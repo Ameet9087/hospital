@@ -19,6 +19,8 @@ const WriteOffItemsList = () => {
         if (response.ok) {
           const data = await response.json();
           setWriteOffGoods(data);
+          console.log(data);
+          
           setFilteredGoods(data); // Initialize filtered goods
         } else {
           console.error('Failed to fetch Write-Off Goods');
@@ -70,14 +72,12 @@ const WriteOffItemsList = () => {
           <thead>
             <tr>
               {[
-               "Req.No",
-  "StoreName",
-  "Req.Date",
-  "Requested By",
-  "Received By",
-  "Status",
-  "Verification Status",
-  "Actions"
+               "Item Name",
+  "Write Off Quantity",
+  "Write Off Date",
+  "Rate",
+  "Total Amount",
+  "Remark"
               ].map((header, index) => (
                 <th
                   key={index}
@@ -104,7 +104,6 @@ const WriteOffItemsList = () => {
               <tr key={index}>
                 <td>{item.itemName}</td>
                 <td>{item.writeOffQty}</td>
-                <td>piece</td> {/* Adjust if the field name is different */}
                 <td>{item.writeOffDate}</td>
                 <td>{item.itemRate}</td>
                 <td>{item.totalAmount}</td>

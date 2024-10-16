@@ -1,84 +1,33 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./StockManage.css";
+import { API_BASE_URL } from "../../../api/api";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 
 const StockManage = ({ item, onBack }) => {
+  console.log(item);
+  
   const [minStockQuantity, setMinStockQuantity] = useState(item.minStockQuantity || 0);
-  const [formValues, setFormValues] = useState(item); // Initialize with item data if needed
-  const [errors, setErrors] = useState({});
+  const [modifiedQty, setModifiedQty] = useState(0); // For input quantity
+  const [isInChecked, setIsInChecked] = useState(false);
+  const [isOutChecked, setIsOutChecked] = useState(false);
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   const handleSubmit = async () => {
-    console.log("-----------------------");
-    
-    const requiredFields = ["itemCategory", "itemName", "itemSubCategory", "itemCompany"];
-    const newErrors = {};
+    let finalQuantity = minStockQuantity;
 
-    requiredFields.forEach((field) => {
-        if (!formValues[field]) {
-            newErrors[field] = `${field.replace(/([A-Z])/g, " $1")} is required`;
-        }
-    });
-
-    if (Object.keys(newErrors).length > 0) {
-        setErrors(newErrors);
-        return; // Prevent submission if there are errors
+    if (isInChecked) {
+        finalQuantity = minStockQuantity; 
+    } else if (isOutChecked) {
+        finalQuantity = minStockQuantity;
     }
-
-    // Prepare the data object in the required format
-    const requestData = {
-        itemName: item.itemName,
-        minStockQuantity: minStockQuantity || Number(formValues.minStockQuantity), // Update with received value
-        description: formValues.description,
-        standardRate: parseFloat(formValues.standardRate),
-        itemCode: formValues.itemCode,
-        inventory: formValues.inventory,
-        itemCompany: formValues.itemCompany.companyName || "",
-        reOrderQuantity: Number(formValues.reOrderQuantity),
-        unitQuantity: Number(formValues.unitQuantity),
-        isVatApplicable: formValues.isVatApplicable,
-        isCssdApplicable: formValues.isCssdApplicable,
-        isColdStorageApplicable: formValues.isColdStorageApplicable,
-        isPatientConsumptionApplicable: formValues.isPatientConsumptionApplicable,
-        isActive: formValues.isActive,
-        packagingType: formValues.packagingType.packagingTypeName || "",
-        unitOfMeasurement: formValues.unitOfMeasurement.unitOfMeasurementName || "",
-        subCategory: formValues.itemSubCategory.subCategoryName || "",
-        company: formValues.itemCompany.companyName || "",
-    };
-
-    console.log("Request Data:", requestData);
-
     try {
-        const response = await fetch(`http://192.168.1.39:8080/api/items/update/${item.Id}`, { // Use PUT method for update
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestData),
+        const response = await fetch(`${API_BASE_URL}/items/updateStock/${item.id}?Quantity=${finalQuantity}`, {
+            method: "PUT"
         });
 
         if (response.ok) {
             alert("Item updated successfully!");
-            setFormValues({
-                itemCategory: "",
-                itemName: "",
-                itemSubCategory: "",
-                unitOfMeasurement: "",
-                minStockQuantity: "",
-                isVatApplicable: false,
-                description: "",
-                standardRate: 0,
-                itemCode: "",
-                inventory: "GENERAL-INVENTORY",
-                itemCompany: "",
-                reOrderQuantity: "",
-                unitQuantity: 0,
-                packagingType: "",
-                vendorName: "",
-                isCssdApplicable: false,
-                isColdStorageApplicable: false,
-                isPatientConsumptionApplicable: false,
-                isActive: true,
-            });
             onBack(); // Close the modal after submission
         } else {
             const errorData = await response.json();
@@ -92,58 +41,107 @@ const StockManage = ({ item, onBack }) => {
 };
 
 
+const handleStockAdjustment = () => {
+  if (isInChecked) {
+    setMinStockQuantity((prevQty) => prevQty + Number(modifiedQty)); // Add quantity if "In"
+  } else if (isOutChecked) {
+    setMinStockQuantity((prevQty) => prevQty - Number(modifiedQty)); // Subtract quantity if "Out"
+  }
+};
+
   return (
     <div className="StockManage-container">
-      {/* <button onClick={onBack} className="back-button">
+      <button onClick={onBack} className="StockManage-back-button">
         Back to List
-      </button> */}
+      </button>
       <h2 className="StockManage-title">Stock Manage {item.itemName}</h2>
       <div className="StockManage-item-name">
         Item Name: <strong>{item.itemName}</strong>
       </div>
-      <table className="StockManage-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>GR No.</th>
-            <th>Received Date</th>
-            <th>Batch No.</th>
-            <th>Expiry Date</th>
-            <th>Remarks</th>
-            <th>Received Qty</th>
-            <th>Current Qty</th>
-            <th>Adjustment Type (In/Out)</th>
-            <th>Modified Qty</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <input type="checkbox" />
-            </td>
-            <td>2</td>
-            <td>
-              <input type="checkbox" /> Date (B.S.)?
-            </td>
-            <td></td>
-            <td>2024-11-01</td>
-            <td></td>
-            <td>10</td>
-            <td>54</td>
-            <td>
-              <input type="checkbox" /> In
-              <input type="checkbox" /> Out
-            </td>
-            <td>
+      <table className="patientList-table" ref={tableRef}>
+          <thead>
+            <tr>
+              {[
+                 '',
+                 'GR No.',
+                 'Received Date',
+                 'Batch No.',
+                 'Updated Date',
+                 'Remarks',
+                 'Received Qty',
+                 'Current Qty',
+                 'Adjustment Type (In/Out)',
+                 'Modified Qty'
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input type="checkbox" />
+          </td>
+          <td>{item.id}</td>
+          <td>
+            <input type="checkbox" /> Date (B.S.)?
+          </td>
+          <td></td>
+          <td>{new Date().toDateString()}</td>
+          <td></td>
+          <td>{item.reOrderQuantity}</td>
+          <td>{minStockQuantity}</td>
+          <td>
+            <label>
               <input
-                type="text"
-                value={minStockQuantity}
-                onChange={(e) => setMinStockQuantity(Number(e.target.value))}
+                type="checkbox"
+                checked={isInChecked}
+                onChange={(e) => {
+                  setIsInChecked(e.target.checked);
+                  setIsOutChecked(false); // Uncheck "Out" if "In" is checked
+                }}
               />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              In
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={isOutChecked}
+                onChange={(e) => {
+                  setIsOutChecked(e.target.checked);
+                  setIsInChecked(false); // Uncheck "In" if "Out" is checked
+                }}
+              />
+              Out
+            </label>
+          </td>
+          <td>
+            <input
+              type="number"
+              value={modifiedQty}
+              className="StockManage-input"
+              onChange={(e) => setModifiedQty(Number(e.target.value))}
+              onBlur={handleStockAdjustment} // Update stock when leaving the input field
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
       <div className="StockManage-totals">
   <div className="StockManage-item">
     <label>Current Total Available:</label>

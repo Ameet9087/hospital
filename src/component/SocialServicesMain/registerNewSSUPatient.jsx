@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../SocialServicesMain/registerNewSSUPatient.css";
+import { API_BASE_URL } from "../api/api";
 
 function RegisterNewSSUPatient({ togglePopup, patientData = null }) {
   const [formData, setFormData] = useState({
@@ -52,14 +53,14 @@ function RegisterNewSSUPatient({ togglePopup, patientData = null }) {
       if (patientData) {
         // Update existing patient
         const response = await axios.put(
-          `http://localhost:1415/api/patients/${patientData.id}`,
+          `${API_BASE_URL}/patients/${patientData.id}`,
           formData
         );
         console.log("Update Response:", response.data);
       } else {
         // Register new patient
         const response = await axios.post(
-          "http://localhost:1415/api/patients/register",
+        `${API_BASE_URL}/patients/register`,
           formData
         );
         console.log("Create Response:", response.data);

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./PurchaseRequest.css";
 import AddVendor from "./AddVendor";
-import AddItem from "./AddItem";
 import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
+import AddItemForm from "./AddItemForm";
 
 const PurchaseRequest = () => {
   // State variables for the component
@@ -15,7 +15,7 @@ const PurchaseRequest = () => {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [vendor, setVendor] = useState("");
+  const [vendors, setVendors] = useState("");
   const [requestDate, setRequestDate] = useState("");
   const [prCategory, setPrCategory] = useState("Consumables");
   const [itemName, setItemName] = useState("");
@@ -76,15 +76,18 @@ const PurchaseRequest = () => {
   }, []);
 
   const handleItemSelect = (e) => {
-    const selectedItemName = e.target.value;
-    setItemName(selectedItemName);
+    const selectedItemId = e.target.value;
+    console.log(selectedItemId);
+    
+    setItemName(selectedItemId);
 
     // Find the selected item details
-    const selectedNewitem = item.find((items) => items.itemName === selectedItemName);
+    const selectedNewitem = item.find((items) => items.id == selectedItemId);
+    console.log(selectedNewitem);
     if (selectedNewitem) {
-      setItemCode(selectedNewitem.itemCode);  // Auto-fill item code
-      setUom(selectedNewitem.unitOfMeasurement);            // Auto-fill UOM
-      setAvailableQty(selectedNewitem.minStockQuantity);  // Auto-fill available quantity     // Set selected item to track it if needed
+      setItemCode(selectedNewitem?.itemCode);  // Auto-fill item code
+      setUom(selectedNewitem?.unitOfMeasurement?.name);            // Auto-fill UOM
+      setAvailableQty(selectedNewitem?.minStockQuantity);  // Auto-fill available quantity     // Set selected item to track it if needed
     }
   };
 
@@ -103,18 +106,20 @@ const PurchaseRequest = () => {
   // Handle creation of a new purchase request
   const handleCreateRequest = () => {
     const requestPayload = {
-      vendor,
       requestDate,
       prCategory,
-      itemName,
       quantity,
       quantityVerifiedOn,
-      uom,
       status: "pending",
       remarks,
       requestedBy,
+      vendor:{
+        id:vendors
+      },
+      item:{
+        id:itemName
+      }
     };
-
     console.log(requestPayload);
     
 
@@ -143,7 +148,6 @@ const PurchaseRequest = () => {
     setIsCreatingRequest(false);
   };
 
-  // Open and close modal handlers
   const openVendorModal = () => setIsVendorModalOpen(true);
   const closeVendorModal = () => setIsVendorModalOpen(false);
 
@@ -160,11 +164,11 @@ const PurchaseRequest = () => {
               <div>
                 <label>Vendor:</label>
                 <select
-                 value={vendor}
+                 value={vendors}
                  className="purchase-request-select"
-                 onChange={(e) => setVendor(e.target.value)}>
+                 onChange={(e) => setVendors(e.target.value)}>
                   {vendorList.map((vendor) => (
-                    <option key={vendor.id} value={vendor.vendorName}>
+                    <option key={vendor.id} value={vendor.id}>
                       {vendor.vendorName}
                     </option>
                   ))}
@@ -239,7 +243,7 @@ const PurchaseRequest = () => {
                   >
                     <option value="">Select Item</option>
                     {item.map((item) => (
-                      <option key={item.id} value={item.itemName}>
+                      <option key={item.id} value={item.id}>
                         {item.itemName}
                       </option>
                     ))}
@@ -425,10 +429,10 @@ const PurchaseRequest = () => {
             <tbody>
               {purchaseRequests.map((request, index) => (
                 <tr key={index}>
-                  <td>{request.vendor}</td>
+                  <td>{request.vendor.vendorName}</td>
                   <td>{request.requestDate}</td>
                   <td>{request.prCategory}</td>
-                  <td>{request.itemName}</td>
+                  <td>{request.item.itemName}</td>
                   <td>{request.quantity}</td>
                   <td>{request.status}</td>
                 </tr>
@@ -438,7 +442,12 @@ const PurchaseRequest = () => {
         </div>
       )}  
       <AddVendor isOpen={isVendorModalOpen} onClose={closeVendorModal} />
-      <AddItem isOpen={openAddItem} onClose={closeAddItemModel} />
+      {openAddItem && 
+      <div className='Add-Item-Modal-Container'>
+        <div className='Add-Item-Modal-overlay'>
+        <AddItemForm onClose={closeAddItemModel} />
+        </div>
+        </div> }
     </div>
   );
 };

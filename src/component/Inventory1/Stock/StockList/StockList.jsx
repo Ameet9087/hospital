@@ -25,7 +25,7 @@ const StockList = () => {
 
   const filteredItems = items.filter(item =>
     item.itemName.toLowerCase().includes(searchQuery.toLowerCase()) &&
-    (!subcategory || item.subCategory === subcategory)
+    (!subcategory || item.subCategory.itemSubCategoryName === subcategory)
   );
 
   const handleManageStockClick = (item) => {
@@ -44,12 +44,12 @@ const StockList = () => {
         <>
           <div className="stock-filters">
             <label className='stock-list-label'>
-              SubCategory *:
+              SubCategory
               <select value={subcategory} onChange={handleSubcategoryChange}>
+                <option>Select Option</option>
               {filteredItems.map((item)=>(
-                <option>{item.subCategory}</option>
+                <option>{item?.subCategory?.itemSubCategoryName}</option>
               ))
-
               }
               </select>
             </label>
@@ -65,26 +65,19 @@ const StockList = () => {
               <input type="checkbox" />
               Show Zero Quantity
             </label>
-            <div className="stock-legends">
-              <span className="stock-zero-quantity">● Zero Quantity</span>
-              <span className="stock-below-min-stock">● Below MinStockQuantity</span>
-            </div>
           </div>
           <div className="stock-search-export">
-            <div>
+            <div className='Stock-search-input-container'>
               <input
                 type="text"
                 placeholder="Search"
                 value={searchQuery}
                 onChange={handleSearchChange}
-                aria-label="Search"
+                className='Stock-search-input'
               />
-              <button className='stock-list-search-bar' aria-label="Search Button">🔍</button>
             </div>
             <div className='stock-button-list'>
-              
               <span>{`Showing ${filteredItems.length} of ${items.length} results`}</span>
-
               <button className="stock-export" aria-label="Export Data">Export</button>
               <button className="stock-print" aria-label="Print Data">Print</button>
             </div>
@@ -100,7 +93,6 @@ const StockList = () => {
   "Item Code",
   "Unit",
   "Available Quantity",
-  "Minimum Quantity",
   "Action"
               ].map((header, index) => (
                 <th
@@ -126,11 +118,10 @@ const StockList = () => {
               {filteredItems.map(item => (
                 <tr key={item.id}>
                   <td>{item?.inventory}</td>
-                  {/* <td>{item?.subCategory}</td> */}
+                  <td>{item?.subCategory?.itemSubCategoryName}</td>
                   <td>{item?.itemName}</td>
                   <td>{item?.itemCode}</td>
-                  {/* <td>{item?.unitOfMeasurement}</td> */}
-                  <td>{item?.unitQuantity}</td>
+                  <td>{item?.unitOfMeasurement?.name}</td>
                   <td>{item?.minStockQuantity}</td>
                   <td>
                     <button className="stock-view-button">View</button>

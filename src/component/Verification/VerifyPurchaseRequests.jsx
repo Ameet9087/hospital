@@ -131,11 +131,11 @@ const VerifyPurchaseRequests = () => {
             <tbody>
               {filteredRequests.map((request) => (
                 <tr key={request.id}>
-                  <td>{request.id}</td>
+                  <td>{request.purchaseId}</td>
                   <td>{request.requestDate}</td>
                   <td>{request.requestFrom}</td>
                   <td>{request.requestedBy}</td>
-                  <td>{request.vendor}</td>
+                  <td>{request.vendor.vendorName}</td>
                   <td>{request.status}</td>
                   <td>{request.status ==="pending"?"0 verified out of 1":"Verified"}</td>
                   <td>

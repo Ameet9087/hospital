@@ -10,8 +10,8 @@ import { API_BASE_URL } from "../../api/api";
 const Requisition = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
-  const [dateFrom, setDateFrom] = useState("2024-08-07");
-  const [dateTo, setDateTo] = useState("2024-08-07");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [showDirect, setShowDirect] = useState(false);
   const [status, setStatus] = useState("All");
@@ -65,6 +65,26 @@ const Requisition = () => {
     setSelectedDispatch(null);
   };
 
+  // Function to filter data based on date range
+  const filterDataByDate = (data) => {
+    if (!dateFrom && !dateTo) return data; // Return original data if no date filter is applied
+
+    return data.filter((item) => {
+      const dispatchDate = new Date(item.dispatchDate);
+      const fromDate = new Date(dateFrom);
+      const toDate = new Date(dateTo);
+
+      // Check if dispatch date is within the specified range
+      return (
+        (!dateFrom || dispatchDate >= fromDate) &&
+        (!dateTo || dispatchDate <= toDate)
+      );
+    });
+  };
+
+  // Get filtered data based on date range
+  const filteredData = filterDataByDate(data);
+
   return (
     <div className="requisition-inventory-content">
       {!showDirect ? (
@@ -87,7 +107,7 @@ const Requisition = () => {
                         name="status"
                         checked={status === s}
                         onChange={() => setStatus(s)}
-                      />{" "}
+                      />
                       {s}
                     </label>
                   ))}
@@ -110,9 +130,6 @@ const Requisition = () => {
                     onChange={(e) => setDateTo(e.target.value)}
                   />
                 </label>
-                <button className="requisition-inventory-star">☆</button>
-                <button className="requisition-inventory-minus">-</button>
-                <button className="requisition-inventory-ok">✓ OK</button>
               </div>
               <div className="requisition-inventory-search-bar-container">
                 <div className="requisition-inventory-search-bar">
@@ -125,7 +142,7 @@ const Requisition = () => {
                   <button className="requisition-inventory-search-bar-button" onClick={handleSearch}>🔍</button>
                 </div>
                 <div className="requisition-inventory-results">
-                  <span className="requisition-inventory-results-span">Showing {data.length} results</span>
+                  <span className="requisition-inventory-results-span">Showing {filteredData.length} results</span>
                   <button className="requisition-inventory-results-print" onClick={handlePrint}>Print</button>
                 </div>
               </div>
@@ -164,8 +181,8 @@ const Requisition = () => {
                       <tr>
                         <td colSpan="8">Loading...</td>
                       </tr>
-                    ) : data.length > 0 ? (
-                      data.map((item, index) => (
+                    ) : filteredData.length > 0 ? (
+                      filteredData.map((item, index) => (
                         <tr key={index}>
                           <td>{item.id}</td>
                           <td>{item.storeName}</td>

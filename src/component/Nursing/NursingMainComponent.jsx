@@ -391,7 +391,7 @@ const tableRef = useRef(null);
                 />
               )}
       </div>):(
-      <VitalsPage patientId={selectedPatientId} Type={true} onClose={closeTriAgeModal}/>)}
+      <VitalsPage newPatientVisitId={selectedPatientId} Type={true} onClose={closeTriAgeModal}/>)}
     </>):(<><PatientDashboard  isPatientOPEN={isPatientOPEN} setIsPatientOPEN={setIsPatientOPEN} patient={selectedPatient} type={isNursing} /></>)}
     </>
   );

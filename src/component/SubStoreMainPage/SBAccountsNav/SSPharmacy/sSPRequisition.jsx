@@ -6,6 +6,7 @@ import "../SSPharmacy/sSPRequisition.css";
 import { useParams } from 'react-router-dom';
 import SSPharmacyReqCreateReq from './sSPharmacyReqCreateReq';
 import { API_BASE_URL } from '../../../api/api';
+import RequisitionDetails from './RequisitionDetails';
 
 function SSPRequisition() {
   const { store } = useParams();
@@ -13,12 +14,20 @@ function SSPRequisition() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isDeatilsPopupOpen,setIsDeatilsPopupOpen] =useState(false);
+  const [product,setProduct] = useState({});
 
   const handleOpenPopup = () => {
     setIsPopupOpen(true);
   };
 
+  const handleDetailsOpenPopup = (req) => {
+    setProduct(req)
+    setIsDeatilsPopupOpen(true);
+  };
+
   const handleClosePopup = () => {
+    setIsDeatilsPopupOpen(false)
     setIsPopupOpen(false);
   };
 
@@ -56,10 +65,22 @@ function SSPRequisition() {
             <button className="sSPRequisition-close-button" onClick={handleClosePopup}>
               &times;
             </button>
-            <SSPharmacyReqCreateReq onClose={handleClosePopup} />
+            <SSPharmacyReqCreateReq  onClose={handleClosePopup} />
           </div>
         </div>
       )}
+
+{isDeatilsPopupOpen && (
+        <div className="sSPRequisition-modal-overlay">
+          <div className="sSPRequisition-modal-content">
+            <button className="sSPRequisition-close-button" onClick={handleClosePopup}>
+              &times;
+            </button>
+            <RequisitionDetails product={product} onClose={handleClosePopup} />
+          </div>
+        </div>
+      )}
+
 
        <div className="sSPRequisition-search-N-results">
           <div className="sSPRequisition-search-bar">
@@ -103,8 +124,8 @@ function SSPRequisition() {
                 <td>{req.requestedDate}</td>
                 <td>{req.status}</td>
                 <td>
-                  <button className="sSPRequisition-btn-view">View</button>
-                  {req.status === 'pending' ? null : (
+                  <button className="sSPRequisition-btn-view" onClick={()=>handleDetailsOpenPopup(req)}>View</button>
+                  {req.status === 'Pending' ? null : (
                     <button className="sSPRequisition-btn-receive">Receive Items</button>
                   )}
                 </td>

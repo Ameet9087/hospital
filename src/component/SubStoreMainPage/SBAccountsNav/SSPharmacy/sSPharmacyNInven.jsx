@@ -1,7 +1,7 @@
 /* Ajhar Tamboli sSPharmacyNInven.jsx 19-09-24 */
 
 import React from 'react';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useParams } from 'react-router-dom';
 import "../SSPharmacy/sSPharmacyNInven.css";
 
 const SSPharmacyNInven = () => {
@@ -14,10 +14,10 @@ const SSPharmacyNInven = () => {
 
   return (
     <nav className="sSPharmacyNInven-bar">
-      <ul className='sSPharmacyNInven-ul'>
+      <div className='sSPharmacyNInven-ul'>
         <div className='sSPharmacyNInven-pha-N-inven'>
-          <li><NavLink to={`/sSPStock/${store}`}>Pharmacy</NavLink></li> {/* Link to SSPStock */}
-          <li><NavLink to={`/SSIStock/${store}`}>Inventory</NavLink></li> {/* Link to SSIStock */}
+          <p className='sSPharmacyNInven-pha-N-inven-p'><NavLink to={`/sSPStock/${store}`}>Pharmacy</NavLink></p> {/* Link to SSPStock */}
+          <p className='sSPharmacyNInven-pha-N-inven-p'><NavLink to={`/SSIStock/${store}`}>Inventory</NavLink></p>{/* Link to SSIStock */}
         </div>
         <div className='sSPharmacyNInven-Acc-N-Log'>
           <button className='sSPharmacyNInven-active-Accounts-button'>{`Active Store: ${store}`}</button>
@@ -28,7 +28,7 @@ const SSPharmacyNInven = () => {
             <i className="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
-      </ul>
+      </div>
     </nav>
   );
 }

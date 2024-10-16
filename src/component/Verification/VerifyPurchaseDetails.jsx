@@ -9,7 +9,7 @@ const VerifyPurchaseDetails = ({ onclose, request,handleCloseForm  }) => {
   const currentDate = new Date(Date.now()).toLocaleDateString();
 
   const handleSubmit = async () => {
-    const apiUrl = `http://localhost:1415/api/purchase-requests/${request.id}/updateStatusAndRemarks`;
+    const apiUrl = `http://localhost:1415/api/purchase-requests/${request.purchaseId}/updateStatusAndRemarks`;
 
     try {
       const response = await fetch(`${apiUrl}?status=${status}&remarks=${remarks}`, {
@@ -55,11 +55,11 @@ const VerifyPurchaseDetails = ({ onclose, request,handleCloseForm  }) => {
 
       <div className="verify-purchase-details">
         <div className="verify-purchase-row">
-          <span>PR No: {request.id}</span>
+          <span>PR No: {request.purchaseId}</span>
           <span>Requested Date: {request.requestDate}</span>
         </div>
         <div className="verify-purchase-row">
-          <span>Selected Vendor: {request.vendor}</span>
+          <span>Selected Vendor: {request.vendor.vendorName}</span>
           <span>Request From : {request.requestedBy}</span>
         </div>
       </div>
@@ -77,8 +77,8 @@ const VerifyPurchaseDetails = ({ onclose, request,handleCloseForm  }) => {
         </thead>
         <tbody>
           <tr>
-            <td>{request.itemName}</td>
-            <td>{request.uom}</td>
+            <td>{request.item.itemName}</td>
+            <td>{request.item.unitOfMeasurement.name}</td>
             <td>{request.quantity}</td>
             <td>{request.status}</td>
           </tr>

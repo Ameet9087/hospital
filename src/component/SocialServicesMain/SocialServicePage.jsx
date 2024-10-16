@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./SocialServicePage.css";
 import RegisterNewSSUPatient from "./registerNewSSUPatient";
+import { API_BASE_URL } from "../api/api";
 
 function SocialServicePage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -9,7 +10,7 @@ function SocialServicePage() {
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
   useEffect(() => {
-    fetch("http://localhost:1415/api/patients/show-all-patient-details")
+    fetch(`${API_BASE_URL}/patients/show-all-patient-details`)
       .then((res) => res.json())
       .then((data) => setData(data))
       .catch((err) => console.log(err));

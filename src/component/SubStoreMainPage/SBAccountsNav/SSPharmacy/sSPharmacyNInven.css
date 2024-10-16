@@ -22,6 +22,7 @@
   .sSPharmacyNInven-ul
   {
     width: 100%;
+    padding: 4px;
     display: flex;
     justify-content: space-between;
   }
@@ -38,30 +39,10 @@
     }
     .sSPharmacyNInven-pha-N-inven{
         display: flex;
-        /* border: 1px solid red; */
+       gap: 5px;
         
     }
-    .sSPharmacyNInven-pha-N-inven li{
-        margin: none;
-        padding:10px;
-        /* color: red; */
-    }
     
-    
-    .sSPharmacyNInven-bar ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 10px 0px 10px 0px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-  
-    }
-    
-    .sSPharmacyNInven-bar li {
-      margin: 0 0px;
-      
-    }
     
     .sSPharmacyNInven-bar a {
       color: white;

@@ -4,7 +4,7 @@ import { API_BASE_URL } from '../../api/api';
 
 const DirectDispatch = ({ setShowDirect }) => {
   const [storeName, setStoreName] = useState('');
-  const [dispatchDate, setDispatchDate] = useState('2024-08-21');
+  const [dispatchDate, setDispatchDate] = useState('');
   const [items, setItems] = useState([{
       itemCategory: 'Consumables',
       itemName: '',
@@ -49,7 +49,7 @@ const DirectDispatch = ({ setShowDirect }) => {
         ...newItems[index],
         itemName: selectedItem.itemName,
         code: selectedItem.itemCode,
-        unit: selectedItem.unitOfMeasurement,
+        unit: selectedItem.unitOfMeasurement.name,
         availableQty: selectedItem.minStockQuantity,
       };
       setItems(newItems);

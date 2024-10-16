@@ -2,28 +2,34 @@
 
 /* Swapnil ROkade adding className And Applying colors 14/09 */
 .stock-filters {
-    display: flex; /* Use flexbox to align items in a row */
-    flex-wrap: wrap; /* Allow items to wrap onto multiple lines if necessary */
-    align-items: center; /* Vertically align items to the center */
-    margin-bottom: 20px; /* Space below the filter section */
+   display: flex;
+   gap: 10px;
+   align-items: center;
+   padding: 5px 0px;
 }
 
 /* Style for each label within stock-filters */
 /* Style for select element inside stock-filters */
 .stock-filters select {
-    margin-left: 10px;
     width: 100%;
-    max-width: 150px;
-    height: 25px; /* Adjust the height of the select element */
-    /* padding: 5px; Optional: add padding for better appearance */
-    box-sizing: border-box; /* Ensure padding is included in the total width/height */
+    max-width: 200px;
 }
+.Stock-search-input-container
+{
+    width: 40%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+/* .Stock-search-input
+{
+    padding: 5px;
+} */
 
 /* Style for checkboxes */
-.stock-filters input[type="checkbox"] {
-    margin-left: 10px;
-    height: 20px; /* Set the height of the checkbox */
-    width: 20px;  /* Set the width of the checkbox for consistent size */
+.stock-filters input[type="checkbox"] { 
+    height: 15px; /* Set the height of the checkbox */
+    width: 15px;  /* Set the width of the checkbox for consistent size */
 }
 
 /* Style for label with checkbox */
@@ -58,7 +64,6 @@
     width: 100%;
     height: 75vh;
     overflow-y: scroll;
-    padding: 20px;
     box-sizing: border-box;
     background-color: #f9f9f9;
 }
@@ -135,48 +140,39 @@
     align-items: center;
 }
 
-.stock-search-export input[type="text"] {
-    padding: 5px;
-    border: 1px solid #ddd;
+ .stock-export {
+    padding: 2px 10px;
+    border: 1px solid var(--button-color);
     border-radius: 5px;
-    margin-right: 10px;
-    box-sizing: border-box;
-}
-
-.stock-search-export button {
-    padding: 8px 15px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-left: 10px;
-    box-sizing: border-box;
-}
-
-.stock-search-export .stock-export {
     background-color: var(--button-color);
     color: white;
 }
-.stock-search-export .stock-export:hover
+.stock-export:hover
 {
     background-color: var(--button-hover-background-color);
     color: var(--button-hover-text-color);
     border: 1px solid var(--button-hover-border-color);
 }
-
-.stock-search-export .stock-print {
+.stock-print
+{
+    padding: 2px 10px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
     background-color: var(--button-color);
     color: white;
 }
-.stock-search-export .stock-print:hover{
-    background-color: var(--button-hover-background-color);
-    color: var(--button-hover-text-color);
-    border: 1px solid var(--button-hover-border-color);
+.stock-button-list 
+{
+    width: 50%;
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+    align-items: center;
 }
 
 .stock-button-list span {
     font-size: var(--font-size); /* Font size for the result count */
     color: var(--button-color);
-    flex-grow: 1; /* Allows the span to take up remaining space */
 }
 .stock-legends {
     margin-left: auto;
@@ -199,23 +195,3 @@
 }
 /*  */
 
-.stock-list-search-bar {
-    background-color: transparent; /* Remove background color */
-    border: none; /* Remove default border */
-    cursor: pointer; /* Change cursor to pointer */
-    font-size: var(--heading-font); /* Font size */
-    margin-left: 10px;
-    display: flex; /* Center icon */
-    align-items: center; /* Center icon vertically */
-    justify-content: center; /* Center icon horizontally */
-    box-shadow: none; /* Remove any shadow */
-    background: none; /* Remove any background image */
-}
-
-.stock-search-export input[type="text"]{
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-right: -50px;
-    box-sizing: border-box;
-}

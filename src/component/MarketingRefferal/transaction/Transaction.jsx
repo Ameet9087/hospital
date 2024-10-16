@@ -3,6 +3,7 @@ import React, { useState, useEffect ,useRef} from 'react';
 import { FaSearch } from 'react-icons/fa';
 import './transaction.css';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { API_BASE_URL } from '../../api/api';
 
 function Transaction() {
   const [transactions, setTransactions] = useState([]);
@@ -15,7 +16,7 @@ function Transaction() {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/transactions/fetch-all-transaction');
+        const response = await fetch(`${API_BASE_URL}/transactions/fetch-all-transaction`);
         const data = await response.json();
         console.log(data);
         

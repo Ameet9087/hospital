@@ -1,12 +1,15 @@
 .StockManage-container {
     background-color: var(--background-color);
     height: 90vh;
-    /* padding: 20px; */
+    padding: 10px;
     /* border-radius: 10px; */
     /* width: 100%; */
     /* margin: auto; */
   }
-  
+  .StockManage-input
+  {
+    width: 100%;
+  }
   .StockManage-title {
     font-size: var(--heading-font);
     margin-left: 10px;
@@ -63,10 +66,10 @@
     margin-right: 10px;       /* Add margin to the top of the container */
   }
   
-  .StockManage-update-button {
+  .StockManage-update-button,.StockManage-back-button {
     background-color: var(--button-color);
     color: white;
-    padding: 10px 15px;
+    padding: 5px 10px;
     margin-left: 10px;       /* Space between buttons */
     border: none;
     border-radius: 5px;
@@ -76,7 +79,7 @@
   .StockManage-cancel-button {
     background-color: #dc3545;
     color: white;
-    padding: 10px 15px;
+    padding: 5px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;

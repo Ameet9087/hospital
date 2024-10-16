@@ -4,6 +4,7 @@ import axios from 'axios';
 import { FaPlus, FaSearch } from 'react-icons/fa';
 import './refring_org.css';
 import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { API_BASE_URL } from '../../../api/api';
 
 const RefringOrg = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,7 +15,7 @@ const RefringOrg = () => {
 
   useEffect(() => {
     // Fetch organizations from API
-    axios.get('http://localhost:5000/api/organizations/fetch-all-transaction')
+    axios.get(`${API_BASE_URL}/organizations/fetch-all-transaction`)
       .then(response => {
         setOrgs(response.data);
       })
@@ -35,7 +36,7 @@ const RefringOrg = () => {
     const confirmation = window.confirm("Are you sure you want to deactivate this organization?");
     if (confirmation) {
       // Update organization status to inactive
-      axios.put(`http://localhost:5000/api/organizations/deactivate/${id}`)
+      axios.put(`${API_BASE_URL}/organizations/deactivate/${id}`)
         .then(() => {
           setOrgs(prevOrgs =>
             prevOrgs.map(org =>
@@ -53,7 +54,7 @@ const RefringOrg = () => {
     const confirmation = window.confirm("Are you sure you want to activate this organization?");
     if (confirmation) {
       // Update organization status to active
-      axios.put(`http://localhost:5000/api/organizations/activate/${id}`)
+      axios.put(`${API_BASE_URL}/organizations/activate/${id}`)
         .then(() => {
           setOrgs(prevOrgs =>
             prevOrgs.map(org =>

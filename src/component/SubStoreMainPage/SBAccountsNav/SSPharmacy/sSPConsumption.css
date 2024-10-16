@@ -99,13 +99,17 @@
   }
   
   .sSPConsumption-btn-view, .btn-receive {
-    background-color: #79C879;
+    background-color:var(--button-color);
     color: white;
-    border: none;
+    border: 1px solid var(--button-color);
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
-    margin-right: 5px;
+  }
+  .sSPConsumption-btn-view:hover
+  {
+    background-color:var(--button-hover-color);
+    color: var(--button-color);
   }
   
   .sSPConsumption-pagination {
@@ -143,7 +147,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: center;
   /* padding: 20px; */
   z-index: 1000;
 }

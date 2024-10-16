@@ -3,7 +3,7 @@ import '../SSPharmacy/sSPConsumInternalConsum.css';
 import { API_BASE_URL } from '../../../api/api';
 import { useParams } from 'react-router-dom';
 
-function SSPConsumInternalConsum({onClose}) {
+function SSPConsumInternalConsum({ onClose }) {
   const { store } = useParams();
   const [formData, setFormData] = useState({
     itemName: '',
@@ -15,10 +15,11 @@ function SSPConsumInternalConsum({onClose}) {
     totalAmount: 0.0,
     consumedBy: '',
     remark: '',
-    storeName: store
+    storeName: store,
   });
-
   const [items, setItems] = useState([]);
+  const [error, setError] = useState(''); 
+  const [id,setId] = useState();
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -26,44 +27,41 @@ function SSPConsumInternalConsum({onClose}) {
         const response = await fetch(`${API_BASE_URL}/pharmacyRequisitions/getAll`);
         const data = await response.json();
         const filteredData = data.filter(item => item.storeName === store);
-        setItems(filteredData); // Adjust based on actual API response structure
+        setItems(filteredData);
       } catch (error) {
         console.error('Error fetching items:', error);
       }
     };
 
     fetchItems();
-  }, []);
+  }, [store]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     // Update formData with the new value
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
-  
+
     // Calculate totalAmount if 'quantity' or 'salePrice' is being updated
     if (name === 'quantity' || name === 'salePrice') {
       const quantity = name === 'quantity' ? value : formData.quantity;
       const salePrice = name === 'salePrice' ? value : formData.salePrice;
-  
+
       const totalAmount = quantity * salePrice;
-    
+
       setFormData((prevData) => ({
         ...prevData,
-        totalAmount
+        totalAmount,
       }));
     }
   };
-  
 
   const handleItemChange = (e) => {
-    console.log("-----------------------------------------------");
-    
-    const selectedItem = items.find(item => item.itemName === e.target.value);  
-    console.log(selectedItem)  
+    const selectedItem = items.find(item => item.itemName === e.target.value);
+    setId(selectedItem.pharmacyRequisitionId);
     setFormData({
       ...formData,
       itemName: e.target.value,
@@ -73,19 +71,36 @@ function SSPConsumInternalConsum({onClose}) {
       expiryDate: selectedItem ? selectedItem.expiryDate : '',
     });
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Reset error message
+    setError('');
+
+    // Validation: Check if quantity exceeds availableQuantity
+    if (formData.quantity > formData.availableQuantity) {
+      setError('Quantity cannot exceed available quantity.');
+      return; // Prevent submission
+    }
+
     try {
       const response = await fetch(`${API_BASE_URL}/internal-consumption/add`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ...formData,
-          expiryDate: new Date(formData.expiryDate).toISOString(), // Ensure date format compatibility
-        })
+          quantity: formData.quantity,
+          totalAmount: formData.totalAmount,
+          consumedBy: formData.consumedBy,
+          consumedDate: new Date().toISOString().split('T')[0], // Send the current date in the required format
+          remark: formData.remark,
+          storeName: formData.storeName,
+          pharmacyRequisition: {
+            pharmacyRequisitionId:id
+          }
+        }),
       });
 
       if (response.ok) {
@@ -98,17 +113,18 @@ function SSPConsumInternalConsum({onClose}) {
       console.error('Error:', error);
       alert('An error occurred. Please try again.');
     }
-  };
+};
+
 
   return (
     <div className="sSPConsumInternalConsum-container">
       <div className="sSPConsumInternalConsum-header">
         <i className="fa fa-shopping-cart"></i> New Internal Consumption
-        <button className="sSPConsumInternalConsum-close-button"></button>
+        <button className="sSPConsumInternalConsum-close-button" onClick={onClose}></button>
       </div>
       <div className="sSPConsumInternalConsum-content">
         <form onSubmit={handleSubmit}>
-          <table >
+          <table>
             <thead>
               <tr>
                 <th>Item Name</th>
@@ -123,7 +139,6 @@ function SSPConsumInternalConsum({onClose}) {
             <tbody>
               <tr>
                 <td>
-                  {/* <button type="button" className="delete-button">✖</button> */}
                   <select name="itemName" value={formData.itemName} onChange={handleItemChange} className='sSPConsumInternalConsum-input'>
                     <option>--Select Item--</option>
                     {items.map((item) => (
@@ -135,7 +150,7 @@ function SSPConsumInternalConsum({onClose}) {
                 </td>
                 <td>
                   <input
-                 className='sSPConsumInternalConsum-input'
+                    className='sSPConsumInternalConsum-input'
                     type="number"
                     name="availableQuantity"
                     value={formData.availableQuantity}
@@ -145,7 +160,7 @@ function SSPConsumInternalConsum({onClose}) {
                 </td>
                 <td>
                   <input
-                   className='sSPConsumInternalConsum-input'
+                    className='sSPConsumInternalConsum-input'
                     type="number"
                     name="quantity"
                     value={formData.quantity}
@@ -154,7 +169,7 @@ function SSPConsumInternalConsum({onClose}) {
                 </td>
                 <td>
                   <input
-                   className='sSPConsumInternalConsum-input'
+                    className='sSPConsumInternalConsum-input'
                     type="text"
                     name="batchNo"
                     value={formData.batchNo}
@@ -163,7 +178,7 @@ function SSPConsumInternalConsum({onClose}) {
                 </td>
                 <td>
                   <input
-                  className='sSPConsumInternalConsum-input'
+                    className='sSPConsumInternalConsum-input'
                     type="date"
                     name="expiryDate"
                     value={formData.expiryDate}
@@ -193,6 +208,8 @@ function SSPConsumInternalConsum({onClose}) {
             </tbody>
           </table>
 
+          {error && <div className="error-message" style={{ color: 'red' }}>{error}</div>} {/* Display error message */}
+
           <div className="sSPConsumInternalConsum-details">
             <div className="sSPConsumInternalConsum-total-amount">
               <span className='sSPConsumInternalConsum-total-span'>Total Amount:</span>
@@ -218,9 +235,9 @@ function SSPConsumInternalConsum({onClose}) {
               ></textarea>
             </div>
             <div className="sSPConsumInternalConsum-footer">
-            <button type="submit" className="sSPConsumInternalConsum-save-button">Save</button>
-            <button type="button" className="sSPConsumInternalConsum-cancel-button">Cancel</button>
-          </div>
+              <button type="submit" className="sSPConsumInternalConsum-save-button">Save</button>
+              <button type="button" className="sSPConsumInternalConsum-cancel-button" onClick={onClose}>Cancel</button>
+            </div>
           </div>
         </form>
       </div>
