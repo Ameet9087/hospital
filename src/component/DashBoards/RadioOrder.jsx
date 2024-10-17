@@ -22,7 +22,7 @@ const RadioOrder = ({ selectedOrders, setActiveSection, patientId, newPatientVis
 
   const handleSign = async () => {
     const requisitionData = orders.map((order) => ({
-      requisitionDTO: {
+     
         ...(newPatientVisitId ? {
           newPatientVisitDTO: {
             newPatientVisitId: newPatientVisitId
@@ -52,7 +52,7 @@ const RadioOrder = ({ selectedOrders, setActiveSection, patientId, newPatientVis
         status: 'Pending',
         signatureList: '',
       }
-    }));
+    ));
 
     try {
       console.log(requisitionData);

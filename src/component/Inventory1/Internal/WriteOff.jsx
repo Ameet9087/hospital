@@ -12,7 +12,7 @@ const WriteOff = () => {
       code: '0',
       availableQty: '0',
       writeOffQty: '0',
-      writeOffDate: '2024-08-08',
+      writeOffDate: '',
       remark: '',
       itemRate: '0',
       subTotal: '0',
@@ -28,6 +28,7 @@ const WriteOff = () => {
       try {
         const response = await fetch(`${API_BASE_URL}/items/all`);
         if (response.ok) {
+         
           const data = await response.json();
           setItems(data); // Assuming the data is an array of items
         } else {
@@ -47,7 +48,7 @@ const WriteOff = () => {
       code: '0',
       availableQty: '0',
       writeOffQty: '0',
-      writeOffDate: '2024-08-08',
+      writeOffDate: '',
       remark: '',
       itemRate: '0',
       subTotal: '0',
@@ -120,6 +121,7 @@ const WriteOff = () => {
       });
 
       if (response.ok) {
+        alert('Write Off Request Added Successfully ')
         console.log('Write-Off Goods submitted successfully');
         // Handle success response
       } else {

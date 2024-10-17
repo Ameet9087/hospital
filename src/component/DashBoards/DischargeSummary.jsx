@@ -77,6 +77,8 @@ const PatientDischargeForm = ({ patient }) => {
         const response = await fetch(
           `${API_BASE_URL}/admissions/details?patientId=${patient?.patientDTO?.patientId}&startDate=${AdmissionDate}&endDate=${formattedDate}`
         );
+        console.log(`${API_BASE_URL}/admissions/details?patientId=${patient?.patientDTO?.patientId}&startDate=${AdmissionDate}&endDate=${formattedDate}`);
+        
         const data = await response.json();
         setAllDocuments(data);
         console.log(data);
