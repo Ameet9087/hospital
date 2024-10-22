@@ -10,7 +10,7 @@ import Incentive from "../../component/IncentiveMain/incentiveApp";
 import Lab from "../../component/NavBarSection/Lab";
 import Emergency from "../../component/Emergency/Emergency";
 
-import Utilitiesmain from "../../component/Utilities/utilitiesmain";
+// import Utilitiesmain from "../../component/Utilities/utilitiesmain";
 
 import SystemAdmin from "../../component/SystemAdmin/SystemAdmin";
 
@@ -62,6 +62,7 @@ import TransportMainRouting from "../../component/TransportMain/transportMainRou
 import SuperUserMain from "../../component/SuperUserMain/superUserMainRoute";
 import HRHome from "../../component/HRHome/HRHome"
 import Radiationtherapy from "../../component/RadiationTherapy/radiationtherapy";
+import endoscopy from "../../component/Endoscopy/EndoscopyRoute";
 
 const Layout = () => {
   const [showAppointment, setShowAppointment] = useState(false);
@@ -111,6 +112,7 @@ const Layout = () => {
   const [showSuperUser, setShowSuperUser] = useState(false)
   const [showHR, setShowHR] = useState(false)
   const [shoeRadiationtherapy,setShowRadiationTherapy] = useState(false)
+  const [shoeEndoscopy,setShowEndoscopy] = useState(false)
 
 
   const resetAllToggles = () => {
@@ -158,6 +160,7 @@ const Layout = () => {
     setShowSuperUser(false)
     setShowHR(false)
     setShowRadiationTherapy(false)
+    setShowEndoscopy(false)
 
   };
   const toggleHomehealthcare=()=>{
@@ -336,6 +339,12 @@ const Layout = () => {
     resetAllToggles();
     setshowphysiotherapy(!showphysiotherapy);
   }
+  const togglepEndoscopy=()=>{
+    resetAllToggles();
+    setShowEndoscopy(!shoeEndoscopy);
+  }
+
+
   return (
     <div className="hrmsLayout">
       <Sidebar
@@ -385,7 +394,7 @@ const Layout = () => {
         onpediatricoutpatient={togglePediatricoutpatient}
         onpediatricinpatient={togglePediatricinpatient}
         onphysiotherapy={togglephysiotherapy}
-        
+        onendoscopy={togglepEndoscopy}
        
     
       />
@@ -443,7 +452,7 @@ const Layout = () => {
 
           {showHR && <HRHome />}
           {shoeRadiationtherapy && <Radiationtherapy/>}
-
+          {shoeEndoscopy && <endoscopy/>}
         </main>
       </div>
     </div>
