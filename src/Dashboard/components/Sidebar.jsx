@@ -61,7 +61,10 @@ const Sidebar = ({
   onHr,
 
   onRadiationTherapy,
-  onendoscopy
+  onendoscopy,
+
+  onChemotherapy,
+
 
 }) => {
   const [openMenus, setOpenMenus] = useState({})
@@ -278,10 +281,16 @@ const Sidebar = ({
   }
   
 
+
   const handleendoscopyClick = () => {
     handleLinkClick('endoscopy')
     onendoscopy()
   }
+  const handleChemotherapyClick = () =>{
+    handleLinkClick('chemotherapy')
+    onChemotherapy()
+  }
+
 
   return (
     <div className={`custom-sidebar ${isOpen ? '' : 'custom-sidebar-closed'}`}>
@@ -397,6 +406,112 @@ const Sidebar = ({
             </ul>
           )}
         </li>
+
+
+
+
+
+
+
+        <li
+          className={`custom-nav-item ${
+            activeLink === 'chemotherapy-submenu1' ||
+            activeLink === 'chemotherapy-submenu2' ||
+            activeLink === 'chemotherapy-submenu3' ||
+            activeLink === 'chemotherapy-submenu4' ||
+            activeLink === 'chemotherapy-submenu5' ||
+            activeLink === 'chemotherapy-submenu6' ||
+            activeLink === 'chemotherapy-submenu7'
+              ? 'custom-nav-item-active'
+              : ''
+          }`}
+        >
+          <div
+            className="custom-nav-link-content"
+            onClick={handleChemotherapyClick}
+          >
+            <span>
+              <FaClinicMedical />
+            </span>
+            {isOpen && <span className="custom-nav-link-text">Chemotherapy</span>}
+            <span className="custom-dropdown-icon">
+              {openMenus.chemotherapy ? <LuChevronUp /> : <LuChevronDown />}
+            </span>
+          </div>
+          {openMenus.chemotherapy && isOpen && (
+            <ul className="custom-submenu">
+              <li
+                onClick={() => handleItemClick('chemotherapy', 'submenu1')}
+                className={
+                  activeLink === 'chemotherapy-submenu1'
+                    ? 'custom-submenu-active'
+                    : ''
+                }
+              >
+                <Link to="/surgery-management">Surgery Management</Link>
+              </li>
+              <li
+                onClick={() => handleItemClick('chemotherapy', 'submenu2')}
+                className={
+                  activeLink === 'chemotherapy-submenu2'
+                    ? 'custom-submenu-active'
+                    : ''
+                }
+              >
+                <Link to="/chemotherapy-scheduling">Chemotherapy Scheduling</Link>
+              </li>
+              <li
+                onClick={() => handleItemClick('chemotherapy', 'submenu3')}
+                className={
+                  activeLink === 'chemotherapy-submenu3'
+                    ? 'custom-submenu-active'
+                    : ''
+                }
+              >
+                <Link to="/radiation-therapy">Radiation Therapy</Link>
+              </li>
+              <li
+                onClick={() => handleItemClick('chemotherapy', 'submenu4')}
+                className={
+                  activeLink === 'chemotherapy-submenu4'
+                    ? 'custom-submenu-active'
+                    : ''
+                }
+              >
+                <Link to="/cancer-diagnosis">Cancer Diagnosis </Link>
+              </li>
+              <li
+                onClick={() => handleItemClick('chemotherapy', 'submenu5')}
+                className={
+                  activeLink === 'chemotherapy-submenu5'
+                    ? 'custom-submenu-active'
+                    : ''
+                }
+              >
+                <Link to="/patient-survival-tracking">Patient Survival Tracking </Link>
+              </li>
+             
+            </ul>
+          )}
+        </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <li
           className={`custom-nav-item ${

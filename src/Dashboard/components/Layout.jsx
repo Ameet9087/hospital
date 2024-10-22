@@ -10,7 +10,8 @@ import Incentive from "../../component/IncentiveMain/incentiveApp";
 import Lab from "../../component/NavBarSection/Lab";
 import Emergency from "../../component/Emergency/Emergency";
 
-// import Utilitiesmain from "../../component/Utilities/utilitiesmain";
+import Utilitiesmain from "../../component/UTILITIES/utilitiesmain";
+
 
 import SystemAdmin from "../../component/SystemAdmin/SystemAdmin";
 
@@ -62,8 +63,10 @@ import TransportMainRouting from "../../component/TransportMain/transportMainRou
 import SuperUserMain from "../../component/SuperUserMain/superUserMainRoute";
 import HRHome from "../../component/HRHome/HRHome"
 import Radiationtherapy from "../../component/RadiationTherapy/radiationtherapy";
+
 import endoscopy from "../../component/Endoscopy/EndoscopyRoute";
 
+import ChemotherapyRouting from "../../component/ChemotherapyModule/ChemotherapyRoute";
 const Layout = () => {
   const [showAppointment, setShowAppointment] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
@@ -112,7 +115,10 @@ const Layout = () => {
   const [showSuperUser, setShowSuperUser] = useState(false)
   const [showHR, setShowHR] = useState(false)
   const [shoeRadiationtherapy,setShowRadiationTherapy] = useState(false)
+
   const [shoeEndoscopy,setShowEndoscopy] = useState(false)
+
+  const [showChemotherapy,setshowChemotherapy]=useState(false)
 
 
   const resetAllToggles = () => {
@@ -161,6 +167,8 @@ const Layout = () => {
     setShowHR(false)
     setShowRadiationTherapy(false)
     setShowEndoscopy(false)
+
+    setshowChemotherapy(false)
 
   };
   const toggleHomehealthcare=()=>{
@@ -344,6 +352,11 @@ const Layout = () => {
     setShowEndoscopy(!shoeEndoscopy);
   }
 
+  
+  const toggelChemotherapy =()=>{
+    resetAllToggles();
+    setshowChemotherapy(!showChemotherapy);
+  }
 
   return (
     <div className="hrmsLayout">
@@ -394,7 +407,10 @@ const Layout = () => {
         onpediatricoutpatient={togglePediatricoutpatient}
         onpediatricinpatient={togglePediatricinpatient}
         onphysiotherapy={togglephysiotherapy}
+
         onendoscopy={togglepEndoscopy}
+        onChemotherapy={toggelChemotherapy}
+
        
     
       />
@@ -452,7 +468,9 @@ const Layout = () => {
 
           {showHR && <HRHome />}
           {shoeRadiationtherapy && <Radiationtherapy/>}
+
           {shoeEndoscopy && <endoscopy/>}
+          {showChemotherapy && <ChemotherapyRouting/>}
         </main>
       </div>
     </div>

@@ -42,7 +42,7 @@ function NavigationBar() {
         </button>
 
         <button
-          className={`navigationBarTabButton ${activeTab === 'identity-verification' ? 'navigationBarActive' : ''}`}
+          className={`navigationBarTabButton ${activeTab === 'insurance' ? 'navigationBarActive' : ''}`}
           onClick={() => handleTabClick('insurance')}
         >
            Insurance Verification
