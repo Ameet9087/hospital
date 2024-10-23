@@ -1,55 +1,65 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './ChemotherapyNavbar.css';
 
 const ChemotherapyNavbar = () => {
-  const location = useLocation(); // Get the current route location
-
   return (
-    <nav className="chemotherapy-navbar">
+    <div className='chemotherapy-navbar-module'>
+      <nav className="chemotherapy-navbar">
       <ul>
         <li>
-          <Link 
+          <NavLink 
             to="/surgery-management" 
-            className={`chemotherapy-navbar-button ${location.pathname === '/surgery-management' ? 'active' : ''}`}
+            className={({ isActive }) => 
+              isActive ? "chemotherapy-navbar-button active" : "chemotherapy-navbar-button"
+            }
           >
             Surgery Management
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link 
+          <NavLink 
             to="/chemotherapy-scheduling" 
-            className={`chemotherapy-navbar-button ${location.pathname === '/chemotherapy-scheduling' ? 'active' : ''}`}
+            className={({ isActive }) => 
+              isActive ? "chemotherapy-navbar-button active" : "chemotherapy-navbar-button"
+            }
           >
             Chemotherapy Scheduling
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link 
+          <NavLink 
             to="/radiation-therapy" 
-            className={`chemotherapy-navbar-button ${location.pathname === '/radiation-therapy' ? 'active' : ''}`}
+            className={({ isActive }) => 
+              isActive ? "chemotherapy-navbar-button active" : "chemotherapy-navbar-button"
+            }
           >
             Radiation Therapy
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link 
+          <NavLink 
             to="/cancer-diagnosis" 
-            className={`chemotherapy-navbar-button ${location.pathname === '/cancer-diagnosis' ? 'active' : ''}`}
+            className={({ isActive }) => 
+              isActive ? "chemotherapy-navbar-button active" : "chemotherapy-navbar-button"
+            }
           >
             Cancer Diagnosis
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link 
+          <NavLink 
             to="/patient-survival-tracking" 
-            className={`chemotherapy-navbar-button ${location.pathname === '/patient-survival-tracking' ? 'active' : ''}`}
+            className={({ isActive }) => 
+              isActive ? "chemotherapy-navbar-button active" : "chemotherapy-navbar-button"
+            }
           >
            Patient Survival Tracking
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </nav>
+    </div>
   );
 };
 

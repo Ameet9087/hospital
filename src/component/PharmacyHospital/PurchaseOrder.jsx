@@ -52,9 +52,9 @@ const PurchaseOrder = () => {
                 <input type="date" id="from-date" />
                 <label htmlFor="to-date">To:</label>
                 <input type="date" id="to-date" />
-                <button className="purchase-order-favorite-btn">★</button>
+                {/* <button className="purchase-order-favorite-btn">★</button>
                 <button className="purchase-order-reset-btn">-</button>
-                <button className="purchase-order-date-range-button">OK</button>
+                <button className="purchase-order-date-range-button">OK</button> */}
             </div>
                   
             <div className="purchase-order-search-container">

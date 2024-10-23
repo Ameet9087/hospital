@@ -1,4 +1,8 @@
 /* Base Styles */
+.dispatch-form-module-container{
+ width: auto;
+ padding: 20px;
+}
 .dispatch-form-module-com {
   display: flex; 
   justify-content: space-between; 
@@ -60,7 +64,7 @@
   background-color: var(--button-color);
   color: white;
   border: none;
-  padding: 10px 15px; 
+  padding: 5px 10px; 
   border-radius: 5px;
   cursor: pointer;
   font-size: var(--font-size);

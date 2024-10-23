@@ -9,7 +9,7 @@
 .pharmacy-home-page-com {
   padding: 20px;
   background-color: var(--background-color);
-  border: 2px solid white;
+  /* border: 2px solid white; */
   border-radius: 10px;
 }
 

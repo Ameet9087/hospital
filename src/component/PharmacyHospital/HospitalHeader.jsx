@@ -1,6 +1,5 @@
-/* Mohini_HospitalHeader_WholePage_14/sep/2024 */
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./HospitalHeader.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -24,33 +23,32 @@ const HospitalHeader = () => {
 
   return (
     <div className="hospital-header-container-module">
-      <header className="pharmacy-header-module">
+      {/* <header className="pharmacy-header-module"> */}
         <nav className="hospital-nav-module">
-          <ul className="hospital-nav-list-module">
-            <Link to="/"
-              className="hospital-nav-item-module"
-              
-            >
+          {/* <ul className="hospital-nav-list-module"> */}
+            <NavLink to="/" className="hospital-nav-item-module">
               <i className="fa fa-home"></i>
-            </Link>
-            <Link to="order"
+            </NavLink>
+            <NavLink 
+              to="order"
               className={`hospital-nav-item-module ${activeNav === "order" ? "active" : ""}`}
               onClick={() => handleNavClick("order")}
             >
               Order
-            </Link>
-            <Link to='/SupplierLedgerComponent'
+            </NavLink>
+            <NavLink 
+              to='/SupplierLedgerComponent'
               className={`hospital-nav-item-module ${activeNav === "supplier" ? "active" : ""}`}
-             
             >
               Supplier
-            </Link>
-            <Link to="report"
+            </NavLink>
+            <NavLink 
+              to="report"
               className={`hospital-nav-item-module ${activeNav === "report" ? "active" : ""}`}
               onClick={() => handleNavClick("report")}
             >
               Report
-            </Link>
+            </NavLink>
             <li 
               className={`hospital-nav-item-module ${activeNav === "setting" ? "active" : ""}`}
               onClick={() => handleNavClick("setting")}
@@ -63,17 +61,15 @@ const HospitalHeader = () => {
             >
               Store
             </li>
-            <Link to="/SupplierHeaderCom" className="hospital-nav-item-module"
-            >
+            <NavLink to="/SupplierHeaderCom" className="hospital-nav-item-module">
               Supplier Ledger
-            </Link>
-            <Link to="/SubstoreDispatchCom" className="hospital-nav-item-module"
-            >
+            </NavLink>
+            <NavLink to="/SubstoreDispatchCom" className="hospital-nav-item-module">
               Substore Request/Dispatch
-            </Link>
-          </ul>
+            </NavLink>
+          {/* </ul> */}
         </nav>
-      </header> 
+      {/* </header>  */}
 
       {activeNav === "order" && (
         <div className="pharmacy-sub-nav-module">
@@ -82,13 +78,13 @@ const HospitalHeader = () => {
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/purchase-order" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/purchase-order")}
             >
-              <Link to="/purchase-order">Purchase Order</Link>
+              <NavLink to="/purchase-order">Purchase Order</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/good-receipt" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/good-receipt")}
             >
-              <Link to="/good-receipt">Good Receipt</Link>
+              <NavLink to="/good-receipt">Good Receipt</NavLink>
             </li>
           </ul>
         </div>
@@ -101,25 +97,25 @@ const HospitalHeader = () => {
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/purchase" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/purchase")}
             >
-              <Link to="/purchase">Purchase</Link>
+              <NavLink to="/purchase">Purchase</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/sales" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/sales")}
             >
-              <Link to="/sales">Sales</Link>
+              <NavLink to="/sales">Sales</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/stock" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/stock")}
             >
-              <Link to="/stock">Stock</Link>
+              <NavLink to="/stock">Stock</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/supplier" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/supplier")}
             >
-              <Link to="/supplier">Supplier</Link>
+              <NavLink to="/supplier">Supplier</NavLink>
             </li>
           </ul>
         </div>
@@ -132,73 +128,73 @@ const HospitalHeader = () => {
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/setting-supplier" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/setting-supplier")}
             >
-              <Link to="/setting-supplier">Supplier</Link>
+              <NavLink to="/setting-supplier">Supplier</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/setting-company" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/setting-company")}
             >
-              <Link to="/setting-company">Company</Link>
+              <NavLink to="/setting-company">Company</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/setting-category" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/setting-category")}
             >
-              <Link to="/setting-category">Category</Link>
+              <NavLink to="/setting-category">Category</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/setting-uom" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/setting-uom")}
             >
-              <Link to="/setting-uom">UOM</Link>
+              <NavLink to="/setting-uom">UOM</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/setting-item-type" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/setting-item-type")}
             >
-              <Link to="/setting-item-type">Item Type</Link>
+              <NavLink to="/setting-item-type">Item Type</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/setting-item-component" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/setting-item-component")}
             >
-              <Link to="/setting-item-component">Item</Link>
+              <NavLink to="/setting-item-component">Item</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/setting-tax" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/setting-tax")}
             >
-              <Link to="/setting-tax">TAX</Link>
+              <NavLink to="/setting-tax">TAX</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/setting-generic" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/setting-generic")}
             >
-              <Link to="/setting-generic">Generic</Link>
+              <NavLink to="/setting-generic">Generic</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/setting-dispensary" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/setting-dispensary")}
             >
-              <Link to="/setting-dispensary">Dispensary</Link>
+              <NavLink to="/setting-dispensary">Dispensary</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/setting-rack" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/setting-rack")}
             >
-              <Link to="/setting-rack">Rack</Link>
+              <NavLink to="/setting-rack">Rack</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/setting-invoice-headers" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/setting-invoice-headers")}
             >
-              <Link to="/setting-invoice-headers">Invoice Headers</Link>
+              <NavLink to="/setting-invoice-headers">Invoice Headers</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/setting-terms" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/setting-terms")}
             >
-              <Link to="/setting-terms">Terms</Link>
+              <NavLink to="/setting-terms">Terms</NavLink>
             </li>
           </ul>
         </div>
@@ -211,29 +207,31 @@ const HospitalHeader = () => {
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/breakage-item" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/breakage-item")}
             >
-              <Link to="/breakage-item">Breakage Item
-              <i className="fa-solid fa-trash-can"></i>
-              </Link>
+              <NavLink to="/breakage-item">
+                Breakage Item
+                <i className="fa-solid fa-trash-can"></i>
+              </NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/return-to-supplier" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/return-to-supplier")}
             >
-              <Link to="/return-to-supplier">Return To Supplier 
-              <i className="fa-solid fa-plus"></i>
-              </Link>
+              <NavLink to="/return-to-supplier">
+                Return To Supplier 
+                <i className="fa-solid fa-plus"></i>
+              </NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/return-to-supplier-list" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/return-to-supplier-list")}
             >
-              <Link to="/return-to-supplier-list">Return To Supplier List</Link>
+              <NavLink to="/return-to-supplier-list">Return To Supplier List</NavLink>
             </li>
             <li
               className={`pharmacy-sub-nav-item-module ${activeSubNav === "/store-details-list" ? "active" : ""}`}
               onClick={() => handleSubNavClick("/store-details-list")}
             >
-              <Link to="/store-details-list">Store Details List</Link>
+              <NavLink to="/store-details-list">Store Details List</NavLink>
             </li>
           </ul>
         </div>
@@ -243,4 +241,3 @@ const HospitalHeader = () => {
 };
 
 export default HospitalHeader;
-/* Mohini_HospitalHeader_WholePage_14/sep/2024 */

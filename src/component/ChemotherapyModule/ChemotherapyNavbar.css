@@ -1,30 +1,45 @@
+.chemotherapy-navbar-module{
+  width: 100%;
+  margin: 0 auto;
+}
+.chemotherapy-navbar {
+  background-color: #fff;
+  padding: 10px;
+  margin-bottom: 10px;
+  height: 10%;
+}
+
 .chemotherapy-navbar ul {
-    list-style-type: none;
-    padding: 20px;
-    display: flex;
-    gap: 20px; /* Space between items */
-    font-size: var(--heading-font);
-    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
-  }
-  
-  .chemotherapy-navbar-button {
-    padding: 5px 10px; /* Padding for buttons */
-    text-decoration: none;
-    background-color: var(--button-color);
-    color: white;
-    font-size: var(--heading-font);
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .chemotherapy-navbar-button:hover {
-    background-color: #f0f0f0;
-    color: var(--button-color);
-    border-bottom: 1px solid var(--button-hover-border-color);
-  }
-  
-  .chemotherapy-navbar-button.active {
-    background-color: var(--button-bg-color);
-    color: white;
-  }
-  
+  list-style: none;  
+  /* padding: 0; */
+  display: flex;
+}
+
+/* .chemotherapy-navbar li {
+  margin-left: 10px;
+} */
+
+.chemotherapy-navbar-button {
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 10px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.chemotherapy-navbar-button:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.chemotherapy-navbar-button.active {
+  border: 1px solid var(--button-bg-color);
+  color: white;
+  background-color: var(--button-bg-color);
+}
