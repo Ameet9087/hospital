@@ -3,9 +3,6 @@
     width: 100%;
     padding: 20px;
 }
-
-
-  
   .lab-billing-header{
     display: flex;
     justify-content: space-between;
@@ -91,57 +88,6 @@
 
   }
 
-  
-  .lab-table-wrapper {
-    overflow-x: auto;
-  }
-  
-  .lab-billing-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-  }
-  
-  .lab-billing-table-header th {
-    background-color: #f2f2f2;
-    padding: 5px;
-    font-size: 14px;
-    color: black;
-    text-align: left;
-  }
-  
-  .lab-billing-table-body td {
-    padding: 1px;
-    border-bottom: 1px solid #ccc;
-    font-size: 14px;
-    color: #333;
-    background-color: white;
-  }
-  
-  .lab-billing-table-body .lab-billing-row:hover {
-    background-color: #f9f9f9;
-  }
-  
-  .lab-header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .lab-resizer {
-    width: 5px;
-    cursor: col-resize;
-    height: 100%;
-    /* background-color: #ccc; */
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  
-  .lab-resizable-th {
-    position: relative;
-    min-width: 50px;
-  }
 
   .lab-billing-modal-body {
     display: flex;

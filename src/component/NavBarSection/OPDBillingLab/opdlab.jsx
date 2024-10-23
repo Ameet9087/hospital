@@ -1,36 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import * as XLSX from "xlsx";
 import "./opdlab.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import Modal from "react-bootstrap/Modal";
+import { API_BASE_URL } from "../../api/api";
 
 function Opdlab() {
-  const [billingData, setBillingData] = useState([
-    {
-      patientId: "301",
-      patientName: "John Doe",
-      ageSex: "50/M",
-      doctorName: "Dr. Lee",
-      labTest: "Blood Test",
-      serviceDate: "2024-09-12",
-      totalAmount: 150,
-      paymentStatus: "Paid",
-      paymentMode: "Insurance",
-      billingDate: "2024-09-12",
-    },
-    {
-      patientId: "302",
-      patientName: "Emily Davis",
-      ageSex: "29/F",
-      doctorName: "Dr. Kumar",
-      labTest: "Urine Test",
-      serviceDate: "2024-09-13",
-      totalAmount: 100,
-      paymentStatus: "Pending",
-      paymentMode: "Cash",
-      billingDate: "2024-09-13",
-    },
-  ]);
+  const [billingData, setBillingData] = useState([]);
 
   const [filteredData, setFilteredData] = useState(billingData);
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,13 +18,27 @@ function Opdlab() {
   const [discount, setDiscount] = useState(0);
   const [totalBillAfterDiscount, setTotalBillAfterDiscount] = useState(0);
 
+  useEffect(() => {
+    fetch(
+      `${API_BASE_URL}/opd-service-billing/fetch-by-department?department=Laboratory`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setBillingData(data);
+        setFilteredData(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
     const filtered = billingData.filter(
       (item) =>
-        item.patientName.toLowerCase().includes(term) ||
-        item.labTest.toLowerCase().includes(term)
+        (
+          item.newPatientVisitDTO?.firstName.toLowerCase() ||
+          item.newPatientVisitDTO?.lastName.toLowerCase()
+        ).includes(term) || item?.serviceName.toLowerCase().includes(term)
     );
     setFilteredData(filtered);
   };
@@ -82,18 +72,16 @@ function Opdlab() {
       if (item.patientId === currentPatient.patientId) {
         return {
           ...item,
-          paymentStatus: "Paid", // Set the payment status to "Paid"
-          paymentMode: selectedPaymentMode, // Update with the selected payment mode
-          totalAmount: totalBillAfterDiscount, // Update the total after discount
+          paymentStatus: "Paid",
+          paymentMode: selectedPaymentMode,
+          totalAmount: totalBillAfterDiscount,
         };
       }
       return item;
     });
-
-    // Update billing data with the new state
     setBillingData(updatedData);
-    setFilteredData(updatedData); // Also update the filtered data if search is active
-    setShowModal(false); // Close the modal after payment is done
+    setFilteredData(updatedData);
+    setShowModal(false);
   };
 
   const exportToExcel = () => {
@@ -128,17 +116,15 @@ function Opdlab() {
         </div>
       </header>
 
-      <div className="lab-table-wrapper" id="table-to-print">
-        <table ref={tableRef} className="billing-table">
-          <thead className="lab-billing-table-header">
+      <div className="table-container" id="table-to-print">
+        <table ref={tableRef}>
+          <thead>
             <tr>
               {[
                 "Patient ID",
                 "Patient Name",
                 "Age/Sex",
-                "Doctor Name",
-                "Lab Test",
-                "Service Date",
+                "Service Name",
                 "Total Amount",
                 "Payment Status",
                 "Billing Date",
@@ -147,13 +133,16 @@ function Opdlab() {
                 <th
                   key={index}
                   style={{ width: columnWidths[index] }}
-                  className="lab-resizable-th"
+                  className="resizable-th"
                 >
-                  <div className="lab-header-content">
+                  <div className="header-content">
                     <span>{header}</span>
                     <div
-                      className="lab-resizer"
-                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
                     ></div>
                   </div>
                 </th>
@@ -163,17 +152,25 @@ function Opdlab() {
           <tbody className="lab-billing-table-body">
             {filteredData.map((item, index) => (
               <tr key={index} className="lab-billing-row">
-                <td className="lab-billing-cell">{item.patientId}</td>
-                <td className="lab-billing-cell">{item.patientName}</td>
-                <td className="lab-billing-cell">{item.ageSex}</td>
-                <td className="lab-billing-cell">{item.doctorName}</td>
-                <td className="lab-billing-cell">{item.labTest}</td>
-                <td className="lab-billing-cell">{item.serviceDate}</td>
-                <td className="lab-billing-cell">{item.totalAmount}</td>
+                <td className="lab-billing-cell">
+                  {item.newPatientVisitDTO?.newPatientVisitId}
+                </td>
+                <td className="lab-billing-cell">
+                  {item.newPatientVisitDTO?.firstName}{" "}
+                  {item.newPatientVisitDTO?.middleName}{" "}
+                  {item.newPatientVisitDTO?.lastName}
+                </td>
+                <td className="lab-billing-cell">
+                  {item.newPatientVisitDTO?.age}{" "}
+                  {item.newPatientVisitDTO?.ageUnit} /{" "}
+                  {item.newPatientVisitDTO?.gender}
+                </td>
+                <td className="lab-billing-cell">{item.serviceName}</td>
+                <td className="lab-billing-cell">{item.totalServiceFee}</td>
                 <td className="lab-billing-cell">{item.paymentStatus}</td>
                 <td className="lab-billing-cell">{item.billingDate}</td>
                 <td className="lab-billing-cell">
-                  {item.paymentStatus === "Paid" ? (
+                  {item.paymentStatus === "PAID" ? (
                     <button onClick={printTable} className="lab-btn print-btn">
                       Print
                     </button>
@@ -203,10 +200,18 @@ function Opdlab() {
           <Modal.Body>
             <div className="lab-billing-modal-body">
               <div className="lab-ptninfo">
-                <p><b>Patient Name:</b> {currentPatient.patientName}</p>
-                <p><b>Doctor Name:</b> {currentPatient.doctorName}</p>
-                <p><b>Lab Test:</b> {currentPatient.labTest}</p>
-                <p><b>Total Bill:</b> {currentPatient.totalAmount}</p>
+                <p>
+                  <b>Patient Name:</b> {currentPatient.patientName}
+                </p>
+                <p>
+                  <b>Doctor Name:</b> {currentPatient.doctorName}
+                </p>
+                <p>
+                  <b>Lab Test:</b> {currentPatient.labTest}
+                </p>
+                <p>
+                  <b>Total Bill:</b> {currentPatient.totalAmount}
+                </p>
               </div>
               <div className="lab-billing-modal-select">
                 <label htmlFor="paymentMode">Select Payment Mode:</label>
@@ -238,10 +243,7 @@ function Opdlab() {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <button
-              className="lab-btn confirm-btn"
-              onClick={confirmPayment}
-            >
+            <button className="lab-btn confirm-btn" onClick={confirmPayment}>
               Confirm Payment
             </button>
             <button

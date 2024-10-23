@@ -9,13 +9,8 @@ import Inventory from "../../component/Inventory1/Inventory";
 import Incentive from "../../component/IncentiveMain/incentiveApp";
 import Lab from "../../component/NavBarSection/Lab";
 import Emergency from "../../component/Emergency/Emergency";
-
-import Utilitiesmain from "../../component/UTILITIES/utilitiesmain";
-
+import Utilitiesmain from "../../component/UTILITIES/Utilitiesmain";
 import SystemAdmin from "../../component/SystemAdmin/SystemAdmin";
-
-
-
 
 import SocialServicePage from "../../component/SocialServicesMain/SocialServicePage";
 import Disprensary from "../../component/DispensaryPage/disprensaryRoute";
@@ -55,12 +50,11 @@ import Pediatricoutpatient from "../../component/PediatricOutpatient/PaediatricO
 import Pediatricinpatient from "../../component/pediatricModule/AppRoutes";
 import PhysiotherapyRotes from "../../component/PhysiotherapyModule/PhysiotherapyRotes";
 
-
 import BloodBank from "../../component/BloodBank/bloodBankRoute";
 
-import TransportMainRouting from "../../component/TransportMain/transportMainRoute"
+import TransportMainRouting from "../../component/TransportMain/transportMainRoute";
 import SuperUserMain from "../../component/SuperUserMain/superUserMainRoute";
-import HRHome from "../../component/HRHome/HRHome"
+import HRHome from "../../component/HRHome/HRHome";
 import Radiationtherapy from "../../component/RadiationTherapy/radiationtherapy";
 import ChemotherapyRouting from "../../component/ChemotherapyModule/ChemotherapyRoute";
 const Layout = () => {
@@ -97,22 +91,20 @@ const Layout = () => {
   const [showVerification, setShowVerification] = useState(false);
   const [showSubStore, setShowSubStore] = useState(false);
   const [showMedicalRecord, setShowMedicalRecord] = useState(false);
-  const [showProcurement,setShowProcurement]=useState(false);
-  const [showBilling,setShowBilling]=useState(false);
-  const [showHomehealthcare,setshowHomehealthcare]=useState(false);
-  const [showonpediatricoutpatient,setshowonpediatricoutpatient]=useState(false);
-  const [showonpediatricinpatient,setshowonpediatricinpatient]=useState(false);
-  const [showphysiotherapy,setshowphysiotherapy]=useState(false);
-
-
-
-  const [showBloodBank, setShowBloodBank] = useState(false)
-  const [showTransport, setShowTransport] = useState(false)
-  const [showSuperUser, setShowSuperUser] = useState(false)
-  const [showHR, setShowHR] = useState(false)
-  const [shoeRadiationtherapy,setShowRadiationTherapy] = useState(false)
-  const [showChemotherapy,setshowChemotherapy]=useState(false)
-
+  const [showProcurement, setShowProcurement] = useState(false);
+  const [showBilling, setShowBilling] = useState(false);
+  const [showHomehealthcare, setshowHomehealthcare] = useState(false);
+  const [showonpediatricoutpatient, setshowonpediatricoutpatient] =
+    useState(false);
+  const [showonpediatricinpatient, setshowonpediatricinpatient] =
+    useState(false);
+  const [showphysiotherapy, setshowphysiotherapy] = useState(false);
+  const [showBloodBank, setShowBloodBank] = useState(false);
+  const [showTransport, setShowTransport] = useState(false);
+  const [showSuperUser, setShowSuperUser] = useState(false);
+  const [showHR, setShowHR] = useState(false);
+  const [shoeRadiationtherapy, setShowRadiationTherapy] = useState(false);
+  const [showChemotherapy, setshowChemotherapy] = useState(false);
   const resetAllToggles = () => {
     setShowAppointment(false);
     setShowSetting(false);
@@ -152,18 +144,17 @@ const Layout = () => {
     setshowonpediatricoutpatient(false);
     setshowonpediatricinpatient(false);
     setshowphysiotherapy(false);
-    
-    setShowBloodBank(false)
-    setShowTransport(false)
-    setShowSuperUser(false)
-    setShowHR(false)
-    setShowRadiationTherapy(false)
-    setshowChemotherapy(false)
+    setShowBloodBank(false);
+    setShowTransport(false);
+    setShowSuperUser(false);
+    setShowHR(false);
+    setShowRadiationTherapy(false);
+    setshowChemotherapy(false);
   };
-  const toggleHomehealthcare=()=>{
+  const toggleHomehealthcare = () => {
     resetAllToggles();
     setshowHomehealthcare(!showHomehealthcare);
-  }
+  };
   const toggelAppointment = () => {
     resetAllToggles();
     setShowAppointment(!showAppointment);
@@ -305,42 +296,41 @@ const Layout = () => {
   const toggelBloodBank = () => {
     resetAllToggles();
     setShowBloodBank(!showBloodBank);
-
-  }
+  };
   const toggelTransport = () => {
     resetAllToggles();
-    setShowTransport(!showTransport)
-  }
+    setShowTransport(!showTransport);
+  };
   const toggleSuperUser = () => {
     resetAllToggles();
-    setShowSuperUser(!showSuperUser)
-  }
+    setShowSuperUser(!showSuperUser);
+  };
 
   const toggleHR = () => {
     resetAllToggles();
-    setShowHR(!showHR)
-  }
-  const toggleRadiationTherapy = () =>{
+    setShowHR(!showHR);
+  };
+  const toggleRadiationTherapy = () => {
     resetAllToggles();
-    setShowRadiationTherapy(!shoeRadiationtherapy)
-  }
-  const togglePediatricoutpatient=()=>{
+    setShowRadiationTherapy(!shoeRadiationtherapy);
+  };
+  const togglePediatricoutpatient = () => {
     resetAllToggles();
     setshowonpediatricoutpatient(!showonpediatricoutpatient);
-  }
-  const togglePediatricinpatient=()=>{
+  };
+  const togglePediatricinpatient = () => {
     resetAllToggles();
     setshowonpediatricinpatient(!showonpediatricinpatient);
-  }
-  const togglephysiotherapy=()=>{
+  };
+  const togglephysiotherapy = () => {
     resetAllToggles();
     setshowphysiotherapy(!showphysiotherapy);
-  }
-  
-  const toggelChemotherapy =()=>{
+  };
+
+  const toggelChemotherapy = () => {
     resetAllToggles();
     setshowChemotherapy(!showChemotherapy);
-  }
+  };
   return (
     <div className="hrmsLayout">
       <Sidebar
@@ -381,7 +371,6 @@ const Layout = () => {
         onBloodbank={toggelBloodBank}
         onTransport={toggelTransport}
         onSuperUser={toggleSuperUser}
-
         onHr={toggleHR}
         onRadiationTherapy={toggleRadiationTherapy}
         isOpen={isOpen}
@@ -391,13 +380,11 @@ const Layout = () => {
         onpediatricinpatient={togglePediatricinpatient}
         onphysiotherapy={togglephysiotherapy}
         onChemotherapy={toggelChemotherapy}
-       
-    
       />
       <div
-
-        className={`hrmsLayoutMainContent ${isOpen ? "hrmsLayoutMainContentOpen" : "hrmsLayoutMainContentClosed"
-          }`}
+        className={`hrmsLayoutMainContent ${
+          isOpen ? "hrmsLayoutMainContentOpen" : "hrmsLayoutMainContentClosed"
+        }`}
       >
         <Header isOpen={isOpen} setIsOpen={setIsOpen} />
         <main className="hrmsLayoutMainPadding">
@@ -433,22 +420,22 @@ const Layout = () => {
           {showVerification && <VerificationRouting />}
           {showSubStore && <SubstoreRouting />}
           {showMedicalRecord && <MedicalReportRouting />}
-          {showHomehealthcare && <HomehealthCare/>}
-          {showonpediatricoutpatient && <Pediatricoutpatient/>}
-          {showonpediatricinpatient && <Pediatricinpatient/>}
-          {showphysiotherapy && <PhysiotherapyRotes/>}
-          {showHomehealthcare && <HomehealthCare/>}
-          {showonpediatricoutpatient && <Pediatricoutpatient/>}
-          {showonpediatricinpatient && <Pediatricinpatient/>}
-          {showphysiotherapy && <PhysiotherapyRotes/>}
+          {showHomehealthcare && <HomehealthCare />}
+          {showonpediatricoutpatient && <Pediatricoutpatient />}
+          {showonpediatricinpatient && <Pediatricinpatient />}
+          {showphysiotherapy && <PhysiotherapyRotes />}
+          {showHomehealthcare && <HomehealthCare />}
+          {showonpediatricoutpatient && <Pediatricoutpatient />}
+          {showonpediatricinpatient && <Pediatricinpatient />}
+          {showphysiotherapy && <PhysiotherapyRotes />}
           {showBilling && <Billing />}
           {showBloodBank && <BloodBank />}
           {showTransport && <TransportMainRouting />}
           {showSuperUser && <SuperUserMain />}
 
           {showHR && <HRHome />}
-          {shoeRadiationtherapy && <Radiationtherapy/>}
-          {showChemotherapy && <ChemotherapyRouting/>}
+          {shoeRadiationtherapy && <Radiationtherapy />}
+          {showChemotherapy && <ChemotherapyRouting />}
         </main>
       </div>
     </div>
