@@ -22,6 +22,7 @@
   padding: 5px 5px;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid var(--button-color);
 }
 
 .newPatient-new-patient:hover {
@@ -41,7 +42,10 @@
 }
 .newPatientVisitPrint{
   background-color: var(--button-color);
+  color: white;
+  border-radius: 5px;
   padding: 5px 10px;
+  border: none;
   margin-left: 5px;
 }
 .newPatient-search-bar input {
