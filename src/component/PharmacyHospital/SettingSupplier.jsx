@@ -4,7 +4,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import './SettingSupplier.css'; 
 import { API_BASE_URL } from '../api/api';
-
+import CustomModal from '../../CustomModel/CustomModal';
 const initialUser = {
   name: '',
   contactNo: '',
@@ -17,8 +17,9 @@ const initialUser = {
   dda: '',
   isActive: false,
 };
-
 const SettingSupplierComponent = () => {
+  const [openStickerPopup, setOpenStickerPopup] = useState(false);
+
   const [suppliers, setSuppliers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showEditModal, setShowEditModal] = useState(false);
@@ -149,135 +150,148 @@ const SettingSupplierComponent = () => {
         </div> */}
       </div>
 
-      <Modal
-        show={showEditModal}
-        onHide={handleCloseModal}
-        className="supplier-setting-supplier-update-modal"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{isEditMode ? 'Update Supplier' : 'Add Supplier'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <div className="supplier-setting-form-row">
-              <Form.Group controlId="supplierName" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Supplier Name<span className="supplier-setting-text-danger">*</span>:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Supplier Name"
-                  name="name"
-                  required
-                  value={selectedUser.name || ''}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="contact" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Contact<span className="supplier-setting-text-danger">*</span>:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Contact Number"
-                  name="contactNo"
-                  required
-                  value={selectedUser.contactNo || ''}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </div>
+      <CustomModal
+  isOpen={showEditModal} 
+  onClose={handleCloseModal}
+  className="supplier-setting-supplier-update-modal"
+>
+  <div className="supplier-form-grid">
+    <div className="supplier-form-grid1">
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Supplier Name</td>
+            <td>
+              <Form.Control
+                type="text"
+                placeholder="Enter Supplier Name"
+                name="name"
+                required
+                value={selectedUser.name || ''}
+                onChange={handleInputChange}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Contact</td>
+            <td>
+              <Form.Control
+                type="text"
+                placeholder="Enter Contact Number"
+                name="contactNo"
+                required
+                value={selectedUser.contactNo || ''}
+                onChange={handleInputChange}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td>
+              <Form.Control
+                type="text"
+                placeholder="Enter Description"
+                name="description"
+                value={selectedUser.description || ''}
+                onChange={handleInputChange}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>City</td>
+            <td>
+              <Form.Control
+                type="text"
+                placeholder="Enter City"
+                name="city"
+                value={selectedUser.city || ''}
+                onChange={handleInputChange}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Credit Period</td>
+            <td>
+              <Form.Control
+                type="text"
+                placeholder="Enter Credit Period"
+                name="creditPeriod"
+                value={selectedUser.creditPeriod || ''}
+                onChange={handleInputChange}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>KRA PIN</td>
+            <td>
+              <Form.Control
+                type="text"
+                placeholder="Enter KRA PIN"
+                name="kraPin"
+                required
+                value={selectedUser.kraPin || ''}
+                onChange={handleInputChange}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Contact Address</td>
+            <td>
+              <Form.Control
+                type="text"
+                placeholder="Enter Address"
+                name="contactAddress"
+                value={selectedUser.contactAddress || ''}
+                onChange={handleInputChange}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>DDA</td>
+            <td>
+              <Form.Control
+                type="text"
+                placeholder="Enter DDA"
+                name="dda"
+                value={selectedUser.dda || ''}
+                onChange={handleInputChange}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td>
+              <Form.Check
+                type="checkbox"
+                label="Active"
+                name="isActive"
+                checked={selectedUser.isActive || false}
+                onChange={handleInputChange}
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div className="supplier-form-grid2">
+      <div className="supplier-setting-form-actions">
+        <Button variant="secondary" onClick={handleCloseModal}>
+          Cancel
+        </Button> &nbsp; &nbsp;
+        <Button variant="primary" type="submit" className='btnAddSupplier'>
+          {isEditMode ? 'Update Supplier' : 'Add Supplier'}
+        </Button>
+      </div>
+    </div>
+  </div>
+</CustomModal>
 
-            <div className="supplier-setting-form-row">
-              <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Description:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Description"
-                  name="description"
-                  value={selectedUser.description || ''}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="city" className="supplier-setting-form-group col-md-6">
-                <Form.Label>City:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter City"
-                  name="city"
-                  value={selectedUser.city || ''}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </div>
-
-            <div className="supplier-setting-form-row">
-              <Form.Group controlId="creditPeriod" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Credit Period:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Credit Period"
-                  name="creditPeriod"
-                  value={selectedUser.creditPeriod || ''}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="kraPin" className="supplier-setting-form-group col-md-6">
-                <Form.Label>KRA PIN<span className="supplier-setting-text-danger">*</span>:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter KRA PIN"
-                  name="kraPin"
-                  required
-                  value={selectedUser.kraPin || ''}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </div>
-
-            <div className="supplier-setting-form-row">
-              <Form.Group controlId="address" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Contact Address:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Address"
-                  name="contactAddress"
-                  value={selectedUser.contactAddress || ''}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="dda" className="supplier-setting-form-group col-md-6">
-                <Form.Label>DDA:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter DDA"
-                  name="dda"
-                  value={selectedUser.dda || ''}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </div>
-
-            <div className="supplier-setting-form-row">
-              <Form.Group controlId="isActive" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Status:</Form.Label>
-                <Form.Check
-                  type="checkbox"
-                  label="Active"
-                  name="isActive"
-                  checked={selectedUser.isActive || false}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </div>
-
-            <div className="supplier-setting-form-actions">
-              <Button variant="secondary" onClick={handleCloseModal}>
-                Cancel
-              </Button> &nbsp; &nbsp;
-              <Button variant="primary" type="submit" className='btnAddSupplier'>
-                {isEditMode ? 'Update Supplier' : 'Add Supplier'}
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
     </div>
   );
 };

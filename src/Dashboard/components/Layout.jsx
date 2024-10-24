@@ -9,7 +9,8 @@ import Inventory from "../../component/Inventory1/Inventory";
 import Incentive from "../../component/IncentiveMain/incentiveApp";
 import Lab from "../../component/NavBarSection/Lab";
 import Emergency from "../../component/Emergency/Emergency";
-import Utilitiesmain from "../../component/UTILITIES/Utilitiesmain";
+// import Utilitiesmain from "../../component/UTILITIES/Utilitiesmain";
+import Utilitiesmain from "../../component/UTILITIES/utilitiesmain";
 import SystemAdmin from "../../component/SystemAdmin/SystemAdmin";
 
 import SocialServicePage from "../../component/SocialServicesMain/SocialServicePage";

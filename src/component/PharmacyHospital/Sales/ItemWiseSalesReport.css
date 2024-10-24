@@ -59,7 +59,9 @@
     transition: background-color 0.3s ease;
 
 }
-
+.item-wise-sale-button{
+  display: flex;
+}
 .item-wise-sales-btn:hover {
     border: 1px solid var( --button-hover-border-color);
     color: var(--button-hover-text-color);
@@ -157,7 +159,6 @@
 
 .item-wise-sales-summary-item span:last-child {
     color: blue;
-    font-weight: bold;
 }
 .item-wise-sales-pagination {
     display: flex;

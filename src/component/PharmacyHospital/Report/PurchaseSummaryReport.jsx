@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ItemWisePurchaseReport.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
 
 
 const PurchaseSummaryReport = () => {
@@ -14,7 +15,18 @@ const PurchaseSummaryReport = () => {
   //     value.toString().toLowerCase().includes(searchTerm.toLowerCase())
   //   )
   // );
+ // Function to export table to Excel
+ const handleExport = () => {
+  const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+  const wb = XLSX.utils.book_new(); // Creates a new workbook
+  XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+  XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+};
 
+// Function to trigger print
+const handlePrint = () => {
+  window.print(); // Triggers the browser's print window
+};
   return (
     <div className="iten-purchase-container">
       <h2 className="iten-purchase-header"> ⚛ Purchase Summary Report</h2>
@@ -50,8 +62,8 @@ const PurchaseSummaryReport = () => {
       
       <div className='item-purchase-btn'>
       <span>Showing 0 / 0 results</span>
-        <button className="iten-purchase-button">Export</button>
-        <button className="iten-purchase-button">Print</button>
+        <button className="iten-purchase-button"onClick={handleExport}>Export</button>
+        <button className="iten-purchase-button"onClick={handlePrint}>Print</button>
       </div>
       
 
