@@ -1,10 +1,12 @@
-import React, { useState,useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import './SurgeryManagement.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 const SurgeryManagement = () => {
     const [columnWidths, setColumnWidths] = useState({});
     const tableRef = useRef(null);
+    
     const [formData, setFormData] = useState({
         patientID: '',
         patientName: '',
@@ -21,34 +23,57 @@ const SurgeryManagement = () => {
         comments: '',
     });
 
-    const [records, setRecords] = useState([
-        { 
-            patientID: '', 
-            patientName: '', 
-            surgeryType: '', 
-            surgeryDate: '', 
-            surgeonName: '', 
-            anesthetistName: '' 
-        },
-        // Add more records as needed
-    ]);
-
+    const [records, setRecords] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
+    // Fetch all surgery records (GET request)
+    useEffect(() => {
+        axios.get('http://localhost:8000/api/surgeries/all')
+            .then(response => {
+                setRecords(response.data);  // Set the fetched data to records state
+            })
+            .catch(error => {
+                console.error("Error fetching surgery data: ", error);
+            });
+    }, []);
+
+    // Handle input changes for form fields
     const handleInputChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: type === "checkbox" ? checked : value,
+            [name]: value,
         });
     };
 
+    // Handle form submission (POST request)
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add the new formData to the records array
-        setRecords([...records, formData]);
-        setShowForm(false); // Hide form after submission
-        console.log("Form Data Submitted: ", formData);
+        
+        const surgeryData = {
+            patientName: formData.patientName,
+            surgeryType: formData.surgeryType,
+            surgeryDate: formData.surgeryDate,
+            surgeonName: formData.surgeonName,
+            anesthetistName: formData.anesthetistName,
+            hospitalStay: formData.hospitalStay,
+            preOpInstructions: formData.preOpInstructions,
+            postOpCarePlan: formData.postOpCarePlan,
+            followUp: formData.followUp,
+            complications: formData.complications,
+            outcome: formData.outcome,
+            comments: formData.comments,
+        };
+
+        axios.post(`http://localhost:8000/api/surgeries/patient/${formData.patientID}`, surgeryData)
+            .then(response => {
+                console.log('Form Data Submitted:', response.data);
+                setRecords([...records, response.data]);  // Add the new record to the existing ones
+                setShowForm(false);  // Hide form after submission
+            })
+            .catch(error => {
+                console.error("Error submitting data: ", error);
+            });
     };
 
     return (
@@ -61,11 +86,11 @@ const SurgeryManagement = () => {
                     >
                         Add Surgery
                     </button>
-                  <div className='table-container'>
-                  <table ref={tableRef}>
-                        <thead>
-                            <tr>
-                                {[  'Patient ID',
+                    <div className='table-container'>
+                        <table ref={tableRef}>
+                            <thead>
+                                <tr>
+                                    {[
                                         'Patient Name',
                                         'Surgery Type',
                                         'Surgery Date',
@@ -77,23 +102,23 @@ const SurgeryManagement = () => {
                                         'Follow-Up',
                                         'Complications',
                                         'Outcome',
-                                        'Comments',].map((header, index) => (
-                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                                        <div className="header-content">
-                                            <span>{header}</span>
-                                            <div
-                                                className="resizer"
-                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                                            ></div>
-                                        </div>
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {records.map((record, index) => (
-                                <tr key={index}>
-                                  <td>{record.patientID}</td>
+                                        'Comments',
+                                    ].map((header, index) => (
+                                        <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                            <div className="header-content">
+                                                <span>{header}</span>
+                                                <div
+                                                    className="resizer"
+                                                    onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                                ></div>
+                                            </div>
+                                        </th>
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {records.map((record, index) => (
+                                    <tr key={index}>
                                         <td>{record.patientName}</td>
                                         <td>{record.surgeryType}</td>
                                         <td>{record.surgeryDate}</td>
@@ -106,11 +131,11 @@ const SurgeryManagement = () => {
                                         <td>{record.complications}</td>
                                         <td>{record.outcome}</td>
                                         <td>{record.comments}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                  </div>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </>
             )}
 
@@ -163,23 +188,25 @@ const SurgeryManagement = () => {
                         </div>
                         <h3>Surgery Details</h3>
                         <div className="surgery-management-group">
-                            <label>Surgeon Name<span className="mandatory">*</span></label>
+                            <label>Surgeon Name <span className="mandatory">*</span></label>
                             <input
                                 type="text"
                                 name="surgeonName"
                                 value={formData.surgeonName}
                                 onChange={handleInputChange}
                                 placeholder="Surgeon Name"
+                                required
                             />
                         </div>
                         <div className="surgery-management-group">
-                            <label>Anesthetist Name<span className="mandatory">*</span></label>
+                            <label>Anesthetist Name <span className="mandatory">*</span></label>
                             <input
                                 type="text"
                                 name="anesthetistName"
                                 value={formData.anesthetistName}
                                 onChange={handleInputChange}
                                 placeholder="Anesthetist Name"
+                                required
                             />
                         </div>
                     </div>
@@ -203,23 +230,25 @@ const SurgeryManagement = () => {
                             />
                         </div>
                         <div className="surgery-management-group">
-                            <label>Hospital Stay<span className="mandatory">*</span></label>
+                            <label>Hospital Stay <span className="mandatory">*</span></label>
                             <input
                                 type="text"
                                 name="hospitalStay"
                                 value={formData.hospitalStay}
                                 onChange={handleInputChange}
                                 placeholder="Hospital Stay"
+                                required
                             />
                         </div>
                         <div className="surgery-management-group">
-                            <label>Follow-Up</label>
+                            <label>Follow-Up <span className="mandatory">*</span></label>
                             <input
                                 type="text"
                                 name="followUp"
                                 value={formData.followUp}
                                 onChange={handleInputChange}
                                 placeholder="Follow-Up"
+                                required
                             />
                         </div>
                         <div className="surgery-management-group">
@@ -249,9 +278,9 @@ const SurgeryManagement = () => {
                                 placeholder="Comments"
                             />
                         </div>
-                        <div className='surgery-management-button'>
-                            <button type="submit" className="surgery-management-submit-btn">Submit</button>
-                        </div>
+                    </div>
+                    <div className="surgery-management-actions">
+                        <button type="submit" className="surgery-management-submit-btn">Submit</button>
                     </div>
                 </form>
             )}

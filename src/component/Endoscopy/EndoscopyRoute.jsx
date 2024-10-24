@@ -14,7 +14,7 @@ const EndoscopyRoute = () => {
   return (
     <>
     
-    <EndoscopyNavbar/>
+    {/* <EndoscopyNavbar/> */}
 
     <Routes>
       <Route path="/procedure-scheduling" element={<ProcedureSchedulingForm />} />
