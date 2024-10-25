@@ -204,7 +204,7 @@ const QueuePrioritization = () => {
           <tbody>
             {currentTests.length === 0 ? (
               <tr>
-                <td colSpan="12" style={{ textAlign: 'center', color: 'red' }}>No Rows to Show</td>
+                <td colSpan="5" style={{ textAlign: 'center', color: 'red' }}>No Rows to Show</td>
               </tr>
             ) : (
               currentTests.map((test) => (

@@ -200,7 +200,7 @@ const ServiceTimeTracking = () => {
           <tbody>
             {currentTests.length === 0 ? (
               <tr>
-                <td colSpan="12" style={{ textAlign: 'center', color: 'red' }}>No Rows to Show</td>
+                <td colSpan="9" style={{ textAlign: 'center', color: 'red' }}>No Rows to Show</td>
               </tr>
             ) : (
               currentTests.map((test) => (
