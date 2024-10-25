@@ -179,9 +179,9 @@ const Sidebar = ({
     onAccounting()
   }
   const handleQueueManament = () => {
-    handleLinkClick('queueManagement')
-    onQueueManagement()
-  }
+    handleLinkClick("queueManagement");
+    onQueueManagement();
+  };
   const handleMeternity = () => {
     handleLinkClick('maternity')
     onMaternity()
@@ -2441,9 +2441,8 @@ const Sidebar = ({
         </li>
 
         <li
-          className={`custom-nav-item ${
-            activeLink === 'queuemngt-submenu1' ? 'custom-nav-item-active' : ''
-          }`}
+          className={`custom-nav-item ${activeLink === "queueManagement-submenu1" ? "custom-nav-item-active" : ""
+            }`}
         >
           <div
             className="custom-nav-link-content"
@@ -2454,10 +2453,92 @@ const Sidebar = ({
             </span>
             {isOpen && <span className="custom-nav-link-text">QueueMngmt</span>}
             <span className="custom-dropdown-icon">
-              {openMenus.queuemngt ? <LuChevronUp /> : <LuChevronDown />}
+              {openMenus.queueManagement ? <LuChevronUp /> : <LuChevronDown />}
             </span>
           </div>
+          {openMenus.queueManagement && isOpen && (
+            <ul className="custom-submenu">
+              <li
+                onClick={() => handleItemClick("queueManagement", "submenu1")}
+                className={
+                  activeLink === "queueManagement-submenu1"
+                    ? "custom-submenu-active"
+                    : ""
+                }
+              >
+                <Link>OPD</Link>
+              </li>
+              <li
+                onClick={() => handleItemClick("queueManagement", "submenu2")}
+                className={
+                  activeLink === "queueManagement-submenu2"
+                    ? "custom-submenu-active"
+                    : ""
+                }
+              >
+                <Link>Patient Queue Display</Link>
+              </li>
+              <li
+                onClick={() => handleItemClick("queueManagement", "submenu3")}
+                className={
+                  activeLink === "queueManagement-submenu3"
+                    ? "custom-submenu-active"
+                    : ""
+                }
+              >
+                <Link
+                  className="appointment-booking-list-nav-link"
+                >
+                  Queue Prioritization
+                </Link>
+              </li>
+              <li
+                onClick={() => handleItemClick("queueManagement", "submenu4")}
+                className={
+                  activeLink === "queueManagement-submenu4"
+                    ? "custom-submenu-active"
+                    : ""
+                }
+              >
+                <Link
+                  className="appointment-booking-list-nav-link"
+                >
+                  Real-Time Queue Monitoring
+                </Link>
+              </li>
+              <li
+                onClick={() => handleItemClick("queueManagement", "submenu5")}
+                className={
+                  activeLink === "queueManagement-submenu5"
+                    ? "custom-submenu-active"
+                    : ""
+                }
+              >
+                <Link
+                  className="appointment-booking-list-nav-link"
+                >
+                  Service Time Tracking
+                </Link>
+              </li>
+              <li
+                onClick={() => handleItemClick("queueManagement", "submenu6")}
+                className={
+                  activeLink === "queueManagement-submenu6"
+                    ? "custom-submenu-active"
+                    : ""
+                }
+              >
+                <Link
+                  className="appointment-booking-list-nav-link"
+                >
+                  Patient Notification
+                </Link>
+              </li>
+            </ul>
+          )}
+
         </li>
+
 
         <li
           className={`custom-nav-item ${

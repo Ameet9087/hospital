@@ -29,7 +29,7 @@ import FixedAssetReport from "../../component/FixedAssests/FixedAssetsReport/Fix
 import FixedAssets from "../../component/FixedAssests/FixedAssests";
 import Cssd from "../../component/CSSD/Cssd";
 import AccountComponent from "../../component/Accounting/AccountingComponent";
-import PatientQueue from "../../component/QueueMngmt/PatientQueue";
+import PatientQueue from "../../component/QueueMngmt/QueueMain/PatientQueue";
 import MaternityHeader from "../../component/Maternity/MaternityHeader";
 import AppConfig from "../../component/Maternity/AppConfig";
 import HelpDeskNav from "../../component/HelpD/helpDeskNav";
