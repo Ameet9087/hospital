@@ -1,8 +1,6 @@
 
   .hh-employee-list {
     font-family: Arial, sans-serif;
-    /* max-width: 1200px; */
-    margin: 10px 0px 10px 0px ;
     padding: 10px 20px;
     background-color: var(--background-color);
     height: 75vh;
@@ -27,23 +25,21 @@
   
   .hh-search-container {
     display: flex;
-    margin-left: -20px;
+    background-color: #f2f2f2;
+    position: relative;
+    align-items: center;
+    padding: 0 10px;
 }
 .hh-search-container i{
-    margin-left: -16px;
-    position: relative;
-    color:gray;
-    top: 7px;
-    left: 205px;
+   position: absolute;
+   right: 10px;
+   color: gray;
 }
 
 .hh-search-input {
-      /* border: 1px solid red; */
-    flex-grow: 1;
-    padding: 3px;
-    width: 200px;
-    border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
+    border: none;
+    outline: none;
+    background-color: transparent;
   }
   
   .hh-search-button {

@@ -7,6 +7,11 @@ import PatientComponent from "./PatientList";
 import MaternityAllowanceReportComponent from "./MaternityAllowanceReport ";
 import MaternityHeader from "./MaternityHeader";
 
+import AntenatalCare from './AntenatalCare/antenatalCare';
+import PostnatalCareManagement from './PostnatalCare/postnatalcare';
+import Labourmgnt from './LaborRoomManagement/labourmgnt';
+import BreastfeedingSupportManagement from './BreastfeedingSupportManagement/breastfeedingSupportmgnt';
+import FamilyPlanningSupportManagement from './FamilySupportService/familysupportservice';
 
 const AppConfig = () => {
   return (
@@ -16,8 +21,14 @@ const AppConfig = () => {
       <Route path="/maternity-list" element={<MaternityComponent />} />
       <Route path="/reports" element={<ReportComponent />} />
       <Route path="/patient-form" element={<PatientComponent />} />
+
+      
       <Route path="/maternity-allowance-report" element={<MaternityAllowanceReportComponent />} />
-      {/* Add more routes as needed */}
+              <Route path="/AntenatalCare" element={<AntenatalCare />} />
+              <Route path='/PostnatalCare' element={<PostnatalCareManagement/>}></Route>
+              <Route path='/Labourmgnt/*' element={<Labourmgnt/>}></Route>
+              <Route path='/BreastfeedingSupport' element={<BreastfeedingSupportManagement/>}></Route>
+              <Route path='/FamilyPlanningService' element={<FamilyPlanningSupportManagement/>}></Route>
     </Routes>
     </>
   );

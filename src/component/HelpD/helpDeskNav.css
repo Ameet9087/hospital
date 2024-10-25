@@ -2,9 +2,7 @@
 .helpDeskNav-bar {
     background-color: white;
     font-family: Arial, sans-serif;
-    margin-left: 10px;
-
-    /* padding: 10px; */
+    padding: 10px;
     /* border: 1px solid #007bff; */
 
   }
@@ -25,8 +23,7 @@
   }
   
   .helpDeskNav-bar a {
-    color: white;
-    background-color: var(--button-color);
+    color: black;
     text-decoration: none;
     /* font-weight: bold; */
     font-size: var(--heading-font);
@@ -36,9 +33,9 @@
   }
   
   .helpDeskNav-bar a:hover {
-    background-color: white;
-    color: var(--button-color);
-    border: 1px solid gray;
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
 
     
   }

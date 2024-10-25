@@ -72,5 +72,9 @@ padding: 3px 5px;
   text-align: center;
 border: 1px solid #e4e2e2;
 }
-
+.wardInformation-tableActionBTN{
+  background-color: transparent;
+  color: black;
+  border: none;
+}
  

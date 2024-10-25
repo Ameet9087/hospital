@@ -36,6 +36,9 @@ import Department from './ControlAllDepartment/Department';
 import Inventory from './ControlAllDepartment/Inventory';
 import QueryPage from './ControlAllDepartment/QueryPage';
 import QueryPageInventory from './ControlAllDepartment/QueryPageInventory';
+
+import Superusermodulemain from './SuperUserModuleMain/superusermodulemain';
+import SuperUserRoleManagement from './Rolemgnt/rolemgnt';
 function SuperUserMain() {
 
   return (
@@ -77,7 +80,11 @@ function SuperUserMain() {
           <Route path="/department" element={<Department />} />           
           <Route path="/inventory" element={<Inventory />} />           
           <Route path="/send-query" element={<QueryPage />} />           
-          <Route path="/send-inventory-query" element={<QueryPageInventory />} />           
+
+          <Route path="/send-inventory-query" element={<QueryPageInventory />} />   
+
+          <Route path="/Superusermodulemain/*" element={<Superusermodulemain />} />
+          <Route path='/rolemgnt' element={<SuperUserRoleManagement />} />       
         </Routes>
       </div>
     </>

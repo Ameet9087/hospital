@@ -1,10 +1,9 @@
 import React, { useRef } from "react";
-import "./AdmissionDischargePrint.css"; // External CSS file
 
-const AdmissionDischargePrint = ({ data,onClose}) => {
+import "./admissionDischargePrint.css"; // External CSS file
+
+const AdmissionDischargePrint = ({ data, onClose }) => {
   console.log(data);
-
-
   const printRef = useRef();
 
   const handlePrint = () => {
@@ -49,7 +48,10 @@ const AdmissionDischargePrint = ({ data,onClose}) => {
 
   return (
     <div className="PatientDischargeForm-container">
-        <button className="PatientDischargeForm-close-btn" onClick={onClose}>X</button>
+      <button className="PatientDischargeForm-close-btn" onClick={onClose}>
+        X
+      </button>
+
       <div ref={printRef}>
         <h1 className="PatientDischargeForm-title">Discharge Summary</h1>
 
@@ -79,7 +81,8 @@ const AdmissionDischargePrint = ({ data,onClose}) => {
             {data?.dischargeDate}
           </p>
           <p>
-            <strong>Date of Admission:</strong> {data?.admissionDTO?.admissionDate}
+            <strong>Date of Admission:</strong>{" "}
+            {data?.admissionDTO?.admissionDate}
           </p>
         </div>
 
@@ -152,16 +155,17 @@ const AdmissionDischargePrint = ({ data,onClose}) => {
           <ul>
             {JSON.parse(data?.medications || "[]").map((medication, index) => (
               <div key={index}>
-              <p>Name: {medication.name}</p>
-              <p>Dosage: {medication.dosage}</p>
-              <p>Frequency: {medication.frequency}</p>
-            </div>
+                <p>Name: {medication.name}</p>
+                <p>Dosage: {medication.dosage}</p>
+                <p>Frequency: {medication.frequency}</p>
+              </div>
             ))}
           </ul>
         </div>
 
         <p>
-          <strong>Date:</strong>{data?.dischargeDate}
+          <strong>Date:</strong>
+          {data?.dischargeDate}
         </p>
         <p className="PatientDischargeForm-signature">Signature of M.O:</p>
       </div>

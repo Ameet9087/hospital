@@ -11,7 +11,10 @@ const IncentiveNavBar = () => {
         <li><NavLink to="incentiveTransaction">Transaction</NavLink></li>
         <li><NavLink to="/incentiveReport"> Reports</NavLink></li>
         <li><NavLink to="/insentiveSettings"> Setting</NavLink></li>
-      
+
+        <li><NavLink to="incentiveTransaction">Transaction</NavLink></li>
+
+
         </div>
         <div className='incentiveNavBar-Activebtn-N-LogOut'>
         <button className='activeincentiveNavBar-btn'>Active Incentive:Main-Incentive</button>

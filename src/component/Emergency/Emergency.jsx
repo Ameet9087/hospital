@@ -9,6 +9,11 @@ import PatientList from '../Emergency/Patient';
 import TriagedPatients from '../Emergency/TriagedPatients';
 import FinalizedPatients from '../Emergency/FinalizedPatients';
 import WardOccupancy from '../Emergency/BedInfo';
+import EmergencyCodeResponseForm from './EmergencyCodeResponse/EmergencyCodeResponseForm';
+import ResponseLogForm from './EmergencyCodeResponse/ResponseLogForm';
+import IncidentSummaryForm from './EmergencyCodeResponse/IncidentSummaryForm';
+import EmergencyDrillReportForm from './EmergencyCodeResponse/EmergencyDrillReportForm';
+
 
 const NavBar = () => {
     return (
@@ -20,6 +25,12 @@ const NavBar = () => {
                 <Route path="/triagedPatients" element={<TriagedPatients />} />
                 <Route path="/finalizedPatients" element={<FinalizedPatients />} />
                 <Route path="/bedInfo" element={<WardOccupancy />} />
+                <Route path="/emergency-code-activation" element={<EmergencyCodeResponseForm/>}/>
+                <Route path="/response-log" element={<ResponseLogForm/>}/>
+                <Route path="/incident-summary" element={<IncidentSummaryForm/>}/>
+                <Route path="/emergency-drill-report" element={<EmergencyDrillReportForm/>}/>
+
+
             </Routes>
         </div>
     );
@@ -63,6 +74,39 @@ const NavMenu = () => {
             >
                 Bed Information
             </NavLink>
+
+            <NavLink 
+                to="/emergency-code-activation" 
+                className="EmergencyNavBar-button"
+                activeClassName="EmergencyNavBar-active"
+            >
+                 Emergency Code Response
+            </NavLink>
+
+            <NavLink 
+                to="/response-log" 
+                className="EmergencyNavBar-button"
+                activeClassName="EmergencyNavBar-active"
+            >
+                  Response Log
+            </NavLink>
+
+            <NavLink 
+                to="/incident-summary" 
+                className="EmergencyNavBar-button"
+                activeClassName="EmergencyNavBar-active"
+            >
+                  Incident Summary
+            </NavLink>
+
+            <NavLink 
+                to="/emergency-drill-report" 
+                className="EmergencyNavBar-button"
+                activeClassName="EmergencyNavBar-active"
+            >
+                   Emergency Drill Report
+            </NavLink>
+
         </nav>
     );
 };

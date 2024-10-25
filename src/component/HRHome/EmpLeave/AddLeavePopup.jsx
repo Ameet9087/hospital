@@ -31,7 +31,9 @@ function AddLeavePopup({ onClose, onSubmit }) {
     return (
         <div className="addleave-overlay">
             <div className="popup">
-                <h3>Add Leave Details</h3>
+            <button className="addleaveclose-popup" onClick={onClose}>X</button>
+
+                <h2>Add Leave Details</h2>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label>Employee ID:</label>
@@ -73,8 +75,8 @@ function AddLeavePopup({ onClose, onSubmit }) {
                             required
                         />
                     </div>
-                    <button type="submit">Submit</button>
-                    <button type="button" onClick={onClose}>Cancel</button>
+                    <button className='actionbtns' type="submit">Submit</button>
+                    <button className='actionbtns' type="button" onClick={onClose}>Cancel</button>
                 </form>
             </div>
         </div>

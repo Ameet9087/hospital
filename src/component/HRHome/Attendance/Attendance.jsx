@@ -1,6 +1,3 @@
-/* Ravindra_Sanap_Attendance.jsx_03_10_2024_Start */
-
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Attendance.css';
@@ -10,6 +7,7 @@ function Attendance() {
     const [currentPage, setCurrentPage] = useState(1);
     const employeesPerPage = 10;
     const [attendanceStatus, setAttendanceStatus] = useState({});
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const fetchEmployees = async () => {
@@ -22,11 +20,37 @@ function Attendance() {
         };
 
         fetchEmployees();
+
+        const storedAttendance = JSON.parse(localStorage.getItem('attendanceStatus')) || {};
+        setAttendanceStatus(storedAttendance);
     }, []);
+
+    useEffect(() => {
+        const storedAttendance = JSON.parse(localStorage.getItem('attendanceStatus')) || {};
+        const now = new Date().getTime();
+
+        Object.keys(storedAttendance).forEach(empId => {
+            const markedTime = storedAttendance[empId]?.markedTime;
+            if (markedTime) {
+                const hoursPassed = (now - markedTime) / (1000 * 60 * 60);
+                if (hoursPassed >= 15) {
+                    delete storedAttendance[empId];
+                }
+            }
+        });
+
+        localStorage.setItem('attendanceStatus', JSON.stringify(storedAttendance));
+        setAttendanceStatus(storedAttendance);
+    }, []);
+
+    const filteredEmployees = employees.filter((employee) =>
+        employee.empName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const indexOfLastEmployee = currentPage * employeesPerPage;
     const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
-    const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+    const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+
     const totalPages = Math.ceil(employees.length / employeesPerPage);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -42,13 +66,19 @@ function Attendance() {
         }
     };
 
-    async function markAttendancePresent(employeeId) {
+    async function markAttendance(employeeId, isPresent) {
         try {
-            await axios.post(`http://localhost:8086/api/attendance/add/${employeeId}`);
-            setAttendanceStatus((prevStatus) => ({
-                ...prevStatus,
-                [employeeId]: true,
-            }));
+            await axios.post(`http://localhost:8086/api/attendance/add/${employeeId}`, {
+                isPresent: isPresent
+            });
+
+            const updatedAttendanceStatus = {
+                ...attendanceStatus,
+                [employeeId]: { markedTime: new Date().getTime() }
+            };
+            setAttendanceStatus(updatedAttendanceStatus);
+
+            localStorage.setItem('attendanceStatus', JSON.stringify(updatedAttendanceStatus));
         } catch (error) {
             console.error('Error marking attendance:', error);
         }
@@ -57,6 +87,16 @@ function Attendance() {
     return (
         <div className="attendance-container">
             <h2>Employee Attendance</h2>
+            <div className="employee-searchAndActions">
+                <input
+                    type="text"
+                    placeholder="Search By Employee Name"
+                    className="employee-searchInput"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
+
             <table className="attendance-table">
                 <thead>
                     <tr>
@@ -84,10 +124,17 @@ function Attendance() {
                                 <td>
                                     <button
                                         className="attendance-btn"
-                                        onClick={() => markAttendancePresent(employee.empId)}
+                                        onClick={() => markAttendance(employee.empId, true)}
                                         disabled={attendanceStatus[employee.empId]}
                                     >
-                                        {attendanceStatus[employee.empId] ? 'Marked' : 'Present'}
+                                        Present
+                                    </button>
+                                    <button
+                                        className="attendance-btn"
+                                        onClick={() => markAttendance(employee.empId, false)}
+                                        disabled={attendanceStatus[employee.empId]}
+                                    >
+                                        Absent
                                     </button>
                                 </td>
                             </tr>
@@ -119,6 +166,3 @@ function Attendance() {
 }
 
 export default Attendance;
-
-
-/* Ravindra_Sanap_Attendance.jsx_03_10_2024_End */

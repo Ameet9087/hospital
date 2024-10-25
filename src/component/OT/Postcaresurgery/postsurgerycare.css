@@ -1,0 +1,107 @@
+.postsurgerycare-container {
+    padding: 20px;
+  }
+  
+  .postsurgerycare-add-btn {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .postsurgerycare-add-btn:hover {
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  
+  .postsurgerycare-edit-btn {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .postsurgerycare-edit-btn:hover{
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+  
+  .postsurgerycare-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .postsurgerycare-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 900px;
+    max-width: 90%;
+  }
+  
+  .postsurgerycare-form-group {
+    margin-bottom: 15px;
+    display: flex;
+  }
+  
+  .postsurgerycare-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    width: 200px;
+  }
+  
+  .postsurgerycare-form-group input,
+  .postsurgerycare-form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .postsurgerycare-modal button {
+    padding: 10px 15px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .postsurgerymodalbtn{
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+
+  }
+  .postsurgerymodalbtn:hover{
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+
+  }
+  

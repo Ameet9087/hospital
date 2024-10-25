@@ -1,0 +1,99 @@
+.EMR-conatainer
+{
+    position: relative;
+    width: 100%;
+    padding: 5px;
+}
+.EMR-closeButton
+{
+    padding: 5px 10px ;
+    border-radius: 5px;
+    border: 1px solid var(--button-color);
+    background-color: var(--button-color);
+    color: white;
+}
+.EMR-closeButton:hover
+{
+    color: var(--button-color);
+    background-color: white;
+}
+.EMR-fullwidth-container
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.EMR-fullwidth-container textarea
+{
+    width: 98%;
+}
+.EMR-twoSection-container
+{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.EMR-twoSection-left
+{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+}
+.EMR-twoSection-right
+{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    padding-right: 5px;
+    align-items: end;
+}
+.EMR-twoSection-right-textarea
+{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    padding-right: 5px;
+    align-items: end;
+
+}
+.EMR-twoSection-right-textarea textarea
+{
+    width: 100%;
+}
+.EMR-twoSection-left input
+{
+    width: 100%;
+}
+.EMR-twoSection-right input{
+    width: 100%;
+}
+.EMR-twoSection-left img{
+    width: 200px;
+    height: 200px;
+}
+.EMR-twoSection-right img{
+    width: 200px;
+    height: 200px;
+}
+.EMR-saveBtn-container
+{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+}
+.EMR-saveBtn
+{
+    padding: 5px 10px;
+    color: white;
+    background-color: var(--button-color);
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+}
+.EMR-saveBtn:hover{
+    color:  var(--button-color);
+    background-color:white;
+}

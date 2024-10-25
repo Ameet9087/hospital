@@ -87,92 +87,94 @@ function Patientlist() {
           <button className="patientList-print-btn">Print</button>
         </div>
       </div>
-      <table className="patientList-table" ref={tableRef}>
-        <thead>
-          <tr>
-            {[
-              "Id",
-              "Baby's Name",
-              "Age/Sex",
-              "Mother's Name",
-              "Address",
-              "Actions",
-            ].map((header, index) => (
-              <th
-                key={index}
-                style={{ width: columnWidths[index] }}
-                className="resizable-th"
-              >
-                <div className="header-content">
-                  <span>{header}</span>
-                  <div
-                    className="resizer"
-                    onMouseDown={startResizing(
-                      tableRef,
-                      setColumnWidths
-                    )(index)}
-                  ></div>
-                </div>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {patients.map((patient, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{patient.babyName}</td>
+      <div className="table-container">
+        <table className="patientList-table" ref={tableRef}>
+          <thead>
+            <tr>
+              {[
+                "Id",
+                "Baby's Name",
+                "Age/Sex",
+                "Mother's Name",
+                "Address",
+                "Actions",
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {patients.map((patient, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{patient.babyName}</td>
+                <td>
+                  {patient.age} {patient.ageUnit} {patient.gender}
+                </td>
+                <td>{patient.motherName}</td>
+                <td>{patient.address}</td>
+                {/* <td>{patient.vaccinationDoses}</td>
               <td>
-                {patient.age} {patient.ageUnit} {patient.gender}
-              </td>
-              <td>{patient.motherName}</td>
-              <td>{patient.address}</td>
-              {/* <td>{patient.vaccinationDoses}</td>
-              <td>
-                {patient.daysPassed !== null ? patient?.daysPassed : "N/A"}
+              {patient.daysPassed !== null ? patient?.daysPassed : "N/A"}
               </td> */}
-              <td>
-                <button
-                  onClick={() => openStickerPopup(patient)}
-                  className="patientList-table-btn"
-                  type="button"
-                >
-                  Sticker
-                </button>
-                <button
-                  className="patientList-table-btn"
-                  onClick={() => handleUpdateRegister(patient)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="patientList-table-btn"
-                  onClick={() => handleVaccinationDetails(patient)}
-                >
-                  Vaccination
-                </button>
-                {/* <button
+                <td>
+                  <button
+                    onClick={() => openStickerPopup(patient)}
+                    className="patientList-table-btn"
+                    type="button"
+                  >
+                    Sticker
+                  </button>
+                  <button
+                    className="patientList-table-btn"
+                    onClick={() => handleUpdateRegister(patient)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="patientList-table-btn"
+                    onClick={() => handleVaccinationDetails(patient)}
+                  >
+                    Vaccination
+                  </button>
+                  {/* <button
                   onClick={() => openFollowupPopup(patient)}
                   className="patientList-table-btn"
                   type="button"
-                >
+                  >
                   Follow-up
-                </button>
-                <button
+                  </button>
+                  <button
                   onClick={() => toggleMoreOptions(index)}
                   className="patientList-table-btn patientList-table-moreBtn"
                   type="button"
-                >
+                  >
                   More...
-                </button> */}
-                {/* {activeMoreOptionsIndex === index && (
+                  </button> */}
+                  {/* {activeMoreOptionsIndex === index && (
                   <div className="patientList-more-options"></div>
-                )} */}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  )} */}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {isVaccinationRegister && (
         <VaccinationRegister onClose={closeRegisterPopup} />
       )}

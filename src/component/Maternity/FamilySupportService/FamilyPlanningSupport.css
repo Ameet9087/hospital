@@ -1,0 +1,99 @@
+/* FamilyPlanningSupport.css */
+
+.family-planning-support-management {
+    width: 100%;
+    padding: 20px;
+    background-color: var(--background-color);
+   
+}
+
+.fps-btn {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 20px;
+}
+
+.fps-btn:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+
+
+.fps-edit-btn {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+}
+
+.fps-modal-button{
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    margin-right: 20px;
+
+}
+
+.fps-edit-btn:hover , .fps-modal-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+/* Modal styles */
+.fps-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.fps-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 800px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.fps-formmodal{
+    display: flex;
+}
+.fps-modal-content label {
+    display: block;
+    margin-bottom: 5px;
+    width: 200px;
+}
+
+.fps-modal-content input,
+.fps-modal-content textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+

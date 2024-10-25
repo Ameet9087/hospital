@@ -1,7 +1,7 @@
 /* Ravindra_Sanap_AddEmployeepopup.jsx_03_10_2024_Start */
 
 import React, { useState } from 'react';
-import './AddEmployeepopup.css'
+import './AddEmployeePopup.css'
 function AddEmployeepopupforaddemp({ onClose, onSubmit }) {
     const [formData, setFormData] = useState({
         empName: '',
@@ -12,7 +12,6 @@ function AddEmployeepopupforaddemp({ onClose, onSubmit }) {
         dateOfJoining: '',
         schedulestart: '',
         scheduleend: '',
-        salary: ''
     });
 
     const handleChange = (e) => {
@@ -30,6 +29,8 @@ function AddEmployeepopupforaddemp({ onClose, onSubmit }) {
     return (
         <div className="popupforaddemp-overlay">
             <div className="popupforaddemp-content">
+            <button className="addempclose-popup" onClick={onClose}>X</button>
+
                 <h2>Add Employee</h2>
                 <form onSubmit={handleSubmit}>
                     <label>Employee Name:</label>
@@ -56,12 +57,11 @@ function AddEmployeepopupforaddemp({ onClose, onSubmit }) {
                     <label>Schedule End:</label>
                     <input type="time" name="scheduleend" value={formData.scheduleend} onChange={handleChange} required />
 
-                    <label>Salary:</label>
-                    <input type="number" name="salary" value={formData.salary} onChange={handleChange} required />
+                  
+                    <button className='actionbtns' type="submit">Add Employee</button>
+                    <button className="actionbtns" type='button' onClick={onClose}>Cancel</button>
 
-                    <button type="submit">Add Employee</button>
                 </form>
-                <button className="close-button" type='button' onClick={onClose}>Cancel</button>
             </div>
         </div>
     );

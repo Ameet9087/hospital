@@ -5,27 +5,36 @@ import "./MedicationOrder.css";
 import { API_BASE_URL } from "../api/api";
 import { startResizing } from "../TableHeadingResizing/resizableColumns";
 
-const MedicationOrder = ({ selectedOrders, patientId, newPatientVisitId,setActiveSection }) => {
-  const [columnWidths,setColumnWidths] = useState({});
+const MedicationOrder = ({
+  selectedOrders,
+  patientId,
+  newPatientVisitId,
+  setActiveSection,
+}) => {
+  const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
-  console.log(patientId +""+ newPatientVisitId);
-  
-  const [medicationList, setMedicationList] = useState(selectedOrders.map(order => ({
-    type: order?.genericNameDTO?.genericName || "", 
-    medicationName: order?.itemName || "",
-    dose: "",
-    route: "mouth",
-    frequency: 0,
-    lastTaken: "",
-    comments: "",
-    status:"pending",
-    medicationDate:new Date().toISOString().slice(0, 10),
-    ...(patientId ? { patientDTO: { patientId } } : { newPatientVisitDTO: { newPatientVisitId } })
-  })));
+  console.log(patientId + "" + newPatientVisitId);
+
+  const [medicationList, setMedicationList] = useState(
+    selectedOrders.map((order) => ({
+      type: order?.genericNameDTO?.genericName || "",
+      medicationName: order?.itemName || "",
+      dose: "",
+      route: "mouth",
+      frequency: 0,
+      lastTaken: "",
+      comments: "",
+      status: "pending",
+      medicationDate: new Date().toISOString().slice(0, 10),
+      ...(patientId
+        ? { patientDTO: { patientId } }
+        : { newPatientVisitDTO: { newPatientVisitId } }),
+    }))
+  );
 
   const handleInputChange = (index, e) => {
     const { name, value } = e.target;
-    const updatedMedications = medicationList.map((medication, i) => 
+    const updatedMedications = medicationList.map((medication, i) =>
       i === index ? { ...medication, [name]: value } : medication
     );
     setMedicationList(updatedMedications);
@@ -33,56 +42,54 @@ const MedicationOrder = ({ selectedOrders, patientId, newPatientVisitId,setActiv
 
   const handleSubmit = async () => {
     console.log(medicationList);
-    
-    try {  
+
+    try {
       const response = await axios.post(
         `${API_BASE_URL}/medications/save-medication-details`,
         medicationList // Sending the entire formData array as the payload
       );
-      setActiveSection('dashboard');
+      setActiveSection("dashboard");
       console.log("Success:", response.data);
     } catch (error) {
       console.error("Error submitting medication list:", error);
     }
   };
-  
-  
 
   return (
     <div className="MedicationOrder-form">
       <h3>Medication Order</h3>
       <table className="patientList-table" ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-                 "",
-                 "Generic",
-                 "Brand Name",
-                 "Dose",
-                 "Route",
-                 "Frequency",
-                 "Duration (days)",
-                 "Remarks"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
+        <thead>
+          <tr>
+            {[
+              "",
+              "Generic",
+              "Brand Name",
+              "Dose",
+              "Route",
+              "Frequency",
+              "Duration (days)",
+              "Remarks",
+            ].map((header, index) => (
+              <th
+                key={index}
+                style={{ width: columnWidths[index] }}
+                className="resizable-th"
+              >
+                <div className="header-content">
+                  <span>{header}</span>
+                  <div
+                    className="resizer"
+                    onMouseDown={startResizing(
+                      tableRef,
+                      setColumnWidths
+                    )(index)}
+                  ></div>
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
         <tbody>
           {medicationList.map((medication, index) => (
             <tr key={index}>

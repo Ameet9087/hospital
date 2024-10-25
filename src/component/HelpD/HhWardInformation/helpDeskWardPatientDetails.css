@@ -1,0 +1,79 @@
+
+.ward-container {
+    margin: 20px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #00968f;
+    position: fixed;
+  }
+  
+  .ward-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:#007973;
+    padding: 15px;
+    color: white;
+  }
+  
+  .back-button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+  }
+  
+  .ward-header h2 {
+    margin: 0;
+    padding: 0 10px;
+    font-size: 18px;
+  }
+  
+  .ward-date {
+    font-size: 14px;
+  }
+  
+  .ward-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .ward-table th {
+    background-color:#00968f;;
+    color: white;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .ward-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .gray-row {
+    background-color: #f2f2f2;
+  }
+  
+  .ward-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row coloring */
+  }
+  
+  .ward-table th, .ward-table td {
+    text-align: center;
+  }
+  
+  .ward-table th {
+    color: white;
+  }
+  
+  .ward-table td {
+    background-color: white;
+  }
+  
+  .gray-row td {
+    background-color: #d3d3d3;
+  }
+  

@@ -1,32 +1,83 @@
-/* Ravindra_Sanap_HRHome.css_04_10_2024_Start */
+/* Container styling */
+.HRHome-container {
+    margin: auto;
+}
 
+/* Navbar styling */
+.HRHome-navbar {
+    background-color: white;
+    /* White background for the navbar */
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
 
-.hrhome-navbar {
+.HRHome-nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
     justify-content: space-between;
-    background-color: var(--background-color);
-    justify-content: flex-start;
-    gap: 20px;
-    height: 50px;
-    width: 100%;
-    align-items: center;
-    padding-left: 10px;
-
+    /* Ensure even spacing between items */
 }
 
-.hrhome-navbar {
+.HRHome-nav-links li {
+    margin: 5px;
+}
+
+/* Button styling */
+.HRHome-button {
+    background-color: var(--button-color);
+    /* Blue background */
+    color: white;
+    /* White text color */
+    padding: 10px 15px;
+    text-decoration: none;
+    /* No underline for links */
+    border: 1px solid var(--button-hover-border-color);
+    /* 1px solid black border */
+    border-radius: 5px;
     font-size: 16px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    /* Smooth transition for hover effects */
 }
 
-.section.active {
-    border-bottom: 2px solid blue;
+/* Active button (clicked) styling */
+.HRHome-button.active {
+    background-color: var(--upperBar-bg-color);
+    /* Green when clicked (active) */
+    color: white;
 }
 
-.section {
-    padding: 5px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
+/* Hover effect */
+.HRHome-button:hover {
+    background-color: white;
+    /* Red on hover */
+    border-color: 1px solid var(--button-hover-border-color);
+    /* Keep black border on hover */
+    color: var(--button-hover-text-color);
+    /* White text on hover */
 }
 
 
-/* Ravindra_Sanap_HRHome.css_04_10_2024_End */
+
+
+/* Responsive design */
+@media screen and (max-width: 768px) {
+    .HRHome-nav-links {
+        flex-direction: column;
+        /* Stack links vertically on smaller screens */
+        align-items: center;
+    }
+
+    .HRHome-button {
+        width: 100%;
+        /* Make buttons take full width on smaller screens */
+        margin-bottom: 10px;
+        text-align: center;
+    }
+}
+
+/* Content area */
+.HRHome-content {
+    padding: 20px;
+}

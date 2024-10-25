@@ -1,0 +1,136 @@
+/* Mohini_Verification Model_EmployeeVerification_14/10/24 */
+.employee-verification-form {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: var(--background-color);
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+/* Styles for left and right sections */
+.employee-verification-left,
+.employee-verification-right {
+  width: 48%;
+}
+
+.employee-verification-left h2{
+  font-size: var(--heading-font);
+  margin-bottom: 20px;
+}
+.employee-verification-right h2{
+  font-size: var(--heading-font);
+  margin-bottom: 20px;
+}
+
+.emp-centered-button {
+  display: flex;               /* Enable flexbox */
+  justify-content: center;     /* Center horizontally */
+  margin-top: 20px;           /* Optional: Add some top margin */
+}
+
+
+
+
+
+
+.employee-verification-form-group {
+  display: flex; /* Change to flex for horizontal layout */
+  align-items: center; /* Center align items vertically */
+  margin-bottom: 15px;
+}
+
+.employee-verification-form-group label {
+  flex: 0 0 120px; /* Set a fixed width for the label */
+  margin-right: 10px; /* Add space between label and input */
+  margin-left: 20px;
+  font-size: var(--heading-font);
+}
+
+.employee-verification-form-group input[type="text"],
+.employee-verification-form-group input[type="number"],
+.employee-verification-form-group input[type="date"],
+.employee-verification-form-group input[type="email"],
+.employee-verification-form-group input[type="tel"],
+.employee-verification-form-group textarea,
+.employee-verification-form-group select {
+  flex: 1; /* Allow input to take up the remaining space */
+  padding: 4px;
+  font-size: var(--font-size);
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.employee-verification-submit {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px; /* Adjust padding for better appearance */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  border: 1px solid var(--button-hover-border-color);
+  margin-left: 20px; /* Space from the left */
+}
+
+.employee-verification-submit:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-color);
+  background-color: white;
+}
+
+.employee-verification-textarea {
+  resize: vertical; /* Allow vertical resizing */
+}
+
+/* Optional: Additional styles for better spacing and aesthetics */
+.employee-verification-form-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.employee-verification-left,
+.employee-verification-right {
+  padding: 0 10px; /* Add horizontal padding for better spacing */
+}
+
+/* Responsive Styles for Small Screens */
+@media (max-width: 768px) {
+  .employee-verification-form {
+    flex-direction: column; /* Stack sections vertically */
+  }
+
+  .employee-verification-left,
+  .employee-verification-right {
+    width: 100%; /* Full width for smaller screens */
+  }
+
+  .employee-verification-form-group {
+    flex-direction: row; /* Keep fields in one line */
+    margin-bottom: 10px; /* Adjust margin for compactness */
+  }
+
+  .employee-verification-form-group label {
+    flex: 0 0 100px; /* Adjust label width for smaller screens */
+  }
+
+  .employee-verification-form-group input[type="text"],
+  .employee-verification-form-group input[type="number"],
+  .employee-verification-form-group input[type="date"],
+  .employee-verification-form-group input[type="email"],
+  .employee-verification-form-group input[type="tel"],
+  .employee-verification-form-group textarea,
+  .employee-verification-form-group select {
+    flex: 1; /* Full width for inputs */
+  }
+
+  .employee-verification-submit {
+    width: 50%; /* Full width for submit button */
+    margin-left: 0; /* Remove margin for full width */
+  }
+}
+
+
+/* Mohini_Verification Model_EmployeeVerification_14/10/24 */

@@ -67,11 +67,16 @@
 }
 
 .superUserNav-Navbttn-N-act {
+
+  margin-top: 15px;
   display: flex;
+ 
 }
 
 .superUserNav-Navbttn-N-act li {
   padding: 0 5px;
+
+  
 }
 
 /* Media query for responsiveness */

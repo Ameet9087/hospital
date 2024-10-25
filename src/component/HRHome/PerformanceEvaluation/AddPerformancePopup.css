@@ -16,19 +16,29 @@
 
 .popup-content {
     background-color: white;
+
     padding: 20px;
-    border-radius: 8px;
     width: 400px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+
+    max-width: 90%;
+    font-family: 'Arial', sans-serif;
 }
 
 .popup-content h2 {
     margin-top: 0;
+    font-size: 18px;
+    margin-bottom: 10px;
+
 }
 
 .popup-content label {
+    margin-left: -8px;
+
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
 }
 
 .popup-content input,
@@ -36,13 +46,14 @@
     width: 100%;
     padding: 8px;
     margin-top: 5px;
+    margin-left: 0;
 
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border-radius: 4px;
     border: 1px solid #ccc;
 }
 
-.popup-content button {
+.actionbtns {
     margin-right: 10px;
     padding: 10px 20px;
     background-color: #007bff;
@@ -52,13 +63,49 @@
     cursor: pointer;
 }
 
-.popup-content button[type='button'] {
+.actionbtns[type='button'] {
     background-color: #6c757d;
 }
 
-.popup-content button:hover {
+.actionbtns:hover {
     background-color: #0056b3;
 }
+
+
+.popup-content {
+    position: relative;
+    background-color: white;
+    padding: 20px;
+    width: 400px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
+    font-family: 'Arial', sans-serif;
+}
+
+
+.addperformanceclose-popup {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addperformanceclose-popup:hover {
+    background-color: darkred;
+}
+
+
 
 
 /* Ravindra_Sanap_AddPerformancePopup.css_04_10_2024_End */

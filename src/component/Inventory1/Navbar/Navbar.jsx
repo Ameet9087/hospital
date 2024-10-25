@@ -41,6 +41,23 @@ const Navbar = () => {
         >
           Return To Vendor
         </button>
+
+
+        <button
+          className={isActive('/drug-registration') ? 'active' : ''}
+          onClick={() => navigate('/drug-registration')}
+        >
+          Drug Registration
+        </button>
+   
+        <button
+          className={isActive('/expiry-notification') ? 'active' : ''}
+          onClick={() => navigate('/expiry-notification')}
+        >
+          Drug Registration
+        </button>
+
+
       </div>
       <div className="inventory-active-inventory">
         Active Inventory: GENERAL-INVENTORY <span className="inventory-arrow">➔</span>

@@ -10,6 +10,8 @@ function PerformanceEvaluation() {
     const [evaluations, setEvaluations] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [showPopup, setShowPopup] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+
 
     const evaluationsPerPage = 10;
 
@@ -43,9 +45,13 @@ function PerformanceEvaluation() {
         }
     };
 
+    const filteredEvaluations = evaluations.filter((evaluation) =>
+        evaluation.employee.empName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     const indexOfLastEvaluation = currentPage * evaluationsPerPage;
     const indexOfFirstEvaluation = indexOfLastEvaluation - evaluationsPerPage;
-    const currentEvaluations = evaluations.slice(indexOfFirstEvaluation, indexOfLastEvaluation);
+    const currentEvaluations = filteredEvaluations.slice(indexOfFirstEvaluation, indexOfLastEvaluation);
     const totalPages = Math.ceil(evaluations.length / evaluationsPerPage);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -70,6 +76,18 @@ function PerformanceEvaluation() {
                     Add Performance
                 </button>
             </div>
+
+            <div className="employee-searchAndActions">
+                <input
+                    type="text"
+                    placeholder="Search By Employee Name"
+                    className="employee-searchInput"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+
+            </div>
+
 
             {showPopup && (
                 <AddPerformancePopup
@@ -96,7 +114,7 @@ function PerformanceEvaluation() {
                         </tr>
                     ) : (
                         currentEvaluations.map((evaluation) => (
-                            <tr key={evaluation.id}>
+                            <tr key={evaluation.evaluationId}>
                                 <td>{evaluation.employee.empId}</td>
                                 <td>{evaluation.employee.empName}</td>
                                 <td>{evaluation.evaluationDate}</td>

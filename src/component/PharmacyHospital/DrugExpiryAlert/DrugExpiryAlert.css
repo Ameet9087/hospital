@@ -1,0 +1,71 @@
+/* Mohini_DrugExpiryAlert_WholePage_8/10/24 */
+.drug-expiry-alert-container {
+    padding: 20px;
+    background-color: var(--background-color);
+    height: 90vh;
+    overflow-y: scroll;
+}
+
+.drug-expiry-alert-container h1 {
+    text-align: left;
+    font-size: var(--heading-font);
+}
+
+.drug-expiry-alert-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.drug-expiry-alert-th, .drug-expiry-alert-td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.drug-expiry-alert-th {
+    background-color: #f4f4f4;
+}
+
+.expired-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.drug-expiry-alert-td {
+    padding: 5px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+
+/* WhatsApp-like notification (top of the viewport) */
+.alert-whatsapp-popup {
+    position: fixed;
+    top: 20px; /* Position the alert at the top of the viewport */
+    right: 20px;
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    animation: slide-in 0.3s ease-out;
+}
+
+@keyframes slide-in {
+    from {
+        opacity: 1;
+        transform: translateY(-20px); /* Adjust the animation for sliding in from the top */
+    }
+    to {
+        opacity: 2;
+        transform: translateY(0);
+    }
+}
+
+/* Mohini_DrugExpiryAlert_WholePage_8/10/24 */

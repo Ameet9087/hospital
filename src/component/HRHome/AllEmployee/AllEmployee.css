@@ -4,38 +4,70 @@
 .employee-container {
     width: 100%;
     margin: 0 auto;
-    border-radius: 10px;
+    background-color: var(--background-color);
+
 }
 
 .employee-container h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: #333;
     font-size: 18px;
 }
 
 .employee-table {
-    width: 100%;
+    /* width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
     table-layout: auto;
-    background-color: white;
+    background-color: white; */
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #f2f2f2;
 }
 
 .employee-table th,
 .employee-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
+    /* border: 1px solid #ddd;
+    padding: 6px;
     text-align: left;
     white-space: nowrap;
-    font-size: 14px;
+    font-size: 14px; */
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+    padding: 8px;
+    font-size: var(--font-size);
+
 }
 
 .employee-table th {
-    color: #333;
-    font-size: 16px;
+    /* color: #333;
+    font-size: 16px; */
+    background-color: #eaeaea;
+    color: black;
 }
 
+.employee-searchAndActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px;
+    margin-left: 20px;
+}
+
+.employee-searchInput {
+    padding: 5px;
+    width: 300px;
+    transition: border-color 0.3s;
+
+}
+
+.employee-searchInput:focus {
+    border-color: skyblue;
+    outline: none;
+}
 
 
 .employee-table tr:hover {
@@ -111,5 +143,32 @@
     cursor: pointer;
     border-radius: 5px;
 }
+
+
+.allemp-btn {
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.allemp-btn:nth-child(2) {
+    background-color: rgb(194, 61, 61);
+}
+
+.allemp-btn:nth-child(2):hover {
+    background-color: rgb(83, 30, 30);
+}
+
+.allemp-btn:hover {
+    background-color: #333;
+}
+
+
+
 
 /* Ravindra_Sanap_AllEmployee.css_03_10_2024_End */

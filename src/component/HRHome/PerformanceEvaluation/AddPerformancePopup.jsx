@@ -27,6 +27,8 @@ function AddPerformancePopup({ onClose, onAdd }) {
     return (
         <div className="popup-overlay">
             <div className="popup-content">
+                <button className="addperformanceclose-popup" onClick={onClose}>X</button>
+
                 <h2>Add Performance Evaluation</h2>
                 <form onSubmit={handleSubmit}>
                     <label>
@@ -75,8 +77,8 @@ function AddPerformancePopup({ onClose, onAdd }) {
                             max="10"
                         />
                     </label>
-                    <button type="submit">Add Evaluation</button>
-                    <button type="button" onClick={onClose}>
+                    <button className='actionbtns' type="submit">Add Evaluation</button>
+                    <button className='actionbtns' type="button" onClick={onClose}>
                         Cancel
                     </button>
                 </form>

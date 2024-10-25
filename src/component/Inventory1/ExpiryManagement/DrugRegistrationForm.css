@@ -1,0 +1,116 @@
+  /* Mohini_ExpiryManagement_DrugRegistrationForm_7/10/2024*/
+  .drug-registration-form {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 20px;
+  background-color: var(--background-color);
+  height: 90vh;
+  overflow-y: auto;
+}
+
+/* Left and right sections */
+.drug-registration-left, 
+.drug-registration-right {
+  flex: 1;
+  max-width: 45%; /* Adjust to control width */
+}
+
+/* Styles for form groups */
+.drug-registration-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.drug-registration-group label {
+  flex: 0 0 120px; /* Label width */
+  margin-right: 10px; /* Space between label and input */
+  font-size: var(--heading-font);
+}
+
+.drug-registration-group input[type="text"],
+.drug-registration-group input[type="number"],
+.drug-registration-group input[type="date"] {
+  flex: 1;
+  padding: 4px;
+  font-size: var(--font-size);
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.drug-registration-group select {
+  width: 100%; /* Full width */
+  padding: 5px; /* Padding for comfort */
+  border: 1px solid #ccc; /* Border style */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Font size */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+/* Submit button styling */
+.drug-registration-submit-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.drug-registration-submit-btn:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-color);
+  background-color: white;
+}
+
+/* Mandatory field styling */
+.mandatory {
+  color: red;
+  margin-left: 5px;
+}
+
+/* Checkbox group styles */
+.drug-registration-group-checkbox {
+  display: flex;
+  align-items: center; /* Aligns items vertically centered */
+  margin-bottom: 20px; /* Adjust this value for desired bottom margin */
+}
+
+.drug-registration-group-checkbox label {
+  margin-right: 50px; /* Creates a 50px gap between the label and the checkbox */
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 768px) {
+  .drug-registration-form {
+    flex-direction: column; /* Stack items vertically */
+    height: auto; /* Adjust height for better view */
+  }
+
+  .drug-registration-left,
+  .drug-registration-right {
+    max-width: 50%; /* Full width for both sections */
+    flex: none; /* Prevent flex shrinking */
+  }
+
+  .drug-registration-group {
+    flex-direction: column; /* Stack label and input vertically */
+    align-items: flex-start; /* Align to the left */
+  }
+
+  .drug-registration-group label {
+    margin-bottom: 5px; /* Space below label */
+    margin-right: 0; /* Remove right margin for stacked layout */
+    flex: none; /* Allow label to take only needed space */
+  }
+
+  .drug-registration-group input,
+  .drug-registration-group select {
+    width: 100%; /* Full width for inputs */
+  }
+}
+  /* Mohini_ExpiryManagement_DrugRegistrationForm_7/10/2024*/

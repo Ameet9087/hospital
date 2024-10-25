@@ -7,6 +7,7 @@ import { useReactToPrint } from 'react-to-print';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { API_BASE_URL } from '../api/api';
 
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
@@ -20,7 +21,7 @@ const PatientList = () => {
 
   // Fetch data from the API
   useEffect(() => {
-    fetch('http://localhost:3107/api/patients')
+    fetch(`${API_BASE_URL}/emergency-patients`)
       .then(response => response.json())
       .then(data => setPatients(data))
       .catch(error => console.error('Error fetching patients:', error));
@@ -65,7 +66,7 @@ const PatientList = () => {
     setPatients([...patients]);
 
     // Make the PUT request to update the status in the API
-    fetch(`http://localhost:3107/api/patients/${patientId}`, {
+    fetch(`${API_BASE_URL}/patients/${patientId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

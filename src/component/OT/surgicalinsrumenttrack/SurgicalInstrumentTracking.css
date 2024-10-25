@@ -1,0 +1,121 @@
+.surgicalinstrumenttrackingbtn{
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+.surgicalinstrumenttrackingbtn:hover{
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+.surgicaltrack-modal {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.surgicaltrack-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%;
+}
+
+.surgical-instrument-tracking {
+    padding: 20px;
+}
+
+
+.surgicalinstrumenttrackingedit-btn{
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+   
+}
+.surgicalinstrumenttrackingedit-btn:hover{
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+.surgicaltrack-modal {
+    position: fixed; /* Make the modal fixed */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    right: 0; /* Extend to the right */
+    bottom: 0; /* Extend to the bottom */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 1000; /* Ensure it appears on top of other elements */
+}
+
+.surgicaltrack-modal-content {
+    background-color: white; /* White background for the modal content */
+    padding: 20px; /* Padding inside the modal */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    width: 400px; /* Fixed width */
+    max-width: 90%; /* Responsive width for smaller screens */
+}
+
+.surgicaltrack-modal-content h2 {
+    margin-bottom: 20px; /* Space below the heading */
+    text-align: center; /* Center the heading */
+}
+
+.surgicaltrack-modal-content label {
+    display: block; /* Make labels block elements */
+    margin: 10px 0 5px; /* Space around the labels */
+    font-weight: bold; /* Bold font for labels */
+}
+
+.surgicaltrack-modal-content input[type="text"],
+.surgicaltrack-modal-content input[type="number"],
+.surgicaltrack-modal-content select {
+    width: 100%; /* Full width input fields */
+    padding: 10px; /* Padding inside input fields */
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 4px; /* Rounded corners */
+    margin-bottom: 15px; /* Space below input fields */
+}
+
+.surgical-instrumenttrack-modalbtn {
+    display: flex; /* Use flexbox for button alignment */
+    justify-content: space-between; /* Space between buttons */
+}
+
+.surgicaltrack-modal-content button {
+    padding: 10px 15px; /* Padding inside buttons */
+    border: none; /* No border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor for buttons */
+    font-weight: bold; /* Bold font for buttons */
+}
+
+.surgicaltrack-modal-content button:hover {
+    background-color:var(--button-color); /* Light grey background on hover */
+}
+
+.surgicaltrack-modal-content button:active {
+    background-color: #ddd; /* Darker grey when pressed */
+}

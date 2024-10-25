@@ -184,6 +184,7 @@ const CheckIn = () => {
           employeeId: "",
         });
 
+
         const response = await axios.put(
           `${API_BASE_URL}/appointments/update-status/${patient?.appointmentId}?status=cancelled`
         );

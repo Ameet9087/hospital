@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ReturnToVendor.css';
 import CreateReturnToVendor from './CreateReturnToVendor';
-import CustomModal from "../CustomModel/CustomModal";
+import CustomModal from "../../CustomModel/CustomModal";
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../../api/api';
 

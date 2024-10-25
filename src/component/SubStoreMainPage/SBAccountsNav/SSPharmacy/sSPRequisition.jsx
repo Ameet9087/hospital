@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import SSPharmacyReqCreateReq from './sSPharmacyReqCreateReq';
 import { API_BASE_URL } from '../../../api/api';
 import RequisitionDetails from './RequisitionDetails';
+import CustomModal from '../../../CustomModel/CustomModal';
 
 function SSPRequisition() {
   const { store } = useParams();
@@ -58,17 +59,17 @@ function SSPRequisition() {
       <button className="sSPRequisition-create-requisition" onClick={handleOpenPopup}>
         <i className="fa-solid fa-plus"></i> Create Requisition
       </button>
-      
       {isPopupOpen && (
         <div className="sSPRequisition-modal-overlay">
           <div className="sSPRequisition-modal-content">
             <button className="sSPRequisition-close-button" onClick={handleClosePopup}>
               &times;
             </button>
-            <SSPharmacyReqCreateReq  onClose={handleClosePopup} />
+            <SSPharmacyReqCreateReq onClose={handleClosePopup} />
           </div>
         </div>
       )}
+     
 
 {isDeatilsPopupOpen && (
         <div className="sSPRequisition-modal-overlay">
@@ -134,15 +135,6 @@ function SSPRequisition() {
           </tbody>
         </table>
       )}
-
-      {/* <div className="sSPRequisition-pagination">
-        <span>1 to {requisitions.length} of {requisitions.length}</span>
-        <button disabled>First</button>
-        <button disabled>Previous</button>
-        <button className="sSPRequisition-active">Page 1 of 1</button>
-        <button disabled>Next</button>
-        <button disabled>Last</button>
-      </div> */}
     </div>
   );
 }

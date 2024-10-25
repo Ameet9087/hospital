@@ -1,0 +1,74 @@
+.Ophtha-navbar {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: white; /* Adjust as needed */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .Ophtha-home-button {
+    border: none;
+    background: var( --upperBar-bg-color);
+    color:white;
+    font-size: var(--heading-font);
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 10px; /* Gap between home button and the rest */
+  }
+  .Ophtha-home-button .active
+  {
+    color: var( --button-hover-background-color);
+    border-radius: 5px;
+  }  
+  .Ophtha-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 10px gap between buttons */
+  }
+  
+  .Ophtha-nav-links button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: var(--heading-font);
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .Ophtha-nav-links button .active {
+    border-bottom: 4px solid var(--sideBar-bg-color);
+    color: var(--sideBar-bg-color); /* Active button text color */
+    border-radius: 4px;
+  }
+  
+  .Ophtha-nav-links button:hover {
+    border-bottom: 4px solid var(--sideBar-bg-color);
+  }
+  
+  .Ophtha-active-inventory {
+    margin-left: auto; /* Pushes this element to the far right */
+    font-size: var(--heading-font);
+    padding: 5px;
+    display: flex;
+    border-radius: 5px;
+    background-color: var(--button-bg-color);
+    color:white;
+    align-items: center;
+    /* color: #555; */
+  }
+
+  
+  .inventory-arrow {
+    margin-left: 5px;
+   color: black;
+   font-size: var(--heading-font);
+  }
+  
+
+
+
+
+
+
+  

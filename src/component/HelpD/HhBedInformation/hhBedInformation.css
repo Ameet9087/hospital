@@ -5,7 +5,6 @@
     width: auto;
     margin: 0 auto;
     padding: 20px;
-    background-color: #dff0ff;
   }
   
   .bedInformation-stats-container {
@@ -146,6 +145,12 @@ align-items: first baseline;
   .hhBedInformation-wardNameColumn{
     font-weight: bold;
     color: #007bff;
+  }
+
+  .hhBedInformation-wardNameColumnBTN{
+    background-color: transparent;
+    color: var(--button-bg-color);
+    border: none;
   }
 
   /* Hide everything except the table during print */

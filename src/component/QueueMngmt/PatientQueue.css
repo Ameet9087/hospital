@@ -45,12 +45,15 @@
   }
   
   .queue-management-title {
-    font-size: 16px;
+    font-size: var(--heading-font);
     margin-bottom: 20px;
     color: #004080;
     font-weight: bold;
   }
-  
+  .queue-status-filter{
+    display: flex;
+    gap: 20px;
+  }
   .queue-management-form-container {
     display: flex;
     align-items: center;
@@ -136,36 +139,6 @@
     margin-left: -40px;
   }
   
-  .queue-management-table-section table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .queue-management-table-section th, 
-  .queue-management-table-section td {
-    padding: 5px;
-    text-align: center; /* Center-align the text in table headers */
-    font-size: 14px;
-    /* text-align: left; */
-    border: 1px solid #ccc;
-  }
-  .queue-managemnt-table{
-    width: 100%;
-    background-color: white;
-  }
-
-.queue-mana-table{
-    background-color: white;
-}
-
-
-  .queue-management-table-section thead th {
-    background-color: #f5f5f5;
-    font-size: 14px;
-    text-align: center; /* Ensure headers are centered in the thead section */
-
-  }
-  
   .queue-management-no-data {
     text-align: center;
     background-color: #fff3cd;
@@ -198,19 +171,24 @@
     color: #0F63AF;
     font-size: 14px;
     display: flex;
-    justify-content: flex-end; /* Aligns the text to the left */
+    justify-content: flex-end; 
 }
 
+.queue-management-tables-head{
+  font-size: var(--heading-font);
+  font-weight: bold;
+}
 
-.que-complete-button {
-  background-color: var(--button-color); /* Green */
+.que-complete-button,.que-attend-button {
+  background-color: var(--button-color);
   color: white;
   border: none;
-  padding: 5px;
+  padding: 5px 10px;
   margin: 5px;
   font-size: 14px;
   cursor: pointer;
   border-radius: 4px;
+  border: 1px solid var(--button-color);
 }
 
 .que-complete-button:hover {
@@ -270,12 +248,6 @@
   /* .queue-management-search-button {
     margin-left: 0; 
   } */
-
-  .queue-management-table-section th,
-  .queue-management-table-section td {
-    padding: 8px 5px; /* Adjust padding for smaller screens */
-  }
-
   /* .queue-management-pagination {
     flex-direction: column; 
   } */
@@ -357,32 +329,6 @@
   /* margin-bottom: 20px; */
   color: #004080;
 }
-
-.queue-management-table-section {
-  /* margin-top: 20px; */
-  max-height: 500px; /* Adjust the height as needed */
-  overflow-y: auto; /* Only vertical scrollbar when needed */
-}
-
-.queue-management-table-section table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.queue-management-table-section th, 
-.queue-management-table-section td {
-  padding: 5px;
-  font-size: 14px;
-  text-align: center;
-  border: 1px solid #ccc;
-  background-color: white; /* Ensure background remains white */
-}
-
-.queue-management-table-section thead th {
-  background-color: #f5f5f5;
-  font-size: 14px;
-}
-
 /* Hide scrollbar when not needed */
 .queue-management-table-section::-webkit-scrollbar {
   width: 0; /* For Webkit-based browsers like Chrome */

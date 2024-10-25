@@ -1,0 +1,147 @@
+/* Mohini_Verification Model_VerificationNavbar_14/10/24 */
+.verification-header ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    font-size: var(--heading-font);
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  }
+  
+  /* Navbar item style */
+  .verification-header ul li {
+    cursor: pointer;
+    padding: 5px 10px;
+    text-decoration: none;
+    background-color: var(--button-color);
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  /* Hover effect */
+  .verification-header ul li:hover {
+    background-color: #f0f0f0;
+    color: var(--button-color);
+    border-bottom: 1px solid var(--button-hover-border-color);
+  }
+  
+  /* Active state for main navbar */
+  .verification-header ul li.active {
+    background-color: var(--button-bg-color);
+    color: white;
+  }
+  
+  /* General Sub-Navigation Styles */
+.verification-sub-nav {
+    /* background-color: #e3f2fd; */
+    padding: 5px ;
+  }
+  
+  .verification-sub-nav ul {
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+    gap: 10px;
+  }
+  
+  .verification-sub-nav li {
+    cursor: pointer;
+    padding: 5px 5px;
+    color: black;
+    font-size: var(--heading-font);
+    border-radius: 5px;
+    position: relative; /* For pseudo-element effects */
+  }
+  
+  /* .verification-sub-nav li:hover,
+  .verification-sub-nav li.active {
+    background-color: var(--button-color);
+  } */
+  
+  /* Sub-Nav Link Styling */
+  .verification-sub-nav a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    padding-bottom: 5px;
+    position: relative;
+    transition: color 0.3s, background-color 0.3s;
+  }
+  
+  /* Animated Underline Effect */
+  .verification-sub-nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    background-color: var(--button-bg-color);
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+  }
+  
+  .verification-sub-nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+
+
+  /* Sub-Nav Active State */
+.verification-sub-nav li.active {
+  border-bottom: 2px solid var(--button-bg-color); /* Active underline */
+}
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .verification-sub-nav ul {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .verification-sub-nav li {
+      font-size: 14px;
+      padding: 8px 10px;
+    }
+  }
+  
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .verification-header ul {
+      flex-direction: column; /* Stack items vertically on smaller screens */
+      align-items: flex-start;
+    }
+  
+    .verification-header ul li {
+      width: 100%; /* Make buttons full width */
+      padding: 10px;
+      font-size: calc(var(--heading-font) - 2px);
+      text-align: center;
+    }
+  
+    .verification-sub-nav ul {
+      flex-direction: column; /* Stack sub-nav items vertically */
+      gap: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .verification-header ul {
+      gap: 10px; /* Reduce gap for smaller screens */
+    }
+  
+    .verification-header ul li {
+      font-size: calc(var(--heading-font) - 4px);
+    }
+  
+    .verification-sub-nav ul li a {
+      font-size: calc(var(--heading-font) - 4px);
+    }
+  }
+  
+/* Mohini_Verification Model_VerificationNavbar_14/10/24 */

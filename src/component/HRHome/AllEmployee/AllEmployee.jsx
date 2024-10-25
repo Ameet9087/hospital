@@ -1,15 +1,19 @@
 /* Ravindra_Sanap_AllEmployee.jsx_03_10_2024_Start */
 
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AllEmployee.css';
 import AddEmployeePopup from './AddEmployeePopup';
+import UpdateEmployeePopup from './UpdateEmployeePopup';
 
 function AllEmployee() {
     const [employees, setEmployees] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [showPopup, setShowPopup] = useState(false);
+    const [showUpdatePopup, setShowUpdatePopup] = useState(false);
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
+
     const employeesPerPage = 10;
 
     useEffect(() => {
@@ -31,11 +35,12 @@ function AllEmployee() {
 
     const handlePopupClose = () => {
         setShowPopup(false);
+        setShowUpdatePopup(false);
     };
 
     const handleFormSubmit = async (formData) => {
         try {
-            const response = await axios.post('http://localhost:8086/api/employee/add', formData, {
+            await axios.post('http://localhost:8086/api/employee/add', formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -43,17 +48,49 @@ function AllEmployee() {
 
             handlePopupClose();
             fetchEmployees();
-
         } catch (error) {
             console.error('Error adding employee:', error);
         }
     };
 
+    const handleDelete = async (empId) => {
+        try {
+            await axios.delete(`http://localhost:8086/api/employee/delete/${empId}`);
+            fetchEmployees();
+        } catch (error) {
+            console.error('Error deleting employee:', error);
+        }
+    };
+
+    const handleEditClick = (employee) => {
+        setSelectedEmployee(employee);
+        setShowUpdatePopup(true);
+    };
+
+    const handleUpdateSubmit = async (formData) => {
+        try {
+            await axios.put(`http://localhost:8086/api/employee/update/${selectedEmployee.empId}`, formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            handlePopupClose();
+            fetchEmployees();
+        } catch (error) {
+            console.error('Error updating employee:', error);
+        }
+    };
+
+    const filteredEmployees = employees.filter((employee) =>
+        employee.empName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     const indexOfLastEmployee = currentPage * employeesPerPage;
     const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
-    const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+    const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
 
-    const totalPages = Math.ceil(employees.length / employeesPerPage);
+    const totalPages = Math.ceil(filteredEmployees.length / employeesPerPage);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -69,6 +106,8 @@ function AllEmployee() {
         }
     };
 
+
+
     return (
         <div className='employee-container'>
             <div className="addemp-header">
@@ -77,11 +116,29 @@ function AllEmployee() {
                     Add Employee
                 </button>
             </div>
+            <div className="employee-searchAndActions">
+                <input
+                    type="text"
+                    placeholder="Search By Employee Name"
+                    className="employee-searchInput"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+
+            </div>
 
             {showPopup && (
                 <AddEmployeePopup
                     onClose={handlePopupClose}
                     onSubmit={handleFormSubmit}
+                />
+            )}
+
+            {showUpdatePopup && (
+                <UpdateEmployeePopup
+                    employee={selectedEmployee}
+                    onClose={handlePopupClose}
+                    onSubmit={handleUpdateSubmit}
                 />
             )}
 
@@ -95,7 +152,7 @@ function AllEmployee() {
                         <th>Position</th>
                         <th>Department</th>
                         <th>Date of Joining</th>
-                        <th>Salary</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -113,7 +170,20 @@ function AllEmployee() {
                                 <td>{employee.position}</td>
                                 <td>{employee.department}</td>
                                 <td>{employee.dateOfJoining}</td>
-                                <td>{employee.salary}</td>
+                                <td>
+                                    <button
+                                        className="allemp-btn"
+                                        onClick={() => handleEditClick(employee)}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        className="allemp-btn"
+                                        onClick={() => handleDelete(employee.empId)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
                             </tr>
                         ))
                     )}

@@ -4,12 +4,14 @@
 .schedule-container {
     width: 100%;
     margin: 0 auto;
-    border-radius: 10px;
+    background-color: var(--background-color);
+
 }
 
 .schedule-container h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-top: 0px;
+    margin-bottom: 10px;
     color: #333;
     font-size: 18px;
 }
@@ -17,24 +19,27 @@
 .schedule-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
-    table-layout: auto;
-    background-color: white;
+    margin-top: 20px;
+    background-color: #f2f2f2;
 }
 
 .schedule-table th,
 .schedule-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
+    /* border: 1px solid #ddd;
+    padding: 6px;
     text-align: left;
     white-space: nowrap;
-    font-size: 14px;
+    font-size: 14px; */
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+    padding: 8px;
+    font-size: var(--font-size);
 }
 
 .schedule-table th {
-    color: #333;
-    font-size: 16px;
-    padding: 10px;
+    background-color: #eaeaea;
+    color: black;
 }
 
 .schedule-table tr:hover {
@@ -98,5 +103,28 @@
     padding: 10px;
 }
 
+
+.allemp-btn {
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.allemp-btn:nth-child(2) {
+    background-color: rgb(194, 61, 61);
+}
+
+.allemp-btn:nth-child(2):hover {
+    background-color: rgb(83, 30, 30);
+}
+
+.allemp-btn:hover {
+    background-color: #333;
+}
 
 /* Ravindra_Sanap_EmpSchedule.css_04_10_2024_End */

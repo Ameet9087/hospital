@@ -8,6 +8,7 @@ import AddLeavePopup from './AddLeavePopup';
 
 function EmpLeave() {
     const [leaves, setLeaves] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [showPopup, setShowPopup] = useState(false);
     const leavesPerPage = 10;
@@ -46,9 +47,13 @@ function EmpLeave() {
         }
     };
 
+    const filteredLeaves = leaves.filter((leave) =>
+        leave.employee.empName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     const indexOfLastLeave = currentPage * leavesPerPage;
     const indexOfFirstLeave = indexOfLastLeave - leavesPerPage;
-    const currentLeaves = leaves.slice(indexOfFirstLeave, indexOfLastLeave);
+    const currentLeaves = filteredLeaves.slice(indexOfFirstLeave, indexOfLastLeave);
     const totalPages = Math.ceil(leaves.length / leavesPerPage);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -80,6 +85,17 @@ function EmpLeave() {
                     Add Leave
                 </button>
             </div>
+            <div className="employee-searchAndActions">
+                <input
+                    type="text"
+                    placeholder="Search By Employee Name"
+                    className="employee-searchInput"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+
+            </div>
+
 
             {showPopup && (
                 <AddLeavePopup
@@ -101,7 +117,7 @@ function EmpLeave() {
                 <tbody>
                     {currentLeaves.length === 0 ? (
                         <tr>
-                            <td className='nodatatoshow' colSpan="5" style={{ textAlign: 'center', color: 'red'}}>No Rows to Show</td>
+                            <td className='nodatatoshow' colSpan="5" style={{ textAlign: 'center', color: 'red' }}>No Rows to Show</td>
                         </tr>
                     ) : (
                         currentLeaves.map((leave) => (

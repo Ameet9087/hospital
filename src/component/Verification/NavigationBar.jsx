@@ -26,6 +26,29 @@ function NavigationBar() {
         >
           Pharmacy
         </button>
+       
+        <button
+          className={`navigationBarTabButton ${activeTab === 'document-verification' ? 'navigationBarActive' : ''}`}
+          onClick={() => handleTabClick('document-verification')}
+        >
+          Document & Employment Verification
+        </button>
+
+        <button
+          className={`navigationBarTabButton ${activeTab === 'identity-verification' ? 'navigationBarActive' : ''}`}
+          onClick={() => handleTabClick('identity-verification')}
+        >
+           Identity Verification
+        </button>
+
+        <button
+          className={`navigationBarTabButton ${activeTab === 'identity-verification' ? 'navigationBarActive' : ''}`}
+          onClick={() => handleTabClick('insurance')}
+        >
+           Insurance Verification
+        </button>
+
+
       </div>
       <div className='navigationBarActionButtons'>
         {activeTab === 'Inventory' && (
@@ -54,6 +77,39 @@ function NavigationBar() {
             </Link>
           </>
         )}
+
+
+       {activeTab === 'document-verification' && (
+          <>
+            <Link to="/employee-verification">
+              <button className='navigationBarActionButton'> Employee Verification</button>
+            </Link>
+            <Link to="/patient-verification">
+              <button className='navigationBarActionButton'> Patient Verification</button>
+            </Link>
+          </>
+        )}
+          {activeTab === 'identity-verification' && (
+          <>
+            <Link to="/employee-identity-verification">
+              <button className='navigationBarActionButton'> Employee Identity Verification</button>
+            </Link>
+            <Link to="/patient-identity-verification">
+              <button className='navigationBarActionButton'>Patient Identity Verification </button>
+            </Link>
+          </>
+        )}
+        {activeTab === 'insurance' && (
+          <>
+            <Link to="/employee-insurance-verification">
+              <button className='navigationBarActionButton'>Employee Insurance Verification</button>
+            </Link>
+            <Link to="/patient-insurance-verification">
+              <button className='navigationBarActionButton'> Patient Insurance Verification</button>
+            </Link>
+          </>
+        )}
+
       </div>
     </div>
   );

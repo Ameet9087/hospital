@@ -1,0 +1,188 @@
+/* Mohini_EmergencyCodeResponse_EmergencyCodeResponseForm_10/10/24 */
+.emergency-code-response {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    justify-content: space-between;
+    padding: 20px;
+    background-color: var(--background-color);
+    height: auto;
+    min-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Styles for left and right sections */
+.emergency-code-response-left,
+.emergency-code-response-right {
+    width: 48%;
+}
+
+/* Make the form responsive on smaller screens */
+@media (max-width: 768px) {
+    .emergency-code-response-left,
+    .emergency-code-response-right {
+        width: 100%; /* Make the sections stack vertically */
+        margin-bottom: 20px;
+    }
+}
+
+.emergency-code-response-group {
+    display: flex; /* Flex for horizontal layout */
+    align-items: center; /* Center align items vertically */
+    margin-bottom: 15px;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+.emergency-code-response-group label {
+    flex: 0 0 120px; /* Set a fixed width for the label */
+    margin-right: 10px; /* Add space between label and input */
+    margin-left: 20px;
+    font-size: var(--heading-font);
+}
+/* Styles for the select dropdown */
+.emergency-code-response-group select {
+    flex: 1; /* Allow select to take up the remaining space */
+    padding: 5px;
+    font-size: var(--font-size); /* Use the same font size as the inputs */
+    border: 1px solid #ced4da; /* Same border as the inputs */
+    border-radius: 4px; /* Same border-radius as the inputs */
+    background-color: white; /* Ensure consistent background */
+    appearance: none; /* Remove default browser appearance */
+    cursor: pointer;
+}
+
+.emergency-code-response-group select:focus {
+    border-color: var(--button-color); /* Change border color on focus */
+    outline: none; /* Remove the default focus outline */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Optional: Add focus shadow */
+}
+
+/* Adjust the select element for smaller screens */
+@media (max-width: 768px) {
+    .emergency-code-response-group select {
+        width: 100%; /* Ensure it takes full width on smaller screens */
+        margin-left: 0;
+    }
+}
+
+
+/* Adjust input fields for smaller screens */
+@media (max-width: 768px) {
+    .emergency-code-response-group label {
+        flex: 0 0 100%; /* Label takes full width on smaller screens */
+        margin-left: 0;
+        margin-bottom: 5px; /* Add some space below label */
+    }
+
+    .emergency-code-response-group input[type="text"],
+    .emergency-code-response-group input[type="number"],
+    .emergency-code-response-group input[type="date"],
+    .emergency-code-response-group input[type="email"],
+    .emergency-code-response-group textarea {
+        width: 100%; /* Make inputs take full width on smaller screens */
+        margin-left: 0;
+    }
+}
+
+.emergency-code-response-group input[type="text"],
+.emergency-code-response-group input[type="number"],
+.emergency-code-response-group input[type="date"],
+.emergency-code-response-group input[type="email"],
+
+.emergency-code-response-group textarea {
+    flex: 1; /* Allow input to take up the remaining space */
+    padding: 5px;
+    font-size: var(--font-size);
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.emergency-code-response-group input[type="checkbox"] {
+    margin-right: 80px; /* Push checkbox to the right */
+}
+
+.emergency-code-response-group label .mandatory {
+    color: red; /* Set color of the asterisk to red */
+    margin-left: 5px; /* Space between label text and asterisk */
+}
+
+.emergency-code-response-button {
+    display: flex; /* Use Flexbox for centering */
+    justify-content: flex-start; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-left: -50px;
+}
+
+.emergency-code-response-submit-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.emergency-code-response-submit-btn:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-color);
+    background-color: white;
+}
+
+/* Ensure button is centered for smaller screens */
+@media (max-width: 768px) {
+    .emergency-code-response-button {
+        justify-content: center; /* Center button on smaller screens */
+        margin-left: 0;
+    }
+}
+
+.mandatory {
+    color: red; /* Change the color to red */
+}
+
+
+
+
+
+
+
+
+
+/* EmergencyCodeResponseForm.css */
+.emergency-cose-custom-popup {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    z-index: 999;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.emergency-cose-custom-popup p {
+    margin: 0;
+    font-size: var(--font-size);
+}
+
+
+
+/* Mohini_EmergencyCodeResponse_EmergencyCodeResponseForm_10/10/24 */

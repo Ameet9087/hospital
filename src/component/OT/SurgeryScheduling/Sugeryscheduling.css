@@ -1,0 +1,53 @@
+/* General styling for the navbar */
+.oprationtheator-schedullist-navbar {
+    list-style-type: none;
+  
+    padding: 10px;
+    background-color: white;
+    overflow: hidden;
+    display: flex;
+    justify-content: left;
+    margin-right: 50px;
+  
+    
+  }
+  
+  /* Styling for each link */
+  .oprationtheator-schedullist-nav-link {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    margin-right: 50px;
+  }
+  
+  /* Hover effect on links */
+  .oprationtheator-schedullist-nav-link:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  /* Active class for the currently active link */
+  .active {
+    background-color: var(--button-bg-color); /* Highlight color for active link */
+  }
+  
+  /* Responsive layout for smaller screens */
+  @media (max-width: 600px) {
+    .oprationtheator-schedullist-navbar {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .oprationtheator-schedullist-nav-link {
+      padding: 10px;
+      font-size: 14px;
+    }
+  }
+  

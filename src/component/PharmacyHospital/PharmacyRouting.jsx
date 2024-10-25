@@ -119,6 +119,7 @@ const PharmacyRouting = () => {
       {/* Add other routes here */}
 
       <Route path="/rank-membership-wise-sales" element={<RankMembershipwiseReport/>}/>
+
     </Routes>
     </>
   );

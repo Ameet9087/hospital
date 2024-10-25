@@ -4,28 +4,37 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './EmpSchedule.css';
+import UpdateEmployeepopup from '../AllEmployee/UpdateEmployeePopup';
 
 function EmpSchedule() {
     const [schedules, setSchedules] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [showUpdatePopup, setShowUpdatePopup] = useState(false);
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
     const schedulesPerPage = 10;
 
     useEffect(() => {
-        const fetchSchedules = async () => {
-            try {
-                const response = await axios.get('http://localhost:8086/api/employee/getall');
-                setSchedules(response.data);
-            } catch (error) {
-                console.error('Error fetching schedule data:', error);
-            }
-        };
-
         fetchSchedules();
     }, []);
 
+    const fetchSchedules = async () => {
+        try {
+            const response = await axios.get('http://localhost:8086/api/employee/getall');
+            setSchedules(response.data);
+        } catch (error) {
+            console.error('Error fetching schedule data:', error);
+        }
+    };
+
+    const filteredSchedules = schedules.filter((schedule) =>
+        schedule.empName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     const indexOfLastSchedule = currentPage * schedulesPerPage;
     const indexOfFirstSchedule = indexOfLastSchedule - schedulesPerPage;
-    const currentSchedules = schedules.slice(indexOfFirstSchedule, indexOfLastSchedule);
+    const currentSchedules = filteredSchedules.slice(indexOfFirstSchedule, indexOfLastSchedule);
+
     const totalPages = Math.ceil(schedules.length / schedulesPerPage);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -34,6 +43,31 @@ function EmpSchedule() {
             setCurrentPage(currentPage + 1);
         }
     };
+
+
+    const handlePopupClose = () => {
+        setShowUpdatePopup(false);
+    };
+    const handleEditClick = (schedule) => {
+        setSelectedEmployee(schedule);
+        setShowUpdatePopup(true);
+    };
+
+    const handleUpdateSubmit = async (formData) => {
+        try {
+            await axios.put(`http://localhost:8086/api/employee/update/${selectedEmployee.empId}`, formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            handlePopupClose();
+            fetchSchedules();
+        } catch (error) {
+            console.error('Error updating employee:', error);
+        }
+    };
+
 
     const prevPage = () => {
         if (currentPage > 1) {
@@ -44,6 +78,17 @@ function EmpSchedule() {
     return (
         <div className="schedule-container">
             <h2>Employee Schedule</h2>
+            <div className="employee-searchAndActions">
+                <input
+                    type="text"
+                    placeholder="Search By Employee Name"
+                    className="employee-searchInput"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+
+            </div>
+
             <table className="schedule-table">
                 <thead>
                     <tr>
@@ -53,12 +98,13 @@ function EmpSchedule() {
                         <th>Department</th>
                         <th>Start Time</th>
                         <th>End Time</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {currentSchedules.length === 0 ? (
                         <tr>
-                            <td className='nodatatoshow' colSpan="6" style={{ textAlign: 'center', color: 'red' }}>No Rows to Show</td>
+                            <td className='nodatatoshow' colSpan="8" style={{ textAlign: 'center', color: 'red' }}>No Rows to Show</td>
                         </tr>
                     ) : (
                         currentSchedules.map((schedule) => (
@@ -69,6 +115,15 @@ function EmpSchedule() {
                                 <td>{schedule.department}</td>
                                 <td>{schedule.schedulestart}</td>
                                 <td>{schedule.scheduleend}</td>
+                                <td>
+                                    <button
+                                        className="allemp-btn"
+                                        onClick={() => handleEditClick(schedule)}
+                                    >
+                                        Edit
+                                    </button>
+
+                                </td>
                             </tr>
                         ))
                     )}
@@ -93,6 +148,13 @@ function EmpSchedule() {
                     Next
                 </button>
             </div>
+            {showUpdatePopup && (
+                <UpdateEmployeepopup
+                    employee={selectedEmployee}
+                    onClose={handlePopupClose}
+                    onSubmit={handleUpdateSubmit}
+                />
+            )}
         </div>
     );
 }

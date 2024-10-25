@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Registration.css';
+import { API_BASE_URL } from '../api/api';
 
 const EmergencyPatientRegistration = () => {
     const [formData, setFormData] = useState({
@@ -27,14 +28,6 @@ const EmergencyPatientRegistration = () => {
         careOfPersonNumber: "",
         broughtBy: "",
         relationWithPatient: "",
-        caseType: "",
-        // Fields related to Dog Bite, Snake Bite, and Animal Bite case types
-        bitingAddress: "",
-        dateOfBite: "",
-        bittenOn: "",
-        firstAidGiven: false,
-        // Field related to Medico-Legal case type
-        medicoLegalType: "",
     });
 
     const handleChange = (e) => {
@@ -47,16 +40,15 @@ const EmergencyPatientRegistration = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // API call to register a patient
-        axios.post('http://localhost:3107/api/patients/register', formData)
+        console.log(formData);
+        
+        axios.post(`${API_BASE_URL}/emergency-patients/register`, formData)
             .then(response => {
                 console.log('Success:', response.data);
-                // Handle successful registration here
+            
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Handle error here
             });
     };
 
@@ -133,10 +125,6 @@ const EmergencyPatientRegistration = () => {
                                     <option value="Days">Days</option>
                                 </select>
                             </div>
-                        </div>
-                        <div className="PatientRegistration-form-group">
-                            <label htmlFor="country">Country:</label>
-                            <input type="text" id="country" name="country" placeholder="Country" value={formData.country} onChange={handleChange} />
                         </div>
                         <div className="PatientRegistration-form-group">
                             <label htmlFor="county">County:</label>

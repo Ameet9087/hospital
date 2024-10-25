@@ -1,0 +1,60 @@
+/* Mohini_AppointmentReminder_WholePage_8/10/24 */
+.appointment-reminder-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.appointment-whatsapp-message {
+    background-color: #48b059; 
+    border: 1px solid #48b059;
+    border-radius: 20px;
+    font-size: var(--heading-font); 
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.9s forwards; 
+    transition: background-color 0.5s ease; 
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-90px);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 7;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .appointment-reminder-container {
+        padding: 15px; 
+    }
+
+    .appointment-whatsapp-message {
+        font-size: calc(var(--heading-font) * 0.9); 
+        padding: 8px 12px; 
+        margin-bottom: 15px; 
+    }
+}
+
+@media (max-width: 400px) {
+    .appointment-reminder-container {
+        padding: 10px; 
+    }
+
+    .appointment-whatsapp-message {
+        font-size: calc(var(--heading-font) * 0.8);
+        padding: 6px 10px;
+        margin-bottom: 10px; 
+    }
+}
+/* Mohini_AppointmentReminder_WholePage_8/10/24 */

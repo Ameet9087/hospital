@@ -1,0 +1,174 @@
+.patient-ot-schedule {
+    padding: 20px;
+    
+}
+
+.otadd-new-schedule-book{
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+}
+
+.otadd-new-schedule-book:hover{
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.ot-addnew-book-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    
+}
+
+.ot-addnew-book-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 900px;
+  
+}
+
+.otaddnewbook-modalform{
+    display: flex;
+}
+.otaddnewbook-modalformbtn{
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    margin-left: 40px;
+    margin-top: 20px;
+    border-radius: 5px;
+
+}
+.otaddnewbook-modalformbtn:hover{
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+
+}
+
+.ot-addnew-book-modal-content label {
+    display: block;
+    margin-top: 10px;
+    width: 150px;
+}
+
+.ot-addnew-book-modal-content input, .ot-addnew-book-modal-content select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 500px; /* Adjust as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Modal Heading */
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Labels */
+.modal-content label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Inputs and Selects */
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Buttons */
+.modal-content button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--button-color);
+    color: white;
+}
+
+/* Submit button */
+.modal-content button:first-child {
+    background-color: var(--submit-button-color);
+}
+
+.modal-content button:first-child:hover {
+    background-color: var(--submit-button-hover-color);
+}
+
+/* Close button */
+.modal-content button:last-child {
+    background-color: red;  
+    margin-left: 10px;
+}
+
+.modal-content button:last-child:hover {
+    background-color: red
+}
+
+
+
+/* Button Hover Effects */
+.modal-content button:hover {
+    opacity: 0.9;
+}
+
+/* Adjusting for smaller screen sizes */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 90%;
+    }
+}
