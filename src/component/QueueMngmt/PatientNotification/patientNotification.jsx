@@ -268,7 +268,7 @@ const PatientNotification = () => {
       )} */}
 
       <CustomModal isOpen={showPopup} onClose={handleClosePopup}>
-        <AddPatientNotification notification={selectedNotification} />
+        <AddPatientNotification notification={selectedNotification} onSubmit={handleAddUpdate}/>
       </CustomModal>
       <div className="nGOpatientRegistration-pagination">
         <button onClick={handlePreviousPage} disabled={currentPage === 1}>

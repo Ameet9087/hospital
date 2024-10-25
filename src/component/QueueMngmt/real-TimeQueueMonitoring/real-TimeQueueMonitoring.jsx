@@ -258,7 +258,7 @@ const RealTimeQueueMonitoring = () => {
         </div>
       )} */}
       <CustomModal isOpen={showPopup} onClose={handleClosePopup}>
-        <AddRealTimeQueueMonitoring selectedData={selectedData} />
+        <AddRealTimeQueueMonitoring selectedData={selectedData} onSubmit={handleAddUpdate}/>
       </CustomModal>
 
       <div className="nGOpatientRegistration-pagination">

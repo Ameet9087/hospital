@@ -266,7 +266,7 @@ const PatientQueueDisplay = () => {
       </div>
 
       <CustomModal isOpen={showPopup} onClose={handleClosePopup}>
-        <AddPatientQueueDisplay selectedQueue={selectedPatient} />
+        <AddPatientQueueDisplay selectedQueue={selectedPatient} onSubmit={handleAddUpdate}/>
       </CustomModal>
 
       {/* {showPopup && (

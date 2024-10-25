@@ -236,7 +236,7 @@ const ServiceTimeTracking = () => {
       )} */}
 
       <CustomModal isOpen={showPopup} onClose={handleClosePopup}>
-        <AddServiceTimeTracking selectedTest={selectedTest} />
+        <AddServiceTimeTracking selectedTest={selectedTest} onSubmit={handleAddUpdate}/>
       </CustomModal>
       <div className="nGOpatientRegistration-pagination">
         <button

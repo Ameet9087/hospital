@@ -222,7 +222,7 @@ const QueuePrioritization = () => {
       </div>
 
       <CustomModal isOpen={showPopup} onClose={handleClosePopup}>
-        <AddQueuePrioritization editingItem={editingItem} />
+        <AddQueuePrioritization editingItem={editingItem} onSubmit={handleAddUpdate}/>
       </CustomModal>
 
       {/* {showPopup && (
