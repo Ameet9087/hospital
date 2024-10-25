@@ -118,9 +118,9 @@ const Sidebar = ({
     onSystemAdmin()
   }
   const handleSocialServiceClick = () => {
-    handleLinkClick('socialService')
-    onSocialService()
-  }
+    handleLinkClick("socialService");
+    onSocialService();
+  };
   const handleDisprensaryClick = () => {
     handleLinkClick('disprensary')
     onDisprensary()
@@ -2416,13 +2416,11 @@ const Sidebar = ({
             </ul>
           )}
         </li>
-
         <li
-          className={`custom-nav-item ${
-            activeLink === 'socialService-submenu1'
-              ? 'custom-nav-item-active'
-              : ''
-          }`}
+          className={`custom-nav-item ${activeLink === "socialService-submenu1"
+              ? "custom-nav-item-active"
+              : ""
+            }`}
         >
           <div
             className="custom-nav-link-content"
@@ -2438,6 +2436,31 @@ const Sidebar = ({
               {openMenus.socialService ? <LuChevronUp /> : <LuChevronDown />}
             </span>
           </div>
+          {openMenus.socialService && isOpen && (
+            <ul className="custom-submenu">
+              <li
+                onClick={() => handleItemClick("socialService", "submenu1")}
+                className={
+                  activeLink === "socialService-submenu1"
+                    ? "custom-submenu-active"
+                    : ""
+                }
+              >
+                <Link>SSU Patient List</Link>
+              </li>
+              <li
+                onClick={() => handleItemClick("socialService", "submenu2")}
+                className={
+                  activeLink === "socialService-submenu2"
+                    ? "custom-submenu-active"
+                    : ""
+                }
+              >
+                <Link>Patient Counseling</Link>
+              </li>
+             
+            </ul>
+          )}
         </li>
 
         <li
