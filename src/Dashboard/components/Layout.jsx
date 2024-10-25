@@ -12,7 +12,7 @@ import Emergency from "../../component/Emergency/Emergency";
 import Utilitiesmain from "../../component/UTILITIES/utilitiesmain";
 import SystemAdmin from "../../component/SystemAdmin/SystemAdmin";
 
-import SocialServicePage from "../../component/SocialServicesMain/SocialServicePage";
+import SocialServicePage from "../../component/SocialServicesMain/SocialServicesMainRoute";
 import Disprensary from "../../component/DispensaryPage/disprensaryRoute";
 import DynamicReport from "../../component/DynamicReport/DynamicReport";
 import Report from "../../component/Reports/Layout";
