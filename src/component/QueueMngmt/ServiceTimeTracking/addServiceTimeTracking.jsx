@@ -64,7 +64,6 @@ const AddServiceTimeTracking = ({ onClose, selectedTest, onSubmit }) => {
     <div className="addServiceTimeTracking-container">
       <div className="addServiceTimeTracking-header">
         <h3>{selectedTest ? 'Update' : 'Add'} Service Time Tracking</h3>
-        <button className="addServiceTimeTracking-close-btn" onClick={onClose}>x</button>
       </div>
 
       <form onSubmit={handleSubmit}>  {/* Handle form submit */}

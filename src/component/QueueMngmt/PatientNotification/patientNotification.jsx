@@ -1,9 +1,14 @@
 /* Ajhar Tamboli patientNotification.jsx 10-10-24 */
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "./patientNotification.css";
 import AddPatientNotification from "./addPatientNotification.jsx";
+import * as XLSX from 'xlsx';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import useCustomAlert from '../../../alerts/useCustomAlert';
+import CustomModal from '../../../CustomModel/CustomModal';
+
 
 const PatientNotification = () => {
   const [labTests, setLabTests] = useState([]); // State to hold fetched lab tests
@@ -12,6 +17,11 @@ const PatientNotification = () => {
   const [recordsPerPage] = useState(10); // Number of records per page
   const [selectedNotification, setSelectedNotification] = useState(null); // State for selected notification
   const [searchTerm, setSearchTerm] = useState(''); // State for the search term
+  const tableRef = useRef(null);
+  const [columnWidths, setColumnWidths] = useState(Array(12).fill("auto"));
+
+
+  const { success, warning, error, CustomAlerts } = useCustomAlert();
 
   // Fetch lab tests from the API
   useEffect(() => {
@@ -28,6 +38,8 @@ const PatientNotification = () => {
       setLabTests(data); // Set the fetched data to state
     } catch (error) {
       console.error('Failed to fetch lab tests:', error);
+      warning('Failed to fetch Data');
+
     }
   };
 
@@ -42,9 +54,13 @@ const PatientNotification = () => {
   };
 
   // Filter lab tests based on the search term
+  // Filter lab tests based on the search term across multiple fields
   const filteredLabTests = labTests.filter(test =>
-    test.notificationStatus?.toLowerCase().includes(searchTerm.toLowerCase())
+    Object.values(test).some(value =>
+      value && value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
   );
+
 
   // Calculate total number of pages
   const totalPages = Math.ceil(filteredLabTests.length / recordsPerPage);
@@ -65,6 +81,8 @@ const PatientNotification = () => {
     const method = selectedNotification ? 'PUT' : 'POST';
 
     console.log('Sending Data:', formData); // Log the data being sent
+    success('Successfully Add or Update');
+
 
     try {
       const response = await fetch(apiUrl, {
@@ -87,6 +105,8 @@ const PatientNotification = () => {
       handleClosePopup(); // Close the form after successful submission
     } catch (error) {
       console.error('Error:', error);
+      warning('Failed to Add or Update');
+
       // Optionally, handle errors (e.g., show a notification)
     }
   };
@@ -97,6 +117,57 @@ const PatientNotification = () => {
     }
   };
 
+  // Print the table displaying only currentRecords
+  const printTable = () => {
+    const printContent = `
+    <table>
+      <thead>
+        <tr>
+          <th>Queue ID</th>
+          <th>Patient ID</th>
+          <th>Patient Mo.No</th>
+          <th>Remark</th>
+          <th>Notifications Status</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${currentRecords
+        .map(
+          (test) => `
+            <tr>
+              <td>${test.queueNumber}</td>
+              <td>${test.id}</td>
+              <td>${test.mobile}</td>
+              <td>${test.remark}</td>
+              <td>${test.notificationStatus}</td>
+              <td>${test.status}</td>
+            </tr>
+          `
+        )
+        .join('')}
+      </tbody>
+    </table>`;
+
+    const printWindow = window.open("", "", "height=600,width=800");
+    printWindow.document.write("<html><head><title>Patient Queue</title>");
+    printWindow.document.write("</head><body>");
+    printWindow.document.write(printContent);
+    printWindow.document.write("</body></html>");
+    printWindow.document.close();
+    printWindow.print();
+  };
+
+  // Export only the currentRecords to Excel
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(currentRecords);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "PatientQueue");
+
+    // Generate Excel file and download
+    XLSX.writeFile(workbook, "PatientQueueData_CurrentPage.xlsx");
+  };
+
   return (
     <div className="patientNotification-container">
       <div className="patientNotification-firstRow">
@@ -104,6 +175,8 @@ const PatientNotification = () => {
           <button className="patientNotification-add-button" onClick={() => handlePatientNotification()}>
             + Add Patient Notification
           </button>
+          <CustomAlerts />
+
         </div>
       </div>
       <div className="addpatientNotification-controls">
@@ -116,8 +189,7 @@ const PatientNotification = () => {
             To:
             <input type="date" defaultValue="2024-08-16" />
           </label>
-          <button className="addpatientNotification-star-button">☆</button>
-          <button className="addpatientNotification-ok-button">OK</button>
+
         </div>
       </div>
       <div className='patientNotification-search-N-result'>
@@ -125,48 +197,67 @@ const PatientNotification = () => {
           <i className="fa-solid fa-magnifying-glass"></i>
           <input
             type="text"
-            placeholder="Search by Notification Status..."
+            placeholder="Search..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
         <div className="patientNotification-results-info">
           <span>Showing {currentRecords.length} of {filteredLabTests.length} results</span>
-          <button className="patientNotification-print-button"><i className="fa-solid fa-print"></i> Print</button>
-        </div>
+          <button
+            className="patientQueueDisplay-print-button"
+            onClick={exportToExcel}
+          >
+            <i className="fa-regular fa-file-excel"></i> Export
+          </button>
+          <button className="patientQueueDisplay-print-button" onClick={printTable}>
+            <i className="fa-solid fa-print"></i> Print
+          </button>        </div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Queue ID</th>
-            <th>Patient ID</th>
-            <th>Patient Mo.No</th>
-            <th>Remark</th>
-            <th>Notifications Status</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentRecords.map((test, index) => (
-            <tr key={index}>
-              <td>{test.queueNumber}</td>
-              <td>{test.id}</td>
-              <td>{test.mobile}</td>
-              <td>{test.remark}</td>
-              <td>{test.notificationStatus}</td>
-              <td>{test.status}</td>
-              <td>
-                <button className="patientNotification-edit-button" onClick={() => handlePatientNotification(test)}>
-                  Edit
-                </button>
-              </td>
+
+
+      <div className="table-container">
+        <table ref={tableRef}>
+          <thead>
+            <tr>
+              {["Queue ID", "Patient ID", "Patient Mo.No", "Remark", "Notifications Status", "Status", "Actions"].map((header, index) => (
+                <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div className="resizer" onMouseDown={startResizing(tableRef, setColumnWidths)(index)}></div>
+                  </div>
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentRecords.length === 0 ? (
+              <tr>
+                <td colSpan="7" style={{ textAlign: 'center', color: 'red' }}>No Rows to Show</td>
+              </tr>
+            ) : (
+              currentRecords.map((test) => (
+                <tr key={test.id}>
+                  <td>{test.queueNumber}</td>
+                  <td>{test.id}</td>
+                  <td>{test.mobile}</td>
+                  <td>{test.remark}</td>
+                  <td>{test.notificationStatus}</td>
+                  <td>{test.status}</td>
+                  <td>
+                    <button className="queuePrioritization-edit-button" onClick={() => handlePatientNotification(test)}>
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
       {/* Modal Popup */}
-      {showPopup && (
+      {/* {showPopup && (
         <div className="patientNotification-modal">
           <div className="patientNotification-modal-content">
             <AddPatientNotification onClose={handleClosePopup}
@@ -174,8 +265,11 @@ const PatientNotification = () => {
               onSubmit={handleAddUpdate} />
           </div>
         </div>
-      )}
+      )} */}
 
+      <CustomModal isOpen={showPopup} onClose={handleClosePopup}>
+        <AddPatientNotification notification={selectedNotification} />
+      </CustomModal>
       <div className="nGOpatientRegistration-pagination">
         <button onClick={handlePreviousPage} disabled={currentPage === 1}>
           « Previous

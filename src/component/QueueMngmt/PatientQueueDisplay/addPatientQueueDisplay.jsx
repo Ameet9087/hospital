@@ -58,7 +58,6 @@ const AddPatientQueueDisplay = ({ onClose, onSubmit, selectedQueue }) => {
     <div className="addPatientQueueDisplay-container">
       <div className="addPatientQueueDisplay-header">
         <h3>{selectedQueue ? 'Edit Patient Queue Display' : 'Add Patient Queue Display'}</h3>
-        <button className="addPatientQueueDisplay-close-btn" onClick={onClose}>x</button>
       </div>
 
       <form className="addPatientQueueDisplay-form" onSubmit={handleSubmit}>

@@ -1,9 +1,13 @@
 /* Ajhar Tamboli ServiceTimeTracking.jsx 09-10-24 */
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "./serviceTimeTracking.css";
 import AddServiceTimeTracking from "./addServiceTimeTracking.jsx";
+import * as XLSX from 'xlsx';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns.js';
+import useCustomAlert from '../../../alerts/useCustomAlert';
+import CustomModal from '../../../CustomModel/CustomModal';
 
 const ServiceTimeTracking = () => {
   const [labTests, setLabTests] = useState([]); // State to hold fetched lab tests
@@ -12,6 +16,11 @@ const ServiceTimeTracking = () => {
   const [currentPage, setCurrentPage] = useState(1); // State for the current page
   const [searchQuery, setSearchQuery] = useState(''); // State for search query
   const itemsPerPage = 10; // Number of items to display per page
+  const tableRef = useRef(); // Use a ref for the table element
+  const [columnWidths, setColumnWidths] = useState([80, 80, 100, 100, 100, 80, 120, 100, 60, 120, 80, 100]); // Set initial widths for columns
+
+
+  const { success, warning, error, CustomAlerts } = useCustomAlert();
 
   // Fetch lab tests from the API
   useEffect(() => {
@@ -28,9 +37,16 @@ const ServiceTimeTracking = () => {
       setLabTests(data); // Set the fetched data to state
     } catch (error) {
       console.error('Failed to fetch lab tests:', error);
+      warning('Failed to fetch Data');
+
     }
   };
-
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(currentTests);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Queue Monitoring");
+    XLSX.writeFile(workbook, "RealTimeQueueMonitoring.xlsx");
+  };
   const handleServiceTimeTracking = (test = null) => {
     setSelectedTest(test); // Set the selected test for editing, or null for adding new
     setShowPopup(true); // Show the popup
@@ -41,6 +57,8 @@ const ServiceTimeTracking = () => {
       ? `http://localhost:8080/api/patientsqueue/update/${selectedTest.id}`
       : 'http://localhost:8080/api/patientsqueue/add';
     const method = selectedTest ? 'PUT' : 'POST';
+    success('Successfully Add or Update');
+
 
     try {
       const response = await fetch(apiUrl, {
@@ -61,6 +79,8 @@ const ServiceTimeTracking = () => {
       handleClosePopup();
     } catch (error) {
       console.error('Error:', error);
+      warning('Failed to Add or Update');
+
     }
   };
 
@@ -74,10 +94,44 @@ const ServiceTimeTracking = () => {
   const indexOfFirstTest = indexOfLastTest - itemsPerPage;
 
   // Filter lab tests based on search query
-  const filteredLabTests = labTests.filter(test =>
-    test.status.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Filter lab tests based on search query
+  const filteredLabTests = labTests.filter(test => {
+    // Ensure the test object and properties are not null or undefined before calling toLowerCase()
+    return (
+      (test.status && test.status.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (test.queueNumber && test.queueNumber.toString().toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (test.id && test.id.toString().toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (test.arrivalTime && test.arrivalTime.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (test.appointmentTime && test.appointmentTime.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (test.completedTime && test.completedTime.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (test.serviceStartTime && test.serviceStartTime.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (test.waitTime && test.waitTime.toString().toLowerCase().includes(searchQuery.toLowerCase())) // Assuming waitTime is a number
+    );
+  });
 
+  const printTable = () => {
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            h2 { text-align: center; }
+          </style>
+        </head>
+        <body>
+          <h2>Queue Monitoring Table</h2>
+          ${tableRef.current.outerHTML} <!-- Use the tableRef content -->
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+  };
   // Get current tests based on filtered results
   const currentTests = filteredLabTests.slice(indexOfFirstTest, indexOfLastTest);
 
@@ -86,6 +140,8 @@ const ServiceTimeTracking = () => {
       <div className="serviceTimeTracking-firstRow">
         <div className="serviceTimeTracking-addBtn">
           <button className="serviceTimeTracking-add-button" onClick={() => handleServiceTimeTracking()}>+ Add Service Time Tracking</button>
+
+          <CustomAlerts />
         </div>
       </div>
       <div className="addserviceTimeTracking-controls">
@@ -99,8 +155,6 @@ const ServiceTimeTracking = () => {
             To:
             <input type="date" defaultValue="2024-08-16" />
           </label>
-          <button className="addserviceTimeTracking-star-button">☆</button>
-          <button className="addserviceTimeTracking-ok-button">OK</button>
         </div>
       </div>
       <div className='serviceTimeTracking-search-N-result'>
@@ -108,50 +162,68 @@ const ServiceTimeTracking = () => {
           <i className="fa-solid fa-magnifying-glass"></i>
           <input
             type="text"
-            placeholder="Search by Status..."
+            placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)} // Update search query on input change
           />
         </div>
         <div className="serviceTimeTracking-results-info">
           <span>Showing {currentTests.length} / {filteredLabTests.length} results</span>
-          <button className="serviceTimeTracking-print-button"><i className="fa-solid fa-print"></i> Print</button>
+          <button
+            className="patientQueueDisplay-print-button"
+            onClick={exportToExcel}>
+            <i className="fa-regular fa-file-excel"></i> Export
+          </button>
+          <button className="serviceTimeTracking-print-button" onClick={printTable}><i className="fa-solid fa-print"></i> Print</button>
         </div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Queue ID</th>
-            <th>Patient ID</th>
-            <th>Arrival Time</th>
-            <th>Appointment Time</th>
-            <th>Completed Time</th>
-            <th>Service Time</th>
-            <th>Wait Time</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentTests.map((test, index) => (
-            <tr key={index}>
-              <td>{test.queueNumber}</td>
-              <td>{test.id}</td>
-              <td>{test.arrivalTime}</td>
-              <td>{test.appointmentTime}</td>
-              <td>{test.completedTime}</td>
-              <td>{test.serviceStartTime}</td>
-              <td>{test.waitTime}</td>
-              <td>{test.status}</td>
-              <td>
-                <button className="serviceTimeTracking-edit-button" onClick={() => handleServiceTimeTracking(test)}>Edit</button>
-              </td>
+      <div className="table-container">
+        <table ref={tableRef}>
+          <thead>
+            <tr>
+
+              {[
+                "Queue ID", "Patient ID", "Arrival Time",
+                "Appo. Time", "Completed Time",
+                "Service Time", "Wait Time",
+                "Status", "Actions"
+              ].map((header, index) => (
+                <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div className="resizer" onMouseDown={startResizing(tableRef, setColumnWidths)(index)}></div>
+                  </div>
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentTests.length === 0 ? (
+              <tr>
+                <td colSpan="12" style={{ textAlign: 'center', color: 'red' }}>No Rows to Show</td>
+              </tr>
+            ) : (
+              currentTests.map((test) => (
+                <tr key={test.id}>
+                  <td>{test.queueNumber}</td>
+                  <td>{test.id}</td>
+                  <td>{test.arrivalTime}</td>
+                  <td>{test.appointmentTime}</td>
+                  <td>{test.completedTime}</td>
+                  <td>{test.serviceStartTime}</td>
+                  <td>{test.waitTime}</td>
+                  <td>{test.status}</td>
+                  <td>
+                    <button className="realTimeQueueMonitoring-edit-button" onClick={() => handleServiceTimeTracking(test)}>Edit</button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
       {/* Modal Popup */}
-      {showPopup && (
+      {/* {showPopup && (
         <div className="serviceTimeTracking-modal">
           <div className="serviceTimeTracking-modal-content">
             <AddServiceTimeTracking
@@ -161,7 +233,11 @@ const ServiceTimeTracking = () => {
             />
           </div>
         </div>
-      )}
+      )} */}
+
+      <CustomModal isOpen={showPopup} onClose={handleClosePopup}>
+        <AddServiceTimeTracking selectedTest={selectedTest} />
+      </CustomModal>
       <div className="nGOpatientRegistration-pagination">
         <button
           onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}

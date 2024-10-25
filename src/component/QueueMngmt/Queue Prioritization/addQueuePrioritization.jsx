@@ -6,7 +6,7 @@ import "./addQueuePrioritization.css";
 const AddQueuePrioritization = ({ onClose, editingItem, onSubmit }) => {
   const [formData, setFormData] = useState({
     id: '',
-    patientName: '',
+    name: '',
     priority: '',
     department: '',
     queueNumber: '',
@@ -20,7 +20,7 @@ const AddQueuePrioritization = ({ onClose, editingItem, onSubmit }) => {
     if (editingItem) {
       setFormData({
         id: editingItem.id,
-        patientName: editingItem.patientName,
+        name: editingItem.name,
         priority: editingItem.priority,
         department: editingItem.department,
         queueNumber: editingItem.queueNumber,
@@ -32,7 +32,7 @@ const AddQueuePrioritization = ({ onClose, editingItem, onSubmit }) => {
     } else {
       setFormData({
         id: '',
-        patientName: '',
+        name: '',
         priority: '',
         department: '',
         queueNumber: '',
@@ -61,7 +61,6 @@ const AddQueuePrioritization = ({ onClose, editingItem, onSubmit }) => {
     <div className="addQueuePrioritization-container">
       <div className="addQueuePrioritization-header">
         <h3>{editingItem ? 'Edit Queue Prioritization' : 'Add Queue Prioritization'}</h3>
-        <button className="addQueuePrioritization-close-btn" onClick={onClose}>x</button>
       </div>
 
       <form className="addQueuePrioritization-form" onSubmit={handleSubmit}>
@@ -97,9 +96,9 @@ const AddQueuePrioritization = ({ onClose, editingItem, onSubmit }) => {
               <label>Patient Name</label>
               <input
                 type="text"
-                name="patientName"
+                name="name"
                 placeholder="Enter Patient Name"
-                value={formData.patientName}
+                value={formData.name}
                 onChange={handleChange}
               />
             </div>
