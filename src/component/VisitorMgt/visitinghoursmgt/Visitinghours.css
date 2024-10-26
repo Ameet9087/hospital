@@ -1,0 +1,362 @@
+.visitinghoursmgt-page {
+    padding: 20px;
+    text-align: center;
+    background-color: var(--background-color);
+    height: auto;
+  }
+  
+  .visitinghoursmgt-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+ /* Resizable Columns */
+ .resizable-th {
+  position: relative;
+}
+
+.resizer {
+  width: 5px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: col-resize;
+  z-index: 1;
+}
+
+table th .resizer:hover {
+  background-color: #aaa;
+}
+
+  .visitinghoursmgt-add-button,
+  .visitinghoursmgt-export-button,
+  .visitinghoursmgt-print-button {
+    padding: 10px 15px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+    
+  }
+
+  .visitinghoursmgt-add-button {
+    visibility: hidden;
+  }
+
+  
+  .visitinghoursmgt-add-button:hover,
+  .visitinghoursmgt-export-button:hover,
+  .visitinghoursmgt-print-button:hover {
+    background-color: white;
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .visitinghoursmgt-search-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .visitinghoursmgt-search-icon {
+    margin-right: 10px;
+    color: #333;
+    font-size: 18px;
+  }
+  
+  .visitinghoursmgt-search-bar {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 200px;
+    background-color: white;
+  }
+  
+  .visitinghoursmgt-export-print {
+    display: flex;
+    align-items: center;
+  }
+  
+  .visitinghoursmgt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #f2f2f2;
+  }
+  
+  .visitinghoursmgt-table th,
+  .visitinghoursmgt-table td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .visitinghoursmgt-table th {
+    background-color: #eaeaea;
+    color: black;
+  }
+  
+  .visitinghoursmgt-table tr:hover {
+    background-color: #d1d1d1;
+  }
+  
+  .visitinghoursmgt-edit-button {
+    background-color: var(--button-color);
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    color: white;
+    border-radius: 5px;
+
+  }
+  
+.visitor1-search-N-results {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.visitor1-search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid gray;
+  background-color: white;
+  padding: 3px;
+}
+
+.visitor1-search-bar i {
+  color: gray;
+}
+
+.visitor1-search-bar input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.visitor1-search-button {
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  margin-left: 5px;
+  /* Adds some spacing between the input and the button */
+  border-radius: 4px;
+  /* Optional: rounds the corners of the button */
+  font-size: var(--font-size);
+  /* Adjusts the font size for consistency */
+}
+
+.visitor1-search-button:hover {
+  background-color: #e0e0e0;
+  /* Changes the background color on hover */
+}
+
+
+.visitor1-results-info {
+  text-align: right;
+  font-size: var(--font-size);
+  /* color: rgb(88, 87, 87); */
+  /* font-weight: bold; */
+  /* margin-top: 5px; */
+}
+
+
+
+
+.visitor1-ex-pri-buttons {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.visitor1-ex-pri-buttons:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.visitor1-action-button-add-reports {
+  background-color: var(--button-color);
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  border: none;
+}
+
+.visitor1-ex-pri-buttons:hover,
+.visitor1-action-button-add-reports:hover {
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.visitor1-searchInput {
+  /* padding: 5px; */
+  width: 300px;
+  transition: border-color 0.3s;
+  font-size: 14px;
+  margin-left: 0;
+
+}
+
+.visitor1-searchInput:focus {
+  border-color: skyblue;
+  outline: none;
+}
+
+.visitor1__formGroup label {
+  text-align: left;
+  margin: 0;
+  /* Remove any top/bottom margin to ensure alignment */
+  font-size: 14px;
+  font-weight: normal;
+  /* Adjust weight if needed */
+}
+
+.visitor1__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  z-index: 55555;
+}
+
+.visitor1__popup {
+  background-color: white;
+  padding: 20px;
+  position: relative;
+  width: 80%;
+
+}
+
+.visitor1-header h2 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 16px;
+}
+
+.visitor1-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+
+.visitor1__closeButton {
+  background: none;
+  border: none;
+  padding: 5px 12px;
+  /* font-size: 2rem; */
+  cursor: pointer;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+}
+
+.visitor1__form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.visitor1__formGroup {
+  display: flex;
+  align-items: center;
+}
+
+.visitor1__formGroup label {
+  width: 30%;
+  min-width: 150px;
+  /* Adjust as necessary */
+  margin-bottom: 5px;
+  font-size: 14px;
+  /* font-weight: bold; */
+}
+
+.visitor1__formGroup input,
+.visitor1__formGroup select {
+  width: 70%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.visitor1__ageInput {
+  display: flex;
+  gap: 10px;
+}
+
+.visitor1__ageInput input {
+  width: 50px;
+}
+
+.visitor1__formActions {
+  grid-column: span 2;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.visitor1__formActions button {
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.visitor1__formActions button:first-child {
+  background-color: #ccc;
+}
+
+.visitor1__formActions button:last-child {
+  background-color: var(--button-color);
+  color: white;
+}
+
+.visitor1__formActions button:last-child:hover {
+  background-color: var(--button-bg-color);
+}
+
+.visitor1__note {
+  grid-column: span 2;
+  margin-top: 0px;
+  color: green;
+}
+
+.visitor1__openButton {
+  padding: 10px 20px;
+  background-color: var(--button-bg-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

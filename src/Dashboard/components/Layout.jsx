@@ -54,6 +54,7 @@ import BloodBank from "../../component/BloodBank/bloodBankRoute";
 
 import TransportMainRouting from "../../component/TransportMain/transportMainRoute"
 import SuperUserMain from "../../component/SuperUserMain/superUserMainRoute";
+import VisitorManagement from "../../component/VisitorMgt/MainVisitorFile";
 import HRHome from "../../component/HRHome/HRHome";
 import Radiationtherapy from "../../component/RadiationTherapy/radiationtherapy";
 import ChemotherapyRouting from "../../component/ChemotherapyModule/ChemotherapyRoute";
@@ -106,6 +107,7 @@ const Layout = () => {
   const [showTransport, setShowTransport] = useState(false)
   const [showSuperUser, setShowSuperUser] = useState(false)
   const [showHR, setShowHR] = useState(false)
+  const [showVisitorManagement, setShowVisitorManagement] = useState(false)
   const [shoeRadiationtherapy,setShowRadiationTherapy] = useState(false)
   const [showChemotherapy, setshowChemotherapy] = useState(false);
   const [showPulmonology,setShowPulmonology] = useState(false)
@@ -151,6 +153,7 @@ const Layout = () => {
     setShowBloodBank(false);
     setShowTransport(false);
     setShowSuperUser(false);
+    setShowVisitorManagement(false);
     setShowHR(false);
     setShowRadiationTherapy(false);
     setshowChemotherapy(false);    setShowPulmonology(false);
@@ -315,6 +318,10 @@ const Layout = () => {
     resetAllToggles();
     setShowHR(!showHR);
   };
+  const toggleVisitorManagement = () => {
+    resetAllToggles();
+    setShowVisitorManagement(!showVisitorManagement);
+  };
   const toggleRadiationTherapy = () => {
     resetAllToggles();
     setShowRadiationTherapy(!shoeRadiationtherapy);
@@ -381,6 +388,7 @@ const Layout = () => {
         onBloodbank={toggelBloodBank}
         onTransport={toggelTransport}
         onSuperUser={toggleSuperUser}
+        onVisitorManagement={toggleVisitorManagement}
         onHr={toggleHR}
         onRadiationTherapy={toggleRadiationTherapy}
         onPulmonology={togglePulmonology}
@@ -443,7 +451,7 @@ const Layout = () => {
           {showBloodBank && <BloodBank />}
           {showTransport && <TransportMainRouting />}
           {showSuperUser && <SuperUserMain />}
-
+          {showVisitorManagement && <VisitorManagement />}
           {showHR && <HRHome />}
           {shoeRadiationtherapy && <Radiationtherapy />}
           {showChemotherapy && <ChemotherapyRouting />}   
