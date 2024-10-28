@@ -1,0 +1,245 @@
+.visitorbadges-page {
+  padding: 20px;
+  text-align: center;
+  background-color: var(--background-color);
+  height: auto;
+}
+
+.visitorbadges-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.visitorbadges-add-button {
+  visibility: hidden;
+}
+
+/* Resizable Columns */
+.resizable-th {
+  position: relative;
+}
+
+.resizer {
+  width: 5px;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: col-resize;
+  z-index: 1;
+}
+
+table th .resizer:hover {
+  background-color: #aaa;
+}
+
+.visitor1-header h2 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-size: 18px;
+}
+
+.visitor1-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+
+.visitorbadges-add-button,
+.visitorbadges-export-button,
+.visitorbadges-print-button {
+  padding: 10px 15px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.3s;
+}
+
+.visitorbadges-add-button:hover,
+.visitorbadges-export-button:hover,
+.visitorbadges-print-button:hover {
+  background-color: white;
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.visitorbadges-search-container {
+  display: flex;
+  align-items: center;
+}
+
+.visitorbadges-search-icon {
+  margin-right: 10px;
+  color: #333;
+  font-size: 18px;
+}
+
+.visitorbadges-search-bar {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 200px;
+  background-color: white;
+}
+
+.visitorbadges-export-print {
+  display: flex;
+  align-items: center;
+}
+
+.visitorbadges-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #f2f2f2;
+}
+
+.visitorbadges-table th,
+.visitorbadges-table td {
+  border: 1px solid #ccc;
+  padding: 12px;
+  text-align: left;
+}
+
+.visitorbadges-table th {
+  background-color: #eaeaea;
+  color: black;
+}
+
+.visitorbadges-table tr:hover {
+  background-color: #d1d1d1;
+}
+
+.visitorbadges-edit-button {
+  background-color: var(--button-color);
+  border: none;
+  padding: 5px;
+  margin-left: 5px;
+  cursor: pointer;
+  color: white;
+  border-radius: 5px;
+
+}
+
+.visitorbadges-search-N-results {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.visitorbadges-search-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid gray;
+  background-color: white;
+  padding: 3px;
+}
+
+.visitorbadges-search-bar i {
+  color: gray;
+}
+
+.visitorbadges-search-bar input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.visitorbadges-search-button {
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  margin-left: 5px;
+  /* Adds some spacing between the input and the button */
+  border-radius: 4px;
+  /* Optional: rounds the corners of the button */
+  font-size: var(--font-size);
+  /* Adjusts the font size for consistency */
+}
+
+.visitorbadges-search-button:hover {
+  background-color: #e0e0e0;
+  /* Changes the background color on hover */
+}
+
+
+.visitorbadges-results-info {
+  text-align: right;
+  font-size: var(--font-size);
+  /* color: rgb(88, 87, 87); */
+  /* font-weight: bold; */
+  /* margin-top: 5px; */
+}
+
+
+
+
+.visitorbadges-ex-pri-buttons {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.visitorbadges-ex-pri-buttons:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.visitorbadges-action-button-add-reports {
+  background-color: var(--button-color);
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  border: none;
+}
+
+.visitorbadges-ex-pri-buttons:hover,
+.visitorbadges-action-button-add-reports:hover {
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.visitorbadges-searchInput {
+  /* padding: 5px; */
+  width: 300px;
+  transition: border-color 0.3s;
+  font-size: 14px;
+  margin-left: 0;
+
+}
+
+.visitorbadges-searchInput:focus {
+  border-color: skyblue;
+  outline: none;
+}
+
+.visitorbadges__formGroup label {
+  text-align: left;
+  margin: 0;
+  /* Remove any top/bottom margin to ensure alignment */
+  font-size: 14px;
+  font-weight: normal;
+  /* Adjust weight if needed */
+}

@@ -1,0 +1,99 @@
+.pulmonology-respiratoryfuntest-container {
+    padding: 20px;
+  }
+  
+  .pulmonology-respiratoryfuntest-btn {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+   
+  }
+  
+  .pulmonology-respiratoryfuntest-btn:hover {
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+
+  
+  .pulmonology-respiratoryfuntest-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .pulmonology-respiratoryfuntest-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 800px;
+   
+  }
+  
+  .pulmonology-respiratoryfuntest-modal-edit-btn {
+    margin-left: 5px;
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+  }
+  .pulmonology-respiratoryfuntest-modal-btns {
+    display: flex;
+    padding: 20px;
+    margin-top: 15px;
+    gap: 20px;
+  }
+  .pulmonology-respiratoryfuntest-modal-contentform{
+    display: flex;
+    padding: 10px;
+
+  }
+  .pulmonology-respiratoryfuntest-modal-contentform label{
+    width: 200px;
+  font-size: 16px;
+  }
+  .pulmonology-respiratoryfuntest-modal-contentform input{
+    width: 400px;
+  padding: 5px;
+  border-radius: 5px;
+  }
+
+  
+  .pulmonology-respiratoryfuntest-modal-btns button {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    
+  }
+  
+  .pulmonology-respiratoryfuntest-modal-btns button:hover {
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+
+.pulmonology-respiratoryfuntest-search{
+  margin: 5px;
+}

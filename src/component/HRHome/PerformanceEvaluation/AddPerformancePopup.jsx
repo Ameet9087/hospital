@@ -25,49 +25,67 @@ function AddPerformancePopup({ onClose, onAdd }) {
     };
 
     return (
-        <div className="popup-overlay">
-            <div className="popup-content">
-                <button className="addperformanceclose-popup" onClick={onClose}>X</button>
+       
 
-                <h2>Add Performance Evaluation</h2>
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Employee ID:
+        <div className="addperformance__overlay">
+            <div className="addperformance__popup">
+                <div className="addperformance__header">
+                    <h2>Add Performance Evaluation</h2>
+                    <button
+                        onClick={onClose}
+                        className="addperformance__closeButton"
+                    >
+                        X
+                    </button>
+                </div>
+                <form className="addperformance__form" onSubmit={handleSubmit}>
+                    <div className="addperformance__formGroup">
+                        <label>
+                            Employee ID: </label>
                         <input
                             type="number"
                             value={employeeId}
                             onChange={(e) => setEmployeeId(e.target.value)}
                             required
                         />
-                    </label>
-                    <label>
-                        Evaluation Date:
+
+                    </div>
+                    <div className="addperformance__formGroup">
+                        <label>
+                            Evaluation Date:</label>
                         <input
                             type="date"
                             value={evaluationDate}
                             onChange={(e) => setEvaluationDate(e.target.value)}
                             required
                         />
-                    </label>
-                    <label>
-                        Evaluator Name:
+
+                    </div>
+                    <div className="addperformance__formGroup">
+                        <label>
+                            Evaluator Name: </label>
                         <input
                             type="text"
                             value={evaluatorName}
                             onChange={(e) => setEvaluatorName(e.target.value)}
                             required
                         />
-                    </label>
-                    <label>
-                        Feedback:
-                        <textarea
+
+                    </div>
+                    <div className="addperformance__formGroup">
+                        <label>
+                            Feedback: </label>
+                        <input
+                            type='text'
                             value={feedback}
                             onChange={(e) => setFeedback(e.target.value)}
                             required
                         />
-                    </label>
-                    <label>
-                        Score:
+
+                    </div>
+                    <div className="addperformance__formGroup">
+                        <label>
+                            Score:  </label>
                         <input
                             type="number"
                             value={score}
@@ -76,12 +94,18 @@ function AddPerformancePopup({ onClose, onAdd }) {
                             min="1"
                             max="10"
                         />
-                    </label>
-                    <button className='actionbtns' type="submit">Add Evaluation</button>
-                    <button className='actionbtns' type="button" onClick={onClose}>
-                        Cancel
-                    </button>
+
+                    </div>
+
+
+                    <div className="addperformance__formActions">
+                        <button type="button" onClick={onClose}>
+                            Cancel
+                        </button>
+                        <button type="submit">Register</button>
+                    </div>
                 </form>
+
             </div>
         </div>
     );
