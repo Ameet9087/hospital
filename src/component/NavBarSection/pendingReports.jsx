@@ -109,8 +109,6 @@ function PendingReports() {
                 onChange={handleDateToChange}
               />
             </label>
-            <button className="pendingReports-star-button">☆</button>
-            <button className="pendingReports-ok-button">OK</button>
           </div>
         </div>
         <div className="pendingReports-category-select">
@@ -150,9 +148,7 @@ function PendingReports() {
             {/* Add more options here */}
           </select>
         </div>
-        <button className="pendingReports-load-button">
-          Load <i className="fa fa-refresh" />
-        </button>
+        
       </div>
       <div className="pendingReports-searchbar-N-showing">
         <div className="pendingReports-search-bar">
@@ -165,6 +161,9 @@ function PendingReports() {
         </div>
         <div className="pendingReports-results-info">
           <span>Showing 0 / 0 results</span>
+          <button className="pendingReports-print-button" onClick={handlePrint}>
+          <i className="fa fa-file-excel"></i> Export
+          </button>
           <button className="pendingReports-print-button" onClick={handlePrint}>
             <i className="fa-solid fa-print"></i> Print
           </button>

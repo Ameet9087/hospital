@@ -84,10 +84,7 @@ function SSPReportsInternalConsumption() {
         To:
         <input type="date" defaultValue="2024-08-16" />
       </label>
-      <button className="sSPReportsInternalConsumption-star-button">☆</button>
-    <button className="sSPReportsInternalConsumption-more-btn">-</button>
-      <button className="sSPReportsInternalConsumption-ok-button">OK</button>
-    </div>
+   </div>
 
         <div className="sSPReportsInternalConsumption-filter">
           <button className='sSPReportsInternalConsumption-print-btn'>Show Report</button>

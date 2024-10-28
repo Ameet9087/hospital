@@ -420,8 +420,8 @@ const SalesStockDetails = () => {
         doc.output('dataurlnewwindow');
     };
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
+    // if (loading) return <p>Loading...</p>;
+    // if (error) return <p>{error}</p>;
 
     return (
 
@@ -463,6 +463,20 @@ const SalesStockDetails = () => {
                             <input type="checkbox" /> Show Zero Quantity
                         </label>
                     </div>
+                    <div className="dispenSalesStockDetails-controls">
+        {/* Your date range and button controls */}
+          <div className="dispenSalesStockDetails-date-range">
+            <label>
+              From:
+              <input type="date" defaultValue="2024-08-09" />
+            </label>
+            <label>
+              To:
+              <input type="date" defaultValue="2024-08-16" />
+            </label>
+           
+          </div>
+      </div>
 
                     <div className='dispenSalesStockDetails-search-N-result'>
                         <div className="dispenSalesStockDetails-search-bar">

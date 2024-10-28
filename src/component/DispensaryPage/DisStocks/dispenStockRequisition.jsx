@@ -214,9 +214,7 @@ function DispenStockRequisition() {
         To:
         <input type="date" defaultValue="2024-08-16" />
       </label>
-      <button className="dispenStockRequisition-star-button">☆</button>
-    <button className="dispenStockRequisition-more-btn">-</button>
-      <button className="dispenStockRequisition-ok-button">OK</button>
+
     </div>
 
           </div>
@@ -227,6 +225,7 @@ function DispenStockRequisition() {
             </div>
             <div className="dispenStockRequisition-results-info">
               Showing {requisitions.length} / {requisitions.length} results
+              <button className='dispenStockRequisition-print-btn' onClick={handlePrint}><i className="fa-solid fa-file-excel"></i> Export</button>
               <button className='dispenStockRequisition-print-btn' onClick={handlePrint}><i class="fa-solid fa-print"></i> Print</button>
             </div>
           </div>

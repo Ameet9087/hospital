@@ -61,6 +61,19 @@ function SSPRequisition() {
         </div>
       )}
 
+<div className="sSPRequisition-controls">
+          <div className="sSPRequisition-date-range">
+      <label>
+        From:
+        <input type="date" defaultValue="2024-08-09" />
+      </label>
+      <label>
+        To:
+        <input type="date" defaultValue="2024-08-16" />
+      </label>
+
+    </div>
+</div>
        <div className="sSPRequisition-search-N-results">
           <div className="sSPRequisition-search-bar">
             <i className="fa-solid fa-magnifying-glass"></i>
@@ -80,11 +93,11 @@ function SSPRequisition() {
           </div>
         </div>
 
-      {loading ? (
+      {/* {loading ? (
         <p>Loading requisitions...</p>
       ) : error ? (
         <p>Error: {error}</p>
-      ) : (
+      ) : ( */}
         <table className="sSPRequisition-table">
           <thead>
             <tr>
@@ -112,7 +125,7 @@ function SSPRequisition() {
             ))}
           </tbody>
         </table>
-      )}
+      {/* )} */}
 
       {/* <div className="sSPRequisition-pagination">
         <span>1 to {requisitions.length} of {requisitions.length}</span>

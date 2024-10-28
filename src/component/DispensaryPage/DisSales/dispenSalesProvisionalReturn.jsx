@@ -50,8 +50,7 @@ function DispenSalesProvisionalReturn() {
             To:
             <input type="date" defaultValue="2024-08-16" />
           </label>
-          <button className="dispenSalesProvisionalReturn-star-button">☆</button>
-          <button className="dispenSalesProvisionalReturn-ok-button">OK</button>
+          
         </div>
       </div>
 
@@ -62,7 +61,8 @@ function DispenSalesProvisionalReturn() {
         </div>
         <div className="dispenSalesProvisionalReturn-results-info">
           Showing {provisionalReturns.length} / {provisionalReturns.length} results
-          <button className='dispenSalesProvisionalReturn-print-btn' onClick={handlePrint}>Print</button>
+          <button className='dispenSalesProvisionalReturn-print-btn' onClick={""}> <i className="fa-solid fa-file-excel"></i> Export</button>
+          <button className='dispenSalesProvisionalReturn-print-btn' onClick={handlePrint}><i class="fa-solid fa-print"></i> Print</button>
         </div>
       </div>
 

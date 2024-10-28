@@ -106,6 +106,18 @@ function RDopdbilling() {
 
   return (
     <div className="rd-billing-container">
+            <div className="rd-billing-controls">
+        <div className="rd-billing-date-range">
+          <label>
+            From:
+            <input type="date" defaultValue="2024-08-09" />
+          </label>
+          <label>
+            To:
+            <input type="date" defaultValue="2024-08-16" />
+          </label>
+ </div>
+      </div>
       <header className="rd-billing-header">
         <div className="rd-billing-controls">
           <div className="rd-billing-search">

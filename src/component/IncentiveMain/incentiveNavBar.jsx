@@ -12,7 +12,6 @@ const IncentiveNavBar = () => {
         <li><NavLink to="/incentiveReport"> Reports</NavLink></li>
         <li><NavLink to="/insentiveSettings"> Setting</NavLink></li>
 
-        <li><NavLink to="incentiveTransaction">Transaction</NavLink></li>
 
 
         </div>

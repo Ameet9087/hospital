@@ -74,9 +74,7 @@ function DispenSalesSettelmentReceipts() {
              To:
              <input type="date" defaultValue="2024-08-16" />
            </label>
-           <button className="dispenSalesSettelmentReceipts-star-button">☆</button>
-           <button className="dispenSalesSettelmentReceipts-ok-button">OK</button>
-         </div>
+</div>
          {/* <button className='dispenSalesSettelmentReceipts-CreateRequisition'>Load Data</button> */}
        </div>
        <div className="dispenSalesSettelmentReceipts-search-N-results">

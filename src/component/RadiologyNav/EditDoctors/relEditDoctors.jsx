@@ -95,10 +95,7 @@ function RDLEditDoctors() {
             To:
             <input type="date" defaultValue="2024-08-16" />
           </label>
-          <button className="relEditDoctors-star-button">☆</button>
-          <button className="relEditDoctors-more-btn">-</button>
-          <button className="relEditDoctors-ok-button">OK</button>
-        </div>
+ </div>
       </div>
       <div className="relEditDoctors-search-N-results">
         <div className="relEditDoctors-search-bar">

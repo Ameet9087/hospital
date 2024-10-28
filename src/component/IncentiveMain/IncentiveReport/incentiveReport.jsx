@@ -26,9 +26,7 @@ const IncentiveReport = () => {
           <input type="date" />
           <label>To: </label>
           <input type="date" />
-          <button className="incentiveReportNew-icon-button incentiveReportNew-star">★</button>
-          <button className="incentiveReportNew-icon-button incentiveReportNew-dash">-</button>
-          <button className="incentiveReportNew-ok-button">OK</button>
+
 
         </div>
       <div className="incentiveReportNew-Select-Doctor">

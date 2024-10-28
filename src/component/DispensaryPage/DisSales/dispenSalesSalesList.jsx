@@ -54,13 +54,9 @@ function DispenSalesSalesList() {
             To:
             <input type="date" defaultValue="2024-08-16" />
           </label>
-          <button className="dispenSalesSalesList-star-button">☆</button>
-          <button className="dispenSalesSalesList-ok-button">OK</button>
+          
         </div>
-        <div className='dispenSalesSalesList-CreateRequisition-div'>
-        <button className='dispenSalesSalesList-CreateRequisition'>Load Invoices</button>
-
-        </div>
+       
       </div>
       <div className="dispenSalesSalesList-search-N-results">
         <div className="dispenSalesSalesList-search-bar">
@@ -69,6 +65,12 @@ function DispenSalesSalesList() {
         </div>
         <div className="dispenSalesSalesList-results-info">
           Showing {salesList.length} results
+        <button className="dispenSalesSalesList-print-button" onClick={""}>
+            <i className="fa-solid fa-file-excel"></i> Export
+          </button>
+          <button className="dispenSalesSalesList-print-button" onClick={handlePrint}>
+            <i className="fa-solid fa-print"></i> Print
+          </button>
         </div>
       </div>
       <div style={{ display: 'none' }}>

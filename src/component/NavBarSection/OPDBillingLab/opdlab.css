@@ -1,13 +1,36 @@
-.lab-billing-container{
+.opdlab-billing-container{
     background-color: var(--background-color);
     width: 100%;
     padding: 20px;
 }
-  .lab-billing-header{
+.opdlab-billing-controls {
+  display: flex;
+  margin-bottom: 10px;
+}
+.opdlab-billing-date-range {
+  display: flex;
+  align-items: center;
+  width: 38%;
+  gap: 10px;
+  background-color: #f0f0f0;
+  padding: 1px 10px;
+}
+.opdlab-billing-date-range label{
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  font-size: var(--font-size);
+}
+
+.opdlab-billing-date-range input[type="date"] {
+  padding: 3px;
+  margin-left: 10px;
+}
+  .opdopdlab-billing-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
   }
   
   .rd-billing-title {
@@ -15,18 +38,18 @@
     color: #333;
   }
   
-  .lab-billing-controls {
+  .opdopdlab-billing-controls {
     display: flex;
     width: 100%;
    justify-content: space-between;
   }
   
-  .lab-billing-search {
+  .opdlab-billing-search {
     position: relative;
     width: 300px;
   }
   
-  .lab-search-input {
+  .opdlab-search-input {
     width: 100%;
     padding: 8px;
     font-size: 14px;
@@ -35,7 +58,7 @@
   }
   
 
-  .lab-billing-buttons .lab-btn {
+  .opdlab-billing-buttons .opdlab-btn {
     padding: 5px;
     background-color: #3598dc;
     color: #fff;
@@ -48,31 +71,31 @@
 
   }
   
-  .lab-btn.export-btn {
+  .opdlab-btn.export-btn {
     background-color:var(--button-color);
     padding: 5px;
     font-size: 14px;
   }
-  .lab-btn.export-btn:hover{
+  .opdlab-btn.export-btn:hover{
     background-color:var(--button-hover-background-color) ;
     color:var(--button-hover-text-color) ;
     border:1px solid var(--button-hover-border-color) ;
 
   }
-  .lab-btn.print-btn
+  .opdlab-btn.print-btn
    {
     background-color:var(--button-color);
     padding: 5px;
     font-size: 14px;
   }
 
-  .lab-btn.print-btn:hover{
+  .opdlab-btn.print-btn:hover{
     background-color:var(--button-hover-background-color) ;
     color:var(--button-hover-text-color) ;
     border:1px solid var(--button-hover-border-color) ;
 
   }
-  .lab-btn.print-row-btn{
+  .opdlab-btn.print-row-btn{
     background-color:var(--button-color);
     padding: 0px 5px;
     font-size: 14px;
@@ -81,7 +104,7 @@
     border-radius: 5px;
 
   }
-  .lab-btn.print-row-btn:hover{
+  .opdlab-btn.print-row-btn:hover{
     background-color:var(--button-hover-background-color) ;
     color:var(--button-hover-text-color) ;
     border:1px solid var(--button-hover-border-color) ;
@@ -89,7 +112,7 @@
   }
 
 
-  .lab-billing-modal-body {
+  .opdlab-billing-modal-body {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -101,32 +124,32 @@
   }
 
  
-  .lab-billing-modal-body p {
+  .opdlab-billing-modal-body p {
     margin: 10px;
     font-size: 14px;
     font-weight: 500;
   }
   
-  .lab-billing-modal-header {
+  .opdlab-billing-modal-header {
     font-size: 18px;
     font-weight: bold;
     color: #333;
   }
   
-  .lab-billing-modal-select {
+  .opdlab-billing-modal-select {
     display: flex;
     flex-direction: column;
     margin-bottom: 5px;
   }
   
-  .lab-billing-modal-select label {
+  .opdlab-billing-modal-select label {
     font-size: 14px;
     font-weight: 600;
     margin-bottom: 5px;
   }
   
-  .lab-billing-modal-dropdown,
-  .lab-billing-modal-input {
+  .opdlab-billing-modal-dropdown,
+  .opdlab-billing-modal-input {
     width: 100%;
     padding: 8px;
     border-radius: 5px;
@@ -134,19 +157,19 @@
     font-size: 14px;
   }
   
-  .lab-billing-modal-dropdown:focus,
-  .lab-billing-modal-input:focus {
+  .opdlab-billing-modal-dropdown:focus,
+  .opdlab-billing-modal-input:focus {
     outline: none;
     border-color: #007bff;
   }
   
-  .lab-billing-modal-footer {
+  .opdlab-billing-modal-footer {
     padding: 10px;
     display: flex;
     justify-content: flex-end;
   }
   
-  .lab-billing-modal-btn {
+  .opdlab-billing-modal-btn {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -156,7 +179,7 @@
     font-size: 16px;
   }
   
-  .lab-billing-modal-btn:hover {
+  .opdlab-billing-modal-btn:hover {
     background-color: #0056b3;
   }
   
