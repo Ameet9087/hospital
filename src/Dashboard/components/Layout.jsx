@@ -10,7 +10,7 @@ import Incentive from "../../component/IncentiveMain/incentiveApp";
 import Lab from "../../component/NavBarSection/Lab";
 import Emergency from "../../component/Emergency/Emergency";
 
-import Utilitiesmain from "../../component/UTILITIES/Utilitiesmain";
+// import Utilitiesmain from "../../component/UTILITIES/Utilitiesmain";
 
 import SystemAdmin from "../../component/SystemAdmin/SystemAdmin";
 

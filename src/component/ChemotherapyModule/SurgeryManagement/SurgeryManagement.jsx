@@ -68,6 +68,7 @@ const SurgeryManagement = () => {
         axios.post(`http://localhost:8000/api/surgeries/patient/${formData.patientID}`, surgeryData)
             .then(response => {
                 console.log('Form Data Submitted:', response.data);
+                alert("added Successfully");
                 setRecords([...records, response.data]);  // Add the new record to the existing ones
                 setShowForm(false);  // Hide form after submission
             })
