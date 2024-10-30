@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import * as XLSX from "xlsx";
 import "./opdlab.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
-import Modal from "react-bootstrap/Modal";
 import { API_BASE_URL } from "../../api/api";
 
 function Opdlab() {
@@ -199,8 +198,7 @@ function Opdlab() {
           <div className="lab-billing-modal-inner-container">
             <div className="lab-billing-modal-body">
               <button className="lab-billing-cancel-button" onClick={()=>setShowModal(false)}>X</button>
-              <div className="lab-ptninfo">
-                
+              <div className="lab-ptninfo">                
                 <div className="lab-billing-header">
                 <p>
                   <b>Patient Name:</b> {currentPatient?.newPatientVisitDTO?.firstName+" "+currentPatient?.newPatientVisitDTO?.lastName}

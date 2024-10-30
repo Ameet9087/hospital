@@ -3,6 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import './ManageImagingType.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../../api/api';
+import CustomModal from '../../CustomModel/CustomModal';
 
 const ManageImagingItem = () => {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -21,8 +22,6 @@ const ManageImagingItem = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
-
-  // Fetch imaging items and imaging types from the API when component mounts
   useEffect(() => {
     fetchImagingItems();
     fetchImagingTypes();
@@ -178,147 +177,132 @@ const ManageImagingItem = () => {
         </table>
       </div>
 
-      <Modal show={showEditModal} onHide={handleCloseModal} dialogClassName="manage-add-employee-role">
-        <div className="manage-modal-dialog">
-          <div className="manage-modal-modal-header">
-            <div className="manage-modal-modal-title">
-              {isEditMode ? 'Update Imaging Item' : 'Add New Imaging Item'}
-            </div>
-            <Button onClick={handleCloseModal} className="manage-modal-employee-role-btn">
-              X
-            </Button>
-          </div>
-          <div className="manage-modal-modal-body">
-  <Form onSubmit={handleSubmit}>
-    {/* Section 1: Imaging Type and Item Details */}
-    <div className="manage-modal-section">
-      <h3 className="manage-modal-section-title">Imaging Details</h3>
-      <Form.Group controlId="imagingType">
-        <Form.Label className="manage-modal-form-label">
-          Imaging Type <span className="manage-modal-text-danger">*</span>:
-        </Form.Label>
-        <Form.Control
-          as="select"
-          value={selectedImagingType}
-          onChange={(e) => setSelectedImagingType(e.target.value)}
-          required
-          className="manage-modal-form-control"
-        >
-          <option value="">Select Imaging Type</option>
-          {imagingTypeList.map((type) => (
-            <option key={type.imagingTypeId} value={type.imagingTypeId}>
-              {type.imagingTypeName}
-            </option>
-          ))}
-        </Form.Control>
-      </Form.Group>
-
-      <Form.Group controlId="role">
-        <Form.Label className="manage-modal-form-label">
-          Imaging Item Name <span className="manage-modal-text-danger">*</span>:
-        </Form.Label>
-        <Form.Control
-          type="text"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-          placeholder="Imaging Item Name"
-          required
-          className="manage-modal-form-control"
-        />
-      </Form.Group>
-
-      <Form.Group controlId="procedureCode">
-        <Form.Label className="manage-modal-form-label">
-          Procedure Code <span className="manage-modal-text-danger">*</span>:
-        </Form.Label>
-        <Form.Control
-          type="text"
-          value={procedureCode}
-          onChange={(e) => setProcedureCode(e.target.value)}
-          placeholder="Procedure Code"
-          required
-          className="manage-modal-form-control"
-        />
-      </Form.Group>
+      <CustomModal isOpen={showEditModal} onClose={handleCloseModal}>
+  <div className="manage-modal-dialog">
+    <div className="manage-modal-modal-header">
+      <div className="manage-modal-modal-title">
+        {isEditMode ? 'Update Imaging Item' : 'Add New Imaging Item'}
+      </div>
     </div>
+    <div className="manage-modal-modal-body">
+      <form onSubmit={handleSubmit}>
+        {/* Section 1: Imaging Type and Item Details */}
+        <div className="manage-modal-section">
+          <h3 className="manage-modal-section-title">Imaging Details</h3>
 
-    {/* Section 2: Pricing and Description */}
-    <div className="manage-modal-section">
-      <h3 className="manage-modal-section-title">Pricing and Additional Details</h3>
-      <Form.Group controlId="itemPrice">
-        <Form.Label className="manage-modal-form-label">
-          Item Price <span className="manage-modal-text-danger">*</span>:
-        </Form.Label>
-        <Form.Control
-          type="number"
-          value={itemPrice}
-          onChange={(e) => setItemPrice(parseFloat(e.target.value))}
-          placeholder="Item Price"
-          required
-          className="manage-modal-form-control"
-        />
-      </Form.Group>
+          <label className="manage-modal-form-label">
+            Imaging Type <span className="manage-modal-text-danger">*</span>:
+          
+          <select
+            value={selectedImagingType}
+            onChange={(e) => setSelectedImagingType(e.target.value)}
+            required
+            className="manage-modal-form-control"
+          >
+            <option value="">Select Imaging Type</option>
+            {imagingTypeList.map((type) => (
+              <option key={type.imagingTypeId} value={type.imagingTypeId}>
+                {type.imagingTypeName}
+              </option>
+            ))}
+          </select>
+          </label>
 
-      <Form.Group controlId="discount">
-        <Form.Label className="manage-modal-form-label">Discount:</Form.Label>
-        <Form.Control
-          type="number"
-          value={discount}
-          onChange={(e) => setDiscount(parseFloat(e.target.value))}
-          placeholder="Discount (%)"
-          className="manage-modal-form-control"
-        />
-      </Form.Group>
+          <label className="manage-modal-form-label">
+            Imaging Item Name <span className="manage-modal-text-danger">*</span>:
+        
+          <input
+            type="text"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            placeholder="Imaging Item Name"
+            required
+            className="manage-modal-form-control"
+          />  </label>
 
-      <Form.Group controlId="totalPrice">
-        <Form.Label className="manage-modal-form-label">Total Price:</Form.Label>
-        <Form.Control
-          type="number"
-          value={itemPrice - (itemPrice * (discount / 100))}
-          readOnly
-          className="manage-modal-form-control"
-        />
-      </Form.Group>
-
-      <Form.Group controlId="description">
-        <Form.Label className="manage-modal-form-label">Description:</Form.Label>
-        <Form.Control
-          as="textarea"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
-          className="manage-modal-form-control"
-        />
-      </Form.Group>
-    </div>
-
-    {/* Active Status */}
-    <Form.Group controlId="isActive">
-      <Form.Check
-        type="checkbox"
-        label="Is Active"
-        checked={isActive}
-        onChange={(e) => setIsActive(e.target.checked)}
-      />
-    </Form.Group>
-
-    <Form.Group controlId="isValidForReporting">
-      <Form.Check
-        type="checkbox"
-        label="Is Valid For Reporting"
-        checked={isValidForReporting}
-        onChange={(e) => setIsValidForReporting(e.target.checked)}
-      />
-    </Form.Group>
-
-    <Button type="submit" className="manage-modal-submit-btn">
-      {isEditMode ? 'Update' : 'Add'}
-    </Button>
-  </Form>
-</div>
-
+          <label className="manage-modal-form-label">
+            Procedure Code <span className="manage-modal-text-danger">*</span>:
+          
+          <input
+            type="text"
+            value={procedureCode}
+            onChange={(e) => setProcedureCode(e.target.value)}
+            placeholder="Procedure Code"
+            required
+            className="manage-modal-form-control"
+          />
+          </label>
         </div>
-      </Modal>
+
+        {/* Section 2: Pricing and Description */}
+        <div className="manage-modal-section">
+          <label className="manage-modal-form-label">
+            Item Price <span className="manage-modal-text-danger">*</span>:
+         
+          <input
+            type="number"
+            value={itemPrice}
+            onChange={(e) => setItemPrice(parseFloat(e.target.value))}
+            placeholder="Item Price"
+            required
+            className="manage-modal-form-control"
+          /> </label>
+
+          <label className="manage-modal-form-label">Discount:
+          <input
+            type="number"
+            value={discount}
+            onChange={(e) => setDiscount(parseFloat(e.target.value))}
+            placeholder="Discount (%)"
+            className="manage-modal-form-control"
+          /></label>
+
+          <label className="manage-modal-form-label">Total Price:
+          <input
+            type="number"
+            value={itemPrice - (itemPrice * (discount / 100))}
+            readOnly
+            className="manage-modal-form-control"
+          /></label>
+
+          <label className="manage-modal-form-label">Description:
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Description"
+            className="manage-modal-form-control"
+          /></label>
+        </div>
+
+        {/* Active Status */}
+        <div>
+          <input
+            type="checkbox"
+            id="isActive"
+            checked={isActive}
+            onChange={(e) => setIsActive(e.target.checked)}
+          />
+          <label htmlFor="isActive">Is Active</label>
+        </div>
+
+        <div>
+          <input
+            type="checkbox"
+            id="isValidForReporting"
+            checked={isValidForReporting}
+            onChange={(e) => setIsValidForReporting(e.target.checked)}
+          />
+          <label htmlFor="isValidForReporting">Is Valid For Reporting</label>
+        </div>
+
+        <Button type="submit" className="manage-modal-submit-btn">
+          {isEditMode ? 'Update' : 'Add'}
+        </Button>
+      </form>
+    </div>
+  </div>
+  </CustomModal>
+
     </div>
   );
 };

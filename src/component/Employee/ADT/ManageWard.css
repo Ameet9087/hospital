@@ -9,14 +9,13 @@
   .manage-add-ward-table-container {
     background-color: var(--background-color);
     border-radius: 5px;
-    /* Uncomment if needed: box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-    /* Uncomment if needed: padding: 15px; */
   }
   .manage-add-modal-employee-role-btn
   {
     background: var(--button-color);
     color: white;
-    padding: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
     border: 1px solid var(--button-color);
   }
   .manage-add-modal-employee-role-btn:hover{
@@ -136,22 +135,17 @@
 }
 
 .manage-add-employee-role {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  max-width: 500px; /* Adjust based on your design */
-  z-index: 1050;
-  background-color: white;
-  border-radius: 8px;
-  padding: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .manage-modal-dialog {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   /* height: 100vh; */
 }
 
@@ -161,8 +155,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 15px;
-  /* background-color: #f8f9fa;
-  border-bottom: 1px solid #dee2e6; */
 }
 
 .manage-modal-modal-title {

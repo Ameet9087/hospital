@@ -18,11 +18,12 @@
   padding: 10px 0px;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap; /* Enable wrapping for smaller screens */
+  flex-wrap: wrap; 
 }
 
 .superUserNav-Navigation-bar li {
-  margin: 0;
+  display: inline-flex;
+  flex-flow: row nowrap;
 }
 
 .superUserNav-Navigation-bar a {

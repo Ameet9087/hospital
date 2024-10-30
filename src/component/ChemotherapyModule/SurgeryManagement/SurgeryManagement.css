@@ -1,0 +1,85 @@
+.surgery-management-container {
+    width: auto;
+    margin: 20px;
+}
+
+.surgery-management {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: var(--background-color);
+    height: 90vh;
+    overflow-y: auto; /* Use 'auto' to handle overflow properly */
+}
+
+.surgery-management-left,
+.surgery-management-right {
+    width: 48%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) { /* Adjust this breakpoint as necessary */
+    .surgery-management {
+        flex-direction: column; /* Stack elements vertically */
+        height: auto; /* Allow height to adjust naturally */
+    }
+
+    .surgery-management-left,
+    .surgery-management-right {
+        width: 100%; /* Full width on smaller screens */
+        margin-bottom: 10px; /* Add a small margin between the stacked sections */
+    }
+}
+
+.surgery-management-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.surgery-management-group label {
+    flex: 0 0 120px; /* Fixed width for labels */
+    margin-right: 10px;
+    margin-left: 20px;
+    font-size: var(--heading-font);
+}
+
+.surgery-management-group input[type="text"],
+.surgery-management-group input[type="number"],
+.surgery-management-group input[type="date"],
+.surgery-management-group input[type="email"],
+.surgery-management-group textarea {
+    flex: 1;
+    padding: 4px;
+    font-size: var(--font-size);
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.surgery-management-submit-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    margin-left: 20px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.surgery-management-submit-btn:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-color);
+    background-color: white;
+}
+
+.mandatory {
+    color: red;
+}
+
+.surgery-management-left h3,
+.surgery-management-right h3 {
+    font-size: var(--heading-font);
+}
+

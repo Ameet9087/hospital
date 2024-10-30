@@ -2,7 +2,8 @@
 .hrmsLayout {
  display: flex;
  height: 100vh;
-overflow-x: scroll;
+ overflow-x: scroll;
+ margin: 0;
 }
 
 .hrmsLayout::-webkit-scrollbar{

@@ -143,24 +143,23 @@
     background-color: white;
 }
 
-.manage-add-employee-role {
+/* .manage-add-employee-role {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     margin: 0 auto;
-    max-width: 500px; /* Adjust based on your design */
+    max-width: 500px; 
     z-index: 1050;
     background-color: white;
     border-radius: 8px;
     padding: 20px;
-  }
+  } */
   
   .manage-modal-dialog {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 75vh;
     overflow-y: scroll;
     scrollbar-width: none;
   }
@@ -198,9 +197,12 @@
   }
   
   .manage-modal-form-label {
-    font-size: 16px;
-    
-    margin-bottom: 5px;
+    font-size: 14px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 2px;
+    align-items: center;
   }
   
   .manage-modal-text-danger {
@@ -208,9 +210,7 @@
   }
   
   .manage-modal-form-control {
-    width: 50%;
-    padding: 10px;
-    margin-bottom: 15px;
+    width: 70%;
     border: 1px solid #ced4da;
     border-radius: 4px;
   }
@@ -218,7 +218,8 @@
   .manage-modal-form-group {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    justify-content: space-between;
+    margin-bottom: 5px;
   }
   
   .manage-modal-form-check-input {
@@ -243,11 +244,12 @@
   }
 
   .manage-modal-section {
-    margin-bottom: 20px; /* Add some spacing between sections */
-    padding: 10px; /* Add padding to the section */
-    border: 1px solid #ced4da; /* Optional: Add a border for better separation */
-    border-radius: 4px; /* Rounded corners */
-    background-color: #f8f9fa; /* Light background color for sections */
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 2px;
+   flex-direction: column;
   }
   
   .manage-modal-section-title {

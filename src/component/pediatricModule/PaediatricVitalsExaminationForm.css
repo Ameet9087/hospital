@@ -1,0 +1,144 @@
+/* Mohini_PaediatricVitalsExaminationForm_WholePage_3/oct/24 */
+.immunization-record-form-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px; /* Reduced padding */
+  background-color: var(--background-color);
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+.immunization-record-form-title {
+  text-align: left;
+  font-size: var(--heading-font);
+  color: #333;
+  margin-bottom: 15px; /* Reduced margin */
+}
+
+.immunization-record-form {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.immunization-record-form-left,
+.immunization-record-form-right {
+  width: 48%;
+}
+
+.immunization-record-form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Reduced margin */
+  gap: 10px; /* Reduced gap */
+}
+
+.immunization-record-form-label {
+  flex: 0 0 140px; /* Reduced label width */
+  margin-right: 5px; /* Reduced margin */
+  font-size: var(--heading-font);
+}
+
+.immunization-record-form-input {
+  padding: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: var(--font-size);
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.immunization-record-form-input[type="text"],
+.immunization-record-form-input[type="number"],
+.immunization-record-form-input[type="date"] {
+  padding: 5px;
+  font-size: var(--font-size);
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.immunization-record-form-submit-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px; /* Reduced padding */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.immunization-record-form-submit-btn:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-color);
+  background-color: white;
+}
+
+.immunization-record-form-cancel-btn {
+  background-color: #f8d7da;
+  color: black;
+  border: none;
+  padding: 5px 10px; /* Reduced padding */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+
+.immunization-record-form-cancel-btn:hover {
+  background-color: #f5c6cb;
+}
+
+.mandatory {
+  color: red;
+}
+
+.immunization-record-form-buttons {
+  display: flex;
+  gap: 10px; /* Reduced gap */
+  justify-content: center;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .immunization-record-form {
+      flex-direction: column; /* Stack elements vertically */
+  }
+
+  .immunization-record-form-left,
+  .immunization-record-form-right {
+      width: 100%; /* Full width for mobile */
+  }
+
+  .immunization-record-form-group {
+      flex-direction: column; /* Stack label and input vertically */
+      align-items: flex-start; /* Align items to the left */
+      margin-bottom: 5px; /* Reduced margin */
+  }
+
+  .immunization-record-form-label {
+      flex: none; /* Reset flex property */
+      margin: 0 0 5px 0; /* Add margin below the label */
+  }
+
+  .immunization-record-form-input {
+      width: 100%; /* Full width for input fields */
+  }
+
+  .immunization-record-form-buttons {
+      flex-direction: column; /* Stack buttons vertically */
+      gap: 5px; /* Reduced gap for buttons */
+  }
+}
+
+@media (max-width: 480px) {
+  .immunization-record-form-title {
+      font-size: calc(var(--heading-font) - 2px); /* Slightly smaller font size */
+  }
+
+  .immunization-record-form-submit-btn,
+  .immunization-record-form-cancel-btn {
+      padding: 8px; /* Increased padding for touch targets */
+      font-size: calc(var(--font-size) - 1px); /* Slightly smaller font size */
+  }
+}
+/* Mohini_PaediatricVitalsExaminationForm_WholePage_3/oct/24 */

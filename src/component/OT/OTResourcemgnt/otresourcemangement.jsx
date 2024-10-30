@@ -76,7 +76,7 @@ const OTResourceManagement = () => {
     };
 
     return (
-        <div className="ot-resource-management">
+        <div className="">
             <button className='otresourcemgntbtn' onClick={() => setShowAddOTModal(true)}>Add OT</button>
 
             <table ref={tableRef}>

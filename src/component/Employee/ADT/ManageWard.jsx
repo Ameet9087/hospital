@@ -3,6 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import './ManageWard.css';
 import { API_BASE_URL } from '../../api/api';
+import CustomModal from '../../CustomModel/CustomModal';
 
 const ManageWard = () => {
   const [showModal, setShowModal] = useState(false);
@@ -45,7 +46,7 @@ const ManageWard = () => {
     setWardName(ward.wardName);
     setWardCode(ward.wardCode);
     setWardLocation(ward.wardLocation);
-    setSubStore(ward.subStore);
+    setSubStore(ward.subStore.subStoreName);
     setIsActive(ward.isActive);
     setOccupied(ward.occupied);
     setVacant(ward.vacant);
@@ -115,9 +116,9 @@ const ManageWard = () => {
     <div className="manage-add-ward-page">
       <div className="manage-add-ward-table-container">
         <div className="manage-add-ward-manage-section">
-          <Button className="manage-add-ward-btn" onClick={handleAddClick}>
+          <button className="manage-add-ward-btn" onClick={handleAddClick}>
             + Add Ward
-          </Button>
+          </button>
         </div>
         <input
           type="text"
@@ -168,19 +169,19 @@ const ManageWard = () => {
                   <td>{ward.wardName}</td>
                   <td>{ward.wardCode}</td>
                   <td>{ward.wardLocation}</td>
-                  <td>{ward.subStore}</td>
+                  <td>{ward?.subStore?.subStoreName}</td>
                   <td>{ward.occupied}</td>
                   <td>{ward.vacant}</td>
                   <td>{ward.reserved}</td>
                   <td>{ward.numberOfBeds}</td>
                   <td>{ward.isActive ? 'True' : 'False'}</td>
                   <td>
-                    <Button
+                    <button
                       className="manage-add-ward-edit-btn"
                       onClick={() => handleEditClick(ward)}
                     >
                       Edit
-                    </Button>
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -189,151 +190,143 @@ const ManageWard = () => {
         </div>
       </div>
 
-      <Modal
-        show={showModal}
-        onHide={handleCloseModal}
-        dialogClassName="manage-add-employee-role"
-      >
-        <div className="manage-modal-dialog">
-          <div className="manage-modal-modal-header">
-            <div className="manage-modal-modal-title">
-              {modalType === 'edit' ? 'Update Ward Department' : 'Add New Ward'}
-            </div>
-            <Button
-              onClick={handleCloseModal}
-              className="manage-modal-employee-role-btn"
-            >
-              X
-            </Button>
-          </div>
-          <div className="manage-modal-modal-body">
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="wardName">
-                <Form.Label className="manage-modal-form-label">
-                  Ward Name <span className="manage-modal-text-danger">*</span>:
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  value={wardName}
-                  onChange={(e) => setWardName(e.target.value)}
-                  placeholder="Ward Name"
-                  required
-                  className="manage-modal-form-control"
-                />
-              </Form.Group>
-
-              <Form.Group controlId="wardCode">
-                <Form.Label className="manage-modal-form-label">
-                  Ward Code:
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  value={wardCode}
-                  onChange={(e) => setWardCode(e.target.value)}
-                  placeholder="Ward Code"
-                  className="manage-modal-form-control"
-                />
-              </Form.Group>
-
-              <Form.Group controlId="wardLocation">
-                <Form.Label className="manage-modal-form-label">
-                  Ward Location:
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  value={wardLocation}
-                  onChange={(e) => setWardLocation(e.target.value)}
-                  placeholder="Ward Location"
-                  className="manage-modal-form-control"
-                />
-              </Form.Group>
-
-              <Form.Group controlId="subStore">
-                <Form.Label className="manage-modal-form-label">
-                  Sub Store:
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  value={subStore}
-                  onChange={(e) => setSubStore(e.target.value)}
-                  placeholder="Sub Store"
-                  className="manage-modal-form-control"
-                />
-              </Form.Group>
-
-              <Form.Group controlId="occupied">
-                <Form.Label className="manage-modal-form-label">
-                  Occupied:
-                </Form.Label>
-                <Form.Control
-                  type="number"
-                  value={occupied}
-                  onChange={(e) => setOccupied(parseInt(e.target.value))}
-                  placeholder="Occupied"
-                  className="manage-modal-form-control"
-                />
-              </Form.Group>
-
-              <Form.Group controlId="vacant">
-                <Form.Label className="manage-modal-form-label">
-                  Vacant:
-                </Form.Label>
-                <Form.Control
-                  type="number"
-                  value={vacant}
-                  onChange={(e) => setVacant(parseInt(e.target.value))}
-                  placeholder="Vacant"
-                  className="manage-modal-form-control"
-                />
-              </Form.Group>
-
-              <Form.Group controlId="reserved">
-                <Form.Label className="manage-modal-form-label">
-                  Reserved:
-                </Form.Label>
-                <Form.Control
-                  type="number"
-                  value={reserved}
-                  onChange={(e) => setReserved(parseInt(e.target.value))}
-                  placeholder="Reserved"
-                  className="manage-modal-form-control"
-                />
-              </Form.Group>
-
-              <Form.Group controlId="numberOfBeds">
-                <Form.Label className="manage-modal-form-label">
-                  Number of Beds:
-                </Form.Label>
-                <Form.Control
-                  type="number"
-                  value={numberOfBeds}
-                  onChange={(e) => setNumberOfBeds(parseInt(e.target.value))}
-                  placeholder="Number of Beds"
-                  className="manage-modal-form-control"
-                />
-              </Form.Group>
-
-              <Form.Group controlId="isActive" className="manage-modal-form-group">
-                <Form.Label className="manage-modal-form-label">
-                  Is Active:
-                </Form.Label>
-                <Form.Check
-                  type="checkbox"
-                  checked={isActive}
-                  onChange={(e) => setIsActive(e.target.checked)}
-                  className="manage-modal-form-check"
-                />
-              </Form.Group>
-
-              <div className="manage-modal-modal-footer">
-                <Button type="submit" className="manage-add-modal-employee-role-btn">
-                  {modalType === 'edit' ? 'Update Ward' : 'Add Ward'}
-                </Button>
-              </div>
-            </Form>
-          </div>
+      <CustomModal isOpen={showModal} onClose={handleCloseModal}>
+      <div className="manage-add-employee-role">
+  <div className="manage-modal-dialog">
+    <div className="manage-modal-modal-header">
+      <div className="manage-modal-modal-title">
+        {modalType === 'edit' ? 'Update Ward Department' : 'Add New Ward'}
+      </div>
+    </div>
+    <div className="manage-modal-modal-body">
+      <form onSubmit={handleSubmit}>
+        <div className="manage-modal-form-group">
+          <label className="manage-modal-form-label">
+            Ward Name <span className="manage-modal-text-danger">*</span>:
+          </label>
+          <input
+            type="text"
+            value={wardName}
+            onChange={(e) => setWardName(e.target.value)}
+            placeholder="Ward Name"
+            required
+            className="manage-modal-form-control"
+          />
         </div>
-      </Modal>
+
+        <div className="manage-modal-form-group">
+          <label className="manage-modal-form-label">
+            Ward Code:
+          </label>
+          <input
+            type="text"
+            value={wardCode}
+            onChange={(e) => setWardCode(e.target.value)}
+            placeholder="Ward Code"
+            className="manage-modal-form-control"
+          />
+        </div>
+
+        <div className="manage-modal-form-group">
+          <label className="manage-modal-form-label">
+            Ward Location:
+          </label>
+          <input
+            type="text"
+            value={wardLocation}
+            onChange={(e) => setWardLocation(e.target.value)}
+            placeholder="Ward Location"
+            className="manage-modal-form-control"
+          />
+        </div>
+
+        <div className="manage-modal-form-group">
+          <label className="manage-modal-form-label">
+            Sub Store:
+          </label>
+          <input
+            type="text"
+            value={subStore}
+            onChange={(e) => setSubStore(e.target.value)}
+            placeholder="Sub Store"
+            className="manage-modal-form-control"
+          />
+        </div>
+
+        {/* <div className="manage-modal-form-group">
+          <label className="manage-modal-form-label">
+            Occupied:
+          </label>
+          <input
+            type="number"
+            value={occupied}
+            onChange={(e) => setOccupied(parseInt(e.target.value))}
+            placeholder="Occupied"
+            className="manage-modal-form-control"
+          />
+        </div>
+
+        <div className="manage-modal-form-group">
+          <label className="manage-modal-form-label">
+            Vacant:
+          </label>
+          <input
+            type="number"
+            value={vacant}
+            onChange={(e) => setVacant(parseInt(e.target.value))}
+            placeholder="Vacant"
+            className="manage-modal-form-control"
+          />
+        </div>
+
+        <div className="manage-modal-form-group">
+          <label className="manage-modal-form-label">
+            Reserved:
+          </label>
+          <input
+            type="number"
+            value={reserved}
+            onChange={(e) => setReserved(parseInt(e.target.value))}
+            placeholder="Reserved"
+            className="manage-modal-form-control"
+          />
+        </div>
+
+        <div className="manage-modal-form-group">
+          <label className="manage-modal-form-label">
+            Number of Beds:
+          </label>
+          <input
+            type="number"
+            value={numberOfBeds}
+            onChange={(e) => setNumberOfBeds(parseInt(e.target.value))}
+            placeholder="Number of Beds"
+            className="manage-modal-form-control"
+          />
+        </div> */}
+
+        <div className="manage-modal-form-group">
+          <label className="manage-modal-form-label">
+            Is Active:
+          </label>
+          <input
+            type="checkbox"
+            checked={isActive}
+            onChange={(e) => setIsActive(e.target.checked)}
+            className="manage-modal-form-check"
+          />
+        </div>
+
+        <div className="manage-modal-modal-footer">
+          <button type="submit" className="manage-add-modal-employee-role-btn">
+            {modalType === 'edit' ? 'Update Ward' : 'Add Ward'}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+      </CustomModal>
     </div>
   );
 };

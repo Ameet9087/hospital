@@ -1,0 +1,89 @@
+
+.cancer-diagnosis-and-staging-container{
+    width: auto;
+    margin: 20px;
+}
+.cancer-diagnosis-and-staging {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: var(--background-color);
+    height: 90vh;
+    overflow-y: scroll;
+}
+
+.cancer-diagnosis-and-staging-left,
+.cancer-diagnosis-and-staging-right {
+    width: 48%;
+}
+
+.cancer-diagnosis-and-staging-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.cancer-diagnosis-and-staging-group label {
+    flex: 0 0 120px;
+    margin-right: 10px;
+    margin-left: 20px;
+    font-size: var(--heading-font);
+}
+
+.cancer-diagnosis-and-staging-group input[type="text"],
+.cancer-diagnosis-and-staging-group input[type="number"],
+.cancer-diagnosis-and-staging-group input[type="date"],
+.cancer-diagnosis-and-staging-group input[type="email"],
+.cancer-diagnosis-and-staging-group textarea {
+    flex: 1;
+    padding: 4px;
+    font-size: var(--font-size);
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.cancer-diagnosis-and-staging-submit-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    margin-left: 20px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.cancer-diagnosis-and-staging-submit-btn:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-color);
+    background-color: white;
+}
+
+.mandatory {
+    color: red;
+}
+
+.cancer-diagnosis-and-staging-left h3 {
+    font-size: var(--heading-font);
+}
+
+.cancer-diagnosis-and-staging-right h3 {
+    font-size: var(--heading-font);
+}
+@media (max-width: 768px) {
+    .cancer-diagnosis-and-staging {
+        flex-direction: column; /* Stack left and right sections vertically */
+        height: auto; /* Allow height to adjust based on content */
+    }
+
+    .cancer-diagnosis-and-staging-left,
+    .cancer-diagnosis-and-staging-right {
+        width: 100%; /* Full width for both sections */
+        margin-bottom: 20px; /* Space between the stacked sections */
+    }
+
+    .cancer-diagnosis-and-staging-submit-btn {
+        width: 100%; /* Full width for the submit button */
+    }
+}

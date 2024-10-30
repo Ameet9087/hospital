@@ -2,7 +2,11 @@
     background-color: var(--background-color);
     width: 100%;
     padding: 20px;
+<<<<<<< HEAD
 }  
+=======
+}
+>>>>>>> dd54e3c33a7c6fb616b4c5f7a9383afbe910dc5b
   .lab-billing-header{
     display: flex;
     justify-content: space-between;
@@ -88,6 +92,7 @@
 
   }
 
+<<<<<<< HEAD
   
   .lab-table-wrapper {
     overflow-x: auto;
@@ -168,6 +173,8 @@
     border: none;
     color: white;
   }
+=======
+>>>>>>> dd54e3c33a7c6fb616b4c5f7a9383afbe910dc5b
 
   .lab-billing-modal-body {
     height: 100%;

@@ -17,13 +17,13 @@ const DispensaryNavBar = () => {
     <nav className="dispensary-Navigation-bar">
       <ul>
         <div className='disPrescription-Navbttn-N-act'>
-          <li><NavLink to="/disPrescription">Prescription</NavLink></li>
-          <li><NavLink to="/dispenSales">Sale</NavLink></li>
-          <li><NavLink to="/salesStockDetails">Stock</NavLink></li>
-          <li><NavLink to="/dispenCouter">Counter</NavLink></li>
-          <li><NavLink to="/dispenReportList">Reports</NavLink></li>
+          <li><NavLink to="/dispensary/disPrescription">Prescription</NavLink></li>
+          <li><NavLink to="/dispensary/dispenSales">Sale</NavLink></li>
+          <li><NavLink to="/dispensary/salesStockDetails">Stock</NavLink></li>
+          <li><NavLink to="/dispensary/dispenCouter">Counter</NavLink></li>
+          <li><NavLink to="/dispensary/dispenReportList">Reports</NavLink></li>
           {/* <li><NavLink to="/dispenPatientConsump">Patient Consumption</NavLink></li> */}
-          <li><NavLink to="/dispenPatientConsumption">Patient Consumption</NavLink></li>
+          <li><NavLink to="/dispensary/dispenPatientConsumption">Patient Consumption</NavLink></li>
         </div>
         <div className='dispensary-Activebtn-N-LogOut'>
           <button className='activeDispensary-btn'>Active Dispensary: Main-Dispensary</button>

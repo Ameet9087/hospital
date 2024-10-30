@@ -129,5 +129,15 @@
     color: white;
     float: right;
   }
-  
+.viewAvailability-prescription-details .availability-yes {
+  color: green;
+  font-weight: bold;
+}
+
+.viewAvailability-prescription-details .availability-no {
+  color: red;
+  font-weight: bold;
+}
+
+
   

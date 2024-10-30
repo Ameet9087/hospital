@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import './ManageImagingType.css';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
-import axios from 'axios';
-import { API_BASE_URL } from '../../api/api';
+import React, { useState, useEffect, useRef } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
+import "./ManageImagingType.css";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import axios from "axios";
+import { API_BASE_URL } from "../../api/api";
+import CustomModal from "../../CustomModel/CustomModal";
 
 const ManageImagingType = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImagingType, setSelectedImagingType] = useState(null);
-  const [role, setRole] = useState('');
-  const [description, setDescription] = useState('');
+  const [role, setRole] = useState("");
+  const [description, setDescription] = useState("");
   const [isActive, setIsActive] = useState(false);
-  const [createdDate, setCreatedDate] = useState(''); // New state for created date
-  const [createdTime, setCreatedTime] = useState(''); // New state for created time
+  const [createdDate, setCreatedDate] = useState(""); // New state for created date
+  const [createdTime, setCreatedTime] = useState(""); // New state for created time
   const [isEditMode, setIsEditMode] = useState(false);
   const [imagingTypes, setImagingTypes] = useState([]);
   const [columnWidths, setColumnWidths] = useState({});
@@ -20,10 +21,12 @@ const ManageImagingType = () => {
   useEffect(() => {
     const fetchImagingTypes = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/radiology-settings/imaging-types`);
+        const response = await axios.get(
+          `${API_BASE_URL}/radiology-settings/imaging-types`
+        );
         setImagingTypes(response.data);
       } catch (error) {
-        console.error('Error fetching imaging types:', error);
+        console.error("Error fetching imaging types:", error);
       }
     };
     fetchImagingTypes();
@@ -32,20 +35,19 @@ const ManageImagingType = () => {
   const handleEditClick = (type) => {
     setSelectedImagingType(type);
     setRole(type.imagingTypeName); // Ensure the correct field name is used
-    setIsActive(type.isActive === 'true'); // Convert string 'true'/'false' to boolean
+    setIsActive(type.isActive === "true"); // Convert string 'true'/'false' to boolean
     setCreatedDate(type.createdDate); // Autofill created date
     setCreatedTime(type.createdTime); // Autofill created time
     setIsEditMode(true);
     setShowModal(true);
   };
-  
 
   const handleAddClick = () => {
     setSelectedImagingType(null);
-    setRole('');
+    setRole("");
     setIsActive(false);
-    setCreatedDate(''); // Clear date for new entries
-    setCreatedTime(''); // Clear time for new entries
+    setCreatedDate(""); // Clear date for new entries
+    setCreatedTime(""); // Clear time for new entries
     setIsEditMode(false);
     setShowModal(true);
   };
@@ -59,8 +61,8 @@ const ManageImagingType = () => {
     event.preventDefault();
     const imagingTypeData = {
       imagingTypeName: role,
-      isActive: isActive ? 'true' : 'false',
-      createdDate, 
+      isActive: isActive ? "true" : "false",
+      createdDate,
       createdTime,
     };
 
@@ -70,19 +72,24 @@ const ManageImagingType = () => {
           `${API_BASE_URL}/radiology-settings/imaging-types/${selectedImagingType.imagingTypeId}`,
           imagingTypeData
         );
-        console.log('Updated:', imagingTypeData);
+        console.log("Updated:", imagingTypeData);
       } else {
-        console.log('Added:', imagingTypeData);
+        console.log("Added:", imagingTypeData);
         // Add new imaging type
-        await axios.post(`${API_BASE_URL}/radiology-settings/imaging-types`, imagingTypeData);
-        console.log('Added:', imagingTypeData);
+        await axios.post(
+          `${API_BASE_URL}/radiology-settings/imaging-types`,
+          imagingTypeData
+        );
+        console.log("Added:", imagingTypeData);
       }
       // Refresh imaging types after update/add
-      const response = await axios.get(`${API_BASE_URL}/radiology-settings/imaging-types`);
+      const response = await axios.get(
+        `${API_BASE_URL}/radiology-settings/imaging-types`
+      );
       setImagingTypes(response.data);
       handleCloseModal();
     } catch (error) {
-      console.error('Error submitting imaging type:', error);
+      console.error("Error submitting imaging type:", error);
     }
   };
 
@@ -93,18 +100,29 @@ const ManageImagingType = () => {
           + Add Imaging Type
         </button>
       </div>
-      <input type="text" className="manage-imaging-type-search-bar" placeholder="Search" />
+      <input
+        type="text"
+        className="manage-imaging-type-search-bar"
+        placeholder="Search"
+      />
       <div className="table-container">
         <table ref={tableRef}>
           <thead>
             <tr>
-              {['Type Name', 'IsActive', 'Action'].map((header, index) => (
-                <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+              {["Type Name", "IsActive", "Action"].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
                   <div className="header-content">
                     <span>{header}</span>
                     <div
                       className="resizer"
-                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
                     ></div>
                   </div>
                 </th>
@@ -132,23 +150,24 @@ const ManageImagingType = () => {
         </table>
       </div>
 
-      <Modal show={showModal} onHide={handleCloseModal} dialogClassName="manage-add-employee-role">
+      <CustomModal 
+       isOpen={showModal}
+        onClose={handleCloseModal}
+>
         <div className="manage-modal-dialog">
           <div className="manage-modal-modal-header">
             <div className="manage-modal-modal-title">
-              {isEditMode ? 'Update Imaging Type' : 'Add Imaging Type'}
+              {isEditMode ? "Update Imaging Type" : "Add Imaging Type"}
             </div>
-            <Button onClick={handleCloseModal} className="manage-modal-employee-role-btn">
-              X
-            </Button>
           </div>
           <div className="manage-modal-modal-body">
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="role">
-                <Form.Label className="manage-modal-form-label">
-                  Imaging Item Name <span className="manage-modal-text-danger">*</span> :
-                </Form.Label>
-                <Form.Control
+            <form onSubmit={handleSubmit}>
+              <div className="manage-modal-form-group">
+                <label className="manage-modal-form-label">
+                  Imaging Item Name{" "}
+                  <span className="manage-modal-text-danger">*</span> :
+                </label>
+                <input
                   type="text"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
@@ -156,45 +175,45 @@ const ManageImagingType = () => {
                   required
                   className="manage-modal-form-control"
                 />
-              </Form.Group>
+              </div>
 
-              <Form.Group controlId="isActive" className="manage-modal-form-group">
-                <Form.Label className="manage-modal-form-label">Is Active :</Form.Label>
-                <Form.Check
+              <div className="manage-modal-form-group">
+                <label className="manage-modal-form-label">Is Active :</label>
+                <input
                   type="checkbox"
                   checked={isActive}
                   onChange={(e) => setIsActive(e.target.checked)}
                   className="manage-modal-form-check-input"
                 />
-              </Form.Group>
+              </div>
 
-              <Form.Group controlId="createdDate">
-                <Form.Label className="manage-modal-form-label">Created Date:</Form.Label>
-                <Form.Control
+              <div className="manage-modal-form-group">
+                <label className="manage-modal-form-label">Created Date:</label>
+                <input
                   type="date"
                   value={createdDate}
                   onChange={(e) => setCreatedDate(e.target.value)}
                   className="manage-modal-form-control"
                 />
-              </Form.Group>
+              </div>
 
-              <Form.Group controlId="createdTime">
-                <Form.Label className="manage-modal-form-label">Created Time:</Form.Label>
-                <Form.Control
+              <div className="manage-modal-form-group">
+                <label className="manage-modal-form-label">Created Time:</label>
+                <input
                   type="time"
                   value={createdTime}
                   onChange={(e) => setCreatedTime(e.target.value)}
                   className="manage-modal-form-control"
                 />
-              </Form.Group>
+              </div>
 
-              <Button type="submit" className="manage-modal-employee-btn">
-                {isEditMode ? 'Update' : 'Add'}
-              </Button>
-            </Form>
+              <button type="submit" className="manage-modal-employee-btn">
+                {isEditMode ? "Update" : "Add"}
+              </button>
+            </form>
           </div>
         </div>
-      </Modal>
+</CustomModal>
     </div>
   );
 };

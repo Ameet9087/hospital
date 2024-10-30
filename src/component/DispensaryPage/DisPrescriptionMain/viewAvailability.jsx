@@ -1,82 +1,26 @@
-// import React from 'react';
-// import "../DisPrescriptionMain/viewAvailability.css"
-// const PrescriptionDetails = ({ prescription, onClose }) => {
-//   return (
-//     <div className="viewAvailability-prescription-container">
-//       <div className="viewAvailability-header">
-//         <img src="your-logo-url" alt="Logo" className="viewAvailability-logo" />
-//         <div className="viewAvailability-close-button" onClick={onClose}>x</div>
-//       </div>
-
-//       <div className="viewAvailability-center">
-//           <p>KRA PIN:</p>
-//           <p>Phone No:</p>
-//           <p>Pharmacy Unit</p>
-//       </div>
-
-//       <div className="viewAvailability-info">
-//         <div className="viewAvailability-left">
-//           <p>Hospital Code: <span>{prescription.code}</span></p>
-//           <p>Patient Name: <span>{prescription.patientName}</span></p>
-//         </div>
-//         <div className="viewAvailability-right">
-//           <p>Requested By: <span>{prescription.requestedBy}</span></p>
-//           <p>Date: <span>{prescription.date}</span></p>
-//         </div>
-//       </div>
-
-//       <div className="viewAvailability-prescription-details">
-//         <h6>PRESCRIPTION DETAILS</h6>
-//         <table>
-//           <thead>
-//             <tr>
-//               <th>S.N</th>
-//               <th>Item Name</th>
-//               <th>Frequency</th>
-//               <th>Days</th>
-//               <th>Availability</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             <tr>
-//               <td>1</td>
-//               <td>DEXTROSE 5% IN NORMAL SALINE 500ML</td>
-//               <td>2</td>
-//               <td>1</td>
-//               <td className="viewAvailability-availability">YES</td>
-//             </tr>
-//             <tr>
-//               <td>2</td>
-//               <td>Sodium Chloride (Normal Saline) 0.9% 500ML</td>
-//               <td>1</td>
-//               <td>1</td>
-//               <td className="viewAvailability-availability">YES</td>
-//             </tr>
-//             <tr>
-//               <td>3</td>
-//               <td>Hydralazine Hydrochloride Injection & 20Mg/MI</td>
-//               <td>1</td>
-//               <td>1</td>
-//               <td className="viewAvailability-availability">YES</td>
-//             </tr>
-//           </tbody>
-//         </table>
-//       </div>
-
-//       <div className="viewAvailability-buttons">
-//         <button className="viewAvailability-print-button">Print <i class="fa-solid fa-print"></i></button>
-//         <button className="viewAvailability-dispatch-button">Dispatch <i class="fa-solid fa-share"></i></button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default PrescriptionDetails;
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import html2pdf from 'html2pdf.js';
 import "../DisPrescriptionMain/viewAvailability.css";
 
 const PrescriptionDetails = ({ prescription, onClose }) => {
+  const [stockData, setStockData] = useState({});
+
+  useEffect(() => {
+    // Function to fetch stock availability for medications
+    const fetchStockData = async () => {
+      try {
+        const response = await fetch('http://localhost:1415/api/add-items'); // Your API endpoint for stock status
+        const data = await response.json();
+        // Assume data is an object with medicationId as key and availability status as value
+        setStockData(data);
+      } catch (error) {
+        console.error('Error fetching stock data:', error);
+      }
+    };
+
+    fetchStockData();
+  }, []);
+
   const printDocument = () => {
     const element = document.getElementById('prescription-details');
     const options = {
@@ -84,19 +28,18 @@ const PrescriptionDetails = ({ prescription, onClose }) => {
       html2canvas: { scale: 2 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
-    
-    // Create a new PDF object
+
     const pdf = html2pdf().from(element).toPdf().get('pdf');
 
     pdf.then(pdf => {
-      // Convert PDF to a Blob
       const pdfBlob = pdf.output('blob');
       const pdfUrl = URL.createObjectURL(pdfBlob);
-
-      // Open the PDF in a new window
       window.open(pdfUrl, '_blank');
     });
   };
+
+  // Default to an empty array if medications are undefined
+  const medications = prescription.medications || [];
 
   return (
     <div className="viewAvailability-prescription-container">
@@ -105,21 +48,10 @@ const PrescriptionDetails = ({ prescription, onClose }) => {
         <div className="viewAvailability-close-button" onClick={onClose}>x</div>
       </div>
 
-      <div className="viewAvailability-center">
-        <p>KRA PIN:</p>
-        <p>Phone No:</p>
-        <p>Pharmacy Unit</p>
-      </div>
-
       <div className="viewAvailability-info">
-        <div className="viewAvailability-left">
-          <p>Hospital Code: <span>{prescription.code}</span></p>
-          <p>Patient Name: <span>{prescription.patientName}</span></p>
-        </div>
-        <div className="viewAvailability-right">
-          <p>Requested By: <span>{prescription.requestedBy}</span></p>
-          <p>Date: <span>{prescription.date}</span></p>
-        </div>
+        <p>Patient Name: <span>{`${prescription.newPatientVisitDTO.firstName || ''} ${prescription.newPatientVisitDTO.middleName || ''} ${prescription.newPatientVisitDTO.lastName || ''}`}</span></p>
+        <p>Requested By: <span>{prescription.requestedBy || 'N/A'}</span></p>
+        <p>Date: <span>{prescription.medicationDate || 'N/A'}</span></p>
       </div>
 
       <div id="prescription-details" className="viewAvailability-prescription-details">
@@ -130,32 +62,32 @@ const PrescriptionDetails = ({ prescription, onClose }) => {
               <th>S.N</th>
               <th>Item Name</th>
               <th>Frequency</th>
-              <th>Days</th>
+              <th>Dose</th>
+              <th>Last Taken</th>
+              <th>Comments</th>
               <th>Availability</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>DEXTROSE 5% IN NORMAL SALINE 500ML</td>
-              <td>2</td>
-              <td>1</td>
-              <td className="viewAvailability-availability">YES</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Sodium Chloride (Normal Saline) 0.9% 500ML</td>
-              <td>1</td>
-              <td>1</td>
-              <td className="viewAvailability-availability">YES</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Hydralazine Hydrochloride Injection & 20Mg/MI</td>
-              <td>1</td>
-              <td>1</td>
-              <td className="viewAvailability-availability">YES</td>
-            </tr>
+            {medications.length > 0 ? (
+              medications.map((medication, index) => (
+                <tr key={medication.medicationId}>
+                  <td>{index + 1}</td>
+                  <td>{medication.medicationName}</td>
+                  <td>{medication.frequency}</td>
+                  <td>{medication.dose}</td>
+                  <td>{medication.lastTaken}</td>
+                  <td>{medication.comments || 'N/A'}</td>
+                  <td className={stockData[medication.medicationId] ? 'availability-yes' : 'availability-no'}>
+  {stockData[medication.medicationId] ? 'Yes' : 'No'}
+</td>   
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7">No medications available</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

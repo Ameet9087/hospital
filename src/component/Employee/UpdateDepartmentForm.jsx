@@ -57,7 +57,6 @@ const UpdateDepartmentForm = ({ department, onClose }) => {
 
   return (
     <div className="update-setting-department-form-container">
-      <button className="update-setting-form-close-btn" onClick={onClose}>X</button>
       <form className="update-setting-department-form" onSubmit={handleSubmit}>
         <h2>{department && department.departmentCode ? 'Update Department' : 'Add Department'}</h2>
 

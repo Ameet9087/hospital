@@ -108,8 +108,8 @@ const SurgicalInstrumentTracking = () => {
             {showAddInstrumentModal && (
                 <div className="surgicaltrack-modal" onClick={() => setShowAddInstrumentModal(false)}>
                     <div className="surgicaltrack-modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2>{newInstrument.instrumentId ? 'Edit Instrument' : 'Add New Instrument'}</h2>
-                        <label>Instrument Name:</label>
+                        <h2 className='.surgicaltrack-modal-content-h2'>{newInstrument.instrumentId ? 'Edit Instrument' : 'Add New Instrument'}</h2>
+                        <label >Instrument Name:</label>
                         <input
                             type="text"
                             value={newInstrument.instrumentName}
@@ -122,7 +122,7 @@ const SurgicalInstrumentTracking = () => {
                             onChange={(e) => setNewInstrument({ ...newInstrument, availableQuantity: e.target.value })}
                         />
                         <label>Condition Status:</label>
-                        <select
+                        <select 
                             value={newInstrument.conditionStatus}
                             onChange={(e) => setNewInstrument({ ...newInstrument, conditionStatus: e.target.value })}
                         >
@@ -131,9 +131,9 @@ const SurgicalInstrumentTracking = () => {
                             <option value="Needs Repair">Needs Repair</option>
                             <option value="Out of Service">Out of Service</option>
                         </select>
-                        <div className='surgical-instrumenttrack-modalbtn'>
-                            <button onClick={handleAddInstrument}>Save</button>
-                            <button onClick={() => setShowAddInstrumentModal(false)}>Cancel</button>
+                        <div>
+                            <button className='surgicalinstrumenttrackingedit-btn' onClick={handleAddInstrument}>Save</button>
+                            <button className='surgicalinstrumenttrackingedit-btn' onClick={() => setShowAddInstrumentModal(false)}>Cancel</button>
                         </div>
                     </div>
                 </div>

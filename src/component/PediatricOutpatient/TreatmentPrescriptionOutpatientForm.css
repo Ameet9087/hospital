@@ -1,0 +1,150 @@
+
+.treatment-prescription-out-patient-form-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--background-color);
+    height: 90vh;
+    overflow-y: scroll;
+}
+
+.treatment-prescription-out-patient-title {
+    text-align: left; /* Align the heading to the left */
+    font-size: var(--heading-font); /* Set the font size */
+    color: #333; /* Set the text color */
+    margin-bottom: 20px; /* Add space below the heading */
+}
+
+.treatment-prescription-out-patient-form h3 {
+    text-align: left; /* Align the heading to the left */
+    font-size: var(--heading-font); /* Set the font size */
+    color: #333; /* Set the text color */
+    margin-bottom: 20px; /* Add space below the heading */
+}
+
+.treatment-prescription-out-patient-medication-group h4 {
+    text-align: left; /* Align the heading to the left */
+    font-size: var(--heading-font); /* Set the font size */
+    color: #333; /* Set the text color */
+    margin-bottom: 20px; /* Add space below the heading */
+}
+
+.treatment-prescription-out-patient-form h2 {
+    text-align: left; /* Align the heading to the left */
+    font-size: var(--heading-font); /* Set the font size */
+    color: #333; /* Set the text color */
+    margin-bottom: 20px; /* Add space below the heading */
+}
+
+.treatment-prescription-out-patient-medication-group {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.treatment-prescription-out-patient-medication-group h4 {
+    margin-bottom: 10px;
+}
+
+.treatment-prescription-out-patient-right,
+.treatment-prescription-out-patient-left {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Gap between left and right sections */
+}
+
+.treatment-prescription-out-patient-half {
+    flex: 1;
+    display: flex;
+    font-size: var(--font-size);
+    align-items: center;
+    margin-bottom: 15px; /* Gap between individual input fields */
+}
+
+.treatment-prescription-out-patient-half label {
+    flex-basis: 40%; /* Keep this if you want to maintain label width */
+    display: flex;
+    font-size: var(--font-size);
+    align-items: center;
+}
+
+.treatment-prescription-out-patient-half input,
+.treatment-prescription-out-patient-half textarea {
+    flex: 1; /* Allow input to take up the remaining space */
+    padding: 4px;
+    font-size: var(--font-size);
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.treatment-prescription-out-patient-submit-btn {
+    background-color: var(--button-color);
+    margin-bottom: 10px;
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.treatment-prescription-out-patient-submit-btn:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-color);
+    background-color: white;
+}
+
+.treatment-prescription-out-patient-group {
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: row; /* Stack label and input vertically */
+    margin-bottom: 15px; /* Space between groups */
+    font-size: var(--font-size);
+}
+
+.treatment-prescription-out-patient-label-input {
+    display: flex; /* Align label and input in a row */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 10px; /* Space between label and input */
+    font-size: var(--font-size);
+}
+
+.treatment-prescription-out-patient-group label {
+    margin-right: 10px; /* Space between label and input */
+    flex: 0 0 150px; /* Optional: fixed width for labels */
+    font-size: var(--font-size);
+}
+
+.treatment-prescription-out-patient-group input,
+.treatment-prescription-out-patient-group textarea {
+    flex: 1; /* Take remaining space */
+    padding: 5px; /* Add padding for inputs */
+    border: 1px solid #ccc; /* Optional: border styling */
+    border-radius: 4px; /* Optional: border radius */
+    font-size: var(--font-size);
+}
+
+/* immunization */
+
+.immu-treatment-prescription-out-patient-group {
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: column; /* Stack label and input vertically */
+    margin-bottom: 15px; /* Space between groups */
+    font-size: var(--font-size);
+}
+
+
+.immu-treatment-prescription-out-patient-group label {
+    margin-right: 10px; /* Space between label and input */
+    flex: 0 0 150px; /* Optional: fixed width for labels */
+    font-size: var(--font-size);
+}
+
+.immu-treatment-prescription-out-patient-group input,
+.immu-treatment-prescription-out-patient-group textarea {
+    flex: 1; /* Take remaining space */
+    padding: 5px; /* Add padding for inputs */
+    border: 1px solid #ccc; /* Optional: border styling */
+    border-radius: 4px; /* Optional: border radius */
+    font-size: var(--font-size);
+}

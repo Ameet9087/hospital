@@ -5,6 +5,7 @@ import LabLookUpAddNewLUp from "./labLookUpAddNewLUp";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import LabLookUpUpdateNewLUp from "./LabLookUpUpdateNewLUp";
 import axios from "axios";
+import { API_BASE_URL } from "../../api/api";
 
 const LookUps = () => {
   const [labTests, setLabTests] = useState([]); // State to store fetched lab lookups
@@ -21,7 +22,7 @@ const LookUps = () => {
     setError("");
     try {
       const response = await axios.get(
-        `http://localhost:1415/api/lab-lookups/getAll-lookup`
+        `${API_BASE_URL}/lab-lookups/getAll-lookup`
       );
       setLabTests(response.data); // Assuming API response is an array of lab lookups
     } catch (err) {

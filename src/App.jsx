@@ -1,19 +1,17 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Dashboard/components/Layout";
-import { BrowserRouter } from "react-router-dom";
-import Section from "./Section";
+import Disprensary from "./component/DispensaryPage/disprensaryRoute";
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <Layout />
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="dispensary/*" element={<Disprensary />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

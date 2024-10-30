@@ -1,0 +1,32 @@
+
+.radiationtherapy-header {
+    width: 100%; 
+    z-index: 1000; 
+    padding: 10px 10px;
+    font-size: 14px;
+    
+  }
+  
+  .radiationtherapy-header-button {
+    background-color: var(--button-color); 
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 8px;
+    margin-left: 5px;
+  }
+  
+ 
+  .radiationtherapy-header-button:last-child {
+    margin-right: 0;
+  }
+  
+  
+  .radiationtherapy-header-button:hover,
+  .radiationtherapy-header-button.active {
+    background-color: var(--button-bg-color); 
+    color: white;
+  }
+  

@@ -5,6 +5,7 @@ import AddDepartment from './AddDepartment';
 import './ManageDepartment.css';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../api/api';
+import CustomModal from '../CustomModel/CustomModal';
 
 const ManageDepartment = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -113,14 +114,11 @@ const ManageDepartment = () => {
       </div>
 
       {/* Modal for Add or Update Department */}
-      <Modal
-        show={showUpdateModal}
-        onHide={handleCloseUpdateModal}
-        dialogClassName="update-manage-modal-dialog" // Custom class for the dialog
-        className="update-manage-modal" // Custom class for the modal
-      >
-        <Modal.Body>
-          {selectedDepartment !== null ? (
+      <CustomModal 
+       isOpen={showUpdateModal}
+        onClose={handleCloseUpdateModal}
+>
+{selectedDepartment !== null ? (
             <UpdateDepartmentForm
               department={selectedDepartment}
               onClose={handleCloseUpdateModal}
@@ -128,8 +126,8 @@ const ManageDepartment = () => {
           ) : (
             <AddDepartment onClose={handleCloseUpdateModal} />
           )}
-        </Modal.Body>
-      </Modal>
+
+      </CustomModal>
     </div>
   );
 };

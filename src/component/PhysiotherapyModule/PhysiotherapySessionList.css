@@ -1,0 +1,38 @@
+/* Mohini_PhysiotherapyModule_PhysiotherapySessionList_30/sep/24 */
+.physiotherapy-session-list{
+   padding: 60px;
+   position: sticky;
+   background-color: var(--background-color);
+   /* height: 90vh; */
+   overflow-y: auto; 
+}
+.physiotherapy-session-list h1 {
+    text-align: left;           /* Ensure the heading is aligned to the left */
+    font-size: var(--heading-font); /* Set font size */
+    color: #333;                /* Set text color */
+    margin-bottom: 20px;        /* Space below the heading */
+  }
+  .physiotherapy-session-list-edit {
+    background-color: var(--button-color); /* Set the background color of the button */
+    color: white;                           /* Set the text color */
+    border: none;                           /* Remove default border */
+    padding: 5px 5px;                     /* Add padding for a better click area */
+    border-radius: 4px;                    /* Rounded corners */
+    cursor: pointer;                        /* Change cursor to pointer */
+    font-size: var(--font-size);           /* Font size */
+    margin-right: 10px;                    /* Add right margin for gap between buttons */
+    transition: background-color 0.3s;     /* Smooth transition for background color */
+  }
+  
+  .physiotherapy-session-list-edit:hover {
+    color: var(--button-color); /* Change background color on hover */
+     background-color: white;
+  }
+  
+.physiotherapy-session-no-row{
+    padding: 15px;
+    text-align: center;
+    background-color: antiquewhite;
+    font-size: var(--font-size);
+}
+/* Mohini_PhysiotherapyModule_PhysiotherapySessionList_30/sep/24 */

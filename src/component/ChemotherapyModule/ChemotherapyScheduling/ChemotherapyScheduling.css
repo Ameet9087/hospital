@@ -1,0 +1,97 @@
+.chemotherapy-scheduling-container {
+    width: auto;
+    margin: 20px;
+}
+
+.chemotherapy-scheduling {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: var(--background-color);
+    height: 90vh;
+    overflow-y: auto; /* Change to 'auto' to ensure scrolling when necessary */
+}
+
+/* Flex items */
+.chemotherapy-scheduling-left,
+.chemotherapy-scheduling-right {
+    width: 48%;
+}
+
+/* Scheduling group */
+.chemotherapy-scheduling-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.chemotherapy-scheduling-group label {
+    flex: 0 0 120px;
+    margin-right: 10px;
+    margin-left: 20px;
+    font-size: var(--heading-font);
+}
+
+.chemotherapy-scheduling-group input[type="text"],
+.chemotherapy-scheduling-group input[type="number"],
+.chemotherapy-scheduling-group input[type="date"],
+.chemotherapy-scheduling-group input[type="email"],
+.chemotherapy-scheduling-group textarea {
+    flex: 1;
+    padding: 4px;
+    font-size: var(--font-size);
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.chemotherapy-scheduling-submit-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    margin-left: 20px;
+    padding: 5px 10px; /* Adjust padding for a better button size */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.chemotherapy-scheduling-submit-btn:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-color);
+    background-color: white;
+}
+
+.mandatory {
+    color: red;
+}
+
+.chemotherapy-scheduling-left h3,
+.chemotherapy-scheduling-right h3 {
+    font-size: var(--heading-font);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .chemotherapy-scheduling {
+        flex-direction: column; /* Stack the left and right sections vertically */
+        height: auto; /* Allow height to adjust based on content */
+        padding: 10px; /* Reduce padding for smaller screens */
+    }
+
+    .chemotherapy-scheduling-left,
+    .chemotherapy-scheduling-right {
+        width: 100%; /* Full width on small screens */
+        margin-bottom: 20px; /* Add some space between sections */
+    }
+
+    .chemotherapy-scheduling-group label {
+        flex: 0 0 100px; /* Adjust label width for smaller screens */
+    }
+
+    .chemotherapy-scheduling-submit-btn {
+        margin-left: 0; /* Remove left margin for smaller screens */
+        width: 100%; /* Full width button */
+        padding: 10px; /* Increase padding for better touch targets */
+    }
+}

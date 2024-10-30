@@ -1,34 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
+import axios from 'axios';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
 
 import './ManageSubstore.css';
+import CustomModal from '../CustomModel/CustomModal';
+import { API_BASE_URL } from '../api/api';
 
 const ManageSubstore = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedSubstore, setSelectedSubstore] = useState(null);
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
-  const data = [
-    { name: 'Accounts', code: '0010', parentSubStore: '', email: '', phone: '', address: '', label: '', verification: 0, isActive: true },
-    { name: 'Brain Operations Store', code: '2001', parentSubStore: '', email: '', phone: '', address: '', label: '', verification: 0, isActive: true },
-    { name: 'Female Ward Substore', code: '', parentSubStore: '', email: '', phone: '', address: '', label: '', verification: 0, isActive: true },
-    { name: 'ICU Sub store', code: '', parentSubStore: '', email: '', phone: '', address: '', label: '', verification: 0, isActive: true },
-    { name: 'male ward SubStore', code: '', parentSubStore: '', email: '', phone: '', address: '', label: '', verification: 0, isActive: true },
-    { name: 'Maternity Substore', code: 'Maternity', parentSubStore: '', email: '', phone: '', address: '', label: 'Maternity Substore', verification: 0, isActive: true },
-    { name: 'Operations Store', code: '2000', parentSubStore: '', email: '', phone: '', address: '', label: '', verification: 0, isActive: true },
-    { name: 'Private Sub Store', code: '', parentSubStore: '', email: '', phone: '', address: '', label: '', verification: 0, isActive: true },
-    { name: 'SubStore1', code: '', parentSubStore: '', email: '', phone: '', address: 'ward', label: '', verification: 0, isActive: true },
-    { name: 'SubStore3', code: '', parentSubStore: '', email: '', phone: '', address: '', label: '', verification: 0, isActive: true },
-  ];
+  const [substores, setSubstores] = useState([]);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
+
+  // Fetch substores on component mount
+  useEffect(() => {
+    const fetchSubstores = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/substores`);
+        setSubstores(response.data);
+      } catch (error) {
+        console.error('Error fetching substores:', error);
+      }
+    };
+    fetchSubstores();
+  }, []);
 
   const handleAddClick = () => {
-    setSelectedSubstore(null); // Reset the selected substore for "Add" mode
+    setSelectedSubstore(null); // Reset selected substore for "Add" mode
     setShowModal(true);
   };
 
   const handleEditClick = (substore) => {
-    setSelectedSubstore(substore); // Set the selected substore for "Edit" mode
+    setSelectedSubstore(substore); // Set selected substore for "Edit" mode
     setShowModal(true);
   };
 
@@ -42,7 +47,7 @@ const ManageSubstore = () => {
       <div className="manage-substore-table-container">
         <div className="manage-substore-manage-section">
           <h1 className="manage-add-substore-btn" onClick={handleAddClick}>+ Add Substore</h1>
-          <div className="manage-substore-results-info">Showing 10 / 10 results</div>
+          <div className="manage-substore-results-info">Showing {substores.length} results</div>
         </div>
         <input type="text" placeholder="Search" className="manage-substore-search-input" />
 
@@ -52,13 +57,11 @@ const ManageSubstore = () => {
               {[
                 "Name",
                 "Code",
-                "Parent Substore",
                 "Email",
-                "Phone",
-                "Address",
+                "Contact No",
+                "Location",
+                "Description",
                 "Label",
-                "Verification",
-                "Is Active",
                 "Action"
               ].map((header, index) => (
                 <th
@@ -70,10 +73,7 @@ const ManageSubstore = () => {
                     <span>{header}</span>
                     <div
                       className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
+                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
                     ></div>
                   </div>
                 </th>
@@ -81,19 +81,17 @@ const ManageSubstore = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {substores.map((substore, index) => (
               <tr key={index}>
-                <td>{item.name}</td>
-                <td>{item.code}</td>
-                <td>{item.parentSubStore}</td>
-                <td>{item.email}</td>
-                <td>{item.phone}</td>
-                <td>{item.address}</td>
-                <td>{item.label}</td>
-                <td>{item.verification}</td>
-                <td>{item.isActive.toString()}</td>
+                <td>{substore.subStoreName}</td>
+                <td>{substore.code}</td>
+                <td>{substore.email}</td>
+                <td>{substore.contactNo}</td>
+                <td>{substore.location}</td>
+                <td>{substore.subStoreDescription}</td>
+                <td>{substore.label}</td>
                 <td>
-                  <Button className="manage-store-edit-btn" onClick={() => handleEditClick(item)}>
+                  <Button className="manage-store-edit-btn" onClick={() => handleEditClick(substore)}>
                     Edit
                   </Button>
                 </td>
@@ -102,65 +100,79 @@ const ManageSubstore = () => {
           </tbody>
         </table>
       </div>
-
-      {showModal && (
-        <div className="used-substore-manage">
-          <Modal show={showModal} onHide={handleCloseModal} size="lg" centered>
-            <Modal.Body>
-              <UpdateSubStore substore={selectedSubstore} onClose={handleCloseModal} />
-            </Modal.Body>
-          </Modal>
-        </div>
-      )}
+<CustomModal isOpen={showModal} onClose={handleCloseModal}>
+<UpdateSubStore substore={selectedSubstore} onClose={handleCloseModal}/>
+</CustomModal>
     </div>
   );
 };
 
 const UpdateSubStore = ({ substore, onClose }) => {
-  const handleSubmit = (e) => {
+  const [formData, setFormData] = useState({
+    subStoreName: substore?.subStoreName || '',
+    code: substore?.code || '',
+    email: substore?.email || '',
+    contactNo: substore?.contactNo || '',
+    location: substore?.location || '',
+    subStoreDescription: substore?.subStoreDescription || '',
+    label: substore?.label || ''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    onClose();
+    try {
+      if (substore) {
+        console.log(formData);
+        
+        await axios.put(`${API_BASE_URL}/substores/${substore.subStoreId}`, formData);
+      } else {
+        // Add new substore
+        await axios.post(`${API_BASE_URL}/substores/save`, formData);
+      }
+      onClose();
+    } catch (error) {
+      console.error('Error saving substore:', error);
+    }
   };
 
   return (
     <div className="update-substore-modal-container">
       <div className="update-substore-modal-header">
         <h2>{substore ? "Update SubStore" : "Add SubStore"}</h2>
-        <button className="update-substore-close-btn" onClick={onClose}>&times;</button>
       </div>
       <form className="update-substore-form-container" onSubmit={handleSubmit}>
         <div className="update-substore-form-group">
           <label>SubStore Name<span className="update-substore-required">*</span>:</label>
-          <input type="text" defaultValue={substore ? substore.name : ''} className="update-substore-input-field" />
+          <input type="text" name="subStoreName" value={formData.subStoreName} onChange={handleInputChange} className="update-substore-input-field" required />
         </div>
         <div className="update-substore-form-group">
           <label>Code :</label>
-          <input type="text" value={substore ? substore.code : ''} readOnly={!!substore} className="update-substore-input-field" />
+          <input type="text" name="code" value={formData.code} onChange={handleInputChange} className="update-substore-input-field" readOnly={!!substore} />
         </div>
         <div className="update-substore-form-group">
           <label>Email :</label>
-          <input type="email" defaultValue={substore ? substore.email : ''} className="update-substore-input-field" />
+          <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="update-substore-input-field" />
         </div>
         <div className="update-substore-form-group">
           <label>Contact No :</label>
-          <input type="text" defaultValue={substore ? substore.phone : ''} className="update-substore-input-field" />
+          <input type="text" name="contactNo" value={formData.contactNo} onChange={handleInputChange} className="update-substore-input-field" />
         </div>
         <div className="update-substore-form-group">
           <label>Location :</label>
-          <input type="text" defaultValue={substore ? substore.address : ''} className="update-substore-input-field" />
+          <input type="text" name="location" value={formData.location} onChange={handleInputChange} className="update-substore-input-field" />
         </div>
         <div className="update-substore-form-group">
           <label>SubStore Description :</label>
-          <textarea defaultValue={substore ? substore.description : ''} className="update-substore-textarea-field"></textarea>
+          <textarea name="subStoreDescription" value={formData.subStoreDescription} onChange={handleInputChange} className="update-substore-textarea-field"></textarea>
         </div>
         <div className="update-substore-form-group">
           <label>Label :</label>
-          <input type="text" defaultValue={substore ? substore.label : ''} className="update-substore-input-field" />
-        </div>
-        <div className="update-substore-form-group">
-          <label>Max Verification Level :</label>
-          <input type="number" defaultValue={substore ? substore.verification : 0} className="update-substore-input-field" />
+          <input type="text" name="label" value={formData.label} onChange={handleInputChange} className="update-substore-input-field" />
         </div>
         <button type="submit" className="update-substore-update-btn">{substore ? "Update" : "Add"}</button>
       </form>

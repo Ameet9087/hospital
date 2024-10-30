@@ -85,20 +85,14 @@ const AddDepartment = ({ onClose }) => {
 
   return (
     <div className="update-setting-department-form-container">
-      <button className="update-setting-form-close-btn" onClick={onClose}>
-        X
-      </button>
       <form className="update-setting-department-form" onSubmit={handleSubmit}>
         <h2>Add Department</h2>
-
         {error && <div className="error-message">{error}</div>}
         {success && <div className="success-message">{success}</div>}
 
         <div className="update-setting-form-group">
           <label>
-            Department Code<span>*</span>
-          </label>
-          <span>:</span>
+            Department Code :</label>
           <input
             type="text"
             value={departmentCode}
@@ -109,9 +103,9 @@ const AddDepartment = ({ onClose }) => {
 
         <div className="update-setting-form-group">
           <label>
-            Department Name<span>*</span>
+            Department Name :
           </label>
-          <span>:</span>
+  
           <input
             type="text"
             value={departmentName}
@@ -121,8 +115,7 @@ const AddDepartment = ({ onClose }) => {
         </div>
 
         <div className="update-setting-form-group">
-          <label>Parent Department Name</label>
-          <span>:</span>
+          <label>Parent Department Name :</label>
           <select
             name="parentDepartment"
             value={parentDepartment}
@@ -191,8 +184,8 @@ const AddDepartment = ({ onClose }) => {
         </div>
 
         <div className="update-setting-form-group">
-          <label>Department Description</label>
-          <span>:</span>
+          <label>Department Description :</label>
+         
           <textarea
             value={departmentDescription}
             onChange={(e) => setDepartmentDescription(e.target.value)}
@@ -200,8 +193,8 @@ const AddDepartment = ({ onClose }) => {
         </div>
 
         <div className="update-setting-form-group">
-          <label>Department Notice Text</label>
-          <span>:</span>
+          <label>Department Notice Text :</label>
+         
           <textarea
             value={departmentNoticeText}
             onChange={(e) => setDepartmentNoticeText(e.target.value)}
@@ -209,8 +202,8 @@ const AddDepartment = ({ onClose }) => {
         </div>
 
         <div className="update-setting-form-group">
-          <label>Department Head</label>
-          <span>:</span>
+          <label>Department Head :</label>
+        
           <input
             type="text"
             value={departmentHead}
@@ -219,8 +212,7 @@ const AddDepartment = ({ onClose }) => {
         </div>
 
         <div className="update-setting-form-group">
-          <label>Room Number</label>
-          <span>:</span>
+          <label>Room Number :</label>
           <input
             type="text"
             value={roomNumber}
@@ -229,8 +221,8 @@ const AddDepartment = ({ onClose }) => {
         </div>
 
         <div className="update-setting-form-group">
-          <label>Is Active</label>
-          <span>:</span>
+          <label>Is Active :</label>
+          
           <select
             value={isActive}
             onChange={(e) => setIsActive(e.target.value)}
@@ -241,8 +233,8 @@ const AddDepartment = ({ onClose }) => {
         </div>
 
         <div className="update-setting-form-group">
-          <label>Is Appointment Applicable</label>
-          <span>:</span>
+          <label>Is Appointment Applicable :</label>
+          
           <select
             value={isAppointmentApplicable}
             onChange={(e) => setIsAppointmentApplicable(e.target.value)}

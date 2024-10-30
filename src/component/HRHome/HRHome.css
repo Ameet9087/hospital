@@ -1,83 +1,387 @@
-/* Container styling */
+/* AppointmentBookingList.css */
 .HRHome-container {
-    margin: auto;
-}
-
-/* Navbar styling */
-.HRHome-navbar {
-    background-color: white;
-    /* White background for the navbar */
-    padding: 10px 20px;
-    border-bottom: 1px solid #ddd;
-}
-
-.HRHome-nav-links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .HRHome-nav {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    height: 10%;
+  }
+  
+  /* .HRHome-nav-link {
+    background: none;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    color: #0066cc;
+    text-decoration: none;
+  } */
+  
+  /* .HRHome-nav-link.active {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  } */
+  
+  .HRHome-navigation-link {
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border:1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 10px;
+  }
+  
+  .HRHome-navigation-link:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .HRHome-navigation-link.active {
+    border: 1px solid var(--button-bg-color);
+    color:white;
+    background-color: var(--button-bg-color);
+  }
+  
+  .appointment-search-form {
+    background-color: #e6f3ff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .appointment-search-form-group {
+    margin-right: 20px;
+    margin-bottom: 10px;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .appointment-search-form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .appointment-search-form-input,
+  .appointment-search-form-select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .appointment-search-form-button {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-end;
+  }
+  
+  .appointment-table-container {
+    background-color: #e6f3ff;
+    border-radius: 5px;
+    padding: 20px;
+  }
+  
+  .appointment-table-title {
+    margin-top: 0;
+  }
+  
+  .appointment-table-search {
+    width: 20%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .appointment-table-actions {
     display: flex;
     justify-content: space-between;
-    /* Ensure even spacing between items */
-}
-
-.HRHome-nav-links li {
-    margin: 5px;
-}
-
-/* Button styling */
-.HRHome-button {
+    margin-bottom: 10px;
+  }
+  
+  .appointment-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .appointment-table-head th,
+  .appointment-table-body td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .appointment-table-head th {
+    background-color: #f2f2f2;
+  }
+  
+  .appointment-table-pagination {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .appointment-table-pagination-button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 5px 5px;
+    margin: 0 2px;
+    cursor: pointer;
+  }
+  
+  .appointment-table-pagination-info {
+    margin: 0 10px;
+  }
+  /* .HRHome-nav-link {
     background-color: var(--button-color);
-    /* Blue background */
-    color: white;
-    /* White text color */
-    padding: 10px 15px;
-    text-decoration: none;
-    /* No underline for links */
-    border: 1px solid var(--button-hover-border-color);
-    /* 1px solid black border */
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-    /* Smooth transition for hover effects */
-}
-
-/* Active button (clicked) styling */
-.HRHome-button.active {
-    background-color: var(--upperBar-bg-color);
-    /* Green when clicked (active) */
-    color: white;
-}
-
-/* Hover effect */
-.HRHome-button:hover {
-    background-color: white;
-    /* Red on hover */
-    border-color: 1px solid var(--button-hover-border-color);
-    /* Keep black border on hover */
-    color: var(--button-hover-text-color);
-    /* White text on hover */
-}
-
-
-
-
-/* Responsive design */
-@media screen and (max-width: 768px) {
-    .HRHome-nav-links {
-        flex-direction: column;
-        /* Stack links vertically on smaller screens */
-        align-items: center;
-    }
-
-    .HRHome-button {
-        width: 100%;
-        /* Make buttons take full width on smaller screens */
-        margin-bottom: 10px;
-        text-align: center;
-    }
-}
-
-/* Content area */
-.HRHome-content {
+      color: white;
+      border: none;
+      padding: 5px 5px;
+      border-radius: 5px;
+      cursor: pointer;
+  } */
+  
+  .appointments__container {
     padding: 20px;
-}
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  .searchable-dropdown {
+    position: relative;
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .appointment-doctor-dropdown-container {
+    position: relative;
+  }
+  
+  .appointments__search-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: var(--font-size);
+  }
+  
+  .appointment-dropdown-list {
+    position: absolute;
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    z-index: 100;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .appointment-dropdown-item {
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .appointment-dropdown-item:last-child {
+    border-bottom: none;
+  }
+  
+  .appointment-dropdown-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .appointment-appointments__selected-doctor {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  
+  .appointments__filter-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+  }
+  
+  .appointments__filter-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .appointments__filter-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .appointments__required {
+    color: red;
+  }
+  
+  .appointments__dropdown {
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  
+  .appointments__date-picker {
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 4px;
+  }
+  
+  .appointments__show-patient-btn {
+    background-color: var(--button-color);
+      color: white;
+      border: none;
+      padding: 5px 5px;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+  
+  .appointments__show-patient-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  
+  }
+  
+  .appointments__upcoming-appointments {
+    margin-top: 20px;
+  }
+  
+  .appointments__title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .appointments_search-bar-container{
+    display: flex;
+    justify-content: space-between;
+  }
+  .appointments__search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+    background-color: #f2f2f2;
+  }
+  .appointments__search-bar i{
+    color: gray;
+    margin-right: 5px;
+  }
+  
+  .appointments__search-input {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-radius: 4px 0 0 4px;
+    font-size: 14px;
+  }
+  
+  .appointments__search-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .appointments__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  
+  .appointments__table th, .appointments__table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+  }
+  
+  .appointments__status--cancelled {
+    color: red;
+  }
+  .appointments__status--checked-in {
+    color: green;
+  }
+  
+  .appointments__status--initiated {
+    color: blue;
+  }
+  
+  .appointments__action-btn {
+    background-color: var(--button-color);
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .appointments__action-btn  a{
+   
+    color: #fff;
+  
+    text-decoration: none;
+  }
+  .appointments__pagination-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  
+  .appointments__pagination-buttons button {
+    padding: 7px 15px;
+    margin-right: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .appointments__summary-report {
+    background-color: #d7f2f7;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .appointments__summary-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .appointments__summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  .appointments__summary-table td {
+    padding: 7px;
+    border: 1px solid #ccc;
+    font-weight: bold;
+  }
+        

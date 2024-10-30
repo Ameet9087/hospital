@@ -1,111 +1,129 @@
 /* Ravindra_Sanap_AddPerformancePopup.css_04_10_2024_Start */
 
-
-.popup-overlay {
+.addperformance__overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    align-items: center;
     justify-content: center;
-    z-index: 1000;
-}
-
-.popup-content {
+    align-items: center;
+    padding: 50px;
+    z-index: 55555;
+  }
+  
+  .addperformance__popup {
     background-color: white;
-
     padding: 20px;
-    width: 400px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-
-    max-width: 90%;
-    font-family: 'Arial', sans-serif;
-}
-
-.popup-content h2 {
-    margin-top: 0;
-    font-size: 18px;
-    margin-bottom: 10px;
-
-}
-
-.popup-content label {
-    margin-left: -8px;
-
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.popup-content input,
-.popup-content textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    margin-left: 0;
-
-    margin-bottom: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
-.actionbtns {
-    margin-right: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.actionbtns[type='button'] {
-    background-color: #6c757d;
-}
-
-.actionbtns:hover {
-    background-color: #0056b3;
-}
-
-
-.popup-content {
     position: relative;
-    background-color: white;
-    padding: 20px;
-    width: 400px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-    max-width: 90%;
-    font-family: 'Arial', sans-serif;
-}
+    width: 80%;
 
-
-.addperformanceclose-popup {
+  }
+  
+  .addperformance__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: var(--heading-font);
+    
+  }
+  .addperformance__header h2{
+    color: black;
+  }
+  
+  .addperformance__closeButton {
+    background: none;
+    border: none;
+    padding: 5px 12px;
+    /* font-size: 2rem; */
+    cursor: pointer;
     position: absolute;
     top: -10px;
     right: -10px;
     background-color: red;
     color: white;
-    border: none;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+  }
+  
+  .addperformance__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  
+  .addperformance__formGroup {
     display: flex;
-    justify-content: center;
     align-items: center;
-}
+  }
+  
+  .addperformance__formGroup label {
+    width: 30%;
+    min-width: 150px; /* Adjust as necessary */
+    margin-bottom: 5px;
+    font-size: 14px;
+    /* font-weight: bold; */
+  }
+  
+  .addperformance__formGroup input,
+  .addperformance__formGroup select {
+    width: 70%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .addperformance__ageInput {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .addperformance__ageInput input {
+    width: 50px;
+  }
+  
+  .addperformance__formActions {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .addperformance__formActions button {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .addperformance__formActions button:first-child {
+    background-color: #ccc;
+  }
+  
+  .addperformance__formActions button:last-child {
+    background-color: var(--button-color);
+    color: white;
+  }
 
-.addperformanceclose-popup:hover {
-    background-color: darkred;
-}
-
-
-
-
+  .addperformance__formActions button:last-child:hover {
+    background-color: var(--button-bg-color);
+  }
+  
+  .addperformance__note {
+    grid-column: span 2;
+    margin-top: 0px;
+    color: green;
+  }
+  
+  .addperformance__openButton {
+    padding: 10px 20px;
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 /* Ravindra_Sanap_AddPerformancePopup.css_04_10_2024_End */

@@ -26,11 +26,11 @@ const EmployeeHeader = ({ onNavClick }) => {
               >Radiology</li> 
             <li onClick={() => handleNavClick('adt')}
              className={activeNav === 'adt' ? 'active' : ''}   >ADT</li>
-            {/* <li onClick={() => handleNavClick('security')}              className={activeNav === 'security' ? 'active' : ''}
+            <li onClick={() => handleNavClick('security')}              className={activeNav === 'security' ? 'active' : ''}
             >Security</li>
 
             <li onClick={() => handleNavClick('billing')}              className={activeNav === 'billing' ? 'active' : ''}
-            >Billing</li>  */}
+            >Billing</li> 
 
             <li onClick={() => handleNavClick('employee')}              className={activeNav === 'employee' ? 'active' : ''}
             >Employee</li>
@@ -66,7 +66,7 @@ const EmployeeHeader = ({ onNavClick }) => {
         <div className="department-sub-nav">
           <ul>
             <li><Link to="/manage-department" >Manage Department</Link></li>
-            {/* <li><Link to="/manage-substore" >Manage Substore</Link></li> */}
+            <li><Link to="/manage-substore" >Manage Substore</Link></li>
             {/* <li><Link to="/manage-ward-substore" >Manage Ward Substore</Link></li> */}
           </ul>
         </div>
@@ -93,14 +93,14 @@ const EmployeeHeader = ({ onNavClick }) => {
           </ul>
         </div>
       )}
-     {/* {activeNav === 'security' && (
+     {activeNav === 'security' && (
         <div className="security-sub-nav">
           <ul>
             <li><Link to="/manage-user" >Manage User</Link></li>
             <li><Link to="/manage-role" >Manage Role</Link></li>
           </ul>
         </div>
-      )} */}
+      )}
       {/* {activeNav === 'geolocation' && (  
         <div className="geolocation-sub-nav">
           <ul>

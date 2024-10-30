@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+/* Ravindra_Sanap_Attendance.jsx_03_10_2024_Start */
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import * as XLSX from 'xlsx'; // Import the xlsx library
 import './Attendance.css';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 function Attendance() {
     const [employees, setEmployees] = useState([]);
@@ -8,6 +11,9 @@ function Attendance() {
     const employeesPerPage = 10;
     const [attendanceStatus, setAttendanceStatus] = useState({});
     const [searchTerm, setSearchTerm] = useState('');
+    const [columnWidths, setColumnWidths] = useState([80, 150, 100, 150, 150, 150, 150, 200]);
+
+    const tableRef = useRef();
 
     useEffect(() => {
         const fetchEmployees = async () => {
@@ -44,14 +50,18 @@ function Attendance() {
     }, []);
 
     const filteredEmployees = employees.filter((employee) =>
-        employee.empName.toLowerCase().includes(searchTerm.toLowerCase())
+        employee.empId.toString().includes(searchTerm) ||
+        employee.empName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        employee.mobile.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        employee.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        employee.department.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const indexOfLastEmployee = currentPage * employeesPerPage;
     const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
     const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
 
-    const totalPages = Math.ceil(employees.length / employeesPerPage);
+    const totalPages = Math.ceil(filteredEmployees.length / employeesPerPage);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
     const nextPage = () => {
@@ -84,64 +94,138 @@ function Attendance() {
         }
     }
 
+    const printTable = () => {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head><title>Print Table</title>');
+        printWindow.document.write('<link rel="stylesheet" href="path_to_your_css/Attendance.css">'); // Include your CSS file
+        printWindow.document.write('</head><body>');
+        printWindow.document.write('<h2>Employee Attendance</h2>');
+        printWindow.document.write('<table class="attendance-table" style="width: 100%; border-collapse: collapse;">');
+        printWindow.document.write('<thead><tr><th>EMP. ID</th><th>EMP Name</th><th>Mobile No</th><th>Email</th><th>Position</th><th>Department</th><th>Date of Joining</th><th>Action</th></tr></thead><tbody>');
+
+        currentEmployees.forEach(employee => {
+            printWindow.document.write(`<tr>
+                <td>${employee.empId}</td>
+                <td>${employee.empName}</td>
+                <td>${employee.mobile}</td>
+                <td>${employee.email}</td>
+                <td>${employee.position}</td>
+                <td>${employee.department}</td>
+                <td>${employee.dateOfJoining}</td>
+                <td>
+                    <button>Present</button>
+                    <button>Absent</button>
+                </td>
+            </tr>`);
+        });
+
+        printWindow.document.write('</tbody></table>');
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+    };
+
+    const exportToExcel = () => {
+        const worksheet = XLSX.utils.json_to_sheet(filteredEmployees);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Attendance");
+        XLSX.writeFile(workbook, "Attendance_Data.xlsx");
+    };
+
     return (
         <div className="attendance-container">
             <h2>Employee Attendance</h2>
-            <div className="employee-searchAndActions">
-                <input
-                    type="text"
-                    placeholder="Search By Employee Name"
-                    className="employee-searchInput"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
+            <div className="attendance-search-N-results">
+                <div className="attendance-searchAndActions">
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        className="attendance-searchInput"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                </div>
+                <div className="attendance-results-info">
+                    Showing {currentEmployees.length} / {filteredEmployees.length} results
+                    <button
+                        className="attendance-ex-pri-buttons"
+                        onClick={exportToExcel}
+                    >
+                        <i className="fa-regular fa-file-excel"></i> Export
+                    </button>
+                    <button className="attendance-ex-pri-buttons" onClick={printTable}>
+                        <i className="fa-solid fa-print"></i> Print
+                    </button>
+                </div>
             </div>
 
-            <table className="attendance-table">
-                <thead>
-                    <tr>
-                        <th>EMP. ID</th>
-                        <th>EMP Name</th>
-                        <th>Mobile No</th>
-                        <th>Position</th>
-                        <th>Department</th>
-                        <th>Attendance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentEmployees.length === 0 ? (
+            <div className="table-container">
+                <table className='employeelist-table' ref={tableRef}>
+                    <thead>
                         <tr>
-                            <td className='nodatatoshow' colSpan="6" style={{ textAlign: 'center', color: 'red', padding: '10px' }}>No Rows to Show</td>
+                            {[
+                                "EMP. ID",
+                                "EMP Name",
+                                "Mobile No",
+                                "Email",
+                                "Position",
+                                "Department",
+                                "Date of Joining",
+                                "Action",
+                            ].map((header, index) => (
+                                <th
+                                    key={index}
+                                    style={{ width: columnWidths[index] }}
+                                    className="resizable-th"
+                                >
+                                    <div className="header-content">
+                                        <span>{header}</span>
+                                        <div
+                                            className="resizer"
+                                            onMouseDown={(e) => startResizing(e, index, setColumnWidths)}
+                                        />
+                                    </div>
+                                </th>
+                            ))}
                         </tr>
-                    ) : (
-                        currentEmployees.map((employee) => (
-                            <tr key={employee.empId}>
-                                <td>{employee.empId}</td>
-                                <td>{employee.empName}</td>
-                                <td>{employee.mobile}</td>
-                                <td>{employee.position}</td>
-                                <td>{employee.department}</td>
-                                <td>
-                                    <button
-                                        className="attendance-btn"
-                                        onClick={() => markAttendance(employee.empId, true)}
-                                        disabled={attendanceStatus[employee.empId]}
-                                    >
-                                        Present
-                                    </button>
-                                    <button
-                                        className="attendance-btn"
-                                        onClick={() => markAttendance(employee.empId, false)}
-                                        disabled={attendanceStatus[employee.empId]}
-                                    >
-                                        Absent
-                                    </button>
-                                </td>
+                    </thead>
+                    <tbody>
+                        {currentEmployees.length === 0 ? (
+                            <tr>
+                                <td className='nodatatoshow' colSpan="8" style={{ textAlign: 'center', color: 'red', padding: '10px' }}>No Rows to Show</td>
                             </tr>
-                        ))
-                    )}
-                </tbody>
-            </table>
+                        ) : (
+                            currentEmployees.map((employee) => (
+                                <tr key={employee.empId}>
+                                    <td>{employee.empId}</td>
+                                    <td>{employee.empName}</td>
+                                    <td>{employee.mobile}</td>
+                                    <td>{employee.email}</td>
+                                    <td>{employee.position}</td>
+                                    <td>{employee.department}</td>
+                                    <td>{employee.dateOfJoining}</td>
+                                    <td>
+                                        <button
+                                            className="attendance-btn"
+                                            onClick={() => markAttendance(employee.empId, true)}
+                                            disabled={attendanceStatus[employee.empId]}
+                                        >
+                                            Present
+                                        </button>
+                                        <button
+                                            className="attendance-btn"
+                                            onClick={() => markAttendance(employee.empId, false)}
+                                            disabled={attendanceStatus[employee.empId]}
+                                        >
+                                            Absent
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
+                    </tbody>
+                </table>
+            </div>
 
             <div className="pagination">
                 <button onClick={prevPage} className={currentPage === 1 ? 'disabled' : ''} disabled={currentPage === 1}>
@@ -166,3 +250,5 @@ function Attendance() {
 }
 
 export default Attendance;
+
+/* Ravindra_Sanap_Attendance.jsx_03_10_2024_End */

@@ -1,0 +1,44 @@
+/* CustomAlert.css */
+.custom-alert-container {
+    position: fixed;
+    bottom: 20px;  /* Positioning at the bottom */
+    right: 20px;   /* Aligning to the right */
+    z-index: 1000; /* Ensuring it appears on top of other content */
+  }
+  
+  .custom-alert {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .custom-alert.success {
+    background-color: #4caf50; /* Success color */
+  }
+  
+  .custom-alert.warning {
+    background-color: #ff9800; /* Warning color */
+  }
+  
+  .custom-alert.error {
+    background-color: #f44336; /* Error color (red) */
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 15px;
+  }
+  
+  .close-btn:hover {
+    color: #ccc;
+  }
+  

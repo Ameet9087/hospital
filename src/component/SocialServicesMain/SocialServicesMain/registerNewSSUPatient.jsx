@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../SocialServicesMain/registerNewSSUPatient.css";
-import { API_BASE_URL } from "../api/api";
+import { API_BASE_URL } from "../../api/api";
 
 function RegisterNewSSUPatient({ togglePopup, patientData = null }) {
   const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ function RegisterNewSSUPatient({ togglePopup, patientData = null }) {
     middleName: "",
     fatherName: "",
     motherName: "",
-    country: "india",
+    country: "",
     age: "",
     ageUnit: "Years",
     gender: "",

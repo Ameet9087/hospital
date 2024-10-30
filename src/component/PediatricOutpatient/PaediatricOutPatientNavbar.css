@@ -1,0 +1,99 @@
+.pediatric-inpatient-navbar ul {
+    list-style-type: none;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+  font-size: var(--heading-font);
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  }
+  
+  .pediatric-inpatient-nav-button {
+    padding: 5px 10px; /* Slightly increased horizontal padding */
+  text-decoration: none;
+  background-color: var(--button-color);
+  color: white;
+  font-size: var(--heading-font);
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .pediatric-inpatient-nav-button:hover {
+    background-color: #f0f0f0;
+    color: var(--button-color);
+    border-bottom: 1px solid var(--button-hover-border-color); /* Stronger bottom border on hover */
+  }
+  
+  .pediatric-inpatient-nav-button.active {
+    background-color: var(--button-bg-color); /* Active button background color */
+    color: white;
+    border-bottom: 1px solid var(--button-hover-border-color); /* Active state styling */
+  }
+  
+  
+
+  .menu {
+    background-color: #e0f7ff; /* Light blue background */
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+/* Styling each menu item as a tab */
+.menu-item {
+  padding: 5px 10px; /* Slightly increased horizontal padding */
+  text-decoration: none;
+  background-color: var(--button-color);
+  color: white;
+  font-size: var(--heading-font);
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  margin-left: 20px;
+  border: none;
+}
+ 
+
+
+/* Style for the selected item */
+.menu-item.selected {
+    font-weight: bold;
+    background-color: #d0f0ff; /* Slightly darker blue background */
+    border-color: #000; /* Black border for selected tab */
+}
+
+/* Register button styling */
+.register-button {
+  padding: 5px 10px; /* Slightly increased horizontal padding */
+  text-decoration: none;
+  background-color: var(--button-color);
+  color: white;
+  font-size: var(--heading-font);
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  margin-left: 20%;
+  border: none;
+}
+
+/* Hover effect for the register button */
+.register-button:hover {
+  background-color: #f0f0f0;
+    color: var(--button-color);
+    border-bottom: 1px solid var(--button-hover-border-color); /* Stronger bottom border on hover */
+}
+
+.menu-item:hover {
+  background-color: #f0f0f0;
+  color: var(--button-color);
+  /* border-bottom: 1px solid var(--button-hover-border-color);  */
+}
+
+.menu-item.selected {
+  background-color:  #27ae60; /* Highlight with different color when selected */
+  color: #fff;
+}
+
+.menu-item.selected:hover {
+  background-color: #27ae60;/* Darker shade when selected and hovered */
+  color: #fff;
+}

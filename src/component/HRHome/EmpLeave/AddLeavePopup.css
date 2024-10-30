@@ -1,6 +1,4 @@
-/* Ravindra_Sanap_AddLeavepopup.css_03_10_2024_Start */
-
-.addleave-overlay {
+.addemployeeleave__overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,102 +8,119 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    z-index: 1000;
-}
-
-.popup {
-    background: #fff;
-    padding: 30px;
-    padding-left: 10px;
-
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    width: 400px;
-    max-width: 90%;
-    font-family: 'Arial', sans-serif;
+    padding: 50px;
+    z-index: 55555;
+  }
+  
+  .addemployeeleave__popup {
+    background-color: white;
+    padding: 20px;
     position: relative;
-}
+    width: 80%;
 
-.popup h2 {
+  }
+  
+  .addemployeeleave__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
-    font-size: 18px;
-    color: #333;
-    text-align: center;
-}
-
-.popup label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 14px;
-    color: #333;
-}
-
-.popup input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    margin-left: 0;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    transition: border-color 0.3s;
-}
-
-.popup input:focus {
-    border-color: #007BFF;
-    outline: none;
-}
-
-
-.actionbtns {
-    margin-right: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
+    font-size: var(--heading-font);
+    
+  }
+  .addemployeeleave__header h2{
+    color: black;
+  }
+  
+  .addemployeeleave__closeButton {
+    background: none;
     border: none;
-    border-radius: 4px;
+    padding: 5px 12px;
+    /* font-size: 2rem; */
     cursor: pointer;
-}
-
-.actionbtns[type='button'] {
-    background-color: #6c757d;
-    margin-top: 10px;
-}
-
-.actionbtns:hover {
-    background-color: #0056b3;
-}
-
-
-@media (max-width: 500px) {
-    .popup {
-        width: 90%;
-        padding: 20px;
-    }
-}
-
-
-.addleaveclose-popup {
     position: absolute;
     top: -10px;
     right: -10px;
     background-color: red;
     color: white;
-    border: none;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
+  }
+  
+  .addemployeeleave__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  
+  .addemployeeleave__formGroup {
     display: flex;
-    justify-content: center;
     align-items: center;
-}
+  }
+  
+  .addemployeeleave__formGroup label {
+    width: 30%;
+    min-width: 150px; /* Adjust as necessary */
+    margin-bottom: 5px;
+    font-size: 14px;
+    /* font-weight: bold; */
+  }
+  
+  .addemployeeleave__formGroup input,
+  .addemployeeleave__formGroup select {
+    width: 70%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .addemployeeleave__ageInput {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .addemployeeleave__ageInput input {
+    width: 50px;
+  }
+  
+  .addemployeeleave__formActions {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .addemployeeleave__formActions button {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .addemployeeleave__formActions button:first-child {
+    background-color: #ccc;
+  }
+  
+  .addemployeeleave__formActions button:last-child {
+    background-color: var(--button-color);
+    color: white;
+  }
 
-.addleaveclose-popup:hover {
-    background-color: darkred;
-}
-
-
-/* Ravindra_Sanap_AddLeavepopup.css_03_10_2024_End */
+  .addemployeeleave__formActions button:last-child:hover {
+    background-color: var(--button-bg-color);
+  }
+  
+  .addemployeeleave__note {
+    grid-column: span 2;
+    margin-top: 0px;
+    color: green;
+  }
+  
+  .addemployeeleave__openButton {
+    padding: 10px 20px;
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
