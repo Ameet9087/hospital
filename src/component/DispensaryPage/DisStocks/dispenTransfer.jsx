@@ -325,6 +325,21 @@ const DispenTransfer = () => {
                         </button>
                     </div>
 
+                    <div className="dispenStockTransfer-controls">
+        {/* Your date range and button controls */}
+          <div className="dispenStockTransfer-date-range">
+            <label>
+              From:
+              <input type="date" defaultValue="2024-08-09" />
+            </label>
+            <label>
+              To:
+              <input type="date" defaultValue="2024-08-16" />
+            </label>
+           
+          </div>
+      </div>
+
                     <div className='dispenStockTransfer-search-N-result'>
                         <div className="dispenStockTransfer-search-bar">
                             <i className="fa-solid fa-magnifying-glass"></i>
@@ -337,6 +352,9 @@ const DispenTransfer = () => {
                         </div>
                         <div className="dispenStockTransfer-results-info">
                             <span>Showing {filteredTransfers.length} / {transfers.length} results</span>
+                            <button className="dispenStockTransfer-print-button" onClick={handlePrint}>
+                            <i className="fa-solid fa-file-excel"></i> Export
+                            </button>
                             <button className="dispenStockTransfer-print-button" onClick={handlePrint}>
                             <i class="fa-solid fa-print"></i> Print
                             </button>

@@ -62,6 +62,7 @@ function SSPReportsConsumption() {
             <h4><i class="fa-solid fa-star-of-life"></i>Consumption Report </h4>
           </div>
         </header>
+        
         <div className="sSPReportsConsumption-controls">
         <div className="sSPReportsConsumption-date-range">
       <label>
@@ -72,10 +73,7 @@ function SSPReportsConsumption() {
         To:
         <input type="date" defaultValue="2024-08-16" />
       </label>
-      <button className="sSPReportsConsumption-star-button">☆</button>
-    <button className="sSPReportsConsumption-more-btn">-</button>
-      <button className="sSPReportsConsumption-ok-button">OK</button>
-    </div>
+ </div>
    
           <div className="sSPReportsConsumption-filter">
             {/* <label>SubCategory</label>

@@ -120,10 +120,7 @@ function SSIPatientConsumption() {
         To:
         <input type="date" defaultValue="2024-08-16" />
       </label>
-      <button className="sSIPatientConsumption-star-button">☆</button>
-    <button className="sSIPatientConsumption-more-btn">-</button>
-      <button className="sSIPatientConsumption-ok-button">OK</button>
-    </div>
+      </div>
     </div>
         <div className="sSIPatientConsumption-search-N-results">
           <div className="sSIPatientConsumption-search-bar">

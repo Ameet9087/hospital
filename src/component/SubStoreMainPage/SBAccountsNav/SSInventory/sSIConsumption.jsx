@@ -97,7 +97,6 @@ function SSIPatientConsumption() {
               <option value="">Cotton</option>
               <option value="">Soap</option> */}
             </select>
-            <button className='sSIConsumption-print-btn'>Load</button>
           </div>
         </header>
         <div className="sSIConsumption-controls">
@@ -110,9 +109,7 @@ function SSIPatientConsumption() {
               To:
               <input type="date" defaultValue="2024-08-16" />
             </label>
-            <button className="sSIConsumption-star-button">☆</button>
-            <button className="sSIConsumption-ok-button">OK</button>
-          </div>
+         </div>
           
         </div>
         <div className="sSIConsumption-search-N-results">
@@ -122,10 +119,10 @@ function SSIPatientConsumption() {
           </div>
           <div className="sSIConsumption-results-info">
             Showing 2 / 2 results
-            <button className='sSIConsumption-print-btn' onClick={handleExportToExcel}>
+            <button className='sSIConsumption-print-button' onClick={handleExportToExcel}>
               <i className="fa-regular fa-file-excel"></i> Export
             </button>
-            <button className='sSIConsumption-print-btn' onClick={handlePrint}>Print</button>
+            <button className='sSIConsumption-print-button' onClick={handlePrint}><i class="fa-solid fa-print"></i> Print</button>
           </div>
         </div>
         <div style={{ display: 'none' }}>

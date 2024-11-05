@@ -72,10 +72,7 @@ function SSPReportsTransfer() {
         To:
         <input type="date" defaultValue="2024-08-16" />
       </label>
-      <button className="sSPReportsTransfer-star-button">☆</button>
-    <button className="sSPReportsTransfer-more-btn">-</button>
-      <button className="sSPReportsTransfer-ok-button">OK</button>
-    </div>
+   </div>
 
           <div className="sSPReportsTransfer-filter">
             {/* <label>SubCategory</label>

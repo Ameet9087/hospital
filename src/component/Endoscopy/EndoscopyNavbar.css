@@ -6,6 +6,7 @@
     gap: 20px;
     font-size: var(--heading-font);
     flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    margin: 10px;
   }
   
   .endoscopy-header-button {

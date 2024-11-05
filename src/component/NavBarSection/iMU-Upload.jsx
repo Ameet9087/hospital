@@ -21,12 +21,9 @@ function IMUUploadPage() {
               To:
               <input type="date" defaultValue="2024-08-16" />
             </label>
-            <button className="imuUpload-star-button">☆</button>
-            <button className="imuUpload-ok-button">OK</button>
-          </div>
+           </div>
       </div>
         <div className="imuUpload-buttons">
-          <button className="imuUpload-load-data"><i class="fa-brands fa-instalod"></i> Load Data</button>
           <button className="imuUpload-upload-to-imu"><i class="fa-solid fa-upload"></i> Upload To IMU</button>
         </div>
       </div>
@@ -46,6 +43,12 @@ function IMUUploadPage() {
         <label className='imuUpload-checkbx'><input type="radio" name="status" /> UploadCompleted</label>
         <label className='imuUpload-checkbx'><input type="radio" name="status" /> All</label>
       </div>
+      <div className="imuUpload-Showing">
+          <span>Showing {} / {} results</span>
+          <button className="imuUpload-print-button" onClick={""}><i className="fa-solid fa-file-excel"></i> Export</button>
+          <button className="imuUpload-print-button" onClick={""}><i class="fa-solid fa-print"></i> Print</button>
+        
+        </div>
       </div>
 
       <table className="imuUpload-data-table">

@@ -4,7 +4,7 @@
     justify-content: space-between;
     padding: 20px;
     background-color: var(--background-color);
-    height: 90vh;
+    /* height: 90vh; */
     overflow-y: scroll;
 }
 

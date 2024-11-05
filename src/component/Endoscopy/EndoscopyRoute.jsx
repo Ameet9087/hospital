@@ -14,7 +14,7 @@ const EndoscopyRoute = () => {
   return (
     <>
     
-    {/* <EndoscopyNavbar/> */}
+    <EndoscopyNavbar/>
 
     <Routes>
       <Route path="/procedure-scheduling" element={<ProcedureSchedulingForm />} />
@@ -23,7 +23,7 @@ const EndoscopyRoute = () => {
       <Route path="/sterilization-tracking" element={<SterilizationLogForm />} />
       <Route path="/post-procedure-doc" element={<PostProcedureNotesForm />} />
       <Route path="/patient-search-report" element={<PatientReportsSearchForm />} />
-      <Route path="//patient-report-result" element={<PatientReportsResults />} />
+      <Route path="/patient-report-result" element={<PatientReportsResults />} />
 
     </Routes>
 

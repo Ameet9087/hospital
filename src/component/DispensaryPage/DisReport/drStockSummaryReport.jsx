@@ -36,7 +36,6 @@ function DrStockSummaryReport() {
         <div className="drStockSummaryReport-date-range">
           <label>From: <input type="date" defaultValue="2024-08-16" /></label>
           <label>To: <input type="date" defaultValue="2024-08-16" /></label>
-          <button className="drStockSummaryReport-star-button">☆</button>
         </div>
         <div className="drStockSummaryReport-select-filters">
           <label>Select Dispensary:

@@ -1,16 +1,7 @@
-.activeincentiveNavBar-btn{
-    background-color: var(--button-color);
-    color: white;
-    /* height: 25px; */
-    /* font-weight: bold; */
-    font-size: var(--heading-font);
-    border: none;
-    padding: 5px 8px;
-  }
-  .incentiveNavBar-Navigation-bar {
-      background-color: white;
-      font-family: Arial, sans-serif;
-font-size: 14px;
+.incentiveNavBar-Navigation-bar {
+  background-color: white;
+  font-family: Arial, sans-serif;
+font-size: var(--heading-font);
       /* padding: 10px; */
       /* border: 1px solid #007bff; */
   
@@ -31,34 +22,45 @@ font-size: 14px;
     }
     
     .incentiveNavBar-Navigation-bar a {
-      color: white;
-      background-color: var(--button-color);
-      text-decoration: none;
-      /* font-weight: bold; */
-      font-size: var(--heading-font);
-      padding: 7px 5px;
+      color: black;
+      border: none;
+      padding: 7px 10px;
       border-radius: 5px;
-  
-    }
-    
-    .incentiveNavBar-Navigation-bar a:hover {
-      background-color:white;
-      color: var(--button-color);
-      border: 1px solid gray;
-  
+      border:1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      margin-left: 10px;
       
     }
     
-    .incentiveNavBar-Navigation-bar .active {
-      background-color: var(--button-bg-color);
-      color: white;
-  
+    .incentiveNavBar-Navigation-bar a:hover {
+      border: 1px solid var( --button-hover-border-color);
+      color: var(--button-hover-text-color);
+      background-color: var(--button-hover-background-color);
+      
+      
+    }
+    
+    .incentiveNavBar-Navigation-bar a.active {
+      border: 1px solid var(--button-bg-color);
+  color:white;
+  background-color: var(--button-bg-color);
+      
     }
     .incentiveNavBar-Activebtn-N-LogOut{
       display: flex;
       justify-content: start;
       gap: 5px;
     }
+    .activeincentiveNavBar-btn{
+        background-color: var(--button-color);
+        color: white;
+        /* height: 25px; */
+        /* font-weight: bold; */
+        font-size: var(--heading-font);
+        border: none;
+        padding: 0px 8px;
+      }
     .incentiveNavBar-LogOut{
       border: none;
       font-size: 18px;
@@ -67,6 +69,6 @@ font-size: 14px;
     .incentiveNavBar-Navbttn-N-act{
       display: flex;
     }
-    .incentiveNavBar-Navbttn-N-act li{
+    /* .incentiveNavBar-Navbttn-N-act li{
       padding: 0 10px 0 10px;
-    }
+    } */

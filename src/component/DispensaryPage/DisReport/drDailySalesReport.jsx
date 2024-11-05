@@ -191,7 +191,6 @@ function DrDailySalesReport() {
         <div className="drDailySalesReport-date-range">
           <label>From: <input type="date" defaultValue="2024-08-16" /></label>
           <label>To: <input type="date" defaultValue="2024-08-16" /></label>
-          <button className="drDailySalesReport-star-button">☆</button>
         </div>
         <div className="drDailySalesReport-select-filters">
           <label>Select Dispensary:

@@ -15,10 +15,6 @@ const IncentiveTranHospitalIncome = () => {
           <input type="date" />
           <label>To: </label>
           <input type="date" />
-          <button className="incentiveTranHospitalIncome-icon-button incentiveTranHospitalIncome-star">★</button>
-          <button className="incentiveTranHospitalIncome-icon-button incentiveTranHospitalIncome-dash">-</button>
-          <button className="incentiveTranRefralSummaryReport-ok-button">OK</button>
-
         </div>
       <div className="incentiveTranHospitalIncome-Select-Doctor">
         <label htmlFor="">Select Doctor:</label>

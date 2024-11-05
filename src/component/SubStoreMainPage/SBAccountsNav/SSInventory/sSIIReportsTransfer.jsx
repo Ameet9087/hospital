@@ -71,10 +71,7 @@ function SSIIReportsTransfer() {
               To:
               <input type="date" defaultValue="2024-08-16" />
             </label>
-            <button className="sSIIReportsTransfer-star-button">☆</button>
-          <button className="sSIIReportsTransfer-more-btn">-</button>
-            <button className="sSIIReportsTransfer-ok-button">OK</button>
-          </div>
+</div>
 
      
           <div className="sSIIReportsTransfer-filter">

@@ -88,6 +88,18 @@ function SSIStock() {
       case 'Stock':
         return (
           <div className="sSIStock-content">
+                  <div className="sSIStock-controls">
+      <div className="sSIStock-date-range">
+      <label>
+        From:
+        <input type="date" defaultValue="2024-08-09" />
+      </label>
+      <label>
+        To:
+        <input type="date" defaultValue="2024-08-16" />
+      </label>
+   </div>
+   </div>
             {/* Stock content goes here */}
             <div className="sSIStock-filters">
               <div className="sSIStock-filter">

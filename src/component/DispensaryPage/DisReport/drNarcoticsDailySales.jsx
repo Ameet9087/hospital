@@ -189,7 +189,6 @@ function DrNarcoticsDailySales() {
         <div className="drNarcoticsDailySales-date-range">
           <label>From: <input type="date" defaultValue="2024-08-16" /></label>
           <label>To: <input type="date" defaultValue="2024-08-16" /></label>
-          <button className="drNarcoticsDailySales-star-button">☆</button>
         </div>
         <div className="drNarcoticsDailySales-select-filters">
           <label>Select Dispensary:

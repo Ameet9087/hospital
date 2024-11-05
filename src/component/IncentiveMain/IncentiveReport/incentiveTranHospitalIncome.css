@@ -45,7 +45,7 @@
   }
   
   .incentiveTranHospitalIncome-date-range {
-    background-color: #EBF7FF;
+    background-color: #f0f0f0;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -60,31 +60,7 @@
     cursor: pointer;
     font-size: var(--heading-font);
   }
-  .incentiveTranHospitalIncome-star{
-    background: none;
-    border: none;
-    font-size: 24px;
-    color:var(--button-color) ;
-    cursor: pointer;
-    }
-    .incentiveTranHospitalIncome-ok-button {
-      background-color:var( --button-color);
-      border: 1px solid var( --button-hover-border-color);
-      color: white;
-      /* border: none; */
-      /* margin-right: 10px; */
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: var(--font-size);
-      margin: 1px;
-      transition: background-color 0.3s ease;
-      padding: 5px 5px;
-    }
-    .incentiveTranHospitalIncome-ok-button:hover {
-      border: 1px solid var( --button-hover-border-color);
-      color: var(--button-hover-text-color);
-      background-color: var(--button-hover-background-color);
-    }
+  
   .incentiveTranHospitalIncome-Select-Doctor{
     font-size: var(--font-size);
     /* font-weight: bold; */

@@ -1,7 +1,6 @@
  /* Ajhar Tamboli dispenSalesProvisionalSettelment.jsx 19-09-24 */
 
 import React, { useState, useRef } from 'react';
-// import "../DisStocks/dispenSalesProvisionalBill.css"
 import { useReactToPrint } from 'react-to-print';
 import "../DisSales/dispenSalesProvisionalSettelment.css"
 
@@ -55,8 +54,20 @@ function DispenSalesProvisionalSettelment() {
       <header className='dispenSalesProvisionalSettelment-header'>
        
        </header>
-       <div className="dispenSalesProvisionalSettelment-controls">
 
+       <div className="dispenSalesProvisionalSettelment-controls">
+        {/* Your date range and button controls */}
+          <div className="dispenSalesProvisionalSettelment-date-range">
+            <label>
+              From:
+              <input type="date" defaultValue="2024-08-09" />
+            </label>
+            <label>
+              To:
+              <input type="date" defaultValue="2024-08-16" />
+            </label>
+           
+          </div>
        <div className="dispenSalesProvisionalSettelment-select-filters">
           <label>Credit Organizations:
             <select defaultValue="All">
@@ -64,8 +75,9 @@ function DispenSalesProvisionalSettelment() {
             </select>
           </label>
         </div>
-        
-       </div>
+      </div>
+
+       
        <div className="dispenSalesProvisionalSettelment-search-N-results">
          <div className="dispenSalesProvisionalSettelment-search-bar">
            <i className="fa-solid fa-magnifying-glass"></i>
@@ -73,6 +85,9 @@ function DispenSalesProvisionalSettelment() {
          </div>
          <div className="dispenSalesProvisionalSettelment-results-info">
            Showing 2 / 2 results
+           <button className='dispenSalesProvisionalSettelment-print-btn'
+           onClick={""}
+           > <i className="fa-solid fa-file-excel"></i> Export</button>
            <button className='dispenSalesProvisionalSettelment-print-btn'
            onClick={handlePrint}
            ><i class="fa-solid fa-print"></i> Print</button>

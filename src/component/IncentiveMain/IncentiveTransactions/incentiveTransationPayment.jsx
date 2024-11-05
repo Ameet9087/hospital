@@ -89,13 +89,7 @@ const IncentiveTransationPayment = () => {
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
           />
-          <button className="incentiveTransationPayment-icon-button incentiveTransationPayment-star">
-            ★
-          </button>
-          <button className="incentiveTransationPayment-icon-button incentiveTransationPayment-dash">
-            -
-          </button>
-          <button className="incentiveTransationPayment-ok-button">OK</button>
+         
 
         </div>
         <div className="incentiveTransationPayment-Select-Doctor">

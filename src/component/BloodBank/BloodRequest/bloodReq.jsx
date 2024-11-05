@@ -96,9 +96,7 @@ function BloodReq() {
         To:
         <input type="date" defaultValue="2024-08-16" />
       </label>
-      <button className="bloodReq-star-button">☆</button>
-    <button className="bloodReq-more-btn">-</button>
-      <button className="bloodReq-ok-button">OK</button>
+     
     </div>
 
         <div className="bloodReq-filter">

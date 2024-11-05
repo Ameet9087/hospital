@@ -98,10 +98,7 @@ function SSPReportsReqDis() {
         To:
         <input type="date" defaultValue="2024-08-16" />
       </label>
-      <button className="sSPReportsReqDis-star-button">☆</button>
-    <button className="sSPReportsReqDis-more-btn">-</button>
-      <button className="sSPReportsReqDis-ok-button">OK</button>
-    </div>
+      </div>
 
         <div className="sSPReportsReqDis-filter">
           <button className='sSPReportsReqDis-print-btn' onClick={() => { /* Handle report generation */ }}>

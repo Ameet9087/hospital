@@ -407,9 +407,14 @@ function UserCollectionReport() {
       <h4><i className="fa-solid fa-star-of-life"></i> User Collection Report (Detailed)</h4>
       <div className="userCollectionReport-filters">
         <div className="userCollectionReport-date-range">
-          <label>From: <input type="date" defaultValue="2024-08-16" /></label>
-          <label>To: <input type="date" defaultValue="2024-08-16" /></label>
-          <button className="userCollectionReport-star-button">☆</button>
+          <label>
+            From:
+             <input type="date" defaultValue="2024-08-16" />
+             </label>
+          <label>
+            To: 
+            <input type="date" defaultValue="2024-08-16" />
+            </label>
         </div>
         <div className="userCollectionReport-select-filters">
           <label>Select Dispensary:

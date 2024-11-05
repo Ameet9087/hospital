@@ -16,6 +16,7 @@ const PaediatricOutpatientRoutes = () => {
   return (
     <>
     <PaediatricOutpatientNavbar/>
+    <div className="bloodBank-content">
     <Routes> {/* Wrap all routes inside Routes */}
       <Route path="/registration-outpatient-form" element={<PatientOutPatientRegistrationForm />} />
       <Route path="/vital-signs-inpatient" element={<VitalSignsInpatientForm />} />
@@ -27,7 +28,7 @@ const PaediatricOutpatientRoutes = () => {
       <Route path="/consentlegal-outpatient" element={<ConsentLegalOutpatientForms />} />
       <Route path="/discharge-Outpatient" element={<DischargeSummaryOutpatientForm />} />
     </Routes>
-
+    </div>
     </>
   );
 };

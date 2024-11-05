@@ -52,10 +52,8 @@ function DispenSalesRetunSalesList() {
             To:
             <input type="date" defaultValue="2024-08-16" />
           </label>
-          <button className="dispenSalesRetunSalesList-star-button">☆</button>
-          <button className="dispenSalesRetunSalesList-ok-button">OK</button>
+         
         </div>
-        <button className='dispenSalesRetunSalesList-CreateRequisition'>Load Data</button>
       </div>
 
       {/* Search and Results Info */}
@@ -66,6 +64,12 @@ function DispenSalesRetunSalesList() {
         </div>
         <div className="dispenSalesRetunSalesList-results-info">
           Showing {returnLists.length} / {returnLists.length} results
+          <button className="dispenSalesRetunSalesList-print-button" onClick={""}>
+            <i className="fa-solid fa-file-excel"></i> Export
+          </button>
+          <button className="dispenSalesRetunSalesList-print-button" onClick={handlePrint}>
+            <i className="fa-solid fa-print"></i> Print
+          </button>
         </div>
       </div>
 

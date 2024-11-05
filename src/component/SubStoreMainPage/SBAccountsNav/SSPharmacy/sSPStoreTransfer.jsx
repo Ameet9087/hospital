@@ -6,12 +6,44 @@ import "../SSPharmacy/sSPStoreTransfer.css"
 function SSPStoreTransfer() {
   return (
     <div className="ssp-Transfer-store-container">
+      
       <div className="ssp-Transfer-store-transfer-form">
+      <div className="ssp-Transfer-controls">
+          <div className="ssp-Transfer-date-range">
+      <label>
+        From:
+        <input type="date" defaultValue="2024-08-09" />
+      </label>
+      <label>
+        To:
+        <input type="date" defaultValue="2024-08-16" />
+      </label>
+
+    </div>
+</div>  
         <label htmlFor="transfer-type">Transfer Type:</label>
         <select id="transfer-type" className="ssp-Transfer-store-transfer-type">
           <option>Normal Transfer</option>
           <option>Expiry Transfer</option>
         </select>
+        <div className="ssp-Transfer-search-N-results">
+          <div className="ssp-Transfer-search-bar">
+            <i className="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search" />
+          </div>
+          <div className="ssp-Transfer-results-info">
+        <span>Showing {} / {} results</span>
+            {/* Showing 2 / 2 results */}
+            <button className='ssp-Transfer-print-btn' 
+            // onClick={handleExportToExcel}
+            >
+              <i className="fa-regular fa-file-excel"></i> Export
+            </button>
+            <button className='ssp-Transfer-print-btn' 
+            // onClick={handlePrint}
+            ><i class="fa-solid fa-print"></i> Print</button>
+          </div>
+        </div>
         <table className='ssp-Transfer-store'>
           <thead>
             <tr>

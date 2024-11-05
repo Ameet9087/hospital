@@ -191,10 +191,7 @@ function RDLListReports() {
               onChange={handleDateToChange}
             />
           </label>
-          <button className="rDLListReport-star-button">☆</button>
-          <button className="rDLListReport-more-btn">-</button>
-          <button className="rDLListReport-ok-button">OK</button>
-        </div>
+          </div>
       </div>
       <div className="rDLListReport-search-N-results">
         <div className="rDLListReport-search-bar">

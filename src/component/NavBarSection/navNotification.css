@@ -56,10 +56,10 @@
   .labNotificationSms-date-range {
     display: flex;
     align-items: center;
-    /* width: 95%; */
+    width: 100%;
     gap: 10px;
     background-color: #f0f0f0;
-    padding: 3px;
+    padding: 3px 10px;
   }
   .labNotificationSms-date-range label{
     display: flex;
@@ -72,31 +72,8 @@
     padding: 3px;
     margin-left: 10px;
   }
-  .labNotificationSms-star-button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color:var(--button-color) ;
-    cursor: pointer;
-  }
-  .labNotificationSms-ok-button {
-    background-color:var( --button-color);
-    border: 1px solid var( --button-hover-border-color);
-    color: white;
-    /* border: none; */
-    /* margin-right: 10px; */
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: var(--font-size);
-    margin: 1px;
-    transition: background-color 0.3s ease;
-    padding: 5px 5px;
-  }
-  .labNotificationSms-ok-button:hover {
-    border: 1px solid var( --button-hover-border-color);
-    color: var(--button-hover-text-color);
-    background-color: var(--button-hover-background-color);
-  }
+
+ 
   
   .labNotificationSms-show-data-btn {
     background-color:var( --button-color);
@@ -138,6 +115,29 @@
     font-size: var(--font-size);
   }
   
+  .labNotificationSms-Showing span{
+    /* color: #0F63AF; */
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+  }
+  .labNotificationSms-print-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-top: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+    padding: 5px 10px;
+  }
+  .labNotificationSms-print-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
   .labNotificationSms-data-table {
     width: 100%;
     border-collapse: collapse;
@@ -175,21 +175,20 @@
   .labNotificationSms-search-n-filter{
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   .labNotificationSms-search-input {
+   
     padding: 5px;
+    font-size: var(--font-size);
     width: 200px;
-    border: 1px solid black;
-    border-radius: 15px;
+    border: 1px solid gray;
+    border-radius: 5px;
   }
   .labNotificationSms-search-bar{
-  margin-left: -15px;
+  /* margin-left: -15px; */
   position: relative;
-  margin-bottom: 10px;
-  /* padding-left: -10px; */
-  /* opacity: 0; */
-  /* animation: slideIn 1s forwards 0.8s; */
-}
+  }
 .labNotificationSms-search-bar i{
   position: absolute;
   top: 8px;
@@ -199,5 +198,5 @@
   color: gray;
 }
 .labNotificationSms-content{
-  margin-top: 15px;
+  margin: 15px 10px 0px 0px;
 }

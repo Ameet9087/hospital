@@ -114,6 +114,19 @@ const LabCategories = () => {
           </button>
         </div>
       </div>
+      <div className="labCategories-controls">
+          <div className="labCategories-date-range">
+      <label>
+        From:
+        <input type="date" defaultValue="2024-08-09" />
+      </label>
+      <label>
+        To:
+        <input type="date" defaultValue="2024-08-16" />
+      </label>
+
+    </div>
+</div>
       <div className="labCategories-search-N-result">
         <div className="labCategories-search-bar">
           <i className="fa-solid fa-magnifying-glass"></i>
@@ -123,6 +136,9 @@ const LabCategories = () => {
           <span>
             Showing {labCategories?.length} / {labCategories?.length} results
           </span>
+          <button className="labCategories-print-button">
+          <i className="fa-solid fa-file-excel"></i> Export
+          </button>
           <button className="labCategories-print-button">
             <i class="fa-solid fa-print"></i> Print
           </button>

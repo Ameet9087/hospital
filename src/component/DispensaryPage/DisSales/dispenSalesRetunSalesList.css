@@ -16,27 +16,6 @@
     align-items: center;
     /* margin-bottom: 20px; */
   }
-  
-  
-  .dispenSalesRetunSalesList-CreateRequisition{
-    background-color:var( --button-color);
-    border: 1px solid var( --button-hover-border-color);
-    color: white;
-    /* border: none; */
-    margin: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: var(--font-size);
-    margin-left: 100px;
-    transition: background-color 0.3s ease;
-    padding: 5px 5px;;
-    }
-    
-    .dispenSalesRetunSalesList-CreateRequisition:hover{
-      border: 1px solid var( --button-hover-border-color);
-      color: var(--button-hover-text-color);
-      background-color: var(--button-hover-background-color);
-    }
  
   .dispenSalesRetunSalesList-checkBox select {
     padding: 3px 5px 3px 5px;
@@ -59,7 +38,7 @@ color: green;
   .dispenSalesRetunSalesList-date-range {
     display: flex;
     align-items: center;
-    width: 45%;
+    width: 38%;
     gap: 10px;
     background-color: #f0f0f0;
     margin-bottom: 10px;
@@ -77,32 +56,8 @@ color: green;
     padding: 3px;
   }
   
-  .dispenSalesRetunSalesList-star-button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color:var(--button-color) ;
-    cursor: pointer;
-  }
-  
-  .dispenSalesRetunSalesList-ok-button {
-    background-color:var( --button-color);
-    border: 1px solid var( --button-hover-border-color);
-    color: white;
-    /* border: none; */
-    /* margin-right: 10px; */
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: var(--font-size);
-    margin: 1px;
-    transition: background-color 0.3s ease;
-    padding: 5px 5px;
-  }
-  .dispenSalesRetunSalesList-ok-button:hover {
-    border: 1px solid var( --button-hover-border-color);
-    color: var(--button-hover-text-color);
-    background-color: var(--button-hover-background-color);
-  }
+
+
   
   .dispenSalesRetunSalesList-search-bar {
     display: flex;
@@ -135,16 +90,20 @@ color: green;
     color:black;
     font-size: var(--font-size);
 }
-.dispenSalesRetunSalesList-print-btn{
-      margin-left: 10px;
-      /* gap: 10px; */
-    background-color: #0011ff ;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    font-size: var(--font-size);
-
+.dispenSalesRetunSalesList-print-button {
+  background-color: var(--button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.dispenSalesRetunSalesList-print-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
   }
   
   .dispenSalesRetunSalesList-table-N-paginat table {

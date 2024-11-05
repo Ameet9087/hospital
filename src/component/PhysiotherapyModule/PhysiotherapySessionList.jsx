@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './PhysiotherapySessionList.css';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
 
+
 const PhysiotherapySession = () => {
     const [sessions, setSessions] = useState([]);
     const [columnWidths, setColumnWidths] = useState({});
@@ -48,6 +49,7 @@ const PhysiotherapySession = () => {
 
     return (
         <div className="physiotherapy-session-list">
+            
             <h1>Physiotherapy Sessions</h1>
             <div className='physiotherapy-tab'>
                 <div className="table-container">

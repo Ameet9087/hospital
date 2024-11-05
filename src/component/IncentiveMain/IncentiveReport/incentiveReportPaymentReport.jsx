@@ -13,9 +13,7 @@ const IncentiveReportPaymentReport = () => {
           <input type="date" />
           <label>To: </label>
           <input type="date" />
-          <button className="incentiveReportPaymentReport-icon-button incentiveReportPaymentReport-star">★</button>
-          <button className="incentiveReportPaymentReport-icon-button incentiveReportPaymentReport-dash">-</button>
-          <button className="incentiveTranHospitalIncome-ok-button">OK</button>
+
 
         </div>
         <button className="incentiveReportPaymentReport-load-button"><i class="fa-solid fa-magnifying-glass"></i> Show Report</button>
