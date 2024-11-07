@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios'; // Import axios
 import './RadiationTherapyIntegration.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
@@ -10,6 +11,7 @@ const RadiationTherapyIntegration = () => {
         patientId: '',
         patientName: '',
         age: '',
+        therapyPlan: '',
         therapyType: '',
         radiationDose: '',
         numberOfSessions: '',
@@ -17,6 +19,7 @@ const RadiationTherapyIntegration = () => {
         endDate: '',
         equipmentUsed: '',
         technicianName: '',
+        medicalTeam: '',
         attendingOncologist: '',
         followUpDates: '',
         comments: ''
@@ -24,6 +27,20 @@ const RadiationTherapyIntegration = () => {
 
     const [records, setRecords] = useState([]); // State to hold the submitted records
     const [isFormVisible, setIsFormVisible] = useState(false); // State to track form visibility
+
+    // Fetch existing therapy plans from the API
+    useEffect(() => {
+        const fetchTherapyPlans = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/therapy-plans');
+                setRecords(response.data); // Set the records with fetched data
+            } catch (error) {
+                console.error('Error fetching therapy plans:', error);
+            }
+        };
+
+        fetchTherapyPlans();
+    }, []);
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -33,27 +50,37 @@ const RadiationTherapyIntegration = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Add the new formData to the records array
-        setRecords([...records, formData]);
-        console.log("Form Data Submitted: ", formData);
-        setFormData({ // Reset the form data after submission
-            patientId: '',
-            patientName: '',
-            age: '',
-            therapyType: '',
-            radiationDose: '',
-            numberOfSessions: '',
-            startDate: '',
-            endDate: '',
-            equipmentUsed: '',
-            technicianName: '',
-            attendingOncologist: '',
-            followUpDates: '',
-            comments: ''
-        });
-        setIsFormVisible(false); // Hide the form after submission
+        
+        try {
+            const response = await axios.post('http://localhost:8000/api/therapy-plans', formData);
+            console.log("Form Data Submitted: ", response.data);
+
+            // Update records with the newly submitted data
+            setRecords([...records, response.data]);
+
+            setFormData({ // Reset the form data after submission
+                patientId: '',
+                patientName: '',
+                age: '',
+                therapyPlan: '',
+                therapyType: '',
+                radiationDose: '',
+                numberOfSessions: '',
+                startDate: '',
+                endDate: '',
+                equipmentUsed: '',
+                technicianName: '',
+                medicalTeam: '',
+                attendingOncologist: '',
+                followUpDates: '',
+                comments: ''
+            });
+            setIsFormVisible(false); // Hide the form after submission
+        } catch (error) {
+            console.error('Error submitting form data:', error);
+        }
     };
 
     const toggleFormVisibility = () => {
@@ -71,7 +98,7 @@ const RadiationTherapyIntegration = () => {
                         <table ref={tableRef}>
                             <thead>
                                 <tr>
-                                    {["Patient ID", "Patient Name", "Age", "Therapy Type", "Radiation Dose", "Number of Sessions", "Start Date", "End Date", "Equipment Used", "Technician Name", "Attending Oncologist", "Follow-Up Dates", "Comments"].map((header, index) => (
+                                    {["Patient ID", "Patient Name", "Age", "Therapy Plan", "Therapy Type", "Radiation Dose", "Number of Sessions", "Start Date", "End Date", "Equipment Used", "Technician Name", "Attending Oncologist", "Follow-Up Dates", "Comments"].map((header, index) => (
                                         <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
                                             <div className="header-content">
                                                 <span>{header}</span>
@@ -90,6 +117,7 @@ const RadiationTherapyIntegration = () => {
                                         <td>{record.patientId}</td>
                                         <td>{record.patientName}</td>
                                         <td>{record.age}</td>
+                                        <td>{record.therapyPlan}</td>
                                         <td>{record.therapyType}</td>
                                         <td>{record.radiationDose}</td>
                                         <td>{record.numberOfSessions}</td>
@@ -144,6 +172,17 @@ const RadiationTherapyIntegration = () => {
                             />
                         </div>
                         <h3>Therapy Plan</h3>
+                        <div className="radiation-therapy-integration-group">
+                            <label>Therapy Plan <span className="mandatory">*</span></label>
+                            <input
+                                type="text"
+                                name="therapyPlan"
+                                value={formData.therapyPlan}
+                                onChange={handleInputChange}
+                                placeholder="Therapy Plan"
+                                required
+                            />
+                        </div>
                         <div className="radiation-therapy-integration-group">
                             <label>Therapy Type <span className="mandatory">*</span></label>
                             <input
@@ -220,7 +259,16 @@ const RadiationTherapyIntegration = () => {
                                 placeholder="Technician Name"
                             />
                         </div>
-                        <h3>Medical Team</h3>
+                        <div className="radiation-therapy-integration-group">
+                            <label>Medical Team</label>
+                            <input
+                                type="text"
+                                name="medicalTeam"
+                                value={formData.medicalTeam}
+                                onChange={handleInputChange}
+                                placeholder="Medical Team"
+                            />
+                        </div>
                         <div className="radiation-therapy-integration-group">
                             <label>Attending Oncologist</label>
                             <input
@@ -250,10 +298,11 @@ const RadiationTherapyIntegration = () => {
                                 placeholder="Comments"
                             />
                         </div>
-                        <div className='radiation-therapy-integration-button'>
-                            <button type="submit" className="radiation-therapy-integration-submit-btn">Submit</button>
-                        </div>
+
+                        <button type="submit" className='radiation-therapy-integration-submit-btn'>Submit</button>
+                        <button type="button" className='radiation-therapy-integration-submit-btn' onClick={toggleFormVisibility}>Cancel</button>
                     </div>
+                  
                 </form>
             )}
         </div>

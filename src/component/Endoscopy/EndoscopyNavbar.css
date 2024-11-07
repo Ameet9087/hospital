@@ -1,0 +1,57 @@
+  /* Mohini_Endoscopy_18-10-24 */
+.endoscopy-navbar ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    font-size: var(--heading-font);
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    margin: 10px;
+  }
+  
+  .endoscopy-header-button {
+    padding: 5px 10px; /* Slightly increased horizontal padding */
+    text-decoration: none;
+    background-color: var(--button-color);
+    color: white;
+    font-size: var(--heading-font);
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .endoscopy-header-button:hover {
+    background-color: #f0f0f0;
+    color: var(--button-color);
+    border-bottom: 1px solid var(--button-hover-border-color);
+  }
+  
+  .endoscopy-header-button.active {
+    background-color: var(--button-bg-color);
+    color: white;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .endoscopy-navbar ul {
+      flex-direction: column; /* Stack items vertically on smaller screens */
+      align-items: flex-start; /* Align items to the left */
+    }
+  
+    .endoscopy-header-button {
+      width: 100%; /* Make buttons full width */
+      padding: 10px; /* Increase padding for better touch targets */
+      font-size: calc(var(--heading-font) - 2px); /* Slightly decrease font size */
+      text-align: center; /* Center text for full-width buttons */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .endoscopy-navbar ul {
+      gap: 10px; /* Reduce gap between items for smaller screens */
+    }
+  
+    .endoscopy-header-button {
+      font-size: calc(var(--heading-font) - 4px); /* Further decrease font size for smaller devices */
+    }
+  }
+  /* Mohini_Endoscopy_18-10-24 */

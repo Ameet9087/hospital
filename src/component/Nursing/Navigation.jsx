@@ -43,7 +43,11 @@ function Navigation() {
                 > Discharge Summary</button>
             </NavLink>
 
-          
+            <NavLink to="/AdhenseSafetyPrecaution"> <button
+                className={`nursing-action-button ${selectedButton === 'Adherence Safety Precaution' ? 'selected' : ''}`}
+                onClick={() => handleButtonClick('Adherence Safety Precaution')}
+                > Adherence Safety Precaution</button>
+            </NavLink>
         </nav>
 
         

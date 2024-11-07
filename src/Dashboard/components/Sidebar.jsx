@@ -61,6 +61,7 @@ const Sidebar = ({
   onVisitorManagement,
   onHr,
   onRadiationTherapy,
+  onendoscopy,
   onChemotherapy,
 
   onPulmonology,
@@ -280,6 +281,16 @@ const Sidebar = ({
     handleLinkClick('radiationTherapy')
     onRadiationTherapy()
   }
+
+  
+
+
+  const handleendoscopyClick = () => {
+    handleLinkClick('endoscopy')
+    onendoscopy()
+  }
+
+
   const handlePulmonology = () => {
     handleLinkClick('pulmonology')
     onPulmonology()
@@ -288,6 +299,7 @@ const Sidebar = ({
   }
 
   const handleChemotherapyClick = () => {
+
     handleLinkClick('chemotherapy')
     onChemotherapy()
   }
@@ -3403,7 +3415,79 @@ const Sidebar = ({
         </li>
         {/* Prachi */}
 
+ {/* Prachi endoscopy */}
 
+ <li
+          className={`custom-nav-item ${
+            activeLink === "endoscopy-submenu1" ||
+            activeLink === "endoscopy-submenu2" 
+         
+              ? "custom-nav-item-active"
+              : ""
+          }`}
+        >
+          <div className="custom-nav-link-content" onClick={handleendoscopyClick}>
+            <span>
+              <TbUsers />
+            </span>
+            {isOpen && <span className="custom-nav-link-text">Endoscopy</span>}
+            <span className="custom-dropdown-icon">
+              {openMenus.endoscopy ? <LuChevronUp /> : <LuChevronDown />}
+            </span>
+          </div>
+          {openMenus.endoscopy && isOpen && (
+            <ul className="custom-submenu">
+              <li
+                onClick={() => handleItemClick("endoscopy", "submenu1")}
+                className={
+                  activeLink === "endoscopy-submenu1" ? "custom-submenu-active" : ""
+                }
+              >
+                <Link to="/procedure-scheduling">Procedure Scheduling</Link>
+              </li>
+              <li
+                onClick={() => handleItemClick("endoscopy", "submenu2")}
+                className={
+                  activeLink === "endoscopy-submenu2" ? "custom-submenu-active" : ""
+                }
+              >
+                <Link
+                  to="/endoscope-inventory"
+                  className="endoscopy-booking-list-nav-link"
+                >
+                 Endoscope Inventory
+                </Link>
+              </li>
+              <li
+                onClick={() => handleItemClick("endoscopy", "submenu2")}
+                className={
+                  activeLink === "endoscopy-submenu2" ? "custom-submenu-active" : ""
+                }
+              >
+                <Link
+                  to="/sterilization-tracking"
+                  className="endoscopy-booking-list-nav-link"
+                >
+                 Sterilization Tracking
+                </Link>
+              </li>
+              <li
+                onClick={() => handleItemClick("endoscopy", "submenu2")}
+                className={
+                  activeLink === "endoscopy-submenu2" ? "custom-submenu-active" : ""
+                }
+              >
+                <Link
+                  to="/post-procedure-doc"
+                  className="endoscopy-booking-list-nav-link"
+                >
+                 Post-Procedure Documentation
+                </Link>
+              </li>
+            </ul>
+          )}
+        </li>
+        {/* Prachi */}
 
 
         <li

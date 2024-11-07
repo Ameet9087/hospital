@@ -1,0 +1,82 @@
+  /* Mohini_Endoscopy_PatientReportsSearchForm_18-10-24 */
+.patient-report-search-form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--background-color);
+    height: 90vh;
+    overflow-y: auto;
+}
+
+.patient-report-search-form-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.patient-report-search-form-title{
+    font-size: var(--heading-font);
+}
+
+.patient-report-search-form-left,
+.patient-report-search-form-right {
+    width: 48%; /* Equal width for left and right sections */
+}
+
+/* Group Styles */
+.patient-report-search-form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.patient-report-search-form-group label {
+    flex: 0 0 120px; /* Fixed label width */
+    margin-right: 10px;
+    font-size: var(--heading-font);
+}
+
+/* Input Fields */
+.patient-report-search-input,
+.patient-report-search-input-date,
+.patient-report-search-select {
+    flex: 1;
+    padding: 5px;
+    font-size: var(--font-size);
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.patient-report-search-date-range {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.patient-report-search-date-range span {
+    margin: 0 5px;
+}
+
+/* Button Container */
+.patient-report-search-button-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+}
+
+.patient-report-search-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.patient-report-search-button:hover {
+    background-color: white;
+    color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+  /* Mohini_Endoscopy_PatientReportsSearchForm_18-10-24 */

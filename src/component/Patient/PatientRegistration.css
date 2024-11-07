@@ -56,7 +56,7 @@
   .patient-registration .form-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
+    /* margin-bottom: 15px; */
   }
   
   .patient-registration .form-group {
@@ -187,3 +187,22 @@
 }
 
 
+.patient-registration .form-group {
+  display: flex;
+  align-items: center;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  margin-right: 15px; /* Space between radio groups */
+}
+
+.radio-option input[type="radio"] {
+  margin-right: 0; /* No space between radio and label */
+}
+
+.radio-option .radio-label {
+  margin-left: 0; /* No space between radio and label */
+  font-weight: normal;
+}

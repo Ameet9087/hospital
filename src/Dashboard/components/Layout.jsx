@@ -57,6 +57,9 @@ import SuperUserMain from "../../component/SuperUserMain/superUserMainRoute";
 import VisitorManagement from "../../component/VisitorMgt/MainVisitorFile";
 import HRHome from "../../component/HRHome/HRHome";
 import Radiationtherapy from "../../component/RadiationTherapy/radiationtherapy";
+
+import Endoscopy from "../../component/Endoscopy/EndoscopyRoute";
+
 import ChemotherapyRouting from "../../component/ChemotherapyModule/ChemotherapyRoute";
 import Pulmonology from "../../component/Pulmonology/Pulmonology";
 
@@ -94,13 +97,14 @@ const Layout = () => {
   const [showVerification, setShowVerification] = useState(false);
   const [showSubStore, setShowSubStore] = useState(false);
   const [showMedicalRecord, setShowMedicalRecord] = useState(false);
+
   const [showProcurement,setShowProcurement]=useState(false);
   const [showBilling,setShowBilling]=useState(false);
   const [showHomehealthcare,setshowHomehealthcare]=useState(false);
   const [showonpediatricoutpatient,setshowonpediatricoutpatient]=useState(false);
   const [showonpediatricinpatient,setshowonpediatricinpatient]=useState(false);
   const [showphysiotherapy,setshowphysiotherapy]=useState(false);
-
+  const [showEndoscopy,setShowEndoscopy]=useState(false);
 
 
   const [showBloodBank, setShowBloodBank] = useState(false)
@@ -111,6 +115,7 @@ const Layout = () => {
   const [shoeRadiationtherapy,setShowRadiationTherapy] = useState(false)
   const [showChemotherapy, setshowChemotherapy] = useState(false);
   const [showPulmonology,setShowPulmonology] = useState(false)
+
   const resetAllToggles = () => {
     setShowAppointment(false);
     setShowSetting(false);
@@ -150,6 +155,7 @@ const Layout = () => {
     setshowonpediatricoutpatient(false);
     setshowonpediatricinpatient(false);
     setshowphysiotherapy(false);
+
     setShowBloodBank(false);
     setShowTransport(false);
     setShowSuperUser(false);
@@ -342,12 +348,19 @@ const Layout = () => {
   const togglephysiotherapy = () => {
     resetAllToggles();
     setshowphysiotherapy(!showphysiotherapy);
-  };
 
-  const toggelChemotherapy = () => {
+  }
+  const togglepEndoscopy=()=>{
+    resetAllToggles();
+    setShowEndoscopy(!showEndoscopy);
+  }
+
+
+  const toggelChemotherapy =()=>{
     resetAllToggles();
     setshowChemotherapy(!showChemotherapy);
-  };
+  }
+
   return (
     <div className="hrmsLayout">
       <Sidebar
@@ -398,7 +411,10 @@ const Layout = () => {
         onpediatricoutpatient={togglePediatricoutpatient}
         onpediatricinpatient={togglePediatricinpatient}
         onphysiotherapy={togglephysiotherapy}
+
+        onendoscopy={togglepEndoscopy}
         onChemotherapy={toggelChemotherapy}
+
       />
       <div
         className={`hrmsLayoutMainContent ${
@@ -453,9 +469,13 @@ const Layout = () => {
           {showSuperUser && <SuperUserMain />}
           {showVisitorManagement && <VisitorManagement />}
           {showHR && <HRHome />}
+
           {shoeRadiationtherapy && <Radiationtherapy />}
+
           {showChemotherapy && <ChemotherapyRouting />}   
            {showPulmonology&& <Pulmonology/>}
+           {showEndoscopy && <Endoscopy/>}
+
 
         </main>
       </div>
