@@ -4,6 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import "../DisSales/dispenSalesSalesList.css"
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 function DispenSalesSalesList() {
   const [salesList, setSalesList] = useState([]); // State to store fetched sales data
@@ -11,6 +12,8 @@ function DispenSalesSalesList() {
   const [showScanDone, setShowScanDone] = useState(false);
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const printRef = useRef();
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   // Fetch sales data from the API
   useEffect(() => {
@@ -77,14 +80,33 @@ function DispenSalesSalesList() {
         <div ref={printRef}>
           <h2>Requisition Report</h2>
           <p>Date and Time: {new Date().toLocaleString()}</p>
-          <table>
-            <thead>
+          <table ref={tableRef}>
+          <thead>
               <tr>
-                <th>Req.No</th>
-                <th>Requested By</th>
-                <th>Requested From</th>
-                <th>Date</th>
-                <th>Status</th>
+              {[
+                "Req.No",
+                "Requested By",
+                "Requested From",
+                "Date",
+                "Status",
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
               </tr>
             </thead>
             <tbody>
@@ -95,19 +117,39 @@ function DispenSalesSalesList() {
           </table>
         </div>
       </div>
-      <div className="dispenSalesSalesList-table-N-paginat">
-        <table>
-          <thead>
+      {/* <div className="dispenSalesSalesList-table-N-paginat"> */}
+      <div className="table-container">
+      <table ref={tableRef}>
+      <thead>
             <tr>
-              <th>Hospital Number</th>
-              <th>Invoice No</th>
-              <th>Patient Name</th>
-              <th>Sub Total</th>
-              <th>Dis Amt</th>
-              <th>Total Amt</th>
-              <th>Date</th>
-              <th>Patient Type</th>
-              <th>Action</th>
+            {[
+              "Hospital Number",
+              "Invoice No",
+              "Patient Name",
+              "Sub Total",
+              "Dis Amt",
+              "Total Amt",
+              "Date",
+              "Patient Type",
+              "Action",
+            ].map((header, index) => (
+                  <th
+                    key={index}
+                    style={{ width: columnWidths[index] }}
+                    className="resizable-th"
+                  >
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
+                      ></div>
+                    </div>
+                  </th>
+                ))}
             </tr>
           </thead>
           <tbody>

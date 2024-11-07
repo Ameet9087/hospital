@@ -28,13 +28,13 @@
     color: black;
     font-weight: bold;
   }
-  .dispenSalesSales-invoice-summary{
+  /* .dispenSalesSales-invoice-summary{
     background-color:white;
     margin-bottom: 20px;
     width: 100%;
 
   }
-  
+   */
   .dispenSalesSales-patient-info {
     margin-bottom: 20px;
   }
@@ -172,7 +172,7 @@ width: 30px;
 
   }
   
-  .dispenSalesSales-invoice-summary table {
+  /* .dispenSalesSales-invoice-summary table {
     width: 100%;
     border-collapse: collapse;
   }
@@ -180,12 +180,11 @@ width: 30px;
   .dispenSalesSales-invoice-summary th,
   .dispenSalesSales-invoice-summary td {
     padding: 5px;
-    /* border: 1px solid #ccc; */
     text-align: center;
     background-color: #EEEEEE;
     font-size: 16px;
     color: black;
-  }
+  } */
   
   .dispenSalesSales-payment-section {
     margin-bottom: 20px;

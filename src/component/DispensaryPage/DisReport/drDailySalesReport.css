@@ -178,7 +178,7 @@
 
  }
 
- .drDailySalesReport-report table {
+ /* .drDailySalesReport-report table {
    margin-top: 10px;
    width: 100%;
    border-collapse: collapse;
@@ -196,7 +196,7 @@
  .drDailySalesReport-report th {
    background-color: #F3F3F3;
    color: #333333;
- }
+ } */
 
  /* .no-data {
     text-align: center;

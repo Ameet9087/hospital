@@ -120,7 +120,7 @@
 }
 
 /* Table styles */
-.dSSD-stock-table {
+/* .dSSD-stock-table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
@@ -139,9 +139,8 @@
     background-color: white;
     padding: 10px;
     font-size: var(--font-size);
-    /* color: #242323; */
     text-align: center;
-}
+} */
 
 /* Pagination and summary styles */
 .sales-stock-details-dSSDetails-pagination-bar {
