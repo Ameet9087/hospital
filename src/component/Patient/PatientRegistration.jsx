@@ -94,11 +94,11 @@ const PatientRegistration = ({sendpatientdata,patientData}) => {
             <div className="patient-registration-data">
             <div className="form-group">
                 
-                Mr. &nbsp;&nbsp;&nbsp;
+                Mr. 
                 <input type="radio" name="maritalStatus" value="Married" onChange={handleChange} /> 
-                Ms. &nbsp;&nbsp;&nbsp;
+                Ms.
                 <input type="radio" name="maritalStatus" value="Unmarried" onChange={handleChange} />
-                Mrs. &nbsp;&nbsp;&nbsp;
+                Mrs.
                 <input type="radio" name="maritalStatus" value="Unmarried" onChange={handleChange} />
                
          
@@ -146,15 +146,31 @@ const PatientRegistration = ({sendpatientdata,patientData}) => {
             <input type="text" name="middleName" value={formData.middleName} onChange={handleChange} />
           </div>
 
-            <div className="form-group">
-                 <label>Marital Status:</label>
-                Married &nbsp;&nbsp;&nbsp;
-                <input type="radio" name="maritalStatus" value="Married" onChange={handleChange} /> 
-                Unmarried &nbsp;&nbsp;&nbsp;
-                <input type="radio" name="maritalStatus" value="Unmarried" onChange={handleChange} />
-               
-         
-        </div>
+          <div className="form-group" style={{ width: "49%" }}>
+            <label>Marital Status:</label>
+
+            <span className="radio-option">
+              <input 
+                type="radio" 
+                id="married" 
+                name="maritalStatus" 
+                value="Married" 
+                onChange={handleChange} 
+              />
+              <label htmlFor="married" className="radio-label">Married</label>
+            </span>
+
+            <span className="radio-option">
+              <input 
+                type="radio" 
+                id="unmarried" 
+                name="maritalStatus" 
+                value="Unmarried" 
+                onChange={handleChange} 
+              />
+              <label htmlFor="unmarried" className="radio-label">Unmarried</label>
+            </span>
+          </div>
           
         </div>
 
