@@ -25,6 +25,7 @@
   .pharmacy-expiry-report-date-range > div,
   .pharmacy-expiry-report-filters > div {
     margin-right: 10px;
+    
   }
   
   .pharmacy-expiry-report-input {
@@ -167,6 +168,7 @@
   
   .pharmacy-expiry-report-summary h2 {
     margin-bottom: 10px;
+    font-size: var(--heading-font);
   }
   
   .pharmacy-expiry-report-summary div {
@@ -176,11 +178,11 @@
   }
   
   .pharmacy-expiry-report-summary span {
-    font-size: 16px;
+    font-size: var(--font-size);
   }
   .pharmacy-expiry-report-results-info{
     color: black;
-    font-size: 14px;
+    font-size: var(--font-size);
     margin-top: 10px;
   }
   .pharmacy-expiry-report-checkboxes {
@@ -221,4 +223,12 @@
     text-align: center;
     background-color: #ffffc0;
   }
+
+  .pharmacy-expiry-report-con {
+    display: flex;
+    justify-content: flex-end; /* Aligns the button to the right */
+    margin-right: 10px; /* Optional: Adds spacing from the right edge */
+}
+
+  
   /* Mohini_PharmacyExpiryReport_WholePage_14/sep/2024 */

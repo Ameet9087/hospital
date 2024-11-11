@@ -36,9 +36,14 @@ const RankMembershipwiseReport = () => {
           
         </div>
        
-        <button className="rank-membershipfavorite-btn">★</button>
-        <button className="rank-membership-reset-btn">-</button>
-        <div className="rank-wise-saales-filter-item">
+        {/* <button className="rank-membershipfavorite-btn">★</button>
+        <button className="rank-membership-reset-btn">-</button> */}
+       
+      </div>
+     
+      
+      <div className="rank-memeber-range">
+      <div className="rank-wise-saales-filter-item">
           <label>Rank:</label>
           {/* <input
             type="text"
@@ -51,10 +56,6 @@ const RankMembershipwiseReport = () => {
           <button className="rank-wise-saalesfilter-item" onClick={handleShowReport}>Show Report</button>
         </div>
         </div>
-      </div>
-     
-      
-      <div className="rank-memeber-range">
       <div className="rank-wise-saales-filter-item">
           <label>Membership:</label>
           <select

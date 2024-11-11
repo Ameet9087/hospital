@@ -6,8 +6,10 @@
 }
 
 .rank-wise-saales-report-page-container h3 {
-  font-size: 16px;
-  margin-bottom: 15px;
+  font-size: var(--heading-font);
+align-items: start;
+
+  margin-bottom: 20px;
   color: black;
 }
 
@@ -15,8 +17,9 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 50%;
   background-color: #ffffff;
-  padding: 15px;
+  padding: 5px;
   border-radius: 5px;
   margin-bottom: 15px;
 }
@@ -24,17 +27,17 @@
 .rank-wise-saales-filter-item {
   display: flex;
   align-items: center;
-  font-size: 16px;
+  font-size: var(--heading-font);
 }
 
 .rank-wise-saales-filter-item label {
   margin-right: 5px;
-  font-size: 14px;
+  font-size: var(--font-size);
 }
 
 .rank-wise-saales-filter-item input[type="date"] {
   padding: 5px;
-  font-size: 14px;
+  font-size: var(--font-size);
   border: 1px solid #ccc;
   border-radius: 3px;
 }
@@ -58,6 +61,7 @@
 
 .rank-memeber-range {
   display: flex;
+  justify-content: end;
   align-items: center;
   gap: 20px;
 }

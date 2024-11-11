@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
 import './CancerDiagnosisAndStaging.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
 
 const CancerDiagnosisAndStaging = () => {
     const [columnWidths, setColumnWidths] = useState({});
     const tableRef = useRef(null);
     
-    // State for form data
     const [formData, setFormData] = useState({
         patientId: '',
         patientName: '',
@@ -22,9 +22,9 @@ const CancerDiagnosisAndStaging = () => {
         comments: ''
     });
 
-    // State for tracking form visibility and records
     const [isFormVisible, setIsFormVisible] = useState(false);
-    const [records, setRecords] = useState([]); // New state to hold records
+    const [records, setRecords] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -36,10 +36,7 @@ const CancerDiagnosisAndStaging = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add new record to records array
         setRecords([...records, formData]);
-        console.log("Form Data Submitted: ", formData);
-        // Reset form data after submission
         setFormData({
             patientId: '',
             patientName: '',
@@ -54,28 +51,59 @@ const CancerDiagnosisAndStaging = () => {
             oncologistAssigned: '',
             comments: ''
         });
-        setIsFormVisible(false); // Hide the form after submission
+        setIsFormVisible(false);
     };
 
     const toggleFormVisibility = () => {
-        setIsFormVisible(!isFormVisible); // Toggle form visibility
+        setIsFormVisible(!isFormVisible);
     };
 
+    const handleExport = () => {
+        const ws = XLSX.utils.table_to_sheet(tableRef.current);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'CancerDiagnosisReport');
+        XLSX.writeFile(wb, 'CancerDiagnosisReport.xlsx');
+    };
+
+    const handlePrint = () => {
+        window.print();
+    };
+
+    const filteredRecords = records.filter(record =>
+        record.patientName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+  
     return (
         <div className="cancer-diagnosis-and-staging-container">
-            {/* Button to toggle form visibility */}
-            {!isFormVisible && (
+        {!isFormVisible && (
+            <>
                 <button 
                     className='cancer-diagnosis-and-staging-submit-btn' 
                     type="button" 
                     onClick={toggleFormVisibility}
                 >
-                   Add Cancer Type
+                    Add Cancer Type
                 </button>
-            )}
 
-            {/* Table to display records */}
-            {!isFormVisible && (
+                <div className="cancer-diagnosis-actions">
+                    <input
+                        type="text"
+                        placeholder="Search by Patient Name"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="cancer-diagnosis-search-bar"
+                    />
+                    <div className="cancer-diagnosis-action-buttons">
+                        <span>Showing {filteredRecords.length} / {records.length} results</span>
+                        <button onClick={handleExport}>Export</button>
+                        <button onClick={handlePrint}>Print</button>
+                    </div>
+                </div>
+            </>
+        )}
+
+       {!isFormVisible && (
                 <div className='table-container'>
                     <table ref={tableRef}>
                         <thead>

@@ -1,10 +1,16 @@
 /* Mohini_StoreBreakageItem_WholePage_14/sep/2024 */
-import React, { useState } from 'react';
+import React, { useState ,useRef} from 'react';
 import './SettingTerm.css';
+import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import ReturnForm from './ReturnForm';
+import * as XLSX from 'xlsx';
+
 
 const StoreBreakageItem = () => {
   const [showReturnForm, setShowReturnForm] = useState(false);
+  const [columnWidths, setColumnWidths] = useState({});
+    const tableRef = useRef(null);
+
 
   const handleAddBreakageClick = () => {
     setShowReturnForm(true); // Show the ReturnForm component when the button is clicked
@@ -13,6 +19,24 @@ const StoreBreakageItem = () => {
   const handleCloseReturnForm = () => {
     setShowReturnForm(false); // Hide the ReturnForm component
   };
+  
+
+
+
+
+// Function to export table to Excel
+const handleExport = () => {
+  const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+  const wb = XLSX.utils.book_new(); // Creates a new workbook
+  XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+  XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+};
+
+// Function to trigger print
+const handlePrint = () => {
+  window.print(); // Triggers the browser's print window
+};
+
   return (
     <div className="setting-terms-container">
  <button className="setting-terms-add-terms-btn" onClick={handleAddBreakageClick}>
@@ -23,26 +47,42 @@ const StoreBreakageItem = () => {
         {/* <span className="search-icon">🔍</span> */}
       </div>
       
-      <div className="setting-terms-results-print">
-        <span>Showing 0 / 0 results</span>
-        <button className="setting-terms-print-btn">Print</button>
-      </div>
+    
       
-      <div className='setting-terms-setting-term-ta'>
-      <table className="setting-terms-terms-table">
-        <thead>
-          <tr>
-            <th>Breakage Date</th>
-            <th>Breakage Id</th>
-            <th>Total  Qty</th>
-            <th>Sub total</th>
-            <th>Discount Amount</th>
-            <th>VAT Amount</th>
-            <th>Totall Amount</th>
-            <th>Remark</th>
-            <th>Is Active</th>
-          </tr>
-        </thead>
+      <div className='setting-supplier-span'>
+      <span>Showing 0 / 0 results</span>
+      <button className='item-wise-export-button'onClick={handleExport}>Export</button>
+  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
+</div>
+      
+      <div className='table-container'>
+      <table ref={tableRef}>
+                        <thead>
+                            <tr>
+                                {["Breakage Date",
+  "Breakage Id",
+  "Total Qty",
+  "Sub total",
+  "Discount Amount",
+  "VAT Amount",
+  "Total Amount",
+  "Remark",
+  "Is Active"].map((header, index) => (
+                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                        <div className="header-content">
+                                            <span>{header}</span>
+                                            <div
+                                                className="resizer"
+                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                            ></div>
+                                        </div>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+
+
+
         <tbody>
           <tr>
             <td colSpan="9" className="setting-terms-no-rows">No Rows To Show</td>

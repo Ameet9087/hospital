@@ -1,6 +1,7 @@
 import React, { useState,useRef } from 'react';
 import './ChemotherapyScheduling.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
 
 
 const ChemotherapyScheduling = () => {
@@ -43,6 +44,10 @@ const ChemotherapyScheduling = () => {
     ]);
 
     const [tableData, setTableData] = useState(records); // Initially display the records
+    const [searchTerm, setSearchTerm] = useState(''); // Search state
+    const filteredRecords = tableData.filter(record =>
+        record.patientName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -51,10 +56,8 @@ const ChemotherapyScheduling = () => {
             [name]: type === 'checkbox' ? checked : value,
         });
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add the new formData to the records array
         const updatedRecords = [...records, formData];
         setRecords(updatedRecords);
         setTableData(updatedRecords); // Update the table with the new record
@@ -77,13 +80,50 @@ const ChemotherapyScheduling = () => {
         }); // Clear the form
     };
 
+    
+
+
+
+
+
+// Function to export table to Excel
+const handleExport = () => {
+  const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+  const wb = XLSX.utils.book_new(); // Creates a new workbook
+  XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+  XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+};
+
+// Function to trigger print
+const handlePrint = () => {
+  window.print(); // Triggers the browser's print window
+};
+
+
+
+
     return (
         <div className="chemotherapy-scheduling-container">
-        {!showForm && (
-            <button className="chemotherapy-scheduling-submit-btn" onClick={() => setShowForm(true)}>
-                Add Chemotherapy
-            </button>
-        )}         {!showForm && tableData.length > 0 && (
+         {!showForm && (
+                <div className="chemotherapy-scheduling-action-buttons">
+                    <button className="chemotherapy-scheduling-submit-btn" onClick={() => setShowForm(true)}>
+                        Add Chemotherapy
+                    </button>
+                    <input
+                        type="text"
+                        placeholder="Search by Patient Name"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="chemotherapy-scheduling-search-bar"
+                    />
+                    <span>Showing {filteredRecords.length} / {records.length} results</span>
+                    <button onClick={handleExport}>Export</button>
+                    <button onClick={handlePrint}>Print</button>
+                </div>
+            )}
+               
+               
+                {!showForm && tableData.length > 0 && (
               <div className='table-container'>
                   <table ref={tableRef}>
                         <thead>

@@ -107,7 +107,7 @@
 
 .insurance-patient-report-results {
   color: black;
-  font-size: 14px;
+  font-size: var(--font-size);
 }
 
 /* .insurance-patient-report-export-btn,
@@ -187,18 +187,16 @@
   padding: 10px;
   margin-top: 20px;
   text-align: center;
-  font-size: 16px;
+  font-size: var(--heading-font);
 }
 
 .insurance-patient-report-summary h3 {
   margin-top: 0;
-  font-size: 16px;
-}
+  font-size: var(--heading-font);}
 
 .insurance-patient-report-summary p {
   margin-bottom: 0;
-  font-size: 16px;
-}
+  font-size: var(--heading-font);}
 
 .insurance-table-con {
   background-color: white;
@@ -226,7 +224,7 @@
 }
 
 .insurance-patient-report-search-bar span {
-  font-size: 14px; /* Adjust text size */
+  font-size: var(--font-size); /* Adjust text size */
   color: #333; /* Optional: Text color */
 }
 

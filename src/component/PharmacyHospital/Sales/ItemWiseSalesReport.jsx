@@ -66,20 +66,21 @@ const ItemWiseSalesReport = () => {
             </div>
             </div>
           
-           
-            <div className='item-wise-sale-button'>
-                
-           <div className="item-wise-sales-report-table">
-    <input type="text" placeholder="Search" className="item-wise-sales-search-bar" />
-    <button className="invoice-billing-search-button"><i className="fa fa-search"></i></button>
+            <div className="item-wise-sale-button">
+    <div className="item-wise-sales-report-table">
+        <div className="search-bar-wrapper">
+            <input type="text" placeholder="Search" className="item-wise-sales-search-bar" />
+            {/* <button className="invoice-billing-search-button"><i className="fa fa-search"></i></button> */}
+        </div>
+    </div>
+
+    <div className="item-wise-export-print-buttons">
+        <div className="item-wise-pagination-info">Showing 0 / 0 results</div>
+        <button className="item-wise-export-button" onClick={handleExport}>Export</button>
+        <button className="item-wise-print-button" onClick={handlePrint}>Print</button>
+    </div>
 </div>
 
-<div className="item-wise-export-print-buttons">
-    <div className="item-wise-pagination-info">Showing 0 / 0 results</div>
-    <button className="item-wise-export-button" onClick={handleExport}>Export</button>
-    <button className="item-wise-print-button" onClick={handlePrint}>Print</button>
-</div>
-            </div>
 
                 <div className='table-container'>
                 <table  ref={tableRef}>
