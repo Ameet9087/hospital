@@ -10,6 +10,7 @@ import MyPatientsTable from './MyPatientsTable';
 import Nephrology from './Nephrology';
 import RequisitionList from './RequisitionList';
 import DischargeSummary from './DischargeSummary';
+import AdhenseSafetyPrecaution from './AdhenseSafetyPrecaution';
 
 function NurisingMainRouting() {
 
@@ -24,6 +25,7 @@ function NurisingMainRouting() {
                   <Route path='/Nephrology' element={<Nephrology/>}></Route>
                   <Route path='/RequisitionList' element={<RequisitionList/>}></Route>
                   <Route path='/DischargeSummary' element={<DischargeSummary/>}></Route>
+                  <Route path='/AdhenseSafetyPrecaution' element={<AdhenseSafetyPrecaution/>}></Route>
                   </Routes>
             </Layout>
     </>

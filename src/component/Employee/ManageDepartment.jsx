@@ -5,6 +5,8 @@ import AddDepartment from './AddDepartment';
 import './ManageDepartment.css';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../api/api';
+import CustomModal from "../../CustomModel/CustomModal";
+
 
 const ManageDepartment = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);

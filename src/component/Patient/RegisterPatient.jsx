@@ -8,6 +8,7 @@ import AddressPage from './AddressPage';
 import GuarantorPage from './GuarantorPage';
 import InsurancePage from './InsurancePage'; // Import the new InsurancePage component
 import EmergencyContactPage from './EmergencyContactPage';
+import UploadPhotoPage from './UploadPhoto';
 
 function RegisterPatient() {
   const location = useLocation();
@@ -23,6 +24,7 @@ function RegisterPatient() {
       guarantorData: {},
       insuranceData: {},
       emergencyContactData: {},
+      uploadPhotoData: {}
     });
 
   const {id}=useParams();
@@ -71,6 +73,7 @@ function RegisterPatient() {
         guarantorData: patient.guarantorDTO || {},
         insuranceData: patient.insuranceDTO || {},
         emergencyContactData: patient.emergencyContactDTO || {},
+        uploadPhotoData:patient.uploadPhotoDTO || {},
       });
       setIsEditMode(true);
       setActiveTab('basic-info'); // Set the active tab based on the incoming data
@@ -143,11 +146,19 @@ function RegisterPatient() {
     }));
   };
 
+  const handleUploadPhotoData = (data) => {
+    setFormData(prevState => ({
+      ...prevState,
+      uploadPhotoData: data,
+    }));
+   
+  };
+
 
   const handleRegisterPatient = async () => {
     // Check if all tabs have data (optional validation)
-    const { patientData, addressData, guarantorData, insuranceData, emergencyContactData } = formData;
-    if (!patientData || !addressData || !guarantorData || !insuranceData || !emergencyContactData) {
+    const { patientData, addressData, guarantorData, insuranceData, emergencyContactData,uploadPhotoData } = formData;
+    if (!patientData || !addressData || !guarantorData || !insuranceData || !emergencyContactData || !uploadPhotoData) {
       alert('Please complete all sections before registering.');
       return;
     }
@@ -159,6 +170,7 @@ function RegisterPatient() {
       guarantorDTO: guarantorData,
       insuranceDTO: insuranceData,
       emergencyContactDTO: emergencyContactData,
+      uploadPhotoDTO:uploadPhotoData,
       isIPD:true
     };
 
@@ -190,7 +202,8 @@ function RegisterPatient() {
         addressData: {},
         guarantorData: {},
         insuranceData: {},
-        emergencyContactData: {}
+        emergencyContactData: {},
+        uploadPhotoData: {}
       });
       setActiveTab('basic-info'); // Optionally reset active tab to default
       navigate('/'); // Redirect to the home page or wherever appropriate
@@ -207,39 +220,49 @@ function RegisterPatient() {
       <div className="patient-menu">
       <a
         href={patientIds ? `#basic-info/${patientIds}` : '#basic-info'}
-        className={`menu-item ${activeTab === 'basic-info' ? 'active' : ''}`}
+        className={`menu-item-patient ${activeTab === 'basic-info' ? 'active' : ''}`}
         onClick={() => setActiveTab('basic-info')}
       >
         Basic Information
       </a>
       <a
         href={patientIds ? `#address/${patientIds}` : '#address'}
-        className={`menu-item ${activeTab === 'address' ? 'active' : ''}`}
+        className={`menu-item-patient ${activeTab === 'address' ? 'active' : ''}`}
         onClick={() => setActiveTab('address')}
       >
         Address
       </a>
       <a
         href={patientIds ? `#guarantor/${patientIds}` : '#guarantor'}
-        className={`menu-item ${activeTab === 'guarantor' ? 'active' : ''}`}
+        className={`menu-item-patient ${activeTab === 'guarantor' ? 'active' : ''}`}
         onClick={() => setActiveTab('guarantor')}
       >
         Guarantor
       </a>
       <a
         href={patientIds ? `#insurance/${patientIds}` : '#insurance'}
-        className={`menu-item ${activeTab === 'insurance' ? 'active' : ''}`}
+        className={`menu-item-patient ${activeTab === 'insurance' ? 'active' : ''}`}
         onClick={() => setActiveTab('insurance')}
       >
         Insurance
       </a>
       <a
         href={patientIds ? `#emergency-contact/${patientIds}` : '#emergency-contact'}
-        className={`menu-item ${activeTab === 'emergency-contact' ? 'active' : ''}`}
+        className={`menu-item-patient ${activeTab === 'emergency-contact' ? 'active' : ''}`}
         onClick={() => setActiveTab('emergency-contact')}
       >
         Emergency Contact
       </a>
+
+      <a
+        href={patientIds ? `#upload-photo/${patientIds}` : '#upload-photo'}
+        className={`menu-item-patient ${activeTab === 'upload-photo' ? 'active' : ''}`}
+        onClick={() => setActiveTab('upload-photo')}
+      >
+        Upload Photo
+      </a>
+
+
       <a href="#" className="register-button" onClick={handleRegisterPatient}>
         {isEditMode ? 'Update Patient' : 'Register Patient'}
       </a>
@@ -251,6 +274,7 @@ function RegisterPatient() {
         {activeTab === 'guarantor' && <GuarantorPage sendguarantordata={handleGuarantorData} guarantorData={formData.guarantorData} />}
         {activeTab === 'insurance' && <InsurancePage sendinsurancedata={handleInsuranceData} insuranceData={formData.insuranceData} />}
         {activeTab === 'emergency-contact' && <EmergencyContactPage sendemergencycontactdata={handleEmergencyContactData} emergencyData={formData.emergencyContactData} />}
+        {activeTab === 'upload-photo' && <UploadPhotoPage sendUploadPhotodata={handleUploadPhotoData} uploadphotodata={formData.uploadPhotoData} />}
 
         {isCameraOpen && (
           <div className="register-patient-camera-container">

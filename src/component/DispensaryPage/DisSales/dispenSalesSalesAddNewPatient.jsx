@@ -137,10 +137,12 @@ const AddNewPatient = ({ onClose, counterId }) => {
     };
 
     return (
-        <div className="salesAddNewPatient-modal-container">
+        <div 
+        // className="salesAddNewPatient-modal-container"
+        >
             <div className="salesAddNewPatient-modal-header">
                 <h2>Add New Patient</h2>
-                <button className="salesAddNewPatient-close-button" onClick={onClose}>X</button>
+                {/* <button className="salesAddNewPatient-close-button" onClick={onClose}>X</button> */}
             </div>
             <div className="salesAddNewPatient-modal-body">
                 <form onSubmit={handleSubmit}>

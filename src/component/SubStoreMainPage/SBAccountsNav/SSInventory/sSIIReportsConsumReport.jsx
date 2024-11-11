@@ -70,10 +70,7 @@ function SSIIReportsConsumReport() {
               To:
               <input type="date" defaultValue="2024-08-16" />
             </label>
-            <button className="sSIIReportsConsumReport-star-button">☆</button>
-          <button className="sSIIReportsConsumReport-more-btn">-</button>
-            <button className="sSIIReportsConsumReport-ok-button">OK</button>
-          </div>
+       </div>
 
           <div className="sSIIReportsConsumReport-filter">
             <label>SubCategory</label>

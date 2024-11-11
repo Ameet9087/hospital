@@ -15,9 +15,7 @@ const IncentiveTranRefralSummaryReport = () => {
           <input type="date" />
           <label>To: </label>
           <input type="date" />
-          <button className="incentiveTranRefralSummaryReport-icon-button incentiveTranRefralSummaryReport-star">★</button>
-          <button className="incentiveTranRefralSummaryReport-icon-button incentiveTranRefralSummaryReport-dash">-</button>
-          <button className="incentiveTranRefralSummaryReport-ok-button">OK</button>
+          
 
         </div>
       <div className="incentiveTranRefralSummaryReport-Select-Doctor">

@@ -144,6 +144,19 @@ function SSPStock() {
         return (
           <div className="sSPStock-stock-content">
            
+           <div className="sSPStock-controls">
+          <div className="sSPStock-date-range">
+      <label>
+        From:
+        <input type="date" defaultValue="2024-08-09" />
+      </label>
+      <label>
+        To:
+        <input type="date" defaultValue="2024-08-16" />
+      </label>
+
+    </div>
+</div>
             <div className="sSPStock-stock-search-N-results">
           <div className="sSPStock-stock-search-bar">
             <i className="fa-solid fa-magnifying-glass"></i>
@@ -162,11 +175,11 @@ function SSPStock() {
             ><i class="fa-solid fa-print"></i> Print</button>
           </div>
         </div>
-            {loading ? (
+            {/* {loading ? (
               <p>Loading data...</p>
             ) : error ? (
               <p>{error}</p>
-            ) : (
+            ) : ( */}
               <table className='sSPStock-stock'>
                 <thead>
                   <tr>
@@ -191,7 +204,7 @@ function SSPStock() {
                   ))}
                 </tbody>
               </table>
-            )}
+            {/* )} */}
             {/* <div className="pagination">
               <span>1 to {stockData.length} of {stockData.length}</span>
               <button disabled>First</button>

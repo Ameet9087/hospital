@@ -1,0 +1,102 @@
+.upload-photo-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.upload-photo-page h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* File Input */
+.upload-photo-page input[type="file"] {
+    display: block;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.upload-photo-page input[type="file"]:hover {
+    background-color: var(--button-color);
+}
+
+/* Button Styles */
+.upload-photo-page button {
+    background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.upload-photo-page button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+
+/* Camera Container */
+.register-patient-camera-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.register-patient-camera-container video {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    margin-bottom: 10px;
+}
+
+/* Image Preview */
+.register-patient-image-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.register-patient-captured-image {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 10px;
+    border: 2px solid #007bff;
+}
+
+.register-patient-image-preview img {
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid #007bff;
+}
+
+
+.register-patient-capture-btn {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.register-patient-capture-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}

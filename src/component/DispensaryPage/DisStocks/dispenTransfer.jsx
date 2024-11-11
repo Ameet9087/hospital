@@ -79,17 +79,17 @@
 //                         <table className="dispenStockTransfer-requisition-table">
 //                             <thead>
 //                                 <tr>
-//                                     <th>Transfer Date</th>
-//                                     <th>Generic Name</th>
-//                                     <th>Medicine Name</th>
-//                                     <th>Batch</th>
-//                                     <th>Expiry Date</th>
-//                                     <th>Requesting Dept.</th>
-//                                     <th>Trans Qty</th>
-//                                     <th>Transferred By</th>
-//                                     <th>Target Store</th>
-//                                     <th>Received By</th>
-//                                     <th>Remarks</th>
+//                                     "Transfer Date",
+//                                     "Generic Name",
+//                                     "Medicine Name",
+//                                     "Batch",
+//                                     "Expiry Date",
+//                                     "Requesting Dept.",
+//                                     "Trans Qty",
+//                                     "Transferred By",
+//                                     "Target Store",
+//                                     "Received By",
+//                                     "Remarks",
 //                                 </tr>
 //                             </thead>
 //                             <tbody>
@@ -193,17 +193,17 @@
 //                         <table className="dispenStockTransfer-requisition-table">
 //                             <thead>
 //                                 <tr>
-//                                     <th>Transfer Date</th>
-//                                     <th>Generic Name</th>
-//                                     <th>Medicine Name</th>
-//                                     <th>Batch</th>
-//                                     <th>Expiry Date</th>
-//                                     <th>Requesting Dept.</th>
-//                                     <th>Trans Qty</th>
-//                                     <th>Transferred By</th>
-//                                     <th>Target Store</th>
-//                                     <th>Received By</th>
-//                                     <th>Remarks</th>
+//                                     "Transfer Date",
+//                                     "Generic Name",
+//                                     "Medicine Name",
+//                                     "Batch",
+//                                     "Expiry Date",
+//                                     "Requesting Dept.",
+//                                     "Trans Qty",
+//                                     "Transferred By",
+//                                     "Target Store",
+//                                     "Received By",
+//                                     "Remarks",
 //                                 </tr>
 //                             </thead>
 //                             <tbody>
@@ -233,17 +233,20 @@
  /* Ajhar Tamboli dispenTransfer.jsx 19-09-24 */
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import "../DisStocks/dispenTransfer.css";
 import DispenStockTransferNewTrans from './dispenStockTransferNewTrans';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 const DispenTransfer = () => {
     const [showNewTransfer, setShowNewTransfer] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [transfers, setTransfers] = useState([]);
     const [filteredTransfers, setFilteredTransfers] = useState([]);
+    const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
     // Fetch transfers data from the API
     useEffect(() => {
@@ -325,6 +328,21 @@ const DispenTransfer = () => {
                         </button>
                     </div>
 
+                    <div className="dispenStockTransfer-controls">
+        {/* Your date range and button controls */}
+          <div className="dispenStockTransfer-date-range">
+            <label>
+              From:
+              <input type="date" defaultValue="2024-08-09" />
+            </label>
+            <label>
+              To:
+              <input type="date" defaultValue="2024-08-16" />
+            </label>
+           
+          </div>
+      </div>
+
                     <div className='dispenStockTransfer-search-N-result'>
                         <div className="dispenStockTransfer-search-bar">
                             <i className="fa-solid fa-magnifying-glass"></i>
@@ -338,26 +356,47 @@ const DispenTransfer = () => {
                         <div className="dispenStockTransfer-results-info">
                             <span>Showing {filteredTransfers.length} / {transfers.length} results</span>
                             <button className="dispenStockTransfer-print-button" onClick={handlePrint}>
+                            <i className="fa-solid fa-file-excel"></i> Export
+                            </button>
+                            <button className="dispenStockTransfer-print-button" onClick={handlePrint}>
                             <i class="fa-solid fa-print"></i> Print
                             </button>
                         </div>
                     </div>
 
-                    <div className='dispenStockTransfer-table-N-paginationDiv'>
-                        <table className="dispenStockTransfer-requisition-table">
+                    {/* <div className='dispenStockTransfer-table-N-paginationDiv'> */}
+                    <div className="table-container">
+                        <table ref={tableRef}>
                             <thead>
-                                <tr>
-                                    <th>Transfer Date</th>
-                                    <th>Generic Name</th>
-                                    <th>Medicine Name</th>
-                                    <th>Batch</th>
-                                    <th>Expiry Date</th>
-                                    {/* <th>Requesting Dept.</th> */}
-                                    <th>Trans Qty</th>
-                                    <th>Transferred By</th>
-                                    <th>Target Store</th>
-                                    <th>Received By</th>
-                                    <th>Remarks</th>
+                                <tr>{[
+                                    "Transfer Date",
+                                    "Generic Name",
+                                    "Medicine Name",
+                                    "Batch",
+                                    "Expiry Date",
+                                    "Trans Qty",
+                                    "Transferred By",
+                                    "Target Store",
+                                    "Received By",
+                                    "Remarks",
+                                ].map((header, index) => (
+                                    <th
+                                      key={index}
+                                      style={{ width: columnWidths[index] }}
+                                      className="resizable-th"
+                                    >
+                                      <div className="header-content">
+                                        <span>{header}</span>
+                                        <div
+                                          className="resizer"
+                                          onMouseDown={startResizing(
+                                            tableRef,
+                                            setColumnWidths
+                                          )(index)}
+                                        ></div>
+                                      </div>
+                                    </th>
+                                  ))}
                                 </tr>
                             </thead>
                             <tbody>
@@ -377,11 +416,12 @@ const DispenTransfer = () => {
                                             <td>{transfer.remark}</td>
                                         </tr>
                                     ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="11" className="no-data">No Rows To Show</td>
-                                    </tr>
-                                )}
+                                ) : (""
+                                    // <tr>
+                                    //     <td colSpan="11" className="no-data">No Rows To Show</td>
+                                    // </tr>
+                                )
+                                }
                             </tbody>
                         </table>
 

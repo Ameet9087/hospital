@@ -62,7 +62,7 @@ padding: 0 5px;
   .dispenStockRequisition-date-range {
     display: flex;
     align-items: center;
-    width: 50%;
+    width: 38%;
     gap: 10px;
     background-color: #f0f0f0;
     padding: 1px 10px;
@@ -78,38 +78,7 @@ padding: 0 5px;
     padding: 3px;
     margin-left: 10px;
   }
-  .dispenStockRequisition-star-button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color:var(--button-color) ;
-    cursor: pointer;
-  }
-  .dispenStockRequisition-ok-button {
-    background-color:var( --button-color);
-    border: 1px solid var( --button-hover-border-color);
-    color: white;
-    /* border: none; */
-    /* margin-right: 10px; */
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: var(--font-size);
-    margin: 1px;
-    transition: background-color 0.3s ease;
-    padding: 5px 5px;
-  }
-  .dispenStockRequisition-ok-button:hover {
-    border: 1px solid var( --button-hover-border-color);
-    color: var(--button-hover-text-color);
-    background-color: var(--button-hover-background-color);
-  }
-   .dispenStockRequisition-more-btn {
-    background-color: #B9B9CA;
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    cursor: pointer;
-    color: white;
-  }
+  
   
   .dispenStockRequisition-search-bar {
     display: flex;
@@ -160,8 +129,11 @@ padding: 0 5px;
   color: var(--button-hover-text-color);
   background-color: var(--button-hover-background-color);
 }
-  
-  .dispenStockRequisition-table-N-paginat table {
+
+.dispenStockRequisition-table-N-paginat{
+  background-color: white ;
+}
+  /* .dispenStockRequisition-table-N-paginat table {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
@@ -180,13 +152,12 @@ padding: 0 5px;
     padding: 3px;
     text-align: center;
     font-size: var(--font-size);
-    /* color: rgb(70, 69, 69); */
   }
   
   .dispenStockRequisition-table-N-paginat tr:nth-child(even) {
     background-color: #f9f9f9;
   }
-  
+   */
   .dispenStockRequisition-action-button {
     padding: 5px 10px;
     color: white;
@@ -239,9 +210,6 @@ padding: 0 5px;
     margin: 0 10px;
     /* color: gray; */
     font-size: var(--font-size);
-  }
-  .dispenStockRequisition-table-N-paginat{
-    background-color: white ;
   }
 
   

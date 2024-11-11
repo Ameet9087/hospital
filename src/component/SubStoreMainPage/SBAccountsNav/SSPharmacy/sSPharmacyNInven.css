@@ -43,7 +43,7 @@
     }
     .sSPharmacyNInven-pha-N-inven li{
         margin: none;
-        padding:10px;
+        /* padding:10px; */
         /* color: red; */
     }
     
@@ -51,7 +51,7 @@
     .sSPharmacyNInven-bar ul {
       list-style-type: none;
       margin: 0;
-      padding: 10px 0px 10px 0px;
+      /* padding: 10px 0px 10px 0px; */
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -60,33 +60,29 @@
     
     .sSPharmacyNInven-bar li {
       margin: 0 0px;
-      
+      padding: 2px;
     }
     
     .sSPharmacyNInven-bar a {
-      color: white;
-      background-color: var(--button-color);
-      text-decoration: none;
-      /* font-weight: bold; */
-      font-size: var(--heading-font);
-      border: 1px solid var(--button-color);
-      padding: 7px 5px;
+      color: black;
+      border: none;
+      padding: 5px 10px;
       border-radius: 5px;
-  
+      border:1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      margin-left: 10px;
     }
     
     .sSPharmacyNInven-bar a:hover {
-      background-color: white;
-      color: var(--button-color);
-      border: 1px solid var(--button-color);
-      /* border: 1px solid gray; */
-  
-      
+      border: 1px solid var( --button-hover-border-color);
+      color: var(--button-hover-text-color);
+      background-color: var(--button-hover-background-color); 
     }
     
-    .sSPharmacyNInven-bar .active {
-      background-color: var(--button-bg-color);
-      color: white;
-  
+    .sSPharmacyNInven-bar a.active {
+      border: 1px solid var(--button-bg-color);
+  color:white;
+  background-color: var(--button-bg-color);
     }
     

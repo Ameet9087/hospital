@@ -109,16 +109,16 @@
 //                     <table className="dSSD-stock-table">
 //                         <thead>
 //                             <tr>
-//                                 <th>Generic Name</th>
-//                                 <th>Medicine Name</th>
-//                                 <th>Unit</th>
-//                                 <th>Rack No</th>
-//                                 <th>Batch No</th>
-//                                 <th>Expiry Date</th>
-//                                 <th>Available Quantity</th>
-//                                 <th>Sale Price</th>
-//                                 <th>Total Value</th>
-//                                 <th>Store Name</th>
+//                                 "Generic Name",
+//                                 "Medicine Name",
+//                                 "Unit",
+//                                 "Rack No",
+//                                 "Batch No",
+//                                 "Expiry Date",
+//                                 "Available Quantity",
+//                                 "Sale Price",
+//                                 "Total Value",
+//                                 "Store Name",
 //                             </tr>
 //                         </thead>
 //                         <tbody>
@@ -290,16 +290,16 @@
 //                             <table className="dSSD-stock-table">
 //                                 <thead>
 //                                     <tr>
-//                                         <th>Generic Name</th>
-//                                         <th>Medicine Name</th>
-//                                         <th>Unit</th>
-//                                         <th>Rack No</th>
-//                                         <th>Batch No</th>
-//                                         <th>Expiry Date</th>
-//                                         <th>Available Quantity</th>
-//                                         <th>Sale Price</th>
-//                                         <th>Total Value</th>
-//                                         <th>Store Name</th>
+//                                         "Generic Name",
+//                                         "Medicine Name",
+//                                         "Unit",
+//                                         "Rack No",
+//                                         "Batch No",
+//                                         "Expiry Date",
+//                                         "Available Quantity",
+//                                         "Sale Price",
+//                                         "Total Value",
+//                                         "Store Name",
 //                                     </tr>
 //                                 </thead>
 //                                 <tbody>
@@ -350,7 +350,7 @@
  /* Ajhar Tamboli dispenSalesStockDetails.jsx 19-09-24 */
 
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import axios from 'axios'; // Import axios
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
@@ -358,13 +358,15 @@ import 'jspdf-autotable';
 import "../DisStocks/dispenSalesStockDetails.css";
 import DispenTransfer from "./dispenTransfer";
 import DispenStockRequisition from "./dispenStockRequisition";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 
 const SalesStockDetails = () => {
     const [activeTab, setActiveTab] = useState("StockDetails");
     const [salesData, setSalesData] = useState([]); // State to hold the fetched data
     const [loading, setLoading] = useState(true); // State to manage loading status
     const [error, setError] = useState(null); // State to manage error messages
-
+    const [columnWidths, setColumnWidths] = useState({});
+    const tableRef = useRef(null);
     console.log("Helloooo");
     
     // Fetch data from the backend API when the component mounts
@@ -420,8 +422,8 @@ const SalesStockDetails = () => {
         doc.output('dataurlnewwindow');
     };
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
+    // if (loading) return <p>Loading...</p>;
+    // if (error) return <p>{error}</p>;
 
     return (
 
@@ -463,6 +465,20 @@ const SalesStockDetails = () => {
                             <input type="checkbox" /> Show Zero Quantity
                         </label>
                     </div>
+                    <div className="dispenSalesStockDetails-controls">
+        {/* Your date range and button controls */}
+          <div className="dispenSalesStockDetails-date-range">
+            <label>
+              From:
+              <input type="date" defaultValue="2024-08-09" />
+            </label>
+            <label>
+              To:
+              <input type="date" defaultValue="2024-08-16" />
+            </label>
+           
+          </div>
+      </div>
 
                     <div className='dispenSalesStockDetails-search-N-result'>
                         <div className="dispenSalesStockDetails-search-bar">
@@ -482,20 +498,39 @@ const SalesStockDetails = () => {
                             </button>
                         </div>
                     </div>
-
-                    <table className="dSSD-stock-table">
+                    <div className="table-container">
+                    <table ref={tableRef}>
                         <thead>
-                            <tr>
-                                <th>Generic Name</th>
-                                <th>Medicine Name</th>
-                                <th>Unit</th>
-                                <th>Rack No</th>
-                                <th>Batch No</th>
-                                <th>Expiry Date</th>
-                                <th>Available Quantity</th>
-                                <th>Sale Price</th>
-                                <th>Total Value</th>
-                                <th>Store Name</th>
+                            <tr>{[
+                                "Generic Name",
+                                "Medicine Name",
+                                "Unit",
+                                "Rack No",
+                                "Batch No",
+                                "Expiry Date",
+                                "Available Quantity",
+                                "Sale Price",
+                                "Total Value",
+                                "Store Name",
+                                "EDD",
+                            ].map((header, index) => (
+                              <th
+                                key={index}
+                                style={{ width: columnWidths[index] }}
+                                className="resizable-th"
+                              >
+                                <div className="header-content">
+                                  <span>{header}</span>
+                                  <div
+                                    className="resizer"
+                                    onMouseDown={startResizing(
+                                      tableRef,
+                                      setColumnWidths
+                                    )(index)}
+                                  ></div>
+                                </div>
+                              </th>
+                            ))}
                             </tr>
                         </thead>
                         <tbody>
@@ -515,7 +550,7 @@ const SalesStockDetails = () => {
                             ))}
                         </tbody>
                     </table>
-                    
+                    </div>
                     {/* <div className="dSSDetails-pagination-bar">
                         <span>1 to 20 of {salesData.length}</span>
                         <button>First</button>

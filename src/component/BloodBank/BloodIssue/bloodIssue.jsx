@@ -96,9 +96,7 @@ function BloodIssue() {
         To:
         <input type="date" defaultValue="2024-08-16" />
       </label>
-      <button className="bloodIssue-star-button">☆</button>
-    <button className="bloodIssue-more-btn">-</button>
-      <button className="bloodIssue-ok-button">OK</button>
+
     </div>
 
         <div className="bloodIssue-filter">

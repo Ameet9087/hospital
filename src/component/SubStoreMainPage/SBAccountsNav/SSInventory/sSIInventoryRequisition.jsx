@@ -158,10 +158,7 @@ function SSIInventoryRequisition() {
               To:
               <input type="date" defaultValue="2024-08-16" />
             </label>
-            <button className="sSIInventoryRequisition-star-button">☆</button>
-          <button className="sSIInventoryRequisition-more-btn">-</button>
-            <button className="sSIInventoryRequisition-ok-button">OK</button>
-          </div>
+        </div>
           </div>
 
 
@@ -173,6 +170,7 @@ function SSIInventoryRequisition() {
         </div>
         <div className="sSIInventoryRequisition-results-info">
           Showing {filteredRequisitions.length} / {filteredRequisitions.length} results
+          <button className='sSIInventoryRequisition-print-button' onClick={""}><i className="fa-solid fa-file-excel"></i> Export</button>
           <button className='sSIInventoryRequisition-print-button' onClick={handlePrint}><i class="fa-solid fa-print"></i> Print</button>
         </div>
       </div>

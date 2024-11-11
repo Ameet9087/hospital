@@ -41,10 +41,10 @@ font-size: var(--font-size);
   .relEditDoctors-date-range {
     display: flex;
     align-items: center;
-    width: 50%;
+    width: 37%;
     gap: 10px;
     background-color: #f0f0f0;
-    padding: 1px 10px;
+    padding: 3px 10px;
   }
   .relEditDoctors-date-range label{
     display: flex;
@@ -57,38 +57,7 @@ font-size: var(--font-size);
     padding: 3px;
     margin-left: 10px;
   }
-  .relEditDoctors-star-button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color:var(--button-color) ;
-    cursor: pointer;
-  }
-  .relEditDoctors-ok-button {
-    background-color:var( --button-color);
-    border: 1px solid var( --button-hover-border-color);
-    color: white;
-    /* border: none; */
-    /* margin-right: 10px; */
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: var(--font-size);
-    margin: 1px;
-    transition: background-color 0.3s ease;
-    padding: 5px 5px;
-  }
-  .relEditDoctors-ok-button:hover {
-    border: 1px solid var( --button-hover-border-color);
-    color: var(--button-hover-text-color);
-    background-color: var(--button-hover-background-color);
-  }
-   .relEditDoctors-more-btn {
-    background-color: #B9B9CA;
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    cursor: pointer;
-    color: white;
-  }
+
   
   .relEditDoctors-search-bar {
     display: flex;
@@ -96,12 +65,8 @@ font-size: var(--font-size);
     border: 1px solid gray;
     align-items: center;
     justify-content: center;
-<<<<<<< HEAD
-    padding: 5px;
-    margin-bottom: 10px;
-=======
+
     padding: 3px;
->>>>>>> 9f2a38c15825231657e9214b1750e759062c2c86
   }
   
   .relEditDoctors-search-bar input {

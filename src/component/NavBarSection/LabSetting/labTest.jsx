@@ -28,7 +28,6 @@ const LabTestSetting = () => {
 
   return (
     <div className="labTestLS-container">
-      <div className="labTestLS-firstRow">
         <div className="labTestLS-addBtn">
           <button
             className="labTestLS-add-button"
@@ -37,6 +36,21 @@ const LabTestSetting = () => {
             +Add New Lab Test
           </button>
         </div>
+      <div className="labTestLS-firstRow">
+        <div className="labTestLS-controls">
+          <div className="labTestLS-date-range">
+      <label>
+        From:
+        <input type="date" defaultValue="2024-08-09" />
+      </label>
+      <label>
+        To:
+        <input type="date" defaultValue="2024-08-16" />
+      </label>
+
+    </div>
+
+          </div>
         <div className="labTestLS-filters">
           <span>Search Filters: </span>
           <label>
@@ -72,6 +86,7 @@ const LabTestSetting = () => {
           </select>
         </div>
       </div>
+      
       <div className="labTestLS-search-N-result">
         <div className="labTestLS-search-bar">
           <i className="fa-solid fa-magnifying-glass"></i>
@@ -81,6 +96,9 @@ const LabTestSetting = () => {
           <span>
             Showing {labTest?.length} / {labTest?.length} results
           </span>
+          <button className="labTestLS-print-button">
+          <i className="fa-solid fa-file-excel"></i> Export
+          </button>
           <button className="labTestLS-print-button">
             <i class="fa-solid fa-print"></i> Print
           </button>

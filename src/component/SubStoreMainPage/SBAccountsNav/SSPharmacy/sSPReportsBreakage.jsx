@@ -72,10 +72,8 @@ function SSPReportsBreakage() {
         To:
         <input type="date" defaultValue="2024-08-16" />
       </label>
-      <button className="sSPReportsBreakage-star-button">☆</button>
-    <button className="sSPReportsBreakage-more-btn">-</button>
-      <button className="sSPReportsBreakage-ok-button">OK</button>
-    </div>
+
+ </div>
 
           <div className="sSPReportsBreakage-filter">
             {/* <label>SubCategory</label>

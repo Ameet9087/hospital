@@ -63,6 +63,19 @@ const LookUps = () => {
           </button>
         </div>
       </div>
+      <div className="looksUps-controls">
+          <div className="looksUps-date-range">
+      <label>
+        From:
+        <input type="date" defaultValue="2024-08-09" />
+      </label>
+      <label>
+        To:
+        <input type="date" defaultValue="2024-08-16" />
+      </label>
+
+    </div>
+</div>
       <div className="looksUps-search-N-result">
         <div className="looksUps-search-bar">
           <i className="fa-solid fa-magnifying-glass"></i>
@@ -70,6 +83,9 @@ const LookUps = () => {
         </div>
         <div className="looksUps-results-info">
           <span>Showing 0 / 0 results</span>
+          <button className="looksUps-print-button">
+          <i className="fa-solid fa-file-excel"></i> Export
+          </button>
           <button className="looksUps-print-button">
             <i class="fa-solid fa-print"></i> Print
           </button>

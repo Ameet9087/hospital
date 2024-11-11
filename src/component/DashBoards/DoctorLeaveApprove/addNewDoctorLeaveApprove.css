@@ -1,0 +1,171 @@
+ /* Ajhar Tamboli addNewDoctorLeaveApprove.css 29-10-24 */
+   
+   
+   .addNewDoctorLeaveApprove-container {
+    width: 100%;
+    /* max-width: 1200px; */
+    margin: auto;
+    border: 1px solid #ddd;
+    padding: 14px;
+    background-color: white;
+    border-radius: 8px;
+    /* font-family: Arial, sans-serif; */
+    /* color: #525151; */
+  }
+  
+  .addNewDoctorLeaveApprove-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 16px;
+  }
+  
+  .addNewDoctorLeaveApprove-header h3 {
+    margin: 0;
+    font-size: var(--heading-font);
+  }
+  
+  .addNewDoctorLeaveApprove-close-btn {
+    background-color: #E31D2D;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    padding: 1px 8px;
+  }
+  
+  .addNewDoctorLeaveApprove-form .addNewDoctorLeaveApprove-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .addNewDoctorLeaveApprove-form-group {
+    /* flex: 1; */
+    display: flex;
+    /* text-align: center; */
+    /* align-items: left; */
+    font-size: var(--font-size);
+    margin-left: 10px;
+    /* width: 220px; */
+    /* border: 1px solid red; */
+  }
+  
+  .addNewDoctorLeaveApprove-form-group label {
+    display: block;
+    margin-bottom: 4px;
+    /* font-weight: bold; */
+    width: 400px;
+  }
+  
+  .addNewDoctorLeaveApprove-form-group input,
+  .addNewDoctorLeaveApprove-form-group select,
+  .addNewDoctorLeaveApprove-form-group textarea {
+    width: 60%;
+    padding: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: var(--font-size);
+    /* color: gray; */
+  }
+  
+  
+  .addNewDoctorLeaveApprove-select-components-section {
+    margin-top: 24px;
+    border-top: 1px solid #ddd;
+    padding-top: 16px;
+  }
+  
+  .addNewDoctorLeaveApprove-select-components-section h4 {
+    margin-bottom: 8px;
+  }
+  
+  .addNewDoctorLeaveApprove-select-components-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 8px;
+  }
+  
+  .addNewDoctorLeaveApprove-select-components-section table th,
+  .addNewDoctorLeaveApprove-select-components-section table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .addNewDoctorLeaveApprove-add-component-btn {
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  
+  .addNewDoctorLeaveApprove-create-new-component {
+    display: block;
+    margin-top: 8px;
+    color: #0F63AF;
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .addNewDoctorLeaveApprove-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    font-size: var(--font-size);
+    gap: 8px;
+    margin-top: 16px;
+    border-top: 1px solid #ddd;
+    /* margin-bottom: 10px; */
+  }
+  
+  .addNewDoctorLeaveApprove-add-btn {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    /* margin: 1px; */
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .addNewDoctorLeaveApprove-add-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .addNewDoctorLeaveApprove-form-group-1row{
+    display: flex;
+    justify-content: space-between;
+    gap:30px;
+  
+  }
+  .addNewDoctorLeaveApprove-form-group-sub{
+    display: flex;
+    justify-content: space-between;
+    /* width: 600px; */
+    /* border: 1px solid red; */
+  }
+  
+  .addNewDoctorLeaveApprove-AddNew{
+    display: flex;
+    justify-content: center;
+  }
+  .addNewDoctorLeaveApprove-AddNew a{
+    
+    color: #0F63AF;
+    font-size: var(--font-size);
+    /* font-weight: bold; */
+    text-decoration: none;
+  }

@@ -118,10 +118,7 @@ function SSIReturn() {
         To:
         <input type="date" defaultValue="2024-08-16" />
       </label>
-      <button className="sSIReturn-star-button">☆</button>
-    <button className="sSIReturn-more-btn">-</button>
-      <button className="sSIReturn-ok-button">OK</button>
-    </div>
+</div>
     </div>
         <div className="sSIReturn-search-N-results">
           <div className="sSIReturn-search-bar">

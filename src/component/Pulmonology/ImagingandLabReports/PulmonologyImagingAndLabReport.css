@@ -1,0 +1,108 @@
+
+
+.pulmonology-imaginandlabreport-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .pulmonology-imaginandlabreport-btn {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .pulmonology-imaginandlabreport-btn:hover {
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  
+  .pulmonology-imaginandlabreport-edit-btn {
+    margin-left:5px ;
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .pulmonology-imaginandlabreport-edit-btn:hover {
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .pulmonology-imaginandlabreport-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .pulmonology-imaginandlabreport-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 800px;
+    max-width: 90%;
+  }
+  
+  .pulmonology-imaginandlabreport-modal-contentform{
+    display: flex;
+    padding: 5px;
+  }
+  .pulmonology-imaginandlabreport-modal h2 {
+    margin-bottom: 20px;
+  }
+  
+  .pulmonology-imaginandlabreport-modal label {
+    width: 150px;
+
+  
+    
+  }
+  
+  .pulmonology-imaginandlabreport-modal input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .pulmonology-imaginandlabreport-modal-btn {
+    display: flex;
+   gap: 20px;
+  }
+  
+  .pulmonology-imaginandlabreport-modal-btn button {
+    color: white;
+    background-color: var(--button-color);
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .pulmonology-imaginandlabreport-modal-btn button:hover {
+    background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }

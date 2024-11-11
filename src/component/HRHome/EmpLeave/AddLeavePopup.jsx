@@ -29,13 +29,20 @@ function AddLeavePopup({ onClose, onSubmit }) {
     };
 
     return (
-        <div className="addleave-overlay">
-            <div className="popup">
-            <button className="addleaveclose-popup" onClick={onClose}>X</button>
-
-                <h2>Add Leave Details</h2>
-                <form onSubmit={handleSubmit}>
-                    <div>
+      
+        <div className="addemployeeleave__overlay">
+            <div className="addemployeeleave__popup">
+                <div className="addemployeeleave__header">
+                    <h2>Add Leave Details</h2>
+                    <button
+                        onClick={onClose}
+                        className="addemployeeleave__closeButton"
+                    >
+                        X
+                    </button>
+                </div>
+                <form className="addemployeeleave__form" onSubmit={handleSubmit}>
+                    <div className="addemployeeleave__formGroup">
                         <label>Employee ID:</label>
                         <input
                             type="number"
@@ -45,7 +52,7 @@ function AddLeavePopup({ onClose, onSubmit }) {
                             required
                         />
                     </div>
-                    <div>
+                    <div className="addemployeeleave__formGroup">
                         <label>Start Date:</label>
                         <input
                             type="date"
@@ -55,7 +62,7 @@ function AddLeavePopup({ onClose, onSubmit }) {
                             required
                         />
                     </div>
-                    <div>
+                    <div className="addemployeeleave__formGroup">
                         <label>End Date:</label>
                         <input
                             type="date"
@@ -65,7 +72,7 @@ function AddLeavePopup({ onClose, onSubmit }) {
                             required
                         />
                     </div>
-                    <div>
+                    <div className="addemployeeleave__formGroup">
                         <label>Leave Type:</label>
                         <input
                             type="text"
@@ -75,9 +82,16 @@ function AddLeavePopup({ onClose, onSubmit }) {
                             required
                         />
                     </div>
-                    <button className='actionbtns' type="submit">Submit</button>
-                    <button className='actionbtns' type="button" onClick={onClose}>Cancel</button>
+
+
+                    <div className="addemployeeleave__formActions">
+                        <button type="button" onClick={onClose}>
+                            Cancel
+                        </button>
+                        <button type="submit">Register</button>
+                    </div>
                 </form>
+
             </div>
         </div>
     );

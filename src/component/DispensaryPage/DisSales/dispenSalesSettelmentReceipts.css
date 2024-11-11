@@ -98,22 +98,6 @@ color: green;
     padding: 5px;
   }
   
-  .dispenSalesSettelmentReceipts-star-button {
-    background: none;
-    border: none;
-    font-size: 1.2em;
-    color: #0011ff;
-    cursor: pointer;
-  }
-  
-  .dispenSalesSettelmentReceipts-ok-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 15px;
-    cursor: pointer;
-  }
   
   .dispenSalesSettelmentReceipts-search-bar {
     display: flex;

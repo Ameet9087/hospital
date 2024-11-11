@@ -54,8 +54,6 @@ const SampleCollection = () => {
             To:
             <input type="date" defaultValue="2024-08-16" />
           </label>
-          <button className="sampleCollection-star-button">☆</button>
-          <button className="sampleCollection-ok-button">OK</button>
         </div>
       </div>
 
@@ -70,6 +68,9 @@ const SampleCollection = () => {
         </div>
         <div className="sampleCollection-results-info">
           <span>Showing 0 / 0 results</span>
+          <button className="sampleCollection-print-btn">
+          <i className="fa fa-file-excel"></i> Export
+          </button>
           <button className="sampleCollection-print-btn">
             <i className="fa-solid fa-print"></i> Print
           </button>

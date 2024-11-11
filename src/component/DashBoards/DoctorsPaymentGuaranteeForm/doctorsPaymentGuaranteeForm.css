@@ -1,0 +1,121 @@
+.doctorsPaymentGuaranteeForm-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    /* background-color: #fff; */
+  }
+  
+  .doctorsPaymentGuaranteeForm-header {
+    background-color: var(--button-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px 4px 0 0;
+}
+
+.doctorsPaymentGuaranteeForm-header h2 {
+      color: white;
+    margin: 0;
+    font-size: var(--heading-font)
+  }
+  
+  .doctorsPaymentGuaranteeForm-payment-form {
+    padding: 20px;
+    /* background-color: #f8f9fa; */
+    border: 1px solid #dee2e6;
+  }
+  
+  .doctorsPaymentGuaranteeForm-section {
+    margin-bottom: 20px;
+  }
+  
+  .doctorsPaymentGuaranteeForm-section h3 {
+    margin-bottom: 15px;
+    font-size: var(--heading-font);
+  }
+  
+  .doctorsPaymentGuaranteeForm-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    align-items: center;
+  }
+  
+  .doctorsPaymentGuaranteeForm-row label {
+    width: 200px;
+    /* color: #2c3e50; */
+    font-size: var(--font-size);
+    margin-right: 10px;
+  }
+  
+  .doctorsPaymentGuaranteeForm-row input,
+  .doctorsPaymentGuaranteeForm-row textarea {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: var(--font-size);
+  }
+  
+  .doctorsPaymentGuaranteeForm-row textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .doctorsPaymentGuaranteeForm-input-with-icon {
+    flex: 1;
+    position: relative;
+    display: flex;
+  }
+  
+  .doctorsPaymentGuaranteeForm-input-with-icon input {
+    width: 90%;
+    padding-right: 30px;
+  }
+  
+  .doctorsPaymentGuaranteeForm-search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+  }
+  .doctorsPaymentGuaranteeForm-button {
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    /* margin: 1px; */
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  
+  .doctorsPaymentGuaranteeForm-button:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .doctorsPaymentGuaranteeForm-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .doctorsPaymentGuaranteeForm-row label {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+  
+    .doctorsPaymentGuaranteeForm-row input,
+    .doctorsPaymentGuaranteeForm-row textarea,
+    .doctorsPaymentGuaranteeForm-input-with-icon {
+      width: 100%;
+    }
+  }

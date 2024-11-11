@@ -2,15 +2,13 @@
 
 
 .schedule-container {
-    width: 100%;
-    margin: 0 auto;
-    background-color: var(--background-color);
-
+    padding: 20px;
+    background-color: #e3fffe;
+    
 }
 
 .schedule-container h2 {
     text-align: center;
-    margin-top: 0px;
     margin-bottom: 10px;
     color: #333;
     font-size: 18px;
@@ -18,23 +16,21 @@
 
 .schedule-table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .schedule-table th,
 .schedule-table td {
-    /* border: 1px solid #ddd;
-    padding: 6px;
-    text-align: left;
-    white-space: nowrap;
-    font-size: 14px; */
+    background-color: #f2f2f2;
     border: 1px solid #ccc;
-    padding: 6px;
-    text-align: left;
     padding: 8px;
+    text-align: left;
     font-size: var(--font-size);
+    white-space: nowrap; /* Prevent wrapping */
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .schedule-table th {
@@ -59,14 +55,14 @@
     }
 }
 
-.pagination {
+.HRpagination {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
     align-items: center;
 }
 
-.pagination button {
+.HRpagination button {
     background-color: var(--button-color);
     color: white;
     border: none;
@@ -77,15 +73,34 @@
     font-size: 14px;
 }
 
-.pagination button.disabled {
+.HRpagination button.disabled {
     background-color: #ccc;
     cursor: not-allowed;
 }
 
-.pagination button.active {
+.HRpagination button.active {
     background-color: #333;
     color: white;
 }
+
+/* Resizable Columns */
+.resizable-th {
+    position: relative;
+  }
+  
+  .resizer {
+    width: 5px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: col-resize;
+    z-index: 1;
+  }
+  
+  table th .resizer:hover {
+    background-color: #aaa;
+  }
 
 .no-data {
     text-align: center;
@@ -104,7 +119,7 @@
 }
 
 
-.allemp-btn {
+.scheduleedit-btn {
     background-color: var(--button-color);
     color: white;
     padding: 5px 10px;
@@ -115,16 +130,119 @@
     font-size: 14px;
 }
 
-.allemp-btn:nth-child(2) {
-    background-color: rgb(194, 61, 61);
+
+
+
+.schedule-searchAndActions {
+
+    margin: 10px;
+    margin-left: 0;
 }
 
-.allemp-btn:nth-child(2):hover {
-    background-color: rgb(83, 30, 30);
+.schedule-search-N-results {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-.allemp-btn:hover {
-    background-color: #333;
+.schedule-search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid gray;
+    background-color: white;
+    padding: 3px;
 }
+
+.schedule-search-bar i {
+    color: gray;
+}
+
+.schedule-search-bar input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.schedule-search-button {
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    margin-left: 5px;
+    /* Adds some spacing between the input and the button */
+    border-radius: 4px;
+    /* Optional: rounds the corners of the button */
+    font-size: var(--font-size);
+    /* Adjusts the font size for consistency */
+}
+
+.schedule-search-button:hover {
+    background-color: #e0e0e0;
+    /* Changes the background color on hover */
+}
+
+
+.schedule-results-info {
+    text-align: right;
+    font-size: var(--font-size);
+    /* color: rgb(88, 87, 87); */
+    /* font-weight: bold; */
+    /* margin-top: 5px; */
+}
+
+
+
+
+.schedule-ex-pri-buttons {
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+}
+
+.schedule-ex-pri-buttons:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+
+.schedule-action-button-add-reports {
+    background-color: var(--button-color);
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+}
+
+.schedule-ex-pri-buttons:hover,
+.schedule-action-button-add-reports:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.schedule-searchInput {
+    /* padding: 5px; */
+    width: 300px;
+    transition: border-color 0.3s;
+    font-size: 14px;
+    margin-left: 0;
+
+}
+
+.schedule-searchInput:focus {
+    border-color: skyblue;
+    outline: none;
+}
+
 
 /* Ravindra_Sanap_EmpSchedule.css_04_10_2024_End */

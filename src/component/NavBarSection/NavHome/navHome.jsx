@@ -27,8 +27,6 @@ const Dashboard = () => {
             To:
             <input type="date" defaultValue="2024-08-16" />
           </label>
-          <button className="labNavHome-star-button">☆</button>
-          <button className="labNavHome-ok-button">OK</button>
         </div>
       </div>
 

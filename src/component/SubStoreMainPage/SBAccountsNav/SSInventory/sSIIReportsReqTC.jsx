@@ -71,10 +71,7 @@ function SSIIReportsReqTC() {
               To:
               <input type="date" defaultValue="2024-08-16" />
             </label>
-            <button className="sSIIReportsReqTC-star-button">☆</button>
-          <button className="sSIIReportsReqTC-more-btn">-</button>
-            <button className="sSIIReportsReqTC-ok-button">OK</button>
-          </div>
+      </div>
 
           <div className="sSIIReportsReqTC-filter">
             <label>SubCategory</label>

@@ -1,16 +1,20 @@
  /* Ajhar Tamboli vehicleMaintenance.jsx 25-09-24 */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import "../VehicleMaintenance/vehicleMaintenance.css"
 import VMAddNewVehicle from './vMAddNewVehicle';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import CustomModal from '../../../CustomModel/CustomModal';
 const labTests = [
   { vehicleId: "", vehicleType: "", vehicleNumbe: "", vehicelCompanyName: "", yearOfManufactur:"", fuelType:"",maintenanceType:"", completedDate:"", repairDetails:"", partsReplace:"", cost:"", },
   { vehicleId: "", vehicleType: "", vehicleNumbe: "", vehicelCompanyName: "", yearOfManufactur:"",fuelType:"",maintenanceType:"", completedDate:"", repairDetails:"", partsReplace:"", cost:"", },
   // Add more rows as needed
-  
 ];
 
 const VehicleMaintenance = () => {
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
+
   const [showPopup, setShowPopup] = useState(false);
 
   const handleAddNewLabTestClick = () => {
@@ -40,26 +44,46 @@ const VehicleMaintenance = () => {
         </div>
         <div className="vehicleMaintenance-results-info">
           <span>Showing 0 / 0 results</span>
+          <button className="vehicleMaintenance-print-button"><i class="fa-solid fa-file-excel"></i> Export</button>
           <button className="vehicleMaintenance-print-button"><i class="fa-solid fa-print"></i> Print</button>
         </div>
         </div>
-      <table >
+        <div className="table-container">
+      <table ref={tableRef}>
         <thead>
-          <tr>
-            <th>Vehicle Id</th>
-            <th>Vehicle Type</th>
-            <th>Vehicle Number</th>
-            <th>Vehicel Company Name</th>
-            <th>Year Of Manufactur</th>
-            <th>Fuel Type</th>
-            <th>Maintenance Type</th>
-            <th>Schedule Date</th>
-            <th>Completed Date</th>
-            <th>Service Provider</th>
-            <th>Repair Details</th>
-            <th>Parts Replace</th>
-            <th>Cost</th>
-            <th>Actions</th>
+          <tr>{[
+            "Vehicle Id",
+            "Vehicle Type",
+            "Vehicle Number",
+            "Vehicel Company Name",
+            "Year Of Manufactur",
+            "Fuel Type",
+            "Maintenance Type",
+            "Schedule Date",
+            "Completed Date",
+            "Service Provider",
+            "Repair Details",
+            "Parts Replace",
+            "Cost",
+            "Actions",
+          ].map((header, index) => (
+            <th
+              key={index}
+              style={{ width: columnWidths[index] }}
+              className="resizable-th"
+            >
+              <div className="header-content">
+                <span>{header}</span>
+                <div
+                  className="resizer"
+                  onMouseDown={startResizing(
+                    tableRef,
+                    setColumnWidths
+                  )(index)}
+                ></div>
+              </div>
+            </th>
+          ))}
           </tr>
         </thead>
         <tbody>
@@ -87,6 +111,7 @@ const VehicleMaintenance = () => {
           ))}
         </tbody>
       </table>
+      </div>
       {/* <div className="vehicleMaintenance-pagination">
           <span>0 to 0 of 0</span>
           <button>First</button>
@@ -98,9 +123,12 @@ const VehicleMaintenance = () => {
       {/* Modal Popup */}
       {showPopup && (
         <div className="vehicleMaintenance-modal">
-          <div className="vehicleMaintenance-modal-content">
-            <VMAddNewVehicle onClose={handleClosePopup} />
-          </div>
+          {/* <div className="vehicleMaintenance-modal-content"> */}
+          <CustomModal isOpen={setShowPopup} onClose={handleClosePopup}>
+
+            <VMAddNewVehicle  />
+          </CustomModal>
+          {/* </div> */}
         </div>
       )}
     </div>

@@ -76,12 +76,24 @@ function SSPReportsStock() {
 
   return (
     <div className="sSPReportsStock-active-imaging-request">
+      
       <header className='sSPReportsStock-header'>
         <div className="sSPReportsStock-status-filters">
           <h4><i className="fa-solid fa-star-of-life"></i>Stock Report</h4>
         </div>
       </header>
       <div className="sSPReportsStock-controls">
+          <div className="sSPReportsStock-date-range">
+      <label>
+        From:
+        <input type="date" defaultValue="2024-08-09" />
+      </label>
+      <label>
+        To:
+        <input type="date" defaultValue="2024-08-16" />
+      </label>
+
+</div>
         <div className="sSPReportsStock-filter">
           <div className="sSPReportsStock-filterBySubCategory">
             <label>Select Item:</label>

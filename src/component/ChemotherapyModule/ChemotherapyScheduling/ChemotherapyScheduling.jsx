@@ -1,8 +1,8 @@
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios'; // Import axios
 import './ChemotherapyScheduling.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
-
 
 const ChemotherapyScheduling = () => {
     const [columnWidths, setColumnWidths] = useState({});
@@ -23,61 +23,65 @@ const ChemotherapyScheduling = () => {
         comments: '',
     });
 
-    const [showForm, setShowForm] = useState(false); // Initially false to show the table first
-    const [records, setRecords] = useState([
-        { 
-            patientId: 'P001',
-            patientName: 'John Doe',
-            dateOfBirth: '1985-04-15',
-            diagnosisDetails: 'Lung Cancer',
-            cycleNumber: '2',
-            drugName: 'Cisplatin',
-            dosage: '75mg/m²',
-            frequency: 'Every 3 weeks',
-            startDate: '2024-01-10',
-            endDate: '2024-04-10',
-            nextSessionDate: '2024-02-01',
-            attendingOncologist: 'Dr. Smith',
-            comments: 'Patient responding well to treatment',
-        },
-        // You can add more records here
-    ]);
+    const [showForm, setShowForm] = useState(false);
+    const [records, setRecords] = useState([]);
+    const [tableData, setTableData] = useState([]);
 
-    const [tableData, setTableData] = useState(records); // Initially display the records
-    const [searchTerm, setSearchTerm] = useState(''); // Search state
-    const filteredRecords = tableData.filter(record =>
-        record.patientName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Fetch records from the API when the component mounts
+    useEffect(() => {
+        const fetchRecords = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/chemotherapy-session/all');
+                setRecords(response.data); // Assuming the response is an array of records
+                setTableData(response.data);
+            } catch (error) {
+                console.error('Error fetching records:', error);
+            }
+        };
+
+        fetchRecords();
+    }, []); // Empty dependency array to run only once on mount
 
     const handleInputChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value } = e.target;
         setFormData({
             ...formData,
-            [name]: type === 'checkbox' ? checked : value,
+            [name]: value,
         });
     };
-    const handleSubmit = (e) => {
+
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const updatedRecords = [...records, formData];
-        setRecords(updatedRecords);
-        setTableData(updatedRecords); // Update the table with the new record
-        setShowForm(false); // Hide form after submission
-        console.log("Form Data Submitted: ", formData);
-        setFormData({
-            patientId: '',
-            patientName: '',
-            dateOfBirth: '',
-            diagnosisDetails: '',
-            cycleNumber: '',
-            drugName: '',
-            dosage: '',
-            frequency: '',
-            startDate: '',
-            endDate: '',
-            nextSessionDate: '',
-            attendingOncologist: '',
-            comments: '',
-        }); // Clear the form
+        try {
+            // Make a POST request to add a new chemotherapy session
+            const response = await axios.post('http://localhost:8000/api/chemotherapy-session/add', formData);
+            console.log("Data submitted: ", response.data);
+
+            // Add the new record to the state
+            setRecords([...records, response.data]); // Add the response data (new record) to the state
+            setTableData([...records, response.data]); // Update the table with the new record
+            setShowForm(false); // Hide form after submission
+            
+            // Clear the form
+            setFormData({
+                patientId: '',
+                patientName: '',
+                dateOfBirth: '',
+                diagnosisDetails: '',
+                cycleNumber: '',
+                drugName: '',
+                dosage: '',
+                frequency: '',
+                startDate: '',
+                endDate: '',
+                nextSessionDate: '',
+                attendingOncologist: '',
+                comments: '',
+            });
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
     };
 
     
@@ -104,43 +108,18 @@ const handlePrint = () => {
 
     return (
         <div className="chemotherapy-scheduling-container">
-         {!showForm && (
-                <div className="chemotherapy-scheduling-action-buttons">
-                    <button className="chemotherapy-scheduling-submit-btn" onClick={() => setShowForm(true)}>
-                        Add Chemotherapy
-                    </button>
-                    <input
-                        type="text"
-                        placeholder="Search by Patient Name"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="chemotherapy-scheduling-search-bar"
-                    />
-                    <span>Showing {filteredRecords.length} / {records.length} results</span>
-                    <button onClick={handleExport}>Export</button>
-                    <button onClick={handlePrint}>Print</button>
-                </div>
+
+            {!showForm && (
+                <button className="chemotherapy-scheduling-submit-btn" onClick={() => setShowForm(true)}>
+                    Add Chemotherapy
+                </button>
             )}
-               
-               
-                {!showForm && tableData.length > 0 && (
-              <div className='table-container'>
-                  <table ref={tableRef}>
+            {!showForm && tableData.length > 0 && (
+                <div className='table-container'>
+                    <table ref={tableRef}>
                         <thead>
                             <tr>
-                                {["Patient ID",
-    "Patient Name",
-    "Date of Birth",
-    "Diagnosis",
-    "Cycle",
-    "Drug",
-    "Dosage",
-    "Frequency",
-    "Start Date",
-    "End Date",
-    "Next Session",
-    "Oncologist",
-    "Comments"].map((header, index) => (
+                                {["Patient ID", "Patient Name", "Date of Birth", "Diagnosis", "Cycle", "Drug", "Dosage", "Frequency", "Start Date", "End Date", "Next Session", "Oncologist", "Comments"].map((header, index) => (
                                     <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
                                         <div className="header-content">
                                             <span>{header}</span>
@@ -153,211 +132,204 @@ const handlePrint = () => {
                                 ))}
                             </tr>
                         </thead>
-
-                    <tbody>
-                        {tableData.map((data, index) => (
-                            <tr key={index}>
-                                <td>{data.patientId}</td>
-                                <td>{data.patientName}</td>
-                                <td>{data.dateOfBirth}</td>
-                                <td>{data.diagnosisDetails}</td>
-                                <td>{data.cycleNumber}</td>
-                                <td>{data.drugName}</td>
-                                <td>{data.dosage}</td>
-                                <td>{data.frequency}</td>
-                                <td>{data.startDate}</td>
-                                <td>{data.endDate}</td>
-                                <td>{data.nextSessionDate}</td>
-                                <td>{data.attendingOncologist}</td>
-                                <td>{data.comments}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-              </div>
+                        <tbody>
+                            {tableData.map((data, index) => (
+                                <tr key={index}>
+                                    <td>{data.patientId}</td>
+                                    <td>{data.patientName}</td>
+                                    <td>{data.dateOfBirth}</td>
+                                    <td>{data.diagnosisDetails}</td>
+                                    <td>{data.cycleNumber}</td>
+                                    <td>{data.drugName}</td>
+                                    <td>{data.dosage}</td>
+                                    <td>{data.frequency}</td>
+                                    <td>{data.startDate}</td>
+                                    <td>{data.endDate}</td>
+                                    <td>{data.nextSessionDate}</td>
+                                    <td>{data.attendingOncologist}</td>
+                                    <td>{data.comments}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
 
-            {/* Toggle Button to Show Form */}
-            {/* {!showForm && (
-              
-            )} */}
-
-            {/* Display Form Conditionally */}
             {showForm && (
-                <form className="chemotherapy-scheduling" onSubmit={handleSubmit}>
-                    <div className="chemotherapy-scheduling-left">
-                        <h3>Patient Details</h3>
+                 <form className="chemotherapy-scheduling" onSubmit={handleSubmit}>
+                 <div className="chemotherapy-scheduling-left">
+                     <h3>Patient Details</h3>
 
-                        <div className="chemotherapy-scheduling-group">
-                            <label>
-                                Patient ID <span className="mandatory">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                name="patientId"
-                                value={formData.patientId}
-                                onChange={handleInputChange}
-                                placeholder="Patient ID"
-                                required
-                            />
-                        </div>
-                        <div className="chemotherapy-scheduling-group">
-                            <label>
-                                Patient Name <span className="mandatory">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                name="patientName"
-                                value={formData.patientName}
-                                onChange={handleInputChange}
-                                placeholder="Patient Name"
-                                required
-                            />
-                        </div>
-                        <div className="chemotherapy-scheduling-group">
-                            <label>
-                                Date of Birth <span className="mandatory">*</span>
-                            </label>
-                            <input
-                                type="date"
-                                name="dateOfBirth"
-                                value={formData.dateOfBirth}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </div>
-                        <div className="chemotherapy-scheduling-group">
-                            <label>
-                                Diagnosis Details <span className="mandatory">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                name="diagnosisDetails"
-                                value={formData.diagnosisDetails}
-                                onChange={handleInputChange}
-                                placeholder="Diagnosis Details"
-                                required
-                            />
-                        </div>
-                        <div className="chemotherapy-scheduling-group">
-                            <label>
-                                Cycle Number <span className="mandatory">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                name="cycleNumber"
-                                value={formData.cycleNumber}
-                                onChange={handleInputChange}
-                                placeholder="Cycle Number"
-                                required
-                            />
-                        </div>
-                        <div className="chemotherapy-scheduling-group">
-                            <label>
-                                Drug Name <span className="mandatory">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                name="drugName"
-                                value={formData.drugName}
-                                onChange={handleInputChange}
-                                placeholder="Drug Name"
-                                required
-                            />
-                        </div>
-                        <div className="chemotherapy-scheduling-group">
-                            <label>
-                                Dosage <span className="mandatory">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                name="dosage"
-                                value={formData.dosage}
-                                onChange={handleInputChange}
-                                placeholder="Dosage"
-                                required
-                            />
-                        </div>
-                    </div>
-                    <div className="chemotherapy-scheduling-right">
-                        <div className="chemotherapy-scheduling-group">
-                            <label>
-                                Frequency <span className="mandatory">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                name="frequency"
-                                value={formData.frequency}
-                                onChange={handleInputChange}
-                                placeholder="Frequency"
-                                required
-                            />
-                        </div>
-                        <div className="chemotherapy-scheduling-group">
-                            <label>
-                                Start Date <span className="mandatory">*</span>
-                            </label>
-                            <input
-                                type="date"
-                                name="startDate"
-                                value={formData.startDate}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </div>
-                        <div className="chemotherapy-scheduling-group">
-                            <label>
-                                End Date <span className="mandatory">*</span>
-                            </label>
-                            <input
-                                type="date"
-                                name="endDate"
-                                value={formData.endDate}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </div>
-                        <div className="chemotherapy-scheduling-group">
-                            <label>
-                                Next Session Date <span className="mandatory">*</span>
-                            </label>
-                            <input
-                                type="date"
-                                name="nextSessionDate"
-                                value={formData.nextSessionDate}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </div>
-                        <h3>Medical Team</h3>
-                        <div className="chemotherapy-scheduling-group">
-                            <label>Attending Oncologist</label>
-                            <input
-                                type="text"
-                                name="attendingOncologist"
-                                value={formData.attendingOncologist}
-                                onChange={handleInputChange}
-                                placeholder="Attending Oncologist"
-                            />
-                        </div>
-                        <div className="chemotherapy-scheduling-group">
-                            <label>Comments</label>
-                            <textarea
-                                name="comments"
-                                value={formData.comments}
-                                onChange={handleInputChange}
-                                placeholder="Additional Comments"
-                            />
-                        </div>
+                     <div className="chemotherapy-scheduling-group">
+                         <label>
+                             Patient ID <span className="mandatory">*</span>
+                         </label>
+                         <input
+                             type="text"
+                             name="patientId"
+                             value={formData.patientId}
+                             onChange={handleInputChange}
+                             placeholder="Patient ID"
+                             required
+                         />
+                     </div>
+                     <div className="chemotherapy-scheduling-group">
+                         <label>
+                             Patient Name <span className="mandatory">*</span>
+                         </label>
+                         <input
+                             type="text"
+                             name="patientName"
+                             value={formData.patientName}
+                             onChange={handleInputChange}
+                             placeholder="Patient Name"
+                             required
+                         />
+                     </div>
+                     <div className="chemotherapy-scheduling-group">
+                         <label>
+                             Date of Birth <span className="mandatory">*</span>
+                         </label>
+                         <input
+                             type="date"
+                             name="dateOfBirth"
+                             value={formData.dateOfBirth}
+                             onChange={handleInputChange}
+                             required
+                         />
+                     </div>
+                     <div className="chemotherapy-scheduling-group">
+                         <label>
+                             Diagnosis Details <span className="mandatory">*</span>
+                         </label>
+                         <input
+                             type="text"
+                             name="diagnosisDetails"
+                             value={formData.diagnosisDetails}
+                             onChange={handleInputChange}
+                             placeholder="Diagnosis Details"
+                             required
+                         />
+                     </div>
+                     <div className="chemotherapy-scheduling-group">
+                         <label>
+                             Cycle Number <span className="mandatory">*</span>
+                         </label>
+                         <input
+                             type="text"
+                             name="cycleNumber"
+                             value={formData.cycleNumber}
+                             onChange={handleInputChange}
+                             placeholder="Cycle Number"
+                             required
+                         />
+                     </div>
+                     <div className="chemotherapy-scheduling-group">
+                         <label>
+                             Drug Name <span className="mandatory">*</span>
+                         </label>
+                         <input
+                             type="text"
+                             name="drugName"
+                             value={formData.drugName}
+                             onChange={handleInputChange}
+                             placeholder="Drug Name"
+                             required
+                         />
+                     </div>
+                     <div className="chemotherapy-scheduling-group">
+                         <label>
+                             Dosage <span className="mandatory">*</span>
+                         </label>
+                         <input
+                             type="text"
+                             name="dosage"
+                             value={formData.dosage}
+                             onChange={handleInputChange}
+                             placeholder="Dosage"
+                             required
+                         />
+                     </div>
+                 </div>
+                 <div className="chemotherapy-scheduling-right">
+                     <div className="chemotherapy-scheduling-group">
+                         <label>
+                             Frequency <span className="mandatory">*</span>
+                         </label>
+                         <input
+                             type="text"
+                             name="frequency"
+                             value={formData.frequency}
+                             onChange={handleInputChange}
+                             placeholder="Frequency"
+                             required
+                         />
+                     </div>
+                     <div className="chemotherapy-scheduling-group">
+                         <label>
+                             Start Date <span className="mandatory">*</span>
+                         </label>
+                         <input
+                             type="date"
+                             name="startDate"
+                             value={formData.startDate}
+                             onChange={handleInputChange}
+                             required
+                         />
+                     </div>
+                     <div className="chemotherapy-scheduling-group">
+                         <label>
+                             End Date <span className="mandatory">*</span>
+                         </label>
+                         <input
+                             type="date"
+                             name="endDate"
+                             value={formData.endDate}
+                             onChange={handleInputChange}
+                             required
+                         />
+                     </div>
+                     <div className="chemotherapy-scheduling-group">
+                         <label>
+                             Next Session Date <span className="mandatory">*</span>
+                         </label>
+                         <input
+                             type="date"
+                             name="nextSessionDate"
+                             value={formData.nextSessionDate}
+                             onChange={handleInputChange}
+                             required
+                         />
+                     </div>
+                     <h3>Medical Team</h3>
+                     <div className="chemotherapy-scheduling-group">
+                         <label>Attending Oncologist</label>
+                         <input
+                             type="text"
+                             name="attendingOncologist"
+                             value={formData.attendingOncologist}
+                             onChange={handleInputChange}
+                             placeholder="Attending Oncologist"
+                         />
+                     </div>
+                     <div className="chemotherapy-scheduling-group">
+                         <label>Comments</label>
+                         <textarea
+                             name="comments"
+                             value={formData.comments}
+                             onChange={handleInputChange}
+                             placeholder="Additional Comments"
+                         />
+                     </div>
 
-                        <div className="chemotherapy-scheduling-buttons">
-                            <button type="submit" className="chemotherapy-scheduling-submit-btn">
-                                Submit
-                            </button>
-                           
-                        </div>
-                    </div>
-                </form>
+                     <div className="chemotherapy-scheduling-buttons">
+                         <button type="submit" className="chemotherapy-scheduling-submit-btn">
+                             Submit
+                         </button>
+                        
+                     </div>
+                 </div>
+             </form>
             )}
         </div>
     );

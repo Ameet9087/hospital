@@ -188,10 +188,7 @@ function RDLListRequest() {
               onChange={handleDateToChange}
             />
           </label>
-          <button className="rDLListRequest-star-button">☆</button>
-          <button className="rDLListRequest-more-btn">-</button>
-          <button className="rDLListRequest-ok-button">OK</button>
-        </div>
+</div>
       </div>
       <div className="rDLListRequest-search-N-results">
         <div className="rDLListRequest-search-bar">
@@ -207,7 +204,17 @@ function RDLListRequest() {
           {filteredRequests.length > 0
             ? `Showing ${filteredRequests.length} result(s)`
             : "No rows to show"}
+                     <button
+            className="rDLListRequest-ex-pri-buttons"
+            onClick={""}
+          >
+            <i className="fa-regular fa-file-excel"></i> Export
+          </button>
+          <button className="rDLListRequest-ex-pri-buttons" onClick={""}>
+            <i class="fa-solid fa-print"></i> Print
+          </button>
         </div>
+
       </div>
       <div className="table-container">
         <table ref={tableRef}>
