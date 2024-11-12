@@ -62,6 +62,7 @@ import Endoscopy from "../../component/Endoscopy/EndoscopyRoute";
 
 import ChemotherapyRouting from "../../component/ChemotherapyModule/ChemotherapyRoute";
 import Pulmonology from "../../component/Pulmonology/Pulmonology";
+import AdminMastersMenu from "../../component/MasterDashboard/AdminMaster/AdminMasterRoutes";
 
 const Layout = () => {
   const [showAppointment, setShowAppointment] = useState(false);
@@ -114,7 +115,8 @@ const Layout = () => {
   const [showVisitorManagement, setShowVisitorManagement] = useState(false)
   const [shoeRadiationtherapy,setShowRadiationTherapy] = useState(false)
   const [showChemotherapy, setshowChemotherapy] = useState(false);
-  const [showPulmonology,setShowPulmonology] = useState(false)
+  const [showPulmonology,setShowPulmonology] = useState(false);
+  const [showAdminMastersMenu,setAdminMastersMenu]=useState(false);
 
   const resetAllToggles = () => {
     setShowAppointment(false);
@@ -162,8 +164,12 @@ const Layout = () => {
     setShowVisitorManagement(false);
     setShowHR(false);
     setShowRadiationTherapy(false);
-    setshowChemotherapy(false);    setShowPulmonology(false);
+    setshowChemotherapy(false);    
+    setShowPulmonology(false);
+    setAdminMastersMenu(false);
 
+
+  
   };
   const toggleHomehealthcare = () => {
     resetAllToggles();
@@ -361,6 +367,13 @@ const Layout = () => {
     setshowChemotherapy(!showChemotherapy);
   }
 
+  const toggelAdminMastersMenu =()=>{
+    resetAllToggles();
+    setAdminMastersMenu(!showAdminMastersMenu);
+  }
+
+
+
   return (
     <div className="hrmsLayout">
       <Sidebar
@@ -414,6 +427,9 @@ const Layout = () => {
 
         onendoscopy={togglepEndoscopy}
         onChemotherapy={toggelChemotherapy}
+        onAdminMastersMenu={toggelAdminMastersMenu}
+
+       
 
       />
       <div
@@ -475,6 +491,10 @@ const Layout = () => {
           {showChemotherapy && <ChemotherapyRouting />}   
            {showPulmonology&& <Pulmonology/>}
            {showEndoscopy && <Endoscopy/>}
+          {showAdminMastersMenu && <AdminMastersMenu/>}
+
+
+       
 
 
         </main>

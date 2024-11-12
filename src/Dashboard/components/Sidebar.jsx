@@ -65,6 +65,7 @@ const Sidebar = ({
   onChemotherapy,
 
   onPulmonology,
+  onAdminMastersMenu,
 }) => {
   const [openMenus, setOpenMenus] = useState({})
   const [activeLink, setActiveLink] = useState(null)
@@ -302,6 +303,12 @@ const Sidebar = ({
 
     handleLinkClick('chemotherapy')
     onChemotherapy()
+  }
+
+  const handleAdminMastersClick = () => {
+
+    handleLinkClick('AdminMastersMenu')
+    onAdminMastersMenu()
   }
 
 
@@ -4136,6 +4143,101 @@ const Sidebar = ({
             </ul>
           )}
         </li>
+
+
+        {/* Prachi */}
+
+        <li
+          className={`custom-nav-item ${activeLink === 'AdminMastersMenu-submenu1' ||
+            activeLink === 'AdminMastersMenu-submenu2' ||
+            activeLink === 'AdminMastersMenu-submenu3' ||
+            activeLink === 'AdminMastersMenu-submenu4' ||
+            activeLink === 'AdminMastersMenu-submenu5' ? 'custom-nav-item-active'
+            : ''
+            }`}
+        >
+          <div className="custom-nav-link-content" onClick={handleAdminMastersClick}>
+            <span>
+              <TbUsers />
+            </span>
+            {isOpen && <span className="custom-nav-link-text">Admin Masters Menu</span>}
+            <span className="custom-dropdown-icon">
+              {openMenus.AdminMastersMenu ? <LuChevronUp /> : <LuChevronDown />}
+            </span>
+          </div>
+          {openMenus.AdminMastersMenu && isOpen && (
+            <ul className="custom-submenu">
+              <li
+                onClick={() => handleItemClick('AdminMastersMenu', 'submenu1')}
+                className={
+                  activeLink === 'AdminMastersMenu-submenu1' ? 'custom-submenu-active' : ''
+                }
+              >
+                <Link to="/location-master">Location Masters</Link>
+              </li>
+
+              <li
+                onClick={() => handleItemClick('AdminMastersMenu', 'submenu1')}
+                className={
+                  activeLink === 'AdminMastersMenu-submenu1' ? 'custom-submenu-active' : ''
+                }
+              >
+                <Link to="/display-location">Display Location Masters</Link>
+              </li>
+
+              <li
+                onClick={() => handleItemClick('AdminMastersMenu', 'submenu1')}
+                className={
+                  activeLink === 'AdminMastersMenu-submenu1' ? 'custom-submenu-active' : ''
+                }
+              >
+                <Link to="/soc-master">SOC Master</Link>
+              </li>
+
+              <li
+                onClick={() => handleItemClick('AdminMastersMenu', 'submenu1')}
+                className={
+                  activeLink === 'AdminMastersMenu-submenu1' ? 'custom-submenu-active' : ''
+                }
+              >
+                <Link to="/display-SocMaster">Display SOC Master</Link>
+              </li>
+
+
+              <li
+                onClick={() => handleItemClick('AdminMastersMenu', 'submenu1')}
+                className={
+                  activeLink === 'AdminMastersMenu-submenu1' ? 'custom-submenu-active' : ''
+                }
+              >
+                <Link to="/speciality-group">Speciality Group</Link>
+              </li>
+
+              <li
+                onClick={() => handleItemClick('AdminMastersMenu', 'submenu1')}
+                className={
+                  activeLink === 'AdminMastersMenu-submenu1' ? 'custom-submenu-active' : ''
+                }
+              >
+                <Link to="/Display-SpecialityGroup">Display Speciality Group</Link>
+              </li>
+              
+              <li
+                onClick={() => handleItemClick('AdminMastersMenu', 'submenu1')}
+                className={
+                  activeLink === 'AdminMastersMenu-submenu1' ? 'custom-submenu-active' : ''
+                }
+              >
+                <Link to="/specialisations">Specialisations</Link>
+              </li>
+
+
+            </ul>
+          )}
+        </li>
+
+
+        {/* prachi end */}
       </ul>
     </div>
   )
