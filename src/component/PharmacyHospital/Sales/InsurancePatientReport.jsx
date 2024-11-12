@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './InsurancePatientReport.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
 
 function InsurancePatientReport() {
   const [fromDate, setFromDate] = useState('23-08-2024');
@@ -13,6 +14,24 @@ function InsurancePatientReport() {
   const [searchTerm, setSearchTerm] = useState('');
   const [columnWidths,setColumnWidths] = useState({});
   const tableRef=useRef(null);
+  
+
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
+
+
   return (
     <div className="insurance-patient-report-container">
       <div className="insurance-patient-report-report-header">
@@ -37,8 +56,8 @@ function InsurancePatientReport() {
               onChange={(e) => setToDate(e.target.value)}
             />
           </label>
-          <button className="insurance-patient-report-star-btn">⭐</button>
-          <button className="insurance-patient-report-minus-btn">-</button>
+          {/* <button className="insurance-patient-report-star-btn">⭐</button>
+          <button className="insurance-patient-report-minus-btn">-</button> */}
         </div>
       <div className="insurance-patient-report-filters">
         <label>
@@ -80,8 +99,8 @@ function InsurancePatientReport() {
       <div className="insurance-patient-report-search-bar">
         
         <span >Showing 0 / 0 results</span>
-        <button >Export</button>
-        <button >Print</button>
+        <button onClick={handleExport}>Export</button>
+        <button onClick={handlePrint}>Print</button>
       </div>
 <div className='table-container'>
 <table  ref={tableRef}>

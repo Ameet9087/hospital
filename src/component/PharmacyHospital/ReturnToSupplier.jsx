@@ -2,9 +2,27 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ReturnToSupplier.css';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
+
 const ReturnToSupplier = () => {
   const [columnWidths,setColumnWidths] = useState({});
   const tableRef=useRef(null);
+  
+
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
   return (
     <div className="return-to-supplier-container">
       <h2 className="return-to-supplier-header-title">Return To Supplier Report</h2>
@@ -39,16 +57,16 @@ const ReturnToSupplier = () => {
           <input type="date" className="return-to-supplier-input-date" defaultValue="2024-08-22" />
         </div>
         
-        <div className="return-to-supplier-date-filter-actions">
+        {/* <div className="return-to-supplier-date-filter-actions">
           <button className="return-to-supplier-star-button">★</button>
           <button className="return-to-supplier-minus-button">-</button>
           <button className="return-to-supplier-ok-button">OK</button>
+        </div> */}
         </div>
-        </div>
-        <div className="return-to-supplier-filters-container">     
+        {/* <div className="return-to-supplier-filters-container">     
          <button className="return-to-supplier-search-button">Search</button>
 
-      </div>
+      </div> */}
      
      
 
@@ -61,7 +79,8 @@ const ReturnToSupplier = () => {
         </button>
         <div className="return-to-supplier-print-container">
         <span >Showing 0 / 0 results</span>
-        <button className="return-to-supplier-print-button">Print</button>
+        <button className="return-to-supplier-print-button" onClick={handleExport}>Export</button>
+        <button className="return-to-supplier-print-button"onClick={handlePrint}>Print</button>
       </div>
       </div>
      

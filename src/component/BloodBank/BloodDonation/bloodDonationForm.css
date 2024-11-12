@@ -1,4 +1,8 @@
 /*Mohini_BloodDonationForm_24/sep/24/css_start_1_to_css_end_103  */
+.blood-donation-patient-form-container{
+    width: auto;
+    margin: 20px;
+}
 .blood-donation-patient-form {
     display: flex;
     justify-content: space-between;
@@ -101,6 +105,8 @@
     color: red; /* Change the color to red */
 }
 .header-BloodDonation{
-    text-align: center;
+    margin: 20px;
+    text-align: left;
+    font-size: var(--heading-font);
 }
 /*Mohini_BloodDonationForm_24/sep/24/css_start_1_to_css_end_103  */

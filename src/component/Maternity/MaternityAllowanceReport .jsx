@@ -39,18 +39,7 @@ const MaternityAllowanceReportComponent = () => {
             <input type="date" id="fromDate" name="fromDate" />
             <label htmlFor="toDate">To:</label>
             <input type="date" id="toDate" name="toDate" />
-            <button className="maternity-allowance-favorite-button">★</button>
-            <button className="maternity-allowance-clear-button" onClick={handleClearButtonClick}>-</button>
-            {isPopupVisible && (
-              <div className="maternity-allowance-popup">
-                <ul>
-                  <li><button>Today</button></li>
-                  <li><button>Last 1 Week</button></li>
-                  <li><button>Last 1 Month</button></li>
-                  <li><button>Last 3 Months</button></li>
-                </ul>
-              </div>
-            )}
+           
           </div>
           <div className="maternity-allowance-user-filter">
             <label htmlFor="userSelect">Select User :</label>

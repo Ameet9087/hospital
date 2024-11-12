@@ -54,19 +54,7 @@ const MaternityList = () => {
             <input type="date" value="2024-08-13" />
             <label>To:</label>
             <input type="date" value="2024-08-13" />
-            <button className="mater-star-btn">☆</button>
-            <button className="mater-clear-button" onClick={handleClearButtonClick}>-</button>
-            {isPopupVisible && (
-              <div className="mater-popup">
-                <ul>
-                  <li><button>Today</button></li>
-                  <li><button>Last 1 Week</button></li>
-                  <li><button>Last 1 Month</button></li>
-                  <li><button>Last 3 Months</button></li>
-                </ul>
-              </div>
-            )}
-            <button className="mater-ok-btn" style={{ marginLeft: '10px' }}>OK</button>
+          
           </div>
 
           <div className="mater-search-bar">

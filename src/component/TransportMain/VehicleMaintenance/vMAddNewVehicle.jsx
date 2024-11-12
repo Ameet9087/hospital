@@ -5,10 +5,11 @@ import "../VehicleMaintenance/vMAddNewVehicle.css"
 
 const LabVenderAddNewLV = ({ onClose }) => {
   return (
-    <div className="vMAddNewVehicle-container">
+    <>
+    {/* <div className="vMAddNewVehicle-container"> */}
       <div className="vMAddNewVehicle-header">
         <h3>Add New Vehicle</h3>
-        <button className="vMAddNewVehicle-close-btn"onClick={onClose}>x</button>
+        {/* <button className="vMAddNewVehicle-close-btn"onClick={onClose}>x</button> */}
       </div>
 
       <div className="vMAddNewVehicle-form">
@@ -69,7 +70,8 @@ const LabVenderAddNewLV = ({ onClose }) => {
         <button className="vMAddNewVehicle-add-btn">Add </button>
         {/* <button className="vMAddNewVehicle-close-btn">Close</button> */}
       </div>
-    </div>
+    {/* </div> */}
+    </>
   );
 };
 

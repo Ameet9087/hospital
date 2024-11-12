@@ -19,8 +19,8 @@ const ReturnToSupplier = () => {
           <input type="date" />
           <label>To:</label>
           <input type="date" />
-          <button className="return-purchase-favorite-btn">★</button>
-          <button className="return-purchase-reset-btn">-</button>
+          {/* <button className="return-purchase-favorite-btn">★</button>
+          <button className="return-purchase-reset-btn">-</button> */}
         </div>
         <div className="return-purchase-status-container">
           <label>Status Name:</label>

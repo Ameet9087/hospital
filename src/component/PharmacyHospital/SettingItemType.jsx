@@ -1,16 +1,24 @@
 /* Mohini_SettingItemType_WholePage_14/sep/2024 */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import './SettingSupplier.css'; // Make sure this contains relevant styles
 import { API_BASE_URL } from '../api/api';
-
+import CustomModal from '../../CustomModel/CustomModal';
+import * as XLSX from 'xlsx';
+import useCustomAlert from '../../alerts/useCustomAlert';
+import { startResizing } from '../TableHeadingResizing/resizableColumns';
 const SettingItemType = () => {
   const [itemTypes, setItemTypes] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [formMode, setFormMode] = useState('Add');
   const [selectedItem, setSelectedItem] = useState(null);
+  const [openStickerPopup, setOpenStickerPopup] = useState(false);
+  const { success, error, CustomAlerts } = useCustomAlert();
+  const [columnWidths, setColumnWidths] = useState({});
+    const tableRef = useRef(null);
+
 
   // Fetch item types from API
   useEffect(() => {
@@ -72,9 +80,25 @@ const SettingItemType = () => {
         });
     }
   };
+  
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
 
   return (
     <div className="setting-supplier-container">
+      <CustomAlerts/>
       <div className="setting-supplier-header">
         <button className="setting-supplier-add-user-button" onClick={() => handleShowModal('Add')}>+ Add Item Type</button>
       </div>
@@ -85,20 +109,35 @@ const SettingItemType = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <div className='setting-supplier-span'>
+      {/* <div className='setting-supplier-span'> */}
+        <div className='setting-supplier-span'>
         <span>Showing {filteredItemTypes.length} / {itemTypes.length} results</span>
-      </div>
+  <button className='item-wise-export-button'onClick={handleExport}>Export</button>
+  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
+</div>
+      {/* </div> */}
       <div className='setting-supplier-tab'>
-        <table className="setting-suppliers-users-table">
-          <thead>
-            <tr>
-              <th>Item Type</th>
-              <th>Category</th>
-              <th>Description</th>
-              <th>Is Active</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+      <table ref={tableRef}>
+                        <thead>
+                            <tr>
+                                {[  "Item Type",
+  "Category",
+  "Description",
+  "Is Active",
+  "Action"].map((header, index) => (
+                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                        <div className="header-content">
+                                            <span>{header}</span>
+                                            <div
+                                                className="resizer"
+                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                            ></div>
+                                        </div>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+
           <tbody>
             {filteredItemTypes.map((item, index) => (
               <tr key={index}>
@@ -126,55 +165,61 @@ const SettingItemType = () => {
         </div> */}
       </div>
 
-      <Modal show={showModal} onHide={handleCloseModal} className="supplier-setting-supplier-update-modal">
-        <Modal.Header closeButton>
-          <Modal.Title>{formMode === 'Add' ? 'Add Item Type' : 'Update Item Type'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <div className="supplier-setting-form-row">
-              <Form.Group controlId="itemType" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Type of Item<span className="supplier-setting-text-danger">*</span>:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Item Type"
-                  required
-                  defaultValue={formMode === 'Edit' ? selectedItem?.type : ''}
-                />
-              </Form.Group>
-              <Form.Group controlId="selectCategory" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Select Category<span className="supplier-setting-text-danger">*</span>:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Category"
-                  required
-                  defaultValue={formMode === 'Edit' ? selectedItem?.category : ''}
-                />
-              </Form.Group>
-            </div>
-            <Form.Group controlId="description" className="supplier-setting-form-group">
-              <Form.Label>Description:</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter Description"
-                defaultValue={formMode === 'Edit' ? selectedItem?.description : ''}
-              />
-            </Form.Group>
-            <Form.Group controlId="isActive" className="supplier-setting-form-group">
-              <Form.Check
-                type="checkbox"
-                label="Is Active"
-                defaultChecked={formMode === 'Edit' ? selectedItem?.isActive : false}
-              />
-            </Form.Group>
-            <div className="supplier-setting-text-right">
-              <Button variant="primary" type="submit">
-                {formMode === 'Add' ? 'Add' : 'Update'}
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
+      <CustomModal
+  isOpen={showModal}
+  onClose={handleCloseModal}
+  className="supplier-setting-supplier-update-modal"
+>
+  <div className="supplier-setting-modal-header">
+    <h5>{formMode === 'Add' ? 'Add Item Type' : 'Update Item Type'}</h5>
+    {/* <button className="close" onClick={handleCloseModal}>&times;</button> */}
+  </div>
+  <div className="supplier-setting-modal-body">
+    <Form onSubmit={handleSubmit}>
+      <div className="supplier-setting-form-row">
+        <Form.Group controlId="itemType" className="supplier-setting-form-group col-md-6">
+          <Form.Label>Type of Item<span className="supplier-setting-text-danger">*</span>:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter Item Type"
+            required
+            defaultValue={formMode === 'Edit' ? selectedItem?.type : ''}
+          />
+        </Form.Group>
+        <Form.Group controlId="selectCategory" className="supplier-setting-form-group col-md-6">
+          <Form.Label>Select Category<span className="supplier-setting-text-danger">*</span>:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter Category"
+            required
+            defaultValue={formMode === 'Edit' ? selectedItem?.category : ''}
+          />
+        </Form.Group>
+      </div>
+      <Form.Group controlId="description" className="supplier-setting-form-group">
+        <Form.Label>Description:</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter Description"
+          defaultValue={formMode === 'Edit' ? selectedItem?.description : ''}
+        />
+      </Form.Group>
+      <Form.Group controlId="isActive" className="supplier-setting-form-group">
+        <Form.Check
+          type="checkbox"
+          label="Is Active"
+          defaultChecked={formMode === 'Edit' ? selectedItem?.isActive : false}
+        />
+      </Form.Group>
+      <div className="supplier-setting-text-right">
+        <Button variant="primary" type="submit">
+          {formMode === 'Add' ? 'Add' : 'Update'}
+        </Button>
+      </div>
+    </Form>
+  </div>
+</CustomModal>
+
     </div>
   );
 };

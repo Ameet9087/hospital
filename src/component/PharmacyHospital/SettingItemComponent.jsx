@@ -1,10 +1,13 @@
 /* Mohini_SettingItemComponent_WholePage_14/sep/2024 */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import './SettingSupplier.css'; // Ensure this contains relevant styles
 import { API_BASE_URL } from '../api/api';
-
+import CustomModal from '../../CustomModel/CustomModal';
+import useCustomAlert from '../../alerts/useCustomAlert';
+import * as XLSX from 'xlsx';
+import { startResizing } from '../TableHeadingResizing/resizableColumns';
 const SettingItemComponent = () => {
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -17,7 +20,12 @@ const SettingItemComponent = () => {
   const [itemTypes, setItemTypes] = useState([]);
   const [genericNames, setGenericNames] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
+  const [openStickerPopup, setOpenStickerPopup] = useState(false);
+  const { success, error, CustomAlerts } = useCustomAlert();
+  const [columnWidths, setColumnWidths] = useState({});
+    const tableRef = useRef(null);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -152,9 +160,26 @@ const SettingItemComponent = () => {
   };
 
  
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
+
+
 
   return (
     <div className="setting-supplier-container">
+      <CustomAlerts/>
       <div className="setting-supplier-header">
         <button
           className="setting-supplier-add-user-button"
@@ -170,26 +195,41 @@ const SettingItemComponent = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <div className="setting-supplier-span">
-        <span>
+      {/* <div className="setting-supplier-span"> */}
+    
+          <div className='setting-supplier-span'>
           Showing {filteredItems.length} / {items.length} results
-        </span>
-      </div>
-      <div className="setting-supplier-tab">
-        <table className="setting-suppliers-users-table">
-          <thead>
-            <tr>
-              <th>Generic Nameaaaaaaa</th>
-              <th>Medicine Name</th>
-              <th>Company Name</th>
-              <th>Item Type</th>
-              <th>ReOrder Quantity</th>
-              <th>MinStock Quantity</th>
-              <th>Rack No</th>
-              <th>IsActive</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+  <button className='item-wise-export-button'onClick={handleExport}>Export</button>
+  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
+</div>
+        
+      {/* </div> */}
+      <div className="table-container">
+      <table ref={tableRef}>
+                        <thead>
+                            <tr>
+                                {[ "Generic Nameaaaaaaa",
+  "Medicine Name",
+  "Company Name",
+  "Item Type",
+  "ReOrder Quantity",
+  "MinStock Quantity",
+  "Rack No",
+  "IsActive",
+  "Action"].map((header, index) => (
+                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                        <div className="header-content">
+                                            <span>{header}</span>
+                                            <div
+                                                className="resizer"
+                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                            ></div>
+                                        </div>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+
           <tbody>
             {filteredItems.length ? (
               filteredItems.map((item, index) => (
@@ -229,264 +269,268 @@ const SettingItemComponent = () => {
           </tbody>
         </table>
       </div>
-      <Modal
-        show={showModal}
-        onHide={handleCloseModal}
-        className="supplier-setting-supplier-update-modal"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{isEditMode ? 'Update Item' : 'Add New Item'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="salesCategory" className="supplier-setting-form-group">
-              <Form.Label>
-                Select Sales Category<span className="supplier-setting-text-danger">*</span>:
-              </Form.Label>
-              <Form.Control
-                as="select"
-                name="salesCategory"
-                value={selectedItem?.salesCategory || ''}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Select Sales Category</option>
-                {categories.map((category) => (
-                  <option key={category.id} value={category.name}>
-                    {category.name}
-                  </option>
-                ))}
-              </Form.Control>
-              {error && <div className="supplier-setting-error">{error}</div>}
-            </Form.Group>
+      <CustomModal
+  isOpen={showModal}
+  onClose={handleCloseModal}
+  className="supplier-setting-supplier-update-modal"
+>
+  <div className="supplier-setting-modal-header">
+    <h5>{isEditMode ? 'Update Item' : 'Add New Item'}</h5>
+    {/* <button className="close" onClick={handleCloseModal}>&times;</button> */}
+  </div>
+  <div className="supplier-setting-modal-body">
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="salesCategory" className="supplier-setting-form-group">
+        <Form.Label>
+          Select Sales Category<span className="supplier-setting-text-danger">*</span>:
+        </Form.Label>
+        <Form.Control
+          as="select"
+          name="salesCategory"
+          value={selectedItem?.salesCategory || ''}
+          onChange={handleInputChange}
+          required
+        >
+          <option value="">Select Sales Category</option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.name}>
+              {category.name}
+            </option>
+          ))}
+        </Form.Control>
+        {error && <div className="supplier-setting-error">{error}</div>}
+      </Form.Group>
 
-            <Form.Group controlId="itemName" className="supplier-setting-form-group">
-              <Form.Label>Item Name:</Form.Label>
-              <Form.Control
-                type="text"
-                name="itemName"
-                value={selectedItem?.itemName || ''}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="itemName" className="supplier-setting-form-group">
+        <Form.Label>Item Name:</Form.Label>
+        <Form.Control
+          type="text"
+          name="itemName"
+          value={selectedItem?.itemName || ''}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="itemCode" className="supplier-setting-form-group">
-              <Form.Label>Item Code:</Form.Label>
-              <Form.Control
-                type="text"
-                name="itemCode"
-                value={selectedItem?.itemCode || ''}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="itemCode" className="supplier-setting-form-group">
+        <Form.Label>Item Code:</Form.Label>
+        <Form.Control
+          type="text"
+          name="itemCode"
+          value={selectedItem?.itemCode || ''}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="companyName" className="supplier-setting-form-group">
-              <Form.Label>Company Name:</Form.Label>
-              <Form.Control
-                as="select"
-                name="companyName"
-                value={selectedItem?.companyName || ''}
-                onChange={handleInputChange}
-              >
-                <option value="">Select Company</option>
-                {companies.map((company) => (
-                  <option key={company.id} value={company.companyName}>
-                    {company.companyName}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
+      <Form.Group controlId="companyName" className="supplier-setting-form-group">
+        <Form.Label>Company Name:</Form.Label>
+        <Form.Control
+          as="select"
+          name="companyName"
+          value={selectedItem?.companyName || ''}
+          onChange={handleInputChange}
+        >
+          <option value="">Select Company</option>
+          {companies.map((company) => (
+            <option key={company.id} value={company.companyName}>
+              {company.companyName}
+            </option>
+          ))}
+        </Form.Control>
+      </Form.Group>
 
-            <Form.Group controlId="itemType" className="supplier-setting-form-group">
-              <Form.Label>Item Type:</Form.Label>
-              <Form.Control
-                as="select"
-                name="itemType"
-                value={selectedItem?.itemType || ''}
-                onChange={handleInputChange}
-              >
-                <option value="">Select Item Type</option>
-                {itemTypes.map((itemType) => (
-                  <option key={itemType.id} value={itemType.type}>
-                    {itemType.type}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
+      <Form.Group controlId="itemType" className="supplier-setting-form-group">
+        <Form.Label>Item Type:</Form.Label>
+        <Form.Control
+          as="select"
+          name="itemType"
+          value={selectedItem?.itemType || ''}
+          onChange={handleInputChange}
+        >
+          <option value="">Select Item Type</option>
+          {itemTypes.map((itemType) => (
+            <option key={itemType.id} value={itemType.type}>
+              {itemType.type}
+            </option>
+          ))}
+        </Form.Control>
+      </Form.Group>
 
-            <Form.Group controlId="unitOfMeasurement" className="supplier-setting-form-group">
-              <Form.Label>Unit of Measurement:</Form.Label>
-              <Form.Control
-                as="select"
-                name="unitOfMeasurement"
-                value={selectedItem?.unitOfMeasurement || ''}
-                onChange={handleInputChange}
-              >
-                <option value="">Select Unit of Measurement</option>
-                {unitsOfMeasurement.map((unit) => (
-                  <option key={unit.id} value={unit.name}>
-                    {unit.name}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
+      <Form.Group controlId="unitOfMeasurement" className="supplier-setting-form-group">
+        <Form.Label>Unit of Measurement:</Form.Label>
+        <Form.Control
+          as="select"
+          name="unitOfMeasurement"
+          value={selectedItem?.unitOfMeasurement || ''}
+          onChange={handleInputChange}
+        >
+          <option value="">Select Unit of Measurement</option>
+          {unitsOfMeasurement.map((unit) => (
+            <option key={unit.id} value={unit.name}>
+              {unit.name}
+            </option>
+          ))}
+        </Form.Control>
+      </Form.Group>
 
-            <Form.Group controlId="genericName" className="supplier-setting-form-group">
-              <Form.Label>Generic Name:</Form.Label>
-              <Form.Control
-                as="select"
-                name="genericName"
-                value={selectedItem?.genericName || ''}
-                onChange={handleInputChange}
-              >
-                <option value="">Select Generic Name</option>
-                {genericNames.map((genericName) => (
-                  <option key={genericName.id} value={genericName.genericName}>
-                    {genericName.genericName}
-                  </option>
-                ))}
-              </Form.Control>
-            </Form.Group>
+      <Form.Group controlId="genericName" className="supplier-setting-form-group">
+        <Form.Label>Generic Name:</Form.Label>
+        <Form.Control
+          as="select"
+          name="genericName"
+          value={selectedItem?.genericName || ''}
+          onChange={handleInputChange}
+        >
+          <option value="">Select Generic Name</option>
+          {genericNames.map((genericName) => (
+            <option key={genericName.id} value={genericName.genericName}>
+              {genericName.genericName}
+            </option>
+          ))}
+        </Form.Control>
+      </Form.Group>
 
-            <Form.Group controlId="isActive" className="supplier-setting-form-group">
-              <Form.Check
-                type="checkbox"
-                name="isActive"
-                label="Active"
-                checked={selectedItem?.isActive || false}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="isActive" className="supplier-setting-form-group">
+        <Form.Check
+          type="checkbox"
+          name="isActive"
+          label="Active"
+          checked={selectedItem?.isActive || false}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="isInternationalBrand" className="supplier-setting-form-group">
-              <Form.Check
-                type="checkbox"
-                name="isInternationalBrand"
-                label="International Brand"
-                checked={selectedItem?.isInternationalBrand || false}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="isInternationalBrand" className="supplier-setting-form-group">
+        <Form.Check
+          type="checkbox"
+          name="isInternationalBrand"
+          label="International Brand"
+          checked={selectedItem?.isInternationalBrand || false}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="ccCharge" className="supplier-setting-form-group">
-              <Form.Label>CC Charge:</Form.Label>
-              <Form.Control
-                type="number"
-                name="ccCharge"
-                value={selectedItem?.ccCharge || ''}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="ccCharge" className="supplier-setting-form-group">
+        <Form.Label>CC Charge:</Form.Label>
+        <Form.Control
+          type="number"
+          name="ccCharge"
+          value={selectedItem?.ccCharge || ''}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="isNarcotic" className="supplier-setting-form-group">
-              <Form.Check
-                type="checkbox"
-                name="isNarcotic"
-                label="Narcotic"
-                checked={selectedItem?.isNarcotic || false}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="isNarcotic" className="supplier-setting-form-group">
+        <Form.Check
+          type="checkbox"
+          name="isNarcotic"
+          label="Narcotic"
+          checked={selectedItem?.isNarcotic || false}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="reOrderQuantity" className="supplier-setting-form-group">
-              <Form.Label>ReOrder Quantity:</Form.Label>
-              <Form.Control
-                type="number"
-                name="reOrderQuantity"
-                value={selectedItem?.reOrderQuantity || ''}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="reOrderQuantity" className="supplier-setting-form-group">
+        <Form.Label>ReOrder Quantity:</Form.Label>
+        <Form.Control
+          type="number"
+          name="reOrderQuantity"
+          value={selectedItem?.reOrderQuantity || ''}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="minStockQuantity" className="supplier-setting-form-group">
-              <Form.Label>MinStock Quantity:</Form.Label>
-              <Form.Control
-                type="number"
-                name="minStockQuantity"
-                value={selectedItem?.minStockQuantity || ''}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="minStockQuantity" className="supplier-setting-form-group">
+        <Form.Label>MinStock Quantity:</Form.Label>
+        <Form.Control
+          type="number"
+          name="minStockQuantity"
+          value={selectedItem?.minStockQuantity || ''}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="dosage" className="supplier-setting-form-group">
-              <Form.Label>Dosage:</Form.Label>
-              <Form.Control
-                type="text"
-                name="dosage"
-                value={selectedItem?.dosage || ''}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="dosage" className="supplier-setting-form-group">
+        <Form.Label>Dosage:</Form.Label>
+        <Form.Control
+          type="text"
+          name="dosage"
+          value={selectedItem?.dosage || ''}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="budgetedQuantity" className="supplier-setting-form-group">
-              <Form.Label>Budgeted Quantity:</Form.Label>
-              <Form.Control
-                type="number"
-                name="budgetedQuantity"
-                value={selectedItem?.budgetedQuantity || ''}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="budgetedQuantity" className="supplier-setting-form-group">
+        <Form.Label>Budgeted Quantity:</Form.Label>
+        <Form.Control
+          type="number"
+          name="budgetedQuantity"
+          value={selectedItem?.budgetedQuantity || ''}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="isVatApplicable" className="supplier-setting-form-group">
-              <Form.Check
-                type="checkbox"
-                name="isVatApplicable"
-                label="VAT Applicable"
-                checked={selectedItem?.isVatApplicable || false}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="isVatApplicable" className="supplier-setting-form-group">
+        <Form.Check
+          type="checkbox"
+          name="isVatApplicable"
+          label="VAT Applicable"
+          checked={selectedItem?.isVatApplicable || false}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="purchaseRate" className="supplier-setting-form-group">
-              <Form.Label>Purchase Rate:</Form.Label>
-              <Form.Control
-                type="number"
-                name="purchaseRate"
-                value={selectedItem?.purchaseRate || ''}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="purchaseRate" className="supplier-setting-form-group">
+        <Form.Label>Purchase Rate:</Form.Label>
+        <Form.Control
+          type="number"
+          name="purchaseRate"
+          value={selectedItem?.purchaseRate || ''}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="salesRate" className="supplier-setting-form-group">
-              <Form.Label>Sales Rate:</Form.Label>
-              <Form.Control
-                type="number"
-                name="salesRate"
-                value={selectedItem?.salesRate || ''}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="salesRate" className="supplier-setting-form-group">
+        <Form.Label>Sales Rate:</Form.Label>
+        <Form.Control
+          type="number"
+          name="salesRate"
+          value={selectedItem?.salesRate || ''}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="purchaseDiscount" className="supplier-setting-form-group">
-              <Form.Label>Purchase Discount:</Form.Label>
-              <Form.Control
-                type="number"
-                name="purchaseDiscount"
-                value={selectedItem?.purchaseDiscount || ''}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="purchaseDiscount" className="supplier-setting-form-group">
+        <Form.Label>Purchase Discount:</Form.Label>
+        <Form.Control
+          type="number"
+          name="purchaseDiscount"
+          value={selectedItem?.purchaseDiscount || ''}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Form.Group controlId="discountPercentage" className="supplier-setting-form-group">
-              <Form.Label>Discount Percentage:</Form.Label>
-              <Form.Control
-                type="number"
-                name="discountPercentage"
-                value={selectedItem?.discountPercentage || ''}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
+      <Form.Group controlId="discountPercentage" className="supplier-setting-form-group">
+        <Form.Label>Discount Percentage:</Form.Label>
+        <Form.Control
+          type="number"
+          name="discountPercentage"
+          value={selectedItem?.discountPercentage || ''}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
 
-            <Button variant="secondary" onClick={handleCloseModal}>
-              Close
-            </Button>
-            <Button variant="primary" type="submit">
-              {isEditMode ? 'Update' : 'Add'}
-            </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
+      <div className="modal-footer">
+        <Button variant="secondary" onClick={handleCloseModal}>
+          Close
+        </Button>
+        <Button variant="primary" type="submit">
+          {isEditMode ? 'Update' : 'Add'}
+        </Button>
+      </div>
+    </Form>
+  </div>
+</CustomModal>
+
     </div>
   );
 };

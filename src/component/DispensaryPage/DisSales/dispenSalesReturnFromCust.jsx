@@ -1,9 +1,10 @@
  /* Ajhar Tamboli dispenSalesReturnFromCust.jsx 19-09-24 */
 
 
-import React, { useState } from 'react';
+import React, { useRef,useState } from 'react';
 import { Calendar, Search } from 'lucide-react';
 import '../DisSales/dispenSalesReturnFromCust.css'
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 const DispenSalesReturnFromCust = () => {
   const [fiscalYear, setFiscalYear] = useState('2024');
@@ -17,7 +18,8 @@ const DispenSalesReturnFromCust = () => {
   const [salePrice, setSalePrice] = useState(0);
   const [remarks, setRemarks] = useState('');
   const [returncustomLists, setReturncustomLists] = useState([]);
-
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
   // useEffect(() => {
   //   // Fetch data from the backend API
   //   fetch('http://localhost:1415/api/hospital/return-lists/fetch-all-returnList')
@@ -129,16 +131,34 @@ const DispenSalesReturnFromCust = () => {
         </div>
       </div>
 
-      <table className="dispenSalesReturnFromCust-return-table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Drug Name*</th>
-            <th>Batch*</th>
-            <th>Expiry*</th>
-            <th>Returned Qty*</th>
-            <th>SalePrice*</th>
-            <th>Total Amount</th>
+      <table ref={tableRef}>
+      <thead>
+          <tr>{[
+            "",
+            "Drug Name*",
+            "Batch*",
+            "Expiry*",
+            "Returned Qty*",
+            "SalePrice*",
+            "Total Amount",
+          ].map((header, index) => (
+            <th
+              key={index}
+              style={{ width: columnWidths[index] }}
+              className="resizable-th"
+            >
+              <div className="header-content">
+                <span>{header}</span>
+                <div
+                  className="resizer"
+                  onMouseDown={startResizing(
+                    tableRef,
+                    setColumnWidths
+                  )(index)}
+                ></div>
+              </div>
+            </th>
+          ))}
           </tr>
         </thead>
         <tbody>

@@ -6,6 +6,8 @@ import PurchaseOrderForm from './PurchaseOrderForm';
 import './PurchaseOrder.css';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../api/api';
+import * as XLSX from 'xlsx';
+
 const PurchaseOrder = () => {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
     const [showEditModal, setShowEditModal] = useState(false);
@@ -35,6 +37,22 @@ const PurchaseOrder = () => {
 
    
 
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
+
+
     return (
         <div className="purchase-order-container">
             <div className="purchase-order-header">
@@ -52,16 +70,18 @@ const PurchaseOrder = () => {
                 <input type="date" id="from-date" />
                 <label htmlFor="to-date">To:</label>
                 <input type="date" id="to-date" />
-                <button className="purchase-order-favorite-btn">★</button>
+                {/* <button className="purchase-order-favorite-btn">★</button>
                 <button className="purchase-order-reset-btn">-</button>
-                <button className="purchase-order-date-range-button">OK</button>
+                <button className="purchase-order-date-range-button">OK</button> */}
             </div>
                   
             <div className="purchase-order-search-container">
     <input type="text" className="purchase-order-search-box" placeholder="Search" />
     <div className="purchase-order-search-right">
         <span className="purchase-results-count-span">Showing 0 / 0 results</span>
-        <button className="purchase-order-print-button">Print</button>
+        <button className="purchase-order-print-button" onClick={handleExport}>Export</button>
+
+        <button className="purchase-order-print-button"onClick={handlePrint}>Print</button>
     </div>
 </div>
 

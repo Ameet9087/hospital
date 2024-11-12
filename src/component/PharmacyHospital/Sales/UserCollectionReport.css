@@ -5,13 +5,15 @@
   height: 90vh;
   font-family: Arial, sans-serif;
 }
-.user-collection-header{
-
-}
-.user-collection-header h2 {
+.user-collection-report-container h2{
   text-align: left;
   color: black;
+  font-size: var(--heading-font);
+  margin-bottom: 20px;
 }
+/* .user-collection-header h2 {
+  
+} */
 
 .user-collection-filter-section {
   display: flex;
@@ -160,9 +162,7 @@ select {
   font-size: 16px;
   color: brown;
 }
-.user-collection-header{
-  font-size: 16px;
-}
+
 /*  */
 .user-collection-container {
     display: flex;

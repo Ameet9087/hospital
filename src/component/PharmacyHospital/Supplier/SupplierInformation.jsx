@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './SupplierInformation.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
+
 const SupplierInformationCom = () => {
   const [columnWidths,setColumnWidths] = useState({});
   const tableRef=useRef(null);
@@ -12,6 +14,23 @@ const SupplierInformationCom = () => {
     { name: 'Temporibus voluptatum', contact: '551681257', city: 'Non cumque culpa minus ut', pan: '', address: 'Sit itaque quo ea ad eligendi temp...', email: 'sa@a.com' },
   ];
 
+
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
+
+
   return (
     <div className="supplier-info-list-container">
       <div className="supplier-info-search-container">
@@ -21,8 +40,8 @@ const SupplierInformationCom = () => {
       <div className='supplier-info-sale'>
       <div>Showing 4 / 4 results</div>
 
-          <button className="supplier-info-export-button">Export</button>
-          <button className="supplier-info-print-button">Print</button>
+          <button className="supplier-info-export-button" onClick={handleExport}>Export</button>
+          <button className="supplier-info-print-button"onClick={handlePrint}>Print</button>
         </div>
         <div className='table-container'>
         <table  ref={tableRef}>

@@ -31,9 +31,10 @@ function PatientSalesReport() {
               onChange={(e) => setToDate(e.target.value)}
             />
           </label>
-          <button className="patient-sales-report-star-btn">⭐</button>
-          <button className="patient-sales-report-minus-btn">-</button>
+          {/* <button className="patient-sales-report-star-btn">⭐</button>
+          <button className="patient-sales-report-minus-btn">-</button> */}
         </div>
+        
         <div className="patient-sales-report-filters">
           <label>
             Patient Name *:

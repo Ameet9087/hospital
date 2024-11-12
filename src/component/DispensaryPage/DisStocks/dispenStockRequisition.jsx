@@ -88,11 +88,11 @@
 //               <table>
 //                 <thead>
 //                   <tr>
-//                     <th>Req.No</th>
-//                     <th>Requested By</th>
-//                     <th>Requested From</th>
-//                     <th>Date</th>
-//                     <th>Status</th>
+//                     "Req.No",
+//                     "Requested By",
+//                     "Requested From",
+//                     "Date",
+//                     "Status",
 //                   </tr>
 //                 </thead>
 //                 <tbody>
@@ -108,12 +108,12 @@
 //         <table>
 //           <thead>
 //             <tr>
-//               <th>Req.No</th>
-//               <th>Requested By</th>
-//               <th>Requested From</th>
-//               <th>Date</th>
-//               <th>Status</th>
-//               <th>Action</th>
+//               "Req.No",
+//               "Requested By",
+//               "Requested From",
+//               "Date",
+//               "Status",
+//               "Action",
 //             </tr>
 //           </thead>
 //           <tbody>
@@ -150,11 +150,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import "../DisStocks/dispenStockRequisition.css";
 import DispenStockRequisitionCreateReq from './dispenStockRequisitionCreateReq';
 import { useReactToPrint } from 'react-to-print';
-
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 function DispenStockRequisition() {
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [requisitions, setRequisitions] = useState([]);
   const printRef = useRef();
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   // Fetch requisitions from the backend API
   useEffect(() => {
@@ -233,14 +235,32 @@ function DispenStockRequisition() {
             <div ref={printRef}>
               <h2>Requisition Report</h2>
               <p>Date and Time: {new Date().toLocaleString()}</p>
-              <table>
+              <table ref={tableRef}>
                 <thead>
-                  <tr>
-                    <th>Req.No</th>
-                    <th>Requested By</th>
-                    <th>Requested From</th>
-                    <th>Date</th>
-                    <th>Status</th>
+                  <tr>{[
+                    "Req.No",
+                    "Requested By",
+                    "Requested From",
+                    "Date",
+                    "Status",
+                  ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
                   </tr>
                 </thead>
                 <tbody>
@@ -257,16 +277,35 @@ function DispenStockRequisition() {
               </table>
             </div>
           </div>
-          <div className="dispenStockRequisition-table-N-paginat">
-            <table>
+          {/* <div className="dispenStockRequisition-table-N-paginat"> */}
+          <div className="table-container">
+            <table ref={tableRef}>
               <thead>
-                <tr>
-                  <th>Req.No</th>
-                  <th>Requested By</th>
-                  <th>Requested From</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                <tr>{[
+                  "Req.No",
+                  "Requested By",
+                  "Requested From",
+                  "Date",
+                  "Status",
+                  "Action",
+                ].map((header, index) => (
+                  <th
+                    key={index}
+                    style={{ width: columnWidths[index] }}
+                    className="resizable-th"
+                  >
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
+                      ></div>
+                    </div>
+                  </th>
+                ))}
                 </tr>
               </thead>
               <tbody>

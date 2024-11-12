@@ -1,14 +1,17 @@
  /* Ajhar Tamboli drStockSummaryReport.jsx 19-09-24 */
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import "../DisReport/drStockSummaryReport.css";
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 function DrStockSummaryReport() {
   // State to hold fetched user collections
   const [userCollections, setUserCollections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   // Fetch user collections from the API
   useEffect(() => {
@@ -86,44 +89,62 @@ function DrStockSummaryReport() {
           <button className="drStockSummaryReport-print-button" ><i class="fa-solid fa-print"></i> Print</button>
         </div>
       </div>
-      <div className='drStockSummaryReport-table-N-paginationDiv'>
-      <table>
+      {/* <div className='drStockSummaryReport-table-N-paginationDiv'> */}
+      <div className="table-container">
+      <table ref={tableRef}>
         <thead>
-          <tr>
-            <th>Store</th>
-            <th>Generic Name</th>
-            <th>Item Name</th>
-            <th>Unit</th>
-            <th>Batch</th>
-            <th>Expiry</th>
-            <th>CP</th>
-            <th>SP</th>
-            <th>Opening Qty</th>
-            <th>Opening Value</th>
-            <th>Provisional Qty</th>
-            <th>Provisional Value</th>
-            <th>Closing Value</th>
-            <th>Closing Qty</th>
-            <th>Purchase Qty</th>
-            <th>Purchase Value</th>
-            <th>Purchase Return Qty</th>
-            <th>Purchase Return Value</th>
-            <th>Sales Qty</th>
-            <th>Sales Return Qty</th>
-            <th>Sales Return Value</th>
-            <th>Consumption Qty</th>
-            <th>Consumption Value</th>
-            <th>Write-off Qty </th>
-            <th>Write-off Value </th>
-            <th>Stock ManageIn Qty </th>
-            <th>Stock ManageIn Value </th>
-            <th>Stock ManageOut Qty </th>
-            <th>Stock ManageOut Value </th>
-            <th>TransferIn Value </th>
-            <th>TransferIn Qty </th>
-            <th>TransferOut Value </th>
-            <th>TransferOut Qty </th>
-           
+          <tr>{[
+            "Store",
+            "Generic Name",
+            "Item Name",
+            "Unit",
+            "Batch",
+            "Expiry",
+            "CP",
+            "SP",
+            "Opening Qty",
+            "Opening Value",
+            "Provisional Qty",
+            "Provisional Value",
+            "Closing Value",
+            "Closing Qty",
+            "Purchase Qty",
+            "Purchase Value",
+            "Purchase Return Qty",
+            "Purchase Return Value",
+            "Sales Qty",
+            "Sales Return Qty",
+            "Sales Return Value",
+            "Consumption Qty",
+            "Consumption Value",
+            "Write-off Qty ",
+            "Write-off Value ",
+            "Stock ManageIn Qty ",
+            "Stock ManageIn Value ",
+            "Stock ManageOut Qty ",
+            "Stock ManageOut Value ",
+            "TransferIn Value ",
+            "TransferIn Qty ",
+            "TransferOut Value ",
+            "TransferOut Qty ",
+          ].map((header, index) => (
+            <th
+              key={index}
+              style={{ width: columnWidths[index] }}
+              className="resizable-th"
+            >
+              <div className="header-content">
+                <span>{header}</span>
+                <div
+                  className="resizer"
+                  onMouseDown={startResizing(
+                    tableRef,
+                    setColumnWidths
+                  )(index)}
+                ></div>
+              </div>
+            </th>
+          ))}
             
             
           </tr>

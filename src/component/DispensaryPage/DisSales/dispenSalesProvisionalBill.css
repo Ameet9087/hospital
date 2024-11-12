@@ -111,7 +111,7 @@ color: green;
   background-color: var(--button-hover-background-color);
 }
   
-  .dispenSalesProvisionalBill-table-N-paginat table {
+  /* .dispenSalesProvisionalBill-table-N-paginat table {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
@@ -126,7 +126,6 @@ color: green;
 }
   
   .dispenSalesProvisionalBill-table-N-paginat th {
-    /* background-color: red; */
     background-color: #F3F3F3;
     font-size: var(--heading-font);
 
@@ -134,7 +133,7 @@ color: green;
   
   .dispenSalesProvisionalBill-table-N-paginat tr:nth-child(even) {
     background-color: #f9f9f9;
-  }
+  } */
   
   .dispenSalesProvisionalBill-action-button {
     padding: 5px 10px;

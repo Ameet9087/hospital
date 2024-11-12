@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios'; // Import axios
 import './ChemotherapyScheduling.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
 
 const ChemotherapyScheduling = () => {
     const [columnWidths, setColumnWidths] = useState({});
@@ -49,6 +50,7 @@ const ChemotherapyScheduling = () => {
         });
     };
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -82,8 +84,31 @@ const ChemotherapyScheduling = () => {
         }
     };
 
+    
+
+
+
+
+
+// Function to export table to Excel
+const handleExport = () => {
+  const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+  const wb = XLSX.utils.book_new(); // Creates a new workbook
+  XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+  XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+};
+
+// Function to trigger print
+const handlePrint = () => {
+  window.print(); // Triggers the browser's print window
+};
+
+
+
+
     return (
         <div className="chemotherapy-scheduling-container">
+
             {!showForm && (
                 <button className="chemotherapy-scheduling-submit-btn" onClick={() => setShowForm(true)}>
                     Add Chemotherapy

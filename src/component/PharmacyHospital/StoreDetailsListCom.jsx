@@ -1,7 +1,9 @@
 /* Mohini_StoreDetailsListCom_WholePage_14/sep/2024 */
-import React, { useState } from 'react';
+import React, { useState ,useRef} from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import './SettingSupplier.css'; 
+import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
 
 const usersData = [
   {
@@ -113,6 +115,9 @@ const StoreDetailsListCom = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [showZeroQty, setShowZeroQty] = useState(false);
   const [selectedStore, setSelectedStore] = useState(''); // State for store filtering
+  const [columnWidths, setColumnWidths] = useState({});
+    const tableRef = useRef(null);
+
 
   const handleStoreFilterChange = (e) => {
     setSelectedStore(e.target.value);
@@ -151,6 +156,22 @@ const StoreDetailsListCom = () => {
     handleCloseModal();
   };
 
+
+
+
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
   return (
     <div className="setting-supplier-container">
               <span className="store-setting-incoming-stock-title">Incoming Stock List</span>
@@ -187,24 +208,39 @@ const StoreDetailsListCom = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+    
+        
       <div className='setting-supplier-span'>
-        <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
-      </div>
-      <div className='setting-supplier-tab'>
-        <table className="setting-suppliers-users-table">
-          <thead>
-            <tr>
-              <th>Medicine Name</th>
-              <th>Generic Name</th>
-              <th>Batch No</th>
-              <th>Expiry Date</th>
-              <th>Available Qty</th>
-              <th>Sales</th>
-              <th>Purchases</th>
-              <th>Store</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+      <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
+      <button className='item-wise-export-button'onClick={handleExport}>Export</button>
+  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
+</div>
+      <div className='table-container'>
+      <table ref={tableRef}>
+                        <thead>
+                            <tr>
+                                {["Medicine Name",
+  "Generic Name",
+  "Batch No",
+  "Expiry Date",
+  "Available Qty",
+  "Sales",
+  "Purchases",
+  "Store",
+  "Action"].map((header, index) => (
+                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                        <div className="header-content">
+                                            <span>{header}</span>
+                                            <div
+                                                className="resizer"
+                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                            ></div>
+                                        </div>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+
           <tbody>
             {filteredUsers.map((user, index) => (
               <tr key={index}>
