@@ -1,7 +1,10 @@
-* {
-    padding: 0;
+
+.superuser-administration-outerDiv {
+
+    padding: 10px;
     margin: 0;
 }
+
 
 .superuser-administration-table {
     width: 100%;
@@ -100,10 +103,7 @@
     color: red;
 }
 
-.superuser-administration-outerDiv {
 
-    padding: 10px;
-}
 
 .superuser-administration-heading-text {
     font-size: 16px;
