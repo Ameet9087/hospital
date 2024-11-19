@@ -23,6 +23,7 @@
     margin-top: 2px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    overflow: hidden;
   }
   
   .AddActive-form-group input[type="checkbox"] {

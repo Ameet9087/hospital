@@ -18,7 +18,7 @@ overflow-x: scroll;
    transition: all 0.3s ease;
    width: 100%;
    overflow: auto;
-   background-color: var(--background-color);
+   /* background-color: var(--background-color); */
 }
 .hrmsLayoutMainContent::-webkit-scrollbar {
    display: none;
