@@ -1,4 +1,8 @@
 /* EmergencyRequest.css */
+.emergency-request-com-module-form-container{
+  width: auto;
+  margin: 20px;
+}
 .emergency-request-com-module-form {
   display: flex;
   justify-content: space-between;

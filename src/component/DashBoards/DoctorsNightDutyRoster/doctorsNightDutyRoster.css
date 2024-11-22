@@ -1,0 +1,161 @@
+.doctorsNightDutyRoster-roster {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .doctorsNightDutyRoster-roster header {
+    background-color: var(--button-hover-border-color);
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .doctorsNightDutyRoster-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .doctorsNightDutyRoster-header-right {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .doctorsNightDutyRoster-back-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .doctorsNightDutyRoster-icon-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .doctorsNightDutyRoster-header-left h1 {
+    font-size: 16px;
+    margin: 0;
+  }
+  
+  .doctorsNightDutyRoster-content {
+    padding: 20px;
+    flex: 1;
+  }
+  
+  .doctorsNightDutyRoster-duty-register {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .doctorsNightDutyRoster-duty-register label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .doctorsNightDutyRoster-required {
+    color: red;
+    margin-left: 2px;
+  }
+  
+  .doctorsNightDutyRoster-duty-input {
+    width: 85%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .doctorsNightDutyRoster-section {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+  }
+  
+  .doctorsNightDutyRoster-section-header {
+    background-color: #e6eef7;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .doctorsNightDutyRoster-section-header h2 {
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  .doctorsNightDutyRoster-control-text {
+    color: #666;
+    font-size: 12px;
+    margin-left: 10px;
+  }
+  
+  .doctorsNightDutyRoster-search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+
+  
+  .doctorsNightDutyRoster-action-column {
+    white-space: nowrap;
+    width: 1%;
+  }
+  
+  .doctorsNightDutyRoster-add-link, .doctorsNightDutyRoster-del-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .doctorsNightDutyRoster-del-link {
+    color: red;
+  }
+  
+  .doctorsNightDutyRoster-search-field {
+    display: flex;
+    align-items: center;
+  }
+  
+  .doctorsNightDutyRoster-search-field input {
+    flex: 1;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .doctorsNightDutyRoster-search-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 5px;
+  }
+  
+  .doctorsNightDutyRoster-add-btn, .doctorsNightDutyRoster-del-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 5px;
+    margin-right: 5px;
+  }
+  
+  .doctorsNightDutyRoster-add-btn {
+    color: blue;
+  }
+  
+  .doctorsNightDutyRoster-del-btn {
+    color: red;
+  }

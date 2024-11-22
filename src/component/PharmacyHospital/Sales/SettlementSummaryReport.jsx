@@ -2,9 +2,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './InvoiceBilling.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
+
 const SettlementSummaryReport = () => {
   const [columnWidths,setColumnWidths] = useState({});
   const tableRef=useRef(null);
+  
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
   return (
     <div className="invoice-billing-report-container">
       <h1 className="invoice-billing-report-title">⚛ Settlement Summary Report</h1>
@@ -20,8 +37,10 @@ const SettlementSummaryReport = () => {
           <label>To:</label>
           <input type="date" value="2024-08-23" />
        
-          <button className="invoice-billing-favorite-btn">★</button>
-          <button className="invoice-billing-reset-btn">-</button>
+          {/* <button className="invoice-billing-favorite-btn">★</button>
+          <button className="invoice-billing-reset-btn">-</button> */}
+      
+      </div>
       <div className='sales-invoice-number'>
       <label>Select Dispensary:</label>
       <select>
@@ -29,13 +48,11 @@ const SettlementSummaryReport = () => {
     
     {/* Add more options as needed */}
   </select>
-       
+  <button className="invoice-billing-show-report-button">Show Report</button>
+
       </div>
           
         
-        <button className="invoice-billing-show-report-button">Show Report</button>
-      </div>
-      
       
       <div className="invoice-billing-search-export-container">
         <div className="invoice-billing-search-bar">
@@ -46,8 +63,8 @@ const SettlementSummaryReport = () => {
         <div className="invoice-billing-export-print-buttons">
         <div className="invoice-billing-pagination-info">Showing 0 / 0 results</div>
 
-          <button className="invoice-billing-export-button">Export</button>
-          <button className="invoice-billing-print-button">Print</button>
+          <button className="invoice-billing-export-button"onClick={handleExport}>Export</button>
+          <button className="invoice-billing-print-button"onClick={handlePrint}>Print</button>
         </div>
       </div>
       {/* <div className='sales-invoice-billing-tab'>  */}

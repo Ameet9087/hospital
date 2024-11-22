@@ -223,9 +223,9 @@
     resize: vertical;
   }
   
-  select {
+  /* select {
     color: #999;
-  }
+  } */
   
   /* Responsive adjustments */
   @media (max-width: 600px) {

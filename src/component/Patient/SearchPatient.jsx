@@ -1,6 +1,4 @@
- //prachi parab search Patient 13/9
-
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './SearchPatient.css';
@@ -12,6 +10,8 @@ function SearchPatient() {
   const [patients, setPatients] = useState([]);
   const [filteredPatients, setFilteredPatients] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
   const patientsPerPage = 5;
   const navigate = useNavigate();
   const [columnWidths, setColumnWidths] = useState({});
@@ -23,7 +23,6 @@ function SearchPatient() {
       .then(response => {
         setPatients(response.data);
         console.log(response.data);
-        
       })
       .catch(error => {
         console.error('There was an error fetching the patient data!', error);
@@ -31,13 +30,22 @@ function SearchPatient() {
   }, []);
 
   useEffect(() => {
-    // Filter patients based on the search term
-    const filtered = patients.filter(patient =>
-      `${patient.firstName} ${patient.lastName}`.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Filter patients based on the search term and date range
+    const filtered = patients.filter(patient => {
+      const patientName = `${patient.firstName} ${patient.lastName}`.toLowerCase();
+      const matchesSearchTerm = patientName.includes(searchTerm.toLowerCase());
+
+      // Check if the patient matches the date range
+      const patientDate = new Date(patient.date); // Assuming "date" is the date field in patient data
+      const isWithinDateRange =
+        (!fromDate || patientDate >= new Date(fromDate)) &&
+        (!toDate || patientDate <= new Date(toDate));
+
+      return matchesSearchTerm && isWithinDateRange;
+    });
     setFilteredPatients(filtered);
-    setCurrentPage(1); // Reset to first page when search term changes
-  }, [searchTerm, patients]);
+    setCurrentPage(1); // Reset to first page when search term or dates change
+  }, [searchTerm, patients, fromDate, toDate]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -74,6 +82,25 @@ function SearchPatient() {
             />
             <i className="fas fa-search"></i>
           </div>
+          <br></br>
+          <div className="date-filters">
+            <label>
+              From:
+              <input
+                type="date"
+                value={fromDate}
+                onChange={(e) => setFromDate(e.target.value)}
+              />
+            </label>
+            <label>
+              To:
+              <input
+                type="date"
+                value={toDate}
+                onChange={(e) => setToDate(e.target.value)}
+              />
+            </label>
+          </div>
         </div>
         <div className="results-and-print">
           <span className="results-text">Showing {displayedPatients.length} / {filteredPatients.length} results</span>
@@ -82,35 +109,32 @@ function SearchPatient() {
       </div>
 
       <table className="patientList-table" ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-                "Serial No",
-                "Patient Name",
-                "Age/Sex",
-                "Address",
-                "Phone",
-                "Actions"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
+        <thead>
+          <tr>
+            {[
+              "Serial No",
+              "Patient Name",
+              "Age/Sex",
+              "Address",
+              "Phone",
+              "Actions"
+            ].map((header, index) => (
+              <th
+                key={index}
+                style={{ width: columnWidths[index] }}
+                className="resizable-th"
+              >
+                <div className="header-content">
+                  <span>{header}</span>
+                  <div
+                    className="resizer"
+                    onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                  ></div>
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
         <tbody>
           {displayedPatients.map((patient, index) => (
             <tr key={index}>
@@ -126,13 +150,6 @@ function SearchPatient() {
           ))}
         </tbody>
       </table>
-      {/* <div className="pagination">
-        <button onClick={() => handlePageChange(1)} disabled={currentPage === 1}>First</button>
-        <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
-        <span>Page {currentPage} of {Math.ceil(filteredPatients.length / patientsPerPage)}</span>
-        <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === Math.ceil(filteredPatients.length / patientsPerPage)}>Next</button>
-        <button onClick={() => handlePageChange(Math.ceil(filteredPatients.length / patientsPerPage))} disabled={currentPage === Math.ceil(filteredPatients.length / patientsPerPage)}>Last</button>
-      </div> */}
     </div>
   );
 }

@@ -511,7 +511,8 @@ const DisPrescription = () => {
         </div>
       </div>
 
-      <div className='disPrescription-table-N-paginationDiv'>
+      {/* <div className='disPrescription-table-N-paginationDiv'> */}
+      <div className="table-container">
         <table ref={tableRef}>
           <thead>
             <tr>{[

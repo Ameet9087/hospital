@@ -14,7 +14,9 @@
     padding: 10px;
     border-radius: 5px;
 }
-
+.purchase-order-button{
+    justify-content: end;
+}
 /* Add Purchase Order Button */
 .purchase-order-add-purchase-order-button {
     background-color: var(--button-color);
@@ -23,7 +25,7 @@
     padding: 5px 5px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: var(--font-size);
 }
 .purchase-order-add-purchase-order-button:hover
 {

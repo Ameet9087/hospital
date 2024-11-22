@@ -31,8 +31,8 @@ function PharmacyPaymentReport() {
               onChange={(e) => setToDate(e.target.value)}
             />
           </label>
-          <button className="pharmacy-payment-star-btn">⭐</button>
-          <button className="pharmacy-payment-minus-btn">-</button>
+          {/* <button className="pharmacy-payment-star-btn">⭐</button>
+          <button className="pharmacy-payment-minus-btn">-</button> */}
         </div>
         <button className="pharmacy-payment-show-report-btn">Show Report</button>
       </div>

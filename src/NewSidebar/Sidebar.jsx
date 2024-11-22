@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import "./Sidebar.css";
-import hospitallogo from '../Dashboard/Images/hospitallogo.png'
+import hospitallogo from './Images/hospitallogo.png'
 
 const Sidebar = ({ modules, isOpen }) => {
     const [activeModule, setActiveModule] = useState(null);
@@ -69,7 +69,7 @@ const Sidebar = ({ modules, isOpen }) => {
                         </span>
                     ) : (
                         <img
-                            style={{ width: '30px' }}
+                            style={{ width: '35px' }}
                             src={hospitallogo}
                             alt="Hospital Logo"
                         />
@@ -85,7 +85,7 @@ const Sidebar = ({ modules, isOpen }) => {
                         className="Sidebar-search"
                     />
                     {filteredModules.map((moduleName, index) => {
-                        const module = modules[moduleName]; // Get module data
+                        const module = modules[moduleName] || { submodules: [], logo: 'fa-solid fa-circle-question' };; // Get module data
                         return (
                             <DraggableModule
                                 key={moduleName}
@@ -112,7 +112,7 @@ const DraggableModule = ({
     moveModule,
     activeModule,
     handleToggle,
-    submodules,
+    submodules=[],
     currentPath,
     moduleLogo // Added to handle the logo
 }) => {

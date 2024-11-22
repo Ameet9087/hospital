@@ -1,8 +1,12 @@
 /* Mohini_SettingDispensary_WholePage_14/sep/2024 */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useRef} from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import './SettingSupplier.css'; 
 import { API_BASE_URL } from '../api/api';
+import CustomModal from '../../CustomModel/CustomModal';
+import useCustomAlert from '../../alerts/useCustomAlert';
+import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
 
 const SettingDispensary = () => {
   const [suppliers, setSuppliers] = useState([]); // Initialize with empty array to load from API
@@ -10,6 +14,11 @@ const SettingDispensary = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
+  const { success, error, CustomAlerts } = useCustomAlert();
+  const [openStickerPopup, setOpenStickerPopup] = useState(false);
+  const [columnWidths, setColumnWidths] = useState({});
+    const tableRef = useRef(null);
+
 
   // Fetch suppliers from API when the component mounts
   useEffect(() => {
@@ -95,9 +104,25 @@ const SettingDispensary = () => {
       .catch(error => console.error('Error adding dispensary:', error));
     }
   };
+  
+
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
 
   return (
     <div className="setting-supplier-container">
+      <CustomAlerts/>
       <div className="setting-supplier-header">
         <button className="setting-supplier-add-user-button" onClick={() => handleShowModal()}>
           + Add Dispensary
@@ -110,25 +135,41 @@ const SettingDispensary = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+    
+       
       <div className='setting-supplier-span'>
-        <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
-      </div>
-      <div className='setting-supplier-tab'>
-        <table className="setting-suppliers-users-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Type</th>
-              <th>Contact No</th>
-              <th>Description</th>
-              <th>Label</th>
-              <th>KRA PIN</th>
-              <th>Address</th>
-              <th>Email</th>
-              <th>Default Payment Mode</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+      <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
+      <button className='item-wise-export-button'onClick={handleExport}>Export</button>
+  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
+</div>
+      <div className='table-container'>
+      <table ref={tableRef}>
+                        <thead>
+                            <tr>
+                                {[ "Name",
+  "Type",
+  "Contact No",
+  "Description",
+  "Label",
+  "KRA PIN",
+  "Address",
+  "Email",
+  "Default Payment Mode",
+  "Actions"].map((header, index) => (
+                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                        <div className="header-content">
+                                            <span>{header}</span>
+                                            <div
+                                                className="resizer"
+                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                            ></div>
+                                        </div>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+
+
           <tbody>
             {filteredUsers.map((user, index) => (
               <tr key={index}>
@@ -161,95 +202,101 @@ const SettingDispensary = () => {
         </div> */}
       </div>
 
-      <Modal show={showModal} onHide={handleCloseModal} className="supplier-setting-supplier-update-modal">
-        <Modal.Header closeButton>
-          <Modal.Title>{isEditMode ? 'Edit Dispensary Details' : 'Add New Dispensary'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            {/* Dispensary Name Field */}
-            <Form.Group controlId="name" className="supplier-setting-form-group">
-              <Form.Label className="supplier-setting-form-label">
-                <span className="supplier-setting-text-danger">*</span> Dispensary Name:
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                placeholder="Enter Dispensary Name"
-                required
-                className="supplier-setting-form-control"
-                defaultValue={selectedUser?.name || ''}
-              />
-            </Form.Group>
+      <CustomModal
+  isOpen={showModal}
+  onClose={handleCloseModal}
+  className="supplier-setting-supplier-update-modal"
+>
+  <div className="supplier-setting-modal-header">
+    <h5>{isEditMode ? 'Edit Dispensary Details' : 'Add New Dispensary'}</h5>
+    {/* <button className="close" onClick={handleCloseModal}>&times;</button> */}
+  </div>
+  <div className="supplier-setting-modal-body">
+    <Form onSubmit={handleSubmit}>
+      {/* Dispensary Name Field */}
+      <Form.Group controlId="name" className="supplier-setting-form-group">
+        <Form.Label className="supplier-setting-form-label">
+        Dispensary Name<span className="supplier-setting-text-danger">*</span>:
+        </Form.Label>
+        <Form.Control
+          type="text"
+          name="name"
+          placeholder="Enter Dispensary Name"
+          required
+          className="supplier-setting-form-control"
+          defaultValue={selectedUser?.name || ''}
+        />
+      </Form.Group>
 
-            {/* Dispensary Type Field */}
-            <Form.Group controlId="type" className="supplier-setting-form-group">
-              <Form.Label className="supplier-setting-form-label">
-                <span className="supplier-setting-text-danger">*</span> Dispensary Type:
-              </Form.Label>
-              <Form.Control
-                as="select"
-                name="type"
-                required
-                className="supplier-setting-form-control"
-                defaultValue={selectedUser?.type || ''}
-              >
-                <option value="Normal">Normal</option>
-                <option value="Special">Special</option>
-                {/* Add other options as needed */}
-              </Form.Control>
-            </Form.Group>
+      {/* Dispensary Type Field */}
+      <Form.Group controlId="type" className="supplier-setting-form-group">
+        <Form.Label className="supplier-setting-form-label">
+        Dispensary Type<span className="supplier-setting-text-danger">*</span>:
+        </Form.Label>
+        <Form.Control
+          as="select"
+          name="type"
+          required
+          className="supplier-setting-form-control"
+          defaultValue={selectedUser?.type || ''}
+        >
+          <option value="Normal">Normal</option>
+          <option value="Special">Special</option>
+          {/* Add other options as needed */}
+        </Form.Control>
+      </Form.Group>
 
-            {/* Description Field */}
-            <Form.Group controlId="description" className="supplier-setting-form-group">
-              <Form.Label className="supplier-setting-form-label">Description:</Form.Label>
-              <Form.Control
-                type="text"
-                name="description"
-                placeholder="Enter Description"
-                className="supplier-setting-form-control"
-                defaultValue={selectedUser?.description || ''}
-              />
-            </Form.Group>
+      {/* Description Field */}
+      <Form.Group controlId="description" className="supplier-setting-form-group">
+        <Form.Label className="supplier-setting-form-label">Description:</Form.Label>
+        <Form.Control
+          type="text"
+          name="description"
+          placeholder="Enter Description"
+          className="supplier-setting-form-control"
+          defaultValue={selectedUser?.description || ''}
+        />
+      </Form.Group>
 
-            {/* IsActive Checkbox */}
-            <Form.Group controlId="isActive" className="supplier-setting-form-group">
-              <Form.Check
-                type="checkbox"
-                name="isActive"
-                label="Is Active"
-                defaultChecked={selectedUser?.isActive || false}
-              />
-            </Form.Group>
+      {/* IsActive Checkbox */}
+      <Form.Group controlId="isActive" className="supplier-setting-form-group">
+        <Form.Check
+          type="checkbox"
+          name="isActive"
+          label="Is Active"
+          defaultChecked={selectedUser?.isActive || false}
+        />
+      </Form.Group>
 
-            {/* Print Invoice Header in DotMatrix Checkbox */}
-            <Form.Group controlId="printInvoiceHeader" className="supplier-setting-form-group">
-              <Form.Check
-                type="checkbox"
-                name="printInvoiceHeader"
-                label="Print Invoice Header in DotMatrix"
-                defaultChecked={selectedUser?.printInvoiceHeader || false}
-              />
-            </Form.Group>
+      {/* Print Invoice Header in DotMatrix Checkbox */}
+      <Form.Group controlId="printInvoiceHeader" className="supplier-setting-form-group">
+        <Form.Check
+          type="checkbox"
+          name="printInvoiceHeader"
+          label="Print Invoice Header in DotMatrix"
+          defaultChecked={selectedUser?.printInvoiceHeader || false}
+        />
+      </Form.Group>
 
-            {/* Use Separate Invoice Header Checkbox */}
-            <Form.Group controlId="useSeparateInvoiceHeader" className="supplier-setting-form-group">
-              <Form.Check
-                type="checkbox"
-                name="useSeparateInvoiceHeader"
-                label="Use separate invoice header"
-                defaultChecked={selectedUser?.useSeparateInvoiceHeader || false}
-              />
-            </Form.Group>
+      {/* Use Separate Invoice Header Checkbox */}
+      <Form.Group controlId="useSeparateInvoiceHeader" className="supplier-setting-form-group">
+        <Form.Check
+          type="checkbox"
+          name="useSeparateInvoiceHeader"
+          label="Use separate invoice header"
+          defaultChecked={selectedUser?.useSeparateInvoiceHeader || false}
+        />
+      </Form.Group>
 
-            <div className="supplier-setting-text-right">
-              <Button variant="primary" type="submit">
-                {isEditMode ? 'Update' : 'Add'}
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
+      <div className="supplier-setting-text-right">
+        <Button variant="primary" type="submit">
+          {isEditMode ? 'Update' : 'Add'}
+        </Button>
+      </div>
+    </Form>
+  </div>
+</CustomModal>
+
     </div>
   );
 };

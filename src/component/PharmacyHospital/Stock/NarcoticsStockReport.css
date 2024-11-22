@@ -164,6 +164,7 @@
   }
   
   .nacotics-stock-selection-btn {
+    margin-bottom: 20px;
     padding: 5px 5px; /* Add padding for the button */
     margin-left: 40px;
     justify-content: flex-end; /* Evenly distribute space between and around the items */

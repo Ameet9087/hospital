@@ -106,9 +106,9 @@ const Administration = () => {
     const selectedRequest = requests.find((request) => request.issuesrequest_id === selectedRequestId); // Get selected request
 
     return (
-        <div className='administration-outerDiv'>
-            <span className='administration-heading-text'>Administration</span>
-            <table className="administration-table">
+        <div className='superuser-administration-outerDiv'>
+            <span className='superuser-administration-heading-text'>Administration</span>
+            <table className="superuser-administration-table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -132,7 +132,7 @@ const Administration = () => {
                             <td>{request.description}</td>
                             <td>{request.status}</td>
                             <td>
-                                <button className="administration-button" onClick={() => openModal(request)}>View</button>
+                                <button className="superuser-administration-button" onClick={() => openModal(request)}>View</button>
                             </td>
                         </tr>
                     ))}
@@ -157,12 +157,12 @@ const Administration = () => {
                         },
                     }}
                 >
-                    <button className="administration-closeButton" onClick={closeModal}>
+                    <button className="superuser-administration-closeButton" onClick={closeModal}>
                         &times; {/* Cross icon */}
                     </button>
 
-                    <span className='administration-requestDetail-title'>Request Details</span>
-                    <table className="administration-modalTable">
+                    <span className='superuser-administration-requestDetail-title'>Request Details</span>
+                    <table className="superuser-administration-modalTable">
                         <tbody>
                             <tr>
                                 <td><strong>ID:</strong></td>
@@ -195,9 +195,9 @@ const Administration = () => {
                         </tbody>
                     </table>
 
-                    <div className='administration-app-rej-btn'>
-                        <button className="administration-approve-button" onClick={handleApprove}>Approve</button>
-                        <button className="administration-button-reject" onClick={handleReject}>Reject</button>
+                    <div className='superuser-administration-app-rej-btn'>
+                        <button className="superuser-administration-approve-button" onClick={handleApprove}>Approve</button>
+                        <button className="superuser-administration-button-reject" onClick={handleReject}>Reject</button>
                     </div>
                 </Modal>
             )}
@@ -206,4 +206,4 @@ const Administration = () => {
 };
 
 export default Administration;
-// Kshitija_FacilityService_26_09_endline_150
+// Kshitija_FacilityService_26_09_endline_15

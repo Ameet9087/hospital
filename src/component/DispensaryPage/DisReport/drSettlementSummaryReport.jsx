@@ -88,15 +88,15 @@
 //       <table>
 //         <thead>
 //           <tr>
-//             <th>Hospital No</th>
-//             <th>Patient Name</th>
-//             <th>Age/Sex</th>
-//             <th>Contact</th>
-//             <th>Receivable Amount</th>
-//             <th>Cash Discount</th>
-//             <th>Discount Return</th>
-//             <th>Settelement Date</th>
-//             <th>Action</th>
+//             "Hospital No",
+//             "Patient Name",
+//             "Age/Sex",
+//             "Contact",
+//             "Receivable Amount",
+//             "Cash Discount",
+//             "Discount Return",
+//             "Settelement Date",
+//             "Action",
             
             
 //           </tr>
@@ -153,14 +153,17 @@
  /* Ajhar Tamboli drSettlementSummaryReport.jsx 19-09-24 */
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import "../DisReport/drSettlementSummaryReport.css";
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 function DrSettlementSummaryReport() {
   // State to hold fetched settlement summaries
   const [settlementSummaries, setSettlementSummaries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   // Fetch settlement summaries from the API
   useEffect(() => {
@@ -209,19 +212,40 @@ function DrSettlementSummaryReport() {
           <button className="drSettlementSummaryReport-print-button"><i class="fa-solid fa-print"></i> Print</button>
         </div>
       </div>
-      <div className='drSettlementSummaryReport-table-N-paginationDiv'>
-        <table>
+
+      {/* <div className='drSettlementSummaryReport-table-N-paginationDiv'> */}
+      <div className="table-container">
+        <table ref={tableRef}>
           <thead>
             <tr>
-              <th>Hospital No</th>
-              <th>Patient Name</th>
-              <th>Age</th>
-              <th>Contact</th>
-              <th>Receivable Amount</th>
-              <th>Cash Discount</th>
-              <th>Discount Return</th>
-              <th>Settlement Date</th>
-              <th>Action</th>
+            {[
+              "Hospital No",
+              "Patient Name",
+              "Age",
+              "Contact",
+              "Receivable Amount",
+              "Cash Discount",
+              "Discount Return",
+              "Settlement Date",
+              "Action",
+            ].map((header, index) => (
+              <th
+                key={index}
+                style={{ width: columnWidths[index] }}
+                className="resizable-th"
+              >
+                <div className="header-content">
+                  <span>{header}</span>
+                  <div
+                    className="resizer"
+                    onMouseDown={startResizing(
+                      tableRef,
+                      setColumnWidths
+                    )(index)}
+                  ></div>
+                </div>
+              </th>
+            ))}
             </tr>
           </thead>
           <tbody>

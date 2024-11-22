@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import "./PrintInvoice.css";
-import HIMSLOGO from "../../Dashboard/Images/hospitallogo.png";
+import HIMSLOGO from "../../NewSidebar/Images/hospitallogo.png";
 import { toWords } from "number-to-words";
 import { useNavigate } from "react-router-dom";
 

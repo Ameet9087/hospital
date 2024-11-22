@@ -178,7 +178,7 @@
   
   }
   
-  .userCollectionReport-report table {
+  /* .userCollectionReport-report table {
     margin-top: 10px;
     width: 100%;
     border-collapse: collapse;
@@ -194,8 +194,7 @@
   
   .userCollectionReport-report th {
     background-color: #F3F3F3;
-    /* color: #333333; */
-  }
+  } */
   .userCollectionReport-Loading{
     display: flex;
   justify-content: center;

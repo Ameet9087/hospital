@@ -23,7 +23,7 @@ import BloodBank from "../component/BloodBank/bloodBankRoute";
 import TransportMainRouting from "../component/TransportMain/transportMainRoute"
 import SettingRouting from '../component/Employee/SettingRouting';
 import IncentiveApp from '../component/IncentiveMain/incentiveApp';
-import Header from '../Dashboard/components/Header';
+import Header from './Header';
 import NursingRouting from '../component/Nursing/NursingMainRouting';
 import SuperUserMainRoute from '../component/SuperUserMain/superUserMainRoute';
 import SocialServicesMainRoute from '../component/SocialServicesMain/SocialServicesMainRoute';
@@ -115,7 +115,7 @@ const modules = {
     },
     Nursing:{
         logo:"fa-solid fa-user-nurse",
-        submodules:['Outpatient', 'Inpatient', 'Requisition List', 'Discharge Summary']
+        submodules:['Outpatient', 'Inpatient', 'Requisition List', 'Discharge Summary','Adhense Safety Precaution']
     },
     Appointment:{
         logo:"fa-solid fa-bell",
@@ -189,10 +189,6 @@ const modules = {
         logo:"fa-solid fa-circle-h",
         submodules: ['Session Form', 'Session List'],
     },
-    UserManagement:{
-        logo:"fa-solid fa-user",
-        submodules:['Role', 'Assign Functionality', 'User']
-    },
     Radiology:{
         logo:"fa-solid fa-x-ray",
         submodules:['List Requests', 'List Reports', 'Edit Doctors', 'OPD Billing']
@@ -252,6 +248,7 @@ function Layout({}) {
                             />
                         ))
                     )} */}
+                    <Route path='/' element={<AppointmentRouting/>}/>
                     <Route path="/appointment/*" element={<AppointmentRouting />} />
                     <Route path="/settings/*" element={<SettingRouting />} />
                     <Route path='/dispensary/*'element={<Disprensary/>}/>

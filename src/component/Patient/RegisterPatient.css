@@ -94,7 +94,7 @@
 
 .patient-nav-link {
   font-size: 16px;
-  color: #004080;
+  color: var( --button-bg-color);;
   cursor: pointer;
   padding: 10px;
   position: relative;
@@ -103,7 +103,7 @@
 .patient-nav-link:hover,
 .patient-nav-link.active {
   font-weight: bold;
-  color: #004080;
+  color:var( --button-bg-color);;
 }
 
 .patient-nav-link.active::after,
@@ -123,12 +123,12 @@
 
 .camera-icon i {
   font-size: 18px;
-  color: #004080;
+  color: var( --button-bg-color);
   cursor: pointer;
 }
 
 .camera-icon:hover i {
-  color: #0073e6;
+  color:var( --button-bg-color);;
 }
 .patient-menu {
   background-color:#e3fffe;
@@ -137,21 +137,26 @@
   justify-content: space-around;
 }
 
-.menu-item {
-  font-size: 16px;
-  color:black;
-  cursor: pointer;
-  padding: 10px;
-  position: relative;
-  text-decoration: none;
+.menu-item-patient {
+  padding: 10px 20px;
+    border: none;
+    background-color: var(--background-color);
+    text-decoration: none;
+    color: black;
+
 }
 
-.menu-item:hover,
-.menu-item.active {
+.menu-item-patient:hover,
+.menu-item-patient.active
+ {
+  color: black;
+  border-bottom: 5px solid var(--sideBar-bg-color);
+  padding: 10px 20px;
   font-weight: bold;
 }
 
-.menu-item.active::after,
+
+/* .menu-item.active::after,
 .menu-item:hover::after {
   content: '';
   position: absolute;
@@ -160,7 +165,7 @@
   background-color:var( --button-bg-color);
   bottom: 0;
   left: 0;
-}
+} */
 
 .register-button {
   font-size: 16px;

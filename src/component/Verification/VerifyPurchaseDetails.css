@@ -25,7 +25,7 @@
     text-align: center;
   }
   
-  .verify-purchase-hospital-info h1,h2 {
+  .verify-purchase-hospital-info h1 {
     font-size: 18px;
     /* margin-bottom: 5px; */
   }
@@ -34,9 +34,9 @@
     margin: 2px 0;
   }
   
-  .verify-purchase-details {
-    /* margin-bottom: 20px; */
-  }
+  /* .verify-purchase-details {
+  
+  } */
   
   .verify-purchase-row {
     display: flex;

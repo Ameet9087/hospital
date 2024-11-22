@@ -34,9 +34,9 @@
 }
 
 /* Active class for the currently active link */
-.active {
+/* .active {
     background-color: var(--button-bg-color);  
-}
+} */
 
 /* Responsive layout for smaller screens */
 @media (max-width: 600px) {

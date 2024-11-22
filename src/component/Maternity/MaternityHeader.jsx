@@ -1,5 +1,4 @@
 import React from "react";
-
 import { NavLink, useLocation,Route,Routes } from "react-router-dom";
 import './MaternityHeader.css';
 import MaternityList from "./MaternityList";
@@ -11,8 +10,6 @@ import BreastfeedingSupportManagement from "./BreastfeedingSupportManagement/bre
 import FamilyPlanningSupportManagement from "./FamilySupportService/familysupportservice";
 
 const MaternityHeader = () => {
-  const location = useLocation(); // Get the current location
-
   return (
     <>
     <div className="maternity-header">
@@ -39,7 +36,6 @@ const MaternityHeader = () => {
       <NavLink to="/maternity/breastfeedingsupport" className={`maternity-header-button ${location.pathname.startsWith('/breastfeedingsupport') ? 'active' : ''}`} activeClassName="active">Breastfeeding Support</NavLink>
                
       <NavLink to="/maternity/familyplanningservice" className={`maternity-header-button ${location.pathname.startsWith('/familyplanningservice') ? 'active' : ''}`} activeClassName="active">Family Planning Service</NavLink>
-                  
     </div>
 
 <div className="content">

@@ -40,6 +40,11 @@ function Navigation() {
                     Discharge Summary
                 </button>
             </NavLink>
+
+            <NavLink to="/nursing/adhensesafetyprecaution"> <button
+                    className={`nursing-action-button ${isSelected('/nursing/adhensesafetyprecaution') ? 'selected' : ''}`}
+                > Adherence Safety Precaution</button>
+            </NavLink>
         </nav>
     );
 }

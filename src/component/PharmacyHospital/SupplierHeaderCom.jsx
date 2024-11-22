@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import './SettingSupplier.css'; 
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
 
 const usersData = [
 
@@ -80,6 +81,23 @@ const SettingSupplierComponent = () => {
     handleCloseModal();
   };
 
+
+
+
+
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
   return (
     <div className="setting-supplier-container">
       {/* <div className="setting-supplier-header">
@@ -92,9 +110,13 @@ const SettingSupplierComponent = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+    
+
       <div className='setting-supplier-span'>
-        <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
-      </div>
+      <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
+      <button className='item-wise-export-button'onClick={handleExport}>Export</button>
+  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
+</div>
       <div className='table-container'>
       <table  ref={tableRef}>
           <thead>

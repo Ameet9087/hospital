@@ -1,9 +1,13 @@
 /* Mohini_SettingTax_WholePage_14/sep/2024 */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import './SettingSupplier.css'; 
 import { API_BASE_URL } from '../api/api';
+import CustomModal from '../../CustomModel/CustomModal';
+import useCustomAlert from '../../alerts/useCustomAlert';
+import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
 
 const SettingTax = () => {
   const [suppliers, setSuppliers] = useState([]);
@@ -11,6 +15,11 @@ const SettingTax = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
+  const { success, error, CustomAlerts } = useCustomAlert();
+  const [openStickerPopup, setOpenStickerPopup] = useState(false);
+  const [columnWidths, setColumnWidths] = useState({});
+    const tableRef = useRef(null);
+
 
   useEffect(() => {
     // Fetch data from API
@@ -79,8 +88,24 @@ const SettingTax = () => {
     });
   };
 
+
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
   return (
     <div className="setting-supplier-container">
+      <CustomAlerts/>
       <div className="setting-supplier-header">
         <button className="setting-supplier-add-user-button" onClick={() => handleShowModal()}>
           + Add Tax
@@ -93,19 +118,35 @@ const SettingTax = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+      {/* <div className='setting-supplier-span'>
+        
+      </div> */}
       <div className='setting-supplier-span'>
-        <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
-      </div>
-      <div className='setting-supplier-tab'>
-        <table className="setting-suppliers-users-table">
-          <thead>
-            <tr>
-              <th>Tax Name</th>
-              <th>Tax Percentage</th>
-              <th>Description</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+      <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
+        <button className='item-wise-export-button'onClick={handleExport}>Export</button>
+  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
+</div>
+      <div className='table-container'>
+      <table ref={tableRef}>
+                        <thead>
+                            <tr>
+                                {[ "Tax Name",
+  "Tax Percentage",
+  "Description",
+  "Action"].map((header, index) => (
+                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                        <div className="header-content">
+                                            <span>{header}</span>
+                                            <div
+                                                className="resizer"
+                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                            ></div>
+                                        </div>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+
           <tbody>
             {filteredUsers.map((user, index) => (
               <tr key={index}>
@@ -131,57 +172,63 @@ const SettingTax = () => {
         </div> */}
       </div>
 
-      <Modal show={showModal} onHide={handleCloseModal} className="supplier-setting-supplier-update-modal">
-        <Modal.Header closeButton>
-          <Modal.Title>{isEditMode ? `Edit Tax for ${selectedUser?.name}` : 'Add New Tax'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="taxName" className="supplier-setting-form-group">
-              <Form.Label className="supplier-setting-form-label">
-                <span className="supplier-setting-text-danger">*</span> Tax Name:
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={selectedUser?.name || ''}
-                onChange={handleInputChange}
-                placeholder="Enter Tax Name"
-                required
-                className="supplier-setting-form-control"
-              />
-            </Form.Group>
+      <CustomModal
+  isOpen={showModal}
+  onClose={handleCloseModal}
+  className="supplier-setting-supplier-update-modal"
+>
+  <div className="supplier-setting-modal-header">
+    <h5>{isEditMode ? `Edit Tax for ${selectedUser?.name}` : 'Add New Tax'}</h5>
+    {/* <button className="close" onClick={handleCloseModal}>&times;</button> */}
+  </div>
+  <div className="supplier-setting-modal-body">
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="taxName" className="supplier-setting-form-group">
+        <Form.Label className="supplier-setting-form-label">
+           Tax Name<span className="supplier-setting-text-danger">*</span>:
+        </Form.Label>
+        <Form.Control
+          type="text"
+          name="name"
+          value={selectedUser?.name || ''}
+          onChange={handleInputChange}
+          placeholder="Enter Tax Name"
+          required
+          className="supplier-setting-form-control"
+        />
+      </Form.Group>
 
-            <Form.Group controlId="taxPercentage" className="supplier-setting-form-group">
-              <Form.Label className="supplier-setting-form-label">Tax Percentage:</Form.Label>
-              <Form.Control
-                type="text"
-                name="percentage"
-                value={selectedUser?.percentage || ''}
-                onChange={handleInputChange}
-                placeholder="Enter Tax Percentage"
-                className="supplier-setting-form-control"
-              />
-            </Form.Group>
+      <Form.Group controlId="taxPercentage" className="supplier-setting-form-group">
+        <Form.Label className="supplier-setting-form-label">Tax Percentage:</Form.Label>
+        <Form.Control
+          type="text"
+          name="percentage"
+          value={selectedUser?.percentage || ''}
+          onChange={handleInputChange}
+          placeholder="Enter Tax Percentage"
+          className="supplier-setting-form-control"
+        />
+      </Form.Group>
 
-            <Form.Group controlId="description" className="supplier-setting-form-group">
-              <Form.Label className="supplier-setting-form-label">Description:</Form.Label>
-              <Form.Control
-                type="text"
-                name="description"
-                value={selectedUser?.description || ''}
-                onChange={handleInputChange}
-                placeholder="Enter Description"
-                className="supplier-setting-form-control"
-              />
-            </Form.Group>
+      <Form.Group controlId="description" className="supplier-setting-form-group">
+        <Form.Label className="supplier-setting-form-label">Description:</Form.Label>
+        <Form.Control
+          type="text"
+          name="description"
+          value={selectedUser?.description || ''}
+          onChange={handleInputChange}
+          placeholder="Enter Description"
+          className="supplier-setting-form-control"
+        />
+      </Form.Group>
 
-            <div className="supplier-setting-text-right">
-              <Button variant="primary" type="submit">Save</Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
+      <div className="supplier-setting-text-right">
+        <Button variant="primary" type="submit">Save</Button>
+      </div>
+    </Form>
+  </div>
+</CustomModal>
+
     </div>
   );
 };

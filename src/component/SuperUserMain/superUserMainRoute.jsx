@@ -6,8 +6,6 @@ import SuperUserNavBar from './superUserNav';
 import Revenuemgnt from './RevenueMgnt/revenuemgnt';
 import RevenueDashboard from './RevenueMgnt/RevenueDashboard/revenuedashboard';
 
-import SUPermission from './SuperUserPermission/sUPermission';
-
 import BillingNavbar from './BillingDiscountApproval/BillingNavbar';
 import DiscountApprovalRequest from './BillingDiscountApproval/DiscountApprovalRequestForm';
 import DiscountApprovalReviewFormCom from './BillingDiscountApproval/DiscountApprovalReviewFormCom';
@@ -36,10 +34,7 @@ import Department from './ControlAllDepartment/Department';
 import Inventory from './ControlAllDepartment/Inventory';
 import QueryPage from './ControlAllDepartment/QueryPage';
 import QueryPageInventory from './ControlAllDepartment/QueryPageInventory';
-
-import Superusermodulemain from './SuperUserModuleMain/superusermodulemain';
-import SuperUserRoleManagement from './Rolemgnt/rolemgnt';
-import UserManagement from '../UserManagment/UserManagement';
+import UserManagement from './UserManagment/UserManagement';
 function SuperUserMain() {
 
   return (

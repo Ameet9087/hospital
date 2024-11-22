@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './PharmacyExpiryReport.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
 
 const StockTransferSummary = () => {
   const [fromDate, setFromDate] = useState('24-08-2024');
@@ -14,6 +15,20 @@ const StockTransferSummary = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [columnWidths,setColumnWidths] = useState({});
   const tableRef=useRef(null);
+
+
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
 
   return (
     <div className="pharmacy-expiry-report-container">
@@ -28,8 +43,8 @@ const StockTransferSummary = () => {
           <label>To:</label>
           <input type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} />
         </div>
-        <button className="pharmacy-expiry-report-star-btn">★</button>
-        <button className="pharmacy-expiry-report-dash-btn">-</button>
+        {/* <button className="pharmacy-expiry-report-star-btn">★</button>
+        <button className="pharmacy-expiry-report-dash-btn">-</button> */}
       </div>
 
       <div className="pharmacy-expiry-report-filters">
@@ -57,13 +72,13 @@ const StockTransferSummary = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button>🔍</button>
+        {/* <button>🔍</button> */}
       </div>
 
       <div className="pharmacy-expiry-report-results-info">
         <span>Showing 0 / 0 results</span>
-        <button className="pharmacy-expiry-report-export-btn">⬇ Export</button>
-        <button className="pharmacy-expiry-report-print-btn">Print</button>
+        <button className="pharmacy-expiry-report-export-btn"onClick={handleExport}>⬇ Export</button>
+        <button className="pharmacy-expiry-report-print-btn"onClick={handlePrint}>Print</button>
       </div>
    <div className='table-container'>
    <table  ref={tableRef}>

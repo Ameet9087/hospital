@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useRef,useState,useEffect } from 'react';
 import "../DisSales/dispenSalesSales.css";
 import AddExternalReferral from './dispenSalesSales1AER';
 import AddNewPatient from './dispenSalesSalesAddNewPatient';
@@ -10,6 +10,8 @@ import DispenSalesProvisionalBill from './dispenSalesProvisionalBill';
 import DispenSalesProvisionalSettelment from './dispenSalesProvisionalSettelment';
 import DispenSalesProvisionalReturn from './dispenSalesProvisionalReturn';
 import axios from 'axios';
+import { startResizing } from "../../TableHeadingResizing/resizableColumns"
+import CustomModal from '../../../CustomModel/CustomModal';
 
 const SalesSales = () => {
   const [showExternalPopup, setShowExternalPopup] = useState(false);
@@ -19,7 +21,8 @@ const SalesSales = () => {
   const [patients, setPatients] = useState([]); // State to store patients data
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [selectedPatientInfo, setSelectedPatientInfo] = useState(null); // State to store selected patient info
-
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   useEffect(() => {
     axios.get('http://localhost:1415/api/hospital/fetch-all-patients')
@@ -155,9 +158,12 @@ const SalesSales = () => {
 
         {/* Conditionally render the AddExternalReferral popup */}
         {showExternalPopup && (
-          <div className="addExternalReferral-popup-overlay">
+          // <div className="addExternalReferral-popup-overlay">
+          <CustomModal isOpen={handleExternalPopupOpen} onClose={handleExternalPopupClose}>
+
             <AddExternalReferral onClose={handleExternalPopupClose} />
-          </div>
+          </CustomModal>
+          // </div>
         )}
 
         <div className="dispenSalesSales-register-patient">
@@ -167,16 +173,22 @@ const SalesSales = () => {
 
         {/* Conditionally render the AddNewPatient popup */}
         {showPatientPopup && (
-          <div className="salesAddNewPatient-popup-overlay">
-            <AddNewPatient onClose={handlePatientPopupClose} />
-          </div>
+          // <div className="salesAddNewPatient-popup-overlay">
+          <CustomModal isOpen={handlePatientPopupOpen} onClose={handlePatientPopupClose}>
+
+            <AddNewPatient />
+          </CustomModal>
+          // </div>
         )}
           {/* Conditionally render the DispenSalessalesStockDetails popup */}
       {showStockDetailsPopup && (
-        <div className="salesStockDetails-popup-overlay">
+        // <div className="salesStockDetails-popup-overlay">
+        <CustomModal isOpen={handleStockDetailsPopupOpen} onClose={handleStockDetailsPopupClose}>
+
           <DispenSalessalesStockDetails />
-          <button onClick={handleStockDetailsPopupClose} className="dispenSalessalesStockDetails-close-popup-btn">X</button>
-        </div>
+        </CustomModal>
+          // <button onClick={handleStockDetailsPopupClose} className="dispenSalessalesStockDetails-close-popup-btn">X</button>
+        // </div>
       )}
       </div>
 
@@ -256,21 +268,42 @@ const SalesSales = () => {
             </div>
           </div>
 
-          <div className="dispenSalesSales-invoice-summary">
-            <table>
-              <thead>
+          {/* <div className="dispenSalesSales-invoice-summary"> */}
+          <div className="table-container">
+          <table ref={tableRef}>
+          <thead>
+            
                 <tr>
-                  <th>#</th>
-                  <th>GenericName</th>
-                  <th>ItemName</th>
-                  <th>Expiry</th>
-                  <th>Batch</th>
-                  <th>Qty</th>
-                  <th>SalePrice</th>
-                  <th>SubTotal</th>
-                  <th>Discount Amt.</th>
-                  <th>VAT Amt.</th>
-                  <th>Total</th>
+                {[
+                  "#",
+                  "GenericName",
+                  "ItemName",
+                  "Expiry",
+                  "Batch",
+                  "Qty",
+                  "SalePrice",
+                  "SubTotal",
+                  "Discount Amt.",
+                  "VAT Amt.",
+                  "Total"
+                ].map((header, index) => (
+                  <th
+                    key={index}
+                    style={{ width: columnWidths[index] }}
+                    className="resizable-th"
+                  >
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
+                      ></div>
+                    </div>
+                  </th>
+                ))}
                 </tr>
               </thead>
               <tbody>

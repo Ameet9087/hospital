@@ -9,6 +9,7 @@ import Inventory from "../../component/Inventory1/Inventory";
 import Incentive from "../../component/IncentiveMain/incentiveApp";
 import Lab from "../../component/NavBarSection/Lab";
 import Emergency from "../../component/Emergency/Emergency";
+
 import Utilitiesmain from "../../component/UTILITIES/utilitiesmain";
 import SystemAdmin from "../../component/SystemAdmin/SystemAdmin";
 
@@ -56,9 +57,16 @@ import TransportMainRouting from "../../component/TransportMain/transportMainRou
 import SuperUserMain from "../../component/SuperUserMain/superUserMainRoute";
 import HRHome from "../../component/HRHome/HRHome";
 import Radiationtherapy from "../../component/RadiationTherapy/radiationtherapy";
+
+import Endoscopy from "../../component/Endoscopy/EndoscopyRoute";
+
 import ChemotherapyRouting from "../../component/ChemotherapyModule/ChemotherapyRoute";
 import Pulmonology from "../../component/Pulmonology/Pulmonology";
+<<<<<<< HEAD
 import UserManagement from "../../component/UserManagment/UserManagement";
+=======
+import AdminMastersMenu from "../../component/MasterDashboard/AdminMaster/AdminMasterRoutes";
+>>>>>>> c950b44ed9532e386a605e9fa68569d55b1725dd
 
 const Layout = () => {
   const [showAppointment, setShowAppointment] = useState(false);
@@ -94,13 +102,14 @@ const Layout = () => {
   const [showVerification, setShowVerification] = useState(false);
   const [showSubStore, setShowSubStore] = useState(false);
   const [showMedicalRecord, setShowMedicalRecord] = useState(false);
+
   const [showProcurement,setShowProcurement]=useState(false);
   const [showBilling,setShowBilling]=useState(false);
   const [showHomehealthcare,setshowHomehealthcare]=useState(false);
   const [showonpediatricoutpatient,setshowonpediatricoutpatient]=useState(false);
   const [showonpediatricinpatient,setshowonpediatricinpatient]=useState(false);
   const [showphysiotherapy,setshowphysiotherapy]=useState(false);
-
+  const [showEndoscopy,setShowEndoscopy]=useState(false);
 
 
   const [showBloodBank, setShowBloodBank] = useState(false)
@@ -109,8 +118,14 @@ const Layout = () => {
   const [showHR, setShowHR] = useState(false)
   const [shoeRadiationtherapy,setShowRadiationTherapy] = useState(false)
   const [showChemotherapy, setshowChemotherapy] = useState(false);
+<<<<<<< HEAD
   const [showUserManagement,setShowUserManagement]=useState(false);
   const [showPulmonology,setShowPulmonology] = useState(false)
+=======
+  const [showPulmonology,setShowPulmonology] = useState(false);
+  const [showAdminMastersMenu,setAdminMastersMenu]=useState(false);
+
+>>>>>>> c950b44ed9532e386a605e9fa68569d55b1725dd
   const resetAllToggles = () => {
     setShowAppointment(false);
     setShowSetting(false);
@@ -150,15 +165,24 @@ const Layout = () => {
     setshowonpediatricoutpatient(false);
     setshowonpediatricinpatient(false);
     setshowphysiotherapy(false);
+
     setShowBloodBank(false);
     setShowTransport(false);
     setShowSuperUser(false);
     setShowHR(false);
     setShowRadiationTherapy(false);
+<<<<<<< HEAD
     setshowChemotherapy(false);   
      setShowPulmonology(false);
      setShowUserManagement(false);
+=======
+    setshowChemotherapy(false);    
+    setShowPulmonology(false);
+    setAdminMastersMenu(false);
+>>>>>>> c950b44ed9532e386a605e9fa68569d55b1725dd
 
+
+  
   };
   const toggleHomehealthcare = () => {
     resetAllToggles();
@@ -339,16 +363,34 @@ const Layout = () => {
   const togglephysiotherapy = () => {
     resetAllToggles();
     setshowphysiotherapy(!showphysiotherapy);
-  };
 
-  const toggelChemotherapy = () => {
+  }
+  const togglepEndoscopy=()=>{
+    resetAllToggles();
+    setShowEndoscopy(!showEndoscopy);
+  }
+
+
+  const toggelChemotherapy =()=>{
     resetAllToggles();
     setshowChemotherapy(!showChemotherapy);
+<<<<<<< HEAD
   };
   const toggelUserManagement =()=>{
     resetAllToggles();
     setShowUserManagement(!showUserManagement);
   }
+=======
+  }
+
+  const toggelAdminMastersMenu =()=>{
+    resetAllToggles();
+    setAdminMastersMenu(!showAdminMastersMenu);
+  }
+
+
+
+>>>>>>> c950b44ed9532e386a605e9fa68569d55b1725dd
   return (
     <div className="hrmsLayout">
       <Sidebar
@@ -398,8 +440,17 @@ const Layout = () => {
         onpediatricoutpatient={togglePediatricoutpatient}
         onpediatricinpatient={togglePediatricinpatient}
         onphysiotherapy={togglephysiotherapy}
+
+        onendoscopy={togglepEndoscopy}
         onChemotherapy={toggelChemotherapy}
+<<<<<<< HEAD
         onUserManagement={toggelUserManagement}
+=======
+        onAdminMastersMenu={toggelAdminMastersMenu}
+
+       
+
+>>>>>>> c950b44ed9532e386a605e9fa68569d55b1725dd
       />
       <div
         className={`hrmsLayoutMainContent ${
@@ -453,10 +504,22 @@ const Layout = () => {
           {showTransport && <TransportMainRouting />}
           {showSuperUser && <SuperUserMain />}
           {showHR && <HRHome />}
+
           {shoeRadiationtherapy && <Radiationtherapy />}
+
           {showChemotherapy && <ChemotherapyRouting />}   
+<<<<<<< HEAD
           {showPulmonology&& <Pulmonology/>}
           {showUserManagement && <UserManagement/>}
+=======
+           {showPulmonology&& <Pulmonology/>}
+           {showEndoscopy && <Endoscopy/>}
+          {showAdminMastersMenu && <AdminMastersMenu/>}
+
+
+       
+
+>>>>>>> c950b44ed9532e386a605e9fa68569d55b1725dd
 
         </main>
       </div>

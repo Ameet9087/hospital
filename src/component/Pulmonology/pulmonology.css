@@ -32,9 +32,9 @@
 }
 
 
-.active {
+/* .active {
     background-color: var(--button-bg-color); 
-}
+} */
 
 @media (max-width: 600px) {
     .pulmonology-navbar {

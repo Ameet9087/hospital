@@ -1,9 +1,13 @@
 /* Mohini_SettingCategory_WholePage_14/sep/2024 */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import './SettingSupplier.css';
 import { API_BASE_URL } from '../api/api';
+import * as XLSX from 'xlsx';
+import CustomModal from '../../CustomModel/CustomModal';
+import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import useCustomAlert from '../../alerts/useCustomAlert';
 
 const SettingCategory = () => {
   const [suppliers, setSuppliers] = useState([]);
@@ -11,6 +15,11 @@ const SettingCategory = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false); // Track if it's edit or add mode
+  const { success, error, CustomAlerts } = useCustomAlert();
+  const [openStickerPopup, setOpenStickerPopup] = useState(false);
+  const [columnWidths, setColumnWidths] = useState({});
+    const tableRef = useRef(null);
+
 
   useEffect(() => {
 
@@ -80,9 +89,27 @@ const SettingCategory = () => {
       [name]: inputValue,
     }));
   };
+  
+
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
+
 
   return (
     <div className="setting-supplier-container">
+      <CustomAlerts/>
       <div className="setting-supplier-header">
         <button
           className="setting-supplier-add-user-button"
@@ -99,18 +126,31 @@ const SettingCategory = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <div className='setting-supplier-span'>
-        <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
-      </div>
-      <div className='setting-supplier-tab'>
-        <table className="setting-suppliers-users-table">
-          <thead>
-            <tr>
-              <th>Category Name</th>
-              <th>Description</th>
-              <th>Is Active</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+  <span>Showing {suppliers.length} results</span>
+  <button className='item-wise-export-button'onClick={handleExport}>Export</button>
+  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
+</div>
+      <div className='table-container'>
+      <table ref={tableRef}>
+                        <thead>
+                            <tr>
+                                {[ "Category Name",
+  "Description",
+  "Is Active",
+  "Action"].map((header, index) => (
+                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                        <div className="header-content">
+                                            <span>{header}</span>
+                                            <div
+                                                className="resizer"
+                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                            ></div>
+                                        </div>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+
           <tbody>
             {filteredUsers.map((user, index) => (
               <tr key={index}>
@@ -154,52 +194,62 @@ const SettingCategory = () => {
           </div>
         </div> */}
       </div>
-      <Modal show={showEditModal} onHide={handleCloseModal} className="supplier-setting-supplier-update-modal">
-        <Modal.Header closeButton>
-          <Modal.Title>{isEditMode ? 'Update Company Category' : 'Add Company Category'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <div className="supplier-setting-form-row">
-              <Form.Group controlId="categoryName" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Category Name<span className="supplier-setting-text-danger">*</span>:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Category Name"
-                  name="name"
-                  required
-                  value={selectedUser?.name || ''}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Description:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Description"
-                  name="description"
-                  value={selectedUser?.description || ''}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </div>
-            <Form.Group controlId="isActive" className="supplier-setting-form-group col-md-6">
-              <Form.Check
-                type="checkbox"
-                label="Is Active"
-                name="isActive"
-                checked={selectedUser?.isActive || false}
-                onChange={handleInputChange}
-              />
-            </Form.Group>
-            <div className="supplier-setting-text-right">
-              <Button variant="primary" type="submit">
-                {isEditMode ? 'Update' : 'Add'}
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
+      <CustomModal
+  isOpen={showEditModal}
+  onClose={handleCloseModal}
+  className="supplier-setting-supplier-update-modal"
+>
+  <div className="supplier-setting-supplier-update-modal-header">
+    <h5>{isEditMode ? 'Update Company Category' : 'Add Company Category'}</h5>
+    {/* <button onClick={handleCloseModal} className="close-button">
+      &times;
+    </button> */}
+  </div>
+  <div className="supplier-setting-supplier-update-modal-body">
+    <Form onSubmit={handleSubmit}>
+      <div className="supplier-setting-form-row">
+        <Form.Group controlId="categoryName" className="supplier-setting-form-group col-md-6">
+          <Form.Label>
+            Category Name<span className="supplier-setting-text-danger">*</span>:
+          </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter Category Name"
+            name="name"
+            required
+            value={selectedUser?.name || ''}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+        <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+          <Form.Label>Description:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter Description"
+            name="description"
+            value={selectedUser?.description || ''}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+      </div>
+      <Form.Group controlId="isActive" className="supplier-setting-form-group col-md-6">
+        <Form.Check
+          type="checkbox"
+          label="Is Active"
+          name="isActive"
+          checked={selectedUser?.isActive || false}
+          onChange={handleInputChange}
+        />
+      </Form.Group>
+      <div className="supplier-setting-text-right">
+        <Button variant="primary" type="submit">
+          {isEditMode ? 'Update' : 'Add'}
+        </Button>
+      </div>
+    </Form>
+  </div>
+</CustomModal>
+
     </div>
   );
 };

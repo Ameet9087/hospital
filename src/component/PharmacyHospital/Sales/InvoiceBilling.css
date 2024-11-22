@@ -177,6 +177,7 @@
 }
 .sales-invoice-number {
   margin-left: 20px; /* Adjust the value as needed */
+  margin-bottom: 20px;
   display: flex;
   align-items: center; /* Aligns the label and input in a straight line */
 }
@@ -398,9 +399,7 @@
     width: 100%;
   }
 
-  .invoice-billing-sales-table {
-    font-size: 12px;
-  }
+  
 
   .invoice-billing-pagination-container {
     flex-direction: column;

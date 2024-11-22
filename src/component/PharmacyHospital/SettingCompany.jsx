@@ -1,9 +1,13 @@
 /* Mohini_SettingCategory_WholePage_14/sep/2024 */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import './SettingSupplier.css'; 
 import { API_BASE_URL } from '../api/api';
+import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import CustomModal from '../../CustomModel/CustomModal';
+import useCustomAlert from '../../alerts/useCustomAlert';
+import * as XLSX from 'xlsx';
 
 const initialUserData = {
   name: '',
@@ -20,6 +24,11 @@ const SettingCompany = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(initialUserData);
   const [isEditMode, setIsEditMode] = useState(false); 
+  const [openStickerPopup, setOpenStickerPopup] = useState(false);
+  const { success, error, CustomAlerts } = useCustomAlert();
+  const [columnWidths, setColumnWidths] = useState({});
+    const tableRef = useRef(null);
+
 
 
   useEffect(() => {
@@ -84,8 +93,23 @@ const filteredUsers = suppliers.filter(user =>
     }));
   };
 
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
   return (
     <div className="setting-supplier-container">
+      <CustomAlerts/>
       <div className="setting-supplier-header">
         <button
           className="setting-supplier-add-user-button"
@@ -101,21 +125,35 @@ const filteredUsers = suppliers.filter(user =>
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <div className='setting-supplier-span'>
-        <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
-      </div>
-      <div className='setting-supplier-tab'>
-        <table className="setting-suppliers-users-table">
-          <thead>
-            <tr>
-              <th>Supplier Name</th>
-              <th>Contact No</th>
-              <th>Description</th>
-              <th>Contact Address</th>
-              <th>Email</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+        <div className='setting-supplier-span'>
+  <span>Showing {suppliers.length} results</span>
+  <button className='item-wise-export-button'onClick={handleExport}>Export</button>
+  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
+</div>
+      <div className='table-container'>
+      <table ref={tableRef}>
+                        <thead>
+                            <tr>
+                                {[ "Supplier Name",
+  "Contact No",
+  "Description",
+  "Contact Address",
+  "Email",
+  "Action"].map((header, index) => (
+                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                        <div className="header-content">
+                                            <span>{header}</span>
+                                            <div
+                                                className="resizer"
+                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                            ></div>
+                                        </div>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+
+
           <tbody>
             {filteredUsers.map((user, index) => (
               <tr key={index}>
@@ -148,90 +186,99 @@ const filteredUsers = suppliers.filter(user =>
         </div> */}
       </div>
 
-      <Modal show={showEditModal} onHide={handleCloseModal} className="supplier-setting-supplier-update-modal">
-        <Modal.Header closeButton>
-          <Modal.Title>{isEditMode ? 'Update Company' : 'Add Company'}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <div className="supplier-setting-form-row">
-              <Form.Group controlId="companyName" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Company Name<span className="supplier-setting-text-danger">*</span>:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Company Name"
-                  name="name"
-                  required
-                  value={selectedUser.name}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="contactNumber" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Contact Number<span className="supplier-setting-text-danger">*</span>:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Contact Number"
-                  name="contactNo"
-                  required
-                  value={selectedUser.contactNo}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </div>
+      <CustomModal
+  isOpen={showEditModal}
+  onClose={handleCloseModal}
+  className="supplier-setting-supplier-update-modal"
+>
+  <div className="supplier-setting-form">
+    <div className="supplier-setting-header">
+      <h2>{isEditMode ? 'Update Company' : 'Add Company'}</h2>
+      <button className="close-btn" onClick={handleCloseModal}>×</button>
+    </div>
 
-            <div className="supplier-setting-form-row">
-              <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Description:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Description"
-                  name="description"
-                  value={selectedUser.description}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="contactAddress" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Contact Address:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Contact Address"
-                  name="contactAddress"
-                  value={selectedUser.contactAddress}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </div>
+    <div className="supplier-setting-form-content">
+      <Form onSubmit={handleSubmit}>
+        <div className="supplier-setting-form-row">
+          <Form.Group controlId="companyName" className="supplier-setting-form-group col-md-6">
+            <Form.Label>Company Name<span className="supplier-setting-text-danger">*</span>:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Company Name"
+              name="name"
+              required
+              value={selectedUser.name}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="contactNumber" className="supplier-setting-form-group col-md-6">
+            <Form.Label>Contact Number<span className="supplier-setting-text-danger">*</span>:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Contact Number"
+              name="contactNo"
+              required
+              value={selectedUser.contactNo}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+        </div>
 
-            <div className="supplier-setting-form-row">
-              <Form.Group controlId="email" className="supplier-setting-form-group col-md-6">
-                <Form.Label>Email:</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter Email"
-                  name="email"
-                  value={selectedUser.email}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-              <Form.Group controlId="isActive" className="supplier-setting-form-group col-md-6">
-                <Form.Check
-                  type="checkbox"
-                  label="Is Active"
-                  name="isActive"
-                  checked={selectedUser.isActive}
-                  onChange={handleInputChange}
-                />
-              </Form.Group>
-            </div>
+        <div className="supplier-setting-form-row">
+          <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+            <Form.Label>Description:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Description"
+              name="description"
+              value={selectedUser.description}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="contactAddress" className="supplier-setting-form-group col-md-6">
+            <Form.Label>Contact Address:</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Contact Address"
+              name="contactAddress"
+              value={selectedUser.contactAddress}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+        </div>
 
-            <div className="supplier-setting-text-right">
-              <Button variant="primary" type="submit" className=''>
-                {isEditMode ? 'Update' : 'Add'}
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
+        <div className="supplier-setting-form-row">
+          <Form.Group controlId="email" className="supplier-setting-form-group col-md-6">
+            <Form.Label>Email:</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Enter Email"
+              name="email"
+              value={selectedUser.email}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="isActive" className="supplier-setting-form-group col-md-6">
+            <Form.Check
+              type="checkbox"
+              label="Is Active"
+              name="isActive"
+              checked={selectedUser.isActive}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+        </div>
+
+        <div className="supplier-setting-footer">
+          <Button variant="primary" type="submit">
+            {isEditMode ? 'Update' : 'Add'}
+          </Button>
+        </div>
+      </Form>
+    </div>
+  </div>
+</CustomModal>
+
     </div>
   );
 };

@@ -15,6 +15,14 @@ import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import RadiologyReportDoc from "./RadiologyReportDoc";
 import VisitTable from "./EncounterHistory";
 import LabReportResult from "./LabReportResult";
+import Infusion from "./Infusion";
+import ProcedureService from "./ProcedureService";
+import TreatmentGiven from "./TreatmentGiven";
+import DietOrder from "./DietOrder";
+import ReferralConsultation from "./ReferralConsultation";
+import NurseOrder from "./NurseOrder";
+import PACRequest from "./PACRequest";
+import AdmissionSlip from "./AdmissionSlip";
 
 const Section = ({ title, handleAddClick, children }) => (
   <div className="Patient-Dashboard-firstBox">
@@ -49,7 +57,38 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
   const [LabRequest, setLabRequest] = useState([]);
   const [showRadioReport, setShowRadioReport] = useState(false);
   const [ShowLabReport, setShowLabReport] = useState(false);
+  const [showInfusion,setInfusion]=useState([])
+  const [services,setServices]=useState([])
+  const [treatment,setTreatment]=useState([])
   console.log(patient);
+
+  useEffect(() => {
+    // Fetch medications data from the API
+    const fetchInfusions = async () => {
+      let endpoint = "";
+
+        endpoint = `http://192.168.0.110:9000/infusions/patient/1`;
+      // } else if (patient?.admissionId) {
+      //   endpoint = `${API_BASE_URL}/medications/by-ipd-id?ipdPatientId= ${
+      //     patient?.patientDTO?.patientId || patient?.patientId
+      //   }`;
+      
+      try {
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        console.log("infusion"+data);
+
+        setInfusion(data);
+      } catch (error) {
+        console.error("Error fetching infusion:", error);
+      }
+    };
+
+    fetchInfusions();
+  }, [activeSection]);
+
+
+
 
   useEffect(() => {
     // Fetch medications data from the API
@@ -76,6 +115,90 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
 
     fetchMedications();
   }, [activeSection]);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      const endpoint = 'http://192.168.0.110:9000/api/services/patient/1';
+  
+      try {
+        const response = await fetch(endpoint);
+        const data = await response.json();
+  
+        // Process the serviceNames to parse the JSON string into an array
+        const parsedServices = data.map((service) => {
+          let parsedServiceNames = [];
+  
+          // Parse each serviceNames string into a proper array
+          if (service.serviceNames && service.serviceNames.length > 0) {
+            try {
+              parsedServiceNames = JSON.parse(service.serviceNames[0]); // Only parse the first item in the array
+            } catch (error) {
+              console.error('Error parsing serviceNames:', error);
+            }
+          }
+  
+          return { ...service, serviceNames: parsedServiceNames }; // Return service with parsed serviceNames
+        });
+  
+        console.log('Fetched Services:', parsedServices);
+  
+        setServices(parsedServices); // Set state with parsed services
+  
+      } catch (error) {
+        console.error('Error fetching service:', error);
+      }
+    };
+  
+    fetchServices();
+  }, [activeSection]);
+  
+  
+  
+  useEffect(() => {
+    const fetchTreatmentGive = async () => {
+      const endpoint = 'http://192.168.0.110:9000/api/treatments/patient/1';
+  
+      try {
+        const response = await fetch(endpoint);
+
+        // Check if the response is okay
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        console.log('Fetched data:', data); // Log the entire fetched data
+
+        // Process the treatment descriptions and parse JSON strings
+        const parsedTreatment = data.map((treatment) => {
+          let parsedTreatmentDescriptions = [];
+
+          // If treatmentDescriptions exist and have data, parse it
+          if (treatment.treatmentDescriptions && treatment.treatmentDescriptions.length > 0) {
+            parsedTreatmentDescriptions = treatment.treatmentDescriptions; // No need to parse if it's already an array
+          }
+
+          return { ...treatment, treatmentDescriptions: parsedTreatmentDescriptions };
+        });
+
+        console.log('Parsed Treatment:', parsedTreatment);
+
+        setTreatment(parsedTreatment); // Set state with the parsed treatment data
+
+      } catch (error) {
+        console.error('Error fetching treatment data:', error);
+      }
+    };
+
+    fetchTreatmentGive();
+  }, [activeSection]); // Only re-fetch when activeSection changes
+
+
+  
+
+
+
 
   useEffect(() => {
     const fetchVitals = () => {
@@ -330,6 +453,40 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
             newPatientVisitId={patient.newPatientVisitId}
           />
         );
+        case "Infusion":
+          return(
+            <Infusion 
+            patientId={patient?.patientDTO?.patientId || patient?.patientId}
+            />
+          )
+        case "procedures":
+          return(
+            <ProcedureService/>
+          )
+        case "treatment":
+          return(
+            <TreatmentGiven/>
+          )
+        case "diet":
+          return (
+            <DietOrder/>
+          )
+        case "referral":
+          return (
+            <ReferralConsultation/>
+          )
+          case "nursing":
+            return (
+              <NurseOrder/>
+            )
+          case "pacrequest":
+            return(
+              <PACRequest/>
+            )
+          case "admissionslip":
+            return(
+              <AdmissionSlip/>
+            )
 
       default:
         return renderDashboard();
@@ -486,8 +643,70 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
               </div>
             </div>
           )}
+          <div className="Patient-Dashboard-boxOne">
+<div className="Patient-Dashboard-textAndLogo">
+<span className="Patient-Dashboard-textOne"
+onClick={() => {
+  setActiveSection("diet");
+  setPrevAction(...activeSection);
+}}
+>Diet Order</span>
+</div>
+</div>
+
+<div className="Patient-Dashboard-boxOne">
+<div className="Patient-Dashboard-textAndLogo">
+<span className="Patient-Dashboard-textOne"
+onClick={() => {
+  setActiveSection("referral");
+  setPrevAction(...activeSection);
+}}
+>Referral / Cross Consultation</span>
+</div>
+</div>
+
+<div className="Patient-Dashboard-boxOne">
+<div className="Patient-Dashboard-textAndLogo">
+<span className="Patient-Dashboard-textOne"   
+    onClick={() => {
+    setActiveSection("nursing");
+    setPrevAction(...activeSection);}}>Nursing Order</span>
+</div>
+</div>
+
+<div className="Patient-Dashboard-boxOne">
+<div className="Patient-Dashboard-textAndLogo">
+<span className="Patient-Dashboard-textOne" 
+    onClick={() => {
+    setActiveSection("pacrequest");
+    setPrevAction(...activeSection);}}>PAC Request</span>
+</div>
+</div>
+<div className="Patient-Dashboard-boxOne">
+<div className="Patient-Dashboard-textAndLogo">
+<span className="Patient-Dashboard-textOne"  
+    onClick={() => {
+    setActiveSection("admissionslip");
+    setPrevAction(...activeSection);}}>Admission Slip</span>
+</div>
+</div>
+
+<div className="Patient-Dashboard-boxOne">
+<div className="Patient-Dashboard-textAndLogo">
+<span className="Patient-Dashboard-textOne">Doctor Appointment</span>
+</div>
+</div>
+
+<div className="Patient-Dashboard-boxOne">
+<div className="Patient-Dashboard-textAndLogo">
+<span className="Patient-Dashboard-textOne">pending Cross Consultation</span>
+</div>
+</div>
+
         </div>
       </aside>
+
+   {/* middle content */}
 
       <main className="Patient-Dashboard-betweenSection">
         <div className="Patient-Dashboard-outOutDiv">
@@ -707,6 +926,167 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
             }
           />
         </div>
+
+
+
+
+
+
+{/* adan 14/11/24 */}
+
+        <div className="Patient-Dashboard-outOutDiv">
+          <Section
+            title="💉 Infusion"
+            handleAddClick={() => {
+              setPrevAction(activeSection);
+              setActiveSection("Infusion");
+            }}
+            children={
+              <>
+                {" "}
+                {showInfusion.length > 0 ?(
+                  <div className="Patient-Dashboard-inputSection">
+                    <table
+                      border="1"
+                      cellPadding="10"
+                      cellSpacing="0"
+                      className="patient-table"
+                    >
+                      <thead>
+                        <tr>
+                          <th className="Patient-Dashboard-th">Infusionnm</th>
+                          <th className="Patient-Dashboard-th">Infusion Generic</th>
+                          <th className="Patient-Dashboard-th">Infusion Frequency</th>
+			  <th className="Patient-Dashboard-th">Drug</th>
+			  <th className="Patient-Dashboard-th">Flow Rate</th>
+			  <th className="Patient-Dashboard-th">InfuRemarks</th>
+			  <th className="Patient-Dashboard-th">Start Date</th>
+			  <th className="Patient-Dashboard-th">Start Time</th>
+			  <th className="Patient-Dashboard-th">End Date</th>
+			  <th className="Patient-Dashboard-th">End Time</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+  {showInfusion.map((Infusion) => (
+    <tr key={Infusion.sn}>
+      <td className="Patient-Dashboard-td">{Infusion.infusionNm}</td>
+      <td className="Patient-Dashboard-td">{Infusion.infusionGeneric}</td>
+      <td className="Patient-Dashboard-td">{Infusion.infusionRoute}</td>
+      <td className="Patient-Dashboard-td">{Infusion.drug}</td>
+      <td className="Patient-Dashboard-td">{Infusion.flowRate}</td>
+      <td className="Patient-Dashboard-td">{Infusion.infuRemarks}</td>
+      <td className="Patient-Dashboard-td">{Infusion.startDate}</td>
+      <td className="Patient-Dashboard-td">{Infusion.startTime}</td>
+      <td className="Patient-Dashboard-td">{Infusion.endDate}</td>
+      <td className="Patient-Dashboard-td">{Infusion.endTime}</td>
+    </tr>
+  ))}
+</tbody>
+                    </table>
+                  </div>
+                  ): "no data found"}
+              </>
+              
+            }
+          />
+        </div>
+        <div className="Patient-Dashboard-outOutDiv">
+  <Section
+    title="📝 Procedures / Services"
+    handleAddClick={() => setActiveSection("procedures")}
+    children={
+      <>
+        {services.length > 0 ? (
+          <div className="Patient-Dashboard-inputSection">
+            <table
+              border="1"
+              cellPadding="10"
+              cellSpacing="0"
+              className="patient-table"
+            >
+              <thead>
+                <tr>
+                  <th className="Patient-Dashboard-th">Service Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                {services.map((service, index) => {
+                  return (
+                    <tr key={index}>
+                      <td className="Patient-Dashboard-td">
+                        {service.serviceNames.join(", ")} {/* Join the parsed service names into a comma-separated string */}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          "No Data Available"
+        )}
+      </>
+    }
+  />
+</div>
+
+
+
+
+
+
+<div className="Patient-Dashboard-outOutDiv">
+      <Section
+        title="📟 Treatment Given"
+        handleAddClick={() => {
+          setPrevAction(activeSection);
+          setActiveSection("treatment");
+        }}
+        children={
+          <>
+            {treatment.length > 0 ? (
+              <div className="Patient-Dashboard-inputSection">
+                <table
+                  border="1"
+                  cellPadding="10"
+                  cellSpacing="0"
+                  className="patient-table"
+                >
+                  <thead>
+                    <tr>
+                      <th className="Patient-Dashboard-th">Treatment Descriptions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {treatment.map((treatmentItem, index) => {
+                      return (
+                        <tr key={index}>
+                          <td className="Patient-Dashboard-td">
+                            {treatmentItem.treatmentDescriptions.join(", ")} {/* Join the array into a comma-separated string */}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p>No data found</p>
+            )}
+          </>
+        }
+      />
+    </div>
+
+
+        
+
+
+
+
+
+        
       </main>
 
       <aside className="Patient-Dashboard-aside-section  Patient-Dashboard-right-aside">

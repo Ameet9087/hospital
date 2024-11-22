@@ -1,9 +1,13 @@
-* {
-    padding: 0;
+
+
+.superuser-administration-outerDiv {
+
+    padding: 10px;
     margin: 0;
 }
 
-.administration-table {
+
+.superuser-administration-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
@@ -11,22 +15,22 @@
 
 }
 
-.administration-table th {
+.superuser-administration-table th {
     font-size: 16px;
 }
-
-.administration-table td {
+/* all */
+.superuser-administration-table td {
     font-size: 14px;
 }
 
-.administration-table th,
-.administration-table td {
+.superuser-administration-table th,
+.superuser-administration-table td {
     border: 1px solid #ccc;
     padding: 10px;
     text-align: center;
 }
 
-.administration-button {
+.superuser-administration-button {
     margin-right: 10px;
     padding: 5px;
     border-radius: 5px;
@@ -35,12 +39,12 @@
     color: white;
 }
 
-.administration-button :hover {
+.superuser-administration-button :hover {
     background-color: white;
     color: #007b6f;
 }
 
-.administration-modalOverlay {
+.superuser-administration-modalOverlay {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
@@ -53,7 +57,7 @@
     border-radius: 8px;
 }
 
-.administration-closeButton {
+.superuser-administration-closeButton {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -64,17 +68,17 @@
     cursor: pointer;
 }
 
-.administration-requestDetail-title {
+.superuser-administration-requestDetail-title {
     font-size: 16px;
 }
 
-.administration-app-rej-btn {
+.superuser-administration-app-rej-btn {
 
     text-align: center;
     padding: 20px;
 }
 
-.administration-approve-button {
+.superuser-administration-approve-button {
     padding: 5px;
     background-color: green;
     color: white;
@@ -82,12 +86,12 @@
     border-radius: 5px;
 }
 
-.administration-approve-button:hover {
+.superuser-administration-approve-button:hover {
     background-color: white;
     color: green;
 }
 
-.administration-button-reject {
+.superuser-administration-button-reject {
     padding: 5px;
     background-color: red;
     color: white;
@@ -95,33 +99,30 @@
     border-radius: 5px;
 }
 
-.administration-button-reject:hover {
+.superuser-administration-button-reject:hover {
     background-color: white;
     color: red;
 }
 
-.administration-outerDiv {
 
-    padding: 10px;
-}
 
-.administration-heading-text {
+.superuser-administration-heading-text {
     font-size: 16px;
 
 }
 
-.administration-modalTable {
+.superuser-administration-modalTable {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.administration-modalTable td {
+.superuser-administration-modalTable td {
     padding: 10px;
     border: 1px solid #ccc;
     font-size: 14px;
 }
 
-.administration-modalTable td:first-child {
+.superuser-administration-modalTable td:first-child {
     font-weight: bold;
 }

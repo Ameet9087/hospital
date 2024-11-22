@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import "../DisSales/dispenSalesProvisionalSettelment.css"
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 DispenSalesProvisionalSettelment
 function DispenSalesProvisionalSettelment() {
@@ -10,7 +11,8 @@ function DispenSalesProvisionalSettelment() {
   const [showScanDone, setShowScanDone] = useState(false);
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [isLoading, setIsLoading] = useState(true); // State for loading indicator
-
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   // useEffect(() => {
   //   axios.get('http://localhost:1415/api/provisional-bills/fetch-all-provisional-bills')
@@ -97,20 +99,38 @@ function DispenSalesProvisionalSettelment() {
             <div ref={printRef}>
               <h2>Provisional Bill Report</h2>
               <p>Date and Time: {new Date().toLocaleString()}</p>
-              <table>
+              <table ref={tableRef}>
                 <thead>
-                  <tr>
-                  <th>Hospital Number</th>
-              <th>Ret Receipt No</th>
-              <th>Patient Name</th>
-              <th>Contact No.</th>
-              <th>Age/Sex </th>
-              <th>SubTotal</th>
-              <th>Discount</th>
-              <th>Total</th>
-              <th>Ref No</th>
-              <th>LastReturnDate</th>
-              <th>VisitType</th>
+                  <tr>{[
+                  "Hospital Number",
+              "Ret Receipt No",
+              "Patient Name",
+              "Contact No.",
+              "Age/Sex ",
+              "SubTotal",
+              "Discount",
+              "Total",
+              "Ref No",
+              "LastReturnDate",
+              "VisitType",
+            ].map((header, index) => (
+              <th
+                key={index}
+                style={{ width: columnWidths[index] }}
+                className="resizable-th"
+              >
+                <div className="header-content">
+                  <span>{header}</span>
+                  <div
+                    className="resizer"
+                    onMouseDown={startResizing(
+                      tableRef,
+                      setColumnWidths
+                    )(index)}
+                  ></div>
+                </div>
+              </th>
+            ))}
                   </tr>
                 </thead>
                 <tbody>
@@ -121,22 +141,41 @@ function DispenSalesProvisionalSettelment() {
               </table>
             </div>
           </div>
-      <div className="dispenSalesProvisionalSettelment-table-N-paginat">
-        
-        <table>
+      {/* <div className="dispenSalesProvisionalSettelment-table-N-paginat"> */}
+      <div className="table-container">
+        <table ref={tableRef}>
           <thead>
             <tr>
-              <th>Hospital Number</th>
-              <th>Patient Name</th>
-              <th>Age/Sex </th>
-              <th>Deposit Amt  </th>
-              <th>Credit Amt  </th>
-              <th>Provisional Amt  </th>
-              <th>Blance Amt  </th>
-              <th>Last Credit</th>
-              <th>Last Deposit</th>
+              {[
+              "Hospital Number",
+              "Patient Name",
+              "Age/Sex ",
+              "Deposit Amt  ",
+              "Credit Amt  ",
+              "Provisional Amt  ",
+              "Blance Amt  ",
+              "Last Credit",
+              "Last Deposit",
               
-              <th>Action</th>
+              "Action",
+            ].map((header, index) => (
+              <th
+                key={index}
+                style={{ width: columnWidths[index] }}
+                className="resizable-th"
+              >
+                <div className="header-content">
+                  <span>{header}</span>
+                  <div
+                    className="resizer"
+                    onMouseDown={startResizing(
+                      tableRef,
+                      setColumnWidths
+                    )(index)}
+                  ></div>
+                </div>
+              </th>
+            ))}
             </tr>
           </thead>
           <tbody>

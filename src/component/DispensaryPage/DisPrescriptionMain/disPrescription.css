@@ -139,9 +139,9 @@
   align-items: center;
 }
 
-.disPrescription-table-N-paginationDiv {
+/* .disPrescription-table-N-paginationDiv {
   background-color: white;
-}
+} */
 
 .disPrescription-Availability-button {
   border: 1px solid gray;

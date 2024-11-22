@@ -157,11 +157,11 @@
     background-color:var( --button-color);
     color: white;
     border: none;
-    margin-right: 10px;
+    /* margin-right: 10px; */
     padding: 5px 5px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: var(--font-size);
     margin-left: auto;
     transition: background-color 0.3s ease;
 
@@ -244,7 +244,6 @@
     display: flex;
     justify-content: flex-end; /* Aligns content to the right */
     align-items: center; /* Vertically centers content */
-    gap: 10px; /* Adds space between the span and the button */
     font-size: 14px;
 
 }

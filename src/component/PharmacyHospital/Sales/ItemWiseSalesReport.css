@@ -59,7 +59,9 @@
     transition: background-color 0.3s ease;
 
 }
-
+.item-wise-sale-button{
+  display: flex;
+}
 .item-wise-sales-btn:hover {
     border: 1px solid var( --button-hover-border-color);
     color: var(--button-hover-text-color);
@@ -157,7 +159,6 @@
 
 .item-wise-sales-summary-item span:last-child {
     color: blue;
-    font-weight: bold;
 }
 .item-wise-sales-pagination {
     display: flex;
@@ -240,6 +241,65 @@
     align-items: center; /* Vertically align items in the center */
     margin-bottom: 10px; /* Optional: Add space between filter groups */
 }
+
+
+/*  */
+
+
+.item-wise-sale-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 20px;    */
+}
+
+/* .item-wise-sales-report-table {
+  flex: 1;
+} */
+
+.search-bar-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.item-wise-sales-search-bar {
+  width: 200px; /* Adjust width as needed */
+  padding: 5px;
+}
+
+.invoice-billing-search-button {
+  margin-left: 5px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.item-wise-export-print-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+}
+.item-wise-export-button,
+.item-wise-print-button{
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+
+.item-wise-export-button:hover,
+.item-wise-print-button:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.item-wise-pagination-info {
+  margin-right: 20px;
+}
+
 
 
 /* Mohini_ItemWiseSalesReport_WholePage_14/sep/2024 */

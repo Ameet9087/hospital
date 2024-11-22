@@ -27,12 +27,12 @@
     overflow-y: auto;
 }
 
-h3 {
+/* h3 {
     text-align: center;
     font-size: 1.8rem;
     margin-bottom: 20px;
     color: #333;
-}
+} */
 
 /* Form Group */
 .modal-form-group {
