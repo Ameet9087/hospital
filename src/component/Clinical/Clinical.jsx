@@ -10,7 +10,7 @@ function Clinical() {
           <ul>
             <li>
               <NavLink
-                to="ClinicalAssessmentAndPlan"
+                to="/clinical/clinicalassessmentandplan"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Clinical Assesments And Plan
@@ -22,11 +22,7 @@ function Clinical() {
       <div className="clinical-component-content">
         <Routes>
           <Route
-            path="ClinicalAssessmentAndPlan"
-            element={<ClinicalAssesment />}
-          />
-          <Route
-            path="clinical/ClinicalAssessmentAndPlan"
+            path="/clinicalassessmentandplan"
             element={<ClinicalAssesment />}
           />
         </Routes>

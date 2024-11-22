@@ -26,19 +26,6 @@
 }
 
 /* Hover and active state */
-.reports-nav-link:hover,
-.reports-nav-link.active {
-    border: 1px solid var( --button-hover-border-color);
-    color: var(--button-hover-text-color);
-    background-color: var(--button-hover-background-color);
-}
-
-/* Optional: additional styling for the active state, if needed */
-.reports-nav-link.active {
-    background-color: #2d68ea;;
-    color: white; /* Optional: change text color on active */
-    font-weight: bold;
-}
 
 /*  */
 
@@ -105,8 +92,7 @@
 /* Navigation links */
 .reports-nav-link {
     text-decoration: none;
-    color: #2d68ea;
-    padding: 10px 20px;
+    color: black;
     border-radius: 5px;
     background-color: transparent;
     font-weight: normal;
@@ -116,18 +102,10 @@
 /* Hover and active state */
 .reports-nav-link:hover,
 .reports-nav-link.active {
-    background-color: #2d68ea;
+    background-color: var(--button-bg-color);
     color: white; /* Optional: change text color on hover */
     font-weight: bold;
 }
-
-/* Optional: additional styling for the active state, if needed */
-.reports-nav-link.active {
-    background-color: #2d68ea;
-    color: white; /* Optional: change text color on active */
-    font-weight: bold;
-}
-
 /* Patient Sub-navigation Styles */
 .patient-sub-nav-container {
     background-color: #e3f2fd;
@@ -215,6 +193,3 @@
     transition: border-bottom 0.3s ease; /* Smooth transition for border */
 }
 
-.patient-nav-link.active {
-    /* border-bottom: 2px solid #007bff; */
-}

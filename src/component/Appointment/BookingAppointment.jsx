@@ -43,11 +43,11 @@ const BookingAppointment = () => {
   );
 
   const handleUpdatePatient = (patient) => {
-    navigate("/add-new-appointment", { state: { patientData: patient } });
+    navigate("/appointment/add-new-appointment", { state: { patientData: patient } });
   };
 
   const handleNewPatient = () => {
-    navigate("/add-new-appointment");
+    navigate("/appointment/add-new-appointment");
   };
 
   return (

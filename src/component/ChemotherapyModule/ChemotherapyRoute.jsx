@@ -14,11 +14,11 @@ const ChemotherapyRoute = () => {
     <>
 <ChemotherapyNavbar/>
     <Routes>
-      <Route path="/surgery-management" element={<SurgeryManagement />} />
-      <Route path="/chemotherapy-scheduling" element={<ChemotherapyScheduling />} />
-      <Route path="/radiation-therapy" element={<RadiationTherapyIntegration />} />
-      <Route path="/cancer-diagnosis" element={<CancerDiagnosisAndStaging />} />
-      <Route path="/patient-survival-tracking" element={<PatientSurvivalTracking />} />
+      <Route path="/surgerymanagement" element={<SurgeryManagement />} />
+      <Route path="/chemotherapyscheduling" element={<ChemotherapyScheduling />} />
+      <Route path="/radiationtherapy" element={<RadiationTherapyIntegration />} />
+      <Route path="/cancerdiagnosis" element={<CancerDiagnosisAndStaging />} />
+      <Route path="/patientsurvivaltracking" element={<PatientSurvivalTracking />} />
     </Routes>
     </>
   );

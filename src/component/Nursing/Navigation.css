@@ -12,12 +12,13 @@
   }
   
   .nursing-actions-container a {
+    border-radius: 5px;
     text-decoration: none; /* Remove underline from links */
   }
   
   .nursing-action-button {
-    background-color: var(--button-color);
-    color: white;
+    background-color: transparent;
+    color: black;
     border: none;
     padding: 5px 5px;
     border-radius: 5px;
@@ -38,6 +39,7 @@
   
   .nursing-action-button.selected {
     background-color: var(--button-bg-color);
-    color: white;
+    color: white !important;
+    border-radius: 5px;
   }
   

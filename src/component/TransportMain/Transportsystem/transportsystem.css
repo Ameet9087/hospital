@@ -3,7 +3,7 @@
 /* Main header styling */
 .transportsystem-header {
     background-color: white;
-    padding: 10px 20px;
+    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,7 +16,7 @@
 .transportsystem-nav-links {
     display: flex;
     gap: 30px;
-
+    margin-bottom: 0;
 }
 
 /* Individual link button styling */
@@ -27,7 +27,7 @@
     color: white;
     
     border: none;
-    padding: 5px;
+    padding: 2px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;

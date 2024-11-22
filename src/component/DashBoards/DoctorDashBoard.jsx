@@ -1,52 +1,56 @@
-import React, { useEffect, useState } from 'react';
-import './DoctorDashBoard.css'; // Make sure to create and include the CSS file
-import PatientRecord from './OutPatient'; // Import the PatientRecord component
-import InPatient from '../DashBoards/InPatient'; // Import the InPatient component
-import Records from '../DashBoards/PatientsRecord'; // Import the Records component
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
+import './DoctorDashBoard.css';
+import PatientRecord from './OutPatient';
+import InPatient from '../DashBoards/InPatient';
+import Records from '../DashBoards/PatientsRecord';
 
 const DrDashboard = () => {
-  // State to manage which content to display
-  const [activeSection, setActiveSection] = useState('outPatient');
-
-  useEffect(() => {
-    // Add any necessary side effects here
-  }, [activeSection]);
-
-  // Function to handle button clicks
-  const handleButtonClick = (section) => {
-    setActiveSection(section);
-  };
+  const location = useLocation(); // Get the current path
 
   return (
     <div className="doctor-dashboard-container">
+      {/* Navbar */}
       <div className="doctor-dashboard-button-group">
-        <button
-          className={`dashboard-button ${activeSection === 'outPatient' ? 'active' : ''}`}
-          onClick={() => handleButtonClick('outPatient')}
-        >
-          Out Patient
-        </button>
-        <button
-          className={`dashboard-button ${activeSection === 'inPatient' ? 'active' : ''}`}
-          onClick={() => handleButtonClick('inPatient')}
-        >
-          In Patient Department
-        </button>
-        <button
-          className={`dashboard-button ${activeSection === 'patientRecord' ? 'active' : ''}`}
-          onClick={() => handleButtonClick('patientRecord')}
-        >
-          Patient Record
-        </button>
+        <Link to="/doctor/outpatient">
+          <button
+            className={`dashboard-button ${
+              location.pathname === '/doctor/outpatient' ? 'active' : ''
+            }`}
+          >
+            Out Patient
+          </button>
+        </Link>
+        <Link to="/doctor/in-patientdepartment">
+          <button
+            className={`dashboard-button ${
+              location.pathname === '/doctor/in-patientdepartment' ? 'active' : ''
+            }`}
+          >
+            In Patient Department
+          </button>
+        </Link>
+        <Link to="/doctor/patientrecord">
+          <button
+            className={`dashboard-button ${
+              location.pathname === '/doctor/patientrecord' ? 'active' : ''
+            }`}
+          >
+            Patient Record
+          </button>
+        </Link>
       </div>
 
-      {/* Conditionally render content based on activeSection */}
-      {activeSection === 'outPatient' && <PatientRecord />}
-      {activeSection === 'inPatient' && <InPatient />}
-      {activeSection === 'patientRecord' && <Records />}
+      {/* Content Rendering */}
+      <div className="dashboard-content">
+        <Routes>
+          <Route path="/outpatient" element={<PatientRecord />} />
+          <Route path="/in-patientdepartment" element={<InPatient />} />
+          <Route path="/patientrecord" element={<Records />} />
+        </Routes>
+      </div>
     </div>
   );
-}
+};
 
 export default DrDashboard;
-

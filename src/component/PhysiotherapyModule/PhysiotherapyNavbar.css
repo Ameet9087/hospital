@@ -21,8 +21,7 @@
 .physiotherapy-navbar-button {
   padding: 5px 10px; /* Slightly increased horizontal padding */
   text-decoration: none;
-  background-color: var(--button-color);
-  color: white;
+  color: black;
   font-size: var(--heading-font);
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;

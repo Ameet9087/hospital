@@ -8,11 +8,10 @@ const IncentiveNavBar = () => {
     <nav className="incentiveNavBar-Navigation-bar">
       <ul>
         <div className='incentiveNavBar-Navbttn-N-act'>
-        <li><NavLink to="incentiveTransaction">Transaction</NavLink></li>
-        <li><NavLink to="/incentiveReport"> Reports</NavLink></li>
-        <li><NavLink to="/insentiveSettings"> Setting</NavLink></li>
+        <li><NavLink to="transaction">Transaction</NavLink></li>
+        <li><NavLink to="reports"> Reports</NavLink></li>
+        <li><NavLink to="setting"> Setting</NavLink></li>
 
-        <li><NavLink to="incentiveTransaction">Transaction</NavLink></li>
 
 
         </div>

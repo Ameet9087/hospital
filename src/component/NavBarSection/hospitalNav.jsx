@@ -8,30 +8,30 @@ const NavigationBar = () => {
     <nav className="navigation-bar">
       <ul>
         <li>
-          <NavLink to="/notification">Notification</NavLink>
+          <NavLink to="notification">Notification</NavLink>
         </li>
         <li>
-          <NavLink to="/OpdLadbilling">OPD Billing</NavLink>
+          <NavLink to="opdbilling">OPD Billing</NavLink>
         </li>
         <li>
-          <NavLink to="/navHome">
+          <NavLink to="Home">
             <i className="fa-solid fa-house-chimney"></i>
           </NavLink>
         </li>
         <li>
-          <NavLink to="/sampleCollection">Sample Collection</NavLink>
+          <NavLink to="samplecollection">Sample Collection</NavLink>
         </li>
         <li>
-          <NavLink to="/add-results">Add Results</NavLink>
+          <NavLink to="addresults">Add Results</NavLink>
         </li>
         <li>
-          <NavLink to="/pending-reports">Pending Reports</NavLink>
+          <NavLink to="pendingreports">Pending Reports</NavLink>
         </li>
         <li>
-          <NavLink to="/final-reports">Final Reports</NavLink>
+          <NavLink to="finalreports">Final Reports</NavLink>
         </li>
         <li>
-          <NavLink to="/settings">Settings</NavLink>
+          <NavLink to="settings">Settings</NavLink>
         </li>
         {/* <li>
           <NavLink to="/ward-billing">Ward Billing</NavLink>

@@ -19,15 +19,15 @@ function BloodBankRoute() {
         <BloodBankNavBar/>
         <div className="bloodBank-content">
         <Routes>
-          <Route path="/bloodDonationForm" element={<BloodDonationForm />} />          
-          <Route path="/bloodcollectionmain/*" element={<Bloodcollectionmain />} /> 
-          <Route path="/hIMSSampleDataTable/*" element={<HIMSSampleDataTable />} /> 
-          <Route path="/bloodStorageDashboard" element={<BloodStorageDashboard />} />          
-          <Route path="/bloodReq" element={<BloodReq />} />          
-          <Route path="/bloodIssue" element={<BloodIssue />} />          
-          <Route path="/bBReport" element={<BBReport />} />   
-          <Route path="/donarlist" element={<Donarlist />} />   
-          <Route path="/collectionlist" element={<Colletionlist />} />   
+          <Route path="/blooddonationregistration" element={<BloodDonationForm />} />          
+          <Route path="/bloodcollection/*" element={<Bloodcollectionmain />} /> 
+          <Route path="/bloodtestingandscreening/*" element={<HIMSSampleDataTable />} /> 
+          <Route path="/bloodstorage" element={<BloodStorageDashboard />} />          
+          <Route path="/bloodrequest" element={<BloodReq />} />          
+          <Route path="/bloodissues" element={<BloodIssue />} />          
+          <Route path="/reports" element={<BBReport />} />   
+          <Route path="/bloodcollection/donarlist" element={<Donarlist />} />   
+          <Route path="/bloodcollection/collectionlist" element={<Colletionlist />} />   
 
                  
  

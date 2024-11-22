@@ -28,14 +28,14 @@
 
 
 .nhif-header-nav a {
-    background-color: var(--button-color);
-    color: white;
+    color: black;
     text-decoration: none;
     font-size: 16px;
     padding: 5px ;
     border-radius: 4px;
     transition: background-color 0.3s ease;
     margin-left: 20px;
+    border:1px solid transparent;
 }
 
 .nhif-header-nav a:hover {
@@ -46,7 +46,8 @@
 
 /* Active link styling */
 .nhif-header-nav a.active {
-    background-color:var(--button-bg-color) /* Active state color */
+    background-color:var(--button-bg-color); /* Active state color */
+    color:white
 }
 
 /* Content area below the navigation bar */

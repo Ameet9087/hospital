@@ -1,0 +1,110 @@
+.Sidebar-Container {
+  background-color: var(--sideBar-bg-color);
+  width: 280px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: auto;
+  gap: 10px;
+}
+.custom-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  position: sticky;
+  top: -10px;
+  z-index: 10;
+  background-color: var(--sideBar-bg-color);
+  padding: 10px 0 10px 0;
+
+}
+.Sidebar-Container.collapsed {
+  width: 60px;
+}
+
+.Sidebar-Container::-webkit-scrollbar {
+  width: 6px;
+}
+.Sidebar-Container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+.Sidebar-Container::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.Sidebar-search {
+  padding: 8px;
+  margin: 0;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.Sidebar-Mainmodule {
+  cursor: pointer;
+  background-color: var(--button-bg-color);
+  padding: 8px;
+  color: white;
+  border-radius: 5px;
+}
+
+.Sidebar-Mainmodule p {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Sidebar-submodule {
+  background-color: var(--button-bg-color);
+  padding: 5px 10px;
+  border-radius: 0 0 5px 5px;
+}
+
+.submodule-link {
+  display: block;
+  padding: 5px;
+  text-decoration: none;
+  color: white;
+  position: relative; /* Required for positioning the pseudo-element */
+  overflow: hidden; /* Ensure the pseudo-element doesn't spill out */
+  transition: color 0.3s ease-in-out; /* Smooth text color transition */
+}
+.submodule-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #05e5da; /* The fill color for the border effect */
+  z-index: -1; /* Ensure it stays behind the text */
+  transition: width 0.4s ease-in-out; /* Smooth border expansion */
+}
+.submodule-link:hover::before {
+  width: 100%; /* Expands the border from left to right */
+}
+
+.submodule-link:hover {
+  color: var(--button-color); /* Changes text color on hover */
+}
+
+.submodule-link.active {
+  background-color: #00c9c0;
+  color: var(--sideBar-bg-color);
+  font-weight: bold;
+  border-radius: 5px;
+  border-left: 5px solid var(--sideBar-bg-color);
+}
+  
+
+.collapsed .Sidebar-search,
+.collapsed .Sidebar-submodule,
+.collapsed .Sidebar-Mainmodule span:not(:first-child) {
+    display: none; /* Hide text and submodules when collapsed */
+}
+

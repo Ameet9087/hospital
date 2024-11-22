@@ -13,8 +13,8 @@ const PhysiotherapyRotes = () => {
         <Routes>
             {/* <Route path="/" element={<HomePage />} /> */}
             {/* <Route path="/physiotherapy-module" element={<PhysiotherapyModule />} /> */}
-            <Route path="/physiotherapy-session-form" element={<PhysiotherapySessionForm />} />
-            <Route path="/physiotherapy-session-list" element={<PhysiotherapySessionList />} />
+            <Route path="/sessionform" element={<PhysiotherapySessionForm />} />
+            <Route path="/sessionlist" element={<PhysiotherapySessionList />} />
         </Routes>
 
         </>

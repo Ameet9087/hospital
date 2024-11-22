@@ -18,11 +18,11 @@ const NavSetting = () => {
       <nav className="nav-Setting-navbar">
         <ul>
           <li>
-            <NavLink to="/settings/labTest">Lab Test</NavLink>
+            <NavLink to="/laboratory/settings/labTest">Lab Test</NavLink>
           </li>
           {/* <li><NavLink to="/navHome"><i className="fa-solid fa-house-chimney" ></i></NavLink></li> */}
           <li>
-            <NavLink to="/settings/labTestComponent">
+            <NavLink to="/laboratory/settings/labTestComponent">
               Lab Test Components
             </NavLink>
           </li>
@@ -38,10 +38,10 @@ const NavSetting = () => {
             <NavLink to="/settings/vendorsLab">Vendors</NavLink>
           </li> */}
           <li>
-            <NavLink to="/settings/lookUps">Looks Ups</NavLink>
+            <NavLink to="/laboratory/settings/lookUps">Looks Ups</NavLink>
           </li>
           <li>
-            <NavLink to="/settings/labCategories">Lab Categories</NavLink>
+            <NavLink to="/laboratory/settings/labCategories">Lab Categories</NavLink>
           </li>
           {/* <li>
             <NavLink to="/settings/mapGovernmentItemxs">

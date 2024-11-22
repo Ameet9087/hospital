@@ -18,9 +18,9 @@ const AppConfig = () => {
     <>
     <MaternityHeader/>
     <Routes>
-      <Route path="/maternity-list" element={<MaternityComponent />} />
+      <Route path="/maternitylist" element={<MaternityComponent />} />
       <Route path="/reports" element={<ReportComponent />} />
-      <Route path="/patient-form" element={<PatientComponent />} />
+      <Route path="/paymentsreports" element={<PatientComponent />} />
 
       
       <Route path="/maternity-allowance-report" element={<MaternityAllowanceReportComponent />} />

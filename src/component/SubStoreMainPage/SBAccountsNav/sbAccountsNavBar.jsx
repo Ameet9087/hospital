@@ -55,8 +55,8 @@ function SBAccountsNavBar() {
       <SSPharmacyNInven />
       <div className="lab-content">
        <Routes>
-        <Route path="/sSPStock" element={<SSPStock />} />
-        <Route path="/sSIStock" element={<SSIStock />} />
+        <Route path="/pharmacy" element={<SSPStock />} />
+        <Route path="/inventory" element={<SSIStock />} />
 
         {/* <Route path="/accounts" element={<SBAccountsNavBar />} /> */}
         {/* <Route path="/sSPStock" element={<SSPStock />} /> */}

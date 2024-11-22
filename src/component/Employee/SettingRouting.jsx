@@ -1,11 +1,11 @@
 // src/Routes.jsx
 
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route,useLocation,NavLink } from 'react-router-dom';
 // import EmployeeTable from './Employee/EmployeeTable';
 // import EmployeeRoleTable from './Employee/EmployeeRoleTable';
 // import EmployeeTypeTable from './Employee/EmployeeTypeTable';
-import Employeecomponent from './EmployeeTable';
+import EmployeeTable from './EmployeeTable';
 import EmployeeRoleComponent from './EmployeeRoleTable';
 import EmployeeTypeComponent from './EmployeeTypeTable';
 import ManageDepartment from './ManageDepartment';
@@ -53,33 +53,34 @@ import PaymentExportConfiguration from './Bank/PaymentExportConfiguration';
 import EmployeeHeader from './EmployeeHeader';
 
 
-const AppRoutes = () => {
+const SettingRouting = () => {
   return (
     <>
     <EmployeeHeader/>
+
     <Routes>
-      <Route path="/manage-employee" element={<Employeecomponent />} />
-      <Route path="/manage-employee-role" element={<EmployeeRoleComponent/>} />
-      <Route path="/manage-employee-type" element={<EmployeeTypeComponent />} />
-      <Route path="/manage-department" element={<ManageDepartment />} />
-      <Route path="/manage-substore" element={ <ManageSubstore/>}/>
-      <Route path="/manage-ward-substore" element={ <ManageWardSubstoreMap/>}/>
-      <Route path="/manage-ward" element={<ManageWard />} />
-      <Route path="/manage-bed-feature" element={<ManageBedFeatureScheme/>}/>
-      <Route  path="manage-bed" element = { <ManageBed/>}/>
-      <Route path="manage-auto-add-billing-items" element= {<ManageAutoAddBillingItems/>}/>
-      <Route path="manage-bed-feature-scheme" element={<ManageBedPriceCategory/>}/>
-      <Route path="deposit-settings" element={<DepositeSettings/>}/>
-      <Route path="manage-tax" element={<ManageTax/>}/>
-      <Route path="external-referrals" element={<ExternalReferrals/>}/>
-      <Route path="core-cfg-prmeter" element={<CoreCfgParameter/>}/>
-      <Route path="manage-imaging-type" element={<ManageImagingType/>}/>
-      <Route path="manage-imaging-item" element={<ManageImagingItem/>}/>
-      <Route path="manage-radiology-template" element={<ManageRadiologyTempltate/>}/>
-      <Route path="default-signatories" element={<DefaultSignatories/>}/>
-      <Route path="manage-user" element={<ManageUsers/>}/>
-      <Route path="manage-role" element={<ManageRole/>}/>
-      <Route  path="manage-municipality" element={<ManageMunicipality/>}/>
+    <Route path="/employee/manage-employee" element={<EmployeeTable />} />
+    <Route path="/employee/manage-employee-role" element={<EmployeeRoleComponent />} />
+    <Route path="/employee/manage-employee-type" element={<EmployeeTypeComponent />} />
+    <Route path="/departments/manage-department" element={<ManageDepartment />} />
+    <Route path="/departments/manage-substore" element={ <ManageSubstore/>}/>
+    <Route path="manage-ward-substore" element={ <ManageWardSubstoreMap/>}/>
+    <Route path="/adt/manage-ward" element={<ManageWard />} />
+    <Route path="/adt/manage-bed-feature" element={<ManageBedFeatureScheme/>}/>
+    <Route path="/adt/manage-bed" element = { <ManageBed/>}/>
+    <Route path="manage-auto-add-billing-items" element= {<ManageAutoAddBillingItems/>}/>
+    <Route path="manage-bed-feature-scheme" element={<ManageBedPriceCategory/>}/>
+    <Route path="deposit-settings" element={<DepositeSettings/>}/>
+    <Route path="manage-tax" element={<ManageTax/>}/>
+    <Route path="external-referrals" element={<ExternalReferrals/>}/>
+    <Route path="core-cfg-prmeter" element={<CoreCfgParameter/>}/>
+    <Route path="/radiology/manage-imaging-type" element={<ManageImagingType/>}/>
+    <Route path="/radiology/manage-imaging-item" element={<ManageImagingItem/>}/>
+    <Route path="manage-radiology-template" element={<ManageRadiologyTempltate/>}/>
+    <Route path="default-signatories" element={<DefaultSignatories/>}/>
+    <Route path="manage-user" element={<ManageUsers/>}/>
+    <Route path="manage-role" element={<ManageRole/>}/>
+    <Route  path="manage-municipality" element={<ManageMunicipality/>}/>
     <Route path="manage-country" element={<ManageCountry/>}/>
      <Route path="manage-subdivision" element={<ManageSubDivision/>}/>
      <Route path="manage-reaction" element={<ManageReaction/>}/>
@@ -103,11 +104,10 @@ const AppRoutes = () => {
      <Route path="payment-mode-settings" element={<PaymentModeSetting/>}/>
      <Route path="price-category" element={<PriceCategory/>}/>
      <Route path="print-export-configuration" element={<PaymentExportConfiguration/>}/>
-
     </Routes>
     </>
   );
 };
 
-export default AppRoutes;
+export default SettingRouting;
 

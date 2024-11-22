@@ -20,11 +20,11 @@ function RadiologyRouting() {
       <RadiologyNavBar />
       <div className="lab-content">
         <Routes>
-          <Route path="/rDLListRequest" element={<RDLListRequest/>}/>
-          <Route path="/rDLListReports" element={<RDLListReports/>}/>
-          <Route path="/rDLEditDoctors" element={<RDLEditDoctors/>}/>
+          <Route path="/listrequests" element={<RDLListRequest/>}/>
+          <Route path="/listreports" element={<RDLListReports/>}/>
+          <Route path="/editdoctors" element={<RDLEditDoctors/>}/>
           <Route path="/rDLWardBilling" element={<RDLWardBilling/>}/>
-          <Route path="/rDOpdbilling" element={<RDopdbilling/>}/>
+          <Route path="/opdbilling" element={<RDopdbilling/>}/>
 
           
         </Routes>

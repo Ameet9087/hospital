@@ -13,36 +13,36 @@ const Navbar = ({ handleNavigation }) => {
       </div>
       <nav className="nav-links">
         <Link
-          to="/search-patient"
-          className={`adt-header-button ${location.pathname === '/search-patient' ? 'active' : ''}`}
+          to="/adt/searchpatient"
+          className={`adt-header-button ${location.pathname === '/adt/searchpatient' ? 'active' : ''}`}
 
         >
           Search Patient
         </Link>
         <Link
-          to="/admitted-patient"
-          className={`adt-header-button ${location.pathname === '/admitted-patient' ? 'active' : ''}`}
+          to="/adt/admittedpatients"
+          className={`adt-header-button ${location.pathname === '/adt/admittedpatients' ? 'active' : ''}`}
 
         >
           Admitted Patients
         </Link>
         <Link
-          to="/discharged-patient"
-          className={`adt-header-button ${location.pathname === '/discharged-patient' ? 'active' : ''}`}
+          to="/adt/dischargedpatients"
+          className={`adt-header-button ${location.pathname === '/adt/dischargedpatients' ? 'active' : ''}`}
 
         >
           Discharged Patients
         </Link>
         <Link
-          to="/exchange-bed"
-          className={`adt-header-button ${location.pathname === '/exchange-bed' ? 'active' : ''}`}
+          to="/adt/exchangebed"
+          className={`adt-header-button ${location.pathname === '/adt/exchangebed' ? 'active' : ''}`}
 
         >
           Exchange Bed
         </Link>
         <Link
-          to="/cancel-reservation"
-          className={`adt-header-button ${location.pathname === '/cancel-reservation' ? 'active' : ''}`}
+          to="/adt/cancelbedreservation"
+          className={`adt-header-button ${location.pathname === '/adt/cancelbedreservation' ? 'active' : ''}`}
 
         >
           Cancel Bed Reservation

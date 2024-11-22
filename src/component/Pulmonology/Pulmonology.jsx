@@ -14,30 +14,30 @@ function Pulmonology() {
         <nav>
           <ul className="pulmonology-navbar">
             <li>
-              <NavLink to="/respiratory-function-tests" className="pulmonology-nav-link" activeClassName="active">Respiratory Function Tests</NavLink>
+              <NavLink to="/pulmonology/respiratoryfunctiontests" className="pulmonology-nav-link" activeClassName="active">Respiratory Function Tests</NavLink>
             </li>
             <li>
-              <NavLink to="/pulmonary-rehabilitation" className="pulmonology-nav-link" activeClassName="active">Pulmonary Rehabilitation</NavLink>
+              <NavLink to="/pulmonology/pulmonaryrehabilitation" className="pulmonology-nav-link" activeClassName="active">Pulmonary Rehabilitation</NavLink>
             </li>
             <li>
-              <NavLink to="/imaging-lab-reports" className="pulmonology-nav-link" activeClassName="active">Imaging and Lab Reports</NavLink>
+              <NavLink to="/pulmonology/imagingandlabreports" className="pulmonology-nav-link" activeClassName="active">Imaging and Lab Reports</NavLink>
             </li>
             <li>
-              <NavLink to="/medication-management" className="pulmonology-nav-link" activeClassName="active">Medication Management</NavLink>
+              <NavLink to="/pulmonology/medicationmanagement" className="pulmonology-nav-link" activeClassName="active">Medication Management</NavLink>
             </li>
             <li>
-              <NavLink to="/follow-up-scheduling" className="pulmonology-nav-link" activeClassName="active">Follow-Up Scheduling</NavLink>
+              <NavLink to="/pulmonology/follow-upscheduling" className="pulmonology-nav-link" activeClassName="active">Follow-Up Scheduling</NavLink>
             </li>
           </ul>
         </nav>
       </header>
       <div>
         <Routes>
-          <Route path="/respiratory-function-tests" element={<RespiratoryFunctionTests />} />
-          <Route path="/pulmonary-rehabilitation" element={<PulmonaryRehabilitation />} />
-          <Route path="/imaging-lab-reports" element={<ImagingandLabReports />} />
-          <Route path="/medication-management" element={<MedicationManagement />} />
-          <Route path="/follow-up-scheduling" element={<FollowUpScheduling />} />
+          <Route path="/respiratoryfunctiontests" element={<RespiratoryFunctionTests />} />
+          <Route path="/pulmonaryrehabilitation" element={<PulmonaryRehabilitation />} />
+          <Route path="/imagingandlabreports" element={<ImagingandLabReports />} />
+          <Route path="/medicationmanagement" element={<MedicationManagement />} />
+          <Route path="/follow-upscheduling" element={<FollowUpScheduling />} />
         </Routes>
       </div>
     </div>

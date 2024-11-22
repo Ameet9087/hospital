@@ -37,26 +37,27 @@ function TransportMain() {
         <div className="transportNavBar-content">
         <Routes>
          
-          <Route path="/transportsystem" element={<Transportsystem />} />           
-          <Route path="/patientTransportForm" element={<PatientTransportForm />} />           
-          <Route path="/patienttrasferstatus" element={<Patienttrasferstatus />} />           
-          <Route path="/tansferedpatientlist" element={<Tansferedpatientlist />} />
+          <Route path="/patienttransport" element={<Transportsystem />} />           
+          <Route path="/patienttransport/patientTransportForm" element={<PatientTransportForm />} />           
+          <Route path="/patienttransport/patienttrasferstatus" element={<Patienttrasferstatus />} />           
+          <Route path="/patienttransport/tansferedpatientlist" element={<Tansferedpatientlist />} />
 
 
-          <Route path="/ambulanceNavbar" element={<AmbulanceNavbar />} />
-          <Route path="/ambulance-list" element={<AmbulanceList />} />
-          <Route path="/dispatch" element={<DispatchForm />} />
-          <Route path="/gps-map" element={<GPSMap />} />
-          <Route path="/emergency-request" element={<EmergencyRequest />} />
+          <Route path="/ambulance" element={<AmbulanceNavbar />} />
+          <Route path="/ambulance/ambulance-list" element={<AmbulanceList />} />
+          <Route path="/ambulance/dispatch" element={<DispatchForm />} />
+          <Route path="/ambulance/gps-map" element={<GPSMap />} />
+          <Route path="/ambulance/emergency-request" element={<EmergencyRequest />} />
 
-          <Route path="/staffTransNavbar" element={<StaffTransNavbar />} />
-          <Route path="/staff-information" element={<StaffTransportTable />} />
-          <Route path="/transport-service-details" element={<VehicleTable />} />
-          <Route path="/route-schedule-management" element={<RouteScheduleManagement />} />
-          <Route path="/emergency-late-night-arrangements" element={<EmergencyLateNightArrangements />} />
+          <Route path="/stafftransport" element={<StaffTransNavbar />} />
+          <Route path="/stafftransport/staff-information" element={<StaffTransportTable />} />
+          <Route path="/stafftransport/transport-service-details" element={<VehicleTable />} />
+          <Route path="/stafftransport/route-schedule-management" element={<RouteScheduleManagement />} />
+          <Route path="/stafftransport/emergency-late-night-arrangements" element={<EmergencyLateNightArrangements />} />
 
-          <Route path="/emergencyTransportTable" element={<EmergencyTransportTable />} />           
-          <Route path="/addEmergencyPageTransport" element={<AddEmergencyPageTransport />} />           
+          <Route path="/emergencytransport" element={<EmergencyTransportTable />} />           
+          <Route path="/emergencytransport/addEmergencyPageTransport" element={<AddEmergencyPageTransport />} />  
+                   
           <Route path="/transportRequest" element={<TransportRequest />} />           
 
           

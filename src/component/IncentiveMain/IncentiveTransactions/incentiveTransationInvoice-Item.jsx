@@ -123,13 +123,13 @@ const IncentiveTransationInvoiceItem = () => {
       });
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>; // Show a loading message while fetching
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>; // Show a loading message while fetching
+  // }
 
-  if (error) {
-    return <div>Error: {error}</div>; // Show an error message if there's an error
-  }
+  // if (error) {
+  //   return <div>Error: {error}</div>; // Show an error message if there's an error
+  // }
 
   return (
     <div className="incentiveTransationInvoice-container">
@@ -140,9 +140,6 @@ const IncentiveTransationInvoiceItem = () => {
           <input type="date" />
           <label>To: </label>
           <input type="date" />
-          <button className="incentiveTransationInvoice-icon-button incentiveTransationInvoice-star">★</button>
-          <button className="incentiveTransationInvoice-icon-button incentiveTransationInvoice-dash">-</button>
-          <button className="incentiveTransationInvoice-ok-button"><i className="fa-regular fa-square-check"></i> OK</button>
         </div>
       </div>
       <div className="incentiveTransationInvoice-search-N-Infotext">
@@ -153,6 +150,8 @@ const IncentiveTransationInvoiceItem = () => {
         />
         <div className="incentiveTransationInvoice-info-text">
           Showing {serviceDepartments.length} / {serviceDepartments.length} results
+          <button className="incentiveTransationInvoice-print-button" onClick={""}><i className="fa-solid fa-file-excel"></i> Export</button>
+          <button className="incentiveTransationInvoice-print-button" onClick={""}><i class="fa-solid fa-print"></i> Print</button>
         </div>
       </div>
       {/* Table Section */}

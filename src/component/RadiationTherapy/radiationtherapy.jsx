@@ -14,32 +14,32 @@ const RadiationtherapyHeader = () => {
   return (
     <div className="radiationtherapy-header">
       <NavLink 
-        to="/patienttherapyplan" 
+        to="/radiationtherapy/patienttherapyplan" 
         className={`radiationtherapy-header-button ${location.pathname === '/patienttherapyplan' ? 'active' : ''}`}
       >
         Patient Therapy Plan
       </NavLink>
       <NavLink 
-        to="/dosagetracking" 
+        to="/radiationtherapy/dosagetracking" 
         className={`radiationtherapy-header-button ${location.pathname === '/dosagetracking' ? 'active' : ''}`}
       >
         Dosage Tracking
       </NavLink>
       <NavLink 
-        to="/equipmentusagelogs" 
+        to="/radiationtherapy/equipmentusagelogs" 
         className={`radiationtherapy-header-button ${location.pathname === '/equipmentusagelogs' ? 'active' : ''}`}
       >
         Equipment Usage Logs
       </NavLink>
       <NavLink 
-        to="/radiationsafetycompliance" 
+        to="/radiationtherapy/radiationsafetycompliance" 
         className={`radiationtherapy-header-button ${location.pathname === '/radiationsafetycompliance' ? 'active' : ''}`}
       >
         Radiation Safety Compliance
       </NavLink>
       <NavLink 
-        to="/appointmentandschedulling" 
-        className={`radiationtherapy-header-button ${location.pathname === '/appointmentandschedulling' ? 'active' : ''}`}
+        to="/radiationtherapy/appointmentandscheduling" 
+        className={`radiationtherapy-header-button ${location.pathname === '/appointmentandscheduling' ? 'active' : ''}`}
       >
         Appointment And Schedulling
       </NavLink>
@@ -51,7 +51,7 @@ const RadiationtherapyHeader = () => {
           <Route path="/dosagetracking" element={<Dasagetracking />} />
           <Route path="/equipmentusagelogs" element={<Equipmentusagelogs />} />
           <Route path="/radiationsafetycompliance" element={<Radiationsafetycompliance />} />
-          <Route path="/appointmentandschedulling" element={<Radiationappointemt />} />
+          <Route path="/appointmentandscheduling" element={<Radiationappointemt />} />
         </Routes>
       </div>
     </div>

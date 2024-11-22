@@ -136,12 +136,12 @@ const AppointmentBookingList = () => {
   };
 
   const handleCheckIn = (patient) => {
-    navigate("/checkIn", {
+    navigate("/appointment/checkIn", {
       state: { patient: patient },
     });
   };
   const handleEditAppointment = (appointmentPatient) => {
-    navigate("/add-new-appointment", {
+    navigate("/appointment/add-new-appointment", {
       state: { patientData: appointmentPatient },
     });
   };

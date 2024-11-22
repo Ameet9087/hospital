@@ -15,14 +15,14 @@ const BloodBankNavBar = () => {
     <nav className="bloodBank-Navigation-bar">
       <ul>
         <div className='disPrescription-Navbttn-N-act'>
-          <li><NavLink to="/bloodDonationForm">Blood Donation Registration</NavLink></li>
-          <li><NavLink to="/bloodcollectionmain">Blood Collection</NavLink></li>
-          <li><NavLink to="/hIMSSampleDataTable">Blood Testing and Screening</NavLink></li>
-          <li><NavLink to="/bloodStorageDashboard">Blood Storage</NavLink></li>
-          <li><NavLink to="/bloodReq">Blood Request</NavLink></li>
-          <li><NavLink to="/bloodIssue">Blood Issues</NavLink></li>
+          <li><NavLink to="/bloodbank/blooddonationregistration">Blood Donation Registration</NavLink></li>
+          <li><NavLink to="/bloodbank/bloodcollection">Blood Collection</NavLink></li>
+          <li><NavLink to="/bloodbank/bloodtestingandscreening">Blood Testing and Screening</NavLink></li>
+          <li><NavLink to="/bloodbank/bloodstorage">Blood Storage</NavLink></li>
+          <li><NavLink to="/bloodbank/bloodrequest">Blood Request</NavLink></li>
+          <li><NavLink to="/bloodbank/bloodissues">Blood Issues</NavLink></li>
           {/* <li><NavLink to="/">Inventory and Stock Management</NavLink></li> */}
-          <li><NavLink to="/bBReport">Reports</NavLink></li>
+          <li><NavLink to="/bloodbank/reports">Reports</NavLink></li>
         </div>
         <div className='bloodBank-Activebtn-N-LogOut'>
           {/* <button className='activebloodBank-btn'>Active Blood Bank: Main-Blood Bank</button> */}

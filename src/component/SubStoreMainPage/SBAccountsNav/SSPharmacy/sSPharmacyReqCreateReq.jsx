@@ -7,10 +7,11 @@ import { useParams } from 'react-router-dom';
 const SSPharmacyReqCreateReq = ({ onClose }) => {
   // General Form States
   const { store } = useParams();
-  const [requisitionDate, setRequisitionDate] = useState('');
+  const [requisitionDate, setRequisitionDate] = useState('2024-08-29');
   const [issueNo, setIssueNo] = useState('');
   const [remarks, setRemarks] = useState('');
   const [needVerification, setNeedVerification] = useState(true);
+  const [checkedBy, setCheckedBy] = useState('Mr. admin admin');
   const [chooseItem, setChooseItem] = useState([]);
 
   // Inventory Item State (single object)

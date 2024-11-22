@@ -23,14 +23,14 @@ function Disprensary() {
       <DispensaryNavBar />
       <div className="dispensary-content">
         <Routes>
-          <Route path="disPrescription" element={<DisPrescription />} />
-          <Route path="dispenSales" element={<DispenSales />} />
-          <Route path="salesStockDetails" element={<SalesStockDetails />} />
+          <Route path="prescription" element={<DisPrescription />} />
+          <Route path="sale" element={<DispenSales />} />
+          <Route path="stock" element={<SalesStockDetails />} />
           <Route path="dispenTransfer" element={<DispenTransfer />} />
-          <Route path="dispenCouter" element={<DispenCouter />} />
-          <Route path="dispenReportList" element={<DispenReportList />} />
+          <Route path="counter" element={<DispenCouter />} />
+          <Route path="reports" element={<DispenReportList />} />
           <Route path="dispenPatientConsump" element={<DispenPatientConsump />} />
-          <Route path="dispenPatientConsumption" element={<DispenPatientConsumption />} />
+          <Route path="patientconsumption" element={<DispenPatientConsumption />} />
           <Route path="user-collection-report" element={<UserCollectionReport />} />
           <Route path="dr-Narcotics-Daily-Sales" element={<DrNarcoticsDailySales />} />
           <Route path="dr-Daily-Sales-Report" element={<DrDailySalesReport />} />

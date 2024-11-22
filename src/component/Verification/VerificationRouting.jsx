@@ -20,18 +20,19 @@ const VerificationRouting = () => {
       <>
       <NavigationBar />
       <Routes>
-        <Route path="/requisition" element={<RequisitionPage />} />
-        <Route path="/requisitionPharmacy" element={<RequisitionPagePharmacy />} />
+        <Route path="/inventory/requisition" element={<RequisitionPage />} />
+        <Route path="/pharmacy/requisitionPharmacy" element={<RequisitionPagePharmacy />} />
 
-        <Route path="/purchase-request" element={<VerifyPurchaseRequests />} />
-        <Route path="/verify-purchase-order" element={<PurchaseOrder />} />
-        <Route path='/gr-quality-inspection' element={<GRQualityInspection/>}></Route>
-        <Route path='/employee-verification' element={<EmployeeVerification/>}></Route>
-        <Route path='/patient-verification' element={<PatientDocumentVerification/>}></Route>
-        <Route path='/employee-identity-verification' element={<EmpIdentityVerificationForm/>}></Route>
-        <Route path='/patient-identity-verification' element={<PatientIdentityVerificationForm/>}></Route>
-        <Route path='/employee-insurance-verification' element={<EmployeeInsuranceVerificationForm/>}></Route>
-        <Route path='/patient-insurance-verification' element={<PatientInsuranceForm/>}></Route>
+        <Route path="/inventory/purchase-request" element={<VerifyPurchaseRequests />} />
+        <Route path="/inventory/verify-purchase-order" element={<PurchaseOrder />} />
+        <Route path='/inventory/gr-quality-inspection' element={<GRQualityInspection/>}></Route>
+        <Route path="/pharmacy/verify-purchase-order" element={<PurchaseOrder />} />
+        <Route path='/document&employmentverification/employee-verification' element={<EmployeeVerification/>}></Route>
+        <Route path='/document&employmentverification/patient-verification' element={<PatientDocumentVerification/>}></Route>
+        <Route path='/identityverification/employee-identity-verification' element={<EmpIdentityVerificationForm/>}></Route>
+        <Route path='/identityverification/patient-identity-verification' element={<PatientIdentityVerificationForm/>}></Route>
+        <Route path='/insuranceverification/employee-insurance-verification' element={<EmployeeInsuranceVerificationForm/>}></Route>
+        <Route path='/insuranceverification/patient-insurance-verification' element={<PatientInsuranceForm/>}></Route>
 
 
         {/* Add other routes here for different pages */}

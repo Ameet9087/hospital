@@ -16,7 +16,7 @@ const HRHome = () => {
         <div className="HRHome-container">
             <nav className="HRHome-nav">
                 <NavLink
-                    to="/employee-list"
+                    to="/hr/employeelist"
                     className={({ isActive }) =>
                         isActive ? "HRHome-navigation-link active" : "HRHome-navigation-link"
                     }
@@ -24,7 +24,7 @@ const HRHome = () => {
                     Employee List
                 </NavLink>
                 <NavLink
-                    to="/employee-attendance"
+                    to="/hr/attendance"
                     className={({ isActive }) =>
                         isActive ? "HRHome-navigation-link active" : "HRHome-navigation-link"
                     }
@@ -32,7 +32,7 @@ const HRHome = () => {
                     Attendance
                 </NavLink>
                 <NavLink
-                    to="/employee-schedule"
+                    to="/hr/employeeschedule"
                     className={({ isActive }) =>
                         isActive ? "HRHome-navigation-link active" : "HRHome-navigation-link"
                     }
@@ -40,7 +40,7 @@ const HRHome = () => {
                     Employee Schedule
                 </NavLink>
                 <NavLink
-                    to="/employee-leave"
+                    to="/hr/employeeleave"
                     className={({ isActive }) =>
                         isActive ? "HRHome-navigation-link active" : "HRHome-navigation-link"
                     }
@@ -48,7 +48,7 @@ const HRHome = () => {
                     Employee Leave
                 </NavLink>
                 <NavLink
-                    to="/employee-performance"
+                    to="/hr/performanceevaluation"
                     className={({ isActive }) =>
                         isActive ? "HRHome-navigation-link active" : "HRHome-navigation-link"
                     }
@@ -57,7 +57,7 @@ const HRHome = () => {
                 </NavLink>
 
                 <NavLink
-                    to="/employee-payroll"
+                    to="/hr/payroll"
                     className={({ isActive }) =>
                         isActive ? "HRHome-navigation-link active" : "HRHome-navigation-link"
                     }
@@ -66,7 +66,7 @@ const HRHome = () => {
                 </NavLink>
 
                 <NavLink
-                    to="/employee-recruitment"
+                    to="/hr/recruitmentmanagement"
                     className={({ isActive }) =>
                         isActive ? "HRHome-navigation-link active" : "HRHome-navigation-link"
                     }
@@ -82,13 +82,13 @@ const HRHome = () => {
 
             <div className="HRHome-content">
                 <Routes>
-                    <Route path="/employee-list" element={<AllEmployee />} />
-                    <Route path="/employee-attendance" element={<Attendance />} />
-                    <Route path="/employee-schedule" element={<EmpSchedule />} />
-                    <Route path="/employee-leave" element={<EmpLeave />} />
-                    <Route path="/employee-performance" element={<PerformanceEvaluation />} />
-                    <Route path="/employee-payroll" element={<Payroll />} />
-                    <Route path="/employee-recruitment" element={<RecrutierMng />} />
+                    <Route path="/employeelist" element={<AllEmployee />} />
+                    <Route path="/attendance" element={<Attendance />} />
+                    <Route path="/employeeschedule" element={<EmpSchedule />} />
+                    <Route path="/employeeleave" element={<EmpLeave />} />
+                    <Route path="/performanceevaluation" element={<PerformanceEvaluation />} />
+                    <Route path="/payroll" element={<Payroll />} />
+                    <Route path="/recruitmentmanagement" element={<RecrutierMng />} />
                 </Routes>
             </div>
         </div>

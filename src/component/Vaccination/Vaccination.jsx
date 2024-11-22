@@ -12,7 +12,7 @@ function Vaccination() {
           <ul>
             <li>
               <NavLink
-                to="PatientList"
+                to="/vaccination/patientlist"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Patient List
@@ -20,7 +20,7 @@ function Vaccination() {
             </li>
             <li>
               <NavLink
-                to="Reports"
+                to="/vaccination/reports"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Reports
@@ -31,9 +31,9 @@ function Vaccination() {
       </header>
       <div className="vaccination-component-content">
         <Routes>
-          <Route path="PatientList" element={<PatientList />} />
-          <Route path="Reports/*" element={<VaccinationReports />} />
-          <Route path="Vaccination/PatientList" element={<PatientList />} />
+          <Route path="patientlist" element={<PatientList />} />
+          <Route path="reports/*" element={<VaccinationReports />} />
+          <Route path="vaccination/patientlist" element={<PatientList />} />
         </Routes>
       </div>
     </div>

@@ -19,25 +19,25 @@ const Navbar = () => {
       <div className="inventory-nav-links">
         <button
           className={isActive('/internal') ? 'active' : ''}
-          onClick={() => navigate('/internal')}
+          onClick={() => navigate('/inventory/internal')}
         >
           Internal
         </button>
         <button
           className={isActive('/stock') ? 'active' : ''}
-          onClick={() => navigate('/stock')}
+          onClick={() => navigate('/inventory/stock')}
         >
           Stock
         </button>
         <button
           className={isActive('/reports') ? 'active' : ''}
-          onClick={() => navigate('/reports')}
+          onClick={() => navigate('/inventory/reports')}
         >
           Reports
         </button>
         <button
           className={isActive('/return-to-vendor') ? 'active' : ''}
-          onClick={() => navigate('/return-to-vendor')}
+          onClick={() => navigate('/inventory/returntovendor')}
         >
           Return To Vendor
         </button>
@@ -45,16 +45,16 @@ const Navbar = () => {
 
         <button
           className={isActive('/drug-registration') ? 'active' : ''}
-          onClick={() => navigate('/drug-registration')}
+          onClick={() => navigate('/inventory/drugregistration')}
         >
           Drug Registration
         </button>
    
         <button
           className={isActive('/expiry-notification') ? 'active' : ''}
-          onClick={() => navigate('/expiry-notification')}
+          onClick={() => navigate('/inventory/expirynotification')}
         >
-          Drug Registration
+          Expiry Notification
         </button>
 
 

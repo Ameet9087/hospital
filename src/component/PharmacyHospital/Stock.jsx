@@ -13,7 +13,7 @@ const Stock = () => {
     <div className="purchase-report-container">
       <div className="report-grid">
         <div className="reports-cont">
-        <Link to="/dispensary-story-stock" className="report-details-link">
+        <Link to="/pharmacy/report/stock/dispensary-story-stock" className="report-details-link">
           <div className="report-icon-container">
             <i className="fa-solid fa-circle-dot"></i>
           </div>
@@ -24,7 +24,7 @@ const Stock = () => {
           </Link>
         </div>
         <div className="reports-cont">
-        <Link to="/expiry-report" className="report-details-link">
+        <Link to="/pharmacy/report/stock/expiry-report" className="report-details-link">
 
           <div className="report-icon-container">
             <i className="fa-solid fa-circle-dot"></i>
@@ -37,7 +37,7 @@ const Stock = () => {
         </div>
       
         <div className="reports-cont">
-        <Link to="/narcotics-stock-report" className="report-details-link">
+        <Link to="/pharmacy/report/stock/narcotics-stock-report" className="report-details-link">
           <div className="report-icon-container">
             <i className="fa-solid fa-circle-dot"></i>
           </div>
@@ -49,7 +49,7 @@ const Stock = () => {
         </div>
        
         <div className="reports-cont">
-        <Link to="/stock-summary-report" className="report-details-link">
+        <Link to="/pharmacy/report/stock/stock-summary-report" className="report-details-link">
 
           <div className="report-icon-container">
             <i className="fa-solid fa-circle-dot"></i>
@@ -63,7 +63,7 @@ const Stock = () => {
       </div>
       <div className="report-grid">
         <div className="reports-cont">
-        <Link to="/return-from-customer-report" className="report-details-link">
+        <Link to="/pharmacy/report/stock/return-from-customer-report" className="report-details-link">
 
           <div className="report-icon-container">
             <i className="fa-solid fa-circle-dot"></i>
@@ -76,7 +76,7 @@ const Stock = () => {
 
         </div>
         <div className="reports-cont">
-        <Link to="/supplier-wise-stock-report" className="report-details-link">
+        <Link to="/pharmacy/report/stock/supplier-wise-stock-report" className="report-details-link">
 
           <div className="report-icon-container">
             <i className="fa-solid fa-circle-dot"></i>
@@ -88,7 +88,7 @@ const Stock = () => {
           </Link>
         </div>
         <div className="reports-cont">
-        <Link to="/opening-stock-valuation" className="report-details-link">
+        <Link to="/pharmacy/report/stock/opening-stock-valuation" className="report-details-link">
 
           <div className="report-icon-container">
             <i className="fa-solid fa-circle-dot"></i>
@@ -100,7 +100,7 @@ const Stock = () => {
           </Link>
         </div>
         <div className="reports-cont">
-        <Link to="/stock-transfers" className="report-details-link">
+        <Link to="/pharmacy/report/stock/stock-transfers" className="report-details-link">
 
           <div className="report-icon-container">
             <i className="fa-solid fa-circle-dot"></i>
@@ -114,7 +114,7 @@ const Stock = () => {
       </div>
       <div className="report-grid">
         <div className="reports-cont">
-        <Link to="/item-wise-ward-supply" className="report-details-link">
+        <Link to="/pharmacy/report/stock/item-wise-ward-supply" className="report-details-link">
 
           <div className="report-icon-container">
             <i className="fa-solid fa-circle-dot"></i>
@@ -126,7 +126,7 @@ const Stock = () => {
           </Link>
         </div>
         <div className="reports-cont">
-        <Link to="/stock-transfer-summary" className="report-details-link">
+        <Link to="/pharmacy/report/stock/stock-transfer-summary" className="report-details-link">
 
           <div className="report-icon-container">
             <i className="fa-solid fa-circle-dot"></i>

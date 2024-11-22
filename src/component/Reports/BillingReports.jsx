@@ -22,32 +22,32 @@ const BillingReportsCom = () => {
       icon: '👤',
       title: 'User Collection',
       subtitle: 'Report',
-      onClick: () => navigate('/user-collection-report'), 
+      onClick: () => navigate('/report/billingreports/user-collection-report'), 
     },
     { 
       icon: '📄', 
       title: 'Total Item Bill', 
       subtitle: 'Report',
-      onClick: () => navigate('/total-item-bill'), 
+      onClick: () => navigate('/report/billingreports/total-item-bill'), 
     },
     { 
       icon: '📄', 
       title: 'Deposit Balance', 
       subtitle: 'Report',
-      onClick: () => navigate('/deposit-balance'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/deposit-balance'), // Navigate to Deposit Balance
     },
 
     { 
       icon: '💰', 
       title: 'Patient Credit Summary', 
       subtitle: 'Report',
-      onClick: () => navigate('/patient-credit-summary'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/patient-credit-summary'), // Navigate to Deposit Balance
     },
     {
       icon: '🧾',
       title: 'Income Segregation',
       subtitle: 'Report',
-      onClick: () => navigate('/income-segregation'), // Navigate to User Collection Report
+      onClick: () => navigate('/report/billingreports/income-segregation'), // Navigate to User Collection Report
     },
 
 
@@ -55,13 +55,13 @@ const BillingReportsCom = () => {
       icon: '🚫', 
       title: 'Cancel Bill', 
       subtitle: 'Report',
-      onClick: () => navigate('/cancel-bill'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/cancel-bill'), // Navigate to Deposit Balance
     },
     {
       icon: '🧾',
       title: 'Return Bill',
       subtitle: 'Report',
-      onClick: () => navigate('/return-bill'), // Navigate to User Collection Report
+      onClick: () => navigate('/report/billingreports/return-bill'), // Navigate to User Collection Report
     },
 
 
@@ -69,14 +69,14 @@ const BillingReportsCom = () => {
       icon: '💸', 
       title: 'Discount Report', 
       subtitle: 'Report',
-      onClick: () => navigate('/discount-report'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/discount-report'), // Navigate to Deposit Balance
     },
 
    { 
       icon: '👥', 
       title: 'Patient Census', 
       subtitle: 'Report',
-      onClick: () => navigate('/patient-census'), 
+      onClick: () => navigate('/report/billingreports/patient-census'), 
     },
 
 
@@ -84,11 +84,11 @@ const BillingReportsCom = () => {
       icon: '🪙', 
       title: 'Doctorwise Income Summary (OP + IP)', 
       subtitle: 'Report',
-      onClick: () => navigate('/doctorwise-income-summary'), 
+      onClick: () => navigate('/report/billingreports/doctorwise-income-summary'), 
     },
 
     { icon: '📝', title: 'Daily  MIS', subtitle: 'Report' ,
-      onClick: () => navigate('/daily-mis'), 
+      onClick: () => navigate('/report/billingreports/daily-mis'), 
 
     },
 
@@ -97,38 +97,38 @@ const BillingReportsCom = () => {
       icon: '🩺', 
       title: 'Doctor Summary', 
       subtitle: 'Report',
-      onClick: () => navigate('/doctor-summary'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/doctor-summary'), // Navigate to Deposit Balance
     },
 
 
     { icon: '🗂', title: 'Department Summary', subtitle: 'Report',
-      onClick: () => navigate('/department-summary'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/department-summary'), // Navigate to Deposit Balance
 
      },
 
 
 
     { icon: '🩺', title: 'Dialysis Patient Details', subtitle: 'Report' ,
-      onClick: () => navigate('/dialysis-patient-details'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/dialysis-patient-details'), // Navigate to Deposit Balance
 
     },
 
 
 
     { icon: '📑', title: 'Referral Summary', subtitle: 'Report' ,
-      onClick: () => navigate('/referral-summary'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/referral-summary'), // Navigate to Deposit Balance
 
 
     },
 
     { icon: '📑', title: 'Items Summary', subtitle: 'Report',
-      onClick: () => navigate('/item-summary'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/item-summary'), // Navigate to Deposit Balance
 
      },
 
 
     { icon: '💰', title: 'Deposit Transaction', subtitle: 'Report' ,
-      onClick: () => navigate('/deposit-transaction'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/deposit-transaction'), // Navigate to Deposit Balance
 
     },
 
@@ -136,7 +136,7 @@ const BillingReportsCom = () => {
 
 
     { icon: '💵', title: 'Discount Scheme', subtitle: 'Report' ,
-      onClick: () => navigate('/discount-scheme'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/discount-scheme'), // Navigate to Deposit Balance
 
 
     },
@@ -144,7 +144,7 @@ const BillingReportsCom = () => {
 
 
     { icon: '📊', title: 'Department Wise Discount Scheme', subtitle: 'Report',
-      onClick: () => navigate('/department-wise-discount-scheme'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/department-wise-discount-scheme'), // Navigate to Deposit Balance
 
      },
 
@@ -152,7 +152,7 @@ const BillingReportsCom = () => {
 
 
     { icon: '👥', title: 'User Wise Cash Collection', subtitle: 'Report' ,
-      onClick: () => navigate('/user-wise-cash-collection'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/user-wise-cash-collection'), // Navigate to Deposit Balance
 
     },
 
@@ -160,7 +160,7 @@ const BillingReportsCom = () => {
 
 
     { icon: '📃', title: 'EHS Bill', subtitle: 'Report' ,
-      onClick: () => navigate('/ehs-bill'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/ehs-bill'), // Navigate to Deposit Balance
 
 
     },
@@ -169,7 +169,7 @@ const BillingReportsCom = () => {
 
 
     { icon: '📝', title: 'Bill Detail', subtitle: 'Report' ,
-      onClick: () => navigate('/bill-detail'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/bill-detail'), // Navigate to Deposit Balance
 
     },
 
@@ -177,7 +177,7 @@ const BillingReportsCom = () => {
 
 
     { icon: '💳', title: 'Credit Settlement Report', subtitle: 'Report' ,
-      onClick: () => navigate('/credit-settlement-report'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/credit-settlement-report'), // Navigate to Deposit Balance
 
     },
 
@@ -186,14 +186,14 @@ const BillingReportsCom = () => {
 
     { icon: '💲', title: 'Payment Mode Wise Report', subtitle: 'Report' ,
 
-      onClick: () => navigate('/payment-mode-wise-report'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/payment-mode-wise-report'), // Navigate to Deposit Balance
     },
 
     { 
       icon: '📄', 
       title: 'Scheme Detail(Invoice)', 
       subtitle: 'Report',
-      onClick: () => navigate('/scheme-details'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/scheme-details'), // Navigate to Deposit Balance
 
     },
 
@@ -202,7 +202,7 @@ const BillingReportsCom = () => {
       icon: '📄', 
       title: 'Package Sales', 
       subtitle: 'Report',
-      onClick: () => navigate('/package-sales'), // Navigate to Deposit Balance
+      onClick: () => navigate('/report/billingreports/package-sales'), // Navigate to Deposit Balance
 
     },
     

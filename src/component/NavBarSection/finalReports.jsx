@@ -111,9 +111,7 @@ function FinalReports() {
                 onChange={handleDateToChange}
               />
             </label>
-            <button className="finalReports-star-button">☆</button>
-            <button className="finalReports-ok-button">OK</button>
-          </div>
+        </div>
         </div>
         <div className="finalReports-category-select">
           <label>Category:</label>
@@ -140,9 +138,7 @@ function FinalReports() {
             <option value="">Blood Transfusion</option>
           </select>
         </div>
-        <button className="finalReports-load-button">
-          Load <i className="fa-solid fa-rotate"></i>
-        </button>
+        
       </div>
 
       <div className="finalReports-searchbar-N-showing">
@@ -158,6 +154,9 @@ function FinalReports() {
           <span>
             Showing {labResult?.length} / {labResult?.length} results
           </span>
+          <button className="finalReports-print-button" onClick={handlePrint}>
+          <i className="fa-solid fa-file-excel"></i> Export
+          </button>
           <button className="finalReports-print-button" onClick={handlePrint}>
             <i class="fa-solid fa-print"></i> Print
           </button>

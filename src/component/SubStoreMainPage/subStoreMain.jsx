@@ -68,9 +68,9 @@ function SubStoreMain() {
 
   const handleClick = (store) => {
     if (store) {
-      navigate(`/SSIStock/${store}`);  // Navigating with the store name
+      navigate(`/substore/pharmacy/${store}`);  // Navigating with the store name
     } else {
-      navigate(`/sSPStock/${store}`);  // Navigate to a different page based on store
+      navigate(`/substore/inventory/${store}`);  // Navigate to a different page based on store
     }
   };
   return (

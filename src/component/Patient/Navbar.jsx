@@ -1,36 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Navbar.css';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link, useLocation } from 'react-router-dom'; // Import Link and useLocation
 
 function Navbar() {
-  const [selectedButton, setSelectedButton] = useState(null);
-
-  const handleButtonClick = (buttonName) => {
-    setSelectedButton(buttonName);
-  };
+  const location = useLocation(); // Get the current location
 
   return (
     <div className="patient-actions-container">
-      <Link to="/">
+      <Link to="/patient/home">
         <button
-          className={`home-button-home ${selectedButton === 'home' ? 'selected' : ''}`}
-          onClick={() => handleButtonClick('home')}
+          className={`patient-action-button ${
+            location.pathname === '/patient/home' ? 'active-btn' : ''
+          }`}
         >
           <i className="fas fa-home"></i>
         </button>
       </Link>
-      <Link to="/SearchPatient">
+      <Link to="/patient/searchpatient">
         <button
-          className={`patient-action-button ${selectedButton === 'search' ? 'selected' : ''}`}
-          onClick={() => handleButtonClick('search')}
+          className={`patient-action-button ${
+            location.pathname === '/patient/searchpatient' ? 'active-btn' : ''
+          }`}
         >
           Search Patient
         </button>
       </Link>
-      <Link to="/RegisterPatient">
+      <Link to="/patient/registerpatient">
         <button
-          className={`patient-action-button ${selectedButton === 'register' ? 'selected' : ''}`}
-          onClick={() => handleButtonClick('register')}
+          className={`patient-action-button ${
+            location.pathname === '/patient/registerpatient' ? 'active-btn' : ''
+          }`}
         >
           Register Patient
         </button>

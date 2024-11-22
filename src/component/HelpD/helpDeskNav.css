@@ -2,7 +2,6 @@
 .helpDeskNav-bar {
     background-color: white;
     font-family: Arial, sans-serif;
-    padding: 10px;
     /* border: 1px solid #007bff; */
 
   }
@@ -12,7 +11,7 @@
     margin: 0;
     padding: 10px 0px 10px 0px;
     display: flex;
-    gap: 10px;
+    /* gap: 10px; */
     justify-content: left;
 
   }
@@ -24,25 +23,24 @@
   
   .helpDeskNav-bar a {
     color: black;
-    text-decoration: none;
-    /* font-weight: bold; */
-    font-size: var(--heading-font);
-    padding: 7px 5px;
+    border: none;
+    padding: 7px 10px;
     border-radius: 5px;
-
+    border:1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 10px;
   }
   
   .helpDeskNav-bar a:hover {
-    background-color: var(--button-hover-background-color);
+    border: 1px solid var( --button-hover-border-color);
     color: var(--button-hover-text-color);
-    border: 1px solid var(--button-hover-border-color);
-
-    
+    background-color: var(--button-hover-background-color); 
   }
   
-  .helpDeskNav-bar .active {
-    background-color: var(--button-bg-color);
-    color: white;
-
+  .helpDeskNav-bar a.active {
+    border: 1px solid var(--button-bg-color);
+    color:white;
+    background-color: var(--button-bg-color); 
   }
   

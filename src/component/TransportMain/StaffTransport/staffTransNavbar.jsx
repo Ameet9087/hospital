@@ -8,11 +8,11 @@ const StaffTransNavbar = () => {
       <div className="StaffTransportManagement-app-container">
         <nav className="StaffTransportManagement-nav">
           <ul className="StaffTransportManagement-nav-list">
-            <li><NavLink to="/staff-information" className="StaffTransportManagement-nav-link" activeClassName="StaffTransportManagement-active">Staff Information</NavLink></li>
-            <li><NavLink to="/transport-service-details" className="StaffTransportManagement-nav-link" activeClassName="StaffTransportManagement-active">Transport Service Details</NavLink></li>
-            <li><NavLink to="/route-schedule-management" className="StaffTransportManagement-nav-link" activeClassName="StaffTransportManagement-active">Route and Schedule Management</NavLink></li>
+            <li><NavLink to="/transport/stafftransport/staff-information" className="StaffTransportManagement-nav-link" activeClassName="StaffTransportManagement-active">Staff Information</NavLink></li>
+            <li><NavLink to="/transport/stafftransport/transport-service-details" className="StaffTransportManagement-nav-link" activeClassName="StaffTransportManagement-active">Transport Service Details</NavLink></li>
+            <li><NavLink to="/transport/stafftransport/route-schedule-management" className="StaffTransportManagement-nav-link" activeClassName="StaffTransportManagement-active">Route and Schedule Management</NavLink></li>
             {/* <li><NavLink to="/shift-scheduling-integration" className="StaffTransportManagement-nav-link" activeClassName="StaffTransportManagement-active">Shift Scheduling Integration</NavLink></li> */}
-            <li><NavLink to="/emergency-late-night-arrangements" className="StaffTransportManagement-nav-link" activeClassName="StaffTransportManagement-active">Emergency/Late-Night Arrangements</NavLink></li>
+            <li><NavLink to="/transport/stafftransport/emergency-late-night-arrangements" className="StaffTransportManagement-nav-link" activeClassName="StaffTransportManagement-active">Emergency/Late-Night Arrangements</NavLink></li>
             {/* <li><NavLink to="/communication-notification" className="StaffTransportManagement-nav-link" activeClassName="StaffTransportManagement-active">Communication & Notification</NavLink></li>
             <li><NavLink to="/booking-confirmation" className="StaffTransportManagement-nav-link" activeClassName="StaffTransportManagement-active">Booking & Confirmation</NavLink></li>
             <li><NavLink to="/performance-feedback" className="StaffTransportManagement-nav-link" activeClassName="StaffTransportManagement-active">Performance & Feedback</NavLink></li> */}

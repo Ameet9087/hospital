@@ -50,8 +50,7 @@ function DispenSalesProvisionalBill() {
               To:
               <input type="date" defaultValue="2024-08-16" />
             </label>
-            <button className="dispenSalesProvisionalBill-star-button">☆</button>
-            <button className="dispenSalesProvisionalBill-ok-button">OK</button>
+           
           </div>
       </div>
       <div className="dispenSalesProvisionalBill-search-N-results">
@@ -62,6 +61,7 @@ function DispenSalesProvisionalBill() {
           </div>
         <div className="dispenSalesProvisionalBill-results-info">
           Showing {bills.length} / {bills.length} results
+          <button className='dispenSalesProvisionalBill-print-btn' onClick={handlePrint}> <i className="fa-solid fa-file-excel"></i> Export</button>
           <button className='dispenSalesProvisionalBill-print-btn' onClick={handlePrint}><i class="fa-solid fa-print"></i> Print</button>
         </div>
       </div>

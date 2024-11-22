@@ -188,7 +188,6 @@ function DrSettlementSummaryReport() {
         <div className="drSettlementSummaryReport-date-range">
           <label>From: <input type="date" defaultValue="2024-08-16" /></label>
           <label>To: <input type="date" defaultValue="2024-08-16" /></label>
-          <button className="drSettlementSummaryReport-star-button">☆</button>
         </div>
         <div className="drSettlementSummaryReport-select-filters">
           <label>Select Dispensary:

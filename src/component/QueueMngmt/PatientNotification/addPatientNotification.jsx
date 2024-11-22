@@ -56,7 +56,6 @@ const AddPatientNotification = ({ onClose, notification, onSubmit }) => {
     <div className="addPatientNotification-container">
       <div className="addPatientNotification-header">
         <h3>{notification ? 'Edit Patient Notification' : 'Add Patient Notification'}</h3>
-        <button className="addPatientNotification-close-btn" onClick={onClose}>x</button>
       </div>
 
       <form onSubmit={handleSubmit}>

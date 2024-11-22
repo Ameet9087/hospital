@@ -9,13 +9,13 @@ function Revenuemgnt() {
         <header>
             <nav>
                 <ul>
-                <Link to="/revenuedashoboard"><li>revenue dashboard</li></Link>
+                <Link to="/superuser/revenuemanagement/revenuedashoboard"><li>revenue dashboard</li></Link>
                 </ul>
             </nav>
         </header>
       <div>
         <Routes>
-            <Route path="/revenuedashoboard" element={<RevenueDashboard/>}>
+            <Route path="/revenuemanagement/revenuedashoboard" element={<RevenueDashboard/>}>
 
             </Route>
         </Routes>

@@ -17,9 +17,9 @@ function PatientRouting() {
          <Navbar />
         <Routes>
         <Route path='/PatientRegistration' element={<PatientRegistration/>}></Route>
-        <Route path='/SearchPatient' element={<SearchPatient/>}></Route>
-        <Route path='/RegisterPatient' element={<RegisterPatient/>}></Route>
-        <Route path='/' element={<Dashborad/>}></Route>
+        <Route path='/searchpatient' element={<SearchPatient/>}></Route>
+        <Route path='/registerpatient' element={<RegisterPatient/>}></Route>
+        <Route path='/home' element={<Dashborad/>}></Route>
 
          </Routes>
       </div>

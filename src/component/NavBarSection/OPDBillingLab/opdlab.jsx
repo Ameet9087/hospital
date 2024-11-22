@@ -95,23 +95,38 @@ function Opdlab() {
   };
 
   return (
-    <div className="lab-billing-container">
-      <header className="lab-billing-header">
-        <div className="lab-billing-controls">
-          <div className="lab-billing-search">
+    <div className="opdlab-billing-container">
+            <div className="opdlab-billing-controls">
+        {/* Your date range and button controls */}
+          <div className="opdlab-billing-date-range">
+            <label>
+              From:
+              <input type="date" defaultValue="2024-08-09" />
+            </label>
+            <label>
+              To:
+              <input type="date" defaultValue="2024-08-16" />
+            </label>
+           </div>
+      </div>
+      <header className="opdopdlab-billing-header">
+        
+        <div className="opdopdlab-billing-controls">
+          
+          <div className="opdlab-billing-search">
             <input
               type="text"
               placeholder="Search by Patient Name or Lab Test"
               value={searchTerm}
               onChange={handleSearch}
-              className="lab-search-input"
+              className="opdlab-search-input"
             />
           </div>
-          <div className="lab-billing-buttons">
-            <button onClick={exportToExcel} className="lab-btn export-btn">
+          <div className="opdlab-billing-buttons">
+            <button onClick={exportToExcel} className="opdlab-btn export-btn">
               <i className="fa fa-file-excel"></i> Export
             </button>
-            <button onClick={printTable} className="lab-btn print-btn">
+            <button onClick={printTable} className="opdlab-btn print-btn">
               <i className="fa fa-print"></i> Print All
             </button>
           </div>
@@ -151,35 +166,35 @@ function Opdlab() {
               ))}
             </tr>
           </thead>
-          <tbody className="lab-billing-table-body">
+          <tbody className="opdlab-billing-table-body">
             {filteredData.map((item, index) => (
-              <tr key={index} className="lab-billing-row">
-                <td className="lab-billing-cell">
+              <tr key={index} className="opdlab-billing-row">
+                <td className="opdlab-billing-cell">
                   {item.newPatientVisitDTO?.newPatientVisitId}
                 </td>
-                <td className="lab-billing-cell">
+                <td className="opdlab-billing-cell">
                   {item.newPatientVisitDTO?.firstName}{" "}
                   {item.newPatientVisitDTO?.middleName}{" "}
                   {item.newPatientVisitDTO?.lastName}
                 </td>
-                <td className="lab-billing-cell">
+                <td className="opdlab-billing-cell">
                   {item.newPatientVisitDTO?.age}{" "}
                   {item.newPatientVisitDTO?.ageUnit} /{" "}
                   {item.newPatientVisitDTO?.gender}
                 </td>
-                <td className="lab-billing-cell">{item.serviceName}</td>
-                <td className="lab-billing-cell">{item.totalServiceFee}</td>
-                <td className="lab-billing-cell">{item.paymentStatus}</td>
-                <td className="lab-billing-cell">{item.billingDate}</td>
-                <td className="lab-billing-cell">
+                <td className="opdlab-billing-cell">{item.serviceName}</td>
+                <td className="opdlab-billing-cell">{item.totalServiceFee}</td>
+                <td className="opdlab-billing-cell">{item.paymentStatus}</td>
+                <td className="opdlab-billing-cell">{item.billingDate}</td>
+                <td className="opdlab-billing-cell">
                   {item.paymentStatus === "PAID" ? (
-                    <button onClick={printTable} className="lab-btn print-btn">
+                    <button onClick={printTable} className="opdlab-btn print-btn">
                       Print
                     </button>
                   ) : (
                     <button
                       onClick={() => handlePayment(item)}
-                      className="lab-btn print-btn"
+                      className="opdlab-btn print-btn"
                     >
                       Make Payment
                     </button>
@@ -200,6 +215,7 @@ function Opdlab() {
               <button className="lab-billing-cancel-button" onClick={()=>setShowModal(false)}>X</button>
               <div className="lab-ptninfo">                
                 <div className="lab-billing-header">
+
                 <p>
                   <b>Patient Name:</b> {currentPatient?.newPatientVisitDTO?.firstName+" "+currentPatient?.newPatientVisitDTO?.lastName}
                 </p>
@@ -211,13 +227,13 @@ function Opdlab() {
                   <b>Lab Test:</b> {currentPatient.serviceName}
                 </p>
               </div>
-              <div className="lab-billing-modal-select">
+              <div className="opdlab-billing-modal-select">
                 <label htmlFor="paymentMode">Select Payment Mode:</label>
                 <select
                   id="paymentMode"
                   value={selectedPaymentMode}
                   onChange={(e) => setSelectedPaymentMode(e.target.value)}
-                  className="lab-billing-modal-dropdown"
+                  className="opdlab-billing-modal-dropdown"
                 >
                   <option value="Cash">Cash</option>
                   <option value="Credit">Credit</option>
@@ -225,14 +241,14 @@ function Opdlab() {
                   <option value="Other">Other</option>
                 </select>
               </div>
-              <div className="lab-billing-modal-select">
+              <div className="opdlab-billing-modal-select">
                 <label htmlFor="discount">Enter Discount (if any):</label>
                 <input
                   type="number"
                   id="discount"
                   value={discount}
                   onChange={handleDiscountChange}
-                  className="lab-billing-modal-input"
+                  className="opdlab-billing-modal-input"
                 />
               </div>
               <p>

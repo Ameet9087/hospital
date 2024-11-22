@@ -12,7 +12,7 @@ function Superusermodulemain() {
           <ul className="supuserumlAcc-navbar">
             <li>
               <NavLink 
-                to="/Superusermodulemain/patientmgnt"
+                to="/superuser/useraccountmanagement/patientmgnt"
                 className="supuserumlAcc-nav-link"
                 activeClassName="active" // Note: activeClassName is used for react-router-dom v5. For v6, consider using 'isActive'
               >
@@ -21,7 +21,7 @@ function Superusermodulemain() {
             </li>
             <li>
               <NavLink 
-                to="/Superusermodulemain/empmanagement" 
+                to="/superuser/useraccountmanagement/empmanagement" 
                 className="supuserumlAcc-nav-link"
                 activeClassName="active" // Note: activeClassName is used for react-router-dom v5. For v6, consider using 'isActive'
               >

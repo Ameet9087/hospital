@@ -12,7 +12,7 @@ function Cssd() {
           <ul>
             <li>
               <NavLink
-                to="Sterilization"
+                to="/cssd/sterilization"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Sterilization
@@ -20,7 +20,7 @@ function Cssd() {
             </li>
             <li>
               <NavLink
-                to="Reports"
+                to="/cssd/reports"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Reports
@@ -31,9 +31,9 @@ function Cssd() {
       </header>
       <div className="cssd-component-content">
         <Routes>
-          <Route path="Sterilization/*" element={<Sterilization />} />
-          <Route path="Reports/*" element={<CssdReports />} />
-          <Route path="Sterilization/PendingItem" element={<Sterilization />} />
+          <Route path="/sterilization/*" element={<Sterilization />} />
+          <Route path="/reports/*" element={<CssdReports />} />
+          <Route path="/sterilization/PendingItem" element={<Sterilization />} />
         </Routes>
       </div>
     </div>

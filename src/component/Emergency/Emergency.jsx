@@ -20,17 +20,15 @@ const NavBar = () => {
         <div>
             <NavMenu />
             <Routes>
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/home" element={<Dashboard />} />
                 <Route path="/newPatients" element={<PatientList />} />
                 <Route path="/triagedPatients" element={<TriagedPatients />} />
                 <Route path="/finalizedPatients" element={<FinalizedPatients />} />
-                <Route path="/bedInfo" element={<WardOccupancy />} />
-                <Route path="/emergency-code-activation" element={<EmergencyCodeResponseForm/>}/>
-                <Route path="/response-log" element={<ResponseLogForm/>}/>
-                <Route path="/incident-summary" element={<IncidentSummaryForm/>}/>
-                <Route path="/emergency-drill-report" element={<EmergencyDrillReportForm/>}/>
-
-
+                <Route path="/bedinformation" element={<WardOccupancy />} />
+                <Route path="/emergencycoderesponse" element={<EmergencyCodeResponseForm/>}/>
+                <Route path="/responselog" element={<ResponseLogForm/>}/>
+                <Route path="/incidentsummary" element={<IncidentSummaryForm/>}/>
+                <Route path="/emergencydrillreport" element={<EmergencyDrillReportForm/>}/>
             </Routes>
         </div>
     );
@@ -40,35 +38,35 @@ const NavMenu = () => {
     return (
         <nav className="EmergencyNavBar-nav-menu">
             <NavLink 
-                to="/dashboard" 
+                to="/emergency/home" 
                 className="EmergencyNavBar-button"
                 activeClassName="EmergencyNavBar-active"
             >
                 <FaHome />
             </NavLink>
             <NavLink 
-                to="/newPatients" 
+                to="/emergency/newpatients" 
                 className="EmergencyNavBar-button"
                 activeClassName="EmergencyNavBar-active"
             >
                 New Patients
             </NavLink>
             <NavLink 
-                to="/triagedPatients" 
+                to="/emergency/triagedpatients" 
                 className="EmergencyNavBar-button"
                 activeClassName="EmergencyNavBar-active"
             >
                 Triaged Patients
             </NavLink>
             <NavLink 
-                to="/finalizedPatients" 
+                to="/emergency/finalizedpatients" 
                 className="EmergencyNavBar-button"
                 activeClassName="EmergencyNavBar-active"
             >
                 Finalized Patients
             </NavLink>
             <NavLink 
-                to="/bedInfo" 
+                to="/emergency/bedinformation" 
                 className="EmergencyNavBar-button"
                 activeClassName="EmergencyNavBar-active"
             >
@@ -76,7 +74,7 @@ const NavMenu = () => {
             </NavLink>
 
             <NavLink 
-                to="/emergency-code-activation" 
+                to="/emergency/emergencycoderesponse" 
                 className="EmergencyNavBar-button"
                 activeClassName="EmergencyNavBar-active"
             >
@@ -84,7 +82,7 @@ const NavMenu = () => {
             </NavLink>
 
             <NavLink 
-                to="/response-log" 
+                to="/emergency/responselog" 
                 className="EmergencyNavBar-button"
                 activeClassName="EmergencyNavBar-active"
             >
@@ -92,7 +90,7 @@ const NavMenu = () => {
             </NavLink>
 
             <NavLink 
-                to="/incident-summary" 
+                to="/emergency/incidentsummary" 
                 className="EmergencyNavBar-button"
                 activeClassName="EmergencyNavBar-active"
             >
@@ -100,7 +98,7 @@ const NavMenu = () => {
             </NavLink>
 
             <NavLink 
-                to="/emergency-drill-report" 
+                to="/emergency/emergencydrillreport" 
                 className="EmergencyNavBar-button"
                 activeClassName="EmergencyNavBar-active"
             >

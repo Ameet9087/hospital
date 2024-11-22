@@ -80,14 +80,7 @@ const IncentiveTransactionsBillScan = () => {
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
           />
-          <button className="incentiveTransactionsBillScan-icon-button incentiveTransactionsBillScan-star">
-            ★
-          </button>
-          <button className="incentiveTransactionsBillScan-icon-button incentiveTransactionsBillScan-dash">
-            -
-          </button>
-          <button className="incentiveTransactionsBillScan-ok-button">OK</button>
-
+        
         </div>
         <button
           className="incentiveTransactionsBillScan-load-button"

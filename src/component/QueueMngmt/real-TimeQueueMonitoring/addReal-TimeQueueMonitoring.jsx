@@ -59,7 +59,6 @@ const AddRealTimeQueueMonitoring = ({ onClose, selectedData, onSubmit }) => {
     <div className="addRealTimeQueueMonitoring-container">
       <div className="addRealTimeQueueMonitoring-header">
         <h3>{selectedData ? 'Update Real-Time Queue Monitoring' : 'Add Real-Time Queue Monitoring'}</h3>
-        <button className="addRealTimeQueueMonitoring-close-btn" onClick={onClose}>x</button>
       </div>
 
       <form className="addRealTimeQueueMonitoring-form" onSubmit={handleSubmit}>

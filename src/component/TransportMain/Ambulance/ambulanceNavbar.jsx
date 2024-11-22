@@ -10,7 +10,7 @@ const AmbulanceNavbar = () => {
       <ul>
         <li>
           <Link 
-            to="/ambulance-list" 
+            to="/transport/ambulance/ambulance-list" 
             className={`ambulance-header-button ${location.pathname === '/ambulance-list' ? 'active' : ''}`}
           >
             Ambulance List
@@ -18,7 +18,7 @@ const AmbulanceNavbar = () => {
         </li>
         <li>
           <Link 
-            to="/dispatch" 
+            to="/transport/ambulance/dispatch" 
             className={`ambulance-header-button ${location.pathname === '/dispatch' ? 'active' : ''}`}
           >
             Dispatch Ambulance
@@ -26,7 +26,7 @@ const AmbulanceNavbar = () => {
         </li>
         <li>
           <Link 
-            to="/gps-map" 
+            to="/transport/ambulance/gps-map" 
             className={`ambulance-header-button ${location.pathname === '/gps-map' ? 'active' : ''}`}
           >
             GPS Tracking
@@ -34,7 +34,7 @@ const AmbulanceNavbar = () => {
         </li>
         <li>
           <Link 
-            to="/emergency-request" 
+            to="/transport/ambulance/emergency-request" 
             className={`ambulance-header-button ${location.pathname === '/emergency-request' ? 'active' : ''}`}
           >
             Emergency Request

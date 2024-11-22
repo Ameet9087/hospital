@@ -13,7 +13,7 @@ const VendorNavbar = () => {
        
         <li>
           <Link 
-            to="/purchase-order-acknowlegement" 
+            to="/superuser/vendorandsupplymanagement/purchase-order-acknowlegement" 
             className={`vendor-navbar-link ${location.pathname === '/purchase-order-acknowlegement' ? 'active' : ''}`}
           >
             Purchase Order from Hospital
@@ -21,7 +21,7 @@ const VendorNavbar = () => {
         </li>
         <li>
           <Link 
-            to="/purchase-order" 
+            to="/superuser/vendorandsupplymanagement/purchase-order" 
             className={`vendor-navbar-link ${location.pathname === '/purchase-order' ? 'active' : ''}`}
           >
             Issue List of Items
@@ -29,7 +29,7 @@ const VendorNavbar = () => {
         </li>
         <li>
           <Link 
-            to="/QuotationForm" 
+            to="/superuser/vendorandsupplymanagement/QuotationForm" 
             className={`vendor-navbar-link ${location.pathname === '/QuotationForm' ? 'active' : ''}`}
           >
             Quotation Form
@@ -37,7 +37,7 @@ const VendorNavbar = () => {
         </li>
         <li>
           <Link 
-            to="/invoice" 
+            to="/superuser/vendorandsupplymanagement/invoice" 
             className={`vendor-navbar-link ${location.pathname === '/invoice' ? 'active' : ''}`}
           >
             Invoice Form
@@ -45,7 +45,7 @@ const VendorNavbar = () => {
         </li>
         <li>
           <Link 
-            to="/InvoiceListItems" 
+            to="/superuser/vendorandsupplymanagement/InvoiceListItems" 
             className={`vendor-navbar-link ${location.pathname === '/InvoiceListItems' ? 'active' : ''}`}
           >
            Invoice List Items
@@ -53,7 +53,7 @@ const VendorNavbar = () => {
         </li>
         <li>
           <Link 
-            to="/report" 
+            to="/superuser/vendorandsupplymanagement/report" 
             className={`vendor-navbar-link ${location.pathname === '/report' ? 'active' : ''}`}
           >
             Report Generation Form

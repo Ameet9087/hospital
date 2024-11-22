@@ -2,15 +2,30 @@
 
 
  .patientNotification-container {
-    background-color: var(--background-color);
-    padding: 10px;
-    border-radius: 5px;
-    font-family: Arial, Helvetica, sans-serif;
-    /* width: 100%; */
-    /* max-width: 1200px; */
-    margin: 0 auto;
-    height: 75vh;
+  
+  padding: 20px;
+  background-color: #e3fffe;
+
   }
+
+  esizable Columns */
+ .resizable-th {
+   position: relative;
+ }
+
+ .resizer {
+   width: 5px;
+   height: 100%;
+   position: absolute;
+   right: 0;
+   top: 0;
+   cursor: col-resize;
+   z-index: 1;
+ }
+
+ table th .resizer:hover {
+   background-color: #aaa;
+ }
   .patientNotification-firstRow{
     display: flex;
     justify-content: space-between;
@@ -148,27 +163,28 @@
   
   .patientNotification-container table {
     width: 100%;
+    background-color: #f2f2f2;
     border-collapse: collapse;
-    margin-bottom: 20px;
-    background-color: white;
+    table-layout: fixed;
   }
   
   .patientNotification-container th, .patientNotification-container td {
-    padding: 3px;
-    text-align: center;
-    border: 1px solid #ddd;
-    /* color: rgb(78, 78, 78); */
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
     font-size: var(--font-size);
+    white-space: nowrap;
+    /* Prevent wrapping */
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   
   .patientNotification-container th {
-    background-color: #f2f2f2;
-    font-size: var(--heading-font);
+    background-color: #eaeaea;
+    color: black;
   }
   
-  .patientNotification-container td {
-    background-color: white;
-  }
   
   .patientNotification-edit-button {
     background-color:var( --button-color);

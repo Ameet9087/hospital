@@ -11,16 +11,16 @@ const RadiologyNavBar = () => {
     <nav className="radiologyNav-bar">
       <ul>
         <li>
-          <NavLink to="/rDLListRequest">List Requests</NavLink>
+          <NavLink to="/radiology/listrequests">List Requests</NavLink>
         </li>
         <li>
-          <NavLink to="/rDLListReports">List Reports</NavLink>
+          <NavLink to="/radiology/listreports">List Reports</NavLink>
         </li>
         <li>
-          <NavLink to="/rDLEditDoctors">Edit Doctors</NavLink>
+          <NavLink to="/radiology/editdoctors">Edit Doctors</NavLink>
         </li>
         <li>
-          <NavLink to="/rDOpdbilling">OPD Billing</NavLink>
+          <NavLink to="/radiology/opdbilling">OPD Billing</NavLink>
         </li>
         {/* <li><NavLink to="/rDLWardBilling">Ward Billing</NavLink></li> */}
       </ul>

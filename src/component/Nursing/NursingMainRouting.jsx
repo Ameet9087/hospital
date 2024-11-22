@@ -14,19 +14,17 @@ import DischargeSummary from './DischargeSummary';
 function NurisingMainRouting() {
 
   return (
-    <>
-            <Layout>
+    <Layout>
                 <Routes>
-                  <Route path='/' element={<NursingMainComponent/>}></Route>
-                  <Route path="/Inpatient" element={<Inpatient />} />
+                  {/* <Route path='/nursing' element={<NursingMainComponent/>}></Route> */}
+                  <Route path="/inpatient" element={<Inpatient />} />
                   {/* <Route path='/MyPatients'element={<MyPatientsTable/>}></Route> */}
-                  <Route path='/Outpatient' element={<OutPatient/>}></Route>
-                  <Route path='/Nephrology' element={<Nephrology/>}></Route>
-                  <Route path='/RequisitionList' element={<RequisitionList/>}></Route>
-                  <Route path='/DischargeSummary' element={<DischargeSummary/>}></Route>
+                  <Route path='/outpatient' element={<OutPatient/>}></Route>
+                  <Route path='/nephrology' element={<Nephrology/>}></Route>
+                  <Route path='/requisitionList' element={<RequisitionList/>}></Route>
+                  <Route path='/dischargesummary' element={<DischargeSummary/>}></Route>
                   </Routes>
-            </Layout>
-    </>
+    </Layout>
   )
 }
 

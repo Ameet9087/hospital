@@ -14,16 +14,16 @@ const BillingNavbar = () => {
           <NavLink to="/">Home</NavLink>
         </li> */}
         <li>
-          <NavLink to="/discount-approval-request" className="billing-discount-approval-header-button" activeClassName="active">Discount Approval Request</NavLink>
+          <NavLink to="/superuser/billingdiscountapproval/discount-approval-request" className="billing-discount-approval-header-button" activeClassName="active">Discount Approval Request</NavLink>
         </li>
         <li>
-          <NavLink to="/discount-approval-review" className="billing-discount-approval-header-button" activeClassName="active">Discount Approval Review</NavLink>
+          <NavLink to="/superuser/billingdiscountapproval/discount-approval-review" className="billing-discount-approval-header-button" activeClassName="active">Discount Approval Review</NavLink>
         </li>
         <li>
-          <NavLink to="/discount-history" className="billing-discount-approval-header-button" activeClassName="active">Discount History</NavLink>
+          <NavLink to="/superuser/billingdiscountapproval/discount-history" className="billing-discount-approval-header-button" activeClassName="active">Discount History</NavLink>
         </li>
         <li>
-          <NavLink to="/patient-billing-summary" className="billing-discount-approval-header-button" activeClassName="active">Patient Billing Summary</NavLink>
+          <NavLink to="/superuser/billingdiscountapproval/patient-billing-summary" className="billing-discount-approval-header-button" activeClassName="active">Patient Billing Summary</NavLink>
         </li>
       </ul>
     </nav>

@@ -128,8 +128,6 @@ function AddResults() {
                 onChange={handleDateToChange}
               />
             </label>
-            <button className="addResults-star-button">☆</button>
-            <button className="addResults-ok-button">OK</button>
           </div>
         </div>
         <div className="addResults-category-select">
@@ -167,9 +165,7 @@ function AddResults() {
             {/* Add more options here */}
           </select>
         </div>
-        <button className="addResults-load-button">
-          Load <i className="fa fa-refresh" />{" "}
-        </button>
+        
         <div className="addResults-worklist">
           <a href="#" onClick={toggleWorkList}>
             WorkList
@@ -187,6 +183,9 @@ function AddResults() {
         </div>
         <div className="addResults-results-info">
           <span>Showing 0 / 0 results</span>
+          <button className="addResults-print-button">
+          <i className="fa fa-file-excel"></i> Export
+          </button>
           <button className="addResults-print-button">
             <i class="fa-solid fa-print"></i> Print
           </button>

@@ -180,14 +180,10 @@ const fetchInvoices = async () => {
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
                 />
-                <button className="incentiveTransation-icon-button incentiveTransation-star">★</button>
-                <button className="incentiveTransation-icon-button incentiveTransation-dash">-</button>
-            <button className="incentiveTransation-ok-button">OK</button>
+                
 
               </div>
-              <button className="incentiveTransation-load-button" onClick={fetchInvoices}>
-                <i className="fa-solid fa-rotate"></i> Load
-              </button>
+             
             </div>
             <div className="incentiveTransation-search-N-sms">
               <input

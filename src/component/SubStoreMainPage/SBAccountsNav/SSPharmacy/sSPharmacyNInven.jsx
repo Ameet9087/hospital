@@ -1,7 +1,7 @@
 /* Ajhar Tamboli sSPharmacyNInven.jsx 19-09-24 */
 
 import React from 'react';
-import { Link, NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import "../SSPharmacy/sSPharmacyNInven.css";
 
 const SSPharmacyNInven = () => {
@@ -9,15 +9,15 @@ const SSPharmacyNInven = () => {
   const navigate = useNavigate();
 
   const handleLogoutButtonClick = () => {
-    navigate('/substore'); // Route to open SubStoreMain component
+    navigate('/substore/stores'); // Route to open SubStoreMain component
   };
 
   return (
     <nav className="sSPharmacyNInven-bar">
-      <div className='sSPharmacyNInven-ul'>
+      <ul className='sSPharmacyNInven-ul'>
         <div className='sSPharmacyNInven-pha-N-inven'>
-          <p className='sSPharmacyNInven-pha-N-inven-p'><NavLink to={`/sSPStock/${store}`}>Pharmacy</NavLink></p> {/* Link to SSPStock */}
-          <p className='sSPharmacyNInven-pha-N-inven-p'><NavLink to={`/SSIStock/${store}`}>Inventory</NavLink></p>{/* Link to SSIStock */}
+          <li><NavLink to={`/substore/pharmacy/${store}`}>Pharmacy</NavLink></li> {/* Link to SSPStock */}
+          <li><NavLink to={`/substore/inventory/${store}`}>Inventory</NavLink></li> {/* Link to SSIStock */}
         </div>
         <div className='sSPharmacyNInven-Acc-N-Log'>
           <button className='sSPharmacyNInven-active-Accounts-button'>{`Active Store: ${store}`}</button>
@@ -28,7 +28,7 @@ const SSPharmacyNInven = () => {
             <i className="fa-solid fa-right-from-bracket"></i>
           </button>
         </div>
-      </div>
+      </ul>
     </nav>
   );
 }

@@ -22,11 +22,11 @@ const Adt = () => {
       <div className="app-container">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/search-patient" element={<SearchPatient />} />
-          <Route path="/admitted-patient" element={<AdmittedPatient />} />
-          <Route path="/discharged-patient" element={<DischargedPatient />} />
-          <Route path="/exchange-bed" element={<ExchangeBed />} />
-          <Route path="/cancel-reservation" element={<CancelReservation />} />
+          <Route path="/searchpatient" element={<SearchPatient />} />
+          <Route path="/admittedpatients" element={<AdmittedPatient />} />
+          <Route path="/dischargedpatients" element={<DischargedPatient />} />
+          <Route path="/exchangebed" element={<ExchangeBed />} />
+          <Route path="/cancelbedreservation" element={<CancelReservation />} />
         </Routes>
       </div>
     </>

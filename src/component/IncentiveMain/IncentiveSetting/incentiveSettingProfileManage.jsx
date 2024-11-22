@@ -42,6 +42,19 @@ const IncentiveSettingProfileManage = () => {
           + Add New Profile
         </button>
       </div>
+      <div className="incentiveSettingProfileManage-controls">
+          <div className="incentiveSettingProfileManage-date-range">
+      <label>
+        From:
+        <input type="date" defaultValue="2024-08-09" />
+      </label>
+      <label>
+        To:
+        <input type="date" defaultValue="2024-08-16" />
+      </label>
+
+    </div>
+     </div>
       <div className="incentiveSettingProfileManage-search-Showing">
         <div className="incentiveSettingProfileManage-search-container">
           <input
@@ -54,6 +67,9 @@ const IncentiveSettingProfileManage = () => {
 
         <div className="incentiveSettingProfileManage-Showing">
           <span>Showing {profiles.length} / {profiles.length} results</span>
+          <button className="incentiveSettingProfileManage-print-button" onClick={""}><i className="fa-solid fa-file-excel"></i> Export</button>
+          <button className="incentiveSettingProfileManage-print-button" onClick={""}><i class="fa-solid fa-print"></i> Print</button>
+        
         </div>
       </div>
       <div className="incentiveSettingProfileManage-profile-table-N-pagination">

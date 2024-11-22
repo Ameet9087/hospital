@@ -9,26 +9,26 @@ const UtilitiesNavbar = ({ handleNavigation }) => {
     <header className="utlt-header">
       <nav className="utlt-nav-links">
         <Link 
-          to="/" 
-          className={`utlt-header-button ${location.pathname === '/' ? 'active' : ''}`}
+          to="/utilities/schemerefundlist" 
+          className={`utlt-header-button ${location.pathname === '/utilities/schemerefundlist' ? 'active' : ''}`}
         >
           Scheme Refund List
         </Link>
         <Link 
-          to="/Change_Visitscheme" 
-          className={`utlt-header-button ${location.pathname === '/Change_Visitscheme' ? 'active' : ''}`}
+          to="/utilities/changevisitscheme" 
+          className={`utlt-header-button ${location.pathname === '/utilities/changevisitscheme' ? 'active' : ''}`}
         >
           Change Visit Scheme
         </Link>
         <Link 
-          to="/CounterInfo" 
-          className={`utlt-header-button ${location.pathname === '/CounterInfo' ? 'active' : ''}`}
+          to="/utilities/changebillingcounter" 
+          className={`utlt-header-button ${location.pathname === '/utilities/changebillingcounter' ? 'active' : ''}`}
         >
           Change Billing Counter
         </Link>
         <Link 
-          to="/OrganizationDeposit" 
-          className={`utlt-header-button ${location.pathname === '/OrganizationDeposit' ? 'active' : ''}`}
+          to="/utilities/organizationdeposit" 
+          className={`utlt-header-button ${location.pathname === '/utilities/organizationdeposit' ? 'active' : ''}`}
         >
           Organization Deposit
         </Link>

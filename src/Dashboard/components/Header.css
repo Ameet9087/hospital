@@ -1,36 +1,22 @@
-/* Header.css */
-
 .hrmsDashSidebarHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   border-bottom: 1px solid #e5e7eb;
-  background-color: var(--upperBar-bg-color);
+  background-color: var(--sideBar-bg-color);
   color: #fff;
   width: 100%;
   position: sticky;
   top: 0;
   z-index: 20;
   height: 60px;
-  margin-left: 0px;
-}
-
-.hrmsDashHeaderTextSmall {
-  font-size: 0.75rem;
-}
-
-.hrmsDashHeaderTextLarge {
-  font-size: 1.25rem;
-  font-weight: 600;
 }
 
 .hrmsDashHeaderRight {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 1rem;
-  float: right;
 }
 
 .hrmsDashNotificationButton {
@@ -43,9 +29,8 @@
 
 .hrmsDashNotificationBadge {
   position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(25%, -25%);
+  top: -0.25rem;
+  right: -0.25rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,32 +39,31 @@
   font-weight: 600;
   font-size: 0.625rem;
   width: 1.25rem;
-  height: 1rem;
+  height: 1.25rem;
   border-radius: 9999px;
-  border: 2px solid white;
 }
 
 .hrmsDashProfileImage {
   width: 2rem;
   height: 2rem;
-  border-radius: 9999px;
-  border: 0.25rem solid #6366f1;
+  border-radius: 50%;
+  border: 2px solid #6366f1;
 }
 
-
 .custom-toggle-button {
-  position: absolute;
-  top: 1rem;
-  left: 0rem;
   background-color: white;
   color: var(--button-color);
   border-radius: 50%;
-  padding: 5px;
+  padding: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: none;
-  z-index: 8888;
-  transition: all 0.3s ease;
+  cursor: pointer;
+  transition: transform 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.custom-toggle-button:hover {
+  transform: scale(1.1);
 }

@@ -1,53 +1,46 @@
-// src/components/Navigation.js
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import './Navigation.css';
 
 function Navigation() {
+    const location = useLocation();
 
-    const [selectedButton, setSelectedButton] = useState("Out Patient");
-
-  const handleButtonClick = (buttonName) => {
-    setSelectedButton(buttonName);
-  };
+    const isSelected = (path) => location.pathname === path;
 
     return (
         <nav className="nursing-actions-container">
-            <NavLink to="/Outpatient" selected> <button
-                className={`nursing-action-button ${selectedButton === 'Out Patient' ? 'selected' : ''}`}
-                onClick={() => handleButtonClick('Out Patient')}
-                > Out Patient</button>
+            <NavLink to="/nursing/outpatient">
+                <button
+                    className={`nursing-action-button ${isSelected('/nursing/outpatient') ? 'selected' : ''}`}
+                >
+                    Out Patient
+                </button>
             </NavLink>
 
-            <NavLink to="/Inpatient"> <button
-                className={`nursing-action-button ${selectedButton === 'In Patient' ? 'selected' : ''}`}
-                onClick={() => handleButtonClick('In Patient')}
-                > In Patient</button>
+            <NavLink to="/nursing/inpatient">
+                <button
+                    className={`nursing-action-button ${isSelected('/nursing/inpatient') ? 'selected' : ''}`}
+                >
+                    In Patient
+                </button>
             </NavLink>
 
-            {/* <NavLink to="/Nephrology"> <button
-                className={`nursing-action-button ${selectedButton === 'Nephrology' ? 'selected' : ''}`}
-                onClick={() => handleButtonClick('Nephrology')}
-                > Nephrology</button>
-            </NavLink> */}
-
-            <NavLink to="/RequisitionList"> <button
-                className={`nursing-action-button ${selectedButton === 'RequisitionList' ? 'selected' : ''}`}
-                onClick={() => handleButtonClick('RequisitionList')}
-                > Requisition List</button>
+            <NavLink to="/nursing/requisitionlist">
+                <button
+                    className={`nursing-action-button ${isSelected('/nursing/requisitionlist') ? 'selected' : ''}`}
+                >
+                    Requisition List
+                </button>
             </NavLink>
 
-            <NavLink to="/DischargeSummary"> <button
-                className={`nursing-action-button ${selectedButton === 'Discharge Summary' ? 'selected' : ''}`}
-                onClick={() => handleButtonClick('Discharge Summary')}
-                > Discharge Summary</button>
+            <NavLink to="/nursing/dischargesummary">
+                <button
+                    className={`nursing-action-button ${isSelected('/nursing/dischargesummary') ? 'selected' : ''}`}
+                >
+                    Discharge Summary
+                </button>
             </NavLink>
-
-          
         </nav>
-
-        
-
     );
 }
 

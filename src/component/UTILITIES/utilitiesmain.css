@@ -1,7 +1,8 @@
 /* // neha-utilities-utilitimain-19-9-24*/
 .utlt-header {
     background-color: white; /* Background color for the navbar */
-    padding:  5px; /* Padding around the navbar */
+    padding:  10px; /* Padding around the navbar */
+    margin-bottom: 10px;
   }
   
   .utlt-nav-links {
@@ -13,7 +14,6 @@
   }
   
   .utlt-nav-links a {
-    background-color: var(--button-color);
     text-decoration: none; 
     padding: 5px; /* Padding around links */
     font-size: 16px; /* Font size for links */

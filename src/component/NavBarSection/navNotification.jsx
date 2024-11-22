@@ -45,9 +45,7 @@ function NavNotification() {
               To:
               <input type="date" defaultValue="2024-08-16" />
             </label>
-            <button className="labNotificationSms-star-button">☆</button>
-            <button className="labNotificationSms-ok-button">OK</button>
-          </div>
+         </div>
       </div>
 
               <div>
@@ -93,6 +91,12 @@ function NavNotification() {
                 <input type="checkbox" /> All
               </label>
             </div>
+            <div className="labNotificationSms-Showing">
+          <span>Showing {} / {} results</span>
+          <button className="labNotificationSms-print-button" onClick={""}><i className="fa-solid fa-file-excel"></i> Export</button>
+          <button className="labNotificationSms-print-button" onClick={""}><i class="fa-solid fa-print"></i> Print</button>
+        
+        </div>
           </div>
 
           <table className="labNotificationSms-data-table">

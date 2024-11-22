@@ -27,7 +27,7 @@ function EmergencyTransportTable() {
 
   const handleAddEmergencyClick = () => {
     // navigate("/add-emergency");
-    navigate("/addEmergencyPageTransport"); 
+    navigate("/emergencytransport/addEmergencyPageTransport"); 
   };
 
   const handleEditClick = (row) => {

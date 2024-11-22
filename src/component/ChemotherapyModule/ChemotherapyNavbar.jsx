@@ -10,40 +10,40 @@ const ChemotherapyNavbar = () => {
       <ul>
         <li>
           <Link 
-            to="/surgery-management" 
-            className={`chemotherapy-navbar-button ${location.pathname === '/surgery-management' ? 'active' : ''}`}
+            to="/chemotherapy/surgerymanagement" 
+            className={`chemotherapy-navbar-button ${location.pathname === '/chemotherapy/surgerymanagement' ? 'active' : ''}`}
           >
             Surgery Management
           </Link>
         </li>
         <li>
           <Link 
-            to="/chemotherapy-scheduling" 
-            className={`chemotherapy-navbar-button ${location.pathname === '/chemotherapy-scheduling' ? 'active' : ''}`}
+            to="/chemotherapy/chemotherapyscheduling" 
+            className={`chemotherapy-navbar-button ${location.pathname === '/chemotherapy/chemotherapyscheduling' ? 'active' : ''}`}
           >
             Chemotherapy Scheduling
           </Link>
         </li>
         <li>
           <Link 
-            to="/radiation-therapy" 
-            className={`chemotherapy-navbar-button ${location.pathname === '/radiation-therapy' ? 'active' : ''}`}
+            to="/chemotherapy/radiationtherapy" 
+            className={`chemotherapy-navbar-button ${location.pathname === '/chemotherapy/radiationtherapy' ? 'active' : ''}`}
           >
             Radiation Therapy
           </Link>
         </li>
         <li>
           <Link 
-            to="/cancer-diagnosis" 
-            className={`chemotherapy-navbar-button ${location.pathname === '/cancer-diagnosis' ? 'active' : ''}`}
+            to="/chemotherapy/cancerdiagnosis" 
+            className={`chemotherapy-navbar-button ${location.pathname === '/chemotherapy/cancerdiagnosis' ? 'active' : ''}`}
           >
             Cancer Diagnosis
           </Link>
         </li>
         <li>
           <Link 
-            to="/patient-survival-tracking" 
-            className={`chemotherapy-navbar-button ${location.pathname === '/patient-survival-tracking' ? 'active' : ''}`}
+            to="/chemotherapy/patientsurvivaltracking" 
+            className={`chemotherapy-navbar-button ${location.pathname === '/chemotherapy/patientsurvivaltracking' ? 'active' : ''}`}
           >
            Patient Survival Tracking
           </Link>

@@ -7,9 +7,9 @@ const SubstoreRouting = () => {
   return (
     <div>
       <Routes>
-        <Route path="/subStore" element={<SubStoreMain />} />
-        <Route path="/sSPStock/:store" element={<SSPStock />} />
-        <Route path="/SSIStock/:store" element={<SSIStock />} /> {/* Route for SSIStock */}
+        <Route path="/stores" element={<SubStoreMain />} />
+        <Route path="/pharmacy/:store" element={<SSPStock />} />
+        <Route path="/inventory/:store" element={<SSIStock />} /> {/* Route for SSIStock */}
         </Routes> 
     </div>
   )

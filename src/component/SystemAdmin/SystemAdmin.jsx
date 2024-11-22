@@ -1,48 +1,51 @@
-/* Dhanashree_ButtonPanel_19/09 */
-
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
 import './SystemAdmin.css';
-import DatabaseBackup from './DataBaseBackup'; // Import the DatabaseBackup component
-import MaterializedSalesView from './Materialized'; // Import the MaterializedSalesView component
-import SalesBookDetails from './SalesBook'; // Import the SalesBookDetails component
-import NewSales from './NewSales'; // Import the NewSales component
-import AuditTrails from './AuditTrial'; // Import the AuditTrails component
+import DatabaseBackup from './DataBaseBackup';
+import MaterializedSalesView from './Materialized';
+import SalesBookDetails from './SalesBook';
+import NewSales from './NewSales';
+import AuditTrails from './AuditTrial';
 
-const ButtonPanel = () => {
-  const [activeButton, setActiveButton] = useState(0); // Initialize the first button as active
+const SystemAdmin = () => {
+  const location = useLocation(); // Get the current route
 
-  const buttons = [
-    'Database Backup',
-    'Materialized Sales View',
-    'Sales Book',
-    'New Sales Book',
-    'AuditTrail'
+  // Define the navigation structure
+  const navItems = [
+    { path: '/databasebackup', label: 'Database Backup', component: <DatabaseBackup /> },
+    { path: '/materializedsales', label: 'Materialized Sales View', component: <MaterializedSalesView /> },
+    { path: '/salesbook', label: 'Sales Book', component: <SalesBookDetails /> },
+    { path: '/newsales', label: 'New Sales Book', component: <NewSales /> },
+    { path: '/audittrail', label: 'AuditTrail', component: <AuditTrails /> },
   ];
 
   return (
     <div className="ButtonPanel-button-panel-container">
+      {/* Navbar */}
       <div className="ButtonPanel-button-panel">
-        {buttons.map((text, index) => (
-          <button 
-            key={index} 
-            className={`ButtonPanel-button ${index === activeButton ? 'ButtonPanel-active' : ''}`}
-            onClick={() => setActiveButton(index)} // Update the active button index on click
-          >
-            {text}
-          </button>
+        {navItems.map((item, index) => (
+          <Link to={`/systemadmin${item.path}`} key={index}>
+            <button
+              className={`ButtonPanel-button ${
+                location.pathname === "/systemadmin"+item.path ? 'ButtonPanel-active' : ''
+              }`}
+            >
+              {item.label}
+            </button>
+          </Link>
         ))}
       </div>
 
-      {/* Conditionally render the appropriate component based on the active button */}
-      {activeButton === 0 && <DatabaseBackup />}
-      {activeButton === 1 && <MaterializedSalesView />}
-      {activeButton === 2 && <SalesBookDetails />}
-      {activeButton === 3 && <NewSales />}
-      {activeButton === 4 && <AuditTrails />}
+      {/* Content Rendering */}
+      <div className="ButtonPanel-content">
+        <Routes>
+          {navItems.map((item, index) => (
+            <Route key={index} path={item.path} element={item.component} />
+          ))}
+        </Routes>
+      </div>
     </div>
   );
 };
 
-export default ButtonPanel;
-
-/* Dhanashree_ButtonPanel_19/09 */
+export default SystemAdmin;

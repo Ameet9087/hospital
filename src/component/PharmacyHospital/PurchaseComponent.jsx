@@ -9,7 +9,7 @@ const PurchaseComponent = () => {
     <div className="purchase-report-container">
       <div className="report-grid">
         <div className="reports-cont">
-          <Link to="/purchase-order-report" className="report-purchase-report-details-link">
+          <Link to="/pharmacy/report/purchase/purchase-order-report" className="report-purchase-report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -20,7 +20,7 @@ const PurchaseComponent = () => {
           </Link>
         </div>
         <div className="reports-cont">
-          <Link to="/return-to-supplier" className="report-purchase-report-details-link">
+          <Link to="/pharmacy/report/purchase/return-to-supplier" className="report-purchase-report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -31,7 +31,7 @@ const PurchaseComponent = () => {
           </Link>
         </div>
         <div className="reports-cont">
-          <Link to="/item-wise-purchase-report-com" className="report-purchase-report-details-link">
+          <Link to="/pharmacy/report/purchase/item-wise-purchase-report-com" className="report-purchase-report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -42,7 +42,7 @@ const PurchaseComponent = () => {
           </Link>
         </div>
         <div className="reports-cont">
-          <Link to="/supplier-wise-purchase-report" className="report-purchase-report-details-link">
+          <Link to="/pharmacy/report/purchase/supplier-wise-purchase-report" className="report-purchase-report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -54,7 +54,7 @@ const PurchaseComponent = () => {
         </div>
       </div>
       <div className="reports-cont reports-cont-summary">
-        <Link to="/purchase-summary-report" className="report-purchase-report-details-link">
+        <Link to="/pharmacy/report/purchase/purchase-summary-report" className="report-purchase-report-details-link">
           <div className="report-icon-container">
             <i className="fa-solid fa-circle-dot"></i>
           </div>

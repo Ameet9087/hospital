@@ -1,0 +1,179 @@
+/* Mohini_HomeHealthCareModule_HomeHealthNavbar_27/sep/24 */
+.home-health-navbar {
+    background-color: var(--navbar-bg-color); /* Set background color for the navbar */
+    padding: 10px 20px;
+  }
+  
+  .home-health-navbar-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+    font-size: var(--heading-font); /* Match the heading font */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  }
+  
+  .home-health-navbar-button {
+    padding: 5px 10px; /* Slightly increased horizontal padding */
+    text-decoration: none;
+    background-color: var(--button-color); /* Match button background color */
+    color: white;
+    font-size: var(--heading-font); /* Match the heading font size */
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .home-health-navbar-button:hover {
+    background-color: #f0f0f0;
+    color: var(--button-color); /* Match hover color changes */
+    border-bottom: 1px solid var(--button-hover-border-color);
+  }
+  
+  .home-health-navbar-button.active {
+    border:1px solid var(--button-bg-color); /* Active button background color */
+    color: white;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .home-health-navbar-list {
+      flex-direction: column; /* Stack items vertically on smaller screens */
+      align-items: flex-start; /* Align items to the left */
+    }
+  
+    .home-health-navbar-button {
+      width: 100%; /* Make buttons full width */
+      padding: 10px; /* Increase padding for better touch targets */
+      font-size: calc(var(--heading-font) - 2px); /* Slightly decrease font size */
+      text-align: center; /* Center text for full-width buttons */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .home-health-navbar-list {
+      gap: 10px; /* Reduce gap between items for smaller screens */
+    }
+  
+    .home-health-navbar-button {
+      font-size: calc(var(--heading-font) - 4px); /* Further decrease font size for smaller devices */
+    }
+  }
+/* Mohini_HomeHealthCareModule_HomeHealthNavbar_27/sep/24 */
+.register-patient {
+  font-family: Arial, sans-serif;
+}
+
+
+
+.register-patient-content {
+  padding: 20px;
+}
+
+.register-patient-camera-container {
+  position: relative;
+  display: inline-block;
+}
+
+.register-patient-camera-container video {
+  width: 100%;
+  height: auto;
+}
+
+.register-patient-capture-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register-patient-image-preview {
+  margin-top: 20px;
+}
+
+.register-patient-captured-image {
+  max-width: 100%;
+  height: auto;
+}
+
+
+
+
+
+
+.menu-homeHealth-care {
+  position: sticky;
+  top: 30px;
+  z-index: 1000; /* Ensure it stays on top of other content */
+  background-color: var(--navbar-bg-color);
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+  font-size: var(--heading-font);
+  flex-wrap: wrap;
+  margin-top: 1%;
+  margin-left:1%;
+}
+
+/* Styling each menu item as a tab */
+.menu-item-homeHealth-care {
+  padding: 5px 10px; /* Slightly increased horizontal padding */
+  text-decoration: none;
+  color: black;
+  font-size: var(--heading-font);
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+
+
+/* Style for the selected item */
+.menu-item-homeHealth-care.selected {
+  font-weight: bold;
+  background-color: #d0f0ff; /* Slightly darker blue background */
+  border-color: #000; /* Black border for selected tab */
+}
+
+/* Register button styling */
+.register-button-homeHealth-care {
+  padding: 5px 10px; /* Slightly increased horizontal padding */
+  text-decoration: none;
+  background-color: var(--button-color);
+  color: white;
+  font-size: var(--heading-font);
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  margin-left:10%
+}
+
+/* Hover effect for the register button */
+.register-button-homeHealth-care:hover {
+  background-color: #f0f0f0;
+  color: var(--button-color);
+  border-bottom: 1px solid var(--button-hover-border-color);
+
+}
+
+.menu-item-homeHealth-care:hover {
+  background-color: #f0f0f0;
+  color: var(--button-color);
+  border-bottom: 1px solid var(--button-hover-border-color);
+}
+
+.menu-item-homeHealth-care.active {
+  border-bottom:4px solid var(--button-bg-color);
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+.menu-item-homeHealth-care.selected:hover {
+background-color:var(--button-color);/* Darker shade when selected and hovered */
+color: #fff;
+}

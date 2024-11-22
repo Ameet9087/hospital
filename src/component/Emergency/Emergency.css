@@ -3,7 +3,7 @@
 .EmergencyNavBar-nav-menu {
     display: flex;
     align-items: center;
-    background-color: var(--background-color);
+    /* background-color: var(--background-color); */
     padding: 8px 16px;
 }
 
@@ -17,27 +17,9 @@
 
 .EmergencyNavBar-nav-item.EmergencyNavBar-active {
     background-color: var(--background-color);
-    color: var(--nav-item-active-color);
+    color: white !important;
     border-radius: 4px;
 }
-
-.EmergencyNavBar-home-icon {
-    background-color: var(--background-color);
-    color: var(--nav-item-active-color);
-    padding: 8px;
-    border-radius: 4px;
-    margin-right: 16px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-.EmergencyNavBar-home-icon.EmergencyNavBar-active {
-    background-color: var(--background-color);
-}
-
 .EmergencyNavBar-nav-text {
     color: var(--nav-text-color);
     padding: 8px 16px;
@@ -52,14 +34,11 @@
 }
 
 .EmergencyNavBar-button {
-    background-color: var(--button-color); /* Initial red color */
-    color: white;
-    border: 1px solid var(--button-hover-border-color); /* Black border */
-    padding: 5px 10px;
+    color: black;
+    padding: 5px;
     text-align: center;
     text-decoration: none;
     font-size: 16px;
-    font-weight: bold;
     border-radius: 5px;
     transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
 }

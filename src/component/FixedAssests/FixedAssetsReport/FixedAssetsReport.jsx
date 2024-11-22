@@ -19,7 +19,7 @@ const FixedAssetReport = () => {
   // Update navigation visibility based on the current path
   useEffect(() => {
     // Show the navigation only if the pathname matches exactly and should be shown
-    if (location.pathname === "/Reports") {
+    if (location.pathname.match("/reports")) {
       setNavVisible(true);
     } else {
       setNavVisible(false);
@@ -39,7 +39,7 @@ const FixedAssetReport = () => {
           <ul>
             <li>
               <NavLink
-                to="/Reports/FixedAssetsMovement"
+                to="/fixedassets/reports/FixedAssetsMovement"
                 className={({ isActive }) =>
                   `fixed-assets-btn ${isActive ? "active" : ""}`
                 }
@@ -61,7 +61,7 @@ const FixedAssetReport = () => {
 
       <div className="fixed-asset-report-content">
         <Routes>
-          <Route path="FixedAssetsMovement" element={<FixedAssetsMovement />} />
+          <Route path="/FixedAssetsMovement" element={<FixedAssetsMovement />} />
         </Routes>
       </div>
     </div>

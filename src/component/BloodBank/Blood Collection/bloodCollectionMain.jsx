@@ -12,10 +12,10 @@ function Bloodcollectionmain() {
       <header className="bloodcollection-header">
         <nav>
           <ul className="bloodcollection-nav-links">
-            <Link to="/donarlist" className="bloodcollection-header-button">
+            <Link to="/bloodbank/bloodcollection/donarlist" className="bloodcollection-header-button">
               <li className='bloodcollection-header-button'>Donor List</li>
             </Link>
-            <Link to="/collectionlist" className="bloodcollection-header-button">
+            <Link to="/bloodbank/bloodcollection/collectionlist" className="bloodcollection-header-button">
               <li className='bloodcollection-header-button'>Collection List</li>
             </Link>
           </ul>
@@ -23,8 +23,8 @@ function Bloodcollectionmain() {
       </header>
       
       <Routes>
-        <Route path="/donarlist" element={<Donarlist />} />
-        <Route path="/collectionlist" element={<Colletionlist />} />
+        <Route path="/bloodcollection/donarlist" element={<Donarlist />} />
+        <Route path="/bloodcollection/collectionlist" element={<Colletionlist />} />
       </Routes>
     </div>
   );

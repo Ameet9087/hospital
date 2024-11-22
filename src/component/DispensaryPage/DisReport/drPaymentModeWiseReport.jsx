@@ -33,7 +33,6 @@ function DrPaymentModeWiseReport() {
         <div className="drPaymentModeWiseReport-date-range">
           <label>From: <input type="date" defaultValue="2024-08-16" /></label>
           <label>To: <input type="date" defaultValue="2024-08-16" /></label>
-          <button className="drPaymentModeWiseReport-star-button">☆</button>
         </div>
         <div className="drPaymentModeWiseReport-select-filters">
         <button className="drPaymentModeWiseReport-show-report-button"><i class="fa-solid fa-magnifying-glass"></i> Show Report</button>

@@ -4,6 +4,7 @@ import axios from 'axios';
 import * as XLSX from 'xlsx'; // Import the xlsx library
 import './Attendance.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import useCustomAlert from '../../../alerts/useCustomAlert';
 
 function Attendance() {
     const [employees, setEmployees] = useState([]);
@@ -12,6 +13,7 @@ function Attendance() {
     const [attendanceStatus, setAttendanceStatus] = useState({});
     const [searchTerm, setSearchTerm] = useState('');
     const [columnWidths, setColumnWidths] = useState([80, 150, 100, 150, 150, 150, 150, 200]);
+    const { success, warning, error, CustomAlerts } = useCustomAlert();
 
     const tableRef = useRef();
 
@@ -22,6 +24,8 @@ function Attendance() {
                 setEmployees(response.data);
             } catch (error) {
                 console.error('Error fetching employee data:', error);
+                warning('Failed to Fetch Employee');
+
             }
         };
 

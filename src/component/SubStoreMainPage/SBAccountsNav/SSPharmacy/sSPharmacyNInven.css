@@ -19,10 +19,8 @@
     display: flex;
     /* float: right; */
   }
-  .sSPharmacyNInven-ul
-  {
+  .sSPharmacyNInven-ul{
     width: 100%;
-    padding: 4px;
     display: flex;
     justify-content: space-between;
   }
@@ -34,23 +32,38 @@
       background-color: white;
       /* padding: 10px; */
       /* border: 1px solid #007bff; */
-
-  
     }
     .sSPharmacyNInven-pha-N-inven{
         display: flex;
-       gap: 5px;
+        /* border: 1px solid red; */
         
+    }
+    .sSPharmacyNInven-pha-N-inven li{
+        margin: none;
+        padding:10px;
+        /* color: red; */
     }
     
     
+    .sSPharmacyNInven-bar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 10px 0px 10px 0px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  
+    }
+    
+    .sSPharmacyNInven-bar li {
+      margin: 0 0px;
+    }
+    
     .sSPharmacyNInven-bar a {
-      color: white;
-      background-color: var(--button-color);
+      color: black;
       text-decoration: none;
       /* font-weight: bold; */
       font-size: var(--heading-font);
-      border: 1px solid var(--button-color);
       padding: 7px 5px;
       border-radius: 5px;
   
@@ -60,9 +73,7 @@
       background-color: white;
       color: var(--button-color);
       border: 1px solid var(--button-color);
-      /* border: 1px solid gray; */
-  
-      
+      /* border: 1px solid gray; */    
     }
     
     .sSPharmacyNInven-bar .active {

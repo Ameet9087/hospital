@@ -10,14 +10,14 @@ const PhysiotherapyNavbar = () => {
     <div className="physiotherapy-navbar">
      
       <Link 
-        to="/physiotherapy-session-form" 
-        className={`physiotherapy-navbar-button ${location.pathname === '/physiotherapy-session-form' ? 'active' : ''}`}
+        to="/physiotherapy/sessionform" 
+        className={`physiotherapy-navbar-button ${location.pathname === '/physiotherapy/sessionform' ? 'active' : ''}`}
       >
         Session Form
       </Link>
       <Link 
-        to="/physiotherapy-session-list" 
-        className={`physiotherapy-navbar-button ${location.pathname === '/physiotherapy-session-list' ? 'active' : ''}`}
+        to="/physiotherapy/sessionlist" 
+        className={`physiotherapy-navbar-button ${location.pathname === '/physiotherapy/sessionlist' ? 'active' : ''}`}
       >
         Session List
       </Link>

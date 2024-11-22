@@ -19,7 +19,7 @@ const PediatricNavbar = () => {
         </li> */}
         <li>
           <Link
-            to="/patient-history-form"
+            to="/pediatric/inpatient/patient-history-form"
             className={`pediatric-nav-button ${location.pathname === '/patient-history-form' ? 'active' : ''}`}
           >
             Patient History Form
@@ -27,56 +27,56 @@ const PediatricNavbar = () => {
         </li>
         <li>
           <Link
-            to="/admission-form"
-            className={`pediatric-nav-button ${location.pathname === '/admission-form' ? 'active' : ''}`}
+            to="/pediatric/inpatient/admission-form"
+            className={`pediatric-nav-button ${location.pathname === '/pediatric/inpatient/admission-form' ? 'active' : ''}`}
           >
              Admission Form
           </Link>
         </li>
         <li>
           <Link
-            to="/paediatric-vitals-examination-Form"
-            className={`pediatric-nav-button ${location.pathname === '/paediatric-vitals-examination-Form' ? 'active' : ''}`}
+            to="/pediatric/inpatient/paediatric-vitals-examination-Form"
+            className={`pediatric-nav-button ${location.pathname === '/pediatric/inpatient/paediatric-vitals-examination-Form' ? 'active' : ''}`}
           >
            Paediatric VitalsExamination Form
           </Link>
         </li>
         <li>
           <Link
-            to="/paediatric-treatment-plan-form"
-            className={`pediatric-nav-button ${location.pathname === '/paediatric-treatment-plan-form' ? 'active' : ''}`}
+            to="/pediatric/inpatient/paediatric-treatment-plan-form"
+            className={`pediatric-nav-button ${location.pathname === '/pediatric/inpatient/paediatric-treatment-plan-form' ? 'active' : ''}`}
           >
             Paediatric TreatmentPlan Form
           </Link>
         </li>
         <li>
           <Link
-            to="/nursing-care-plan-form"
-            className={`pediatric-nav-button ${location.pathname === '/nursing-care-plan-form' ? 'active' : ''}`}
+            to="/pediatric/inpatient/nursing-care-plan-form"
+            className={`pediatric-nav-button ${location.pathname === '/pediatric/inpatient/nursing-care-plan-form' ? 'active' : ''}`}
           >
             Nursing CarePlanForm
           </Link>
         </li>
         <li>
           <Link
-            to="/paediatric-progress-notes-form"
-            className={`pediatric-nav-button ${location.pathname === '/paediatric-progress-notes-form' ? 'active' : ''}`}
+            to="/pediatric/inpatient/paediatric-progress-notes-form"
+            className={`pediatric-nav-button ${location.pathname === '/pediatric/inpatient/paediatric-progress-notes-form' ? 'active' : ''}`}
           >
             Paediatric ProgressNotes Form
           </Link>
         </li>
         <li>
           <Link
-            to="/discharge"
-            className={`pediatric-nav-button ${location.pathname === '/discharge' ? 'active' : ''}`}
+            to="/pediatric/inpatient/discharge"
+            className={`pediatric-nav-button ${location.pathname === '/pediatric/inpatient/discharge' ? 'active' : ''}`}
           >
             Discharge Summary
           </Link>
         </li>
         <li>
           <Link
-            to="/pediatric-immunization-form"
-            className={`pediatric-nav-button ${location.pathname === '/pediatric-immunization-form' ? 'active' : ''}`}
+            to="/pediatric/inpatient/pediatric-immunization-form"
+            className={`pediatric-nav-button ${location.pathname === '/pediatric/inpatient/pediatric-immunization-form' ? 'active' : ''}`}
           >
           Pediatric Immunization Form
           </Link>
@@ -84,8 +84,8 @@ const PediatricNavbar = () => {
        
         <li>
           <Link
-            to="/nutrition"
-            className={`pediatric-nav-button ${location.pathname === '/nutrition' ? 'active' : ''}`}
+            to="/pediatric/inpatient/nutrition"
+            className={`pediatric-nav-button ${location.pathname === '/pediatric/inpatient/nutrition' ? 'active' : ''}`}
           >
             Nutrition Form
           </Link>

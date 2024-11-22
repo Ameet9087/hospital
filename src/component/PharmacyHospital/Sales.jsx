@@ -9,7 +9,7 @@ const Sales = () => {
     <div className="purchase-report-container">
       <div className="report-grid">
         <div className="reports-cont">
-          <Link to="/invoice-billing" className="report-details-link">
+          <Link to="/pharmacy/report/sales/invoice-billing" className="report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -20,7 +20,7 @@ const Sales = () => {
           </Link>
         </div>
         <div className="reports-cont">
-          <Link to="/item-wise-sales" className="report-details-link">
+          <Link to="/pharmacy/report/sales/item-wise-sales" className="report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -31,7 +31,7 @@ const Sales = () => {
           </Link>
         </div>
         <div className="reports-cont">
-          <Link to="/user-collection" className="report-details-link">
+          <Link to="/pharmacy/report/sales/user-collection" className="report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -42,7 +42,7 @@ const Sales = () => {
           </Link>
         </div>
         <div className="reports-cont">
-          <Link to="/narcotics-sales" className="report-details-link">
+          <Link to="/pharmacy/report/sales/narcotics-sales" className="report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -56,7 +56,7 @@ const Sales = () => {
 
       <div className="report-grid">
         <div className="reports-cont">
-          <Link to="/rank-membership-wise-sales" className="report-details-link">
+          <Link to="/pharmacy/report/sales/rank-membership-wise-sales" className="report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -67,7 +67,7 @@ const Sales = () => {
           </Link>
         </div>
         <div className="reports-cont">
-          <Link to="/sales-statement" className="report-details-link">
+          <Link to="/pharmacy/report/sales/sales-statement" className="report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -78,7 +78,7 @@ const Sales = () => {
           </Link>
         </div>
         <div className="reports-cont">
-          <Link to="/insurance-patients" className="report-details-link">
+          <Link to="/pharmacy/report/sales/insurance-patients" className="report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -89,7 +89,7 @@ const Sales = () => {
           </Link>
         </div>
         <div className="reports-cont">
-          <Link to="/sales-summary" className="report-details-link">
+          <Link to="/pharmacy/report/sales/sales-summary" className="report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -103,7 +103,7 @@ const Sales = () => {
 
       <div className="report-grid">
         <div className="reports-cont">
-          <Link to="/patient-wise-sales-details" className="report-details-link">
+          <Link to="/pharmacy/report/sales/patient-wise-sales-details" className="report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -114,7 +114,7 @@ const Sales = () => {
           </Link>
         </div>
         <div className="reports-cont">
-          <Link to="/settlement-summary" className="report-details-link">
+          <Link to="/pharmacy/report/sales/settlement-summary" className="report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -125,7 +125,7 @@ const Sales = () => {
           </Link>
         </div>
         <div className="reports-cont">
-          <Link to="/return-on-investment" className="report-details-link">
+          <Link to="/pharmacy/report/sales/return-on-investment" className="report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>
@@ -136,7 +136,7 @@ const Sales = () => {
           </Link>
         </div>
         <div className="reports-cont">
-          <Link to="/pharmacy-payment-mode-wise" className="report-details-link">
+          <Link to="/pharmacy/report/sales/pharmacy-payment-mode-wise" className="report-details-link">
             <div className="report-icon-container">
               <i className="fa-solid fa-circle-dot"></i>
             </div>

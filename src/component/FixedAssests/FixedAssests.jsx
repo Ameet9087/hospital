@@ -14,7 +14,7 @@ function FixedAssets() {
           <ul>
             <li>
               <NavLink
-                to="AssetsManagement"
+                to="/fixedassets/assetsmanagement"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Assets Management
@@ -22,7 +22,7 @@ function FixedAssets() {
             </li>
             <li>
               <NavLink
-                to="AssetsMaintainance"
+                to="/fixedassets/assetsmaintenance"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Assets Maintainance
@@ -30,7 +30,7 @@ function FixedAssets() {
             </li>
             <li>
               <NavLink
-                to="DepreciationAndDiscarding"
+                to="/fixedassets/depreciationanddiscarding"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Depreciation And Discarding
@@ -38,7 +38,7 @@ function FixedAssets() {
             </li>
             <li>
               <NavLink
-                to="Reports"
+                to="/fixedassets/reports"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Reports
@@ -49,13 +49,13 @@ function FixedAssets() {
       </header>
       <div className="fixedAssets-component-content">
         <Routes>
-          <Route path="AssetsManagement" element={<AssetsManagement />} />
-          <Route path="AssetsMaintainance" element={<AssetsMaintainance />} />
+          <Route path="/assetsmanagement" element={<AssetsManagement />} />
+          <Route path="/assetsmaintenance" element={<AssetsMaintainance />} />
           <Route
-            path="DepreciationAndDiscarding"
+            path="/depreciationanddiscarding"
             element={<DepreciationAndDiscarding />}
           />
-          <Route path="Reports/*" element={<FixedAssetReport />} />
+          <Route path="/reports/*" element={<FixedAssetReport />} />
         </Routes>
       </div>
     </div>

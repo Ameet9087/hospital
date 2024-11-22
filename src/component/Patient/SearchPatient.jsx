@@ -58,7 +58,7 @@ function SearchPatient() {
   };
 
   const handleEdit = (patient) => {    
-    navigate(`/RegisterPatient#basic-info/${patient?.patientId}`, { state: { patient } });
+    navigate(`/patient/registerpatient#basic-info/${patient?.patientId}`, { state: { patient } });
   };
 
   return (

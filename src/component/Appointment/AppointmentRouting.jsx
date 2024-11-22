@@ -15,7 +15,7 @@ const AppointmentRouting = () => {
     <div className="appointment-booking-list-container">
       <nav className="appointment-booking-list-nav">
         <NavLink 
-          to="/appointment-booking-list" 
+          to="/appointment/appointmentbookinglist" 
           className={({ isActive }) => 
             isActive ? "appointment-booking-list-navigation-link active" : "appointment-booking-list-navigation-link"
           }
@@ -23,7 +23,7 @@ const AppointmentRouting = () => {
           Appointment Booking List
         </NavLink>
         <NavLink 
-          to="/book-appointment" 
+          to="/appointment/bookappointment" 
           className={({ isActive }) => 
             isActive ? "appointment-booking-list-navigation-link active" : "appointment-booking-list-navigation-link"
           }
@@ -31,7 +31,7 @@ const AppointmentRouting = () => {
           Book Appointment
         </NavLink>
         <NavLink 
-          to="/list-visits" 
+          to="/appointment/listvisits" 
           className={({ isActive }) => 
             isActive ? "appointment-booking-list-navigation-link active" : "appointment-booking-list-navigation-link"
           }
@@ -39,7 +39,7 @@ const AppointmentRouting = () => {
           List Visits
         </NavLink>
         <NavLink 
-          to="/new-visit" 
+          to="/appointment/newvisit" 
           className={({ isActive }) => 
             isActive ? "appointment-booking-list-navigation-link active" : "appointment-booking-list-navigation-link"
           }
@@ -47,7 +47,7 @@ const AppointmentRouting = () => {
           New Visit
         </NavLink>
         <NavLink 
-          to="/online-appointment" 
+          to="/appointment/onlineappointment" 
           className={({ isActive }) => 
             isActive ? "appointment-booking-list-navigation-link active" : "appointment-booking-list-navigation-link"
           }
@@ -70,15 +70,15 @@ const AppointmentRouting = () => {
       
       <div className="appointment-booking-list-content">
         <Routes>
-          <Route path="/appointment-booking-list" element={<AppointmentBookingList />} />
-          <Route path="/book-appointment" element={<BookingAppointment />} />
-          <Route path="/list-visits" element={<ListVisited />} />
-          <Route path="/new-visit" element={<NewVisitedList />} />
-          <Route path="/online-appointment" element={<OnlineAppointment />} />
-          <Route path="/ssf-claim" element={<SSFClaim />} />
-          <Route path="/checkIn/*" element={<CheckIn/>}></Route>
+          <Route path="appointmentbookinglist" element={<AppointmentBookingList />} />
+          <Route path="bookappointment" element={<BookingAppointment />} />
+          <Route path="listvisits" element={<ListVisited />} />
+          <Route path="newvisit" element={<NewVisitedList />} />
+          <Route path="onlineappointment" element={<OnlineAppointment />} />
+          <Route path="ssf-claim" element={<SSFClaim />} />
+          <Route path="checkIn/*" element={<CheckIn/>}></Route>
           <Route path="*" element={<AppointmentBookingList />} />
-          <Route path="/add-new-appointment" element={<AddNewAppointmentForm />} />
+          <Route path="add-new-appointment" element={<AddNewAppointmentForm />} />
         </Routes>
       </div>
     </div>

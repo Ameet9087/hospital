@@ -138,7 +138,7 @@
   width: 100%;
 }
 
-.employee-header-form li {
+.employee-header-form li a {
   padding: 10px 15px;
   cursor: pointer;
   text-decoration: none;
@@ -150,11 +150,11 @@
   margin-left: 5px;
 }
 
-.employee-header-form li:hover {
+.employee-header-form li a:hover {
   background-color:white;
   color:var(--button-color);
 }
-.employee-header-form li.active {
+.employee-header-form li a.active {
   background-color: var(--button-bg-color); /* Background color when active */
   color: white; /* Text color when active */
 }
@@ -164,30 +164,27 @@
   padding: 0;
 }
 
-.employee-sub-nav ul,.department-sub-nav ul,.SettingLinks{
+.sub-nav-container ul{
   list-style-type: none;
   display: flex;
   padding: 0;
   margin: 0;
 }
-.SettingLinks{
-  text-decoration: none;
-  color: white;
-}
-.SettingLinks:hover{
-  color:var(--button-color);
-}
 
-.employee-sub-nav li,.department-sub-nav li {
-  padding: 10px 15px;
+.sub-nav-container li a{
+  padding: 10px 10px;
   cursor: pointer;
   color: black;
 }
 
-.employee-sub-nav li:hover, .employee-sub-nav li.active {
+.sub-nav-container li a:hover {
   background-color: var(--background-color);
+  color: black;
 }
-
+.sub-nav-container li a.active{
+  background: transparent;
+  border-bottom:5px solid var(--button-bg-color);
+}
 /* Responsive Design */
 /* @media (max-width: 768px) {
   .employee-header-form {
@@ -216,35 +213,17 @@
 } */
 
 /* Common Sub-navigation Styles */
-.employee-sub-nav ul,
-.department-sub-nav ul,
-.radiology-sub-nav ul,
-.security-sub-nav ul,
-.geolocation-sub-nav ul,
-.clinical-sub-nav ul,
-.dynamic-templates-sub-nav ul {
+.sub-nav-container ul {
   list-style-type: none; /* Remove default list styling */
   padding: 0;
   margin: 0;
 }
 
-.employee-sub-nav li,
-.department-sub-nav li,
-.radiology-sub-nav li,
-.security-sub-nav li,
-.geolocation-sub-nav li,
-.clinical-sub-nav li,
-.dynamic-templates-sub-nav li {
+.sub-nav-container li {
   position: relative; /* Position relative for the pseudo-element */
 }
 
-.employee-sub-nav a,
-.department-sub-nav a,
-.radiology-sub-nav a,
-.security-sub-nav a,
-.geolocation-sub-nav a,
-.clinical-sub-nav a,
-.dynamic-templates-sub-nav a {
+.sub-nav-container a {
   text-decoration: none; /* Remove default underline */
   color: black; /* Set text color to black */
   font-size: 16px; /* Set font size */
@@ -253,236 +232,23 @@
   position: relative; /* Position relative to use pseudo-element */
 }
 
-.employee-sub-nav a::after,
-.department-sub-nav a::after,
-.radiology-sub-nav a::after,
-.security-sub-nav a::after,
-.geolocation-sub-nav a::after,
-.clinical-sub-nav a::after,
-.dynamic-templates-sub-nav a::after {
+.sub-nav-container a::after
+{
   content: ''; /* Empty content for pseudo-element */
   position: absolute;
   left: 0;
-  bottom: 0;
+  bottom: -4.8px;
   width: 100%;
-  height: 4px;
+  height: 5px;
   background-color: var(--button-bg-color); /* Blue underline */
   transform: scaleX(0); /* Start with 0 width for the animation */
   transform-origin: bottom right; /* Origin for the animation */
   transition: transform 0.3s ease; /* Smooth transition */
 }
 
-.employee-sub-nav a:hover::after,
-.department-sub-nav a:hover::after,
-.radiology-sub-nav a:hover::after,
-.security-sub-nav a:hover::after,
-.geolocation-sub-nav a:hover::after,
-.clinical-sub-nav a:hover::after,
-.dynamic-templates-sub-nav a:hover::after {
+.sub-nav-container a:hover::after {
   transform: scaleX(1); /* Scale to full width on hover */
   transform-origin: bottom left; /* Change origin for the hover effect */
-}
-
-/* ADT Sub-navigation Styles */
-.adt-sub-nav,
-.radiology-sub-nav,
-.security-sub-nav,
-.geolocation-sub-nav,
-.clinical-sub-nav,
-.dynamic-templates-sub-nav {
-  background-color: var(--background-color);
-  padding: 0;
-}
-
-.adt-sub-nav ul,
-.radiology-sub-nav ul,
-.security-sub-nav ul,
-.geolocation-sub-nav ul,
-.clinical-sub-nav ul,
-.dynamic-templates-sub-nav ul {
-  list-style-type: none;
-  display: flex;
-  padding: 0;
-  margin: 0;
-}
-
-.adt-sub-nav li,
-.radiology-sub-nav li,
-.security-sub-nav li,
-.geolocation-sub-nav li,
-.clinical-sub-nav li,
-.dynamic-templates-sub-nav li {
-  padding: 10px 15px;
-  cursor: pointer;
-  color: black;
-}
-
-.adt-sub-nav li:hover,
-.adt-sub-nav li.active,
-.radiology-sub-nav li:hover,
-.radiology-sub-nav li.active,
-.security-sub-nav li:hover,
-.security-sub-nav li.active,
-.geolocation-sub-nav li:hover,
-.geolocation-sub-nav li.active,
-.clinical-sub-nav li:hover,
-.clinical-sub-nav li.active,
-.dynamic-templates-sub-nav li:hover,
-.dynamic-templates-sub-nav li.active {
-  background-color: var(--background-color);
-}
-
-/* Link Styles for ADT and Other Sub-navs */
-.adt-sub-nav a,
-.radiology-sub-nav a,
-.security-sub-nav a,
-.geolocation-sub-nav a,
-.clinical-sub-nav a,
-.dynamic-templates-sub-nav a {
-  text-decoration: none;
-  color: black;
-  font-size: 16px;
-  display: block;
-  padding-bottom: 5px;
-  position: relative;
-}
-
-.adt-sub-nav a::after,
-.radiology-sub-nav a::after,
-.security-sub-nav a::after,
-.geolocation-sub-nav a::after,
-.clinical-sub-nav a::after,
-.dynamic-templates-sub-nav a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 4px;
-  background-color: var(--button-bg-color); /* Blue underline */
-  transform: scaleX(0);
-  transform-origin: bottom right;
-  transition: transform 0.3s ease;
-}
-
-.adt-sub-nav a:hover::after,
-.radiology-sub-nav a:hover::after,
-.security-sub-nav a:hover::after,
-.geolocation-sub-nav a:hover::after,
-.clinical-sub-nav a:hover::after,
-.dynamic-templates-sub-nav a:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-
-/* Responsive Design for ADT and Other Sub-navs */
-@media (max-width: 768px) {
-  .adt-sub-nav ul,
-  .radiology-sub-nav ul,
-  .security-sub-nav ul,
-  .geolocation-sub-nav ul,
-  .clinical-sub-nav ul,
-  .dynamic-templates-sub-nav ul {
-    flex-direction: column;
-  }
-
-  .adt-sub-nav li,
-  .radiology-sub-nav li,
-  .security-sub-nav li,
-  .geolocation-sub-nav li,
-  .clinical-sub-nav li,
-  .dynamic-templates-sub-nav li {
-    padding: 10px;
-    font-size: 14px;
-  }
-}
-/* General Sub-navigation Styles */
-.billing-sub-nav ul {
-  list-style-type: none; /* Remove default list styling */
-  padding: 0;
-  margin: 0;
-}
-
-.billing-sub-nav li {
-  position: relative; /* Position relative for the pseudo-element */
-}
-
-.billing-sub-nav a {
-  text-decoration: none; /* Remove default underline */
-  color: black; /* Set text color to black */
-  font-size: 16px; /* Set font size */
-  display: block; /* Make the entire link area clickable */
-  padding-bottom: 5px; /* Space between text and underline */
-  position: relative; /* Position relative to use pseudo-element */
-}
-
-.billing-sub-nav a::after {
-  content: ''; /* Empty content for pseudo-element */
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 4px;
-  background-color: var( --button-bg-color); /* Blue underline */
-  transform: scaleX(0); /* Start with 0 width for the animation */
-  transform-origin: bottom right; /* Origin for the animation */
-  transition: transform 0.3s ease; /* Smooth transition */
-}
-
-.billing-sub-nav a:hover::after {
-  transform: scaleX(1); /* Scale to full width on hover */
-  transform-origin: bottom left; /* Change origin for the hover effect */
-}
-
-/* Billing Sub-navigation Styles */
-.billing-sub-nav {
-  background-color: var(--background-color); /* Background color for billing sub-nav */
-  padding: 0;
-}
-
-.billing-sub-nav ul {
-  display: flex;
-  padding: 0;
-  margin: 0;
-}
-
-.billing-sub-nav li {
-  padding: 10px 15px;
-  cursor: pointer;
-  color: black;
-}
-
-.billing-sub-nav li:hover,
-.billing-sub-nav li.active {
-  background-color: var(--background-color); /* Background color on hover or active state */
-}
-
-/* Link Styles for Billing Sub-nav */
-.billing-sub-nav a {
-  text-decoration: none;
-  color: black;
-  font-size: 16px;
-  display: block;
-  padding-bottom: 5px;
-  position: relative;
-}
-
-.billing-sub-nav a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 4px;
-  background-color: var(--button-bg-color);
-  transform: scaleX(0);
-  transform-origin: bottom right;
-  transition: transform 0.3s ease;
-}
-
-.billing-sub-nav a:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
 }
 
 /* Responsive Design for Billing Sub-nav */

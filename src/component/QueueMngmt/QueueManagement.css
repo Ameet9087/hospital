@@ -1,0 +1,40 @@
+.QueueManagement-container {
+    padding: 0px;
+  }
+  
+  .QueueManagement-navbar {
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+  }
+  
+  .QueueManagement-button {
+    background-color: transparent;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .QueueManagement-button:hover {
+    background: var(--button-color);
+    color: white;
+  }
+  
+  .QueueManagement-button.QueueManagement-active {
+    background: var(--button-bg-color);
+    color: white;
+    font-weight: bold;
+  }
+  
+  .QueueManagement-content {
+    /* padding: 20px; */
+    border-radius: 5px;
+    background: #fff;
+  }
+  

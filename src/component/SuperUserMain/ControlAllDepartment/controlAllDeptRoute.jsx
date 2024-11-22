@@ -18,10 +18,10 @@ function ControlAllDeptRoute() {
         <nav className="ControlDepartmentsCD-navbar">
           <ul>
             <li>
-              <Link to="/department">Department</Link>
+              <Link to="/superuser/controlalldepartment/department">Department</Link>
             </li>
             <li>
-              <Link to="/inventory">Inventory</Link>
+              <Link to="/superuser/controlalldepartment/inventory">Inventory</Link>
             </li>
             
             {/* <li>

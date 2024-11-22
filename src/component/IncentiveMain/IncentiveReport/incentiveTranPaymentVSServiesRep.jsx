@@ -15,10 +15,7 @@ const IncentiveTranPaymentVSServiesRep = () => {
           <input type="date" />
           <label>To: </label>
           <input type="date" />
-          <button className="incentiveTranPaymentVSServiesRep-icon-button incentiveTranPaymentVSServiesRep-star">★</button>
-          <button className="incentiveTranPaymentVSServiesRep-icon-button incentiveTranPaymentVSServiesRep-dash">-</button>
-          <button className="incentiveTranPaymentVSServiesRep-ok-button">OK</button>
-        
+      
         </div>
       <div className="incentiveTranPaymentVSServiesRep-Select-Doctor">
         <label htmlFor="">Select Doctor:</label>

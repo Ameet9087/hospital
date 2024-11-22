@@ -23,8 +23,8 @@ const Inventory = () => {
         <Route path="/internal/*" element={<Internal />} />
         <Route path="/stock/*" element={<Stock/>} />
         <Route path="/reports/*" element={<Reports />} />
-        <Route path="/return-to-vendor" element={<ReturnToVendor />} />
-        <Route path="/drug-registration" element={<DrugRegistrationForm/>} />
+        <Route path="/returntovendor" element={<ReturnToVendor />} />
+        <Route path="/drugregistration" element={<DrugRegistrationForm/>} />
         <Route path="/expiry-notification" element={<DrugExpiryAlert/>} />
 
         <Route path="/drug-inventory" element={<DrugInventoryManagementForm />} />

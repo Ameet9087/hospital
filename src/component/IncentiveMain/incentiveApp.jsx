@@ -18,9 +18,9 @@ function IncentiveApp() {
         <IncentiveNavBar/>
         <div className="incentive-content">
         <Routes>
-        <Route path="/incentiveTransaction" element={<IncentiveTransation />} />
-        <Route path="/incentiveReport" element={<IncentiveReport />} />
-        <Route path="/insentiveSettings" element={<InsentiveSettings />} />
+        <Route path="transaction" element={<IncentiveTransation />} />
+        <Route path="reports" element={<IncentiveReport />} />
+        <Route path="setting" element={<InsentiveSettings />} />
        
         </Routes>
       </div>
