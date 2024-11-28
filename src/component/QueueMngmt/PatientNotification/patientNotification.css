@@ -8,11 +8,11 @@
 
   }
 
- .resizable-th {
+ /* .resizable-th {
    position: relative;
- }
+ } */
 
- .resizer {
+ /* .resizer {
    width: 5px;
    height: 100%;
    position: absolute;
@@ -24,7 +24,7 @@
 
  table th .resizer:hover {
    background-color: #aaa;
- }
+ } */
   .patientNotification-firstRow{
     display: flex;
     justify-content: space-between;

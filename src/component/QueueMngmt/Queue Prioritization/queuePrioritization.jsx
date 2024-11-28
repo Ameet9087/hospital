@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx'; // Import the xlsx library
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import CustomModal from '../../../CustomModel/CustomModal';
+import { API_BASE_URL } from '../../api/api';
 
 const QueuePrioritization = () => {
   const [showPopup, setShowPopup] = useState(false);
