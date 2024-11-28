@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./RequisitionDetail.css";
 
 const RequisitionDetail = ({ requisition, onClose }) => {
-  console.log(requisition.items[0].itemCategory);
+  console.log(requisition);
   const [selectedItems, setSelectedItems] = useState([]);
   const [remarks, setRemarks] = useState({});
   const [editableItemId, setEditableItemId] = useState(null);
@@ -53,10 +53,10 @@ const RequisitionDetail = ({ requisition, onClose }) => {
         <div className="inventory-requisition-details">
           <h2 className="inventory-requi-h2">Inventory Unit</h2>
           <p>
-            Requisition No: <strong>{requisition.id}</strong>
+            Requisition No: <strong>{requisition.inventoryRequisitionId}</strong>
           </p>
           <p>
-            Request From: <strong>{requisition.storeName}</strong>
+            Request From: <strong>{requisition.subStoreDTO.subStoreName}</strong>
           </p>
           <hr />
           <table className="inventory-requi-table">
@@ -69,12 +69,11 @@ const RequisitionDetail = ({ requisition, onClose }) => {
                 <th>Quantity</th>
                 <th>Received Qty.</th>
                 <th>Pending Qty.</th>
-                <th>Status</th>
                 <th>Remarks</th>
               </tr>
             </thead>
             <tbody>
-                {requisition?.items.map((item) => (
+                {requisition?.itemRequisitionsDtos?.map((item) => (
                   <tr key={item.id}>
                     <td>
                     <input
@@ -84,13 +83,12 @@ const RequisitionDetail = ({ requisition, onClose }) => {
                     />
                   </td>
                     <td>{item.itemCategory}</td>
-                    <td>{item.itemName}</td>
-                    <td>{item.code}</td>
-                    <td>{item.availableQty}</td>
-                    <td>{item.dispatchedQty}</td>
-                    <td>{item.availableQty - item.dispatchedQty}</td>
-                    <td>approved</td>
-                    <td>{requisition.remarks}</td>
+                    <td>{item.item.itemName}</td>
+                    <td>{item.item.itemCode}</td>
+                    <td>{item.requestedQuantity}</td>
+                    <td>{item.dispatchQty}</td>
+                    <td>{item.requestedQuantity - item.dispatchQty}</td>
+                    <td>{item.remarks}</td>
                   </tr>
                 ))}
               </tbody>
@@ -98,12 +96,14 @@ const RequisitionDetail = ({ requisition, onClose }) => {
        
 
           <div className="inventory-remarks-section">
-            <p>
-              <strong>Dispatched By:</strong> <br />1 Mr. admin admin (Aug 26,
-              2024, 10:54:07 AM)
+          <p>
+              <strong>Status:</strong> <br />{requisition.status}
             </p>
             <p>
-              <strong>Rem:</strong> ok
+              <strong>Dispatched By:</strong> <br />{requisition.dispatchBy} {requisition.dispatchDate}
+            </p>
+            <p>
+              <strong>Rem:</strong> {requisition.remark}
             </p>
           </div>
           <div className="inventory-status-steps">

@@ -25,7 +25,7 @@ const Requisition = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/dispatch/getAllDispatches`);
+        const response = await axios.get(`${API_BASE_URL}/inventory-requisitions/getAll`);
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -85,6 +85,9 @@ const Requisition = () => {
   // Get filtered data based on date range
   const filteredData = filterDataByDate(data);
 
+  console.log(filteredData);
+  
+
   return (
     <div className="requisition-inventory-content">
       {!showDirect ? (
@@ -96,7 +99,7 @@ const Requisition = () => {
                   className="requisition-inventory-direct-dispatch"
                   onClick={() => setShowDirect(true)}
                 >
-                  Direct Dispatch ➚
+                  Direct Dispatch
                 </button>
                 <div className="requisition-inventory-direct-dispatch-filters">
                   <span>List by Requisition Status:</span>
@@ -142,7 +145,7 @@ const Requisition = () => {
                   <button className="requisition-inventory-search-bar-button" onClick={handleSearch}>🔍</button>
                 </div>
                 <div className="requisition-inventory-results">
-                  <span className="requisition-inventory-results-span">Showing {filteredData.length} results</span>
+                  <span className="requisition-inventory-results-span">Showing {filteredData?.length} results</span>
                   <button className="requisition-inventory-results-print" onClick={handlePrint}>Print</button>
                 </div>
               </div>
@@ -157,7 +160,7 @@ const Requisition = () => {
                         "Requested By",
                         "Received By",
                         "Status",
-                        "Verification Status",
+                        "Verified Or Not",
                         "Actions"
                       ].map((header, index) => (
                         <th
@@ -181,16 +184,16 @@ const Requisition = () => {
                       <tr>
                         <td colSpan="8">Loading...</td>
                       </tr>
-                    ) : filteredData.length > 0 ? (
-                      filteredData.map((item, index) => (
+                    ) : filteredData?.length > 0 ? (
+                      filteredData?.map((item, index) => (
                         <tr key={index}>
-                          <td>{item.id}</td>
-                          <td>{item.storeName}</td>
-                          <td>{item.dispatchDate}</td>
-                          <td>Mr.admin</td>
+                          <td>{item.inventoryRequisitionId}</td>
+                          <td>{item.subStoreDTO.subStoreName}</td>
+                          <td>{item.requisitionDate}</td>
+                          <td>{item.requestedBy}</td>
                           <td>{item.receivedBy}</td>
-                          <td>Complete</td>
-                          <td>N/A</td>
+                          <td>{item.status}</td>
+                          <td>{item.verifyOrNot}</td>
                           <td>
                             <button
                               className="requisition-inventory-direct-button"

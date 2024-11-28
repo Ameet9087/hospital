@@ -6,6 +6,7 @@ import { API_BASE_URL } from '../../api/api';
 const WriteOff = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
+
   const [rows, setRows] = useState([
     {
       itemName: '',
@@ -21,6 +22,7 @@ const WriteOff = () => {
     },
   ]);
   const [items, setItems] = useState([]);
+  const [errorMessages, setErrorMessages] = useState([]);
 
   // Fetch items data from API when component mounts
   useEffect(() => {
@@ -70,9 +72,10 @@ const WriteOff = () => {
         if (i === index) {
           return {
             ...row,
+            itemId:selectedItem.itemId,
             itemName: selectedItem.itemName,
-            code: selectedItem.itemCode,
-            availableQty: selectedItem.minStockQuantity,
+            code: selectedItem.itemCode, // Use `id` to map to backend requirements
+            availableQty: selectedItem.unitQuantity,
             itemRate: selectedItem.standardRate,
             writeOffQty: '0',
             subTotal: '0',
@@ -86,23 +89,30 @@ const WriteOff = () => {
     }
   };
   
+  
 
   const handleChange = (index, field, value) => {
     const updatedRows = rows.map((row, i) => {
       if (i === index) {
         const newRow = { ...row, [field]: value };
-
+        if (field === 'writeOffQty') {
+          if (parseFloat(value) > parseFloat(newRow.availableQty)) {
+            setErrorMessages((prev) => [...prev, `Row ${index + 1}: Write-Off Quantity cannot exceed Available Quantity (${newRow.availableQty})`]);
+          } else {
+            setErrorMessages((prev) => prev.filter((msg) => !msg.includes(`Row ${index + 1}`)));
+          }
+        }
         // Recalculate fields when writeOffQty or itemRate changes
         if (field === 'writeOffQty' || field === 'itemRate') {
           const subTotal = parseFloat(newRow.itemRate) * parseFloat(newRow.writeOffQty);
           const vat = subTotal * 0.05; // Assuming 5% VAT
           const totalAmount = subTotal + vat;
-
+  
           newRow.subTotal = subTotal.toFixed(2);
           newRow.vat = vat.toFixed(2);
           newRow.totalAmount = totalAmount.toFixed(2);
         }
-
+  
         return newRow;
       }
       return row;
@@ -111,18 +121,35 @@ const WriteOff = () => {
   };
 
   const handleSubmit = async () => {
+    if (rows.some((row) => !row.itemName || !row.writeOffQty || !row.writeOffDate || !row.remark)) {
+      setErrorMessages(['All required fields (*) must be filled in before submission.']);
+      return;
+    }
+
     try {
-      const response = await fetch(`${API_BASE_URL}/writeoffgoods/createWriteOffGoods`, {
+      // Format rows data
+      const formattedData = rows.map((row) => ({
+        writeOffQty: parseFloat(row.writeOffQty),
+        writeOffDate: row.writeOffDate,
+        remark: row.remark,
+        totalAmount: parseFloat(row.totalAmount),
+        item: { id: row.itemId }, // Ensure `code` corresponds to `item.id` in your backend
+      }));
+      
+  console.log(formattedData);
+  
+      const response = await fetch(`${API_BASE_URL}/writeoffgoods/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(rows), // Send all rows as an array
+        body: JSON.stringify(formattedData), // Send the array directly
       });
-
+  
       if (response.ok) {
-        alert('Write Off Request Added Successfully ')
+        alert('Write-Off Request Added Successfully');
         console.log('Write-Off Goods submitted successfully');
+        navigate("/internal/writeOffItemsList")
         // Handle success response
       } else {
         console.error('Failed to submit Write-Off Goods');
@@ -133,6 +160,7 @@ const WriteOff = () => {
       // Handle network error
     }
   };
+  
 
   const totalSubTotal = rows.reduce((sum, row) => sum + parseFloat(row.subTotal), 0).toFixed(2);
   const totalVat = rows.reduce((sum, row) => sum + parseFloat(row.vat), 0).toFixed(2);
@@ -181,7 +209,7 @@ const WriteOff = () => {
                   <button className='writeOff-add-row' onClick={handleAddRow}>+</button>
                 </td>
                 <td>
-                  <select className='writeOff-input' value={row.itemName} onChange={(e) => handleItemSelect(index, e.target.value)}>
+                  <select className='writeOff-select' value={row.itemName} onChange={(e) => handleItemSelect(index, e.target.value)}>
                     <option value="">Select Item</option>
                     {items.map((item, idx) => (
                       <option key={idx} value={item.itemName}>
@@ -192,7 +220,7 @@ const WriteOff = () => {
                 </td>
                 <td><input className='writeOff-input' type="text" value={row.code} readOnly /></td>
                 <td><input className='writeOff-input' type="text" value={row.availableQty} readOnly /></td>
-                <td><input className='writeOff-input' type="text" value={row.writeOffQty} onChange={(e) => handleChange(index, 'writeOffQty', e.target.value)} /></td>
+                <td><input className='writeOff-input' type="text" value={row.writeOffQty} onChange={(e) => handleChange(index, 'writeOffQty', e.target.value)} /> </td>
                 <td><input className='writeOff-input' type="date" value={row.writeOffDate} onChange={(e) => handleChange(index, 'writeOffDate', e.target.value)} /></td>
                 <td><input className='writeOff-input' type="text" value={row.remark} onChange={(e) => handleChange(index, 'remark', e.target.value)} /></td>
                 <td><input className='writeOff-input' type="text" value={row.itemRate} onChange={(e) => handleChange(index, 'itemRate', e.target.value)} /></td>
@@ -200,7 +228,9 @@ const WriteOff = () => {
                 <td><input className='writeOff-input' type="text" value={row.vat} readOnly /></td>
                 <td><input className='writeOff-input' type="text" value={row.totalAmount} readOnly /></td>
               </tr>
+              
             ))}
+          
           </tbody>
         </table>
         <div className='writeOff-totals-container'>
@@ -220,9 +250,20 @@ const WriteOff = () => {
           </div>
           <div className="writeOff-buttons">
             <button className="writeOff-write-off-request" onClick={handleSubmit}>Write-Off Request</button>
-            <button className="writeOff-cancel">Cancel</button>
+            <button className="writeOff-cancel" onClick={() => navigate("/internal/writeOffItemsList")}>Cancel</button>
           </div>
         </div>
+        {errorMessages.length > 0 && (
+          <div className="writeOff-errors">
+            <ul>
+              {errorMessages.map((error, idx) => (
+                <li key={idx} className="error-message">
+                  {error}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

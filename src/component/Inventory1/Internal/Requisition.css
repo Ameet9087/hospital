@@ -1,344 +1,166 @@
-/* Swapnil Rokade requisition adding className 14/09 */
 .requisition-inventory-content {
-    /* height: 100%; */
-    margin: 0 auto;
-    height: 90vh;
-    overflow-y: scroll;
-    padding: 10px;
-    background-color: var(--background-color);
-  }
-  .requisition-inventory-content::-webkit-scrollbar {
-    display: none;
-  }
-  .requisition-inventory-search-bar-container
-  {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .requisition-inventory-direct-dispatch-filters
-  {
-    display: flex;
-  }
-.requisition-inventory-direct-dispatch{
+  margin: 0 auto;
+  height: 90vh;
+  overflow-y: scroll;
+  padding: 10px;
+  background-color: var(--background-color);
+}
+.requisition-inventory-status-filter
+{
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.requisition-inventory-content::-webkit-scrollbar {
+  display: none;
+}
+
+.requisition-inventory-search-bar-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.requisition-inventory-direct-button
+{
+  padding: 5px;
   background-color: var(--button-color);
   color: white;
-  border: none;
-  /* height: 25px; */
+  margin: 1px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+}
+
+.requisition-inventory-direct-dispatch {
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
   padding: var(--input-box-padding);
   border-radius: 4px;
+  cursor: pointer;
 }
-.requisition-inventory-direct-dispatch:hover
-{
-  background-color: var( --button-hover-background-color);
+.requisition-inventory-direct-dispatch:hover {
+  background-color: var(--button-hover-background-color);
   border: 1px solid var(--button-hover-border-color);
   color: var(--button-hover-text-color);
 }
-  .requisition-inventory-search-bar {
-    display: flex;
-    flex-wrap: wrap;
-    width: 60%;
-    margin-top: 10px;
-    margin-bottom: 20px;
-  }
-  
- 
-  .requisition-inventory-search-bar-button {
-    margin-bottom: 10px;
-    padding: 0; /* Remove padding to prevent extra space around the icon */
-    margin-left: -30px; /* Adjust margin if needed for alignment */
-    border: none; /* Remove the border */
-    background: transparent; /* Make the background transparent */
-    cursor: pointer; /* Change cursor to pointer for clickable button */
-    display: flex; /* Ensure the button size fits the icon */
-    align-items: center; /* Center the icon vertically */
-    justify-content: center; /* Center the icon horizontally */
-    width: auto; /* Adjust width to fit the icon */
-    
+
+.requisition-inventory-search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  width: 60%;
+  margin: 10px 0 20px;
 }
 
-  
-  /* Results section */
- 
- 
-  /* Table styling */
-
-.requisition-ta{
-  background-color: white;
+.requisition-inventory-requisition-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
 }
-
-  .requisition-inventory-requisition-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 10px;
-  }
-  
-  .requisition-inventory-requisition-table thead {
-    background-color: #f2f2f2;
-    color: black;
-    font-size: var(--heading-font);
-
-  }
-  
-  .requisition-inventory-requisition-table th,
-  .requisition-inventory-requisition-table td {
-    padding: 5px;
-    font-size: var(--heading-font);
-    border-color: #f2f2f2;
-    text-align: left;
-    border: 1px solid #ccc;
-    word-wrap: break-word;
-  }
-  
-  /* Pagination
-  .requisition-inventory-requisition-pagination {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; */
-    /* margin-top: 10px; */
-/* 
-  }
-  
-  .requisition-inventory-requisition-pagination-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .requisition-inventory-requisition-pagination-div-button {
-    background-color: #2196F3;
-    padding: 5px 10px;
-    height: 30px;
-
-    border-radius: 5px;
-    border: none;
-  } */
-  
-  /*  */
-  .requisition-inventory-status-filter {
-    display: flex;
-    align-items: center;
-    margin-right: 40px;
-    justify-content: space-between; /* Aligns the content to the right */
+.requisition-inventory-requisition-table thead {
+  background-color: #f2f2f2;
+  color: black;
+  font-size: var(--heading-font);
 }
-
-.requisition-inventory-status-filter span {
-    margin-right: 10px; /* Adjust space between the label and radio buttons */
-}
-
-.requisition-inventory-status-filter label {
-    margin-left: 10px; /* Adjust space between radio buttons */
+.requisition-inventory-requisition-table th,
+.requisition-inventory-requisition-table td {
+  padding: 5px;
+  font-size: var(--heading-font);
+  border: 1px solid #ccc;
+  text-align: left;
+  word-wrap: break-word;
 }
 
 .requisition-inventory-results {
-  display: flex; /* Align items horizontally */
-  justify-content: flex-end; /* Align items to the right */
-  align-items: center; /* Vertically center items */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
-
 .requisition-inventory-results-span {
-  margin-right: 10px; /* Add space between the text and the button */
+  margin-right: 10px;
   font-size: var(--heading-font);
-  color: var( --button-color); /* Example background color */
-
+  color: var(--button-color);
 }
-
 .requisition-inventory-results-print {
   font-size: var(--heading-font);
   border-radius: 5px;
-  padding: 5px 10px; /* Adjust padding for the button */
-  border: none; /* Remove default border */
-  background-color: var( --button-color); /* Example background color */
-  color: #fff; /* Example text color */
-  cursor: pointer; /* Change cursor to pointer for clickable button */
+  padding: 5px 10px;
+  border: none;
+  background-color: var(--button-color);
+  color: #fff;
+  cursor: pointer;
 }
-.requisition-inventory-results-print:hover{
-  background-color: var( --button-hover-background-color);
+.requisition-inventory-results-print:hover {
+  background-color: var(--button-hover-background-color);
   border: 1px solid var(--button-hover-border-color);
   color: var(--button-hover-text-color);
 }
-
-/* Optional: Add specific styles for each button */
-
-
-
-.requisition-inventory-direct-button {
-  padding: 5px; /* Adjust padding as needed */
-  border: 1px solid #ddd; /* Border style */
-  border-radius: 5px; /* Rounded corners for the button */
-  background-color: var(--button-color); /* Background color */
-  font-size: var(--heading-font);
-  color: white; /* Text color */
-  cursor: pointer; /* Pointer cursor on hover */
-  margin-right: 10px; /* Gap between buttons */
-  display: inline-block; /* Ensure buttons are in line */
-}
-.requisition-inventory-direct-button:hover
-{
-  background-color: var( --button-hover-background-color);
-  border: 1px solid var(--button-hover-border-color);
-  color: var(--button-hover-text-color);
-}
-
-/* Remove margin from the last button to prevent extra space */
-.requisition-inventory-direct-button:last-child {
-  margin-right: 0;
-}
-
 
 .requisition-inventory-date-range {
   display: flex;
-  background-color: #f2f2f2;
-  align-items: center; /* Align items vertically centered */
-  gap: 10px; /* Adjust the gap between items as needed */
+  align-items: center;
+  gap: 10px;
 }
-
 .requisition-inventory-date-range label {
+  display: flex;
+  align-items: center;
   background-color: white;
-  margin: 0; /* Remove default margin */
 }
-
 .requisition-inventory-date-range input[type="date"] {
-  margin-left: 5px; /* Space between label and input */
-  /* background-color: white; */
-
+  margin-left: 5px;
+  height: 30px;
 }
 
-.requisition-inventory-date-range {
-    display: flex;
-    align-items: center; /* Center items vertically */
-    gap: 10px; /* Space between items */
+.substore-select-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem 0;
 }
-
-.requisition-inventory-date-range label {
-    margin: 0; /* Remove default margin */
-    display: flex;
-    align-items: center; /* Center label and input */
-    background-color: white;
+.substore-select-container label {
+  margin-right: 10px;
 }
-
-.requisition-inventory-date-range input[type="date"] {
-    margin-left: 5px; /* Space between label text and input */
-    height: 30px;
-}
-
-.requisition-inventory-star {
-  padding: 8px;
-  border: none;
-  background: none; /* Removes any background */
-  color: var(--button-color); /* Text color */
+.substore-select {
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  font-size: var(--heading-font);
   cursor: pointer;
-  font-size: var(--heading-font); /* Font size for star icon */
-  display: inline-flex; /* Keeps it in line with other elements */
-  align-items: center; /* Centers icon vertically */
-  justify-content: center; /* Centers icon horizontally */
 }
 
-.requisition-inventory-minus {
-  padding: 8px;
+.requisition-dispatch-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.requisition-dispatch-modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 90%;
+  max-height: 80%;
+  overflow-y: auto;
+}
+.requisition-dispatch-modal-close {
+  background: #ff4d4d;
+  color: white;
   border: none;
-  background: none; /* Removes any background */
-  color: var(--button-color); /* Text color */
+  border-radius: 4px;
+  padding: 10px 20px;
   cursor: pointer;
-  font-size: var(--heading-font); /* Font size for star icon */
-  display: inline-flex; /* Keeps it in line with other elements */
-  align-items: center; /* Centers icon vertically */
-  justify-content: center; /* Centers icon horizontally */
+  float: right;
 }
-
-.requisition-inventory-ok {
-    padding: 5px 10px; /* Adjust padding */
-    border: none;
-    background-color: var(--button-color); /* Light green background */
-    color: white; /* Text color */
-    cursor: pointer;
-    border-radius: 4px; /* Rounded corners */
-    font-size: var(--heading-font); /* Font size for OK text */
+.requisition-dispatch-modal-close:hover {
+  background: #ff3333;
 }
-.requisition-inventory-ok:hover
-{
-  background-color: var( --button-hover-background-color);
-  border: 1px solid var(--button-hover-border-color);
-  color: var(--button-hover-text-color);
-}
-
-
-/*  */
-.return-from-substore-no-row {
-  /* position: absolute; */
-    top: 40px;
-    height: 30px;
-    width: 100%;
-    margin: auto;
-    font-size: var(--font-size); 
-    text-align: center;
-    background: #ffe6a0;
-    color: #be6b03;
-    padding: 12px 15px;
-    text-transform: capitalize;
-}
-
-
-
-/*  */
-
-  .substore-select-container {
-    display: flex;
-    justify-content: flex-end; /* Center items horizontally */
-    margin: 1rem 0; /* Adds some space above and below the container */
-  }
-  
-  .substore-select-container label {
-    margin-right: 10px; /* Adds space between the label and the select box */
-  }
-  
-  .substore-select {
-    height: 30px; /* Sets the height of the select box */
-    padding: 0 12px; /* Adds horizontal padding inside the select box */
-    border: 1px solid #ddd; /* Adds a border around the select box */
-    border-radius: 4px; /* Rounds the corners of the select box */
-    background-color: #fff; /* Sets a white background color */
-    color: #333; /* Sets the text color */
-    font-size: var(--heading-font); /* Sets the font size */
-    cursor: pointer; /* Changes the cursor to a pointer on hover */
-  }
-  
-  /*  */
-  .requisition-dispatch-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000; /* Ensure it is above other content */
-  }
-  
-  .requisition-dispatch-modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 90%;
-    max-height: 80%;
-    overflow-y: auto; /* Add scroll if content exceeds max-height */
-  }
-  
-  .requisition-dispatch-modal-close {
-    background: #ff4d4d; /* Red background for close button */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
-    float: right;
-  }
-  
-  .requisition-dispatch-modal-close:hover {
-    background: #ff3333;
-  }
-  
