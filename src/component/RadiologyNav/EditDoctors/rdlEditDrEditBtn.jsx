@@ -11,7 +11,7 @@ function TransactionDetails({ onClose, selectedRequest }) {
     const imagingId = selectedRequest.imagingId;
 
     fetch(
-      `http://localhost:1415/api/imaging-requisitions/update-prescriber?prescriberId=${prescriberId}&imagingId=${imagingId}`,
+      `${API_BASE_URL}/imaging-requisitions/update-prescriber?prescriberId=${prescriberId}&imagingId=${imagingId}`,
       {
         method: "POST",
       }

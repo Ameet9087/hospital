@@ -3,6 +3,7 @@ import React, { useState, useEffect , useRef} from 'react';
 import { FaSearch } from 'react-icons/fa';
 import './ot_machine.css';
 import { startResizing } from '../../../../../TableHeadingResizing/ResizableColumns';
+import { API_BASE_URL } from '../../../../api/api';
 
 function Ot_machine() {
   const [machines, setMachines] = useState([]);
@@ -21,7 +22,7 @@ function Ot_machine() {
 
   const fetchMachines = async () => {
     try {
-      const response = await fetch('http://localhost:1415/api/ot-machines');
+      const response = await fetch(`${API_BASE_URL}/ot-machines`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -47,7 +48,7 @@ function Ot_machine() {
   // Handle add new machine
   const handleAdd = async () => {
     try {
-      const response = await fetch('http://localhost:1415/api/ot-machines', {
+      const response = await fetch(`${API_BASE_URL}/ot-machines`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +78,7 @@ function Ot_machine() {
     if (!editingMachine) return;
 
     try {
-      const response = await fetch(`http://localhost:1415/api/ot-machines/${editingMachine.id}`, {
+      const response = await fetch(`${API_BASE_URL}/ot-machines/${editingMachine.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -21,7 +21,7 @@ const SurgicalInstrumentTracking = () => {
     useEffect(() => {
         const fetchInstruments = async () => {
             try {
-                const response = await axios.get('http://localhost:8051/api/instruments'); // Update this URL as needed
+                const response = await axios.get(`${API_BASE_URL}/instruments`); // Update this URL as needed
                 setInstruments(response.data);
                 console.log(response.data); // Set the instruments state with the fetched data
             } catch (error) {
@@ -36,12 +36,12 @@ const SurgicalInstrumentTracking = () => {
         try {
             if (newInstrument.instrumentId) { // Check if we are editing an existing instrument
                 // Update the existing instrument via PUT request
-                const response = await axios.put(`http://localhost:8051/api/instruments/${newInstrument.instrumentId}`, newInstrument);
+                const response = await axios.put(`${API_BASE_URL}/instruments/${newInstrument.instrumentId}`, newInstrument);
                 setInstruments(instruments.map(instrument => 
                     (instrument.instrumentId === newInstrument.instrumentId ? response.data : instrument)
                 ));
             } else { // Add a new instrument via POST request
-                const response = await axios.post('http://localhost:8051/api/instruments', newInstrument);
+                const response = await axios.post(`${API_BASE_URL}/instruments`, newInstrument);
                 setInstruments([...instruments, response.data]);
             }
 

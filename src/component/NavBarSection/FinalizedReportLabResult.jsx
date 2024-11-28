@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./labResult.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../api/api";
 
 const FinalizedReportLabResult = ({ data, setShowLabResult }) => {
   const navigate = useNavigate();
@@ -126,7 +127,7 @@ const FinalizedReportLabResult = ({ data, setShowLabResult }) => {
     printWindow.print(); // Trigger the print dialog
     printWindow.close();
     const response = await axios.put(
-      `http://localhost:1415/api/lab-result/update-isPrinted/${data.labResultId}`
+      `${API_BASE_URL}/lab-result/update-isPrinted/${data.labResultId}`
     );
     if (response.status === 200) {
       setShowLabResult(false);

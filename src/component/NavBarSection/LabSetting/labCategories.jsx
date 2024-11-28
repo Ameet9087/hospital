@@ -70,7 +70,7 @@ const LabCategories = () => {
   const tableRef = useRef(null);
 
   useEffect(() => {
-    fetch(`http://localhost:1415/api/lab-test-categories/getAll-testCategory`)
+    fetch(`${API_BASE_URL}/lab-test-categories/getAll-testCategory`)
       .then((res) => res.json())
 
       .then((data) => setLabCategory(data))
@@ -80,7 +80,7 @@ const LabCategories = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:1415/api/lab-test-categories/getAll-testCategory`)
+    fetch(`${API_BASE_URL}/lab-test-categories/getAll-testCategory`)
       .then((res) => res.json())
       .then((data) => setLabCategories(data))
       .catch((err) => {

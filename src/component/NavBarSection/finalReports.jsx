@@ -4,6 +4,7 @@ import "jspdf-autotable";
 import "../NavBarSection/finalReports.css";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import FinalizedReportLabResult from "./FinalizedReportLabResult";
+import { API_BASE_URL } from "../api/api";
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
 };
@@ -48,12 +49,12 @@ function FinalReports() {
     let link;
 
     if (dateFrom && dateTo) {
-      link = `http://localhost:1415/api/lab-result/by-verify-dateRange?isVerified=Yes&startDate=${dateFrom}&endDate=${dateTo}`;
+      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?isVerified=Yes&startDate=${dateFrom}&endDate=${dateTo}`;
     } else {
       const todayDate = getCurrentDate();
       console.log(todayDate);
 
-      link = `http://localhost:1415/api/lab-result/by-verify-dateRange?isVerified=Yes&startDate=${todayDate}&endDate=${todayDate}`;
+      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?isVerified=Yes&startDate=${todayDate}&endDate=${todayDate}`;
     }
 
     // Fetch the data

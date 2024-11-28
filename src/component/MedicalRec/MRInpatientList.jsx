@@ -31,7 +31,7 @@ function RecordMedical() {
 
   // Fetch patients data from API
   useEffect(() => {
-    axios.get('http://localhost:1415/api/mrinpatients/getAllMRInpatients')
+    axios.get(`${API_BASE_URL}/mrinpatients/getAllMRInpatients`)
       .then(response => {
         setPatients(response.data);
         setFilteredPatients(response.data);
@@ -99,7 +99,7 @@ function RecordMedical() {
   const updatePatientRecord = () => {
     if (!selectedPatient) return;
 
-    axios.put(`http://localhost:8989/api/mrinpatients/${selectedPatient.id}`, {
+    axios.put(`${API_BASE_URL}/mrinpatients/${selectedPatient.id}`, {
       icdCode: document.querySelector('.WardTransferModal__input').value,
       isOperationConducted: document.querySelector('#operationConducted').checked ? 'Yes' : 'No',
       // Include other updated patient details here

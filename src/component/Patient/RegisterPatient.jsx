@@ -176,8 +176,8 @@ function RegisterPatient() {
 
     try {
       const url = isEditMode 
-        ? `http://localhost:1415/api/patients/${patientData.id}` // Adjust the endpoint for update
-        : 'http://localhost:1415/api/patients/add-in-Patient'; // Endpoint for adding new patient
+        ? `${API_BASE_URL}/patients/${patientData.id}` // Adjust the endpoint for update
+        : `${API_BASE_URL}/api/patients/add-in-Patient`; // Endpoint for adding new patient
 
       const response = await fetch(url, {
         method: isEditMode ? 'PUT' : 'POST',

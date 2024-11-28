@@ -12,7 +12,7 @@ function ReferralTracking() {
 
   // Fetch data from API on component mount
   useEffect(() => {
-    axios.get('http://localhost:5000/api/referrals')
+    axios.get(`${API_BASE_URL}/referrals`)
       .then(response => {
         setReferrals(response.data);
         console.log(response.data);
@@ -36,7 +36,7 @@ function ReferralTracking() {
 
   // Function to update referral data using Axios PUT request
   const updateReferral = (updatedReferral) => {
-    axios.put(`http://localhost:5000/api/referrals/${updatedReferral.referralId}`, updatedReferral)
+    axios.put(`${API_BASE_URL}/api/referrals/${updatedReferral.referralId}`, updatedReferral)
       .then(response => {
         console.log('Referral updated successfully', response.data);
         // Update local state with the updated referral

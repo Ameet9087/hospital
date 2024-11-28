@@ -29,7 +29,7 @@ const ServiceTimeTracking = () => {
 
   const fetchLabTests = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/patientsqueue/allpatients');
+      const response = await fetch(`${API_BASE_URL}/patientsqueue/allpatients`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -54,8 +54,8 @@ const ServiceTimeTracking = () => {
 
   const handleAddUpdate = async (formData) => {
     const apiUrl = selectedTest
-      ? `http://localhost:8080/api/patientsqueue/update/${selectedTest.id}`
-      : 'http://localhost:8080/api/patientsqueue/add';
+      ? `${API_BASE_URL}/patientsqueue/update/${selectedTest.id}`
+      : `${API_BASE_URL}/patientsqueue/add`;
     const method = selectedTest ? 'PUT' : 'POST';
     success('Successfully Add or Update');
 

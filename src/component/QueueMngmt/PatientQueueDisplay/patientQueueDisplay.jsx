@@ -34,7 +34,7 @@ const PatientQueueDisplay = () => {
 
   const fetchPatientsQueue = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/patientsqueue/allpatients');
+      const response = await fetch(`${API_BASE_URL}/patientsqueue/allpatients`);
       if (response.ok) {
         const data = await response.json();
         console.log('Fetched Patient Data:', data); // Log the fetched data
@@ -96,7 +96,7 @@ const PatientQueueDisplay = () => {
   };
 
   const handleAddUpdate = async (formData) => {
-    const apiUrl = selectedPatient ? `http://localhost:8080/api/patientsqueue/update/${formData.id}` : 'http://localhost:8080/api/patientsqueue/add';
+    const apiUrl = selectedPatient ? `${API_BASE_URL}/patientsqueue/update/${formData.id}` : `${API_BASE_URL}/patientsqueue/add`;
     const method = selectedPatient ? 'PUT' : 'POST';
 
     console.log('Sending Data:', formData); // Log the data being sent

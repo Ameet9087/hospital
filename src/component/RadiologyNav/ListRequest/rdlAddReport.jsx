@@ -86,7 +86,7 @@ function AddReportForm({ onClose, selectedRequest }) {
     formDataToSend.append("requisition", JSON.stringify(requisition));
 
     fetch(
-      `http://localhost:1415/api/imaging-requisitions/update/${selectedRequest.imagingId}`,
+      `${API_BASE_URL}/imaging-requisitions/update/${selectedRequest.imagingId}`,
       {
         method: "PUT",
         body: formDataToSend, // Send the FormData object

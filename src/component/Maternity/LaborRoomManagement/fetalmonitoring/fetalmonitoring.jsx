@@ -17,7 +17,7 @@ const FetalMonitoringManagement = () => {
     // Fetch monitoring data from API
     const fetchMonitoringData = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/fetal-monitoring'); // Adjust the URL to your API endpoint
+            const response = await axios.get(`${API_BASE_URL}/fetal-monitoring`); // Adjust the URL to your API endpoint
             setMonitoringList(response.data); // Set the state with the fetched data
         } catch (error) {
             console.error('Error fetching fetal monitoring data:', error);
@@ -32,12 +32,12 @@ const FetalMonitoringManagement = () => {
         try {
             if (newMonitoring.fetalMonitoringId) {
                 // Update existing monitoring
-                const response = await axios.put(`http://localhost:8080/api/fetal-monitoring/${newMonitoring.fetalMonitoringId}`, newMonitoring);
+                const response = await axios.put(`${API_BASE_URL}/fetal-monitoring/${newMonitoring.fetalMonitoringId}`, newMonitoring);
                 const updatedMonitoring = response.data;
                 setMonitoringList(monitoringList.map(monitoring => (monitoring.fetalMonitoringId === updatedMonitoring.fetalMonitoringId ? updatedMonitoring : monitoring)));
             } else {
                 // Add new monitoring
-                const response = await axios.post('http://localhost:8080/api/fetal-monitoring', newMonitoring);
+                const response = await axios.post(`${API_BASE_URL}/fetal-monitoring`, newMonitoring);
                 const createdMonitoring = response.data;
                 setMonitoringList([...monitoringList, createdMonitoring]);
             }

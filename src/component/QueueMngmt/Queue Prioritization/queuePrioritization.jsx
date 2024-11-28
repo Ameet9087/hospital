@@ -65,7 +65,7 @@ const QueuePrioritization = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/patientsqueue/allpatients');
+      const response = await fetch(`${API_BASE_URL}/patientsqueue/allpatients`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -81,8 +81,8 @@ const QueuePrioritization = () => {
   const handleAddUpdate = async (formData) => {
     // Determine the correct API URL based on whether we're editing or adding a new item
     const apiUrl = editingItem
-      ? `http://localhost:8080/api/patientsqueue/update/${editingItem.id}` // Use editingItem.id for the update
-      : 'http://localhost:8080/api/patientsqueue/add'; // URL for adding a new item
+      ? `${API_BASE_URL}/patientsqueue/update/${editingItem.id}` // Use editingItem.id for the update
+      : `${API_BASE_URL}/patientsqueue/add`; // URL for adding a new item
 
     const method = editingItem ? 'PUT' : 'POST'; // Set the correct method
     success('Successfully Add or Update');

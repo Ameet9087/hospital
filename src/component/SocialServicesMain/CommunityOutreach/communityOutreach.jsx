@@ -14,7 +14,7 @@ const CommunityOutreach = () => {
 
   const fetchCommunityOutreachData = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/communityoutreach/getall');
+      const response = await axios.get(`${API_BASE_URL}/communityoutreach/getall`);
       setOutreachPrograms(response.data);
       setLoading(false);
     } catch (error) {
@@ -36,11 +36,11 @@ const CommunityOutreach = () => {
     try {
       if (selectedOutreachProgram) {
         // Update existing outreach program
-        await axios.put(`http://localhost:8080/api/communityoutreach/update/${outreachData.outreachId}`, outreachData);
+        await axios.put(`${API_BASE_URL}/communityoutreach/update/${outreachData.outreachId}`, outreachData);
         console.log('Outreach program updated:', outreachData);
       } else {
         // Add new outreach program
-        await axios.post('http://localhost:8080/api/communityoutreach/add', outreachData);
+        await axios.post(`${API_BASE_URL}/communityoutreach/add`, outreachData);
         console.log('New outreach program added:', outreachData);
       }
       fetchCommunityOutreachData(); // Refresh the outreach programs list

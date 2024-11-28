@@ -29,7 +29,7 @@ function BirthList() {
 
   useEffect(() => {
     // Fetch data when the component mounts
-    axios.get('http://localhost:8989/api/birth-certificates/display-birthCertificate')
+    axios.get(`${API_BASE_URL}/birth-certificates/display-birthCertificate`)
       .then(response => {
         setBirthListData(response.data); // Assuming response.data is the array of birth certificates
         console.log(response.data);
@@ -105,7 +105,7 @@ function BirthList() {
   const handleSubmitBirth = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:1415/api/birth-certificates/save-birthCertificate', formBirthData);
+      const response = await axios.post(`${API_BASE_URL}/birth-certificates/save-birthCertificate`, formBirthData);
       alert('Birth Certificate Saved:', response.data);
       console.log('Birth Certificate Saved ', response.data);
       closeModal(); // Close the modal after successful submission

@@ -22,7 +22,7 @@ function Ot_personnelType() {
   // Function to fetch personnel types
   const fetchPersonnelTypes = async () => {
     try {
-      const response = await fetch('http://localhost:1415/api/personnel-types/all');
+      const response = await fetch(`${API_BASE_URL}/personnel-types/all`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -50,7 +50,7 @@ function Ot_personnelType() {
     if (editingPersonnelType) {
       // Update existing personnel type
       try {
-        const response = await fetch(`http://localhost:1415/api/personnel-types/${editingPersonnelType.id}`, {
+        const response = await fetch(`${API_BASE_URL}/personnel-types/${editingPersonnelType.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ function Ot_personnelType() {
     } else {
       // Add new personnel type
       try {
-        const response = await fetch('http://localhost:1415/api/personnel-types', {
+        const response = await fetch(`${API_BASE_URL}/api/personnel-types`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

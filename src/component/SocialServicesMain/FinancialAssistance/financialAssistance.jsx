@@ -17,7 +17,7 @@ const FinancialAssistance = () => {
   // Function to fetch financial assistance data from the API
   const fetchFinancialAssistance = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/financialassistance/getall');
+      const response = await fetch(`${API_BASE_URL}/financialassistance/getall`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -48,8 +48,8 @@ const FinancialAssistance = () => {
   };
 
   const handleAddUpdate = async (data, existingData) => {
-    const addApiUrl = 'http://localhost:8080/api/financialassistance/add'; // API URL for adding
-    const updateApiUrl = `http://localhost:8080/api/financialassistance/update/${existingData?.assistenceId}`; // API URL for updating
+    const addApiUrl = `${API_BASE_URL}/financialassistance/add`; // API URL for adding
+    const updateApiUrl = `${API_BASE_URL}/financialassistance/update/${existingData?.assistenceId}`; // API URL for updating
 
     try {
       if (existingData) {

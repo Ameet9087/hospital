@@ -18,7 +18,7 @@ const PostnatalCareManagement = () => {
     useEffect(() => {
         const fetchVisits = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/postnatal-care'); 
+                const response = await axios.get(`${API_BASE_URL}/postnatal-care`); 
                 console.log(response.data); // Replace with your actual API endpoint
                 setVisits(response.data); // Assuming the API returns an array of visits
             } catch (error) {
@@ -33,7 +33,7 @@ const PostnatalCareManagement = () => {
         if (newVisit.visitID) { 
             // If the visit ID exists, we are editing an existing visit, so we use PUT
             try {
-                const response = await axios.put(`http://localhost:8080/api/postnatal-care/${newVisit.visitID}`, newVisit);
+                const response = await axios.put(`${API_BASE_URL}/postnatal-care/${newVisit.visitID}`, newVisit);
                 console.log('Updated visit:', response.data);
                 setVisits(visits.map(visit => (visit.pncId === newVisit.visitID ? response.data : visit)));
             } catch (error) {
@@ -46,7 +46,7 @@ const PostnatalCareManagement = () => {
                     ...newVisit,
                     patientId:101,
                 }
-                const response = await axios.post('http://localhost:8080/api/postnatal-care', newVisit1);
+                const response = await axios.post(`${API_BASE_URL}/postnatal-care`, newVisit1);
                 console.log('New visit added:', response.data);
                 setVisits([...visits, response.data]);
             } catch (error) {

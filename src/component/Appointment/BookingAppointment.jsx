@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios if you are using it
 import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import AddNewAppointmentForm from "./AddNewappointment";
+import {API_BASE_URL} from "../api/api.js"
 
 const BookingAppointment = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +19,7 @@ const BookingAppointment = () => {
     const fetchPatients = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:1415/api/appointments/fetch-all-appointment"
+          `${API_BASE_URL}/appointments/fetch-all-appointment`
         );
         setPatients(response.data);
       } catch (error) {

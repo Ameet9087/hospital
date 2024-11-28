@@ -22,7 +22,7 @@ function ReferralReward() {
 
     // Step 2: Fetch rewards data from the API on component mount
     useEffect(() => {
-        axios.get('http://localhost:5000/api/rewards') // Replace with your API endpoint
+        axios.get(`${API_BASE_URL}/api/rewards`) // Replace with your API endpoint
             .then(response => {
                 setRewards(response.data); // Set the rewards data
                 console.log('Fetched rewards:', response.data);
@@ -74,7 +74,7 @@ function ReferralReward() {
     const handleSubmit = () => {
         if (modalMode === 'add') {
             // Step 4: Axios POST Request (Add New Reward)
-            axios.post('http://localhost:5000/api/rewards', formData) // Replace with your POST API endpoint
+            axios.post(`${API_BASE_URL}/rewards`, formData) // Replace with your POST API endpoint
                 .then(response => {
                     console.log('Added new reward:', response.data);
                     setRewards([...rewards, response.data]); // Add new reward to the list
@@ -85,7 +85,7 @@ function ReferralReward() {
                 });
         } else if (modalMode === 'edit') {
             // Step 5: Axios PUT Request (Edit Existing Reward)
-            axios.put(`http://localhost:5000/api/rewards/${formData.rewardId}`, formData) // Replace with your PUT API endpoint
+            axios.put(`${API_BASE_URL}/rewards/${formData.rewardId}`, formData) // Replace with your PUT API endpoint
                 .then(response => {
                     console.log('Updated reward:', response.data);
                     const updatedRewards = rewards.map((reward) =>

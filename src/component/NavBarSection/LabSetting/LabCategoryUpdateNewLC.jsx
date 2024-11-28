@@ -37,7 +37,7 @@ const LabCategoryUpdateNewLC = ({ labCategory, onClose }) => {
     try {
       // Sending a PUT request to update the lab category
       const response = await axios.put(
-        `http://localhost:1415/lab-test-categories/update/${labCategory.labTestCategoryId}`,
+        `${API_BASE_URL}/lab-test-categories/update/${labCategory.labTestCategoryId}`,
         payload
       );
       if (response.status === 200) {

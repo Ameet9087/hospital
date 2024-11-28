@@ -28,7 +28,7 @@ const LabCategoryAddNewLC = ({ onClose }) => {
       console.log(payload);
       
       const response = await axios.post(
-        `http://localhost:1415/api/lab-test-categories/create-testCategory`,
+        `${API_BASE_URL}/lab-test-categories/create-testCategory`,
         payload
       );
       if (response.status === 200 || response.status === 201) {

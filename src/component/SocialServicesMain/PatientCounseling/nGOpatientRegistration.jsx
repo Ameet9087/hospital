@@ -24,7 +24,7 @@ function NGOpatientRegistration() {
 
   // Fetch records from the API
   useEffect(() => {
-    fetch("http://localhost:8080/api/ngopatients/getall")
+    fetch(`${API_BASE_URL}/ngopatients/getall`)
       .then((response) => response.json())
       .then((data) => setLabTests(data))
       .catch((error) => console.error("Error fetching data:", error));
@@ -43,7 +43,7 @@ function NGOpatientRegistration() {
 
   // Handle adding new patient
   const handleAddSubmit = (formData) => {
-    fetch("http://localhost:8080/api/ngopatients/add", {
+    fetch(`${API_BASE_URL}/ngopatients/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ function NGOpatientRegistration() {
 
   // Handle updating existing patient
   const handleUpdateSubmit = (formData) => {
-    fetch(`http://localhost:8080/api/ngopatients/update/${formData.patientId}`, {
+    fetch(`${API_BASE_URL}/ngopatients/update/${formData.patientId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

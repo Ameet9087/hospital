@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios'; // Import Axios for API calls
 import './postsurgerycare.css'; // Importing CSS for styling
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { API_BASE_URL } from '../../api/api';
 
 
 const PostSurgeryCare = () => {
@@ -24,7 +25,7 @@ const PostSurgeryCare = () => {
   useEffect(() => {
     const fetchCareRecords = async () => {
       try {
-        const response = await axios.get('http://localhost:8051/api/post-surgery-care'); 
+        const response = await axios.get(`${API_BASE_URL}/post-surgery-care`); 
         console.log(response.data); // Debugging log
         setCareRecords(response.data); // Assuming response.data is an array of records
       } catch (error) {
@@ -51,7 +52,7 @@ const PostSurgeryCare = () => {
     if (editMode) {
       // Edit existing record via PUT request
       try {
-        const response = await axios.put(`http://localhost:8051/api/post-surgery-care/${formData.postCareId}`, formData);
+        const response = await axios.put(`${API_BASE_URL}/post-surgery-care/${formData.postCareId}`, formData);
         setCareRecords(careRecords.map((record) =>
           record.postCareId === formData.postCareId ? response.data : record
         ));
@@ -61,7 +62,7 @@ const PostSurgeryCare = () => {
     } else {
       // Add new record via POST request
       try {
-        const response = await axios.post('http://localhost:8051/api/post-surgery-care', formData);
+        const response = await axios.post(`${API_BASE_URL}/post-surgery-care`, formData);
         setCareRecords([...careRecords, response.data]); // Append new record to the state
       } catch (error) {
         console.error('Error adding record:', error);

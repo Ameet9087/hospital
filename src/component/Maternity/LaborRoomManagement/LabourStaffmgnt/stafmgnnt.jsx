@@ -23,7 +23,7 @@ const LabourStaffManagement = () => {
     useEffect(() => {
         const fetchStaffList = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/labor-staff-management'); // Replace with your actual API endpoint
+                const response = await axios.get(`${API_BASE_URL}/labor-staff-management`); // Replace with your actual API endpoint
                 setStaffList(response.data);
             } catch (error) {
                 console.error('Error fetching staff list:', error);
@@ -37,11 +37,11 @@ const LabourStaffManagement = () => {
         try {
             if (newStaff.staffId) {
                 // Update existing staff
-                await axios.put(`http://localhost:8080/api/labor-staff-management/${newStaff.staffId}`, newStaff);
+                await axios.put(`${API_BASE_URL}/labor-staff-management/${newStaff.staffId}`, newStaff);
                 setStaffList(staffList.map(staff => (staff.staffId === newStaff.staffId ? newStaff : staff)));
             } else {
                 // Add new staff
-                const response = await axios.post('http://localhost:8080/api/labor-staff-management', newStaff);
+                const response = await axios.post(`${API_BASE_URL}/labor-staff-management`, newStaff);
                 setStaffList([...staffList, response.data]);
             }
             // Reset newStaff state

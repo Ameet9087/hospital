@@ -73,7 +73,7 @@ const Lab1 = () => {
     event.preventDefault();
 
     await axios.put(
-      `http://localhost:1415/api/lab-requests/update-status/${test.labRequestId}`
+      `${API_BASE_URL}/lab-requests/update-status/${test.labRequestId}`
     );
 
     const labResultData = {
@@ -95,7 +95,7 @@ const Lab1 = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:1415/api/lab-result/save",
+        `${API_BASE_URL}/lab-result/save`,
         labResultData
       );
       console.log("Lab result saved:", response.data);

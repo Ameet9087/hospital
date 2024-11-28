@@ -22,7 +22,7 @@ function CampaignManagement() {
 
     // Fetch campaigns data from API on component mount
     useEffect(() => {
-        axios.get('http://localhost:5000/api/campaigns') // Replace with your API endpoint
+        axios.get(`${API_BASE_URL}/campaigns`) // Replace with your API endpoint
             .then(response => {
                 setCampaigns(response.data); // Set the fetched campaigns
             })
@@ -81,7 +81,7 @@ function CampaignManagement() {
                 campaignStatus: formData.campaignStatus,
             };
 
-            axios.post('http://localhost:5000/api/campaigns', newCampaign) // Replace with your API endpoint
+            axios.post(`${API_BASE_URL}/campaigns`, newCampaign) // Replace with your API endpoint
                 .then((response) => {
                     setCampaigns([...campaigns, response.data]); // Add new campaign to the list
                     closeModal();
@@ -92,7 +92,7 @@ function CampaignManagement() {
 
         } else if (modalMode === 'edit') {
             // PUT request to update the campaign
-            axios.put(`http://localhost:5000/api/campaigns/${formData.campaignId}`, formData) // Replace with your API endpoint
+            axios.put(`${API_BASE_URL}/campaigns/${formData.campaignId}`, formData) // Replace with your API endpoint
                 .then((response) => {
                     const updatedCampaigns = campaigns.map((campaign) =>
                         campaign.campaignId === formData.campaignId ? response.data : campaign
