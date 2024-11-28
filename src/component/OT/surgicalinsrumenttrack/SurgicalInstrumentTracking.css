@@ -79,36 +79,28 @@
     height: 450px;
 }
 
-<<<<<<< HEAD
-.surgicaltrack-modal-content h2 {
-=======
+
 
 
 .surgicaltrack-modal-content-h2 {
->>>>>>> dd54e3c33a7c6fb616b4c5f7a9383afbe910dc5b
+
     margin-bottom: 20px; /* Space below the heading */
     text-align: center; /* Center the heading */
 }
 
-<<<<<<< HEAD
-.surgicaltrack-modal-content label {
-=======
+
 .surgical-instrument-tracking label {
->>>>>>> dd54e3c33a7c6fb616b4c5f7a9383afbe910dc5b
+
     display: block; /* Make labels block elements */
     margin: 10px 0 5px; /* Space around the labels */
     font-weight: bold; /* Bold font for labels */
 }
 
-<<<<<<< HEAD
-.surgicaltrack-modal-content input[type="text"],
-.surgicaltrack-modal-content input[type="number"],
-.surgicaltrack-modal-content select {
-=======
+
 .surgical-instrument-tracking input[type="text"],
 .surgical-instrument-tracking input[type="number"],
 .surgical-instrument-tracking select {
->>>>>>> dd54e3c33a7c6fb616b4c5f7a9383afbe910dc5b
+
     width: 100%; /* Full width input fields */
     padding: 10px; /* Padding inside input fields */
     border: 1px solid #ccc; /* Light grey border */
@@ -121,7 +113,7 @@
     justify-content: space-between; /* Space between buttons */
 }
 
-<<<<<<< HEAD
+
 .surgicaltrack-modal-content button {
     padding: 10px 15px; /* Padding inside buttons */
     border: none; /* No border */
@@ -137,7 +129,7 @@
 .surgicaltrack-modal-content button:active {
     background-color: #ddd; /* Darker grey when pressed */
 }
-=======
+
 .surgicalinstrumenttrackingedit-btn{
     color: white;
     background-color: var(--button-color);
@@ -157,4 +149,4 @@
     color: var(--button-hover-text-color);
     border: 1px solid var(--button-hover-border-color);
 }
->>>>>>> dd54e3c33a7c6fb616b4c5f7a9383afbe910dc5b
+

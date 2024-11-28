@@ -64,7 +64,7 @@
      background-color: var(--button-hover-background-color);
  }
 
-<<<<<<< HEAD
+
  .recrutierMng-search-bar {
      margin-left: -15px;
      /* margin: 0; */
@@ -108,8 +108,7 @@
  }
 
 
-=======
->>>>>>> dd54e3c33a7c6fb616b4c5f7a9383afbe910dc5b
+
  .recrutierMng-results-info {
      display: flex;
      align-items: center;
