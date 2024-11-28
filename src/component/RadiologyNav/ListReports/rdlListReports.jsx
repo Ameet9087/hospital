@@ -39,12 +39,12 @@ function RDLListReports() {
     let link;
 
     if (dateFrom && dateTo) {
-      link = `http://localhost:1415/api/imaging-requisitions/by-status-date?status=Completed&startDate=${dateFrom}&endDate=${dateTo}`;
+      link = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=Completed&startDate=${dateFrom}&endDate=${dateTo}`;
     } else {
       const todayDate = getCurrentDate();
       console.log(todayDate);
 
-      link = `http://localhost:1415/api/imaging-requisitions/by-status-date?status=Completed&startDate=${todayDate}&endDate=${todayDate}`;
+      link = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=Completed&startDate=${todayDate}&endDate=${todayDate}`;
     }
 
     // Fetch the data

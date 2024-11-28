@@ -3,6 +3,7 @@ import React, { useState, useEffect,useRef } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import './manage_checklist.css';
 import { startResizing } from '../../../../../TableHeadingResizing/ResizableColumns';
+import { API_BASE_URL } from '../../../../api/api';
 
 function ManageOtChecklist() {
   const [checklists, setChecklists] = useState([]);
@@ -30,7 +31,7 @@ function ManageOtChecklist() {
   const fetchChecklists = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:1415/api/otchecklists');
+      const response = await fetch(`${API_BASE_URL}/otchecklists`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -76,8 +77,8 @@ function ManageOtChecklist() {
 
     try {
       const url = editingIndex !== null 
-        ? `http://localhost:1415/api/otchecklists/${checklists[editingIndex].id}`
-        : 'http://localhost:1415/api/otchecklists';
+        ? `${API_BASE_URL}/otchecklists/${checklists[editingIndex].id}`
+        : `${API_BASE_URL}/otchecklists`;
 
       const method = editingIndex !== null ? 'PUT' : 'POST';
 

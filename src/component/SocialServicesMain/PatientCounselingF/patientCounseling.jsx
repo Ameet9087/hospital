@@ -40,7 +40,7 @@ const PatientCounseling = () => {
   };
 
   const handleAddSubmit = (formData) => {
-    axios.post('http://localhost:8080/api/patientcounseling/add', formData)
+    axios.post(`${API_BASE_URL}/patientcounseling/add`, formData)
       .then((response) => {
         // Add new record to the state
         setLabTests((prev) => [...prev, response.data]);
@@ -53,7 +53,7 @@ const PatientCounseling = () => {
   const handleUpdateSubmit = (formData) => {
     if (!selectedCounselingData) return; // Ensure there's data to update
 
-    axios.put(`http://localhost:8080/api/patientcounseling/update/${selectedCounselingData.councellingId}`, formData)
+    axios.put(`${API_BASE_URL}/patientcounseling/update/${selectedCounselingData.councellingId}`, formData)
       .then((response) => {
         // Update the local state with the new data
         setLabTests((prev) => prev.map(test =>
@@ -68,7 +68,7 @@ const PatientCounseling = () => {
   useEffect(() => {
     const fetchPatientCounselingData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/patientcounseling/getall');
+        const response = await axios.get(`${API_BASE_URL}/patientcounseling/getall`);
         setLabTests(response.data);
       } catch (error) {
         setError('Error fetching data');

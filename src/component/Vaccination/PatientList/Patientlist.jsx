@@ -21,7 +21,7 @@ function Patientlist() {
   const tableRef = useRef(null);
 
   useEffect(() => {
-    fetch("http://localhost:1415/api/vaccinations/allVaccine")
+    fetch(`${API_BASE_URL}/vaccinations/allVaccine`)
       .then((response) => response.json())
       .then((response) => setPatients(response))
       .catch((error) => console.error("Error fetching patient data:", error));

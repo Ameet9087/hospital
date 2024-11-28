@@ -31,8 +31,8 @@ const RealTimeQueueMonitoring = () => {
 
   const handleAddUpdate = async (formData) => {
     const apiUrl = selectedData
-      ? `http://localhost:8080/api/patientsqueue/update/${selectedData.id}`
-      : 'http://localhost:8080/api/patientsqueue/add';
+      ? `${API_BASE_URL}/patientsqueue/update/${selectedData.id}`
+      : `${API_BASE_URL}/patientsqueue/add`;
     const method = selectedData ? 'PUT' : 'POST';
     success('Successfully Add or Update');
 
@@ -63,7 +63,7 @@ const RealTimeQueueMonitoring = () => {
 
   const fetchLabTests = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/patientsqueue/allpatients');
+      const response = await fetch(`${API_BASE_URL}/patientsqueue/allpatients`);
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }

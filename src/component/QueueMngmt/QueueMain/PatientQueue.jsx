@@ -12,7 +12,7 @@ const PatientQueue = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:1415/api/queues/employee/role')
+      .get(`${API_BASE_URL}/queues/employee/role`)
       .then((response) => {
         const formattedDoctors = response.data.map((doctor) => ({
           id: doctor.employeeId,
@@ -26,7 +26,7 @@ const PatientQueue = () => {
   const handleLoadData = () => {
     if (selectedDoctor) {
       axios
-        .get(`http://localhost:1415/api/queues/employee/${selectedDoctor}`)
+        .get(`${API_BASE_URL}/queues/employee/${selectedDoctor}`)
         .then((response) => {
           setData(response.data);
           setShowTable(true);
@@ -45,7 +45,7 @@ const PatientQueue = () => {
     const updatedData = { ...patientData, status: newStatus };
 
     axios
-      .put(`http://localhost:1415/api/queues/update/${patientData.patientQueueId}`, updatedData)
+      .put(`${API_BASE_URL}/queues/update/${patientData.patientQueueId}`, updatedData)
       .then(() => {
         setData((prevData) =>
           prevData.map((item) =>

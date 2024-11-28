@@ -65,7 +65,7 @@ const LabTestComponent = () => {
   const [labComponentData, setLabComponentData] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:1415/api/lab-components/getAllComponents`).then(
+    fetch(`${API_BASE_URL}/lab-components/getAllComponents`).then(
       (res) =>
         res
           .json()

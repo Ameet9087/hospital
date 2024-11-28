@@ -22,7 +22,7 @@ const ListVisited = () => {
     const fetchVisitPatient = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:1415/api/new-patient-visits"
+          `${API_BASE_URL}/new-patient-visits`
         );
         setListVisit(response.data);
       } catch (error) {

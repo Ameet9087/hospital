@@ -41,7 +41,7 @@ console.log(selectedPatient)
         const fetchPatients = async () => {
             setLoading(true);
             try {
-                const response = await axios.get('http://localhost:8051/api/bookings');
+                const response = await axios.get(`${API_BASE_URL}/bookings`);
                 setPatients(response.data);
                 setLoading(false);
             } catch (err) {
@@ -65,7 +65,7 @@ console.log(selectedPatient)
     // Add new patient and post to the API
     const handleAddPatient = async () => {
         try {
-            const response = await axios.post('http://localhost:8051/api/bookings', newPatient);
+            const response = await axios.post(`${API_BASE_URL}/bookings`, newPatient);
             setPatients([...patients, response.data]); // Update patients state with the newly added patient
             setShowAddPatientModal(false);
             setNewPatient({
@@ -103,7 +103,7 @@ console.log(selectedPatient)
             };
             
             console.log('Surgery details before submission', surgeryData);
-            const response = await axios.post('http://localhost:8051/api/surgeries', surgeryData);
+            const response = await axios.post(`${API_BASE_URL}/surgeries`, surgeryData);
             console.log('Surgery details submitted:', response.data);
             
             setShowActionModal(false);

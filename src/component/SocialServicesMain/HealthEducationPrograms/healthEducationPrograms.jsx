@@ -17,7 +17,7 @@ const HealthEducationPrograms = () => {
   // Fetching health education programs data
   const fetchHealthEducationPrograms = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/healtheducationprograms/getall');
+      const response = await fetch(`${API_BASE_URL}/healtheducationprograms/getall`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -53,8 +53,8 @@ const HealthEducationPrograms = () => {
 
   // Add or update health education program data
   const handleAddUpdate = async (data, existingData) => {
-    const addApiUrl = 'http://localhost:8080/api/healtheducationprograms/add';
-    const updateApiUrl = `http://localhost:8080/api/healtheducationprograms/update/${existingData?.programId}`;
+    const addApiUrl = `${API_BASE_URL}/healtheducationprograms/add`;
+    const updateApiUrl = `${API_BASE_URL}/healtheducationprograms/update/${existingData?.programId}`;
 
     try {
       if (existingData) {

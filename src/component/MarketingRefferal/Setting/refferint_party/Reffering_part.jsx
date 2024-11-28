@@ -24,7 +24,7 @@ const ReferringParty = () => {
 
   useEffect(() => {
     // Fetch referring parties from API
-    axios.get('http://localhost:5000/api/ReferingParty/fetch-all-ReferingParty')
+    axios.get(`${API_BASE_URL}/ReferingParty/fetch-all-ReferingParty`)
       .then(response => {
         setParties(response.data);
       })
@@ -44,7 +44,7 @@ const ReferringParty = () => {
   const handleDeactivate = (id) => {
     const confirmation = window.confirm("Are you sure you want to deactivate this party?");
     if (confirmation) {
-      axios.put(`http://localhost:5000/api/referring-parties/deactivate/${id}`)
+      axios.put(`${API_BASE_URL}/referring-parties/deactivate/${id}`)
         .then(() => {
           setParties(prevParties =>
             prevParties.map(party =>
@@ -61,7 +61,7 @@ const ReferringParty = () => {
   const handleActivate = (id) => {
     const confirmation = window.confirm("Are you sure you want to activate this party?");
     if (confirmation) {
-      axios.put(`http://localhost:5000/api/referring-parties/activate/${id}`)
+      axios.put(`${API_BASE_URL}/referring-parties/activate/${id}`)
         .then(() => {
           setParties(prevParties =>
             prevParties.map(party =>
@@ -115,7 +115,7 @@ const ReferringParty = () => {
 
     setIsLoading(true);
 
-    axios.post('http://localhost:5000/api/ReferingParty/save-referingParty', newParty)
+    axios.post(`${API_BASE_URL}/ReferingParty/save-referingParty`, newParty)
       .then(() => {
         alert('Referring Party saved successfully!');
         setParties([...parties, newParty]);

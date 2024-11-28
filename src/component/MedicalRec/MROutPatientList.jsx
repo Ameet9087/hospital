@@ -51,7 +51,7 @@ function RecordMedical() {
   // Fetch data from the API
   const fetchOutpatients = () => {
     
-    axios.get('http://localhost:1415/api/mroutpatients/getAllMRoutpatients')
+    axios.get(`${API_BASE_URL}/mroutpatients/getAllMRoutpatients`)
       .then(response => {
         const data = response.data;
         setOutpatients(data);

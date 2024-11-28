@@ -27,7 +27,7 @@ const LabourList = () => {
     useEffect(() => {
         const fetchDeliveries = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/labor-list'); // Replace with your actual API endpoint
+                const response = await axios.get(`${API_BASE_URL}/labor-list`); // Replace with your actual API endpoint
                 setDeliveries(response.data);
                 console.log(response.data);
             } catch (error) {
@@ -42,11 +42,11 @@ const LabourList = () => {
         try {
             if (newDelivery.laborId) {
                 // Update existing delivery
-                await axios.put(`http://localhost:8080/api/labor-list/${newDelivery.laborId}`, newDelivery);
+                await axios.put(`${API_BASE_URL}/labor-list/${newDelivery.laborId}`, newDelivery);
                 setDeliveries(deliveries.map(delivery => (delivery.laborId === newDelivery.laborId ? newDelivery : delivery)));
             } else {
                 // Add new delivery
-                const response = await axios.post('http://localhost:8080/api/labor-list', newDelivery);
+                const response = await axios.post(`${API_BASE_URL}/labor-list`, newDelivery);
                 setDeliveries([...deliveries, response.data]);
             }
             // Reset newDelivery state

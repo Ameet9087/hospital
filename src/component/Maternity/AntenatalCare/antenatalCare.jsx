@@ -31,7 +31,7 @@ const AntenatalCare = () => {
     useEffect(() => {
         const fetchVisits = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/antenatal-care');
+                const response = await axios.get(`${API_BASE_URL}/antenatal-care`);
                 console.log(response.data); // Replace with your actual API endpoint
                 setVisits(response.data);
             } catch (error) {
@@ -48,7 +48,7 @@ const AntenatalCare = () => {
         console.log("before submitting",newVisit)
         try {
             // Send POST request to add new visit
-            const response = await axios.post('http://localhost:8080/api/antenatal-care', {
+            const response = await axios.post(`${API_BASE_URL}/antenatal-care`, {
                 ...newVisit,
                 visitDate: new Date(newVisit.visitDate),
                 nextVisitDate: new Date(newVisit.nextVisitDate),
@@ -79,7 +79,7 @@ const AntenatalCare = () => {
 
             console.log("data before updating",updatedVisit);
 
-            await axios.put(`http://localhost:8080/api/antenatal-care/${visits[editIndex].ancId}`, updatedVisit); // Use visit ID for the PUT request
+            await axios.put(`${API_BASE_URL}/antenatal-care/${visits[editIndex].ancId}`, updatedVisit); // Use visit ID for the PUT request
 
             // Update local state
             const updatedVisits = [...visits];

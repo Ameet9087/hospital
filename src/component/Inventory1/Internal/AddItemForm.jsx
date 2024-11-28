@@ -44,28 +44,28 @@ const AddItemForm = ({ onClose }) => {
   }, []);
 
   const fetchUmo = () => {
-    fetch('http://localhost:1415/api/unitofmeasurement/fetchAll')
+    fetch(`${API_BASE_URL}/unitofmeasurement/fetchAll`)
       .then((res) => res.json())
       .then((data) => setUom(data))
       .catch((err) => console.log(err));
   };
 
   const fetchCompany = () => {
-    fetch('http://localhost:1415/api/company/allCompany')
+    fetch(`${API_BASE_URL}/company/allCompany`)
       .then((res) => res.json())
       .then((data) => setCompany(data))
       .catch((err) => console.log(err));
   };
 
   const fetchSubcategory = () => {
-    fetch('http://localhost:1415/api/subcategories/fetchAll')
+    fetch(`${API_BASE_URL}/subcategories/fetchAll`)
       .then((res) => res.json())
       .then((data) => setSubCategory(data))
       .catch((err) => console.log(err));
   };
 
   const fetchPackageType = () => {
-    fetch('http://localhost:1415/api/packageType/getAllPackageType')
+    fetch(`${API_BASE_URL}/packageType/getAllPackageType`)
       .then((res) => res.json())
       .then((data) => setPackagingType(data))
       .catch((err) => console.log(err));
@@ -89,7 +89,7 @@ const AddItemForm = ({ onClose }) => {
     }
     console.log(data);
     
-    fetch("http://localhost:1415/api/items/create", {
+    fetch(`${API_BASE_URL}/items/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

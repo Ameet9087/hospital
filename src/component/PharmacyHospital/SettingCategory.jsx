@@ -168,7 +168,7 @@ const SettingCategory = () => {
                     className="setting-supplier-action-button"
                     onClick={() => {
                       // Handle deactivate action
-                      axios.delete(`http://192.168.1.37:1415/api/categories/${user.id}`)
+                      axios.delete(`${API_BASE_URL}/categories/${user.id}`)
                         .then(() => {
                           setSuppliers(suppliers.filter(supplier => supplier.id !== user.id));
                         })

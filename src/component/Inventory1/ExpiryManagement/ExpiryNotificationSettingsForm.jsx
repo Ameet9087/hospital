@@ -13,7 +13,7 @@ const DrugExpiryAlert = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8000/api/drugs/getDrugs');
+                const response = await fetch(`${API_BASE_URL}/api/drugs/getDrugs`);
                 const data = await response.json();
                 // Map the data to your desired structure
                 const formattedData = data.map(drug => ({

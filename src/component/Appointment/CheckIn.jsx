@@ -67,7 +67,7 @@ const CheckIn = () => {
   const fetchDoctors = async (departmentId) => {
     try {
       const response = await fetch(
-        `http://localhost:1415/api/employees/department/${departmentId}`
+        `${API_BASE_URL}/employees/department/${departmentId}`
       );
       const data = await response.json();
       setEmployees(data);
@@ -78,7 +78,7 @@ const CheckIn = () => {
   const fetchConsultationChargesForSelectedDoctor = async (id) => {
     try {
       const response = await axios.get(
-        `http://localhost:1415/api/consultation-charges/by-doctor/${id}`
+        `${API_BASE_URL}/consultation-charges/by-doctor/${id}`
       );
       const data = response.data;
       setCharges(data);

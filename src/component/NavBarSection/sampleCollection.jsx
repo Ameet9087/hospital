@@ -18,7 +18,7 @@ const SampleCollection = () => {
   useEffect(() => {
     const requisitionDate = new Date().toISOString().split("T")[0];
     fetch(
-      `http://localhost:1415/api/lab-requests/by-requisition-date?requisitionDate=${requisitionDate}&status=Pending`
+      `${API_BASE_URL}/lab-requests/by-requisition-date?requisitionDate=${requisitionDate}&status=Pending`
     )
       .then((response) => response.json())
       .then((data) => {

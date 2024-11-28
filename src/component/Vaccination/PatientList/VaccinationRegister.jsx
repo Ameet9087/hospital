@@ -72,7 +72,7 @@ const VaccinationRegister = ({ onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Send formData to the backend API
-    fetch("http://localhost:1415/api/vaccinations", {
+    fetch(`${API_BASE_URL}/vaccinations`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -15,7 +15,7 @@ const SocialWelfareSupport = () => {
 
   const fetchSocialWelfareSupport = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/socialwelfaresupport/getall');
+      const response = await fetch(`${API_BASE_URL}/socialwelfaresupport/getall`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -41,7 +41,7 @@ const SocialWelfareSupport = () => {
 
       // Check if the social welfare support ID exists to determine if it's an update
       if (data.socialwelfaresupportId) {
-        response = await fetch(`http://localhost:8080/api/socialwelfaresupport/update/${data.socialwelfaresupportId}`, {
+        response = await fetch(`${API_BASE_URL}/socialwelfaresupport/update/${data.socialwelfaresupportId}`, {
           method: 'PUT', // Use PUT for updates
           headers: {
             'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const SocialWelfareSupport = () => {
         });
       } else {
         // Add new support
-        response = await fetch('http://localhost:8080/api/socialwelfaresupport/add', {
+        response = await fetch(`${API_BASE_URL}/socialwelfaresupport/add`, {
           method: 'POST', // Use POST for adding new entries
           headers: {
             'Content-Type': 'application/json',

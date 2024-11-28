@@ -38,10 +38,10 @@ function PendingReports() {
     let link;
 
     if (dateFrom != "" && dateTo != "") {
-      link = `http://localhost:1415/api/lab-result/by-verify-dateRange?isVerified=No&startDate=${dateFrom}&endDate=${dateTo}`;
+      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?isVerified=No&startDate=${dateFrom}&endDate=${dateTo}`;
     } else {
       let TodaysDate = new Date().toISOString().split("T")[0];
-      link = `http://localhost:1415/api/lab-result/by-verify-dateRange?isVerified=No&startDate=${TodaysDate}&endDate=${TodaysDate}`;
+      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?isVerified=No&startDate=${TodaysDate}&endDate=${TodaysDate}`;
     }
     fetch(link)
       .then((res) => res.json())

@@ -63,7 +63,7 @@ const CollectSample = ({ sample }) => {
 
     try {
       const response = await axios.put(
-        `http://localhost:1415/api/lab-requests/update-sample/${sample.labRequestId}`,
+        `${API_BASE_URL}/lab-requests/update-sample/${sample.labRequestId}`,
         labRequestObject
       );
 

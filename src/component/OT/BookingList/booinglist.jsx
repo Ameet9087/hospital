@@ -6,6 +6,7 @@ import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { API_BASE_URL } from '../../api/api';
 
 function BookingList() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -25,7 +26,7 @@ function BookingList() {
     // Fetch existing bookings when the component mounts
     const fetchPatientList = async () => {
       try {
-        const response = await axios.get('http://localhost:1415/api/operation/all-operation-data');
+        const response = await axios.get(`${API_BASE_URL}/operation/all-operation-data`);
         setOtPatientList(response.data); // Store data from the API in state
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -52,7 +53,7 @@ function BookingList() {
 
     try {
       // Send POST request to add a new booking
-      const response = await axios.post('http://localhost:1415/api/operation/save-operation-details', payload);
+      const response = await axios.post(`${API_BASE_URL}/operation/save-operation-details`, payload);
       console.log('Operation booked successfully:', response.data);
 
       // Reset the form after submission
@@ -66,7 +67,7 @@ function BookingList() {
       setStatus('Booked');
 
       // Fetch updated patient list after adding a new booking
-      const updatedPatientList = await axios.get('http://localhost:1415/api/operation/fetch-all');
+      const updatedPatientList = await axios.get(`${API_BASE_URL}/operation/fetch-all`);
       setOtPatientList(updatedPatientList.data);
     } catch (error) {
       console.error('Error booking operation:', error);

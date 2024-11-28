@@ -44,7 +44,7 @@ const PatientVaccinationDetails = ({ patient, onClose }) => {
     const fetchVaccines = async () => {
       try {
         const response = await fetch(
-          `http://localhost:1415/api/vaccinations/get-all-vaccination/doses/${patient?.vaccinationId}`
+          `${API_BASE_URL}/vaccinations/get-all-vaccination/doses/${patient?.vaccinationId}`
         );
         if (response.ok) {
           const data = await response.json();
@@ -91,7 +91,7 @@ const PatientVaccinationDetails = ({ patient, onClose }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:1415/api/vaccinations/${patient?.vaccinationId}/doses`,
+        `${API_BASE_URL}/vaccinations/${patient?.vaccinationId}/doses`,
         {
           method: "POST",
           headers: {
@@ -125,7 +125,7 @@ const PatientVaccinationDetails = ({ patient, onClose }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:1415/api/vaccinations/${patient?.vaccinationId}/doses/${vaccines?.doseId}`,
+        `${API_BASE_URL}/vaccinations/${patient?.vaccinationId}/doses/${vaccines?.doseId}`,
         {
           method: "PUT",
           headers: {

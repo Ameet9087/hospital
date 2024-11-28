@@ -19,7 +19,7 @@ const BreastfeedingSupportManagement = () => {
     useEffect(() => {
         const fetchSessions = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/breastfeeding-support');
+                const response = await axios.get(`${API_BASE_URL}/breastfeeding-support`);
                 console.log(response.data); // Replace with your API endpoint
                 setSessions(response.data); // Assuming the data is in the correct format
             } catch (error) {
@@ -35,7 +35,7 @@ const BreastfeedingSupportManagement = () => {
         if (newSession.bfSupportId) { 
             // If bfSupportId exists, update the existing session (PUT)
             try {
-                await axios.put(`http://localhost:8080/api/breastfeeding-support/${newSession.bfSupportId}`, newSession);
+                await axios.put(`${API_BASE_URL}/breastfeeding-support/${newSession.bfSupportId}`, newSession);
                 setSessions(sessions.map(session => (session.bfSupportId === newSession.bfSupportId ? newSession : session)));
             } catch (error) {
                 console.error('Error updating session:', error);
@@ -43,7 +43,7 @@ const BreastfeedingSupportManagement = () => {
         } else { 
             // If no bfSupportId, add a new session (POST)
             try {
-                const response = await axios.post('http://localhost:8080/api/breastfeeding-support', newSession);
+                const response = await axios.post(`${API_BASE_URL}/breastfeeding-support`, newSession);
                 setSessions([...sessions, { ...response.data }]); // Append new session
             } catch (error) {
                 console.error('Error adding session:', error);

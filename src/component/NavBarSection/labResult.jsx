@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./labResult.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../api/api";
 
 const Lab2 = () => {
   const [selectedSignatory, setSelectedSignatory] = useState("");
@@ -13,7 +14,7 @@ const Lab2 = () => {
 
   useEffect(() => {
     fetch(
-      `http://localhost:1415/api/lab-result/by-labRequest?labRequestId=${labRequestId}`
+      `${API_BASE_URL}/lab-result/by-labRequest?labRequestId=${labRequestId}`
     )
       .then((res) => res.json())
       .then((res) => setLabResult(res))
@@ -51,7 +52,7 @@ const Lab2 = () => {
     try {
       // Call the API to update the lab result
       await axios.put(
-        `http://localhost:1415/api/lab-result/update/${labResult.labResultId}`,
+        `${API_BASE_URL}/lab-result/update/${labResult.labResultId}`,
         updatedLabResult
       );
       console.log("Lab result updated successfully!");

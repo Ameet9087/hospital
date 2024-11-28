@@ -29,7 +29,7 @@ const FamilyPlanningSupportManagement = () => {
     useEffect(() => {
         const fetchSessions = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/family-planning`);
+                const response = await axios.get(`${API_BASE_URL}/family-planning`);
                 console.log(response.data); // Log the fetched data to verify it
                 if (Array.isArray(response.data)) {
                     setSessions(response.data); // Set the fetched data into state
@@ -48,13 +48,13 @@ const FamilyPlanningSupportManagement = () => {
         try {
             if (newSession.fpServiceId) {
                 // If fpServiceId exists, update (PUT request)
-                await axios.put(`http://localhost:8080/api/family-planning/${newSession.fpServiceId}`, {
+                await axios.put(`${API_BASE_URL}/family-planning/${newSession.fpServiceId}`, {
                     ...newSession,
                 });
                 setSessions(sessions.map(session => (session.fpServiceId === newSession.fpServiceId ? newSession : session)));
             } else {
                 // If no fpServiceId, add new session (POST request)
-                const response = await axios.post('http://localhost:8080/api/family-planning', {
+                const response = await axios.post(`${API_BASE_URL}/family-planning`, {
                     ...newSession,
                    
                 });

@@ -30,7 +30,7 @@ const PatientNotification = () => {
 
   const fetchLabTests = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/patientsqueue/allpatients');
+      const response = await fetch(`${API_BASE_URL}/patientsqueue/allpatients`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -77,7 +77,7 @@ const PatientNotification = () => {
   };
 
   const handleAddUpdate = async (formData) => {
-    const apiUrl = selectedNotification ? `http://localhost:8080/api/patientsqueue/update/${formData.id}` : 'http://localhost:8080/api/patientsqueue/add';
+    const apiUrl = selectedNotification ? `${API_BASE_URL}/patientsqueue/update/${formData.id}` : `${API_BASE_URL}/patientsqueue/add`;
     const method = selectedNotification ? 'PUT' : 'POST';
 
     console.log('Sending Data:', formData); // Log the data being sent

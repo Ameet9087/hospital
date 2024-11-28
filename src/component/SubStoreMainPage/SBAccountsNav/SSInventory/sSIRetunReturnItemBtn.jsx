@@ -119,7 +119,7 @@ const SSIRetunReturnItemBtn = ({ onBack }) => {
     };
 
     try {
-      const response = await fetch('http://localhost:1415/api/inventory-return/add', {
+      const response = await fetch(`${API_BASE_URL}/inventory-return/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

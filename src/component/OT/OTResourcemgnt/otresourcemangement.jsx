@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './OTResourceManagement.css';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { API_BASE_URL } from '../../api/api';
 
 
 const OTResourceManagement = () => {
@@ -16,7 +17,7 @@ const OTResourceManagement = () => {
 
     // Fetch OT data when component mounts
     useEffect(() => {
-        axios.get('http://localhost:8051/api/ot-resources')
+        axios.get(`${API_BASE_URL}/ot-resources`)
             .then(response => {
                 console.log(response.data);
                 setOTs(response.data); // Set the OTs state with the fetched data
@@ -29,7 +30,7 @@ const OTResourceManagement = () => {
     const handleAddOT = () => {
         if (newOT.OTID) { // Check if we are editing an existing OT
             // PUT request to update existing OT
-            axios.put(`http://localhost:8051/api/ot-resources/${newOT.OTID}`, {
+            axios.put(`${API_BASE_URL}/ot-resources/${newOT.OTID}`, {
                 otName: newOT.OTName,
                 availabilityStatus: newOT.AvailabilityStatus,
                 equipmentAvailable: newOT.EquipmentAvailable,
@@ -46,7 +47,7 @@ const OTResourceManagement = () => {
             });
         } else { // Add a new OT
             // POST request to create a new OT
-            axios.post('http://localhost:8051/api/ot-resources', {
+            axios.post(`${API_BASE_URL}/ot-resources`, {
                 otName: newOT.OTName,
                 availabilityStatus: newOT.AvailabilityStatus,
                 equipmentAvailable: newOT.EquipmentAvailable,

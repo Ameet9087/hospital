@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios'; // Import Axios
 import './anesthesiarecordmgnt.css'; // Ensure you have this file for styling
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { API_BASE_URL } from '../../api/api';
 
 
 const AnesthesiaRecordManagement = () => {
@@ -25,7 +26,7 @@ const AnesthesiaRecordManagement = () => {
   useEffect(() => {
     const fetchRecords = async () => {
       try {
-        const response = await axios.get('http://localhost:8051/api/anesthesia-records'); // Update this URL as needed
+        const response = await axios.get(`${API_BASE_URL}/anesthesia-records`); // Update this URL as needed
         setRecords(response.data); // Assuming response.data is an array of records
       } catch (error) {
         console.error('Error fetching anesthesia records:', error);
@@ -46,7 +47,7 @@ const AnesthesiaRecordManagement = () => {
   const handleAddRecord = async () => {
     try {
       // Add new record via POST request
-      const response = await axios.post('http://localhost:8051/api/anesthesia-records', newRecord);
+      const response = await axios.post(`${API_BASE_URL}/anesthesia-records`, newRecord);
       setRecords([...records, response.data]); // Append new record to the state
     } catch (error) {
       console.error('Error adding record:', error);
@@ -66,7 +67,7 @@ const AnesthesiaRecordManagement = () => {
   const handleUpdateRecord = async () => {
     try {
       // Update the existing record via PUT request
-      const response = await axios.put(`http://localhost:8051/api/anesthesia-records/${editRecordId}`, newRecord);
+      const response = await axios.put(`${API_BASE_URL}/anesthesia-records/${editRecordId}`, newRecord);
       setRecords(records.map(record => (record.anesthesiaRecordId === editRecordId ? response.data : record))); // Update the record in the state
     } catch (error) {
       console.error('Error updating record:', error);

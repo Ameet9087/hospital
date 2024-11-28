@@ -39,12 +39,12 @@ function RDLListRequest() {
     let linkPending, linkActive;
 
     if (dateFrom && dateTo) {
-      linkPending = `http://localhost:1415/api/imaging-requisitions/by-status-date?status=Pending&startDate=${dateFrom}&endDate=${dateTo}`;
-      linkActive = `http://localhost:1415/api/imaging-requisitions/by-status-date?status=Active&startDate=${dateFrom}&endDate=${dateTo}`;
+      linkPending = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=Pending&startDate=${dateFrom}&endDate=${dateTo}`;
+      linkActive = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=Active&startDate=${dateFrom}&endDate=${dateTo}`;
     } else {
       const todayDate = getCurrentDate();
-      linkPending = `http://localhost:1415/api/imaging-requisitions/by-status-date?status=Pending&startDate=${todayDate}&endDate=${todayDate}`;
-      linkActive = `http://localhost:1415/api/imaging-requisitions/by-status-date?status=Active&startDate=${todayDate}&endDate=${todayDate}`;
+      linkPending = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=Pending&startDate=${todayDate}&endDate=${todayDate}`;
+      linkActive = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=Active&startDate=${todayDate}&endDate=${todayDate}`;
     }
 
     // Fetch the data for Pending and Active statuses
@@ -78,7 +78,7 @@ function RDLListRequest() {
 
   const updateStatus = (id, filmTypeId, quantity, status, scannedOn) => {
     fetch(
-      `http://localhost:1415/api/imaging-requisitions/update-film-type-and-quantity?filmTypeId=${filmTypeId}&quantity=${quantity}&status=${status}&scannedOn=${scannedOn}&imagingId=${id}`,
+      `${API_BASE_URL}/imaging-requisitions/update-film-type-and-quantity?filmTypeId=${filmTypeId}&quantity=${quantity}&status=${status}&scannedOn=${scannedOn}&imagingId=${id}`,
       {
         method: "PUT",
         headers: {
