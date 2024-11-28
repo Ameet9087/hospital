@@ -8,6 +8,15 @@
     height: 550px;
     width: 100%;
 }
+.error-message
+{
+    color: red;
+}
+.writeOff-select
+{
+    padding: 7px;
+    width: 100%;
+}
 
 /* .writeOff-tab-content {
     width: 100%;

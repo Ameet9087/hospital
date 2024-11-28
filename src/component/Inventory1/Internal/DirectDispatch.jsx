@@ -1,21 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import "./DirectDispatch.css";
-import { API_BASE_URL } from '../../api/api';
+import { API_BASE_URL } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const DirectDispatch = ({ setShowDirect }) => {
-  const [storeName, setStoreName] = useState('');
-  const [dispatchDate, setDispatchDate] = useState('');
-  const [items, setItems] = useState([{
-      itemCategory: 'Consumables',
-      itemName: '',
-      code: '',
-      unit: '',
-      availableQty: '',
-      dispatchedQty: '',
-      remark: ''
-  }]);
-  const [remarks, setRemarks] = useState('');
+  const [storeName, setStoreName] = useState("");
+  const [dispatchDate, setDispatchDate] = useState("");
+  const navigate = useNavigate();
+  const [items, setItems] = useState([
+    {
+      itemCategory: "",
+      itemName: "",
+      code: "",
+      unit: "",
+      availableQty: "",
+      dispatchedQty: "",
+      remark: "",
+    },
+  ]);
+  const [remarks, setRemarks] = useState("");
   const [allItems, setAllItems] = useState([]);
+  const [subStore, setSubStore] = useState([]);
 
   useEffect(() => {
     // Fetch items when the component mounts
@@ -25,47 +30,71 @@ const DirectDispatch = ({ setShowDirect }) => {
         const data = await response.json();
         setAllItems(data); // Assuming data is an array of items
       } catch (error) {
-        console.error('Error fetching items:', error);
+        console.error("Error fetching items:", error);
       }
     };
 
     fetchItems();
   }, []);
 
+  useEffect(() => {
+    // Fetch items when the component mounts
+    const fetchSubstore = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/substores`);
+        const data = await response.json();
+        console.log(data);
+
+        setSubStore(data); // Assuming data is an array of items
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      }
+    };
+
+    fetchSubstore();
+  }, []);
+
   const handleChange = (index, event) => {
     const { name, value } = event.target;
     const newItems = [...items];
-    newItems[index][name] = value;
+    newItems[index] = {
+      ...newItems[index],
+      [name]: value,
+    };
     setItems(newItems);
   };
 
-  const handleItemSelect = async (index, itemName) => {
-    const selectedItem = allItems.find(item => item.itemName === itemName); // Adjust according to your item structure
-    console.log(selectedItem);
+  const handleItemSelect = (index, itemId) => {
+    const selectedItem = allItems.find(item => item.itemId === parseInt(itemId)); // Match by itemId
     
     if (selectedItem) {
       const newItems = [...items];
       newItems[index] = {
         ...newItems[index],
-        itemName: selectedItem.itemName,
-        code: selectedItem.itemCode,
-        unit: selectedItem.unitOfMeasurement.name,
-        availableQty: selectedItem.minStockQuantity,
+        itemId: selectedItem.itemId, // Store the itemId
+        itemName: selectedItem.itemName, // Update the item name
+        code: selectedItem.itemCode, // Update the item code
+        unit: selectedItem.unitOfMeasurement.name, // Update the unit
+        availableQty: selectedItem.minStockQuantity // Update available quantity
       };
       setItems(newItems);
     }
   };
+  
 
   const handleAddItem = () => {
-    setItems([...items, {
-      itemCategory: 'Consumables',
-      itemName: '',
-      code: '',
-      unit: '',
-      availableQty: '',
-      dispatchedQty: '',
-      remark: ''
-    }]);
+    setItems([
+      ...items,
+      {
+        itemCategory: "",
+        itemName: "",
+        code: "",
+        unit: "",
+        availableQty: "",
+        dispatchedQty: "",
+        remark: "",
+      },
+    ]);
   };
 
   const handleRemoveItem = (index) => {
@@ -75,50 +104,67 @@ const DirectDispatch = ({ setShowDirect }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(items);
     const payload = {
-      storeName,
-      dispatchDate,
-      items,
-      remarks,
+      issueNo: "REQ123", // You can dynamically generate or fetch this value if needed
+      requisitionDate: dispatchDate,
+      dispatchBy: "Mr.Jhon",
+      itemCategory: items[0]?.itemCategory || "",
+      remark: remarks,
+      status: "Approved", // You can change this based on form input if needed
+      subStoreId: parseInt(storeName), // Assuming storeName contains subStoreId
+      itemRequisitions: items.map((item) => ({
+        itemId: item.itemId,
+        dispatchQty: item.dispatchedQty,
+        requestedQuantity: item.dispatchedQty,
+        remarks: item.remark,
+      })),
     };
+
     console.log(payload);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/dispatch/savedispatch`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/inventory-requisitions/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
       if (response.ok) {
-        console.log('Dispatch saved successfully');
+        console.log("Dispatch to substore saved successfully");
         setShowDirect(false);
+        
         // Handle success (e.g., show a success message, clear the form, etc.)
       } else {
-        console.error('Error saving dispatch');
+        console.error("Error saving dispatch");
         // Handle error (e.g., show an error message)
       }
     } catch (error) {
-      console.error('Network error:', error);
+      console.error("Network error:", error);
       // Handle network error
     }
   };
 
   const handleDiscard = () => {
-    setStoreName('');
-    setDispatchDate('2024-08-21');
-    setItems([{
-      itemCategory: 'Consumables',
-      itemName: '',
-      code: '',
-      unit: '',
-      availableQty: '',
-      dispatchedQty: '',
-      remark: ''
-    }]);
-    setRemarks('');
+    setStoreName("");
+    setDispatchDate("2024-08-21");
+    setItems([
+      {
+        itemCategory: "Consumables",
+        itemName: "",
+        code: "",
+        unit: "",
+        availableQty: "",
+        dispatchedQty: "",
+        remark: "",
+      },
+    ]);
+    setRemarks("");
   };
 
   return (
@@ -126,31 +172,31 @@ const DirectDispatch = ({ setShowDirect }) => {
       <form onSubmit={handleSubmit}>
         <div className="direct-dispatch-dispatch-date">
           <h1>Direct Dispatch</h1>
-          <label>Dispatch Date: 
-            <input 
-              type="date" 
-              value={dispatchDate} 
-              onChange={(e) => setDispatchDate(e.target.value)} 
+          <label>
+            Dispatch Date:
+            <input
+              type="date"
+              value={dispatchDate}
+              onChange={(e) => setDispatchDate(e.target.value)}
             />
           </label>
         </div>
         <div className="direct-dispatch-store-name">
-          <label>Store*: 
-            <select 
+          <label>
+            Store*:
+            <select
               value={storeName}
               onChange={(e) => setStoreName(e.target.value)}
               required
             >
-              <option value="" disabled>Select Store</option>
-              <option value="Accounts">Accounts</option>
-              <option value="Brain Operations Store">Brain Operations Store</option>
-              <option value="ICU Substore">ICU Substore</option>
-              <option value="Male Ward Substore">Male Ward Substore</option>
-              <option value="Maternity Substore">Maternity Substore</option>
-              <option value="Operation Store">Operation Store</option>
-              <option value="Private Sub Store">Private Sub Store</option>
-              <option value="Substore1">Substore1</option>
-              <option value="Substore2">Substore2</option>
+              <option value="" disabled>
+                Select Store
+              </option>
+              {subStore.map((item, index) => (
+                <option key={index} value={item.subStoreId}>
+                  {item.subStoreName}
+                </option>
+              ))}
             </select>
           </label>
         </div>
@@ -172,12 +218,18 @@ const DirectDispatch = ({ setShowDirect }) => {
             {items.map((item, index) => (
               <tr key={index}>
                 <td>
-                  <button type="button" className="direct-dispatch-buttons-direct-add" onClick={handleAddItem}>+</button>
+                  <button
+                    type="button"
+                    className="direct-dispatch-buttons-direct-add"
+                    onClick={handleAddItem}
+                  >
+                    +
+                  </button>
                 </td>
                 <td>
-                  <select 
-                    name="itemCategory" 
-                    value={item.itemCategory} 
+                  <select
+                    name="itemCategory"
+                    value={item.itemCategory}
                     onChange={(e) => handleChange(index, e)}
                   >
                     <option>Consumables</option>
@@ -185,64 +237,75 @@ const DirectDispatch = ({ setShowDirect }) => {
                   </select>
                 </td>
                 <td>
-                  <select 
-                    name="itemName" 
-                    value={item.itemName} 
+                  <select
+                    name="itemId"
+                    value={item.itemId} // Bind to itemId instead of itemName
                     onChange={(e) => {
                       handleItemSelect(index, e.target.value);
                     }}
                   >
-                    <option value="" disabled>Select Item</option>
+                    <option value="" disabled>
+                      Select Item
+                    </option>
                     {allItems.map((allItem, idx) => (
-                      <option key={idx} value={allItem.itemName}>{allItem.itemName}</option>
+                      <option key={idx} value={allItem.itemId}>
+                        {allItem.itemName}
+                      </option>
                     ))}
                   </select>
                 </td>
+
                 <td>
-                  <input 
-                    type="text" 
-                    name="code" 
-                    value={item.code} 
+                  <input
+                    type="text"
+                    name="code"
+                    value={item.code}
                     onChange={(e) => handleChange(index, e)}
                     readOnly // Optional: Make it read-only if auto-filled
                   />
                 </td>
                 <td>
-                  <input 
-                    type="text" 
-                    name="unit" 
-                    value={item.unit} 
+                  <input
+                    type="text"
+                    name="unit"
+                    value={item.unit}
                     onChange={(e) => handleChange(index, e)}
                     readOnly // Optional: Make it read-only if auto-filled
                   />
                 </td>
                 <td>
-                  <input 
-                    type="number" 
-                    name="availableQty" 
-                    value={item.availableQty} 
-                    onChange={(e) => handleChange(index, e)} 
+                  <input
+                    type="number"
+                    name="availableQty"
+                    value={item.availableQty}
+                    onChange={(e) => handleChange(index, e)}
                     readOnly // Optional: Make it read-only if auto-filled
                   />
                 </td>
                 <td>
-                  <input 
-                    type="number" 
-                    name="dispatchedQty" 
-                    value={item.dispatchedQty} 
+                  <input
+                    type="number"
+                    name="dispatchedQty"
+                    value={item.dispatchedQty}
                     onChange={(e) => handleChange(index, e)}
                   />
                 </td>
                 <td>
-                  <input 
-                    type="text" 
-                    name="remark" 
-                    value={item.remark} 
+                  <input
+                    type="text"
+                    name="remark"
+                    value={item.remark}
                     onChange={(e) => handleChange(index, e)}
                   />
                 </td>
                 <td>
-                  <button type="button" className="direct-dispatch-buttons-remove" onClick={() => handleRemoveItem(index)}>X</button>
+                  <button
+                    type="button"
+                    className="direct-dispatch-buttons-remove"
+                    onClick={() => handleRemoveItem(index)}
+                  >
+                    X
+                  </button>
                 </td>
               </tr>
             ))}
@@ -250,14 +313,25 @@ const DirectDispatch = ({ setShowDirect }) => {
         </table>
         <div className="direct-dispatch-remarks">
           <label>Remarks*:</label>
-          <textarea 
+          <textarea
             value={remarks}
             onChange={(e) => setRemarks(e.target.value)}
           ></textarea>
         </div>
         <div className="direct-dispatch-buttons">
-          <button className="direct-dispatch-buttons-direct-dispatch" type="submit">Direct Dispatch</button>
-          <button className="direct-dispatch-buttons-discard-change" type="button" onClick={handleDiscard}>Discard Changes</button>
+          <button
+            className="direct-dispatch-buttons-direct-dispatch"
+            type="submit"
+          >
+            Direct Dispatch
+          </button>
+          <button
+            className="direct-dispatch-buttons-discard-change"
+            type="button"
+            onClick={handleDiscard}
+          >
+            Discard Changes
+          </button>
         </div>
       </form>
     </div>

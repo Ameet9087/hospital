@@ -1,39 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './DispatchTable.css';
+import CustomModal from '../../CustomModel/CustomModal';
+import RequisitionDetail from './RequisitionDetail';
 
 const DispatchTable = ({ dispatch }) => {
+    console.log(dispatch);
+    
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const itemsPerPage = 10; // Adjust as needed
+    const [show,setShow] = useState(false);
 
-    useEffect(() => {
-        // Fetch data logic here if needed
-        // For now, we'll just use the props data
-    }, []);
+
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };
 
-    const handlePageChange = (direction) => {
-        setCurrentPage(prevPage => {
-            if (direction === 'next') {
-                return Math.min(prevPage + 1, totalPages);
-            }
-            if (direction === 'previous') {
-                return Math.max(prevPage - 1, 1);
-            }
-            return prevPage;
-        });
-    };
+    const handleViewClick = () => {
+        setShow(true); // Only triggered when button is clicked
+      };
 
     const filteredDispatches = dispatch ? [dispatch] : [];
     const handlePrint = () => {
         window.print(); // Trigger the browser's print dialog
     };
     return (
+        <>
         <div className="dispatch-table-container">
             <div className="dispatch-table-header">
                 <div className="dispatch-table-search">
@@ -45,7 +39,7 @@ const DispatchTable = ({ dispatch }) => {
                     />
                 </div>
                 <div className="dispatch-table-actions">
-                <span>Showing {filteredDispatches.length} result</span>
+                <span>Showing {filteredDispatches?.length} result</span>
 
                 <button className="dispatch-print-btn" onClick={handlePrint}>Print</button>
 
@@ -66,45 +60,24 @@ const DispatchTable = ({ dispatch }) => {
                 </thead>
                 <tbody>
                     {filteredDispatches
-                        .filter(dispatch => 
-                            dispatch.id.toString().includes(searchTerm) ||
-                            dispatch.dispatchDate.includes(searchTerm)
-                        )
-                        .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-                        .map(dispatch => (
-                            <tr key={dispatch.id}>
-                                <td>{dispatch.id}</td>
+                        ?.map(dispatch => (
+                            <tr key={dispatch.inventoryRequisitionId}>
+                                <td>{dispatch.inventoryRequisitionId}</td>
                                 <td>{dispatch.dispatchDate}</td>
-                                <td>{`REQ${dispatch.id}`}</td>
-                                <td>{dispatch.receivedBy || 'Mr. admin admin'}</td>
-                                <td>{dispatch.dispatchedBy || 'Mr. admin admin'}</td>
+                                <td>{`REQ${dispatch.inventoryRequisitionId}`}</td>
+                                <td>{dispatch.receivedBy }</td>
+                                <td>{dispatch.dispatchBy }</td>
                                 <td>
-                                    <button className='dispatch-view-btn'>View</button>
+                                    <button className='dispatch-view-btn' onClick={handleViewClick}>View</button>
                                 </td>
                             </tr>
                         ))}
                 </tbody>
             </table>
-
-            {/* <div className="dispatch-table-pagination">
-
-                <button
-                    disabled={currentPage === 1}
-                    onClick={() => handlePageChange('previous')}
-                >
-                    Previous
-                </button>
-                <span>Page {currentPage} of {totalPages}</span>
-                <button
-                    disabled={currentPage === totalPages}
-                    onClick={() => handlePageChange('next')}
-                >
-                    Next
-                </button>
-            </div> */}
-
-            
-        </div>
+                    </div>
+                    <CustomModal isOpen={show} onClose={() => setShow(false)}>
+                    <RequisitionDetail requisition={dispatch} onClose={() => setShow(false)} />
+                </CustomModal></>
     );
 };
 

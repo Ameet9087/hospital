@@ -1,66 +1,53 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const isActive = (path) => location.pathname === path;
-
   return (
     <nav className="inventory-navbar">
-      <button
-        className={`inventory-home-button ${isActive('/') ? 'active' : ''}`}
-        onClick={() => navigate('/')}
+      <NavLink
+        to="/"
+        className={({ isActive }) => `inventory-home-button ${isActive ? 'active' : ''}`}
       >
         ⌂
-      </button>
+      </NavLink>
       <div className="inventory-nav-links">
-        <button
-          className={isActive('/internal') ? 'active' : ''}
-          onClick={() => navigate('/inventory/internal')}
+        <NavLink
+          to="/inventory/internal"
+          className={({ isActive }) => (isActive ? 'active' : '')}
         >
           Internal
-        </button>
-        <button
-          className={isActive('/stock') ? 'active' : ''}
-          onClick={() => navigate('/inventory/stock')}
+        </NavLink>
+        <NavLink
+          to="/inventory/stock"
+          className={({ isActive }) => (isActive ? 'active' : '')}
         >
           Stock
-        </button>
-        <button
-          className={isActive('/reports') ? 'active' : ''}
-          onClick={() => navigate('/inventory/reports')}
+        </NavLink>
+        <NavLink
+          to="/inventory/reports"
+          className={({ isActive }) => (isActive ? 'active' : '')}
         >
           Reports
-        </button>
-        <button
-          className={isActive('/return-to-vendor') ? 'active' : ''}
-          onClick={() => navigate('/inventory/returntovendor')}
+        </NavLink>
+        <NavLink
+          to="/inventory/returntovendor"
+          className={({ isActive }) => (isActive ? 'active' : '')}
         >
           Return To Vendor
-        </button>
-
-
-        <button
-          className={isActive('/drug-registration') ? 'active' : ''}
-          onClick={() => navigate('/inventory/drugregistration')}
+        </NavLink>
+        <NavLink
+          to="/inventory/drugregistration"
+          className={({ isActive }) => (isActive ? 'active' : '')}
         >
           Drug Registration
-        </button>
-   
-        <button
-          className={isActive('/expiry-notification') ? 'active' : ''}
-          onClick={() => navigate('/inventory/expirynotification')}
+        </NavLink>
+        <NavLink
+          to="/inventory/expirynotification"
+          className={({ isActive }) => (isActive ? 'active' : '')}
         >
           Expiry Notification
-        </button>
-
-
-      </div>
-      <div className="inventory-active-inventory">
-        Active Inventory: GENERAL-INVENTORY <span className="inventory-arrow">➔</span>
+        </NavLink>
       </div>
     </nav>
   );

@@ -1,0 +1,90 @@
+/* Overall page styling */
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #e6f7f7; /* Slight background color */
+    padding: 20px;
+  }
+  
+  /* Logo styling */
+  .logo-container {
+    margin-bottom: 20px;
+  }
+  
+  .logo {
+    font-size: 32px; /* Adjusted size */
+    color: #00968f; /* Use the original color */
+  }
+  
+  /* Header styling */
+  .login-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .login-header h2 {
+    color: #007973; /* Darker shade */
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+  
+  /* Login option buttons styling */
+  .login-options {
+    display: flex;
+    gap: 40px; /* Spacing between buttons */
+  }
+  
+  .login-option {
+    text-align: center;
+  }
+  
+  /* Button styling */
+  .login-button {
+    width: 140px;
+    height: 140px;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .button-icon {
+    font-size: 50px; /* Adjust the size */
+    margin-bottom: 10px;
+  }
+  
+  .button-label {
+    color: white;
+    font-size: 16px;
+  }
+  
+  /* Specific Button Colors */
+  .login-button.admin {
+    background-color: #007973; /* Darker shade */
+  }
+  
+  .login-button.receptionist {
+    background-color: #008a80; /* Slightly Darker Shade */
+  }
+  
+  .login-button.doctor {
+    background-color: #00a39c; /* Slightly Lighter Shade */
+  }
+  
+  /* Hover effect for buttons */
+  .login-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  }
+  
