@@ -9,11 +9,11 @@
 
 }
 
-header {
+/* header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
+} */
 
 .new-request-button {
   padding: 5px;
