@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Button } from 'react-bootstrap';
-import './EmployeeTypeTable.css'; // Assuming your CSS is included here
-import AddEmployeeType from './AddEmployeeType'; // Import the AddEmployeeType component
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-import { API_BASE_URL } from '../api/api'; // Ensure the correct API_BASE_URL is imported
+import React, { useState, useEffect, useRef } from "react";
+import { Button } from "react-bootstrap";
+import "./EmployeeTypeTable.css"; // Assuming your CSS is included here
+import AddEmployeeType from "./AddEmployeeType"; // Import the AddEmployeeType component
+import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { API_BASE_URL } from "../api/api"; // Ensure the correct API_BASE_URL is imported
+import { useFilter } from "../ShortCuts/useFilter";
 
 const EmployeeTypeComponent = () => {
   const [showAddTypeModal, setShowAddTypeModal] = useState(false);
@@ -12,8 +13,11 @@ const EmployeeTypeComponent = () => {
   const [employeeTypes, setEmployeeTypes] = useState([]); // State for fetched employee types
   const [isLoading, setIsLoading] = useState(true); // Loading state
   const tableRef = useRef(null);
-
-  // Fetch employee types when the component mounts
+  const [searchTerm, setSearchTerm] = useState("");
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  const filteredItems = useFilter(employeeTypes, searchTerm);
   useEffect(() => {
     const fetchEmployeeTypes = async () => {
       try {
@@ -23,11 +27,11 @@ const EmployeeTypeComponent = () => {
           setEmployeeTypes(data); // Update state with fetched employee types
           setIsLoading(false);
         } else {
-          console.error('Failed to fetch employee types:', response.statusText);
+          console.error("Failed to fetch employee types:", response.statusText);
           setIsLoading(false);
         }
       } catch (error) {
-        console.error('Error fetching employee types:', error);
+        console.error("Error fetching employee types:", error);
         setIsLoading(false);
       }
     };
@@ -44,11 +48,11 @@ const EmployeeTypeComponent = () => {
 
   // Example functions to handle modal classes for toggling
   function openModal() {
-    document.body.classList.add('emp-modal-open');
+    document.body.classList.add("emp-modal-open");
   }
 
   function closeModal() {
-    document.body.classList.remove('emp-modal-open');
+    document.body.classList.remove("emp-modal-open");
   }
 
   return (
@@ -63,16 +67,19 @@ const EmployeeTypeComponent = () => {
             +Add Type
           </Button>
         </div>
-        <input type="text" placeholder="Search" className="emp-search-input" />
+        <input
+          type="text"
+          placeholder="Search"
+          className="emp-search-input"
+          value={searchTerm}
+          onChange={handleSearch}
+        />
 
         <div className="table-container">
-          {isLoading ? (
-            <div>Loading...</div>
-          ) : (
             <table ref={tableRef}>
               <thead>
                 <tr>
-                  {['Type', 'Description', 'Action'].map((header, index) => (
+                  {["Type", "Description", "Action"].map((header, index) => (
                     <th
                       key={index}
                       style={{ width: columnWidths[index] }}
@@ -93,8 +100,8 @@ const EmployeeTypeComponent = () => {
                 </tr>
               </thead>
               <tbody>
-                {employeeTypes.length > 0 ? (
-                  employeeTypes.map((type, index) => (
+                {filteredItems.length > 0 ? (
+                  filteredItems.map((type, index) => (
                     <tr key={index}>
                       <td>{type.employeeType}</td>
                       <td>{type.description}</td>
@@ -102,9 +109,7 @@ const EmployeeTypeComponent = () => {
                         <Button
                           className="emp-role-btn"
                           variant="secondary"
-                          onClick={() =>
-                            handleOpenAddTypeModal(type)
-                          }
+                          onClick={() => handleOpenAddTypeModal(type)}
                         >
                           Edit
                         </Button>
@@ -118,7 +123,6 @@ const EmployeeTypeComponent = () => {
                 )}
               </tbody>
             </table>
-          )}
         </div>
       </div>
 

@@ -4,8 +4,8 @@ import { API_BASE_URL } from "../api/api";
 // Replace with your actual API base URL
 
 const AddDepartment = ({ onClose }) => {
-  const [departmentCode, setDepartmentCode] = useState("ACC"); // Assuming 'ACC' is a default or auto-generated code
-  const [departmentName, setDepartmentName] = useState("Account");
+  const [departmentCode, setDepartmentCode] = useState(""); //Assuming 'ACC' is a default or auto-generated code
+  const [departmentName, setDepartmentName] = useState("");
   const [parentDepartment, setParentDepartment] = useState("");
   const [departmentDescription, setDepartmentDescription] = useState("");
   const [departmentNoticeText, setDepartmentNoticeText] = useState("");
@@ -33,13 +33,13 @@ const AddDepartment = ({ onClose }) => {
       noticeText: departmentNoticeText || null,
       departmentHead: departmentHead || null,
       roomNumber: roomNumber || null,
-      isActive: isActive? "Yes" :"No", // Convert to boolean if API expects
-      isAppointmentApplicable: isAppointmentApplicable ? "Yes" :"No", // Convert to boolean if API expects
+      isActive: isActive ? "Yes" : "No", // Convert to boolean if API expects
+      isAppointmentApplicable: isAppointmentApplicable ? "Yes" : "No", // Convert to boolean if API expects
     };
 
     try {
       console.log(payload);
-      
+
       const response = await fetch(
         `${API_BASE_URL}/departments/add-department`,
         {

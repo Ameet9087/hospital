@@ -3,7 +3,7 @@
 /* General Styles */
 .manage-substore-page {
   background-color: var(--background-color);
-  padding: 15px;
+  padding: 10px;
   height: 90vh;
   overflow-y: scroll;
 }
@@ -20,7 +20,7 @@
 }
 
 .manage-add-substore-btn {
-  background-color:var(--button-color);
+  background-color: var(--button-color);
   color: white;
   border: none;
   padding: 6px 12px; /* Reduced padding */
@@ -28,7 +28,7 @@
   font-weight: bold;
   cursor: pointer;
 }
-.manage-add-substore-btn :hover{
+.manage-add-substore-btn :hover {
   color: var(--button-color);
   background-color: white;
 }
@@ -46,14 +46,13 @@
   border-collapse: collapse;
 }
 
-.manage-substore-table th, .manage-substore-table td {
+.manage-substore-table th,
+.manage-substore-table td {
   border: 1px solid #e0e0e0;
   padding: 8px; /* Reduced padding */
   text-align: left;
   font-size: 13px; /* Reduced font size */
 }
-
-
 
 /* Hover effect for table rows */
 .manage-substore-table tbody tr:hover {
@@ -63,13 +62,17 @@
 .manage-store-edit-btn {
   background-color: var(--button-color);
   color: white;
-  border: none;
-  padding: 4px 8px; /* Reduced padding */
+  border: 1px solid var(--button-color);
+  padding: 4px 8px;
   border-radius: 3px;
   cursor: pointer;
-  font-size: 11px; /* Reduced font size */
+  font-size: 11px;
 }
-
+.manage-store-edit-btn:hover {
+  background-color: var(--button-hover-color);
+  color: var(--button-color);
+  border: 1px solid var(--button-color);
+}
 .manage-store-pagination {
   margin-top: 15px; /* Reduced margin */
   display: flex;
@@ -77,24 +80,24 @@
   align-items: center;
 }
 
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .manage-substore-manage-section {
-      flex-direction: column;
-      align-items: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .manage-add-substore-btn {
-      margin-bottom: 8px; /* Reduced margin */
+    margin-bottom: 8px; /* Reduced margin */
   }
 
   .manage-substore-search-input {
-      width: 100%;
+    width: 100%;
   }
 
-  .manage-substore-table th, .manage-substore-table td {
-      font-size: 12px; /* Font size remains the same */
+  .manage-substore-table th,
+  .manage-substore-table td {
+    font-size: 12px; /* Font size remains the same */
   }
 }
 
@@ -103,38 +106,45 @@
   font-size: 14px;
 }
 
-/* Modal Styles */
-.update-substore-modal-container {
- width: 100%;
-}
-
-.update-substore-modal-header {
+.update-substore-conatainer {
+  width: 800px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
+  flex-direction: column;
 }
-
+.update-substore-form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.update-substore-form-grid {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+}
+.update-substore-form-group {
+  width: 100%;
+}
+.update-substore-form-button-group {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 .update-substore-modal-header h2 {
   margin: 0;
   font-size: 24px;
   color: #333;
 }
-.update-substore-form-group
-{
+.update-substore-form-group {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.update-substore-form-group input
-{
+.update-substore-form-group input {
   width: 60%;
 }
-.update-substore-form-group textarea
-{
+.update-substore-form-group textarea {
   width: 70%;
 }
 .manage-add-substore-btn {
@@ -155,13 +165,12 @@
   border: 1px solid var(--button-color); /* Add border on hover */
 }
 
-
 .update-substore-close-btn {
   background: none;
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color:red;
+  color: red;
   transition: color 0.3s ease;
 }
 
@@ -169,11 +178,15 @@
   color: #333;
 }
 
-.update-substore-input-field,
-.update-substore-textarea-field {
+.update-substore-input-field {
   width: 100%;
   padding: 8px;
   margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.update-substore-textarea-field {
+  width: 100%;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -181,8 +194,8 @@
 .update-substore-update-btn {
   background-color: var(--button-color);
   color: #fff;
-  border: none;
-  padding:5px 10px;
+  border: 1px solid var(--button-color);
+  padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
   margin-top: 20px;
@@ -191,4 +204,10 @@
 .update-substore-update-btn:hover {
   background-color: white;
   color: var(--button-color);
+}
+.manage-store-btn-conatainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
 }

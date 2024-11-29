@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Modal, Button } from 'react-bootstrap';
-import UpdateDepartmentForm from './UpdateDepartmentForm';
-import AddDepartment from './AddDepartment';
-import './ManageDepartment.css';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-import { API_BASE_URL } from '../api/api';
+import React, { useState, useEffect, useRef } from "react";
+import { Modal, Button } from "react-bootstrap";
+import UpdateDepartmentForm from "./UpdateDepartmentForm";
+import AddDepartment from "./AddDepartment";
+import "./ManageDepartment.css";
+import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { API_BASE_URL } from "../api/api";
 import CustomModal from "../../CustomModel/CustomModal";
+import { useFilter } from "../ShortCuts/useFilter";
 
 const ManageDepartment = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -13,13 +14,16 @@ const ManageDepartment = () => {
   const [data, setData] = useState([]); // State to hold department data
   const [loading, setLoading] = useState(true); // Loading state
   const [columnWidths, setColumnWidths] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
   const tableRef = useRef(null);
 
   // Fetch department data from the API
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/departments/getAllDepartments`);
+        const response = await fetch(
+          `${API_BASE_URL}/departments/getAllDepartments`
+        );
         const departments = await response.json();
         setData(departments); // Set the department data
         setLoading(false); // Set loading to false once data is fetched
@@ -31,6 +35,14 @@ const ManageDepartment = () => {
 
     fetchDepartments();
   }, []);
+
+  // Filter departments by department name
+  const filteredItems = useFilter(data, searchTerm);
+
+  // Handle search input changes
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   const handleShowUpdateModal = (department) => {
     setSelectedDepartment(department); // Set department if editing, null if adding
@@ -46,19 +58,25 @@ const ManageDepartment = () => {
     <div className="manage-department-page">
       <div className="manage-department-table-container">
         <div className="manage-department-manage-section">
-          <h1 className="manage-add-department-btn" onClick={() => handleShowUpdateModal(null)}>
+          <h1
+            className="manage-add-department-btn"
+            onClick={() => handleShowUpdateModal(null)}
+          >
             + Add Department
           </h1>
-          <div className="manage-department-results-info">Showing {data.length} / {data.length} results</div>
+          <div className="manage-department-results-info">
+            Showing {filteredItems.length} / {data.length} results
+          </div>
         </div>
         <div className="sett-search-bar">
-          <input type="text" placeholder="Search" className="manage-department-search-input" />
+          <input
+            type="text"
+            placeholder="Search by department name"
+            className="manage-department-search-input"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
         </div>
-        
-        {/* Show loader if data is loading */}
-        {loading ? (
-          <p>Loading departments...</p>
-        ) : (
           <div className="table-container">
             <table ref={tableRef}>
               <thead>
@@ -70,7 +88,7 @@ const ManageDepartment = () => {
                     "Description",
                     "Is Active",
                     "Is Appointment",
-                    "Action"
+                    "Action",
                   ].map((header, index) => (
                     <th
                       key={index}
@@ -81,7 +99,10 @@ const ManageDepartment = () => {
                         <span>{header}</span>
                         <div
                           className="resizer"
-                          onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
                         ></div>
                       </div>
                     </th>
@@ -89,14 +110,16 @@ const ManageDepartment = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => (
+                {filteredItems?.map((item, index) => (
                   <tr key={index}>
                     <td>{item.departmentCode}</td>
                     <td>{item.departmentName}</td>
                     <td>{item.parentDepartmentName}</td>
                     <td>{item.description}</td>
                     <td>{item.isActive === "Yes" ? "Yes" : "No"}</td>
-                    <td>{item.isAppointmentApplicable === "Yes" ? "Yes" : "No"}</td>
+                    <td>
+                      {item.isAppointmentApplicable === "Yes" ? "Yes" : "No"}
+                    </td>
                     <td>
                       <Button
                         className="manage-department-edit-btn"
@@ -110,23 +133,18 @@ const ManageDepartment = () => {
               </tbody>
             </table>
           </div>
-        )}
-      </div>
+        </div>
 
       {/* Modal for Add or Update Department */}
-      <CustomModal 
-       isOpen={showUpdateModal}
-        onClose={handleCloseUpdateModal}
->
-{selectedDepartment !== null ? (
-            <UpdateDepartmentForm
-              department={selectedDepartment}
-              onClose={handleCloseUpdateModal}
-            />
-          ) : (
-            <AddDepartment onClose={handleCloseUpdateModal} />
-          )}
-
+      <CustomModal isOpen={showUpdateModal} onClose={handleCloseUpdateModal}>
+        {selectedDepartment !== null ? (
+          <UpdateDepartmentForm
+            department={selectedDepartment}
+            onClose={handleCloseUpdateModal}
+          />
+        ) : (
+          <AddDepartment onClose={handleCloseUpdateModal} />
+        )}
       </CustomModal>
     </div>
   );

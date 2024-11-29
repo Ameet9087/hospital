@@ -1,15 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Button } from 'react-bootstrap';
-import './EmployeeRoleTable.css';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-import AddEmployeeRoleForm from './AddEmployeeRole';
-import { API_BASE_URL } from '../api/api';
+import React, { useState, useEffect, useRef } from "react";
+import { Button } from "react-bootstrap";
+import "./EmployeeRoleTable.css";
+import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import AddEmployeeRoleForm from "./AddEmployeeRole";
+import { API_BASE_URL } from "../api/api";
+import { useFilter } from "../ShortCuts/useFilter";
 const EmployeeRoleComponent = () => {
   const [showAddRoleModal, setShowAddRoleModal] = useState(false);
-  const [roleData, setRoleData] = useState({ role: '', description: '' });
+  const [roleData, setRoleData] = useState({ role: "", description: "" });
   const [columnWidths, setColumnWidths] = useState({});
   const [roles, setRoles] = useState([]); // State to store roles
   const tableRef = useRef(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Fetch employee roles from the API
   const fetchRoles = async () => {
@@ -19,10 +21,10 @@ const EmployeeRoleComponent = () => {
         const data = await response.json();
         setRoles(data); // Update roles state with fetched data
       } else {
-        console.error('Failed to fetch roles:', response.statusText);
+        console.error("Failed to fetch roles:", response.statusText);
       }
     } catch (error) {
-      console.error('Error while fetching roles:', error);
+      console.error("Error while fetching roles:", error);
     }
   };
 
@@ -31,12 +33,17 @@ const EmployeeRoleComponent = () => {
     fetchRoles();
   }, []);
 
-  const handleOpenAddRoleModal = (role = '', description = '') => {
+  const handleOpenAddRoleModal = (role = "", description = "") => {
     setRoleData({ role, description });
     setShowAddRoleModal(true);
   };
 
   const handleCloseAddRoleModal = () => setShowAddRoleModal(false);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  const filteredItems = useFilter(roles, searchTerm);
 
   return (
     <div className="employee-role-role-page">
@@ -50,9 +57,15 @@ const EmployeeRoleComponent = () => {
             +Add Role
           </Button>
         </div>
-        <input type="text" placeholder="Search" className="emp-search-input" />
+        <input
+          type="text"
+          placeholder="Search"
+          className="emp-search-input"
+          value={searchTerm}
+          onChange={handleSearch}
+        />
 
-        <div className='table-container'>
+        <div className="table-container">
           <table ref={tableRef}>
             <thead>
               <tr>
@@ -66,7 +79,10 @@ const EmployeeRoleComponent = () => {
                       <span>{header}</span>
                       <div
                         className="resizer"
-                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
                       ></div>
                     </div>
                   </th>
@@ -74,7 +90,7 @@ const EmployeeRoleComponent = () => {
               </tr>
             </thead>
             <tbody>
-              {roles.map((role, index) => (
+              {filteredItems.map((role, index) => (
                 <tr key={index}>
                   <td>{role.role}</td>
                   <td>{role.description}</td>

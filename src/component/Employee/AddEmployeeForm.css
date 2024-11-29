@@ -4,7 +4,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .add-employee-form {
@@ -51,35 +50,35 @@
   width: 100%;
 }
 
-.emp-form-add{
-  flex: 1;
-  margin-right: 20px;
-  padding-right: 20px;
+.emp-form-add {
+  width: 33%;
 }
 
 .emp-radio-sign {
-  flex: 2;
-  padding-left: 20px;
+  width: 33%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
 }
 
 .add-employee-group {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 }
-.add-employee-groups{
+.add-employee-groups {
   display: flex;
   align-items: center;
   /* margin-bottom: 10px; */
   /* padding-bottom: 0px; */
   /* border-bottom: 2px solid #ccc; */
-
 }
 
 .emp-input {
-  
   flex: 1;
- font-size: 16px;
+  font-size: 16px;
 
   max-width: 150px; /* Ensures label doesn't take too much space */
 }
@@ -87,7 +86,7 @@
 .emp-input[type="text"],
 .emp-input[type="email"],
 .emp-input[type="date"],
-.add-employee-button[type="file"],
+.emp-input[type="file"],
 .emp-input[type="number"],
 .emp-input[type="textarea"],
 .emp-input,
@@ -105,7 +104,6 @@ input[type="checkbox"] {
   margin-right: 10px;
 }
 
-
 .add-employee-buttons {
   display: flex;
   justify-content: space-between;
@@ -114,15 +112,15 @@ input[type="checkbox"] {
 
 .add-employee-button,
 .cancel-button {
-  padding: 10px 20px;
-  margin-left: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
   border: none;
-  background-color: #007bff;
+  background-color: var(--button-color);
   color: white;
   cursor: pointer;
 }
 .emp-input.required::after {
-  content: '*';
+  content: "*";
   color: red; /* Red color for the asterisk */
   margin-left: 5px; /* Space between label text and asterisk */
 }
@@ -141,9 +139,8 @@ input[type="checkbox"] {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.emp-depart{
-  border-right: 1px solid #ccc;
-  padding-right: 30px;
+.emp-depart {
+  width: 33%;
 }
 .emp-modal-open .table {
   background-color: #f0f0f0;
@@ -152,60 +149,37 @@ input[type="checkbox"] {
 /*  */
 /* Style for .emp-app */
 .emp-app {
-  margin-top: 20px; 
-  padding: 10px; 
+  margin-top: 20px;
+  padding: 10px;
   /* border-top: 1px solid #ccc;  */
 }
 
 .add-employee-groups {
-  margin-bottom: 10px; 
-  display: flex; 
-  
-  align-items: center; 
+  margin-bottom: 10px;
+  display: flex;
+
+  align-items: center;
 }
 
 .add-employee-groups .emp-input {
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
-/* Style for .add-employee-buttons */
-/* Style for .add-employee-buttons */
-.add-employee-buttons {
-  border-top: 1px solid #ccc; 
-  display: flex; 
-  justify-content: flex-start; 
-  padding: 5px 0; /* Add vertical padding if needed */
+.emp-select {
+  width: 50%;
+  padding: 5px;
 }
-
-/* Style for buttons */
-.add-employee-button {
-  background-color: #4CAF50; 
-  color: white; 
-  border: none; 
-  padding: 10px 20px; 
-  text-align: center; 
-  text-decoration: none; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  font-size: 16px;
-  height: 30px; 
-  cursor: pointer;
-  border-radius: 4px; 
-}
-
-
 .cancel-button {
   background-color: #f44336;
   color: white;
-  border: none; 
-  padding: 10px 20px; 
-  text-align: center; 
-  text-decoration: none; 
-  display: inline-block; 
-  font-size: 16px; 
-  margin: 4px 2px; 
-  cursor: pointer; 
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
   border-radius: 4px;
 }
 /* Style for the table */

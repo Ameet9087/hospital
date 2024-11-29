@@ -1,5 +1,12 @@
 /* General Styles */
 .manage-add-ward-page {
+<<<<<<< HEAD
+  background-color: var(--background-color);
+  padding: 15px;
+  height: 90vh;
+  overflow-y: scroll;
+}
+=======
     background-color: var(--background-color);
     padding: 15px;
     height: 90vh;
@@ -83,19 +90,98 @@
     border-radius: 3px;
     cursor: pointer;
     border-radius: 1px solid var(--button-color);
+>>>>>>> e4112cc3bb780c9a05c175e703858a4dc5da842f
 
-    font-size: 11px; /* Reduced font size */
-  }
-  .manage-add-ward-edit-btn:hover{
-    color: var(--button-color);
-    background-color: white;
-    border-radius: 1px solid var(--button-color);
-  }
-  .manage-add-ward-pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
+.manage-add-ward-table-container {
+  background-color: var(--background-color);
+  border-radius: 5px;
+  /* Uncomment if needed: box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  /* Uncomment if needed: padding: 15px; */
+}
+.manage-add-modal-employee-role-btn {
+  background: var(--button-color);
+  color: white;
+  padding: 5px;
+  border: 1px solid var(--button-color);
+}
+.manage-add-modal-employee-role-btn:hover {
+  background: var(--button-hover-color);
+  color: var(--button-color);
+  border: 1px solid var(--button-color);
+}
+.manage-add-ward-manage-section {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px; /* Reduced margin */
+}
+
+.manage-add-ward-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.manage-add-ward-btn:hover {
+  color: var(--button-color);
+  background-color: white;
+  border-bottom: 1px solid var(--button-color);
+}
+
+.manage-add-ward-search-input {
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 180px; /* Reduced width */
+}
+
+.manage-add-ward-table {
+  width: 100%;
+  background-color: white;
+  border-collapse: collapse;
+}
+
+.manage-add-ward-table th,
+.manage-add-ward-table td {
+  border: 1px solid #e0e0e0;
+  padding: 5px;
+  text-align: left;
+  font-size: 14px; /* Reduced font size */
+}
+
+.manage-add-ward-table th {
+  background-color: #f5f5f5;
+  /* font-weight: bold; */
+  color: #333;
+}
+
+/* Hover effect for table rows */
+.manage-add-ward-table tbody tr:hover {
+  background-color: #f0f0f0; /* Light gray background on hover */
+}
+
+.manage-add-ward-edit-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 4px 8px; /* Reduced padding */
+  border-radius: 3px;
+  cursor: pointer;
+  border-radius: 1px solid var(--button-color);
+
+  font-size: 11px; /* Reduced font size */
+}
+.manage-add-ward-edit-btn:hover {
+  color: var(--button-color);
+  background-color: white;
+  border-radius: 1px solid var(--button-color);
+}
+.manage-add-ward-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .manage-add-ward-pagination-btn {
@@ -113,24 +199,23 @@
   font-size: 14px;
 }
 
-
 .manage-add-ward-results-info {
   color: black;
   font-size: 14px;
   display: flex;
   justify-content: flex-end; /* Aligns the text to the left */
 }
-.manage-add-ward-deactivate-btn{
-  background-color: #0F63AF;
-    color: white;
-    border: none;
-    padding: 4px 8px; /* Reduced padding */
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 11px; /* Reduced font size */
+.manage-add-ward-deactivate-btn {
+  background-color: #0f63af;
+  color: white;
+  border: none;
+  padding: 4px 8px; /* Reduced padding */
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 11px; /* Reduced font size */
 }
 
-.manage-ward-ta{
+.manage-ward-ta {
   background-color: white;
 }
 
@@ -141,12 +226,28 @@
   justify-content: space-evenly;
 }
 
+<<<<<<< HEAD
+.manage-modal-dialog-ward {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.manage-modal-dialog-bed-feature {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  scrollbar-width: none;
+=======
 .manage-modal-dialog {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   /* height: 100vh; */
+>>>>>>> e4112cc3bb780c9a05c175e703858a4dc5da842f
 }
 
 .manage-modal-modal-header {
@@ -176,7 +277,7 @@
 
 .manage-modal-form-label {
   font-size: 16px;
-  
+
   margin-bottom: 5px;
 }
 
