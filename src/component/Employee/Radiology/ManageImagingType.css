@@ -1,147 +1,149 @@
 /* Container styling */
 .manage-imaging-type-container {
-    background-color: var(--background-color); /* Light blue background */
-    border-radius: 5px;
-    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-    padding: 15px; 
-    height: 90vh;
-    overflow-y: scroll;
-    box-sizing: border-box;
+  background-color: var(--background-color); /* Light blue background */
+  border-radius: 5px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  padding: 15px;
+  height: 90vh;
+  overflow-y: scroll;
+  box-sizing: border-box;
 }
 
 /* Button styling */
 .manage-imaging-type-btn {
-    background-color:var(--button-color); /* Purple color */
-    color: white;
-    border: none;
-    padding:5px 5px; /* Reduced padding */
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    border-bottom: 1px solid var(--button-color);
-
+  background-color: var(--button-color); /* Purple color */
+  color: white;
+  border: none;
+  padding: 5px 5px; /* Reduced padding */
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--button-color);
 }
 
 .manage-imaging-type-btn:hover {
-    background-color: white; /* Darker purple on hover */
-    color: var(--button-color);
-    border-bottom: 1px solid var(--button-color);
+  background-color: white; /* Darker purple on hover */
+  color: var(--button-color);
+  border-bottom: 1px solid var(--button-color);
 }
 
 /* Search bar styling */
 .manage-imaging-type-search-bar {
-    margin-bottom: 15px;
-    padding: 6px; /* Reduced padding */
-    width: 180px; /* Reduced width */
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  margin-bottom: 15px;
+  padding: 6px; /* Reduced padding */
+  width: 180px; /* Reduced width */
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 /* Table styling */
 .manage-imaging-type-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
 }
 
-.manage-imaging-type-table th, .manage-imaging-type-table td {
-    padding: 8px; /* Reduced padding */
-    text-align: left;
-    border: 1px solid #e0e0e0;
-    font-size: 13px; /* Reduced font size */
+.manage-imaging-type-table th,
+.manage-imaging-type-table td {
+  padding: 8px; /* Reduced padding */
+  text-align: left;
+  border: 1px solid #e0e0e0;
+  font-size: 13px; /* Reduced font size */
 }
 
 .manage-imaging-type-table th {
-    background-color: #f5f5f5; /* Light gray background for table headers */
-    font-weight: bold;
-    color: #333;
+  background-color: #f5f5f5; /* Light gray background for table headers */
+  font-weight: bold;
+  color: #333;
 }
 
 /* Hover effect for table rows */
 .manage-imaging-type-table tbody tr:hover {
-    background-color: #f0f0f0; /* Light gray background on hover */
+  background-color: #f0f0f0; /* Light gray background on hover */
 }
 
 /* Edit button styling */
 .manage-imaging-type-edit-button {
-    background-color: var(--button-color); /* Blue color */
-    color: white;
-    border: none;
-    padding: 5px 5px; /* Reduced padding */
-    border-radius: 5px;
-    cursor: pointer;
-    border-bottom: 1px solid var(--button-color);
+  background-color: var(--button-color); /* Blue color */
+  color: white;
+  border: none;
+  padding: 5px 5px; /* Reduced padding */
+  border-radius: 5px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--button-color);
 
-    font-size: 14px; /* Reduced font size */
+  font-size: 14px; /* Reduced font size */
 }
 
 .manage-imaging-type-edit-button:hover {
-    background-color: white; /* Darker blue on hover */
-    color: var(--button-color);
-    border-bottom: 1px solid var(--button-color);
+  background-color: white; /* Darker blue on hover */
+  color: var(--button-color);
+  border-bottom: 1px solid var(--button-color);
 }
 
 /* Pagination styling */
 .manage-imaging-type-pagination {
-    margin-top: 15px; /* Reduced margin */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin-top: 15px; /* Reduced margin */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .manage-imaging-type-pagination-buttons button {
-    margin: 0 4px; /* Reduced margin */
-    padding: 4px 8px; /* Reduced padding */
-    background-color: #0F63AF; /* Blue color */
-    color: white;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 13px; /* Reduced font size */
+  margin: 0 4px; /* Reduced margin */
+  padding: 4px 8px; /* Reduced padding */
+  background-color: #0f63af; /* Blue color */
+  color: white;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 13px; /* Reduced font size */
 }
-.manage-modal-submit-btn,.manage-imaging-item-edit-button,.manage-imaging-item-btn
-{
+.manage-modal-submit-btn,
+.manage-imaging-item-edit-button,
+.manage-imaging-item-btn {
   color: white;
   padding: 5px;
   border-radius: 5px;
   background-color: var(--button-color);
   border: 1px solid var(--button-color);
 }
-.manage-modal-submit-btn:hover
-{
+.manage-modal-submit-btn:hover {
   background-color: var(--button-hover-color);
   border: 1px solid var(--button-color);
   color: var(--button-color);
 }
 
 .manage-imaging-type-pagination span {
-    margin: 0 8px; /* Reduced margin */
-    font-size: 13px; /* Reduced font size */
+  margin: 0 8px; /* Reduced margin */
+  font-size: 13px; /* Reduced font size */
 }
 
 /* Results info styling */
 .manage-imaging-type-results-info {
-    color: var(--button-color);
-    font-size: 16px;
+  color: var(--button-color);
+  font-size: 16px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .manage-imaging-type-btn {
-        margin-bottom: 8px; /* Reduced margin */
-    }
+  .manage-imaging-type-btn {
+    margin-bottom: 8px; /* Reduced margin */
+  }
 
-    .manage-imaging-type-search-bar {
-        width: 100%;
-    }
+  .manage-imaging-type-search-bar {
+    width: 100%;
+  }
 
-    .manage-imaging-type-table th, .manage-imaging-type-table td {
-        font-size: 12px; /* Font size remains the same */
-    }
+  .manage-imaging-type-table th,
+  .manage-imaging-type-table td {
+    font-size: 12px; /* Font size remains the same */
+  }
 }
-.manage-type{
-    background-color: white;
+.manage-type {
+  background-color: white;
 }
+
 
 /* .manage-add-employee-role {
     position: fixed;
@@ -259,3 +261,4 @@
   }
   
   
+

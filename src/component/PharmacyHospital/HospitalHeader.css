@@ -1,106 +1,7 @@
 /* HospitalHeader.css */
 
-<<<<<<< HEAD
-
-.hospital-header-container-module{
-  background-color:var(--background-color) ;
-}
-
-.pharmacy-header-module {
-  background-color: white;
-  color: #3598dc;
-  padding: 10px;
-  font-size: 16px;
-  width: 100%;
-}
-
-.hospital-nav-list-module {
-  list-style-type: none;
-  display: flex;
-  padding: 0;
-  margin: 0;
-  overflow-x: auto;
-  gap: 10px; /* Add 10px space between flex items */
-}
-
-.hospital-nav-item-module {
-text-decoration: none;
-color: black;
-font-size: 16px;
-padding: 5px;
-border-radius: 5px;
-}
-
-.hospital-nav-item-module:hover, 
-.hospital-nav-item-module.active {
-  background-color:var(--button-bg-color);
-  color: white;
-}
-
-/* Sub-navigation Styles */
-.pharmacy-sub-nav-module {
-  margin-top: 10px;
-  margin-left: 10px;
-  background-color: white;
-  padding: 0;
-  margin-right: 10px;
-
-  gap: 10px;
-  /* border-radius: 5px; */
-}
-
-.pharmacy-sub-nav-module ul {
-  list-style-type: none;
-  display: flex;
-  padding: 0;
-  gap: 10px;
-  border-radius: 5px;
-  margin: 0;
-}
-
-
-.pharmacy-sub-nav-module li {
-  padding: 10px 15px;
-  cursor: pointer;
-  color: black;
-}
-
-/* .pharmacy-sub-nav-module li:hover, 
-.pharmacy-sub-nav-module li.active {
-  background-color: #bbdefb;
-}
- */
-
-
-
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .hospital-nav-list-module {
-    flex-direction: column;
-  }
-
-  .hospital-nav-item-module {
-    padding: 10px;
-    font-size: 14px;
-  }
-
-  .pharmacy-sub-nav-module ul {
-    flex-direction: column;
-  }
-
-  .pharmacy-sub-nav-module li {
-    padding: 10px;
-    font-size: 16px;
-  }
-}
-
-
-/*  */
-=======
->>>>>>> c950b44ed9532e386a605e9fa68569d55b1725dd
 .hospital-header-container-module {
-  width: 100%;
+  width: 100% !important;
   margin: 0 auto;
 }
 
@@ -110,41 +11,8 @@ border-radius: 5px;
   margin-bottom: 10px;
   height: 10%;
 }
-<<<<<<< HEAD
-.hospital-nav-item-module:hover{
-  color: var(--button-color);
-  background-color: white;
-
-} 
-.hospital-nav-item-module.active {
-  background-color: var(--button-bg-color);
-  color: white;
-}
-
-/* Sub-navigation Styles */
-.pharmacy-sub-nav-module {
-  /* margin-top: 10px; */
-  background-color: white;
-  /* padding: 0; */
-  gap: 10px;
-}
-
-.pharmacy-sub-nav-module ul {
-  list-style-type: none;
-  display: flex;
-  /* padding: 0; */
-  gap: 10px;
-  border-radius: 5px;
-  /* margin: 0; */
-}
-
-.pharmacy-sub-nav-module li {
-  padding: 10px 10px;
-  cursor: pointer;
-=======
 
 .hospital-nav-item-module {
->>>>>>> c950b44ed9532e386a605e9fa68569d55b1725dd
   color: black;
   border: none;
   padding: 5px 10px;

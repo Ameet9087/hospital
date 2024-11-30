@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import CustomModal from '../../../CustomModel/CustomModal';
+import { API_BASE_URL } from '../../api/api';
 
 
 const PatientQueueDisplay = () => {

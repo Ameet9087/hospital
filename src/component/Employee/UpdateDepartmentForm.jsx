@@ -1,31 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import './UpdateDepartmentForm.css';
-import axios from 'axios';
-import { API_BASE_URL } from '../api/api';
+import React, { useState, useEffect } from "react";
+import "./UpdateDepartmentForm.css";
+import axios from "axios";
+import { API_BASE_URL } from "../api/api";
 
 const UpdateDepartmentForm = ({ department, onClose }) => {
-  const [departmentCode, setDepartmentCode] = useState('');
-  const [departmentName, setDepartmentName] = useState('');
-  const [parentDepartment, setParentDepartment] = useState('');
-  const [departmentDescription, setDepartmentDescription] = useState('');
-  const [departmentNoticeText, setDepartmentNoticeText] = useState('');
-  const [departmentHead, setDepartmentHead] = useState('');
-  const [roomNumber, setRoomNumber] = useState('');
-  const [isActive, setIsActive] = useState('Yes');
-  const [isAppointmentApplicable, setIsAppointmentApplicable] = useState('No');
+  const [departmentCode, setDepartmentCode] = useState("");
+  const [departmentName, setDepartmentName] = useState("");
+  const [parentDepartment, setParentDepartment] = useState("");
+  const [departmentDescription, setDepartmentDescription] = useState("");
+  const [departmentNoticeText, setDepartmentNoticeText] = useState("");
+  const [departmentHead, setDepartmentHead] = useState("");
+  const [roomNumber, setRoomNumber] = useState("");
+  const [isActive, setIsActive] = useState("Yes");
+  const [isAppointmentApplicable, setIsAppointmentApplicable] = useState("No");
 
   // Populate form fields when department data is passed for editing
   useEffect(() => {
     if (department) {
-      setDepartmentCode(department.departmentCode || '');
-      setDepartmentName(department.departmentName || '');
-      setParentDepartment(department.parentDepartmentName || '');
-      setDepartmentDescription(department.description || '');
-      setDepartmentNoticeText(department.noticeText || '');
-      setDepartmentHead(department.departmentHead || '');
-      setRoomNumber(department.roomNumber || '');
-      setIsActive(department.isActive === 'Yes' ? 'Yes' : 'No');
-      setIsAppointmentApplicable(department.isAppointmentApplicable === 'Yes' ? 'Yes' : 'No');
+      setDepartmentCode(department.departmentCode || "");
+      setDepartmentName(department.departmentName || "");
+      setParentDepartment(department.parentDepartmentName || "");
+      setDepartmentDescription(department.description || "");
+      setDepartmentNoticeText(department.noticeText || "");
+      setDepartmentHead(department.departmentHead || "");
+      setRoomNumber(department.roomNumber || "");
+      setIsActive(department.isActive === "Yes" ? "Yes" : "No");
+      setIsAppointmentApplicable(
+        department.isAppointmentApplicable === "Yes" ? "Yes" : "No"
+      );
     }
   }, [department]);
 
@@ -46,22 +48,31 @@ const UpdateDepartmentForm = ({ department, onClose }) => {
 
     try {
       console.log(departmentData);
-      
-        await axios.put(`${API_BASE_URL}/departments/update-department/${department.departmentId}`, departmentData);
-        console.log('Department Updated successfully');
+
+      await axios.put(
+        `${API_BASE_URL}/departments/update-department/${department.departmentId}`,
+        departmentData
+      );
+      console.log("Department Updated successfully");
       onClose(); // Close modal after successful operation
     } catch (error) {
-      console.error('Error submitting the form:', error);
+      console.error("Error submitting the form:", error);
     }
   };
 
   return (
     <div className="update-setting-department-form-container">
       <form className="update-setting-department-form" onSubmit={handleSubmit}>
-        <h2>{department && department.departmentCode ? 'Update Department' : 'Add Department'}</h2>
+        <h2>
+          {department && department.departmentCode
+            ? "Update Department"
+            : "Add Department"}
+        </h2>
 
         <div className="update-setting-form-group">
-          <label>Department Code<span>*</span></label>
+          <label>
+            Department Code<span>*</span>
+          </label>
           <span>:</span>
           <input
             type="text"
@@ -71,7 +82,9 @@ const UpdateDepartmentForm = ({ department, onClose }) => {
         </div>
 
         <div className="update-setting-form-group">
-          <label>Department Name<span>*</span></label>
+          <label>
+            Department Name<span>*</span>
+          </label>
           <span>:</span>
           <input
             type="text"
@@ -214,7 +227,9 @@ const UpdateDepartmentForm = ({ department, onClose }) => {
         </div>
 
         <div className="update-setting-form-group submit-btn">
-          <button type="submit">{department && department.departmentCode ? 'Update' : 'Add'}</button>
+          <button type="submit">
+            {department && department.departmentCode ? "Update" : "Add"}
+          </button>
         </div>
       </form>
     </div>

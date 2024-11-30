@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-.homehealthnavbar{
-  background-color: white;
-  padding: 10px;
-}
-.homehealthnav-link{
-=======
+
 /* Mohini_HomeHealthCareModule_HomeHealthNavbar_27/sep/24 */
 .home-health-navbar {
   width: 100%;
@@ -174,7 +168,6 @@
 .register-button-homeHealth-care {
   padding: 5px 10px; /* Slightly increased horizontal padding */
   text-decoration: none;
->>>>>>> c950b44ed9532e386a605e9fa68569d55b1725dd
   background-color: var(--button-bg-color);
   padding: 10px;
   color: white;

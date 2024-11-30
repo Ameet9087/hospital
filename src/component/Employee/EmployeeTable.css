@@ -1,14 +1,12 @@
 /* Employee Table Styles */
 .employee-page-table {
   background-color: var(--background-color);
-  padding: 20px;
   height: 90vh;
   overflow-y: scroll;
-
 }
 
 .employee-table-container {
-  background-color:var(--background-color);
+  background-color: var(--background-color);
   border-radius: 5px;
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   padding: 20px;
@@ -28,9 +26,8 @@
   border-radius: 5px;
   cursor: pointer;
   border-bottom: 1px solid var(--button-color);
-
 }
-.add-employee-role-role-btn:hover{
+.add-employee-role-role-btn:hover {
   color: var(--button-color);
   background-color: white;
   border-bottom: 1px solid var(--button-color);
@@ -48,7 +45,8 @@
   border-collapse: collapse;
 }
 
-.employee-table th, .employee-table td {
+.employee-table th,
+.employee-table td {
   border: 1px solid #e0e0e0;
   /* padding: 10px; */
   text-align: left;
@@ -60,7 +58,6 @@
   font-weight: bold;
   color: #333;
 }
-
 
 /* Hover effect for table rows */
 .employee-table tbody tr:hover {
@@ -76,9 +73,8 @@
   cursor: pointer;
   font-size: 14px;
   border-bottom: 1px solid var(--button-color);
-
 }
-.employee-edit-btn:hover{
+.employee-edit-btn:hover {
   color: var(--button-color);
   background-color: white;
   border-bottom: 1px solid var(--button-color);
@@ -113,20 +109,18 @@
   font-size: 16px;
   position: static;
   /* overflow-x: scroll;  */
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 .employee-header-form::-webkit-scrollbar {
   display: none;
-    scrollbar-width: 5px;    
-
+  scrollbar-width: 5px;
 }
 
 /* .employee-header {
   -ms-overflow-style: none;  
   scrollbar-width: none;    
 } */
-
 
 .employee-header-form {
   list-style-type: none;
@@ -151,27 +145,28 @@
 }
 
 .employee-header-form li a:hover {
-  background-color:white;
-  color:var(--button-color);
+  background-color: white;
+  color: var(--button-color);
 }
 .employee-header-form li a.active {
   background-color: var(--button-bg-color); /* Background color when active */
   color: white; /* Text color when active */
 }
 
-.employee-sub-nav,.department-sub-nav{
+.employee-sub-nav,
+.department-sub-nav {
   background-color: var(--background-color);
   padding: 0;
 }
 
-.sub-nav-container ul{
+.sub-nav-container ul {
   list-style-type: none;
   display: flex;
   padding: 0;
   margin: 0;
 }
 
-.sub-nav-container li a{
+.sub-nav-container li a {
   padding: 10px 10px;
   cursor: pointer;
   color: black;
@@ -181,9 +176,9 @@
   background-color: var(--background-color);
   color: black;
 }
-.sub-nav-container li a.active{
+.sub-nav-container li a.active {
   background: transparent;
-  border-bottom:5px solid var(--button-bg-color);
+  border-bottom: 5px solid var(--button-bg-color);
 }
 /* Responsive Design */
 /* @media (max-width: 768px) {
@@ -232,9 +227,8 @@
   position: relative; /* Position relative to use pseudo-element */
 }
 
-.sub-nav-container a::after
-{
-  content: ''; /* Empty content for pseudo-element */
+.sub-nav-container a::after {
+  content: ""; /* Empty content for pseudo-element */
   position: absolute;
   left: 0;
   bottom: -4.8px;
@@ -269,7 +263,7 @@
   right: 0;
   background-color: #f9f9f9;
   /* min-width: 100px; */
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -287,5 +281,5 @@
 }
 
 .more-dropdown li a:hover {
-  background-color:#f1f1f1;
+  background-color: #f1f1f1;
 }

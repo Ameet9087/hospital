@@ -4,7 +4,8 @@ import "./ManageImagingType.css";
 import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
+import { useFilter } from "../../ShortCuts/useFilter";
 
 const ManageImagingType = () => {
   const [showModal, setShowModal] = useState(false);
@@ -17,6 +18,7 @@ const ManageImagingType = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [imagingTypes, setImagingTypes] = useState([]);
   const [columnWidths, setColumnWidths] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
   const tableRef = useRef(null);
   useEffect(() => {
     const fetchImagingTypes = async () => {
@@ -31,6 +33,11 @@ const ManageImagingType = () => {
     };
     fetchImagingTypes();
   }, []);
+
+  const filteredItems = useFilter(imagingTypes, searchTerm);
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   const handleEditClick = (type) => {
     setSelectedImagingType(type);
@@ -104,6 +111,8 @@ const ManageImagingType = () => {
         type="text"
         className="manage-imaging-type-search-bar"
         placeholder="Search"
+        value={searchTerm}
+        onChange={handleSearch}
       />
       <div className="table-container">
         <table ref={tableRef}>
@@ -130,7 +139,7 @@ const ManageImagingType = () => {
             </tr>
           </thead>
           <tbody>
-            {imagingTypes.map((type, index) => (
+            {filteredItems.map((type, index) => (
               <tr key={index}>
                 <td>{type.imagingTypeName}</td>
                 <td>{type.isActive}</td>
@@ -150,10 +159,7 @@ const ManageImagingType = () => {
         </table>
       </div>
 
-      <CustomModal 
-       isOpen={showModal}
-        onClose={handleCloseModal}
->
+      <CustomModal isOpen={showModal} onClose={handleCloseModal}>
         <div className="manage-modal-dialog">
           <div className="manage-modal-modal-header">
             <div className="manage-modal-modal-title">
@@ -165,7 +171,7 @@ const ManageImagingType = () => {
               <div className="manage-modal-form-group">
                 <label className="manage-modal-form-label">
                   Imaging Item Name{" "}
-                  <span className="manage-modal-text-danger">*</span> :
+                  <span className="manage-modal-text-danger">*</span>:
                 </label>
                 <input
                   type="text"
@@ -178,7 +184,7 @@ const ManageImagingType = () => {
               </div>
 
               <div className="manage-modal-form-group">
-                <label className="manage-modal-form-label">Is Active :</label>
+                <label className="manage-modal-form-label">Is Active:</label>
                 <input
                   type="checkbox"
                   checked={isActive}
@@ -213,7 +219,7 @@ const ManageImagingType = () => {
             </form>
           </div>
         </div>
-</CustomModal>
+      </CustomModal>
     </div>
   );
 };
