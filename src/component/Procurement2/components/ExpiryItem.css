@@ -1,0 +1,79 @@
+.ExpiryItem-substore-dispatch-and-consumption-report {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.ExpiryItem-report-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.ExpiryItem-date-range,
+.ExpiryItem-substore-selection,
+.ExpiryItem-subcategory-selection,
+.ExpiryItem-item-selection {
+  display: flex;
+  align-items: center;
+}
+
+.ExpiryItem-date-range label,
+.ExpiryItem-substore-selection label,
+.ExpiryItem-subcategory-selection label,
+.ExpiryItem-item-selection label {
+  margin-right: 10px;
+}
+
+.ExpiryItem-date-range input,
+.ExpiryItem-substore-selection select,
+.ExpiryItem-subcategory-selection select,
+.ExpiryItem-item-selection select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.ExpiryItem-show-report-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ExpiryItem-report-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.ExpiryItem-report-table th,
+.ExpiryItem-report-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.ExpiryItem-report-table th {
+  background-color: #f2f2f2;
+}
+
+.ExpiryItem-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.ExpiryItem-pagination-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+}

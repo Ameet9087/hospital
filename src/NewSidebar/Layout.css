@@ -48,7 +48,7 @@
   }
   /* Scrollable Content Area */
   .scrollable-content {
-    overflow-y: auto;
+    /* overflow-y: auto; */
     padding: 5px;
     height: calc(100vh - 60px); /* Fill remaining space */
     transition: padding 0.3s ease;

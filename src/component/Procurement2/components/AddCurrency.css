@@ -1,0 +1,40 @@
+.AddCurrency-model {
+  width: 280px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.AddCurrency-heading{
+  font-size: 18px;
+  text-align: center;
+}
+
+.AddCurrency-form-group {
+  margin-bottom: 15px;
+}
+
+.AddCurrency-form-group label {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.AddCurrency-form-group-checkbox
+{
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.AddCurrency-form-group input{
+  width: 100%;
+}
+
+.AddCurrency-form-group-checkbox input[type="checkbox"]
+{
+  width: 40%;
+  outline: none;
+}
