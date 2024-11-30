@@ -1,0 +1,127 @@
+/* NewDraftList Component Styles */
+.NewDraftList-purchase-order-draft-list {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.NewDraftList-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.NewDraftList-header h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.NewDraftList-start-new-draft-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.NewDraftList-start-new-draft-button:hover {
+  background-color: #0056b3;
+}
+
+.NewDraftList-search-bar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+.NewDraftList-search-bar input {
+  width: 200px;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.NewDraftList-search-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.NewDraftList-search-button:hover {
+  background-color: #218838;
+}
+
+.NewDraftList-draft-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.NewDraftList-discarded-draft {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.NewDraftList-results-info {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.NewDraftList-draft-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.NewDraftList-draft-table th,
+.NewDraftList-draft-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.NewDraftList-draft-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.NewDraftList-draft-table .NewDraftList-no-data {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}
+
+.NewDraftList-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.NewDraftList-pagination span {
+  font-size: 14px;
+  color: #555;
+}
+
+.NewDraftList-pagination button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.NewDraftList-pagination button:hover {
+  background-color: #0056b3;
+}

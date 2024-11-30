@@ -1,0 +1,44 @@
+.supplier-reports-boxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  background-color: var(--background-color);
+}
+
+.supplier-report-box {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.supplier-report-box:hover {
+  transform: translateY(-5px);
+}
+
+.supplier-report-icon {
+  font-size: 24px;
+  color: var(--upperBar-bg-color);
+  margin-right: 15px;
+}
+
+.supplier-report-content {
+  flex-grow: 1;
+}
+
+.supplier-report-content h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.supplier-report-content p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #777;
+}

@@ -1,0 +1,99 @@
+.IssuedItemListReport-issued-item-list-report {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.IssuedItemListReport-report-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.IssuedItemListReport-date-range,
+.IssuedItemListReport-subcategory-selection,
+.IssuedItemListReport-substore-selection,
+.IssuedItemListReport-employee-selection,
+.IssuedItemListReport-item-selection {
+  display: flex;
+  align-items: center;
+}
+
+.IssuedItemListReport-date-range label,
+.IssuedItemListReport-subcategory-selection label,
+.IssuedItemListReport-substore-selection label,
+.IssuedItemListReport-employee-selection label,
+.IssuedItemListReport-item-selection label {
+  margin-right: 10px;
+}
+
+.IssuedItemListReport-date-range input,
+.IssuedItemListReport-subcategory-selection select,
+.IssuedItemListReport-substore-selection select,
+.IssuedItemListReport-employee-selection select,
+.IssuedItemListReport-item-selection select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.IssuedItemListReport-load-report-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.IssuedItemListReport-report-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.IssuedItemListReport-report-table th,
+.IssuedItemListReport-report-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.IssuedItemListReport-report-table th {
+  background-color: #f2f2f2;
+}
+
+.IssuedItemListReport-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.IssuedItemListReport-pagination-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.IssuedItemListReport-report-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.IssuedItemListReport-export-btn,
+.IssuedItemListReport-print-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}

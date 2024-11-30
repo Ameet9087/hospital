@@ -1,0 +1,90 @@
+/* Base Styles */
+.AddInvoiceHeader-invoice-header-form {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  max-width: 800px;
+  font-family: Arial, sans-serif;
+}
+
+.AddInvoiceHeader-heading {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+/* Grid Layout */
+.AddInvoiceHeader-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+/* Form Row */
+.AddInvoiceHeader-form-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.AddInvoiceHeader-form-row label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.AddInvoiceHeader-form-row label span {
+  color: #e74c3c;
+  margin-left: 5px;
+}
+
+/* Input Styles */
+.AddInvoiceHeader-form-row input[type="text"],
+.AddInvoiceHeader-form-row input[type="email"],
+.AddInvoiceHeader-form-row input[type="tel"],
+.AddInvoiceHeader-form-row input[type="file"] {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.AddInvoiceHeader-form-row input[type="checkbox"] {
+  margin-top: 5px;
+  width: 20px;
+  height: 20px;
+}
+
+/* Save Button */
+.AddInvoiceHeader-save-button {
+  grid-column: span 2;
+  background-color: var(--button-color);
+  color: #fff;
+  padding: 5px 10px;
+  border: 1px solid var(--button-color);
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+}
+
+.AddInvoiceHeader-save-button:hover {
+  background-color: white;
+  color: var(--button-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .AddInvoiceHeader-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .AddInvoiceHeader-save-button {
+    grid-column: span 1;
+  }
+}

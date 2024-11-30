@@ -1,0 +1,36 @@
+.RoutesProcurement-nav {
+  background-color: var(--background-color);
+  padding: 10px;
+}
+
+.RoutesProcurement-ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.RoutesProcurement-li {
+  display: inline-block;
+}
+
+.RoutesProcurement-link {
+  text-decoration: none;
+  color: white;
+  background-color: var(--button-bg-color);
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.RoutesProcurement-link:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+}
+
+.RoutesProcurement-link:active,
+.RoutesProcurement-link.active {
+  background-color: var(--button-bg-color); /* Active/Clicked state color */
+  color: white;
+}

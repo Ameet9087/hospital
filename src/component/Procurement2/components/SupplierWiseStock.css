@@ -1,0 +1,118 @@
+.WiseeSupplierContainer {
+  background-color: var(--background-color);
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.WiseeSupplierHeading {
+  font-size: 24px;
+  color: Black;
+  display: flex;
+  align-items: center;
+}
+
+.WiseeSupplierFilters {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.WiseeSupplierFilterRow {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.WiseeSupplierFilterRow input,
+.WiseeSupplierFilterRow select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.WiseeSupplierFilterRow label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.WiseeShowReportButton {
+  background-color: var(--button-color);
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.WiseeSupplierTable {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.WiseeSupplierTableHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.WiseeSupplierSearch {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.WiseeExportButton,
+.WiseePrintButton {
+  padding: 8px 15px;
+  border-radius: 4px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.WiseeTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.WiseeThead th {
+  background-color: #e7f3fc;
+  padding: 10px;
+}
+
+.WiseeTbody td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.WiseeNoData {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+}
+
+.WiseePagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.WiseePaginationButtons button {
+  padding: 8px 10px;
+  margin: 0 3px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.WiseeStarIcon {
+  font-size: 24px;
+  color: #084298;
+}

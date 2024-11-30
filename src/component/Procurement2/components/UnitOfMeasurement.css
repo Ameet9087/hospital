@@ -1,0 +1,114 @@
+/* UnitOfMeasurement.css */
+
+.unit-of-measurement-container {
+    background-color: var(--background-color);
+    padding: 10px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .uom-filter
+  {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px;
+  }
+  .uom-filter input{
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  .uom-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .uom-add-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+
+   
+  .uom-add-button:hover {
+    background-color: white;
+    color: var(--button-hover-text-color);
+    border: 1px solid var( --button-hover-border-color);
+    
+  }
+
+
+  
+  .uom-search-bar {
+    display: flex;
+  }
+  
+  .uom-search-button {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .uom-results-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .uom-print-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+
+  .uom-print-button:hover {
+    background-color: white;
+    color: var(--button-hover-text-color);
+    border: 1px solid var( --button-hover-border-color);
+  }
+
+  
+  .uom-edit-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .uom-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .uom-pagination button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .uom-pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  

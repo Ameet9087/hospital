@@ -1,0 +1,166 @@
+.PurchaseSummaryReport-container.PurchaseSummaryReport {
+  background-color: var(--background-color);
+  margin: 0;
+  padding: 10px;
+}
+
+.PurchaseSummaryReport.PurchaseSummaryReport {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
+.PurchaseSummaryReport h1.PurchaseSummaryReport {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.PurchaseSummaryReport-date-container.PurchaseSummaryReport {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #f0f8ff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.PurchaseSummaryReport-date-container.PurchaseSummaryReport input[type="date"],
+.PurchaseSummaryReport-date-container.PurchaseSummaryReport input[type="text"] {
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin: 0 10px;
+  border-radius: 3px;
+}
+
+.PurchaseSummaryReport-load-button.PurchaseSummaryReport {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.PurchaseSummaryReport-search-container.PurchaseSummaryReport {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.PurchaseSummaryReport-search-container.PurchaseSummaryReport
+  input[type="text"] {
+  flex-grow: 1;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.PurchaseSummaryReport-search-container.PurchaseSummaryReport .button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.PurchaseSummaryReport-table.PurchaseSummaryReport {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.PurchaseSummaryReport-table.PurchaseSummaryReport th {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.PurchaseSummaryReport-no-rows.PurchaseSummaryReport {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: center;
+}
+
+.PurchaseSummaryReport-pagination.PurchaseSummaryReport {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.PurchaseSummaryReport-pagination-button.PurchaseSummaryReport {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.PurchaseSummaryReport-summary.PurchaseSummaryReport {
+  margin-top: 20px;
+}
+
+.PurchaseSummaryReport-summary-header.PurchaseSummaryReport {
+  background-color: var(--button-color);
+  color: white;
+  padding: 10px;
+  margin: 0;
+}
+
+.PurchaseSummaryReport-summary-table.PurchaseSummaryReport {
+  width: 100%;
+}
+
+.PurchaseSummaryReport-summary-table.PurchaseSummaryReport th {
+  background-color: #f2f2f2;
+  color: white;
+  border: 1px solid black;
+}
+
+.PurchaseSummaryReport-print-button.PurchaseSummaryReport {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  margin-top: 20px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.PurchaseSummaryReport-page-wrapper.PurchaseSummaryReport {
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0; /* Light grey background to distinguish the page area */
+  overflow: auto; /* Allows scrolling if needed on small screens */
+}
+
+.PurchaseSummaryReport-page-content.PurchaseSummaryReport {
+  width: 1000px; /* Fixed width */
+  height: 500px; /* Fixed height */
+  background-color: var(
+    --background-color
+  ); /* Same background as the container */
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  overflow: hidden;
+}
+
+@media (max-width: 1000px) {
+  .PurchaseSummaryReport-page-content.PurchaseSummaryReport {
+    width: 100%;
+  }
+}
+
+@media (max-height: 500px) {
+  .PurchaseSummaryReport-page-content.PurchaseSummaryReport {
+    height: 100%;
+  }
+}
