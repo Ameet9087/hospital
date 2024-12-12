@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import "./Infusion.css";
+import { API_BASE_URL } from "../api/api";
 
-const Infusion = ({patientId}) => {
+const Infusion = ({
+  inPatientId,
+  outPatientId,}) => {
   const [formData, setFormData] = useState({
     infusionNm: '',
     infusionGeneric: '',
@@ -13,9 +16,9 @@ const Infusion = ({patientId}) => {
     startTime: '',
     endDate: '',
     endTime: '',
-    patient: {
-      patientId: patientId, // Use the passed `patientId` prop
-    },
+    ...(inPatientId
+      ? { inPatient: { inPatientId } }
+      : { outPatient: { outPatientId } }),
   });
   
   const handleCancel = () => {
@@ -45,15 +48,12 @@ const Infusion = ({patientId}) => {
     e.preventDefault();
   
     try {
-      const response = await fetch('http://192.168.0.110:9000/infusions', {
+      const response = await fetch('http://192.168.0.118:8080/api/infusions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          patient: { patientId: 1 }, // Ensure `patientId` is sent
-        }),        
+        body: JSON.stringify(formData), // Send formData directly
       });
   
       if (response.ok) {
@@ -71,7 +71,9 @@ const Infusion = ({patientId}) => {
           startTime: '',
           endDate: '',
           endTime: '',
-          patient:{patientId:1}
+          ...(inPatientId
+            ? { inPatient: { inPatientId } }
+            : { outPatient: { outPatientId } }),
         });
       } else {
         console.error('Failed to save data:', response);
@@ -80,6 +82,7 @@ const Infusion = ({patientId}) => {
       console.error('Error submitting form data:', error);
     }
   };
+  
   
 
   return (

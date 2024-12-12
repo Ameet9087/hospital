@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './NurseOrder.css';
 import axios from 'axios';
+import { API_BASE_URL } from "../api/api";
 
-const NurseOrder = () => {
+const NurseOrder = ({ inPatientId, outPatientId }) => {
   // Form state
   const [orderName, setOrderName] = useState('');
   const [nurseTime, setNurseTime] = useState('');
@@ -13,7 +14,6 @@ const NurseOrder = () => {
   // State for fetching existing orders
   const [nursingOrders, setNursingOrders] = useState([]);
 
-  const patientId = 1;  // Assuming patient ID 1 for now
 
   // Handle form cancel
   const handleCancel = () => {
@@ -31,18 +31,18 @@ const NurseOrder = () => {
     // Prepare form data
     const formData = {
       nOrderName: orderName,
-      nurseTime,
+      nurseTime, // Sending raw value
       nursingFrequency,
-      orderGivenTime,
+      orderGivenTime, // Sending raw value
       remarks,
-      patient:{
-        patientId:1
-      }
+      ...(inPatientId
+        ? { inPatient: { inPatientId } }
+        : { outPatient: { outPatientId } }),
     };
 
     try {
       // Send POST request to backend
-      await axios.post('http://192.168.0.110:9000/nursing-orders', formData, {
+      await axios.post(`${API_BASE_URL}/nursing-orders`, formData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -50,8 +50,8 @@ const NurseOrder = () => {
 
       console.log('Form submitted:', formData);
       alert('Nursing order submitted successfully!');
-      
-      // Optionally, reset the form after submission
+
+      // Reset the form after submission
       handleCancel();
 
       // Fetch the updated list of nursing orders
@@ -65,41 +65,36 @@ const NurseOrder = () => {
   // Fetch nursing orders for a specific patient
   const fetchNursingOrders = async () => {
     try {
-      const response = await axios.get(`http://192.168.0.110:9000/nursing-orders/patient/1`);
+      let endpoint = "";
+  
+      if (inPatientId) {
+        endpoint = `${API_BASE_URL}/nursing-orders/in-patient/${inPatientId}`;
+      } else if (outPatientId) {
+        endpoint = `${API_BASE_URL}/nursing-orders/out-patient/${outPatientId}`;
+      } else {
+        console.error("No valid patient ID provided for nursing orders.");
+        return;
+      }
+  
+      const response = await axios.get(endpoint);
       setNursingOrders(response.data); // Store fetched data in state
     } catch (error) {
-      console.error('Error fetching nursing orders:', error);
+      console.error("Error fetching nursing orders:", error);
     }
   };
+  
 
   // Fetch nursing orders on component mount
   useEffect(() => {
     fetchNursingOrders();
-  }, [patientId]); // Re-fetch if patientId changes
+  }, [inPatientId]); // Re-fetch if inPatientId changes
 
   return (
     <div className="Nurse-Order-container">
       <h3>Nurse Order Form</h3>
 
-      {/* Display existing nursing orders for the patient */}
-      <div className="Nurse-Order-existing-orders">
-        <h4>Existing Nursing Orders:</h4>
-        {nursingOrders.length > 0 ? (
-          <ul>
-            {nursingOrders.map((order) => (
-              <li key={order.sn}>
-                <strong>Order Name:</strong> {order.nOrderName}, 
-                <strong>Time:</strong> {order.nurseTime}, 
-                <strong>Frequency:</strong> {order.nursingFrequency}, 
-                <strong>Order Given Time:</strong> {order.orderGivenTime}, 
-                <strong>Remarks:</strong> {order.remarks}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No nursing orders found for this patient.</p>
-        )}
-      </div>
+     
+     
 
       {/* Nursing order form */}
       <form onSubmit={handleSubmit}>
@@ -147,7 +142,7 @@ const NurseOrder = () => {
             <div className="Nurse-Order-group">
               <label htmlFor="orderGivenTime">Order Given Time</label>
               <input
-                type="datetime-local"
+                type="time"
                 id="orderGivenTime"
                 value={orderGivenTime}
                 onChange={(e) => setOrderGivenTime(e.target.value)}
@@ -176,6 +171,38 @@ const NurseOrder = () => {
           </button>
         </div>
       </form>
+
+      <div className="ReferralConsultation-existing-referrals">
+        <h4>Existing Nursing Orders:</h4>
+        {nursingOrders.length > 0 ? (
+          <table className="ReferralConsultation-table">
+            <thead>
+              <tr>
+                <th>SN</th>
+                <th>Order Name</th>
+                <th>Time</th> 
+                <th>Frequency</th>
+                 <th>Order Given Time</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              {nursingOrders.map((order, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{order.nOrderName || 'N/A'}</td>
+                  <td>{order.nurseTime}</td>
+                  <td>{order.nursingFrequency}</td>
+                  <td>{order.orderGivenTime}</td>
+                  <td>{order.remarks}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No existing referrals found.</p>
+        )}
+      </div>
     </div>
   );
 };

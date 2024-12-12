@@ -10,6 +10,12 @@
   margin-bottom: 10px;
   height: 10%;
 }
+.appointment-doctor-doctor-search
+{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 
 /* .appointment-booking-list-nav-link {
   background: none;
@@ -316,14 +322,14 @@
   border: 1px solid #ccc;
 }
 
-.appointments__status--cancelled {
+.appointments__status--Cancelled {
   color: red;
 }
 .appointments__status--checked-in {
   color: green;
 }
 
-.appointments__status--initiated {
+.appointments__status--Initialized {
   color: blue;
 }
 

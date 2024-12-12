@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ProcedureService.css';
+import { API_BASE_URL } from '../api/api';
 
-const ProcedureService = () => {
+
+const ProcedureService = ({ inPatientId, outPatientId }) => {
   const [selectedProcedures, setSelectedProcedures] = useState([]);
-  const [availableProcedures, setAvailableProcedures] = useState([
-    "Procedure 1", "Procedure 2", "Procedure 3", "Procedure 4"
-  ]);
+  const [availableProcedures, setAvailableProcedures] = useState([]);
   const [selectedProcedure, setSelectedProcedure] = useState("");
-  const [patientId, setPatientId] = useState(1); // Example patientId, replace with dynamic value if needed
+
+  useEffect(() => {
+    const fetchProcedures = async () => {
+      try {
+        const response = await axios.get('http://192.168.0.118:8080/api/services');
+        setAvailableProcedures(response.data);
+      } catch (error) {
+        console.error('Error fetching procedures:', error);
+        alert('Failed to load procedures. Please try again later.');
+      }
+    };
+    fetchProcedures();
+  }, []);
 
   const addProcedure = () => {
     if (selectedProcedure && !selectedProcedures.includes(selectedProcedure)) {
@@ -26,28 +38,31 @@ const ProcedureService = () => {
 
   const submitSelection = async () => {
     if (selectedProcedures.length === 0) {
-      alert("No procedures selected.");
+      alert("Please select at least one procedure before submitting.");
       return;
     }
 
-    const payload = {
-      serviceNames: selectedProcedures,
-      patient: {
-        patientId: patientId,
-      },
-    };
-
     try {
-      const response = await axios.post('http://192.168.0.110:9000/api/services', payload, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log('Data submitted successfully:', response.data);
-      alert('Procedures saved successfully!');
+      for (const serviceName of selectedProcedures) {
+        const payload = {
+          serviceName: serviceName,
+          ...(inPatientId
+            ? { inPatient: { inPatientId } }
+            : { outPatient: { outPatientId } }),
+        };
+
+        await axios.post(`http://192.168.0.118:8080/api/services`, payload, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+      }
+
+      alert('All procedures saved successfully!');
+      cancelSelection();
     } catch (error) {
-      console.error('Error saving procedures:', error);
-      alert('Failed to save procedures.');
+      console.error('Error saving procedures:', error.message);
+      alert('Failed to save procedures. Please try again later.');
     }
   };
 
@@ -63,8 +78,8 @@ const ProcedureService = () => {
         >
           <option value="">--Select--</option>
           {availableProcedures.map((procedure, index) => (
-            <option key={index} value={procedure}>
-              {procedure}
+            <option key={index} value={procedure.serviceName}>
+              {procedure.serviceName}
             </option>
           ))}
         </select>
@@ -93,18 +108,10 @@ const ProcedureService = () => {
       </div>
 
       <div className="procedures-service-action-buttons">
-        <button
-          type="button"
-          onClick={cancelSelection}
-          className="procedures-service-action-cancel"
-        >
+        <button type="button" onClick={cancelSelection} className="procedures-service-action-cancel">
           Cancel
         </button>
-        <button
-          type="button"
-          onClick={submitSelection}
-          className="procedures-service-action-submit"
-        >
+        <button type="button" onClick={submitSelection} className="procedures-service-action-submit">
           Submit
         </button>
       </div>
