@@ -78,7 +78,7 @@ const modules = {
   },
   Appointment:{
       logo:"fa-solid fa-bell",
-      submodules:['Appointment Booking List', 'Book Appointment', 'List Visits', 'New Visit', 'Online Appointment'],
+      submodules:['Appointment Booking List', "Doctor Appointment","Doctor Schedule Std","Break Time"],
   }, 
   Settings:{
       logo:"fa-solid fa-gear",
