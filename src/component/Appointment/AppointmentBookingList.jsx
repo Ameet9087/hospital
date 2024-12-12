@@ -5,6 +5,9 @@ import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import AppoitmentPopupTable from "./AppoitmentPopupTable"
+import CustomModal from "../CustomModel/CustomModal";
+import AddCancel from "./AddCancel";
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
 };
@@ -14,42 +17,22 @@ const AppointmentBookingList = () => {
   const [dateTo, setDateTo] = useState(getCurrentDate());
   const [appointments, setAppointments] = useState([]);
   const [error, setError] = useState(null);
-  const [newPatientVisit, setnewPatientVisit] = useState([]);
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [doctorList, setDoctorList] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredDoctors, setFilteredDoctors] = useState(doctorList);
-  const [selectedDoctor, setSelectedDoctor] = useState(0);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [visitType, setVisitType] = useState("");
+  const [activePopup,setActivePopup]=useState(false)
   const navigate = useNavigate();
+  const [selectedDoctor,setSelectedDoctor]=useState(null);
+  const [filteredAppointments, setFilteredAppointments] = useState(appointments);
+  const [formData,setFormData] = useState();
+  const [showPopup,setShowPopup] = useState(false);
 
   const fetchAppointments = () => {
     console.log("Fetching appointments..."); // Debug log
-    const url = new URL(`${API_BASE_URL}/appointments/fetch-by-condition`);
-
-    // Append query parameters if values are provided
-    if (selectedDoctor) {
-      url.searchParams.append("employeeId", selectedDoctor);
-      console.log("Selected Doctor:", selectedDoctor); // Debug log
-    }
-
-    if (visitType) {
-      url.searchParams.append("visitType", visitType);
-      console.log("Visit Type:", visitType); // Debug log
-    }
-
-    if (dateFrom) {
-      url.searchParams.append("startDate", dateFrom);
-      console.log("Date From:", dateFrom); // Debug log
-    }
-
-    if (dateTo) {
-      url.searchParams.append("endDate", dateTo);
-      console.log("Date To:", dateTo); // Debug log
-    }
-
+    const url = new URL(`${API_BASE_URL}/appointments/between?fromDate=${dateFrom}&toDate=${dateTo}`);
+    
     fetch(url)
       .then((response) => {
         if (!response.ok) {
@@ -58,7 +41,6 @@ const AppointmentBookingList = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Fetched data:", data); // Debug log
         setAppointments(data);
       })
       .catch((error) => {
@@ -72,41 +54,79 @@ const AppointmentBookingList = () => {
   }, [selectedDoctor, visitType, dateFrom, dateTo]);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/employees/findAllDoctors`)
-      .then((response) => {
+    const filterAppointments = () => {
+      // If appointments are not available, set an empty array and exit
+      if (!appointments || appointments.length === 0) {
+        console.log("No appointments to filter");
+        setFilteredAppointments([]);
+        return;
+      }
+  
+      console.log("Initial appointments:", appointments);
+  
+      // Start with the full list of appointments
+      let filtered = [...appointments];
+  
+      // Exclude appointments with status "Cancelled"
+      filtered = filtered.filter((appointment) => appointment.status !== "Cancelled");
+  
+      // Filter by selected doctor if available
+      if (selectedDoctor && selectedDoctor.doctorName) {
+        console.log("Filtering by doctor:", selectedDoctor);
+        filtered = filtered.filter(
+          (appointment) => appointment.addDoctor?.doctorName === selectedDoctor.doctorName
+        );
+      }
+  
+      // Filter by visit type if it is not "All"
+      if (visitType && visitType !== 'All') {
+        console.log("Filtering by visit type:", visitType);
+        filtered = filtered.filter(
+          (appointment) => appointment.typeOfAppointment === visitType
+        );
+      }
+  
+      // Log and set the filtered appointments
+      console.log("Filtered appointments:", filtered);
+      setFilteredAppointments(filtered);
+    };
+  
+    // Call the filtering function whenever dependencies change
+    filterAppointments();
+  }, [selectedDoctor, visitType, appointments]);
+  
+  
+  
+  
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/doctors`)
+      .then((response) => {  
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         return response.json();
       })
       .then((items) => {
+        console.log(items);
+        
         setDoctorList(items);
       })
       .catch((error) => setError(error.message));
   }, []);
 
-  useEffect(() => {
-    if (searchTerm) {
-      const filtered = doctorList.filter((doctor) =>
-        (doctor?.firstName || doctor?.lastName)
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
-      );
-      setFilteredDoctors(filtered);
-    } else {
-      setFilteredDoctors(doctorList); // Reset to full list if no search term
+
+  const getPopupData=()=>{
+    if(activePopup){
+      return {columns:["doctorName"],data:doctorList}
+    }else{
+      return {columns:[],data:[]}
     }
-  }, [searchTerm]);
+  }
 
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-    setIsDropdownOpen(true);
-  };
+  const {columns,data}=getPopupData();
 
-  const handleSelect = (id, name) => {
-    setSelectedDoctor(id);
-    setSearchTerm(name);
-    setIsDropdownOpen(false);
+  const handleSelect = (data) => {
+      setSelectedDoctor(data)
   };
 
   const toggleDropdown = () => {
@@ -126,13 +146,8 @@ const AppointmentBookingList = () => {
   };
 
   const handleCancelledStatus = async (id) => {
-    const response = await axios.put(
-      `${API_BASE_URL}/appointments/update-status/${id}?status=cancelled`
-    );
-    if (response.ok) {
-      fetchAppointments();
-      console.log("Status Updated Successfully");
-    }
+    setShowPopup(true);
+    setFormData(id);
   };
 
   const handleCheckIn = (patient) => {
@@ -147,7 +162,7 @@ const AppointmentBookingList = () => {
   };
 
   const renderAppointments = () => {
-    if (appointments.length === 0) {
+    if (filteredAppointments.length === 0) {
       return (
         <tr>
           <td colSpan="9">No appointments found</td>
@@ -155,40 +170,28 @@ const AppointmentBookingList = () => {
       );
     }
 
-    return appointments.map((appointment, index) => (
+    return filteredAppointments.map((appointment, index) => (
       <tr key={index}>
         <td className={`appointments__status--${appointment.status}`}>
           {appointment?.status}
         </td>
         <td>{appointment.appointmentDate}</td>
         <td>{appointment.appointmentTime}</td>
-        <td>{appointment.appointmentId}</td>
+        <td>{appointment.id}</td>
         <td>{`${appointment.firstName} ${appointment.middleName} ${appointment.lastName}`}</td>
-        <td>{appointment.contactNumber}</td>
+        <td>{appointment.mobileNo}</td>
         <td>
-          {appointment?.employeeDTO != null
-            ? `${appointment?.employeeDTO?.salutation} ${appointment?.employeeDTO?.firstName} ${appointment?.employeeDTO?.lastName}`
+          {appointment?.addDoctor != null
+            ? `${appointment?.addDoctor?.doctorName}`
             : "NA"}
         </td>
-        <td>{appointment.visitType}</td>
+        <td>{appointment.typeOfAppointment}</td>
         <td>
           <button
-            onClick={() => handleCheckIn(appointment)}
-            className="appointments__action-btn"
-          >
-            Check-In
-          </button>
-          <button
-            onClick={() => handleCancelledStatus(appointment.appointmentId)}
+            onClick={() => handleCancelledStatus(appointment)}
             className="appointments__action-btn"
           >
             Cancel
-          </button>
-          <button
-            onClick={() => handleEditAppointment(appointment)}
-            className="appointments__action-btn"
-          >
-            Edit
           </button>
         </td>
       </tr>
@@ -196,6 +199,7 @@ const AppointmentBookingList = () => {
   };
 
   return (
+    <>
     <div className="appointments__container">
       {/* {error && <p className="appointments__error">Error: {error}</p>} */}
 
@@ -205,40 +209,14 @@ const AppointmentBookingList = () => {
             Doctor <span className="appointments__required">*</span>
           </label>
           <div className="appointment-doctor-dropdown-container">
+            <div className="appointment-doctor-doctor-search">
             <input
               type="text"
               placeholder="Search or select a Doctor"
-              value={searchTerm}
-              onChange={handleSearch}
-              onClick={toggleDropdown} // Open/close dropdown on click
+              value={selectedDoctor?.doctorName || ""}
               className="appointment-search-form-input"
             />
-
-            {/* Dropdown list */}
-            {isDropdownOpen && (
-              <ul className="appointment-dropdown-list">
-                {filteredDoctors?.length > 0 ? (
-                  filteredDoctors.map((doctor) => (
-                    <li
-                      key={doctor.employeeId}
-                      onClick={() =>
-                        handleSelect(
-                          doctor.employeeId,
-                          doctor.firstName + " " + doctor.lastName
-                        )
-                      }
-                      className="appointment-dropdown-item"
-                    >
-                      {doctor.salutation} {doctor.firstName} {doctor.lastName}
-                    </li>
-                  ))
-                ) : (
-                  <li className="appointment-dropdown-item">
-                    No doctors found
-                  </li>
-                )}
-              </ul>
-            )}
+            <span><i onClick={()=>setActivePopup(true)} className="fa-solid fa-magnifying-glass"></i></span></div>
           </div>
         </div>
         <div className="appointments__filter-group">
@@ -250,8 +228,8 @@ const AppointmentBookingList = () => {
             className="appointments__dropdown"
           >
             <option>All</option>
-            <option value="New Patient">New Patient</option>
-            <option value="Follow-Up Patient">Follow-Up Patient</option>
+            <option value="newPatient">New Patient</option>
+            <option value="oldPatient">Old Patient</option>
           </select>
         </div>
         <div className="appointments__filter-group">
@@ -289,14 +267,14 @@ const AppointmentBookingList = () => {
       <div className="appointments__upcoming-appointments">
         <h3 className="appointments__title">Upcoming Appointments</h3>
         <div className="appointments_search-bar-container">
-          <div className="appointments__search-bar">
+          {/* <div className="appointments__search-bar">
             <input
               className="appointments__search-input"
               type="text"
               placeholder="Search"
             />
             <i className="fas fa-search"></i>{" "}
-          </div>
+          </div> */}
           <p>Show 0 / 0 results</p>
         </div>
         <div className="table-container">
@@ -360,16 +338,16 @@ const AppointmentBookingList = () => {
                 <td>
                   {
                     appointments.filter(
-                      (app) => app.visitType === "New Patient"
+                      (app) => app.typeOfAppointment === "newPatient"
                     ).length
                   }
                 </td>
               </tr>
               <tr>
-                <td>Follow-Up Patients</td>
+                <td>Old Patients</td>
                 <td>
                   {
-                    appointments.filter((app) => app.visitType === "Follow-Up")
+                    appointments.filter((app) => app.typeOfAppointment === "oldPatient")
                       .length
                   }
                 </td>
@@ -379,6 +357,18 @@ const AppointmentBookingList = () => {
         </div>
       </div>
     </div>
+    <CustomModal isOpen={showPopup} onClose={()=>setShowPopup(false)}>
+        <AddCancel formData={formData}  updatedAppointments={formData} onClose={()=>setShowPopup(false)}/>
+      </CustomModal>
+    {activePopup && (
+      <AppoitmentPopupTable
+        columns={columns}
+        data={data}
+        onSelect={handleSelect}
+        onClose={()=>setActivePopup(false)}      
+      />
+    )}
+  </>
   );
 };
 

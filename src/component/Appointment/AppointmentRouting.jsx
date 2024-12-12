@@ -9,6 +9,9 @@ import SSFClaim from '../Appointment/SSFClaim';
 import AppointmentBookingList from '../Appointment/AppointmentBookingList';
 import CheckIn from '../Appointment/CheckIn';
 import AddNewAppointmentForm from './AddNewappointment';
+import DoctorAppointment from './DoctorAppointment';
+import DoctorScheduleSTD from './DoctorScheduleSTD';
+import BreakTime from './BreakTime';
 
 const AppointmentRouting = () => {
   return (
@@ -22,7 +25,7 @@ const AppointmentRouting = () => {
         >
           Appointment Booking List
         </NavLink>
-        <NavLink 
+        {/* <NavLink 
           to="/appointment/bookappointment" 
           className={({ isActive }) => 
             isActive ? "appointment-booking-list-navigation-link active" : "appointment-booking-list-navigation-link"
@@ -45,15 +48,32 @@ const AppointmentRouting = () => {
           }
         >
           New Visit
-        </NavLink>
+        </NavLink> */}
         <NavLink 
-          to="/appointment/onlineappointment" 
+          to="/appointment/doctorappointment" 
           className={({ isActive }) => 
             isActive ? "appointment-booking-list-navigation-link active" : "appointment-booking-list-navigation-link"
           }
         >
-          Online Appointment
+          Doctor Appointment
         </NavLink>
+        <NavLink 
+          to="/appointment/doctorschedulestd" 
+          className={({ isActive }) => 
+            isActive ? "appointment-booking-list-navigation-link active" : "appointment-booking-list-navigation-link"
+          }
+        >
+          Doctor Schedule Std
+        </NavLink>
+        <NavLink 
+          to="/appointment/breaktime" 
+          className={({ isActive }) => 
+            isActive ? "appointment-booking-list-navigation-link active" : "appointment-booking-list-navigation-link"
+          }
+        >
+          Break Time
+        </NavLink>
+
 
         {/* <NavLink 
           to="/ssf-claim" 
@@ -71,9 +91,12 @@ const AppointmentRouting = () => {
       <div className="appointment-booking-list-content">
         <Routes>
           <Route path="appointmentbookinglist" element={<AppointmentBookingList />} />
-          <Route path="bookappointment" element={<BookingAppointment />} />
-          <Route path="listvisits" element={<ListVisited />} />
-          <Route path="newvisit" element={<NewVisitedList />} />
+          {/* <Route path="bookappointment" element={<BookingAppointment />} /> */}
+          <Route path="doctorappointment" element={<DoctorAppointment/>}/>
+          <Route path='doctorschedulestd' element={<DoctorScheduleSTD/>}/>
+          <Route path='breaktime' element={<BreakTime/>}/>
+          {/* <Route path="listvisits" element={<ListVisited />} />
+          <Route path="newvisit" element={<NewVisitedList />} /> */}
           <Route path="onlineappointment" element={<OnlineAppointment />} />
           <Route path="ssf-claim" element={<SSFClaim />} />
           <Route path="checkIn/*" element={<CheckIn/>}></Route>
