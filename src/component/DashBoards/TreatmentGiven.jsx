@@ -1,36 +1,30 @@
 import React, { useState } from 'react';
 import './TreatmentGiven.css';
+import { API_BASE_URL } from '../api/api';
 
-const TreatmentGiven = () => {
+const TreatmentGiven = ({ inPatientId, outPatientId }) => {
   const [selectedTreatments, setSelectedTreatments] = useState([]);
   const [inputText, setInputText] = useState("");
-  const [patientId, setPatientId] = useState(1); // Replace this with dynamic patient ID if necessary
 
-  // Add treatments from the input textarea
   const addTreatmentsFromInput = () => {
     const treatments = inputText
-      .split('\n')  // Split by newline
-      .map(treatment => treatment.trim())  // Trim whitespace
-      .filter(treatment => treatment.length > 0);  // Remove empty lines
-    
-    // Add only unique treatments
+      .split('\n')
+      .map(treatment => treatment.trim())
+      .filter(treatment => treatment.length > 0);
     const newTreatments = treatments.filter(treatment => !selectedTreatments.includes(treatment));
     setSelectedTreatments([...selectedTreatments, ...newTreatments]);
-    setInputText(""); // Clear the input field after adding
+    setInputText("");
   };
 
-  // Remove a specific treatment from the list
   const removeTreatment = (treatment) => {
     setSelectedTreatments(selectedTreatments.filter(item => item !== treatment));
   };
 
-  // Clear all selected treatments
   const cancelSelection = () => {
     setSelectedTreatments([]);
-    setInputText(""); // Clear input text as well
+    setInputText("");
   };
 
-  // Submit the selected treatments to the backend
   const submitSelection = async () => {
     if (selectedTreatments.length === 0) {
       alert("No treatments selected.");
@@ -38,33 +32,32 @@ const TreatmentGiven = () => {
     }
 
     try {
-      // Prepare data to be sent
       const data = {
-        treatmentDescriptions: selectedTreatments,
-        patient: {
-          patientId: patientId // Ensure this is correctly passed as an object
-        }
+        treatmentDescriptions: selectedTreatments.join(', '),
+        ...(inPatientId
+          ? { inPatient: { inPatientId } }
+          : { outPatient: { outPatientId } }),
       };
+      console.log(data);
 
-      // Send data to backend
-      const response = await fetch('http://192.168.0.110:9000/api/treatments/add', {
+      const response = await fetch(`${API_BASE_URL}/treatments/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+
         body: JSON.stringify(data),
+        
       });
 
       if (!response.ok) {
-        const errorText = await response.text(); // Get the response text for error details
+        const errorText = await response.text();
         throw new Error(`Server error: ${response.statusText}, ${errorText}`);
       }
 
       const result = await response.json();
       console.log("Treatments added:", result);
       alert('Treatments successfully submitted!');
-      
-      // Clear input fields and selected treatments after successful submission
       setSelectedTreatments([]);
       setInputText("");
     } catch (error) {
@@ -113,7 +106,7 @@ const TreatmentGiven = () => {
         <button type="button" onClick={cancelSelection} className='Treatment-Given-action-cancel'>Cancel</button>
         <button type="button" onClick={submitSelection} className='Treatment-Given-action-submit'>Submit</button>
       </div>
-    </div>
+    </div>  
   );
 };
 

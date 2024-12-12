@@ -1,80 +1,121 @@
 import React, { useState, useEffect } from 'react';
 import './ReferralConsultation.css';
-import axios from 'axios'; // Import axios
-
-const ReferralConsultation = () => {
-  const [doctorName, setDoctorName] = useState('');
+import axios from 'axios';
+import { API_BASE_URL } from '../api/api';
+const ReferralConsultation = ({inPatientId, outPatientId}) => {
+  const [doctors, setDoctors] = useState([]); // To store the fetched list of doctors
+  const [selectedDoctorId, setSelectedDoctorId] = useState(''); // Selected doctor ID
   const [priority, setPriority] = useState('');
   const [reasonFor, setReasonFor] = useState('');
-  const [patientId, setPatientId] = useState(1); // Assuming patient ID is 1 for now
   const [referrals, setReferrals] = useState([]); // To store fetched referrals
 
   // Handle form cancel
   const handleCancel = () => {
-    setDoctorName('');
+    setSelectedDoctorId('');
     setPriority('');
     setReasonFor('');
   };
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = {
-      doctorName,
-      priority,
-      reasonFor,
-      patient:{
-        patientId:1
+  // Fetch the list of doctors on component mount
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/doctors`);
+        setDoctors(response.data); // Store fetched doctors in state
+      } catch (error) {
+        console.error('Error fetching doctors:', error);
+        alert('Failed to fetch doctor names.');
       }
     };
 
+    fetchDoctors();
+  }, []);
+
+  // Fetch existing referrals for a specific patient
+  useEffect(() => {
+    const fetchReferrals = async () => {
+      try {
+        let endpoint = "";
+  
+        if (inPatientId) {
+          endpoint = `${API_BASE_URL}/referrals/in-patient/${inPatientId}`;
+        } else if (outPatientId) {
+          endpoint = `${API_BASE_URL}/referrals/out-patient/${outPatientId}`;
+        } else {
+          console.error("No valid patient ID provided for Diet Orders.");
+          return;
+        }
+  
+        const response = await axios.get(endpoint);
+        setReferrals(response.data);
+        
+      } catch (error) {
+        console.error("Error fetching Referrals:", error);
+      }
+    };
+
+    fetchReferrals();
+  }, []);
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Construct the form data in the required format
+    const formData = {
+      priority: priority,
+      reasonFor: reasonFor,
+      ...(inPatientId
+        ? { inPatient: { inPatientId } }
+        : { outPatient: { outPatientId } }),
+      referredByDoctor: {
+        doctorId: 1, // Static doctor ID
+      },
+      referredToDoctor: {
+        doctorId: parseInt(selectedDoctorId), // Selected doctor ID
+      },
+    };
+
     try {
-      // Save data to the backend
-      await axios.post('http://192.168.0.110:9000/referrals', formData);
+      // Send the form data to the API
+      await axios.post(`${API_BASE_URL}/referrals`, formData);
       console.log('Form submitted:', formData);
+      handleCancel(); // Reset the form fields
       alert('Referral submitted successfully!');
-      // Optionally, reset form after submission
-      handleCancel();
+
     } catch (error) {
       console.error('Error submitting referral:', error);
       alert('Failed to submit referral.');
     }
   };
 
-  // Fetch referrals for a specific patient on component mount
-  useEffect(() => {
-    const fetchReferrals = async () => {
-      try {
-        const response = await axios.get(`http://192.168.0.110:9000/referrals/patient/1`);
-        setReferrals(response.data); // Store fetched data in state
-      } catch (error) {
-        console.error('Error fetching referrals:', error);
-      }
-    };
-
-    fetchReferrals();
-  }, [patientId]); // Fetch on component mount or when patientId changes
-
   return (
     <div className="ReferralConsultation-form-container">
       <h3>Referral / Cross Consultation</h3>
-
 
       {/* Referral form */}
       <form onSubmit={handleSubmit}>
         <div className="ReferralConsultation-content">
           <div className="ReferralConsultation-content-left">
+            {/* Doctor Name Field */}
             <div className="ReferralConsultation-form-group">
               <label htmlFor="doctorName">Doctor Name:</label>
-              <input
-                type="text"
+              <select
                 id="doctorName"
-                value={doctorName}
-                onChange={(e) => setDoctorName(e.target.value)}
+                value={selectedDoctorId}
+                onChange={(e) => setSelectedDoctorId(e.target.value)}
                 required
-              />
+              >
+                <option value="">Select Doctor</option>
+                {doctors.map((doctor) => (
+                  <option key={doctor.doctorId} value={doctor.doctorId}>
+                    {doctor.doctorName}
+                  </option>
+                ))}
+              </select>
             </div>
 
+            {/* Priority Field */}
             <div className="ReferralConsultation-form-group">
               <label htmlFor="priority">Priority:</label>
               <select
@@ -92,6 +133,7 @@ const ReferralConsultation = () => {
           </div>
 
           <div className="ReferralConsultation-content-right">
+            {/* Reason For Referral Field */}
             <div className="ReferralConsultation-form-group">
               <label htmlFor="reasonFor">Reason For Referral:</label>
               <textarea
@@ -104,6 +146,7 @@ const ReferralConsultation = () => {
           </div>
         </div>
 
+        {/* Buttons */}
         <div className="ReferralConsultation-buttons">
           <button type="button" onClick={handleCancel} className="ReferralConsultation-cancel-btn">
             Cancel
@@ -114,22 +157,35 @@ const ReferralConsultation = () => {
         </div>
       </form>
 
-      
-      {/* Display existing referrals for the patient */}
+      {/* Display existing referrals */}
       <div className="ReferralConsultation-existing-referrals">
         <h4>Existing Referrals:</h4>
         {referrals.length > 0 ? (
-          <ul>
-            {referrals.map((referral) => (
-              <li key={referral.sn}>
-                <strong>Doctor:</strong> {referral.doctorName}, <strong>Priority:</strong> {referral.priority}, <strong>Reason:</strong> {referral.reasonFor}
-              </li>
-            ))}
-          </ul>
+          <table className="ReferralConsultation-table">
+            <thead>
+              <tr>
+                <th>Sr No</th>
+                <th>Doctor Name</th>
+                <th>Priority</th>
+                <th>Reason For Referral</th>
+              </tr>
+            </thead>
+            <tbody>
+              {referrals.map((referral, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{referral.referredToDoctor?.doctorName || 'N/A'}</td>
+                  <td>{referral.priority}</td>
+                  <td>{referral.reasonFor}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         ) : (
           <p>No existing referrals found.</p>
         )}
       </div>
+
     </div>
   );
 };
