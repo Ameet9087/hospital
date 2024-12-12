@@ -5,6 +5,7 @@ import AddSupplierForm from './AddSupplierForm';
 import AddGRItemForm from './AddGRItemForm';
 import axios from 'axios';
 import { API_BASE_URL } from '../api/api';
+import CustomModal from '../../CustomModel/CustomModal';
 
 const GoodsReceiptForm = () => {
   const [isFormOpen, setIsFormOpen] = useState(true);
@@ -272,19 +273,23 @@ const GoodsReceiptForm = () => {
             </div>
           </div>
         </div>
-        <div className="goods-receipt-form-actions">
+        <div >
           <button className="goods-receipt-print-btn" type="button">Print Receipt</button> &nbsp;&nbsp;
           <button className="goods-receipt-discard-btn" type="button">Discard</button>
         </div>
       </form>
-      {isAddSupplierModalOpen && <AddSupplierForm onClose={handleCloseSupplierModal} />}
-      {isAddGRItemFormOpen && <AddGRItemForm
-  isOpen={isAddGRItemFormOpen}
-  onClose={handleCloseAddGRItemForm}
+      <CustomModal
+      isOpen={isAddSupplierModalOpen}
+      onClose={handleCloseSupplierModal}> <AddSupplierForm  />
+      </CustomModal>
+
+
+       <CustomModal isOpen={isAddGRItemFormOpen} onClose={handleCloseAddGRItemForm} >
+         <AddGRItemForm
   addItem={handleAddItem}
   updateItem={handleUpdateItem}
   itemToUpdate={itemToUpdate}
-/>}
+/></CustomModal>
     </div>
   );
 };

@@ -32,7 +32,7 @@ const PurchaseOrderForm = () => {
   const [suppliers, setSuppliers] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/suppliers`)
+    axios.get(`${API_BASE_URL}/suppliers/get-all-suppliers`)
       .then(response => {
         setSuppliers(response.data);
       })
@@ -137,7 +137,7 @@ const PurchaseOrderForm = () => {
           <select name="supplier" value={formData.supplier} onChange={handleInputChange}>
             <option value="">Select Supplier</option>
             {suppliers.map(supplier => (
-              <option key={supplier.id} value={supplier.name}>{supplier.name}</option>
+              <option key={supplier.suppliersId} value={supplier.supplierName}>{supplier.supplierName}</option>
             ))}
           </select>
         </div>

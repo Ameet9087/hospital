@@ -22,8 +22,6 @@ const Otmain = () => {
           <Route path="/" element={<BookingList/>} />
           <Route path="setting/*" element={<Setting/>} />
           {/* <Route path="/Change_Visitscheme" element={<Change_Visitscheme/>} /> */}
-        
-
             <Route path="/surgeryScheduling" element={<Sugeryscheduling />} />
             <Route path='/ot' element={<OTResourceManagement />} />
             <Route path='/surgicaltrack' element={<SurgicalInstrumentTracking />} />

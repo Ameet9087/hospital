@@ -1,5 +1,5 @@
 /* Mohini_SettingSupplier_WholePage_14/sep/2024 */
-import React, { useState,useRef } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import './SettingSupplier.css'; 
@@ -9,8 +9,8 @@ import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import CustomModal from '../../CustomModel/CustomModal';
 import useCustomAlert from '../../alerts/useCustomAlert';
 const initialUser = {
-  name: '',
-  contactNo: '',
+  supplierName: '',
+  contactNumber: '',
   description: '',
   city: '',
   kraPin: '',
@@ -18,6 +18,8 @@ const initialUser = {
   email: '',
   creditPeriod: '', // Ensure creditPeriod is correctly handled
   dda: '',
+  additionalContact:"",
+  isLedgerRequired:"",
   isActive: false,
 };
 const SettingSupplierComponent = () => {
@@ -31,6 +33,21 @@ const SettingSupplierComponent = () => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
     const tableRef = useRef(null);
+
+
+    const fetchSuppliers = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/suppliers/get-all-suppliers`);
+      setSuppliers(response.data);
+    } catch (error) {
+      console.error('Error fetching suppliers:', error.response ? error.response.data : error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchSuppliers(); // Fetch data when the component is mounted
+  }, []); // Empty dependency array means this effect runs only once
+
 
 
   const handleShowEditModal = (user = initialUser) => {
@@ -74,10 +91,21 @@ const SettingSupplierComponent = () => {
 
     // Ensure creditPeriod is a number
     const dataToSend = {
-      ...selectedUser,
-      creditPeriod: selectedUser.creditPeriod ? Number(selectedUser.creditPeriod) : 0,
-    };
+    supplierName: selectedUser.supplierName || '',
+    contactNumber: selectedUser.contactNumber || '',
+    description: selectedUser.description || '',
+    creditPeriod: selectedUser.creditPeriod ? Number(selectedUser.creditPeriod) : 0,
+    contactAddress: selectedUser.contactAddress || '',
+    email: selectedUser.email || '',
+    isLedgerRequired: selectedUser.isLedgerRequired || 'No', // Adjust if applicable
+    city: selectedUser.city || '',
+    kraPin: selectedUser.kraPin || '',
+    dda: selectedUser.dda || '',
+    additionalContact: selectedUser.additionalContact || '',
+    isActive: selectedUser.isActive || "", // Convert boolean to string if required
+  };
 
+    console.log(dataToSend)
     try {
       if (isEditMode) {
         // Update existing supplier
@@ -99,6 +127,14 @@ const SettingSupplierComponent = () => {
       alert('Error saving data. Please try again.');
     }
   };
+
+  const filteredSuppliers = suppliers.filter((supplier) =>
+  supplier.supplierName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  supplier.contactNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  supplier.kraPin.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  supplier.email.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
 
 
 
@@ -123,13 +159,12 @@ const SettingSupplierComponent = () => {
           + Add Supplier
         </button>
       </div>
-      <input
-        type="text"
-        placeholder="Search"
-        className="setting-supplier-manage-users-search-input"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
+       <input
+      type="text"
+      placeholder="Search"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
      <div className='setting-supplier-span'>
   <span>Showing {suppliers.length} results</span>
   <button className='item-wise-export-button'onClick={handleExport}>Export</button>
@@ -163,30 +198,30 @@ const SettingSupplierComponent = () => {
                         </thead>
 
           <tbody>
-            {suppliers.map((user, index) => (
-              <tr key={index}>
-                <td>{user.name}</td>
-                <td>{user.contactNo}</td>
-                <td>{user.description}</td>
-                <td>{user.city}</td>
-                <td>{user.kraPin}</td>
-                <td>{user.contactAddress}</td>
-                <td>{user.email}</td>
-                <td>{user.creditPeriod}</td>
-                <td className="setting-supplier-action-buttons">
-                  <button
-                    className="setting-supplier-action-button"
-                    onClick={() => handleShowEditModal(user)}
-                  >
-                    Edit
-                  </button>
-                  <button className="setting-supplier-action-button">
-                    Deactivate
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+            {filteredSuppliers.map((user, index) => (
+    <tr key={index}>
+      <td>{user.supplierName}</td>
+      <td>{user.contactNumber}</td>
+      <td>{user.description}</td>
+      <td>{user.city}</td>
+      <td>{user.kraPin}</td>
+      <td>{user.contactAddress}</td>
+      <td>{user.email}</td>
+      <td>{user.creditPeriod}</td>
+      <td className="setting-supplier-action-buttons">
+        <button
+          className="setting-supplier-action-button"
+          onClick={() => handleShowEditModal(user)}
+        >
+          Edit
+        </button>
+        <button className="setting-supplier-action-button">
+          Deactivate
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
         </table>
         {/* <div className="setting-supplier-pagination">
           <div className="setting-supplier-pagination-controls">
@@ -200,146 +235,143 @@ const SettingSupplierComponent = () => {
       </div>
 
       <CustomModal
-  isOpen={showEditModal} 
-  onClose={handleCloseModal}
-  className="supplier-setting-supplier-update-modal"
->
-  <div className="supplier-form-grid">
-    <div className="supplier-form-grid1">
-      <table>
-        <thead>
-          <tr>
-            <th>Field</th>
-            <th>Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Supplier Name</td>
-            <td>
-              <Form.Control
-                type="text"
-                placeholder="Enter Supplier Name"
-                name="name"
-                required
-                value={selectedUser.name || ''}
-                onChange={handleInputChange}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Contact</td>
-            <td>
-              <Form.Control
-                type="text"
-                placeholder="Enter Contact Number"
-                name="contactNo"
-                required
-                value={selectedUser.contactNo || ''}
-                onChange={handleInputChange}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Description</td>
-            <td>
-              <Form.Control
-                type="text"
-                placeholder="Enter Description"
-                name="description"
-                value={selectedUser.description || ''}
-                onChange={handleInputChange}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>City</td>
-            <td>
-              <Form.Control
-                type="text"
-                placeholder="Enter City"
-                name="city"
-                value={selectedUser.city || ''}
-                onChange={handleInputChange}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Credit Period</td>
-            <td>
-              <Form.Control
-                type="text"
-                placeholder="Enter Credit Period"
-                name="creditPeriod"
-                value={selectedUser.creditPeriod || ''}
-                onChange={handleInputChange}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>KRA PIN</td>
-            <td>
-              <Form.Control
-                type="text"
-                placeholder="Enter KRA PIN"
-                name="kraPin"
-                required
-                value={selectedUser.kraPin || ''}
-                onChange={handleInputChange}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Contact Address</td>
-            <td>
-              <Form.Control
-                type="text"
-                placeholder="Enter Address"
-                name="contactAddress"
-                value={selectedUser.contactAddress || ''}
-                onChange={handleInputChange}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>DDA</td>
-            <td>
-              <Form.Control
-                type="text"
-                placeholder="Enter DDA"
-                name="dda"
-                value={selectedUser.dda || ''}
-                onChange={handleInputChange}
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>Status</td>
-            <td>
-              <Form.Check
-                type="checkbox"
-                label="Active"
-                name="isActive"
-                checked={selectedUser.isActive || false}
-                onChange={handleInputChange}
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div className="supplier-form-grid2">
-      <div className="supplier-setting-form-actions">
-        <Button variant="secondary" onClick={handleCloseModal}>
-          Cancel
-        </Button> &nbsp; &nbsp;
-        <Button variant="primary" type="submit" className='btnAddSupplier'>
-          {isEditMode ? 'Update Supplier' : 'Add Supplier'}
-        </Button>
-      </div>
-    </div>
-  </div>
-</CustomModal>
+        isOpen={showEditModal}
+        onClose={handleCloseModal}
+        className="supplier-setting-supplier-update-modal"
+      >
+        {isEditMode ? 'Update Supplier' : 'Add Supplier'}
+      
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            <div className="supplier-setting-form-row">
+              <Form.Group controlId="supplierName" className="supplier-setting-form-group col-md-6">
+                <Form.Label>Supplier Name<span className="supplier-setting-text-danger">*</span>:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Supplier Name"
+                  name="supplierName"
+                  required
+                  value={selectedUser.supplierName || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="contact" className="supplier-setting-form-group col-md-6">
+                <Form.Label>Contact<span className="supplier-setting-text-danger">*</span>:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Contact Number"
+                  name="contactNumber"
+                  required
+                  value={selectedUser.contactNumber || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+            </div>
+
+            <div className="supplier-setting-form-row">
+              <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+                <Form.Label>Description:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Description"
+                  name="description"
+                  value={selectedUser.description || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="city" className="supplier-setting-form-group col-md-6">
+                <Form.Label>City:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter City"
+                  name="city"
+                  value={selectedUser.city || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+            </div>
+
+            <div className="supplier-setting-form-row">
+              <Form.Group controlId="creditPeriod" className="supplier-setting-form-group col-md-6">
+                <Form.Label>Credit Period:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Credit Period"
+                  name="creditPeriod"
+                  value={selectedUser.creditPeriod || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="kraPin" className="supplier-setting-form-group col-md-6">
+                <Form.Label>KRA PIN<span className="supplier-setting-text-danger">*</span>:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter KRA PIN"
+                  name="kraPin"
+                  required
+                  value={selectedUser.kraPin || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+            </div>
+
+            <div className="supplier-setting-form-row">
+              <Form.Group controlId="address" className="supplier-setting-form-group col-md-6">
+                <Form.Label>Contact Address:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Address"
+                  name="contactAddress"
+                  value={selectedUser.contactAddress || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="dda" className="supplier-setting-form-group col-md-6">
+                <Form.Label>DDA:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter DDA"
+                  name="dda"
+                  value={selectedUser.dda || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="email" className="supplier-setting-form-group col-md-6">
+                <Form.Label>email:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter email"
+                  name="email"
+                  value={selectedUser.email || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+            </div>
+
+            <div className="supplier-setting-form-row">
+              <Form.Group controlId="isActive" className="supplier-setting-form-group col-md-6">
+                <Form.Label>Status:</Form.Label>
+                <Form.Check
+                  type="checkbox"
+                  label="Active"
+                  name="isActive"
+                  checked={selectedUser.isActive || false}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+            </div>
+
+            <div className="supplier-setting-form-actions">
+              <Button variant="secondary" onClick={handleCloseModal}>
+                Cancel
+              </Button>
+              <Button variant="primary" type="submit">
+                {isEditMode ? 'Update Supplier' : 'Add Supplier'}
+              </Button>
+            </div>
+          </Form>
+        </Modal.Body>
+      </CustomModal>
 
     </div>
   );

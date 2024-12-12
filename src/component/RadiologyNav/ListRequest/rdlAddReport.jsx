@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../ListRequest/rdlAddReport.css";
+import { API_BASE_URL } from "../../api/api";
 
 function AddReportForm({ onClose, selectedRequest }) {
   const [formData, setFormData] = useState({

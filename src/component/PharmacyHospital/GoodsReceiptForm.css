@@ -1,13 +1,12 @@
 /* Mohini_GoodReceiptComponent_WholePage_14/sep/2024 */
 .goods-receipt-form-com {
-  position: relative;
-  padding: 20px;
+  
   border: 1px solid #ccc;
   border-radius: 4px;
+  padding: 10px;
   background-color: #fff;
-  max-width: 1200px; /* Set maximum width to prevent exceeding */
-    width: 100%; /* Ensure it takes up full width up to max-width */
-  margin: 0 auto;
+ height: 90vh;
+ overflow-y: scroll;
 }
 
 .goods-receipt-form-com h3 {

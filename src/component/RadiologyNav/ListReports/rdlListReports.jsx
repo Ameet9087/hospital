@@ -5,6 +5,7 @@ import "../ListReports/rdlListReports.css";
 import * as XLSX from "xlsx"; // Import xlsx library
 import RadiologyReportPopup from "./RadiologyReportPopup";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { API_BASE_URL } from "../../api/api";
 
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
