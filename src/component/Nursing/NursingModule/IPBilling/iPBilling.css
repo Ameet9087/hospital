@@ -1,0 +1,245 @@
+.operation-master {
+  font-family: Arial, sans-serif;
+  background-color:var(--background-color);
+  padding: 4px;
+  font-size: 12px;
+  
+}
+
+.iPBilling-title-bar {
+  /* background-color: var(--upperBar-bg-color); */
+  color: black;
+  padding: 8px;
+  font-size: var(--heading-font);
+  margin-bottom: 4px;
+}
+
+.iPBilling-header {
+  font-size: var(--heading-font);
+  text-align: center;
+}
+
+
+.iPBilling-checkbox-label {
+  font-weight: normal;
+  margin-left: 4px;
+}
+
+.iPBilling-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.iPBilling-main-section {
+  display: flex;
+  gap: 4px;
+}
+
+.iPBilling-panel {
+  flex: 1;
+  background: white;
+  border: 1px solid #ccc;
+}
+
+.iPBilling-panel-header {
+  color: black;
+  font-weight: bolder;
+  padding: 4px 40px;
+  font-size: var(--heading-font);
+  display: flex;
+}
+.iPBilling-panel-content {
+  padding: 8px;
+  
+}
+
+.iPBilling-form-row {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 6px;
+  gap: 4px;
+  font-size: var(--font-size);
+}
+.iPBilling-form-row-chechbox{
+  
+  text-align:end;
+  margin-bottom: 6px;
+  font-size: var(--font-size);
+  padding-right: 40px;
+}
+
+.iPBilling-form-row label {
+  min-width: 140px;
+}
+.iPBilling-form-row input  {
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 47%;
+}
+ .iPBilling-form-row select
+ {
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 50%;
+}
+.iPBilling-input-with-search {
+  display: flex;
+  gap: 2px;
+  width: 50%;
+}
+
+.iPBilling-input-with-search input {
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 100%;
+}
+.iPBilling-input-with-search input svg{
+  padding: var();
+}
+.iPBilling-magnifier-btn {
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+.iPBilling-status-controls {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size);
+}
+
+.iPBilling-radio-group {
+  display: flex;
+  gap: 12px;
+}
+
+.iPBilling-services-section {
+  background: white;
+  border: 1px solid #ccc;
+}
+
+.iPBilling-tab-bar {
+  display: flex;
+  gap: 5px;
+  background: var(--upperBar-bg-color);
+  padding: 4px ;
+}
+
+.iPBilling-tab {
+  padding: 4px 12px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  color: var(--button-color);
+  font-size: var(--font-size);
+  background:var(--button-hover-background-color);
+  cursor: pointer;
+}
+
+.iPBilling-tab.active {
+  background: var(--button-color);
+  color: var(--button-hover-background-color);
+  font-weight: bold;
+}
+
+.services-table {
+  padding: 8px;
+}
+
+.table-actions {
+  margin-bottom: 4px;
+}
+
+.iPBilling-add-btn,
+.iPBilling-del-btn {
+  margin-right: 4px;
+  padding: 2px 8px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+.iPBilling-add-btn {
+  background-color: green;
+}
+.iPBilling-del-btn {
+  background-color: red;
+}
+
+.iPBilling-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.iPBilling-table th, td {
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  text-align: left;
+}
+
+.iPBilling-table th {
+  background: #f5f5f5;
+  font-weight: normal;
+}
+
+.iPBilling-action-buttons {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.iPBilling-action-buttons button {
+
+  background-color: var(--button-bg-color);
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
+}
+.iPBilling-action-buttons button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color); 
+}
+
+/* Style the date input */
+.date-input {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+/* Focused state */
+.date-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+}
+
+/* Hover effect */
+.date-input:hover {
+  border-color: #007bff;
+}
+
+/* For smaller table cells, ensure it doesn't overflow */
+td .date-input {
+  max-width: 100%;
+  box-sizing: border-box;
+}

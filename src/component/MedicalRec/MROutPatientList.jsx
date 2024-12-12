@@ -4,6 +4,7 @@ import '../MedicalRec/MROutPatientList.css';
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { API_BASE_URL } from '../api/api';
 
 function RecordMedical() {
   const [isMenuVisible, setisMenuVisible] = useState(false);

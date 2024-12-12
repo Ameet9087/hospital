@@ -1,0 +1,291 @@
+       
+          :root {
+            --wardNurseDashboard-primary-color: #2f4f4f;
+          --wardNurseDashboard-secondary-color: #4a6785;
+          --wardNurseDashboard-border-color: #ccc;
+          --panel-header-start: #c5d5e6;
+          --panel-header-end: #9ab3d1;
+          --marker-red: #ff6b6b;
+          --marker-blue: #4a90e2;
+          }
+          
+          .wardNurseDashboard-container {
+            margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+            display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+          background-color: #f5f5f5;
+          font-family: Arial, sans-serif;
+          }
+          
+          .wardNurseDashboard-header {
+          background-color: var(--button-color);
+          color: white;
+          padding: 8px 16px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 2px solid var(--wardNurseDashboard-secondary-color);
+          }
+          
+          .wardNurseDashboard-header-left {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          }
+          
+          .wardNurseDashboard-hospital-logo {
+          width: 40px;
+          height: 40px;
+          background-color: white;
+          border-radius: 50%;
+          }
+          
+          .wardNurseDashboard-hospital-info h1 {
+          font-size: 20px;
+          font-weight: bold;
+          }
+          
+          .wardNurseDashboard-hospital-info h2 {
+          font-size: var(--font-size);
+          font-weight: normal;
+          }
+          
+          .wardNurseDashboard-header-icons {
+          display: flex;
+          gap: 8px;
+          }
+          
+          .wardNurseDashboard-icon-btn {
+          padding: 6px 12px;
+          background: transparent;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          color: white;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: var(--font-size);
+          transition: background-color 0.2s;
+          }
+          
+          .wardNurseDashboard-icon-btn:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+          }
+          
+          .wardNurseDashboard-dashboard-content {
+            flex: 1;
+            padding: 2px;
+            overflow-y: auto;
+            }
+            
+            .wardNurseDashboard-panels-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 6px;
+          }
+          
+          .wardNurseDashboard-panel {
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+            height: 40vh;
+          }
+          
+          .wardNurseDashboard-panel-header {
+          /* background: linear-gradient(to bottom, var(--panel-header-start), var(--panel-header-end)); */
+          background-color: var(--button-color);
+          padding: 8px 12px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+          }
+          
+          .wardNurseDashboard-panel-count {
+          background: white;
+          padding: 2px 8px;
+          border-radius: 3px;
+          font-weight: bold;
+          font-size: var(--font-size);
+          }
+          
+          .wardNurseDashboard-panel-title {
+          flex: 1;
+          font-size: var(--font-size);
+          color: #333;
+          }
+          
+          .wardNurseDashboard-info-icon {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          border: none;
+          background: rgba(255, 255, 255, 0.5);
+          cursor: pointer;
+          }
+          
+          .wardNurseDashboard-panel-content {
+          padding: 12px;
+          max-height: 400px;
+          overflow-y: auto;
+          }
+          
+          .wardNurseDashboard-panel-content.empty {
+          min-height: 100px;
+          }
+          
+          .wardNurseDashboard-patient-card {
+          display: flex;
+          gap: 12px;
+          padding: 10px;
+          border-bottom: 1px solid #eee;
+          }
+          
+          .wardNurseDashboard-patient-card:last-child {
+          border-bottom: none;
+          }
+          
+          .wardNurseDashboard-patient-marker {
+          padding: 4px 8px;
+          border-radius: 4px;
+          color: white;
+          font-weight: bold;
+          height: fit-content;
+          font-size: var(--font-size);
+          }
+          
+          .wardNurseDashboard-marker-red {
+          background-color: var(--marker-red);
+          }
+          
+          .wardNurseDashboard-marker-blue {
+          background-color: var(--marker-blue);
+          }
+          
+          .wardNurseDashboard-patient-info {
+          flex: 1;
+          }
+          
+          .wardNurseDashboard-patient-primary {
+          margin-bottom: 8px;
+          }
+          
+          .wardNurseDashboard-patient-name {
+          font-weight: bold;
+          font-size: var(--font-size);
+          color: #333;
+          }
+          
+          .wardNurseDashboard-patient-identifiers {
+          font-size: var(--font-size);
+          color: #666;
+          margin-top: 4px;
+          }
+          
+          .wardNurseDashboard-patient-identifiers span {
+          margin-right: 8px;
+          }
+          
+          .wardNurseDashboard-patient-secondary {
+          font-size: var(--font-size);
+          color: #444;
+          }
+          
+          .wardNurseDashboard-info-row {
+          display: flex;
+          margin-bottom: 4px;
+          }
+          
+          .wardNurseDashboard-info-row label {
+          min-width: 85px;
+          color: #666;
+          }
+          
+          .wardNurseDashboard-footer {
+          background-color: #f0f0f0;
+          padding: 5px 10px;
+          display: flex;
+          /* justify-content: space-between; */
+          align-items: center;
+          border: 1px solid var(--wardNurseDashboard-border-color);
+font-size: var(--heading-font);
+          position: fixed;
+          /* padding: 10px; */
+          bottom: 1px;
+          /* right: 0; */
+          
+    gap: 10px;
+    overflow-y: auto;
+          /* display: flex; */
+          width: 100%;
+          }
+          
+          .wardNurseDashboard-footer-left {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: var(--font-size);
+          }
+          
+          .wardNurseDashboard-search-box {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+          }
+          
+          .wardNurseDashboard-search-box input {
+          padding: 4px 8px;
+          border: 1px solid var(--wardNurseDashboard-border-color);
+          border-radius: 4px;
+          width: 150px;
+          }
+          
+          .wardNurseDashboard-btn-adv-search,
+          .wardNurseDashboard-btn-go,
+          .wardNurseDashboard-btn-home,
+          .wardNurseDashboard-btn-refresh,
+          .wardNurseDashboard-btn-exit {
+          padding: 4px 12px;
+          border: 1px solid var(--wardNurseDashboard-border-color);
+          border-radius: 4px;
+          background: white;
+          cursor: pointer;
+          font-size: var(--font-size);
+          }
+          
+          .wardNurseDashboard-btn-home {
+          padding: 4px 8px;
+          }
+          
+          .wardNurseDashboard-cubicle-select {
+          padding: 4px 8px;
+          border: 1px solid var(--wardNurseDashboard-border-color);
+          border-radius: 4px;
+          width: 150px;
+          }
+          
+          .wardNurseDashboard-current-date {
+          font-size: var(--font-size);
+          color: #666;
+          margin-right: 12px;
+          }
+          
+          ::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+          }
+          
+          ::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          }
+          
+          ::-webkit-scrollbar-thumb {
+          background: #888;
+          border-radius: 4px;
+          }
+          
+          ::-webkit-scrollbar-thumb:hover {
+            background: #666;
+            } 

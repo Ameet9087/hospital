@@ -4,6 +4,7 @@ import Ipbilling from "./IP_Billing/ipbilling";
 import IpViewDetail from "./IP_Billing/ipviewDetail";
 // import BillingHome from './Billing_Home/billing_home';
 import Search_Patient from "./Billing_Search_Patient/Search_Patient";
+
 // import Provisinal_Main from './Provisinal Clearence/Provisinal_Main';
 import { FaHome } from "react-icons/fa";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";

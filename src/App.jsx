@@ -74,7 +74,7 @@ const modules = {
   },
   Nursing:{
       logo:"fa-solid fa-user-nurse",
-      submodules:['Outpatient', 'Inpatient', 'Requisition List', 'Discharge Summary','Adhense Safety Precaution']
+      submodules:['Nursing Dashboard','Outpatient', 'Inpatient', 'Requisition List', 'Discharge Summary','Adhense Safety Precaution']
   },
   Appointment:{
       logo:"fa-solid fa-bell",

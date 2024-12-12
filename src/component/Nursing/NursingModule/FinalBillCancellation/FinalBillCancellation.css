@@ -1,0 +1,173 @@
+/* Container styling */
+.Final-Bill-Cancellation.container {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid gray;
+  box-sizing: border-box;
+}
+
+/* Header styling */
+.Final-Bill-Cancellation.header {
+  background-color: var(--button-bg-color);
+  color: white;
+  padding: 1px;
+  text-align: center;
+  font-size: var(--font-size);
+}
+
+/* Form container styling */
+.Final-Bill-Cancellation.form-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+/* Column styling */
+.Final-Bill-Cancellation.left-column,
+.Final-Bill-Cancellation.right-column,
+.Final-Bill-Cancellation.rightmost-column {
+  flex: 1;
+  margin: 10px;
+}
+
+/* Field styling */
+.Final-Bill-Cancellation.field {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+/* Label styling */
+.Final-Bill-Cancellation.field label {
+  width: 150px;
+  font-size: var(--font-size);
+  font-weight: bold;
+}
+
+/* Input and textarea styling */
+.Final-Bill-Cancellation.field input,
+.Final-Bill-Cancellation.field textarea {
+  flex: 1;
+  padding: 5px;
+  font-size: var(--font-size);
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+/* Search button styling */
+.Final-Bill-Cancellation.search-button {
+  margin-left: 5px;
+  padding: 5px 5px;
+  font-size: var(--font-size);
+  cursor: pointer;
+}
+
+/* Textarea specific styling */
+.Final-Bill-Cancellation textarea {
+  resize: none;
+  overflow: hidden;
+}
+
+/* Save button styling */
+.Final-Bill-Cancellation.save-button-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.Final-Bill-Cancellation.save-button {
+  padding: 5px 10px;
+  background-color: var(--button-color);
+  color: white;
+  font-size: var(--heading-font);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.Final-Bill-Cancellation.save-button:hover {
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+
+
+
+
+
+.Final-Bill-Cancellation.delete-button {
+  padding: 5px 10px;
+  background-color: var(--button-color);
+  color: white;
+  font-size: var(--heading-font);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.Final-Bill-Cancellation.delete-button:hover {
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+/* Background blur effect */
+.Final-Bill-Cancellation.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+  backdrop-filter: blur(5px); /* Applies blur to the background */
+  z-index: 999; /* Behind the popup but above other content */
+  display: block; /* Make it visible when active */
+}
+
+/* Popup styling */
+.Final-Bill-Cancellation.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* On top of the overlay */
+  display: block; /* Make it visible when active */
+  width: 300px;
+  text-align: center;
+}
+
+/* Popup message styling */
+.Final-Bill-Cancellation.popup-message {
+  font-size: var(--font-size);
+  color: red;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Popup close button styling */
+.Final-Bill-Cancellation.popup-close {
+  margin-top: 10px;
+  padding: 5px 10px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.Final-Bill-Cancellation.popup-close:hover {
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+
+
+.savedeletebutton{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+}
