@@ -1,0 +1,133 @@
+/* NewPurchaseOrder Component Styles */
+.NewPurchaseOrder-add-purchase-order {
+  font-family: Arial, sans-serif;
+  background-color: #e6f3ff;
+  padding: 20px;
+}
+
+.NewPurchaseOrder-h2 {
+  margin-bottom: 20px;
+}
+
+.NewPurchaseOrder-top-row,
+.NewPurchaseOrder-vendor-info,
+.NewPurchaseOrder-address-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.NewPurchaseOrder-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.NewPurchaseOrder-label {
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.NewPurchaseOrder-input,
+.NewPurchaseOrder-select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.NewPurchaseOrder-item-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.NewPurchaseOrder-item-table th,
+.NewPurchaseOrder-item-table td {
+  border: 1px solid #ccc;
+  padding: 5px;
+  font-size: 12px;
+}
+
+.NewPurchaseOrder-item-table th {
+  background-color: #f0f0f0;
+}
+
+.NewPurchaseOrder-delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 2px 5px;
+  cursor: pointer;
+}
+
+.NewPurchaseOrder-add-row-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.NewPurchaseOrder-items-count {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.NewPurchaseOrder-verification-checkbox {
+  margin-bottom: 10px;
+}
+
+.NewPurchaseOrder-terms-conditions {
+  margin-bottom: 20px;
+}
+
+.NewPurchaseOrder-terms-conditions textarea {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.NewPurchaseOrder-help-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.NewPurchaseOrder-totals-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.NewPurchaseOrder-totals,
+.NewPurchaseOrder-payment-mode,
+.NewPurchaseOrder-remarks {
+  width: 30%;
+}
+
+.NewPurchaseOrder-action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.NewPurchaseOrder-add-order-btn,
+.NewPurchaseOrder-discard-btn {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.NewPurchaseOrder-add-order-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.NewPurchaseOrder-discard-btn {
+  background-color: #f44336;
+  color: white;
+}

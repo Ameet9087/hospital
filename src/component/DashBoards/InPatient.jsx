@@ -22,7 +22,7 @@ const PatientList = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/admissions/fetch`);
+        const response = await fetch(`${API_BASE_URL}/inpatients/getAllPatients`);
         const data = await response.json();
         console.log(data);
         
@@ -115,7 +115,7 @@ const PatientList = () => {
                  "Hospital No",
                  "Name",
                  "Age/Sex",
-                 "Admission Status",
+                //  "Admission Status",
                  "Admitted On",
                  "Ward/Bed",
                  "Department",
@@ -144,10 +144,10 @@ const PatientList = () => {
         <tbody>
           {patients.map((patient, index) => (
             <tr key={index}>
-              <td>{patient.patientDTO.hospitalNo}</td>
-              <td>{`${patient.patientDTO.firstName} ${patient.patientDTO.lastName}`}</td>
-              <td>{ patient.patientDTO.age}/{patient.patientDTO.gender}</td>
-              <td>{patient.admissionStatus}</td>
+              <td>{patient.hospitalNo}</td>
+              <td>{`${patient.firstName} ${patient.lastName}`}</td>
+              <td>{ patient.age}/{patient.gender}</td>
+              {/* <td>{patient.admissionStatus}</td> */}
               <td>{patient.admissionDate}</td>
               <td>{patient?.manageBedDTO?.bedNumber}</td>
               <td>{patient?.wardDepartmentDTO?.wardName}</td>

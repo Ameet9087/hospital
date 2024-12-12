@@ -1,0 +1,133 @@
+.AddPurchaseOrderDraft-purchase-order-draft {
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.AddPurchaseOrderDraft h2 {
+  color: #333;
+}
+
+.AddPurchaseOrderDraft-vendor-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.AddPurchaseOrderDraft-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.AddPurchaseOrderDraft-form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.AddPurchaseOrderDraft label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.AddPurchaseOrderDraft input,
+.AddPurchaseOrderDraft select,
+.AddPurchaseOrderDraft textarea {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.AddPurchaseOrderDraft-help-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.AddPurchaseOrderDraft table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.AddPurchaseOrderDraft th,
+.AddPurchaseOrderDraft td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.AddPurchaseOrderDraft th {
+  background-color: #f2f2f2;
+}
+
+.AddPurchaseOrderDraft-remove-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.AddPurchaseOrderDraft-add-row-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.AddPurchaseOrderDraft-items-count {
+  color: var(--button-color);
+}
+
+.AddPurchaseOrderDraft-totals {
+  margin-top: 20px;
+}
+
+.AddPurchaseOrderDraft-total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.AddPurchaseOrderDraft-remarks {
+  margin-top: 20px;
+}
+
+.AddPurchaseOrderDraft-form-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.AddPurchaseOrderDraft-save-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.AddPurchaseOrderDraft-discard-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+}

@@ -1,0 +1,95 @@
+.SubstoreDispatchAndConsumptionReport-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.SubstoreDispatchAndConsumptionReport-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.SubstoreDispatchAndConsumptionReport-date-range,
+.SubstoreDispatchAndConsumptionReport-substore-selection,
+.SubstoreDispatchAndConsumptionReport-subcategory-selection,
+.SubstoreDispatchAndConsumptionReport-item-selection {
+  display: flex;
+  align-items: center;
+}
+
+.SubstoreDispatchAndConsumptionReport-date-range label,
+.SubstoreDispatchAndConsumptionReport-substore-selection label,
+.SubstoreDispatchAndConsumptionReport-subcategory-selection label,
+.SubstoreDispatchAndConsumptionReport-item-selection label {
+  margin-right: 10px;
+}
+
+.SubstoreDispatchAndConsumptionReport-date-range input,
+.SubstoreDispatchAndConsumptionReport-substore-selection select,
+.SubstoreDispatchAndConsumptionReport-subcategory-selection select,
+.SubstoreDispatchAndConsumptionReport-item-selection select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.SubstoreDispatchAndConsumptionReport-show-report-btn {
+  background-color: var(--button-color);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.SubstoreDispatchAndConsumptionReport-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.SubstoreDispatchAndConsumptionReport-table th,
+.SubstoreDispatchAndConsumptionReport-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.SubstoreDispatchAndConsumptionReport-table th {
+  background-color: #f2f2f2;
+}
+
+.SubstoreDispatchAndConsumptionReport-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.SubstoreDispatchAndConsumptionReport-pagination-btn {
+  background-color: var(--button-color);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.SubstoreDispatchAndConsumptionReport-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.SubstoreDispatchAndConsumptionReport-export-btn,
+.SubstoreDispatchAndConsumptionReport-print-btn {
+  background-color: var(--button-color);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}

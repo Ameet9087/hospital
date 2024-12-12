@@ -1,42 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './PACRequest.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./PACRequest.css";
+import { API_BASE_URL } from "../api/api";
 
-const PACRequest = () => {
-  const [patientId, setPatientId] = useState('');
-  const [patientName, setPatientName] = useState('');
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
-  const [address, setAddress] = useState('');
-  const [roomNo, setRoomNo] = useState('');
-  const [consultant, setConsultant] = useState('');
-  const [diagnosis, setDiagnosis] = useState('');
-  const [anaesthesiaPlan, setAnaesthesiaPlan] = useState('');
-  const [surgeryName, setSurgeryName] = useState('');
-  const [pacAdviceNotes, setPacAdviceNotes] = useState('');
-  const [mrNo,setMrNo]=useState("");
-
-  const [pacRequests, setPacRequests] = useState([]);  // State to store fetched PAC requests
+const PACRequest = ({ inPatientId, outPatientId }) => {
+  const [mrNo, setMrNo] = useState("");
+  const [patientName, setPatientName] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [address, setAddress] = useState("");
+  const [roomNo, setRoomNo] = useState("");
+  const [consultant, setConsultant] = useState("");
+  const [diagnosis, setDiagnosis] = useState("");
+  const [anaesthesiaPlan, setAnaesthesiaPlan] = useState("");
+  const [surgeryName, setSurgeryName] = useState("");
+  const [pacAdviceNotes, setPacAdviceNotes] = useState("");
+  const [pacRequests, setPacRequests] = useState([]);
 
   const handleCancel = () => {
-    setPatientId('');
-    setPatientName('');
-    setAge('');
-    setGender('');
-    setAddress('');
-    setRoomNo('');
-    setConsultant('');
-    setDiagnosis('');
-    setAnaesthesiaPlan('');
-    setSurgeryName('');
-    setPacAdviceNotes('');
+    setMrNo("");
+    setPatientName("");
+    setAge("");
+    setGender("");
+    setAddress("");
+    setRoomNo("");
+    setConsultant("");
+    setDiagnosis("");
+    setAnaesthesiaPlan("");
+    setSurgeryName("");
+    setPacAdviceNotes("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const formData = {
-      mrNo,  // Use patientId as MR number
+      mrNo,
       patientName,
       roomNoBedNo: roomNo,
       consultant,
@@ -44,63 +43,63 @@ const PACRequest = () => {
       anaesthesiaPlan,
       surgeryName,
       pacAdviceNotes,
-      patientId: 1  // Send only the patientId (not the full patient object)
+      ...(inPatientId
+        ? { inPatient: { inPatientId } }
+        : { outPatient: { outPatientId } }),
     };
-  
+
     try {
-      // Send POST request to backend
-      await axios.post('http://192.168.0.110:9000/api/pac-requests', formData, {
+      await axios.post(`${API_BASE_URL}/pac-requests`, formData, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
-  
-      console.log('PAC request submitted:', formData);
-      alert('PAC request submitted successfully!');
-      
-      // Optionally reset the form after successful submission
+      console.log("PAC request submitted:", formData);
+      alert("PAC request submitted successfully!");
       handleCancel();
-  
-      // Fetch the updated list of PAC requests
       fetchPACRequests();
     } catch (error) {
-      console.error('Error submitting PAC request:', error);
-      alert('Failed to submit PAC request.');
+      console.error("Error submitting PAC request:", error);
+      alert("Failed to submit PAC request.");
     }
   };
-  
 
-  // Fetch all PAC requests
   const fetchPACRequests = async () => {
     try {
-      const response = await axios.get('http://192.168.0.110:9000/api/pac-requests/patient/1');
-      setPacRequests(response.data); // Store fetched PAC requests in state
+      let endpoint = "";
+
+      if (inPatientId) {
+        endpoint = `${API_BASE_URL}/pac-requests/in-patient/${inPatientId}`;
+      } else if (outPatientId) {
+        endpoint = `${API_BASE_URL}/pac-requests/out-patient/${outPatientId}`;
+      } else {
+        console.error("No valid patient ID provided for PAC requests.");
+        return;
+      }
+
+      const response = await axios.get(endpoint);
+      setPacRequests(response.data);
     } catch (error) {
-      console.error('Error fetching PAC requests:', error);
+      console.error("Error fetching PAC requests:", error);
     }
   };
 
-  // Fetch PAC requests when the component mounts
   useEffect(() => {
     fetchPACRequests();
-  }, []);  // Empty dependency array means this runs once when the component mounts
+  }, []);
 
   return (
     <div className="PACRequest-form-container">
       <h3>Post-Acute Care (PAC) Request Form</h3>
 
-      {/* Display existing PAC requests */}
-      
-
-      {/* PAC Request Form */}
       <form onSubmit={handleSubmit}>
         <div className="PACRequest-form-group-content">
           <div className="PACRequest-form-group-left">
             <div className="PACRequest-form-group">
-              <label htmlFor="patientId">Patient ID</label>
+              <label htmlFor="mrNo">MR Number</label>
               <input
                 type="text"
-                id="patientId"
+                id="mrNo"
                 value={mrNo}
                 onChange={(e) => setMrNo(e.target.value)}
                 required
@@ -232,7 +231,11 @@ const PACRequest = () => {
         </div>
 
         <div className="PACRequest-form-group-buttons">
-          <button type="button" onClick={handleCancel} className="PACRequest-cancel-btn">
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="PACRequest-cancel-btn"
+          >
             Cancel
           </button>
           <button type="submit" className="PACRequest-submit-btn">
@@ -241,23 +244,57 @@ const PACRequest = () => {
         </div>
       </form>
 
-      <div className="PACRequest-existing-requests">
+      {/* <div className="PACRequest-existing-requests">
         <h4>Existing PAC Requests:</h4>
         {pacRequests.length > 0 ? (
           <ul>
             {pacRequests.map((request) => (
               <li key={request.sn}>
-                <strong>Patient Name:</strong> {request.patientName}, 
-                <strong>Surgery:</strong> {request.surgeryName}, 
-                <strong>Consultant:</strong> {request.consultant}, 
-                <strong>Room No./Bed No.:</strong> {request.roomNoBedNo}, 
-                <strong>Diagnosis:</strong> {request.diagnosis}, 
+                <strong>Patient Name:</strong> {request.patientName},{" "}
+                <strong>Surgery:</strong> {request.surgeryName},{" "}
+                <strong>Consultant:</strong> {request.consultant},{" "}
+                <strong>Room No./Bed No.:</strong> {request.roomNoBedNo},{" "}
+                <strong>Diagnosis:</strong> {request.diagnosis},{" "}
                 <strong>Anaesthesia Plan:</strong> {request.anaesthesiaPlan}
               </li>
             ))}
           </ul>
         ) : (
           <p>No PAC requests found.</p>
+        )}
+      </div> */}
+
+      <div className="ReferralConsultation-existing-referrals">
+        <h4>Existing PAC Requests:</h4>
+        {pacRequests.length > 0 ? (
+          <table className="ReferralConsultation-table">
+            <thead>
+              <tr>
+                <th>SN </th>
+                <th>Patient Name </th>
+                <th>Surgery </th>
+                <th>Consultant </th>
+                <th>Room No./Bed No.</th>
+                <th>Diagnosis</th>
+                <th>Anaesthesia Plan</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pacRequests.map((pacRequest, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{pacRequest.patientName || 'N/A'}</td>
+                  <td>{pacRequest.surgeryName}</td>
+                  <td>{pacRequest.consultant}</td>
+                  <td>{pacRequest.roomNoBedNo}</td>
+                  <td>{pacRequest.diagnosis}</td>
+                  <td>{pacRequest.anaesthesiaPlan}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No existing referrals found.</p>
         )}
       </div>
     </div>

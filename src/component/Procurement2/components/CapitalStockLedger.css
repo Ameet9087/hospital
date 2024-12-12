@@ -1,0 +1,89 @@
+
+.capii.suppp-container {
+  background-color: #e6f7ff;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.capii.suppp-tabs {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.capii.suppp-tab {
+  padding: 10px 20px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.capii.suppp-tab.capii.suppp-active {
+  background-color: #3366ff;
+  color: white;
+}
+
+.capii.suppp-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.capii.suppp-title {
+  display: flex;
+  align-items: center;
+  color: #3366ff;
+  margin-bottom: 20px;
+}
+
+.capii.suppp-icon {
+  margin-right: 10px;
+}
+
+.capii.suppp-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.capii.suppp-select,
+.capii.suppp-date-input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.capii.suppp-date-range {
+  display: flex;
+  flex-direction: column;
+}
+
+.capii.suppp-item-select {
+  display: flex;
+  flex-direction: column;
+}
+
+.capii.suppp-required {
+  color: red;
+}
+
+.capii.suppp-button {
+  background-color: #3366ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .capii.suppp-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .capii.suppp-date-range,
+  .capii.suppp-item-select {
+    width: 100%;
+  }
+}

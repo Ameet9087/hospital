@@ -1,0 +1,77 @@
+.UpdateItem-form-container-updates {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.UpdateItem-heading {
+  text-align: left;
+  margin-bottom: 20px; /* Increased margin for better spacing */
+  font-size: 24px; /* Set font size */
+  font-weight: bold; /* Make the title bold */
+  color: #333; /* Darker color for better readability */
+}
+
+.UpdateItem-item-form-updates {
+  display: flex;
+  flex-direction: column;
+}
+
+.UpdateItem-form-row-updates {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.UpdateItem-form-row-updates label {
+  width: 30%;
+  display: flex;
+  align-items: center;
+}
+
+.UpdateItem-input-field-updates,
+.UpdateItem-description-field-updates,
+.UpdateItem-checkbox-updates {
+  width: 65%;
+  padding: 2px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.UpdateItem-description-field-updates {
+  resize: vertical;
+  height: 80px;
+}
+
+.UpdateItem-radio-buttons-updates {
+  display: flex;
+  justify-content: space-around;
+  width: 65%;
+}
+
+.UpdateItem-radio-buttons-updates label {
+  margin-right: 2px;
+}
+
+.UpdateItem-required-updates {
+  color: red;
+}
+
+.UpdateItem-save-button-updates {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.UpdateItem-save-button-updates:hover {
+  background-color: #218838;
+}

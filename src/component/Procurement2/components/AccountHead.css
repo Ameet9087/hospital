@@ -1,0 +1,85 @@
+
+.account-head-container {
+    background-color: var(--background-color);
+    padding: 10px;
+  }
+  
+  .account-head-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .account-head-add-button {
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid var(--button-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .account-head-add-button:hover {
+
+    background-color: white;
+    color: var(--button-hover-text-color);
+    border: 1px solid var( --button-hover-border-color);
+
+  }
+
+
+  
+  .account-head-search-bar {
+    display: flex;
+  }
+  
+  .account-head-search-bar input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .account-head-search-button {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius:5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .account-head-results-info {
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .account-head-print-button {
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px 10px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  
+  .account-head-print-button:hover {
+
+    background-color: white;
+    color: var(--button-hover-text-color);
+    border: 1px solid var( --button-hover-border-color);
+
+  }
+  .account-head-edit-button {
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid var(--button-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  

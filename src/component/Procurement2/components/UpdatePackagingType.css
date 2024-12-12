@@ -1,0 +1,60 @@
+.MeasssAddItemSubcategory {
+  width: 280px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.MeasssAddItemSubcategory h2 {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.MeasssFormGroup {
+  margin-bottom: 15px;
+}
+
+.MeasssFormGroup label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.MeasssFormGroup input[type="text"],
+.MeasssFormGroup select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.MeasssRequired {
+  color: red;
+}
+
+.MeasssCreateLedger {
+  display: block;
+  color: #f0a500;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.MeasssFormGroup input[type="checkbox"] {
+  margin-top: 10px;
+}
+
+.MeasssBtnAdd {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.MeasssBtnAdd:hover {
+  background-color: #218838;
+}

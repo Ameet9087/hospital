@@ -1,0 +1,255 @@
+.CreateGoodReceipts-add-goods-receipt {
+  font-family: Arial, sans-serif;
+  background-color: #e6f7ff;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.CreateGoodReceipts-heading {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 28px;
+  text-align: center;
+}
+
+.CreateGoodReceipts-date-fields,
+.CreateGoodReceipts-vendor-details {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.CreateGoodReceipts-form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  width: 48%;
+}
+
+.CreateGoodReceipts-label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.CreateGoodReceipts-required {
+  color: red;
+  margin-left: 2px;
+}
+
+.CreateGoodReceipts-input-text,
+.CreateGoodReceipts-input-date,
+.CreateGoodReceipts-input-number,
+.CreateGoodReceipts-select,
+.CreateGoodReceipts-textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.CreateGoodReceipts-input-text:focus,
+.CreateGoodReceipts-input-date:focus,
+.CreateGoodReceipts-input-number:focus,
+.CreateGoodReceipts-select:focus,
+.CreateGoodReceipts-textarea:focus {
+  border-color: #80bdff;
+  outline: none;
+}
+
+.CreateGoodReceipts-select {
+  width: 100%;
+}
+
+.CreateGoodReceipts-input-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.CreateGoodReceipts-info-button {
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.CreateGoodReceipts-info-button:hover {
+  background-color: #138496;
+}
+
+.CreateGoodReceipts-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.CreateGoodReceipts-items-table th,
+.CreateGoodReceipts-items-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.CreateGoodReceipts-items-table th {
+  background-color: #f2f2f2;
+}
+
+.CreateGoodReceipts-table-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.CreateGoodReceipts-items-table input[type="text"],
+.CreateGoodReceipts-items-table input[type="number"],
+.CreateGoodReceipts-items-table input[type="date"],
+.CreateGoodReceipts-items-table select {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.CreateGoodReceipts-remove-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.CreateGoodReceipts-remove-button:hover {
+  background-color: #c82333;
+}
+
+.CreateGoodReceipts-add-row-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.CreateGoodReceipts-add-row-button:hover {
+  background-color: #218838;
+}
+
+.CreateGoodReceipts-items-count {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.CreateGoodReceipts-quality-inspection {
+  margin-bottom: 20px;
+}
+
+.CreateGoodReceipts-checkbox-label {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.CreateGoodReceipts-checkbox-label input {
+  margin-right: 10px;
+}
+
+.CreateGoodReceipts-checked-by {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.CreateGoodReceipts-checked-label {
+  margin: 0 10px;
+  font-weight: bold;
+}
+
+.CreateGoodReceipts-add-button,
+.CreateGoodReceipts-remove-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.CreateGoodReceipts-add-button:hover,
+.CreateGoodReceipts-remove-button:hover {
+  background-color: #0056b3;
+}
+
+.CreateGoodReceipts-totals {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.CreateGoodReceipts-totals .CreateGoodReceipts-form-group {
+  width: 30%; 
+  margin-right: 10px;
+}
+
+.CreateGoodReceipts-totals .CreateGoodReceipts-label {
+  text-align: right;
+}
+
+.CreateGoodReceipts-totals .CreateGoodReceipts-input-number {
+  width: 100%;
+}
+
+.CreateGoodReceipts-remarks {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.CreateGoodReceipts-remarks .CreateGoodReceipts-label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.CreateGoodReceipts-remarks .CreateGoodReceipts-textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.CreateGoodReceipts-in-words {
+  margin-top: 5px;
+  font-style: italic;
+  color: #555;
+}
+
+.CreateGoodReceipts-action-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.CreateGoodReceipts-receipt-button,
+.CreateGoodReceipts-discard-button {
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.CreateGoodReceipts-receipt-button:hover,
+.CreateGoodReceipts-discard-button:hover {
+  background-color: #138496;
+}

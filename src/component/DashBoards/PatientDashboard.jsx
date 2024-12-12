@@ -23,6 +23,7 @@ import ReferralConsultation from "./ReferralConsultation";
 import NurseOrder from "./NurseOrder";
 import PACRequest from "./PACRequest";
 import AdmissionSlip from "./AdmissionSlip";
+import OutPatient from "./OutPatient";
 
 const Section = ({ title, handleAddClick, children }) => (
   <div className="Patient-Dashboard-firstBox">
@@ -57,26 +58,32 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
   const [LabRequest, setLabRequest] = useState([]);
   const [showRadioReport, setShowRadioReport] = useState(false);
   const [ShowLabReport, setShowLabReport] = useState(false);
-  const [showInfusion,setInfusion]=useState([])
-  const [services,setServices]=useState([])
-  const [treatment,setTreatment]=useState([])
+  const [showInfusion, setInfusion] = useState([])
+  const [services, setServices] = useState([])
+  const [treatment, setTreatment] = useState([])
   console.log(patient);
+  
 
   useEffect(() => {
-    // Fetch medications data from the API
     const fetchInfusions = async () => {
       let endpoint = "";
 
-        endpoint = `http://192.168.0.110:9000/infusions/patient/1`;
-      // } else if (patient?.admissionId) {
-      //   endpoint = `${API_BASE_URL}/medications/by-ipd-id?ipdPatientId= ${
-      //     patient?.patientDTO?.patientId || patient?.patientId
-      //   }`;
-      
+      if (patient.inPatientId) {
+        endpoint = `${API_BASE_URL}/infusions/in-patient/${patient.inPatientId}`;
+      } else if (patient.outPatientId) {
+        endpoint = `${API_BASE_URL}/infusions/out-patient/${patient.outPatientId}`;
+      } else {
+        console.error("No valid patient ID provided.");
+        return;
+      }
+
       try {
         const response = await fetch(endpoint);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
-        console.log("infusion"+data);
+        console.log("Infusion data:", data);
 
         setInfusion(data);
       } catch (error) {
@@ -85,7 +92,7 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
     };
 
     fetchInfusions();
-  }, [activeSection]);
+  }, [patient.inPatientId, patient.outPatientId, activeSection]);
 
 
 
@@ -98,9 +105,8 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
       if (patient?.newPatientVisitId) {
         endpoint = `${API_BASE_URL}/medications/by-opd-id?opdPatientId=${patient?.newPatientVisitId}`;
       } else if (patient?.admissionId) {
-        endpoint = `${API_BASE_URL}/medications/by-ipd-id?ipdPatientId= ${
-          patient?.patientDTO?.patientId || patient?.patientId
-        }`;
+        endpoint = `${API_BASE_URL}/medications/by-ipd-id?ipdPatientId= ${patient?.patientDTO?.patientId || patient?.patientId
+          }`;
       }
       try {
         const response = await fetch(endpoint);
@@ -118,84 +124,63 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
 
   useEffect(() => {
     const fetchServices = async () => {
-      const endpoint = 'http://192.168.0.110:9000/api/services/patient/1';
-  
+      let endpoint = "";
+
+      if (patient.inPatientId) {
+        endpoint = `${API_BASE_URL}/services/in-patient/${patient.inPatientId}`;
+      } else if (patient.outPatientId) {
+        endpoint = `${API_BASE_URL}/services/out-patient/${patient.outPatientId}`;
+      } else {
+        console.error("No valid patient ID provided.");
+        return;
+      }
+
       try {
         const response = await fetch(endpoint);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
-  
-        // Process the serviceNames to parse the JSON string into an array
-        const parsedServices = data.map((service) => {
-          let parsedServiceNames = [];
-  
-          // Parse each serviceNames string into a proper array
-          if (service.serviceNames && service.serviceNames.length > 0) {
-            try {
-              parsedServiceNames = JSON.parse(service.serviceNames[0]); // Only parse the first item in the array
-            } catch (error) {
-              console.error('Error parsing serviceNames:', error);
-            }
-          }
-  
-          return { ...service, serviceNames: parsedServiceNames }; // Return service with parsed serviceNames
-        });
-  
-        console.log('Fetched Services:', parsedServices);
-  
-        setServices(parsedServices); // Set state with parsed services
-  
+        console.log("Infusion data:", data);
+
+        setServices(data);
       } catch (error) {
-        console.error('Error fetching service:', error);
       }
     };
-  
+
     fetchServices();
   }, [activeSection]);
-  
-  
-  
+
+
+
+
+
   useEffect(() => {
     const fetchTreatmentGive = async () => {
-      const endpoint = 'http://192.168.0.110:9000/api/treatments/patient/1';
-  
+      let endpoint = "";
+
+      if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/treatments/in-patient/${patient.inPatientId}`;
+      } else if (patient?.outPatientId) {
+        endpoint = `${API_BASE_URL}/treatments/out-patient/${patient.outPatientId}`;
+          
+      }
       try {
         const response = await fetch(endpoint);
-
-        // Check if the response is okay
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
         const data = await response.json();
+        console.log(data);
 
-        console.log('Fetched data:', data); // Log the entire fetched data
-
-        // Process the treatment descriptions and parse JSON strings
-        const parsedTreatment = data.map((treatment) => {
-          let parsedTreatmentDescriptions = [];
-
-          // If treatmentDescriptions exist and have data, parse it
-          if (treatment.treatmentDescriptions && treatment.treatmentDescriptions.length > 0) {
-            parsedTreatmentDescriptions = treatment.treatmentDescriptions; // No need to parse if it's already an array
-          }
-
-          return { ...treatment, treatmentDescriptions: parsedTreatmentDescriptions };
-        });
-
-        console.log('Parsed Treatment:', parsedTreatment);
-
-        setTreatment(parsedTreatment); // Set state with the parsed treatment data
-
+        setTreatment(data);
       } catch (error) {
-        console.error('Error fetching treatment data:', error);
+        console.error("Error fetching Treatments:", error);
       }
     };
 
     fetchTreatmentGive();
-  }, [activeSection]); // Only re-fetch when activeSection changes
+  }, [activeSection]);
 
 
-  
+
 
 
 
@@ -207,9 +192,8 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
       if (patient?.newPatientVisitId) {
         endpoint = `${API_BASE_URL}/vitals/get-by-opd-patient-id/${patient?.newPatientVisitId}`;
       } else if (patient?.admissionId) {
-        endpoint = `${API_BASE_URL}/vitals/get-by-in-patient-id/${
-          patient?.patientDTO?.patientId || patient?.patientId
-        }`;
+        endpoint = `${API_BASE_URL}/vitals/get-by-in-patient-id/${patient?.patientDTO?.patientId || patient?.patientId
+          }`;
       }
 
       // If an endpoint is determined, make the API call
@@ -241,9 +225,8 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
       if (patient?.newPatientVisitId) {
         endpoint = `${API_BASE_URL}/allergies/by-newVisitPatientId/${patient?.newPatientVisitId}`;
       } else if (patient?.admissionId) {
-        endpoint = `${API_BASE_URL}/allergies/by-patientId/${
-          patient?.patientDTO?.patientId || patient?.patientId
-        }`;
+        endpoint = `${API_BASE_URL}/allergies/by-patientId/${patient?.patientDTO?.patientId || patient?.patientId
+          }`;
       }
 
       // If an endpoint is determined, make the API call
@@ -275,9 +258,8 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
       if (patient?.newPatientVisitId) {
         endpoint = `${API_BASE_URL}/active-problems/by-newVisitPatientId/${patient?.newPatientVisitId}`;
       } else if (patient?.admissionId) {
-        endpoint = `${API_BASE_URL}/active-problems/by-patientId/${
-          patient?.patientDTO?.patientId || patient?.patientId
-        }`;
+        endpoint = `${API_BASE_URL}/active-problems/by-patientId/${patient?.patientDTO?.patientId || patient?.patientId
+          }`;
       }
 
       // If an endpoint is determined, make the API call
@@ -307,9 +289,8 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
       if (patient?.newPatientVisitId) {
         endpoint = `${API_BASE_URL}/imaging-requisitions/by-opd-patient-id?opdPatientId=${patient?.newPatientVisitId}`;
       } else if (patient?.admissionId) {
-        endpoint = `${API_BASE_URL}/imaging-requisitions/by-ipd-patient-id?ipdPatientId=${
-          patient?.patientDTO?.patientId || patient?.patientId
-        }`;
+        endpoint = `${API_BASE_URL}/imaging-requisitions/by-ipd-patient-id?ipdPatientId=${patient?.patientDTO?.patientId || patient?.patientId
+          }`;
       }
 
       // If an endpoint is determined, make the API call
@@ -340,9 +321,8 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
       if (patient?.newPatientVisitId) {
         endpoint = `${API_BASE_URL}/lab-requests/by-opd-patient-id?opdPatientId=${patient?.newPatientVisitId}`;
       } else if (patient?.admissionId) {
-        endpoint = `${API_BASE_URL}/lab-requests/by-ipd-patient-id?ipdPatientId=${
-          patient?.patientDTO?.patientId || patient?.patientId
-        }`;
+        endpoint = `${API_BASE_URL}/lab-requests/by-ipd-patient-id?ipdPatientId=${patient?.patientDTO?.patientId || patient?.patientId
+          }`;
       }
 
       // If an endpoint is determined, make the API call
@@ -453,45 +433,66 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
             newPatientVisitId={patient.newPatientVisitId}
           />
         );
-        case "Infusion":
-          return(
-            <Infusion 
-            patientId={patient?.patientDTO?.patientId || patient?.patientId}
-            />
-          )
-        case "procedures":
-          return(
-            <ProcedureService/>
-          )
-        case "treatment":
-          return(
-            <TreatmentGiven/>
-          )
-        case "diet":
-          return (
-            <DietOrder/>
-          )
-        case "referral":
-          return (
-            <ReferralConsultation/>
-          )
-          case "nursing":
-            return (
-              <NurseOrder/>
-            )
-          case "pacrequest":
-            return(
-              <PACRequest/>
-            )
-          case "admissionslip":
-            return(
-              <AdmissionSlip/>
-            )
+      case "Infusion":
+        return (
+          <Infusion
+          inPatientId={patient.inPatientId}
+          outPatientId={patient.outPatientId}          />
+        )
+      case "procedures":
+        return (
+          <ProcedureService 
+          inPatientId={patient.inPatientId}
+          outPatientId={patient.outPatientId} />
+        )
+      case "treatment":
+        return (
+          <TreatmentGiven 
+          inPatientId={patient.inPatientId}
+          outPatientId={patient.outPatientId}  />
+        )
+      case "diet":
+        return (
+          <DietOrder 
+          inPatientId={patient.inPatientId}
+          outPatientId={patient.outPatientId}  />
+        )
+      case "referral":
+        return (
+          <ReferralConsultation 
+          inPatientId={patient.inPatientId}
+          outPatientId={patient.outPatientId}  />
+        )
+      case "nursing":
+        return (
+          <NurseOrder 
+          inPatientId={patient.inPatientId}
+          outPatientId={patient.outPatientId}
+          />
+        )
+      case "pacrequest":
+        return (
+          <PACRequest
+          inPatientId={patient.inPatientId}
+          outPatientId={patient.outPatientId}
+          />
+        )
+      case "admissionslip":
+        return (
+          <AdmissionSlip
+          inPatientId={patient.inPatientId}
+          outPatientId={patient.outPatientId}
+
+          />
+
+        )
 
       default:
         return renderDashboard();
     }
   };
+
+
   const renderDashboard = () => (
     <div className="Patient-Dashboard-main-section">
       <aside className="Patient-Dashboard-aside-section  Patient-Dashboard-left-aside">
@@ -503,24 +504,21 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
                 {patient.admissionId ? "IPD" : "OPD"}
               </button>
             </div>
-            <span className="Patient-Dashboard-textName">{`${
-              patient?.firstName ||
+            <span className="Patient-Dashboard-textName">{`${patient?.firstName ||
               patient?.patientDTO?.firstName ||
-              patient?.patientFirstName ||
-              patient?.patient?.firstName
-            } ${
-              patient?.lastName ||
+
+              patient?.patientFirstName
+              } ${patient?.lastName ||
+
               patient?.patientDTO?.lastName ||
               patient?.patientLastName
-            }`}</span>
+              }`}</span>
             <br></br>
-            <span className="Patient-Dashboard-ageGen">{`${
-              patient?.age || patient?.patientDTO?.age || patient?.patientAge
-            }/${
-              patient?.gender ||
+            <span className="Patient-Dashboard-ageGen">{`${patient?.age || patient?.patientDTO?.age || patient?.patientAge
+              }/${patient?.gender ||
               patient?.patientDTO?.gender ||
               patient?.patientGender
-            }`}</span>
+              }`}</span>
           </div>
           <hr></hr>
           <div className="Patient-Dashboard-divTwoDetails">
@@ -535,19 +533,16 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
               <span className="Patient-Dashboard-detailHeading">
                 Attending:
               </span>
-              <span>{`${
-                patient?.employeeDTO?.salutation ||
+              <span>{`${patient?.employeeDTO?.salutation ||
                 patient?.admittedDoctorDTO?.salutation ||
                 patient?.doctorSalutationName
-              } ${
-                patient?.employeeDTO?.firstName ||
+                } ${patient?.employeeDTO?.firstName ||
                 patient?.admittedDoctorDTO?.firstName ||
                 patient?.doctorFirstName
-              } ${
-                patient?.employeeDTO?.lastName ||
+                } ${patient?.employeeDTO?.lastName ||
                 patient?.admittedDoctorDTO?.lastName ||
                 patient?.doctorLastName
-              }`}</span>
+                }`}</span>
             </div>
           </div>
         </div>
@@ -645,69 +640,72 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
             </div>
           )}
           <div className="Patient-Dashboard-boxOne">
-<div className="Patient-Dashboard-textAndLogo">
-<span className="Patient-Dashboard-textOne"
-onClick={() => {
-  setActiveSection("diet");
-  setPrevAction(...activeSection);
-}}
->Diet Order</span>
-</div>
-</div>
+            <div className="Patient-Dashboard-textAndLogo">
+              <span className="Patient-Dashboard-textOne"
+                onClick={() => {
+                  setActiveSection("diet");
+                  setPrevAction(...activeSection);
+                }}
+              >Diet Order</span>
+            </div>
+          </div>
 
-<div className="Patient-Dashboard-boxOne">
-<div className="Patient-Dashboard-textAndLogo">
-<span className="Patient-Dashboard-textOne"
-onClick={() => {
-  setActiveSection("referral");
-  setPrevAction(...activeSection);
-}}
->Referral / Cross Consultation</span>
-</div>
-</div>
+          <div className="Patient-Dashboard-boxOne">
+            <div className="Patient-Dashboard-textAndLogo">
+              <span className="Patient-Dashboard-textOne"
+                onClick={() => {
+                  setActiveSection("referral");
+                  setPrevAction(...activeSection);
+                }}
+              >Referral / Cross Consultation</span>
+            </div>
+          </div>
 
-<div className="Patient-Dashboard-boxOne">
-<div className="Patient-Dashboard-textAndLogo">
-<span className="Patient-Dashboard-textOne"   
-    onClick={() => {
-    setActiveSection("nursing");
-    setPrevAction(...activeSection);}}>Nursing Order</span>
-</div>
-</div>
+          <div className="Patient-Dashboard-boxOne">
+            <div className="Patient-Dashboard-textAndLogo">
+              <span className="Patient-Dashboard-textOne"
+                onClick={() => {
+                  setActiveSection("nursing");
+                  setPrevAction(...activeSection);
+                }}>Nursing Order</span>
+            </div>
+          </div>
 
-<div className="Patient-Dashboard-boxOne">
-<div className="Patient-Dashboard-textAndLogo">
-<span className="Patient-Dashboard-textOne" 
-    onClick={() => {
-    setActiveSection("pacrequest");
-    setPrevAction(...activeSection);}}>PAC Request</span>
-</div>
-</div>
-<div className="Patient-Dashboard-boxOne">
-<div className="Patient-Dashboard-textAndLogo">
-<span className="Patient-Dashboard-textOne"  
-    onClick={() => {
-    setActiveSection("admissionslip");
-    setPrevAction(...activeSection);}}>Admission Slip</span>
-</div>
-</div>
+          <div className="Patient-Dashboard-boxOne">
+            <div className="Patient-Dashboard-textAndLogo">
+              <span className="Patient-Dashboard-textOne"
+                onClick={() => {
+                  setActiveSection("pacrequest");
+                  setPrevAction(...activeSection);
+                }}>PAC Request</span>
+            </div>
+          </div>
+          <div className="Patient-Dashboard-boxOne">
+            <div className="Patient-Dashboard-textAndLogo">
+              <span className="Patient-Dashboard-textOne"
+                onClick={() => {
+                  setActiveSection("admissionslip");
+                  setPrevAction(...activeSection);
+                }}>Admission Slip</span>
+            </div>
+          </div>
 
-<div className="Patient-Dashboard-boxOne">
-<div className="Patient-Dashboard-textAndLogo">
-<span className="Patient-Dashboard-textOne">Doctor Appointment</span>
-</div>
-</div>
+          <div className="Patient-Dashboard-boxOne">
+            <div className="Patient-Dashboard-textAndLogo">
+              <span className="Patient-Dashboard-textOne">Doctor Appointment</span>
+            </div>
+          </div>
 
-<div className="Patient-Dashboard-boxOne">
-<div className="Patient-Dashboard-textAndLogo">
-<span className="Patient-Dashboard-textOne">pending Cross Consultation</span>
-</div>
-</div>
+          <div className="Patient-Dashboard-boxOne">
+            <div className="Patient-Dashboard-textAndLogo">
+              <span className="Patient-Dashboard-textOne">pending Cross Consultation</span>
+            </div>
+          </div>
 
         </div>
       </aside>
 
-   {/* middle content */}
+      {/* middle content */}
 
       <main className="Patient-Dashboard-betweenSection">
         <div className="Patient-Dashboard-outOutDiv">
@@ -933,7 +931,7 @@ onClick={() => {
 
 
 
-{/* adan 14/11/24 */}
+        {/* adan 14/11/24 */}
 
         <div className="Patient-Dashboard-outOutDiv">
           <Section
@@ -945,7 +943,7 @@ onClick={() => {
             children={
               <>
                 {" "}
-                {showInfusion.length > 0 ?(
+                {showInfusion.length > 0 ? (
                   <div className="Patient-Dashboard-inputSection">
                     <table
                       border="1"
@@ -958,37 +956,37 @@ onClick={() => {
                           <th className="Patient-Dashboard-th">Infusionnm</th>
                           <th className="Patient-Dashboard-th">Infusion Generic</th>
                           <th className="Patient-Dashboard-th">Infusion Frequency</th>
-			  <th className="Patient-Dashboard-th">Drug</th>
-			  <th className="Patient-Dashboard-th">Flow Rate</th>
-			  <th className="Patient-Dashboard-th">InfuRemarks</th>
-			  <th className="Patient-Dashboard-th">Start Date</th>
-			  <th className="Patient-Dashboard-th">Start Time</th>
-			  <th className="Patient-Dashboard-th">End Date</th>
-			  <th className="Patient-Dashboard-th">End Time</th>
+                          <th className="Patient-Dashboard-th">Drug</th>
+                          <th className="Patient-Dashboard-th">Flow Rate</th>
+                          <th className="Patient-Dashboard-th">InfuRemarks</th>
+                          <th className="Patient-Dashboard-th">Start Date</th>
+                          <th className="Patient-Dashboard-th">Start Time</th>
+                          <th className="Patient-Dashboard-th">End Date</th>
+                          <th className="Patient-Dashboard-th">End Time</th>
 
                         </tr>
                       </thead>
                       <tbody>
-  {showInfusion.map((Infusion) => (
-    <tr key={Infusion.sn}>
-      <td className="Patient-Dashboard-td">{Infusion.infusionNm}</td>
-      <td className="Patient-Dashboard-td">{Infusion.infusionGeneric}</td>
-      <td className="Patient-Dashboard-td">{Infusion.infusionRoute}</td>
-      <td className="Patient-Dashboard-td">{Infusion.drug}</td>
-      <td className="Patient-Dashboard-td">{Infusion.flowRate}</td>
-      <td className="Patient-Dashboard-td">{Infusion.infuRemarks}</td>
-      <td className="Patient-Dashboard-td">{Infusion.startDate}</td>
-      <td className="Patient-Dashboard-td">{Infusion.startTime}</td>
-      <td className="Patient-Dashboard-td">{Infusion.endDate}</td>
-      <td className="Patient-Dashboard-td">{Infusion.endTime}</td>
-    </tr>
-  ))}
-</tbody>
+                        {showInfusion.map((Infusion) => (
+                          <tr key={Infusion.sn}>
+                            <td className="Patient-Dashboard-td">{Infusion.infusionNm}</td>
+                            <td className="Patient-Dashboard-td">{Infusion.infusionGeneric}</td>
+                            <td className="Patient-Dashboard-td">{Infusion.infusionRoute}</td>
+                            <td className="Patient-Dashboard-td">{Infusion.drug}</td>
+                            <td className="Patient-Dashboard-td">{Infusion.flowRate}</td>
+                            <td className="Patient-Dashboard-td">{Infusion.infuRemarks}</td>
+                            <td className="Patient-Dashboard-td">{Infusion.startDate}</td>
+                            <td className="Patient-Dashboard-td">{Infusion.startTime}</td>
+                            <td className="Patient-Dashboard-td">{Infusion.endDate}</td>
+                            <td className="Patient-Dashboard-td">{Infusion.endTime}</td>
+                          </tr>
+                        ))}
+                      </tbody>
                     </table>
                   </div>
-                  ): "no data found"}
+                ) : "no data found"}
               </>
-              
+
             }
           />
         </div>
@@ -1013,10 +1011,15 @@ onClick={() => {
               </thead>
               <tbody>
                 {services.map((service, index) => {
+                  // Ensure serviceNames is an array before joining
+                  const serviceNames = Array.isArray(service.serviceNames)
+                    ? service.serviceName
+                    : [service.serviceName]; // If it's not an array, treat it as a single item array
+
                   return (
                     <tr key={index}>
                       <td className="Patient-Dashboard-td">
-                        {service.serviceNames.join(", ")} {/* Join the parsed service names into a comma-separated string */}
+                        {service.serviceName}
                       </td>
                     </tr>
                   );
@@ -1025,7 +1028,7 @@ onClick={() => {
             </table>
           </div>
         ) : (
-          "No Data Available"
+          <p>No Data Available</p>
         )}
       </>
     }
@@ -1037,57 +1040,62 @@ onClick={() => {
 
 
 
-<div className="Patient-Dashboard-outOutDiv">
-      <Section
-        title="📟 Treatment Given"
-        handleAddClick={() => {
-          setPrevAction(activeSection);
-          setActiveSection("treatment");
-        }}
-        children={
-          <>
-            {treatment.length > 0 ? (
-              <div className="Patient-Dashboard-inputSection">
-                <table
-                  border="1"
-                  cellPadding="10"
-                  cellSpacing="0"
-                  className="patient-table"
-                >
-                  <thead>
-                    <tr>
-                      <th className="Patient-Dashboard-th">Treatment Descriptions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {treatment.map((treatmentItem, index) => {
-                      return (
-                        <tr key={index}>
-                          <td className="Patient-Dashboard-td">
-                            {treatmentItem.treatmentDescriptions.join(", ")} {/* Join the array into a comma-separated string */}
-                          </td>
+        <div className="Patient-Dashboard-outOutDiv">
+          <Section
+            title="📟 Treatment Given"
+            handleAddClick={() => {
+              setPrevAction(activeSection);
+              setActiveSection("treatment");
+            }}
+            children={
+              <>
+                {treatment.length > 0 ? (
+                  <div className="Patient-Dashboard-inputSection">
+                    <table
+                      table
+                      border="1"
+                      cellPadding="10"
+                      cellSpacing="0"
+                      className="patient-table"
+                    >
+                      <thead>
+                        <tr>
+                          <th className="Patient-Dashboard-th">Treatment Descriptions</th>
                         </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <p>No data found</p>
-            )}
-          </>
-        }
-      />
-    </div>
+                      </thead>
+                      <tbody>
+                        {treatment.map((treatment, index) => {
+                          const treatmentDescriptions = Array.isArray(treatment.treatmentDescriptions)
+                            ? treatment.treatmentDescriptions
+                            : []; // Default to an empty array if it's not an array
+                          return (
+                            <tr key={index}>
+                              <td className="Patient-Dashboard-td">
+                                {treatment.treatmentDescriptions} {/* Safely join the array */}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+
+                    </table>
+                  </div>
+                ) : (
+                  <p>No data found</p>
+                )}
+              </>
+            }
+          />
+        </div>
 
 
-        
 
 
 
 
 
-        
+
+
       </main>
 
       <aside className="Patient-Dashboard-aside-section  Patient-Dashboard-right-aside">
@@ -1252,9 +1260,8 @@ onClick={() => {
 
   return (
     <div
-      className={`patient-dashboard ${
-        isPatientOPEN ? "isPatientDetailsActive" : "isPatientDetailsInActive"
-      }`}
+      className={`patient-dashboard ${isPatientOPEN ? "isPatientDetailsActive" : "isPatientDetailsInActive"
+        }`}
     >
       <nav className="Patient-Dashboard-navbar">
         <div className="Patient-Dashboard-navText">

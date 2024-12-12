@@ -1,0 +1,121 @@
+.ExpirableStocks-container {
+  background-color: #e6f7ff;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.ExpirableStocks-tabs {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.ExpirableStocks-tab {
+  padding: 10px 20px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.ExpirableStocks-tab.ExpirableStocks-active {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.ExpirableStocks-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.ExpirableStocks-title {
+  display: flex;
+  align-items: center;
+  color: #4a90e2;
+  margin-bottom: 20px;
+}
+
+.ExpirableStocks-icon {
+  margin-right: 10px;
+}
+
+.ExpirableStocks-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.ExpirableStocks-select,
+.ExpirableStocks-date-input,
+.ExpirableStocks-search-input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.ExpirableStocks-date-range,
+.ExpirableStocks-select-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.ExpirableStocks-star-btn {
+  background: none;
+  border: none;
+  color: #4a90e2;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.ExpirableStocks-search-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ExpirableStocks-results {
+  color: #4a90e2;
+}
+
+.ExpirableStocks-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.ExpirableStocks-table th,
+.ExpirableStocks-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.ExpirableStocks-table th {
+  background-color: #f2f2f2;
+}
+
+.ExpirableStocks-view-btn {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.ExpirableStocks-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.ExpirableStocks-page-btn {
+  background-color: #e6f7ff;
+  border: 1px solid #4a90e2;
+  color: #4a90e2;
+  padding: 5px 10px;
+  cursor: pointer;
+}

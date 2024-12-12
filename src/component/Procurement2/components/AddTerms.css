@@ -1,0 +1,64 @@
+.cons-container {
+  max-width: 800px;  /* Limit the container width */
+  height: 500px;  /* Fixed height for the container */
+  overflow-y: auto;  /* Allow vertical scrolling if content overflows */
+  scrollbar-width: none;  /* Hide scrollbar in Firefox */
+  padding: 20px;  /* Add padding inside the container */
+}
+
+.cons-heading {
+  font-size: 24px;  /* Larger font size for the heading */
+  margin-bottom: 20px;  /* Space below the heading */
+}
+
+.terms-quill {
+  width: 100%;  /* Make Quill editor responsive (full width of parent) */
+  height: 200px;  /* Set fixed height for the editor */
+  border-radius: 4px;  /* Round the corners of the editor */
+}
+
+.cons-terms-form {
+  display: flex;
+  flex-direction: column; /* Stack the form elements vertically */
+  gap: 10px;
+}
+.cons-form-group label {
+  font-weight: bold;  /* Make label text bold */
+  margin-bottom: 5px;  /* Space below the label */
+}
+
+.cons-input-text {
+  width: 100%;  /* Full width of the parent container */
+  padding: 8px;  /* Add padding inside the input field */
+  font-size: 14px;  /* Set font size */
+  border: 1px solid #ccc;  /* Light gray border */
+  border-radius: 4px;  /* Rounded corners */
+}
+
+.cons-input-checkbox {
+  margin-left: 10px;  /* Space between checkbox and label */
+}
+
+.cons-form-actions {
+  display: flex;
+  justify-content: flex-end;  /* Align the button to the right */
+}
+
+.cons-save-button {
+  padding: 10px 20px;  /* Button padding */
+  background-color: #4CAF50;  /* Green background */
+  color: white;  /* White text */
+  border: none;  /* Remove default border */
+  border-radius: 4px;  /* Rounded corners */
+  cursor: pointer;  /* Show pointer cursor on hover */
+}
+
+.cons-save-button:hover {
+  background-color: #45a049;  /* Darker green on hover */
+}
+
+.cons-error-message {
+  color: red;  /* Red color for error messages */
+  font-size: 14px;  /* Smaller font size for error messages */
+  margin-bottom: 10px;  /* Space below the error message */
+}

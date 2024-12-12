@@ -1,0 +1,179 @@
+
+.donn-container {
+    width: 90%;
+    margin: 20px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.donn-h2 {
+    color: #1a237e;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.donn-vendor-details,
+.donn-item-details,
+.donn-inspection-details,
+.donn-summary-details,
+.donn-footer-notes {
+    margin-bottom: 20px;
+}
+
+.donn-vendor-details label,
+.donn-summary-fields label,
+.donn-remarks-section label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.donn-vendor-details input,
+.donn-vendor-details select,
+.donn-item-details input,
+.donn-item-details select,
+.donn-summary-fields input,
+.donn-remarks-section input {
+    width: calc(100% - 10px);
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.donn-vendor-details input[type="date"] {
+    width: auto;
+}
+
+.donn-vendor-details input[type="text"],
+.donn-vendor-details input[type="number"] {
+    width: calc(100% - 12px);
+}
+
+.donn-vendor-details select,
+.donn-item-details select,
+.donn-item-details input[type="text"],
+.donn-item-details input[type="date"],
+.donn-item-details input[type="number"],
+.donn-summary-fields input[type="text"],
+.donn-remarks-section input[type="text"] {
+    width: auto;
+    display: inline-block;
+}
+
+.donn-item-details table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.donn-item-details th,
+.donn-item-details td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.donn-item-details th {
+    background-color: #90caf9;
+}
+
+.donn-add-row,
+.donn-delete-row {
+    background-color: #43a047;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.donn-delete-row {
+    background-color: #e53935;
+}
+
+.donn-item-count {
+    display: inline-block;
+    font-weight: bold;
+    color: #0d47a1;
+    margin-left: 20px;
+}
+
+.donn-inspection-details {
+    padding: 10px;
+    background-color: #e3f2fd;
+    border-radius: 5px;
+    border: 1px solid #bbb;
+}
+
+.donn-inspection-details input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.donn-checked-by {
+    margin-top: 10px;
+}
+
+.donn-checked-by label {
+    margin-right: 10px;
+}
+
+.donn-add-checked,
+.donn-remove-checked {
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.donn-add-checked {
+    background-color: #43a047;
+}
+
+.donn-summary-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.donn-summary-fields {
+    width: 60%;
+}
+
+.donn-remarks-section {
+    width: 35%;
+}
+
+.donn-footer-notes span {
+    display: block;
+    font-style: italic;
+    color: #757575;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.donn-form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.donn-form-actions button {
+    background-color: #0288d1;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.donn-receipt-btn {
+    background-color: #0288d1;
+}
+
+.donn-discard-btn {
+    background-color: #d32f2f;
+}

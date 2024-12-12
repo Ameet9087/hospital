@@ -1,0 +1,127 @@
+.vendddContainer {
+    max-width: 800px;
+    margin: auto;
+    padding: 2px;
+    font-family: Arial, sans-serif;
+    position: relative;
+  }
+  
+  .vendddHeading {
+    text-align: center;
+    font-size: 16px;
+    color: #000;
+  }
+  
+  .vendddFormContainer {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .vendddColumn {
+    width: 48%;
+  }
+  
+  .vendddFormRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .vendddLabel {
+    flex: 1 1 40%;
+    color: #000;
+    font-weight: bold;
+  }
+  
+  .vendddColon {
+    margin-right: 2px;
+  }
+  
+  .vendddInput {
+    flex: 1 1 60%;
+    padding: 2px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .vendddTextarea {
+    flex: 1 1 60%;
+    padding: 2px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    resize: none;
+    height: 60px;
+  }
+  
+  .vendddCheckbox {
+    margin-left: 2px;
+  }
+  
+  .vendddRequired {
+    color: red;
+  }
+  
+  .vendddAddButton {
+    margin-top: 2px;
+    padding: 2px 8px;
+    background-color: var(--button-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .vendddError {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  /* Media Query for Tablets */
+  @media (max-width: 768px) {
+    .vendddFormContainer {
+      flex-direction: column;
+    }
+  
+    .vendddColumn {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+  
+  /* Media Query for Mobile Devices */
+  @media (max-width: 480px) {
+    .vendddHeading {
+      font-size: 20px;
+    }
+  
+    .vendddFormRow {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .vendddLabel {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+  
+    .vendddInput,
+    .vendddTextarea {
+      width: 100%;
+    }
+  
+    .vendddAddButton {
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+    }
+  
+    .vendddCloseButton {
+      top: 5px;
+      right: 5px;
+      width: 25px;
+      height: 25px;
+      font-size: 20px;
+    }
+  }
+  

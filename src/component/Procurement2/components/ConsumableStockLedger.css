@@ -1,0 +1,88 @@
+
+
+.suppp-container {
+    background-color: #e6f7ff;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .suppp-tabs {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .suppp-tab {
+    padding: 10px 20px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  
+  .suppp-tab.suppp-active {
+    background-color: #3366ff;
+    color: white;
+  }
+  
+  .suppp-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .suppp-title {
+    display: flex;
+    align-items: center;
+    color: #3366ff;
+    margin-bottom: 20px;
+  }
+  
+  .suppp-icon {
+    margin-right: 10px;
+  }
+  
+  .suppp-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end;
+  }
+  
+  .suppp-select, .suppp-date-input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .suppp-date-range {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .suppp-item-select {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .suppp-required {
+    color: red;
+  }
+  
+  .suppp-button {
+    background-color: #3366ff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .suppp-filters {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .suppp-date-range, .suppp-item-select {
+      width:100%;
+    }
+}

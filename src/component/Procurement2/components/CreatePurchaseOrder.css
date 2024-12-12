@@ -1,0 +1,136 @@
+.CreatePurchaseOrder-purchase-order {
+  background-color: var(--background-color);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.CreatePurchaseOrder-purchase-order h2 {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.CreatePurchaseOrder-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.CreatePurchaseOrder-form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.CreatePurchaseOrder-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.CreatePurchaseOrder-form-group input,
+.CreatePurchaseOrder-form-group select,
+.CreatePurchaseOrder-form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.CreatePurchaseOrder-form-group input[type="number"] {
+  text-align: right;
+}
+
+.CreatePurchaseOrder-item-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.CreatePurchaseOrder-item-table th,
+.CreatePurchaseOrder-item-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.CreatePurchaseOrder-item-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.CreatePurchaseOrder-add-row-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.CreatePurchaseOrder-add-row-btn:hover {
+  background-color: #218838;
+}
+
+.CreatePurchaseOrder-items-count {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.CreatePurchaseOrder-terms-conditions textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.CreatePurchaseOrder-totals {
+  margin-bottom: 20px;
+}
+
+.CreatePurchaseOrder-total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.CreatePurchaseOrder-total-row span {
+  font-weight: bold;
+}
+
+.CreatePurchaseOrder-form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.CreatePurchaseOrder-submit-btn,
+.CreatePurchaseOrder-discard-btn {
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.CreatePurchaseOrder-submit-btn {
+  background-color: #28a745;
+}
+
+.CreatePurchaseOrder-submit-btn:hover {
+  background-color: #218838;
+}
+
+.CreatePurchaseOrder-discard-btn {
+  background-color: #dc3545;
+}
+
+.CreatePurchaseOrder-discard-btn:hover {
+  background-color: #c82333;
+}

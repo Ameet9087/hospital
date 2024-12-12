@@ -1,0 +1,131 @@
+.StartPurchaseOrderDraftNewList-container {
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.StartPurchaseOrderDraftNewList-container h1 {
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.StartPurchaseOrderDraftNewList-form-group {
+  margin-bottom: 5px;
+}
+
+.StartPurchaseOrderDraftNewList-form-row {
+  display: flex;
+  gap: 5px;
+}
+
+.StartPurchaseOrderDraftNewList-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.StartPurchaseOrderDraftNewList-form-group input[type="text"],
+.StartPurchaseOrderDraftNewList-form-group input[type="number"],
+.StartPurchaseOrderDraftNewList-form-group select,
+.StartPurchaseOrderDraftNewList-form-group textarea {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.StartPurchaseOrderDraftNewList-form-group textarea {
+  height: 60px;
+  resize: vertical;
+}
+
+.StartPurchaseOrderDraftNewList-info-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.StartPurchaseOrderDraftNewList-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 5px;
+}
+
+.StartPurchaseOrderDraftNewList-container th,
+.StartPurchaseOrderDraftNewList-container td {
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: left;
+}
+
+.StartPurchaseOrderDraftNewList-container th {
+  background-color: #f2f2f2;
+}
+
+.StartPurchaseOrderDraftNewList-remove-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.StartPurchaseOrderDraftNewList-add-row-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.StartPurchaseOrderDraftNewList-items-count {
+  color: #007bff;
+}
+
+.StartPurchaseOrderDraftNewList-totals {
+  margin-top: 5px;
+}
+
+.StartPurchaseOrderDraftNewList-total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.StartPurchaseOrderDraftNewList-form-actions {
+  margin-top: 5px;
+  text-align: right;
+}
+
+.StartPurchaseOrderDraftNewList-save-btn,
+.StartPurchaseOrderDraftNewList-discard-btn {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.StartPurchaseOrderDraftNewList-save-btn {
+  background-color: var(--button-color);
+  color: white;
+  margin-right: 5px;
+}
+
+.StartPurchaseOrderDraftNewList-discard-btn {
+  background-color: var(--button-color);
+  color: white;
+}

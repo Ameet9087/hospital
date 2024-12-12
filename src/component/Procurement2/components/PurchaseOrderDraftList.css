@@ -1,0 +1,143 @@
+.PurchaseOrderDraftList {
+  font-family: Arial, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--background-color);
+}
+
+.PurchaseOrderDraftList h1 {
+  color: #333;
+}
+
+.PurchaseOrderDraftList-actions-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.PurchaseOrderDraftList-start-new-draft {
+  color: black;
+  text-decoration: none;
+}
+
+.PurchaseOrderDraftList-discarded-draft-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.PurchaseOrderDraftList-search-bar {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.PurchaseOrderDraftList-search-bar input {
+  flex-grow: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+
+.PurchaseOrderDraftList-search-button {
+  padding: 5px 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.PurchaseOrderDraftList-results-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.PurchaseOrderDraftList-export-button,
+.PurchaseOrderDraftList-print-button {
+  padding: 5px 10px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.PurchaseOrderDraftList-draft-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.PurchaseOrderDraftList-draft-table th,
+.PurchaseOrderDraftList-draft-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.PurchaseOrderDraftList-draft-table th {
+  background-color: #f8f9fa;
+}
+
+.PurchaseOrderDraftList-no-rows {
+  background-color: #fff3cd;
+  text-align: center;
+  padding: 20px;
+}
+
+.PurchaseOrderDraftList-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.PurchaseOrderDraftList-pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.PurchaseOrderDraftList-pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Modal Styles */
+.PurchaseOrderDraftList-custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.PurchaseOrderDraftList-custom-modal {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+}
+
+.PurchaseOrderDraftList-close-modal-button {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}

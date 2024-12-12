@@ -47,6 +47,7 @@ import RadiationTherapy from "../component/RadiationTherapy/radiationtherapy"
 import Pulmonology from "../component/Pulmonology/Pulmonology"
 import Chemotherapy from "../component/ChemotherapyModule/ChemotherapyRoute"
 import DynamicReport from "../component/DynamicReport/DynamicReport"
+import Procurementmain from '../component/Procurement2/procurmentmain';
 // Define modules and submodules
 
 
@@ -101,6 +102,7 @@ function Layout({}) {
                     <Route path='/hi/*' element={<Nhif/>}/> 
                     <Route path='/adt/*' element={<ADTRouting/>}/>
                     <Route path='/maternity/*' element={<MaternityHeader/>}/>
+                    <Route path='/procurement/*' element={<Procurementmain/>}/>
                     <Route path='/homehealthcare/*' element={<HomeHealthRoutes/>}/>
                     <Route path='/pediatric/inpatient/*' element={<PediatricInPatientNavbar/>}/>
                     <Route path='/pediatric/outpatient/*' element={<PediatricOutPatientNavbar/>}/>
