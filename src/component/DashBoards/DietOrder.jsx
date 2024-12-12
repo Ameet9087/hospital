@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './DietOrder.css';
+import { API_BASE_URL } from '../api/api';
+import axios from 'axios';
 
-const DietOrder = ({ onBack }) => {
+const DietOrder = ({ inPatientId, outPatientId }) => {
   const [formData, setFormData] = useState({
     dietGroup: '',
     dietOrder: '',
@@ -9,7 +11,10 @@ const DietOrder = ({ onBack }) => {
     dietType: '',
     dietTime: '',
     dietGivenTime: '',
-    dietRemarks: ''
+    dietRemarks: '',
+    ...(inPatientId
+      ? { inPatient: { inPatientId } }
+      : { outPatient: { outPatientId } }),
   });
 
   const [dietOrders, setDietOrders] = useState([]);
@@ -18,21 +23,29 @@ const DietOrder = ({ onBack }) => {
   useEffect(() => {
     const fetchDietOrders = async () => {
       try {
-        const response = await fetch('http://192.168.0.110:9000/dietorders/patient/1');
-        if (!response.ok) {
-          throw new Error('Failed to fetch diet orders');
+        let endpoint = "";
+  
+        if (inPatientId) {
+          endpoint = `${API_BASE_URL}/dietorders/in-patient/${inPatientId}`;
+        } else if (outPatientId) {
+          endpoint = `${API_BASE_URL}/dietorders/out-patient/${outPatientId}`;
+        } else {
+          console.error("No valid patient ID provided for Diet Orders.");
+          return;
         }
-
-        const data = await response.json();
-        setDietOrders(data); // Set the fetched diet orders in state
-        console.log('Fetched diet orders:', data);
+  
+        const response = await axios.get(endpoint);
+        setDietOrders(response.data);
+        
       } catch (error) {
-        console.error('Error fetching diet orders:', error);
+        console.error("Error fetching diet orders:", error);
       }
     };
-
+  
     fetchDietOrders(); // Call the function to fetch data when component mounts
-  }, []); // Empty dependency array means this runs once on mount
+  }, [inPatientId, outPatientId]); // Re-run the effect if either inPatientId or outPatientId changes
+  
+
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -43,50 +56,36 @@ const DietOrder = ({ onBack }) => {
     }));
   };
 
-  // Reset form data
-  const handleCancel = () => {
-    setFormData({
-      dietGroup: '',
-      dietOrder: '',
-      dietFrequency: '',
-      dietType: '',
-      dietTime: '',
-      dietGivenTime: '',
-      dietRemarks: ''
-    });
-  };
+
 
   // Handle form submission (POST request)
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await fetch('http://192.168.0.110:9000/dietorders', {
+      const response = await fetch(`${API_BASE_URL}/dietorders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          patient: { patientId: 1 }, // Assuming patientId is required in the body
-        }),
+        body: JSON.stringify(formData), // Send formData directly without wrapping it in an object
       });
 
       if (!response.ok) {
         throw new Error('Failed to submit diet order');
       }
-
+      alert("Successfully Submitted")
       const responseData = await response.json();
       console.log('Successfully submitted:', responseData);
 
       // Reset form after submission
-      handleCancel();
 
       // Optionally, fetch the updated list of diet orders
-      fetchDietOrders(); // Re-fetch diet orders after submission
     } catch (error) {
       console.error('Error submitting diet order:', error);
     }
   };
+
 
   return (
     <div className="Diet-order-container">
@@ -176,7 +175,6 @@ const DietOrder = ({ onBack }) => {
         <div className="Diet-order-actions">
           <button
             type="button"
-            onClick={handleCancel}
             className="Diet-order-actions-cancel"
           >
             Cancel
@@ -190,19 +188,35 @@ const DietOrder = ({ onBack }) => {
         </div>
       </form>
 
-      {/* Display the fetched diet orders */}
-      <div className="Diet-orders-list">
-        <h4>Existing Diet Orders</h4>
-        {dietOrders.length === 0 ? (
-          <p>No diet orders found.</p>
+
+      <div className="ReferralConsultation-existing-referrals">
+        <h4>Existing Diet Orders:</h4>
+        {dietOrders.length > 0 ? (
+          <table className="ReferralConsultation-table">
+            <thead>
+              <tr>
+                <th>SN </th>
+                <th>Diet Order </th>
+                <th>Diet Group</th>
+                <th>Diet Frequency</th>
+                <th>Diet Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dietOrders.map((diet, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{diet.dietOrder}</td>
+                  <td>{diet.dietGroup}</td>
+                  <td>{diet.dietFrequency}</td>
+                  <td>{diet.dietRemarks}</td>
+
+                </tr>
+              ))}
+            </tbody>
+          </table>
         ) : (
-          <ul>
-            {dietOrders.map((order) => (
-              <li key={order.sn}>
-                {order.dietGroup} - {order.dietOrder} ({order.dietFrequency})
-              </li>
-            ))}
-          </ul>
+          <p>No existing Diet Orders found.</p>
         )}
       </div>
     </div>
