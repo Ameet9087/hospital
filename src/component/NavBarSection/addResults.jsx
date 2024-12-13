@@ -4,6 +4,7 @@ import "../NavBarSection/addResults.css";
 import LabAddResultWorkList from "./labAddresultWorkList";
 import { useNavigate } from "react-router-dom";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { API_BASE_URL } from "../api/api";
 
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
@@ -101,7 +102,7 @@ function AddResults() {
     setStickerData(patientDetails);
   };
   const handleAddResult = (test) => {
-    navigate("/addResultForm", { state: { test } });
+    navigate("/laboratory/addresults/addResultForm", { state: { test } });
   };
 
   return (

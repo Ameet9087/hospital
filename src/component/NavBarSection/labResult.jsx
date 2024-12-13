@@ -181,6 +181,9 @@ const Lab2 = () => {
   };
 
   return (
+    <div className="lab-container-page">
+
+
     <div className="lab-page2">
       <button className="back-button" onClick={handleBackClick}>
         ← Back To Grid
@@ -229,7 +232,7 @@ const Lab2 = () => {
                 labResult?.labRequestDTO?.patientDTO?.patientId}
             </p>
             <p>
-              Age/Sex:{" "}
+            Age/Sex:{" "}
               {labResult?.labRequestDTO?.newPatientVisitDTO?.age ||
                 labResult?.labRequestDTO?.patientDTO?.age}{" "}
               {"Y / "}
@@ -288,7 +291,13 @@ const Lab2 = () => {
             clinical history of the patient by a clinician test
           </p>
         </div>
-      </div>
+
+        
+
+
+
+
+     
 
       {/* <div className="lab-signatory-section">
         <div className="lab-signatory">
@@ -301,7 +310,15 @@ const Lab2 = () => {
           <input type="text" placeholder="Not found" />
         </div>
       </div> */}
-      <div className="lab-signatories">
+    
+    </div>
+
+
+      
+    
+   </div>
+   <div className="lab-signatories">
+      
         <p>Select Signatories:</p>
         <select value={selectedSignatory} onChange={handleSignatoryChange}>
           <option value="">Select a signatory</option>
@@ -314,8 +331,9 @@ const Lab2 = () => {
         <button onClick={handleSubmit} className="lab-print-button">
           Update Signatories and Print
         </button>
-      </div>
-    </div>
+      </div> 
+   </div>
+
   );
 };
 
