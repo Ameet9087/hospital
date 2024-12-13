@@ -15,8 +15,11 @@ import ManageImagingType from './Radiology/ManageImagingType';
 import ManageImagingItem from './Radiology/ManageImagingItem';
 import ManageRadiologyTempltate from './Radiology/ManageRadiologyTempltate';
 import DefaultSignatories from './Radiology/DefaultSignatories';
-
 import EmployeeHeader from './EmployeeHeader';
+import Geologicalmaster from './Geological/geologicalmaster';
+import Countrymaster from './Geological/CountryMaster/countrymaster';
+import StateMaster from './Geological/statemaster/statemaster';
+import CityMaster from './Geological/Citymaster/citymaster';
 
 
 const SettingRouting = () => {
@@ -38,6 +41,9 @@ const SettingRouting = () => {
     <Route path="/radiology/manage-imaging-item" element={<ManageImagingItem/>}/>
     <Route path="manage-radiology-template" element={<ManageRadiologyTempltate/>}/>
     <Route path="default-signatories" element={<DefaultSignatories/>}/>
+    <Route path='/geolocation/manage-country' element={<Countrymaster/>}></Route>
+    <Route path='/geolocation/manage-state' element={<StateMaster/>}></Route>
+    <Route path='/geolocation/manage-city' element={<CityMaster/>}></Route>
     </Routes>
     </>
   );

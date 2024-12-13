@@ -1,13 +1,13 @@
 /* Mohini_PurchaseOrder_WholePage_14/sep/2024 */
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Modal } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import PurchaseOrderForm from './PurchaseOrderForm';
 import './PurchaseOrder.css';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../api/api';
+import CustomModel from "../../CustomModel/CustomModal"
 import * as XLSX from 'xlsx';
-import CustomModel from '../../CustomModel/CustomModal' 
 
 const PurchaseOrder = () => {
   const [purchaseOrders, setPurchaseOrders] = useState([]);
@@ -73,7 +73,7 @@ const PurchaseOrder = () => {
         <label htmlFor="to-date">To:</label>
         <input type="date" id="to-date" />
         {/* <button className="purchase-order-favorite-btn">★</button>
-                <button className="purchase-order-reset-btn">-</button>
+         <button className="purchase-order-reset-btn">-</button>
                 <button className="purchase-order-date-range-button">OK</button> */}
       </div>
 
@@ -186,6 +186,7 @@ const PurchaseOrder = () => {
       </Modal> */}
     </div>
   );
+
 };
 
 export default PurchaseOrder;

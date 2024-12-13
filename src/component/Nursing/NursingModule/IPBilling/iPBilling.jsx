@@ -18,6 +18,9 @@ const IPBilling = () => {
   const ServiceHeading=["serviceId","serviceName","serviceCode","rate"];
   const [activePopup,setActivePopup]=useState("");
 
+  const [previousBills, setPreviousBills] = useState([]); // State to hold API data
+
+
 
 
 const [serviceData, setServiceData] = useState([]); // Store fetched service data
@@ -31,7 +34,8 @@ const ServiceFetch = async () => {
   try {
     const response = await axios.get('http://192.168.0.105:8080/api/totalservices');
     console.log(response.data);
-    setServiceData(response.data); // Store the fetched service data
+    setServiceData(response.data);
+    console.log("---------",response.data) // Store the fetched service data
     alert(response.data);
   } catch (error) {
     console.error('Error fetching services:', error);
@@ -63,8 +67,20 @@ const handleServiceChange = (event, index) => {
   }
 };
 // Fetch data when component mounts
+const fetchPreviousBills = async () => {
+  try {
+    const response = await axios.get(
+      `http://192.168.0.105:8080/api/ipbillings/previous-bills/${patientData.ipAdmmissionId}`
+    );
+    setPreviousBills(response.data); // Update state with fetched data
+    console.log("prevoius data",response.data)
+  } catch (error) {
+    console.error("Error fetching previous bills:", error);
+  }
+};
 useEffect(() => {
   ServiceFetch();
+  fetchPreviousBills();
 }, []);
 
 
@@ -116,7 +132,10 @@ useEffect(() => {
 
   const handleSaveData = () => {
     const dataToPost = {
-      ipAdmissionId: 1,
+      ipAdmission:{
+    ipAdmmissionId:patientData.ipAdmmissionId
+},
+      
       billingDate: new Date().toISOString(),
       billingTime: new Date().toISOString(),
       qnt: 0,
@@ -263,166 +282,148 @@ useEffect(() => {
       </tr>
     </thead>
     <tbody>
-      {servicesData.map((row) => (
-        <tr key={row.sn}>
-          <td>
-            <div className="table-actions">
-              <button className="iPBilling-add-btn" onClick={handleAddRow}>
-                Add
-              </button>
-              <button
-                className="iPBilling-del-btn"
-                onClick={() => handleDeleteRow(row.sn)}
-                disabled={servicesData.length <= 1}
-              >
-                Del
-              </button>
-            </div>
-          </td>
-          <td>{row.sn}</td>
-          <td>
-            <input
-              type="date"
-              value={row.billDate || ""}
-              onChange={(e) => handleRowUpdate(row.sn, "billDate", e.target.value)}
-              style={{ cursor: "pointer" }}
-            />
-          </td>
-          <td>
-            <input
-              type="time"
-              value={row.billTime || ""}
-              onChange={(e) => handleRowUpdate(row.sn, "billTime", e.target.value)}
-              className="time-input"
-            />
-          </td>
-          <td>{row.code}</td>
-          <td>
-          <select
-              onChange={(e) => handleServiceChange(e, index)}
-              value={row.serviceId || ""} // Use serviceId as the value for selection
-              style={{ width: "100px" }}
-            >
-              <option value="">Select A Service</option>
-              {serviceData.map((service) => (
-                <option key={service.serviceId} value={service.serviceId}>
-                  {service.serviceName}
-                </option>
-              ))}
-            </select>
-          </td>
-          <td>DR Amit</td>
-          <td>
-            <input
-              type="number"
-              value={row.rate || ""}
-              onChange={(e) => handleRowUpdate(row.sn, "rate", e.target.value)}
-              style={{ width: "80px" }}
-            />
-          </td>
-          <td>
-            <input
-              type="number"
-              name="qty"
-              value={row.qty || ""}
-              onChange={(e) => handleRowUpdate(row.sn, "qty", e.target.value)}
-              style={{ width: "60px" }}
-            />
-          </td>
-          <td>{row.total || "0.00"}</td>
-          <td>
-            <input
-              type="number"
-              name="disc"
-              value={row.disc || ""}
-              onChange={(e) => handleRowUpdate(row.sn, "disc", e.target.value)}
-              style={{ width: "60px" }}
-            />
-          </td>
-          <td>{row.discAmount || "0.00"}</td>
-          <td>{row.netAmount || "0.00"}</td>
-        </tr>
-      ))}
-    </tbody>
+  {servicesData.map((row, index) => (
+    <tr key={row.sn}>
+      <td>
+        <div className="table-actions">
+          <button className="iPBilling-add-btn" onClick={handleAddRow}>
+            Add
+          </button>
+          <button
+            className="iPBilling-del-btn"
+            onClick={() => handleDeleteRow(row.sn)}
+            disabled={servicesData.length <= 1}
+          >
+            Del
+          </button>
+        </div>
+      </td>
+      <td>{row.sn}</td>
+      <td>
+        <input
+          type="date"
+          value={row.billDate || ""}
+          onChange={(e) => handleRowUpdate(row.sn, "billDate", e.target.value)}
+          style={{ cursor: "pointer" }}
+        />
+      </td>
+      <td>
+        <input
+          type="time"
+          value={row.billTime || ""}
+          onChange={(e) => handleRowUpdate(row.sn, "billTime", e.target.value)}
+          className="time-input"
+        />
+      </td>
+      <td>{row.code}</td>
+      <td>
+        <select
+          onChange={(e) => handleServiceChange(e, index)}
+          value={row.serviceId || ""}
+          style={{ width: "100px" }}
+        >
+          <option value="">Select A Service</option>
+          {serviceData.map((service) => (
+            <option key={service.serviceId} value={service.serviceId}>
+              {service.serviceName}
+            </option>
+          ))}
+        </select>
+      </td>
+      <td>DR Amit</td>
+      <td>
+        <input
+          type="number"
+          value={row.rate || ""}
+          onChange={(e) => handleRowUpdate(row.sn, "rate", e.target.value)}
+          style={{ width: "80px" }}
+          readOnly
+        />
+      </td>
+      <td>
+        <input
+          type="number"
+          name="qty"
+          value={row.qty || ""}
+          onChange={(e) => handleRowUpdate(row.sn, "qty", e.target.value)}
+          style={{ width: "60px" }}
+        />
+      </td>
+      <td>{row.total || "0.00"}</td>
+      <td>
+        <input
+          type="number"
+          name="disc"
+          value={row.disc || ""}
+          onChange={(e) => handleRowUpdate(row.sn, "disc", e.target.value)}
+          style={{ width: "60px" }}
+        />
+      </td>
+      <td>{row.discAmount || "0.00"}</td>
+      <td>{row.netAmount || "0.00"}</td>
+    </tr>
+  ))}
+</tbody>
   </table>
       </div>
     );
   };
-
+// -------------------------------------------------------------------PRevioustest detail-----------------------------------------------
   const renderTable = () => {
     switch (selectedTab) {
       case "services":
         // Existing package table rendering
         return (
           <div className="iPBilling-table">
-            <table>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>SN</th>
-                  <th>Bill Date</th>
-                  <th>Bill Time</th>
-                  <th>Code</th>
-                  <th>Service Name</th>
-                  <th>Doctor Name</th>
-                  <th>rate</th>
-                  <th>Qty</th>
-                  <th>Total</th>
-                  <th>Disc</th>
-                  <th>Disc Amount</th>
-                  <th>Net Amount</th>
-                  <th>Emerg</th>
-                  <th>Vacutainer</th>
-                  <th>Emer Amt</th>
-                  <th>Pkg Name</th>
-                  <th>Doctor %</th>
-                  <th>Doc share Amt</th>
-                  {/* <th>To Hospital</th> */}
-                </tr>
-              </thead>
-              <tbody>
-                {servicesData.map((row) => (
-                  <tr key={row.sn}>
-                    <td>
-                      <div className="table-actions">
-                        <button
-                          className="iPBilling-add-btn"
-                          onClick={handleAddRow}
-                        >
-                          Add
-                        </button>
-                        <button
-                          className="iPBilling-del-btn"
-                          onClick={() => handleDeleteRow(row.sn)}
-                          disabled={servicesData.length <= 1}
-                        >
-                          Del
-                        </button>
-                      </div>
-                    </td>
-                    <td>{row.sn}</td>
-                    <td>{row.billDate}</td>
-                    <td>{row.billTime}</td>
-                    <td>{row.billNo}</td>
-                    <td>{row.code}</td>
-                    <td>{row.serviceName}</td>
-                    <td>{row.doctorName}</td>
-                    <td>{row.rate}</td>
-                    <td>{row.qty}</td>
-                    <td>{row.total}</td>
-                    <td>{row.disc}</td>
-                    <td>{row.discAmount}</td>
-                    <td>{row.netAmount}</td>
-                    <td>{row.emerg}</td>
-                    <td>{row.emerAmt}</td>
-                    <td>{row.userName}</td>
-                    <td>{row.doctorPercentage}</td>
-                    <td>{row.docshareAmt}</td>
-                    {/* <td>{row.toHospital}</td> */}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+              <table>
+        <thead>
+          <tr>
+            <th>SN</th>
+            <th>Bill Date</th>
+            <th>Bill Time</th>
+            <th>Code</th>
+            <th>Service Name</th>
+            <th>Doctor Name</th>
+            <th>Rate</th>
+            <th>Qty</th>
+            <th>Total</th>
+            <th>Disc</th>
+            <th>Disc Amount</th>
+            <th>Net Amount</th>
+            <th>Emerg</th>
+            <th>Vacutainer</th>
+            <th>Emer Amt</th>
+            <th>Pkg Name</th>
+            <th>Doctor %</th>
+            <th>Doc Share Amt</th>
+          </tr>
+        </thead>
+        <tbody>
+          {previousBills.map((bill, index) => (
+            <tr key={bill.sn}>
+              <td>{index + 1}</td>
+              <td>{bill.billingDate || "N/A"}</td>
+              <td>{bill.billingTime || "N/A"}</td>
+              <td>{bill.code || "N/A"}</td>
+              <td>{bill.serviceName || "N/A"}</td>
+              <td>{bill.doctorName || "N/A"}</td>
+              <td>{bill.rate || "0.00"}</td>
+              <td>{bill.qty || "0"}</td>
+              <td>{bill.total || "0.00"}</td>
+              <td>{bill.disc || "0.00"}</td>
+              <td>{bill.discAmount || "0.00"}</td>
+              <td>{bill.netAmount || "0.00"}</td>
+              <td>{bill.emerg || "N/A"}</td>
+              <td>{bill.vacutainer || "N/A"}</td>
+              <td>{bill.emerAmt || "0.00"}</td>
+              <td>{bill.pkgName || "N/A"}</td>
+              <td>{bill.doctorPercentage || "0%"}</td>
+              <td>{bill.docShareAmt || "0.00"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+            
           </div>
         );
       case "testGrid":
@@ -536,7 +537,7 @@ useEffect(() => {
               <div className="iPBilling-form-row">
                 <label>MR No: *</label>
                 <div className="iPBilling-input-with-search">
-                  <input type="text" value={patientData.patient.inPatientId} />
+                  <input type="text" value={patientData.ipAdmmissionId} />
                   <CiSearch />
                 </div>
               </div>
@@ -745,15 +746,17 @@ useEffect(() => {
 
           {/* Dynamically render tables based on selected tab */}
           {renderTable()}
+
+      
         </div>
         <div className="iPBilling-action-buttons">
           <button className="btn-blue" onClick={handleSaveData}>Save</button>
           <button className="btn-red">Delete</button>
           <button className="btn-orange">Clear</button>
           <button className="btn-gray">Close</button>
-          <button className="btn-blue">Search</button>
+          {/* <button className="btn-blue">Search</button>
           <button className="btn-gray">Tracking</button>
-          <button className="btn-green">Print</button>
+          <button className="btn-green">Print</button> */}
           {/* <button className="btn-blue">Export</button>
           <button className="btn-gray">Import</button>
           <button className="btn-green">Health</button>

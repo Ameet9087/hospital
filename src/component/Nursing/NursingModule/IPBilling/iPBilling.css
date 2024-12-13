@@ -3,6 +3,10 @@
   background-color:var(--background-color);
   padding: 4px;
   font-size: 12px;
+  max-height: 500px; /* Set a max height to trigger vertical scroll */
+  max-width: 90%;   /* Optional: Set a max width for horizontal scroll */
+  overflow-y: scroll;  /* Vertical scrollbar when needed */
+  overflow-x: scroll;  /* Horizontal scrollbar when needed */
   
 }
 

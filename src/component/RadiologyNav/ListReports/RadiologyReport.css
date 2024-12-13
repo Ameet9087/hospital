@@ -15,6 +15,18 @@
     align-items: center;
     z-index: 100;
   }
+  .radiology-hospital-logo {
+    width: 40px; /* Adjust the size of the logo */
+    height: auto;
+    margin-right: 10px; /* Space between the logo and the text */
+    vertical-align: middle; /* Aligns the logo with the middle of the text */
+  }
+  
+  .radiology-address {
+    display: block;
+    text-align: center; /* Centers the span text */
+    margin-top: 10px; /* Adds space above the span */
+  }
   
   .RadiologyReportPopup-popup-content {
     padding: 20px;

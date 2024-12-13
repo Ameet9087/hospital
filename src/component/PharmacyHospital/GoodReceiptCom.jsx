@@ -204,17 +204,14 @@ const GoodReceiptComponent = () => {
         </div> */}
       {/* </div> */}
 
-      <Modal
-        show={showEditModal}
-        onHide={handleCloseModal}
-        className="purchase-order-modal"
-        size="lg"
-        centered
+      <CustomModal
+        isOpen={showEditModal}
+        onClose={handleCloseModal}
       >
-        <Modal.Body>
+       
           <GoodsReceiptForm />
-        </Modal.Body>
-      </Modal>
+      
+      </CustomModal>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import "./sampleCollection.css"; // Import CSS module
 import { useNavigate } from "react-router-dom";
 import CollectSample from "./CollectSample";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { API_BASE_URL } from "../api/api";
 
 const SampleCollection = () => {
   const [labTest, setlabTest] = useState(null);

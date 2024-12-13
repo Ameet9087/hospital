@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./addResultFrom.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_BASE_URL } from "../api/api";
 
 const Lab1 = () => {
   const [components, setComponents] = useState([]); // Store all components
@@ -92,6 +93,7 @@ const Lab1 = () => {
       verifyById: null,
     };
     labResultData.componentsJson = JSON.stringify(components); // Convert to JSON only after filtering
+
 
     try {
       const response = await axios.post(

@@ -6,6 +6,16 @@
     background-color: var(--background-color);
 }
 
+.purchaseOrders-add-btn{
+  background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+}
+
 /* Header */
 .purchase-order-header {
     display: flex;

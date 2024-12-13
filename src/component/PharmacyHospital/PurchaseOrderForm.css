@@ -1,6 +1,5 @@
 /* Mohini_PurchaseOrder_WholePage_14/sep/2024 */
 .purchase-order-form-component {
-  position: relative;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -12,6 +11,7 @@
   height: 80vh; /* Set a fixed height */
 
   /* height: 90vh; */
+
 }
 
 /* Header styling */
@@ -81,10 +81,7 @@ textarea.purchase-order-textare {
   background: #e9ecef;
 }
 
-.goods-receipt-totals-section {
-width: 100%;
-height: 90vh;
-}
+
 
 /* Summary section styling */
 .purchase-order-form-summary-section {
@@ -199,10 +196,5 @@ height: 90vh;
 }
 
 /* Style for no rows message */
-.purchase-order-tab tbody .purchase-order-no-rows {
-  text-align: center; /* Center text alignment */
-  padding: 20px; /* Padding inside the no rows cell */
-  color: #888; /* Text color for no rows message */
-  font-style: italic; /* Italicize the no rows message */
-}
+
 /* Mohini_PurchaseOrder_WholePage_14/sep/2024 */

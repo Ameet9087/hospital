@@ -25,7 +25,7 @@ const PurchaseOrderForm = () => {
   const [vatPercentage, setVatPercentage] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
   const [remarks, setRemarks] = useState("");
-  
+
 
 
   const [formData, setFormData] = useState({
@@ -40,16 +40,16 @@ const PurchaseOrderForm = () => {
     deliveryDays: '',
     invoicingAddress: '',
 
-    goodReceiptItems:[
-    {
-      
+    goodReceiptItems: [
+      {
+
         addItem: {
           addItemId: ''
-         
+
         },
         genericName,
         batchNumber,
-        rackNumber,     
+        rackNumber,
         expiryDate,
         itemQuantity,
         freeQuantity,
@@ -63,8 +63,8 @@ const PurchaseOrderForm = () => {
         discountPercentage,
         vatPercentage,
         totalAmount,
-        remarks       
-    }],
+        remarks
+      }],
 
     subtotal: 0,
     discountPercentage: 0,
@@ -88,6 +88,7 @@ const PurchaseOrderForm = () => {
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/suppliers')
+
       .then(response => {
         console.log(response.data);  // Log the response to check the structure of the data
         setSuppliers(response.data);
@@ -124,11 +125,11 @@ const PurchaseOrderForm = () => {
       supplier: selectedSupplier  // Update the state with the selected supplier ID
     }));
     setSelectedSupplierId(selectedSupplier);
-    
+
     // Optionally, you can log or alert the selected supplier ID for debugging
     console.log("Selected Supplier ID:", selectedSupplier);
   };
-  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -136,12 +137,12 @@ const PurchaseOrderForm = () => {
       [name]: value
     }));
   };
-  
+
 
   const handleItemChange = (index, e) => {
     const { name, value } = e.target;
     const updatedItems = [...items];
-    
+
     // Check if the item has a valid addItemId when selecting an item
     if (name === 'itemName') {
       const selectedItem = availableItems.find(item => item.itemName === value);
@@ -149,9 +150,9 @@ const PurchaseOrderForm = () => {
         updatedItems[index].addItemId = selectedItem.addItemId; // Assign addItemId here
       }
     }
-  
+
     updatedItems[index] = { ...updatedItems[index], [name]: value };
-    
+
     // Recalculate other fields based on the item changes
     if (name === 'quantity' || name === 'freeQty') {
       const quantity = parseFloat(updatedItems[index].quantity) || 0;
@@ -163,23 +164,23 @@ const PurchaseOrderForm = () => {
       const rate = parseFloat(updatedItems[index].rate) || 0;
       updatedItems[index].subtotal = quantity * rate; // Update subtotal
     }
-  
+
     if (name === 'discountPercentage' || name === 'vatPercentage' || name === 'ccChargePercentage') {
       const discountPercentage = parseFloat(updatedItems[index].discountPercentage) || 0;
       const vatPercentage = parseFloat(updatedItems[index].vatPercentage) || 0;
       const ccChargePercentage = parseFloat(updatedItems[index].ccChargePercentage) || 0;
       const subtotal = updatedItems[index].subtotal || 0;
-  
+
       updatedItems[index].discountAmount = (discountPercentage / 100) * subtotal;
       updatedItems[index].vatAmount = (vatPercentage / 100) * subtotal;
       updatedItems[index].ccChargeAmount = (ccChargePercentage / 100) * subtotal;
-  
+
       updatedItems[index].totalAmount = subtotal - updatedItems[index].discountAmount + updatedItems[index].vatAmount + updatedItems[index].ccChargeAmount;
     }
-  
+
     setItems(updatedItems);
   };
-  
+
 
   const addItem = () => {
     setItems([...items, {
@@ -210,7 +211,7 @@ const PurchaseOrderForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     if (!selectedSupplierId) {
       alert("Please select a supplier.");
       return;
@@ -229,7 +230,7 @@ const PurchaseOrderForm = () => {
       deliveryDays: formData.deliveryDays,
       invoicingAddress: formData.invoicingAddress,
       subtotal: items.reduce((acc, item) => acc + parseFloat(item.subtotal || 0), 0).toFixed(2),
-discountPercentage: (items.reduce((acc, item) => acc + parseFloat(item.discountPercentage || 0), 0) / items.length).toFixed(2),
+      discountPercentage: (items.reduce((acc, item) => acc + parseFloat(item.discountPercentage || 0), 0) / items.length).toFixed(2),
       discount: (items.reduce((acc, item) => acc + parseFloat(item.discountAmount || 0), 0) / items.length).toFixed(2),
       taxableAmount: items.reduce(
         (acc, item) => acc + (parseFloat(item.subtotal || 0) - parseFloat(item.discountAmount || 0)),
@@ -300,6 +301,8 @@ discountPercentage: (items.reduce((acc, item) => acc + parseFloat(item.discountP
             <option value="">Select Supplier</option>
             {suppliers.map(supplier => (
               <option key={supplier.suppliersId} value={supplier.suppliersId}>{supplier.supplierName}</option>
+
+
             ))}
           </select>
         </div>
@@ -476,23 +479,23 @@ discountPercentage: (items.reduce((acc, item) => acc + parseFloat(item.discountP
           </div>
           <div className="purchase-order-form-summary-item">
             <label>Discount Amount:</label>
-            <input type="number" name="discount" 
+            <input type="number" name="discount"
               value={items.reduce((acc, item) => acc + parseFloat(item.discountAmount || 0), 0).toFixed(2)}
 
-            onChange={handleInputChange} />
+              onChange={handleInputChange} />
             {/* </div>
         <div className="purchase-order-form-summary-item"> */}
             <label>Total Amount:</label>
-            <input type="text" name="totalAmount" 
-                          value={items.reduce((acc, item) => acc + parseFloat(item.totalAmount || 0), 0).toFixed(2)}
+            <input type="text" name="totalAmount"
+              value={items.reduce((acc, item) => acc + parseFloat(item.totalAmount || 0), 0).toFixed(2)}
 
-            onChange={handleInputChange} />
+              onChange={handleInputChange} />
           </div>
           <div className="purchase-order-form-summary-item">
             <label>In Words:</label>
             <input type="text" name="inWords" value={formData.inWords} onChange={handleInputChange} />
           </div>
-          
+
         </div>
 
         <div className="purchase-order-form-summary-buttons" style={{ textAlign: "right" }}>

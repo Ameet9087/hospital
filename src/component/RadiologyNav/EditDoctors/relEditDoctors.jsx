@@ -5,6 +5,7 @@ import "../EditDoctors/relEditDoctors.css";
 import TransactionDetails from "./rdlEditDrEditBtn";
 import * as XLSX from "xlsx";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { API_BASE_URL } from "../../api/api";
 
 function RDLEditDoctors() {
   const [columnWidths, setColumnWidths] = useState({});

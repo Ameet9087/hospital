@@ -4,66 +4,40 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import './SettingSupplier.css'; 
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
-
-const usersData = [
-
-    {
-      name: 'Naynesh',
-      contactNo: '123456',
-      description: '',
-      city: 'Kenya',
-      kraPin: '123456789',
-      contactAddress: 'Kenya',
-      email: '',
-      creditPeriod: 0,
-      isActive: false,
-    },
-    {
-      name: 'Vishal',
-      contactNo: '785623',
-      description: '',
-      city: 'Dubai',
-      kraPin: '4125896',
-      contactAddress: 'Dubai',
-      email: '',
-      creditPeriod: 0,
-      isActive: false,
-    },
-    {
-      name: 'MEDS',
-      contactNo: '0788989876',
-      description: 'MEDS',
-      city: 'Nairobi',
-      kraPin: 'P051097618A',
-      contactAddress: 'Nairobi',
-      email: '',
-      creditPeriod: 30,
-      isActive: true,
-    },
-    {
-      name: 'Temporibus voluptatum et est aut',
-      contactNo: '551681257',
-      description: 'Ipsum consectetur...',
-      city: 'Non cumque culpa',
-      kraPin: 'Est dolorem ipsa...',
-      contactAddress: 'Sit itaque quo ea',
-      email: 'sa@a.com',
-      creditPeriod: 80,
-      isActive: true,
-    },
-];
+import axios from 'axios';
+import { API_BASE_URL } from '../api/api';
 
 const SettingSupplierComponent = () => {
-  const [suppliers, setSuppliers] = useState(usersData);
+  const [suppliers, setSuppliers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [columnWidths,setColumnWidths] = useState({});
   const tableRef=useRef(null);
 
-  const filteredUsers = suppliers.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+
+   const fetchSuppliers = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/suppliers/get-all-suppliers`);
+      setSuppliers(response.data);
+    } catch (error) {
+      console.error('Error fetching suppliers:', error.response ? error.response.data : error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchSuppliers(); // Fetch data when the component is mounted
+  }, []); // Empty dependency array means this effect runs only once
+
+
+
+ const filteredSuppliers = suppliers.filter((supplier) =>
+  supplier.supplierName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  supplier.contactNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  supplier.kraPin.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  supplier.email.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
 
   const handleShowEditModal = (user) => {
     setSelectedUser(user);
@@ -113,62 +87,61 @@ const SettingSupplierComponent = () => {
     
 
       <div className='setting-supplier-span'>
-      <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
+      <span>Showing {filteredSuppliers.length} / {suppliers.length} results</span>
       <button className='item-wise-export-button'onClick={handleExport}>Export</button>
   <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
 </div>
       <div className='table-container'>
-      <table  ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-                "Supplier Name",
-                "Contact No",
-                "Description",
-                "City",
-                "KRA PIN",
-                "Contact Address",
-                "Email",
-                "Credit Period",
-                "Action"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
+      <table ref={tableRef}>
+                        <thead>
+                            <tr>
+                                {["Supplier Name",
+  "Contact No",
+  "Description",
+  "City",
+  "KRA PIN",
+  "Contact Address",
+  "Email",
+  "Credit Period",
+  "Action"].map((header, index) => (
+                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                        <div className="header-content">
+                                            <span>{header}</span>
+                                            <div
+                                                className="resizer"
+                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                            ></div>
+                                        </div>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+
           <tbody>
-            {filteredUsers.map((user, index) => (
-              <tr key={index}>
-                <td>{user.name}</td>
-                <td>{user.contactNo}</td>
-                <td>{user.description}</td>
-                <td>{user.city}</td>
-                <td>{user.kraPin}</td>
-                <td>{user.contactAddress}</td>
-                <td>{user.email}</td>
-                <td>{user.creditPeriod}</td>
-                <td className="setting-supplier-action-buttons">
-                  <button className="setting-supplier-action-button" onClick={() => handleShowEditModal(user)}>Edit</button>
-                  <button className="setting-supplier-action-button">Deactivate</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+            {filteredSuppliers.map((user, index) => (
+    <tr key={index}>
+      <td>{user.supplierName}</td>
+      <td>{user.contactNumber}</td>
+      <td>{user.description}</td>
+      <td>{user.city}</td>
+      <td>{user.kraPin}</td>
+      <td>{user.contactAddress}</td>
+      <td>{user.email}</td>
+      <td>{user.creditPeriod}</td>
+      <td className="setting-supplier-action-buttons">
+        <button
+          className="setting-supplier-action-button"
+          onClick={() => handleShowEditModal(user)}
+        >
+          Edit
+        </button>
+        <button className="setting-supplier-action-button">
+          Deactivate
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
         </table>
         {/* <div className="setting-supplier-pagination">
           <div className="setting-supplier-pagination-controls">

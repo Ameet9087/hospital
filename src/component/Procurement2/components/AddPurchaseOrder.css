@@ -9,6 +9,23 @@
   margin-bottom: 10px;
 }
 
+.purchaseorderItemInput{
+  width: 80px;
+  padding: 5px;
+}
+
+.purchaseorderItemSelect{
+  width: 80px;
+  padding: 5px;
+}
+.purchaseorder-add-btn{
+   background-color: var(--button-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
 .AddPurchaseOrder-form-group {
   margin-right: 10px;
 }

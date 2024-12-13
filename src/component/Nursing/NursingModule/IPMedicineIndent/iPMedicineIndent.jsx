@@ -1,6 +1,6 @@
 import React, { useEffect, useState , useRef} from "react";
 import axios from "axios";
-import "./ipMedicineIndent.css";
+import "./IPMedicineIndent.css";
 import PopupTable from "../Services/PopupTable";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -267,7 +267,7 @@ const IpMedicineIndent = () => {
           />
           <FontAwesomeIcon
   icon={faSearch}
-  onClick={() => setActivePopup("IpNo")}
+  onClick={() => setActivePopup("IpNo")} 
 />
         </div>
         <div className="ipmedicineindent-section">
