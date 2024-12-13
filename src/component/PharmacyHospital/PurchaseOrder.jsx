@@ -1,11 +1,12 @@
 /* Mohini_PurchaseOrder_WholePage_14/sep/2024 */
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Modal } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import PurchaseOrderForm from './PurchaseOrderForm';
 import './PurchaseOrder.css';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../api/api';
+import CustomModel from "../../CustomModel/CustomModal"
 import * as XLSX from 'xlsx';
 
 const PurchaseOrder = () => {
@@ -55,8 +56,8 @@ const PurchaseOrder = () => {
 
     return (
         <div className="purchase-order-container">
+          <button className='purchaseOrders-add-btn' onClick={handleOpenModal}>Purches Order</button>
             <div className="purchase-order-header">
-            
                 <div className="purchase-order-status-filters">
                     <label><input type="checkbox" defaultChecked /> Pending</label>
                     <label><input type="checkbox" /> Completed</label>
@@ -160,17 +161,16 @@ const PurchaseOrder = () => {
 
             
 
-            <Modal
-                show={showEditModal}
-                onHide={handleCloseModal}
-                className="purchase-order-modal"
-                size="lg"
-                centered
+            <CustomModel
+                isOpen={showEditModal}
+                onClose={handleCloseModal}
+           
+                
             >
-                <Modal.Body>
+                
                     <PurchaseOrderForm />
-                </Modal.Body>
-            </Modal>
+                
+            </CustomModel>
         </div>
     );
 };

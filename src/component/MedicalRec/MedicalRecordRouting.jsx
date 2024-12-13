@@ -21,19 +21,19 @@ function MedicalReportRouting() {
     <>
         <Layout>
           <Routes>
-            <Route path='/' element={<MROutPatientList/>}></Route>
-            <Route path='/MROutPatientList' element={<MROutPatientList/>}></Route>
-            <Route path='/MRInpatientList' element={<MRInpatientList/>}></Route>
-            <Route path='/BirthList' element={<BirthList/>}></Route>
-            <Route path='/DeathList' element={<DeathList/>}></Route>
-            <Route path='/MedicalRecordReport' element={<MedicalRecordReport/>}></Route>
-            <Route path='/EmergencyPatientList' element={<EmergencyPatientList/>}></Route>
-            <Route path='/HospitalServiceSummaryReport' element={<HospitalServiceSummaryReport/>}></Route>
-            <Route path='/InpatientMorbidityReport' element={<InpatientMorbidityReport/>}></Route>
-            <Route path='/HospitalMortalityReport' element={<HospitalMortalityReport/>}></Route>
-            <Route path='/EmergencyPMReport' element={<EmergencyPMReport/>}></Route>
-            <Route path='/OutPatientMorbidityReport' element={<OutPatientMorbidityReport/>}></Route>
-            <Route path='/LabServiceReport' element={<LabServiceReport/>}></Route>
+            {/* <Route path='/' element={<MROutPatientList/>}></Route> */}
+            <Route path='/mroutpatientlist' element={<MROutPatientList/>}></Route>
+            <Route path='/mrinpatientlist' element={<MRInpatientList/>}></Route>
+            <Route path='/birthlist' element={<BirthList/>}></Route>
+            <Route path='/deathlist' element={<DeathList/>}></Route>
+            <Route path='/reports/*' element={<MedicalRecordReport/>}></Route>
+            <Route path='/emergencypatientlist' element={<EmergencyPatientList/>}></Route>
+            <Route path='/reports/HospitalServiceSummaryReport' element={<HospitalServiceSummaryReport/>}></Route>
+            <Route path='/reports/InpatientMorbidityReport' element={<InpatientMorbidityReport/>}></Route>
+            <Route path='/reports/HospitalMortalityReport' element={<HospitalMortalityReport/>}></Route>
+            <Route path='/reports/EmergencyPMReport' element={<EmergencyPMReport/>}></Route>
+            <Route path='/reports/OutPatientMorbidityReport' element={<OutPatientMorbidityReport/>}></Route>
+            <Route path='/reports/LabServiceReport' element={<LabServiceReport/>}></Route>
           </Routes>
         </Layout>
       

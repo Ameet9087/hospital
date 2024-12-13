@@ -9,6 +9,16 @@
   margin-bottom: 20px;
 }
 
+.PurchaseOrder-print-button{
+background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 10px;
+  margin-right: 0; /* Make sure buttons stay right-aligned */
+  white-space: nowrap;}
+
 .PurchaseOrder-create-po-button {
   background-color: var(--button-color);
   color: white;

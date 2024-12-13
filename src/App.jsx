@@ -74,11 +74,11 @@ const modules = {
   },
   Nursing:{
       logo:"fa-solid fa-user-nurse",
-      submodules:['Outpatient', 'Inpatient', 'Requisition List', 'Discharge Summary','Adhense Safety Precaution']
+      submodules:['Nursing Dashboard','Outpatient', 'Inpatient', 'Requisition List', 'Discharge Summary','Adhense Safety Precaution']
   },
   Appointment:{
       logo:"fa-solid fa-bell",
-      submodules:['Appointment Booking List', 'Book Appointment', 'List Visits', 'New Visit', 'Online Appointment'],
+      submodules:['Appointment Booking List', "Doctor Appointment","Doctor Schedule Std","Break Time"],
   }, 
   Settings:{
       logo:"fa-solid fa-gear",

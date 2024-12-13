@@ -1,0 +1,139 @@
+.select-consultant-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--background-color);
+  padding: 10px; /* Added padding for better spacing on small screens */
+}
+
+.select-consultant-content {
+  display: flex;
+  flex-direction: column; /* Default to column for better mobile layout */
+  width: 90%; /* Adjusted width for small screens */
+  max-width: 900px;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  overflow: hidden; /* Prevent content overflow */
+}
+
+/* Left Side: Image */
+.select-consultant-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px 5px 0 0; /* Rounded corners for top when stacked */
+}
+
+.select-consultant-doctor-icon {
+  width: 50%; /* Adjusted for better scaling on small screens */
+  max-width: 300px;
+}
+
+/* Right Side: Form */
+.select-consultant-right {
+  flex: 1;
+  padding: 20px;
+}
+
+.select-consultant-title {
+  color: black;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  font-size: var(--heading-font);
+}
+
+.select-consultant-form {
+  text-align: left;
+}
+
+.select-consultant-form-label {
+  display: block;
+  font-size: var(--font-size);
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.select-consultant-form-select {
+  width: 100%;
+  padding: 10px; /* Increased padding for better touch usability */
+  font-size: var(--font-size);
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.select-consultant-form-buttons {
+  display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+  justify-content: center; /* Center buttons on smaller screens */
+  gap: 10px; /* Added spacing between buttons */
+}
+
+.select-consultant-btn {
+  width: auto; /* Allow buttons to size dynamically */
+  padding: 8px 12px; /* Increased padding for better usability */
+  margin: 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+
+.select-consultant-go-btn,
+.select-consultant-cancel-btn,
+.select-consultant-testing-btn {
+  padding: 10px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth hover effect */
+}
+
+.select-consultant-go-btn:hover,
+.select-consultant-cancel-btn:hover,
+.select-consultant-testing-btn:hover {
+  background-color: white;
+  color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+  .select-consultant-content {
+    flex-direction: row; /* Side-by-side layout for larger screens */
+  }
+
+  .select-consultant-left {
+    border-radius: 5px 0 0 5px; /* Restore rounded corners */
+  }
+
+  .select-consultant-right {
+    padding: 20px 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .select-consultant-title {
+    font-size: 18px; /* Reduce title size for small screens */
+  }
+
+  .select-consultant-form-label {
+    font-size: 14px; /* Smaller font for labels */
+  }
+
+  .select-consultant-btn {
+    padding: 8px 10px; /* Adjust button padding for smaller screens */
+    font-size: 14px;
+  }
+
+  .select-consultant-doctor-icon {
+    width: 70%; 
+  }
+}

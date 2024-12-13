@@ -1,62 +1,65 @@
 /* // neha-ADT-search-patient-19/09/24 */
 
-.search-patient-container{
+.search-patient-container {
   background-color: var(--background-color);
   overflow-y: scroll;
   scrollbar-width: none;
   padding: 10px;
 }
 
-.Addmitted-btn
-{
+.Addmitted-btn {
   background-color: red;
   color: white;
   padding: 5px 5px;
   border-radius: 5px;
 }
 
+.btn-warning {
+  background-color: #ffc107;
+  color: black;
+}
+.Addmit-btn {
+  padding: 2px 10px;
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+}
 
-  .btn-warning {
-    background-color: #ffc107;
-    color: black;
-  }
-  
-  .btn-warning:hover {
-    background-color: #e0a800;
-  }
-  
-  /* Pagination Styles */
-  .adt-search-patient-pagination {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .adt-search-patient-pagination-btn {
-    margin: 0 5px;
-    padding: 5px ;
-    background-color: var(--button-color);
-    color: white;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .adt-search-patient-pagination-span {
-    margin: 0 10px;
-    font-size: 14px;
-  }
-  /* Modal Styles */
+.btn-warning:hover {
+  background-color: #e0a800;
+}
+
+/* Pagination Styles */
+.adt-search-patient-pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adt-search-patient-pagination-btn {
+  margin: 0 5px;
+  padding: 5px;
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.adt-search-patient-pagination-span {
+  margin: 0 10px;
+  font-size: 14px;
+}
+/* Modal Styles */
 .search-ptn-modal-content {
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
-
-
 
 .search-ptn-modal-header {
   border-bottom: none;
@@ -90,9 +93,7 @@
   margin-bottom: 20px;
 }
 
-
-
-.adt-search-patient-form-lable{
+.adt-search-patient-form-lable {
   display: block;
   font-weight: 500;
   color: black;
@@ -111,7 +112,7 @@
   box-sizing: border-box;
   height: 30px;
 }
-.save-admission-adt-select{
+.save-admission-adt-select {
   background-color: #ffffff;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -123,12 +124,13 @@
 .adt-search-patient-input[type="time"]:focus,
 .adt-search-patient-input[type="number"]:focus,
 .save-admission-adt-select:focus {
-  border-color: #4CAF50;
+  border-color: #4caf50;
   outline: none;
 }
 
 /* Button Styles */
-.save-admission-adt-btn[type="submit"],.admit-button {
+.save-admission-adt-btn[type="submit"],
+.admit-button {
   background-color: var(--button-color);
   color: white;
   padding: 5px 10px;
@@ -138,10 +140,11 @@
   border: 1px solid var(--button-color);
 }
 
-.save-admission-adt-btn[type="submit"]:hover,.admit-button:hover {
+.save-admission-adt-btn[type="submit"]:hover,
+.admit-button:hover {
   background-color: var(--button-hover-background-color);
   color: var(--button-hover-text-color);
-  border:1px solid var(--button-hover-border-color);
+  border: 1px solid var(--button-hover-border-color);
 }
 
 /* Flexbox Layout */
@@ -166,73 +169,73 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .adt-search-patient-form {
-      flex-direction: column;
+    flex-direction: column;
   }
 
   .adt-search-patient-form {
-      margin-bottom: 20px;
+    margin-bottom: 20px;
   }
 }
 .adt-septn-admission-header {
-    background-color: #00968f;
-    color: white;
-    text-align: center;
-  }
-  
-  .adt-septn-admission-body {
-    background-color: #e3fffe;
-    padding: 20px;
-    width: 100%;
-  }
-  
-  .adt-septn-admission-form-section {
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  
-  .adt-septn-admission-row {
-    width: 48%;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .adt-septn-admission-row label {
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .adt-septn-admission-select,
-  .adt-septn-admission-input {
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 100%;
-    font-size: 14px;
-  }
-  
-  .adt-septn-admission-select:focus,
-  .adt-septn-admission-input:focus {
-    outline: none;
-    border-color: #0056b3;
-  }
-  
-  .adt-septn-admission-footer {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px;
-  }
-  
-  .adt-septn-admission-footer-btn {
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    background-color: #00c9c0;
-  }
+  background-color: #00968f;
+  color: white;
+  text-align: center;
+}
 
-  .adt-septn-admission-footer-btn:hover{
-    background-color: white;
-    color: #00c9c0;
-    border: 1px solid #00c9c0;
-  }
+.adt-septn-admission-body {
+  background-color: #e3fffe;
+  padding: 20px;
+  width: 100%;
+}
+
+.adt-septn-admission-form-section {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.adt-septn-admission-row {
+  width: 48%;
+  display: flex;
+  flex-direction: column;
+}
+
+.adt-septn-admission-row label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.adt-septn-admission-select,
+.adt-septn-admission-input {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  font-size: 14px;
+}
+
+.adt-septn-admission-select:focus,
+.adt-septn-admission-input:focus {
+  outline: none;
+  border-color: #0056b3;
+}
+
+.adt-septn-admission-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.adt-septn-admission-footer-btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #00c9c0;
+}
+
+.adt-septn-admission-footer-btn:hover {
+  background-color: white;
+  color: #00c9c0;
+  border: 1px solid #00c9c0;
+}

@@ -52,13 +52,14 @@ const Terms = () => {
 
         <div className="ateg-search-bar">
           <input type="text" placeholder="Search" />
-          <button className="ateg-search-button">🔍</button>
-        </div>
-
-        <div className="ateg-results-info">
+           <div className="ateg-results-info">
           Showing {terms.length} results
           <button className="ateg-print-button">Print</button>
         </div>
+          {/* <button className="ateg-search-button">🔍</button> */}
+        </div>
+
+       
 
         <table className="ateg-sub-category-table">
           <thead>

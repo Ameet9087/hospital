@@ -1,0 +1,99 @@
+/* Container styles */
+.ipd-return-indent-container {
+    padding: 10px;
+    background-color: var(--background-color);
+    height: 90vh;
+    overflow-y: scroll;
+    width: 100%;
+    }
+    
+    /* Header styles */
+    .ipd-return-indent-header {
+      text-align: center;
+      font-size: var(--heading-font);
+      color: black;
+     
+    }
+    .ipd-return-indent-container h2{
+  
+      font-size: var(--heading-font);
+      color: black;
+    }
+  
+    .ipd-return-indent-container h4{
+      margin-top: 20px;
+      font-size: var(--heading-font);
+      color: black;
+    }
+    /* Form styles */
+    .ipd-return-indent-form {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin: 20px 5px;
+      /* padding: 20px; */
+      border-radius: 5px;
+      background-color: var(--background-color);
+    }
+    
+    .ipd-return-indent-section {
+      display: flex;
+      flex-direction: row;
+    }
+    
+    .ipd-return-indent-section label {
+      width: 150px;
+      font-size: var(--font-size);
+  
+    }
+    
+    .ipd-return-indent-section input {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: var(--font-size);
+      /* width: 200px; */
+    }
+    
+    .ipd-return-indent-section input[readonly] {
+      background-color: #f3f3f3;
+      cursor: not-allowed;
+    }
+    
+    .ipd-return-indent-save-btn {
+      padding: 5px;
+      background-color: var(--button-color);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px;
+    }
+    
+    .ipd-return-indent-save-btn:hover {
+      background-color: white;
+      color: var(--button-color);
+      border: 1px solid var(--button-hover-border-color);
+    }
+    
+    .ipd-return-indent-table input{
+      width: 90%;
+  
+      padding: 5px;
+  
+      border: 1px solid #ccc;
+  
+      border-radius:4px;
+    }
+    
+    /* Media queries for responsiveness */
+    @media (max-width: 768px) {
+      .ipd-return-indent-section {
+        width: 100%; /* Switch to single-column layout */
+      }
+    
+      .ipd-return-indent-save-btn {
+        width:100%;
+  }
+  }
+  

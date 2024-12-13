@@ -11,22 +11,42 @@ import Nephrology from './Nephrology';
 import RequisitionList from './RequisitionList';
 import DischargeSummary from './DischargeSummary';
 import AdhenseSafetyPrecaution from './AdhenseSafetyPrecaution';
+import NurseRoute from './NursingModule/nurseRoute';
+import AddDasboard from "./NursingModule/APDashBoard/aPDashBoard"
+import WardNurseDashboard from './NursingModule/WardNurseDashboard/wardNurseDashboard';
+import { Provider } from 'react-redux';
+import { store } from './NursingModule/ReduxNursing/store';
+import ServicePopup from './NursingModule/Services/PopupTable';
+
 
 function NurisingMainRouting() {
 
   return (
-    <Layout>
+    <>
+
+          <Provider store={store}>
+            <Layout>
                 <Routes>
-                  {/* <Route path='/nursing' element={<NursingMainComponent/>}></Route> */}
-                  <Route path="/inpatient" element={<Inpatient />} />
+                  <Route path='/' element={<NursingMainComponent/>}></Route>
+                  <Route path="/nursingdashboard" element={<NurseRoute />} />
+                  <Route path="/Inpatient" element={<Inpatient />} />
                   {/* <Route path='/MyPatients'element={<MyPatientsTable/>}></Route> */}
-                  <Route path='/outpatient' element={<OutPatient/>}></Route>
-                  <Route path='/nephrology' element={<Nephrology/>}></Route>
-                  <Route path='/requisitionList' element={<RequisitionList/>}></Route>
-                  <Route path='/dischargesummary' element={<DischargeSummary/>}></Route>
-                  <Route path='/adhensesafetyprecaution' element={<AdhenseSafetyPrecaution/>}></Route>
+                  <Route path='/Outpatient' element={<OutPatient/>}></Route>
+                  <Route path='/Nephrology' element={<Nephrology/>}></Route>
+                  <Route path='/RequisitionList' element={<RequisitionList/>}></Route>
+                  <Route path='/DischargeSummary' element={<DischargeSummary/>}></Route>
+                  <Route path='/AdhenseSafetyPrecaution' element={<AdhenseSafetyPrecaution/>}></Route>
+
+
+                  <Route path="/nurse-dashboard" element={<WardNurseDashboard />} ></Route>
+                  <Route path='/patient-dashboard' element={<AddDasboard/>}/>
+                  <Route path="/login-nursing" element={<WardNurseDashboard />} />
+                  <Route path='/services-all' element={<ServicePopup/>} />
+             
                   </Routes>
-    </Layout>
+            </Layout>
+          </Provider>
+    </>
   )
 }
 

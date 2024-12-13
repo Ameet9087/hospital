@@ -5,6 +5,7 @@ import "../ListRequest/rdlListRequest.css";
 import AddReportForm from "./rdlAddReport";
 import RDLAddScanDoneDetails from "./rdlScanDone";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { API_BASE_URL } from "../../api/api";
 
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
