@@ -14,10 +14,10 @@ const QueueManagementRouting = () => {
   // Navigation items for the QueueManagement module
   const submodules = [
     { route:'/opd',path: '/queuemanagement/opd', label: 'OPD', component: <PatientQueue /> },
-    { route:'/prioritization',path: '/queuemanagement/prioritization', label: 'Patient Queue Prioritization', component: <PatientQueuePrioritization /> },
-    { route:'/monitoring',path: '/queuemanagement/monitoring', label: 'Real-Time Queue Monitoring', component: <RealTimeQueueMonitoring /> },
-    { route:'/tracking',path: '/queuemanagement/tracking', label: 'Service Time Tracking', component: <ServiceTimeTracking /> },
-    { route:'/notification',path: '/queuemanagement/notification', label: 'Patient Notification', component: <PatientNotification /> },
+    // { route:'/prioritization',path: '/queuemanagement/prioritization', label: 'Patient Queue Prioritization', component: <PatientQueuePrioritization /> },
+    // { route:'/monitoring',path: '/queuemanagement/monitoring', label: 'Real-Time Queue Monitoring', component: <RealTimeQueueMonitoring /> },
+    // { route:'/tracking',path: '/queuemanagement/tracking', label: 'Service Time Tracking', component: <ServiceTimeTracking /> },
+    // { route:'/notification',path: '/queuemanagement/notification', label: 'Patient Notification', component: <PatientNotification /> },
   ];
 
   return (

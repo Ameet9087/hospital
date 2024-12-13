@@ -19,7 +19,7 @@ function SearchPatient() {
 
   useEffect(() => {
     // Fetch patients from the API when the component mounts
-    axios.get(`${API_BASE_URL}/patients/getAllPatients`)
+    axios.get(`${API_BASE_URL}/inpatients/getAllPatients`)
       .then(response => {
         setPatients(response.data);
         console.log(response.data);

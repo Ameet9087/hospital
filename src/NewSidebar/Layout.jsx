@@ -48,6 +48,7 @@ import Pulmonology from "../component/Pulmonology/Pulmonology"
 import Chemotherapy from "../component/ChemotherapyModule/ChemotherapyRoute"
 import DynamicReport from "../component/DynamicReport/DynamicReport"
 import Procurementmain from '../component/Procurement2/procurmentmain';
+import HelpDeskRouting from '../component/HelpD/HelpDeskRouting';
 // Define modules and submodules
 
 
@@ -116,6 +117,7 @@ function Layout({}) {
                     <Route path='/medicalrecord/*' element={<MedicalReportRouting/>}/>
                     <Route path='/chemotherapy/*' element={<Chemotherapy/>}/>
                     <Route path='/dynamicreport/*' element={<DynamicReport/>}/>
+                    <Route path='/helpdesk/*' element={<HelpDeskRouting/>}/>
                 </Routes>
             </div>
             {/* </div> */}

@@ -9,15 +9,15 @@ const PatientRegistration = ({sendpatientdata,patientData}) => {
     lastName: '',
     dateOfBirth: '',
     age: '',
+    adharCardId:'',
     phoneNumber: '',
-    landlineNumber: '',
-    country: 'USA',
+    alternateNumber: '',
+    country: 'India',
     passportNumber: '',
-    state: 'New York',
+    state: 'Maharashtra',
     address: '',
     bloodGroup: '',
     gender: '',
-    religion: '',
     maritalStatus: '',
     notifications: '',
     employerInfo: '',
@@ -31,20 +31,20 @@ const PatientRegistration = ({sendpatientdata,patientData}) => {
   useEffect(()=>{
     setFormData({
       salutation: patientData?.salutation,
+      adharCardId:patientData?.adharCardId || '',
     firstName: patientData?.firstName || '',
     middleName:  patientData?.middleName ||'',
     lastName: patientData?.lastName ||'',
     dateOfBirth: patientData?.dateOfBirth ||'',
     age: patientData?.age || '',
     phoneNumber:patientData?.phoneNumber || '',
-    landlineNumber:patientData?.landlineNumber || '',
+    alternateNumber:patientData?.alternateNumber || '',
     country: patientData?.country || '',
     passportNumber:patientData?.passportNumber || '',
     state: patientData?.state || '',
     address: patientData?.address ||'',
     bloodGroup:patientData?.bloodGroup || '',
     gender: patientData?.gender || '',
-    religion: patientData?.religion || '',
     maritalStatus: patientData?.maritalStatus || '',
     notifications: patientData?.notifications || '',
     employerInfo:patientData?.employerInfo || '',
@@ -132,7 +132,7 @@ const PatientRegistration = ({sendpatientdata,patientData}) => {
           </div>
           <div className="form-group">
             <label>Religion:</label>
-            <select name="religion" onChange={handleChange}>
+            <select onChange={handleChange}>
               <option value="">--select--</option>
               <option>Hindu</option>
               <option>Muslim</option>
@@ -224,8 +224,8 @@ const PatientRegistration = ({sendpatientdata,patientData}) => {
 
         <div className="form-row">
           <div className="form-group">
-            <label>Landline Number:</label>
-            <input type="tel" name="landlineNumber" onChange={handleChange}  value={formData.landlineNumber}/>
+            <label>alternate Number:</label>
+            <input type="tel" name="alternateNumber" onChange={handleChange}  value={formData.alternateNumber}/>
           </div>
           <div className="form-group">
             <label>Email:</label>
@@ -248,7 +248,6 @@ const PatientRegistration = ({sendpatientdata,patientData}) => {
                 <option value="South Africa">South Africa</option>
                 <option value="India">India</option>
                 <option value="China">China</option>
-                
               </select>
           </div>
           <div className="form-group">
@@ -258,29 +257,26 @@ const PatientRegistration = ({sendpatientdata,patientData}) => {
         </div>
 
         <div className="form-row">
+        <div className="form-group">
+            <label>Adhaar Number:</label>
+            <input type="text" name="adharCardId" onChange={handleChange} value={formData.adharCardId} />
+          </div>
           <div className="form-group">
             <label>Passport Number:</label>
             <input type="text" name="passportNumber" onChange={handleChange} value={formData.passportNumber} />
           </div>
-          <div className="form-group">
-            <label> PIN Code:</label>
-            <input type="text" name="pinCode" onChange={handleChange} value={formData.pinCode} />
-          </div>
         </div>
 
         <div className="form-row">
+        <div className="form-group">
+            <label> PIN Code:</label>
+            <input type="text" name="pinCode" onChange={handleChange} value={formData.pinCode} />
+          </div>
           <div className="form-group">
             <label>State<span className="mandatory">*</span>:</label>
             <input type="text" name="state" value={formData.state} onChange={handleChange}  required />
           </div>
-          <div className="form-group">
-            <label>Dialysis Patient:</label>
-            <select name="dialysisPatient" onChange={handleChange} value={formData.dialysisPatient}>
-              <option value="">--select--</option>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
-            </select>
-          </div>
+          
         </div>
 
         <div className="form-row">
@@ -292,6 +288,14 @@ const PatientRegistration = ({sendpatientdata,patientData}) => {
         </div>
 
         <div className="form-row">
+        <div className="form-group">
+            <label>Dialysis Patient:</label>
+            <select name="dialysisPatient" onChange={handleChange} value={formData.dialysisPatient}>
+              <option value="">--select--</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
           <div className="form-group">
             <label>Blood Group:</label>
             <select name="bloodGroup" onChange={handleChange} value={formData.bloodGroup}>
@@ -306,7 +310,6 @@ const PatientRegistration = ({sendpatientdata,patientData}) => {
               <option value="O-">O-</option>
             </select>
           </div>
-          <div className="form-group"></div>
         </div>
        <div style={{textAlign:"right"}}>
        <button type="submit" className="register-save-button" style={{textAlign:'right'}} >Save</button>

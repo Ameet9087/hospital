@@ -1,4 +1,4 @@
- /* Ajhar Tamboli 09-10-2024 PatientQueue.css */
+/* Ajhar Tamboli 09-10-2024 PatientQueue.css */
  
  
  /* PatientQueue_Mohini_4/9/2024/css_startLine_1_to_EndLine_406 */
@@ -225,7 +225,16 @@
   cursor: pointer;
   border-radius: 4px;
 }
-
+.que-attend-button {
+  background-color: blue; /* Red */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
 .que-skipped-button:hover {
   background-color: #e53935; /* Darker red on hover */
 }

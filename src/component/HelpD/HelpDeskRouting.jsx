@@ -13,16 +13,13 @@ function HelpDeskRouting() {
 
   return (
     <>
-    
       <HelpDeskNav />
       <div className="lab-content">
         <Routes>
-          <Route path="/hHEmpInformation" element={<HHEmpInformation/>}/>
-          <Route path="/hHBedInformation" element={<HHBedInformation/>}/>
-          <Route path="/hHWardInformation" element={<HHWardInformation/>}/>
-          <Route path="/hHQueueInformation" element={<HHQueueInformation/>}/>
-
-          
+          <Route path="employeeinformation" element={<HHEmpInformation/>}/>
+          <Route path="bedinformation" element={<HHBedInformation/>}/>
+          <Route path="wardinformation" element={<HHWardInformation/>}/>
+          <Route path="queueinformation" element={<HHQueueInformation/>}/>    
         </Routes>
       </div>
     </>

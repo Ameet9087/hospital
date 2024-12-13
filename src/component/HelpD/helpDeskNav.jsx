@@ -7,10 +7,10 @@ const HelpDeskNav = () => {
   return (
     <nav className="helpDeskNav-bar">
       <ul>
-        <li><NavLink to="/hHEmpInformation">Employee Information</NavLink></li>
-        <li><NavLink to="/hHBedInformation">Bed Information</NavLink></li>
-        <li><NavLink to="/hHWardInformation">Ward Information</NavLink></li>
-        <li><NavLink to="/hHQueueInformation">Queue Information</NavLink></li>
+        <li><NavLink to="/helpdesk/employeeinformation">Employee Information</NavLink></li>
+        <li><NavLink to="/helpdesk/bedinformation">Bed Information</NavLink></li>
+        <li><NavLink to="/helpdesk/wardinformation">Ward Information</NavLink></li>
+        <li><NavLink to="/helpdesk/queueinformation">Queue Information</NavLink></li>
         </ul>
     </nav>
   );
