@@ -1,12 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './nurseClearanceFormPopUp.css';
 import { useNavigate } from 'react-router-dom';
-const NurseClearanceFormPopUp = ({ rowData, onClose }) => {
-    const navigate = useNavigate();
+import axios from 'axios';
+const NurseClearanceFormPopUp = ({ patientId, onClose }) => {
+    console.log(patientId);
+    
 
-    const handleBack = () => {
-      navigate('/bubble-nurse-clearance'); // Update this path based on your actual route
-    };
+    const [formData, setFormData] = useState({
+      indentNumber: 1245789865,
+      severity: "High",
+      zeroStock: "No",
+      remarks: "Urgent requirement due to surgery",
+      ipadmissionDTO: {
+          ipAdmmissionId: patientId?.ipAdmmissionId || 0
+      },
+      surgeryDTO: {
+          surgeryId: 4
+      },
+      departmentNursingDTO: {
+          deptNursingId: 4
+      },
+      templateNursingDTO: {
+          templateId: 4
+      },
+      medicineNursingDTOList: [
+          {
+              medicineId: 4
+          }
+      ]
+  });
+  const [selectedValues, setSelectedValues] = useState({
+    medicineReturnedPharmacy: false,
+    dischargeMedicinesIndented: false,
+    roomInventoryChecked: false,
+    idBandRemoved: false,
+    centrelineCannulaRemoved: false,
+    folleysCatheterRemoved: false,
+    anyDrainRemoved: false,
+    dressingDone: false,
+    patientEducationGiven: false,
+});
+
+const handleInputChange = (e, fieldName) => {
+  const value = e.target.checked;
+  setSelectedValues(prevState => ({
+      ...prevState,
+      [fieldName]: value,
+  }));
+};
+
+const handleSubmit = async () => {
+  try {
+      // Make an API call with selected values
+      const response = await axios.post('http://192.168.0.124:8080/api/nurse-clearances', selectedValues);
+      console.log('API response:', response.data);
+  } catch (error) {
+      console.error('Error sending data to API:', error);
+  }
+};
+
+
   return (
     <div className="nurseClearanceFormPopUp">
       <div className="nurseClearance-Form">
@@ -31,84 +84,100 @@ const NurseClearanceFormPopUp = ({ rowData, onClose }) => {
               <div className="nurseClearanceForm-form-row">
                 <label>UHID: *</label>
                 <div className="nurseClearanceForm-input-with-search">
-                  <input type="text" value="111" />
-                  <button className="nurseClearanceForm-magnifier-btn">🔍</button>
+                  <input type="text" value={patientId.patient.uhid} />
+                  {/* <button className="nurseClearanceForm-magnifier-btn">🔍</button> */}
                 </div>
               </div>
               <div className="nurseClearanceForm-form-row">
                 <label>IPNO:</label>
-                <input type="text" value="12" />
+                <input type="text" value={patientId.ipAdmmissionId} />
               </div>
               <div className="nurseClearanceForm-form-row">
                 <label>Patient Name:</label>
-                <input type="text" value="Ajhar Tamboli" />
+                <input type="text" value={patientId.patient.firstName} />
               </div>
               <div className="nurseClearanceForm-form-row">
                 <label>Age:</label>
-                <input type="text" value="24" />
+                <input type="text" value={patientId.patient.age}  />
               </div>
               <div className="nurseClearanceForm-form-row">
                 <label>Sex:</label>
-                <input type="text" value="Male" />
+                <input type="text" value={patientId.patient.gender}  />
               </div>
               <div className="nurseClearanceForm-form-row">
                 <label>Relative Name:</label>
-                <input type="text" value="Ajhar Tamboli" />
+                <input type="text"  />
               </div>
               <div className="nurseClearanceForm-form-row">
                 <label>Address:</label>
-                <textarea name="" id=""></textarea>
+                <textarea name="" id="" value={patientId.patient.address}></textarea>
               </div>
               <div className="nurseClearanceForm-form-row">
-            <input type="checkbox" id="allowMultiple" />
+            {/* <input type="checkbox" id="allowMultiple"  onChange={handleInputChange} /> */}
+            <input
+        type="checkbox"
+        id="allowMultiple1"
+        checked={selectedValues.medicineReturnedPharmacy}
+        onChange={(e) => handleInputChange(e, 'medicineReturnedPharmacy')}
+    />
               <label htmlFor="allowMultiple" className="nurseClearanceForm-checkbox-label">
               Medicines Returned Pharmacy
               </label>
             </div>
               <div className="nurseClearanceForm-form-row">
-            <input type="checkbox" id="allowMultiple" />
+              <input
+        type="checkbox"
+        id="allowMultiple2"
+        checked={selectedValues.dischargeMedicinesIndented}
+        onChange={(e) => handleInputChange(e, 'dischargeMedicinesIndented')}
+    />
               <label htmlFor="allowMultiple" className="nurseClearanceForm-checkbox-label">
               Discharge Medicines Indented
               </label>
             </div>
               <div className="nurseClearanceForm-form-row">
-            <input type="checkbox" id="allowMultiple" />
+              <input
+        type="checkbox"
+        id="allowMultiple3"
+        checked={selectedValues.roomInventoryChecked}
+        onChange={(e) => handleInputChange(e, 'roomInventoryChecked')}
+    />
               <label htmlFor="allowMultiple" className="nurseClearanceForm-checkbox-label">
               Room Inventory Checked
               </label>
             </div>
               <div className="nurseClearanceForm-form-row">
-            <input type="checkbox" id="allowMultiple" />
+            <input type="checkbox" id="allowMultiple"  onChange={(e) =>handleInputChange(e, 'idBandRemoved')} />
               <label htmlFor="allowMultiple" className="nurseClearanceForm-checkbox-label">
               ID Band Removed
               </label>
             </div>
               <div className="nurseClearanceForm-form-row">
-            <input type="checkbox" id="allowMultiple" />
+            <input type="checkbox" id="allowMultiple"   onChange={(e)=>handleInputChange(e,'centrelineCannulaRemoved')}/>
               <label htmlFor="allowMultiple" className="nurseClearanceForm-checkbox-label">
               Centreline- Cannula Remove
               </label>
             </div>
               <div className="nurseClearanceForm-form-row">
-            <input type="checkbox" id="allowMultiple" />
+            <input type="checkbox" id="allowMultiple"  onChange={(e)=>handleInputChange(e,'folleysCatheterRemoved')} />
               <label htmlFor="allowMultiple" className="nurseClearanceForm-checkbox-label">
               Folleys Catheter Removed
               </label>
             </div>
               <div className="nurseClearanceForm-form-row">
-            <input type="checkbox" id="allowMultiple" />
+            <input type="checkbox" id="allowMultiple"  onChange={(e)=>handleInputChange(e,'anyDrainRemoved')} />
               <label htmlFor="allowMultiple" className="nurseClearanceForm-checkbox-label">
               Any Drain Removed
               </label>
             </div>
               <div className="nurseClearanceForm-form-row">
-            <input type="checkbox" id="allowMultiple" />
+            <input type="checkbox" id="allowMultiple"   onChange={(e)=>handleInputChange(e,'dressingDone')}/>
               <label htmlFor="allowMultiple" className="nurseClearanceForm-checkbox-label">
               Dressing Done
               </label>
             </div>
               <div className="nurseClearanceForm-form-row">
-            <input type="checkbox" id="allowMultiple" />
+            <input type="checkbox" id="allowMultiple"   onChange={(e)=>handleInputChange(e,'patientEducationGiven')}/>
               <label htmlFor="allowMultiple" className="nurseClearanceForm-checkbox-label">
               Patient Education Given
               </label>
@@ -144,7 +213,7 @@ const NurseClearanceFormPopUp = ({ rowData, onClose }) => {
             </div>
             <div className="nurseClearanceForm-form-row">
             <label>Name:</label>
-              <input type="text" value="4" />
+              <input type="text"  />
             </div>
             <div className="nurseClearanceForm-form-row">
             <label>Contact No:</label>
@@ -203,7 +272,7 @@ const NurseClearanceFormPopUp = ({ rowData, onClose }) => {
 <textarea name="" id=""></textarea>   
            </div>
            <div className="nurseClearanceForm-action-buttons">
-          <button className="btn-blue">Update</button>
+          <button className="btn-blue" onClick={handleSubmit}>Update</button>
           
         </div>
             </div>
