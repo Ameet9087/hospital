@@ -87,7 +87,6 @@ const SettingItemComponent = () => {
         ccCharge: '',
         isNarcotic: '',
         reOrderQuantity: true,
-        isVatApplicable: 0,
         minStockQuantity: 0,
         dosage: '',
         budgetedQuantity: 0,
