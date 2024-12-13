@@ -41,7 +41,7 @@ const WardNurseDashboard = () => {
 
   const handlePatientClick = (patient) => {
     dispatch(setPatientData(patient));
-    navigate('/patient-dashboard', {
+    navigate('/nursing/patient-dashboard', {
       state: {
         patientName: patient.patient.firstName,
         patientAge: patient.patient.age,
