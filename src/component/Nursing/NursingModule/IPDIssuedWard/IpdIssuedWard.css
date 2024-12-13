@@ -1,55 +1,155 @@
-.ipdissuedward-container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: var(--background-color);
-  }
+/* IpdIssuedWard.css */
+
+.ipd-issues-ward-container {
+  display: flex;
+  flex-direction: column;
+  padding:2px;
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+
+  max-height: 500px; /* Set a max height to trigger vertical scroll */
+  max-width: 90%;   /* Optional: Set a max width for horizontal scroll */
+  overflow-y: scroll;  /* Vertical scrollbar when needed */
+  overflow-x: scroll;  /* Horizontal scrollbar when needed */
+}
+
+.ipd-issues-ward-container h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.patient-details {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  margin-bottom: 10px;
+
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: 100px 150px 40px; /* Fixed widths for label and input */
+  align-items: center;
+  gap: 2px;
+}
+
+.detail label {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.detail input, 
+.detail select, 
+.detail button {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+
+/* .detail button:hover {
+  background-color: #0056b3;
+} */
+
+.patient-details a {
+  grid-column: span 4;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 10px;
+}
+
+.item-details {
+  margin-top: 20px;
+}
+
+.item-table {
+  width: 90%;
+  border-collapse: collapse;
+}
+
+.item-table th, .item-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.item-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.add-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: #218838;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+
+.ipdissuedward-form
+{
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 6px;
   
-  .ipdissuedward-header {
-    text-align: center;
-    font-size: 20px;
-    color: #333;
-  }
-  
-  .ipdissuedward-form
- {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-   
-    /* padding: 20px; */
-    border-radius: 5px;
-    background-color: var(--background-color);
-  }
-  
-  .ipdissuedward-section {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .ipdissuedward-section label {
-    flex: 1;
-    font-size: 14px;
-    width: 200px;
-  }
-  
-  .ipdissuedward-section input {
-    flex: 2;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  
-  .ipdissuedadd-btn,
-  .ipdissuedremove-btn {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  .remove-btn {
-    background-color: #f44336;
-  }
-  
+   /* padding: 20px; */
+   border-radius: 5px;
+   background-color: var(--background-color);
+ }
+ 
+ .ipdissuedward-section {
+   display: flex;
+   flex-direction: row;
+ }
+ 
+ .ipdissuedward-section label {
+   flex: 1;
+   font-size: 14px;
+   width: 200px;
+ }
+ 
+ .ipdissuedward-section input {
+   flex: 2;
+   padding: 5px;
+   border: 1px solid #ccc;
+   border-radius: 3px;
+ }
+ 
+ 
+ .ipdissuedadd-btn,
+ .ipdissuedremove-btn {
+   background-color: #4caf50;
+   color: white;
+   border: none;
+   padding: 5px 10px;
+   cursor: pointer;
+ }
+ 
+ .remove-btn {
+   background-color: #f44336;
+ }
+ 
