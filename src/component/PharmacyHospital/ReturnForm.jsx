@@ -1,22 +1,130 @@
-/* Mohini_ReturnForm_WholePage_14/sep/2024 */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ReturnForm.css';
 
 const ReturnForm = () => {
   const [formData, setFormData] = useState({
-    itemName: 'tissue',
-    batchNo: '',
-    goodReceiptNo: '2',
-    availableQty: '95',
-    itemRate: '12',
-    returnRate: '0',
-    quantity: '0',
-    subtotal: '0',
-    returnDiscountAmt: '0',
-    returnVATAmt: '0',
-    returnCCAmt: '0',
-    totalAmount: '0',
+    addItemId: "",
+    breakageQty: "",
+    avlQty: "",
+    batch: "",
+    expiryDate: "",
+    salePrice: "",
+    subTotal: "",
+    discountAmt: "",
+    vatPercent: "",
+    totalAmount: "",
+    breakageDate: "",
+    remark: "",
+    isActive: true,
   });
+  const [addItems, setAddItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // Fetch Add Items from API
+  useEffect(() => {
+    const fetchAddItems = async () => {
+      try {
+        const response = await fetch("http://localhost:9999/api/add-items");
+        if (response.ok) {
+          const data = await response.json();
+          setAddItems(data);
+        } else {
+          console.error("Failed to fetch add items.");
+        }
+      } catch (error) {
+        console.error("Error fetching add items:", error);
+      }
+    };
+
+    fetchAddItems();
+  }, []);
+
+  // Auto-fetch item details based on selected addItemId
+  useEffect(() => {
+    if (formData.addItemId) {
+      const fetchItemDetails = async () => {
+        try {
+          const response = await fetch(`http://localhost:9999/api/add-items/${formData.addItemId}`);
+          if (response.ok) {
+            const data = await response.json();
+            // Populate the form with fetched data
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              avlQty: data.minStockQuantity || "",
+              batch: data.batch || "",
+              expiryDate: data.expiryDate || "",
+              salePrice: data.salesRate || "",
+            }));
+            calculateTotalAmount(data);
+          } else {
+            console.error("Failed to fetch item details.");
+          }
+        } catch (error) {
+          console.error("Error fetching item details:", error);
+        }
+      };
+
+      fetchItemDetails();
+    }
+  }, [formData.addItemId]);
+
+  // Calculate total amount based on fetched data
+  const calculateTotalAmount = (itemData) => {
+    const { salesRate, purchaseDiscount, vatPercent } = itemData;
+    const breakageQty = parseFloat(formData.breakageQty) || 0;
+
+    const subTotal = salesRate * breakageQty;
+    const discountAmt = (purchaseDiscount / 100) * subTotal;
+    const vatAmount = (vatPercent / 100) * (subTotal - discountAmt);
+    const totalAmount = subTotal - discountAmt + vatAmount;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      subTotal: subTotal.toFixed(2),
+      discountAmt: discountAmt.toFixed(2),
+      vatPercent: vatPercent || 0,
+      totalAmount: totalAmount.toFixed(2),
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("http://localhost:9999/api/breakage-items", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert("Data saved successfully!");
+        setFormData({
+          addItemId: "",
+          breakageQty: "",
+          avlQty: "",
+          batch: "",
+          expiryDate: "",
+          salePrice: "",
+          subTotal: "",
+          discountAmt: "",
+          vatPercent: "",
+          totalAmount: "",
+          breakageDate: "",
+          remark: "",
+          isActive: true,
+        });
+      } else {
+        console.error("Failed to save form data.");
+      }
+    } catch (error) {
+      console.error("Error submitting form data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="return-form-component">
@@ -25,142 +133,95 @@ const ReturnForm = () => {
           <tr>
             <th></th>
             <th>Item Name</th>
+            <th>Avl Qty</th>
             <th>Batch No</th>
-            <th>Good Receipt No</th>
-            <th>Available Qty</th>
-            <th>Item Rate</th>
-            <th>Return Rate</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-            <th>Return Discount Amt</th>
-            <th>Return VAT Amt</th>
-            <th>Return CC Amt</th>
+            <th>Exp Date</th>
+            <th>Qty</th>
+            <th>Sale Price</th>
+            <th>Sub Total</th>
+            <th>Discount Amt</th>
+            <th>VAT %</th>
             <th>Total Amount</th>
           </tr>
         </thead>
-        <tr>
-          <td>
-            <button className="return-delete-btn">×</button>
-          </td>
-          <td>
-            <input
-              type="text"
-              value={formData.itemName}
-              onChange={(e) => setFormData({ ...formData, itemName: e.target.value })}
-            />
-          </td>
-          <td>
-            <select
-              value={formData.batchNo}
-              onChange={(e) => setFormData({ ...formData, batchNo: e.target.value })}
-            >
-              <option value=""></option>
-              {/* Add options here */}
-            </select>
-          </td>
-          <td>
-            <input
-              type="text"
-              value={formData.goodReceiptNo}
-              onChange={(e) => setFormData({ ...formData, goodReceiptNo: e.target.value })}
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              value={formData.availableQty}
-              onChange={(e) => setFormData({ ...formData, availableQty: e.target.value })}
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              value={formData.itemRate}
-              onChange={(e) => setFormData({ ...formData, itemRate: e.target.value })}
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              value={formData.returnRate}
-              onChange={(e) => setFormData({ ...formData, returnRate: e.target.value })}
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              value={formData.quantity}
-              onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              value={formData.subtotal}
-              onChange={(e) => setFormData({ ...formData, subtotal: e.target.value })}
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              value={formData.returnDiscountAmt}
-              onChange={(e) => setFormData({ ...formData, returnDiscountAmt: e.target.value })}
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              value={formData.returnVATAmt}
-              onChange={(e) => setFormData({ ...formData, returnVATAmt: e.target.value })}
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              value={formData.returnCCAmt}
-              onChange={(e) => setFormData({ ...formData, returnCCAmt: e.target.value })}
-            />
-          </td>
-          <td>
-            <input
-              type="text"
-              value={formData.totalAmount}
-              onChange={(e) => setFormData({ ...formData, totalAmount: e.target.value })}
-            />
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>
+              <button className="return-delete-btn">×</button>
+            </td>
+            <td>
+              <select
+                value={formData.addItemId}
+                onChange={(e) =>
+                  setFormData({ ...formData, addItemId: e.target.value })
+                }
+              >
+                <option value="">Select Item</option>
+                {addItems.map((item) => (
+                  <option key={item.addItemId} value={item.addItemId}>
+                    {item.itemName}
+                  </option>
+                ))}
+              </select>
+            </td>
+            <td>{formData.avlQty}</td>
+            <td>{formData.batch}</td>
+            <td>{formData.expiryDate}</td>
+            <td>
+              <input
+                type="number"
+                value={formData.breakageQty}
+                onChange={(e) =>
+                  setFormData({ ...formData, breakageQty: e.target.value })
+                }
+              />
+            </td>
+            <td>{formData.salePrice}</td>
+            <td>{formData.subTotal}</td>
+            <td>{formData.discountAmt}</td>
+            <td>{formData.vatPercent}</td>
+            <td>{formData.totalAmount}</td>
+          </tr>
+        </tbody>
       </table>
+
       <div className="return-summary">
         <div className="summary-item-com">
           <label>SubTotal:</label>
-          <input type="text" value="0" readOnly />
+          <input type="text" value={formData.subTotal || "0"} readOnly />
         </div>
         <div className="summary-item-com">
           <label>Discount:</label>
-          <input type="text" value="0" readOnly />
+          <input type="text" value={formData.discountAmt || "0"} readOnly />
         </div>
         <div className="summary-item-com">
           <label>VAT Amount:</label>
-          <input type="text" value="0" readOnly />
-        </div>
-        <div className="summary-item-com">
-          <label>CC Amount:</label>
-          <input type="text" value="0" readOnly />
+          <input type="text" value={formData.vatPercent || "0"} readOnly />
         </div>
         <div className="summary-item-com">
           <label>Total Amount:</label>
-          <input type="text" value="0" readOnly />
+          <input type="text" value={formData.totalAmount || "0"} readOnly />
         </div>
         <div className="summary-item-com-in-words">In Words : Only.</div>
       </div>
-     
+
       <div className="summary-item-com-buttons">
-        <button className="summary-item-com-return-btn">Return</button>
-        <button className="summary-item-com-cancel-btn">Cancel</button>
+        <button
+          className="summary-item-com-return-btn"
+          onClick={handleSubmit}
+          disabled={loading}
+        >
+          {loading ? "Submitting..." : "Return"}
+        </button>
+        <button
+          className="summary-item-com-cancel-btn"
+          onClick={() => setFormData({})}
+        >
+          Cancel
+        </button>
       </div>
     </div>
   );
 };
 
 export default ReturnForm;
-/* Mohini_ReturnForm_WholePage_14/sep/2024 */

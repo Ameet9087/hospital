@@ -59,6 +59,7 @@ import "../LabSetting/labCategories.css";
 import LabCategoryAddNewLC from "./labCategoryAddNewLC";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import LabCategoryUpdateNewLC from "./LabCategoryUpdateNewLC";
+import { API_BASE_URL } from "../../api/api";
 // import LSLabTestAddNLTest from './lSLabTestAddNLTest';
 const LabCategories = () => {
   const [showPopup, setShowPopup] = useState(false);

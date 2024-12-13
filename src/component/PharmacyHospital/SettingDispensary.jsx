@@ -1,5 +1,4 @@
-/* Mohini_SettingDispensary_WholePage_14/sep/2024 */
-import React, { useState, useEffect ,useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import './SettingSupplier.css'; 
 import { API_BASE_URL } from '../api/api';
@@ -7,6 +6,7 @@ import CustomModal from '../../CustomModel/CustomModal';
 import useCustomAlert from '../../alerts/useCustomAlert';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
+import axios from 'axios';
 
 const SettingDispensary = () => {
   const [suppliers, setSuppliers] = useState([]); // Initialize with empty array to load from API
@@ -17,19 +17,56 @@ const SettingDispensary = () => {
   const { success, error, CustomAlerts } = useCustomAlert();
   const [openStickerPopup, setOpenStickerPopup] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
-    const tableRef = useRef(null);
+  const [dispensaries, setDispensaries] = useState([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    type: "",
+    description: "",
+    isActive: "",
+    printInvoiceHeaderInDotMatrix: "",
+    useSeparateInvoiceHeader: "",
+    contactNo: "",
+    address: "",
+    email: "",
+    kraPin: "",
+    defaultPaymentMode: ""
+  });
+  const [editingId, setEditingId] = useState(null);
 
+  const tableRef = useRef(null);
 
-  // Fetch suppliers from API when the component mounts
+  // Fetch dispensaries from API when the component mounts
   useEffect(() => {
-    fetch(`${API_BASE_URL}/dispensaries`)
-      .then(response => response.json())
-      .then(data => setSuppliers(data))
-      .catch(error => console.error('Error fetching dispensaries:', error));
+    fetchDispensaries();
   }, []);
 
-  const filteredUsers = suppliers.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const fetchDispensaries = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/dispensaries`);
+      setDispensaries(response.data);
+    } catch (error) {
+      console.error("Error fetching dispensaries", error);
+    }
+  };
+
+  const handleSave = async () => {
+    try {
+      if (editingId) {
+        // Update existing dispensary
+        await axios.put(`${API_BASE_URL}/dispensaries/${editingId}`, formData);
+      } else {
+        // Create new dispensary
+        await axios.post(`${API_BASE_URL}/dispensaries`, formData);
+      }
+      fetchDispensaries();
+      handleCloseModal();
+    } catch (error) {
+      console.error("Error saving dispensary", error);
+    }
+  };
+
+  const filteredDispensaries = dispensaries.filter((dispensary) =>
+    dispensary.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleShowModal = (user = null) => {
@@ -38,21 +75,40 @@ const SettingDispensary = () => {
       setIsEditMode(true);
     } else {
       setSelectedUser({
-        name: '',
-        type: 'Normal', // Default value
-        contactNo: '',
-        description: '',
-        label: '',
-        kraPin: '',
-        address: '',
-        email: '',
-        defaultPaymentMode: 'Cash',
-        isActive: true,
-        printInvoiceHeader: false,
-        useSeparateInvoiceHeader: false
+        name: "",
+        type: "",
+        description: "",
+        isActive: "",
+        printInvoiceHeaderInDotMatrix: "",
+        useSeparateInvoiceHeader: "",
+        contactNo: "",
+        address: "",
+        email: "",
+        kraPin: "",
+        defaultPaymentMode: ""
       });
       setIsEditMode(false);
     }
+    setShowModal(true);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/dispensaries/${id}`);
+      fetchDispensaries();
+    } catch (error) {
+      console.error("Error deleting dispensary", error);
+    }
+  };
+
+  const handleEdit = (dispensary) => {
+    setFormData(dispensary);
+    setEditingId(dispensary.id);
     setShowModal(true);
   };
 
@@ -63,14 +119,10 @@ const SettingDispensary = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formData = {
-      name: event.target.name.value,
-      type: event.target.type.value,
-      description: event.target.description.value,
-      isActive: event.target.isActive.checked,
-      printInvoiceHeader: event.target.printInvoiceHeader.checked,
-      useSeparateInvoiceHeader: event.target.useSeparateInvoiceHeader.checked
-    };
+    const data = {
+    ...formData,
+    isActive: formData.isActive, // Ensure this is being correctly set and passed
+  };
 
     if (isEditMode) {
       // Update existing user via API
@@ -79,7 +131,7 @@ const SettingDispensary = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(data)
       })
       .then(response => response.json())
       .then(data => {
@@ -94,7 +146,7 @@ const SettingDispensary = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(data)
       })
       .then(response => response.json())
       .then(data => {
@@ -104,7 +156,6 @@ const SettingDispensary = () => {
       .catch(error => console.error('Error adding dispensary:', error));
     }
   };
-  
 
   // Function to export table to Excel
   const handleExport = () => {
@@ -119,10 +170,9 @@ const SettingDispensary = () => {
     window.print(); // Triggers the browser's print window
   };
 
-
   return (
     <div className="setting-supplier-container">
-      <CustomAlerts/>
+      <CustomAlerts />
       <div className="setting-supplier-header">
         <button className="setting-supplier-add-user-button" onClick={() => handleShowModal()}>
           + Add Dispensary
@@ -130,176 +180,152 @@ const SettingDispensary = () => {
       </div>
       <input
         type="text"
-        placeholder="Search"
-        className="manage-users-search-input"
+        placeholder="Search by name"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-    
-       
-      <div className='setting-supplier-span'>
-      <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
-      <button className='item-wise-export-button'onClick={handleExport}>Export</button>
-  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
-</div>
-      <div className='table-container'>
-      <table ref={tableRef}>
-                        <thead>
-                            <tr>
-                                {[ "Name",
-  "Type",
-  "Contact No",
-  "Description",
-  "Label",
-  "KRA PIN",
-  "Address",
-  "Email",
-  "Default Payment Mode",
-  "Actions"].map((header, index) => (
-                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                                        <div className="header-content">
-                                            <span>{header}</span>
-                                            <div
-                                                className="resizer"
-                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                                            ></div>
-                                        </div>
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-
-
+      <div className="setting-supplier-span">
+        <span>Showing {filteredDispensaries.length} / {suppliers.length} results</span>
+        <button className="item-wise-export-button" onClick={handleExport}>Export</button>
+        <button className="item-wise-print-button" onClick={handlePrint}>Print</button>
+      </div>
+      <div className="table-container">
+        <table ref={tableRef}>
+          <thead>
+            <tr>
+              {["Name", "Type", "Contact No", "Description", "Label", "KRA PIN", "Address", "Email", "Default Payment Mode", "Actions"].map((header, index) => (
+                <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
           <tbody>
-            {filteredUsers.map((user, index) => (
+            {filteredDispensaries.map((dispensary, index) => (
               <tr key={index}>
-                <td>{user.name}</td>
-                <td>{user.type}</td>
-                <td>{user.contactNo}</td>
-                <td>{user.description}</td>
-                <td>{user.label}</td>
-                <td>{user.kraPin}</td>
-                <td>{user.address}</td>
-                <td>{user.email}</td>
-                <td>{user.defaultPaymentMode}</td>
+                <td>{dispensary.name}</td>
+                <td>{dispensary.type}</td>
+                <td>{dispensary.contactNo}</td>
+                <td>{dispensary.description}</td>
+                <td>{dispensary.label}</td>
+                <td>{dispensary.kraPin}</td>
+                <td>{dispensary.address}</td>
+                <td>{dispensary.email}</td>
+                <td>{dispensary.defaultPaymentMode}</td>
                 <td className="setting-supplier-action-buttons">
-                  <button className="setting-supplier-action-button" onClick={() => handleShowModal(user)}>Edit</button>
-                  <button className="setting-supplier-action-button">Deactivate</button>
+                  <button className="setting-supplier-action-button" onClick={() => handleShowModal(dispensary)}>Edit</button>
+                  <button className="setting-supplier-action-button" onClick={() => handleDelete(dispensary.id)}>Deactivate</button>
                   <button className="setting-supplier-action-button">Payment Modes</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        {/* <div className="setting-supplier-pagination">
-          <div className="setting-supplier-pagination-controls">
-            <button>First</button>
-            <button>Previous</button>
-            <button>1</button>
-            <button>Next</button>
-            <button>Last</button>
-          </div>
-        </div> */}
       </div>
 
-      <CustomModal
-  isOpen={showModal}
-  onClose={handleCloseModal}
-  className="supplier-setting-supplier-update-modal"
->
-  <div className="supplier-setting-modal-header">
-    <h5>{isEditMode ? 'Edit Dispensary Details' : 'Add New Dispensary'}</h5>
-    {/* <button className="close" onClick={handleCloseModal}>&times;</button> */}
-  </div>
-  <div className="supplier-setting-modal-body">
-    <Form onSubmit={handleSubmit}>
-      {/* Dispensary Name Field */}
-      <Form.Group controlId="name" className="supplier-setting-form-group">
-        <Form.Label className="supplier-setting-form-label">
-        Dispensary Name<span className="supplier-setting-text-danger">*</span>:
-        </Form.Label>
-        <Form.Control
-          type="text"
-          name="name"
-          placeholder="Enter Dispensary Name"
-          required
-          className="supplier-setting-form-control"
-          defaultValue={selectedUser?.name || ''}
-        />
-      </Form.Group>
-
-      {/* Dispensary Type Field */}
-      <Form.Group controlId="type" className="supplier-setting-form-group">
-        <Form.Label className="supplier-setting-form-label">
-        Dispensary Type<span className="supplier-setting-text-danger">*</span>:
-        </Form.Label>
-        <Form.Control
-          as="select"
-          name="type"
-          required
-          className="supplier-setting-form-control"
-          defaultValue={selectedUser?.type || ''}
-        >
-          <option value="Normal">Normal</option>
-          <option value="Special">Special</option>
-          {/* Add other options as needed */}
-        </Form.Control>
-      </Form.Group>
-
-      {/* Description Field */}
-      <Form.Group controlId="description" className="supplier-setting-form-group">
-        <Form.Label className="supplier-setting-form-label">Description:</Form.Label>
-        <Form.Control
-          type="text"
-          name="description"
-          placeholder="Enter Description"
-          className="supplier-setting-form-control"
-          defaultValue={selectedUser?.description || ''}
-        />
-      </Form.Group>
-
-      {/* IsActive Checkbox */}
-      <Form.Group controlId="isActive" className="supplier-setting-form-group">
-        <Form.Check
-          type="checkbox"
-          name="isActive"
-          label="Is Active"
-          defaultChecked={selectedUser?.isActive || false}
-        />
-      </Form.Group>
-
-      {/* Print Invoice Header in DotMatrix Checkbox */}
-      <Form.Group controlId="printInvoiceHeader" className="supplier-setting-form-group">
-        <Form.Check
-          type="checkbox"
-          name="printInvoiceHeader"
-          label="Print Invoice Header in DotMatrix"
-          defaultChecked={selectedUser?.printInvoiceHeader || false}
-        />
-      </Form.Group>
-
-      {/* Use Separate Invoice Header Checkbox */}
-      <Form.Group controlId="useSeparateInvoiceHeader" className="supplier-setting-form-group">
-        <Form.Check
-          type="checkbox"
-          name="useSeparateInvoiceHeader"
-          label="Use separate invoice header"
-          defaultChecked={selectedUser?.useSeparateInvoiceHeader || false}
-        />
-      </Form.Group>
-
-      <div className="supplier-setting-text-right">
-        <Button variant="primary" type="submit">
-          {isEditMode ? 'Update' : 'Add'}
-        </Button>
-      </div>
-    </Form>
-  </div>
-</CustomModal>
-
+      <CustomModal isOpen={showModal} onClose={handleCloseModal} className="supplier-setting-supplier-update-modal">
+        <div className="supplier-setting-modal-header">
+          <h5>{isEditMode ? 'Edit Dispensary Details' : 'Add New Dispensary'}</h5>
+        </div>
+        <div className="supplier-setting-modal-body">
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="dispensaryName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="dispensaryType">
+              <Form.Label>Type</Form.Label>
+              <Form.Control
+                type="text"
+                name="type"
+                value={formData.type}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="dispensaryDescription">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="isActive">
+              <Form.Check
+                type="checkbox"
+                label="Active"
+                name="isActive"
+                checked={formData.isActive}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="dispensaryContactNo">
+              <Form.Label>Contact No</Form.Label>
+              <Form.Control
+                type="text"
+                name="contactNo"
+                value={formData.contactNo}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="dispensaryAddress">
+              <Form.Label>Address</Form.Label>
+              <Form.Control
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="dispensaryEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="dispensaryKraPin">
+              <Form.Label>KRA PIN</Form.Label>
+              <Form.Control
+                type="text"
+                name="kraPin"
+                value={formData.kraPin}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="dispensaryDefaultPaymentMode">
+              <Form.Label>Default Payment Mode</Form.Label>
+              <Form.Control
+                type="text"
+                name="defaultPaymentMode"
+                value={formData.defaultPaymentMode}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              {isEditMode ? 'Save Changes' : 'Add Dispensary'}
+            </Button>
+          </Form>
+        </div>
+      </CustomModal>
     </div>
   );
 };
 
 export default SettingDispensary;
-/* Mohini_SettingDispensary_WholePage_14/sep/2024 */

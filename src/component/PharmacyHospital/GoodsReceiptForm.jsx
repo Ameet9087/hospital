@@ -5,6 +5,7 @@ import AddSupplierForm from './AddSupplierForm';
 import AddGRItemForm from './AddGRItemForm';
 import axios from 'axios';
 import { API_BASE_URL } from '../api/api';
+import CustomModal from '../../CustomModel/CustomModal';
 
 const GoodsReceiptForm = () => {
   const [isFormOpen, setIsFormOpen] = useState(true);
@@ -17,7 +18,7 @@ const GoodsReceiptForm = () => {
   const [suppliers, setSuppliers] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}}/good-receipts/good-receipts`)
+    axios.get(`${API_BASE_URL}/good-receipts/good-receipts`)
       .then(response => {
         setGoodsReceipt(response.data);
         setItems(response.data.items || []);
@@ -53,18 +54,12 @@ const GoodsReceiptForm = () => {
   };
 
   const handleAddItem = (item) => {
-  console.log('Adding item:', item); // Debugging line
-  axios.post(`${API_BASE_URL}/add-items`, item)
-    .then(response => {
-      console.log('Item added:', response.data);
-      setItems(prevItems => [...prevItems, response.data]);
-      setItemCount(prevCount => prevCount + 1);
-    })
-    .catch(error => console.error('Error adding item:', error));
-};
+    console.log('Adding item:', item); // Debugging line
+    setItems([...items, item]);
+  };
 
   const handleUpdateItem = (itemId, updatedItem) => {
-    axios.put(`${API_BASE_URL}/add-items/${itemId}`, updatedItem)
+    axios.put(`${API_BASE_URL}/gr-items/${itemId}`, updatedItem)
       .then(response => {
         setItems(prevItems => prevItems.map(item => 
           item.id === itemId ? response.data : item
@@ -74,7 +69,7 @@ const GoodsReceiptForm = () => {
   };
 
   const handleDeleteItem = (itemId) => {
-    axios.delete(`${API_BASE_URL}/add-items/${itemId}`)
+    axios.delete(`${API_BASE_URL}/gr-items/${itemId}`)
       .then(() => {
         setItems(prevItems => prevItems.filter(item => item.id !== itemId));
         setItemCount(prevCount => prevCount - 1);
@@ -119,7 +114,7 @@ const GoodsReceiptForm = () => {
     <div className="goods-receipt-form-com">
       <button className="goods-receipt-close-btn" onClick={handleClose}>×</button>
       <div className='div-add-good-receipt'>
-      <h5 className='add-good-receipt'>Add Good Receipt</h5>
+        <h5 className='add-good-receipt'>Add Good Receipt</h5>
       </div>
      
       <form onSubmit={handleSubmit}>
@@ -128,11 +123,9 @@ const GoodsReceiptForm = () => {
             <label>Supplier Bill Date:</label>
             <input type="date" name="supplierBillDate" defaultValue="2024-08-24" />
           </div>
-          <div className="goods-receipt-form-group" style={{marginLeft:"10px"}}>
+          <div className="goods-receipt-form-group" style={{ marginLeft: "10px" }}>
             <label>Goods Receipt Date:</label>
             <input type="date" name="goodsReceiptDate" defaultValue="2024-08-24" />
-          </div>
-          <div className="goods-receipt-form-group">
           </div>
         </div>
         <div className="goods-receipt-form-row">
@@ -180,33 +173,35 @@ const GoodsReceiptForm = () => {
               <th>Total Qty</th>
               <th>Rate</th>
               <th>Margin%</th>
-              <th>SalePrice</th>
-              <th>Free Amt</th>
-              <th>CC Charge%</th>
+              <th>cCCharge%</th>
+              <th>ccAmt</th>
               <th>Sub Total</th>
+              <th>Discount%</th>
               <th>Discount Amt</th>
+              <th>Vat%</th>
               <th>VAT Amt</th>
               <th>Total Amount</th>
             </tr>
           </thead>
           <tbody>
             {items.map(item => (
-              <tr key={item.id}>
-                <td>{item.genericName}</td>
-                <td>{item.itemName}</td>
-                <td>{item.batchNumber}</td>
-                <td>{item.rackNumber}</td>
-                <td>{item.expiryDate}</td>
-                <td>{item.itemQuantity}</td>
-                <td>{item.freeQuantity}</td>
-                <td>{item.totalQuantity}</td>
+              <tr key={item.grItemId}>
+                <td>{item.genericNameId}</td>
+                <td>{item.addItemId}</td>
+                <td>{item.batchNo}</td>
+                <td>{item.rackNo}</td>
+                <td>{item.expDate}</td>
+                <td>{item.itemQty}</td>
+                <td>{item.freeQty}</td>
+                <td>{item.totalQty}</td>
                 <td>{item.rate}</td>
                 <td>{item.marginPercentage}</td>
-                <td>{item.salePrice}</td>
-                <td>{item.freeAmount}</td>
                 <td>{item.ccChargePercentage}</td>
+                <td>{item.ccAmount}</td>
                 <td>{item.subTotal}</td>
+                <td>{item.discountPercentage}</td>
                 <td>{item.discountAmount}</td>
+                <td>{item.vatPercentage}</td>
                 <td>{item.vatAmount}</td>
                 <td>{item.totalAmount}</td>
                 <td>
@@ -220,12 +215,12 @@ const GoodsReceiptForm = () => {
           </tbody>
         </table>
         <button
-  type="button"
-  className="goods-receipt-add-item-btn"
-  onClick={handleOpenAddGRItemForm}
->
-  + Add New Item
-</button>
+          type="button"
+          className="goods-receipt-add-item-btn"
+          onClick={handleOpenAddGRItemForm}
+        >
+          + Add New Item
+        </button>
 
         <p>Items Count: {itemCount}</p>
         <div className="goods-receipt-totals-section">
@@ -235,7 +230,7 @@ const GoodsReceiptForm = () => {
               <input type="number" name="taxableSubTotal" defaultValue="0" readOnly />
             </div>
             <div className="goods-receipt-total-row">
-              <label>Non-Taxable Sub Total:</label>
+              <label>Non Taxable Sub Total:</label>
               <input type="number" name="nonTaxableSubTotal" defaultValue="0" readOnly />
             </div>
             <div className="goods-receipt-total-row">
@@ -244,15 +239,17 @@ const GoodsReceiptForm = () => {
             </div>
             <div className="goods-receipt-total-row">
               <label>Discount Percent:</label>
-              <input type="number" name="discountPercent" defaultValue="0" />
+              <input type="number" name="discountPercent" defaultValue="0" readOnly />
             </div>
+          </div>
+          <div className="goods-receipt-totals-column">
             <div className="goods-receipt-total-row">
               <label>Discount Amount:</label>
               <input type="number" name="discountAmount" defaultValue="0" readOnly />
             </div>
             <div className="goods-receipt-total-row">
               <label>VAT Percent:</label>
-              <input type="number" name="vatPercent" defaultValue="0" />
+              <input type="number" name="vatPercent" defaultValue="0" readOnly />
             </div>
             <div className="goods-receipt-total-row">
               <label>VAT Total:</label>
@@ -260,34 +257,49 @@ const GoodsReceiptForm = () => {
             </div>
             <div className="goods-receipt-total-row">
               <label>CC Charge:</label>
-              <input type="number" name="ccCharge" defaultValue="0" />
-            </div>
-            <div className="goods-receipt-total-row">
-              <label>Adjustment:</label>
-              <input type="number" name="adjustment" defaultValue="0" />
+              <input type="number" name="ccCharge" defaultValue="0" readOnly />
             </div>
             <div className="goods-receipt-total-row">
               <label>Total Amount:</label>
-              <input type="number" name="totalAmount" defaultValue="0" readOnly />
+              <input type="number" name="ccCharge" defaultValue="0" readOnly />
+            </div>
+            <div className="goods-receipt-total-row">
+              <label>Remarks:</label>
+              <input type="number" name="ccCharge" defaultValue="0" readOnly />
             </div>
           </div>
         </div>
+
         <div className="goods-receipt-form-actions">
-          <button className="goods-receipt-print-btn" type="button">Print Receipt</button> &nbsp;&nbsp;
-          <button className="goods-receipt-discard-btn" type="button">Discard</button>
+          <button type="submit" className="submit-btn">Print</button>
+          <button type="submit" className="submit-btn">Submit</button>
         </div>
+        
       </form>
-      {isAddSupplierModalOpen && <AddSupplierForm onClose={handleCloseSupplierModal} />}
-      {isAddGRItemFormOpen && <AddGRItemForm
-  isOpen={isAddGRItemFormOpen}
-  onClose={handleCloseAddGRItemForm}
-  addItem={handleAddItem}
-  updateItem={handleUpdateItem}
-  itemToUpdate={itemToUpdate}
-/>}
+
+      {/* Add Item Modal */}
+      {isAddGRItemFormOpen && (
+        <CustomModal
+          title="Add GR Item"
+          onClose={handleCloseAddGRItemForm}
+          isOpen={isAddGRItemFormOpen}
+        >
+          <AddGRItemForm onSubmit={handleAddItem}  onClose={handleCloseAddGRItemForm}/>
+        </CustomModal>
+      )}
+
+      {/* Add Supplier Modal */}
+      {isAddSupplierModalOpen && (
+        <CustomModal
+          title="Add Supplier"
+          onClose={handleCloseSupplierModal}
+          isOpen={isAddSupplierModalOpen}
+        >
+          <AddSupplierForm />
+        </CustomModal>
+      )}
     </div>
   );
 };
 
 export default GoodsReceiptForm;
-/* Mohini_GoodsReceiptForm_WholePage_14/sep/2024 */

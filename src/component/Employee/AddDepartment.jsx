@@ -39,7 +39,7 @@ const AddDepartment = ({ onClose }) => {
 
     try {
       console.log(payload);
-
+        console.log("Sending request to:", `${API_BASE_URL}/departments/add-department`);
       const response = await fetch(
         `${API_BASE_URL}/departments/add-department`,
         {
@@ -53,6 +53,7 @@ const AddDepartment = ({ onClose }) => {
       );
 
       if (response.ok) {
+            console.error("Server responded with error:", errorData);
         setSuccess("Department added successfully!");
         // Optionally, you can reset the form or perform other actions
         // Resetting form fields

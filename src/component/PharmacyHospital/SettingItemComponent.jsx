@@ -8,6 +8,9 @@ import CustomModal from '../../CustomModel/CustomModal';
 import useCustomAlert from '../../alerts/useCustomAlert';
 import * as XLSX from 'xlsx';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import "./SettingItemComponet.css"
+
+
 const SettingItemComponent = () => {
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -77,26 +80,37 @@ const SettingItemComponent = () => {
       setIsEditMode(true);
     } else {
       setSelectedItem({
-        categories: '',
         itemName: '',
         itemCode: '',
-        companyName: '',
-        itemType: '',
-        unit: '',
-        genericName: '',
-        isActive: true,
-        isInternationalBrand: false,
-        ccCharge: 0,
-        isNarcotic: false,
-        reOrderQuantity: 0,
+        isActive: '',
+        isInternationalBrand: '',
+        ccCharge: '',
+        isNarcotic: '',
+        reOrderQuantity: true,
         minStockQuantity: 0,
         dosage: '',
         budgetedQuantity: 0,
         isVatApplicable: false,
+        abOrC: 0,
+        veOrD: 0,
         purchaseRate: 0,
         salesRate: 0,
-        purchaseDiscount: 0,
-        discountPercentage: 0,
+        purchaseDiscount:"",
+        categoryDTO:{
+          categoryId:""
+        },
+        companyDTO:{
+          companyId:""
+        },
+        itemTypeDTO:{
+          itemTypeId:""
+        },
+        unitOfMeasurementPayload:{
+          unitOfMeasurementId:""
+        },
+        genericNameDTO:{
+          genericNameId:""
+        }
       });
       setIsEditMode(false);
     }
@@ -135,17 +149,18 @@ const SettingItemComponent = () => {
       handleCloseModal();
     } catch (error) {
       console.error('Error submitting data:', error);
-      setError('Error submitting data');
+      alert('Error submitting data');
     }
   };
 
-  const handleInputChange = (e) => {
+ const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setSelectedItem(prevItem => ({
-      ...prevItem,
+    setSelectedItem((prev) => ({
+      ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
+
 
   const handleDelete = async (itemCode) => {
     try {
@@ -155,7 +170,7 @@ const SettingItemComponent = () => {
       );
     } catch (error) {
       console.error('Error deleting item:', error);
-      setError('Error deleting item');
+      alert('Error deleting item');
     }
   };
 
@@ -272,7 +287,6 @@ const SettingItemComponent = () => {
       <CustomModal
   isOpen={showModal}
   onClose={handleCloseModal}
-  className="supplier-setting-supplier-update-modal"
 >
   <div className="supplier-setting-modal-header">
     <h5>{isEditMode ? 'Update Item' : 'Add New Item'}</h5>
@@ -280,23 +294,30 @@ const SettingItemComponent = () => {
   </div>
   <div className="supplier-setting-modal-body">
     <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="salesCategory" className="supplier-setting-form-group">
+      <div className='supplier-setting-modal-body'>
+      <div>
+      <Form.Group controlId="categoryDTO" className="supplier-setting-form-group">
         <Form.Label>
           Select Sales Category<span className="supplier-setting-text-danger">*</span>:
         </Form.Label>
         <Form.Control
           as="select"
-          name="salesCategory"
-          value={selectedItem?.salesCategory || ''}
-          onChange={handleInputChange}
+          name="categoryDTO"
+          value={selectedItem?.categoryDTO?.categoryId|| ''}
+           onChange={(e) =>
+                  setSelectedItem((prev) => ({
+                    ...prev,
+                    categoryDTO: { categoryId: e.target.value },
+                  }))
+                }
           required
         >
-          <option value="">Select Sales Category</option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.name}>
-              {category.name}
-            </option>
-          ))}
+           <option value="">Select Category</option>
+                {categories.map((cat) => (
+                  <option key={cat.categoryId} value={cat.categoryId}>
+                    {cat.name}
+                  </option>
+                ))}
         </Form.Control>
         {error && <div className="supplier-setting-error">{error}</div>}
       </Form.Group>
@@ -321,69 +342,90 @@ const SettingItemComponent = () => {
         />
       </Form.Group>
 
-      <Form.Group controlId="companyName" className="supplier-setting-form-group">
+      <Form.Group controlId="companyDTO" className="supplier-setting-form-group">
         <Form.Label>Company Name:</Form.Label>
         <Form.Control
           as="select"
-          name="companyName"
-          value={selectedItem?.companyName || ''}
-          onChange={handleInputChange}
+          name="companyDTO"
+          value={selectedItem?.companyDTO?.companyId || ''}
+          onChange={(e) =>
+                  setSelectedItem((prev) => ({
+                    ...prev,
+                    companyDTO: { companyId: e.target.value },
+                  })) 
+                }
         >
           <option value="">Select Company</option>
           {companies.map((company) => (
-            <option key={company.id} value={company.companyName}>
+            <option key={company.companyId} value={company.companyId}>
               {company.companyName}
             </option>
           ))}
         </Form.Control>
       </Form.Group>
 
-      <Form.Group controlId="itemType" className="supplier-setting-form-group">
+      <Form.Group controlId="itemTypeDTO" className="supplier-setting-form-group">
         <Form.Label>Item Type:</Form.Label>
         <Form.Control
           as="select"
-          name="itemType"
-          value={selectedItem?.itemType || ''}
-          onChange={handleInputChange}
+          name="itemTypeDTO"
+          value={selectedItem?.itemTypeDTO?.itemTypeId || ''}
+           onChange={(e) =>
+                  setSelectedItem((prev) => ({
+                    ...prev,
+                    itemTypeDTO: { itemTypeId: e.target.value },
+                  })) 
+                }
         >
           <option value="">Select Item Type</option>
           {itemTypes.map((itemType) => (
-            <option key={itemType.id} value={itemType.type}>
+            <option key={itemType.itemTypeId} value={itemType.itemTypeId}>
               {itemType.type}
             </option>
           ))}
         </Form.Control>
       </Form.Group>
 
-      <Form.Group controlId="unitOfMeasurement" className="supplier-setting-form-group">
+      <Form.Group controlId="unitOfMeasurementPayload" className="supplier-setting-form-group">
         <Form.Label>Unit of Measurement:</Form.Label>
         <Form.Control
           as="select"
-          name="unitOfMeasurement"
-          value={selectedItem?.unitOfMeasurement || ''}
-          onChange={handleInputChange}
+          name="unitOfMeasurementPayload"
+          value={selectedItem?.unitOfMeasurementPayload?.unitOfMeasurementId || ''}
+          onChange={(e) =>
+                  setSelectedItem((prev) => ({
+                    ...prev,
+                    unitOfMeasurementPayload: { unitOfMeasurementId: e.target.value },
+                  })) 
+                }
         >
           <option value="">Select Unit of Measurement</option>
           {unitsOfMeasurement.map((unit) => (
-            <option key={unit.id} value={unit.name}>
+            <option key={unit.unitOfMeasurementId} value={unit.unitOfMeasurementId}>
               {unit.name}
             </option>
           ))}
         </Form.Control>
       </Form.Group>
-
-      <Form.Group controlId="genericName" className="supplier-setting-form-group">
+      </div>
+<div>
+      <Form.Group controlId="genericNameDTO" className="supplier-setting-form-group">
         <Form.Label>Generic Name:</Form.Label>
         <Form.Control
           as="select"
-          name="genericName"
-          value={selectedItem?.genericName || ''}
-          onChange={handleInputChange}
+          name="genericNameDTO"
+          value={selectedItem?.genericNameDTO?.genericNameId || ''}
+          onChange={(e) =>
+                  setSelectedItem((prev) => ({
+                    ...prev,
+                    genericNameDTO: { genericNameId: e.target.value },
+                  })) 
+                }
         >
           <option value="">Select Generic Name</option>
           {genericNames.map((genericName) => (
-            <option key={genericName.id} value={genericName.genericName}>
-              {genericName.genericName}
+            <option key={genericName.genericNameId} value={genericName.genericNameId}>
+              {genericName.genericName}   
             </option>
           ))}
         </Form.Control>
@@ -438,7 +480,8 @@ const SettingItemComponent = () => {
           onChange={handleInputChange}
         />
       </Form.Group>
-
+</div>
+<div>
       <Form.Group controlId="minStockQuantity" className="supplier-setting-form-group">
         <Form.Label>MinStock Quantity:</Form.Label>
         <Form.Control
@@ -526,6 +569,8 @@ const SettingItemComponent = () => {
         <Button variant="primary" type="submit">
           {isEditMode ? 'Update' : 'Add'}
         </Button>
+      </div>
+      </div>
       </div>
     </Form>
   </div>

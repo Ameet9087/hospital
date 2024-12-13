@@ -6,6 +6,7 @@ import "./PurchaseOrder.css";
 import AddPurchaseOrderDraft from "../components/AddPurchaseOrder";
 import PurchaseOrderDraftList from "../components/PurchaseOrderDraftList";
 import CustomModal from "../../../CustomModel/CustomModal";
+import { API_BASE_URL } from "../../api/api";
 
 const customStyles = {
   content: {
@@ -51,7 +52,7 @@ function PurchaseOrder() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/purchase-orders"
+          `${API_BASE_URL}/purchase-orders`
         );
         setData(response.data);
       } catch (error) {
@@ -93,18 +94,16 @@ function PurchaseOrder() {
           <label>
             To: <input type="date" defaultValue="2024-07-29" />
           </label>
-          <button className="PurchaseOrder-star-button">★</button>
-          <button className="PurchaseOrder-dash-button">-</button>
-          <button className="PurchaseOrder-ok-button">✓ OK</button>
+
         </div>
 
-        <div className="PurchaseOrder-search-bar">
+        {/* <div className="PurchaseOrder-search-bar">
           <input
             className="PurchaseOrder-search-input"
             type="text"
             placeholder="Search"
           />
-          <button className="PurchaseOrder-search-button">🔍</button>
+          <div>
           <span className="PurchaseOrder-results">
             Showing {data.length} results
           </span>
@@ -115,7 +114,34 @@ function PurchaseOrder() {
             )}
             content={() => componentRef.current}
           />
-        </div>
+          </div>
+        </div> */}
+
+
+
+<div className="InvoiceHeaders__table-header">
+      <div className="InvoiceHeaders__search-container">
+        <input
+          type="text"
+          placeholder="Search"
+          className="InvoiceHeaders__search-input"
+        />
+      </div>
+      <div>
+          <span className="PurchaseOrder-results">
+            Showing {data.length} results
+          </span>      
+<button className="PurchaseOrder-export-button">Export</button>
+          <ReactToPrint
+            trigger={() => (
+              <button className="PurchaseOrder-print-button">Print</button>
+            )}
+            content={() => componentRef.current}
+          />        </div>
+      </div>
+
+
+
 
         <div ref={componentRef}>
           <table className="PurchaseOrder-po-table">

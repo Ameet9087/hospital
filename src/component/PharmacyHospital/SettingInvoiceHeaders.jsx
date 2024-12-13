@@ -1,5 +1,5 @@
 /* Mohini_SettingInvoiceHeaders_WholePage_14/sep/2024 */
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import './SettingSupplier.css';
@@ -8,8 +8,8 @@ import CustomModal from '../../CustomModel/CustomModal';
 import useCustomAlert from '../../alerts/useCustomAlert';
 import * as XLSX from 'xlsx';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
-const apiEndpoint = `${API_BASE_URL}/v1/invoice-headers`;
 
+const apiEndpoint = `${API_BASE_URL}/v1/invoice-headers`;
 
 const SettingInvoiceHeaders = () => {
   const [invoiceHeaders, setInvoiceHeaders] = useState([]);
@@ -20,7 +20,7 @@ const SettingInvoiceHeaders = () => {
   const { success, error, CustomAlerts } = useCustomAlert();
   const [openStickerPopup, setOpenStickerPopup] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
-    const tableRef = useRef(null);
+  const tableRef = useRef(null);
 
   useEffect(() => {
     fetchInvoiceHeaders();
@@ -70,41 +70,46 @@ const SettingInvoiceHeaders = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const invoiceHeaderDTO = {
+      hospitalName: event.target.hospitalName.value,
+      address: event.target.address.value,
+      telephone: event.target.telephone.value,
+      email: event.target.email.value,
+      kraPin: event.target.kraPin.value,
+      dda: event.target.dda.value,
+      headerDescription: event.target.headerDescription.value,
+      isActive: event.target.isActive.checked,
+    };
+
     const formData = new FormData();
-    formData.append('invoiceHeaderDTO.hospitalName', event.target.hospitalName.value);
-    formData.append('invoiceHeaderDTO.address', event.target.address.value);
-    formData.append('invoiceHeaderDTO.telephone', event.target.telephone.value);
-    formData.append('invoiceHeaderDTO.email', event.target.email.value);
-    formData.append('invoiceHeaderDTO.kraPin', event.target.kraPin.value);
-    formData.append('invoiceHeaderDTO.dda', event.target.dda.value);
-    formData.append('invoiceHeaderDTO.headerDescription', event.target.headerDescription.value);
-    formData.append('invoiceHeaderDTO.isActive', event.target.isActive.checked);
+    formData.append('invoiceHeaderDTO', JSON.stringify(invoiceHeaderDTO)); // Send as a JSON string
 
     if (event.target.logoImage.files[0]) {
-        formData.append('logoImage', event.target.logoImage.files[0]);
+      formData.append('logoImage', event.target.logoImage.files[0]);
     }
 
     try {
-        if (isEditMode) {
-            await axios.put(`${apiEndpoint}/${selectedUser.id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-        } else {
-            await axios.post(apiEndpoint, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-        }
-        fetchSuppliers();
-        handleCloseModal();
+      if (isEditMode) {
+        await axios.put(`${apiEndpoint}/${selectedHeader.invoiceHeaderId}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+      } else {
+        await axios.post(apiEndpoint, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+      }
+      fetchInvoiceHeaders(); // Refresh data after successful submission
+      handleCloseModal();
     } catch (error) {
-        console.error('Error saving invoice header:', error);
+      console.error('Error saving invoice header:', error);
+      error && error.message && alert(`Error: ${error.message}`);
     }
-};
-
+  };
 
   // Function to export table to Excel
   const handleExport = () => {
@@ -119,13 +124,9 @@ const SettingInvoiceHeaders = () => {
     window.print(); // Triggers the browser's print window
   };
 
-
-
-
-
   return (
     <div className="setting-supplier-container">
-      <CustomAlerts/>
+      <CustomAlerts />
       <div className="setting-supplier-header">
         <Button className="setting-supplier-add-user-button" onClick={() => handleShowModal()}>
           + Add Invoice
@@ -138,41 +139,39 @@ const SettingInvoiceHeaders = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-     
-
 
       <div className='setting-supplier-span'>
-      <span>Showing {filteredHeaders.length} / {invoiceHeaders.length} results</span>
-      <button className='item-wise-export-button'onClick={handleExport}>Export</button>
-  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
-</div>
+        <span>Showing {filteredHeaders.length} / {invoiceHeaders.length} results</span>
+        <button className='item-wise-export-button' onClick={handleExport}>Export</button>
+        <button className='item-wise-print-button' onClick={handlePrint}>Print</button>
+      </div>
 
       <div className='table-container'>
-      <table ref={tableRef}>
-                        <thead>
-                            <tr>
-                                {["Hospital Name",
-  "Address",
-  "Telephone",
-  "Email",
-  "KRA PIN",
-  "DDA",
-  "Header Description",
-  "Created Date",
-  "Is Active",
-  "Actions"].map((header, index) => (
-                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                                        <div className="header-content">
-                                            <span>{header}</span>
-                                            <div
-                                                className="resizer"
-                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                                            ></div>
-                                        </div>
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
+        <table ref={tableRef}>
+          <thead>
+            <tr>
+              {["Hospital Name",
+                "Address",
+                "Telephone",
+                "Email",
+                "KRA PIN",
+                "DDA",
+                "Header Description",
+                "Created Date",
+                "Is Active",
+                "Actions"].map((header, index) => (
+                  <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                      ></div>
+                    </div>
+                  </th>
+                ))}
+            </tr>
+          </thead>
 
           <tbody>
             {filteredHeaders.map((header, index) => (
@@ -199,148 +198,132 @@ const SettingInvoiceHeaders = () => {
             ))}
           </tbody>
         </table>
-        {/* <div className="setting-supplier-pagination">
-          <div className="setting-supplier-pagination-controls">
-            <Button>First</Button>
-            <Button>Previous</Button>
-            <Button>1</Button>
-            <Button>Next</Button>
-            <Button>Last</Button>
-          </div>
-        </div> */}
       </div>
-
-
 
       <CustomModal
-  isOpen={showModal}
-  onClose={handleCloseModal}
-  className="supplier-setting-supplier-update-modal"
->
-  <div className="supplier-setting-modal-header">
-    <h5>{isEditMode ? 'Update Invoice Header' : 'Add New Invoice Header'}</h5>
-    {/* <button className="close" onClick={handleCloseModal}>&times;</button> */}
-  </div>
-  <div className="supplier-setting-modal-body">
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="hospitalName" className="supplier-setting-form-group">
-        <Form.Label>
-          Hospital Name<span className="supplier-setting-text-danger">*</span>:
-        </Form.Label>
-        <Form.Control
-          type="text"
-          name="hospitalName"
-          placeholder="Enter Hospital Name"
-          required
-          defaultValue={selectedHeader?.hospitalName || ''}
-        />
-      </Form.Group>
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        className="supplier-setting-supplier-update-modal"
+      >
+        <div className="supplier-setting-modal-header">
+          <h5>{isEditMode ? 'Update Invoice Header' : 'Add New Invoice Header'}</h5>
+        </div>
+        <div className="supplier-setting-modal-body">
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="hospitalName" className="supplier-setting-form-group">
+              <Form.Label>
+                Hospital Name<span className="supplier-setting-text-danger">*</span>:
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="hospitalName"
+                placeholder="Enter Hospital Name"
+                required
+                defaultValue={selectedHeader?.hospitalName || ''}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="address" className="supplier-setting-form-group">
-        <Form.Label>
-          Address<span className="supplier-setting-text-danger">*</span>:
-        </Form.Label>
-        <Form.Control
-          type="text"
-          name="address"
-          placeholder="Enter Address"
-          required
-          defaultValue={selectedHeader?.address || ''}
-        />
-      </Form.Group>
+            <Form.Group controlId="address" className="supplier-setting-form-group">
+              <Form.Label>
+                Address<span className="supplier-setting-text-danger">*</span>:
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="address"
+                placeholder="Enter Address"
+                required
+                defaultValue={selectedHeader?.address || ''}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="telephone" className="supplier-setting-form-group">
-        <Form.Label>
-          Telephone<span className="supplier-setting-text-danger">*</span>:
-        </Form.Label>
-        <Form.Control
-          type="text"
-          name="telephone"
-          placeholder="Enter Telephone"
-          required
-          defaultValue={selectedHeader?.telephone || ''}
-        />
-      </Form.Group>
+            <Form.Group controlId="telephone" className="supplier-setting-form-group">
+              <Form.Label>
+                Telephone<span className="supplier-setting-text-danger">*</span>:
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="telephone"
+                placeholder="Enter Telephone"
+                required
+                defaultValue={selectedHeader?.telephone || ''}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="email" className="supplier-setting-form-group">
-        <Form.Label>
-          Email<span className="supplier-setting-text-danger">*</span>:
-        </Form.Label>
-        <Form.Control
-          type="email"
-          name="email"
-          placeholder="Enter Email"
-          required
-          defaultValue={selectedHeader?.email || ''}
-        />
-      </Form.Group>
+            <Form.Group controlId="email" className="supplier-setting-form-group">
+              <Form.Label>
+                Email<span className="supplier-setting-text-danger">*</span>:
+              </Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                placeholder="Enter Email"
+                required
+                defaultValue={selectedHeader?.email || ''}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="kraPin" className="supplier-setting-form-group">
-        <Form.Label>KRA PIN:</Form.Label>
-        <Form.Control
-          type="text"
-          name="kraPin"
-          placeholder="Enter KRA PIN"
-          defaultValue={selectedHeader?.kraPin || ''}
-        />
-      </Form.Group>
+            <Form.Group controlId="kraPin" className="supplier-setting-form-group">
+              <Form.Label>KRA PIN:</Form.Label>
+              <Form.Control
+                type="text"
+                name="kraPin"
+                placeholder="Enter KRA PIN"
+                defaultValue={selectedHeader?.kraPin || ''}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="dda" className="supplier-setting-form-group">
-        <Form.Label>DDA:</Form.Label>
-        <Form.Control
-          type="text"
-          name="dda"
-          placeholder="Enter DDA"
-          defaultValue={selectedHeader?.dda || ''}
-        />
-      </Form.Group>
+            <Form.Group controlId="dda" className="supplier-setting-form-group">
+              <Form.Label>DDA:</Form.Label>
+              <Form.Control
+                type="text"
+                name="dda"
+                placeholder="Enter DDA"
+                defaultValue={selectedHeader?.dda || ''}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="headerDescription" className="supplier-setting-form-group">
-        <Form.Label>Header Description:</Form.Label>
-        <Form.Control
-          type="text"
-          name="headerDescription"
-          placeholder="Enter Header Description"
-          defaultValue={selectedHeader?.headerDescription || ''}
-        />
-      </Form.Group>
+            <Form.Group controlId="headerDescription" className="supplier-setting-form-group">
+              <Form.Label>Header Description:</Form.Label>
+              <Form.Control
+                type="text"
+                name="headerDescription"
+                placeholder="Enter Header Description"
+                defaultValue={selectedHeader?.headerDescription || ''}
+              />
+            </Form.Group>
 
-      <Form.Group controlId="logoImage" className="supplier-setting-form-group">
-        <Form.Label>
-          Choose Logo Image<span className="supplier-setting-text-danger">*</span>:
-        </Form.Label>
-        <Form.Control
-          type="file"
-          name="logoImage"
-          accept="image/*"
-        />
-        <Form.Text className="text-muted">
-          {selectedHeader?.logoImagePath ? `File: ${selectedHeader.logoImagePath}` : 'No file chosen'}
-        </Form.Text>
-      </Form.Group>
+            <Form.Group controlId="logoImage" className="supplier-setting-form-group">
+              <Form.Label>
+                Choose Logo Image<span className="supplier-setting-text-danger">*</span>:
+              </Form.Label>
+              <Form.Control
+                type="file"
+                name="logoImage"
+                accept="image/*"
+              />
+              <Form.Text className="text-muted">
+                {selectedHeader?.logoImagePath ? `File: ${selectedHeader.logoImagePath}` : 'No file chosen'}
+              </Form.Text>
+            </Form.Group>
 
-      <Form.Group controlId="isActive" className="supplier-setting-form-group">
-        <Form.Check
-          type="checkbox"
-          name="isActive"
-          label="Is Active"
-          defaultChecked={selectedHeader?.isActive || false}
-        />
-      </Form.Group>
+            <Form.Group controlId="isActive" className="supplier-setting-form-group">
+              <Form.Check
+                type="checkbox"
+                label="Is Active"
+                name="isActive"
+                defaultChecked={selectedHeader?.isActive || false}
+              />
+            </Form.Group>
 
-      <div className="supplier-setting-text-right">
-        <Button variant="primary" onClick={handleCloseModal} className="supplier-setting-mr-2">Cancel</Button>
-        <Button variant="primary" type="submit">
-          {isEditMode ? 'Update Invoice Header' : 'Add Invoice Header'}
-        </Button>
-      </div>
-    </Form>
-  </div>
-</CustomModal>
-
+            <div className="modal-footer">
+              <Button variant="secondary" onClick={handleCloseModal}>Close</Button>
+              <Button type="submit" variant="primary">{isEditMode ? 'Update' : 'Save'}</Button>
+            </div>
+          </Form>
+        </div>
+      </CustomModal>
     </div>
   );
 };
 
 export default SettingInvoiceHeaders;
-/* Mohini_SettingInvoiceHeaders_WholePage_14/sep/2024 */
