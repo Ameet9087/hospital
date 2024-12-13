@@ -1,0 +1,140 @@
+
+  
+  .nurseClearanceFormPopUp {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .nurseClearance-Form {
+    background-color: var(--background-color);
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+  
+  .nurseClearanceForm-title-bar {
+    background-color: var(--sideBar-bg-color);
+    padding: 1px;
+    color: white;
+    font-size: var(--heading-font);
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .nurseClearanceForm-content-wrapper {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+  
+  .nurseClearanceForm-main-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .nurseClearanceForm-panel {
+    flex: 1 1 45%;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+  }
+  
+  .nurseClearanceForm-panel-header {
+    font-size: var(--heading-font);
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--sideBar-bg-color);
+  }
+  
+  .nurseClearanceForm-panel-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .nurseClearanceForm-form-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .nurseClearanceForm-form-row label {
+    font-size: var(--font-size);
+    font-weight: bold;
+    color: #333;
+    min-width: 120px;
+  }
+  
+  .nurseClearanceForm-form-row input,
+  .nurseClearanceForm-form-row textarea,
+  .nurseClearanceForm-form-row select {
+    flex: 1;
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .nurseClearanceForm-checkbox-label {
+    font-size: var(--font-size);
+    color: #333;
+  }
+  
+  .nurseClearanceForm-action-buttons {
+    display: flex;
+  
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: space-between;
+  }
+  
+  .nurseClearanceForm-action-buttons button ,.discharge-nurseaction {
+    flex: 1 1 calc(33.33% - 10px);
+    padding: 5px;
+    font-size: var(--font-size);
+    color: white;
+    background-color: var(--button-bg-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .nurseClearanceForm-action-buttons button:hover ,.discharge-nurseaction:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .nurseClearanceForm-input-with-search {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .nurseClearanceForm-magnifier-btn {
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  textarea {
+    resize: none;
+    height: 80px;
+  }
+  
