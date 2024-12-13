@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Modal, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./searchpatient.css";
-import { FaSearch } from "react-icons/fa";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
-import AdmissionForm from "./AdmissionForm";
+import IpAdmission from "./IpAdmission";
 
 const SearchPatient = () => {
   const [patients, setPatients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [patientsPerPage] = useState(20);
   const [showModal, setShowModal] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const tableRef = useRef(null);
@@ -22,7 +18,7 @@ const SearchPatient = () => {
 
   // Fetch data from the new API
   useEffect(() => {
-    fetch(`${API_BASE_URL}/patients/getAllPatients`, {
+    fetch(`${API_BASE_URL}/inpatients/getAllPatients`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +42,7 @@ const SearchPatient = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/admissions/fetch`, {
+    fetch(`${API_BASE_URL}/ip-admissions/admitted`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -60,19 +56,9 @@ const SearchPatient = () => {
       .catch((error) => console.error("failed to fetch"));
   }, [showModal]);
 
-  // Pagination logic
-  const indexOfLastPatient = currentPage * patientsPerPage;
-  const indexOfFirstPatient = indexOfLastPatient - patientsPerPage;
-  const currentPatients = patients.slice(
-    indexOfFirstPatient,
-    indexOfLastPatient
-  );
-
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const handleAdmit = (patient) => {
     setSelectedPatient(patient);
@@ -82,56 +68,18 @@ const SearchPatient = () => {
   const mapAdmittedPatients = (admittedPatients) => {
     const admittedMap = {};
     admittedPatients.forEach((admittedPatient) => {
-      admittedMap[admittedPatient.patientDTO.patientId] = true; // Mark admitted patients
+      admittedMap[admittedPatient.patient.inPatientId] = true;
     });
-    setAdmittedPatientsMap(admittedMap); // Store the map
+    setAdmittedPatientsMap(admittedMap);
   };
 
   const handleClose = () => setShowModal(false);
-
-  const submitAdmission = async () => {
-    if (!selectedPatient) {
-      console.error("No patient selected");
-      return;
-    }
-
-    // Define the admission details
-
-    const admissionDetails = {};
-
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/admissions/add-admission-details`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(admissionDetails),
-        }
-      );
-
-      const text = await response.text(); // Get raw text to debug
-
-      console.log("Raw response:", text); // Log raw response for debugging
-
-      try {
-        const data = JSON.parse(text); // Attempt to parse JSON
-        console.log("Parsed JSON:", data);
-        handleClose(); // Close modal after successful admission
-      } catch (error) {
-        console.error("Failed to parse JSON:", error);
-      }
-    } catch (error) {
-      console.error("Error adding admission details:", error);
-    }
-  };
 
   return (
     <div className="search-patient-container">
       {showModal ? (
         <>
-          <AdmissionForm patient={selectedPatient} onClose={handleClose} />
+          <IpAdmission patient={selectedPatient} onClose={handleClose} />
         </>
       ) : (
         <>
@@ -189,13 +137,13 @@ const SearchPatient = () => {
                     const lastNameMatch = patient.lastName
                       ?.toLowerCase()
                       .includes(searchLowerCase);
-                    const patientIdMatch = patient.patientId == searchTerm;
+                    const patientIdMatch = patient.inPatientId == searchTerm;
 
                     return firstNameMatch || lastNameMatch || patientIdMatch;
                   })
                   .map((patient) => (
-                    <tr key={patient.patientId}>
-                      <td>{patient.patientId || "N/A"}</td>
+                    <tr key={patient.inPatientId}>
+                      <td>{patient.inPatientId || "N/A"}</td>
                       <td>
                         {`${patient.firstName} ${
                           patient.middleName ? patient.middleName + " " : ""
@@ -205,12 +153,15 @@ const SearchPatient = () => {
                       <td>{patient.gender}</td>
                       <td>{patient.phoneNumber}</td>
                       <td>{patient.address}</td>
-                      <td>{patient.isIPD ? "InPatient" : ""}</td>
+                      <td>{patient.isIPD}</td>
                       <td>
-                        {admittedPatientsMap[patient.patientId] ? (
+                        {admittedPatientsMap[patient.inPatientId] ? (
                           <span className="Addmitted-btn">Admitted</span> // Display if admitted
                         ) : (
-                          <button onClick={() => handleAdmit(patient)}>
+                          <button
+                            className="Addmit-btn"
+                            onClick={() => handleAdmit(patient)}
+                          >
                             Admit
                           </button>
                         )}
@@ -220,19 +171,6 @@ const SearchPatient = () => {
               </tbody>
             </table>
           </div>
-
-          {/* Pagination */}
-          {/* <div className="pagination">
-            {Array.from({ length: Math.ceil(patients.length / patientsPerPage) }, (_, i) => (
-              <button
-                key={i + 1}
-                onClick={() => paginate(i + 1)}
-                className={`page-button ${currentPage === i + 1 ? 'active' : ''}`}
-              >
-                {i + 1}
-              </button>
-            ))}
-          </div> */}
         </>
       )}
     </div>

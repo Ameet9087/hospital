@@ -14,18 +14,10 @@ const CancelAdmission = ({ patient, setShowOptionWindow }) => {
       setErrorMessage("Remarks are required");
       return;
     }
-
     try {
-      // Send the cancel admission request
+      let admissionId = parseInt(patient.ipAdmmissionId);
       const response = await axios.put(
-        `${API_BASE_URL}/admissions/${patient.admissionId}/cancel`,
-        null,
-        {
-          params: {
-            cancelledDate: cancelDate,
-            cancelledRemark: remarks,
-          },
-        }
+        `${API_BASE_URL}/ip-admissions/${admissionId}/cancel?date=${cancelDate}&remark=${remarks}`
       );
 
       if (response.status === 200) {
@@ -45,24 +37,23 @@ const CancelAdmission = ({ patient, setShowOptionWindow }) => {
       <div className="cancelAdmission-header">
         <div>
           <p className="cancelAdmission-name">
-            Name: {patient.patientDTO?.firstName}{" "}
-            {patient.patientDTO?.middleName} {patient.patientDTO?.lastName}
-          </p>
-          <p className="cancelAdmission-ward">
-            Ward Name: {patient.wardDepartmentDTO?.wardName}
+            Name: {patient.patient?.firstName} {patient.patient?.middleName}{" "}
+            {patient.patient?.lastName}
           </p>
           <p className="cancelAdmission-inpatient">
-            Inpatient: {patient.patientDTO?.patientId}
+            Uhid: {patient.patient?.uhid}
+          </p>
+          <p className="cancelAdmission-ward">
+            Room: {patient.roomDetails?.roomDTO?.roomNumber}
           </p>
         </div>
         <div>
           <p className="cancelAdmission-ageSex">
-            Age/Sex: {patient.patientDTO?.age} {patient.patientDTO?.ageUnit} /{" "}
-            {patient.patientDTO?.gender}
+            Age/Sex: {patient.patient?.age} {patient.patient?.ageUnit} /{" "}
+            {patient.patient?.gender}
           </p>
           <p className="cancelAdmission-bedCode">
-            Bed Code: {patient.manageBedDTO?.wardType}-
-            {patient.manageBedDTO?.bedNumber}
+            Bed Code: {patient.roomDetails?.bedDTO?.bedNo}
           </p>
         </div>
       </div>
@@ -77,7 +68,7 @@ const CancelAdmission = ({ patient, setShowOptionWindow }) => {
           <label>Admission Date:</label>
           <input
             type="text"
-            value={patient.admissionDate || "2024-10-04T09:44:00"} // Admission date from patient data
+            value={patient?.admissionDate} // Admission date from patient data
             readOnly
             className="cancelAdmission-admissionDate"
           />

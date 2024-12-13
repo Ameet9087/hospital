@@ -14,15 +14,14 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
-import WardTransfer from "./WardTransfer";
-import CustomModal from "../CustomModel/CustomModal";
+import IpChangeRoom from "./ipchangeroom";
+import CustomModal from "../../CustomModel/CustomModal";
 import PatientCard from "./PatientCard";
 import PrintWristWindow from "./PrintWristWindow";
 import PrintGenericSticker from "./PrintGenericSticker";
 import ChangeDoctor from "./ChangeDoctor";
 import CancelAdmission from "./CancelAdmission";
-import PrintAdmissionSlip from "./PrintAdmissionSlip";
-
+import AdmissionSlip from "./AdmissionFormPrint";
 const AdmittedPatient = () => {
   const [showPrint, setShowPrint] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -58,7 +57,9 @@ const AdmittedPatient = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/admissions/fetch`);
+        const response = await axios.get(
+          `${API_BASE_URL}/ip-admissions/admitted `
+        );
         setPatients(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -142,7 +143,7 @@ const AdmittedPatient = () => {
         );
       case "AdmissionSlip":
         return (
-          <PrintAdmissionSlip
+          <AdmissionSlip
             patient={selectPatient}
             setShowOptionWindow={setShowOptionWindow}
           />
@@ -179,8 +180,9 @@ const AdmittedPatient = () => {
                 "Case Type",
                 "Patient",
                 "Age/Sex",
-                "Ward",
+                "Room Number",
                 "Bed No",
+                "Paytype",
                 "Admitted Doctor",
                 "Remarks",
                 "Action",
@@ -208,41 +210,38 @@ const AdmittedPatient = () => {
             {patients
               ?.filter((patient) => {
                 const searchLowerCase = searchTerm.toLowerCase();
-                const firstNameMatch = patient.patientDTO?.firstName
+                const firstNameMatch = patient.patient?.firstName
                   ?.toLowerCase()
                   .includes(searchLowerCase);
-                const lastNameMatch = patient.patientDTO?.lastName
+                const lastNameMatch = patient.patient?.lastName
                   ?.toLowerCase()
                   .includes(searchLowerCase);
-                const patientIdMatch =
-                  patient.patientDTO?.patientId == searchTerm;
+                const patientIdMatch = patient.patient?.patientId == searchTerm;
 
                 return firstNameMatch || lastNameMatch || patientIdMatch;
               })
               .map((patient, index) => (
                 <tr key={index}>
                   <td>{patient.admissionDate || "N/A"}</td>
-                  <td>{patient.patientDTO?.patientId || "N/A"}</td>
+                  <td>{patient.patient?.inPatientId || "N/A"}</td>
                   <td>{patient.caseType || "N/A"}</td>
-                  <td>{`${patient.patientDTO?.firstName || ""} ${
-                    patient.patientDTO?.lastName || ""
+                  <td>{`${patient.patient?.firstName || ""} ${
+                    patient.patient?.lastName || ""
                   }`}</td>
 
-                  <td>{`${patient.patientDTO?.age || "N/A"} ${
-                    patient.patientDTO?.ageUnit
-                  } / ${patient.patientDTO?.gender || "N/A"}`}</td>
+                  <td>{`${patient.patient?.age || "N/A"} ${
+                    patient.patient?.ageUnit
+                  } / ${patient.patient?.gender || "N/A"}`}</td>
 
-                  <td>{patient.wardDepartmentDTO?.wardName || "N/A"}</td>
+                  <td>{patient.roomDetails?.roomDTO?.roomNumber || "N/A"}</td>
+                  <td>{patient.roomDetails?.bedDTO?.bedNo}</td>
+                  <td>{patient.roomDetails?.payTypeDTO?.payTypeName}</td>
                   <td>
-                    {patient.manageBedDTO?.wardType}{" "}
-                    {patient.manageBedDTO?.bedNumber || "N/A"}
-                  </td>
-                  <td>
-                    {patient.admittedDoctorDTO?.salutation +
+                    {patient.admissionUnderDoctorDetail?.consultantDoctor
+                      .salutation +
                       " " +
-                      patient.admittedDoctorDTO?.firstName +
-                      " " +
-                      patient.admittedDoctorDTO?.lastName || "N/A"}
+                      patient.admissionUnderDoctorDetail?.consultantDoctor
+                        .doctorName}
                   </td>
                   <td>{patient.admissionStatus}</td>
                   <td>
@@ -293,7 +292,7 @@ const AdmittedPatient = () => {
 
       {/* Modal for ward transfer */}
       <CustomModal isOpen={showModal} onClose={handleClose}>
-        <WardTransfer patient={selectPatient} setShowModal={setShowModal} />
+        <IpChangeRoom patient={selectPatient} setShowModal={setShowModal} />
       </CustomModal>
 
       {/* Modal for handling dropdown options */}

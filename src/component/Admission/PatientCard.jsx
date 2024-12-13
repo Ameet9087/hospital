@@ -49,24 +49,25 @@ const PatientCard = ({ patient }) => {
   return (
     <div className="patient-card" id="printable-area">
       <h2 className="patient-header">
-        IPD / {patient?.admittedDoctorDTO?.salutation}{" "}
-        {patient?.admittedDoctorDTO?.firstName}
+        IPD /{" "}
+        {patient?.admissionUnderDoctorDetail?.consultantDoctor?.salutation}{" "}
+        {patient?.admissionUnderDoctorDetail?.consultantDoctor?.doctorName}
       </h2>
       <p>
-        <strong>Patient:</strong> {patient?.patientDTO?.firstName}{" "}
-        {patient?.patientDTO?.lastName} {patient?.patientDTO?.age}{" "}
-        {patient?.patientDTO?.ageUnit}/ {patient?.patientDTO?.gender}
+        <strong>Patient:</strong> {patient?.patient?.firstName}{" "}
+        {patient?.patient?.lastName} {patient?.patient?.age}{" "}
+        {patient?.patient?.ageUnit}/ {patient?.patient?.gender}
       </p>
       <p>
-        <strong>Contact:</strong> {patient?.patientDTO?.phoneNumber} /{" "}
-        {patient?.patientDTO?.address}
+        <strong>Contact:</strong> {patient?.patient?.phoneNumber} /{" "}
+        {patient?.patient?.address}
       </p>
       <p>
-        <strong>IP No.:</strong> {patient?.admissionId}
+        <strong>IP No.:</strong> {patient?.ipAdmmissionId}
       </p>
       <p>
-        <strong>Ward/Bed:</strong> {patient?.wardDepartmentDTO?.wardName} /{" "}
-        {patient?.manageBedDTO?.wardType}-{patient?.manageBedDTO?.bedNumber}
+        <strong>Room/Bed:</strong> {patient?.roomDetails?.roomDTO?.roomNumber} /
+        {patient?.roomDetails?.bedDTO?.bedNo}
       </p>
       <p>
         <strong>DOA:</strong> {patient?.admissionDate}
