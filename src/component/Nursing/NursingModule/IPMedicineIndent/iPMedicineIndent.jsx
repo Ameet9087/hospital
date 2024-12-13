@@ -1,6 +1,6 @@
 import React, { useEffect, useState , useRef} from "react";
 import axios from "axios";
-import "./iPMedicineIndent.css";
+import "./IPMedicineIndent.css";
 import PopupTable from "../Services/PopupTable";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';

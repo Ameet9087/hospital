@@ -12,15 +12,18 @@ const IPDIssuesWard = () => {
     const [rows, setRows] = useState([{ id: 1, scanCode: '', itemName: '', pack: '', tStock: '', bStock: '', issueQty: '', batchNo: '', expiry: '' }]);
 
     const ipnoHeading = ["uhid", "inPatientId", "firstName", "lastName", "phoneNumber", "address"];
+    const itemcodeHeading=["itemName","batchNumber","expiryDate","mrp","tstock","bstock"];
+    const [itemCodedata,setItemCodedata]=useState([]);
+    const [selectedItemCode,setSelectedItemCode]=useState([]);
 
     // Fetch IP Numbers
     const fetchIpNos = async () => {
         try {
             const response = await axios.get("http://192.168.0.105:8080/api/ip-admissions");
             const inPatient = response.data.map((item) => ({
-                inPatientId: item.patient.inPatientId,
-                patientName: `${item.patient.firstName} ${item.patient.lastName}`,
-                mobileNo: item.patient.phoneNumber,
+                inPatientId: item.patient.inPatientId || "N/A",
+                patientName: `${item.patient.firstName} ${item.patient.lastName}` || "N/A",
+                mobileNo: item.patient.phoneNumber || "N/A",
                 consultantDoctor: item.admissionUnderDoctorDetail?.consultantDoctor?.doctorName || "N/A",
                 sourceOfAdmission: item.financials?.sourceOfAdmission || "N/A",
                 bedNo: item.roomDetails?.bedDTO?.bedNo || "N/A",
@@ -28,6 +31,12 @@ const IPDIssuesWard = () => {
                 admissionDate: item.admissionDate || "N/A",
                 typeAdmission: item.financials?.typeAdmission || "N/A",
                 severity: item.roomDetails?.roomTypeDTO?.type || "N/A",
+                age:item.patient.age || "N/A",
+                gender:item.patient.gender || "N/A",
+                relative:item.patient.guarantorDTO.guarantorName || "N/A",
+                roomNo:item.patient.roomDetails.roomDTO.floorNumber || "N/A",
+                roomType:item.patient.roomDetails.roomDTO.roomTypeDTO.roomtype || "N/A",
+                uhid:item.patient.uhid
             }));
             setIpNos(inPatient);
         } catch (error) {
@@ -35,8 +44,40 @@ const IPDIssuesWard = () => {
         }
     };
 
+    const fetchItemCode = async () => {
+      try {
+        const response = await axios.get("http://192.168.0.111:9090/api/item-detail-issue");
+        const itemCode = response.data.map((code) => {
+          const taxAmount = parseFloat(code.tax || 0) * parseFloat(code.taxPercent || 0) / 100;
+          const totalAmount = parseFloat(code.mrp || 0) + taxAmount;
+          return {
+            itemDetailIssueWardId: code.itemDetailIssueWardId,
+            scanCode: code.scanCode,
+            itemName: code.itemName,
+            pack: code.pack,
+            batchNumber: code.batchNumber,
+            expiryDate: code.expiryDate,
+            mrp: code.mrp,
+            tax: code.tax,
+            colTax: code.colTax,
+            taxPercent: code.taxPercent,
+            tstock: code.tstock,
+            bstock: code.bstock,
+            issueQty: 0, // Default value
+            taxAmount: taxAmount.toFixed(2), // Keep it formatted
+            totalAmount: totalAmount.toFixed(2),
+          };
+        });
+        setItemCodedata(itemCode);
+      } catch (error) {
+        console.error("Error Fetching in item", error);
+      }
+    };
+    
+
     useEffect(() => {
         fetchIpNos();
+        fetchItemCode();
     }, []);
 
     // Handle popup data
@@ -44,16 +85,25 @@ const IPDIssuesWard = () => {
         if (activePopup === "IpNo") {
             setSelectedIPNo(data);
         }
+        else if(activePopup==="ItemCode"){
+          setSelectedItemCode(data);
+        }
         setActivePopup(null);
     };
 
     const getPopupData = () => {
         if (activePopup === "IpNo") {
             return { columns: ipnoHeading, data: ipNos };
-        } else {
+        }else if(activePopup==="ItemCode") {
+            return {columns:itemcodeHeading,data:itemCodedata};
+        }
+        
+        else  {
             return { columns: [], data: [] };
         }
     };
+
+
 
     const { columns, data } = getPopupData();
 
@@ -70,6 +120,7 @@ const IPDIssuesWard = () => {
         }
         setRows(rows.filter(row => row.id !== id));
     };
+    
 
     return (
         <div className="ipd-issues-ward-container">
@@ -100,28 +151,28 @@ const IPDIssuesWard = () => {
 
                 <div className="detail">
                     <label>Patient Name:</label>
-                    <input type="text" value={selectedIPNo?.patient?.firstName || ""} />
+                    <input type="text" value={selectedIPNo?.patientName || ""} />
                 </div>
 
                 <div className="detail">
                     <label>Age:</label>
-                    <input type="text" />
+                    <input type="text" value={selectedIPNo?.age || ""} />
                 </div>
 
                 <div className="detail">
                     <label>Sex:</label>
-                    <input type="text" />
+                    <input type="text" value={selectedIPNo?.gender || "" } />
                 </div>
 
                 <div className="detail">
                     <label>Relative Name:</label>
-                    <input type="text" />
+                    <input type="text" value={selectedIPNo?.relative || "" } />
                 </div>
 
                 <div className="detail">
                     <label>Doctor Name:</label>
-                    <input type="text" />
-                    <i className="fa fa-search"></i>
+                    <input type="text" value={selectedIPNo?.consultantDoctor || ''}/>
+                  
                 </div>
 
                 <div className="detail">
@@ -131,7 +182,7 @@ const IPDIssuesWard = () => {
 
                 <div className="detail">
                     <label>Mobile Number:</label>
-                    <input type="text" />
+                    <input type="text" value={selectedIPNo?.mobileNo || ''} />
                 </div>
 
                 <div className="detail">
@@ -143,12 +194,12 @@ const IPDIssuesWard = () => {
 
                 <div className="detail">
                     <label>Bed No:</label>
-                    <input type="text" />
+                    <input type="text" value={selectedIPNo?.bedNo || ''}/>
                 </div>
 
                 <div className="detail">
                     <label>Room No:</label>
-                    <input type="text" />
+                    <input type="text" value={selectedIPNo?.roomNo || ''}   />
                 </div>
 
                 <div className="detail">
@@ -166,7 +217,7 @@ const IPDIssuesWard = () => {
                     <input type="text" />
                 </div>
 
-                <a>Previous Bills</a>
+                {/* <a>Previous Bills</a>
 
                 <div className="detail">
                     <label>MR No:</label>
@@ -178,7 +229,7 @@ const IPDIssuesWard = () => {
                     <label>Template Name:</label>
                     <input type="text" />
                     <i className="fa fa-search"></i>
-                </div>
+                </div> */}
             </div>
 
             <div className="item-details">
@@ -191,12 +242,18 @@ const IPDIssuesWard = () => {
                             <th>Del</th>
                             <th>Scan Code</th>
                             <th>Item Name</th>
+                          
                             <th>Pack</th>
                             <th>TStock</th>
                             <th>BStock</th>
                             <th>Issue Qty</th>
                             <th>Batch No</th>
                             <th>Expiry</th>
+                            <th>MRP</th>
+                            <th>Discount</th>
+                            <th>Tax %</th>
+                            <th>Tax Amount</th>
+                            <th>Amount</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -210,14 +267,29 @@ const IPDIssuesWard = () => {
                                 <td>
                                     <button onClick={() => deleteRow(row.id)} className="delete-button">Del</button>
                                 </td>
-                                <td><input type="text" value={row.scanCode} /></td>
-                                <td><input type="text" value={row.itemName} /></td>
-                                <td><input type="text" value={row.pack} /></td>
-                                <td><input type="text" value={row.tStock} /></td>
-                                <td><input type="text" value={row.bStock} /></td>
-                                <td><input type="text" value={row.issueQty} /></td>
-                                <td><input type="text" value={row.batchNo} /></td>
-                                <td><input type="text" value={row.expiry} /></td>
+                                <td><input type="text" value={selectedItemCode.scanCode || ''} /></td>
+                                <td ><input type="text" value={selectedItemCode.itemName || ''} style={{width:'70%'}} />
+                                <FontAwesomeIcon
+                                    icon={faSearch}
+                                    onClick={() => setActivePopup("ItemCode")}
+                                />
+                                
+                                </td>
+                                <td><input type="text" value={selectedItemCode?.pack || ''} /></td>
+                                <td><input type="text" value={selectedItemCode.tStock || ''} /></td>
+                                <td><input type="text" value={selectedItemCode.bStock || ''} /></td>
+                                <td><input type="text" value={row.issueQty || ''} onChange={(e) => updateIssueQty(row.itemDetailIssueWardId, e.target.value)} /></td>
+                                <td><input type="text" value={selectedItemCode.batchNo || ''} /></td>
+                                <td><input type="text" value={selectedItemCode.expiry || ''} /></td>
+
+                                <td><input type="text" value={selectedItemCode.mrp || ''} /></td>
+                                <td><input type="text" value={selectedItemCode.tax || ''} /></td>
+                                <td><input type="text" value={selectedItemCode.colTax || ''} /></td>
+                                <td><input type="text" value={selectedItemCode.taxPercent || ''} /></td>
+                                <td><input type="text" value={selectedItemCode.totalAmount || ''} /></td>
+
+
+                             
                             </tr>
                         ))}
                     </tbody>

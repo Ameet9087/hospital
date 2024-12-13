@@ -7,7 +7,7 @@
   font-family: Arial, sans-serif;
   background-color: var(--background-color);
 
-  max-height: 500px; /* Set a max height to trigger vertical scroll */
+  max-height: 550px; /* Set a max height to trigger vertical scroll */
   max-width: 90%;   /* Optional: Set a max width for horizontal scroll */
   overflow-y: scroll;  /* Vertical scrollbar when needed */
   overflow-x: scroll;  /* Horizontal scrollbar when needed */
@@ -68,13 +68,13 @@
 }
 
 .item-table {
-  width: 90%;
+  width:100%;
   border-collapse: collapse;
 }
 
 .item-table th, .item-table td {
   border: 1px solid #ccc;
-  padding: 8px;
+  padding: 5px;
   text-align: left;
 }
 
@@ -153,3 +153,22 @@
    background-color: #f44336;
  }
  
+ .item-table input[type="text"] {
+  width: 100%; 
+  padding: 5px; /* Adds padding for a clean and spacious look */
+  border: 1px solid #ccc; /* Adds a light border for visibility */
+  border-radius: 4px; /* Slightly rounds the corners */
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+  font-size: 14px; /* Makes text legible */
+  background-color: #f9f9f9; /* Light gray background for subtle contrast */
+  transition: border-color 0.2s ease-in-out; /* Smooth transition for border color */
+}
+
+/* Focus state for input fields */
+.item-table input[type="text"]:focus {
+  border-color: #007bff; /* Changes border color to blue on focus */
+  outline: none; /* Removes default browser outline */
+  background-color: #fff; /* Highlights input field background on focus */
+}
+
+
