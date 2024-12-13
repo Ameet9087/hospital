@@ -23,7 +23,7 @@ const SettingTax = () => {
 
   useEffect(() => {
     // Fetch data from API
-    axios.get(`${API_BASE_URL}/taxes`)
+    axios.get(`${API_BASE_URL}/taxes/get-all-taxes`)
       .then(response => {
         setSuppliers(response.data);
       })
@@ -42,7 +42,7 @@ const SettingTax = () => {
       setSelectedUser(user);
       setIsEditMode(true);
     } else {
-      setSelectedUser({ name: '', percentage: '', description: '', isActive: true });
+      setSelectedUser({ name: '', percentage: '', description: '' });
       setIsEditMode(false);
     }
     setShowModal(true);
@@ -57,7 +57,7 @@ const SettingTax = () => {
     event.preventDefault();
     if (isEditMode) {
       // Update the existing item
-      axios.put(`${API_BASE_URL}/taxes/${selectedUser.id}`, selectedUser)
+      axios.put(`${API_BASE_URL}/taxes/update/${selectedUser.id}`, selectedUser)
         .then(response => {
           setSuppliers(suppliers.map(supplier =>
             supplier.id === selectedUser.id ? response.data : supplier
@@ -69,7 +69,7 @@ const SettingTax = () => {
         });
     } else {
       // Add a new item
-      axios.post(`${API_BASE_URL}/taxes`, selectedUser)
+      axios.post(`${API_BASE_URL}/taxes/create-tax`, selectedUser)
         .then(response => {
           setSuppliers([...suppliers, response.data]);
           handleCloseModal();

@@ -22,7 +22,7 @@ const InvoiceHeaders = () => {
 
   useEffect(() => {
     fetchInvoiceHeaders();
-  }, []);
+  }, [isModalOpen]);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -86,8 +86,8 @@ const InvoiceHeaders = () => {
                 <td>{header.createdDate}</td>
                 <td>{header.isActive ? "Yes" : "No"}</td>
                 <td>
-                  <button>Edit</button>
-                  <button>Delete</button>
+                  <button className="invoiceHeader-edit">Edit</button>
+                  <button className="invoiceHeader-delete">Delete</button>
                 </td>
               </tr>
             ))
@@ -103,7 +103,7 @@ const InvoiceHeaders = () => {
 
       {/* Add Invoice Header Modal */}
       <CustomModal isOpen={isModalOpen} onClose={closeModal}>
-        <InvoiceHeaderForm />
+        <InvoiceHeaderForm closeModal={closeModal}/>
       </CustomModal>
     </div>
   );

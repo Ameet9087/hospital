@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../ListRequest/rdlAddReport.css";
+import { API_BASE_URL } from "../../api/api";
 
 function UpdateReportForm({ onClose, selectedRequest }) {
   const [formData, setFormData] = useState({
@@ -136,13 +137,16 @@ function UpdateReportForm({ onClose, selectedRequest }) {
         <div className="rDLListRequest-add-report-toolbar">
           {/* Add toolbar buttons here */}
         </div>
+
+
         <textarea
           rows="10"
           name="notes"
           className="rDLListRequest-add-report-textarea"
           value={formData?.notes}
           onChange={handleChange}
-        ></textarea>
+        ></textarea> 
+  
       </div>
       <div className="rDLListRequest-add-report-form-actions">
         <div className="rDLListRequest-add-report-select-signatories">

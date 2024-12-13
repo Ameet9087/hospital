@@ -57,6 +57,7 @@ import LSLabTestAddNLTest from "./lSLabTestAddNLTest";
 import LabTestComponentsAddNewLTC from "./labTestComponentsAddNewLTC";
 
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { API_BASE_URL } from "../../api/api";
 
 const LabTestComponent = () => {
   const [showPopup, setShowPopup] = useState(false);

@@ -17,6 +17,25 @@
   cursor: pointer;
 }
 
+.invoiceHeader-edit{
+  background-color:var(--button-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  color: white;
+  padding: 5px;
+}
+.invoiceHeader-delete{
+  background-color:var(--button-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  color: white;
+  padding: 5px;
+}
+
 .InvoiceHeaders__search-container {
   display: flex;
   align-items: center;

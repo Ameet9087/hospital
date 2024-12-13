@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./AddInvoiceHeader.css";
 import { API_BASE_URL } from "../../api/api";
 
-const InvoiceHeaderForm = ({ fetchInvoiceHeaders }) => {
+const InvoiceHeaderForm = ({closeModal}) => {
   const [formData, setFormData] = useState({
     hospitalName: "",
     address: "",
@@ -11,8 +11,8 @@ const InvoiceHeaderForm = ({ fetchInvoiceHeaders }) => {
     pinCode: "",
     headerDescription: "",
     isActive: true,
-    logoImage: null,
   });
+  const [image,setImage]=useState(null);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -22,40 +22,55 @@ const InvoiceHeaderForm = ({ fetchInvoiceHeaders }) => {
     });
   };
 
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, logoImage: e.target.files[0] });
-  };
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  console.log("Selected file:", file); // Debugging
+  setImage(file);
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const form = new FormData();
-    form.append(
-      "invoiceHeader",
-      JSON.stringify({
-        ...formData,
-        isActive: formData.isActive ? "Y" : "N", // Convert boolean to "Y"/"N"
-      })
-    );
-    if (formData.logoImage) {
-      form.append("logoImage", formData.logoImage);
-    }
-console.log(form);
 
-    try {
-      const response = await fetch(`${API_BASE_URL}/invoice-headers/add`, {
-        method: "POST",
-        body: form,
-      });
-      if (response.ok) {
-        fetchInvoiceHeaders(); // Refresh table data
-        alert("Invoice Header added successfully!");
-      } else {
-        alert("Failed to add Invoice Header. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error adding invoice header:", error);
+
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // Log formData before creating FormData object
+  console.log("FormData state before submission:", formData);
+
+  const form = new FormData();
+  form.append(
+    "invoiceHeader",
+    JSON.stringify({
+      ...formData,
+      isActive: formData.isActive ? "Y" : "N",
+    })
+  );
+
+  if (image!=null) {
+    form.append("logoImage", image);
+  } else {
+    console.error("Logo image is null");
+  }
+
+  console.log("FormData contents:");
+  for (const pair of form.entries()) {
+    console.log(`${pair[0]}: ${pair[1]}`);
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/invoice-headers/add`, {
+      method: "POST",
+      body: form,
+    });
+    if (response.ok) {
+      closeModal();
+      alert("Invoice Header added successfully!");
+    } else {
+      alert("Failed to add Invoice Header. Please try again.");
     }
-  };
+  } catch (error) {
+    console.error("Error adding invoice header:", error);
+  }
+};
 
   return (
     <div className="AddInvoiceHeader-invoice-header-form">
@@ -66,7 +81,7 @@ console.log(form);
           { name: "address", label: "Address", type: "text", required: true },
           { name: "telephone", label: "Telephone", type: "tel", required: true },
           { name: "email", label: "Email", type: "email", required: true },
-          { name: "pinCoade", label: "PIN CODE", type: "text" },
+          { name: "pinCode", label: "PIN CODE", type: "text" },
           { name: "headerDescription", label: "Header Description", type: "text" },
         ].map(({ name, label, type, required }) => (
           <div className="AddInvoiceHeader-form-row" key={name}>
@@ -83,9 +98,16 @@ console.log(form);
         ))}
 
         <div className="AddInvoiceHeader-form-row">
-          <label htmlFor="logoImage">Logo Image<span>*</span></label>
-          <input type="file" name="logoImage" id="logoImage" accept="image/*" onChange={handleFileChange} required />
-        </div>
+  <label htmlFor="logoImage">Logo Image<span>*</span></label>
+  <input
+    type="file"
+    name="logoImage"
+    id="logoImage"
+    accept="image/*"
+    onChange={handleFileChange}
+    required
+  />
+</div>
 
         <div className="AddInvoiceHeader-form-row">
           <label htmlFor="isActive">

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import "../EditDoctors/rdlEditDrEditBtn.css";
+import { API_BASE_URL } from "../../api/api";
 
 function TransactionDetails({ onClose, selectedRequest }) {
   const [reportingDoctor, setReportingDoctor] = useState();
