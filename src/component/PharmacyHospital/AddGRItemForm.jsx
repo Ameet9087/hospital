@@ -1,12 +1,76 @@
 /* Mohini_AddGRItemForm_WholePage_14/sep/2024 */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './AddGRItemForm.css';
+import axios from 'axios';
+import { API_BASE_URL } from '../api/api';
 
 const AddGRItemForm = ({ onClose }) => {
-  const handleSubmit = (event) => {
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [genericNames, setGenericNames] = useState([]);
+  const [items, setItems] = useState([]);
+
+  const [formData, setFormData] = useState({
+    genericNameId: '',
+    addItemId: '',
+    batchNo: '',
+    rackNo: '',
+    expDate: '',
+    itemQty: "",
+    totalQty: "",
+    rate: '',
+    marginPercentage: 0.0,
+    mrp: '',
+    ccChargePercentage: '',
+    ccAmount: "",
+    subTotal: '',
+    discountPercentage: '',
+    discountAmount: '',
+    vatPercentage: '',
+    vatAmount: '',
+    totalAmount:'',
+  });
+
+   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [itemsResponse,genericNamesResponse] = await Promise.all([
+          axios.get(`${API_BASE_URL}/add-items`),
+          axios.get(`${API_BASE_URL}/generic-names`), // Fetch generic names
+        ]);
+
+        console.log('Items Response:', itemsResponse.data);
+        console.log('Generic Names Response:', genericNamesResponse.data);
+
+        setItems(itemsResponse.data);
+        setGenericNames(genericNamesResponse.data);
+      } catch (error) {
+        alert('Error fetching data');
+        console.error('Error fetching data:', error);
+      } 
+    };
+    fetchData();
+  }, []);
+
+
+
+  const handleChange = (e) => {
+  const { name, value } = e.target;
+  setFormData((prevFormData) => ({
+    ...prevFormData,
+    [name]: value,
+  }));
+};
+
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form submitted");
-    onClose();
+    try {
+      const response = await axios.post('http://localhost:9999/api/gr-items', formData);
+      console.log('Data saved successfully:', response.data);
+      onClose(); // Close the form after successful submission
+    } catch (error) {
+      console.error('Error saving data:', error);
+    }
   };
   return (
     <div className="add-gr-item-modal-form-com">
@@ -16,17 +80,35 @@ const AddGRItemForm = ({ onClose }) => {
         <form onSubmit={handleSubmit}>
           <div className="add-gritem-form-row">
             <div className="add-gritem-form-field">
-              <label>Generic Name:</label>
-              <select>
-                <option>Select Generic Name</option>
-              </select>
-              <span className="add-supplier-help-icon">?</span>
-
-            </div>
+  <label>Generic Name:</label>
+  <select
+    name="genericNameId"
+    value={formData.genericNameId || ''}
+    onChange={(e) => handleChange(e)} // Correct function reference
+    required
+  >
+    <option value="">Select Generic Name</option>
+    {genericNames.map((genericName) => (
+  <option key={genericName.genericNameId} value={genericName.genericNameId}>
+    {genericName.genericName}
+  </option>
+))}
+  </select>
+  <span className="add-supplier-help-icon">?</span>
+</div>
             <div className="add-gritem-form-field">
               <label>Item Name*:</label>
-              <select>
+              <select
+               name="addItemId"
+    value={formData.addItemId || ''}
+    onChange={(e) => handleChange(e)} // Correct function reference
+    required
+              >
                 <option>Select an Item</option>
+                {items.map((item) => (
+  <option key={item.addItemId} value={item.addItemId}>
+    {item.itemName}
+  </option>))}
               </select>
               <span className="add-supplier-help-icon">?</span>
 

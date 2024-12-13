@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import "../ListRequest/rdlAddReport.css";
 import { API_BASE_URL } from "../../api/api";
 
@@ -58,18 +60,23 @@ function AddReportForm({ onClose, selectedRequest }) {
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
   };
+
+  const handleNotesChange = (value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      notes: value,
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Create a new FormData instance
     const formDataToSend = new FormData();
 
-    // Append file if available
     if (imageFile) {
       formDataToSend.append("file", imageFile);
     }
 
-    // Create a requisition object with only the desired fields
     const requisition = {
       imagingDate: formData.imagingDate
         ? new Date().toISOString().toString()
@@ -90,7 +97,7 @@ function AddReportForm({ onClose, selectedRequest }) {
       `${API_BASE_URL}/imaging-requisitions/update/${selectedRequest.imagingId}`,
       {
         method: "PUT",
-        body: formDataToSend, // Send the FormData object
+        body: formDataToSend,
       }
     )
       .then((response) => {
@@ -101,10 +108,83 @@ function AddReportForm({ onClose, selectedRequest }) {
       })
       .then((data) => {
         console.log("Update successful:", data);
-        onClose(); // Close the modal on successful update
+        onClose();
       })
       .catch((error) => console.error("Error updating report:", error));
   };
+
+ const handlePrint = () => {
+  const printWindow = window.open("", "_blank", "height=600,width=800");
+  if (!printWindow) {
+    alert("Failed to open the print window. Please disable popup blockers.");
+    return;
+  }
+
+  const hospitalDetails = `
+    <div style="text-align: center;">
+      <h1>LOPMUDRA HOSPITAL</h1>
+      <p style="font-size: 14px;">
+        Survey No 148/4, Vishwakarma Nagar Lopmudra Hospital, CTS No. 1338, Pashan - Sus Rd, 
+        near NIV, Pashan, Pune, Maharashtra 411021
+      </p>
+    </div>
+    <h2 style="text-align: center;">Radiology Report</h2>
+  `;
+
+  const patientInfo = `
+    <div style="font-size: 14px; margin-bottom: 20px;">
+      <div style="display: flex; justify-content: space-between;">
+        <p><strong>Patient Name:</strong> ${selectedRequest.patientDTO?.firstName || selectedRequest.newPatientVisitDTO?.firstName} 
+          ${selectedRequest.patientDTO?.lastName || selectedRequest.newPatientVisitDTO?.lastName}</p>
+        <p><strong>Prescriber:</strong> ${selectedRequest.prescriberDTO?.employeeName || "self"}</p>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <p><strong>Address:</strong> ${selectedRequest.patientDTO?.address || selectedRequest.newPatientVisitDTO?.address}</p>
+        <p><strong>Phone No:</strong> ${selectedRequest.patientDTO?.phoneNumber || selectedRequest.newPatientVisitDTO?.phoneNumber}</p>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <p><strong>Requested On:</strong> ${selectedRequest.requestedDate}</p>
+        <p><strong>Scanned On:</strong> ${formData.scannedDate}</p>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <p><strong>Indication:</strong> ${formData.indication}</p>
+        <p><strong>MRI/CT/X-ray No:</strong> ${formData.mriXRayCTNo}</p>
+      </div>
+      <div>
+        <p><strong>Notes:</strong> ${formData.notes}</p>
+      </div>
+    </div>
+  `;
+
+  const reportBody = `
+    <div style="text-align: center; margin-top: 20px;">
+      ${imagePreview ? `<img src="${imagePreview}" alt="Image Preview" style="max-width: 100%; height: auto;" />` : "<p>No image available</p>"}
+    </div>
+  `;
+
+  // Ensure that the selected doctor’s name is used for the signature
+  const doctorName = formData.signatureList || "Not Signed";
+
+  // Adding signature name at the bottom of the print page
+  const signatureSection = `
+    <div style=" margin-top: 40px;">
+      <p><strong>Signature:</strong> ${doctorName}</p>
+    </div>
+  `;
+
+  printWindow.document.open();
+  printWindow.document.write("<html><head><title>Print Report</title>");
+  printWindow.document.write('<style>body { font-family: Arial, sans-serif; margin: 20px; }</style>');
+  printWindow.document.write("</head><body>");
+  printWindow.document.write(hospitalDetails);
+  printWindow.document.write(patientInfo);
+  printWindow.document.write(reportBody);
+  printWindow.document.write(signatureSection); // Add the signature section here
+  printWindow.document.write("</body></html>");
+  printWindow.document.close();
+  printWindow.print();
+};
+
 
   return (
     <div className="rDLListRequest-add-report-form">
@@ -113,58 +193,63 @@ function AddReportForm({ onClose, selectedRequest }) {
         {selectedRequest.imagingTypeDTO?.imagingTypeName})
       </h2>
       <div className="rDLListRequest-add-report-patient-info">
-        <div className="rDLListRequest-add-report-info-row">
-          <span>
-            <strong>Patient Name:</strong>{" "}
-            {selectedRequest.patientDTO?.firstName ||
-              selectedRequest.newPatientVisitDTO?.firstName}{" "}
-            {selectedRequest.patientDTO?.lastName ||
-              selectedRequest.newPatientVisitDTO?.lastName}
-          </span>
-          <span className="rdlAddReport-prescrider-name">
-            <strong>Prescriber:</strong>{" "}
-            <input
-              type="text"
-              name="prescriber"
-              disabled="true"
-              value={selectedRequest?.prescriberDTO?.employeeName || "self"}
-              readOnly
-            />
-          </span>
-        </div>
-        <div className="rDLListRequest-add-report-info-row">
-          <span>
-            <strong>Address:</strong>{" "}
-            {selectedRequest.patientDTO?.address ||
-              selectedRequest.newPatientVisitDTO?.address}
-          </span>
-          <span>
-            <strong>Phone No:</strong>{" "}
-            {selectedRequest.patientDTO?.phoneNumber ||
-              selectedRequest.newPatientVisitDTO?.phoneNumber}
-          </span>
-          <span>
-            <strong>Req. On:</strong> {selectedRequest.requestedDate}
-          </span>
-          <span>
-            <strong>Scanned On:</strong> {formData.scannedDate}
-          </span>
+        <div className="rDLListRequest-add-report-details">
+          {/* Panel 1 */}
+          <div className="rDLListRequest-panel">
+            <div className="rDLListRequest-form-field">
+              <span>
+                <strong>Patient Name:</strong>{" "}
+                {selectedRequest.patientDTO?.firstName ||
+                  selectedRequest.newPatientVisitDTO?.firstName}{" "}
+                {selectedRequest.patientDTO?.lastName ||
+                  selectedRequest.newPatientVisitDTO?.lastName}
+              </span>
+            </div>
+            <div className="rDLListRequest-form-field rdlAddReport-prescrider-name">
+              <span>
+                <strong>Prescriber:</strong>{" "}
+                <input
+                  type="text"
+                  name="prescriber"
+                  disabled={true}
+                  value={selectedRequest?.prescriberDTO?.employeeName || "self"}
+                  readOnly
+                />
+              </span>
+            </div>
+            <div className="rDLListRequest-form-field">
+              <span>
+                <strong>Address:</strong>{" "}
+                {selectedRequest.patientDTO?.address ||
+                  selectedRequest.newPatientVisitDTO?.address}
+              </span>
+            </div>
+            <div className="rDLListRequest-form-field">
+              <span>
+                <strong>Phone No:</strong>{" "}
+                {selectedRequest.patientDTO?.phoneNumber ||
+                  selectedRequest.newPatientVisitDTO?.phoneNumber}
+              </span>
+            </div>
+          </div>
+
+          {/* Panel 2 */}
+          <div className="rDLListRequest-panel">
+            <div className="rDLListRequest-form-field">
+              <span>
+                <strong>Req. On:</strong> {selectedRequest.requestedDate}
+              </span>
+            </div>
+            <div className="rDLListRequest-form-field">
+              <span>
+                <strong>Scanned On:</strong> {formData.scannedDate}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
+
       <div className="rDLListRequest-add-report-report-details">
-        {/* <div className="rDLListRequest-add-report-info-row">
-          <span>
-            <strong>Report Template:</strong> {formData.imagingTypeId}
-            <a href="#" className="rDLListRequest-add-report-link">
-              Select different template?
-            </a>
-          </span>
-          <span>
-            <a href="#" className="rDLListRequest-add-report-link">
-              Select Dicom images?
-            </a>
-          </span>
-        </div> */}
         <div className="rDLListRequest-add-report-info-row">
           <span>
             <strong>Indication:</strong>
@@ -188,11 +273,13 @@ function AddReportForm({ onClose, selectedRequest }) {
           </span>
         </div>
       </div>
+
       <div className="rDLListRequest-add-report-text-editor">
-        <div className="rDLListRequest-add-report-toolbar">
-          {/* Add toolbar buttons here */}
-        </div>
-        <textarea rows="10" style={{ width: "100%" }} name="notes"></textarea>
+        <ReactQuill
+          value={formData.notes}
+          onChange={handleNotesChange}
+          className="quill-editor"
+        />
       </div>
       <div className="rDLListRequest-add-report-signature-section">
         <div className="rDLListRequest-add-report-signature-box active">
@@ -246,6 +333,14 @@ function AddReportForm({ onClose, selectedRequest }) {
             onClick={handleSubmit}
           >
             Save
+          </button>
+          {/* Print Button */}
+          <button
+            type="button"
+            className="rDLListRequest-add-report-print-btn"
+            onClick={handlePrint}
+          >
+            Print Report
           </button>
         </div>
       </div>

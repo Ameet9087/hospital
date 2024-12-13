@@ -137,13 +137,16 @@ function UpdateReportForm({ onClose, selectedRequest }) {
         <div className="rDLListRequest-add-report-toolbar">
           {/* Add toolbar buttons here */}
         </div>
+
+
         <textarea
           rows="10"
           name="notes"
           className="rDLListRequest-add-report-textarea"
           value={formData?.notes}
           onChange={handleChange}
-        ></textarea>
+        ></textarea> 
+  
       </div>
       <div className="rDLListRequest-add-report-form-actions">
         <div className="rDLListRequest-add-report-select-signatories">
