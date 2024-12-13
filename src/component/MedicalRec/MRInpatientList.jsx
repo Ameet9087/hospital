@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Modal from 'react-modal';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { API_BASE_URL } from '../api/api';
 
 
 function RecordMedical() {

@@ -506,8 +506,10 @@ const PatientDashboard = ({ isPatientOPEN, patient, setIsPatientOPEN }) => {
             </div>
             <span className="Patient-Dashboard-textName">{`${patient?.firstName ||
               patient?.patientDTO?.firstName ||
+
               patient?.patientFirstName
               } ${patient?.lastName ||
+
               patient?.patientDTO?.lastName ||
               patient?.patientLastName
               }`}</span>

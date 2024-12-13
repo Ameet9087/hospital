@@ -11,18 +11,18 @@ function PrintWristWindow({ patient }) {
     const patientInfo = `
       <div style="display:flex; gap:20px, font-family: Arial, sans-serif; padding: 20px; border: 1px dashed black; width: 600px;">
         <div>
-          <p><strong>Name:</strong> ${patient.patientDTO?.firstName}</p>
-          <p><strong>Age:</strong> ${patient.patientDTO?.age} ${patient.patientDTO?.ageUnit}</p>
-          <p><strong>Gender:</strong> ${patient.patientDTO?.gender}</p>
-          <p><strong>DOB:</strong> ${patient.patientDTO?.dateOfBirth}</p>
+          <p><strong>Name:</strong> ${patient.patient?.firstName}</p>
+          <p><strong>Age:</strong> ${patient.patient?.age} ${patient.patient?.ageUnit}</p>
+          <p><strong>Gender:</strong> ${patient.patient?.gender}</p>
+          <p><strong>DOB:</strong> ${patient.patient?.dateOfBirth}</p>
           <p><strong>DOA:</strong> ${patient?.admissionDate}</p>
         </div>
         <div>
-          <p><strong>IP No.:</strong> ${patient.patientDTO?.patientId}</p>
-          <p><strong>Ward:</strong> ${patient.wardDepartmentDTO?.wardName} / ${patient.manageBedDTO?.wardType}-${patient.manageBedDTO?.bedNumber}</p>
-          <p><strong>Blood Group:</strong> ${patient.patientDTO?.bloodGroup}</p>
-          <p><strong>Consultant:</strong> ${patient.admittedDoctorDTO?.salutation} 
-            ${patient.admittedDoctorDTO?.firstName} ${patient.admittedDoctorDTO?.lastName}</p>
+          <p><strong>IP No.:</strong> ${patient.patient?.inPatientId}</p>
+          <p><strong>Ward:</strong> ${patient.roomDetails?.roomDTO?.roomNumber} / ${patient.roomDetails?.bedDTO?.bedNo}</p>
+          <p><strong>Blood Group:</strong> ${patient.patient?.bloodGroup}</p>
+          <p><strong>Consultant:</strong> ${patient.admissionUnderDoctorDetail.consultantDoctor?.salutation} 
+            ${patient.admissionUnderDoctorDetail?.consultantDoctor?.doctorName}</p>
         </div>
         <div style="text-align: center; margin-top: 20px;">
           <div id="qr-code"></div>
@@ -40,7 +40,7 @@ function PrintWristWindow({ patient }) {
           <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
           <script>
             var qrCode = new QRCode(document.getElementById("qr-code"), {
-              text: "Name: ${patient.patientDTO?.firstName} ${patient.patientDTO?.lastName}, IP No.: ${patient.patientDTO?.patientId}",
+              text: "Name: ${patient.patient?.firstName} ${patient.patient?.lastName}, IP No.: ${patient.patient?.patientId}",
               width: 100,
               height: 100,
             });
@@ -54,11 +54,11 @@ function PrintWristWindow({ patient }) {
     doc.close();
   };
 
-  const patientInfo = `Name: ${patient.patientDTO?.firstName} ${patient.patientDTO?.lastName}
-  Age: ${patient.patientDTO?.age} ${patient.patientDTO?.ageUnit}
-  Gender: ${patient.patientDTO?.gender}
-  IP No.: ${patient.patientDTO?.patientId}
-  Ward: ${patient.wardDepartmentDTO?.wardName} / ${patient.manageBedDTO?.wardType}-${patient.manageBedDTO?.bedNumber}`;
+  const patientInfo = `Name: ${patient.patient?.firstName} ${patient.patient?.lastName}
+  Age: ${patient.patient?.age} ${patient.patient?.ageUnit}
+  Gender: ${patient.patient?.gender}
+  IP No.: ${patient.patient?.patientId}
+  Ward: ${patient.roomDetails?.roomDTO?.roomNumber} / ${patient.roomDetails?.bedDTO?.bedNo}`;
 
   const handleIframeLoad = () => {
     // Ensure the iframe has loaded before attempting to write t    o its document
@@ -69,26 +69,26 @@ function PrintWristWindow({ patient }) {
     <>
       <div className="printWristWindowContainer">
         <div className="printWristWindowData_1">
-          <p>Name : {patient.patientDTO?.firstName}</p>
+          <p>Name : {patient.patient?.firstName}</p>
           <p>
-            Age : {patient.patientDTO?.age} {patient.patientDTO?.ageUnit}
+            Age : {patient.patient?.age} {patient.patient?.ageUnit}
           </p>
-          <p>Gender : {patient.patientDTO?.gender}</p>
-          <p>DOB : {patient.patientDTO?.dateOfBirth}</p>
+          <p>Gender : {patient.patient?.gender}</p>
+          <p>DOB : {patient.patient?.dateOfBirth}</p>
           <p>DOA : {patient?.admissionDate}</p>
         </div>
         <div className="printWristWindowData_2">
-          <p>IP No. : {patient.patientDTO?.patientId}</p>
+          <p>IP No. : {patient.patient?.inPatientId}</p>
           <p>
-            {patient.wardDepartmentDTO?.wardName}
+            {patient.roomDetails?.roomDTO?.roomNumber}
             {" / "}
-            {patient.manageBedDTO?.wardType}-{patient.manageBedDTO?.bedNumber}
+            {patient.roomDetails?.bedDTO?.bedNo}
           </p>
-          <p>Blood Group : {patient.patientDTO?.bloodGroup}</p>
+          <p>Blood Group : {patient.patient?.bloodGroup}</p>
           <p>
-            Consultant : {patient.admittedDoctorDTO?.salutation}{" "}
-            {patient.admittedDoctorDTO?.firstName}{" "}
-            {patient.admittedDoctorDTO?.lastName}
+            Consultant :
+            {patient.admissionUnderDoctorDetail.consultantDoctor?.salutation}
+            {patient.admissionUnderDoctorDetail?.consultantDoctor?.doctorName}
           </p>
         </div>
         <div>

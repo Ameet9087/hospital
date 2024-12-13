@@ -7,22 +7,22 @@ const LabReport=()=>{
   const navigate=useNavigate();
   const handleReportClick = (title) => {
     if (title === "Hospital Service Summary Report") {
-      navigate('/HospitalServiceSummaryReport'); // Navigate to the desired route
+      navigate('/medicalrecord/reports/HospitalServiceSummaryReport'); // Navigate to the desired route
     } 
     if(title=== "Inpatient Morbidity Report'"){
-      navigate('/InpatientMorbidityReport');
+      navigate('/medicalrecord/reports/InpatientMorbidityReport');
     }
     if (title === "Hospital Mortality Report") {
-      navigate('/HospitalMortalityReport'); // Navigate to the desired route
+      navigate('/medicalrecord/reports/HospitalMortalityReport'); // Navigate to the desired route
     } 
     if (title === "Emergency Patient Morbidity Report") {
-      navigate('/EmergencyPMReport'); // Navigate to the desired route
+      navigate('/medicalrecord/reports/EmergencyPMReport'); // Navigate to the desired route
     } 
     if (title === "Outpatient Morbidity Report") {
-      navigate('/OutPatientMorbidityReport'); // Navigate to the desired route
+      navigate('/medicalrecord/reports/OutPatientMorbidityReport'); // Navigate to the desired route
     } 
     if (title === "Lab Services Report") {
-      navigate('/LabServiceReport'); // Navigate to the desired route
+      navigate('/medicalrecord/reports/LabServiceReport'); // Navigate to the desired route
     } 
   };
 

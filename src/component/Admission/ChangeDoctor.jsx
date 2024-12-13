@@ -13,9 +13,7 @@ function ChangeDoctor({ patient, setShowOptionWindow }) {
   const [doctorList, setDoctorList] = useState([]);
   const fetchDepartments = async () => {
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/departments/getAllDepartments`
-      );
+      const response = await fetch(`${API_BASE_URL}/specialisations`);
       const data = await response.json();
       setDepartments(data);
       console.log(data);
@@ -40,30 +38,20 @@ function ChangeDoctor({ patient, setShowOptionWindow }) {
     }
   };
 
-  const fetchAllDoctorList = () => {
-    fetch(`${API_BASE_URL}/employees/findAllDoctors`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((items) => {
-        setDoctorList(items);
-      })
-      .catch((error) => setError(error.message));
+  const fetchAllDoctorList = async () => {
+    const response = await axios.get(`${API_BASE_URL}/doctors`);
+    setDoctorList(response.data);
   };
 
   useEffect(() => {
     const fetchDoctors = async () => {
       if (selectedDepartment) {
         try {
-          const response = await fetch(
-            `${API_BASE_URL}/employees/department/${selectedDepartment}`
+          const response = await axios.get(
+            `${API_BASE_URL}/doctors/specialization/${selectedDepartment}`
           );
           const data = await response.json();
           setDoctors(data);
-          console.log(data);
         } catch (error) {
           console.error("Error fetching admitting doctors:", error);
         }
@@ -76,11 +64,13 @@ function ChangeDoctor({ patient, setShowOptionWindow }) {
     if (formData.admittedDoctor == 0) {
       return;
     }
+    let admissionId = parseInt(patient.ipAdmmissionId);
+    let doctorId = parseInt(formData.admittedDoctor);
+
+    console.log(admissionId + " " + doctorId);
+
     try {
-      let baseUrl = `${API_BASE_URL}/admissions/${patient.admissionId}/update-doctor/${formData.admittedDoctor}`;
-      if (formData.requestingDepartment != "-ALL-") {
-        baseUrl = `${API_BASE_URL}/admissions/${patient.admissionId}/update-doctor/${formData.admittedDoctor}?requestingDepartment=${formData.requestingDepartment}`;
-      }
+      let baseUrl = `${API_BASE_URL}/ip-admissions/${admissionId}/change-doctor/${doctorId}`;
       const response = await axios.put(baseUrl);
       if (response.status === 200) {
         console.log("Doctor Changed Successfully");
@@ -97,8 +87,8 @@ function ChangeDoctor({ patient, setShowOptionWindow }) {
       <hr />
       <div className="changeDoctorPatientData">
         <p>
-          {patient.patientDTO?.firstName} {patient.patientDTO?.middleName}{" "}
-          {patient.patientDTO?.lastName} ({patient.patientDTO?.patientId})
+          {patient.patient?.firstName} {patient.patient?.middleName}{" "}
+          {patient.patient?.lastName} ({patient.patient?.uhid})
         </p>
       </div>
       <div className="changeDoctorPreviousDoctorData">
@@ -109,9 +99,8 @@ function ChangeDoctor({ patient, setShowOptionWindow }) {
         <p>
           <span>Current Doctor : </span>{" "}
           <span>
-            {patient.admittedDoctorDTO?.salutation}{" "}
-            {patient.admittedDoctorDTO?.firstName}{" "}
-            {patient.admittedDoctorDTO?.lastName}
+            {patient.admissionUnderDoctorDetail?.consultantDoctor?.salutation}{" "}
+            {patient.admissionUnderDoctorDetail?.consultantDoctor?.doctorName}
           </span>
         </p>
       </div>
@@ -123,10 +112,10 @@ function ChangeDoctor({ patient, setShowOptionWindow }) {
             {departments != null &&
               departments.map((department) => (
                 <option
-                  key={department.departmentId}
-                  value={department.departmentId}
+                  key={department.specialisationId}
+                  value={department.specialisationId}
                 >
-                  {department.departmentName}
+                  {department.specialisationName}
                 </option>
               ))}
           </select>
@@ -136,8 +125,8 @@ function ChangeDoctor({ patient, setShowOptionWindow }) {
           <select name="admittedDoctor" onChange={handleChange}>
             <option value="">Select Doctor</option>
             {(doctors.length > 0 ? doctors : doctorList).map((doctor) => (
-              <option key={doctor.employeeId} value={doctor.employeeId}>
-                {doctor.salutation} {doctor.firstName} {doctor.lastName}
+              <option key={doctor.doctorId} value={doctor.doctorId}>
+                {doctor.salutation} {doctor.doctorName}
               </option>
             ))}
           </select>

@@ -1,0 +1,154 @@
+/* AjharTamboli 22-11-24 iPChangeRoom.css */
+ 
+.iPChangeRoom-master {
+   
+    background-color:var(--background-color);
+    padding: 4px;
+    font-size: 12px;
+  }
+  
+  .iPChangeRoom-title-bar {
+    /* background-color: var(--upperBar-bg-color); */
+    color:black;
+    padding: 8px;
+    margin-bottom: 4px;
+    font-size: 18px;
+    font-weight: 510;
+  }
+  
+  /* .iPChangeRoom-header {
+    font-size: var(--heading-font);
+  } */
+
+  .iPChangeRoom-checkbox-label {
+    font-weight: normal;
+    margin-left: 4px;
+  }
+  
+  .iPChangeRoom-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .iPChangeRoom-main-section {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .iPChangeRoom-panel {
+    flex: 1;
+    background: var(--background-color);
+    border: 1px solid #ccc;
+  }
+  
+  .iPChangeRoom-panel-header {
+    background-color: var(--upperBar-bg-color);
+    color: black;
+    padding:  8px;
+    font-size:18px;
+  }
+  
+  .iPChangeRoom-panel-content {
+    padding: 8px;
+  }
+  
+  .iPChangeRoom-form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    gap: 4px;
+    font-size: var(--font-size);
+    padding: 2px;
+  }
+  
+  .iPChangeRoom-form-row label {
+    min-width: 140px;
+  }
+  .iPChangeRoom-form-row input  {
+    padding: 5px;
+      border: none;
+      background: none;
+      /* border: 1px solid #ccc; */
+      border-bottom: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: var(--font-size);
+
+    width: 50%;
+  }
+
+  .iPChangeRoom-form-row input:focus{
+    border-bottom: 1px solid #ccc;
+    background: none;
+    outline: none;
+
+  }
+   .iPChangeRoom-form-row select
+   {
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    width: 50%;
+  }
+  /* .iPChangeRoom-form-row textarea{
+    
+  } */
+  .iPChangeRoom-input-with-search {
+    display: flex;
+    gap: 2px;
+  }
+  
+  .iPChangeRoom-input-with-search input {
+    padding: 5px;
+    border: none;
+    background: none;
+    /* border: 1px solid #ccc; */
+    border-bottom: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: var(--font-size);
+    width: 80%;
+
+  }
+  .iPChangeRoom-input-with-search input:focus{
+    border-bottom: 1px solid #ccc;
+    background: none;
+    outline: none;
+
+  }
+  .iPChangeRoom-magnifier-btn {
+    
+   
+    padding: 2px 6px;
+    cursor: pointer;
+  }
+
+  .iPChangeRoom-action-buttons {
+    /* display: flex;
+    gap: 4px;
+    justify-content: flex-end;
+    margin-top: 4px; */
+    position: fixed;
+    padding: 10px;
+    bottom: 10px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow-y: auto;
+  }
+  
+  .iPChangeRoom-action-buttons button,.ipchangeroom-btn-blue {
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+  }
+  .iPChangeRoom-action-buttons button:hover,.ipchangeroom-btn-blue:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color); 
+  }
+  
+   /* AjharTamboli 20-11-24 iPChangeRoom.css */

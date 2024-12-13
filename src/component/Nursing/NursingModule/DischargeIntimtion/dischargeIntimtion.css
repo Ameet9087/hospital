@@ -1,0 +1,97 @@
+/* Container styles */
+.discharge-information-container {
+    padding: 10px;
+    background-color: var(--background-color);
+    height: 85vh;
+    overflow-y: scroll;
+    width: 100%;
+    }
+    
+    /* Header styles */
+    .discharge-information-header {
+      text-align: center;
+      font-size: var(--heading-font);
+      color: black;
+     
+    }
+    .discharge-information-container h2{
+      
+      font-size: var(--heading-font);
+      color: black;
+    }
+  
+    .discharge-information-container h4{
+      margin-top: 10px;
+      font-size: var(--heading-font);
+      color: black;
+    }
+    /* Form styles */
+    .discharge-information-form {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin: 20px 5px;
+      /* padding: 20px; */
+      border-radius: 5px;
+      background-color: var(--background-colora);
+    }
+    
+    .discharge-information-section {
+      display: flex;
+      flex-direction: row;
+    }
+    
+    .discharge-information-section label {
+      width: 150px;
+      font-size: var(--font-size);
+  
+    }
+    
+    .discharge-information-section input {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: var(--font-size);
+      /* width: 200px; */
+    }
+    .discharge-information-section select{
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: var(--font-size);
+        width: 190px;
+    }
+    
+    .discharge-information-section input[readonly] {
+      background-color: #f3f3f3;
+      cursor: not-allowed;
+    }
+    
+    .discharge-information-save-btn {
+      padding: 5px;
+      background-color: var(--button-color);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px;
+    }
+    
+    .discharge-information-save-btn:hover {
+      background-color: white;
+      color: var(--button-color);
+      border: 1px solid var(--button-hover-border-color);
+    }
+    
+  
+    /* Media queries for responsiveness */
+    @media (max-width: 768px) {
+      .discharge-information-section {
+        width: 100%; /* Switch to single-column layout */
+      }
+    
+      .discharge-information-save-btn {
+        width:100%;
+  }
+  }
+  
