@@ -49,8 +49,8 @@ const Lab = () => {
 
           <Route path="/collect-sample/:id" element={<CollectSample />}></Route>
           <Route path="/opdbilling" element={<Opdlab />}></Route>
-          <Route path="/addResultForm" element={<AddResultForm />}></Route>
-          <Route path="/labResult" element={<LabResult />}></Route>
+          <Route path="/addresults/addResultForm" element={<AddResultForm />}></Route>
+          <Route path="/pendingreports/labResult" element={<LabResult />}></Route>
         </Routes>
       </div>
     </>

@@ -4,6 +4,7 @@ import "jspdf-autotable";
 import "../NavBarSection/pendingReports.css";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../api/api";
 
 function PendingReports() {
   const [dateFrom, setDateFrom] = useState("");
@@ -237,7 +238,7 @@ function PendingReports() {
                     <button
                       className="pendingReports-table-btn"
                       onClick={() =>
-                        navigate("/labResult", {
+                        navigate("/laboratory/pendingreports/labResult", {
                           state: {
                             labRequestId: result.labRequestDTO?.labRequestId,
                           },
