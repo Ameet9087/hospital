@@ -76,16 +76,16 @@ const EmployeeHeader = () => {
               </NavLink>
             </li>
 
-            {/* <li>
+            <li>
               <NavLink
-                to="/settings/clinical"
+                to="/settings/geolocation"
                 className={
-                  location.pathname === "/settings/clinical" ? "active" : ""
+                  location.pathname === "/settings/geolocation" ? "active" : ""
                 }
               >
-                Clinical
+                Geolocation
               </NavLink>
-            </li> */}
+            </li>
           </ul>
         </nav>
       </header>
@@ -237,6 +237,51 @@ const EmployeeHeader = () => {
                 }
               >
                 Manage Employee Type
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      )}
+
+      {location.pathname.includes("/settings/geolocation") && (
+        <div className="sub-nav-container">
+          <ul>
+            <li>
+              <NavLink
+                to="/settings/geolocation/manage-country"
+                className={
+                  location.pathname === "/settings/employee/manage-country"
+                    ? "active"
+                    : ""
+                }
+              >
+                Manage Country
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/geolocation/manage-state"
+                className={
+                  location.pathname ===
+                  "/settings/geolocation/manage-state"
+                    ? "active"
+                    : ""
+                }
+              >
+                State
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/geolocation/manage-city"
+                className={
+                  location.pathname ===
+                  "/settings/geolocation/manage-city"
+                    ? "active"
+                    : ""
+                }
+              >
+                City
               </NavLink>
             </li>
           </ul>
