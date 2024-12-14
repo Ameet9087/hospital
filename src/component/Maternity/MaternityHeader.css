@@ -3,7 +3,14 @@
   margin: 0 auto;
 }
 
-.maternity-navbar {
+/* .maternity-header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px; 
+} */
+
+.maternity-header  {
   background-color: #fff;
   padding: 10px;
   margin-bottom: 10px;

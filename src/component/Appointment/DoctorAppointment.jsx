@@ -279,6 +279,7 @@ const [appointment,setAppointment]= useState([]);
           <select
           className="DoctorAppointments-input"
           name="doctor"
+         disabled={!formData.location}
           value={formData.doctor}
           onChange={(e) => {
             handleInputChange(e); // Update the doctor value in formData

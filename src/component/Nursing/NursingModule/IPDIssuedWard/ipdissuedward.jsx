@@ -27,7 +27,7 @@ const IPDIssuesWard = () => {
                 consultantDoctor: item.admissionUnderDoctorDetail?.consultantDoctor?.doctorName || "N/A",
                 sourceOfAdmission: item.financials?.sourceOfAdmission || "N/A",
                 bedNo: item.roomDetails?.bedDTO?.bedNo || "N/A",
-                roomNo: item.roomDetails?.bedDTO?.roomNo || "N/A",
+                // roomNo: item.roomDetails?.bedDTO?.roomNo || "N/A",
                 admissionDate: item.admissionDate || "N/A",
                 typeAdmission: item.financials?.typeAdmission || "N/A",
                 severity: item.roomDetails?.roomTypeDTO?.type || "N/A",
