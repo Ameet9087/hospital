@@ -9,6 +9,7 @@ import GuarantorPage from './GuarantorPage';
 import InsurancePage from './InsurancePage'; // Import the new InsurancePage component
 import EmergencyContactPage from './EmergencyContactPage';
 import UploadPhotoPage from './UploadPhoto';
+import { API_BASE_URL } from '../api/api';
 
 function RegisterPatient() {
   const location = useLocation();
@@ -51,9 +52,8 @@ function RegisterPatient() {
           firstName: patient.firstName || '',
           gender: patient.gender || '',
           guarantorDTO: patient.guarantorDTO || {},
-          hospitalNo: patient.hospitalNo || '',
           insuranceDTO: patient.insuranceDTO || {},
-          ipd: patient.ipd || false,
+          isIpd: patient.isIpd ||"Yes",
           landlineNumber: patient.landlineNumber || '',
           lastName: patient.lastName || '',
           maritalStatus: patient.maritalStatus || '',
@@ -171,13 +171,13 @@ function RegisterPatient() {
       insuranceDTO: insuranceData,
       emergencyContactDTO: emergencyContactData,
       uploadPhotoDTO:uploadPhotoData,
-      isIPD:true
+      isIPD:"IPD"
     };
 
     try {
       const url = isEditMode 
-        ? `${API_BASE_URL}/patients/${patientData.id}` // Adjust the endpoint for update
-        : `${API_BASE_URL}/api/patients/add-in-Patient`; // Endpoint for adding new patient
+        ? `${API_BASE_URL}/inpatients/update/${patientData.id}` // Adjust the endpoint for update
+        : `${API_BASE_URL}/patients/inpatient/register`; // Endpoint for adding new patient
 
       const response = await fetch(url, {
         method: isEditMode ? 'PUT' : 'POST',
@@ -187,14 +187,8 @@ function RegisterPatient() {
         body: JSON.stringify(dataToSubmit),
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const result = await response.json();
-
       alert(isEditMode ? 'Patient data updated successfully' : 'Patient registered successfully');
-      console.log('Operation successful:', result);
+      console.log('Operation successful:');
 
       // Optionally reset form data or redirect the user
       setFormData({
@@ -206,7 +200,7 @@ function RegisterPatient() {
         uploadPhotoData: {}
       });
       setActiveTab('basic-info'); // Optionally reset active tab to default
-      navigate('/'); // Redirect to the home page or wherever appropriate
+      navigate('/patient/searchpatient'); // Redirect to the home page or wherever appropriate
 
     } catch (error) {
       console.error('Error handling patient data:', error);
@@ -269,12 +263,12 @@ function RegisterPatient() {
     </div>
 
       <div className="register-patient-content">
-        {activeTab === 'basic-info' && <PatientRegistration sendpatientdata={handlePatientData}  patientData={formData.patientData} />}
-        {activeTab === 'address' && <AddressPage sendaddressdata={handleAddressData} addressData={formData.addressData} />}
-        {activeTab === 'guarantor' && <GuarantorPage sendguarantordata={handleGuarantorData} guarantorData={formData.guarantorData} />}
-        {activeTab === 'insurance' && <InsurancePage sendinsurancedata={handleInsuranceData} insuranceData={formData.insuranceData} />}
-        {activeTab === 'emergency-contact' && <EmergencyContactPage sendemergencycontactdata={handleEmergencyContactData} emergencyData={formData.emergencyContactData} />}
-        {activeTab === 'upload-photo' && <UploadPhotoPage sendUploadPhotodata={handleUploadPhotoData} uploadphotodata={formData.uploadPhotoData} />}
+        <PatientRegistration sendpatientdata={handlePatientData}  patientData={formData.patientData} />
+        <AddressPage sendaddressdata={handleAddressData} addressData={formData.addressData} />
+        <GuarantorPage sendguarantordata={handleGuarantorData} guarantorData={formData.guarantorData} />
+        <InsurancePage sendinsurancedata={handleInsuranceData} insuranceData={formData.insuranceData} />
+        <EmergencyContactPage sendemergencycontactdata={handleEmergencyContactData} emergencyData={formData.emergencyContactData} />
+        <UploadPhotoPage sendUploadPhotodata={handleUploadPhotoData} uploadphotodata={formData.uploadPhotoData} />
 
         {isCameraOpen && (
           <div className="register-patient-camera-container">

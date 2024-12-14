@@ -114,7 +114,7 @@ const modules = {
   },
   QueueManagement:{
       logo:"fa-solid fa-list-check",
-      submodules:['OPD', 'Patient Queue Prioritization', 'Real-Time Queue Monitoring', 'Service Time Tracking', 'Patient Notification'],
+      submodules:['OPD'],
   }, 
   Substore:{
       logo:"fa-solid fa-pills",
@@ -180,10 +180,15 @@ const modules = {
       logo:"fa-solid fa-circle-h",
       submodules:['Respiratory Function Tests', 'Pulmonary Rehabilitation', 'Imaging and Lab Reports', 'Medication Management', 'Follow-Up Scheduling'],
   }, 
-  Helpdesk:{
-      logo:"fa-solid fa-circle-info",
-      submodules:['Employee Information', 'Bed Information', 'Ward Information', 'Queue Information'],
-  }, 
+  Helpdesk: {
+    logo: "fa-solid fa-circle-info",
+    submodules: [
+      "Employee Information",
+      "Bed Information",
+      "Ward Information",
+      "Queue Information",
+    ],
+  } 
 };
 
 function App() {

@@ -1,57 +1,38 @@
 import React, { useState, useEffect } from "react";
 import "../HhQueueInformation/hhQueueInformation.css";
 import { API_BASE_URL } from "../../api/api";
+import axios from "axios";
 
 function HHQueueInformation() {
-  const [departments, setDepartments] = useState([]);
-  const [selectedDepartmentId, setSelectedDepartmentId] = useState("");
-  const [selectedDepartmentName, setSelectedDepartmentName] = useState("");
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctorId, setSelectedDoctorId] = useState("");
   const [selectedDoctorName, setSelectedDoctorName] = useState("");
   const [queueData, setQueueData] = useState(null);
 
-  // Fetch departments on component mount
-  useEffect(() => {
-    const fetchDepartments = async () => {
-      try {
-        const response = await fetch(
-          `${API_BASE_URL}/departments/getAllDepartments`
-        );
-        const data = await response.json();
-        setDepartments(data);
-      } catch (error) {
-        console.error("Error fetching departments:", error);
-      }
-    };
-    fetchDepartments();
-  }, []);
 
   // Fetch doctors when a department is selected (by departmentId)
   useEffect(() => {
     const fetchDoctors = async () => {
-      if (selectedDepartmentId) {
         try {
-          const response = await fetch(
-            `${API_BASE_URL}/employees/department/${selectedDepartmentId}`
+          const response = await axios.get(
+            `${API_BASE_URL}/doctors`
           );
-          const data = await response.json();
-          setDoctors(data);
+          console.log(response);
+          
+          setDoctors(response.data);
         } catch (error) {
           console.error("Error fetching doctors:", error);
         }
-      }
     };
     fetchDoctors();
-  }, [selectedDepartmentId]);
+  }, []);
 
-  // Handle when the "Proceed" button is clicked
   const handleProceed = async () => {
-    if (selectedDoctorId && selectedDepartmentName) {
+    if (selectedDoctorId) {
       try {
-        const response = await fetch(
-          `${API_BASE_URL}/patient-queues/summary?employeeId=${selectedDoctorId}&department=${selectedDepartmentName}`
-        );
+        const response = await fetch(`
+          ${API_BASE_URL}/patient-queues/summary?employeeId=${selectedDoctorId}
+          `);
         const data = await response.json();
         setQueueData(data);
       } catch (error) {
@@ -60,15 +41,6 @@ function HHQueueInformation() {
     } else {
       alert("Please select both a department and a doctor.");
     }
-  };
-
-  const handleDepartmentChange = (e) => {
-    const departmentId = e.target.value;
-    const departmentName = e.target.options[e.target.selectedIndex].text;
-    setSelectedDepartmentId(departmentId);
-    setSelectedDepartmentName(departmentName);
-    setDoctors([]);
-    setQueueData(null);
   };
 
   const handleDoctorChange = (e) => {
@@ -84,34 +56,17 @@ function HHQueueInformation() {
       <header className="queueInformation-header">
         <div className="queueInformation-doctor-select">
           <div>
-            <span>Department:</span>
-            <select
-              value={selectedDepartmentId}
-              onChange={handleDepartmentChange}
-            >
-              <option value="" disabled>
-                --select--
-              </option>
-              {departments.map((dept) => (
-                <option key={dept.departmentId} value={dept.departmentId}>
-                  {dept.departmentName}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
             <span>Doctor:</span>
             <select
               value={selectedDoctorId}
               onChange={handleDoctorChange}
-              disabled={!selectedDepartmentId}
             >
               <option value="" disabled>
                 --select--
               </option>
-              {doctors.map((doc) => (
-                <option key={doc.employeeId} value={doc.employeeId}>
-                  {doc.salutation} {doc.firstName} {doc.lastName}
+              {doctors?.map((doc) => (
+                <option key={doc.doctorId} value={doc.doctorId}>
+                  {doc.doctorName}
                 </option>
               ))}
             </select>

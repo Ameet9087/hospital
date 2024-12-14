@@ -24,7 +24,7 @@ const ManageImagingType = () => {
     const fetchImagingTypes = async () => {
       try {
         const response = await axios.get(
-          `${API_BASE_URL}/radiology-settings/imaging-types`
+          `${API_BASE_URL}/imaging-type/imaging-types`
         );
         setImagingTypes(response.data);
       } catch (error) {
@@ -76,7 +76,7 @@ const ManageImagingType = () => {
     try {
       if (isEditMode && selectedImagingType) {
         await axios.put(
-          `${API_BASE_URL}/radiology-settings/imaging-types/${selectedImagingType.imagingTypeId}`,
+          `${API_BASE_URL}/imaging-type/create-imaging-items/${selectedImagingType.imagingTypeId}`,
           imagingTypeData
         );
         console.log("Updated:", imagingTypeData);
@@ -84,14 +84,14 @@ const ManageImagingType = () => {
         console.log("Added:", imagingTypeData);
         // Add new imaging type
         await axios.post(
-          `${API_BASE_URL}/radiology-settings/imaging-types`,
+          `${API_BASE_URL}/imaging-type/imaging-types`,
           imagingTypeData
         );
         console.log("Added:", imagingTypeData);
       }
       // Refresh imaging types after update/add
       const response = await axios.get(
-        `${API_BASE_URL}/radiology-settings/imaging-types`
+        `${API_BASE_URL}/imaging-type/imaging-types`
       );
       setImagingTypes(response.data);
       handleCloseModal();

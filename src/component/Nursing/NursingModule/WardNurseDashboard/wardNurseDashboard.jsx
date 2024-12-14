@@ -4,6 +4,7 @@ import axios from 'axios';
 import './wardNurseDashboard.css';
 import { useDispatch } from 'react-redux';
 import { setPatientData } from '../ReduxNursing/patientSlice';
+import { API_BASE_URL } from '../../../api/api';
 
 const WardNurseDashboard = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const WardNurseDashboard = () => {
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
-    axios.get('http://192.168.0.105:8080/api/ip-admissions')
+    axios.get(`${API_BASE_URL}/ip-admissions`)
       .then(response => {
         setAdmittedPatients(response.data);
         setLoading(false);

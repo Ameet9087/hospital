@@ -32,7 +32,7 @@ const ManageImagingItem = () => {
   const fetchImagingItems = async () => {
     try {
       const response = await fetch(
-        `${API_BASE_URL}/radiology-settings/imaging-items`
+        `${API_BASE_URL}/imaging-items/getAll`
       );
       const data = await response.json();
       setImagingTypes(data);
@@ -44,7 +44,7 @@ const ManageImagingItem = () => {
   const fetchImagingTypes = async () => {
     try {
       const response = await fetch(
-        `${API_BASE_URL}/radiology-settings/imaging-types`
+        `${API_BASE_URL}/imaging-type/imaging-types`
       );
       const data = await response.json();
       setImagingTypeList(data);
@@ -113,7 +113,7 @@ const ManageImagingItem = () => {
     try {
       if (isEditMode) {
         await fetch(
-          `${API_BASE_URL}/radiology-settings/imaging-items/${currentItem.imagingItemId}`,
+          `${API_BASE_URL}/imaging-items/imaging-items/${currentItem.imagingItemId}`,
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -124,7 +124,7 @@ const ManageImagingItem = () => {
       } else {
         console.log(newItem);
 
-        await fetch(`${API_BASE_URL}/radiology-settings/imaging-items`, {
+        await fetch(`${API_BASE_URL}/imaging-items/create-imaging-items`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newItem),

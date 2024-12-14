@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./DoctorAppointmentPopUP.css";
+import "./DoctorAppointmentPopUp.css";
 import CustomModal from "../CustomModel/CustomModal";
 import AddCancel from "./AddCancel";
 import { API_BASE_URL } from "../api/api";
