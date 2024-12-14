@@ -68,6 +68,22 @@
     margin-top: 20px;
 }
 
+.purchaseOrders-add-btn {
+    background-color:var(--button-color); 
+    color: white;
+    border: none;
+   
+    padding: 5px; 
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+  }
+
 /* Date Range Filter */
 .purchase-order-date-range {
     display: flex;

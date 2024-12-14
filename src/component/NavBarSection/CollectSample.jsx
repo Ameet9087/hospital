@@ -3,6 +3,7 @@ import { RefreshCw } from "lucide-react";
 import "./CollectSample.css";
 import SampleCodePopup from "./sampleCodePopup";
 import axios from "axios";
+import { API_BASE_URL } from "../api/api";
 
 const CollectSample = ({ sample }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -61,7 +62,7 @@ const CollectSample = ({ sample }) => {
 
     console.log(labRequestObject);
 
-    try {
+    try {0
       const response = await axios.put(
         `${API_BASE_URL}/lab-requests/update-sample/${sample.labRequestId}`,
         labRequestObject

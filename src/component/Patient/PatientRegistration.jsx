@@ -1,6 +1,11 @@
  //prachi parab patientRegisteration css 13/9
 import React, { useEffect, useState } from 'react';
 import './PatientRegistration.css';
+import AddressPage from './AddressPage';
+import GuarantorPage from './GuarantorPage';
+import InsurancePage from './InsurancePage';
+import EmergencyContactPage from './EmergencyContactPage';
+import UploadPhotoPage from './UploadPhoto';
 const PatientRegistration = ({sendpatientdata,patientData}) => {
   const [formData, setFormData] = useState({
     salutation: '',

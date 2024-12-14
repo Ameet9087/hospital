@@ -263,12 +263,12 @@ function RegisterPatient() {
     </div>
 
       <div className="register-patient-content">
-        {activeTab === 'basic-info' && <PatientRegistration sendpatientdata={handlePatientData}  patientData={formData.patientData} />}
-        {activeTab === 'address' && <AddressPage sendaddressdata={handleAddressData} addressData={formData.addressData} />}
-        {activeTab === 'guarantor' && <GuarantorPage sendguarantordata={handleGuarantorData} guarantorData={formData.guarantorData} />}
-        {activeTab === 'insurance' && <InsurancePage sendinsurancedata={handleInsuranceData} insuranceData={formData.insuranceData} />}
-        {activeTab === 'emergency-contact' && <EmergencyContactPage sendemergencycontactdata={handleEmergencyContactData} emergencyData={formData.emergencyContactData} />}
-        {activeTab === 'upload-photo' && <UploadPhotoPage sendUploadPhotodata={handleUploadPhotoData} uploadphotodata={formData.uploadPhotoData} />}
+        <PatientRegistration sendpatientdata={handlePatientData}  patientData={formData.patientData} />
+        <AddressPage sendaddressdata={handleAddressData} addressData={formData.addressData} />
+        <GuarantorPage sendguarantordata={handleGuarantorData} guarantorData={formData.guarantorData} />
+        <InsurancePage sendinsurancedata={handleInsuranceData} insuranceData={formData.insuranceData} />
+        <EmergencyContactPage sendemergencycontactdata={handleEmergencyContactData} emergencyData={formData.emergencyContactData} />
+        <UploadPhotoPage sendUploadPhotodata={handleUploadPhotoData} uploadphotodata={formData.uploadPhotoData} />
 
         {isCameraOpen && (
           <div className="register-patient-camera-container">

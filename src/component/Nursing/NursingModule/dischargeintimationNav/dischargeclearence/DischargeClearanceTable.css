@@ -1,0 +1,35 @@
+/* Basic styles for the table and button
+.dischargeclearence-table {
+    padding: 20px;
+  }
+  
+  .dischargeclearence-table__table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .dischargeclearence-table__table th,
+  .dischargeclearence-table__table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  } */
+  
+  .dischargeclearence-table__action-btn {
+    padding: 5px;
+    font-size: var(--font-size);
+    color: white;
+    background-color: var(--button-bg-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .dischargeclearence-table__action-btn:hover {
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  

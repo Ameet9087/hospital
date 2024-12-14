@@ -4,8 +4,13 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #fff;
- overflow-y: scroll;
- height: 90vh;
+  max-width: 1200px; /* Set maximum width to prevent exceeding */
+  width: 100%; /* Ensure it takes up full width up to max-width */
+  margin: 0 auto;
+  overflow-y: auto; /* Enable vertical scrolling */
+  height: 80vh; /* Set a fixed height */
+
+  /* height: 90vh; */
 
 }
 
@@ -21,7 +26,7 @@
 .purchase-order-form-form-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 /* Form group styling */

@@ -1,0 +1,215 @@
+
+  
+  .discharge-clearance {
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-bottom: 100px;
+    top: 0%;
+  }
+  
+  .discharge-clearance__title {
+    font-size: var(--heading-font);
+    color: var(--sideBar-bg-color);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .discharge-clearance__close-icon {
+    font-size: 20px;
+    color: var(--sideBar-bg-color);
+    cursor: pointer;
+  }
+  
+  .discharge-clearance__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .discharge-clearance__form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .discharge-clearance__label {
+    font-size: var(--font-size);
+    color: var(--sideBar-bg-color);
+    margin-bottom: 5px;
+  }
+  
+  .discharge-clearance__input,
+  .discharge-clearance__textarea {
+    padding: var(--input-box-padding);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: var(--font-size);
+  }
+  
+  .discharge-clearance__textarea {
+    resize: none;
+  }
+  
+  .discharge-clearance__checkbox {
+    margin-right: 10px;
+  }
+  
+  .discharge-clearance__checkbox-label {
+    font-size: var(--font-size);
+    color: var(--sideBar-bg-color);
+    display: flex;
+    align-items: center;
+  }
+  
+  .discharge-clearance__popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .discharge-clearance__popup {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  .discharge-clearance__popup-title {
+    font-size: var(--heading-font);
+    color: var(--sideBar-bg-color);
+    margin-bottom: 10px;
+  }
+  
+  .discharge-clearance__popup-message {
+    font-size: var(--font-size);
+    color: var(--sideBar-bg-color);
+    margin-bottom: 20px;
+  }
+  
+  .discharge-clearance__popup-close {
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: var(--font-size);
+  }
+  
+  .discharge-clearance__popup-close:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .discharge-clearance__details-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    z-index: 1100;
+  }
+  
+  .discharge-clearance__details-content {
+    font-size: var(--font-size);
+    color: var(--sideBar-bg-color);
+  }
+  
+  .discharge-clearance__close-button {
+    background-color: var(--button-bg-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .discharge-clearance__close-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  .table-container {
+    width: 100%;
+    max-height: 60vh;
+    overflow-x: auto;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  
+  table {
+    width: 100%;
+    background-color: #f2f2f2;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  
+  thead {
+    background-color: #f2f2f2;
+    z-index: 15;
+    position: sticky;
+    top: -0.5px;
+  }
+  
+  table th,
+  table td {
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+    font-size: var(--font-size);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  
+  table th .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-overflow: ellipsis;
+  }
+  
+  table th:last-child,
+  table td:last-child {
+    width: 250px;
+    text-align: center;
+  }
+  
+  .resizable-th {
+    position: relative;
+  }
+  
+  .resizer {
+    width: 5px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: col-resize;
+    z-index: 1;
+  }
+  
+  table th .resizer:hover {
+    background-color: #aaa;
+  }
+  

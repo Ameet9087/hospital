@@ -11,6 +11,7 @@ import IpdIssueWard from '../IPDIssuedWard/ipdissuedward';
 import { useSelector } from 'react-redux';
 import PatientDashboard from '../../../DashBoards/PatientDashboard';
 import IPChangeRoom from '../IPChangeRoom/IPChangeRoom';
+import DischargeipMainNav from '../dischargeintimationNav/dischargeipMainNav';
 
 const APDashBoard = () => {
   const activePatient = useSelector((state) => state.patient.activePatient);
@@ -57,6 +58,12 @@ const APDashBoard = () => {
         setActiveComponent('IPChangeRoom');
         console.log('Active component set to: IPChangeRoom');  // Debugging log
         break;
+
+        case 'Discharge main':
+          setActiveComponent('dischargeipMainNav');
+          break;
+
+          
       default:
         setActiveComponent(null);
     }
@@ -84,6 +91,9 @@ const APDashBoard = () => {
         return <PatientDashboard patient={patientData} />;
       case 'IPChangeRoom':
         return <IPChangeRoom />;
+        case 'dischargeipMainNav':
+            return <DischargeipMainNav/>;
+            break;
       default:
         return <section className="aPDashBoard-content">Select an option from the sidebar</section>;
     }
@@ -124,6 +134,7 @@ const APDashBoard = () => {
               { text: '+ IP Billing', value: 'IP Billing' },
               { text: '+ IPD Issues Ward', value: 'IPD Issues Ward' },
               { text: '+ IPD Returns Ward', value: 'IPD Returns Ward' },
+              { text:'Discharge main' , value:'Discharge main' },
               { text: 'Exit', value: null },
             ].map((item, index) => (
               <li

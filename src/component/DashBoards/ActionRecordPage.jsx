@@ -25,7 +25,7 @@ const ActionRecordPage = ({
 
   const apiEndpoints = {
     lab: `${API_BASE_URL}/labTestSetting/getAll`,
-    imaging: `${API_BASE_URL}/radiology-settings/imaging-items`,
+    imaging: `${API_BASE_URL}/imaging-items/getAll`,
     medication: `${API_BASE_URL}/add-items`,
   };
 

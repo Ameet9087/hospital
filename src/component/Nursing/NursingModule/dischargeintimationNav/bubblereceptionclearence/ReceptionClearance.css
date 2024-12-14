@@ -1,0 +1,223 @@
+/* ReceptionClearance.css */
+
+.reception-clearance-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+
+.reception-clearance-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reception-clearance-checkbox-label {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.reception-clearance-checkbox {
+    margin-right: 10px;
+}
+
+.reception-clearance-checkbox-label input[type="checkbox"]:focus {
+    outline: 2px solid #3598dc;
+}
+
+.reception-clearance-checkbox:checked + label {
+    color: #3598dc;
+}
+
+.reception-clearance-submit-btn {
+    padding: 10px 20px;
+    background-color: #3598dc;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    align-self: flex-start;
+}
+
+.reception-clearance-submit-btn:hover {
+    background-color: #2a7cb8;
+}
+
+.reception-clearance-cancel-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: #555;
+    cursor: pointer;
+}
+
+.reception-clearance-cancel-btn:hover {
+    text-decoration: underline;
+}
+.reception-action-btn{
+    padding: 5px;
+    font-size: var(--font-size);
+    color: white;
+    background-color: var(--button-bg-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+
+}
+.reception-action-btn:hover{
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+
+}
+
+
+
+/* fgghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh */
+
+
+/* ReceptionClearance.css */
+
+  
+  .reception-clearance-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background-color: var(--background-color); */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .receptionclearence-popup {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 800px;
+    padding: 20px;
+    z-index: 1000;
+  }
+  
+  .reception-clearance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--upperBar-bg-color);
+    margin-bottom: 10px;
+  }
+  
+  .reception-clearance-title {
+    font-size: var(--heading-font);
+    font-weight: bold;
+    
+  }
+  
+  
+.reception-clearance-close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.reception-clearance-close-btn:hover {
+    color: #f00;
+}
+
+  
+  .reception-clearance-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .reception-clearance-form-group {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .reception-clearance-label {
+    font-size: var(--font-size);
+    margin-bottom: 5px;
+    width: 200px;
+  }
+  
+  .reception-clearance-input {
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 150px;
+  }
+  
+  .reception-clearance-divider {
+    border-bottom: 1px solid #ddd;
+    margin: 10px 0;
+  }
+  
+  .reception-clearance-checkbox-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .reception-clearance-checkbox-label {
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size);
+    gap: 5px;
+  }
+  
+  .reception-clearance-checkbox {
+    margin-right: 10px;
+  }
+  
+  /* Button Styles (Optional for future use) */
+  .reception-clearance-button {
+    padding: 5px;
+    background-color: var(--button-bg-color);
+    border: none;
+    color: var(--button-color);
+    font-size: var(--font-size);
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .reception-clearance-button:hover {
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+  }
+  
