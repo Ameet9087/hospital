@@ -60,6 +60,7 @@ function RegisterPatient() {
           middleName: patient.middleName || '',
           notifications: patient.notifications || false,
           occupation: patient.occupation || '',
+          adharCardId:patient.adharCardId||'',
           passportNumber: patient.passportNumber || '',
           phoneNumber: patient.phoneNumber || '',
           pinCode: patient.pinCode || '',
@@ -75,7 +76,6 @@ function RegisterPatient() {
         emergencyContactData: patient.emergencyContactDTO || {},
         uploadPhotoData:patient.uploadPhotoDTO || {},
       });
-      setIsEditMode(true);
       setActiveTab('basic-info'); // Set the active tab based on the incoming data
     }
   }, [location?.state]);
@@ -166,15 +166,16 @@ function RegisterPatient() {
     // Combine all form data
     const dataToSubmit = {
       ...patientData,
-      addressDTO: addressData,
-      guarantorDTO: guarantorData,
-      insuranceDTO: insuranceData,
-      emergencyContactDTO: emergencyContactData,
-      uploadPhotoDTO:uploadPhotoData,
+      addresses : addressData,
+      guarantor: guarantorData,
+      insurance: insuranceData,
+      emergencyContact: emergencyContactData,
       isIPD:"IPD"
     };
 
     try {
+      console.log(dataToSubmit);
+      
       const url = isEditMode 
         ? `${API_BASE_URL}/inpatients/update/${patientData.id}` // Adjust the endpoint for update
         : `${API_BASE_URL}/patients/inpatient/register`; // Endpoint for adding new patient
@@ -210,65 +211,13 @@ function RegisterPatient() {
 
   return (
  <div className="register-patient">
-
-      <div className="patient-menu">
-      <a
-        href={patientIds ? `#basic-info/${patientIds}` : '#basic-info'}
-        className={`menu-item-patient ${activeTab === 'basic-info' ? 'active' : ''}`}
-        onClick={() => setActiveTab('basic-info')}
-      >
-        Basic Information
-      </a>
-      <a
-        href={patientIds ? `#address/${patientIds}` : '#address'}
-        className={`menu-item-patient ${activeTab === 'address' ? 'active' : ''}`}
-        onClick={() => setActiveTab('address')}
-      >
-        Address
-      </a>
-      <a
-        href={patientIds ? `#guarantor/${patientIds}` : '#guarantor'}
-        className={`menu-item-patient ${activeTab === 'guarantor' ? 'active' : ''}`}
-        onClick={() => setActiveTab('guarantor')}
-      >
-        Guarantor
-      </a>
-      <a
-        href={patientIds ? `#insurance/${patientIds}` : '#insurance'}
-        className={`menu-item-patient ${activeTab === 'insurance' ? 'active' : ''}`}
-        onClick={() => setActiveTab('insurance')}
-      >
-        Insurance
-      </a>
-      <a
-        href={patientIds ? `#emergency-contact/${patientIds}` : '#emergency-contact'}
-        className={`menu-item-patient ${activeTab === 'emergency-contact' ? 'active' : ''}`}
-        onClick={() => setActiveTab('emergency-contact')}
-      >
-        Emergency Contact
-      </a>
-
-      <a
-        href={patientIds ? `#upload-photo/${patientIds}` : '#upload-photo'}
-        className={`menu-item-patient ${activeTab === 'upload-photo' ? 'active' : ''}`}
-        onClick={() => setActiveTab('upload-photo')}
-      >
-        Upload Photo
-      </a>
-
-
-      <a href="#" className="register-button" onClick={handleRegisterPatient}>
-        {isEditMode ? 'Update Patient' : 'Register Patient'}
-      </a>
-    </div>
-
       <div className="register-patient-content">
         <PatientRegistration sendpatientdata={handlePatientData}  patientData={formData.patientData} />
         <AddressPage sendaddressdata={handleAddressData} addressData={formData.addressData} />
         <GuarantorPage sendguarantordata={handleGuarantorData} guarantorData={formData.guarantorData} />
         <InsurancePage sendinsurancedata={handleInsuranceData} insuranceData={formData.insuranceData} />
         <EmergencyContactPage sendemergencycontactdata={handleEmergencyContactData} emergencyData={formData.emergencyContactData} />
-        <UploadPhotoPage sendUploadPhotodata={handleUploadPhotoData} uploadphotodata={formData.uploadPhotoData} />
+        {/* <UploadPhotoPage sendUploadPhotodata={handleUploadPhotoData} uploadphotodata={formData.uploadPhotoData} /> */}
 
         {isCameraOpen && (
           <div className="register-patient-camera-container">
@@ -283,6 +232,7 @@ function RegisterPatient() {
             <img src={imageSrc} alt="Captured" className="register-patient-captured-image" />
           </div>
         )}
+        <button className='register-button' onClick={handleRegisterPatient}>Register Patient</button>
       </div>
     </div>
   );

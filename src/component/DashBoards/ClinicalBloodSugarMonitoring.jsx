@@ -4,7 +4,7 @@ import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 
-const ClinicalBloodSugarMonitoring = ({ patientId, newPatientVisitId }) => {
+const ClinicalBloodSugarMonitoring = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [showForm, setShowForm] = useState(false);
@@ -18,7 +18,8 @@ const ClinicalBloodSugarMonitoring = ({ patientId, newPatientVisitId }) => {
     remarks: "",
   });
 
-  const [newFormData, setNewFormData] = useState({ // New form data for saving
+  const [newFormData, setNewFormData] = useState({
+    // New form data for saving
     addedDate: "",
     addedTime: "",
     rbs: "",
@@ -32,8 +33,8 @@ const ClinicalBloodSugarMonitoring = ({ patientId, newPatientVisitId }) => {
       let endpoint = "";
 
       // Determine if newPatientVisitId or admissionId should be used
-      if (newPatientVisitId) {
-        endpoint = `${API_BASE_URL}/blood-sugar-monitoring/by-newPatientVisitId?newPatientVisitId=${newPatientVisitId}`;
+      if (outPatientId) {
+        endpoint = `${API_BASE_URL}/blood-sugar-monitoring/by-newPatientVisitId?newPatientVisitId=${outPatientId}`;
       } else if (patientId) {
         endpoint = `${API_BASE_URL}/blood-sugar-monitoring/by-patientId?patientId=${patientId}`;
       }
@@ -54,10 +55,10 @@ const ClinicalBloodSugarMonitoring = ({ patientId, newPatientVisitId }) => {
       }
     };
 
-    if (newPatientVisitId || patientId) {
+    if (outPatientId || patientId) {
       fetchBloodSugarData();
     }
-  }, [newPatientVisitId, patientId]);
+  }, [outPatientId, patientId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -70,46 +71,46 @@ const ClinicalBloodSugarMonitoring = ({ patientId, newPatientVisitId }) => {
     e.preventDefault();
     let response; // Declare response outside the if...else block
     try {
-        // Prepare blood data for submission
-        const bloodData = {
-            addedDate: newFormData.addedDate,
-            addedTime: newFormData.addedTime,
-            rbs: newFormData.rbs,
-            insulin: newFormData.insulin,
-        };
+      // Prepare blood data for submission
+      const bloodData = {
+        addedDate: newFormData.addedDate,
+        addedTime: newFormData.addedTime,
+        rbs: newFormData.rbs,
+        insulin: newFormData.insulin,
+      };
 
-        // If editing an existing record, include the id in the data
-        if (formData.id) {
-            // Do not pass patientDTO or newPatientVisitDTO for updates
-            console.log("Updating existing record:", bloodData);
-            // Use PUT method for updating
-            const endpoint = `${API_BASE_URL}/blood-sugar-monitoring/update/${formData.id}`;
-            response = await axios.put(endpoint, bloodData); // Assign response here
-        } else {
-            // For new entries, attach patient or visit info
-            if (patientId > 0) {
-                bloodData.patientDTO = { patientId };
-            } else if (newPatientVisitId) {
-                bloodData.newPatientVisitDTO = { newPatientVisitId };
-            }
-
-            console.log("Saving new record:", bloodData);
-            // Use POST method for saving new entries
-            response = await axios.post(`${API_BASE_URL}/blood-sugar-monitoring/save`, bloodData); // Assign response here
+      // If editing an existing record, include the id in the data
+      if (formData.id) {
+        // Do not pass patientDTO or newPatientVisitDTO for updates
+        console.log("Updating existing record:", bloodData);
+        // Use PUT method for updating
+        const endpoint = `${API_BASE_URL}/blood-sugar-monitoring/update/${formData.id}`;
+        response = await axios.put(endpoint, bloodData); // Assign response here
+      } else {
+        // For new entries, attach patient or visit info
+        if (patientId > 0) {
+          bloodData.patientDTO = { patientId };
+        } else if (outPatientId) {
+          bloodData.outPatientDTO = { outPatientId };
         }
 
-        // Check response status and handle success
-        if (response.status === 200) {
-            alert("Data saved successfully");
-            handleCloseForm(); // Close the form on success
-            // Refresh data after submission
-            fetchBloodSugarData();
-        }
+        console.log("Saving new record:", bloodData);
+        response = await axios.post(
+          `${API_BASE_URL}/blood-sugar-monitoring/save`,
+          bloodData
+        ); // Assign response here
+      }
+
+      // Check response status and handle success
+      if (response.status === 200) {
+        alert("Data saved successfully");
+        handleCloseForm(); 
+        fetchBloodSugarData();
+      }
     } catch (error) {
-        console.error("Error saving data:", error);
+      console.error("Error saving data:", error);
     }
-};
-
+  };
 
   const handleAddNew = () => {
     setShowForm(true);
@@ -127,14 +128,16 @@ const ClinicalBloodSugarMonitoring = ({ patientId, newPatientVisitId }) => {
   };
 
   const handleEdit = (record) => {
-    setNewFormData({ // Set the newFormData directly from the record
+    setNewFormData({
+      // Set the newFormData directly from the record
       addedDate: record.addedDate, // Keep the format as needed for input
       addedTime: record.addedTime,
       rbs: record.rbs,
       insulin: record.insulin,
       remarks: record.remarks,
     });
-    setFormData({ // Set formData to hold the id for submission
+    setFormData({
+      // Set formData to hold the id for submission
       id: record.bloodSugarId,
     });
     setShowForm(true);
@@ -160,21 +163,26 @@ const ClinicalBloodSugarMonitoring = ({ patientId, newPatientVisitId }) => {
           <table className="patientList-table" ref={tableRef}>
             <thead>
               <tr>
-                {["Date", "Time", "RBS", "Insulin", "Remarks", "Actions"].map((header, index) => (
-                  <th
-                    key={index}
-                    style={{ width: columnWidths[index] }}
-                    className="resizable-th"
-                  >
-                    <div className="header-content">
-                      <span>{header}</span>
-                      <div
-                        className="resizer"
-                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                      ></div>
-                    </div>
-                  </th>
-                ))}
+                {["Date", "Time", "RBS", "Insulin", "Remarks", "Actions"].map(
+                  (header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  )
+                )}
               </tr>
             </thead>
             <tbody>
@@ -193,7 +201,10 @@ const ClinicalBloodSugarMonitoring = ({ patientId, newPatientVisitId }) => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6" className="clinical-blood-sugar-monitoring-no-rows">
+                  <td
+                    colSpan="6"
+                    className="clinical-blood-sugar-monitoring-no-rows"
+                  >
                     No records found
                   </td>
                 </tr>
@@ -206,7 +217,11 @@ const ClinicalBloodSugarMonitoring = ({ patientId, newPatientVisitId }) => {
         {showForm && (
           <div className="clinical-blood-sugar-monitoring-right-panel">
             <div className="clinical-blood-sugar-monitoring-header">
-              <h3>{formData.id ? "Edit Blood Sugar Entry" : "Blood Sugar New Entry"}</h3>
+              <h3>
+                {formData.id
+                  ? "Edit Blood Sugar Entry"
+                  : "Blood Sugar New Entry"}
+              </h3>
               <button
                 className="clinical-blood-sugar-monitoring-close"
                 onClick={handleCloseForm}
@@ -277,7 +292,10 @@ const ClinicalBloodSugarMonitoring = ({ patientId, newPatientVisitId }) => {
                 >
                   Discard
                 </button>
-                <button type="submit" className="clinical-blood-sugar-monitoring-submit">
+                <button
+                  type="submit"
+                  className="clinical-blood-sugar-monitoring-submit"
+                >
                   {formData.id ? "Update" : "Save"}
                 </button>
               </div>

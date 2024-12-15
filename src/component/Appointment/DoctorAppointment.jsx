@@ -26,10 +26,9 @@ const [appointment,setAppointment]= useState([]);
       alert("Please select location, doctor, and date before loading slots.");
       return;
     }
-  
     try {
       const response = await axios.get(
-        `${API_BASE_URL}/schedules/by-location-and-doctor?locationId=${locationId}&doctorId=${doctorId}`
+        `${API_BASE_URL}/schedules/by-location-and-doctor?locationId=${locationId}&doctorId=${doctorId}&givenDate=${appointmentDate}`
       );
       const scheduleData = response.data;
   

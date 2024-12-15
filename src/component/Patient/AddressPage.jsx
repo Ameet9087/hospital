@@ -32,19 +32,14 @@ const AddressPage = ({ sendaddressdata, addressData }) => {
       ...prevState,
       [name]: value,
     }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    sendaddressdata(addressData);
-    alert("Address Information Saved Successfully ");
+    sendaddressdata({ ...addressDataPatient, [name]: value });
   };
 
   return (
     <div className="address-page-container">
       <div className="address-page-main-content">
         <h5>Address Information</h5>
-        <form onSubmit={handleSubmit} className='address-page-form'>
+        <form className='address-page-form'>
           <div className="address-page-form-row">
             <div className="address-page-form-group">
               <label htmlFor="addressType">Address Type<span className="mandatory">*</span> :</label>
@@ -142,11 +137,6 @@ const AddressPage = ({ sendaddressdata, addressData }) => {
               />
             </div>
             <div className="address-page-form-group"></div>
-          </div>
-          <div style={{textAlign:"right"}}>
-          <button type="submit" className="register-save-button">
-            Add Address
-          </button>
           </div>
         </form>
       </div>

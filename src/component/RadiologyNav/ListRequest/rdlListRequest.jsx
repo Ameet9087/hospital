@@ -137,8 +137,8 @@ function RDLListRequest() {
         request.imagingTypeDTO?.imagingTypeName.toUpperCase() ===
           selectedFilter;
       const matchesSearch =
-        request.patientDTO?.firstName.toLowerCase().includes(searchQuery) ||
-        request.patientDTO?.lastName.toLowerCase().includes(searchQuery) ||
+        request.inPatientDTO?.firstName.toLowerCase().includes(searchQuery) ||
+        request.inPatientDTO?.lastName.toLowerCase().includes(searchQuery) ||
         request.prescriberDTO?.firstName.toLowerCase().includes(searchQuery) ||
         request.imagingItemDTO?.imagingItemName
           .toLowerCase()
@@ -257,13 +257,13 @@ function RDLListRequest() {
                   <td>{index + 1}</td>
                   <td>{request.requestedDate}</td>
                   <td>
-                    {request.patientDTO?.firstName ||
-                      request.newPatientVisitDTO?.firstName}{" "}
-                    {request.patientDTO?.lastName ||
-                      request.newPatientVisitDTO?.lastName}
+                    {request.inPatientDTO?.firstName ||
+                      request.outPatientDTO?.firstName}{" "}
+                    {request.inPatientDTO?.lastName ||
+                      request.outPatientDTO?.lastName}
                   </td>
                   <td>
-                    {request.patientDTO?.age || request.newPatientVisitDTO?.age}
+                    {request.inPatientDTO?.age || request.outPatientDTO?.age}
                   </td>
                   <td>{request.prescriberDTO?.employeeName || "self"}</td>
                   <td>{request.imagingTypeDTO?.imagingTypeName}</td>

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./DoctorAppointmentPopUp.css";
 import CustomModal from "../CustomModel/CustomModal";
 import AddCancel from "./AddCancel";
 import { API_BASE_URL } from "../api/api";
+import axios from "axios";
 
 export default function DoctorAppointmentPopUp({
   date,
@@ -12,27 +13,31 @@ export default function DoctorAppointmentPopUp({
   handleSave,
   handleUpdate,
   handleDelete,
-  closeModal
+  closeModal,
 }) {
   const [formData, setFormData] = useState({
-    appointmentDate:updatedAppointments?.appointmentDate||date,
-    appointmentTime:updatedAppointments?.appointmentTime||selectedTimeSlot,
-    typeOfAppointment:updatedAppointments?.typeOfAppointment||"",
-    mobileNo: updatedAppointments?.mobileNo||"",
-    alternateMobileNo:updatedAppointments?.altMobileNo|| "",
-    initial:updatedAppointments?.initial|| "",
-    firstName:updatedAppointments?.firstName|| "",
-    middleName:updatedAppointments?.middleName||"",
-    lastName:updatedAppointments?.lastName||"",
-    dob:updatedAppointments?.dob|| "",
-    age:updatedAppointments?.age|| "",
-    sex:updatedAppointments?.sex|| "",
-    relativeName:updatedAppointments?.relativeName|| "",
-    address:updatedAppointments?.address|| "",
-    remarks:updatedAppointments?.remarks|| "",
-    adharCardId:updatedAppointments?.adharCardId||"",
-    email:updatedAppointments?.email|| "",
-    appointmentSourceType:updatedAppointments?.appointmentSourceType|| "",
+    appointmentDate: updatedAppointments?.appointmentDate || date,
+    appointmentTime: updatedAppointments?.appointmentTime || selectedTimeSlot,
+    typeOfAppointment: updatedAppointments?.typeOfAppointment || "",
+    mobileNo: updatedAppointments?.mobileNo || "",
+    alternateMobileNo: updatedAppointments?.altMobileNo || "",
+    initial: updatedAppointments?.initial || "",
+    firstName: updatedAppointments?.firstName || "",
+    middleName: updatedAppointments?.middleName || "",
+    lastName: updatedAppointments?.lastName || "",
+    dob: updatedAppointments?.dob || "",
+    age: updatedAppointments?.age || "",
+    sex: updatedAppointments?.sex || "",
+    relativeName: updatedAppointments?.relativeName || "",
+    address: updatedAppointments?.address || "",
+    remarks: updatedAppointments?.remarks || "",
+    adharCardId: updatedAppointments?.adharCardId || "",
+    email: updatedAppointments?.email || "",
+    country: updatedAppointments?.country||"",
+    state:updatedAppointments?.state|| "",
+    city:updatedAppointments?.city|| "",
+    pinCode:updatedAppointments?.pinCode|| "",
+    appointmentSourceType: updatedAppointments?.appointmentSourceType || "",
     status: updatedAppointments?.status || "",
     reason: updatedAppointments?.reason || "",
     addDoctor: {
@@ -41,25 +46,27 @@ export default function DoctorAppointmentPopUp({
   });
 
   const [errors, setErrors] = useState({});
-  const [outPatientId,setOutPatientId]=useState()
-  
-  const [showPopup,setShowPopup] = useState(false);
+  const [outPatientId, setOutPatientId] = useState();
+
+  const [showPopup, setShowPopup] = useState(false);
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     const currentDate = new Date();
     let updatedFormData = { ...formData, [name]: value };
-  
+
     if (name === "dob" && value) {
       // Calculate age when DOB is entered
       const birthDate = new Date(value);
       const age = currentDate.getFullYear() - birthDate.getFullYear();
       const isBeforeBirthday =
         currentDate.getMonth() < birthDate.getMonth() ||
-        (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() < birthDate.getDate());
+        (currentDate.getMonth() === birthDate.getMonth() &&
+          currentDate.getDate() < birthDate.getDate());
       updatedFormData.age = isBeforeBirthday ? age - 1 : age;
     }
-  
+
     if (name === "age" && value) {
       // Calculate DOB when age is entered, starting from January 1st
       const years = parseInt(value, 10);
@@ -67,10 +74,9 @@ export default function DoctorAppointmentPopUp({
       const dobFromJanuary = new Date(dobYear, 0, 1); // January 1st of the calculated year
       updatedFormData.dob = dobFromJanuary.toISOString().split("T")[0]; // Format as YYYY-MM-DD
     }
-  
+
     setFormData(updatedFormData);
   };
-  
 
   const validate = () => {
     let validationErrors = {};
@@ -87,55 +93,74 @@ export default function DoctorAppointmentPopUp({
   };
 
   const handleSaveClick = async () => {
-    const updateFormData= {
-      appointmentDate:date,
-    appointmentTime:selectedTimeSlot,
-    typeOfAppointment:formData?.typeOfAppointment||"",
-    mobileNo: formData?.mobileNo||"",
-    alternateMobileNo:formData?.altMobileNo|| "",
-    initial:formData?.initial|| "",
-    firstName:formData?.firstName|| "",
-    middleName:formData?.middleName||"",
-    lastName:formData?.lastName||"",
-    dob:formData?.dob|| "",
-    age:formData?.age|| "",
-    sex:formData?.sex|| "",
-    relativeName:formData?.relativeName|| "",
-    address:formData?.address|| "",
-    remarks:formData?.remarks|| "",
-    adharCardId:formData?.adharCardId||"",
-    email:formData?.email|| "",
-    appointmentSourceType:formData?.appointmentSourceType|| "",
-    status: "Initialized",
-    reason: formData?.reason || "",
-    addDoctor: {
-      doctorId: selectedDoctor || 0,
+    const updateFormData = {
+      appointmentDate: date,
+      appointmentTime: selectedTimeSlot,
+      typeOfAppointment: formData?.typeOfAppointment || "",
+      mobileNo: formData?.mobileNo || "",
+      alternateMobileNo: formData?.altMobileNo || "",
+      initial: formData?.initial || "",
+      firstName: formData?.firstName || "",
+      middleName: formData?.middleName || "",
+      lastName: formData?.lastName || "",
+      dob: formData?.dob || "",
+      age: formData?.age || "",
+      sex: formData?.sex || "",
+      relativeName: formData?.relativeName || "",
+      address: formData?.address || "",
+      remarks: formData?.remarks || "",
+      adharCardId: formData?.adharCardId || "",
+      email: formData?.email || "",
+      country: "",
+      state: "",
+      city: "",
+      pinCode: "",
+      appointmentSourceType: formData?.appointmentSourceType || "",
+      status: "Initialized",
+      reason: formData?.reason || "",
+      addDoctor: {
+        doctorId: selectedDoctor || 0,
+      },
+    };
+    if (formData.typeOfAppointment) {
+      updateFormData.outPatient = {
+        outPatientId: outPatientId,
+      };
     }
-    }
-    if(formData.typeOfAppointment){
-      updateFormData.outPatient={
-        outPatientId:outPatientId
+    try {
+      const response = await fetch(`${API_BASE_URL}/appointments`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updateFormData),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        alert("Appointment saved successfully!");
+        handleSave(result);
+        closeModal();
+      } else {
+        alert(result.message || "Failed to save the appointment.");
       }
+    } catch (error) {
+      console.error("Error saving appointment:", error);
+      alert("Error saving the appointment.");
     }
-      try {
-        const response = await fetch(`${API_BASE_URL}/appointments`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updateFormData),
-        });
-        const result = await response.json();
-        if (response.ok) {
-          alert("Appointment saved successfully!");
-          handleSave(result);
-          closeModal();
-        } else {
-          alert(result.message || "Failed to save the appointment.");
-        }
-      } catch (error) {
-        console.error("Error saving appointment:", error);
-        alert("Error saving the appointment.");
-      }
   };
+  const fetchDataByPinCode = async () => {
+    const response = await axios.get(
+      `${API_BASE_URL}/cities/area-details?areaPinCode=${formData.pinCode}`
+    );
+    setFormData((prevState) => ({
+      ...prevState,
+      country: response.data.countryName,
+      state: response.data.stateName,
+      city: response.data.cityName,
+    }));
+  };
+ 
+  useEffect(() => {
+    fetchDataByPinCode();
+  }, [formData.pinCode]);
 
   const handleUpdateClick = async () => {
     if (validate()) {
@@ -164,28 +189,31 @@ export default function DoctorAppointmentPopUp({
       alert("Please enter MR No.");
       return;
     }
-  
+
     try {
-      const response = await fetch(`${API_BASE_URL}/patients/outpatient?uhid=${formData.mrNo}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-  
+      const response = await fetch(
+        `${API_BASE_URL}/patients/outpatient?uhid=${formData.mrNo}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
       if (response.ok) {
         const patientData = await response.json();
-        console.log("Hello World ",patientData);
-        setOutPatientId(patientData[0]?.outPatientId)
+        console.log("Hello World ", patientData);
+        setOutPatientId(patientData[0]?.outPatientId);
         setFormData((prevData) => ({
           ...prevData,
           typeOfAppointment: "oldPatient",
           mobileNo: patientData[0]?.phoneNumber || "",
-          adharCardId:patientData[0]?.adharCardId||"",
+          adharCardId: patientData[0]?.adharCardId || "",
           alternateMobileNo: patientData[0]?.alternateMobileNo || "",
           initial: patientData[0]?.initial || "",
           firstName: patientData[0]?.firstName || "",
           middleName: patientData[0]?.middleName || "",
           lastName: patientData[0]?.lastName || "",
-          dob: patientData[0]?.dateOfBirth|| "",
+          dob: patientData[0]?.dateOfBirth || "",
           age: patientData[0]?.age || "",
           sex: patientData[0]?.gender || "",
           relativeName: patientData[0]?.relativeName || "",
@@ -195,8 +223,8 @@ export default function DoctorAppointmentPopUp({
           appointmentSourceType: patientData[0]?.appointmentSourceType || "",
           status: "Initialized",
           reason: patientData?.reason || "",
-          outPatient:{
-            outPatientId:patientData[0].outPatientId
+          outPatient: {
+            outPatientId: patientData[0].outPatientId,
           },
           addDoctor: {
             doctorId: selectedDoctor || 0, // Map doctorId if needed
@@ -211,15 +239,14 @@ export default function DoctorAppointmentPopUp({
       alert("Error fetching patient details.");
     }
   };
-  
 
-  const handleCancelClick =() => {
+  const handleCancelClick = () => {
     setShowPopup(true);
   };
-  const handleCancelClose = ()=>{
-    setShowPopup(false)
+  const handleCancelClose = () => {
+    setShowPopup(false);
     closeModal();
-  }
+  };
   return (
     <div className="operationschedule-modal">
       <h2 className="operationschedule-modal-title">
@@ -243,21 +270,20 @@ export default function DoctorAppointmentPopUp({
         </div>
 
         {formData.typeOfAppointment === "oldPatient" && (
-  <div className="operationschedule-form-row">
-    <div className="operationschedule-form-col">
-      <label>MR No</label>
-      <input
-        type="text"
-        name="mrNo"
-        value={formData.mrNo || ""}
-        onChange={handleInputChange}
-        onBlur={fetchPatientData}
-      />
-      {errors.mrNo && <span className="error-text">{errors.mrNo}</span>}
-    </div>
-  </div>
-)}
-
+          <div className="operationschedule-form-row">
+            <div className="operationschedule-form-col">
+              <label>MR No</label>
+              <input
+                type="text"
+                name="mrNo"
+                value={formData.mrNo || ""}
+                onChange={handleInputChange}
+                onBlur={fetchPatientData}
+              />
+              {errors.mrNo && <span className="error-text">{errors.mrNo}</span>}
+            </div>
+          </div>
+        )}
 
         {/* Row 3 */}
         <div className="operationschedule-form-row">
@@ -310,8 +336,8 @@ export default function DoctorAppointmentPopUp({
               onChange={handleInputChange}
             />
           </div>
-          </div>
-          <div className="operationschedule-form-row">
+        </div>
+        <div className="operationschedule-form-row">
           <div className="operationschedule-form-col">
             <label>Middle Name</label>
             <input
@@ -402,28 +428,41 @@ export default function DoctorAppointmentPopUp({
         </div>
 
         {/* Row 8 */}
-        {/* <div className="operationschedule-form-row">
+        <div className="operationschedule-form-row">
           <div className="operationschedule-form-col">
-            <label>User Name</label>
+            <label>Pin Code</label>
             <input
+              className="checkIn__input"
               type="text"
-              name="userName"
-              value={formData.userName || ""}
+              placeholder="PinCode"
+              name="pinCode"
+              value={formData.pinCode}
               onChange={handleInputChange}
-              disabled
+              required
             />
           </div>
           <div className="operationschedule-form-col">
-            <label>Doctor Name</label>
+            <label>City</label>
             <input
               type="text"
-              name="doctorName"
-              value={formData.doctorName || ""}
+              name="city"
+              value={formData.city || ""}
               onChange={handleInputChange}
             />
           </div>
-        </div> */}
+        </div>
 
+        <div className="operationschedule-form-row">
+          <div className="operationschedule-form-col">
+            <label>State</label>
+            <input
+              type="text"
+              name="state"
+              value={formData.state || ""}
+              onChange={handleInputChange}
+            />
+          </div>
+        </div>
         {/* Row 9 */}
         <div className="operationschedule-form-row">
           <div className="operationschedule-form-col">
@@ -452,16 +491,26 @@ export default function DoctorAppointmentPopUp({
 
       {/* Action Buttons */}
       <div className="operationschedule-modal-buttons">
-        <button onClick={handleSaveClick} className="operationschedule-save-btn">
+        <button
+          onClick={handleSaveClick}
+          className="operationschedule-save-btn"
+        >
           Save
         </button>
-        <button onClick={handleCancelClick} className="operationschedule-delete-btn">
+        <button
+          onClick={handleCancelClick}
+          className="operationschedule-delete-btn"
+        >
           Delete
         </button>
       </div>
 
-      <CustomModal isOpen={showPopup} onClose={()=>setShowPopup(false)}>
-        <AddCancel formData={formData} updatedAppointments={updatedAppointments}  onClose={handleCancelClose}/>
+      <CustomModal isOpen={showPopup} onClose={() => setShowPopup(false)}>
+        <AddCancel
+          formData={formData}
+          updatedAppointments={updatedAppointments}
+          onClose={handleCancelClose}
+        />
       </CustomModal>
     </div>
   );

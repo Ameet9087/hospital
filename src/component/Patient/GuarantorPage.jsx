@@ -36,23 +36,22 @@ const GuarantorPage = ({sendguarantordata,guarantorData}) => {
   
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setGuarantorDataPatient(prevState => ({
-      ...prevState,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+    const newValue = type === 'checkbox' ? checked : value;
+    setGuarantorDataPatient(prevState => {
+      const updatedData = { ...prevState, [name]: newValue };
+      
+      // Pass updated data to parent whenever there's a change
+      sendguarantordata(updatedData);
+
+      return updatedData;
+    });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    sendguarantordata(guarantorDataPatient);
-    alert("Guarantor Data Saved Successfully ")
-  };
 
   return (
     <div className="guarantor-page">
       <h5 style={{marginBottom:'20px'}}>Guarantor Information</h5>
-      <form onSubmit={handleSubmit} className='guarantor-page-form'>
+      <form className='guarantor-page-form'>
         <div className="guarantor-page-form-columns">
           <div className="guarantor-page-left-column">
             <div className="guarantor-page-relationpatient">
@@ -197,11 +196,6 @@ const GuarantorPage = ({sendguarantordata,guarantorData}) => {
             </div>
           </div>
         </div>
-      
-
-        <div style={{textAlign:"right"}}>
-            <button type="submit" className="guarantor-page-save-button" style={{textAlign:'right'}} >Save</button>
-       </div>
       </form>
     </div>
   );

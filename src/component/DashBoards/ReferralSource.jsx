@@ -2,10 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import "./ReferralSource.css";
 import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
+import OutPatient from "./OutPatient";
 
-const ReferralSource = ({ patientId, newPatientVisitId }) => {
-  console.log(newPatientVisitId);
-  
+const ReferralSource = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const [isAddModalOpen, setIsAddModalOpen] = useState(false); // Manage modal visibility
   const [referralData, setReferralData] = useState([]); // Store fetched referral data
@@ -28,14 +27,14 @@ const ReferralSource = ({ patientId, newPatientVisitId }) => {
     const fetchReferralData = async () => {
       try {
         let endpoint = "";
-  
+
         // Check if newPatientVisitId or admissionId is present
-        if (newPatientVisitId) {
-          endpoint = `${API_BASE_URL}/referral-sources/by-newVisitPatientId/${newPatientVisitId}`;
+        if (outPatientId) {
+          endpoint = `${API_BASE_URL}/referral-sources/by-newVisitPatientId/${outPatientId}`;
         } else if (patientId) {
           endpoint = `${API_BASE_URL}/referral-sources/by-patientId/${patientId}`;
         }
-  
+
         // If an endpoint is determined, fetch data
         if (endpoint) {
           const response = await fetch(endpoint);
@@ -51,13 +50,12 @@ const ReferralSource = ({ patientId, newPatientVisitId }) => {
         console.error("Error:", error);
       }
     };
-  
+
     // Fetch referral data if newPatientVisitId or admissionId exists
-    if (newPatientVisitId || patientId) {
+    if (outPatientId || patientId) {
       fetchReferralData();
     }
-  }, [patientId, newPatientVisitId,isAddModalOpen]); // Dependencies to re-fetch when IDs change
-  
+  }, [patientId, outPatientId, isAddModalOpen]); // Dependencies to re-fetch when IDs change
 
   const handleOpenModal = () => {
     setIsAddModalOpen(true); // Open modal
@@ -81,7 +79,7 @@ const ReferralSource = ({ patientId, newPatientVisitId }) => {
     const referrals =
       patientId > 0
         ? { ...formData, patientDTO: { patientId } }
-        : { ...formData, newPatientVisitDTO: { newPatientVisitId } };
+        : { ...formData, outPatientDTO: { outPatientId } };
 
     try {
       const response = await fetch(
@@ -121,57 +119,59 @@ const ReferralSource = ({ patientId, newPatientVisitId }) => {
               </button>
             </div>
             <div className="table-container">
-            <table className="patientList-table" ref={tableRef}>
-              <thead>
-                <tr>
-                  {[
-                    "Newspaper",
-                    "Doctor",
-                    "Radio",
-                    "Web Page",
-                    "Staff",
-                    "Friends and Family",
-                    "TV",
-                    "Magazine",
-                    "Unknown",
-                    "Note",
-                  ].map((header, index) => (
-                    <th
-                      key={index}
-                      style={{ width: columnWidths[index] }}
-                      className="resizable-th"
-                    >
-                      <div className="header-content">
-                        <span>{header}</span>
-                        <div
-                          className="resizer"
-                          onMouseDown={startResizing(
-                            tableRef,
-                            setColumnWidths
-                          )(index)}
-                        ></div>
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {referralData.map((referral, index) => (
-                  <tr key={index}>
-                    <td>{referral.newsPaper ==="true" ? "Yes" : "No"}</td>
-                    <td>{referral.doctor ==="true" ? "Yes" : "No"}</td>
-                    <td>{referral.radio ==="true" ? "Yes" : "No"}</td>
-                    <td>{referral.webPage ==="true" ? "Yes" : "No"}</td>
-                    <td>{referral.staff ==="true" ? "Yes" : "No"}</td>
-                    <td>{referral.friendsFamily ==="true" ? "Yes" : "No"}</td>
-                    <td>{referral.tv ==="true" ? "Yes" : "No"}</td>
-                    <td>{referral.magazine ==="true" ? "Yes" : "No"}</td>
-                    <td>{referral.unknown ==="true" ? "Yes" : "No"}</td>
-                    <td>{referral.note || "N/A"}</td>
+              <table className="patientList-table" ref={tableRef}>
+                <thead>
+                  <tr>
+                    {[
+                      "Newspaper",
+                      "Doctor",
+                      "Radio",
+                      "Web Page",
+                      "Staff",
+                      "Friends and Family",
+                      "TV",
+                      "Magazine",
+                      "Unknown",
+                      "Note",
+                    ].map((header, index) => (
+                      <th
+                        key={index}
+                        style={{ width: columnWidths[index] }}
+                        className="resizable-th"
+                      >
+                        <div className="header-content">
+                          <span>{header}</span>
+                          <div
+                            className="resizer"
+                            onMouseDown={startResizing(
+                              tableRef,
+                              setColumnWidths
+                            )(index)}
+                          ></div>
+                        </div>
+                      </th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {referralData.map((referral, index) => (
+                    <tr key={index}>
+                      <td>{referral.newsPaper === "true" ? "Yes" : "No"}</td>
+                      <td>{referral.doctor === "true" ? "Yes" : "No"}</td>
+                      <td>{referral.radio === "true" ? "Yes" : "No"}</td>
+                      <td>{referral.webPage === "true" ? "Yes" : "No"}</td>
+                      <td>{referral.staff === "true" ? "Yes" : "No"}</td>
+                      <td>
+                        {referral.friendsFamily === "true" ? "Yes" : "No"}
+                      </td>
+                      <td>{referral.tv === "true" ? "Yes" : "No"}</td>
+                      <td>{referral.magazine === "true" ? "Yes" : "No"}</td>
+                      <td>{referral.unknown === "true" ? "Yes" : "No"}</td>
+                      <td>{referral.note || "N/A"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
 

@@ -1,11 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react';
-import axios from 'axios';
-import './ClinicalDocument.css';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-import { API_BASE_URL } from '../api/api';
+import React, { useRef, useState, useEffect } from "react";
+import axios from "axios";
+import "./ClinicalDocument.css";
+import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { API_BASE_URL } from "../api/api";
 
-
-const ClinicalDocument = ({ patientId,newPatientVisitId }) => {
+const ClinicalDocument = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const [labRequests, setLabRequests] = useState([]);
   const [imagingRequisitions, setImagingRequisitions] = useState([]);
@@ -14,13 +13,14 @@ const ClinicalDocument = ({ patientId,newPatientVisitId }) => {
   useEffect(() => {
     const fetchLabRequests = () => {
       let endpoint = "";
-      if (newPatientVisitId) {
-        endpoint = `${API_BASE_URL}/lab-requests/by-opd-patient-id?opdPatientId=${newPatientVisitId}`;
+      if (outPatientId) {
+        endpoint = `${API_BASE_URL}/lab-requests/by-opd-patient-id?opdPatientId=${outPatientId}`;
       } else if (patientId) {
         endpoint = `${API_BASE_URL}/lab-requests/by-in-patient-id?inPatientId=${patientId}`;
       }
       if (endpoint) {
-        axios.get(endpoint)
+        axios
+          .get(endpoint)
           .then((response) => {
             if (response.data.length > 0) {
               setLabRequests(response.data);
@@ -34,13 +34,14 @@ const ClinicalDocument = ({ patientId,newPatientVisitId }) => {
 
     const fetchImagingRequisitions = () => {
       let endpoint = "";
-      if (patient.newPatientVisitId) {
+      if (patient.outPatientId) {
         endpoint = `${API_BASE_URL}/imaging-requisitions/by-opd-patient-id?opdPatientId=${patient.newPatientVisitId}`;
       } else if (patient.admissionId) {
         endpoint = `${API_BASE_URL}/imaging-requisitions/by-in-patient-id?inPatientId=${patient.admissionId}`;
       }
       if (endpoint) {
-        axios.get(endpoint)
+        axios
+          .get(endpoint)
           .then((response) => {
             if (response.data.length > 0) {
               setImagingRequisitions(response.data);
@@ -54,7 +55,7 @@ const ClinicalDocument = ({ patientId,newPatientVisitId }) => {
 
     fetchLabRequests();
     fetchImagingRequisitions();
-  }, [patient.newPatientVisitId, patient.admissionId]);
+  }, [patient.outPatientId, patient.admissionId]);
 
   const showLabReportResult = (lab) => {
     // Implement the logic to show lab report result
@@ -71,24 +72,35 @@ const ClinicalDocument = ({ patientId,newPatientVisitId }) => {
       <div className="Patient-Dashboard-outOutDiv">
         <h2>🧪 Labs</h2>
         {labRequests.length > 0 ? (
-          <div className='Patient-Dashboard-inputSection'>
-            <table border="1" cellPadding="10" cellSpacing="0" className='patient-table'>
+          <div className="Patient-Dashboard-inputSection">
+            <table
+              border="1"
+              cellPadding="10"
+              cellSpacing="0"
+              className="patient-table"
+            >
               <thead>
                 <tr>
-                  <th className='Patient-Dashboard-th'>Test</th>
-                  <th className='Patient-Dashboard-th'>Date</th>
-                  <th className='Patient-Dashboard-th'>Result</th>
+                  <th className="Patient-Dashboard-th">Test</th>
+                  <th className="Patient-Dashboard-th">Date</th>
+                  <th className="Patient-Dashboard-th">Result</th>
                 </tr>
               </thead>
               <tbody>
                 {labRequests.map((lab, index) => (
                   <tr key={index}>
-                    <td className='Patient-Dashboard-td'>{lab.labTestName}</td>
-                    <td className='Patient-Dashboard-td'>{lab.requisitionDate}</td>
-                    <td className='Patient-Dashboard-td'>
+                    <td className="Patient-Dashboard-td">{lab.labTestName}</td>
+                    <td className="Patient-Dashboard-td">
+                      {lab.requisitionDate}
+                    </td>
+                    <td className="Patient-Dashboard-td">
                       {lab.status === "Completed" ? (
-                        <button onClick={() => showLabReportResult(lab)}>View</button>
-                      ) : lab.status}
+                        <button onClick={() => showLabReportResult(lab)}>
+                          View
+                        </button>
+                      ) : (
+                        lab.status
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -103,26 +115,41 @@ const ClinicalDocument = ({ patientId,newPatientVisitId }) => {
       <div className="Patient-Dashboard-outOutDiv">
         <h2>🖼 Imaging</h2>
         {imagingRequisitions.length > 0 ? (
-          <div className='Patient-Dashboard-inputSection'>
-            <table border="1" cellPadding="10" cellSpacing="0" className='patient-table'>
+          <div className="Patient-Dashboard-inputSection">
+            <table
+              border="1"
+              cellPadding="10"
+              cellSpacing="0"
+              className="patient-table"
+            >
               <thead>
                 <tr>
-                  <th className='Patient-Dashboard-th'>Type</th>
-                  <th className='Patient-Dashboard-th'>Item</th>
-                  <th className='Patient-Dashboard-th'>Date</th>
-                  <th className='Patient-Dashboard-th'>Status</th>
+                  <th className="Patient-Dashboard-th">Type</th>
+                  <th className="Patient-Dashboard-th">Item</th>
+                  <th className="Patient-Dashboard-th">Date</th>
+                  <th className="Patient-Dashboard-th">Status</th>
                 </tr>
               </thead>
               <tbody>
                 {imagingRequisitions.map((imaging, index) => (
                   <tr key={index}>
-                    <td className='Patient-Dashboard-td'>{imaging.imagingTypeDTO.imagingTypeName}</td>
-                    <td className='Patient-Dashboard-td'>{imaging.imagingItemDTO.imagingItemName}</td>
-                    <td className='Patient-Dashboard-td'>{imaging.requestedDate}</td>
-                    <td className='Patient-Dashboard-td'>
+                    <td className="Patient-Dashboard-td">
+                      {imaging.imagingTypeDTO.imagingTypeName}
+                    </td>
+                    <td className="Patient-Dashboard-td">
+                      {imaging.imagingItemDTO.imagingItemName}
+                    </td>
+                    <td className="Patient-Dashboard-td">
+                      {imaging.requestedDate}
+                    </td>
+                    <td className="Patient-Dashboard-td">
                       {imaging.status === "Completed" ? (
-                        <button onClick={() => showImagingReport(imaging)}>View</button>
-                      ) : imaging.status}
+                        <button onClick={() => showImagingReport(imaging)}>
+                          View
+                        </button>
+                      ) : (
+                        imaging.status
+                      )}
                     </td>
                   </tr>
                 ))}

@@ -3,15 +3,16 @@ import "./ClinicalAllergy.css"; // Separate CSS file
 import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
+import OutPatient from "./OutPatient";
 
-const Allergy = ({ patientId, newPatientVisitId }) => {
+const Allergy = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [showForm, setShowForm] = useState(false);
-  const [showUpdateForm,setShowUpdateForm] = useState(false);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [allergies, setAllergies] = useState(null);
-  const [allergy,setAllergy]=useState({});
-  const [updateAllergy,setUpdateAllergy]= useState({});
+  const [allergy, setAllergy] = useState({});
+  const [updateAllergy, setUpdateAllergy] = useState({});
   const [formData, setFormData] = useState({
     recordedDate: new Date().toLocaleDateString(),
     typeOfAllergy: "",
@@ -21,8 +22,6 @@ const Allergy = ({ patientId, newPatientVisitId }) => {
     comments: "",
   });
 
-
-
   useEffect(() => {
     setUpdateAllergy({
       recordedDate: new Date().toLocaleDateString(),
@@ -30,7 +29,7 @@ const Allergy = ({ patientId, newPatientVisitId }) => {
       severity: allergy.severity || "",
       verified: allergy.verified || "",
       reaction: allergy.reaction || "",
-      comments: allergy.comments || ""
+      comments: allergy.comments || "",
     });
   }, [allergy]);
 
@@ -54,14 +53,14 @@ const Allergy = ({ patientId, newPatientVisitId }) => {
   useEffect(() => {
     const fetchAllergies = () => {
       let endpoint = "";
-  
+
       // Determine if newPatientVisitId or admissionId should be used
-      if (newPatientVisitId) {
-        endpoint = `${API_BASE_URL}/allergies/by-newVisitPatientId/${newPatientVisitId}`;
+      if (outPatientId) {
+        endpoint = `${API_BASE_URL}/allergies/by-newVisitPatientId/${outPatientId}`;
       } else if (patientId) {
         endpoint = `${API_BASE_URL}/allergies/by-patientId/${patientId}`;
       }
-  
+
       // Fetch data if a valid endpoint is determined
       if (endpoint) {
         axios
@@ -77,13 +76,12 @@ const Allergy = ({ patientId, newPatientVisitId }) => {
           });
       }
     };
-  
+
     // Fetch allergies if patient.newPatientVisitId or patient.admissionId exists
-    if (newPatientVisitId || patientId) {
+    if (outPatientId || patientId) {
       fetchAllergies();
     }
-  }, [newPatientVisitId, patientId,showForm,showUpdateForm]); // Dependencies to track ID changes
-  
+  }, [outPatientId, patientId, showForm, showUpdateForm]); // Dependencies to track ID changes
 
   // Handle radio input for severity
   const handleSeverityChange = (e) => {
@@ -150,10 +148,11 @@ const Allergy = ({ patientId, newPatientVisitId }) => {
     const allergy =
       patientId > 0
         ? { ...formData, patientDTO: { patientId } }
-        : { ...formData, newPatientVisitDTO: { newPatientVisitId } };
+        : { ...formData, outPatientDTO: { outPatientId } };
     console.log(allergy);
 
     try {
+      
       const response = await fetch(`${API_BASE_URL}/allergies/add`, {
         method: "POST",
         headers: {
@@ -179,20 +178,21 @@ const Allergy = ({ patientId, newPatientVisitId }) => {
       console.error("Error:", error);
       alert("Error submitting form");
     }
-  }; 
-
-
+  };
 
   const handleUpdateSubmit = async (e) => {
-    e.preventDefault();    
+    e.preventDefault();
     try {
-      const response = await fetch(`${API_BASE_URL}/allergies/update/${allergy.allergiesId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updateAllergy),
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/allergies/update/${allergy.allergiesId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updateAllergy),
+        }
+      );
 
       if (response.ok) {
         alert("Allergy added successfully!");
@@ -213,12 +213,12 @@ const Allergy = ({ patientId, newPatientVisitId }) => {
     }
   };
 
-  const updateAllergies = (allergies)=>{
+  const updateAllergies = (allergies) => {
     console.log(allergies);
-    
+
     setAllergy(allergies);
     setShowUpdateForm(true);
-  }
+  };
 
   return (
     <div className="allergy-container">
@@ -272,7 +272,9 @@ const Allergy = ({ patientId, newPatientVisitId }) => {
                   <td>{allergy.comments}</td>
                   <td>
                     {/* You can add an edit button here */}
-                    <button onClick={()=>updateAllergies(allergy)}>Edit</button>
+                    <button onClick={() => updateAllergies(allergy)}>
+                      Edit
+                    </button>
                   </td>
                 </tr>
               ))
@@ -415,7 +417,7 @@ const Allergy = ({ patientId, newPatientVisitId }) => {
           </div>
         )}
 
-{showUpdateForm && (
+        {showUpdateForm && (
           <div className="add-allergy-form">
             <div className="allergy-form-header">
               <h3>Update Allergy</h3>

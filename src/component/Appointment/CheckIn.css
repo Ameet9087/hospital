@@ -3,7 +3,6 @@
   padding: 20px;
   font-family: Arial, sans-serif;
   width: 100%;
-  height: 90vh;
   overflow: auto;
 }
 
@@ -38,8 +37,6 @@
 }
 
 .checkIn__content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   margin-top: 20px;
   gap: 10px;
 }
@@ -94,10 +91,15 @@
   width: calc(80% - 15px); */
 }
 
-.checkIn__name-inputs, .checkIn__age-inputs, .checkIn__phone-inputs,.checkIn__address-inputs,.checkIn__DOB-inputs {
+.checkIn__name-inputs, .checkIn__age-inputs, .checkIn__phone-inputs,.checkIn__Kin-inputs{
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
+}
+.checkIn__DOB-inputs,.checkIn__address-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 15px;
 }
 
 .checkIn__form-group--external {
@@ -224,4 +226,10 @@ flex-direction: column;
 
 .checkIn__input--address {
   margin-top: 5px;
+}
+
+.checkIn_search-con{
+  display: flex;
+  gap: 5px;
+  align-items: center;
 }

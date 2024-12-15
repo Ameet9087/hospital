@@ -4,7 +4,7 @@ import { Label } from "recharts";
 import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 
-const ActiveProblems = ({ patientId, newPatientVisitId }) => {
+const ActiveProblems = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -71,9 +71,8 @@ const ActiveProblems = ({ patientId, newPatientVisitId }) => {
     const fetchActiveProblems = async () => {
       let endpoint = "";
 
-      // Determine which endpoint to use based on available IDs
-      if (newPatientVisitId) {
-        endpoint = `${API_BASE_URL}/active-problems/by-newVisitPatientId/${newPatientVisitId}`;
+      if (outPatientId) {
+        endpoint = `${API_BASE_URL}/active-problems/by-newVisitPatientId/${outPatientId}`;
       } else if (patientId) {
         endpoint = `${API_BASE_URL}/active-problems/by-patientId/${patientId}`;
       }
@@ -96,18 +95,18 @@ const ActiveProblems = ({ patientId, newPatientVisitId }) => {
     };
 
     // Only fetch active problems if there is a newPatientVisitId or admissionId
-    if (newPatientVisitId || patientId) {
+    if (outPatientId || patientId) {
       fetchActiveProblems();
     }
-  }, [newPatientVisitId, patientId, isAddModalOpen]); // Dependencies to track ID changes
+  }, [outPatientId, patientId, isAddModalOpen]); // Dependencies to track ID changes
 
   useEffect(() => {
     const fetchPastProblems = async () => {
       let endpoint = "";
 
       // Determine which endpoint to use based on available IDs
-      if (newPatientVisitId) {
-        endpoint = `${API_BASE_URL}/past-problem/by-newPatientVisitId?newPatientVisitId=${newPatientVisitId}`;
+      if (outPatientId) {
+        endpoint = `${API_BASE_URL}/past-problem/by-newPatientVisitId?newPatientVisitId=${outPatientId}`;
       } else if (patientId) {
         endpoint = `${API_BASE_URL}/past-problem/by-patientId?patientId=${patientId}`;
       }
@@ -129,18 +128,20 @@ const ActiveProblems = ({ patientId, newPatientVisitId }) => {
       }
     };
 
-    if (newPatientVisitId || patientId) {
+    if (outPatientId || patientId) {
       fetchPastProblems();
     }
-  }, [newPatientVisitId, patientId, isAddPastModalOpen]); // Dependencies to track ID changes
+  }, [outPatientId, patientId, isAddPastModalOpen]); // Dependencies to track ID changes
 
   const handleSubmit = async () => {
     const formData =
       patientId > 0
         ? { ...activeProblem, patientDTO: { patientId } }
-        : { ...activeProblem, newPatientVisitDTO: { newPatientVisitId } };
+        : { ...activeProblem, outPatientDTO: { outPatientId } };
 
     try {
+      console.log(formData);
+
       const response = await fetch(
         `${API_BASE_URL}/active-problems/save-active-problem`,
         {
@@ -177,7 +178,7 @@ const ActiveProblems = ({ patientId, newPatientVisitId }) => {
     const formData =
       patientId > 0
         ? { ...newPastProblem, patientDTO: { patientId } }
-        : { ...newPastProblem, newPatientVisitDTO: { newPatientVisitId } };
+        : { ...newPastProblem, outPatientDTO: { outPatientId } };
 
     try {
       console.log(formData);

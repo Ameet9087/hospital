@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
-import './LabOrder.css';
-import { API_BASE_URL } from '../api/api';
+import React, { useState } from "react";
+import "./LabOrder.css";
+import { API_BASE_URL } from "../api/api";
 
-const LabOrder = ({ selectedOrders, setActiveSection, patientId, newPatientVisitId }) => {
-  console.log(patientId);
-  
+const LabOrder = ({
+  selectedOrders,
+  setActiveSection,
+  inPatientId,
+  outPatientId,
+}) => {
   const [ordersData, setOrdersData] = useState(
-    selectedOrders.map(order => ({
-      labTestName: order.labTestName || '',
-      urgency: order.urgency || 'Normal',
-      note: order.note || '',
+    selectedOrders.map((order) => ({
+      labTestName: order.labTestName || "",
+      urgency: order.urgency || "Normal",
+      note: order.note || "",
     }))
   );
 
@@ -22,53 +25,53 @@ const LabOrder = ({ selectedOrders, setActiveSection, patientId, newPatientVisit
 
   const handleSign = async () => {
     const payload = {
-      labTestName: ordersData[0].labTestName,  // Assuming you're sending only the first order's lab test name
+      labTestName: ordersData[0].labTestName, // Assuming you're sending only the first order's lab test name
       urgency: ordersData[0].urgency,
       note: ordersData[0].note,
-      status: "Pending", 
+      status: "Pending",
       requisitionDate: new Date().toISOString().slice(0, 10), // Current date in 'YYYY-MM-DD' format
       runNumber: "RN12345", // Example run number
-      labTestIds: selectedOrders.map(order => order.labTestId),  // Assuming each order contains labTestId
+      labTestIds: selectedOrders.map((order) => order.labTestId), // Assuming each order contains labTestId
     };
 
     const formData =
-        patientId > 0
-          ? { ...payload, patientDTO: { patientId } }
-          : { ...payload, newPatientVisitDTO: { newPatientVisitId } };
+    inPatientId> 0
+        ? { ...payload, inPatientDTO: { inPatientId } }
+        : { ...payload, outPatientDTO: { outPatientId } };
     console.log(formData);
 
     try {
       console.log(formData);
-      
+
       const response = await fetch(`${API_BASE_URL}/lab-requests/create`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        console.log('Lab order created successfully:');
+        console.log("Lab order created successfully:");
         setActiveSection();
       } else {
         // Handle error response
-        console.error('Error creating lab order:', response.statusText);
+        console.error("Error creating lab order:", response.statusText);
       }
     } catch (error) {
-      console.error('Network error:', error);
+      console.error("Network error:", error);
     }
   };
 
   const handleCancel = () => {
     setOrdersData(
-      selectedOrders.map(order => ({
-        labTestName: order.labTestName || '',
-        urgency: 'Normal',
-        note: '',
+      selectedOrders.map((order) => ({
+        labTestName: order.labTestName || "",
+        urgency: "Normal",
+        note: "",
       }))
     );
-    console.log('Cancelled');
+    console.log("Cancelled");
   };
 
   return (
@@ -89,7 +92,9 @@ const LabOrder = ({ selectedOrders, setActiveSection, patientId, newPatientVisit
                 <input
                   type="text"
                   value={order.labTestName}
-                  onChange={(e) => handleInputChange(index, 'labTestName', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(index, "labTestName", e.target.value)
+                  }
                   placeholder="Enter Lab Test Name"
                   className="table-input"
                 />
@@ -100,8 +105,10 @@ const LabOrder = ({ selectedOrders, setActiveSection, patientId, newPatientVisit
                     <input
                       type="radio"
                       value="Normal"
-                      checked={order.urgency === 'Normal'}
-                      onChange={(e) => handleInputChange(index, 'urgency', e.target.value)}
+                      checked={order.urgency === "Normal"}
+                      onChange={(e) =>
+                        handleInputChange(index, "urgency", e.target.value)
+                      }
                     />
                     Normal
                   </label>
@@ -109,8 +116,10 @@ const LabOrder = ({ selectedOrders, setActiveSection, patientId, newPatientVisit
                     <input
                       type="radio"
                       value="Urgent"
-                      checked={order.urgency === 'Urgent'}
-                      onChange={(e) => handleInputChange(index, 'urgency', e.target.value)}
+                      checked={order.urgency === "Urgent"}
+                      onChange={(e) =>
+                        handleInputChange(index, "urgency", e.target.value)
+                      }
                     />
                     Urgent
                   </label>
@@ -118,8 +127,10 @@ const LabOrder = ({ selectedOrders, setActiveSection, patientId, newPatientVisit
                     <input
                       type="radio"
                       value="STAT"
-                      checked={order.urgency === 'STAT'}
-                      onChange={(e) => handleInputChange(index, 'urgency', e.target.value)}
+                      checked={order.urgency === "STAT"}
+                      onChange={(e) =>
+                        handleInputChange(index, "urgency", e.target.value)
+                      }
                     />
                     STAT
                   </label>
@@ -128,7 +139,9 @@ const LabOrder = ({ selectedOrders, setActiveSection, patientId, newPatientVisit
               <td>
                 <textarea
                   value={order.note}
-                  onChange={(e) => handleInputChange(index, 'note', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(index, "note", e.target.value)
+                  }
                   className="table-textarea"
                 />
               </td>
@@ -137,10 +150,16 @@ const LabOrder = ({ selectedOrders, setActiveSection, patientId, newPatientVisit
         </tbody>
       </table>
       <div className="lab-action-container">
-        <button className="lab-action-container-btn lab-action-container-btn-sign" onClick={handleSign}>
+        <button
+          className="lab-action-container-btn lab-action-container-btn-sign"
+          onClick={handleSign}
+        >
           Sign
         </button>
-        <button className="lab-action-container-btn lab-action-container-btn-cancel" onClick={handleCancel}>
+        <button
+          className="lab-action-container-btn lab-action-container-btn-cancel"
+          onClick={handleCancel}
+        >
           Cancel
         </button>
       </div>

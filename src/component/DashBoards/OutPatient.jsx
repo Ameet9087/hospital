@@ -1,32 +1,33 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './OutPatient.css';
-import OpdList from '../DashBoards/Opd'; 
-import OutPatientFav from '../DashBoards/OutPatientFav';
-import OutPatientFollowUp from '../DashBoards/OutPatientFollowUp';
-import TableComponent from '../DashBoards/NewPatientsMyFavourite';
-import NewPatientFollowUpList from '../DashBoards/NewPatientFollowUpList';
-import PatientDashboard from '../DashBoards/PatientDashboard'; // Import the PatientDashboard component
-import { API_BASE_URL } from '../api/api';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import React, { useState, useEffect, useRef } from "react";
+import "./OutPatient.css";
+import OpdList from "../DashBoards/Opd";
+import OutPatientFav from "../DashBoards/OutPatientFav";
+import OutPatientFollowUp from "../DashBoards/OutPatientFollowUp";
+import TableComponent from "../DashBoards/NewPatientsMyFavourite";
+import NewPatientFollowUpList from "../DashBoards/NewPatientFollowUpList";
+import PatientDashboard from "../DashBoards/PatientDashboard"; // Import the PatientDashboard component
+import { API_BASE_URL } from "../api/api";
+import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import axios from "axios";
 
 const OutPatient = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
-  const [view, setView] = useState('newPatient');
+  const [view, setView] = useState("newPatient");
   const [showFavorites, setShowFavorites] = useState(false);
   const [showFollowUp, setShowFollowUp] = useState(false);
   const [isPatientOPEN, setIsPatientOPEN] = useState(false);
   const [patients, setPatients] = useState([]);
   const [filteredPatients, setFilteredPatients] = useState([]); // Filtered data
-  const [selectedDate, setSelectedDate] = useState(''); // State for the selected date
+  const [selectedDate, setSelectedDate] = useState(""); // State for the selected date
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedPatient, setSelectedPatient] = useState(null);
 
   const handleViewChange = (newView) => {
     setView(newView);
-    if (newView !== 'favorite') setShowFavorites(false);
-    if (newView !== 'followUp') setShowFollowUp(false);
+    if (newView !== "favorite") setShowFavorites(false);
+    if (newView !== "followUp") setShowFollowUp(false);
   };
 
   const toggleFavorites = () => {
@@ -45,31 +46,14 @@ const OutPatient = () => {
   const handleDateChange = (e) => {
     const date = e.target.value;
     setSelectedDate(date);
-    filterPatientsByDate(date);
-  };
-
-  const filterPatientsByDate = (date) => {
-    if (!date) {
-      setFilteredPatients(patients); // Show all patients if no date is selected
-      return;
-    }
-    const filtered = patients.filter((patient) =>
-      patient.visitDate === date // Adjust key to match the actual date property in your API
-    );
-    setFilteredPatients(filtered);
   };
 
   useEffect(() => {
     const fetchPatientData = async () => {
-      setIsLoading(true);
       try {
-        const response = await fetch(`${API_BASE_URL}/new-patient-visits`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setPatients(data);
-        setFilteredPatients(data); // Initialize with all patients
+        const response = await axios.get(`${API_BASE_URL}/appointments/today`);
+        setPatients(response.data);
+        console.log(response.data);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -81,27 +65,33 @@ const OutPatient = () => {
   }, []);
 
   if (isPatientOPEN) {
-    return <PatientDashboard isPatientOPEN={isPatientOPEN} setIsPatientOPEN={setIsPatientOPEN} patient={selectedPatient} />;
+    return (
+      <PatientDashboard
+        isPatientOPEN={isPatientOPEN}
+        setIsPatientOPEN={setIsPatientOPEN}
+        patient={selectedPatient}
+      />
+    );
   }
 
   return (
     <div className="OutPatient-out-patient">
       <div className="OutPatient-sub-nav">
         <button
-          className={view === 'newPatient' ? 'OutPatient-active' : ''}
-          onClick={() => handleViewChange('newPatient')}
+          className={view === "newPatient" ? "OutPatient-active" : ""}
+          onClick={() => handleViewChange("newPatient")}
         >
           New Patient
         </button>
         <button
-          className={view === 'opdRecord' ? 'OutPatient-active' : ''}
-          onClick={() => handleViewChange('opdRecord')}
+          className={view === "opdRecord" ? "OutPatient-active" : ""}
+          onClick={() => handleViewChange("opdRecord")}
         >
           OPD Record
         </button>
       </div>
 
-      {view === 'newPatient' && (
+      {view === "newPatient" && (
         <div>
           <div className="OutPatient-actions">
             <div className="OutPatient-actions-subDiv">
@@ -131,7 +121,11 @@ const OutPatient = () => {
               <option>Custom</option>
             </select>
             <div className="OutPatient-search">
-              <input className="OutPatient-input" type="text" placeholder="Search" />
+              <input
+                className="OutPatient-input"
+                type="text"
+                placeholder="Search"
+              />
               <button className="OutPatient-input">🔍</button>
             </div>
           </div>
@@ -139,7 +133,13 @@ const OutPatient = () => {
           <table className="patientList-table" ref={tableRef}>
             <thead>
               <tr>
-                {["Name", "Age/Sex", "VisitType", "Performer Name", "Actions"].map((header, index) => (
+                {[
+                  "Name",
+                  "Age/Sex",
+                  "VisitType",
+                  "Performer Name",
+                  "Actions",
+                ].map((header, index) => (
                   <th
                     key={index}
                     style={{ width: columnWidths[index] }}
@@ -149,7 +149,10 @@ const OutPatient = () => {
                       <span>{header}</span>
                       <div
                         className="resizer"
-                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
                       ></div>
                     </div>
                   </th>
@@ -157,13 +160,15 @@ const OutPatient = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredPatients.length > 0 ? (
-                filteredPatients.map((patient, index) => (
+              {patients.length > 0 ? (
+                patients?.map((patient, index) => (
                   <tr key={index}>
                     <td>{`${patient.firstName} ${patient.lastName}`}</td>
-                    <td>{patient.age}/{patient.sex}</td>
+                    <td>
+                      {patient.age}/{patient.sex}
+                    </td>
                     <td>{patient.visitType}</td>
-                    <td>{`${patient?.employeeDTO?.salutation} ${patient?.employeeDTO?.firstName} ${patient?.employeeDTO?.lastName}`}</td>
+                    <td>{`${patient?.addDoctor?.salutation} ${patient?.addDoctor?.doctorName}`}</td>
                     <td>
                       <button
                         className="OutPatient-action-button"
@@ -186,7 +191,7 @@ const OutPatient = () => {
         </div>
       )}
 
-      {view === 'opdRecord' && <OpdList />}
+      {view === "opdRecord" && <OpdList />}
 
       {showFavorites && <TableComponent />}
       {showFollowUp && <NewPatientFollowUpList />}

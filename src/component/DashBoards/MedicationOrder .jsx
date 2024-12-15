@@ -7,13 +7,12 @@ import { startResizing } from "../TableHeadingResizing/resizableColumns";
 
 const MedicationOrder = ({
   selectedOrders,
-  patientId,
-  newPatientVisitId,
+  inPatientId,
+  outPatientId,
   setActiveSection,
 }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
-  console.log(patientId + "" + newPatientVisitId);
 
   const [medicationList, setMedicationList] = useState(
     selectedOrders.map((order) => ({
@@ -26,9 +25,9 @@ const MedicationOrder = ({
       comments: "",
       status: "pending",
       medicationDate: new Date().toISOString().slice(0, 10),
-      ...(patientId
-        ? { patientDTO: { patientId } }
-        : { newPatientVisitDTO: { newPatientVisitId } }),
+      ...(inPatientId
+        ? { patientDTO: { inPatientId } }
+        : { outPatientDTO: { outPatientId } }),
     }))
   );
 

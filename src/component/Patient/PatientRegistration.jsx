@@ -1,11 +1,6 @@
  //prachi parab patientRegisteration css 13/9
 import React, { useEffect, useState } from 'react';
 import './PatientRegistration.css';
-import AddressPage from './AddressPage';
-import GuarantorPage from './GuarantorPage';
-import InsurancePage from './InsurancePage';
-import EmergencyContactPage from './EmergencyContactPage';
-import UploadPhotoPage from './UploadPhoto';
 const PatientRegistration = ({sendpatientdata,patientData}) => {
   const [formData, setFormData] = useState({
     salutation: '',
@@ -35,8 +30,8 @@ const PatientRegistration = ({sendpatientdata,patientData}) => {
   });
   useEffect(()=>{
     setFormData({
-      salutation: patientData?.salutation,
-      adharCardId:patientData?.adharCardId || '',
+    salutation: patientData?.salutation,
+    adharCardId:patientData?.adharCardId || '',
     firstName: patientData?.firstName || '',
     middleName:  patientData?.middleName ||'',
     lastName: patientData?.lastName ||'',
@@ -65,34 +60,41 @@ const PatientRegistration = ({sendpatientdata,patientData}) => {
   
 
   const handleChange = (e) => {
-  const { name, value } = e.target;
-
-  // Convert "yes"/"no" to true/false for Boolean fields
-  const booleanFields = ['notifications', 'dialysisPatient'];
-  let newValue = value;
-
-  if (booleanFields.includes(name)) {
-    newValue = value === 'yes' ? true : false;
-  }
-
-  setFormData(prevState => ({
-    ...prevState,
-    [name]: newValue
-  }));
-};
-
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    sendpatientdata(formData)
-    alert("Basic Information Saved Successfully ")
+    const { name, value } = e.target;
+    const currentDate = new Date();
+    const booleanFields = ['notifications', 'dialysisPatient'];
+    let updatedFormData = { ...formData, [name]: value };
+  
+    if (name === "dateOfBirth" && value) {
+      // Calculate age when DOB is entered
+      const birthDate = new Date(value);
+      const age = currentDate.getFullYear() - birthDate.getFullYear();
+      const isBeforeBirthday =
+        currentDate.getMonth() < birthDate.getMonth() ||
+        (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() < birthDate.getDate());
+      updatedFormData.age = isBeforeBirthday ? age - 1 : age;
+    }
+  
+    if (name === "age" && value) {
+      // Calculate DOB when age is entered, starting from January 1st
+      const years = parseInt(value, 10);
+      const dobYear = currentDate.getFullYear() - years;
+      const dobFromJanuary = new Date(dobYear, 0, 1); // January 1st of the calculated year
+      updatedFormData.dateOfBirth = dobFromJanuary.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+    }
+  
+    if (booleanFields.includes(name)) {
+      // Convert 'yes'/'no' to boolean for specific fields
+      updatedFormData[name] = value === 'yes' ? true : false;
+    }
+  
+    setFormData(updatedFormData);
+    sendpatientdata(updatedFormData);
   };
-
   return (
     <div className="patient-registration">
       <h5>Basic Information</h5>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div className="form-row">
         <div className="form-group">
           <label>Salutation:</label>
@@ -316,11 +318,6 @@ const PatientRegistration = ({sendpatientdata,patientData}) => {
             </select>
           </div>
         </div>
-       <div style={{textAlign:"right"}}>
-       <button type="submit" className="register-save-button" style={{textAlign:'right'}} >Save</button>
-
-       </div>
-       
       </form>
     </div>
   );
