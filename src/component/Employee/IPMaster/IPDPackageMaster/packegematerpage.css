@@ -1,0 +1,37 @@
+.packegemasterclassmaindiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    gap: 20px;
+    
+}
+.ipdmpackege{
+    background-color: var(--background-color);
+
+}
+.packegemasetersbuttons {
+    display: flex;
+    padding: 10px;
+    gap: 20px;
+}
+.packegemasetersbuttonsbtn ,.ipdpckgmasterformcbtn{
+    background-color: var(--button-color);
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+
+}
+.packegemasetersbuttonsbtn:hover, .ipdpckgmasterformcbtn:hover{
+    background-color: white;
+  color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+}
+
+.ipdpckgmasterformc input{
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 10px;
+}

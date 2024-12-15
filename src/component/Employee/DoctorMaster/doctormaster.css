@@ -1,0 +1,167 @@
+/* DoctorMaster.css */
+
+.doctormaster-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    width: 100%;
+  }
+  
+  .doctormaster-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .doctormaster-header-left h1 {
+    margin: 0;
+    color: #333;
+  }
+  
+  .doctormaster-header-right {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  
+  .doctormaster-button,.add-doctor-btn {
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .doctormaster-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color); 
+  }
+
+  .doctormasterspanheader{
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding:  3px;
+    font-size:18px;
+  }
+  
+  .doctormaster-main {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+    background: white;
+    border: 1px solid #ccc;
+  }
+  
+  .doctormaster-doctor-details,
+  .doctormaster-residence-details,
+  .doctormaster-clinic-details {
+    background: var(--background-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction:column;
+    width: 100%;
+
+  }
+
+  .docmasterformdata{
+    display: flex;
+    padding: 3px;
+  }
+  
+  .doctormaster-label {
+    width: 150px;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  
+  .doctormaster-select {
+    width: 60%;
+    padding: 5px;
+    margin-bottom: 15px;  
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  .doctormaster-input{
+  padding: 5px;
+  border: none;
+  background: none;
+  /* border: 1px solid #ccc; */
+  border-bottom: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: var(--font-size);
+
+width: 60%;
+  }
+  .doctormaster-input:focus{
+    border-bottom: 1px solid #ccc;
+    background: none;
+    outline: none;
+  }
+  
+  .doctormaster-input[type="date"] {
+    padding: 5px;
+  border: none;
+  background: none;
+  /* border: 1px solid #ccc; */
+  border-bottom: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: var(--font-size);
+  width: 50%;
+  }
+  
+  .doctormaster-upload {
+    margin-top: 20px;
+  }
+  
+  .doctormaster-upload-input {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  
+  .doctormaster-fee-table {
+    margin-top: 30px;
+  }
+  
+  .doctormaster-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .doctormaster-table th,
+  .doctormaster-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+  
+  .doctormaster-table th {
+    background-color: #3598dc;
+    color: white;
+  }
+  
+  .doctormaster-table td input {
+    width: 80%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .doctormaster-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  

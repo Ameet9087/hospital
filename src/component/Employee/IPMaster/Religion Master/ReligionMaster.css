@@ -1,0 +1,145 @@
+/* Container */
+.religion-master-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--background-color);
+    height: 90vh;
+    position: relative; /* Changed from fixed to relative for flexibility */
+}
+/* Header */
+.religion-master-header {
+    text-align: center;
+    color: black;
+    padding: 10px;
+    font-size: var(--heading-font); /* Increased for better visibility */
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.religion-master-header h2{
+    font-size: var(--heading-font); /* Increased for better visibility */
+}
+/* Form */
+.religion-master-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.religion-master-form label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--font-size);
+    width: 500px;
+}
+
+
+  .religion-master-form input[type="radio"] {
+    margin-right: 8px; /* Adds some space between the checkbox and label text */
+  }
+  
+.religion-master-input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+}
+/* Table */
+.religion-master-table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    margin-right: 200px;
+}
+
+.religion-master-table th,
+.religion-master-table td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.religion-master-table th {
+    background-color: #ccc;
+    color: black;
+}
+
+.religion-master-item-input,
+.religion-master-qty-input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+/* Sidebar */
+.religion-master-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: fixed;
+    right: 20px;
+    top: 100px; /* Adjusted for better alignment */
+    padding: 10px;
+    background-color: var(--background-color);
+    /* border: 1px solid #ccc; */
+    border-radius: 8px;
+    max-height: 80%;
+    overflow-y: auto; /* Added scroll for overflow */
+}
+
+.religion-master-btn {
+    padding: 5px;
+    width: 5%;
+    margin-left: 20px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: var(--font-size);
+    float: right;
+}
+
+.religion-master-btn:hover {
+    background-color: white;
+    color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+.religion-master-edit{
+    padding: 5px;
+    background-color: var(--button-color);
+    color: white;
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: var(--font-size);
+}
+.religion-master-edit:hover{
+    background-color: white;
+    color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .religion-master-container {
+        padding: 10px;
+    }
+
+    .religion-master-form label {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .religion-master-sidebar {
+        right: 10px;
+        top: 50px;
+    }
+}

@@ -3,6 +3,7 @@ import axios from 'axios';
 import './AddPurchaseOrder.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { API_BASE_URL } from '../../api/api';
 
 const AddPurchaseOrderDraft = () => {
   const date=new Date();
@@ -16,36 +17,40 @@ const [filteredItems, setFilteredItems] = useState([]);
     return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
   };
   const [formData, setFormData] = useState({
-    vendorId: null,
-    poDate: new Date().toISOString().split('T')[0],
-    deliveryDate: '',
-    items: [
-      {
-        category: '',
-        itemId: null,
-        itemName: '',
-        quantity: 1,
-        standardRate: 0,
-        totalAmount: 0,
-        remarks: '',
-      },
-    ],
+    vendorId: "",
+    vendorName: "",
+    currencyCode: "",
+    vendorContactNo: "",
+    vendorAddress: "",
+    poDate: "",
+    deliveryDate: "",
+    referenceNo: "",
+    invoicingAddress: "",
+    deliveryAddress: "",
+    contactPerson: "",
+    contactEmail: "",
+    paymentMode: "",
+    remarks: "",
+    items: [],
   });
 
 
+
 useEffect(() => {
-  axios.get('http://localhost:8080/api/items/getAllItem')
+  axios.get(`${API_BASE_URL}/items/getAllItem`)
     .then((response) => setItems(response.data))
     .catch((error) => console.error('Error fetching items:', error));
 }, []);
+console.log(items);
+
 
   // Fetch vendors and items on component mount
   useEffect(() => {
-    axios.get('http://localhost:8080/api/vendors/getAllVendors')
+    axios.get(`${API_BASE_URL}/vendors/getAllVendors`)
       .then((response) => setVendors(response.data))
       .catch((error) => console.error('Error fetching vendors:', error));
 
-    axios.get('http://localhost:8080/api/items/getAllItem')
+    axios.get(`${API_BASE_URL}/items/getAllItem`)
       .then((response) => setItems(response.data))
       .catch((error) => console.error('Error fetching items:', error));
   }, []);
@@ -62,6 +67,7 @@ useEffect(() => {
     updatedItems[index].totalAmount = 0;
     setFormData({ ...formData, items: updatedItems });
   };
+  
 
   const handleItemSelect = (index, itemId) => {
     const selectedItem = items.find((item) => item.id === itemId);
@@ -86,17 +92,17 @@ useEffect(() => {
   };
 
   const handleVendorSelect = (vendorId) => {
-    const vendor = vendors.find(v => v.id === vendorId);
+    const vendor = vendors.find((v) => v.id === vendorId);
     setSelectedVendor(vendor);
     setFormData({
       ...formData,
-      vendor: vendor.vendorName,
+      vendorId,
+      vendorName: vendor.vendorName,
       vendorContactNo: vendor.contactNumber,
       vendorAddress: vendor.contactAddress,
       contactPerson: vendor.contactPerson,
       contactEmail: vendor.email,
       currecyCode:vendor.currencyCode,
-      vendorId: vendor.id
     });
   };
 
@@ -104,17 +110,34 @@ useEffect(() => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleItemChange = (index, field, value) => {
     const updatedItems = [...formData.items];
     updatedItems[index][field] = value;
     setFormData({ ...formData, items: updatedItems });
   };
+  
 
   const addNewRow = () => {
     setFormData({
       ...formData,
-      items: [...formData.items, { /* Initialize with default values */ }]
+      items: [
+        ...formData.items,
+        {
+          itemId:0,
+          category: "",
+          itemName: "",
+          vendorItemCode: "",
+          mssNo: "",
+          hsnCode: "",
+          itemCode: "",
+          unit: "",
+          quantity: 0,
+          standardRate: 0,
+          vat: 0,
+          totalAmount: 0,
+          remarks: "",
+        },
+      ],
     });
   };
 
@@ -123,17 +146,53 @@ useEffect(() => {
     setFormData({ ...formData, items: updatedItems });
   };
 
-  const handleSubmit = () => {
-    axios.post('http://localhost:8080/api/purchase-orders/create', formData)
-      .then(response => {
-        alert('Purchase Order saved successfully!');
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error('Error saving purchase order:', error);
-        alert('Failed to save purchase order.');
-      });
+ const handleSubmit = () => {
+  const cleanedItems = formData.items.map((item) => ({
+    itemId: item.itemId,
+    category: item.category || "",
+    itemName: item.itemName || "",
+    vendorItemCode: item.vendorItemCode || "",
+    mssNo: item.mssNo || "",
+    hsnCode: item.hsnCode || "",
+    itemCode: item.itemCode || "",
+    unit: item.unit || "",
+    quantity: parseFloat(item.quantity) || 0,
+    standardRate: parseFloat(item.standardRate) || 0,
+    vat: parseFloat(item.vat) || 0,
+    totalAmount: parseFloat(item.totalAmount) || 0,
+    remarks: item.remarks || "",
+  }));
+
+  const payload = {
+    poDate: formData.poDate,
+    deliveryDate: formData.deliveryDate,
+    currencyCode: selectedVendor?.currencyCode || "",
+    referenceNo: formData.referenceNo || "",
+    invoicingAddress: formData.invoicingAddress || "",
+    deliveryAddress: formData.deliveryAddress || "",
+    contactPerson: formData.contactPerson || "",
+    contactEmail: formData.contactEmail || "",
+    paymentMode: formData.paymentMode || "",
+    remarks: formData.remarks || "",
+    subTotal: cleanedItems.reduce((sum, item) => sum + Number(item.totalAmount || 0), 0),
+    vat: cleanedItems.reduce((sum, item) => sum + Number(item.vat || 0), 0),
+    totalAmount: cleanedItems.reduce((sum, item) => sum + Number(item.totalAmount || 0), 0),
+    status: "Draft",
+    vendorId: formData.vendorId,
+    items: cleanedItems,
   };
+  console.log(payload);
+  axios
+    .post(`${API_BASE_URL}/purchase-orders/create`, payload)
+    .then((response) => {
+      alert("Purchase Order saved successfully!");
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.error("Error saving purchase order:", error);
+      alert("Failed to save purchase order.");
+    });
+};
 
   return (
     <div className="AddPurchaseOrder-add-purchase-order">
@@ -196,151 +255,184 @@ useEffect(() => {
         </div>
         <div className="AddPurchaseOrder-form-group">
           <label>Reference no:</label>
-          <input type="text" name="deliveryDate" value={formData.deliveryDate} onChange={handleInputChange} />
+          <input type="text" name="referenceNo" value={formData.referenceNo} onChange={handleInputChange} />
         </div>
         <div className="AddPurchaseOrder-form-group">
           <label>Invoicing Address:</label>
-          <input type="text" name="deliveryDate" value={formData.deliveryDate} onChange={handleInputChange} />
+          <input type="text" name="invoicingAddress" value={formData.invoicingAddress} onChange={handleInputChange} />
         </div>
         <div className="AddPurchaseOrder-form-group">
           <label>Contact Person:</label>
-          <input type="text" name="deliveryDate" value={formData.deliveryDate} onChange={handleInputChange} />
+          <input type="text" name="contactPerson" value={formData.contactPerson} onChange={handleInputChange} />
         </div>
         <div className="AddPurchaseOrder-form-group">
           <label>Contact Email:</label>
-          <input type="text" name="deliveryDate" value={formData.deliveryDate} onChange={handleInputChange} />
+          <input type="text" name="contactEmail" value={formData.contactEmail} onChange={handleInputChange} />
         </div>
       </div>
 
       {/* Items Table */}
       <table className="AddPurchaseOrder-items-table">
-        <thead>
-          <tr>
-            <th>Category</th>
-            <th>Item Name</th>
-            <th>Vendor's Item Code</th>
-            <th>MSS No.</th>
-            <th>HSN Code</th>
-            <th>item Code</th>
-            <th>Unit</th>
-            <th>Quantity</th>
-            <th>Standard Rate</th>
-            <th>VAT %</th>
-            <th>Total Amount</th>
-            <th>Remarks</th>
-            <th>Action</th>
-            {/* Add more headers as needed */}
-          </tr>
-        </thead>
-        <tbody>
-          {formData.items.map((item, index) => (
-            <tr key={index}>
-              <td>
-                <select
-                  value={item.category}
-                  className='purchaseorderItemSelect'
-                  onChange={(e) => handleItemChange(index, 'category', e.target.value)}
-                >
-                  <option value="Consumables">Consumables</option>
-                  <option value="Capital_goods">Capital Goods</option>
-                  {/* Add more options */}
-                </select>
-              </td>
-              <td>
-                <input
-                  type="text"
-                  className='purchaseorderItemInput'
-                  value={item.itemName}
-                  onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  className='purchaseorderItemInput'
-                  value={item.itemName}
-                  onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  className='purchaseorderItemInput'
-                  value={item.itemName}
-                  onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  className='purchaseorderItemInput'
-                  value={item.itemName}
-                  onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  className='purchaseorderItemInput'
-                  value={item.itemName}
-                  onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  className='purchaseorderItemInput'
-                  value={item.itemName}
-                  onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  className='purchaseorderItemInput'
-                  value={item.itemName}
-                  onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  className='purchaseorderItemInput'
-                  value={item.itemName}
-                  onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  className='purchaseorderItemInput'
-                  value={item.itemName}
-                  onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  className='purchaseorderItemInput'
-                  value={item.itemName}
-                  onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  className='purchaseorderItemInput'
-                  value={item.itemName}
-                  onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
-                />
-              </td>
-              <td><button className='Pro-Purchase-add-btn' onClick={() => removeRow(index)}><FontAwesomeIcon icon={faTrashAlt} size="lg" /></button>
-             </td>
-              {/* Add more cells */}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Item Name</th>
+      <th>Vendor's Item Code</th>
+      <th>MSS No.</th>
+      <th>HSN Code</th>
+      <th>Item Code</th>
+      <th>Unit</th>
+      <th>Quantity</th>
+      <th>Standard Rate</th>
+      <th>VAT %</th>
+      <th>Total Amount</th>
+      <th>Remarks</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  {formData.items.map((item, index) => (
+    <tr key={index}>
+      <td>
+        <select
+          value={item.category}
+          className="purchaseorderItemSelect"
+          onChange={(e) => handleItemChange(index, "category", e.target.value)}
+        >
+          <option value="Consumables">Consumables</option>
+          <option value="Capital_goods">Capital Goods</option>
+        </select>
+      </td>
+      <td>
+      <select
+  value={item.itemName}
+  className="purchaseorderItemSelect"
+  onChange={(e) => {
+    const selectedItem = items.find(
+      (itm) => itm.itemName === e.target.value
+    );
+    handleItemChange(index, "itemName", e.target.value);
+
+    if (selectedItem) {
+      handleItemChange(index, "itemId", selectedItem.id);
+      handleItemChange(index, "itemCode", selectedItem.itemCode);
+      handleItemChange(index, "unit", selectedItem.unitOfMeasurement.unitOfMeasurementName);
+      handleItemChange(index, "standardRate", selectedItem.standardRate);
+      handleItemChange(index, "totalAmount", 0); // Reset total amount
+    } else {
+      console.warn("Selected item not found");
+    }
+  }}
+>
+  <option value="">Select Item</option>
+  {items.map((itm, idx) => (
+    <option key={idx} value={itm.itemName}>
+      {itm.itemName}
+    </option>
+  ))}
+</select>
+      </td>
+      <td>
+        <input
+          type="text"
+          value={item.vendorItemCode || ""}
+          className="purchaseorderItemInput"
+          onChange={(e) => handleItemChange(index, "vendorItemCode", e.target.value)} // User input only
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          value={item.mssNo || ""}
+          className="purchaseorderItemInput"
+          onChange={(e) => handleItemChange(index, "mssNo", e.target.value)} // User input only
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          value={item.hsnCode || ""}
+          className="purchaseorderItemInput"
+          onChange={(e) => handleItemChange(index, "hsnCode", e.target.value)} // User input only
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          value={item.itemCode || ""}
+          className="purchaseorderItemInput"
+          readOnly
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          value={item.unit || ""}
+          className="purchaseorderItemInput"
+          readOnly
+        />
+      </td>
+      <td>
+        <input
+          type="number"
+          value={item.quantity || ""}
+          className="purchaseorderItemInput"
+          onChange={(e) => {
+            const quantity = e.target.value;
+            handleItemChange(index, "quantity", quantity);
+
+            // Calculate total amount dynamically
+            const totalAmount = quantity * (item.standardRate || 0);
+            handleItemChange(index, "totalAmount", totalAmount.toFixed(2));
+          }}
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          value={item.standardRate || ""}
+          className="purchaseorderItemInput"
+          readOnly
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          value={item.vat || ""}
+          className="purchaseorderItemInput"
+          onChange={(e) => handleItemChange(index, "vat", e.target.value)} // User input only
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          value={item.totalAmount || ""}
+          className="purchaseorderItemInput"
+          readOnly
+        />
+      </td>
+      <td>
+        <input
+          type="text"
+          value={item.remarks || ""}
+          className="purchaseorderItemInput"
+          onChange={(e) => handleItemChange(index, "remarks", e.target.value)} // User input only
+        />
+      </td>
+      <td>
+        <button
+          className="Pro-Purchase-add-btn"
+          onClick={() => removeRow(index)}
+        >
+          <FontAwesomeIcon icon={faTrashAlt} size="lg" />
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
+</table>
+
 
       <button className='purchaseorder-add-btn' onClick={addNewRow}>+ Add New Row</button>
 

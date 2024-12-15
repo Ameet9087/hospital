@@ -1,38 +1,49 @@
-import React, { useState, useRef } from 'react';
-import CustomModal from '../../../../CustomModel/CustomModal';  
-import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
-import "./countrymaster.css"
-
+import React, { useState, useRef, useEffect } from "react";
+import CustomModal from "../../../../CustomModel/CustomModal";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import "./countrymaster.css";
+import axios from "axios";
+import { API_BASE_URL } from "../../../api/api";
 
 function Countrymaster() {
-    const [columnWidths,setColumnWidths] = useState({});
-    const tableRef=useRef(null);
-  
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
+
   const [showModal, setShowModal] = useState(false);
   const [countries, setCountries] = useState([]);
   const [countryData, setCountryData] = useState({
-    countryId: '',
-    countryName: '',
-    countryShortName: '',
+    countryId: "",
+    countryName: "",
+    countryShortName: "",
   });
 
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
+
+  const fetchCountriesData = async () => {
+    const response = await axios.get(`${API_BASE_URL}/country`);
+    setCountries(response.data);
+  };
+
+  useEffect(() => {
+    fetchCountriesData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCountryData({ ...countryData, [name]: value });
   };
 
-  const handleAddCountry = () => {
-    setCountries([...countries, { ...countryData, countryId: countries.length + 1 }]);
-    setCountryData({ countryId: '', countryName: '', countryShortName: '' });
-    handleClose();
+  const handleAddCountry = async () => {
+    const response = await axios.post(`${API_BASE_URL}/country`, countryData);
+    if (response.status === 200) {
+      fetchCountriesData();
+      handleClose();
+    }
   };
 
   return (
     <div className="countrymaster-container">
-      <h1 className="countrymaster-title">Country Master</h1>
       <button className="countrymaster-add-btn" onClick={handleShow}>
         Add Country
       </button>
@@ -42,27 +53,28 @@ function Countrymaster() {
         <table className="countrymaster-table" ref={tableRef}>
           <thead>
             <tr>
-            {['Country ID', 'Country Name', 'Country Short Name'].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
+              {["Country ID", "Country Name", "Country Short Name"].map(
+                (header, index) => (
+                  <th
+                    key={index}
+                    style={{ width: columnWidths[index] }}
+                    className="resizable-th"
+                  >
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
+                      ></div>
+                    </div>
+                  </th>
+                )
+              )}
             </tr>
           </thead>
-
 
           <tbody>
             {countries.map((country, index) => (
@@ -100,8 +112,12 @@ function Countrymaster() {
           />
         </div>
         <div className="modal-footer">
-          <button className="countrymasterclose" onClick={handleClose}>Close</button>
-          <button className="countrymastersave" onClick={handleAddCountry}>Save Changes</button>
+          <button className="countrymasterclose" onClick={handleClose}>
+            Close
+          </button>
+          <button className="countrymastersave" onClick={handleAddCountry}>
+            Save Changes
+          </button>
         </div>
       </CustomModal>
     </div>

@@ -1,10 +1,13 @@
 .GoodsReceiptSettings-container {
   width: 92%;
+  height: 500px;
   margin: 0 auto;
   padding: 2px;
   background: #f9f9f9;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: scroll;
+  scrollbar-width: none;
 }
 /* 
 h2 {
@@ -55,14 +58,19 @@ h2 {
 
 .GoodsReceiptSettings-add-item-button {
   margin-top: 2px;
-  padding: 2px 8px;
+  padding: 5px 8px;
   background: var(--button-color);
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   display: block;
-  width: 20%;
+}
+.GoodsReceiptSettings-form-submit
+{
+  width: 100%;
+  display:flex ;
+  justify-content: end;
 }
 
 .GoodsReceiptSettings-add-item-button:hover {
@@ -80,7 +88,50 @@ h2 {
   cursor: pointer;
   display: inline-block;
 }
-
+.item-row input[type="text"]
+{
+  width: 100%;
+}
+.item-row input[type="date"]
+{
+  width: 100%;
+}
+.item-row input[type="number"]
+{
+  width: 100%;
+}
+.item-row select
+{
+  width: 100%;
+}
+.GoodsReceiptSettings-total-section
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.goods-receipts-form-group
+{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.goods-receipts-form-group input[type="date"]
+{
+  width: 300px;
+  border: 1px solid black;
+}
+.GoodsReceiptSettings-form-row-date
+{
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+.goods-receipts-form-group select
+{
+padding: 7px;
+}
 .GoodsReceiptSettings-btn-submit {
   background: var(--button-color);
   color: #fff;

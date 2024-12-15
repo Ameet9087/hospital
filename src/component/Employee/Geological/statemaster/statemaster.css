@@ -1,28 +1,7 @@
-/* Custom Modal Styles */
-/* .Cus-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.Cus-modal-container {
-  background-color: #fff;
-  border-radius: 8px;
-  width: 600px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-} */
-
 .statemaster-add-btn {
   margin-bottom: 20px;
   background-color: var(--button-bg-color);
+  color: white;
   padding: 5px;
   border-radius: 5px;
   border: 1px solid var(--button-hover-border-color);
@@ -57,8 +36,15 @@
   color: #333;
 }
 
+.statemaster-input-container{
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
 .statemaster-input-container input {
-  width: 100%;
+  width: 90%;
+  margin-right: 5px;
   padding: var(--input-box-padding);
   font-size: var(--font-size);
   margin-top: 5px;

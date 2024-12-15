@@ -40,6 +40,7 @@ function PurchaseOrder() {
   const handleViewDraftListClick = () => {
     setShowDraftListModal(true); // Open draft list modal
   };
+
   const closeDraftModal = () => {
     setShowDraftModal(false);
   };
@@ -51,10 +52,8 @@ function PurchaseOrder() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${API_BASE_URL}/purchase-orders`
-        );
-        setData(response.data);
+        const response = await axios.get(`${API_BASE_URL}/purchase-orders/getAll`);
+        setData(response.data); // Store the fetched data
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -73,75 +72,29 @@ function PurchaseOrder() {
           >
             Create Purchase Order
           </button>
-          <button
-            className="PurchaseOrder-start-draft-button"
-            onClick={handleStartDraftClick}
-          >
-            + Start New Draft
-          </button>
-          <button
-            className="PurchaseOrder-view-draft-button"
-            onClick={handleViewDraftListClick}
-          >
-            ⇱ View Draft List
-          </button>
         </div>
 
-        <div className="PurchaseOrder-date-range">
-          <label>
-            From: <input type="date" defaultValue="2024-07-11" />
-          </label>
-          <label>
-            To: <input type="date" defaultValue="2024-07-29" />
-          </label>
-
-        </div>
-
-        {/* <div className="PurchaseOrder-search-bar">
-          <input
-            className="PurchaseOrder-search-input"
-            type="text"
-            placeholder="Search"
-          />
-          <div>
-          <span className="PurchaseOrder-results">
-            Showing {data.length} results
-          </span>
-          <button className="PurchaseOrder-export-button">Export</button>
-          <ReactToPrint
-            trigger={() => (
-              <button className="PurchaseOrder-print-button">Print</button>
-            )}
-            content={() => componentRef.current}
-          />
+        <div className="InvoiceHeaders__table-header">
+          <div className="InvoiceHeaders__search-container">
+            <input
+              type="text"
+              placeholder="Search"
+              className="InvoiceHeaders__search-input"
+            />
           </div>
-        </div> */}
-
-
-
-<div className="InvoiceHeaders__table-header">
-      <div className="InvoiceHeaders__search-container">
-        <input
-          type="text"
-          placeholder="Search"
-          className="InvoiceHeaders__search-input"
-        />
-      </div>
-      <div>
-          <span className="PurchaseOrder-results">
-            Showing {data.length} results
-          </span>      
-<button className="PurchaseOrder-export-button">Export</button>
-          <ReactToPrint
-            trigger={() => (
-              <button className="PurchaseOrder-print-button">Print</button>
-            )}
-            content={() => componentRef.current}
-          />        </div>
-      </div>
-
-
-
+          <div>
+            <span className="PurchaseOrder-results">
+              Showing {data.length} results
+            </span>
+            <button className="PurchaseOrder-export-button">Export</button>
+            <ReactToPrint
+              trigger={() => (
+                <button className="PurchaseOrder-print-button">Print</button>
+              )}
+              content={() => componentRef.current}
+            />
+          </div>
+        </div>
 
         <div ref={componentRef}>
           <table className="PurchaseOrder-po-table">
@@ -151,7 +104,7 @@ function PurchaseOrder() {
                 <th>PO Date</th>
                 <th>PR No</th>
                 <th>Vendor Name</th>
-                <th>Vendor C...</th>
+                <th>Vendor Contact</th>
                 <th>Total Amount</th>
                 <th>PO Status</th>
                 <th>Verification Status</th>
@@ -165,8 +118,8 @@ function PurchaseOrder() {
                     <td>{row.id}</td>
                     <td>{row.poDate}</td>
                     <td>PR{row.id}</td>
-                    <td>{row.vendorName}</td>
-                    <td>{row.contactPerson}</td>
+                    <td>{row.vendor.vendorName}</td>
+                    <td>{row.vendor.contactNumber}</td>
                     <td>{row.totalAmount}</td>
                     <td>{row.status}</td>
                     <td>{row.status}</td>
@@ -205,21 +158,15 @@ function PurchaseOrder() {
       {/* Modal for AddPurchaseOrderDraft */}
       <CustomModal
         isOpen={showCreatePO}
-        onClose={()=>setShowCreatePO(false)}
+        onClose={() => setShowCreatePO(false)}
         style={customStyles}
         contentLabel="Add Purchase Order Draft Modal"
       >
-        {/* <button
-          onClick={closeModal}
-          className="PurchaseOrder-close-modal-button"
-        >
-          Close
-        </button> */}
         <AddPurchaseOrderDraft />
       </CustomModal>
 
       {/* Modal for starting a new draft */}
-      <CustomModal
+      {/* <CustomModal
         isOpen={showDraftModal}
         onRequestClose={closeDraftModal}
         style={customStyles}
@@ -232,10 +179,10 @@ function PurchaseOrder() {
           Close
         </button>
         <AddPurchaseOrderDraft />
-      </CustomModal>
+      </CustomModal> */}
 
       {/* Modal for View Draft List */}
-      <CustomModal
+      {/* <CustomModal
         isOpen={showDraftListModal}
         onRequestClose={closeDraftListModal}
         style={customStyles}
@@ -248,7 +195,7 @@ function PurchaseOrder() {
           Close
         </button>
         <PurchaseOrderDraftList />
-      </CustomModal>
+      </CustomModal> */}
     </>
   );
 }
