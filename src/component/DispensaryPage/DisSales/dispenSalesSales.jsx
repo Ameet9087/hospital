@@ -1,55 +1,326 @@
-import React, { useRef,useState,useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import "../DisSales/dispenSalesSales.css";
-import AddExternalReferral from './dispenSalesSales1AER';
-import AddNewPatient from './dispenSalesSalesAddNewPatient';
-import DispenSalessalesStockDetails from './dispenSalessalesStockDetails';
-import DispenSalesSalesList from './dispenSalesSalesList';
-import DispenSalesReturnFromCust from './dispenSalesReturnFromCust';
-import DispenSalesRetunSalesList from './dispenSalesRetunSalesList';
-import DispenSalesProvisionalBill from './dispenSalesProvisionalBill';
-import DispenSalesProvisionalSettelment from './dispenSalesProvisionalSettelment';
-import DispenSalesProvisionalReturn from './dispenSalesProvisionalReturn';
-import axios from 'axios';
-import { startResizing } from "../../TableHeadingResizing/resizableColumns"
-import CustomModal from '../../../CustomModel/CustomModal';
+import AddExternalReferral from "./dispenSalesSales1AER";
+import AddNewPatient from "./dispenSalesSalesAddNewPatient";
+import DispenSalessalesStockDetails from "./dispenSalessalesStockDetails";
+import DispenSalesSalesList from "./dispenSalesSalesList";
+import DispenSalesReturnFromCust from "./dispenSalesReturnFromCust";
+import DispenSalesRetunSalesList from "./dispenSalesRetunSalesList";
+import DispenSalesProvisionalBill from "./dispenSalesProvisionalBill";
+import DispenSalesProvisionalSettelment from "./dispenSalesProvisionalSettelment";
+import DispenSalesProvisionalReturn from "./dispenSalesProvisionalReturn";
+import axios from "axios";
+import "./DropdownWithSearch.css";
+import { API_BASE_URL } from "../../api/api";
+import SalesInvoice from "./SalesInvoice";
+import CustomModal from "../../../CustomModel/CustomModal";
+
 
 const SalesSales = () => {
   const [showExternalPopup, setShowExternalPopup] = useState(false);
   const [showPatientPopup, setShowPatientPopup] = useState(false);
   const [showStockDetailsPopup, setShowStockDetailsPopup] = useState(false); // State for stock details popup
-  const [activeTab, setActiveTab] = useState('Sale');
+  const [activeTab, setActiveTab] = useState("Sale");
   const [patients, setPatients] = useState([]); // State to store patients data
   const [selectedPatientId, setSelectedPatientId] = useState(null);
   const [selectedPatientInfo, setSelectedPatientInfo] = useState(null); // State to store selected patient info
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [options] = useState([patients.firstName]);
+
+  const [quantity, setQuantity] = useState(0);
+  const [subtotal, setSubtotal] = useState(0);
+  const [totalSubTotal, setTotalSubTotal] = useState(0);
+
+  const [totalAmount, setTotalAmount] = useState("");
+  const [tender, setTender] = useState("");
+  const [change, setChange] = useState(0);
+  const [remarks, setRemarks] = useState("");
+  const [paidAmount, setPaidAmount] = useState("");
+  const [paymentOption, setPaymentOption] = useState("Cash");
+
+  const [showInvoice, setShowInvoice] = useState(false);
+  const [invoiceData, setInvoiceData] = useState(null);
+
+  const handleClose = () => setShowInvoice(false);
+
+  const [medicines, setMedicines] = useState([{}]);
+  const [filteredMedicines, setFilteredMedicines] = useState([]);
+
+  const fetchInvoiceData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3155/api/patient-invoices"
+      );
+      console.log("API Response:", response.data);
+      setInvoiceData(response.data);
+      // Ensure API response matches expected structure
+    } catch (error) {
+      console.error("Error fetching invoice data:", error);
+    }
+  };
 
   useEffect(() => {
-    axios.get('http://localhost:1415/api/hospital/fetch-all-patients')
-      .then(response => {
-        // Extract only outPatientId and patientName
-        const patientData = response.data.map(patient => ({
-          outPatientId: patient.outPatientId,
-          patientName: patient.patientName,
+    fetchInvoiceData();
+    fetchMedicineDetails();
+  }, []);
+
+  const handlePrint = () => {
+    console.log("Printing Invoice...");
+    // Add print logic here
+  };
+  
+  const handleShowInvoice = () => setShowInvoice(true);
+
+  const handleMedicineSelect = (selectedMedicine) => {
+    // Update formData with the selected medicine details
+    setFormData({
+      ...formData,
+      medicineId:selectedMedicine.medicineId,
+      medicineName: selectedMedicine.medicineName,
+      genericName: selectedMedicine.genericName,
+      expiry: selectedMedicine.expiryDate,
+      batch: selectedMedicine.batchNumber,
+      availableQty: selectedMedicine.availableQty,
+      salePrice: selectedMedicine.salePrice,
+      qty: "", // Clear quantity for new selection
+      subTotal: "", // Clear subtotal for new selection
+    });
+
+    // Clear the suggestions after selection
+    setFilteredMedicines([]);
+  };
+  const fetchMedicineDetails = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3155/api/hospital/fetch-fetch-medicine-details"
+      );
+      // Store the entire API response in `medicines`
+      setMedicines(response.data || []);
+    } catch (error) {
+      console.error("Error fetching medicine details:", error);
+      alert("Failed to fetch medicine details. Please try again.");
+    }
+  };
+
+  // console.log(medicines)
+  const handlePrintInvoice = async () => {
+    const invoiceData = tableData.map((item) => ({
+      storeMedId: item.medicineId,
+      genericName: item.genericName,
+      medicineName: item.medicineName,
+      expiry: item.expiry,
+      batch: item.batch,
+      availableQty: parseInt(item.availableQty, 10), // Ensure availableQty is an integer
+      qty: parseInt(item.qty, 10), // Ensure qty is an integer
+      salePrice: parseFloat(item.salePrice), // Ensure salePrice is a double/float
+      subTotal: parseFloat(item.subTotal), // Ensure subTotal is a double/float
+    }));
+    console.log(invoiceData)
+    
+    try {
+      const response = await axios.post(
+        `http://localhost:3155/api/persons/${selectedPatientId}/medicines`,
+        invoiceData
+      );
+
+      if (response.status === 200 || response.status === 201) {
+        alert("Invoice Printed Successfully!");
+        setInvoiceData(response.data); // Corrected from response.body to response.data
+        setShowInvoice(true);
+        console.log("Response Data:", response.data);
+      } else {
+        alert("Failed to print the invoice. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error posting invoice:", error);
+      alert("Error occurred while printing invoice.");
+    }
+  };
+
+  const [formData, setFormData] = useState({
+    medicineId: "",  // Add this line for medicineId
+    genericName: "",
+    medicineName: "",
+    expiry: "",
+    batch: "",
+    availableQty: "",
+    qty: "",
+    salePrice: "",
+    subTotal: "",
+  });
+
+  const [tableData, setTableData] = useState([]);
+
+  // Add row to table
+  const addRowToTable = () => {
+    setTableData([...tableData, formData]);
+    // Clear the input fields after adding
+    setFormData({
+      medicineId: "",
+      genericName: "",
+      medicineName: "",
+      expiry: "",
+      batch: "",
+      availableQty: "",
+      qty: "",
+      salePrice: "",
+      subTotal: "",
+    });
+  };
+
+  const [ccCharge, setCcCharge] = useState(50);
+
+  const [items, setItems] = useState([
+    {
+      medicineId: "",
+      genericName: "",
+      genericItemName: "",
+      genericCode: "",
+      genericQty: "",
+      availableQty: "",
+      requestingQuantity: "",
+      genericRemark: "",
+    },
+  ]);
+
+  const calculateSubTotal = () => {
+    return tableData.reduce(
+      (total, row) => total + parseFloat(row.subTotal || 0),
+      0
+    );
+  };
+
+  const handleInputChange1 = (e) => {
+    const { name, value } = e.target;
+
+    // Update formData
+    let updatedFormData = { ...formData, [name]: value };
+
+    if (name === "medicineName") {
+      // Filter medicines based on the typed value for autocomplete
+      const filtered = medicines.filter((medicine) =>
+        medicine.medicineName.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredMedicines(filtered);
+    } else if (name === "qty" || name === "salePrice") {
+      // Calculate subtotal dynamically
+      const qty = parseFloat(updatedFormData.qty) || 0;
+      const salePrice = parseFloat(updatedFormData.salePrice) || 0;
+      updatedFormData.subTotal = (qty * salePrice).toFixed(2);
+    }
+
+    // Update the formData state
+    setFormData(updatedFormData);
+  };
+
+  const handleInputChange = (index, e) => {
+    const { name, value } = e.target;
+    const newItems = [...items];
+    newItems[index][name] = value;
+
+    setFormData({ ...formData, [name]: value });
+    setItems(newItems);
+  };
+
+  const handleRemoveRow = (indexToRemove) => {
+    const updatedTableData = tableData.filter(
+      (_, index) => index !== indexToRemove
+    );
+    setTableData(updatedTableData);
+  };
+
+  const addItem = () => {
+    setItems([
+      ...items,
+      {medicineId: "",
+        genericName: "",
+        genericItemName: "",
+        genericCode: "",
+        genericQty: "",
+        availableQty: "",
+        requestingQuantity: "",
+        genericRemark: "",
+      },
+    ]);
+  };
+
+  const removeItem = (index) => {
+    const newItems = [...items];
+    newItems.splice(index, 1);
+    setItems(newItems);
+  };
+
+  console.log(options);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8093/api/persons`)
+      .then((response) => {
+        const patientData = response.data.map((patient) => ({
+          uhid: patient.uhid,
+          firstName: patient.firstName,
+          middleName: patient.middleName,
+          lastName: patient.lastName,
           gender: patient.gender,
           age: patient.age,
-          contactNumber: patient.contactNumber,
+          phoneNumber: patient.phoneNumber,
           address: patient.address,
           country: patient.country,
-          pinCode: patient.pinCode
+          pinCode: patient.pinCode,
+          department: patient.department,
         }));
         setPatients(patientData);
+        console.log(patientData);
       })
-      .catch(error => {
-        console.error('Error fetching patients data:', error);
+      .catch((error) => {
+        console.error("Error fetching patients data:", error);
       });
+
+    setTotalSubTotal(calculateSubTotal());
+  }, [tableData]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/add-items`);
+        const items = response.data;
+
+        const generics = items.map((item) => item.genericNameDTO.genericName);
+        const medicines = items.map((item) => item.itemName);
+
+        setGenericNames([...new Set(generics)]); // Avoid duplicates
+        setMedicineNames([...new Set(medicines)]);
+        setCcCharge(items[0]?.ccCharge || 0);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
+
   useEffect(() => {
     if (selectedPatientId) {
-      const patient = patients.find(p => p.outPatientId === parseInt(selectedPatientId));
+      const patient = patients.find(
+        (p) => p.outPatientId === parseInt(selectedPatientId)
+      );
       setSelectedPatientInfo(patient);
     }
   }, [selectedPatientId, patients]);
+
+  useEffect(() => {
+    setSubtotal(ccCharge * quantity);
+  }, [ccCharge, quantity]);
+
+  const filteredPatients = patients.filter((patient) => {
+    const fullName = `${patient.firstName} ${patient.middleName || ""} ${
+      patient.lastName
+    }`.toLowerCase();
+    return (
+      fullName.includes(searchTerm.toLowerCase()) ||
+      (patient.uhid && patient.uhid.toString().includes(searchTerm))
+    );
+  });
 
   const handleExternalPopupOpen = () => {
     setShowExternalPopup(true);
@@ -81,319 +352,473 @@ const SalesSales = () => {
     <div className="dispenSalesSales-sales-container">
       <div className="dispenSalesSales-header">
         <div className="dispenSalesSales-tabs">
-           <div 
-            className={`dispenSalesSales-tab ${activeTab === 'Sale' ? 'dispenSalesSales-tab-active' : ''}`}
-            onClick={() => handleTabClick('Sale')}
+          <div
+            className={`dispenSalesSales-tab ${
+              activeTab === "Sale" ? "dispenSalesSales-tab-active" : ""
+            }`}
+            onClick={() => handleTabClick("Sale")}
           >
             Sale
           </div>
-          <div 
-            className={`dispenSalesSales-tab ${activeTab === 'Sale List' ? 'dispenSalesSales-tab-active' : ''}`}
-            onClick={() => handleTabClick('Sale List')}
+          <div
+            className={`dispenSalesSales-tab ${
+              activeTab === "Sale List" ? "dispenSalesSales-tab-active" : ""
+            }`}
+            onClick={() => handleTabClick("Sale List")}
           >
             Sale List
           </div>
           <div
-           className={`dispenSalesSales-tab ${activeTab === 'Return From Customer' ? 'dispenSalesSales-tab-active' : ''}`}
-           onClick={() => handleTabClick('Return From Customer')}
+            className={`dispenSalesSales-tab ${
+              activeTab === "Return From Customer"
+                ? "dispenSalesSales-tab-active"
+                : ""
+            }`}
+            onClick={() => handleTabClick("Return From Customer")}
           >
-            Return From Customer</div>
-          <div 
-  className={`dispenSalesSales-tab ${activeTab === 'Return Sale List' ? 'dispenSalesSales-tab-active' : ''}`}
-  onClick={() => handleTabClick('Return Sale List')} 
-           >
-            Return Sale List</div>
-          <div 
- className={`dispenSalesSales-tab ${activeTab === 'Provisional Bills' ? 'dispenSalesSales-tab-active' : ''}`}
- onClick={() => handleTabClick('Provisional Bills')} 
-           >
-            Provisional Bills</div>
-          <div 
- className={`dispenSalesSales-tab ${activeTab === 'Settlement' ? 'dispenSalesSales-tab-active' : ''}`}
- onClick={() => handleTabClick('Settlement')} 
-           >Settlement</div>
-          <div 
- className={`dispenSalesSales-tab ${activeTab === 'Provisional Return' ? 'dispenSalesSales-tab-active' : ''}`}
- onClick={() => handleTabClick('Provisional Return')}           
-          
-          >Provisional Return</div>
+            Return From Customer
+          </div>
+          <div
+            className={`dispenSalesSales-tab ${
+              activeTab === "Return Sale List"
+                ? "dispenSalesSales-tab-active"
+                : ""
+            }`}
+            onClick={() => handleTabClick("Return Sale List")}
+          >
+            Return Sale List
+          </div>
+          <div
+            className={`dispenSalesSales-tab ${
+              activeTab === "Provisional Bills"
+                ? "dispenSalesSales-tab-active"
+                : ""
+            }`}
+            onClick={() => handleTabClick("Provisional Bills")}
+          >
+            Provisional Bills
+          </div>
+          <div
+            className={`dispenSalesSales-tab ${
+              activeTab === "Settlement" ? "dispenSalesSales-tab-active" : ""
+            }`}
+            onClick={() => handleTabClick("Settlement")}
+          >
+            Settlement
+          </div>
+          <div
+            className={`dispenSalesSales-tab ${
+              activeTab === "Provisional Return"
+                ? "dispenSalesSales-tab-active"
+                : ""
+            }`}
+            onClick={() => handleTabClick("Provisional Return")}
+          >
+            Provisional Return
+          </div>
         </div>
       </div>
-      {activeTab === 'Sale' ? (
+      {activeTab === "Sale" ? (
         <>
-      <div className="dispenSalesSales-patient-info">
-      <div className="dispenSalesSales-patient-search">
+          <div className="dispenSalesSales-patient-info">
+            <div className="dispenSalesSales-patient-search">
               <label>Search Patient:</label>
-              <select
-                value={selectedPatientId || ''}
-                onChange={(e) => setSelectedPatientId(e.target.value)}
-                className="dispenSalesSales-patient-dropdown"
-              >
-                <option value="">--Select Patient--</option>
-                {patients.map(patient => (
-                  <option key={patient.outPatientId} value={patient.outPatientId}>
-                    {patient.patientName}
-                  </option>
-                ))}
-              </select>
-            </div>
-            {/* {selectedPatientInfo && (
-              <div className="dispenSalesSales-hospital-info">
-                <div className="dispenSalesSales-hospital-info-subDiv">
-                  <div>Hospital No: {selectedPatientInfo.outPatientId}</div>
-                  <div>Name: {selectedPatientInfo.patientName}</div>
-                  <div>Age/Sex: {selectedPatientInfo.age} / {selectedPatientInfo.gender}</div>
-                  <div>Address: {selectedPatientInfo.address}</div>
-                  <div>Contact No: {selectedPatientInfo.contactNumber}</div>
+              <input
+                type="text"
+                placeholder="Type to search patient"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="dispenSalesSales-patient-input"
+              />
+              {filteredPatients.length > 0 && searchTerm && (
+                <div className="dispenSalesSales-dropdown">
+                  {filteredPatients.map((patient) => (
+                    <div
+                      key={patient.uhid}
+                      onClick={() => {
+                        setSelectedPatientId(patient.uhid);
+                        setSelectedPatientInfo(patient); // Set selected patient info directly
+                        setSearchTerm(
+                          `${patient.firstName} ${patient.lastName}`
+                        ); // Set search term to patient's name
+                      }}
+                      className="dispenSalesSales-dropdown-option"
+                    >
+                      {`${patient.firstName} ${patient.lastName} - UHID: ${patient.uhid}`}
+                    </div>
+                  ))}
                 </div>
+              )}
+            </div>
+
+         
+            <div className="dispenSalesSales-doctor-info">
+              <label>Doctor:</label>
+              <input type="text" value="ANONYMOUS DOCTOR" readOnly />
+              <input type="checkbox" id="external" />
+              <label htmlFor="external">External?</label>
+              <button
+                className="dispenSalesSales-add-button"
+                onClick={handleExternalPopupOpen}
+              >
+                +
+              </button>
+            </div>
+
+            {/* Conditionally render the AddExternalReferral popup */}
+            {showExternalPopup && (
+              <div className="addExternalReferral-popup-overlay">
+                <AddExternalReferral onClose={handleExternalPopupClose} />
               </div>
-            )} */}
-        <div className="dispenSalesSales-doctor-info">
-          <label>Doctor:</label>
-          <input type="text" value="ANONYMOUS DOCTOR" readOnly />
-          <input type="checkbox" id="external" />
-          <label htmlFor="external">External?</label>
-          <button className="dispenSalesSales-add-button" onClick={handleExternalPopupOpen}>+</button>
-        </div>
+            )}
 
-        {/* Conditionally render the AddExternalReferral popup */}
-        {showExternalPopup && (
-          // <div className="addExternalReferral-popup-overlay">
-          <CustomModal isOpen={handleExternalPopupOpen} onClose={handleExternalPopupClose}>
+            <div className="dispenSalesSales-register-patient">
+              <span onClick={handlePatientPopupOpen}>
+                Register New Outdoor Patient |
+              </span>
+              <span onClick={handleStockDetailsPopupOpen}>Stock Details</span>
+            </div>
 
-            <AddExternalReferral onClose={handleExternalPopupClose} />
-          </CustomModal>
-          // </div>
-        )}
+            {/* Conditionally render the AddNewPatient popup */}
+            {showPatientPopup && (
+              <div className="salesAddNewPatient-popup-overlay">
+                <AddNewPatient onClose={handlePatientPopupClose} />
+              </div>
+            )}
+            {/* Conditionally render the DispenSalessalesStockDetails popup */}
+            {showStockDetailsPopup && (
+              <div className="salesStockDetails-popup-overlay">
+                <DispenSalessalesStockDetails />
+                <button
+                  onClick={handleStockDetailsPopupClose}
+                  className="dispenSalessalesStockDetails-close-popup-btn"
+                >
+                  X
+                </button>
+              </div>
+            )}
+          </div>
 
-        <div className="dispenSalesSales-register-patient">
-          <span onClick={handlePatientPopupOpen}>Register New Outdoor Patient  |</span>
-          <span onClick={handleStockDetailsPopupOpen}>Stock Details</span>
-        </div>
-
-        {/* Conditionally render the AddNewPatient popup */}
-        {showPatientPopup && (
-          // <div className="salesAddNewPatient-popup-overlay">
-          <CustomModal isOpen={handlePatientPopupOpen} onClose={handlePatientPopupClose}>
-
-            <AddNewPatient />
-          </CustomModal>
-          // </div>
-        )}
-          {/* Conditionally render the DispenSalessalesStockDetails popup */}
-      {showStockDetailsPopup && (
-        // <div className="salesStockDetails-popup-overlay">
-        <CustomModal isOpen={handleStockDetailsPopupOpen} onClose={handleStockDetailsPopupClose}>
-
-          <DispenSalessalesStockDetails />
-        </CustomModal>
-          // <button onClick={handleStockDetailsPopupClose} className="dispenSalessalesStockDetails-close-popup-btn">X</button>
-        // </div>
-      )}
-      </div>
-
-      <div className="dispenSalesSales-hospital-info">
-        {/* <div className="dispenSalesSales-hospital-info-subDiv">
-          <div>Hospital No:</div>
-          <div>Name: </div>
-          <div>Age/Sex: </div>
-          <div>Address: </div>
-          <div>Contact No:</div>
-        </div> */}
-                    {selectedPatientInfo && (
+          <div className="dispenSalesSales-hospital-info">
+       
+            {selectedPatientInfo && (
               <div className="dispenSalesSales-hospital-info">
                 <div className="dispenSalesSales-hospital-info-subDiv">
                   <div>Hospital No: {selectedPatientInfo.outPatientId}</div>
-                  <div>Name: {selectedPatientInfo.patientName}</div>
-                  <div>Age/Sex: {selectedPatientInfo.age} / {selectedPatientInfo.gender}</div>
+                  <div>
+                    Name:{" "}
+                    {`${selectedPatientInfo.firstName} ${selectedPatientInfo.lastName}`}
+                  </div>
+                  <div>
+                    Age/Sex: {selectedPatientInfo.age} /{" "}
+                    {selectedPatientInfo.gender}
+                  </div>
                   <div>Address: {selectedPatientInfo.address}</div>
-                  <div>Contact No: {selectedPatientInfo.contactNumber}</div>
+                  <div>Contact No: {selectedPatientInfo.phoneNumber}</div>
                 </div>
               </div>
             )}
-        <div className="dispenSalesSales-hospital-info-subDiv">
-          <div>Visit Type: outpatient</div>
-          <div>Membership:</div>
-          <select>
-            <option>Astra</option>
-            <option>BRITAM</option>
-            <option>General</option>
-            <option>ABC</option>
-            <option>XYZ</option>
-            <option>PQR</option>
-            <option>SVT</option>
-          </select>
-          <div>Price Category:</div>
-          <select>
-            <option>Normal</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="dispenSalesSales-medicineInfo-N-paymentSection">
-        <div className="dispenSalesSales-medicineInfo-N-invoiceSummary">
-          <div className="dispenSalesSales-medicine-info">
-            <div>
-              <label>Generic Name</label>
-              <input type="text" placeholder="--Select Generic Name--" />
-            </div>
-            <div>
-              <label>Drug/Medicine Name</label>
-              <input type="text" placeholder="--Select Medicine--" />
-            </div>
-            <div className="dispenSalesSales-Expiry">
-              <label>Expiry</label>
-              <input type="text" />
-            </div>
-            <div className="dispenSalesSales-Batch">
-              <label>Batch</label>
-              <input type="text" />
-            </div>
-            <div className="dispenSalesSales-Avl-Qty">
-              <label>Avl Qty</label>
-              <input type="text" />
-            </div>
-            <div className="dispenSalesSales-Qty">
-              <label>Qty</label>
-              <input type="text" />
-            </div>
-            <div className="dispenSalesSales-QSalePricety">
-              <label>Sale Price</label>
-              <input type="text" value="0" readOnly />
-            </div>
-            <div className="dispenSalesSales-SubTotal">
-              <label>SubTotal</label>
-              <input type="text" value="0" readOnly />
-              <button className="dispenSalesSales-add-button">+</button>
+            <div className="dispenSalesSales-hospital-info-subDiv">
+              <div>Visit Type: outpatient</div>
+              <div>Membership:</div>
+              <select>
+                <option>Astra</option>
+                <option>BRITAM</option>
+                <option>General</option>
+                <option>ABC</option>
+                <option>XYZ</option>
+                <option>PQR</option>
+                <option>SVT</option>
+              </select>
+              <div>Price Category:</div>
+              <select>
+                <option>Normal</option>
+              </select>
             </div>
           </div>
 
-          {/* <div className="dispenSalesSales-invoice-summary"> */}
-          <div className="table-container">
-          <table ref={tableRef}>
-          <thead>
-            
-                <tr>
-                {[
-                  "#",
-                  "GenericName",
-                  "ItemName",
-                  "Expiry",
-                  "Batch",
-                  "Qty",
-                  "SalePrice",
-                  "SubTotal",
-                  "Discount Amt.",
-                  "VAT Amt.",
-                  "Total"
-                ].map((header, index) => (
-                  <th
-                    key={index}
-                    style={{ width: columnWidths[index] }}
-                    className="resizable-th"
-                  >
-                    <div className="header-content">
-                      <span>{header}</span>
-                      <div
-                        className="resizer"
-                        onMouseDown={startResizing(
-                          tableRef,
-                          setColumnWidths
-                        )(index)}
-                      ></div>
-                    </div>
-                  </th>
-                ))}
-                </tr>
-              </thead>
-              <tbody>
-                {/* Add table rows dynamically here */}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div className="dispenSalesSales-payment-section">
-          <div className="dispenSalesSales-payment-summary">
-            <div className="dispenSalesSales-payment-summary-subDiv">
-              Sub Total:
-              <input type="text" placeholder='0'/>
-            </div>
-            <div className="dispenSalesSales-payment-summary-subDiv">
-              Total Amount:
-              <input type="text" placeholder='0'/>
-            </div>
-            <div className="dispenSalesSales-payment-summary-subDiv">In Words: Only.</div>
-            <div className="dispenSalesSales-payment-summary-subDiv">Payment Options:
-            <select>
-              <option>Cash</option>
-              <option>Credit</option>
-              <option>Other</option>
-              {/* Add more payment options */}
-            </select>
-            </div>
-            <div className="dispenSalesSales-payment-summary-subDiv">
-              Tender:
-            <input type="text" placeholder='0'/>
-            </div>
-            <div className="dispenSalesSales-payment-summary-subDiv">Change: 
-            <div className="dispenSalesSales-payment-summary-subDiv-Kshs"> 
+          <div className="dispenSalesSales-medicineInfo-N-paymentSection">
+            <div className="dispenSalesSales-medicineInfo-N-invoiceSummary">
               
-              Kshs. 0
+              <div className="dispenSalesSales-medicine-info">
+                <div style={{position:"relative"}}>
+                  <label>Drug/Medicine Name</label>
+                  <input
+                    type="text"
+                    name="medicineName"
+                    value={formData.medicineName}
+                    onChange={handleInputChange1}
+                    placeholder="--Select Medicine--"
+                  />
+                  {/* Suggestions Dropdown */}
+                  {filteredMedicines.length > 0 && (
+                    <ul className="suggestions-dropdown">
+                      {filteredMedicines.map((medicine, index) => (
+                        <li
+                          key={index}
+                          onClick={() => handleMedicineSelect(medicine)}
+                          className="suggestion-item"
+                        >
+                          {medicine.medicineName}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+                
 
-            </div>
-            </div>
-            <div className="dispenSalesSales-payment-summary-subDiv">
-              Remarks:
-              <input type="text" />
+                <div>
+                  <label>Generic Name</label>
+                  <input
+                    type="text"
+                    name="genericName"
+                    value={formData.genericName}
+                    readOnly
+                  />
+                </div>
+
+                <div className="dispenSalesSales-Expiry">
+                  <label>Expiry</label>
+                  <input
+                    type="text"
+                    name="expiry"
+                    value={formData.expiry}
+                    readOnly
+                  />
+                </div>
+                <div className="dispenSalesSales-Batch">
+                  <label>Batch</label>
+                  <input
+                    type="text"
+                    name="batch"
+                    value={formData.batch}
+                    readOnly
+                  />
+                </div>
+                <div className="dispenSalesSales-Avl-Qty">
+                  <label>Avl Qty</label>
+                  <input
+                    type="text"
+                    name="availableQty"
+                    value={formData.availableQty}
+                    readOnly
+                  />
+                </div>
+                <div className="dispenSalesSales-Qty">
+                  <label>Qty</label>
+                  <input
+                    type="number"
+                    name="qty"
+                    value={formData.qty}
+                    onChange={handleInputChange1}
+                  />
+                </div>
+                <div className="dispenSalesSales-QSalePricety">
+                  <label>Sale Price</label>
+                  <input
+                    type="text"
+                    name="salePrice"
+                    value={formData.salePrice}
+                    readOnly
+                  />
+                </div>
+                <div className="dispenSalesSales-SubTotal">
+                  <label>SubTotal</label>
+                  <input
+                    type="text"
+                    name="subTotal"
+                    value={formData.subTotal}
+                    readOnly
+                  />
+                  <button
+                    className="dispenSalesSales-add-button"
+                    onClick={() => addRowToTable()}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              {/* Invoice Summary Table */}
+              <div className="dispenSalesSales-invoice-summary">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Medicine ID</th>
+                      <th>Generic Name</th>
+                      <th>Medicine Name</th>
+                      <th>Expiry</th>
+                      <th>Batch</th>
+                      <th>Available Qty</th>
+                      <th>Qty</th>
+                      <th>Sale Price</th>
+                      <th>SubTotal</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tableData.map((row, index) => (
+                      <tr key={index}>
+                        <td>{row.medicineId}</td>
+                        <td>{row.genericName}</td>
+                        <td>{row.medicineName}</td>
+                        <td>{row.expiry}</td>
+                        <td>{row.batch}</td>
+                        <td>{row.availableQty}</td>
+                        <td>{row.qty}</td>
+                        <td>{row.salePrice}</td>
+                        <td>{row.subTotal}</td>
+                        <td>
+                          <button className="dispenSalesSales-print-button">
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleRemoveRow(index)}
+                            className="dispenSalesSales-remove-button"
+                          >
+                            X
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
-            <div className="dispenSalesSales-payment-summary-subDiv">Paid Amount: 
-            <input type="text" placeholder='0'/>
+            <div className="dispenSalesSales-payment-section">
+              <div className="dispenSalesSales-payment-summary">
+                <div className="dispenSalesSales-payment-summary-subDiv">
+                  Sub Total:
+                  <input
+                    type="text"
+                    value={totalSubTotal.toFixed(2)}
+                    readOnly
+                  />
+                </div>
+                <div className="dispenSalesSales-payment-summary-subDiv">
+                  Total Amount:
+                  <input
+                    type="text"
+                    value={totalAmount}
+                    onChange={(e) => setTotalAmount(e.target.value)}
+                    placeholder="0"
+                  />
+                </div>
+                <div className="dispenSalesSales-payment-summary-subDiv">
+                  In Words: Only.
+                </div>
+                <div className="dispenSalesSales-payment-summary-subDiv">
+                  Payment Options:
+                  <select
+                    value={paymentOption}
+                    onChange={(e) => setPaymentOption(e.target.value)}
+                  >
+                    <option>Cash</option>
+                    <option>Credit</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div className="dispenSalesSales-payment-summary-subDiv">
+                  Tender:
+                  <input
+                    type="text"
+                    value={tender}
+                    onChange={(e) => {
+                      setTender(e.target.value);
+                      setChange(
+                        Math.max(
+                          Number(e.target.value) - Number(totalAmount),
+                          0
+                        )
+                      );
+                    }}
+                    placeholder="0"
+                  />
+                </div>
+                <div className="dispenSalesSales-payment-summary-subDiv">
+                  Change:
+                  <div className="dispenSalesSales-payment-summary-subDiv-Kshs">
+                    Kshs. {change.toFixed(2)}
+                  </div>
+                </div>
+                <div className="dispenSalesSales-payment-summary-subDiv">
+                  Remarks:
+                  <input
+                    type="text"
+                    value={remarks}
+                    onChange={(e) => setRemarks(e.target.value)}
+                  />
+                </div>
+                <div className="dispenSalesSales-payment-summary-subDiv">
+                  Paid Amount:
+                  <input
+                    type="text"
+                    value={paidAmount}
+                    onChange={(e) => setPaidAmount(e.target.value)}
+                    placeholder="0"
+                  />
+                </div>
+              </div>
+              <div className="dispenSalesSales-payment-actions">
+                <button onClick={setShowInvoice}>Show Invoice</button>
 
+                <button
+                  className="dispenSalesSales-print-button"
+                  onClick={handlePrintInvoice}
+                >
+                  Print Invoice
+                </button>
+                <button className="dispenSalesSales-discard-button">
+                  Discard
+                </button>
+              </div>
             </div>
           </div>
-          <div className="dispenSalesSales-payment-actions">
-            <button className="dispenSalesSales-print-button">Print Invoice</button>
-            <button className="dispenSalesSales-discard-button">Discard</button>
-          </div>
-        </div>
-      </div>
 
-      <div className="dispenSalesSales-history-section">
-        <div className="dispenSalesSales-invoice-history">
-          <h4>Invoice History</h4>
-          <div>Deposit Balance: 0</div>
-          <div>Credit: 0</div>
-          <div>Provisional Amount: 0</div>
-          <div>Total Due</div>
-          <div>Balance Amount: 0</div>
-        </div>
-        <div className="dispenSalesSales-credit-limits">
-          <h4>Credit Limits and Balances</h4>
-          <div>General Credit Limit: 0</div>
-          <div>IP Credit Limit: 0</div>
-          <div>OP Credit Limit: 0</div>
-          <div>IP Balance: 0</div>
-          <div>OP Balance: 0</div>
-        </div>
-      </div>
-      </>
-      ) : activeTab === 'Sale List' ? (
+         {showInvoice && (
+            <SalesInvoice
+              showInvoice={showInvoice}
+              handleClose={() => setShowInvoice(false)}
+              invoiceData={invoiceData}
+              handlePrint={handlePrint}
+            />
+          )}
+          
+
+          <div className="dispenSalesSales-history-section">
+            <div className="dispenSalesSales-invoice-history">
+              <h4>Invoice History</h4>
+              <div>Deposit Balance: 0</div>
+              <div>Credit: 0</div>
+              <div>Provisional Amount: 0</div>
+              <div>Total Due</div>
+              <div>Balance Amount: 0</div>
+            </div>
+            <div className="dispenSalesSales-credit-limits">
+              <h4>Credit Limits and Balances</h4>
+              <div>General Credit Limit: 0</div>
+              <div>IP Credit Limit: 0</div>
+              <div>OP Credit Limit: 0</div>
+              <div>IP Balance: 0</div>
+              <div>OP Balance: 0</div>
+            </div>
+          </div>
+        </>
+      ) : activeTab === "Sale List" ? (
         <DispenSalesSalesList />
-      ) : activeTab === 'Return From Customer' ? (
+      ) : activeTab === "Return From Customer" ? (
         <DispenSalesReturnFromCust />
-      ) : activeTab === 'Return Sale List' ? (
+      ) : activeTab === "Return Sale List" ? (
         <DispenSalesRetunSalesList />
-      ) : activeTab === 'Provisional Bills' ? (
+      ) : activeTab === "Provisional Bills" ? (
         <DispenSalesProvisionalBill />
-      ) : activeTab === 'Settlement' ? (
+      ) : activeTab === "Settlement" ? (
         <DispenSalesProvisionalSettelment />
-      ) : activeTab === 'Provisional Return' ? (
+      ) : activeTab === "Provisional Return" ? (
         <DispenSalesProvisionalReturn />
       ) : null}
     </div>
-    
   );
 };
 

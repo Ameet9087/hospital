@@ -3,14 +3,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import "../DisSales/dispenSalesProvisionalReturn.css";
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 function DispenSalesProvisionalReturn() {
   const [provisionalReturns, setProvisionalReturns] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state for API call
   const printRef = useRef();
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
 
   // Fetching data from the API when the component mounts
   useEffect(() => {
@@ -74,38 +71,20 @@ function DispenSalesProvisionalReturn() {
         <div ref={printRef}>
           <h2>Provisional Bill Report</h2>
           <p>Date and Time: {new Date().toLocaleString()}</p>
-          <table ref={tableRef}>
+          <table>
             <thead>
-              <tr>{[
-                "Hospital Number",
-                "Ret Receipt No",
-                "Patient Name",
-                "Contact No.",
-                "Age/Sex",
-                "SubTotal",
-                "Discount",
-                "Total",
-                "Ref No",
-                "LastReturnDate",
-                "VisitType",
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
+              <tr>
+                <th>Hospital Number</th>
+                <th>Ret Receipt No</th>
+                <th>Patient Name</th>
+                <th>Contact No.</th>
+                <th>Age/Sex</th>
+                <th>SubTotal</th>
+                <th>Discount</th>
+                <th>Total</th>
+                <th>Ref No</th>
+                <th>LastReturnDate</th>
+                <th>VisitType</th>
               </tr>
             </thead>
             <tbody>
@@ -129,44 +108,25 @@ function DispenSalesProvisionalReturn() {
         </div>
       </div>
 
-      {/* <div className="dispenSalesProvisionalReturn-table-N-paginat"> */}
-      <div className="table-container">
-        {/* {loading ? (
+      <div className="dispenSalesProvisionalReturn-table-N-paginat">
+        {loading ? (
           <p>Loading...</p>
-        ) : ( */}
-          <table ref={tableRef}>
+        ) : (
+          <table>
             <thead>
-              <tr>{[
-                "Hospital Number",
-                "Ret Receipt No",
-                "Patient Name",
-                "Contact No.",
-                "Age/Sex",
-                "SubTotal",
-                "Discount",
-                "Total",
-                "Ref No",
-                "LastReturnDate",
-                "VisitType",
-                "Action",
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
+              <tr>
+                <th>Hospital Number</th>
+                <th>Ret Receipt No</th>
+                <th>Patient Name</th>
+                <th>Contact No.</th>
+                <th>Age/Sex</th>
+                <th>SubTotal</th>
+                <th>Discount</th>
+                <th>Total</th>
+                <th>Ref No</th>
+                <th>LastReturnDate</th>
+                <th>VisitType</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -190,7 +150,7 @@ function DispenSalesProvisionalReturn() {
               ))}
             </tbody>
           </table>
-        {/* )} */}
+        )}
         {/* <div className="dispenSalesProvisionalReturn-pagination">
           <span>0 to {provisionalReturns.length} of {provisionalReturns.length}</span>
           <button>First</button>

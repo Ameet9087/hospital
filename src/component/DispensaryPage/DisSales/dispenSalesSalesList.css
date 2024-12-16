@@ -100,10 +100,7 @@ color: green;
     color: var(--button-hover-text-color);
     background-color: var(--button-hover-background-color);
   }
-  .dispenSalesSalesList-table-N-paginat{
-    background-color: white ;
-  }
-/* 
+
   .dispenSalesSalesList-table-N-paginat table {
     width: 100%;
     border-collapse: collapse;
@@ -124,7 +121,7 @@ color: green;
   
   .dispenSalesSalesList-table-N-paginat tr:nth-child(even) {
     background-color: #f9f9f9;
-  } */
+  }
   
   .dispenSalesSalesList-action-button {
     padding: 5px 10px;
@@ -178,6 +175,9 @@ color: green;
     margin: 0 10px;
     color: gray;
     font-size: var(--font-size);
+  }
+  .dispenSalesSalesList-table-N-paginat{
+    background-color: white ;
   }
 
   

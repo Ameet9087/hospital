@@ -109,16 +109,16 @@
 //                     <table className="dSSD-stock-table">
 //                         <thead>
 //                             <tr>
-//                                 "Generic Name",
-//                                 "Medicine Name",
-//                                 "Unit",
-//                                 "Rack No",
-//                                 "Batch No",
-//                                 "Expiry Date",
-//                                 "Available Quantity",
-//                                 "Sale Price",
-//                                 "Total Value",
-//                                 "Store Name",
+//                                 <th>Generic Name</th>
+//                                 <th>Medicine Name</th>
+//                                 <th>Unit</th>
+//                                 <th>Rack No</th>
+//                                 <th>Batch No</th>
+//                                 <th>Expiry Date</th>
+//                                 <th>Available Quantity</th>
+//                                 <th>Sale Price</th>
+//                                 <th>Total Value</th>
+//                                 <th>Store Name</th>
 //                             </tr>
 //                         </thead>
 //                         <tbody>
@@ -290,16 +290,16 @@
 //                             <table className="dSSD-stock-table">
 //                                 <thead>
 //                                     <tr>
-//                                         "Generic Name",
-//                                         "Medicine Name",
-//                                         "Unit",
-//                                         "Rack No",
-//                                         "Batch No",
-//                                         "Expiry Date",
-//                                         "Available Quantity",
-//                                         "Sale Price",
-//                                         "Total Value",
-//                                         "Store Name",
+//                                         <th>Generic Name</th>
+//                                         <th>Medicine Name</th>
+//                                         <th>Unit</th>
+//                                         <th>Rack No</th>
+//                                         <th>Batch No</th>
+//                                         <th>Expiry Date</th>
+//                                         <th>Available Quantity</th>
+//                                         <th>Sale Price</th>
+//                                         <th>Total Value</th>
+//                                         <th>Store Name</th>
 //                                     </tr>
 //                                 </thead>
 //                                 <tbody>
@@ -350,7 +350,7 @@
  /* Ajhar Tamboli dispenSalesStockDetails.jsx 19-09-24 */
 
 
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios'; // Import axios
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
@@ -358,22 +358,20 @@ import 'jspdf-autotable';
 import "../DisStocks/dispenSalesStockDetails.css";
 import DispenTransfer from "./dispenTransfer";
 import DispenStockRequisition from "./dispenStockRequisition";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 
 const SalesStockDetails = () => {
     const [activeTab, setActiveTab] = useState("StockDetails");
     const [salesData, setSalesData] = useState([]); // State to hold the fetched data
     const [loading, setLoading] = useState(true); // State to manage loading status
     const [error, setError] = useState(null); // State to manage error messages
-    const [columnWidths, setColumnWidths] = useState({});
-    const tableRef = useRef(null);
+
     console.log("Helloooo");
     
     // Fetch data from the backend API when the component mounts
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:1415/api/hospital/fetch-fetch-medicine-details'); // API call to the backend
+                const response = await axios.get('http://localhost:3155/api/hospital/fetch-fetch-medicine-details'); // API call to the backend
                 setSalesData(response.data); // Update state with the fetched data
                 setLoading(false); // Set loading to false
                 console.log(response.data);
@@ -498,39 +496,20 @@ const SalesStockDetails = () => {
                             </button>
                         </div>
                     </div>
-                    <div className="table-container">
-                    <table ref={tableRef}>
+
+                    <table className="dSSD-stock-table">
                         <thead>
-                            <tr>{[
-                                "Generic Name",
-                                "Medicine Name",
-                                "Unit",
-                                "Rack No",
-                                "Batch No",
-                                "Expiry Date",
-                                "Available Quantity",
-                                "Sale Price",
-                                "Total Value",
-                                "Store Name",
-                                "EDD",
-                            ].map((header, index) => (
-                              <th
-                                key={index}
-                                style={{ width: columnWidths[index] }}
-                                className="resizable-th"
-                              >
-                                <div className="header-content">
-                                  <span>{header}</span>
-                                  <div
-                                    className="resizer"
-                                    onMouseDown={startResizing(
-                                      tableRef,
-                                      setColumnWidths
-                                    )(index)}
-                                  ></div>
-                                </div>
-                              </th>
-                            ))}
+                            <tr>
+                                <th>Generic Name</th>
+                                <th>Medicine Name</th>
+                                <th>Unit</th>
+                                <th>Rack No</th>
+                                <th>Batch No</th>
+                                <th>Expiry Date</th>
+                                <th>Available Quantity</th>
+                                <th>Sale Price</th>
+                                <th>Total Value</th>
+                                <th>Store Name</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -550,7 +529,7 @@ const SalesStockDetails = () => {
                             ))}
                         </tbody>
                     </table>
-                    </div>
+                    
                     {/* <div className="dSSDetails-pagination-bar">
                         <span>1 to 20 of {salesData.length}</span>
                         <button>First</button>

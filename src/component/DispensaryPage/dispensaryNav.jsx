@@ -7,7 +7,9 @@ const DispensaryNavBar = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
 
   const handleLogOut = () => {
-  
+    console.log("hellloooooo")
+    // Logic for logging out (if any) can be placed here
+    // Then navigate to the DispenSales route
     navigate("/dispenCouter");
   };
 

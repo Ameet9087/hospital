@@ -179,7 +179,7 @@
 
 
  }
-/* 
+
  .drStockSummaryReport-report table {
    margin-top: 10px;
    width: 100%;
@@ -197,8 +197,9 @@
 
  .drStockSummaryReport-report th {
    background-color: #F3F3F3;
+   /* color: #333333; */
    white-space: nowrap;
- } */
+ }
 
  /* .no-data {
     text-align: center;

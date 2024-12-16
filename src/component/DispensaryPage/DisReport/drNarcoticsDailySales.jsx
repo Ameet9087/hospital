@@ -88,18 +88,18 @@
 //       <table>
 //         <thead>
 //           <tr>
-//             "InvoiceNo",
-//             "Date",
-//             "Generic Name",
-//             "Medicine Name",
-//             "Patient Name",
-//             "Doctor",
-//             "KMPDC No",
-//             "Batch No",
-//             "Net Total",
-//             "Quantity",
-//             "Sales Price",
-//             "Total Amount",
+//             <th>InvoiceNo</th>
+//             <th>Date</th>
+//             <th>Generic Name</th>
+//             <th>Medicine Name</th>
+//             <th>Patient Name</th>
+//             <th>Doctor</th>
+//             <th>KMPDC No</th>
+//             <th>Batch No</th>
+//             <th>Net Total</th>
+//             <th>Quantity</th>
+//             <th>Sales Price</th>
+//             <th>Total Amount</th>
             
 //           </tr>
 //         </thead>
@@ -154,17 +154,14 @@
 
  /* Ajhar Tamboli drNarcoticsDailySales.jsx 19-09-24 */
 
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../DisReport/drNarcoticsDailySales.css";
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 function DrNarcoticsDailySales() {
   // State to hold fetched narcotics summaries
   const [narcoticsSummaries, setNarcoticsSummaries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
 
   // Fetch narcotics summaries from the API
   useEffect(() => {
@@ -225,40 +222,21 @@ function DrNarcoticsDailySales() {
           <button className="drNarcoticsDailySales-print-button"><i class="fa-solid fa-print"></i> Print</button>
         </div>
       </div>
-      {/* <div className='drNarcoticsDailySales-table-N-paginationDiv'> */}
-      <div className="table-container">
-        <table ref={tableRef}>
+      <div className='drNarcoticsDailySales-table-N-paginationDiv'>
+        <table>
           <thead>
-            <tr>{[
-              "Invoice No",
-              "Date",
-              "Generic Name",
-              "Medicine Name",
-              "Patient Name",
-              "Doctor",
-              "KMPDC No",
-              "Batch No",
-              "Quantity",
-              "Sale Price",
-              "Total Amount",
-            ].map((header, index) => (
-              <th
-                key={index}
-                style={{ width: columnWidths[index] }}
-                className="resizable-th"
-              >
-                <div className="header-content">
-                  <span>{header}</span>
-                  <div
-                    className="resizer"
-                    onMouseDown={startResizing(
-                      tableRef,
-                      setColumnWidths
-                    )(index)}
-                  ></div>
-                </div>
-              </th>
-            ))}
+            <tr>
+              <th>Invoice No</th>
+              <th>Date</th>
+              <th>Generic Name</th>
+              <th>Medicine Name</th>
+              <th>Patient Name</th>
+              <th>Doctor</th>
+              <th>KMPDC No</th>
+              <th>Batch No</th>
+              <th>Quantity</th>
+              <th>Sale Price</th>
+              <th>Total Amount</th>
             </tr>
           </thead>
           <tbody>

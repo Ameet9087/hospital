@@ -92,24 +92,33 @@
 // export default DispenStockRequisitionCreateReq;
 
  /* Ajhar Tamboli dispenStockRequisitionCreateReq.jsx 19-09-24 */
-
-
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import "../DisStocks/dispenStockRequisitionCreateReq.css";
 
+// Sample list for generic names; you could replace this with an API call
+const availableGenericNames = [
+  "IBUGESIC SYRUP 100ML",
+  "PARACETAMOL 500MG",
+  "AMOXICILLIN CAPSULE 500MG",
+  // Add more generic names here
+];
+
+
 function DispenStockRequisitionCreateReq({ onClose }) {
+  const [requesterInfo] = useState({
+    requestedBy: 'Admin',  // Static value for Requested By
+    requestedFrom: 'Main Store'  // Static value for Requested From
+  });
   const [requisitionDate, setRequisitionDate] = useState('');
-  const [items, setItems] = useState([
-    {
-      genericName: '',
-      genericItemName: '',
-      genericCode: '',
-      genericQty: '',
-      availableQty: 0,
-      requestingQuantity: 1,
-      genericRemark: ''
-    }
-  ]);
+  const [items, setItems] = useState([{
+    genericName: '',
+    genericItemName: '',
+    genericCode: '',
+    genericQty: '',
+    availableQty: 0,
+    requestingQuantity: 1,
+    genericRemark: ''
+  }]);
 
   // Add item
   const addItem = () => {
@@ -133,21 +142,38 @@ function DispenStockRequisitionCreateReq({ onClose }) {
     setItems(newItems);
   };
 
+  // Validate form inputs
+  const validateForm = () => {
+    // Ensure that all fields are filled for each item
+    return items.every(item => item.genericName && item.genericItemName && item.genericCode && item.genericQty && item.requestingQuantity);
+  };
+
   // Handle form submission to post data
   const handleSubmit = async () => {
-    try {
-      // Prepare the payload for the API request
-      const payload = items.map((item) => ({
-        genericName: item.genericName,
-        genericItemName: item.genericItemName,
-        genericCode: item.genericCode,
-        genericQty: item.availableQty,
-        requestingQuantity: item.requestingQuantity,
-        genericRemark: item.genericRemark,
-      }));
+    if (!validateForm()) {
+      alert("Please fill in all required fields for each item.");
+      return;
+    }
 
-      // API call to post data
-      const response = await fetch('http://localhost:1415/api/requisitions/save-requisitions', {
+    try {
+      const payload = { 
+        requestBy: requesterInfo.requestedBy, // Add Requested By to payload
+        requestFrom: requesterInfo.requestedFrom,
+        date:requisitionDate,
+        // Include requisition date
+        pharmacyRequisitions: items.map((item) => ({
+          genericName: item.genericName,
+          genericItemName: item.genericItemName,
+          genericCode: item.genericCode,
+          genericQty: item.genericQty,
+          requestingQuantity: item.requestingQuantity,
+          remark: item.genericRemark,
+        }))
+      }; 
+
+      console.log(payload);
+
+      const response = await fetch('http://localhost:3155/api/requisitions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -202,18 +228,21 @@ function DispenStockRequisitionCreateReq({ onClose }) {
                 <button className="dispenStockRequisitionCreateReq-remove-btn" onClick={() => removeItem(index)}>X</button>
               </td>
               <td>
-                <select className='dispenStockRequisitionCreateReq-select'
+                <select
+                  className='dispenStockRequisitionCreateReq-select'
                   name="genericName"
                   value={item.genericName}
                   onChange={(e) => handleInputChange(index, e)}
                 >
                   <option value="">--Select Generic Name--</option>
-                  <option value="">IBUGESIC SYRUP 100ML</option>
-                  {/* Add more options here */}
+                  {availableGenericNames.map((name, i) => (
+                    <option key={i} value={name}>{name}</option>
+                  ))}
                 </select>
               </td>
               <td>
-                <input className='dispenStockRequisitionCreateReq-input'
+                <input
+                  className='dispenStockRequisitionCreateReq-input'
                   type="text"
                   name="genericItemName"
                   value={item.genericItemName}
@@ -221,7 +250,8 @@ function DispenStockRequisitionCreateReq({ onClose }) {
                 />
               </td>
               <td>
-                <input className='dispenStockRequisitionCreateReq-input'
+                <input
+                  className='dispenStockRequisitionCreateReq-input'
                   type="text"
                   name="genericCode"
                   value={item.genericCode}
@@ -229,7 +259,8 @@ function DispenStockRequisitionCreateReq({ onClose }) {
                 />
               </td>
               <td>
-                <input className='dispenStockRequisitionCreateReq-input'
+                <input
+                  className='dispenStockRequisitionCreateReq-input'
                   type="text"
                   name="genericQty"
                   value={item.genericQty}
@@ -237,7 +268,8 @@ function DispenStockRequisitionCreateReq({ onClose }) {
                 />
               </td>
               <td>
-                <input className='dispenStockRequisitionCreateReq-input'
+                <input
+                  className='dispenStockRequisitionCreateReq-input'
                   type="number"
                   name="availableQty"
                   value={item.availableQty}
@@ -245,7 +277,8 @@ function DispenStockRequisitionCreateReq({ onClose }) {
                 />
               </td>
               <td>
-                <input className='dispenStockRequisitionCreateReq-input'
+                <input
+                  className='dispenStockRequisitionCreateReq-input'
                   type="number"
                   name="requestingQuantity"
                   value={item.requestingQuantity}
@@ -253,7 +286,8 @@ function DispenStockRequisitionCreateReq({ onClose }) {
                 />
               </td>
               <td>
-                <input className='dispenStockRequisitionCreateReq-input'
+                <input
+                  className='dispenStockRequisitionCreateReq-input'
                   type="text"
                   name="genericRemark"
                   value={item.genericRemark}
@@ -261,7 +295,9 @@ function DispenStockRequisitionCreateReq({ onClose }) {
                 />
               </td>
               <td>
-                {index === items.length - 1 && <button className="dispenStockRequisitionCreateReq-add-btn" onClick={addItem}>+</button>}
+                {index === items.length - 1 && (
+                  <button className="dispenStockRequisitionCreateReq-add-btn" onClick={addItem}>+</button>
+                )}
               </td>
             </tr>
           ))}

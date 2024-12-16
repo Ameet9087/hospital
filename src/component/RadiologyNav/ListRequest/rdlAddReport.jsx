@@ -199,10 +199,10 @@ function AddReportForm({ onClose, selectedRequest }) {
             <div className="rDLListRequest-form-field">
               <span>
                 <strong>Patient Name:</strong>{" "}
-                {selectedRequest.patientDTO?.firstName ||
-                  selectedRequest.newPatientVisitDTO?.firstName}{" "}
-                {selectedRequest.patientDTO?.lastName ||
-                  selectedRequest.newPatientVisitDTO?.lastName}
+                {selectedRequest.inPatientDTO?.firstName ||
+                  selectedRequest.outPatientDTO?.firstName}{" "}
+                {selectedRequest.inPatientDTO?.lastName ||
+                  selectedRequest.outPatientDTO?.lastName}
               </span>
             </div>
             <div className="rDLListRequest-form-field rdlAddReport-prescrider-name">
@@ -220,15 +220,15 @@ function AddReportForm({ onClose, selectedRequest }) {
             <div className="rDLListRequest-form-field">
               <span>
                 <strong>Address:</strong>{" "}
-                {selectedRequest.patientDTO?.address ||
-                  selectedRequest.newPatientVisitDTO?.address}
+                {selectedRequest.inPatientDTO?.address ||
+                  selectedRequest.outPatientDTO?.address}
               </span>
             </div>
             <div className="rDLListRequest-form-field">
               <span>
                 <strong>Phone No:</strong>{" "}
-                {selectedRequest.patientDTO?.phoneNumber ||
-                  selectedRequest.newPatientVisitDTO?.phoneNumber}
+                {selectedRequest.inPatientDTO?.phoneNumber ||
+                  selectedRequest.outPatientDTO?.phoneNumber}
               </span>
             </div>
           </div>

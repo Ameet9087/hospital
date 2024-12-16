@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./IPMoneyReceipt.css";
+import ReceiptDisplay from './ReceiptDisplay';
 
 const Ipmoneyreceipt = () => {
   const [formData, setFormData] = useState({
+    receiptDate: "",
+    createdBy: "admin",
+    amount: "",
+    ipRemarks: "",
+    modeOfAmount: "Cash",
+    amountInWords: "",
+    status: "Pending",
+    paymentModes: [],
+    ipNo: "",
     receiptNo: "",
     paymentType: "Patient Pay",
     transactionType: "Non Settlement",
     type: "Advance",
-    ipNo: "",
     mrNo: "",
     patientName: "",
     bedNo: "",
@@ -23,121 +32,184 @@ const Ipmoneyreceipt = () => {
     totalAmount: "",
     totalPaid: "",
     totalCashReceived: "",
+  });
+
+  const [paymentMode, setPaymentMode] = useState({
+    modeName: "Cash",
     amount: "",
-    modeOfPayment: "Cash",
-    amountInWords: "",
-    status: "",
-    panelPayable: "",
+    cardNumber: "",
+    chequeDate: "",
+    status: "Cleared",
+    panelName: "",
     remarks: "",
   });
 
-  const [tableData, setTableData] = useState([]);
+  const [ipAdmissions, setIpAdmissions] = useState([]);
+  const [selectedIp, setSelectedIp] = useState(null);
+  const [showReceipt, setShowReceipt] = useState(false); 
+  // Fetch IP admissions data
+  useEffect(() => {
+    fetch("http://192.168.0.103:4069/api/ip-admissions")
+      .then((response) => response.json())
+      .then((data) => {
+        setIpAdmissions(data);
+        console.log("------------",ipAdmissions)
+      })
+      .catch((error) => console.error("Error fetching IP admissions:", error));
+  }, []);
+
+  const handleIpChange = (e) => {
+    const ipId = e.target.value;
+    const ipData = ipAdmissions.find((item) => item.ipAdmmissionId === parseInt(ipId));
+    setSelectedIp(ipData);
+
+    // Update the form fields with selected IP data
+    if (ipData) {
+      const patient = ipData.patient || {};
+      const bed = ipData.roomDetails?.bedDTO || {};
+      setFormData({
+        ...formData,
+        ipNo: ipData.ipAdmmissionId,
+        patientName:` ${patient.firstName} ${patient.middleName || ""} ${patient.lastName}`,
+        bedNo: bed.roomNo || "",
+        address: patient.address || "",
+        phoneNo: patient.phoneNumber || "",
+        mobileNo: patient.alternateNumber || "",
+        organization: ipData.organisationDetail?.type || "",
+      });
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSave = () => {
-    setTableData([...tableData, formData]);
-    // Reset form fields
+  const handlePaymentChange = (e) => {
+    const { name, value } = e.target;
+    setPaymentMode({ ...paymentMode, [name]: value });
+  };
+
+  const addPaymentMode = () => {
     setFormData({
-      receiptNo: "",
-      paymentType: "Patient Pay",
-      transactionType: "Non Settlement",
-      type: "Advance",
-      ipNo: "",
-      mrNo: "",
-      patientName: "",
-      bedNo: "",
-      address: "",
-      phoneNo: "",
-      mobileNo: "",
-      organization: "",
-      disallowedAmount: "",
-      billAmount: "",
-      organizationDiscount: "",
-      postDiscount: "",
-      retainAmount: "",
-      totalAmount: "",
-      totalPaid: "",
-      totalCashReceived: "",
+      ...formData,
+      paymentModes: [...formData.paymentModes, paymentMode],
+    });
+    setPaymentMode({
+      modeName: "Cash",
       amount: "",
-      modeOfPayment: "Cash",
-      amountInWords: "",
-      status: "",
-      panelPayable: "",
+      cardNumber: "",
+      chequeDate: "",
+      status: "Cleared",
+      panelName: "",
       remarks: "",
     });
   };
 
+  const handleSave = () => {
+    // Ensure required fields are filled
+    if (!formData.receiptDate || !formData.amount || formData.paymentModes.length === 0) {
+      alert("Please fill all required fields and add at least one payment mode.");
+      return;
+    }
+
+    // Convert amount to words (for example purposes, you can implement a helper for this)
+    const amountInWords = convertAmountToWords(formData.amount); // You'll need a function for this
+
+    // Construct data to post, ensuring the format matches the given example
+    const postData = {
+      receiptDate: formData.receiptDate,
+      createdBy: formData.createdBy,
+      amount: parseFloat(formData.amount),
+      ipRemarks: formData.ipRemarks || "",
+      modeOfAmount: formData.modeOfAmount,
+      amountInWords: amountInWords,
+      status: formData.status,
+      paymentModes: formData.paymentModes.map((mode) => ({
+        modeName: mode.modeName,
+        amount: parseFloat(mode.amount),
+        cardNumber: mode.cardNumber || null,
+        chequeDate: mode.chequeDate || null,
+        status: mode.status,
+        panelName: mode.panelName || "",
+        remarks: mode.remarks || "",
+      })),
+      ipadmissionDTO: {
+        ipAdmmissionId: formData.ipNo,
+      },
+    };
+console.log("-----------------",postData)
+    // Send POST request to the backend
+    fetch("http://192.168.0.103:4069/api/IPD-bills/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert("Data saved successfully!");
+        } else {
+          throw new Error("Failed to save data.");
+        }
+      })
+      .catch((error) => alert(error.message));
+  };
+
+  // Convert amount to words function (you can implement this as per your requirements)
+  const convertAmountToWords = (amount) => {
+    // Simple implementation or use a library to convert number to words
+    const words = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]; // Example
+    return words[Math.floor(amount) - 1] || "Amount in Words"; // Simplified for this example
+  };
+  const toggleReceiptDisplay = () => {
+    setShowReceipt(!showReceipt);
+  };
   return (
     <div className="ipmoneyreceiptbilll-container">
+        <button className="ipmoneyreceiptbilll-save-btn" onClick={toggleReceiptDisplay}>
+          {showReceipt ? "Show Receipt " : "Show Receipt"}
+        </button>
       <h2 className="ipmoneyreceiptbilll-header">IP Money Receipt</h2>
       <div className="ipmoneyreceiptbilll-form">
-        {/* Top Section */}
+        {/* IP Number Dropdown */}
+      
         <div className="ipmoneyreceiptbilll-section">
-          <label>Receipt No:</label>
-          <input
-            type="text"
-            name="receiptNo"
-            value={formData.receiptNo}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="ipmoneyreceiptbilll-section">
-          <label>Payment Type:</label>
-          <select
-            name="paymentType"
-            value={formData.paymentType}
-            onChange={handleChange}
-          >
-            <option value="Patient Pay">Patient Pay</option>
-            <option value="Insurance Pay">Panel Pay</option>
-          </select>
-        </div>
-        <div className="ipmoneyreceiptbilll-section">
-          <label>Transaction Type:</label>
-          <select
-            name="transactionType"
-            value={formData.transactionType}
-            onChange={handleChange}
-          >
-            <option value="Non Settlement">Non Settlement</option>
-            <option value="Settlement">Settlement</option>
-          </select>
-        </div>
-        <div className="ipmoneyreceiptbilll-section">
-          <label>Type:</label>
-          <select
-            name="type"
-            value={formData.type}
-            onChange={handleChange}
-          >
-            <option value="Advance">Advance</option>
-            <option value="Due">Due</option>
+          <label>IP Number:</label>
+          <select name="ipNo" value={formData.ipNo} onChange={handleIpChange}>
+            <option value="">Select IP</option>
+            {ipAdmissions.map((item) => (
+              <option key={item.ipAdmmissionId} value={item.ipAdmmissionId}>
+                {item.ipAdmmissionId} - {item.patient?.firstName} {item.patient?.lastName}
+              </option>
+            ))}
           </select>
         </div>
 
-        {/* Patient Details */}
-        <div className="ipmoneyreceiptbilll-section">
-          <label>IP No:</label>
-          <input
-            type="text"
-            name="ipNo"
-            value={formData.ipNo}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="ipmoneyreceiptbilll-section">
-          <label>MR No:</label>
-          <input
-            type="text"
-            name="mrNo"
-            value={formData.mrNo}
-            onChange={handleChange}
-          />
-        </div>
+        {/* Display selected IP details */}
+        {selectedIp && (
+          <div className="ip-details">
+            <p><strong>Admission Date:</strong> {selectedIp.admissionDate}</p>
+            <p><strong>Patient Name:</strong> {formData.patientName}</p>
+            <p><strong>Bed Number:</strong> {formData.bedNo}</p>
+            <p><strong>Phone Number:</strong> {formData.phoneNo}</p>
+
+            {/* Financial Details */}
+            <div className="financial-details">
+              <p><b>Financial Details</b></p>
+              <p><strong>Total Amount:</strong> {selectedIp.financialDetails?.totalAmount || 0}</p>
+              <p><strong>Less Discount:</strong> {selectedIp.financialDetails?.lessDiscount || 0}</p>
+              <p><strong>Net Amount:</strong> {selectedIp.financialDetails?.netAmount || 0}</p>
+              <p><strong>Paid Amount:</strong> {selectedIp.financialDetails?.paidAmount || 0}</p>
+              <p><strong>Due Amount:</strong> {selectedIp.financialDetails?.dueAmount || 0}</p>
+              <p><strong>Total Doctor Share Amount:</strong> {selectedIp.financialDetails?.totalDoctorShareAmount || 0}</p>
+              <p><strong>Total Hospital Amount:</strong> {selectedIp.financialDetails?.totalHospitalAmount || 0}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Other form fields */}
         <div className="ipmoneyreceiptbilll-section">
           <label>Patient Name:</label>
           <input
@@ -174,66 +246,20 @@ const Ipmoneyreceipt = () => {
             onChange={handleChange}
           />
         </div>
+
+        {/* Receipt Date and Amount */}
         <div className="ipmoneyreceiptbilll-section">
-          <label>Mobile No:</label>
+          <label>Receipt Date:</label>
           <input
-            type="text"
-            name="mobileNo"
-            value={formData.mobileNo}
+            type="date"
+            name="receiptDate"
+            value={formData.receiptDate}
             onChange={handleChange}
           />
         </div>
-        <div className="ipmoneyreceiptbilll-section">
-          <label>Organization:</label>
-          <input
-            type="text"
-            name="organization"
-            value={formData.organization}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="ipmoneyreceiptbilll-section">
-            <label>Disallowed Amount</label>
-            <input 
-            type="text" 
-            name="disallowedAmount" 
-            value={formData.disallowedAmount} 
-            onChange={handleChange} />
-        </div>
-        <div className="ipmoneyreceiptbilll-section">
-            <label> Bill Amount</label>
-            <input type="text" name="billAmount" value={formData.billAmount} onChange={handleChange}/>
-        </div>
-        <div className="ipmoneyreceiptbilll-section">
-            <label > Organisation Discount Amount</label>
-            <input type="text" name="organizationDiscount" value={formData.organizationDiscount} onChange={handleChange} />
-        </div>
 
         <div className="ipmoneyreceiptbilll-section">
-            <label> Post Discount</label>
-            <input type="text" name="postDiscount" value={formData.postDiscount} onChange={handleChange} />
-        </div>
-        <div className="ipmoneyreceiptbilll-section">
-            <label>Retain Amount</label>
-            <input type="text" name="retainAmount" value={formData.retainAmount} onChange={handleChange} />
-        </div>
-
-        <div className="ipmoneyreceiptbilll-section">
-            <label>Total Amount</label>
-            <input type="text" name="totalAmount" value={formData.totalAmount} onChange={handleChange} />
-        </div>
-        <div className="ipmoneyreceiptbilll-section">
-            <label > Total Paid</label>
-            <input type="text" name="totalPaid" value={formData.totalPaid} onChange={handleChange} />
-        </div>
-
-        {/* Payment Details */}
-        <div className="ipmoneyreceiptbilll-section">
-            <label>Total Cash Received</label>
-            <input type="text" name="totalCashReceived" value={formData.totalCashReceived} onChange={handleChange}/>
-        </div>
-        <div className="ipmoneyreceiptbilll-section">
-          <label>Amount:</label>
+          <label>Total Amount:</label>
           <input
             type="number"
             name="amount"
@@ -241,76 +267,90 @@ const Ipmoneyreceipt = () => {
             onChange={handleChange}
           />
         </div>
+
+        {/* Payment Mode Details */}
+        <h3>Add Payment Mode</h3>
         <div className="ipmoneyreceiptbilll-section">
-          <label>Mode of Payment:</label>
-          <select
-            name="modeOfPayment"
-            value={formData.modeOfPayment}
-            onChange={handleChange}
-          >
+          <label>Mode Name:</label>
+          <select name="modeName" value={paymentMode.modeName} onChange={handlePaymentChange}>
             <option value="Cash">Cash</option>
-            <option value="Card">Cradit</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Cheque">Cheque</option>
           </select>
         </div>
-        <div className="ipmoneyreceiptbilll-section"> 
-            <label>Amount in words</label>
-            <input type="text" name="amtinwords"  />
-        </div>
         <div className="ipmoneyreceiptbilll-section">
-          <label>Status:</label>
+          <label>Amount:</label>
           <input
-            type="text"
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
+            type="number"
+            name="amount"
+            value={paymentMode.amount}
+            onChange={handlePaymentChange}
           />
         </div>
+        {paymentMode.modeName === "Credit Card" && (
+          <div className="ipmoneyreceiptbilll-section">
+            <label>Card Number:</label>
+            <input
+              type="text"
+              name="cardNumber"
+              value={paymentMode.cardNumber}
+              onChange={handlePaymentChange}
+            />
+          </div>
+        )}
+        {paymentMode.modeName === "Cheque" && (
+          <div className="ipmoneyreceiptbilll-section">
+            <label>Cheque Date:</label>
+            <input
+              type="date"
+              name="chequeDate"
+              value={paymentMode.chequeDate}
+              onChange={handlePaymentChange}
+            />
+          </div>
+        )}
         <div className="ipmoneyreceiptbilll-section">
-            <label>Panel Payable</label>
-            <input type="text" name="panelpayable" value={formData.panelPayable} onChange={handleChange} />
+          <label>Remarks:</label>
+          <input
+            type="text"
+            name="remarks"
+            value={paymentMode.remarks}
+            onChange={handlePaymentChange}
+          />
         </div>
-        <div className="ipmoneyreceiptbilll-section">
-            <label>Remarks:</label>
-            <input type="text" name="remarks" value={formData.remarks} onChange={handleChange}/>
-        </div>
+        <button onClick={addPaymentMode} className="ipmoneyreceiptbilll-save-btn">Add Payment Mode</button>
+
+        {/* Display Added Payment Modes */}
+        {formData.paymentModes.length > 0 && (
+          <div className="payment-modes-list">
+            <h4>Added Payment Modes:</h4>
+            <ul>
+              {formData.paymentModes.map((mode, index) => (
+                <li key={index}>{`${mode.modeName}: ${mode.amount} (${mode.remarks})`}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <button className="ipmoneyreceiptbilll-save-btn" onClick={handleSave}>
           Save
-        </button> 
+        </button>
       </div>
 
-      {/* Table Section */}
-      <table className="ipmoneyreceiptbilll-table">
-        <thead>
-          <tr>
-            <th>SN</th>
-            <th>Receipt No</th>
-            <th>Receipt Date</th>
-            <th>Created By</th>
-            <th>Amount</th>
-            <th>IP Remarks</th>
-            <th>MOP</th>
-            <th>Terminal</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((row, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{row.receiptNo}</td>
-              <td>{row.ReceiptDate}</td>
-              <td>{row.Createdby}</td>
-              <td>{row.amount}</td>
-              <td>{row.remarks}</td>
-              <td>{row.modeOfPayment}</td>
-              <td>{row.terminal}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {showReceipt && (
+        <div className="modalmoneyReceipt">
+          <div className="modal-contentReceipt">
+            <button className="close-btnReceipt" onClick={toggleReceiptDisplay}>
+              X
+            </button>
+            <ReceiptDisplay />
+          </div>
+        </div>
+      )}
+
+
     </div>
   );
 };
 
-
-
-export default Ipmoneyreceipt
+export default Ipmoneyreceipt;

@@ -4,14 +4,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios'; // Import axios
 import { useReactToPrint } from 'react-to-print';
 import "../DisSales/dispenSalesProvisionalBill.css";
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 function DispenSalesProvisionalBill() {
   const [bills, setBills] = useState([]); // State for storing fetched bills data
   const [isLoading, setIsLoading] = useState(true); // State for loading indicator
   const printRef = useRef();
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
 
   // Fetch data from API when component mounts
   useEffect(() => {
@@ -72,34 +69,16 @@ function DispenSalesProvisionalBill() {
         <div ref={printRef}>
           <h2>Provisional Bill Report</h2>
           <p>Date and Time: {new Date().toLocaleString()}</p>
-          <table ref={tableRef}>
+          <table>
             <thead>
-              <tr>{[
-                "Schema",
-                "Hospital Number",
-                "Patient Name",
-                "Age/Sex",
-                "Contact No.",
-                "Last Bill Date",
-                "Total",
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
+              <tr>
+                <th>Schema</th>
+                <th>Hospital Number</th>
+                <th>Patient Name</th>
+                <th>Age/Sex</th>
+                <th>Contact No.</th>
+                <th>Last Bill Date</th>
+                <th>Total</th>
               </tr>
             </thead>
             <tbody>
@@ -118,37 +97,18 @@ function DispenSalesProvisionalBill() {
           </table>
         </div>
       </div>
-      {/* <div className="dispenSalesProvisionalBill-table-N-paginat"> */}
-      <div className="table-container">
-        <table ref={tableRef}>
+      <div className="dispenSalesProvisionalBill-table-N-paginat">
+        <table>
           <thead>
-            <tr>{[
-              "Schema",
-              "Hospital Number",
-              "Patient Name",
-              "Age/Sex",
-              "Contact No.",
-              "Last Bill Date",
-              "Total",
-              "Action",
-            ].map((header, index) => (
-                  <th
-                    key={index}
-                    style={{ width: columnWidths[index] }}
-                    className="resizable-th"
-                  >
-                    <div className="header-content">
-                      <span>{header}</span>
-                      <div
-                        className="resizer"
-                        onMouseDown={startResizing(
-                          tableRef,
-                          setColumnWidths
-                        )(index)}
-                      ></div>
-                    </div>
-                  </th>
-                ))}
+            <tr>
+              <th>Schema</th>
+              <th>Hospital Number</th>
+              <th>Patient Name</th>
+              <th>Age/Sex</th>
+              <th>Contact No.</th>
+              <th>Last Bill Date</th>
+              <th>Total</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>

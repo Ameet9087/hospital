@@ -106,10 +106,7 @@ color: green;
     background-color: var(--button-hover-background-color);
   }
   
-  .dispenSalesRetunSalesList-table-N-paginat{
-    background-color: white ;
-  }
-  /* .dispenSalesRetunSalesList-table-N-paginat table {
+  .dispenSalesRetunSalesList-table-N-paginat table {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
@@ -124,13 +121,14 @@ color: green;
 }
   
   .dispenSalesRetunSalesList-table-N-paginat th {
+    /* background-color: red; */
     background-color: #F3F3F3;
     font-size: var(--heading-font);
   }
   
   .dispenSalesRetunSalesList-table-N-paginat tr:nth-child(even) {
     background-color: #f9f9f9;
-  } */
+  }
   
   .dispenSalesRetunSalesList-action-button {
     padding: 5px 10px;
@@ -184,6 +182,9 @@ color: green;
     margin: 0 10px;
     color: gray;
     font-size: var(--font-size);
+  }
+  .dispenSalesRetunSalesList-table-N-paginat{
+    background-color: white ;
   }
 
   

@@ -87,9 +87,7 @@ const DispenSalessalesStockDetails = () => {
     }, []);
 
     return (
-        <div 
-        // className="dispenSalessalesStockDetails-container"
-        >
+        <div className="dispenSalessalesStockDetails-container">
             <div className="dispenSalessalesStockDetails-header">
                 <input type="text" placeholder="Search" className="dispenSalessalesStockDetails-search-bar" />
                 <div className="dispenSalessalesStockDetails-filter-container">
@@ -106,7 +104,7 @@ const DispenSalessalesStockDetails = () => {
                 <div className="dispenSalessalesStockDetails-header-right">
                     <span>Showing {medicineStocks.length} results</span>
                     <button className="dispenSalessalesStockDetails-print-btn">Print</button>
-                    {/* <button className="dispenSalessalesStockDetails-close-popup-btn">X</button> */}
+                    <button className="dispenSalessalesStockDetails-close-popup-btn">X</button>
                 </div>
             </div>
             {loading ? (

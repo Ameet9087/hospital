@@ -187,10 +187,7 @@ color: green;
   background-color: var(--button-hover-background-color);
 }
   
-.dispenSalesProvisionalSettelment-table-N-paginat{
-  background-color: white ;
-}
-  /* .dispenSalesProvisionalSettelment-table-N-paginat table {
+  .dispenSalesProvisionalSettelment-table-N-paginat table {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
@@ -205,13 +202,14 @@ color: green;
 }
   
   .dispenSalesProvisionalSettelment-table-N-paginat th {
+    /* background-color: red; */
     background-color: #F3F3F3;
     font-size: var(--heading-font);
   }
   
   .dispenSalesProvisionalSettelment-table-N-paginat tr:nth-child(even) {
     background-color: #f9f9f9;
-  } */
+  }
   
   .dispenSalesProvisionalSettelment-action-button {
     padding: 5px 10px;
@@ -265,6 +263,9 @@ color: green;
     margin: 0 10px;
     color: gray;
     font-size: var(--heading-font);
+  }
+  .dispenSalesProvisionalSettelment-table-N-paginat{
+    background-color: white ;
   }
 
   

@@ -392,12 +392,15 @@ const DisPrescription = () => {
   const tableRef = useRef(null);
 
   useEffect(() => {
-    fetchPrescriptions();
-  }, []);
+    if (!showModal) {
+      fetchPrescriptions();
+    }
+  }, [showModal]);
 
   const fetchPrescriptions = async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/medications`);
+      console.log(response.data)
       setPrescriptions(response.data);  // assuming response is an array of medications
       setLoading(false);
     } catch (err) {
@@ -408,9 +411,9 @@ const DisPrescription = () => {
 
   const handleViewAvailabilityClick = (prescription) => {
     const patientMedications = prescriptions.filter(
-      med => med.newPatientVisitDTO.newPatientVisitId === prescription.newPatientVisitDTO.newPatientVisitId
+      med => med.newPatientVisitDTO?.newPatientVisitId === prescription.newPatientVisitDTO?.newPatientVisitId
     );
-
+  
     setSelectedPrescription({
       ...prescription,
       medications: patientMedications
@@ -471,8 +474,9 @@ const DisPrescription = () => {
     const group = groupedPrescriptions[patientId];
     const searchStr = searchTerm.toLowerCase();
     return group.some(prescription => 
-      prescription.newPatientVisitDTO?.firstName?.toLowerCase().includes(searchStr) ||
-      prescription.medicationId.toString().includes(searchStr)
+      (prescription.status !== 'completed') &&  // Filter out completed prescriptions
+      (prescription.newPatientVisitDTO?.firstName?.toLowerCase().includes(searchStr) ||
+       prescription.medicationId.toString().includes(searchStr))
     );
   });
 
@@ -511,8 +515,7 @@ const DisPrescription = () => {
         </div>
       </div>
 
-      {/* <div className='disPrescription-table-N-paginationDiv'> */}
-      <div className="table-container">
+      <div className='disPrescription-table-N-paginationDiv'>
         <table ref={tableRef}>
           <thead>
             <tr>{[
@@ -520,6 +523,7 @@ const DisPrescription = () => {
               "Patient Name",
               "Requested By",
               "Date",
+              "Status",
               "Actions",
             ].map((header, index) => (
               <th
@@ -542,25 +546,31 @@ const DisPrescription = () => {
             </tr>
           </thead>
           <tbody className="disPrescription-requisition-tableBody">
-            {filteredGroups.map(patientId => {
-              const group = groupedPrescriptions[patientId];
-              const patient = group[0]?.newPatientVisitDTO;
-              const patientName = `${patient?.firstName || ''} ${patient?.middleName || ''} ${patient?.lastName || ''}`;
-              return (
-                <tr key={patientId}>
-                  <td>{patient?.newPatientVisitId || 'Unknown ID'}</td>
-                  <td>{patientName}</td>
-                  <td>{group[0]?.requestedBy || 'Unknown Requester'}</td>
-                  <td>{group[0]?.medicationDate || 'Unknown Date'}</td>
-                  <td className="disPrescription-action-column">
-                    <button onClick={() => handleViewAvailabilityClick(group[0])}>
-                      View Availability
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
+  {filteredGroups.map(patientId => {
+    const group = groupedPrescriptions[patientId].filter(
+      prescription => prescription.status !== 'completed'  // Exclude completed prescriptions here
+    );
+    
+    if (group.length === 0) return null;  // Skip rendering if no prescriptions remain after filtering
+
+    const patient = group[0]?.newPatientVisitDTO;
+    const patientName = `${patient?.firstName || ''} ${patient?.middleName || ''} ${patient?.lastName || ''}`;
+    return (
+      <tr key={patientId}>
+        <td>{patient?.newPatientVisitId || 'Unknown ID'}</td>
+        <td>{patientName}</td>
+        <td>{group[0]?.requestedBy || 'Unknown Requester'}</td>
+        <td>{group[0]?.medicationDate || 'Unknown Date'}</td>
+        <td>{group[0]?.status}</td>
+        <td className="disPrescription-action-column">
+          <button onClick={() => handleViewAvailabilityClick(group[0])}>
+            View Availability
+          </button>
+        </td>
+      </tr>
+    );
+  })}
+</tbody>
         </table>
       </div>
       

@@ -97,6 +97,19 @@ padding: 0 5px;
     top: 8px;
   left: 190px;
   }
+
+  .dispenStockRequisition-view-button{
+    background-color:var( --button-color);
+    margin-right: 2px;
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    border-radius: 5px ;
+    cursor: pointer;
+    font-size: var(--font-size);
+    transition: background-color 0.3s ease;
+    padding: 5px ;
+  
+  }
   
   /* .search-bar button {
     padding: 5px 10px;
@@ -129,11 +142,8 @@ padding: 0 5px;
   color: var(--button-hover-text-color);
   background-color: var(--button-hover-background-color);
 }
-
-.dispenStockRequisition-table-N-paginat{
-  background-color: white ;
-}
-  /* .dispenStockRequisition-table-N-paginat table {
+  
+  .dispenStockRequisition-table-N-paginat table {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
@@ -152,12 +162,13 @@ padding: 0 5px;
     padding: 3px;
     text-align: center;
     font-size: var(--font-size);
+    /* color: rgb(70, 69, 69); */
   }
   
   .dispenStockRequisition-table-N-paginat tr:nth-child(even) {
     background-color: #f9f9f9;
   }
-   */
+  
   .dispenStockRequisition-action-button {
     padding: 5px 10px;
     color: white;
@@ -210,6 +221,9 @@ padding: 0 5px;
     margin: 0 10px;
     /* color: gray; */
     font-size: var(--font-size);
+  }
+  .dispenStockRequisition-table-N-paginat{
+    background-color: white ;
   }
 
   

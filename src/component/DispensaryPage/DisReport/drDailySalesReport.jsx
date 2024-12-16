@@ -88,19 +88,19 @@
 //       <table>
 //         <thead>
 //           <tr>
-//             "Bill No",
-//             "Date",
-//             "Generic Name",
-//             "Medicine Name",
-//             "Patient Name",
-//             "Batch No",
-//             "Expiry",
-//             "Quantity",
-//             "SP",
-//             "Sales Value",
-//             "Store",
-//             "Counter",
-//             "User",
+//             <th>Bill No</th>
+//             <th>Date</th>
+//             <th>Generic Name</th>
+//             <th>Medicine Name</th>
+//             <th>Patient Name</th>
+//             <th>Batch No</th>
+//             <th>Expiry</th>
+//             <th>Quantity</th>
+//             <th>SP</th>
+//             <th>Sales Value</th>
+//             <th>Store</th>
+//             <th>Counter</th>
+//             <th>User</th>
             
 //           </tr>
 //         </thead>
@@ -156,17 +156,14 @@
 
  /* Ajhar Tamboli drDailySalesReport.jsx 19-09-24 */
 
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../DisReport/drDailySalesReport.css";
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 function DrDailySalesReport() {
   // State to hold fetched daily sales reports
   const [dailySalesReports, setDailySalesReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
 
   // Fetch daily sales reports from the new API endpoint
   useEffect(() => {
@@ -227,42 +224,23 @@ function DrDailySalesReport() {
           <button className="drDailySalesReport-print-button"><i class="fa-solid fa-print"></i> Print</button>
         </div>
       </div>
-      {/* <div className='drDailySalesReport-table-N-paginationDiv'> */}
-      <div className="table-container">
-        <table ref={tableRef}>
+      <div className='drDailySalesReport-table-N-paginationDiv'>
+        <table>
           <thead>
-            <tr>{[
-              "Bill No",
-              "Date",
-              "Generic Name",
-              "Medicine Name",
-              "Patient Name",
-              "Batch No",
-              "Expiry",
-              "Quantity",
-              "SP",
-              "Sales Value",
-              "Store",
-              "Counter",
-              "User",
-            ].map((header, index) => (
-              <th
-                key={index}
-                style={{ width: columnWidths[index] }}
-                className="resizable-th"
-              >
-                <div className="header-content">
-                  <span>{header}</span>
-                  <div
-                    className="resizer"
-                    onMouseDown={startResizing(
-                      tableRef,
-                      setColumnWidths
-                    )(index)}
-                  ></div>
-                </div>
-              </th>
-            ))}
+            <tr>
+              <th>Bill No</th>
+              <th>Date</th>
+              <th>Generic Name</th>
+              <th>Medicine Name</th>
+              <th>Patient Name</th>
+              <th>Batch No</th>
+              <th>Expiry</th>
+              <th>Quantity</th>
+              <th>SP</th>
+              <th>Sales Value</th>
+              <th>Store</th>
+              <th>Counter</th>
+              <th>User</th>
             </tr>
           </thead>
           <tbody>

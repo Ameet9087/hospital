@@ -77,6 +77,8 @@ function RDLListRequest() {
     fetchImagingRequest();
   }, [dateFrom, dateTo]);
 
+
+  
   const updateStatus = (id, filmTypeId, quantity, status, scannedOn) => {
     fetch(
       `${API_BASE_URL}/imaging-requisitions/update-film-type-and-quantity?filmTypeId=${filmTypeId}&quantity=${quantity}&status=${status}&scannedOn=${scannedOn}&imagingId=${id}`,
@@ -147,10 +149,11 @@ function RDLListRequest() {
       return matchesFilter && matchesSearch;
     });
   };
-
+ 
   const filteredRequests = applyFilters().filter(
     (request) => request.status?.toLowerCase() !== "completed"
   );
+  console.log(filteredRequests);
 
   return (
     <div className="rDLListRequest-active-imaging-request">
