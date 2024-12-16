@@ -1,0 +1,54 @@
+.ipdmpharmacy-container {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+  }
+  
+  .ipdmpharmacy-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .ipdmpharmacy-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .ipdmpharmacy-table th,
+  .ipdmpharmacy-table td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .ipdmpharmacy-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .ipdmpharmacy-input {
+    width: 90%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .ipdmpharmacy-add,
+  .ipdmpharmacy-delete {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    border-radius: 4px;
+  }
+  
+  .ipdmpharmacy-add {
+    background-color: green;
+    color: white;
+  }
+  
+  .ipdmpharmacy-delete {
+    background-color: red;
+    color: white;
+  }
+  

@@ -1,0 +1,37 @@
+.icdcodes-container {
+    padding: 20px;
+  }
+  
+  .icdcodes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .icdcodes-table th, .icdcodes-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  .icdcodes-table th {
+    background-color: #ddd;
+    border: 1px solid #ddd;
+    color: black;
+    padding: 5px;
+  }
+  
+  .icdcodes-table input {
+    padding: 5px;
+    /* margin: 2px; */
+    /* width: 50%; */
+  }
+  
+  .icdcodes-table button {
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  

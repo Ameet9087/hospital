@@ -21,6 +21,12 @@ import Countrymaster from './Geological/CountryMaster/countrymaster';
 import StateMaster from './Geological/statemaster/statemaster';
 import CityMaster from './Geological/Citymaster/citymaster';
 
+import Rooms from "./IPMaster/Rooms/Rooms";
+import Floor from "./IPMaster/Floor/Floor";
+import Beds from "./IPMaster/Beds/Beds";
+import PaytypeMaster from "./IPMaster/PayTypeMaster/PaytypeMaster";
+import Roominfo from "./IPMaster/Rooms/Roominfo";
+import DoctorMaster from "./DoctorMaster/Doctormaster"
 
 const SettingRouting = () => {
   return (
@@ -44,6 +50,53 @@ const SettingRouting = () => {
     <Route path='/geolocation/manage-country' element={<Countrymaster/>}></Route>
     <Route path='/geolocation/manage-state' element={<StateMaster/>}></Route>
     <Route path='/geolocation/manage-city' element={<CityMaster/>}></Route>
+    <Route path='/doctor/add-doctor' element={<DoctorMaster/>}/>
+
+    <Route path="/ipmaster/IP-master-room" element={<Rooms />} />
+    <Route path="/ipmaster/IP-master-Floor" element={<Floor />} />
+    <Route path="/ipmaster/IP-master-Beds" element={<Beds />} />
+    <Route path="/ipmaster/IP-master-Pay-type-master" element={<PaytypeMaster />}/>
+    <Route path="/ipmaster/IP-master-room-info" element={<Roominfo />} />
+        {/* <Route
+          path="/ipmaster/IP-master-OTPackageMaster"
+          element={<OTPackageMaster />}
+        />
+        <Route
+          path="/ipmaster/IP-masterDischargeWordole"
+          element={<DischargeWordole />}
+        />
+        <Route path="/ipmaster/IP-master-OTMaster" element={<OTMaster />} />
+        <Route
+          path="/ipmaster/IP-master-Medical-leo-cases"
+          element={<MLCTypeMaster></MLCTypeMaster>}
+        />
+        <Route
+          path="/ipmaster/IP-master-ReligionMaster"
+          element={<ReligionMaster />}
+        />
+        <Route
+          path="/ipmaster/IP-master-Discharge-template"
+          element={<DischargeTemplate />}
+        />
+        <Route
+          path="/ipmaster/in-admissible-master"
+          element={<InAdmissibleMasterRoutes />}
+        />
+        <Route
+          path="/ipmaster/IP-master-Group-operation-type"
+          element={<GroupOperationType />}
+        />
+        <Route
+          path="/ipmaster/IP-master-operation-type"
+          element={<Operationtype />}
+        />
+        <Route path="IP-master-AutoIncreament" element={<AutoIncrement />} />
+        <Route
+          path="/ipmaster/IP-master-IPD-PackageMaster"
+          element={<IPdPAckage />}
+        />
+        
+        <Route path="/ipmaster/IP-master-OTMaster" element={<OTMaster />} /> */}
     </Routes>
     </>
   );

@@ -10,6 +10,18 @@
   align-items: center;
   justify-content: center;
 }
+.ItemList-item-list-container
+{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.ItemList-results-info
+{
+  display: flex;
+  gap: 5px;
+}
 
 /* Modal Container */
 .ItemList-aadddContainer {
@@ -227,6 +239,21 @@
     font-size: 20px;
   }
 }
+.ItemList-header
+{
+  width: 100%;
+  display:flex ;
+  align-items:start ;
+  flex-direction: column;
+  gap: 5px;
+}
+.ItemList-sub-div
+{
+  width: 100%;
+  display:flex ;
+  justify-content: space-between;
+  align-items: center;
+}
 
 /* Question Mark */
 .ItemList-aadddInputWrapper {
@@ -289,8 +316,10 @@
   cursor: pointer;
 }
 
-.ItemList-Emergencyedit-button {
+.ItemList-Emergencyedit-button,.ItemList-Emergencyprint-button,.ItemList-export-button,.ItemList-add-button {
+  padding: 5px 10px;
   background-color: var(--button-color);
-  border: none;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
   color: white;
 }

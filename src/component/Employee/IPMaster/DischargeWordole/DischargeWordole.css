@@ -1,0 +1,92 @@
+.dischargewordoletemplate-container {
+    padding: 20px;
+    background-color:var(--background-color);
+    font-family: Arial, sans-serif;
+  }
+  
+  .dischargewordoletemplate-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .dischargewordoletemplate-header h2 {
+    color: #3598dc;
+    font-size: 24px;
+  }
+  
+  .dischargewordoletemplate-patient-details {
+    margin-bottom: 10px;
+  }
+  .dischargwordoleformcontent{
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .dischargewordoletemplate-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .dischargewordoletemplate-row div {
+    flex: 1;
+  }
+  
+  .dischargewordoletemplate-row label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    width: 200px;
+  }
+  
+  .dischargewordoletemplate-row input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .dischargewordoletemplate-section {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .dischargewordoletemplate-section label {
+   font-size: 16px;
+    margin-bottom: 5px;
+    width: 150px;
+    
+  }
+  
+  .dischargewordoletemplate-editor {
+    
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+    padding: 10px;
+    height: 100px;
+    margin-bottom: 50px;
+  }
+  
+  .discargewordolenavbuttons{
+    display: flex;
+    gap: 10px;
+  }
+
+  .discargewordolenavbuttons-button,.dischargewardrol-save-button{
+    background-color: var(--button-color);
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+  }
+
+  .discargewordolenavbuttons-button:hover,.dischargewardrol-save-button:hover{
+  background-color: white;
+  color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  }
