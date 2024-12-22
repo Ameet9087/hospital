@@ -56,7 +56,7 @@ const IpAdmission = ({ patient, onClose }) => {
   const [activePopup, setActivePopup] = useState(null);
   const [paytype, setPaytype] = useState();
   const payTypeHeading = ["id", "payTypeName"];
-  const roomHeadings = ["roomId", "roomNumber"];
+  const roomHeadings = ["roomId", "roomType"];
   const bedHeadings = [
     "bedNo",
     "roomNo",
@@ -81,11 +81,17 @@ const IpAdmission = ({ patient, onClose }) => {
   const [selectedCoConsultant, setSelectedCoConsultant] = useState(null);
   const [floor, setFloor] = useState([]);
   const [selectedFloor, setSelectedFloor] = useState(null);
-  const [roomType, setRoomType] = useState([]);
+  const [roomTypes, setRoomTypes] = useState([]);
   const [selectedRoomType, setSelectedRoomType] = useState(null);
   const [files, setFiles] = useState([]);
   const [hospitalPanel, setHospitalPanel] = useState([]);
   const [selectedHospitalPanel, setSelectedHospitalPanel] = useState(null);
+  const [roomData, setRoomData] = useState({
+    rooms: [],
+    beds: [],
+    floor: [],
+    roomType: [],
+  });
 
   const [formData, setFormData] = useState({
     diagnosis: "",
@@ -183,15 +189,79 @@ const IpAdmission = ({ patient, onClose }) => {
 
   const handleSelect = async (data) => {
     if (activePopup === "paytype") {
-      setSelectedPaytype(data);
-      const details = await fetchAllBedsAndRoomByPaytype(data.id);
-      const { rooms, beds, floor, roomType } = getRoomsAndBeds(details);
-      setRooms(rooms);
-      setBeds(beds);
-      setFloor(floor);
-      setRoomType(roomType);
+      try {
+        setSelectedPaytype(data);
+        const details = await fetchAllBedsAndRoomByPaytype(data.id);
+
+        if (!details) {
+          console.warn("No details returned from API");
+          setRooms([]);
+          setBeds([]);
+          setFloor([]);
+          setRoomTypes([]);
+          return;
+        }
+
+        const normalizedDetails = Array.isArray(details) ? details : [details];
+        console.log("Normalized Details:", normalizedDetails);
+
+        const rooms = [];
+        const beds = [];
+        const roomsType = [];
+        const floors = [];
+
+        normalizedDetails.forEach((item) => {
+          if (item.roomTypes) {
+            item.roomTypes.forEach((type) => {
+              roomsType.push({
+                roomTypeId: type.roomTypeId,
+                roomType: type.roomType,
+              });
+            });
+          }
+
+          if (item.rooms) {
+            item.rooms.forEach((room) => {
+              rooms.push({
+                roomId: room.roomId,
+                roomNumber: room.roomNumber,
+                roomName: room.name,
+              });
+            });
+          }
+
+          if (item.beds) {
+            item.beds.forEach((bed) => {
+              beds.push({
+                bedId: bed.bedId,
+                roomNo: bed.roomNo,
+                bedNo: bed.bedNo,
+                bedCharges: bed.bedCharges,
+                floorNumber: bed.floorNo,
+                roomType: bed.roomType,
+              });
+            });
+          }
+
+          if (item.floors) {
+            item.floors.forEach((floor) => {
+              floors.push({
+                floorId: floor.floorId,
+                floorNo: floor.floorNo,
+              });
+            });
+          }
+        });
+        setRooms(rooms);
+        setBeds(beds);
+        setFloor(floors);
+        setRoomTypes(roomsType);
+      } catch (error) {
+        console.error("Error fetching or processing details:", error);
+      }
     } else if (activePopup === "bed") {
       setSelectedBed(data);
+      console.log(roomTypes);
 
       const roomContainingBed = rooms.find(
         (room) => room.roomNumber == data.roomNo
@@ -200,16 +270,9 @@ const IpAdmission = ({ patient, onClose }) => {
       const floorDetails = floor.find(
         (floor) => floor.floorNo == data.floorNumber
       );
-      console.log("floorDetails", floorDetails);
-
-      const roomTypeDetails = roomType.find(
-        (type) =>
-          type?.roomType?.trim().toLowerCase() ===
-          data.roomType?.trim().toLowerCase()
+      const roomTypeDetails = roomTypes.find(
+        (type) => type?.roomType == data.roomType
       );
-
-      console.log("roomTypeDetails", roomTypeDetails);
-
       setSelectedRoom(roomContainingBed);
       setSelectedFloor(floorDetails);
       setSelectedRoomType(roomTypeDetails);
@@ -226,7 +289,6 @@ const IpAdmission = ({ patient, onClose }) => {
     } else if (activePopup === "hospitalPanel") {
       setSelectedHospitalPanel(data);
     }
-    console.log("Selected Data:", data);
     setActivePopup(null); // Close the popup after selection
   };
 
@@ -237,52 +299,17 @@ const IpAdmission = ({ patient, onClose }) => {
     return response.data;
   };
 
-  const getRoomsAndBeds = (data) => {
-    if (!data) return { rooms: [], beds: [], roomType: [], floor: [] }; // Handle undefined or null data
-
+  const getRoomsAndBeds = (details) => {
     const rooms = [];
     const beds = [];
     const roomType = [];
     const floor = [];
-
-    // Extract room information
-    if (data.rooms) {
-      rooms.push({
-        roomId: data.rooms.roomId,
-        roomNumber: data.rooms.roomNumber,
-        roomName: data.rooms.name,
-        floorNumber: data.floors?.floorNo || "Unknown", // Add floor info from `floors`
-        roomType: data.roomTypes?.roomType || "Unknown", // Add room type from `roomTypes`
-      });
+    if (!Array.isArray(details)) {
+      return { rooms: [], beds: [], roomType: [], floor: [] };
     }
+    console.log(details);
 
-    // Extract bed information
-    if (data.beds) {
-      beds.push({
-        bedId: data.beds.bedId,
-        roomNo: data.beds.roomNo,
-        bedNo: data.beds.bedNo,
-        bedCharges: data.beds.bedCharges,
-        floorNumber: data.beds.floorNo,
-        roomType: data.beds.roomType,
-      });
-    }
-
-    if (data.floors) {
-      floor.push({
-        floorId: data.floors.floorId,
-        floorNo: data.floors.floorNo,
-      });
-    }
-
-    if (data.roomTypes) {
-      roomType.push({
-        roomTypeId: data.roomTypes.roomTypeId,
-        roomType: data.roomTypes.roomType,
-      });
-    }
-
-    return { rooms, beds, floor, roomType };
+    return { rooms, beds, roomType, floor };
   };
 
   const handleSubmit = async () => {
@@ -362,8 +389,8 @@ const IpAdmission = ({ patient, onClose }) => {
 
       console.log(payload);
 
-      const response = await axios.post(
-        `${API_BASE_URL}/ip-admissions`,
+      const response = await axios.post(`
+        ${API_BASE_URL}/ip-admissions`,
         formdata,
         {
           headers: {
@@ -626,7 +653,7 @@ const IpAdmission = ({ patient, onClose }) => {
             <label>Bed No</label>
             <input
               type="text"
-              value={selectedBed?.roomNo}
+              value={selectedBed?.bedNo}
               id="description"
               placeholder="Search Bed "
             />

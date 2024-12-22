@@ -109,10 +109,7 @@
     background-color: var(--button-hover-background-color);
   }
   
-  /* .dispenStockTransfer-table-N-paginationDiv{
-    background-color: white;
-  } */
-  /* .dispenStockTransfer-requisition-table {
+  .dispenStockTransfer-requisition-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
@@ -133,7 +130,8 @@
     padding: 3px;
     text-align: center;
     font-size: var(--heading-font);
-  } */
+    /* color: #383737; */
+  }
   
   /* .no-data {
     background-color: #fff9c4;
@@ -166,4 +164,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .dispenStockTransfer-table-N-paginationDiv{
+    background-color: white;
   }

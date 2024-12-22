@@ -49,21 +49,20 @@ function SSIStock() {
 
   useEffect(() => {
     // Fetch data from API
-    fetch(`${API_BASE_URL}/inventory-requisitions/getAll`)
+    fetch(`${API_BASE_URL}/inventory-requisitions/received?subStoreId=${store}`)
       .then(response => response.json())
       .then(data => {
-        const filteredData = data.filter(item => item.storeName === store);
-        console.log(filteredData);
+        console.log(data);
          // Filter based on store
-        const sortedData = filteredData.sort((a, b) => {
-          return sortDirection === 'asc'
-            ? a.storeName.localeCompare(b.storeName)
-            : b.storeName.localeCompare(a.storeName);
-        });
+        // const sortedData = data.sort((a, b) => {
+        //   return sortDirection === 'asc'
+        //     ? a.storeName.localeCompare(b.storeName)
+        //     : b.storeName.localeCompare(a.storeName);
+        // });
 
-        setRequisitions(sortedData);
+        setRequisitions(data);
         // Filter requisitions with status 'Approved'
-        setFilteredRequisitions(sortedData.filter(req => req.status === 'Approved'));
+        setFilteredRequisitions(data.filter(req => req.status === 'Approved'));
       })
       .catch(error => console.error('Error fetching data:', error));
   }, [store, sortDirection]); // Sort direction as a dependency
@@ -147,16 +146,16 @@ function SSIStock() {
                 </tr>
               </thead>
               <tbody>
-                {filteredRequisitions.length > 0 ? (
-                  filteredRequisitions.map((req, index) => (
+                {requisitions.length > 0 ? (
+                  requisitions.map((req, index) => (
                     <tr key={index}>
-                      <td>{req.code}</td>
-                      <td>{req.subCategory}</td>
-                      <td>{req.itemName}</td>
-                      <td>{req.unit}</td>
-                      <td>{req.requiredQuantity}</td>
-                      <td>{req.itemCategory}</td>
-                      <td>{req.storeName}</td>
+                      <td>{req?.item?.itemCode}</td>
+                      <td>{req?.item?.subCategory?.subCategoryName}</td>
+                      <td>{req?.item?.itemName}</td>
+                      <td>{req?.item?.unitOfMeasurement?.unitOfMeasurementName}</td>
+                      <td>{req?.dispatchQuantity}</td>
+                      <td>{req?.item?.subCategory?.subCategoryName}</td>
+                      <td>{store}</td>
                     </tr>
                   ))
                 ) : (

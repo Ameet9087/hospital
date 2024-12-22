@@ -15,6 +15,8 @@ function RecordMedical() {
   const [filteredPatients, setFilteredPatients] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [modalMROpen, setModalMROpen] = useState(false);
+
+  const [patientModal,setPatientModal]=useState([]);
   const [selectedFilters, setSelectedFilters] = useState({
     all: true,
     diagnosisAdded: false,
@@ -32,14 +34,21 @@ function RecordMedical() {
 
   // Fetch patients data from API
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/mrinpatients/getAllMRInpatients`)
+    axios.get(`${API_BASE_URL}/discharge-ip-patients`)
       .then(response => {
         setPatients(response.data);
+        setSelectedPatient(response.data);
         setFilteredPatients(response.data);
         setTotalPages(Math.ceil(response.data.length / 10)); // Adjust pagination as needed
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
+
+
+
+  useEffect(() => {
+    console.log("Selected Patient updated:", selectedPatient); // Debug
+  }, [selectedPatient]);
 
   // Handle checkbox changes
   const handleCheckboxChange = (event) => {
@@ -50,10 +59,32 @@ function RecordMedical() {
     }));
   };
 
-  const openMRModal = (patient) => {
-    setSelectedPatient(patient);
-    setModalMROpen(true);
+  // const openMRModal = (patient) => {
+  //   setSelectedPatient(patient);
+  //   setModalMROpen(true);
+    
+    
+  // };
+
+  const openMRModal = async (ipAdmmissionId) => {
+    try {
+      // Fetch patient details using the provided API
+      const response = await fetch(`http://192.168.0.125:4069/api/ip-admissions/${ipAdmmissionId}`);
+      if (response.ok) {
+        const patientData = await response.json();
+        setPatientModal(patientData); // Set the fetched patient details
+        setModalMROpen(true); // Open the modal
+      } else {
+        console.error('Failed to fetch patient details');
+      }
+    } catch (error) {
+      console.error('Error fetching patient details:', error);
+    }
   };
+  
+
+  
+
 
   const closeMRModal = () => {
     setModalMROpen(false);
@@ -188,11 +219,11 @@ function RecordMedical() {
                 "InPatient No.",
                 "Patient Name",
                 "Age/Gender",
-                "Ward",
-                "Department",
-                "ICD Code",
-                "Doctor",
-                "MR",
+                // "Ward",
+                // "Department",
+                // "ICD Code",
+                // "Doctor",
+                // "MR",
                 "Action"
               ].map((header, index) => (
                 <th
@@ -214,27 +245,27 @@ function RecordMedical() {
               ))}
             </tr>
           </thead>
-              <tbody>
-                {filteredPatients.map((patient, index) => (
-                  <tr key={index} className="MROut-tableRow">
-                    <td>{patient.id}</td>
-                    <td>{patient.admissionDate}</td>
-                    <td>{patient.dischargeDate}</td>
-                    <td>{patient.patientNo}</td>
-                    <td>{patient.inpatientNo}</td>
-                    <td>{patient.patientName}</td>
-                    <td>{`${patient.age} Y/${patient.gender}`}</td>
-                    <td>{patient.ward}</td>
-                    <td>{patient.department}</td>
-                    <td>{patient.icdCode}</td>
-                    <td>{patient.doctorName}</td>
-                    <td>{patient.mrStatus}</td>
-                    <td>
-                      <button className="edit-final-diaggnosois" onClick={() => openMRModal(patient)}>Add MR</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+          <tbody>
+  {filteredPatients.map((patient, index) => (
+    <tr key={index} className="MROut-tableRow">
+      <td>{patient?.ipAdmission?.ipAdmmissionId}</td>
+      <td>{patient?.ipAdmission?.admissionDate}</td>
+      <td>{patient?.dischargeDate}</td>
+      <td>{patient?.ipAdmission?.patient?.uhid}</td>
+      <td>{patient?.ipAdmission?.ipAdmmissionId}</td>
+      <td>{patient?.ipAdmission?.patient?.firstName} {patient?.ipAdmission?.patient?.lastName}</td>
+      <td>{`${patient?.ipAdmission?.patient?.age} Y/${patient?.ipAdmission?.patient?.gender}`}</td>
+      <td>
+        <button 
+          className="edit-final-diagnosis" 
+          onClick={() => openMRModal(patient.ipAdmission.ipAdmmissionId)}>
+          Add MR
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
             </table>
           </div>
             <div className="MROut-pagination">
@@ -275,59 +306,90 @@ function RecordMedical() {
       </div>
 
       {/* Modal for updating medical records */}
-      {modalMROpen && selectedPatient && (
-        <Modal
-          isOpen={modalMROpen}
-          onRequestClose={closeMRModal}
-          contentLabel="Update Medical Records"
-          className="WardTransferModal__content"
-          overlayClassName="WardTransferModal__overlay"
-        >
-          {/* Modal header */}
-          <div className="WardTransferModal__header">
-            <h2>Update Medical Records</h2>
-            <button className="WardTransferModal__closeButton" onClick={closeMRModal}>X</button>
+      {modalMROpen && patientModal && (
+  <Modal
+    isOpen={modalMROpen}
+    onRequestClose={closeMRModal}
+    contentLabel="Update Medical Records"
+    className="WardTransferModal__content"
+    overlayClassName="WardTransferModal__overlay"
+  >
+    <div className="WardTransferModal__header">
+      <h2>Update Medical Records</h2>
+      <button className="WardTransferModal__closeButton" onClick={closeMRModal}>
+        X
+      </button>
+    </div>
+
+    <div className="WardTransferModal__body">
+      <form>
+        <div className="WardTransferModal__info">
+          <div className="WardTransferModal__infoItem">
+            <strong>Name:</strong> {patientModal?.patient?.firstName} {patientModal?.patient?.lastName}
+          </div>
+          <div className="WardTransferModal__infoItem">
+            <strong>Age/Sex:</strong> {patientModal?.patient?.age} Y/{patientModal?.patient?.gender}
+          </div>
+          <div className="WardTransferModal__infoItem">
+            <strong>InPatient No.:</strong> {patientModal?.ipAdmmissionId}
+          </div>
+          <div className="WardTransferModal__infoItem">
+            <strong>Department:</strong> {patientModal?.admissionUnderDoctorDetail?.consultantDoctor?.specialisationId?.specialisationName || 'N/A'}
+          </div>
+          <div className="WardTransferModal__infoItem">
+            <strong>Doctor Name:</strong> {patientModal?.admissionUnderDoctorDetail?.consultantDoctor?.doctorName || 'N/A'}
+          </div>
+          <div className="WardTransferModal__infoItem">
+            <strong>Ward:</strong> {patientModal?.roomDetails?.floorDTO?.location || 'N/A'}
+          </div>
+          <div className="WardTransferModal__infoItem">
+            <strong>Room Type:</strong> {patientModal?.roomDetails?.bedDTO?.bedType || 'N/A'}
           </div>
 
-          {/* Modal body with form fields */}
-          <div className="WardTransferModal__body">
-            <form>
-              {/* Top information */}
-              <div className="WardTransferModal__info">
-                <div className="WardTransferModal__infoItem"><strong>Name:</strong> {selectedPatient.patientName}</div>
-                <div className="WardTransferModal__infoItem"><strong>Hospital No.:</strong> {selectedPatient.hospitalNo}</div>
-                <div className="WardTransferModal__infoItem"><strong>File No.:</strong> <input type="text" value={selectedPatient.fileNo} /></div>
-                <div className="WardTransferModal__infoItem"><strong>Age/Sex:</strong> {selectedPatient.age} Y/{selectedPatient.gender}</div>
-                <div className="WardTransferModal__infoItem"><strong>InPatient No.:</strong> {selectedPatient.inpatientNo}</div>
-                <div className="WardTransferModal__infoItem"><strong>Department:</strong> {selectedPatient.department}</div>
-                <div className="WardTransferModal__infoItem"><strong>Doctor Name:</strong> {selectedPatient.doctorName}</div>
-                <div className="WardTransferModal__infoItem"><strong>Ward:</strong> {selectedPatient.ward}</div>
-                <div className="WardTransferModal__infoItem"><strong>Room Type:</strong> {selectedPatient.roomType}</div>
-                <div className="WardTransferModal__infoItem"><strong>Bed No.:</strong> {selectedPatient.bedNo}</div>
-                <div className="WardTransferModal__infoItem"><strong>Is Discharge:</strong> {selectedPatient.isDischarge}</div>
-              </div>
-
-              {/* Main Form Fields */}
-              <div className="WardTransferModal__form">
-                <div className="WardTransferModal__formGroup">
-                  <label>Diagnosis (ICD-11):</label>
-                  <input type="text" className="WardTransferModal__input" placeholder="ICD-11 Codes" defaultValue={selectedPatient.icdCode} />
-                </div>
-                <div className="WardTransferModal__formGroup">
-                  <input type="checkbox" style={{width:'auto'}} id="operationConducted" defaultChecked={selectedPatient.isOperationConducted === 'Yes'} />
-                  <label htmlFor="operationConducted">Is Operation Conducted</label>
-                </div>
-              </div>
-            </form>
+          <div className="WardTransferModal__infoItem">
+            <strong>Is Discharge:</strong> {patientModal?.isDischarge ? 'Yes' : 'No'}
           </div>
+        </div>
 
-          {/* Modal footer with action buttons */}
-          <div className="WardTransferModal__footer">
-            <button className="WardTransferModal__cancelButton" onClick={closeMRModal}>Cancel</button>
-            <button className="WardTransferModal__updateButton" onClick={updatePatientRecord} type="button">Update Record</button>
+        <div className="WardTransferModal__form">
+          <div className="WardTransferModal__formGroup">
+            <label>Diagnosis (ICD-11):</label>
+            <input
+              type="text"
+              className="WardTransferModal__input"
+              placeholder="ICD-11 Codes"
+              defaultValue={patientModal?.admissionUnderDoctorDetail?.diagnosis}
+            />
           </div>
-        </Modal>
-      )}
+          <div className="WardTransferModal__formGroup">
+            <input
+              type="checkbox"
+              style={{ width: 'auto' }}
+              id="operationConducted"
+              defaultChecked={patientModal?.isOperationConducted === 'Yes'}
+            />
+            <label htmlFor="operationConducted">Is Operation Conducted</label>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div className="WardTransferModal__footer">
+      <button className="WardTransferModal__cancelButton" onClick={closeMRModal}>
+        Cancel
+      </button>
+      <button
+        className="WardTransferModal__updateButton"
+        onClick={updatePatientRecord}
+        type="button"
+      >
+        Update Record
+      </button>
+    </div>
+  </Modal>
+)}
+
+
     </div>
   );
 }

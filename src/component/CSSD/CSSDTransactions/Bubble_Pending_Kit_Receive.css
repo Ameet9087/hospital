@@ -1,0 +1,69 @@
+.pendingkitreceiverecord-container {
+  margin: 20px;
+    background-color: var(--background-color);
+    padding: 20px;
+  
+}
+
+.pendingkitreceiverecord-header {
+  margin-bottom: 20px;
+}
+
+.pendingkitreceiverecord-inputs label {
+  margin-right: 20px;
+}
+
+.pendingkitreceiverecord-search {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.pendingkitreceiverecord-search input  {
+  margin-right: 10px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.pendinginputs {
+  
+  padding: 2px;
+  border-radius: 5px;
+}
+
+
+.pendingkitreceiverecord-modal {
+  position: fixed;
+  top: 20%;
+  left: 30%;
+  width: 40%;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.pendingkitreceiverecord-buttons {
+  margin-top: 20px;
+  padding: 10px 20px;
+  
+}
+.pendingkitreceiverecord-buttons-button{
+    padding: 5px;
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+    border: 1px solid var(--button-bg-color);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    color: white;
+    margin-left: 20px;
+}
+
+.pendingkitreceiverecord-buttons-button:hover{
+
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+
+}
+

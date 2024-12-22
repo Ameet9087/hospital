@@ -32,7 +32,7 @@ const EmployeeHeader = () => {
               </NavLink>
             </li>
 
-            <li>
+            {/* <li>
               <NavLink
                 to="/settings/adt"
                 className={
@@ -43,7 +43,7 @@ const EmployeeHeader = () => {
               </NavLink>
             </li>
 
-            {/* <li>
+            <li>
               <NavLink
                 to="/settings/security"
                 className={
@@ -76,6 +76,26 @@ const EmployeeHeader = () => {
               </NavLink>
             </li>
 
+            {/* <li>
+              <NavLink
+                to="/settings/clinical"
+                className={
+                  location.pathname === "/settings/clinical" ? "active" : ""
+                }
+              >
+                Clinical
+              </NavLink>
+            </li> */}
+            <li>
+              <NavLink
+                to="/settings/ipmaster"
+                className={
+                  location.pathname === "/settings/ipmaster" ? "active" : ""
+                }
+              >
+                Ip Master
+              </NavLink>
+            </li>
             <li>
               <NavLink
                 to="/settings/geolocation"
@@ -84,6 +104,26 @@ const EmployeeHeader = () => {
                 }
               >
                 Geolocation
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/doctor/add-doctor"
+                className={
+                  location.pathname === "/settings/doctor/add-doctor" ? "active" : ""
+                }
+              >
+                Doctor Master
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/serviceMaster/serviceMaster"
+                className={
+                  location.pathname === "/settings/serviceMaster/serviceMaster" ? "active" : ""
+                }
+              >
+                Service Master
               </NavLink>
             </li>
           </ul>
@@ -155,7 +195,7 @@ const EmployeeHeader = () => {
         </div>
       )}
 
-      {location.pathname.includes("/settings/adt") && (
+      {/* {location.pathname.includes("/settings/adt") && (
         <div className="sub-nav-container">
           <ul>
             <li>
@@ -192,6 +232,37 @@ const EmployeeHeader = () => {
                 }
               >
                 Manage Bed Feature
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      )} */}
+
+      {location.pathname.includes("/settings/clinical") && (
+        <div className="sub-nav-container">
+          <ul>
+            <li>
+              <NavLink
+                to="/settings/clinical/icd-group"
+                className={
+                  location.pathname === "/settings/clinical/icd-group"
+                    ? "active"
+                    : ""
+                }
+              >
+                ICD Group
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/clinical/manage-reaction"
+                className={
+                  location.pathname === "/settings/clinical/manage-reaction"
+                    ? "active"
+                    : ""
+                }
+              >
+                Manage Reaction
               </NavLink>
             </li>
           </ul>
@@ -243,6 +314,249 @@ const EmployeeHeader = () => {
         </div>
       )}
 
+      {location.pathname.includes("/settings/ipmaster") && (
+        <div className="sub-nav-container">
+          <ul>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/IP-master-Floor"
+                className={
+                  location.pathname === "/settings/ipmaster/IP-master-Floor"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create Floor
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/IP-master-Pay-type-master"
+                className={
+                  location.pathname ===
+                  "/settings/ipmaster/IP-master-Pay-type-master"
+                    ? "active"
+                    : ""
+                }
+              >
+                PayType Master
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/IP-master-room"
+                className={
+                  location.pathname === "/settings/ipmaster/IP-master-room"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create Room Type
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/IP-master-room-info"
+                className={
+                  location.pathname === "/settings/ipmaster/IP-master-room-info"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create Room
+              </NavLink>
+            </li>
+           
+            <li>
+              <NavLink
+                to="/settings/ipmaster/IP-master-Beds"
+                className={
+                  location.pathname === "/settings/ipmaster/IP-master-Beds"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create Beds
+              </NavLink>
+            </li>
+            {/* <li>
+              <NavLink
+                to="/settings/ipmaster/IP-master-OTPackageMaster"
+                className={
+                  location.pathname ===
+                  "/settings/ipmaster/IP-master-OTPackageMaster"
+                    ? "active"
+                    : ""
+                }
+              >
+                OT Package Master
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/IP-masterDischargeWordole"
+                className={
+                  location.pathname ===
+                  "/settings/ipmaster/IP-masterDischargeWordole"
+                    ? "active"
+                    : ""
+                }
+              >
+                Discharge Wardole
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/IP-master-OTMaster"
+                className={
+                  location.pathname === "/settings/ipmaster/IP-master-OTMaster"
+                    ? "active"
+                    : ""
+                }
+              >
+                OT Master
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/IP-master-Medical-leo-cases"
+                className={
+                  location.pathname ===
+                  "/settings/ipmaster/IP-master-Medical-leo-cases"
+                    ? "active"
+                    : ""
+                }
+              >
+                Medical Leave Cases
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/IP-master-ReligionMaster"
+                className={
+                  location.pathname ===
+                  "/settings/ipmaster/IP-master-ReligionMaster"
+                    ? "active"
+                    : ""
+                }
+              >
+                Religion Master
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/IP-master-Discharge-template"
+                className={
+                  location.pathname ===
+                  "/settings/ipmaster/IP-master-Discharge-template"
+                    ? "active"
+                    : ""
+                }
+              >
+                Discharge Template
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/in-admissible-master"
+                className={
+                  location.pathname ===
+                  "/settings/ipmaster/in-admissible-master"
+                    ? "active"
+                    : ""
+                }
+              >
+                In Admissible Master
+              </NavLink>
+            </li>
+           
+            <li>
+              <NavLink
+                to="/settings/ipmaster/IP-master-Group-operation-type"
+                className={
+                  location.pathname ===
+                  "/settings/ipmaster/IP-master-Group-operation-type"
+                    ? "active"
+                    : ""
+                }
+              >
+                Group Operation Type
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/IP-master-operation-type"
+                className={
+                  location.pathname ===
+                  "/settings/ipmaster/IP-master-operation-type"
+                    ? "active"
+                    : ""
+                }
+              >
+                Operation Type
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/IP-master-IPD-PackageMaster"
+                className={
+                  location.pathname ===
+                  "/settings/ipmaster/IP-master-IPD-PackageMaster"
+                    ? "active"
+                    : ""
+                }
+              >
+                IPD Package Master
+              </NavLink>
+            </li> */}
+          </ul>
+        </div>
+      )}
+
+      {/* {location.pathname.includes("/settings/serviceMaster") && (
+        <div className="sub-nav-container">
+          <ul>
+            <li>
+              <NavLink
+                to="/settings/serviceMaster/serviceMaster"
+                className={
+                  location.pathname === "/settings/serviceMaster/serviceMaster"
+                    ? "active"
+                    : ""
+                }
+              >
+              Service Master
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/serviceMaster/serviceRate"
+                className={
+                  location.pathname ===
+                  "/settings/serviceMaster/serviceRate"
+                    ? "active"
+                    : ""
+                }
+              >
+                ServiceRate
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/serviceMaster/operationOrProcedureRate"
+                className={
+                  location.pathname ===
+                  "/settings/serviceMaster/operationOrProcedureRate"
+                    ? "active"
+                    : ""
+                }
+              >
+                Manage Employee Type
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      )} */}
       {location.pathname.includes("/settings/geolocation") && (
         <div className="sub-nav-container">
           <ul>
@@ -262,8 +576,7 @@ const EmployeeHeader = () => {
               <NavLink
                 to="/settings/geolocation/manage-state"
                 className={
-                  location.pathname ===
-                  "/settings/geolocation/manage-state"
+                  location.pathname === "/settings/geolocation/manage-state"
                     ? "active"
                     : ""
                 }
@@ -275,8 +588,7 @@ const EmployeeHeader = () => {
               <NavLink
                 to="/settings/geolocation/manage-city"
                 className={
-                  location.pathname ===
-                  "/settings/geolocation/manage-city"
+                  location.pathname === "/settings/geolocation/manage-city"
                     ? "active"
                     : ""
                 }

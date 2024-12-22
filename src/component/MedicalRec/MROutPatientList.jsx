@@ -49,23 +49,32 @@ function RecordMedical() {
   };
 
 
-  // Fetch data from the API
   const fetchOutpatients = () => {
-    
-    axios.get(`${API_BASE_URL}/mroutpatients/getAllMRoutpatients`)
+    axios.get(`${API_BASE_URL}/out-patient`)
       .then(response => {
         const data = response.data;
-        setOutpatients(data);
-
-         // Ensure outpatients is always an array
-
+  
+        // Transform data to match the table structure
+        const outpatients = data.map((patient, index) => ({
+          serialNo: index + 1,
+          patientName: `${patient.firstName} ${patient.middleName || ''} ${patient.lastName}`.trim(),
+          age: `${patient.age} ${patient.ageUnit || ''}`.trim(),
+          gender: patient.gender || 'N/A',
+          doctorName: patient.careOfPerson || 'N/A',
+          appointmentDate: "N/A", // Assuming no appointment date field in the data
+          department: "General", // Placeholder as department is not provided
+          icdCode: "N/A", // Placeholder for ICD Code
+          finalDiagnosis: patient.isOpd || 'N/A',
+          action: patient.outPatientId || null,
+        }));
+  
+        setOutpatients(outpatients);
       })
       .catch(error => {
         console.error('There was an error fetching the data!', error);
         setOutpatients([]);
       });
   };
-
   useEffect(() => {
     fetchOutpatients(); // Fetch data initially
   }, [currentPage, filterByAppointment, doctorName, department, diseaseCategory, diagnosis, fromDate, toDate]);
@@ -119,19 +128,7 @@ function RecordMedical() {
               <option >Sachin Mehta</option>
             </select>
 
-        </div>     <br/>
-        <div classname="filter-group-inner">
-
-            <label className="filter-label">Select Disease Category:</label>
-            <select className="filter-select">
-              <option>All</option>
-              <option>Communicable,Vector Borne</option>
-              <option>Cardiovascular & Respiratory Related Problems</option>
-              <option>Certain Infectious or parasitic diseases</option>
-              <option >Ear,Nose and Throat Infection</option>
-            </select>
-          </div>
-       
+        </div>     
    
         
       </div>
@@ -146,47 +143,10 @@ function RecordMedical() {
           <option>CT/MRI</option>
         </select>
         </div><br></br>
-        <div classname="filter-group-inner">
-        <label className="filter-label">Select Diagnosis:</label>
-        <select className="filter-select">
-          <option>ICD-10(s)</option>
-          <option>1F03 | Measles</option>
-          <option>1C17 | Diptheria</option>
-          <option>1C12 | Neonatal Tetanus</option>
-          <option>1B1Z | Tuberculosis</option>
-        </select>
-        </div>
+   
       </div>
       </div>
-      {/* <div className='diagnosis-filter'>
-        <label>
-          <input
-            type="checkbox"
-            name="all"
-            checked={selectedFilters.all}
-            onChange={handleCheckboxChange}
-          />
-          All
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="diagnosisAdded"
-            checked={selectedFilters.diagnosisAdded}
-            onChange={handleCheckboxChange}
-          />
-          Diagnosis Added
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            name="diagnosisPending"
-            checked={selectedFilters.diagnosisPending}
-            onChange={handleCheckboxChange}
-          />
-          Diagnosis Pending
-        </label>
-      </div> */}
+     
       <div className="MROutPatient-tableContainer">
         <h5>Filter by Appointment Date:</h5>
         <div className="MROutPatient-date-filter">
@@ -220,96 +180,66 @@ function RecordMedical() {
         {
           filterByAppointment && (
             <>
-             <table className="patientList-table" ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-               "Serial No",
-              "Patient Name",
-              "Age",
-              "Gender",
-              "Doctor Name",
-              "Appointment Date",
-              "Department",
-              "ICD Code",
-              "Final Diagnosis",
-              "Action"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-                <tbody>
-                  {
-                    outpatients.length > 0 ? (
-                      outpatients.map((patient) => (
-                        <tr key={patient.id}>
-                          <td>{patient.hospitalNo}</td>
-                          <td>{patient.patientName}</td>
-                          <td>{patient.age}</td>
-                          <td>{patient.gender}</td>
-                          <td>{patient.doctorName}</td>
-                          <td>{patient.appointmentDate}</td>
-                          <td>{patient.department}</td>
-                          <td>{patient.icdCode}</td>
-                          <td>{patient.finalDiagnosis || 'N/A'}</td>
-                          <td><button onClick={()=>EditFinalDiagnosisButton(patient)}>Edit Final Diagnosis</button></td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan="10">No data available</td>
-                      </tr>
-                    )
-                  }
-                </tbody>
-              </table>
-              {/* <div className="MROutPatient-pagination">
-                <button
-                  className="MROut-pagination-btn"
-                  onClick={() => handlePageChange(1)}
-                  disabled={currentPage === 1}
-                >
-                  First
-                </button>
-                <button
-                  className="MROut-pagination-btn"
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                >
-                  Previous
-                </button>
-                <span>Page {currentPage} of {totalPages}</span>
-                <button
-                  className="MROut-pagination-btn"
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                >
-                  Next
-                </button>
-                <button
-                  className="MROut-pagination-btn"
-                  onClick={() => handlePageChange(totalPages)}
-                  disabled={currentPage === totalPages}
-                >
-                  Last
-                </button>
-              </div> */}
+             <table className="MROut-patientList-table" ref={tableRef}>
+  <thead>
+    <tr>
+      {[
+        "Serial No",
+        "Patient Name",
+        "Age",
+        "Gender",
+        "Doctor Name",
+        "Appointment Date",
+        "Department",
+        "ICD Code",
+        "Final Diagnosis",
+        "Action"
+      ].map((header, index) => (
+        <th
+          key={index}
+          style={{ width: columnWidths[index] }}
+          className="resizable-th"
+        >
+          <div className="header-content">
+            <span>{header}</span>
+            <div
+              className="resizer"
+              onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+            ></div>
+          </div>
+        </th>
+      ))}
+    </tr>
+  </thead>
+  <tbody>
+    {outpatients.length > 0 ? (
+      outpatients.map((patient, index) => (
+        <tr key={patient.action || index}>
+          <td>{patient.serialNo}</td>
+          <td>{patient.patientName}</td>
+          <td>{patient.age}</td>
+          <td>{patient.gender}</td>
+          <td>{patient.doctorName}</td>
+          <td>{patient.appointmentDate}</td>
+          <td>{patient.department}</td>
+          <td>{patient.icdCode}</td>
+          <td>{patient.finalDiagnosis}</td>
+          <td>
+            <button onClick={() => EditFinalDiagnosisButton(patient)} className='MROut-patientList-table-btn'>
+              Edit Final Diagnosis
+            </button>
+          </td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td colSpan="10">No data available</td>
+      </tr>
+    )}
+  </tbody>
+</table>
+
+        
             </>
           )
         }
@@ -317,97 +247,85 @@ function RecordMedical() {
       
       {
   isModalOpen && outpatients && (
-    <div className="MROUT-container birthlist">
-    <div className="MROUT-modal-overlay">
-      <div className="MROUT-modal-content">
-        <div className="MROUT-modal-header">
-            <button className="close-button" onClick={closeModal}>
-              &times;
-            </button>
-          </div>
-          <h3>Add Final Diagnosis</h3>
+    <div className="MROUT-container-birthlist">
+         <button type="button" className="cut-button" onClick={closeModal}>X</button>
 
-          <div className="form-container">
-            <form onSubmit={handleSubmit}>
-              <h5>
-                <i className="bi bi-person-circle"></i> {addFinalDiagnosisdata.patientName}
-              </h5>
-              <div className="form-group">
-                <strong>Outpatient No:</strong> {addFinalDiagnosisdata.id}
-              </div>
-              <div className="form-group">
-                <strong>Age:</strong> {addFinalDiagnosisdata.age}
-              </div>
-              <div className="form-group">
-                <strong>Visit Date:</strong> {addFinalDiagnosisdata.visitDate}
-              </div>
-              <div className="form-group">
-                <strong>Contact No:</strong> {addFinalDiagnosisdata.contactNo}
-              </div>
-              <div className="form-group">
-                <strong>Doctor Name:</strong> {addFinalDiagnosisdata.doctorName}
-              </div>
-              <div className="form-group">
-                <strong>Address:</strong> {addFinalDiagnosisdata.address}
-              </div>
-              <div className="form-group">
-                <strong>Department:</strong> {addFinalDiagnosisdata.department}
-              </div>
+   <div className="modal-overlay">
+  <div className="modal-container">
+    <div className="modal-header">
+      <p>Add Final Diagnosis</p>
+      <button className="close-button" onClick={closeModal}>
+        &times;
+      </button>
+    </div>
 
-              <div className="form-group">
-                <label htmlFor="diseaseCategory">Select Disease Category</label>
-                <select
-                  id="diseaseCategory"
-                  name="diseaseCategory"
-                  value={diseaseCategory}
-                  onChange={e => setDiseaseCategory(e.target.value)}
-                  required
-                >
-                  <option value="All">All</option>
-                  <option>Communicable, Vector Borne</option>
-                  <option>Cardiovascular & Respiratory Related Problems</option>
-                  <option>Certain Infectious or parasitic diseases</option>
-                  <option>Ear, Nose and Throat Infection</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="diagnosis">Select Diagnosis</label>
-                <input
-                  type="text"
-                  id="diagnosis"
-                  name="diagnosis"
-                  placeholder="ICD-11"
-                  value={diagnosis}
-                  onChange={e => setDiagnosis(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>
-                  <input
-                    type="checkbox"
-                    name="referredOutpatient"
-                    checked={referredOutpatient}
-                    onChange={e => setReferredOutpatient(e.target.checked)}
-                  />
-                  Referred Outpatient?
-                </label>
-              </div>
-
-              <div className="footer-buttons">
-                <button type="submit" className="submit-button">
-                  Submit
-                </button>
-                <button type="button" className="cancel-button" onClick={closeModal}>
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+    <div className="modal-body">
+      <div className="modal-body-content">
+      <h5>
+        <i className="bi bi-person-circle"></i> {addFinalDiagnosisdata.patientName}
+      </h5>
+      <div className="MROut-patientList-details-section">
+        <p>
+          <strong>Outpatient No:</strong> {addFinalDiagnosisdata?.outPatientId} &nbsp;&nbsp;
+          <strong>Age:</strong> {addFinalDiagnosisdata.age} &nbsp;&nbsp;
+          <strong>Visit Date:</strong> {addFinalDiagnosisdata.visitDate}
+        </p>
+        <p>
+          <strong>Contact No:</strong> {addFinalDiagnosisdata.contactNo} &nbsp;&nbsp;
+          <strong>Doctor Name:</strong> {addFinalDiagnosisdata.doctorName}
+        </p>
+        <p>
+          <strong>Department:</strong> {addFinalDiagnosisdata.department} &nbsp;&nbsp;
+          <strong>Address:</strong> {addFinalDiagnosisdata.address}
+        </p>
       </div>
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <div className="MROut-patientList-form-group">
+          <label>Select Disease Category:</label>
+          <select
+            value={diseaseCategory}
+            onChange={e => setDiseaseCategory(e.target.value)}
+          >
+            <option value="All">All</option>
+            <option>Communicable, Vector Borne</option>
+            <option>Cardiovascular & Respiratory Related Problems</option>
+            <option>Certain Infectious or parasitic diseases</option>
+            <option>Ear, Nose and Throat Infection</option>
+          </select>
+        </div>
+
+        <div className="MROut-patientList-form-group">
+          <label>Select Diagnosis:</label>
+          <input
+            type="text"
+            placeholder="ICD-11"
+            value={diagnosis}
+            onChange={e => setDiagnosis(e.target.value)}
+          />
+        </div>
+
+        <div className="MROut-patientList-checkbox-group">
+          <label>
+            <input
+              type="checkbox"
+              checked={referredOutpatient}
+              onChange={e => setReferredOutpatient(e.target.checked)}
+            />
+            Referred Outpatient?
+          </label>
+        </div>
+
+        <div className="MROut-patientList-footer-buttons">
+          <button type="submit" className="MROut-patientList-update-button">Update</button>
+          <button type="button" className="MROut-patientList-cancel-button" onClick={closeModal}>Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
     </div>
   )
 }

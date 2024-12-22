@@ -65,7 +65,7 @@ const NavMenu = () => {
             >
                 Finalized Patients
             </NavLink>
-            <NavLink 
+            {/* <NavLink 
                 to="/emergency/bedinformation" 
                 className="EmergencyNavBar-button"
                 activeClassName="EmergencyNavBar-active"
@@ -103,7 +103,7 @@ const NavMenu = () => {
                 activeClassName="EmergencyNavBar-active"
             >
                    Emergency Drill Report
-            </NavLink>
+            // </NavLink> */}
 
         </nav>
     );

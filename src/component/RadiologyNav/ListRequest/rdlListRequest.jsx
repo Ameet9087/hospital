@@ -131,22 +131,22 @@ function RDLListRequest() {
   };
 
   const applyFilters = () => {
-    return imagingRequests.filter((request) => {
-      const matchesFilter =
-        selectedFilter === "--All--" ||
-        request.imagingTypeDTO?.imagingTypeName.toUpperCase() ===
-          selectedFilter;
-      const matchesSearch =
-        request.patientDTO?.firstName.toLowerCase().includes(searchQuery) ||
-        request.patientDTO?.lastName.toLowerCase().includes(searchQuery) ||
-        request.prescriberDTO?.firstName.toLowerCase().includes(searchQuery) ||
-        request.imagingItemDTO?.imagingItemName
-          .toLowerCase()
-          .includes(searchQuery);
+  return imagingRequests.filter((request) => {
+    const matchesFilter =
+      selectedFilter === "--All--" ||
+      request.imagingTypeDTO?.imagingTypeName?.toUpperCase() === selectedFilter;
 
-      return matchesFilter && matchesSearch;
-    });
-  };
+    const matchesSearch = [
+      request.inPatientDTO?.firstName || '',
+      request.inPatientDTO?.lastName || '',
+      request.prescriberDTO?.firstName || '',
+      request.imagingItemDTO?.imagingItemName || '',
+    ].some((field) => field.toLowerCase().includes(searchQuery));
+
+    return matchesFilter && matchesSearch;
+  });
+};
+
 
   const filteredRequests = applyFilters().filter(
     (request) => request.status?.toLowerCase() !== "completed"
@@ -257,13 +257,13 @@ function RDLListRequest() {
                   <td>{index + 1}</td>
                   <td>{request.requestedDate}</td>
                   <td>
-                    {request.patientDTO?.firstName ||
-                      request.newPatientVisitDTO?.firstName}{" "}
-                    {request.patientDTO?.lastName ||
-                      request.newPatientVisitDTO?.lastName}
+                    {request.inPatientDTO?.firstName ||
+                      request.outPatient?.firstName}{" "}
+                    {request.inPatientDTO?.lastName ||
+                      request.outPatient?.lastName}
                   </td>
                   <td>
-                    {request.patientDTO?.age || request.newPatientVisitDTO?.age}
+                    {request.inPatientDTO?.age || request.outPatient?.age}
                   </td>
                   <td>{request.prescriberDTO?.employeeName || "self"}</td>
                   <td>{request.imagingTypeDTO?.imagingTypeName}</td>

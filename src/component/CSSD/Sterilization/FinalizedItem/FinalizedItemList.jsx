@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./FinalizedItem.css";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 
 function FinalizedItemList() {
   const [columnWidths, setColumnWidths] = useState({});

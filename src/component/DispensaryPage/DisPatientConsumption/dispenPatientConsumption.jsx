@@ -67,12 +67,12 @@
 //         <table id="tableToPrint" className="dispenPatientConsumption-requisition-table">
 //           <thead>
 //             <tr>
-//               "Hospital Number",
-//               "Patient Name",
-//               "Age/Sex",
-//               "Contact No.",
-//               "Total Amt.",
-//               "Action",
+//               <th>Hospital Number</th>
+//               <th>Patient Name</th>
+//               <th>Age/Sex</th>
+//               <th>Contact No.</th>
+//               <th>Total Amt.</th>
+//               <th>Action</th>
 //             </tr>
 //           </thead>
 //           <tbody>
@@ -106,15 +106,13 @@
 // };
 
 // export default DispenPatientConsumption;
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import "../DisPatientConsumption/dispenPatientConsumption.css";
 import DispenPatientConsumNewPC from './dispenPatientConsumNewPC';
-import CustomModal from '../../../CustomModel/CustomModal';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 const DispenPatientConsumption = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -124,8 +122,6 @@ const DispenPatientConsumption = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
 
   useEffect(() => {
     fetch("http://localhost:1415/api/patient-consumption/fetch-all-patient-consumption")
@@ -208,37 +204,16 @@ const DispenPatientConsumption = () => {
         </div>
       </div>
 
-      {/* <div className='dispenPatientConsumption-table-N-paginationDiv'> */}
-      <div className="table-container">
-        <table  ref={tableRef}
-        // id="tableToPrint" className="dispenPatientConsumption-requisition-table"
-        >
+      <div className='dispenPatientConsumption-table-N-paginationDiv'>
+        <table id="tableToPrint" className="dispenPatientConsumption-requisition-table">
           <thead>
-            <tr>{[
-              "Hospital Number",
-              "Patient Name",
-              "Age/Sex",
-              "Contact No.",
-              "Total Amt.",
-              "Action",
-            ].map((header, index) => (
-              <th
-                key={index}
-                style={{ width: columnWidths[index] }}
-                className="resizable-th"
-              >
-                <div className="header-content">
-                  <span>{header}</span>
-                  <div
-                    className="resizer"
-                    onMouseDown={startResizing(
-                      tableRef,
-                      setColumnWidths
-                    )(index)}
-                  ></div>
-                </div>
-              </th>
-            ))}
+            <tr>
+              <th>Hospital Number</th>
+              <th>Patient Name</th>
+              <th>Age/Sex</th>
+              <th>Contact No.</th>
+              <th>Total Amt.</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -283,14 +258,12 @@ const DispenPatientConsumption = () => {
 
       {/* Popup for New Consumption Entry */}
       {isPopupOpen && (
-        // <div className="dispenPatientConsumption-popup-overlay">
-        //   <div className="dispenPatientConsumption-popup-content">
-        <CustomModal isOpen={isPopupOpen} onClose={closePopup}>
+        <div className="dispenPatientConsumption-popup-overlay">
+          <div className="dispenPatientConsumption-popup-content">
             <DispenPatientConsumNewPC />
-        </CustomModal>
-            // <button className="dispenPatientConsumption-close-popup-button" onClick={closePopup}>Close</button>
-          // </div>
-        // </div>
+            <button className="dispenPatientConsumption-close-popup-button" onClick={closePopup}>Close</button>
+          </div>
+        </div>
       )}
     </div>
   );

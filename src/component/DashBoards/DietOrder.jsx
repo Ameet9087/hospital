@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import './DietOrder.css';
-import { API_BASE_URL } from '../api/api';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import "./DietOrder.css";
+import { API_BASE_URL } from "../api/api";
+import axios from "axios";
 
 const DietOrder = ({ inPatientId, outPatientId }) => {
   const [formData, setFormData] = useState({
-    dietGroup: '',
-    dietOrder: '',
-    dietFrequency: '',
-    dietType: '',
-    dietTime: '',
-    dietGivenTime: '',
-    dietRemarks: '',
+    dietGroup: "",
+    dietOrder: "",
+    dietFrequency: "",
+    dietType: "",
+    dietTime: "",
+    dietGivenTime: "",
+    dietRemarks: "",
     ...(inPatientId
       ? { inPatient: { inPatientId } }
       : { outPatient: { outPatientId } }),
@@ -20,43 +20,38 @@ const DietOrder = ({ inPatientId, outPatientId }) => {
   const [dietOrders, setDietOrders] = useState([]);
 
   // Fetch Diet Orders for Patient when component mounts
-  useEffect(() => {
-    const fetchDietOrders = async () => {
-      try {
-        let endpoint = "";
-  
-        if (inPatientId) {
-          endpoint = `${API_BASE_URL}/dietorders/in-patient/${inPatientId}`;
-        } else if (outPatientId) {
-          endpoint = `${API_BASE_URL}/dietorders/out-patient/${outPatientId}`;
-        } else {
-          console.error("No valid patient ID provided for Diet Orders.");
-          return;
-        }
-  
-        const response = await axios.get(endpoint);
-        setDietOrders(response.data);
-        
-      } catch (error) {
-        console.error("Error fetching diet orders:", error);
+  const fetchDietOrders = async () => {
+    try {
+      let endpoint = "";
+
+      if (inPatientId) {
+        endpoint = `${API_BASE_URL}/dietorders/in-patient/${inPatientId}`;
+      } else if (outPatientId) {
+        endpoint = `${API_BASE_URL}/dietorders/out-patient/${outPatientId}`;
+      } else {
+        console.error("No valid patient ID provided for Diet Orders.");
+        return;
       }
-    };
-  
+
+      const response = await axios.get(endpoint);
+      setDietOrders(response.data);
+    } catch (error) {
+      console.error("Error fetching diet orders:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchDietOrders(); // Call the function to fetch data when component mounts
   }, [inPatientId, outPatientId]); // Re-run the effect if either inPatientId or outPatientId changes
-  
-
 
   // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
-
-
 
   // Handle form submission (POST request)
   const handleSubmit = async (e) => {
@@ -64,28 +59,33 @@ const DietOrder = ({ inPatientId, outPatientId }) => {
 
     try {
       const response = await fetch(`${API_BASE_URL}/dietorders`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData), // Send formData directly without wrapping it in an object
       });
 
       if (!response.ok) {
-        throw new Error('Failed to submit diet order');
+        throw new Error("Failed to submit diet order");
       }
-      alert("Successfully Submitted")
+      alert("Successfully Submitted");
       const responseData = await response.json();
-      console.log('Successfully submitted:', responseData);
-
-      // Reset form after submission
-
-      // Optionally, fetch the updated list of diet orders
+      fetchDietOrders();
+      setFormData({
+        dietGroup: "",
+        dietOrder: "",
+        dietFrequency: "",
+        dietType: "",
+        dietTime: "",
+        dietGivenTime: "",
+        dietRemarks: "",
+      });
+      console.log("Successfully submitted:", responseData);
     } catch (error) {
-      console.error('Error submitting diet order:', error);
+      console.error("Error submitting diet order:", error);
     }
   };
-
 
   return (
     <div className="Diet-order-container">
@@ -173,21 +173,14 @@ const DietOrder = ({ inPatientId, outPatientId }) => {
         </div>
 
         <div className="Diet-order-actions">
-          <button
-            type="button"
-            className="Diet-order-actions-cancel"
-          >
+          <button type="button" className="Diet-order-actions-cancel">
             Cancel
           </button>
-          <button
-            type="submit"
-            className="Diet-order-actions-submit"
-          >
+          <button type="submit" className="Diet-order-actions-submit">
             Submit
           </button>
         </div>
       </form>
-
 
       <div className="ReferralConsultation-existing-referrals">
         <h4>Existing Diet Orders:</h4>
@@ -210,7 +203,6 @@ const DietOrder = ({ inPatientId, outPatientId }) => {
                   <td>{diet.dietGroup}</td>
                   <td>{diet.dietFrequency}</td>
                   <td>{diet.dietRemarks}</td>
-
                 </tr>
               ))}
             </tbody>

@@ -1,15 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios'; // Import Axios
-import './anesthesiarecordmgnt.css'; // Ensure you have this file for styling
+import axios from 'axios';
+import './anesthesiarecordmgnt.css';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
-import { API_BASE_URL } from '../../api/api';
-
+import CustomModal from '../../../CustomModel/CustomModal';
+import useCustomAlert from '../../../alerts/useCustomAlert';
 
 const AnesthesiaRecordManagement = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
-  
-  const [records, setRecords] = useState([]); // To store anesthesia records
+  const { success, warning, error, CustomAlerts } = useCustomAlert();
+  const [records, setRecords] = useState([]); 
+  const [searchTerm, setSearchTerm] = useState("");
   const [newRecord, setNewRecord] = useState({
     surgeryId: '',
     surgenId: '',
@@ -18,23 +19,25 @@ const AnesthesiaRecordManagement = () => {
     anesthesiaEndTime: '',
     notes: ''
   });
-  const [showModal, setShowModal] = useState(false); // Modal visibility
-  const [isEditing, setIsEditing] = useState(false); // Flag to check if editing
-  const [editRecordId, setEditRecordId] = useState(null); // ID of the record being edited
+  
+  // Declare openStickerPopup state
+  const [openStickerPopup, setOpenStickerPopup] = useState(false); 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editRecordId, setEditRecordId] = useState(null);
 
-  // Fetch records when component mounts
   useEffect(() => {
     const fetchRecords = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/anesthesia-records`); // Update this URL as needed
-        setRecords(response.data); // Assuming response.data is an array of records
+        const response = await axios.get('http://localhost:8051/api/anesthesia-records');
+        setRecords(response.data);
+        success('Records fetched successfully!');
       } catch (error) {
         console.error('Error fetching anesthesia records:', error);
+        error('Error fetching anesthesia records');
       }
     };
-
-    fetchRecords(); // Call the fetch function
-  }, []); // Empty dependency array to run only on mount
+    fetchRecords();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -46,34 +49,28 @@ const AnesthesiaRecordManagement = () => {
 
   const handleAddRecord = async () => {
     try {
-      // Add new record via POST request
-      const response = await axios.post(`${API_BASE_URL}/anesthesia-records`, newRecord);
-      setRecords([...records, response.data]); // Append new record to the state
+      const response = await axios.post('http://localhost:8051/api/anesthesia-records', newRecord);
+      setRecords([...records, response.data]);
     } catch (error) {
       console.error('Error adding record:', error);
     }
-
-    // Reset form fields
     resetForm();
   };
 
   const handleEditRecord = (record) => {
-    setNewRecord(record); // Set the newRecord state to the record being edited
-    setIsEditing(true); // Set editing flag to true
-    setEditRecordId(record.anesthesiaRecordId); // Set the ID of the record being edited
-    setShowModal(true); // Show the modal
+    setNewRecord(record);
+    setIsEditing(true);
+    setEditRecordId(record.anesthesiaRecordId);
+    setOpenStickerPopup(true); // Show modal when editing
   };
 
   const handleUpdateRecord = async () => {
     try {
-      // Update the existing record via PUT request
-      const response = await axios.put(`${API_BASE_URL}/anesthesia-records/${editRecordId}`, newRecord);
-      setRecords(records.map(record => (record.anesthesiaRecordId === editRecordId ? response.data : record))); // Update the record in the state
+      const response = await axios.put(`http://localhost:8051/api/anesthesia-records/${editRecordId}`, newRecord);
+      setRecords(records.map(record => (record.anesthesiaRecordId === editRecordId ? response.data : record)));
     } catch (error) {
       console.error('Error updating record:', error);
     }
-
-    // Reset form fields
     resetForm();
   };
 
@@ -86,21 +83,104 @@ const AnesthesiaRecordManagement = () => {
       anesthesiaEndTime: '',
       notes: ''
     });
-    setShowModal(false); // Close the modal after saving
-    setIsEditing(false); // Reset editing flag
-    setEditRecordId(null); // Reset editing record ID
+    setOpenStickerPopup(false); // Close the modal after saving
+    setIsEditing(false);
+    setEditRecordId(null);
   };
 
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  const handlePrint = () => {
+    window.print();  // Trigger the print dialog
+};
   return (
     <div className="anesthesia-record-container">
-      {/* Add Record Button */}
-      <button onClick={() => { resetForm(); setShowModal(true); }} className="add-record-btnathensia">
+      <button onClick={() => { resetForm(); setOpenStickerPopup(true); }} className="add-record-btnathensia">
         Add Anesthesia Record
       </button>
+      
 
-      {/* Modal for Adding/Editing Anesthesia Records */}
-      {showModal && (
-        <div className="anestesiaredmgnt-modal-overlay" onClick={() => setShowModal(false)}>
+      <div className="ot-filtersection">
+  <div className="ot-datefilter">
+    <div className="ot-daterange">
+      <label>From: </label>
+      <input
+        className="ot-input"
+        type="date"
+        value="2024-08-05"
+      />
+      <label> To: </label>
+      <input
+        className="ot-input"
+        type="date"
+        value="2024-08-12"
+      />
+    </div>
+  </div>
+
+  
+</div>
+<div className="ot-searchsection">
+    <input
+      type="text"
+      placeholder="Search by Patient Name/ID"
+      className="ot-search-input"
+      value={searchTerm}
+      onChange={handleSearch}
+    />
+    <button className="ot-print-button" onClick={handlePrint}>
+      Print
+    </button>
+  </div>
+
+
+      <div className="records-table">
+          
+          <table ref={tableRef}>
+            <thead>
+              <tr>
+                {[
+                  "Surgery ID",
+                  "Surgeon ID",
+                  "Anesthesia Type",
+                  "Anesthesia Start Time",
+                  "Anesthesia End Time",
+                  "Notes",
+                  "Actions"
+                ].map((header, index) => (
+                  <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div className="resizer" onMouseDown={startResizing(tableRef, setColumnWidths)(index)}></div>
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {records.map((record) => (
+                <tr key={record.anesthesiaRecordId}>
+                  <td>{record.surgeryId}</td>
+                  <td>{record.surgenId}</td>
+                  <td>{record.anesthesiaType}</td>
+                  <td>{record.anesthesiaStartTime}</td>
+                  <td>{record.anesthesiaEndTime}</td>
+                  <td>{record.notes}</td>
+                  <td>
+                    <button onClick={() => handleEditRecord(record)} className="edit-btn">Edit</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+      {openStickerPopup && (
+        <CustomModal
+          isOpen={openStickerPopup} 
+          onClose={() => setOpenStickerPopup(false)} 
+        >
           <div className="anesthesia-record-modal-content" onClick={(e) => e.stopPropagation()}>
             <h4>{isEditing ? 'Edit Anesthesia Record' : 'Add Anesthesia Record'}</h4>
             <div className='athensiarecordmodalform'>
@@ -177,62 +257,11 @@ const AnesthesiaRecordManagement = () => {
               </button>
             </div>
           </div>
-        </div>
+        </CustomModal>
       )}
 
-      {/* Table for displaying the added anesthesia records */}
-      {records.length > 0 && (
-        <div className="records-table">
-          <h3>Added Anesthesia Records</h3>
-          <table ref={tableRef}>
-            <thead>
-              <tr>
-                {[
-                  "Surgery ID",
-                  "Surgeon ID",
-                  "Anesthesia Type",
-                  "Anesthesia Start Time",
-                  "Anesthesia End Time",
-                  "Notes",
-                  "Actions" // New Actions column
-                ].map((header, index) => (
-                  <th
-                    key={index}
-                    style={{ width: columnWidths[index] }}
-                    className="resizable-th"
-                  >
-                    <div className="header-content">
-                      <span>{header}</span>
-                      <div
-                        className="resizer"
-                        onMouseDown={startResizing(
-                          tableRef,
-                          setColumnWidths
-                        )(index)}
-                      ></div>
-                    </div>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {records.map((record) => (
-                <tr key={record.anesthesiaRecordId}>
-                  <td>{record.surgeryId}</td>
-                  <td>{record.surgenId}</td>
-                  <td>{record.anesthesiaType}</td>
-                  <td>{record.anesthesiaStartTime}</td>
-                  <td>{record.anesthesiaEndTime}</td>
-                  <td>{record.notes}</td>
-                  <td>
-                    <button onClick={() => handleEditRecord(record)} className="edit-btn">Edit</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+    
+      <CustomAlerts />
     </div>
   );
 };

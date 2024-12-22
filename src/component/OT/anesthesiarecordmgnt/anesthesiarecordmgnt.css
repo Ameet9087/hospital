@@ -91,3 +91,82 @@
     color: var(--button-hover-text-color);
     border: 1px solid var(--button-hover-border-color);
   }
+
+/* filter-section */
+.ot-filtersection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ot-datefilter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1px;
+}
+
+.ot-daterange label {
+  margin-right: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.ot-input {
+  padding: 5px 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.ot-searchsection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.ot-search-input {
+  padding: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.ot-print-button {
+  color: white;
+  background-color: var(--button-color);
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+}
+
+.ot-print-button:hover {
+  background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+@media (max-width: 768px) {
+  .ot-filtersection {
+    flex-direction: column;
+  }
+
+  .ot-search-input {
+    width: 100%;
+  }
+
+  .ot-print-button {
+    width: 100%;
+    text-align: center;
+  }
+}

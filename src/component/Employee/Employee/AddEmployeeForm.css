@@ -1,0 +1,239 @@
+.add-employee-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-employee-form {
+  background: white;
+  padding: 10px;
+  width: 100vw;
+  max-width: 1080px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+}
+/* Style for the header */
+.add-employee-form-header {
+  display: flex;
+  justify-content: space-between; /* Space between header and cancel button */
+  align-items: center; /* Align items vertically */
+  border-bottom: 2px solid #ccc;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.add-employee-form-header h2 {
+  font-size: 18px;
+  color: #333;
+  margin: 0; /* Remove default margin to avoid extra space */
+}
+
+.emp-cancel-button {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff0000;
+  /* position: absolute; */
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.add-employee-grid {
+  display: flex;
+  width: 100%;
+}
+
+.emp-form-add{
+  flex: 1;
+  margin-right: 20px;
+  padding-right: 20px;
+}
+
+.emp-radio-sign {
+  flex: 2;
+  padding-left: 20px;
+}
+
+.add-employee-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.add-employee-groups{
+  display: flex;
+  align-items: center;
+  /* margin-bottom: 10px; */
+  /* padding-bottom: 0px; */
+  /* border-bottom: 2px solid #ccc; */
+
+}
+
+.emp-input {
+  
+  flex: 1;
+ font-size: 16px;
+  margin-right: 10px;
+  max-width: 150px; /* Ensures label doesn't take too much space */
+}
+
+.emp-input[type="text"],
+.emp-input[type="email"],
+.emp-input[type="date"],
+.add-employee-button[type="file"],
+.emp-input[type="number"],
+.emp-input,
+.emp-input {
+  flex: 2;
+  width: 100%;
+  max-width: 250px;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.add-employee-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.add-employee-button,
+.cancel-button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+.emp-input.required::after {
+  content: '*';
+  color: red; /* Red color for the asterisk */
+  margin-left: 5px; /* Space between label text and asterisk */
+}
+/* .cancel-button {
+  background-color: #dc3545;
+} */
+
+/* Styles for file input */
+.emp-choose-file {
+  cursor: pointer;
+}
+
+.emp-radio-sign {
+  /* margin-left: 10px; */
+  /* border-left: 2px solid #ccc; */
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.emp-depart{
+  border-right: 1px solid #ccc;
+  padding-right: 30px;
+}
+.emp-modal-open .table {
+  background-color: #f0f0f0;
+}
+
+/*  */
+/* Style for .emp-app */
+.emp-app {
+  margin-top: 20px; 
+  padding: 10px; 
+  /* border-top: 1px solid #ccc;  */
+}
+
+.add-employee-groups {
+  margin-bottom: 10px; 
+  display: flex; 
+  
+  align-items: center; 
+}
+
+.add-employee-groups .emp-input {
+  margin-right: 10px; 
+}
+
+/* Style for .add-employee-buttons */
+/* Style for .add-employee-buttons */
+.add-employee-buttons {
+  border-top: 1px solid #ccc; 
+  display: flex; 
+  justify-content: flex-start; 
+  padding: 5px 0; /* Add vertical padding if needed */
+}
+
+/* Style for buttons */
+.add-employee-button {
+  background-color: #4CAF50; 
+  color: white; 
+  border: none; 
+  padding: 10px 20px; 
+  text-align: center; 
+  text-decoration: none; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  font-size: 16px;
+  height: 30px; 
+  cursor: pointer;
+  border-radius: 4px; 
+}
+
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+  border: none; 
+  padding: 10px 20px; 
+  text-align: center; 
+  text-decoration: none; 
+  display: inline-block; 
+  font-size: 16px; 
+  margin: 4px 2px; 
+  cursor: pointer; 
+  border-radius: 4px;
+}
+/* Style for the table */
+.service-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px; /* Space above the table */
+}
+
+.service-table th,
+.service-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.service-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.service-table td input[type="text"] {
+  width: 30%;
+  padding: 4px;
+  box-sizing: border-box;
+}
+
+.service-table input[type="checkbox"] {
+  margin: 0;
+  margin-right: 10px;
+}

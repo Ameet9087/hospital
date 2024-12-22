@@ -10,7 +10,7 @@ import { startResizing } from "../TableHeadingResizing/resizableColumns";
 
 function OPDTriagePage({ onClose, data }) {
   console.log(data);
-  
+
   const [isTriageModalOpen, setIsTriageModalOpen] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [latestVitals, setLatestVitals] = useState(null);
@@ -80,10 +80,10 @@ function OPDTriagePage({ onClose, data }) {
       let endpoint = "";
 
       // Determine if newPatientVisitId or admissionId should be used
-      if (data.newPatientVisitId) {
-        endpoint = `${API_BASE_URL}/allergies/by-newVisitPatientId/${data.newPatientVisitId}`;
-      } else if (data.patientId) {
-        endpoint = `${API_BASE_URL}/allergies/by-patientId/${data.patientId}`;
+      if (data.outPatient?.outPatientId) {
+        endpoint = `${API_BASE_URL}/allergies/by-newVisitPatientId/${data.outPatient?.outPatientId}`;
+      } else if (data.inPatientId) {
+        endpoint = `${API_BASE_URL}/allergies/by-patientId/${data.inPatientId}`;
       }
 
       // Fetch data if a valid endpoint is determined
@@ -102,10 +102,15 @@ function OPDTriagePage({ onClose, data }) {
       }
     };
 
-    if (data.newPatientVisitId || data.patientId) {
+    if (data.outPatient?.outPatientId || data.inPatientId) {
       fetchAllergies();
     }
-  }, [data.newPatientVisitId, data.patientId,showAllergyForm,showUpdateForm]); // Dependencies to track ID changes
+  }, [
+    data.outPatient?.outPatientId,
+    data.inPatientId,
+    showAllergyForm,
+    showUpdateForm,
+  ]); // Dependencies to track ID changes
 
   // Handle radio input for severity
   const handleSeverityChange = (e) => {
@@ -170,9 +175,12 @@ function OPDTriagePage({ onClose, data }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const allergy =
-    data.patientId > 0
-        ? { ...formData, patientDTO: {patientId:data.patientId }}
-        : { ...formData, newPatientVisitDTO:{newPatientVisitId: data.newPatientVisitId} };
+      data.inPatientId > 0
+        ? { ...formData, patientDTO: { inPatientId: data.inPatientId } }
+        : {
+            ...formData,
+            outPatientDTO: { outPatientId: data.outPatient?.outPatientId },
+          };
     try {
       const response = await fetch(`${API_BASE_URL}/allergies/add`, {
         method: "POST",
@@ -241,7 +249,6 @@ function OPDTriagePage({ onClose, data }) {
     setShowUpdateForm(true);
   };
 
-
   const closeTriAgeModal = () => {
     setIsTriageModalOpen(false);
     onClose();
@@ -253,16 +260,25 @@ function OPDTriagePage({ onClose, data }) {
 
   const handleChiefComplaintSave = async (e) => {
     e.preventDefault();
-    const formData = data.patientId > 0
-    ? { cheifComplaint:chiefComplaint, patientDTO: {patientId:data.patientId }}
-    : { cheifComplaint:chiefComplaint, newPatientVisitDTO:{newPatientVisitId: data.newPatientVisitId} };
+    const formData =
+      data.patientId > 0
+        ? {
+            cheifComplaint: chiefComplaint,
+            patientDTO: { inPatientId: data.inPatientId },
+          }
+        : {
+            cheifComplaint: chiefComplaint,
+            outPatientDTO: { outPatientId: data.outPatient?.outPatientId },
+          };
     try {
       console.log(formData);
-      
+
       const response = await axios.post(
-        `${API_BASE_URL}/cheifComplaints/create`,formData);
-        console.log("Chief Complaint saved successfully");
-        setChiefComplaint("")
+        `${API_BASE_URL}/cheifComplaints/create`,
+        formData
+      );
+      console.log("Chief Complaint saved successfully");
+      setChiefComplaint("");
     } catch (error) {
       console.error("Error saving Chief Complaint:", error);
     }
@@ -271,10 +287,10 @@ function OPDTriagePage({ onClose, data }) {
   useEffect(() => {
     const fetchVitals = () => {
       let endpoint = "";
-      if (data.newPatientVisitId) {
-        endpoint = `${API_BASE_URL}/vitals/get-by-opd-patient-id/${data.newPatientVisitId}`;
-      } else if (data.admissionId) {
-        endpoint = `${API_BASE_URL}/vitals/get-by-in-patient-id/${data.admissionId}`;
+      if (data.outPatient?.outPatientId) {
+        endpoint = `${API_BASE_URL}/doc-vitals/get-by-opd-patient-id/${data.outPatient?.outPatientId}`;
+      } else if (data.inPatientId) {
+        endpoint = `${API_BASE_URL}/doc-vitals/get-by-in-patient-id/${data.inPatientId}`;
       }
 
       // If an endpoint is determined, make the API call
@@ -295,7 +311,7 @@ function OPDTriagePage({ onClose, data }) {
     };
 
     fetchVitals();
-  }, [data.newPatientVisitId,showForm]);
+  }, [data.outPatient?.outPatientId, showForm]);
 
   const handleAddVitals = () => {
     setShowForm(true); // Show form when "Add Vitals" button is clicked
@@ -330,12 +346,15 @@ function OPDTriagePage({ onClose, data }) {
   const handleSave = async () => {
     const formData =
       data.patientId > 0
-        ? { ...vitalData, patientDTO:{patientId: data.patientId} }
-        : { ...vitalData, newPatientVisitDTO: {newPatientVisitId: data.newPatientVisitId }};
+        ? { ...vitalData, patientDTO: { patientId: data.inpatientId } }
+        : {
+            ...vitalData,
+            outPatientDTO: { outPatientId: data.outPatient?.outPatientId },
+          };
     try {
       console.log(formData);
-      
-      const response = await fetch(`${API_BASE_URL}/vitals/add`, {
+
+      const response = await fetch(`${API_BASE_URL}/doc-vitals/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -378,15 +397,25 @@ function OPDTriagePage({ onClose, data }) {
       >
         <div className="triage-container">
           <header>
-            <h2>OPD Triage of {data?.firstName} {data?.lastName}</h2>
-            <p>Doctor Name: {data?.employeeDTO?.salutation} {data?.employeeDTO?.firstName}</p>
+            <h2>
+              OPD Triage of {data?.firstName} {data?.lastName}
+            </h2>
+            <p>
+              Doctor Name: {data.addDoctor?.salutation}{" "}
+              {data.addDoctor?.doctorName}
+            </p>
           </header>
           <main className="triage-container-main">
             <section className="main-upperSeection">
               <div className="triage-vital-table">
                 <div className="triage-vital-table-subDiv">
                   <h1>Vital List</h1>
-                  <button onClick={handleAddVitals} className="triage-allergy-add-new-button">Add New</button>
+                  <button
+                    onClick={handleAddVitals}
+                    className="triage-allergy-add-new-button"
+                  >
+                    Add New
+                  </button>
                 </div>
                 {latestVitals && (
                   <div className="triage-Patient-Dashboard-tableRecord">
@@ -641,10 +670,16 @@ function OPDTriagePage({ onClose, data }) {
                   <h3>Chief Complaint</h3>
                   <form className="triage-complaint-form">
                     <label>Description:</label>
-                    <textarea className="triage-complaint-form-textarea" name="cheifComplaint"
-                    value={chiefComplaint}
-                    onChange={handleChiefComplaintChange}></textarea>
-                    <button className="triage-allergy-add-new-button" onClick={handleChiefComplaintSave}>
+                    <textarea
+                      className="triage-complaint-form-textarea"
+                      name="cheifComplaint"
+                      value={chiefComplaint}
+                      onChange={handleChiefComplaintChange}
+                    ></textarea>
+                    <button
+                      className="triage-allergy-add-new-button"
+                      onClick={handleChiefComplaintSave}
+                    >
                       Add New Complaint
                     </button>
                   </form>
@@ -705,7 +740,10 @@ function OPDTriagePage({ onClose, data }) {
                           <td>{allergy.comments}</td>
                           <td>
                             {/* You can add an edit button here */}
-                            <button className="triage-allergy-add-new-button" onClick={() => updateAllergies(allergy)}>
+                            <button
+                              className="triage-allergy-add-new-button"
+                              onClick={() => updateAllergies(allergy)}
+                            >
                               Edit
                             </button>
                           </td>

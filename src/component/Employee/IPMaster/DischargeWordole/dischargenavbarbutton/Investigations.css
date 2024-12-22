@@ -1,0 +1,31 @@
+.investigations-container {
+    padding: 20px;
+  }
+  
+  .investigations-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .investigations-table th,
+  .investigations-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .investigations-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .investigations-table tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .investigations-table input[type="checkbox"] {
+    margin: 0 auto;
+    display: block;
+  }
+  

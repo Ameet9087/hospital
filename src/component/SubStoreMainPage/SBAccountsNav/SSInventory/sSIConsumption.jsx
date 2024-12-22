@@ -6,6 +6,7 @@ import { useReactToPrint } from 'react-to-print';
 import SSIPatientConsumConsumEntry from './sSIPatientConsumConsumEntry';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
+import CustomModal from '../../../CustomModel/CustomModal';
 function SSIPatientConsumption() {
   const { store } = useParams();
   const [consumptions, setConsumptions] = useState([]);
@@ -15,26 +16,41 @@ function SSIPatientConsumption() {
   const printRef = useRef();
 
   useEffect(() => {
-    const fetchConsumptions = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/inventory-consumption/getAll`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        const filteredData = data.filter(item => item.storeName === store);
-        console.log(filteredData);
-        
-        setConsumptions(filteredData); // Adjusted here
-      } catch (error) {
-        setError('Failed to fetch data');
-      } finally {
-        setLoading(false);
+  const fetchConsumptions = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/inventory-consumption/getAll`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
+      const data = await response.json();
+      const filteredData = data.filter(item => item.storeName === store);
+      console.log(filteredData);
 
-    fetchConsumptions();
-  }, [store]); // Ensure the useEffect depends on `store` to avoid stale closure issues
+      const formattedData = filteredData.map(consumption => {
+        return {
+          id: consumption.id,
+          consumedDate: consumption.consumedDate,
+          consumptionTypeName: consumption.consumptionTypeName,
+          remarks: consumption.remarks,
+          storeName: consumption.storeName,
+          items: consumption.items.map(item => ({
+            requisitionItemId: item.requisitionItemId,
+            consumedQty: item.consumedQty
+          }))
+        };
+      });
+
+      setConsumptions(formattedData);
+    } catch (error) {
+      setError('Failed to fetch data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchConsumptions();
+}, [store]);
+ // Ensure the useEffect depends on `store` to avoid stale closure issues
 
   const handleNewPatientConsumptionClick = () => {
     setShowNewPatientConsumption(true);
@@ -77,7 +93,7 @@ function SSIPatientConsumption() {
 
   return (
     <div className="sSIConsumption-active-imaging-request">
-       {!showNewPatientConsumption ? (
+      
         <>
         <header className='sSIConsumption-header'>
           <div className="sSIConsumption-status-filters">
@@ -132,38 +148,46 @@ function SSIPatientConsumption() {
           <div ref={printRef}>
             <h2>Patient Consumption Report</h2>
             <p>Printed On: {new Date().toLocaleString()}</p>
-            <table>
-              <thead>
-                <tr>
-                <th>Consumed Date</th>
-             <th>Consumed Item</th>
-             <th>Consumed Qty</th>
-             <th>Unit</th>
-             <th>Consumption Type Name</th>
-             <th>Entered By</th>
-            <th>Remarks</th>
-                </tr>
-              </thead>
-              <tbody>
-                  {consumptions.length > 0 ? (
-                    consumptions.map((consumption, index) => (
-                      <tr key={index}>
-                        <td>{consumption.consumedDate}</td>
-                        <td>{consumption.consumedItem}</td>
-                        <td>{consumption.consumedQty}</td>
-                        <td>{consumption.units}</td>
-                        <td>{consumption.consumptionTypeName}</td>
-                        <td>{consumption.enteredBy}</td>
-                        <td>{consumption.remarks}</td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="7" className="no-data">No Rows To Show</td>
-                    </tr>
-                  )}
-                </tbody>
-            </table>
+            <div className="sSIConsumption-table-N-paginat">
+  <table>
+    <thead>
+      <tr>
+        <th>Consumed Date</th>
+        <th>Requisition Item ID</th>
+        <th>Consumed Qty</th>
+        <th>Unit</th>
+        <th>Consumption Type Name</th>
+        <th>Entered By</th>
+        <th>Remarks</th>
+      </tr>
+    </thead>
+    <tbody>
+      {consumptions.map((consumption, index) => (
+  <React.Fragment key={index}>
+    {consumption.items && consumption.items.length > 0 ? (
+      consumption.items.map((item, itemIndex) => (
+        <tr key={`${index}-${itemIndex}`}>
+          <td>{consumption.consumedDate}</td>
+          <td>{item.requisitionItemId || "N/A"}</td>
+          <td>{item.consumedQty || "N/A"}</td>
+          <td>{consumption.units || "N/A"}</td>
+          <td>{consumption.consumptionTypeName}</td>
+          <td>{consumption.enteredBy || "N/A"}</td>
+          <td>{consumption.remarks}</td>
+        </tr>
+      ))
+    ) : (
+      <tr key={index}>
+        <td>{consumption.consumedDate}</td>
+        <td colSpan="6" className="no-data">No Items Found</td>
+      </tr>
+    )}
+  </React.Fragment>
+))}
+    </tbody>
+  </table>
+</div>
+
           </div>
         </div>
         <div className="sSIConsumption-table-N-paginat">
@@ -180,25 +204,30 @@ function SSIPatientConsumption() {
                 
               </tr>
             </thead>
-           <tbody>
-                {consumptions.length > 0 ? (
-                  consumptions.map((consumption, index) => (
-                    <tr key={index}>
-                      <td>{consumption.consumedDate}</td>
-                      <td>{consumption.consumedItem}</td>
-                      <td>{consumption.consumedQty}</td>
-                      <td>{consumption.units}</td>
-                      <td>{consumption.consumptionTypeName}</td>
-                      <td>{consumption.enteredBy}</td>
-                      <td>{consumption.remarks}</td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="7" className="no-data">No Rows To Show</td>
-                  </tr>
-                )}
-              </tbody>
+          <tbody>
+  {consumptions.length > 0 ? (
+    consumptions.map((consumption, index) => (
+      <React.Fragment key={index}>
+        {consumption.items.map((item, itemIndex) => (
+          <tr key={`${index}-${itemIndex}`}>
+            <td>{consumption.consumedDate}</td>
+            <td>{item.requisitionItemId}</td>
+            <td>{item.consumedQty}</td>
+            <td>{consumption.units || "N/A"}</td>
+            <td>{consumption.consumptionTypeName}</td>
+            <td>{consumption.enteredBy || "N/A"}</td>
+            <td>{consumption.remarks}</td>
+          </tr>
+        ))}
+      </React.Fragment>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="7" className="no-data">No Rows To Show</td>
+    </tr>
+  )}
+</tbody>
+
           </table>
           {/* <div className="sSIConsumption-pagination">
             <span>0 to 0 of 0</span>
@@ -210,10 +239,10 @@ function SSIPatientConsumption() {
           </div> */}
         </div>
       </>
-      ) : (
-
-<SSIPatientConsumConsumEntry onBack={handleBack} /> // Render the SSIPatientConsumNewPCbtn component if showNewPatientConsumption is true
-      )}
+   
+<CustomModal isOpen={showNewPatientConsumption} onClose={handleBack}>
+<SSIPatientConsumConsumEntry />
+    </CustomModal>
 
     </div>
   );

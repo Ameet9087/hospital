@@ -43,46 +43,28 @@
   width: 100%;
   display: flex;
   justify-content: flex-start; 
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .booking-list-patient-search-dropdown input {
   width: 300px;
-  padding: 8px;
+  padding: 2px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-right: 10px;
+  /* margin-left: 20px; */
 }
 
-/* Table styles */
-.booking-list-ot-patient-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-  background-color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
 
-.booking-list-ot-patient-table th, 
-.booking-list-ot-patient-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-.booking-list-ot-patient-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
 
 /* Action buttons in the table */
 .booklist-action-btn {
-  background-color: #007bff;
   color: white;
-  padding: 4px 8px;
-  border-radius: 5px;
+  background-color: var(--button-color);
+  text-align: center;
+  padding: 5px;
+  font-size: 16px;
   border: none;
-  cursor: pointer;
+  border-radius: 5px;
 }
 
 /* Modal overlay */
@@ -102,26 +84,16 @@
 /* Modal content */
 .booking-list-modal-content {
   background-color: white;
-  padding: 30px;
+  padding: 5px;
   border-radius: 8px;
   width: 700px;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  
 }
 
-/* Close button inside the modal */
-.booking-list-modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  background-color: red;
-}
+
 
 /* Form styling inside the modal */
 .booking-list-modal-content form {
@@ -138,7 +110,7 @@
 
 .booking-list-modal-content input, 
 .booking-list-modal-content select {
-  padding: 8px;
+  padding: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -155,4 +127,84 @@
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
+}
+
+
+.ot-filtersection {
+  display: flex;
+  width: 100%;
+  /* justify-content: space-between; */
+  padding: 1px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ot-datefilter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1px;
+}
+
+.ot-daterange label {
+  margin-right: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.ot-input {
+  padding: 5px 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.ot-bookinglist-searchsection {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 10px;
+
+}
+
+.ot-bookinglist-search-input {
+  padding: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 200px;
+  
+}
+
+.ot-bookinglist-print-button {
+  color: white;
+  background-color: var(--button-color);
+  text-align: center;
+  padding: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 200px;
+}
+
+.ot-bookinglist-print-button:hover {
+  background-color:var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.booking-list-patient-search-dropdown select{
+  width: 150px;
+  /* height: 30px; */
+  margin-left: 15px;
+
+}
+
+.booking-list-patient-search-dropdown label{
+  margin-left: 10px;
+  width: 150px;
 }

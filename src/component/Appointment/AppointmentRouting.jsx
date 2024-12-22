@@ -99,7 +99,6 @@ const AppointmentRouting = () => {
           <Route path="newvisit" element={<NewVisitedList />} /> */}
           <Route path="onlineappointment" element={<OnlineAppointment />} />
           <Route path="ssf-claim" element={<SSFClaim />} />
-          <Route path="checkIn/*" element={<CheckIn/>}></Route>
           <Route path="*" element={<AppointmentBookingList />} />
           <Route path="add-new-appointment" element={<AddNewAppointmentForm />} />
         </Routes>

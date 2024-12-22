@@ -254,7 +254,7 @@ const DoctorScheduleSTD = () => {
                 className="DoctorScheduleSTD-field-input"
               >
                 <option value="">Select option</option>
-                {locations.map((data, index) => (
+                {locations?.map((data, index) => (
                   <option key={index} value={data.id}>
                     {data.locationName}
                   </option>
@@ -271,7 +271,7 @@ const DoctorScheduleSTD = () => {
                 className="DoctorScheduleSTD-field-input"
               >
                 <option value="">Select option</option>
-                {doctors.map((data, index) => (
+                {doctors?.map((data, index) => (
                   <option key={index} value={data.doctorId}>
                     {data.doctorName}
                   </option>

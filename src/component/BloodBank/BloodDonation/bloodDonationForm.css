@@ -2,17 +2,14 @@
 .blood-donation-patient-form-container{
     width: auto;
     margin: 20px;
-    height: 80vh;
-        overflow-y: scroll;
-
 }
 .blood-donation-patient-form {
     display: flex;
     justify-content: space-between;
     padding: 20px;
     background-color:var(--background-color) ;
-    /* height: 90vh;
-    overflow-y: scroll; */
+    height: 90vh;
+    overflow-y: scroll;
 }
 
 /* Styles for left and right sections */

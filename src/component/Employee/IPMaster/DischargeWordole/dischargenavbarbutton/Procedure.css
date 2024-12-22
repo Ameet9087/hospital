@@ -1,0 +1,33 @@
+.procedure-container {
+    padding: 20px;
+  }
+  
+  .procedure-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .procedure-table th, .procedure-table td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .procedure-table th {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .procedure-table input {
+    padding: 5px;
+    margin: 2px;
+  
+  }
+  
+  .procedure-table button {
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+  }
+  

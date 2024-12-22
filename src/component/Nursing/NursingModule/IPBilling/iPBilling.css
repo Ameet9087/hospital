@@ -1,13 +1,10 @@
 .operation-master {
   font-family: Arial, sans-serif;
-  background-color:var(--background-color);
+  background-color: var(--background-color);
   padding: 4px;
-  font-size: 12px;
-  max-height: 500px; /* Set a max height to trigger vertical scroll */
-  max-width: 90%;   /* Optional: Set a max width for horizontal scroll */
-  overflow-y: scroll;  /* Vertical scrollbar when needed */
-  overflow-x: scroll;  /* Horizontal scrollbar when needed */
-  
+  font-size: var(--font-size);
+  overflow-y: scroll; /* Vertical scrollbar when needed */
+  overflow-x: scroll; /* Horizontal scrollbar when needed */
 }
 
 .iPBilling-title-bar {
@@ -17,12 +14,6 @@
   font-size: var(--heading-font);
   margin-bottom: 4px;
 }
-
-.iPBilling-header {
-  font-size: var(--heading-font);
-  text-align: center;
-}
-
 
 .iPBilling-checkbox-label {
   font-weight: normal;
@@ -55,56 +46,76 @@
 }
 .iPBilling-panel-content {
   padding: 8px;
-  
+  background-color: var(--background-color);
 }
 
 .iPBilling-form-row {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 6px;
   gap: 4px;
   font-size: var(--font-size);
-}
-.iPBilling-form-row-chechbox{
-  
-  text-align:end;
-  margin-bottom: 6px;
-  font-size: var(--font-size);
-  padding-right: 40px;
+  padding: 2px;
 }
 
 .iPBilling-form-row label {
-  min-width: 140px;
+  min-width: 100px;
 }
-.iPBilling-form-row input  {
+.iPBilling-form-row input,
+.iPBilling-form-row select {
   padding: 5px;
-  border: 1px solid gray;
-  border-radius: 5px;
-  width: 47%;
+  border: none;
+  background: none;
+  /* border: 1px solid #ccc; */
+  border-bottom: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: var(--font-size);
+
+  width: 43%;
 }
- .iPBilling-form-row select
- {
-  padding: 5px;
-  border: 1px solid gray;
-  border-radius: 5px;
-  width: 50%;
-}
+
 .iPBilling-input-with-search {
   display: flex;
   gap: 2px;
-  width: 50%;
 }
 
 .iPBilling-input-with-search input {
   padding: 5px;
-  border: 1px solid gray;
-  border-radius: 5px;
-  width: 100%;
+  border: none;
+  background: none;
+  /* border: 1px solid #ccc; */
+  border-bottom: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: var(--font-size);
+  width: 180%;
 }
-.iPBilling-input-with-search input svg{
-  padding: var();
+.iPBilling-table input,
+.iPBilling-table select {
+  padding: 5px;
+  border: none;
+  background: none;
+  /* border: 1px solid #ccc; */
+  border-bottom: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: var(--font-size);
+
+  width: 80%;
 }
+.iPBilling-table input:focus,
+.iPBilling-table select:focus {
+  border-bottom: 1px solid #ccc;
+  background: none;
+  outline: none;
+}
+
+.iPBilling-input-with-search input:focus,
+.iPBilling-input-with-search select:focus {
+  border-bottom: 1px solid #ccc;
+  background: none;
+  outline: none;
+}
+
 .iPBilling-magnifier-btn {
   background: #f0f0f0;
   border: 1px solid #ccc;
@@ -133,7 +144,7 @@
   display: flex;
   gap: 5px;
   background: var(--upperBar-bg-color);
-  padding: 4px ;
+  padding: 4px;
 }
 
 .iPBilling-tab {
@@ -142,7 +153,7 @@
   border-radius: 5px;
   color: var(--button-color);
   font-size: var(--font-size);
-  background:var(--button-hover-background-color);
+  background: var(--button-hover-background-color);
   cursor: pointer;
 }
 
@@ -177,13 +188,17 @@
 .iPBilling-del-btn {
   background-color: red;
 }
-
+.iPBilling-table {
+  overflow: scroll;
+}
 .iPBilling-table table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: auto;
 }
 
-.iPBilling-table th, td {
+.iPBilling-table th,
+td {
   border: 1px solid #ccc;
   padding: 4px 8px;
   text-align: left;
@@ -205,7 +220,6 @@
 }
 
 .iPBilling-action-buttons button {
-
   background-color: var(--button-bg-color);
   color: var(--button-hover-background-color);
   font-size: var(--font-size);
@@ -215,7 +229,7 @@
 }
 .iPBilling-action-buttons button:hover {
   background-color: var(--button-hover-background-color);
-  color: var(--button-bg-color); 
+  color: var(--button-bg-color);
 }
 
 /* Style the date input */

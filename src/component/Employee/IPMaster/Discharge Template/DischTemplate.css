@@ -1,0 +1,87 @@
+.disch-template-quill-editor {
+    margin-top: 10px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-height: 150px;
+  }
+  
+  .disch-template-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: var(--background-color);
+    height: 90vh;
+  }
+  
+  .disch-template-header {
+    text-align: center;
+    color:black;
+    /* padding: 10px 0; */
+    /* margin-bottom: 20px;  */
+    border-radius: 5px 5px 0 0;
+  }
+  .disch-template-header h2{
+    font-size: var(--heading-font);
+  }
+  .disch-template-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .disch-template-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Aligns label and input vertically in the center */
+    margin-bottom: 10px;
+  }
+  
+  .disch-template-row div {
+    display: flex; /* Display the label and input next to each other */
+    flex-direction: row; /* Align the label and input in a row */
+    margin-right: 10px;
+  }
+  
+  .disch-template-row div:last-child {
+    margin-right: 0;
+  }
+  
+  .disch-template-row label {
+    margin-right: 10px; /* Adds space between the label and the input */
+    color: #555;
+    font-size: 14px; /* Adjust font size to match the input */
+  }
+  
+  .disch-template-row input {
+    flex: 1; /* Makes the input take up remaining space */
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .disch-template-status{
+    margin-top: 20px;
+  }
+
+  .discharge-master-btn {
+    padding: 5px;
+    /* width: 5%; */
+    margin-left: 20px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: var(--font-size);
+    float: right;
+}
+
+.discharge-master-btn:hover {
+    background-color: white;
+    color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+

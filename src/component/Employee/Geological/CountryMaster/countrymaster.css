@@ -1,144 +1,64 @@
+.countrymaster-add-btn {
+  margin-bottom: 20px;
+  background-color: var(--button-bg-color);
+  padding: 5px;
+  border-radius: 5px;
+  color: white;
+  border: 1px solid var(--button-hover-border-color);
+}
 
-  
-  /* Custom Modal Styles */
-  /* .Cus-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-  } */
-  
-  /* .Cus-modal-container {
-    background-color: #fff;
-    border-radius: 8px;
-    width: 600px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  } */
+.countrymaster-add-btn:hover {
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+}
 
-  .countrymaster-add-btn{
-    margin-bottom: 20px;
-    background-color: var(--button-bg-color);
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid var(--button-hover-border-color);
+.input-container {
+  margin-bottom: 15px;
+}
 
+.input-container label {
+  font-size: var(--font-size);
+  color: #333;
+}
 
-  }
+.input-container input {
+  width: 100%;
+  padding: var(--input-box-padding);
+  font-size: var(--font-size);
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 
-  .countrymaster-add-btn:hover{
-    color: var(--button-hover-text-color);
-    background-color: var(--button-hover-background-color);
-    border: 1px solid var(--button-hover-border-color);
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+}
 
-  }
-  .Cus-close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    /* background: transparent; */
-    border: none;
-    font-size: 20px;
-    color: #000;
-    cursor: pointer;
-  }
-  
-  .Cus-modal-content {
-    padding: 10px;
-  }
-  
-  .input-container {
-    margin-bottom: 15px;
-  }
-  
-  .input-container label {
-    font-size: var(--font-size);
-    color: #333;
-  }
-  
-  .input-container input {
-    width: 100%;
-    padding: var(--input-box-padding);
-    font-size: var(--font-size);
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .modal-footer {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .countrymasterclose,
-  .countrymastersave {
-    background-color: var(--button-bg-color);
-    color: var(--button-color);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  
-  .countrymasterclose:hover,
-  .countrymastersave:hover {
-    background-color: var(--button-hover-background-color);
-    color: var(--button-hover-text-color);
-    border-color: var(--button-hover-border-color);
-  }
-  
-  /* Table Styles */
-  .table-container {
-    width: 100%;
-    max-height: 60vh;
-    overflow-x: auto;
-    overflow-y: auto;
-    scrollbar-width: none;
-  }
-  
-  table {
-    width: 100%;
-    background-color: #f2f2f2;
-    border-collapse: collapse;
-    table-layout: fixed;
-  }
-  
-  thead {
-    background-color: #f2f2f2;
-    z-index: 15;
-    position: sticky;
-    top: -0.5px;
-  }
-  
-  table th,
-  table td {
-    background-color: #f2f2f2;
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
-    font-size: var(--font-size);
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-  
-  table th .header-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    text-overflow: ellipsis;
-  }
-  
-  table th:last-child,
-  table td:last-child {
-    width: 250px;
-    text-align: center;
-  }
-  
+.countrymasterclose,
+.countrymastersave {
+  background-color: var(--button-bg-color);
+  color: var(--button-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.countrymasterclose:hover,
+.countrymastersave:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border-color: var(--button-hover-border-color);
+}
+
+/* Table Styles */
+.table-container {
+  width: 100%;
+  max-height: 60vh;
+  overflow-x: auto;
+  overflow-y: auto;
+  scrollbar-width: none;
+}

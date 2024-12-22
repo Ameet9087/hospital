@@ -3,6 +3,7 @@ import VerifyModal from "./VerifyModal";
 import "./RequisitionPage.css";
 import { API_BASE_URL } from "../api/api";
 import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import CustomModal from "../../CustomModel/CustomModal";
 
 function RequisitionPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,11 +13,16 @@ function RequisitionPage() {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
 
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/inventory-requisitions/getAll`)
-      .then((response) => response.json())
-      .then((data) => setRequisitions(data))
-      .catch((error) => console.error("Error fetching data:", error));
+   useEffect(() => {
+    fetch(`${API_BASE_URL}/inventory-requisitions`)
+      .then(response => response.json())
+      .then(data => {
+        setRequisitions(data);
+        // setFilteredRequisitions(data);
+        console.log(requisitions);
+        
+      })
+      .catch(error => console.error('Error fetching data:', error));
   }, []);
 
   const handleVerifyClick = (requisition) => {
@@ -136,9 +142,9 @@ function RequisitionPage() {
           </thead>
           <tbody>
             {filteredRequisitions.map((requisition) => (
-              <tr key={requisition.inventoryRequisitionId}>
-                <td>{requisition.inventoryRequisitionId}</td>
-                <td>{requisition.storeName}</td>
+              <tr key={requisition.issueNo}>
+                <td>{requisition.issueNo}</td>
+                <td>{requisition.subStoreId}</td>
                 <td>{requisition.requisitionDate}</td>
                 <td>{requisition.status}</td>
                 <td>
@@ -157,13 +163,13 @@ function RequisitionPage() {
         </table>
       </div>
 
-      {isModalOpen && (
+
+<CustomModal></CustomModal>
         <VerifyModal
           isOpen={isModalOpen}
           onClose={closeModal}
           requisitionDetails={selectedRequisition}
         />
-      )}
     </div>
   );
 }

@@ -1,110 +1,95 @@
-import React, { useState } from 'react';
-import './DynamicReport.css'; // Import the CSS file
+import React, { useState } from "react";
+import "./DynamicReport.css"; // Import the CSS file
+import { API_BASE_URL } from "../api/api";
+import axios from "axios";
 
 const DynamicReport = () => {
-  const [sqlQuery, setSqlQuery] = useState('');
-  const [results, setResults] = useState([]);
-  const [search, setSearch] = useState('');
-  const [handlequery,sethandlequery]=useState(false);
+  const [query, setQuery] = useState(""); // For storing the SQL query
+  const [data, setData] = useState([]); // For storing query results
+  const [error, setError] = useState(""); // For error messages
 
-  const handleLoadReport = () => {
-    // Here we simulate a query execution and display dummy data
-    const dummyResults = [
-      { id: 1, name: 'John Doe', age: 28 },
-      { id: 2, name: 'Jane Smith', age: 34 },
-    ];
-    setResults(dummyResults);
+  const executeQuery = async () => {
+    if (!query.trim()) {
+      setError("Query cannot be empty");
+      return;
+    }
+
+    try {
+      setError("");
+      setData([]);
+      console.log(query);
+
+      // Send query to the backend
+      const response = await axios.post(`${API_BASE_URL}/sql/execute`, query, {
+        headers: { "Content-Type": "text/plain" },
+      });
+
+      const rawData = response.data;
+      if (rawData.length > 0) {
+        // Get all unique keys from the data
+        const allKeys = new Set();
+        rawData.forEach((row) => {
+          Object.keys(row).forEach((key) => allKeys.add(key));
+        });
+
+        // Normalize the data to include all keys with null values for missing keys
+        const normalizedData = rawData.map((row) => {
+          const normalizedRow = {};
+          allKeys.forEach((key) => {
+            normalizedRow[key] = row[key] ?? null; // Add null for missing values
+          });
+          return normalizedRow;
+        });
+
+        setData(normalizedData);
+      } else {
+        setData([]);
+      }
+    } catch (err) {
+      console.error(err);
+      setError(
+        err.response?.data || "An error occurred while executing the query"
+      );
+    }
   };
-
-  const handleExport = () => {
-    // Logic for exporting data (e.g., to CSV)
-    alert('Export functionality not implemented.');
-  };
-
-  const handlePrint = () => {
-    // Logic for printing the report
-    alert('Print functionality not implemented.');
-  };
-
-  const filteredResults = results.filter(result =>
-    result.name.toLowerCase().includes(search.toLowerCase())
-  );
-  const handleQueryHere=()=>{
-    sethandlequery(!handlequery);
-  }
 
   return (
     <div className="DynamicReport-container">
-        <h2>Dynamic Report</h2>
-      <div className="DynamicSQL-textarea">
-        <button onClick={handleQueryHere}>Write SQL Query Here</button>
+      <h2>Dynamic Report</h2>
+      <div className="Dynamic-Load-Report-Outer">
+        <textarea
+          rows="5"
+          placeholder="Write SQL Query Here"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <button onClick={executeQuery}>Load Report</button>
       </div>
-      {
-        handlequery &&(
-
-        
-            <div className='Dynamic-Load-Report-Outer'>
-                <textarea
-                rows="5"
-                placeholder="Write SQL Query Here"
-                value={sqlQuery}
-                onChange={e => setSqlQuery(e.target.value)}
-                />
-                {/* <div className="Dynamic-Load-Report"> */}
-                    <button onClick={handleLoadReport}>Load Report</button>
-                {/* </div> */}
-             </div>
-    
-        )
-          
-      }
-    
-    
-      <div className="DynamicReport-search-group">
-      <div className='Admitted-Patient-Header'>
-        <input type='text' placeholder='Search' className='Admitted-Patient-searchInput'/>
-        <div className="DynamicReport-button-group">
-            <span className="Admitted-Patient-results">Showing 0/0 results</span>
-            <button className="Admitted-Patient-button">Export</button>
-            <button className="Admitted-Patient-button">Print</button>
-        </div>
-   </div>
-
-
-
-     
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Age</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredResults.length > 0 ? (
-            filteredResults.map((result, index) => (
-              <tr key={index}>
-                <td>{result.id}</td>
-                <td>{result.name}</td>
-                <td>{result.age}</td>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {data.length > 0 && (
+        <div className="dynamic-report-table">
+          <table>
+            <thead>
+              <tr>
+                {/* Render table headers dynamically */}
+                {Object.keys(data[0]).map((key) => (
+                  <th key={key}>{key}</th>
+                ))}
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="3" className="DynamicReport-text-center">No Rows To Show</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-      {/* <div className="DynamicReport-pagination">
-        <button>First</button>
-        <button>Previous</button>
-        <span>Page 1 of 1</span>
-        <button>Next</button>
-        <button>Last</button>
-      </div> */}
+            </thead>
+            <tbody>
+              {/* Render table rows dynamically */}
+              {data.map((row, index) => (
+                <tr key={index}>
+                  {Object.values(row).map((value, idx) => (
+                    <td key={idx}>{value !== null ? value : "NULL"}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };

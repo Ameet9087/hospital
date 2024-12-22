@@ -7,6 +7,7 @@ import { useReactToPrint } from 'react-to-print';
 import SSIPatientConsumNewPCbtn from './sSIPatientConsumNewPCbtn';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
+import CustomModal from '../../../CustomModel/CustomModal';
 
 function SSIPatientConsumption() {
   const printRef = useRef();
@@ -99,7 +100,7 @@ function SSIPatientConsumption() {
 
   return (
     <div className="sSIPatientConsumption-active-imaging-request">
-            {!showNewPatientConsumption ? ( // Render the main content only if showNewPatientConsumption is false
+            
       <>
         <header className='sSIPatientConsumption-header'>
           <div className="sSIPatientConsumption-status-filters">
@@ -215,11 +216,10 @@ function SSIPatientConsumption() {
           </div> */}
         </div>
       </>
-      ) : (
-
-<SSIPatientConsumNewPCbtn onBack={handleBack} /> // Render the SSIPatientConsumNewPCbtn component if showNewPatientConsumption is true
-      )}
-
+    
+<CustomModal isOpen={showNewPatientConsumption} onClose={handleBack}>
+<SSIPatientConsumNewPCbtn  /> /
+</CustomModal>
     </div>
   );
 }

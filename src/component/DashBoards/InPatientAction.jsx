@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import './InPatientAction.css';
-import VitalsPage from '../DashBoards/ClinicalVitals';
-import ImagingAdd from '../DashBoards/ImagingAdd';
+import React, { useState } from "react";
+import "./InPatientAction.css";
+import VitalsPage from "../DashBoards/ClinicalVitals";
+import ImagingAdd from "../DashBoards/ImagingAdd";
 
-import ClinicalDocument from '../DashBoards/ClinicalDocuments';
-import NotesTable from '../DashBoards/Notes';
-import VisitTable from '../DashBoards/EncounterHistory';
-import OrdersPage from '../DashBoards/LabsActiveOrder';
-import PatientDischargeForm from '../DashBoards/DischargeSummary';
-import DynamicInputForm from '../DashBoards/AddCompliants'; // Import the DynamicInputForm component
-import ActiveProblems from './ActiveProblems';
+import ClinicalDocument from "../DashBoards/ClinicalDocuments";
+import NotesTable from "../DashBoards/Notes";
+import VisitTable from "../DashBoards/EncounterHistory";
+import OrdersPage from "../DashBoards/LabsActiveOrder";
+import PatientDischargeForm from "../DashBoards/DischargeSummary";
+import DynamicInputForm from "../DashBoards/AddCompliants"; // Import the DynamicInputForm component
+import ActiveProblems from "./ActiveProblems";
 
 const PatientDashboard = ({ patient }) => {
-  const [activeSection, setActiveSection] = useState('dashboard');
+  const [activeSection, setActiveSection] = useState("dashboard");
   const [showImagingAdd, setShowImagingAdd] = useState(false);
   const [showNotesTable, setShowNotesTable] = useState(false);
   const [showOrdersPage, setShowOrdersPage] = useState(false);
@@ -24,42 +24,63 @@ const PatientDashboard = ({ patient }) => {
     if (showComplaintsForm) return <DynamicInputForm />; // Render DynamicInputForm if the state is true
 
     switch (activeSection) {
-      case 'clinical':
+      case "clinical":
         return <VitalsPage />;
-      case 'documents':
+      case "documents":
         return <ClinicalDocument />;
-      case 'problems':
+      case "problems":
         return <ActiveProblems onClose={() => setShowActiveProblems(false)} />;
-      case 'encounterHistory':
+      case "encounterHistory":
         return <VisitTable />;
       default:
-        if (showImagingAdd) return <ImagingAdd onClose={() => setShowImagingAdd(false)} />;
-        if (showNotesTable) return <NotesTable onClose={() => setShowNotesTable(false)} />;
-        if (showOrdersPage) return <OrdersPage onClose={() => setShowOrdersPage(false)} />;
-        if (showDischargeSummary) return <PatientDischargeForm onClose={() => setShowDischargeSummary(false)} />;
+        if (showImagingAdd)
+          return <ImagingAdd onClose={() => setShowImagingAdd(false)} />;
+        if (showNotesTable)
+          return <NotesTable onClose={() => setShowNotesTable(false)} />;
+        if (showOrdersPage)
+          return <OrdersPage onClose={() => setShowOrdersPage(false)} />;
+        if (showDischargeSummary)
+          return (
+            <PatientDischargeForm
+              onClose={() => setShowDischargeSummary(false)}
+            />
+          );
         return (
           <div className="main-content">
-            <aside className=''>
+            <aside className="">
               <div className="patientDash-patient-info">
-              <div className="avatar"></div>
-              <div className="ipd-tag">IPD</div>
-              <h2>{patient.name}</h2>
-              <p>{patient.ageSex}</p>
-              <p>Hospital No: {patient.hospitalNo}</p>
-              <p>Ward/Bed: {patient.wardBed}</p>
-              <p>Attending: {patient.providerName}</p>
+                <div className="avatar"></div>
+                <div className="ipd-tag">IPD</div>
+                <h2>{patient.name}</h2>
+                <p>{patient.ageSex}</p>
+                <p>Hospital No: {patient.hospitalNo}</p>
+                <p>Ward/Bed: {patient.wardBed}</p>
+                <p>Attending: {patient.providerName}</p>
               </div>
 
               <nav>
                 <ul>
                   <li>Patient Overview</li>
-                  <li onClick={() => { setActiveSection('problems'); setShowActiveProblems(true); }}>Problems</li>
-                  <li onClick={() => setActiveSection('encounterHistory')}>Encounter History</li>
+                  <li
+                    onClick={() => {
+                      setActiveSection("problems");
+                      setShowActiveProblems(true);
+                    }}
+                  >
+                    Problems
+                  </li>
+                  <li onClick={() => setActiveSection("encounterHistory")}>
+                    Encounter History
+                  </li>
                   <li>Orders</li>
-                  <li onClick={() => setActiveSection('documents')}>Clinical Documents</li>
-                  <li onClick={() => setActiveSection('clinical')}>Clinical</li>
+                  <li onClick={() => setActiveSection("documents")}>
+                    Clinical Documents
+                  </li>
+                  <li onClick={() => setActiveSection("clinical")}>Clinical</li>
                   <li onClick={() => setShowNotesTable(true)}>Notes</li>
-                  <li onClick={() => setShowDischargeSummary(true)}>Discharge Summary</li>
+                  <li onClick={() => setShowDischargeSummary(true)}>
+                    Discharge Summary
+                  </li>
                 </ul>
               </nav>
             </aside>
@@ -67,32 +88,67 @@ const PatientDashboard = ({ patient }) => {
             <main>
               <section className="labs">
                 <h3>🧪 Labs</h3>
-                <button className="add-button" onClick={() => setShowOrdersPage(true)}>+ Add</button>
+                <button
+                  className="add-button"
+                  onClick={() => setShowOrdersPage(true)}
+                >
+                  + Add
+                </button>
                 <div className="no-records">No Records Found</div>
               </section>
 
               <section className="imaging">
                 <h3>🖼 Imaging</h3>
-                <button className="add-button" onClick={() => setShowImagingAdd(true)}>+ Add</button>
+                <button
+                  className="add-button"
+                  onClick={() => setShowImagingAdd(true)}
+                >
+                  + Add
+                </button>
                 <div className="no-records">No Records Found</div>
               </section>
 
               <section className="active-problems">
                 <h3>⚠ Active Problems</h3>
-                <button className="add-button" onClick={() => setShowActiveProblems(true)}>+ Add</button>
+                <button
+                  className="add-button"
+                  onClick={() => setShowActiveProblems(true)}
+                >
+                  + Add
+                </button>
                 <div className="no-records">No Records Found</div>
               </section>
 
               <section className="medications">
                 <h3>💊 Medications</h3>
                 <button className="add-button">+ Add</button>
-                <table className='inpatient-table'>
+                <table className="inpatient-table">
                   <tbody>
-                    <tr><td>.OSMOLAX</td><td>0 times a day</td><td>Start Date- 02.08.2024</td></tr>
-                    <tr><td>ACECLOFENAC + PARACETAMOL TABS</td><td>0 times a day</td><td>Start Date- 12.08.2024</td></tr>
-                    <tr><td>ACECLOFENAC + PARACETAMOL TABS</td><td>3 times a day</td><td>Start Date- 13.08.2024</td></tr>
-                    <tr><td>ACETAZOLAMIDE 250MG</td><td>2 times a day</td><td>Start Date- 13.08.2024</td></tr>
-                    <tr><td>ACETAZOLAMIDE 250MG</td><td>3 times a day</td><td>Start Date- 13.08.2024</td></tr>
+                    <tr>
+                      <td>.OSMOLAX</td>
+                      <td>0 times a day</td>
+                      <td>Start Date- 02.08.2024</td>
+                    </tr>
+                    <tr>
+                      <td>ACECLOFENAC + PARACETAMOL TABS</td>
+                      <td>0 times a day</td>
+                      <td>Start Date- 12.08.2024</td>
+                    </tr>
+                    <tr>
+                      <td>ACECLOFENAC + PARACETAMOL TABS</td>
+                      <td>3 times a day</td>
+                      <td>Start Date- 13.08.2024</td>
+                    </tr>
+                    <tr>
+                      <td>ACETAZOLAMIDE 250MG</td>
+                      <td>2 times a day</td>
+                      <td>Start Date- 13.08.2024</td>
+                    </tr>
+                    <tr>
+                      <td>ACETAZOLAMIDE 250MG</td>
+                      <td>3 times a day</td>
+                      <td>Start Date- 13.08.2024</td>
+                    </tr>
                   </tbody>
                 </table>
               </section>
@@ -102,13 +158,24 @@ const PatientDashboard = ({ patient }) => {
               <section className="last-vitals">
                 <h3>⏱ Last Vitals</h3>
                 {/* <button className="show-graph">Show Graph</button> */}
-                <button className="add-vitals" onClick={() => setShowActiveProblems(true)}>+ Add Vitals</button>
+                <button
+                  className="add-vitals"
+                  onClick={() => setShowActiveProblems(true)}
+                >
+                  + Add Vitals
+                </button>
                 <div className="no-records">No Records Found</div>
               </section>
 
               <section className="chief-complaints">
                 <h3>🗣 Chief Complaints</h3>
-                <button className="new-complaint" onClick={() => setShowComplaintsForm(true)}>+ New Complaint</button> {/* Toggle the form */}
+                <button
+                  className="new-complaint"
+                  onClick={() => setShowComplaintsForm(true)}
+                >
+                  + New Complaint
+                </button>{" "}
+                {/* Toggle the form */}
                 <div className="complaint">
                   Coughing
                   <button className="remove-complaint">❌</button>

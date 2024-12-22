@@ -90,7 +90,6 @@ const PurchaseOrderForm = () => {
     axios.get('http://localhost:8080/api/suppliers')
 
       .then(response => {
-        console.log(response.data);  // Log the response to check the structure of the data
         setSuppliers(response.data);
       })
       .catch(error => {
@@ -99,7 +98,6 @@ const PurchaseOrderForm = () => {
 
     axios.get('http://localhost:8080/api/add-items')
       .then(response => {
-        console.log(response.data);  // Log the response to check the structure of the data
         setAvailableItems(response.data);  // Store the available items
       })
       .catch(error => {
@@ -108,7 +106,6 @@ const PurchaseOrderForm = () => {
 
     axios.get(`${API_BASE_URL}/generic-names`) // Replace with your API endpoint for generics
       .then(response => {
-        console.log(response.data);  // Log the response to check the structure of the data
         setAvailableGenerics(response.data);  // Store the available generics
       })
       .catch(error => {
@@ -127,7 +124,6 @@ const PurchaseOrderForm = () => {
     setSelectedSupplierId(selectedSupplier);
 
     // Optionally, you can log or alert the selected supplier ID for debugging
-    console.log("Selected Supplier ID:", selectedSupplier);
   };
 
   const handleInputChange = (e) => {

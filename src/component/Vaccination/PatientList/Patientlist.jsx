@@ -6,12 +6,12 @@ import Sticker from "./Sticker";
 import VaccinationFollowup from "./VaccinationFollowup";
 import PatientVaccinationDetails from "./PatientVaccinationDetails";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { API_BASE_URL } from "../../api/api";
 
 function Patientlist() {
   const [patients, setPatients] = useState([]);
   const [isVaccinationRegister, setIsVaccinationRegister] = useState(false);
-  const [isUpdateVaccinationRegister, setIsUpdateVaccinationRegister] =
-    useState(false);
+  const [isUpdateVaccinationRegister, setIsUpdateVaccinationRegister] =useState(false);
   const [isVaccinationDetail, setIsVaccinationDetails] = useState(false);
   const [isStickerPopupOpen, setIsStickerPopupOpen] = useState(false);
   const [isFollowupPopupOpen, setIsFollowupPopupOpen] = useState(false);
@@ -202,5 +202,4 @@ function Patientlist() {
     </div>
   );
 }
-
 export default Patientlist;

@@ -1,9 +1,8 @@
  /* neha-OT-OT-otmain-14-9-24 */
 .ot_setting-header {
     background-color:white; 
-    padding: 10px 20px; 
+    padding: 5px; 
     display: flex; 
-   font-size: 18px;
     align-items: center; 
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); 
   }
@@ -11,18 +10,21 @@
   /* Navigation links container */
   .ot_setting-nav-links {
     display: flex; 
-    gap: 30px; /
+    gap: 30px; 
+    
+
   }
   
   /* Individual link button styling */
   .ot_setting-header-button {
-    background-color: var(--button-color);
-    color: white;
+    background-color: white;
+    color: black;
     border: none;
     padding: 5px 5px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
+    text-decoration: none;
   }
 
    

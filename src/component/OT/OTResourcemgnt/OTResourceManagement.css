@@ -65,11 +65,11 @@
 }
 
 /* Modal content styling */
-.otresource-modal .modal-content {
+.otresource-modal .ot-resource-modal-content {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
-    max-width: 500px;
+    max-width: 600px;
     width: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.3s ease-out; /* Optional: add fade-in effect */
@@ -102,7 +102,7 @@
 }
 
 .otresource-modal button {
-    padding: 8px 16px;
+    padding: 5px ;
     margin-right: 10px;
     background-color: var(--button-color);
     color: white;
@@ -119,4 +119,66 @@
 
 .otresource-modal h2 {
     margin-bottom: 15px;
+}
+
+
+
+.otresoucefilter {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-direction: column;
+    
+}
+
+.otresource-date-utlt {
+    display: flex;
+   flex-direction: row;
+   background-color: #f4f4f4;
+   padding: 2px;
+
+  
+}
+
+.ot-resorcefilter-patient .date-range {
+    display: flex;
+    align-items: center;
+   
+}
+.ot-resource-patient-search{
+    display: flex;
+    justify-content: space-between;
+}
+
+.ot-resource-input {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5px;
+    
+    
+}
+
+.otsearch-otresource-search-input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+}
+
+.otsearch-otresource-container-button {
+    padding: 5px ;
+    margin-right: 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.otsearch-anesthesia-container-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
 }

@@ -27,6 +27,17 @@ function NavigationBilling() {
                 > Final Bill</button>
             </NavLink>
 
+            <NavLink to="billing/IPBilling" selected> <button
+                className={`nursing-action-button ${selectedButton === 'IP Billing' ? 'selected' : ''}`}
+                onClick={() => handleButtonClick('IP Bill')}
+                > IP Billing</button>
+            </NavLink>
+            <NavLink to="billing/opbilling" selected> <button
+                className={`nursing-action-button ${selectedButton === 'OPD Billing' ? 'selected' : ''}`}
+                onClick={() => handleButtonClick('OPD Bill')}
+                > OPD Billing</button>
+            </NavLink>
+
           
         </nav>
 

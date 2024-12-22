@@ -283,7 +283,7 @@ const PACRequest = ({ inPatientId, outPatientId }) => {
               {pacRequests.map((pacRequest, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{pacRequest.patientName || 'N/A'}</td>
+                  <td>{pacRequest.patientName || "N/A"}</td>
                   <td>{pacRequest.surgeryName}</td>
                   <td>{pacRequest.consultant}</td>
                   <td>{pacRequest.roomNoBedNo}</td>

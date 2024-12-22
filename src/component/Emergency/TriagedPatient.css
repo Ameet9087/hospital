@@ -185,4 +185,66 @@
 }
 
 
- /* Dhanashree_TriagedPatients_19/09 */
+
+/* Style for finalized button */
+.finalized-btn {
+  background-color: var(--button-bg-color); /* Using variable */
+  color: var(--button-color); /* Using variable */
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: var(--font-size); /* Using variable */
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+.finalized-btn:hover {
+  background-color: var(--button-hover-background-color); /* Using variable */
+  color: var(--button-hover-text-color); /* Using variable */
+  border: 2px solid var(--button-hover-border-color); /* Using variable */
+}
+
+.finalized-btn:active {
+  background-color: var(--button-hover-background-color); /* Even darker color */
+  color: var(--button-hover-text-color);
+  border: 2px solid var(--button-hover-border-color);
+}
+
+/* Additional styling */
+.TriagedPatients-triaged-patients {
+  background-color: var(--background-color); /* Using background color variable */
+}
+
+.TriagedPatients-content {
+  padding: 20px;
+}
+
+.TriagedPatients-search-filter {
+  margin-bottom: 20px;
+}
+
+.TriagedPatients-search-bar input {
+  padding: var(--input-box-padding);
+  font-size: var(--font-size);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.TriagedPatients-search-icon {
+  background-color: var(--button-bg-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.TriagedPatients-filter-dropdown {
+  padding: var(--input-box-padding);
+  font-size: var(--font-size);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+

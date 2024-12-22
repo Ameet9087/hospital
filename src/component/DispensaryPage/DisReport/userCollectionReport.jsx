@@ -41,19 +41,19 @@
 //       <table>
 //         <thead>
 //           <tr>
-//             "Date",
-//             "Type",
-//             "ReceiptNo",
-//             "Hospital Number",
-//             "PatientName",
-//             "SubTotal",
-//             "Discount",
-//             "Net Total",
-//             "Cash Collection",
-//             "User",
-//             "Remarks",
-//             "Counter",
-//             "Store",
+//             <th>Date</th>
+//             <th>Type</th>
+//             <th>ReceiptNo</th>
+//             <th>Hospital Number</th>
+//             <th>PatientName</th>
+//             <th>SubTotal</th>
+//             <th>Discount</th>
+//             <th>Net Total</th>
+//             <th>Cash Collection</th>
+//             <th>User</th>
+//             <th>Remarks</th>
+//             <th>Counter</th>
+//             <th>Store</th>
 //           </tr>
 //         </thead>
 //         <tbody>
@@ -150,19 +150,19 @@
 //         <table>
 //           <thead>
 //             <tr>
-//               "Date",
-//               "Type",
-//               "ReceiptNo",
-//               "Hospital Number",
-//               "Patient Name",
-//               "SubTotal",
-//               "Discount",
-//               "Net Total",
-//               "Cash Collection",
-//               "User",
-//               "Remarks",
-//               "Counter",
-//               "Store",
+//               <th>Date</th>
+//               <th>Type</th>
+//               <th>ReceiptNo</th>
+//               <th>Hospital Number</th>
+//               <th>Patient Name</th>
+//               <th>SubTotal</th>
+//               <th>Discount</th>
+//               <th>Net Total</th>
+//               <th>Cash Collection</th>
+//               <th>User</th>
+//               <th>Remarks</th>
+//               <th>Counter</th>
+//               <th>Store</th>
 //             </tr>
 //           </thead>
 //           <tbody>
@@ -297,19 +297,19 @@
 //       <table>
 //         <thead>
 //           <tr>
-//             "Date",
-//             "Type",
-//             "Receipt No",
-//             "Hospital Number",
-//             "Patient Name",
-//             "Sub Total",
-//             "Discount",
-//             "Net Total",
-//             "Cash Collection",
-//             "User",
-//             "Remarks",
-//             "Counter",
-//             "Store",
+//             <th>Date</th>
+//             <th>Type</th>
+//             <th>Receipt No</th>
+//             <th>Hospital Number</th>
+//             <th>Patient Name</th>
+//             <th>Sub Total</th>
+//             <th>Discount</th>
+//             <th>Net Total</th>
+//             <th>Cash Collection</th>
+//             <th>User</th>
+//             <th>Remarks</th>
+//             <th>Counter</th>
+//             <th>Store</th>
 //           </tr>
 //         </thead>
 //         <tbody>
@@ -364,17 +364,14 @@
  /* Ajhar Tamboli userCollectionReport.jsx 19-09-24 */
 
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../DisReport/userCollectionReport.css";
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 function UserCollectionReport() {
   // State to hold fetched user collections
   const [userCollections, setUserCollections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
 
   // Fetch user collections from the API
   useEffect(() => {
@@ -456,42 +453,23 @@ function UserCollectionReport() {
           <button className="userCollectionReport-print-button" ><i class="fa-solid fa-print"></i> Print</button>
         </div>
       </div>
-      {/* <div className='userCollectionReport-table-N-paginationDiv'> */}
-      <div className="table-container">
-        <table ref={tableRef}>
+      <div className='userCollectionReport-table-N-paginationDiv'>
+        <table>
           <thead>
-            <tr>{[
-              "Date",
-              "Type",
-              "Receipt No",
-              "Hospital Number",
-              "Patient Name",
-              "Sub Total",
-              "Discount",
-              "Net Total",
-              "Cash Collection",
-              "User",
-              "Remarks",
-              "Counter",
-              "Store",
-            ].map((header, index) => (
-              <th
-                key={index}
-                style={{ width: columnWidths[index] }}
-                className="resizable-th"
-              >
-                <div className="header-content">
-                  <span>{header}</span>
-                  <div
-                    className="resizer"
-                    onMouseDown={startResizing(
-                      tableRef,
-                      setColumnWidths
-                    )(index)}
-                  ></div>
-                </div>
-              </th>
-            ))}
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Receipt No</th>
+              <th>Hospital Number</th>
+              <th>Patient Name</th>
+              <th>Sub Total</th>
+              <th>Discount</th>
+              <th>Net Total</th>
+              <th>Cash Collection</th>
+              <th>User</th>
+              <th>Remarks</th>
+              <th>Counter</th>
+              <th>Store</th>
             </tr>
           </thead>
           <tbody>

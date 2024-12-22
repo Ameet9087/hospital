@@ -7,6 +7,18 @@
     font-family: Arial, sans-serif;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+.supplier-setting-despensaryForm{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  .manage-modal-modal-header
+  {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
   
   .setting-supplier-header {
     display: flex;

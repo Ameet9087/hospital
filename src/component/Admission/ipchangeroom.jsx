@@ -1,195 +1,286 @@
-// AjharTamboli 20-11-24 iPChangeRoom.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./iPChangeRoom.css";
 import PopupTable from "./PopupTable";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FaSearch } from "react-icons/fa";
+// import { API_BASE_URL } from "../../../api/api";
+import axios from "axios";
+import { API_BASE_URL } from "../api/api";
 
-const IPChangeRoom = ({ patient }) => {
-  const [selectedTab, setSelectedTab] = useState("services");
+const IPChangeRoom = ({ patient, onClose }) => {
   const [activePopup, setActivePopup] = useState(null);
+  const [beds, setBeds] = useState([]);
+  const [selectedBedId, setSelectedBedId] = useState(null);
+  const [selectedBedDetails, setSelectedBedDetails] = useState(null);
 
-  console.log(patient);
+  const getPopupData = () => {
+    if (activePopup === "bed") {
+      return { columns: ["id", "bedNo", "bedStatus"], data: beds };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
 
-  const handleDeleteRow = (snToDelete) => {
-    const updatedData = servicesData
-      .filter((row) => row.sn !== snToDelete)
-      .map((row, index) => ({ ...row, sn: index + 1 }));
-    setServicesData(updatedData);
+  const { columns, data } = getPopupData();
+
+  const handleSelect = async (data) => {
+    if (activePopup === "bed") {
+      setSelectedBedDetails(data);
+      set;
+    }
+    setActivePopup(null);
+  };
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/beds`)
+      .then((response) => response.json())
+      .then((data) => setBeds(data))
+      .catch((error) => console.error("Error fetching beds:", error));
+  }, []);
+
+  const handleSave = async () => {
+    if (!selectedBedDetails || !patient) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    const { roomDto, id: newBedId } = selectedBedDetails; // New bed details
+    const newRoomId = roomDto.id; // New room ID
+    const newFloorId = roomDto.floorNumber;
+    const oldRoomId = patient.roomDetails?.roomDTO.id;
+    const oldBedId = patient.roomDetails?.bedDTO.id;
+    const ipAdmissionId = patient.patient.inPatientId; // IP Admission ID
+
+    const apiUrl = `${API_BASE_URL}/roomdetails/change?oldRoomId=${oldRoomId}&newRoomId=${newRoomId}&newBedId=${newBedId}&newFloorId=${newFloorId}&ipAdmissionId=${ipAdmissionId}&oldBedId=${oldBedId}`;
+    console.log("API URL:", apiUrl);
+    console.log("Old Room ID:", oldRoomId);
+    console.log("Old Bed ID:", oldBedId);
+
+    try {
+      const response = await axios.put(apiUrl);
+
+      // Check for success response
+      if (response.status === 200) {
+        setSelectedBedId(null);
+        setSelectedBedDetails(null);
+        console.log("Response:", response.data);
+        onclose();
+      } else {
+        alert(`Failed to save changes: ${response.data.message}`);
+      }
+    } catch (error) {
+      console.error("Error saving room change:", error);
+      alert("An error occurred while saving changes.");
+    }
   };
 
   return (
-    <div className="iPChangeRoom-master">
-      <div className="iPChangeRoom-title-bar">
-        <div className="iPChangeRoom-header">
-          <span>IP Change Room</span>
+    <>
+      <div className="iPChangeRoom-master">
+        <div className="iPChangeRoom-title-bar">
+          <div className="iPChangeRoom-header">
+            <span>IP Change Room</span>
+          </div>
         </div>
-      </div>
-      <div className="iPChangeRoom-content-wrapper">
-        <div className="iPChangeRoom-main-section">
-          <div className="iPChangeRoom-panel operation-details">
-            <div className="iPChangeRoom-panel-header">Patient Details</div>
-            <div className="iPChangeRoom-panel-content">
-              <div className="iPChangeRoom-form-row">
-                <label>IP No: *</label>
-                <div className="iPChangeRoom-input-with-search">
+        <div className="iPChangeRoom-content-wrapper">
+          <div className="iPChangeRoom-main-section">
+            <div className="iPChangeRoom-panel operation-details">
+              <div className="iPChangeRoom-panel-header">Patient Details</div>
+              <div className="iPChangeRoom-panel-content">
+                <div className="iPChangeRoom-form-row">
+                  <label>IP No: *</label>
+                  <div className="iPChangeRoom-input-with-search">
+                    <input
+                      type="text"
+                      value={patient?.patient?.inPatientId || ""}
+                      placeholder="Ip No"
+                      readOnly
+                    />
+                  </div>
+                </div>
+                <div className="iPChangeRoom-form-row">
+                  <label>Admission Date:</label>
+                  <input type="date" value={patient?.admissionDate} />
+                </div>
+
+                <div className="iPChangeRoom-form-row">
+                  <label>Admission Time:</label>
+                  <input type="text" value={patient?.admissionTime} />
+                </div>
+
+                <div className="iPChangeRoom-form-row">
+                  <label>Patient Name:</label>
                   <input
                     type="text"
-                    value={patient.patient?.inPatientId}
-                    placeholder="Ip No"
+                    value={`${patient?.patient?.firstName || ""} ${
+                      patient?.patient?.middleName || ""
+                    } ${patient?.patient?.lastName || ""}`}
+                    readOnly
+                  />
+                </div>
+                <div className="iPChangeRoom-form-row">
+                  <label>Age:</label>
+                  <input
+                    type="text"
+                    value={patient?.patient?.age || ""}
+                    readOnly
+                  />
+                </div>
+                <div className="iPChangeRoom-form-row">
+                  <label>Gender:</label>
+                  <select value={patient?.patient?.gender}>
+                    <option value={"Male"}>Male</option>
+                    <option value={"Female"}>Female</option>
+                  </select>
+                </div>
+                {/* <div className="iPChangeRoom-form-row">
+                  <label>Change Date:</label>
+                  <input
+                    type="date"
+                    value={changeDate}
+                    onChange={(e) => setChangeDate(e.target.value)}
+                  />
+                </div>
+                <div className="iPChangeRoom-form-row">
+                  <label>Change Time:</label>
+                  <input
+                    type="time"
+                    value={changeTime}
+                    onChange={(e) => setChangeTime(e.target.value)}
+                  />
+                </div> */}
+              </div>
+            </div>
+            <div className="iPChangeRoom-panel operation-details">
+              <div className="iPChangeRoom-panel-header">
+                Current Room Details
+              </div>
+              <div className="iPChangeRoom-panel-content">
+                <div className="iPChangeRoom-form-row">
+                  <label>Current Pay Type:</label>
+                  <input
+                    type="text"
+                    value={patient?.roomDetails?.payTypeDTO?.payTypeName}
+                  />
+                </div>
+                <div className="iPChangeRoom-form-row">
+                  <label>Current Room Type:</label>
+                  <input
+                    type="text"
+                    value={patient?.roomDetails?.roomTypeDTO?.type}
+                  />
+                </div>
+                <div className="iPChangeRoom-form-row">
+                  <label>Current Room No:</label>
+                  <input
+                    type="text"
+                    value={patient?.roomDetails?.roomDTO?.roomNumber}
+                  />
+                </div>
+                <div className="iPChangeRoom-form-row">
+                  <label>Current Bed No:</label>
+                  <input
+                    type="text"
+                    value={patient?.roomDetails?.bedDTO?.bedNo}
+                  />
+                </div>
+                <div className="iPChangeRoom-form-row">
+                  <label>Current Floor No:</label>
+                  <input
+                    type="text"
+                    value={patient?.roomDetails?.floorDTO?.location}
                   />
                 </div>
               </div>
-              <div className="iPChangeRoom-form-row">
-                <label>Admission Date:</label>
-                <input type="date" value={patient?.admissionDate} />
-              </div>
+            </div>
 
-              <div className="iPChangeRoom-form-row">
-                <label>Admission Time:</label>
-                <input type="text" value={patient?.admissionTime} />
+            <div className="iPChangeRoom-panel dis-templates">
+              <div className="iPChangeRoom-panel-header">
+                Change Room Details
               </div>
+              <div className="iPChangeRoom-panel-content">
+                <div className="iPChangeRoom-form-row">
+                  <label>Select Bed:</label>
+                  <input type="text" value={selectedBedDetails?.bedNo} />
+                  <i
+                    onClick={() => setActivePopup("bed")}
+                    className="fa-solid fa-magnifying-glass"
+                  ></i>
+                </div>
+                {selectedBedDetails && (
+                  <>
+                    <div className="iPChangeRoom-form-row">
+                      <label>Room Type:</label>
+                      <input
+                        type="text"
+                        value={selectedBedDetails.roomDto.name}
+                        readOnly
+                      />
+                    </div>
+                    <div className="iPChangeRoom-form-row">
+                      <label>Room No:</label>
+                      <input
+                        type="text"
+                        value={selectedBedDetails.roomDto.roomNumber}
+                        readOnly
+                      />
+                    </div>
+                    <div className="iPChangeRoom-form-row">
+                      <label>Floor No:</label>
+                      <input
+                        type="text"
+                        value={selectedBedDetails.roomDto.floorNumber}
+                        readOnly
+                      />
+                    </div>
+                    <div className="iPChangeRoom-form-row">
+                      <label>Charge Type:</label>
+                      <input
+                        type="text"
+                        value={selectedBedDetails.chargeType}
+                        readOnly
+                      />
+                    </div>
+                    <div className="iPChangeRoom-form-row">
+                      <label>Remarks:</label>
+                      <textarea />
+                    </div>
+                  </>
+                )}
 
-              <div className="iPChangeRoom-form-row">
-                <label>Patient Name:</label>
-                <input
-                  type="text"
-                  value={`${patient?.patient?.firstName} ${patient?.patient?.middleName} ${patient?.patient?.lastName}`}
-                />
-              </div>
-              <div className="iPChangeRoom-form-row">
-                <label>Age:</label>
-                <input type="text" value={patient?.patient?.age} />
-              </div>
-              <div className="iPChangeRoom-form-row">
-                <label>Gender:</label>
-                <select value={patient?.patient?.gender}>
-                  <option value={"Male"}>Male</option>
-                  <option value={"Female"}>Female</option>
-                </select>
-              </div>
-              <div className="iPChangeRoom-form-row">
-                <label>Change Date:</label>
-                <input type="date" value="" />
-              </div>
-              <div className="iPChangeRoom-form-row">
-                <label>Change Time:</label>
-                <input type="time" value="" />
-              </div>
-            </div>
-          </div>
-          <div className="iPChangeRoom-panel operation-details">
-            <div className="iPChangeRoom-panel-header">
-              Current Room Details
-            </div>
-            <div className="iPChangeRoom-panel-content">
-              <div className="iPChangeRoom-form-row">
-                <label>Current Pay Type:</label>
-                <input
-                  type="text"
-                  value={patient?.roomDetails?.payTypeDTO?.payTypeName}
-                />
-              </div>
-              <div className="iPChangeRoom-form-row">
-                <label>Current Room Type:</label>
-                <input
-                  type="text"
-                  value={patient?.roomDetails?.roomTypeDTO?.roomtype}
-                />
-              </div>
-              <div className="iPChangeRoom-form-row">
-                <label>Current Room No:</label>
-                <input
-                  type="text"
-                  value={patient?.roomDetails?.roomDTO?.roomNumber}
-                />
-              </div>
-              <div className="iPChangeRoom-form-row">
-                <label>Current Bed No:</label>
-                <input
-                  type="text"
-                  value={patient?.roomDetails?.bedDTO?.bedNo}
-                />
-              </div>
-              <div className="iPChangeRoom-form-row">
-                <label>Current Floor No:</label>
-                <input
-                  type="text"
-                  value={patient?.roomDetails?.floorDTO?.location}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="iPChangeRoom-panel dis-templates">
-            <div className="iPChangeRoom-panel-header">Change Room Details</div>
-            <div className="iPChangeRoom-panel-content">
-              <div className="iPChangeRoom-form-row">
-                <label>Bed No:</label>
-                <div className="iPChangeRoom-input-with-search">
-                  <input type="text" />
-                  <FontAwesomeIcon
-                    className="iPChangeRoom-magnifier-btn"
-                    icon={faSearch}
-                  />
-                </div>
-              </div>
-              <div className="iPChangeRoom-form-row">
-                <label>Room Type:</label>
-                <div className="iPChangeRoom-input-with-search">
-                  <input type="text" />
-                  <FontAwesomeIcon
-                    className="iPChangeRoom-magnifier-btn"
-                    icon={faSearch}
-                  />
-                </div>
-              </div>
-              <div className="iPChangeRoom-form-row">
-                <label>Room No:</label>
-                <div className="iPChangeRoom-input-with-search">
-                  <input type="text" />
-                  <FontAwesomeIcon
-                    className="iPChangeRoom-magnifier-btn"
-                    icon={faSearch}
-                  />
-                </div>
-              </div>
-              <div className="iPChangeRoom-form-row">
-                <label>Floor No:</label>
-                <div className="iPChangeRoom-input-with-search">
-                  <input type="text" />
-                  <FontAwesomeIcon
-                    className="iPChangeRoom-magnifier-btn"
-                    icon={faSearch}
-                  />
-                  <div className="iPChangeRoom-action-buttons"></div>
-                </div>
-              </div>
-              <div className="iPChangeRoom-form-row">
-                <label>Change Entitlement:</label>
-                <div className="iPChangeRoom-input-with-search">
-                  <input type="text" />
-                  <FontAwesomeIcon
-                    className="iPChangeRoom-magnifier-btn"
-                    icon={faSearch}
-                  />
-                </div>
-              </div>
-              <div className="iPChangeRoom-form-row">
+                {/* <div className="iPChangeRoom-form-row">
+                  <label>Change Entitlement:</label>
+                  <div className="iPChangeRoom-input-with-search">
+                    <input type="text" />
+                    <FaSearch
+                      onClick={handleSearchClick}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </div>
+                </div> */}
+                {/* <div className="iPChangeRoom-form-row">
                 <label>Remarks:</label>
-                {/* <input type="text" value="" /> */}
                 <textarea name="" id=""></textarea>
+              </div> */}
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <button className="ipchangeroom-btn-blue">Save</button>
+          <div>
+            <button className="ipchangeroom-btn-blue" onClick={handleSave}>
+              Save
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+      {activePopup && (
+        <PopupTable
+          columns={columns}
+          data={data}
+          onClose={() => setActivePopup(null)}
+          onSelect={handleSelect}
+        />
+      )}
+    </>
   );
 };
 
 export default IPChangeRoom;
-
-// AjharTamboli 22-11-24 iPChangeRoom.jsx

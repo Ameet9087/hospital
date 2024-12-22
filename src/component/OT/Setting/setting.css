@@ -1,46 +1,64 @@
 /* Setting.css */
 /* // neha-OT-OT-setting-14-9-24 */
 
-
 .setting-header {
   background-color: white;
-  padding:  5px;
+  padding: 10px;
   font-size: var(--heading-font);
- }
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adding shadow for better visual separation */
+}
 
+/* Navigation container */
 .setting-header-nav {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
-  gap: 20px;
+  gap: 30px;
 }
 
+/* Individual nav items */
 .setting-header-nav li {
-  cursor: pointer;
-  color: black;
-  padding: 10px 15px;
+  padding: 5px;
   border-radius: 5px;
-  text-decoration: none;
-  font-size: var(--heading-font);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
 }
 
-
-.setting-header-nav li {
+/* Link styling */
+.nav-link {
   text-decoration: none;
+  color: black;
+  
 }
 
+/* Hover effect for nav items */
+.setting-header-nav li:hover {
+  background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border-bottom: 4px solid var(--button-bg-color);
+
+}
+
+/* Active nav item styling */
 .active-nav {
-  border-bottom: 4px solid var(--button-bg-color);
+  background-color: var(--button-bg-color); /* Custom color for active state */
+  color: black;
+  border-bottom: 4px solid var(--button-bg-color); /* Stronger indicator */
 }
 
+.active-nav .nav-link {
+  color: white; /* Ensure the link text is white in active state */
+}
 
+/* Sub-navigation styles */
 .setting-sub-nav {
   background-color: #f8f9fa;
-  padding: 15px 20px;
+  padding: 5px ;
   border: 1px solid #ddd;
   border-radius: 5px;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 .setting-sub-nav ul {
@@ -57,6 +75,18 @@
 }
 
 .setting-sub-nav ul li a:hover {
-  color: #050505;
-  text-decoration: none; 
+  color: #6a5555;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .setting-header-nav {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .setting-header-nav li {
+    width: 100%;
+    text-align: center;
+  }
 }

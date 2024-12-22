@@ -34,6 +34,15 @@ function Navbar() {
           Register Patient
         </button>
       </Link>
+      <Link to="/patient/opd">
+        <button
+          className={`patient-action-button ${
+            location.pathname === '/patient/opd' ? 'active-btn' : ''
+          }`}
+        >
+          OPD
+        </button>
+      </Link>
     </div>
   );
 }

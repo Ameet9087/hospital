@@ -10,7 +10,7 @@ import Prescription from "./Prescription";
 const ActionRecordPage = ({
   patient,
   patientId,
-  newPatientVisitId,
+  outPatientId,
   setActiveSection,
   employeeId,
 }) => {
@@ -21,7 +21,7 @@ const ActionRecordPage = ({
   const [showMedicationOrder, setShowMedicationOrder] = useState(false);
   const [labOrder, showLabOrder] = useState(false);
   const [imagingOrder, setImagingOrder] = useState(false);
-  const [showPrintMedication,setShowPrintMedication] = useState(false);
+  const [showPrintMedication, setShowPrintMedication] = useState(false);
 
   const apiEndpoints = {
     lab: `${API_BASE_URL}/labTestSetting/getAll`,
@@ -69,7 +69,6 @@ const ActionRecordPage = ({
     setSelectedOrderId(orderId);
     console.log(orderId);
     if (orderId) {
-
       const selectedOrder = orderData.find(
         (order) =>
           order.addItemId == orderId ||
@@ -111,20 +110,20 @@ const ActionRecordPage = ({
       alert("Please select an order to proceed.");
     }
   };
-  const handleClose = ()=>{
+  const handleClose = () => {
     setShowPrintMedication(false);
-  }
-  const handlePrintMedication =()=>{
+  };
+  const handlePrintMedication = () => {
     setShowPrintMedication(true);
-  }
+  };
 
   if (showMedicationOrder) {
     return (
       <MedicationOrder
         selectedOrders={selectedOrders}
         setActiveSection={setActiveSection}
-        patientId={patientId}
-        newPatientVisitId={newPatientVisitId}
+        inPatientId={patientId}
+        outPatientId={outPatientId}
       />
     ); // Pass selected orders to MedicationOrder
   }
@@ -133,62 +132,66 @@ const ActionRecordPage = ({
       <LabOrder
         selectedOrders={selectedOrders}
         setActiveSection={setActiveSection}
-        patientId={patientId}
-        newPatientVisitId={newPatientVisitId}
+        inPatientId={patientId}
+        outPatientId={outPatientId}
       />
-    ); // Pass selected orders to MedicationOrder
+    );
   }
   if (imagingOrder) {
     return (
       <RadioOrder
         selectedOrders={selectedOrders}
         setActiveSection={setActiveSection}
-        patientId={patientId}
-        newPatientVisitId={newPatientVisitId}
+        inPatientId={patientId}
+        outPatientId={outPatientId}
         employeeId={employeeId}
       />
-    ); // Pass selected orders to MedicationOrder
+    );
   }
 
   return (
     <div className="action_record_container">
-      {!showPrintMedication ?(<>
-      <div className="action_record_orders">
-        <div className="action-records-selected-container">
-          <div className="selected_orders">
-            <div className="selected-order-header">
-              <h2 className="action-records-h2">Selected Orders</h2>
-              <div className="selected-order-header-right">
-                <span
-                  className="remove_order_button"
-                  onClick={() => setSelectedOrders([])}
-                >
-                  Cancel
-                </span>
-                <span className="proceed_order_button" onClick={handleProceed}>
-                  Proceed
-                </span>
+      {!showPrintMedication ? (
+        <>
+          <div className="action_record_orders">
+            <div className="action-records-selected-container">
+              <div className="selected_orders">
+                <div className="selected-order-header">
+                  <h2 className="action-records-h2">Selected Orders</h2>
+                  <div className="selected-order-header-right">
+                    <span
+                      className="remove_order_button"
+                      onClick={() => setSelectedOrders([])}
+                    >
+                      Cancel
+                    </span>
+                    <span
+                      className="proceed_order_button"
+                      onClick={handleProceed}
+                    >
+                      Proceed
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <ul>
+                    {selectedOrders.length === 0 && <p>No orders selected.</p>}
+                    {selectedOrders.map((order, index) => (
+                      <li key={index} className="selected_order_item">
+                        <span className="selected_order_item-span">
+                          {order.itemName ||
+                            order.imagingItemName ||
+                            order.labTestName}
+                        </span>{" "}
+                        {/* Display selected order name */}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </div>
-            <div>
-              <ul>
-                {selectedOrders.length === 0 && <p>No orders selected.</p>}
-                {selectedOrders.map((order, index) => (
-                  <li key={index} className="selected_order_item">
-                    <span className="selected_order_item-span">
-                      {order.itemName ||
-                        order.imagingItemName ||
-                        order.labTestName}
-                    </span>{" "}
-                    {/* Display selected order name */}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
 
-          {/* Active Orders Section */}
-          {/* <div className="action_record_active_orders">
+              {/* Active Orders Section */}
+              {/* <div className="action_record_active_orders">
             <h2 className='action-records-h2'>🔍 Active Orders</h2>
             <table className="action_record_table">
               <thead>
@@ -206,63 +209,77 @@ const ActionRecordPage = ({
               </tbody>
             </table>
           </div> */}
-        </div>
-
-        {/* New Orders Section */}
-        <div className="action_record_new_orders">
-          <h2 className="action-records-h2">➕ New Orders</h2>
-          <div className="action_record_new_order_controls">
-            <div className="action-dropdown-container">
-              <label htmlFor="orderType" className="action_record_label">Order Type:
-              <select
-                id="orderType"
-                className="action_record_dropdown"
-                value={selectedOrderType}
-                onChange={handleOrderTypeChange}
-              >
-                <option value="">------</option>
-                <option value="lab">Lab</option>
-                <option value="imaging">Imaging</option>
-                <option value="medication">Medication</option>
-                <option value="others">Others</option>
-              </select></label>
             </div>
 
-            {selectedOrderType && (
-              <div className="action-dropdown-container">
-                <label htmlFor="orderItem" className="action_record_label">Order Item:
-                <select
-                  id="orderItem"
-                  className="action_record_dropdown"
-                  value={selectedOrderId}
-                  onChange={handleOrderSelect}
-                >
-                  <option value="">Select an order item</option>
-                  {orderData.map((order) => (
-
-                    <option
-                      key={order.id || order.imagingItemId || order.labTestId}
-                      value={
-                        order.addItemId ||
-                        order.imagingItemId ||
-                        order.labTestId
-                      }
+            {/* New Orders Section */}
+            <div className="action_record_new_orders">
+              <h2 className="action-records-h2">➕ New Orders</h2>
+              <div className="action_record_new_order_controls">
+                <div className="action-dropdown-container">
+                  <label htmlFor="orderType" className="action_record_label">
+                    Order Type:
+                    <select
+                      id="orderType"
+                      className="action_record_dropdown"
+                      value={selectedOrderType}
+                      onChange={handleOrderTypeChange}
                     >
-                      {order.itemName ||
-                        order.imagingItemName ||
-                        order.labTestName}
+                      <option value="">------</option>
+                      <option value="lab">Lab</option>
+                      <option value="imaging">Imaging</option>
+                      <option value="medication">Medication</option>
+                      <option value="others">Others</option>
+                    </select>
+                  </label>
+                </div>
 
-                    </option>
-                  ))}
-                </select></label>
+                {selectedOrderType && (
+                  <div className="action-dropdown-container">
+                    <label htmlFor="orderItem" className="action_record_label">
+                      Order Item:
+                      <select
+                        id="orderItem"
+                        className="action_record_dropdown"
+                        value={selectedOrderId}
+                        onChange={handleOrderSelect}
+                      >
+                        <option value="">Select an order item</option>
+                        {orderData.map((order) => (
+                          <option
+                            key={
+                              order.id || order.imagingItemId || order.labTestId
+                            }
+                            value={
+                              order.addItemId ||
+                              order.imagingItemId ||
+                              order.labTestId
+                            }
+                          >
+                            {order.itemName ||
+                              order.imagingItemName ||
+                              order.labTestName}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
-        </div>
-      </div>
 
-      <button className="action_record_print_button" onClick={()=>handlePrintMedication()}>Print Medication</button>
-      </>):(<><Prescription patient={patient} handleClose={handleClose}/></>)}
+          <button
+            className="action_record_print_button"
+            onClick={() => handlePrintMedication()}
+          >
+            Print Medication
+          </button>
+        </>
+      ) : (
+        <>
+          <Prescription patient={patient} handleClose={handleClose} />
+        </>
+      )}
     </div>
   );
 };

@@ -1,120 +1,38 @@
- /* Dhanashree_FinalizedPatients_19/09 */
-
-
-import React, { useState, useEffect, useRef } from 'react';
-import ReactToPrint from 'react-to-print';
-import './FinalizedPatients.css';
-import LAMA from './LAMA'; 
-import Transferred from './Transferred'; 
-import Discharge from './Discharge'; 
-import Admitted from './Admitted'; 
-import Death from './Death'; 
-import DOR from './DOR'; 
-
-// Reusable NavTab component
-const NavTab = ({ tabName, selectedTab, setSelectedTab }) => (
-  <a 
-    href={`http://localhost:3107/finalizedPatients/${tabName}`}
-    className={selectedTab === tabName ? 'FinalizedPatients-active' : ''}
-    onClick={(e) => {
-      e.preventDefault();
-      setSelectedTab(tabName);
-    }}
-  >
-    {tabName}
-  </a>
-);
+import React from "react";
+import { useLocation } from "react-router-dom";
+import "./FinalizedPatients.css";
 
 const FinalizedPatients = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filter, setFilter] = useState('All');
-  const [selectedTab, setSelectedTab] = useState('LAMA');
-  const [patients, setPatients] = useState([]);
-  const printRef = useRef();
-
-  useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        const response = await fetch(`http://localhost:3107/api/finalize/finalize-patient/${selectedTab}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        setPatients(data);
-      } catch (error) {
-        console.error('Error fetching patients:', error.message);
-      }
-    };
-
-    fetchPatients();
-  }, [selectedTab]);
+  const location = useLocation();
+  const { patients = [] } = location.state || {};
 
   return (
-    <div className="FinalizedPatients-finalized-patients">
-      <nav className="FinalizedPatients-tab-nav">
-        {/* Render NavTabs dynamically */}
-        {['LAMA', 'Transferred', 'Discharged', 'Admitted', 'Death', 'DOR'].map((tab) => (
-          <NavTab key={tab} tabName={tab} selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-        ))}
-      </nav>
-
-      <div className="FinalizedPatients-content">
-        {/* Conditionally render the correct component based on the selected tab */}
-        {selectedTab === 'LAMA' ? (
-          <LAMA />  
-        ) : selectedTab === 'Transferred' ? (
-          <Transferred />  
-        ) : selectedTab === 'Discharged' ? (
-          <Discharge />  
-        ) : selectedTab === 'Admitted' ? (
-          <Admitted />  
-        ) : selectedTab === 'Death' ? (
-          <Death />  
-        ) : selectedTab === 'DOR' ? (
-          <DOR />  
-        ) : (
-          <div>
-            <div className="FinalizedPatients-search-filter">
-              <div className="FinalizedPatients-search-bar">
-                <input 
-                  type="text" 
-                  placeholder="Search" 
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <button className="FinalizedPatients-search-icon">🔍</button>
-              </div>
-              <select 
-                value={filter} 
-                onChange={(e) => setFilter(e.target.value)}
-                className="FinalizedPatients-filter-dropdown"
-              >
-                <option value="All">All</option>
-                <option value="General">General</option>
-                <option value="Dog Bite">Dog Bite</option>
-                <option value="Snake Bite">Snake Bite</option>
-                <option value="Animal Bite">Animal Bite</option>
-                <option value="Emergency Labour">Emergency Labour</option>
-                <option value="Medico-Legal">Medico-Legal</option>
-              </select>
-            </div>
-
-            <div className="FinalizedPatients-results-info">
-              <span>Showing {patients.length} results</span>
-              <ReactToPrint
-                trigger={() => <button className="FinalizedPatients-print-btn">Print</button>}
-                content={() => printRef.current}
-              />
-            </div>
-
-            {/* Print Table component can go here */}
-          </div>
-        )}
-      </div>
+    <div className="finalized-patients">
+      <h2>Finalized Patients</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Case Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {patients.map((patient) => (
+            <tr key={patient.id}>
+              <td>{patient.id}</td>
+              <td>{`${patient.firstName} ${patient.lastName}`}</td>
+              <td>{patient.age}</td>
+              <td>{patient.gender}</td>
+              <td>{patient.caseType}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
 
 export default FinalizedPatients;
-
- /* Dhanashree_FinalizedPatients_19/09 */

@@ -1,74 +1,115 @@
-/* Mohini_SupplierLedgerCom_WholePage_14/sep/2024 */
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./PurchaseOrder.css";
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from "../api/api";
 import * as XLSX from 'xlsx';
 
-
 const SupplierLedgerComponent = () => {
-    const [suppliers, setSuppliers] = useState([]);
+    const [purchaseOrders, setPurchaseOrders] = useState([]); // Renamed suppliers to purchaseOrders
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
+    const [searchQuery, setSearchQuery] = useState(""); // State for the search query
+    const [filteredOrders, setFilteredOrders] = useState([]); // State for filtered orders
+    const [columnWidths, setColumnWidths] = useState({});
+    const tableRef = useRef(null);
 
     useEffect(() => {
         // Fetch data from the API
-        const fetchSuppliers = async () => {
+        const fetchPurchaseOrders = async () => {
             try {
-                const response = await axios.get(`${API_BASE_URL}/suppliers`);
-                setSuppliers(response.data);
+                const response = await axios.get(`${API_BASE_URL}/purchase-orders`);
+                setPurchaseOrders(response.data);
+                setFilteredOrders(response.data); // Initially show all orders
                 setLoading(false);
             } catch (error) {
-                setError("Failed to fetch suppliers");
+                setError("Failed to fetch purchase orders");
                 setLoading(false);
             }
         };
 
-        fetchSuppliers();
+        fetchPurchaseOrders();
     }, []);
 
-     const handleUpdateSuccess = () => {
+    // Function to update the filtered list based on search query
+    const handleSearchChange = (event) => {
+        const query = event.target.value.toLowerCase();
+        setSearchQuery(query);
+
+        if (query === "") {
+            setFilteredOrders(purchaseOrders); // If search is cleared, show all orders
+        } else {
+            const filtered = purchaseOrders.filter(order => {
+                // Search for the query in supplier name, subtotal, discount, VAT, and totalAmount
+                return (
+                    order.supplier.supplierName.toLowerCase().includes(query) ||
+                    order.goodReceiptItems.some(item =>
+                        item.subTotal.toString().includes(query) ||
+                        item.discountAmount && item.discountAmount.toString().includes(query) ||
+                        item.vatAmount && item.vatAmount.toString().includes(query) ||
+                        item.totalAmount && item.totalAmount.toString().includes(query)
+                    )
+                );
+            });
+            setFilteredOrders(filtered);
+        }
+    };
+
+    const handleUpdateSuccess = () => {
         setShowModal(false);
-        // Refresh suppliers list
-        const fetchSuppliers = async () => {
+        // Refresh purchase orders list
+        const fetchPurchaseOrders = async () => {
             try {
-                const response = await axios.get(`${API_BASE_URL}/suppliers`);
-                setSuppliers(response.data);
+                const response = await axios.get(`${API_BASE_URL}/purchase-orders`);
+                setPurchaseOrders(response.data);
+                setFilteredOrders(response.data); // Update filtered orders as well
             } catch (error) {
-                setError("Failed to fetch suppliers");
+                setError("Failed to fetch purchase orders");
             }
         };
-        fetchSuppliers();
+        fetchPurchaseOrders();
     };
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`${API_BASE_URL}/suppliers/${id}`);
-            setSuppliers(suppliers.filter(supplier => supplier.id !== id));
+            await axios.delete(`${API_BASE_URL}/purchase-orders/${id}`);
+            setPurchaseOrders(purchaseOrders.filter(order => order.orderPurchaseId !== id));
+            setFilteredOrders(filteredOrders.filter(order => order.orderPurchaseId !== id)); // Remove from filtered list
         } catch (error) {
-            setError("Failed to delete supplier");
+            setError("Failed to delete purchase order");
         }
     };
 
-   
+    // Calculate totals for each purchase order
+    const calculateTotals = (order) => {
+        const subtotal = order.goodReceiptItems.reduce((acc, item) => acc + item.subTotal, 0);
+        const discount = order.discount;
+        const taxableAmount = order.taxableAmount;
+        const vatAmount = order.vatAmount;
 
-  // Function to export table to Excel
-  const handleExport = () => {
-    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
-    const wb = XLSX.utils.book_new(); // Creates a new workbook
-    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
-    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
-  };
+        // Calculating Total Amount based on the provided fields
+        const totalAmount = subtotal - discount + vatAmount + order.ccCharge + order.adjustment;
 
-  // Function to trigger print
-  const handlePrint = () => {
-    window.print(); // Triggers the browser's print window
-  };
+        return {
+            subtotal: subtotal.toFixed(2),
+            discountAmount: discount.toFixed(2),
+            vatAmount: vatAmount.toFixed(2),
+            totalAmount: totalAmount.toFixed(2)
+        };
+    };
 
+    // Function to export table to Excel
+    const handleExport = () => {
+        const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+        const wb = XLSX.utils.book_new(); // Creates a new workbook
+        XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+        XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+    };
 
+    // Function to trigger print
+    const handlePrint = () => {
+        window.print(); // Triggers the browser's print window
+    };
 
     return (
         <div className="purchase-order-container">
@@ -81,85 +122,76 @@ const SupplierLedgerComponent = () => {
                     <input type="date" id="from-date" />
                     <label htmlFor="to-date">To:</label>
                     <input type="date" id="to-date" />
-                    {/* <button className="purchase-order-favorite-btn">★</button>
-                    <button className="purchase-order-reset-btn">-</button>
-                    <button className="purchase-order-date-range-button">OK</button> */}
                 </div>
             </div>
             <div className="purchase-order-search-container">
-    <input type="text" className="purchase-order-search-box" placeholder="Search" />
-    <div className="purchase-order-search-right">
-        <span className="purchase-results-count-span">Showing 0 / 0 results</span>
-        <button className="purchase-order-print-button" onClick={handleExport}>Export</button>
-
-        <button className="purchase-order-print-button"onClick={handlePrint}>Print</button>
-    </div>
-</div>
-            {/* <div className="purchase-order-table-container"> */}
-            <table  ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-                 "Supplier Name",
-    "Sub Total",
-    "Discount Amount",
-    "VAT Amount",
-    "Total Amount",
-    "Action"   
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-                    <tbody>
-                        {suppliers.length > 0 ? (
-                            suppliers.map((supplier) => (
-                                <tr key={supplier.id}>
-                                    <td>{supplier.supplierName}</td>
-                                    <td>{supplier.goodReceiptDate}</td>
-                                    <td>{supplier.discountAmount}</td>
-                                    <td>{supplier.vatAmount}</td>
-                                    <td>{supplier.totalAmount}</td>
-                                    <td>
-                                        <button style={{color:"black"}} onClick={() => handleUpdate(supplier.id)}>Update</button>
-                                        <button style={{color:"black"}} onClick={() => handleDelete(supplier.id)}>Delete</button>
-                                    </td>
+                <input
+                    type="text"
+                    className="purchase-order-search-box"
+                    placeholder="Search"
+                    value={searchQuery}
+                    onChange={handleSearchChange} // Call the search handler on input change
+                />
+                <div className="purchase-order-search-right">
+                    <span className="purchase-results-count-span">Showing {filteredOrders.length} results</span>
+                    <button className="purchase-order-print-button" onClick={handleExport}>Export</button>
+                    <button className="purchase-order-print-button" onClick={handlePrint}>Print</button>
+                </div>
+            </div>
+            <table ref={tableRef}>
+                <thead>
+                    <tr>
+                        {[
+                            "Supplier Name",
+                            "Sub Total",
+                            "Discount Amount",
+                            "VAT Amount",
+                            "Total Amount",
+                            // "Action"
+                        ].map((header, index) => (
+                            <th
+                                key={index}
+                                style={{ width: columnWidths[index] }}
+                                className="resizable-th"
+                            >
+                                <div className="header-content">
+                                    <span>{header}</span>
+                                    <div
+                                        className="resizer"
+                                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                    ></div>
+                                </div>
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredOrders.length > 0 ? (
+                        filteredOrders.map((order) => {
+                            const { subtotal, discountAmount, vatAmount, totalAmount } = calculateTotals(order);
+                            return (
+                                <tr key={order.orderPurchaseId}>
+                                    <td>{order.supplier.supplierName}</td>
+                                    <td>{subtotal}</td>
+                                    <td>{discountAmount}</td>
+                                    <td>{vatAmount}</td>
+                                    <td>{totalAmount}</td>
+                                    {/* <td>
+                                        <button className="purchase-order-print-button" onClick={() => handleUpdate(order.orderPurchaseId)}>Update</button>
+                                        <button className="purchase-order-print-button" onClick={() => handleDelete(order.orderPurchaseId)}>Delete</button>
+                                    </td> */}
                                 </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="6" className="purchase-order-no-rows">No Rows To Show</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-                {/* <div className="purchase-order-pagination">
-                    <span>0 to 0 of 0</span>
-                    <button>First</button>
-                    <button>Previous</button>
-                    <span>Page 0 of 0</span>
-                    <button>Next</button>
-                    <button>Last</button>
-                </div> */}
-            {/* </div> */}
+                            );
+                        })
+                    ) : (
+                        <tr>
+                            <td colSpan="6" className="purchase-order-no-rows">No Rows To Show</td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
         </div>
     );
 };
 
 export default SupplierLedgerComponent;
-/* Mohini_SupplierLedgerCom_WholePage_14/sep/2024 */

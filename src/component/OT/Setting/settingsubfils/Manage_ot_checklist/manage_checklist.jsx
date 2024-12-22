@@ -1,9 +1,9 @@
 // neha-OT-manage-checklist-14-9-24
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import './manage_checklist.css';
 import { startResizing } from '../../../../../TableHeadingResizing/ResizableColumns';
-import { API_BASE_URL } from '../../../../api/api';
+import useCustomAlert from '../../../../../alerts/useCustomAlert';
 
 function ManageOtChecklist() {
   const [checklists, setChecklists] = useState([]);
@@ -23,6 +23,9 @@ function ManageOtChecklist() {
   const tableRef = useRef(null);
   const [columnWidths, setColumnWidths] = useState(0);
 
+  // Custom alert hook usage
+  const { success, error: showError, warning, CustomAlerts } = useCustomAlert();
+
   // Fetch data from API
   useEffect(() => {
     fetchChecklists();
@@ -31,7 +34,7 @@ function ManageOtChecklist() {
   const fetchChecklists = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/otchecklists`);
+      const response = await fetch('http://localhost:1415/api/otchecklists');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -39,6 +42,7 @@ function ManageOtChecklist() {
       setChecklists(data);
     } catch (error) {
       setError('Failed to fetch checklists. Please try again later.');
+      showError('Failed to fetch checklists. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -77,8 +81,8 @@ function ManageOtChecklist() {
 
     try {
       const url = editingIndex !== null 
-        ? `${API_BASE_URL}/otchecklists/${checklists[editingIndex].id}`
-        : `${API_BASE_URL}/otchecklists`;
+        ? `http://localhost:1415/api/otchecklists/${checklists[editingIndex].id}`
+        : 'http://localhost:1415/api/otchecklists';
 
       const method = editingIndex !== null ? 'PUT' : 'POST';
 
@@ -104,10 +108,12 @@ function ManageOtChecklist() {
           return newList;
         });
         setMessage('Checklist item updated successfully!');
+        success('Checklist item updated successfully!');
       } else {
         // Add new checklist
         setChecklists((prev) => [...prev, savedChecklist]);
         setMessage('Checklist item added successfully!');
+        success('Checklist item added successfully!');
       }
 
       setEditingIndex(null);
@@ -121,6 +127,7 @@ function ManageOtChecklist() {
       });
     } catch (error) {
       setError('Error saving checklist. Please try again later.');
+      showError('Error saving checklist. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -237,42 +244,33 @@ function ManageOtChecklist() {
           value={searchTerm}
           onChange={handleSearchChange}
         />
-        {/* <button className="manage_ot_checklist_filter_button">
-          <FaSearch />
-        </button> */}
       </div>
 
-      
-       <div className='table-container'>
-       <table className="manage_ot_checklist_table" ref={tableRef}> 
+      <div className='table-container'>
+        <table className="manage_ot_checklist_table" ref={tableRef}> 
           <thead>
             <tr>
-            {[
-  "Checklist Name",
-  "Display Name",
-  "Input Type",
-  "Display Sequence",
-  "Is Active",
-  "Is Mandatory",
-  "Action"
-].map((header, index) => (
-  <th
-    key={index}
-    style={{ width: columnWidths[index] }}
-    className="rd-resizable-th"
-  >
-    <div className="header-content">
-      <span>{header}</span>
-      <div
-        className="resizer"
-        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-      ></div>
-    </div>
-  </th>
-))}
-</tr>
-</thead>
-<tbody>
+            {[ 
+              "Checklist Name", "Display Name", "Input Type", 
+              "Display Sequence", "Is Active", "Is Mandatory", "Action"
+            ].map((header, index) => (
+              <th
+                key={index}
+                style={{ width: columnWidths[index] }}
+                className="rd-resizable-th"
+              >
+                <div className="header-content">
+                  <span>{header}</span>
+                  <div
+                    className="resizer"
+                    onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                  ></div>
+                </div>
+              </th>
+            ))}
+            </tr>
+          </thead>
+          <tbody>
             {filteredChecklists.map((checklist, index) => (
               <tr key={index}>
                 <td className='manage_ot_checklist_tabledata'>{checklist.checklistName || 'N/A'}</td>
@@ -282,16 +280,19 @@ function ManageOtChecklist() {
                 <td className='manage_ot_checklist_tabledata'>{checklist.isActive ? 'Yes' : 'No'}</td>
                 <td className='manage_ot_checklist_tabledata'>{checklist.isMandatory ? 'Yes' : 'No'}</td>
                 <td className='manage_ot_checklist_tabledata'>
-                  <button onClick={() => handleEdit(index)} className="manage_ot_checklist_edit_button">Edit</button>
+                  <button className="edit-btn" onClick={() => handleEdit(index)}>Edit</button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-       </div>
-    
+      </div>
+      {loading && <p>Loading...</p>}
+      {error && <p className='error-msg'>{error}</p>}
+      {message && <p className='success-msg'>{message}</p>}
 
-      {message && <p className="success-message">{message}</p>}
+      {/* Render custom alerts */}
+      <CustomAlerts />
     </div>
   );
 }

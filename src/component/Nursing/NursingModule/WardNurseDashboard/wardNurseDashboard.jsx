@@ -1,65 +1,78 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './wardNurseDashboard.css';
-import { useDispatch } from 'react-redux';
-import { setPatientData } from '../ReduxNursing/patientSlice';
-import { API_BASE_URL } from '../../../api/api';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./wardNurseDashboard.css";
+import { useDispatch } from "react-redux";
+import { setPatientData } from "../ReduxNursing/patientSlice";
+import { API_BASE_URL } from "../../../api/api";
 
 const WardNurseDashboard = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('admitted');
+  const [activeTab, setActiveTab] = useState("admitted");
   const [admittedPatients, setAdmittedPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
 
   const panels = [
-    { id: 'admitted', title: 'Admitted Patients', count: admittedPatients.length },
-    { id: 'receiving', title: 'Ward Receiving', count: 4 },
-    { id: 'nursing', title: 'Initial Nursing Assessment', count: 0 },
-    { id: 'daily', title: 'Daily Assessment', count: 0 },
-    { id: 'reassessment', title: 'Re Assessment After 5 Days', count: 0 },
-    { id: 'devices', title: 'Devices Expired', count: 0 },
-    { id: 'pharmacy', title: 'Pending Pharmacy Indent', count: 0 },
-    { id: 'orders', title: 'Pending Orders', count: 0 },
-    { id: 'referrals', title: 'Pending Referrals', count: 0 },
-    { id: 'pain', title: 'Pain Score > 2', count: 0 }
+    {
+      id: "admitted",
+      title: "Admitted Patients",
+      count: admittedPatients.length,
+    },
+    { id: "receiving", title: "Ward Receiving", count: 4 },
+    { id: "nursing", title: "Initial Nursing Assessment", count: 0 },
+    { id: "daily", title: "Daily Assessment", count: 0 },
+    { id: "reassessment", title: "Re Assessment After 5 Days", count: 0 },
+    { id: "devices", title: "Devices Expired", count: 0 },
+    { id: "pharmacy", title: "Pending Pharmacy Indent", count: 0 },
+    { id: "orders", title: "Pending Orders", count: 0 },
+    { id: "referrals", title: "Pending Referrals", count: 0 },
+    { id: "pain", title: "Pain Score > 2", count: 0 },
   ];
 
   useEffect(() => {
     // Fetch data from the API when the component mounts
-    axios.get(`${API_BASE_URL}/ip-admissions`)
-      .then(response => {
+
+    axios
+      .get(`${API_BASE_URL}/ip-admissions/admitted`)
+      .then((response) => {
         setAdmittedPatients(response.data);
         setLoading(false);
       })
-      .catch(error => {
-        setError('Error fetching data');
+      .catch((error) => {
+        setError("Error fetching data");
         setLoading(false);
       });
   }, []);
 
   const handlePatientClick = (patient) => {
     dispatch(setPatientData(patient));
-    navigate('/nursing/patient-dashboard', {
+    navigate("/nursing/patient-dashboard", {
       state: {
         patientName: patient.patient.firstName,
         patientAge: patient.patient.age,
         patientGender: patient.patient.gender,
-        mrNo: patient.patient.uhid
-      }
+        mrNo: patient.patient.uhid,
+      },
     });
   };
-  
 
   const renderPatientCard = (patient) => (
     <div
       key={patient.ipAdmmissionId}
-      className={`wardNurseDashboard-patient-card ${activeTab === 'admitted' ? 'clickable' : ''}`}
+      className={`wardNurseDashboard-patient-card ${
+        activeTab === "admitted" ? "clickable" : ""
+      }`}
       onClick={() => handlePatientClick(patient)}
     >
-      <div className={`wardNurseDashboard-patient-marker ${patient.financials.typeAdmission === 'General' ? 'wardNurseDashboard-marker-red' : 'wardNurseDashboard-marker-blue'}`}>
+      <div
+        className={`wardNurseDashboard-patient-marker ${
+          patient.financials.typeAdmission === "General"
+            ? "wardNurseDashboard-marker-red"
+            : "wardNurseDashboard-marker-blue"
+        }`}
+      >
         {patient.patient.uhid}
       </div>
       <div className="wardNurseDashboard-patient-info">
@@ -84,7 +97,9 @@ const WardNurseDashboard = () => {
           </div>
           <div className="wardNurseDashboard-info-row">
             <label>Doctor:</label>
-            <span>{patient.admissionUnderDoctorDetail.consultantDoctor.doctorName}</span>
+            <span>
+              {patient.admissionUnderDoctorDetail.consultantDoctor.doctorName}
+            </span>
           </div>
         </div>
       </div>
@@ -92,7 +107,7 @@ const WardNurseDashboard = () => {
   );
 
   const renderPanelContent = (panelId) => {
-    if (panelId === 'admitted') {
+    if (panelId === "admitted") {
       if (loading) {
         return <div>Loading...</div>;
       }
@@ -133,11 +148,23 @@ const WardNurseDashboard = () => {
 
       <main className="wardNurseDashboard-dashboard-content">
         <div className="wardNurseDashboard-panels-grid">
-          {panels.map(panel => (
-            <div key={panel.id} className={`wardNurseDashboard-panel ${activeTab === panel.id ? 'active' : ''}`}>
-              <div className="wardNurseDashboard-panel-header" onClick={() => setActiveTab(panel.id)}>
-                <span className="wardNurseDashboard-panel-count">{panel.count}</span>
-                <span className="wardNurseDashboard-panel-title">{panel.title}</span>
+          {panels.map((panel) => (
+            <div
+              key={panel.id}
+              className={`wardNurseDashboard-panel ${
+                activeTab === panel.id ? "active" : ""
+              }`}
+            >
+              <div
+                className="wardNurseDashboard-panel-header"
+                onClick={() => setActiveTab(panel.id)}
+              >
+                <span className="wardNurseDashboard-panel-count">
+                  {panel.count}
+                </span>
+                <span className="wardNurseDashboard-panel-title">
+                  {panel.title}
+                </span>
                 <button className="wardNurseDashboard-info-icon">?</button>
               </div>
               {renderPanelContent(panel.id)}
@@ -149,7 +176,9 @@ const WardNurseDashboard = () => {
       <footer className="wardNurseDashboard-footer">
         <div className="wardNurseDashboard-footer-left">
           <span>Screen Search</span>
-          <button className="wardNurseDashboard-btn-adv-search">Adv Search</button>
+          <button className="wardNurseDashboard-btn-adv-search">
+            Adv Search
+          </button>
           <div className="wardNurseDashboard-search-box">
             <input type="text" placeholder="Enter MR No" />
             <button className="wardNurseDashboard-btn-go">Go</button>

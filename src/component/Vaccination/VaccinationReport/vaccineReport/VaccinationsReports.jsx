@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Vaccinationreports.css";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { API_BASE_URL } from "../../../api/api";
 
 function VaccinationsReports() {
   const [columnWidths, setColumnWidths] = useState({});

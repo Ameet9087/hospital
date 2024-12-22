@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./PatientVaccinationDetail.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { API_BASE_URL } from "../../api/api";
 
 const vaccineOptions = [
   "BCG",

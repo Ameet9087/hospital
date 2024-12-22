@@ -14,69 +14,113 @@ const SSIPatientConsumConsumEntry = ({ onBack }) => {
   const [items, setItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [storeName,setStoreName] = useState('');
+    const [requisitions, setRequisitions] = useState([]);
+  const [filteredRequisitions, setFilteredRequisitions] = useState([]);
+    const [sortDirection, setSortDirection] = useState('asc'); // Added sort direction state
 
-  useEffect(() => {
-    const fetchItems = async () => {
-      const response = await fetch(`${API_BASE_URL}/inventory-requisitions/getAll`);
-      const data = await response.json();
-      const completedItems = data.filter(item => item.status?.toLowerCase() === 'approved' && item.storeName===store);
-      setItems(completedItems);
+  const [rows, setRows] = useState([
+  { invItemId: "", itemName: "", unit: "", availableQty: "", code: "", consumedQty: "" }
+]);
+
+
+   useEffect(() => {
+  fetch(`${API_BASE_URL}/inventory-requisitions/received?subStoreId=${store}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log("Fetched Items:", data);
+      setItems(data);
+    })
+    .catch(error => console.error('Error fetching data:', error));
+}, [store]);
+const handleItemChange = (index, event) => {
+  const selectedItemId = event.target.value;
+
+  if (selectedItemId) {
+    const selectedItem = items.find(item => item?.item?.invItemId?.toString() === selectedItemId);
+
+    if (selectedItem) {
+      const updatedRows = rows.map((row, i) =>
+        i === index
+          ? {
+              ...row,
+              invItemId: selectedItem.item.invItemId, // Set the correct ID here
+              itemName: selectedItem.item.itemName,
+              unit: selectedItem.item.unitOfMeasurement.unitOfMeasurementName,
+              availableQty: selectedItem.dispatchQuantity,
+              code: selectedItem.item.itemCode,
+            }
+          : row
+      );
+      setRows(updatedRows);
+    }
+  }
+};
+
+
+
+
+
+
+
+const handleSave = async () => {
+  try {
+    // Prepare the payload in the desired format
+    const consumptionData = {
+      consumedDate: consumptionDate,
+      consumptionTypeName: "Emergency Use", // Update as per requirement
+      remarks: remark,
+      storeName: storeName || store,
+      items: rows.map((row) => ({
+        id: row.invItemId,
+        requisitionItemId: row.invItemId, // Assuming requisitionItemId is the same as invItemId, update if needed
+        consumedQty: row.consumedQty,
+      })),
     };
 
-    fetchItems();
-  }, []);
+    console.log("Payload to be sent:", consumptionData);
 
-  const handleItemChange = (e) => {
-    const selectedItem = items.find(item => item.itemName === e.target.value);
-    // console.log(selectedItem);
-    
-    setSelectedItem(selectedItem);
-    setItemName(selectedItem.itemName);
-    setAvailableQty(selectedItem.requiredQuantity);
-  };
+    // Send the payload to the backend
+    const response = await fetch(`${API_BASE_URL}/inventory-consumption/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(consumptionData),
+    });
 
-  const handleSave = async () => {
-    try {
-      // Update the inventory requisition by subtracting the consumed quantity
-
-      const updatedQty = selectedItem.requiredQuantity - consumedQty;
-      console.log(updatedQty);
-      
-      await fetch(`${API_BASE_URL}/inventory-requisitions/update/${selectedItem.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          requiredQuantity: updatedQty,
-        }),
-      });
-
-      // Add the new consumption entry
-      await fetch(`${API_BASE_URL}/inventory-consumption/add`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          consumedDate: consumptionDate,      // Map to consumedDate in backend
-          consumedItem: itemName,             // Map to consumedItem in backend
-          consumedQty,                        // Map to consumedQty in backend
-          units: selectedItem?.unit,             // Provide the unit value
-          consumptionTypeName: 'YourTypeName', // Provide the consumption type name
-          enteredBy: 'mr.admin',              // Map to enteredBy in backend
-          remarks: remark,                    // Map to remarks in backend
-          storeName: store                // Map to storeName in backend
-        }),
-      });
-      alert('Saved successfully!');
-    } catch (error) {
-      alert('Failed to save!');
+    if (!response.ok) {
+      const responseText = await response.text();
+      console.error("Error response:", responseText);
+      throw new Error(responseText);
     }
-  };
+
+    alert("Saved successfully!");
+  } catch (error) {
+    console.error("Error saving data:", error.message);
+    alert("Failed to save!");
+  }
+};
+
+
 
   const handleDiscard = () => {
     alert('Discarded!');
+  };
+
+
+  const addNewRow = () => {
+  setRows([
+    ...rows,
+    { invItemId: "", itemName: "", unit: "", availableQty: "", code: "", consumedQty: "" },
+  ]);
+};
+
+
+
+
+  const deleteRow = (index) => {
+    const updatedRows = rows.filter((_, i) => i !== index);
+    setRows(updatedRows);
   };
 
   return (
@@ -100,9 +144,7 @@ const SSIPatientConsumConsumEntry = ({ onBack }) => {
             onChange={(e) => setPatient(e.target.value)}
           />
         </div>
-        <button className="sSIPatientConsumConsumEntry-back-btn">
-          <i className="fa-solid fa-backward" onClick={onBack}></i> Back
-        </button>
+      
       </div>
       <div className="sSIPatientConsumConsumEntry-table-section">
         <table className="sSIPatientConsumConsumEntry-table">
@@ -117,40 +159,45 @@ const SSIPatientConsumConsumEntry = ({ onBack }) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>
-                <select value={itemName} onChange={handleItemChange}>
-                  <option value="">--Select Item--</option>
-                  {items.map((item) => (
-                    
-                    <option key={item.id} value={item.itemName}>
-                      {item.itemName}
-                    </option>
-                  ))}
-                </select>
-              </td>
-              <td>
-                <input type="text" value={selectedItem?.code || ''} readOnly />
-              </td>
-              <td>
-                <input type="text" value={selectedItem?.unit || ''} readOnly />
-              </td>
-              <td>
-                <input type="text" value={availableQty} readOnly />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  value={consumedQty}
-                  onChange={(e) => setConsumedQty(e.target.value)}
-                />
-              </td>
-              <td>
-                <button className="delete-btn">❌</button>
-                <button className="add-btn">➕</button>
-              </td>
-            </tr>
-          </tbody>
+  {rows.map((row, index) => (
+    <tr key={index}>
+      <td>
+<select value={row.invItemId} onChange={(e) => handleItemChange(index, e)}>
+  <option value="">--Select Item--</option>
+  {items.map((item) => (
+    <option key={item.invItemId} value={item?.item?.invItemId}>{item?.item?.itemName}</option>
+  ))}
+</select>
+      </td>
+      <td>
+        <input type="text" value={row.code || ""} readOnly />
+      </td>
+      <td>
+        <input type="text" value={row.unit || ""} readOnly />
+      </td>
+      <td>
+        <input type="text" value={row.availableQty || 0} readOnly />
+      </td>
+      <td>
+  <input
+    type="number"
+    value={row.consumedQty}
+    onChange={(e) => {
+      const updatedRows = rows.map((r, i) =>
+        i === index ? { ...r, consumedQty: e.target.value } : r
+      );
+      setRows(updatedRows);
+    }}
+  />
+</td>
+      <td>
+        <button className="delete-btn" onClick={() => deleteRow(index)}>❌</button>
+        <button className="add-btn" onClick={addNewRow}>➕</button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
         </table>
       </div>
       <div className="sSIPatientConsumConsumEntry-remark-section">

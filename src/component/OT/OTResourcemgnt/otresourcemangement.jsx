@@ -2,65 +2,76 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './OTResourceManagement.css';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
-import { API_BASE_URL } from '../../api/api';
-
+import CustomModal from '../../../CustomModel/CustomModal';
+import useCustomAlert from '../../../alerts/useCustomAlert';  // Import useCustomAlert
 
 const OTResourceManagement = () => {
     const [columnWidths, setColumnWidths] = useState({});
     const tableRef = useRef(null);
-
     const [OTs, setOTs] = useState([]);
     const [newOT, setNewOT] = useState({
         OTID: '', OTName: '', AvailabilityStatus: '', EquipmentAvailable: '', Capacity: ''
     });
-    const [showAddOTModal, setShowAddOTModal] = useState(false);
+    const [openStickerPopup, setOpenStickerPopup] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
-    // Fetch OT data when component mounts
+    // Custom alert hook
+    const { success, error, CustomAlerts } = useCustomAlert();
+
     useEffect(() => {
-        axios.get(`${API_BASE_URL}/ot-resources`)
+        axios.get('http://localhost:8051/api/ot-resources')
             .then(response => {
                 console.log(response.data);
-                setOTs(response.data); // Set the OTs state with the fetched data
+                setOTs(response.data); 
             })
-            .catch(error => {
-                console.error('Error fetching OT data:', error);
+            .catch(err => {
+                error('Error fetching OT data');
+                console.error('Error fetching OT data:', err);
             });
     }, []);
 
+    const handleSearch = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const printList = () => {
+        window.print();
+    };
+
     const handleAddOT = () => {
-        if (newOT.OTID) { // Check if we are editing an existing OT
-            // PUT request to update existing OT
-            axios.put(`${API_BASE_URL}/ot-resources/${newOT.OTID}`, {
+        if (newOT.OTID) { 
+            axios.put(`http://localhost:8051/api/ot-resources/${newOT.OTID}`, {
                 otName: newOT.OTName,
                 availabilityStatus: newOT.AvailabilityStatus,
                 equipmentAvailable: newOT.EquipmentAvailable,
                 capacity: newOT.Capacity,
             })
             .then(response => {
-                // Update local state
                 setOTs(OTs.map(ot => (ot.otId === newOT.OTID ? response.data : ot)));
                 setNewOT({ OTID: '', OTName: '', AvailabilityStatus: '', EquipmentAvailable: '', Capacity: '' });
-                setShowAddOTModal(false);
+                setOpenStickerPopup(false);
+                success('OT updated successfully!'); // Trigger success alert
             })
-            .catch(error => {
-                console.error('Error updating OT:', error);
+            .catch(err => {
+                error('Error updating OT'); // Trigger error alert
+                console.error('Error updating OT:', err);
             });
-        } else { // Add a new OT
-            // POST request to create a new OT
-            axios.post(`${API_BASE_URL}/ot-resources`, {
+        } else { 
+            axios.post('http://localhost:8051/api/ot-resources', {
                 otName: newOT.OTName,
                 availabilityStatus: newOT.AvailabilityStatus,
                 equipmentAvailable: newOT.EquipmentAvailable,
                 capacity: newOT.Capacity,
             })
             .then(response => {
-                // Update local state with the new OT
-                setOTs([...OTs, response.data]); // Assuming the server returns the created OT
+                setOTs([...OTs, response.data]); 
                 setNewOT({ OTID: '', OTName: '', AvailabilityStatus: '', EquipmentAvailable: '', Capacity: '' });
-                setShowAddOTModal(false);
+                setOpenStickerPopup(false);
+                success('New OT added successfully!'); // Trigger success alert
             })
-            .catch(error => {
-                console.error('Error adding new OT:', error);
+            .catch(err => {
+                error('Error adding new OT'); // Trigger error alert
+                console.error('Error adding new OT:', err);
             });
         }
     };
@@ -73,12 +84,42 @@ const OTResourceManagement = () => {
             EquipmentAvailable: ot.equipmentAvailable,
             Capacity: ot.capacity,
         });
-        setShowAddOTModal(true); // Show the modal
+        setOpenStickerPopup(true); 
     };
 
     return (
         <div className="">
-            <button className='otresourcemgntbtn' onClick={() => setShowAddOTModal(true)}>Add OT</button>
+            <div className="otresoucefilter">
+                <div className="otresource-date-utlt">
+                    <div className="ot-resorcefilter-patient">
+                        <div className="date-range">
+                            <label>From: </label>
+                            <input className="ot-otresource-input" type="date" value="2024-08-05" />
+                            <label> To: </label>
+                            <input className="ot-otresource-input" type="date" value="2024-08-12" />
+                        </div>
+                    </div>
+                </div>
+
+                <div className='ot-resource-patient-search'>
+                    <input
+                        type="text"
+                        placeholder="Search by PatientName/PatientId"
+                        className="otsearch-otresource-search-input "
+                        value={searchTerm}
+                        onChange={handleSearch}
+                    />
+                    <button
+                        onClick={printList}
+                        className="otsearch-otresource-container-button"
+                    >
+                        Print
+                    </button>
+                </div>
+            </div>
+
+            <button className='otresourcemgntbtn' onClick={() => setOpenStickerPopup(true)}>Add OT</button>
+            <CustomModal/>
 
             <table ref={tableRef}>
                 <thead>
@@ -100,10 +141,7 @@ const OTResourceManagement = () => {
                                     <span>{header}</span>
                                     <div
                                         className="resizer"
-                                        onMouseDown={startResizing(
-                                            tableRef,
-                                            setColumnWidths
-                                        )(index)}
+                                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
                                     ></div>
                                 </div>
                             </th>
@@ -126,9 +164,9 @@ const OTResourceManagement = () => {
                 </tbody>
             </table>
 
-            {showAddOTModal && (
-                <div className="otresource-modal" onClick={() => setShowAddOTModal(false)}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            {openStickerPopup && (
+                <div className="otresource-modal" onClick={() => setOpenStickerPopup(false)}>
+                    <div className="ot-resource-modal-content" onClick={(e) => e.stopPropagation()}>
                         <h2>{newOT.OTID ? 'Edit OT' : 'Add New OT'}</h2>
                         <label>OT Name:</label>
                         <input
@@ -159,12 +197,15 @@ const OTResourceManagement = () => {
                             onChange={(e) => setNewOT({ ...newOT, Capacity: e.target.value })}
                         />
                         <div className='otresource-btn'>
-                        <button onClick={handleAddOT}>Save</button>
-                        <button onClick={() => setShowAddOTModal(false)}>Cancel</button>
-                         </div>   
+                            <button onClick={handleAddOT}>Save</button>
+                            <button onClick={() => setOpenStickerPopup(false)}>Cancel</button>
+                        </div>
                     </div>
                 </div>
             )}
+
+            {/* Render the CustomAlerts component */}
+            <CustomAlerts />
         </div>
     );
 };

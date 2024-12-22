@@ -14,7 +14,7 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
-import IpChangeRoom from "./ipchangeroom";
+import IPChangeRoom from "./IPChangeRoom";
 import CustomModal from "../../CustomModel/CustomModal";
 import PatientCard from "./PatientCard";
 import PrintWristWindow from "./PrintWristWindow";
@@ -292,7 +292,7 @@ const AdmittedPatient = () => {
 
       {/* Modal for ward transfer */}
       <CustomModal isOpen={showModal} onClose={handleClose}>
-        <IpChangeRoom patient={selectPatient} setShowModal={setShowModal} />
+        <IPChangeRoom patient={selectPatient} setShowModal={setShowModal} />
       </CustomModal>
 
       {/* Modal for handling dropdown options */}

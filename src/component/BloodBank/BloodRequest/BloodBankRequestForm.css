@@ -1,0 +1,87 @@
+/* Container styles */
+.bloodbankrequest-container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+.bloodbankrequest-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Form styles */
+.bloodbankrequest-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Form rows for grouping two fields in a row */
+.bloodbankrequest-form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+/* Form group */
+.bloodbankrequest-form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.bloodbankrequest-form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.bloodbankrequest-form-group input,
+.bloodbankrequest-form-group select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.bloodbankrequest-form-group input:focus,
+.bloodbankrequest-form-group select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Button styles */
+.bloodbankrequest-form-actions {
+    display: flex;
+    margin-top: 20px;
+    justify-content: end;
+}
+
+.bloodbankrequest-submit-btn {
+    padding: 5px 10px;
+    font-size: 16px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: var(--button-color);
+}
+
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .bloodbankrequest-form-row {
+        flex-direction: column;
+    }
+}

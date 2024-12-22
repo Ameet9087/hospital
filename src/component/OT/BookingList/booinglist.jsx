@@ -1,12 +1,12 @@
-// neha-OT-BookingList-14-9-24
 import React, { useState, useEffect, useRef } from 'react';
-import './bookinglist.css'
+import './bookinglist.css';
 import { FaSearch, FaRedo, FaPlus } from 'react-icons/fa';
 import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
-import { API_BASE_URL } from '../../api/api';
+import CustomModal from '../../../CustomModel/CustomModal';
+import useCustomAlert from '../../../alerts/useCustomAlert';
 
 function BookingList() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -21,21 +21,33 @@ function BookingList() {
   const [otPatientList, setOtPatientList] = useState([]);
   const tableRef = useRef(null);
   const [columnWidths, setColumnWidths] = useState(0);
+  const [openStickerPopup, setOpenStickerPopup] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedDoctors, setSelectedDoctors] = useState([]);
+  const [selectedEmployees, setSelectedEmployees] = useState([]);
+  const [duration, setDuration] = useState('');
+  const [department,setDepartment] = useState('');
+  const [doctorList, setDoctorList] = useState([]); 
+  const [employeeList, setEmployeeList] = useState([]); 
 
-   useEffect(() => {
+
+  const { success, error, CustomAlerts } = useCustomAlert();
+
+  useEffect(() => {
     // Fetch existing bookings when the component mounts
     const fetchPatientList = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/operation/all-operation-data`);
-        setOtPatientList(response.data); // Store data from the API in state
-      } catch (error) {
-        console.error('Error fetching data:', error);
+        const response = await axios.get('http://localhost:4069/api/operation-bookings');
+        setOtPatientList(response.data); 
+      } catch (err) {
+        error('Error fetching data');
+        console.error('Error fetching data:', err);
       }
     };
     fetchPatientList();
   }, []); 
 
-   const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Combine OT date and time into one field
@@ -48,13 +60,19 @@ function BookingList() {
       otProcedure: procedure,
       useAnesthesia: useAnaesthesia,
       machineName,
-      status
+      status,
+      doctors: selectedDoctors,
+      employees: selectedEmployees,
+      duration,
+      department
     };
 
     try {
       // Send POST request to add a new booking
-      const response = await axios.post(`${API_BASE_URL}/operation/save-operation-details`, payload);
-      console.log('Operation booked successfully:', response.data);
+      const response = await axios.post('http://localhost:4069/api/operation-bookings', payload);
+      
+      // Show success message if the request is successful
+      success('Operation booked successfully');
 
       // Reset the form after submission
       setPatientName('');
@@ -65,12 +83,18 @@ function BookingList() {
       setUseAnaesthesia(false);
       setMachineName('');
       setStatus('Booked');
+      setSelectedDoctors([]);
+      setSelectedEmployees([]);
+      setDuration('');
+      setDepartment('');
 
       // Fetch updated patient list after adding a new booking
-      const updatedPatientList = await axios.get(`${API_BASE_URL}/operation/fetch-all`);
+      const updatedPatientList = await axios.get('http://localhost:4069/api/operation-bookings');
       setOtPatientList(updatedPatientList.data);
-    } catch (error) {
-      console.error('Error booking operation:', error);
+    } catch (err) {
+      // Show error message if there's an issue with the request
+      error('Error booking operation');
+      console.error('Error booking operation:', err);
     }
   };
 
@@ -83,36 +107,62 @@ function BookingList() {
   const handleUseAnaesthesiaChange = (e) => setUseAnaesthesia(e.target.checked);
   const handleMachineNameChange = (e) => setMachineName(e.target.value);
   const handleStatusChange = (e) => setStatus(e.target.value);
+  const handleDurationChange = (e) => setDuration(e.target.value);
+  const handleDepartment = (e) => setDepartment(e.target.value);
 
   return (
     <div className="booking-list-container">
+      {/* Custom Alerts */}
+      <CustomAlerts />
+
       <div className="booking-list-booking-header">
-        <button className="booking-list-btn-btn-success" onClick={() => setIsPopupOpen(true)}>
+        <button className="booking-list-btn-btn-success" onClick={() => setOpenStickerPopup(true)}>
           <FaPlus /> New OT Booking
         </button>
       </div>
 
-      <div className="booking-list-patient-search-dropdown">
-         <input type="text" placeholder="Search" value={patientName} onChange={handlePatientNameChange} />
-        
+      <div className="ot-filtersection">
+        <div className="ot-datefilter">
+          <div className="ot-daterange">
+            <label>From: </label>
+            <input className="ot-input" type="date" value="2024-08-05" />
+            <label> To: </label>
+            <input className="ot-input" type="date" value="2024-08-12" />
+          </div>
+        </div>
+      </div>
+
+      <div className="ot-bookinglist-searchsection">
+        <input
+          type="text"
+          placeholder="Search by Patient Name/ID"
+          className="ot-bookinglist-search-input"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button className="ot-bookinglist-print-button">Print</button>
       </div>
 
       <div className='table-container'>
-      <table className="booking-list-ot-patient-table" ref={tableRef}>
-        <thead>
-          <tr>
-          {[
-  "Sr.No",
-  "Patient Name",
-  "Age/Sex",
-  "OT Date & Time",
-  "Diagnosis",
-  "Procedure",
-  "Anesthesia",
-  "Machine",
-  "Status",
-  "Actions"
-].map((header, index) => (
+        <table className="booking-list-ot-patient-table" ref={tableRef}>
+          <thead>
+            <tr>
+              {[
+                "Sr.No",
+                "Patient Name",
+                "Age/Sex",
+                "OT Date & Time",
+                "Diagnosis",
+                "Procedure",
+                "Anesthesia",
+                "Machine",
+                "Status",
+                "Actions",
+                "Employees",
+                "Duration",
+                "Department",
+                "Actions"
+              ].map((header, index) => (
                 <th
                   key={index}
                   style={{ width: columnWidths[index] }}
@@ -129,75 +179,111 @@ function BookingList() {
               ))}
             </tr>
           </thead>
-            <tbody>  {otPatientList.map((booking, index) => (
-            <tr key={index}>
-              <td>{patient.hospitalNo}</td>
-              <td>{patient.patient.name}</td>
-              <td>{patient.patient.ageSex}</td>
-              <td>{moment(booking.otDateTime).format('YYYY-MM-DD HH:mm')}</td>
-              <td>{booking.diagnosis}</td>
+          <tbody>
+            {otPatientList.map((booking, index) => (
+              <tr key={index}>
+                <td>{booking.hospitalNo}</td>
+                <td>{booking.patient.name}</td>
+                <td>{booking.patient.ageSex}</td>
+                <td>{moment(booking.otDateTime).format('YYYY-MM-DD HH:mm')}</td>
+                <td>{booking.diagnosis}</td>
                 <td>{booking.otProcedure}</td>
                 <td>{booking.useAnesthesia ? 'Yes' : 'No'}</td>
                 <td>{booking.machineName}</td>
                 <td>{booking.status}</td>
-              <td>
-                <Button onClick={() => console.log(`Print receipt ${patient.id}`)}>
-                  Print
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                <td>{booking.department}</td>
+                <td>{booking.doctors?.join(', ')}</td>
+                <td>{booking.employees?.join(', ')}</td>
+                <td>{booking.duration}</td>
+                <td>
+                  <Button onClick={() => console.log(`Print receipt ${booking.id}`)}>
+                    Print
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      {isPopupOpen && (
-        <div className="booking-list-modal-overlay">
-          <div className="booking-list-modal-content">
-            <button className="booking-list-modal-close" onClick={() => setIsPopupOpen(false)}>
-              &times;
-            </button>
-            <form onSubmit={handleSubmit}>
-              <div className="booking-list-patient-search-dropdown">
-                <label>Patient Name:</label>
-                  <input type="text" value={patientName} onChange={handlePatientNameChange} />
-              </div>
-              <div>
-                <label>OT Date:</label>
-                <input type="date" value={otDate} onChange={handleOtDateChange} />
-              </div>
-              <div>
-                <label>OT Time:</label>
-                  <input type="time" value={otTime} onChange={handleOtTimeChange} />
-              </div>
-              <div>
-                <label>Diagnosis:</label>
-                <input type="text" value={diagnosis} onChange={handleDiagnosisChange} />
-              </div>
-              <div>
-                <label>Procedure:</label>
-                 <input type="text" value={procedure} onChange={handleProcedureChange} />
-              </div>
-              <div>
-                <label>Use Anaesthesia:</label>
-               <input type="checkbox" checked={useAnaesthesia} onChange={handleUseAnaesthesiaChange} />
-              </div>
-              <div>
-                <label>Machine Name:</label>
-                <input type="text" value={machineName} onChange={handleMachineNameChange} />
-              </div>
-              <div>
-                <label>Status:</label>
-                <select value={status} onChange={handleStatusChange}>
-                  <option value="Booked">Booked</option>
-                  <option value="Cancelled">Cancelled</option>
-                  <option value="Concluded">Concluded</option>
-                </select>
-              </div>
-              <button type="submit">Submit</button>
-            </form>
-          </div>
-        </div>
+      {openStickerPopup && (
+        <CustomModal isOpen={openStickerPopup} onClose={() => setOpenStickerPopup(false)}>
+          <form onSubmit={handleSubmit} className='booking-list-modal-content'>
+            <div className="booking-list-patient-search-dropdown">
+              <label>Patient Name:</label>
+              <input type="text" value={patientName} onChange={handlePatientNameChange} />
+            </div>
+            <div className="booking-list-patient-search-dropdown">
+              <label>OT Date:</label>
+              <input type="date" value={otDate} onChange={handleOtDateChange} />
+            </div>
+            <div className="booking-list-patient-search-dropdown">
+              <label>OT Time:</label>
+              <input type="time" value={otTime} onChange={handleOtTimeChange} />
+            </div>
+             <div className="booking-list-patient-search-dropdown">
+              <label>Duration:</label>
+              <input type="text" value={duration} onChange={handleDurationChange} />
+            </div>
+            <div className="booking-list-patient-search-dropdown">
+              <label>Department:</label>
+              <select >
+                <option>aaa</option>
+                <option>surgen</option>
+              </select>
+            </div>
+            <div className="booking-list-patient-search-dropdown">
+              <label>Doctors:</label>
+              {/* <select multiple value={selectedDoctors} onChange={(e) => setSelectedDoctors([...e.target.selectedOptions].map(o => o.value))}>
+                {doctorList.map((doctor) => (
+                  <option key={doctor.id} value={doctor.name}>{doctor.name}</option>
+                ))}
+              </select> */}
+              <select name="" id="">
+                <option value="">Dr.Neha</option>
+                <option value="">Dr.Prachi</option>
+                <option value="">Dr.Mohini</option>
+              </select>
+            
+              <label>Employees:</label>
+              {/* <select multiple value={selectedEmployees} onChange={(e) => setSelectedEmployees([...e.target.selectedOptions].map(o => o.value))}>
+                {employeeList.map((employee) => (
+                  <option key={employee.id} value={employee.name}>{employee.name}</option>
+                ))}
+              </select> */}
+              <select name="" id="">
+                <option value="">Nurse</option>
+                <option value="">Doctor</option>
+                <option value="">aaaa</option>
+              </select>
+            </div>
+            <div className="booking-list-patient-search-dropdown">
+              <label>Diagnosis:</label>
+              <input type="text" value={diagnosis} onChange={handleDiagnosisChange} />
+            </div>
+            <div className="booking-list-patient-search-dropdown">
+              <label>Procedure:</label>
+              <input type="text" value={procedure} onChange={handleProcedureChange} />
+            </div>
+            <div className="booking-list-patient-search-dropdown">
+              <label>Use Anaesthesia:</label>
+              <input type="checkbox" checked={useAnaesthesia} onChange={handleUseAnaesthesiaChange} />
+            </div>
+            <div className="booking-list-patient-search-dropdown">
+              <label>Machine Name:</label>
+              <input type="text" value={machineName} onChange={handleMachineNameChange} />
+            </div>
+            <div className="booking-list-patient-search-dropdown">
+              <label>Status:</label>
+              <select value={status} onChange={handleStatusChange}>
+                <option value="Booked">Booked</option>
+                <option value="Cancelled">Cancelled</option>
+                <option value="Concluded">Concluded</option>
+              </select>
+            </div>
+            <button type="submit">Submit</button>
+          </form>
+        </CustomModal>
       )}
     </div>
   );

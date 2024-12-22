@@ -1,0 +1,22 @@
+/* ServiceRate.css */
+
+/* Container styles */
+/* .ServiceRate-container {
+padding: 0px;    
+  }
+   */
+  /* Header styles */
+  .ServiceRate-container h2 {
+    font-size: var(--heading-font);
+    color: #333;
+    /* margin-bottom: 20px;  */
+    text-align: left;
+  }
+  .Service-rate-input
+  {
+    font-size: 14px;
+    padding: 2px;
+  }
+
+ 
+  

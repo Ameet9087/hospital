@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './ProcedureService.css';
-import { API_BASE_URL } from '../api/api';
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./ProcedureService.css";
+import { API_BASE_URL } from "../api/api";
 
 const ProcedureService = ({ inPatientId, outPatientId }) => {
   const [selectedProcedures, setSelectedProcedures] = useState([]);
@@ -12,11 +11,11 @@ const ProcedureService = ({ inPatientId, outPatientId }) => {
   useEffect(() => {
     const fetchProcedures = async () => {
       try {
-        const response = await axios.get('http://192.168.0.118:8080/api/services');
+        const response = await axios.get(`${API_BASE_URL}/services`);
         setAvailableProcedures(response.data);
       } catch (error) {
-        console.error('Error fetching procedures:', error);
-        alert('Failed to load procedures. Please try again later.');
+        console.error("Error fetching procedures:", error);
+        alert("Failed to load procedures. Please try again later.");
       }
     };
     fetchProcedures();
@@ -29,7 +28,9 @@ const ProcedureService = ({ inPatientId, outPatientId }) => {
   };
 
   const removeProcedure = (procedure) => {
-    setSelectedProcedures(selectedProcedures.filter(item => item !== procedure));
+    setSelectedProcedures(
+      selectedProcedures.filter((item) => item !== procedure)
+    );
   };
 
   const cancelSelection = () => {
@@ -51,18 +52,18 @@ const ProcedureService = ({ inPatientId, outPatientId }) => {
             : { outPatient: { outPatientId } }),
         };
 
-        await axios.post(`http://192.168.0.118:8080/api/services`, payload, {
+        await axios.post(`${API_BASE_URL}/services`, payload, {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         });
       }
 
-      alert('All procedures saved successfully!');
+      alert("All procedures saved successfully!");
       cancelSelection();
     } catch (error) {
-      console.error('Error saving procedures:', error.message);
-      alert('Failed to save procedures. Please try again later.');
+      console.error("Error saving procedures:", error.message);
+      alert("Failed to save procedures. Please try again later.");
     }
   };
 
@@ -83,7 +84,11 @@ const ProcedureService = ({ inPatientId, outPatientId }) => {
             </option>
           ))}
         </select>
-        <button type="button" onClick={addProcedure} className="procedures-service-add">
+        <button
+          type="button"
+          onClick={addProcedure}
+          className="procedures-service-add"
+        >
           +
         </button>
       </div>
@@ -108,10 +113,18 @@ const ProcedureService = ({ inPatientId, outPatientId }) => {
       </div>
 
       <div className="procedures-service-action-buttons">
-        <button type="button" onClick={cancelSelection} className="procedures-service-action-cancel">
+        <button
+          type="button"
+          onClick={cancelSelection}
+          className="procedures-service-action-cancel"
+        >
           Cancel
         </button>
-        <button type="button" onClick={submitSelection} className="procedures-service-action-submit">
+        <button
+          type="button"
+          onClick={submitSelection}
+          className="procedures-service-action-submit"
+        >
           Submit
         </button>
       </div>

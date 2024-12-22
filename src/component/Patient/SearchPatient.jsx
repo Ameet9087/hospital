@@ -136,7 +136,7 @@ function SearchPatient() {
           </tr>
         </thead>
         <tbody>
-          {displayedPatients.map((patient, index) => (
+          {filteredPatients.map((patient, index) => (
             <tr key={index}>
               <td>{startIndex + index + 1}</td>
               <td>{patient.firstName} {patient.lastName}</td>

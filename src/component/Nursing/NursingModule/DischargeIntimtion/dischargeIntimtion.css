@@ -5,6 +5,7 @@
     height: 85vh;
     overflow-y: scroll;
     width: 100%;
+    width: -webkit-fill-available;
     }
     
     /* Header styles */

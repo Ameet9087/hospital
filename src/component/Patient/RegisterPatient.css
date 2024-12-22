@@ -68,6 +68,7 @@
   border-radius: 5px;
   cursor: pointer;
   margin-bottom: 15px;
+  float: right;
 }
 
 /* Hover effect for the register button */

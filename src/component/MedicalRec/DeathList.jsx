@@ -1,19 +1,15 @@
-
-import React, { useState } from 'react';
-// import '../MedicalRec/BirthList.css';
-import { useNavigate } from 'react-router-dom';
-import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
-import '../MedicalRec/DeathList.css';
-
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../MedicalRec/DeathList.css";
 
 function BirthList() {
-  const [isMenuVisible,setisMenuVisible]=useState(false);
+  const [isMenuVisible, setisMenuVisible] = useState(false);
 
-  const [addDeathDetails,setdeathDetails]=useState(false);
-  const [addCertificate,setAddCertificate]=useState(false);
+  const [addDeathDetails, setdeathDetails] = useState(false);
+  const [addCertificate, setAddCertificate] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deathListData,setdeathListData]=useState(false);
-  const [showDeathCertificate,setshowDeathCertificate]=useState(false);
+  const [deathListData, setdeathListData] = useState(false);
+  const [showDeathCertificate, setshowDeathCertificate] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
     all: false,
     diagnosisAdded: false,
@@ -27,16 +23,16 @@ function BirthList() {
       setCurrentPage(page);
     }
   };
-  
-  const addDeathDetailsButton=()=>{
+
+  const addDeathDetailsButton = () => {
     setdeathDetails(!addDeathDetails);
     setIsModalOpen(true);
-  }
+  };
 
-  const addCertificateButton=()=>{
+  const addCertificateButton = () => {
     setshowDeathCertificate(!showDeathCertificate);
     // setIsModalOpen(true);
-  }
+  };
 
   const handleOpenCertificateModal = () => setshowDeathCertificate(true);
   const handleCloseCertificateModal = () => setshowDeathCertificate(false);
@@ -49,126 +45,154 @@ function BirthList() {
       [name]: checked,
     }));
   };
-  const [filterOption, setFilterOption] = useState('All');
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
+  const [filterOption, setFilterOption] = useState("All");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const handleFilterData = () => {
     // Implement filter logic here
-    console.log(`Filtering data from ${fromDate} to ${toDate} with option ${filterOption}`);
+    console.log(
+      `Filtering data from ${fromDate} to ${toDate} with option ${filterOption}`
+    );
     setdeathListData(!deathListData);
   };
-  const toggleMenu=()=>{
+  const toggleMenu = () => {
     setisMenuVisible(!isMenuVisible);
-  }
-  
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
   return (
-    <div className='outer-medical-record'>
+    <div className="outer-medical-record">
+      <div className="MRInPatient-tableContainer">
+        <button
+          onClick={addDeathDetailsButton}
+          className="AddNewBirthCertificate"
+        >
+          {" "}
+          &#43; Add Death Certificate
+        </button>
+        <h5>Filter by Death Date:</h5>
+        <div className="MROInPatient-date-filter">
+          <label>
+            From:
+            <input
+              type="date"
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+            />
+          </label>
+          <label>
+            To:
+            <input
+              type="date"
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+            />
+          </label>
 
-  
-    
-    <div className="MRInPatient-tableContainer">
-    <button onClick={addDeathDetailsButton} className='AddNewBirthCertificate'> &#43;  Add Death Certificate</button>
-             <h5>Filter by Death Date:</h5>
-            <div className="MROInPatient-date-filter">
-                <label>
-                  From:
-                  <input type="date" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
-                </label>
-                <label>
-                  To:
-                  <input type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} />
-                </label>
+          <button style={{ marginLeft: "5px" }}>★</button>
+          <button style={{ marginLeft: "5px" }} onClick={toggleMenu}>
+            {" "}
+            -{" "}
+          </button>
+          {isMenuVisible && (
+            <ul
+              style={{
+                marginLeft: "5px",
+                listStyleType: "none",
+                padding: "5px",
+                border: "1px solid #ccc",
+                backgroundColor: "#fff",
+              }}
+            >
+              <li>Last 1 Week</li>
+              <li>Last 1 Month</li>
+              <li>Last 3 Months</li>
+            </ul>
+          )}
+          <button onClick={handleFilterData}>OK</button>
+        </div>
 
-                <button style={{ marginLeft: '5px' }}>★</button>
-                <button style={{ marginLeft: '5px' }} onClick={toggleMenu}> - </button>
-                {
-                  isMenuVisible && (
-                    <ul style={{ marginLeft: '5px', listStyleType: 'none', padding: '5px', border: '1px solid #ccc', backgroundColor: '#fff' }}>
-                    <li>Last 1 Week</li>
-                    <li>Last 1 Month</li>
-                    <li>Last 3 Months</li>
-                  </ul>
-
-                  )
-                }
-                <button onClick={handleFilterData} >OK</button>
-                
-
+        {deathListData && (
+          <>
+            <div className="MRIn-Patient-Header">
+              <input
+                type="text"
+                placeholder="Search"
+                className="MRIn-Patient-searchInput"
+              />
+              <div className="MRIn-Patient-actions">
+                <span className="MRIn-Patient-results">
+                  Showing 0/0 results
+                </span>
               </div>
+            </div>
 
-
-
-              {
-                deathListData && (
-                    <>
-                    <div className='MRIn-Patient-Header'>
-                    <input type='text' placeholder='Search' className='MRIn-Patient-searchInput'/>
-                    <div className="MRIn-Patient-actions">
-                        <span className="MRIn-Patient-results">Showing 0/0 results</span>
-                    </div>
-              </div>
-
-
-                    <table className="MRIn-patientsTable">
-            <thead>
+            <table className="MRIn-patientsTable">
+              <thead>
                 <tr>
-                <th> Certificate No. </th>
-                <th>Patient Name</th>
-                <th>Death Date </th>
-                <th>Death Time</th>
-                <th>Action</th>
-                
-                
-                
+                  <th> Certificate No. </th>
+                  <th>Patient Name</th>
+                  <th>Death Date </th>
+                  <th>Death Time</th>
+                  <th>Action</th>
                 </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
                 <tr className="MROut-tableRow">
-                <td>1</td>
-                <td>Jenifer</td>
-                <td>2023-12-11</td>
-                <td>17:46:00</td>
-               <td>
-                
-                <div className="Actions-actions">
-                            <button className="edit-final-diaggnosois" onClick={addCertificateButton}>Certificate</button>
-                </div>
-                </td>
-                </tr>
-                <tr className="MROut-tableRow">
-                <td>1</td>
-                <td>Jenifer</td>
-                <td>2023-12-11</td>
-                <td>17:46:00</td>
-               <td>
-                
-                <div className="Actions-actions">
-                            <button className="edit-final-diaggnosois" onClick={addCertificateButton}>Certificate</button>
-                </div>
-                </td>
+                  <td>1</td>
+                  <td>Jenifer</td>
+                  <td>2023-12-11</td>
+                  <td>17:46:00</td>
+                  <td>
+                    <div className="Actions-actions">
+                      <button
+                        className="edit-final-diaggnosois"
+                        onClick={addCertificateButton}
+                      >
+                        Certificate
+                      </button>
+                    </div>
+                  </td>
                 </tr>
                 <tr className="MROut-tableRow">
-                <td>1</td>
-                <td>Jenifer</td>
-                <td>2023-12-11</td>
-                <td>17:46:00</td>
-               <td>
-                
-                <div className="Actions-actions">
-                            <button className="edit-final-diaggnosois" onClick={addCertificateButton}>Certificate</button>
-                </div>
-                </td>
+                  <td>1</td>
+                  <td>Jenifer</td>
+                  <td>2023-12-11</td>
+                  <td>17:46:00</td>
+                  <td>
+                    <div className="Actions-actions">
+                      <button
+                        className="edit-final-diaggnosois"
+                        onClick={addCertificateButton}
+                      >
+                        Certificate
+                      </button>
+                    </div>
+                  </td>
                 </tr>
-       
-                </tbody>
-              </table>
+                <tr className="MROut-tableRow">
+                  <td>1</td>
+                  <td>Jenifer</td>
+                  <td>2023-12-11</td>
+                  <td>17:46:00</td>
+                  <td>
+                    <div className="Actions-actions">
+                      <button
+                        className="edit-final-diaggnosois"
+                        onClick={addCertificateButton}
+                      >
+                        Certificate
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-
-              {/* <div className="MROut-pagination">
+            {/* <div className="MROut-pagination">
               <button 
                 className="MROut-pagination-btn" 
                 onClick={() => handlePageChange(1)}
@@ -201,142 +225,167 @@ function BirthList() {
                 Last
               </button>
             </div> */}
-                    </>
-                    
-
-                )
-              }
-
-            
-
-                
-           
-          </div>
-
-          {
-            addDeathDetails && isModalOpen && (
-                <div className="FinalDiagnosis-container deathReport">
-   
-                  <div className="modal-overlay">
-                    <div className="modal-content">
-                      <div className="modal-header-deathlist" style={{textAlign:'right'}}>
-                        <button className="close-button" onClick={closeModal}>
-                          &times;
-                        </button>
-                      </div>
-                        <h5>Add Death Details</h5>
-                      <br></br>                 
-                  
-
-                    <div class="form-container">
-                     
-                          <div class="form-group">
-                          <label for="certificateNumber">Select Patient<span className='mandatory'>*</span>:  </label><input type='text' placeholder='Search' className=''/>
-
-                          </div>
-                            <div class="form-group">
-                                <label for="certificateNumber">Certificate Number</label>
-                                <input type="text" id="certificateNumber" name="certificateNumber" />
-                            </div>
-                            
-                            </div>
-
-                          
-                            <div class="form-group">
-                                <label for="birthDate">Death Date *</label>
-                                <input type="date" id="birthDate" name="birthDate" value="2024-08-19" required />
-                            </div>
-                            <div class="form-group">
-                                <label for="birthTime">Death Time *</label>
-                                <input type="time" id="birthTime" name="birthTime" value="14:23" required />
-                            </div>
-                                      
-                     
-                      <div className="footer-buttons">
-                        <button className="submit-button-death">Add Death Details</button>
-                        <button className="cancel-button" onClick={closeModal}>Cancel</button>
-                      </div>
-                    </div>
-                  </div>
-                
+          </>
+        )}
+      </div>
+      {addDeathDetails && isModalOpen && (
+        <div className="death-FinalDiagnosis-container deathReport">
+          <div className="death-modal-overlay">
+            <div className="death-modal-content">
+              <div
+                className="death-modal-header-deathlist"
+                style={{ textAlign: "right" }}
+              >
+                <button className="death-close-button" onClick={closeModal}>
+                  &times;
+                </button>
               </div>
-            )
-          }
+              <h5>Add Death Details</h5>
+              <br></br>
 
+              <div class="death-form-containe">
+                <div class="death-form-group">
+                  <label for="certificateNumber">
+                    Select Patient :<span className="mandatory">*</span>{" "}
+                  </label>
+                  <input type="text" placeholder="Search" className="" />
+                </div>
+                <div class="death-form-group">
+                  <label for="certificateNumber">Certificate Number</label>
+                  <input
+                    type="text"
+                    id="certificateNumber"
+                    name="certificateNumber"
+                  />
+                </div>
+              </div>
 
-          {
-            handleOpenCertificateModal && (
-              <Modal show={showDeathCertificate} onHide={handleCloseCertificateModal} size="lg">
-      <Modal.Header closeButton>
-        <Modal.Title>Death Record of Sonia Chebii</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form>
-          <Row className="mb-3">
-            <Col>
-              <strong>Fiscal Year :</strong> 2023
-            </Col>
-            <Col className="text-end">
-              <strong>Certificate No :</strong> 1
-            </Col>
-          </Row>
+              <div class="death-form-group">
+                <label for="birthDate">Death Date *</label>
+                <input
+                  type="date"
+                  id="birthDate"
+                  name="birthDate"
+                  required
+                />
+              </div>
+              <div class="death-form-group">
+                <label for="birthTime">Death Time *</label>
+                <input
+                  type="time"
+                  id="birthTime"
+                  name="birthTime"
+                  required
+                />
+              </div>
 
-          <h5 className="text-center mb-4">
-            <strong>Medical Certificate of Death</strong>
-          </h5>
+              <div className="defooter-buttons">
+                <button className="submit-button-death">
+                  Add Death Details
+                </button>
+                <button className="cancel-button-death" onClick={closeModal}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
-          <p>
-            This is to certify that Ms. Sonia Chebii, daughter of Mr.
-            <Form.Control type="text" className="d-inline mx-2" style={{ width: '100px' }} />
-            and Ms.
-            <Form.Control type="text" className="d-inline mx-2" style={{ width: '100px' }} />
-            spouse of Mr.
-            <Form.Control type="text" className="d-inline mx-2" style={{ width: '100px' }} />
-            as per hospital record resident of Country
-            <strong> Kenya</strong> district
-            <strong> Belgut Sub County</strong> village/Sub County and inpatient/Emergency number expired on BS
-            <strong> (2023/12/11 AD, YYYY/MM/DD)</strong> time
-            <strong> 17:46:00</strong> (24 hours) at the age of
-            <strong> 11 days</strong>. Her cause of death was
-            <Form.Control type="text" className="d-inline mx-2" style={{ width: '200px' }} />
-          </p>
+      {showDeathCertificate && (
+        <div className="death-certificate-container" >
+          <div className="death-certificate-modal-overlay" style={{width:"100%", height:"100%"}}>
+            <div className="death-certificate-modal-content" style={{width: "1000px", height:"800px"}}>
+              <div className="death-certificate-modal-header">
+                <h3>Death Record of Sonia Chebii</h3>
+                <button 
+                  className="death-certificate-close-button" 
+                  onClick={() => {
+                    handleCloseCertificateModal();
+                    setshowDeathCertificate(false);
+                  }}
+                >
+                  &times;
+                </button>
+              </div>
+              <hr></hr>
+              
+              <div className="death-certificate-modal-body">
+                <div className="death-certificate-header">
+                  <div className="fiscal-info">
+                    <strong>Fiscal Year:</strong> 2023
+                  </div>
+                  <div className="death-certificate-number">
+                    <strong>Certificate No:</strong> 1
+                  </div>
+                </div>
 
-          <h5 className="mt-4">Certified By</h5>
-          <Form.Group controlId="formCertifiedBy" className="mb-4">
-            <Form.Control type="text" placeholder="Issued By" />
-          </Form.Group>
+                <h3 className="death-certificate-title">Medical Certificate of Death</h3>
 
-          <h5>Hospital/Health Facility</h5>
-          <p>
-            <strong>Name:</strong> Demo Hospital
-            <br />
-            <strong>Address:</strong> <a href="/">P.O Box 1718 RUIRU</a>
-          </p>
+                <div className="death-certificate-content">
+                  <p>
+                    This is to certify that Ms. Sonia Chebii, daughter of Mr.
+                    <input type="text" className="death-certificate-inline-input" />
+                    and Ms.
+                    <input type="text" className="death-certificate-inline-input" />
+                    spouse of Mr.
+                    <input type="text" className="death-certificate-inline-input" />
+                    as per hospital record resident of Country
+                    <strong> Kenya</strong> district
+                    <strong> Belgut Sub County</strong> village/Sub County and
+                    inpatient/Emergency number expired on BS
+                    <strong> (2023/12/11 AD, YYYY/MM/DD)</strong> time
+                    <strong> 17:46:00</strong> (24 hours) at the age of
+                    <strong> 11 days</strong>. Her cause of death was
+                    <input type="text" className="death-certificate-inline-input cause-input" />
+                  </p>
+                </div>
 
-          <Form.Group controlId="formDoctorSignature" className="mb-4">
-            <Form.Label>Doctor Signature:</Form.Label>
-            <Form.Control as="textarea" rows={3} />
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="primary" onClick={handleCloseCertificateModal}>
-          Save and Print
-        </Button>
-        <Button variant="primary" onClick={handleCloseCertificateModal}>
-          Cancel
-        </Button>
-      </Modal.Footer>
-    </Modal>
-            )
-          }
+                <div className="death-certificate-section">
+                  <h5>Certified By</h5>
+                  <input type="text" placeholder="Issued By" className="death-certificate-full-width-input" />
+                </div>
 
+                <div className="death-certificate-hospital-section">
+                  <h4>Hospital/Health Facility</h4>
+                  <p>
+                    <strong>Name:</strong> Demo Hospital<br />
+                    <strong>Address:</strong> <a href="/">P.O Box 1718 RUIRU</a>
+                  </p>
+                </div>
+
+                <div className="death-certificate-signature-section">
+                  <h4>Doctor Signature:</h4>
+                  <textarea rows={3} className="death-certificate-signature-input"></textarea>
+                </div>
+              </div>
+
+              <div className="death-certificate-modal-footer">
+                <button 
+                  className="death-certificate-submit-button" 
+                  onClick={() => {
+                    handleCloseCertificateModal();
+                    setHandleOpenCertificateModal(false);
+                  }}
+                >
+                  Save and Print
+                </button>
+                <button 
+                  className="death-certificate-cancel-button" 
+                  onClick={() => {
+                    handleCloseCertificateModal();
+                    setHandleOpenCertificateModal(false);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-
-    
   );
-};
-
-
+}
 
 export default BirthList;

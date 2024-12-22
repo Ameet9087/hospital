@@ -46,7 +46,7 @@ const IpMedicineIndent = () => {
 
   const fetchIpNos = async () => {
     try {
-      const response = await axios.get("http://192.168.0.110:9090/api/ip-admissions");
+      const response = await axios.get("http://192.168.0.116:4069/api/ip-admissions");
   
       const inPatient = response.data.map((item) => ({
         inPatientId: item.patient.inPatientId,
@@ -69,7 +69,7 @@ const IpMedicineIndent = () => {
   useEffect(()=>{
     const fetchDepartments=async()=>{
       try{
-        const response=await axios.get("http://192.168.0.110:9090/api/department-nursing")
+        const response=await axios.get("http://192.168.0.116:4069/api/department-nursing")
         setDepartmentDetails(response.data);
       }catch(error){
         console.error("Error fetching department data:",error);
@@ -80,7 +80,7 @@ const IpMedicineIndent = () => {
   
   const fetchMedicineDetails = async () => {
     try {
-      const response = await axios.get("http://192.168.0.110:9090/api/medicine-details");
+      const response = await axios.get("http://192.168.0.116:4069/api/medicine-details");
       setMedicineDetails(response.data);
     } catch (error) {
       console.error("Error fetching medicine details:", error);
@@ -119,7 +119,7 @@ const IpMedicineIndent = () => {
             : data
         )
       );
-      console.log(tableData);
+      alert(tableData);
       
     }
     else if(activePopup==="Department"){
@@ -392,7 +392,7 @@ const IpMedicineIndent = () => {
         Save
       </button>
 
-      <table className="ipmedicineindent-table" ref={tableData}>
+<table className="ipmedicineindent-table" ref={tableData}>
   <thead>
     <tr>
       {[

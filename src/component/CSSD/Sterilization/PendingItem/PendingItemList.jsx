@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./pendingItem.css";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 
 function PendingItemList() {
   const [columnWidths, setColumnWidths] = useState({});

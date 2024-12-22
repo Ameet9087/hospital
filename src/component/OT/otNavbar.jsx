@@ -12,34 +12,34 @@ const Navbar = ({ handleNavigation }) => {
       <nav className="ot_setting-nav-links">
 
         <Link
-          to="/"
-          className={`ot_setting-header-button ${location.pathname === '/' ? 'active' : ''}`}
+          to="/operationtheater/bookinglist"
+          className={`ot_setting-header-button ${location.pathname === '/operationtheater/bookinglist' ? 'active' : ''}`}
 
         >
           Booing List
         </Link>
         <Link
-          to="/Setting"
-          className={`ot_setting-header-button ${location.pathname === '/Setting' ? 'active' : ''}`}
+          to="/operationtheater/setting"
+          className={`ot_setting-header-button ${location.pathname === '/operationtheater/setting' ? 'active' : ''}`}
 
         >
           Setting
         </Link>
 
-        <Link to="/surgeryScheduling"   className={`ot_setting-header-button ${location.pathname === '/' ? 'active' : ''}`}>Surgery Scheduling</Link>
+        <Link to="/operationtheater/surgeryscheduling"   className={`ot_setting-header-button ${location.pathname === '/operationtheater/surgeryscheduling' ? 'active' : ''}`}>Surgery Scheduling</Link>
 
 
-        <Link to='/ot'   className={`ot_setting-header-button ${location.pathname === '/' ? 'active' : ''}`}>OT Resource Management</Link>
+        <Link to='/operationtheater/otresourcemanagement'   className={`ot_setting-header-button ${location.pathname === '/operationtheater/otresourcemanagement' ? 'active' : ''}`}>OT Resource Management</Link>
 
 
-        <Link to="/surgicaltrack"   className={`ot_setting-header-button ${location.pathname === '/' ? 'active' : ''}`}>Surgical Instrument Tracking</Link>
+        <Link to="/operationtheater/surgicalinstrumenttracking"   className={`ot_setting-header-button ${location.pathname === '/operationtheater/surgicalinstrumenttracking' ? 'active' : ''}`}>Surgical Instrument Tracking</Link>
 
 
-        <Link to="/anesthesiarecordmgnt"   className={`ot_setting-header-button ${location.pathname === '/' ? 'active' : ''}`}>Anesthesia Record Management</Link>
+        <Link to="/operationtheater/anesthesiarecordmanagement"   className={`ot_setting-header-button ${location.pathname === '/operationtheater/anesthesiarecordmanagement' ? 'active' : ''}`}>Anesthesia Record Management</Link>
 
 
-        <Link to="/postsurgerycare"   className={`ot_setting-header-button ${location.pathname === '/' ? 'active' : ''}`}>Post Surgery Care</Link>
-
+        <Link to="/operationtheater/postsurgerycare"   className={`ot_setting-header-button ${location.pathname === '/operationtheater/postsurgerycare' ? 'active' : ''}`}>Post Surgery Care</Link>
+    
       </nav>
     </header>
   );

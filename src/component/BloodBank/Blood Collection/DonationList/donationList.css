@@ -71,70 +71,58 @@
     overflow-y: auto; /* Allows scrolling if content overflows */
 }
 
-
-
 .bloodcollectionform {
     display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-.bloodcollection-form{
-    display: flex;
-    margin-top: 20px;
-  
+    flex-wrap: wrap; /* Allow wrapping of elements */
+    gap: 5px; /* Space between items */
+    justify-content: space-between; /* Space out items evenly */
 }
 
 .bloodcollectionform label {
-    margin-top: 5px;
+    flex-basis: 100%; /* Make labels span the entire row */
     font-weight: bold;
-    font-size: 14px;
-    width: 190px;
-    margin-top: 10px;
+    margin-bottom: 5px; /* Space below the label */
+}
+
+.bloodcollectionform .form-group {
+    display: flex;
+    flex-direction: column; /* Stack label and input */
+    flex-basis: 48%; /* Take up 48% width for two columns */
 }
 
 .bloodcollectionform input[type="text"],
 .bloodcollectionform input[type="number"],
-.bloodcollectionform input[type="datetime-local"],
-.bloodcollectionform select,
-.bloodcollectionform textarea {
-    margin-top: 10px;
-    padding: 2px;
+.bloodcollectionform input[type="datetime-local"] {
+    padding: 10px;
+    font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 14px;
-    width: 45%;
-    margin-left: 20px;
-}
-
-.bloodcollectionform textarea {
-    resize: vertical; /* Allow vertical resizing only */
+    width: 100%; /* Ensure input spans full width of its container */
+    box-sizing: border-box; /* Include padding and border in width calculation */
 }
 
 .bloodcollectionform button {
-    margin-top: 15px;
-    padding: 5px;
-    background-color:#00c9c0; 
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #00c9c0;
     color: white;
     border: none;
     border-radius: 4px;
-    cursor: pointer;
     font-size: 16px;
-    margin-left: 20px;
+    cursor: pointer;
+    align-self: flex-start; /* Align button to the left */
 }
 
-
-
+/* Buttons hover effect */
 .bloodcollectionform button:hover {
-    opacity: 0.9;
+    background-color: white;
+    color: #00c9c0;
+    border: 1px solid #00c9c0;
 }
 
-.bloodcollectionform button:focus {
-    outline: none;
-}
-
-/* Optional: Add a media query for smaller screens */
-@media (max-width: 920px) {
-    .bloodcollection-modal-content {
-        width: 95%; /* Full width on small screens */
+/* For smaller screens */
+@media (max-width: 768px) {
+    .bloodcollectionform .form-group {
+        flex-basis: 100%; /* Make each group span full width */
     }
 }

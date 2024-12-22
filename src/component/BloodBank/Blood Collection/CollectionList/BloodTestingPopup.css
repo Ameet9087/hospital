@@ -1,0 +1,69 @@
+.bloodtesting-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .bloodtesting-popup {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 400px;
+  }
+  
+  .bloodtesting-popup h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .bloodtesting-form-group {
+    margin-bottom: 15px;
+  }
+  
+  .bloodtesting-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .bloodtesting-form-group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .bloodtesting-form-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .bloodtesting-submit-btn,
+  .bloodtesting-cancel-btn {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .bloodtesting-submit-btn {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .bloodtesting-cancel-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  

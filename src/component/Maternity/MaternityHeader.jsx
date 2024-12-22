@@ -38,7 +38,7 @@ const MaternityHeader = () => {
       <NavLink to="/maternity/familyplanningservice" className={`maternity-header-button ${location.pathname.startsWith('/familyplanningservice') ? 'active' : ''}`} activeClassName="active">Family Planning Service</NavLink>
     </div>
 
-<div className="content">
+{/* <div className="content">
 <Routes>
   <Route path="/maternitylist" element={<MaternityList />} />
   <Route path="/paymentsreports" element={<Payment />} />
@@ -48,7 +48,7 @@ const MaternityHeader = () => {
   <Route path="/breastfeedingsupport" element={<BreastfeedingSupportManagement />} />
   <Route path="/familyplanningservice" element={<FamilyPlanningSupportManagement />} />
 </Routes>
-</div>
+</div> */}
 </>
 
   );

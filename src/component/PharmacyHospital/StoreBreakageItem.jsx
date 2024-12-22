@@ -8,8 +8,11 @@ import { API_BASE_URL } from '../api/api';
 
 const StoreBreakageItem = () => {
   const [breakageItems, setBreakageItems] = useState([]); // State for breakage items
+  const [filteredItems, setFilteredItems] = useState([]); // State for filtered breakage items
   const [showReturnForm, setShowReturnForm] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
+  const [fromDate, setFromDate] = useState('2024-08-15'); // State for "From" date
+  const [toDate, setToDate] = useState('2024-08-22'); // State for "To" date
   const tableRef = useRef(null);
 
   useEffect(() => {
@@ -19,6 +22,7 @@ const StoreBreakageItem = () => {
       .then((response) => {
         if (response.data) {
           setBreakageItems(response.data); // Update state with fetched data
+          setFilteredItems(response.data); // Initially show all items
         }
       })
       .catch((error) => {
@@ -26,10 +30,13 @@ const StoreBreakageItem = () => {
       });
   }, []); // Empty dependency array ensures this runs only once
 
+  // Function to handle adding breakage item
   const handleAddBreakageClick = () => setShowReturnForm(true);
 
+  // Function to handle closing the return form
   const handleCloseReturnForm = () => setShowReturnForm(false);
 
+  // Function to handle export to Excel
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current);
     const wb = XLSX.utils.book_new();
@@ -37,18 +44,63 @@ const StoreBreakageItem = () => {
     XLSX.writeFile(wb, 'BreakageItemsReport.xlsx');
   };
 
+  // Function to handle printing
   const handlePrint = () => window.print();
+
+  // Function to filter breakage items based on selected date range
+  const filterByDate = () => {
+    const filtered = breakageItems.filter((item) => {
+      const itemDate = new Date(item.breakageDate);
+      const from = new Date(fromDate);
+      const to = new Date(toDate);
+      return itemDate >= from && itemDate <= to;
+    });
+    setFilteredItems(filtered); // Update filtered items state
+  };
+
+  // Handle change in "From" date
+  const handleFromDateChange = (e) => {
+    setFromDate(e.target.value);
+    filterByDate(); // Filter when "From" date is changed
+  };
+
+  // Handle change in "To" date
+  const handleToDateChange = (e) => {
+    setToDate(e.target.value);
+    filterByDate(); // Filter when "To" date is changed
+  };
 
   return (
     <div className="setting-terms-container">
       <button className="setting-terms-add-terms-btn" onClick={handleAddBreakageClick}>
         Add Breakage Item
       </button>
+      <div className="return-to-supplier-date-filter-container">
+        <div className="return-to-supplier-date-filter">
+          <label>From:</label>
+          <input
+            type="date"
+            className="return-to-supplier-input-date"
+            value={fromDate}
+            onChange={handleFromDateChange} // Set the "From" date
+          />
+        </div>
+
+        <div className="return-to-supplier-date-filter">
+          <label>To:</label>
+          <input
+            type="date"
+            className="return-to-supplier-input-date"
+            value={toDate}
+            onChange={handleToDateChange} // Set the "To" date
+          />
+        </div>
+      </div>
       <div className="setting-terms-search-container">
         <input type="text" placeholder="Search" className="search-input" />
       </div>
       <div className="setting-supplier-span">
-        <span>Showing {breakageItems.length} results</span>
+        <span>Showing {filteredItems.length} results</span>
         <button className="item-wise-export-button" onClick={handleExport}>
           Export
         </button>
@@ -84,8 +136,8 @@ const StoreBreakageItem = () => {
             </tr>
           </thead>
           <tbody>
-            {breakageItems.length > 0 ? (
-              breakageItems.map((item, index) => (
+            {filteredItems.length > 0 ? (
+              filteredItems.map((item, index) => (
                 <tr key={index}>
                   <td>{item.breakageDate}</td>
                   <td>{item.breakageItemId}</td>

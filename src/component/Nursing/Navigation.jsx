@@ -1,66 +1,89 @@
 // src/components/Navigation.js
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import './Navigation.css';
+import React, { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import "./Navigation.css";
 
 function Navigation() {
+  const location = useLocation();
+  return (
+    <nav className="nursing-actions-container">
+      <NavLink
+        className={`nursing-action-button ${
+          location.pathname === "/nursing/nursingdashboard" ? "selected" : ""
+        }`}
+        to="/nursing/nursingdashboard"
+      >
+        Nursing Dashboard
+      </NavLink>
 
-    const [selectedButton, setSelectedButton] = useState("Out Patient");
+      <NavLink
+        className={`nursing-action-button ${
+          location.pathname === "/nursing/outpatient" ? "selected" : ""
+        }`}
+        to="/nursing/outpatient"
+      >
+        Outpatient
+      </NavLink>
 
-  const handleButtonClick = (buttonName) => {
-    setSelectedButton(buttonName);
-  };
+      {/* <NavLink to="/nursing/Inpatient">
+        {" "}
+        <button
+          className={`nursing-action-button ${
+            selectedButton === "In Patient" ? "selected" : ""
+          }`}
+          onClick={() => handleButtonClick("In Patient")}
+        >
+          {" "}
+          In Patient
+        </button>
+      </NavLink> */}
 
-    return (
-        <nav className="nursing-actions-container">
-
-            <NavLink to="/nursing/nursingdashboard" selected> <button
-                className={`nursing-action-button ${selectedButton === 'Nursing Dashboard' ? 'selected' : ''}`}
-                onClick={() => handleButtonClick('Nursing Dashboard')}
-                >Nursing Dashboard</button>
-            </NavLink>
-
-
-            <NavLink to="/Outpatient" selected> <button
-                className={`nursing-action-button ${selectedButton === 'Out Patient' ? 'selected' : ''}`}
-                onClick={() => handleButtonClick('Out Patient')}
-                > Out Patient</button>
-            </NavLink>
-
-            <NavLink to="/Inpatient"> <button
-                className={`nursing-action-button ${selectedButton === 'In Patient' ? 'selected' : ''}`}
-                onClick={() => handleButtonClick('In Patient')}
-                > In Patient</button>
-            </NavLink>
-
-            {/* <NavLink to="/Nephrology"> <button
+      {/* <NavLink to="/Nephrology"> <button
                 className={`nursing-action-button ${selectedButton === 'Nephrology' ? 'selected' : ''}`}
                 onClick={() => handleButtonClick('Nephrology')}
                 > Nephrology</button>
             </NavLink> */}
 
-            <NavLink to="/RequisitionList"> <button
-                className={`nursing-action-button ${selectedButton === 'RequisitionList' ? 'selected' : ''}`}
-                onClick={() => handleButtonClick('RequisitionList')}
-                > Requisition List</button>
-            </NavLink>
+      {/* <NavLink to="/RequisitionList">
+        {" "}
+        <button
+          className={`nursing-action-button ${
+            selectedButton === "RequisitionList" ? "selected" : ""
+          }`}
+          onClick={() => handleButtonClick("RequisitionList")}
+        >
+          {" "}
+          Requisition List
+        </button>
+      </NavLink>
 
-            <NavLink to="/DischargeSummary"> <button
-                className={`nursing-action-button ${selectedButton === 'Discharge Summary' ? 'selected' : ''}`}
-                onClick={() => handleButtonClick('Discharge Summary')}
-                > Discharge Summary</button>
-            </NavLink>
+      <NavLink to="/DischargeSummary">
+        {" "}
+        <button
+          className={`nursing-action-button ${
+            selectedButton === "Discharge Summary" ? "selected" : ""
+          }`}
+          onClick={() => handleButtonClick("Discharge Summary")}
+        >
+          {" "}
+          Discharge Summary
+        </button>
+      </NavLink>
 
-            <NavLink to="/AdhenseSafetyPrecaution"> <button
-                className={`nursing-action-button ${selectedButton === 'Adherence Safety Precaution' ? 'selected' : ''}`}
-                onClick={() => handleButtonClick('Adherence Safety Precaution')}
-                > Adherence Safety Precaution</button>
-            </NavLink>
-        </nav>
-
-        
-
-    );
+      <NavLink to="/AdhenseSafetyPrecaution">
+        {" "}
+        <button
+          className={`nursing-action-button ${
+            selectedButton === "Adherence Safety Precaution" ? "selected" : ""
+          }`}
+          onClick={() => handleButtonClick("Adherence Safety Precaution")}
+        >
+          {" "}
+          Adherence Safety Precaution
+        </button>
+      </NavLink> */}
+    </nav>
+  );
 }
 
 export default Navigation;

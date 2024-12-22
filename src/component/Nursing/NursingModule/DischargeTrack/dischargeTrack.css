@@ -3,6 +3,7 @@
     padding: 10px;
     background-color: var(--background-color);
     font-family: Arial, sans-serif;
+    width: -webkit-fill-available;
   }
   
   .dischargetrack-upper-bar {

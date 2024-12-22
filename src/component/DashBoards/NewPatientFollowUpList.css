@@ -1,7 +1,8 @@
 /* swapnil Rokade New-Patient Adding className And color and table css 18/09 */
 .New-Patient-table-container {
+    margin-top: 20px;
     width: 100%;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     text-align: center;
     font-family: Arial, sans-serif;
 }

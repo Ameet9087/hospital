@@ -34,7 +34,7 @@ const AddSupplierForm = ({ onClose }) => {
     
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/suppliers/create-supplier`, 
+        `${API_BASE_URL}/suppliers`, 
         formData, 
         {
           headers: {

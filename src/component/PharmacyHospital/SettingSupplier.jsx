@@ -37,7 +37,7 @@ const SettingSupplierComponent = () => {
 
     const fetchSuppliers = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/suppliers/get-all-suppliers`);
+      const response = await axios.get(`${API_BASE_URL}/suppliers`);
       setSuppliers(response.data);
     } catch (error) {
       console.error('Error fetching suppliers:', error.response ? error.response.data : error.message);
@@ -113,7 +113,7 @@ const SettingSupplierComponent = () => {
         console.log('Update Response:', response.data);
       } else {
         // Add new supplier
-        const response = await axios.post(`${API_BASE_URL}/suppliers/create-supplier`, dataToSend);
+        const response = await axios.post(`${API_BASE_URL}/suppliers  `, dataToSend);
         console.log('Add Response:', response.data);
       }
 

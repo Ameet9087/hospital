@@ -50,6 +50,8 @@ import DynamicReport from "../component/DynamicReport/DynamicReport"
 import Procurementmain from '../component/Procurement2/procurmentmain';
 import HelpDeskRouting from '../component/HelpD/HelpDeskRouting';
 import BillingRouting from '../component/Billing/IP_Billing/ipbilling';
+import Otmain from '../component/OT/otmain';
+import AppConfig from '../component/Maternity/AppConfig';
 // Define modules and submodules
 
 
@@ -103,7 +105,7 @@ function Layout({}) {
                     <Route path='/report/*' element={<ReportRoute/>}/>
                     <Route path='/hi/*' element={<Nhif/>}/> 
                     <Route path='/adt/*' element={<ADTRouting/>}/>
-                    <Route path='/maternity/*' element={<MaternityHeader/>}/>
+                    <Route path='/maternity/*' element={<AppConfig/>}/>
                     <Route path='/procurement/*' element={<Procurementmain/>}/>
                     <Route path='/homehealthcare/*' element={<HomeHealthRoutes/>}/>
                     <Route path='/pediatric/inpatient/*' element={<PediatricInPatientNavbar/>}/>
@@ -119,6 +121,7 @@ function Layout({}) {
                     <Route path='/chemotherapy/*' element={<Chemotherapy/>}/>
                     <Route path='/dynamicreport/*' element={<DynamicReport/>}/>                    <Route path='/helpdesk/*' element={<HelpDeskRouting/>}/>
                     <Route path='/billing/*' element={<BillingRouting/>} />
+                    <Route path='/operationtheater/*' element={<Otmain/>}/>
                 </Routes>
             </div>
             {/* </div> */}

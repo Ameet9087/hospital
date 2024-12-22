@@ -10,7 +10,7 @@ function SchedulingList() {
     // Define the async function to fetch the data
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/surgeries`); // Replace with your API endpoint
+        const response = await axios.get('http://localhost:8051/api/surgeries'); // Replace with your API endpoint
         console.log(response.data)
         setSurgeries(response.data);
         setLoading(false);

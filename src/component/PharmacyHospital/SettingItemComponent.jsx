@@ -130,12 +130,13 @@ const SettingItemComponent = () => {
         : `${API_BASE_URL}/add-items`;
       const method = isEditMode ? 'put' : 'post';
 
+      console.log(selectedItem)
       const response = await axios({
         method,
         url,
         data: selectedItem,
       });
-
+       
       if (isEditMode) {
         setItems(prevItems =>
           prevItems.map(item =>
@@ -379,7 +380,7 @@ const SettingItemComponent = () => {
         >
           <option value="">Select Item Type</option>
           {itemTypes.map((itemType) => (
-            <option key={itemType.itemTypeId} value={itemType.itemTypeId}>
+            <option key={itemType.itemTypesId} value={itemType.itemTypesId}>
               {itemType.type}
             </option>
           ))}

@@ -1,71 +1,25 @@
-// import React from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import "../SubStoreMainPage/substoreMain.css";
-
-
-// function SubStoreMain() {
-//   const navigate = useNavigate();
-//   const substores = [
-//     "Accounts",
-//     "Brain Operations Store",
-//     "Female Ward Substore",
-//     "ICU Sub store",
-//     "Male ward SubStore",
-//     "Maternity Substore",
-//     "Operations Store",
-//     "Private Sub Store",
-//     "SubStore1",
-//     "SubStore3"
-//   ];
-
-//   const handleClick = (store) => {
-//     if (store === "Accounts") {
-//       navigate('/accounts');
-//     }
-//   };
-
-//   return (
-//     <div className="subStoreMain-div">
-//       <h6 className="subStoreMain-title"><i class="fa-solid fa-star-of-life"></i> Select your Substore</h6>
-//       <div className="subStoreMain-grid">
-//         {substores.map((store, index) => (
-//           <div
-//             key={index}
-//             className="subStoreMain-card"
-//             onClick={() => handleClick(store)}
-//           >
-//             <div className="subStoreMain-icon"><i class="fa-solid fa-cart-shopping"></i></div>
-//             <div className="subStoreMain-info">
-//               <div className="subStoreMain-name">{store}</div>
-//               <div className="subStoreMain-type">Substore</div>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default SubStoreMain;
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import "../SubStoreMainPage/subStoreMain.css";
+import { API_BASE_URL } from '../api/api';
 
 function SubStoreMain() {
   const navigate = useNavigate();
-  const substores = [
-    "Accounts",
-    "Brain Operations Store",
-    "Female Ward Substore",
-    "ICU Sub store",
-    "Male ward SubStore",
-    "Maternity Substore",
-    "Operations Store",
-    "Private Sub Store",
-    "SubStore1",
-    "SubStore3"
-  ];
+  const [substores, setSubstores] = useState([]);
 
+  // Fetch substores from the API
+  useEffect(() => {
+    axios.get(`${API_BASE_URL}/substores/get-all-substores`)
+      .then((response) => {
+        setSubstores(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching substores:', error);
+      });
+  }, []);
+
+  // Navigate to the next page with the subStoreId
   const handleClick = (store) => {
     if (store) {
       navigate(`/substore/pharmacy/${store}`);  // Navigating with the store name
@@ -75,18 +29,20 @@ function SubStoreMain() {
   };
   return (
     <div className="subStoreMain-div">
-      <h6 className="subStoreMain-title"><i className="fa-solid fa-star-of-life"></i> Select your Substore</h6>
+      <h6 className="subStoreMain-title">
+        <i className="fa-solid fa-star-of-life"></i> Select your Substore
+      </h6>
       <div className="subStoreMain-grid">
-        {substores.map((store, index) => (
+        {substores.map((store) => (
           <div
-            key={index}
+            key={store.subStoreId}
             className="subStoreMain-card"
-            onClick={() => handleClick(store)}
+            onClick={() => handleClick(store.subStoreId)}
           >
             <div className="subStoreMain-icon"><i className="fa-solid fa-cart-shopping"></i></div>
             <div className="subStoreMain-info">
-              <div className="subStoreMain-name">{store}</div>
-              <div className="subStoreMain-type">Substore</div>
+              <div className="subStoreMain-name">{store.subStoreName}</div>
+              <div className="subStoreMain-type">{store.label}</div>
             </div>
           </div>
         ))}

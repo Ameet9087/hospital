@@ -1,0 +1,130 @@
+/* Modal Container */
+.emp-modal-dialog {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 600px;
+  width: 30%;
+  margin: 0;
+  z-index: 1050;
+}
+
+/* Modal Header */
+.emp-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #dee2e6;
+  background-color: #f8f9fa;
+}
+
+.emp-modal-title {
+  font-size: 18px;
+  color: #333;
+}
+
+.add-employee-role-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff0000;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+}
+
+/* Modal Body */
+.emp-modal-body {
+  padding: 20px;
+  background-color: #ffffff;
+  max-height: calc(100vh - 100px); /* Max height of the modal body */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Form Styles */
+.emp-form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px; /* Space between form groups */
+}
+
+.emp-form-label {
+  font-size: 16px;
+  color: #333;
+  margin-right: 40px;
+  width: 100px; /* Set a fixed width for labels */
+}
+.emp-form-labels {
+  font-size: 16px;
+  color: #333;
+  margin-right: 10px;
+  width: 100px; /* Set a fixed width for labels */
+}
+
+.emp-text-danger {
+  color: #ff0000;
+}
+
+.emp-form-control {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding: 10px;
+  flex: 1; /* Makes the input take the remaining space */
+}
+
+.emp-form-check-input {
+  width: 20px;
+  height: 20px;
+}
+
+/* Add Button */
+.add-employee-btn {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  font-size: 16px;
+  height: 30px;
+  padding: 0 15px; /* Add padding for some space around the text */
+  cursor: pointer;
+  display: inline-block; /* Inline-block to adjust width based on content */
+  text-align: center; /* Center text horizontally */
+  line-height: 30px; /* Center text vertically within the 30px height */
+}
+
+.add-employee-btn:hover {
+  background-color: #218838;
+}
+
+/* Modal Backdrop */
+.add-employee-role .modal-backdrop {
+  opacity: 0.5 !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .emp-modal-dialog {
+    margin: 0;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    max-width: none;
+  }
+
+  .emp-modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-employee-role-btn {
+    position: static;
+    margin-top: 10px;
+  }
+}

@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import html2pdf from 'html2pdf.js';
 import "../DisPrescriptionMain/viewAvailability.css";
+import axios from 'axios';
+import { API_BASE_URL } from '../../api/api';
 
 const PrescriptionDetails = ({ prescription, onClose }) => {
   const [stockData, setStockData] = useState({});
+  const [status, setStatus] = useState(prescription.status ); // initial status
 
   useEffect(() => {
     // Function to fetch stock availability for medications
     const fetchStockData = async () => {
       try {
-        const response = await fetch('http://localhost:1415/api/add-items'); // Your API endpoint for stock status
+        const response = await fetch(`${API_BASE_URL}/add-items`); // Your API endpoint for stock status
         const data = await response.json();
-        // Assume data is an object with medicationId as key and availability status as value
         setStockData(data);
       } catch (error) {
         console.error('Error fetching stock data:', error);
@@ -30,7 +32,6 @@ const PrescriptionDetails = ({ prescription, onClose }) => {
     };
 
     const pdf = html2pdf().from(element).toPdf().get('pdf');
-
     pdf.then(pdf => {
       const pdfBlob = pdf.output('blob');
       const pdfUrl = URL.createObjectURL(pdfBlob);
@@ -38,7 +39,19 @@ const PrescriptionDetails = ({ prescription, onClose }) => {
     });
   };
 
-  // Default to an empty array if medications are undefined
+  const updatePrescriptionStatus = async () => {
+    try {
+      console.log(prescription.medicationId)
+      await axios.put(`${API_BASE_URL}/medications/update-status/${prescription.medicationId}?status=completed`);
+
+      alert("status updated")
+
+      setStatus('completed'); // Update status in UI
+    } catch (error) {
+      console.error('Failed to update prescription status:', error);
+    }
+  };
+
   const medications = prescription.medications || [];
 
   return (
@@ -52,6 +65,7 @@ const PrescriptionDetails = ({ prescription, onClose }) => {
         <p>Patient Name: <span>{`${prescription.newPatientVisitDTO.firstName || ''} ${prescription.newPatientVisitDTO.middleName || ''} ${prescription.newPatientVisitDTO.lastName || ''}`}</span></p>
         <p>Requested By: <span>{prescription.requestedBy || 'N/A'}</span></p>
         <p>Date: <span>{prescription.medicationDate || 'N/A'}</span></p>
+        <p>Status: <span>{status}</span></p>
       </div>
 
       <div id="prescription-details" className="viewAvailability-prescription-details">
@@ -70,7 +84,7 @@ const PrescriptionDetails = ({ prescription, onClose }) => {
           </thead>
           <tbody>
             {medications.length > 0 ? (
-              medications.map((medication, index) => (
+              medications.reverse().map((medication, index) => (
                 <tr key={medication.medicationId}>
                   <td>{index + 1}</td>
                   <td>{medication.medicationName}</td>
@@ -79,8 +93,8 @@ const PrescriptionDetails = ({ prescription, onClose }) => {
                   <td>{medication.lastTaken}</td>
                   <td>{medication.comments || 'N/A'}</td>
                   <td className={stockData[medication.medicationId] ? 'availability-yes' : 'availability-no'}>
-  {stockData[medication.medicationId] ? 'Yes' : 'No'}
-</td>   
+                    {stockData[medication.medicationId] ? 'Yes' : 'No'}
+                  </td>
                 </tr>
               ))
             ) : (
@@ -94,7 +108,9 @@ const PrescriptionDetails = ({ prescription, onClose }) => {
 
       <div className="viewAvailability-buttons">
         <button className="viewAvailability-print-button" onClick={printDocument}>Print <i className="fa-solid fa-print"></i></button>
-        <button className="viewAvailability-dispatch-button">Dispatch <i className="fa-solid fa-share"></i></button>
+        <button className="viewAvailability-dispatch-button" onClick={updatePrescriptionStatus} disabled={status === 'completed'}>
+          Dispatch <i className="fa-solid fa-share"></i>
+        </button>
       </div>
     </div>
   );

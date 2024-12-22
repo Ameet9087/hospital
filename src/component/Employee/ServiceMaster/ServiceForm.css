@@ -1,0 +1,83 @@
+.service-ms-form-container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .service-ms-form-addBtn {
+    margin-bottom: 15px;
+  }
+  
+  .service-ms-form-add-button {
+    padding: 5px;
+    margin-left: 10px;
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .service-ms-form-add-button:hover {
+    background-color: white;
+    color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+  
+  
+  .service-ms-form-search-N-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .service-ms-form-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .service-ms-form-search-bar i {
+    color: #888;
+    font-size: var(--font-size);
+  }
+  
+  .service-ms-form-search-bar input {
+    /* width: 250px; */
+    padding: 5px ;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: var(--font-size);
+  }
+  
+  .service-ms-form-results-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .service-ms-form-results-info span {
+    font-size: var(--font-size);
+    color: #555;
+  }
+ 
+  .service-ms-form-print-button {
+    padding: 5px;
+    /* margin-left: 10px; */
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+ 
+  
+  .service-ms-form-print-button:hover {
+    background-color: white;
+    color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+}  
+  
+ 

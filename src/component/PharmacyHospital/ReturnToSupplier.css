@@ -166,6 +166,20 @@
     transition: background-color 0.3s ease;
 
   }
+
+  .returnpageshowbtn {
+    background-color:var( --button-color);
+    color: white;
+    border: none;
+    /* margin-right: 10px; */
+    padding: 5px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin-left: auto;
+    transition: background-color 0.3s ease;
+
+  }
   .return-to-supplier-print-button:hover{
     border: 1px solid var( --button-hover-border-color);
     color: var(--button-hover-text-color);

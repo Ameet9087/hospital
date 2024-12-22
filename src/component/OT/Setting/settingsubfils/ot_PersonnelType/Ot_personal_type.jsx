@@ -1,6 +1,5 @@
-// neha-OT-OT-Personaltype-14-9-24
 import React, { useState, useEffect, useRef } from 'react';
-import { FaSearch } from 'react-icons/fa';
+import useCustomAlert from '../../../../../alerts/useCustomAlert';
 import './ot_personnelType.css';
 import { startResizing } from '../../../../../TableHeadingResizing/ResizableColumns';
 
@@ -13,44 +12,29 @@ function Ot_personnelType() {
   const tableRef = useRef(null);
   const [columnWidths, setColumnWidths] = useState(0);
   
+  const { success, warning, error, CustomAlerts } = useCustomAlert(); // Use the custom alert
 
-  // Fetch personnel types from API
   useEffect(() => {
     fetchPersonnelTypes();
   }, []);
 
-  // Function to fetch personnel types
   const fetchPersonnelTypes = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/personnel-types/all`);
+      const response = await fetch('http://localhost:1415/api/personnel-types/all');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
       const data = await response.json();
       setPersonnelTypes(data);
-    } catch (error) {
-      console.error('Error fetching personnel types:', error);
+    } catch (err) {
+      error('Error fetching personnel types'); // Trigger error alert
     }
   };
 
-  // Handle search input change
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  // Handle edit button click
-  const handleEdit = (personnelType) => {
-    setEditingPersonnelType(personnelType);
-    setPersonnelTypeName(personnelType.name);
-    setIsActive(personnelType.isActive);
-  };
-
-  // Handle add or update personnel type
   const handleSave = async () => {
     if (editingPersonnelType) {
-      // Update existing personnel type
       try {
-        const response = await fetch(`${API_BASE_URL}/personnel-types/${editingPersonnelType.id}`, {
+        const response = await fetch(`http://localhost:1415/api/personnel-types/${editingPersonnelType.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -72,15 +56,14 @@ function Ot_personnelType() {
             pt.id === updatedPersonnelType.id ? updatedPersonnelType : pt
           )
         );
-
+        success('Personnel type updated successfully'); // Trigger success alert
         handleCancel();
-      } catch (error) {
-        console.error('Error updating personnel type:', error);
+      } catch (err) {
+        error('Error updating personnel type'); // Trigger error alert
       }
     } else {
-      // Add new personnel type
       try {
-        const response = await fetch(`${API_BASE_URL}/api/personnel-types`, {
+        const response = await fetch('http://localhost:1415/api/personnel-types', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -98,25 +81,19 @@ function Ot_personnelType() {
 
         const newPersonnelType = await response.json();
         setPersonnelTypes((prevPersonnelTypes) => [...prevPersonnelTypes, newPersonnelType]);
-
+        success('Personnel type added successfully'); // Trigger success alert
         handleCancel();
-      } catch (error) {
-        console.error('Error adding personnel type:', error);
+      } catch (err) {
+        error('Error adding personnel type'); // Trigger error alert
       }
     }
   };
 
-  // Handle cancel edit
   const handleCancel = () => {
     setEditingPersonnelType(null);
     setPersonnelTypeName('');
     setIsActive(false);
   };
-
-  // Filter personnel types based on search term
-  const filteredPersonnelTypes = personnelTypes.filter((pt) =>
-    pt.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
     <div className='ot_personnelType_main'>
@@ -156,67 +133,34 @@ function Ot_personnelType() {
         </div>
       </div>
 
-      <div className="ot_personnelType_search_bar">
-        <input
-          type="text"
-          placeholder="Search"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-        {/* <button className="ot_personnelType_filter_button">
-          <FaSearch />
-        </button> */}
-      </div>
-
-      <table className="ot_personnelType_table" ref={tableRef}>  
+      <table className="ot_personnelType_table" ref={tableRef}>
         <thead>
           <tr>
-            
-            {[
-            'Personel Type Name',
-            'IsActive',
-            'Action'].map((header, index) => (
-              <th
-                key={index}
-                style={{ width: columnWidths[index] }}
-                className="rd-resizable-th"
-              >
+            {['Personnel Type Name', 'IsActive', 'Action'].map((header, index) => (
+              <th key={index} style={{ width: columnWidths[index] }} className="rd-resizable-th">
                 <div className="header-content">
                   <span>{header}</span>
-                  <div
-                    className="resizer"
-                    onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                  ></div>
+                  <div className="resizer" onMouseDown={startResizing(tableRef, setColumnWidths)(index)}></div>
                 </div>
               </th>
             ))}
           </tr>
         </thead>
-          <tbody>
-          {filteredPersonnelTypes.map((pt) => (
+        <tbody>
+          {personnelTypes.map((pt) => (
             <tr key={pt.id}>
-              <td className='ot_personnelType_tabledata'>{pt.name}</td>
-              <td className='ot_personnelType_tabledata'>{pt.isActive ? "true" : "false"}</td>
-              <td className='ot_personnelType_tabledata'>
-                <button
-                  onClick={() => handleEdit(pt)}
-                  className="ot_personnelType_edit_button"
-                >
-                  Edit
-                </button>
+              <td>{pt.name}</td>
+              <td>{pt.isActive ? 'true' : 'false'}</td>
+              <td>
+                <button onClick={() => handleEdit(pt)}>Edit</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {/* <div className="ot_personnelType_pagination">
-        <button>First</button>
-        <button>Previous</button>
-        <span>Page 1 of 4</span>
-        <button>Next</button>
-        <button>Last</button>
-      </div> */}
+      {/* Render the CustomAlerts */}
+      <CustomAlerts />
     </div>
   );
 }

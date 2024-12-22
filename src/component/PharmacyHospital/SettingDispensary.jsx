@@ -234,7 +234,8 @@ const SettingDispensary = () => {
           <h5>{isEditMode ? 'Edit Dispensary Details' : 'Add New Dispensary'}</h5>
         </div>
         <div className="supplier-setting-modal-body">
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit} className='supplier-setting-despensaryForm'>
+            <div>
             <Form.Group className="mb-3" controlId="dispensaryName">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -273,6 +274,8 @@ const SettingDispensary = () => {
                 onChange={handleChange}
               />
             </Form.Group>
+            </div>
+            <div>
             <Form.Group className="mb-3" controlId="dispensaryContactNo">
               <Form.Label>Contact No</Form.Label>
               <Form.Control
@@ -300,6 +303,8 @@ const SettingDispensary = () => {
                 onChange={handleChange}
               />
             </Form.Group>
+            </div>
+            <div>
             <Form.Group className="mb-3" controlId="dispensaryKraPin">
               <Form.Label>KRA PIN</Form.Label>
               <Form.Control
@@ -318,6 +323,7 @@ const SettingDispensary = () => {
                 onChange={handleChange}
               />
             </Form.Group>
+            </div>
             <Button variant="primary" type="submit">
               {isEditMode ? 'Save Changes' : 'Add Dispensary'}
             </Button>

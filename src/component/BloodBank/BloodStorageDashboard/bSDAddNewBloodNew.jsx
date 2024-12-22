@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 // import './Modal.css';
 import "./bSDAddNewBloodNew.css"
+import { API_BASE_URL } from '../../api/api';
 
 const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
     const [test_id, settest_id] = useState('');
@@ -15,7 +16,10 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
 
     const handleSave = async () => {
         const data = {
-            test_id,
+            bloodTestingDTO: {
+                testId: 1
+
+            },
             storagedate: storagedate ? storagedate.toISOString() : null,
             bloodgroup,
             volume,
@@ -25,7 +29,7 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
         };
 
         try {
-            const response = await fetch('http://localhost:8081/api/bloodstorage/add', {
+            const response = await fetch(`${API_BASE_URL}/bloodstorage/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

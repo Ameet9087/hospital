@@ -1,117 +1,27 @@
  /* Ajhar Tamboli dispenStockRequisition.css 19-09-24 */
 
 
-.dispenStockRequisition-active-imaging-request {
-    font-family: Arial, sans-serif;
-    background-color: var(--background-color);
-    height: 75vh;
-    /* max-width: 1200px; */
-    /* margin: 0 auto; */
-    /* padding: 10px; */
-  }
-  
-  .dispenStockRequisition-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* margin-bottom: 20px; */
-  }
-  
-  /* .dispenStockRequisition-header h4 {
-    color: #3f8fdf;
-    margin: 0;
-  } */
-  .dispenStockRequisition-CreateRequisition{
-    background-color:var( --button-color);
-    border: 1px solid var( --button-hover-border-color);
-    color: white;
-    border-radius: 5px ;
-    cursor: pointer;
-    font-size: var(--font-size);
-    transition: background-color 0.3s ease;
-    padding: 5px ;
-    /* border: none; */
-    /* margin-left: 5px; */
-    /* margin: 1px; */
-  }
-  .dispenStockRequisition-CreateRequisition:hover {
-    border: 1px solid var( --button-hover-border-color);
-    color: var(--button-hover-text-color);
-    background-color: var(--button-hover-background-color);
-  }
-  
- 
-  .dispenStockRequisition-checkBox select {
-    padding: 3px 5px 3px 5px;
-    background-color: #f0f0f0;
-    margin-left: 10px;
-    width: 100px;
-  }
-  .dispenStockRequisition-checkBox label {
-font-size: var(--font-size);
-/* font-weight: bold; */
-/* color: green; */
-padding: 0 5px;
+ .dispenStockRequisition-active-imaging-request {
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
+  height: 75vh;
+  /* max-width: 1200px; */
+  /* margin: 0 auto; */
+  /* padding: 10px; */
 }
-  
-  .dispenStockRequisition-controls {
-    padding: 10px;
-    margin-bottom: 5px;
-  }
-  
-  .dispenStockRequisition-date-range {
-    display: flex;
-    align-items: center;
-    width: 38%;
-    gap: 10px;
-    background-color: #f0f0f0;
-    padding: 1px 10px;
-  }
-  .dispenStockRequisition-date-range label{
-    display: flex;
-    align-items: center;
-    margin-left: 20px;
-    font-size: var(--font-size);
-  }
-  
-  .dispenStockRequisition-date-range input[type="date"] {
-    padding: 3px;
-    margin-left: 10px;
-  }
-  
-  
-  .dispenStockRequisition-search-bar {
-    display: flex;
-    margin-left: -15px;
-  }
-  
-  .dispenStockRequisition-search-bar input {
-    flex-grow: 1;
-    padding: 3px;
-    width: 200px;
 
-  }
-  .dispenStockRequisition-search-bar i{
-    position: relative;
-    color:gray;
-    top: 8px;
-  left: 190px;
-  }
-  
-  /* .search-bar button {
-    padding: 5px 10px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    cursor: pointer;
-  } */
-  
-  .dispenStockRequisition-results-info {
-    text-align: right;
-    font-size: var(--font-size);
-    /* font-weight: bold; */
-    /* color: #0011ff; */
+.dispenStockRequisition-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* margin-bottom: 20px; */
 }
-.dispenStockRequisition-print-btn{
+
+/* .dispenStockRequisition-header h4 {
+  color: #3f8fdf;
+  margin: 0;
+} */
+.dispenStockRequisition-CreateRequisition{
   background-color:var( --button-color);
   border: 1px solid var( --button-hover-border-color);
   color: white;
@@ -120,130 +30,310 @@ padding: 0 5px;
   font-size: var(--font-size);
   transition: background-color 0.3s ease;
   padding: 5px ;
-  margin-left: 5px;
   /* border: none; */
+  /* margin-left: 5px; */
   /* margin: 1px; */
 }
-.dispenStockRequisition-print-btn:hover {
+.dispenStockRequisition-CreateRequisition:hover {
   border: 1px solid var( --button-hover-border-color);
   color: var(--button-hover-text-color);
   background-color: var(--button-hover-background-color);
 }
 
-.dispenStockRequisition-table-N-paginat{
-  background-color: white ;
-}
-  /* .dispenStockRequisition-table-N-paginat table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-  }
-  
-  .dispenStockRequisition-table-N-paginat th {
-    border: 1px solid #ddd;
-    padding: 3px;
-    text-align: center;
-    font-size: var(--heading-font);
-        background-color: #f2f2f2;
-  }
-  
-  .dispenStockRequisition-table-N-paginat td {
-    border: 1px solid #ddd;
-    padding: 3px;
-    text-align: center;
-    font-size: var(--font-size);
-  }
-  
-  .dispenStockRequisition-table-N-paginat tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-   */
-  .dispenStockRequisition-action-button {
-    padding: 5px 10px;
-    color: white;
-    border: none;
-    cursor: pointer;
 
-    border-radius: 13px;
-  }
-  
-  .dispenStockRequisition-add-report {
-    background-color: #008CBA;
-  }
-  
-  .dispenStockRequisition-scan-done {
-    background-color: #008CBA;
-  }
-  
-  .dispenStockRequisition-pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  
-  .dispenStockRequisition-search-N-results{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+.dispenStockRequisition-checkBox select {
+  padding: 3px 5px 3px 5px;
+  background-color: #f0f0f0;
+  margin-left: 10px;
+  width: 100px;
 }
-.dispenStockRequisition-pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-  }
-  
-  .dispenStockRequisition-pagination button {
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin: 0 5px;
-    border-radius: 5px;
-  }
-  
-  .dispenStockRequisition-pagination span {
-    margin: 0 10px;
-    /* color: gray; */
-    font-size: var(--font-size);
-  }
+.dispenStockRequisition-checkBox label {
+font-size: var(--font-size);
+/* font-weight: bold; */
+/* color: green; */
+padding: 0 5px;
+}
 
-  
-.dispenStockRequisition-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
+.dispenStockRequisition-controls {
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.dispenStockRequisition-date-range {
+  display: flex;
+  align-items: center;
+  width: 38%;
+  gap: 10px;
+  background-color: #f0f0f0;
+  padding: 1px 10px;
+}
+.dispenStockRequisition-date-range label{
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  font-size: var(--font-size);
+}
+
+.dispenStockRequisition-date-range input[type="date"] {
+  padding: 3px;
+  margin-left: 10px;
+}
+
+
+.dispenStockRequisition-search-bar {
+  display: flex;
+  margin-left: -15px;
+}
+
+.dispenStockRequisition-search-bar input {
+  flex-grow: 1;
+  padding: 3px;
+  width: 200px;
+
+}
+.dispenStockRequisition-search-bar i{
+  position: relative;
+  color:gray;
+  top: 8px;
+left: 190px;
+}
+
+/* .search-bar button {
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+} */
+
+.dispenStockRequisition-results-info {
+  text-align: right;
+  font-size: var(--font-size);
+  /* font-weight: bold; */
+  /* color: #0011ff; */
+}
+.dispenStockRequisition-print-btn{
+background-color:var( --button-color);
+border: 1px solid var( --button-hover-border-color);
+color: white;
+border-radius: 5px ;
+cursor: pointer;
+font-size: var(--font-size);
+transition: background-color 0.3s ease;
+padding: 5px ;
+margin-left: 5px;
+/* border: none; */
+/* margin: 1px; */
+}
+.dispenStockRequisition-print-btn:hover {
+border: 1px solid var( --button-hover-border-color);
+color: var(--button-hover-text-color);
+background-color: var(--button-hover-background-color);
+}
+
+.dispenStockRequisition-table-N-paginat table {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.dispenStockRequisition-table-N-paginat th {
+  border: 1px solid #ddd;
+  padding: 3px;
+  text-align: center;
+  font-size: var(--heading-font);
+      background-color: #f2f2f2;
+}
+
+.dispenStockRequisition-table-N-paginat td {
+  border: 1px solid #ddd;
+  padding: 3px;
+  text-align: center;
+  font-size: var(--font-size);
+  /* color: rgb(70, 69, 69); */
+}
+
+.dispenStockRequisition-table-N-paginat tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.dispenStockRequisition-action-button {
+  padding: 5px 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
+
+  border-radius: 13px;
+}
+
+.dispenStockRequisition-add-report {
+  background-color: #008CBA;
+}
+
+.dispenStockRequisition-scan-done {
+  background-color: #008CBA;
+}
+
+.dispenStockRequisition-pagination {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  margin-top: 20px;
+}
+
+
+.dispenStockRequisition-search-N-results{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.dispenStockRequisition-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.dispenStockRequisition-pagination button {
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 0 5px;
+  border-radius: 5px;
+}
+
+.dispenStockRequisition-pagination span {
+  margin: 0 10px;
+  /* color: gray; */
+  font-size: var(--font-size);
+}
+.dispenStockRequisition-table-N-paginat{
+  background-color: white ;
+}
+
+
+.dispenStockRequisition-modal-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 1000;
 }
 
 /* Modal content styling */
 .dispenStockRequisition-modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  position: relative;
-  max-width: 1300px;
-  width: 100%;
+background-color: #fff;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+position: relative;
+width: 100%;
 }
 
 /* Close button styling */
 .dispenStockRequisition-close-modal {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
+position: absolute;
+top: 10px;
+right: 10px;
+background: transparent;
+border: none;
+font-size: 24px;
+cursor: pointer;
+}
+
+
+.dispensarystockreq-modal-dialog {
+display: flex;
+justify-content: center;
+align-items: center;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.5);
+z-index: 1050;
+}
+
+.dispensarystockreq-modal-content {
+background: #fff;
+border-radius: 8px;
+width: 100%;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+animation: fadeIn 0.3s ease-in-out;
+}
+
+.dispensarystockreq-modal-header {
+background: #3598dc;
+color: #fff;
+padding: 15px;
+border-radius: 8px 8px 0 0;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.dispensarystockreq-modal-title {
+margin: 0;
+font-size: 18px;
+}
+
+.dispensarystockreq-btn-close {
+background: transparent;
+border: none;
+font-size: 20px;
+color: #fff;
+cursor: pointer;
+}
+
+.dispensarystockreq-modal-body {
+padding: 20px;
+}
+
+.dispensarystockreq-requisition-details p {
+margin: 5px 0;
+font-size: 14px;
+}
+
+
+
+.dispensarystockreq-modal-footer {
+padding: 15px;
+background: #f1f1f1;
+border-radius: 0 0 8px 8px;
+text-align: right;
+}
+
+.dispensarystockreq-btn-close-footer {
+background-color: #3598dc;
+color: #fff;
+padding: 8px 16px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+}
+
+.dispensarystockreq-btn-close-footer:hover {
+background-color: var(--button-hover-background-color);
+color: var(--button-hover-text-color);
+border: 1px solid var(--button-hover-border-color);
+}
+
+/* Fade-in animation for modal */
+@keyframes fadeIn {
+from {
+  opacity: 0;
+  transform: scale(0.9);
+}
+to {
+  opacity: 1;
+  transform: scale(1);
+}
 }

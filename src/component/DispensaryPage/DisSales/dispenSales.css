@@ -81,3 +81,7 @@
     }
   }
   
+  .dispenSales-counter-option.active {
+    background-color: #f0f0f0; /* Highlight the active counter */
+    border: 2px solid #007bff; /* Change the border color */
+  }

@@ -134,7 +134,7 @@ const filteredUsers = suppliers.filter(user =>
       <table ref={tableRef}>
                         <thead>
                             <tr>
-                                {[ "Supplier Name",
+                                {[ "Company Name",
   "Contact No",
   "Description",
   "Contact Address",
@@ -157,7 +157,7 @@ const filteredUsers = suppliers.filter(user =>
           <tbody>
             {filteredUsers.map((user, index) => (
               <tr key={index}>
-                <td>{user.name}</td>
+                <td>{user.companyName}</td>
                 <td>{user.contactNumber}</td>
                 <td>{user.description}</td>
                 <td>{user.contactAddress}</td>

@@ -70,7 +70,7 @@ const DispenSalessalesStockDetails = () => {
     useEffect(() => {
         const fetchMedicineStockDetails = async () => {
             try {
-                const response = await fetch("http://localhost:1415/api/hospital/fetch-fetch-medicine-details");
+                const response = await fetch(`${API_BASE_URL}/hospital/fetch-fetch-medicine-details`);
                 if (!response.ok) {
                     throw new Error("Failed to fetch medicine stock details.");
                 }
@@ -87,9 +87,7 @@ const DispenSalessalesStockDetails = () => {
     }, []);
 
     return (
-        <div 
-        // className="dispenSalessalesStockDetails-container"
-        >
+        <div className="dispenSalessalesStockDetails-container">
             <div className="dispenSalessalesStockDetails-header">
                 <input type="text" placeholder="Search" className="dispenSalessalesStockDetails-search-bar" />
                 <div className="dispenSalessalesStockDetails-filter-container">
@@ -106,7 +104,7 @@ const DispenSalessalesStockDetails = () => {
                 <div className="dispenSalessalesStockDetails-header-right">
                     <span>Showing {medicineStocks.length} results</span>
                     <button className="dispenSalessalesStockDetails-print-btn">Print</button>
-                    {/* <button className="dispenSalessalesStockDetails-close-popup-btn">X</button> */}
+                    <button className="dispenSalessalesStockDetails-close-popup-btn">X</button>
                 </div>
             </div>
             {loading ? (

@@ -6,6 +6,8 @@ import PatientRegistration from './PatientRegistration';
 import SearchPatient from './SearchPatient';
 import RegisterPatient from './RegisterPatient';
 import Dashborad from './Dashborad';
+import OpdList from './OpdList';
+import CheckIn from '../Appointment/CheckIn';
 
 
 function PatientRouting() {
@@ -19,7 +21,9 @@ function PatientRouting() {
         <Route path='/PatientRegistration' element={<PatientRegistration/>}></Route>
         <Route path='/searchpatient' element={<SearchPatient/>}></Route>
         <Route path='/registerpatient' element={<RegisterPatient/>}></Route>
+        <Route path='/opd' element={<OpdList/>}></Route>
         <Route path='/home' element={<Dashborad/>}></Route>
+        <Route path='checkIn' element={<CheckIn/>}/>
 
          </Routes>
       </div>

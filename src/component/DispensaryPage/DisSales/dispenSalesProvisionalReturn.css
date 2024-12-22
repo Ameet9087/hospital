@@ -123,10 +123,7 @@ color: green;
   background-color: var(--button-hover-background-color);
 }
   
-.dispenSalesProvisionalReturn-table-N-paginat{
-  background-color: white ;
-}
-  /* .dispenSalesProvisionalReturn-table-N-paginat table {
+  .dispenSalesProvisionalReturn-table-N-paginat table {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
@@ -141,6 +138,7 @@ color: green;
 }
   
   .dispenSalesProvisionalReturn-table-N-paginat th {
+    /* background-color: red; */
     background-color: #F3F3F3;
     font-size: var(--heading-font);
 
@@ -148,7 +146,7 @@ color: green;
   
   .dispenSalesProvisionalReturn-table-N-paginat tr:nth-child(even) {
     background-color: #f9f9f9;
-  } */
+  }
   
   .dispenSalesProvisionalReturn-action-button {
     padding: 5px 10px;
@@ -202,6 +200,9 @@ color: green;
     margin: 0 10px;
     color: gray;
     font-size: var(--font-size);
+  }
+  .dispenSalesProvisionalReturn-table-N-paginat{
+    background-color: white ;
   }
 
   

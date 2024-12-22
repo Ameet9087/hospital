@@ -19,13 +19,13 @@ const Otmain = () => {
      
       <div className="app-container">
         <Routes>
-          <Route path="/" element={<BookingList/>} />
+          <Route path="/bookinglist" element={<BookingList/>} />
           <Route path="setting/*" element={<Setting/>} />
           {/* <Route path="/Change_Visitscheme" element={<Change_Visitscheme/>} /> */}
             <Route path="/surgeryScheduling" element={<Sugeryscheduling />} />
-            <Route path='/ot' element={<OTResourceManagement />} />
-            <Route path='/surgicaltrack' element={<SurgicalInstrumentTracking />} />
-            <Route path='/anesthesiarecordmgnt' element={<AnesthesiaRecordManagement />} />
+            <Route path='/otresourcemanagement' element={<OTResourceManagement />} />
+            <Route path='/surgicalinstrumenttracking' element={<SurgicalInstrumentTracking />} />
+            <Route path='/anesthesiarecordmanagement' element={<AnesthesiaRecordManagement />} />
             <Route path='/postsurgerycare' element={<PostSurgeryCare />} />
         </Routes>
       </div>

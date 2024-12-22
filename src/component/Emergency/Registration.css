@@ -1,5 +1,3 @@
- /* Dhanashree_EmergencyPatientRegistration_19/09 */
-
 .PatientRegistration-container {
     max-width: 1200px;
     margin: 20px auto;
@@ -8,7 +6,6 @@
     border-radius: 5px;
     background-color: #fff;
 }
-
 
 .PatientRegistration-header {
     display: flex;
@@ -30,6 +27,8 @@
 
 .PatientRegistration-form {
     padding: 20px;
+    max-height: 70vh; /* Limit the height of the form */
+    overflow-y: auto; /* Add vertical scrolling if content exceeds max-height */
 }
 
 .PatientRegistration-form-group {
@@ -81,16 +80,7 @@
     margin-top: 20px;
 }
 
-.PatientRegistration-add-button {
-    background-color: #38a169;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-
+.PatientRegistration-add-button,
 .PatientRegistration-register-button {
     background-color: #38a169;
     color: white;
@@ -100,26 +90,23 @@
     cursor: pointer;
 }
 
-
 .PatientRegistration-add-button:hover, 
 .PatientRegistration-register-button:hover {
     background-color: #2f855a;
 }
 
-
 .PatientRegistration-submit-button {
-    background-color: var(--button-color); /* Set the background color to red */
-    color: white; /* Set the text color to white for contrast */
-    border: none; /* Remove any default border */
-    padding: 10px 20px; /* Add some padding for size */
-    font-size: 16px; /* Adjust the font size */
-    border-radius: 5px; /* Optional: add rounded corners */
-    cursor: pointer; /* Change cursor to pointer on hover */
-  }
-  .PatientRegistration-submit-button:hover {
-    background-color: white; /* Change the background to white on hover */
-    color: var(--button-hover-text-color); /* Set the text color to the hover variable */
-    border: 2px solid var(--button-hover-border-color); /* Add a border with the hover color */
-  }
-  
-   /* Dhanashree_EmergencyPatientRegistration_19/09 */
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.PatientRegistration-submit-button:hover {
+    background-color: white;
+    color: var(--button-hover-text-color);
+    border: 2px solid var(--button-hover-border-color);
+}

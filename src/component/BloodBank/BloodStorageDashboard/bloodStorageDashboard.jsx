@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import "./bloodStorageDashboard.css"
 import BSDAddNewBloodNew from './bSDAddNewBloodNew';
-
+import { API_BASE_URL } from '../../api/api';
 
 const BloodStorageDashboard = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -13,7 +13,7 @@ const BloodStorageDashboard = () => {
     // Fetch the data from the API
     const fetchData = async () => {
         try {
-            const response = await fetch('http://localhost:8081/api/bloodstorage/getall');
+            const response = await fetch(`${API_BASE_URL}/bloodstorage/getall`);
             const data = await response.json();
             setStorageData(data);
             setFilteredData(data); // Initially set filteredData to all fetched data
@@ -26,20 +26,24 @@ const BloodStorageDashboard = () => {
         fetchData();
     }, []);
 
-    // Handle search by storage ID or test ID
-    const handleSearch = () => {
-        const filtered = storageData.filter((item) =>
-            searchTerm
-                ? item.id.toString().includes(searchTerm) || item.testId.toString().includes(searchTerm)
-                : true
-        );
+    // Filter the data whenever searchTerm changes
+    useEffect(() => {
+        const filtered = storageData.filter((item) => {
+            const storageId = item.storage_id?.toString() || '';
+            const testId = item.bloodTestingDTO?.testId?.toString() || '';
+            return (
+                searchTerm === '' ||
+                storageId.includes(searchTerm) ||
+                testId.includes(searchTerm)
+            );
+        });
         setFilteredData(filtered);
-    };
+    }, [searchTerm, storageData]);
 
     // Handle delete functionality
     const handleDelete = async (id) => {
         try {
-            const response = await fetch(`http://localhost:8081/api/bloodstorage/delete/${id}`, {
+            const response = await fetch(`${API_BASE_URL}/bloodstorage/delete/${id}`, {
                 method: 'DELETE',
             });
 
@@ -84,9 +88,8 @@ const BloodStorageDashboard = () => {
                             type="text"
                             placeholder="Search by Storage ID or Test ID"
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onChange={(e) => setSearchTerm(e.target.value)} // Update search term on input change
                         />
-                        <button onClick={handleSearch}>Search</button>
                     </div>
                 </div>
             </div>
@@ -107,23 +110,23 @@ const BloodStorageDashboard = () => {
                         <th>Expiry Date</th>
                         <th>Storage Location</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        {/* <th>Actions</th> */}
                     </tr>
                 </thead>
                 <tbody>
                     {filteredData.map((item) => (
                         <tr key={item.storage_id}>
                             <td>{item.storage_id}</td>
-                            <td>{item.test_id}</td>
+                            <td>{item?.bloodTestingDTO?.testId}</td>
                             <td>{item.bloodgroup}</td>
                             <td>{item.volume} ml</td>
                             <td>{item.storagedate}</td>
                             <td>{item.expirydate}</td>
                             <td>{item.storagelocation}</td>
                             <td>{item.status}</td>
-                            <td>
+                            {/* <td>
                                 <button onClick={() => handleDelete(item.storage_id)}>Delete</button>
-                            </td>
+                            </td> */}
                         </tr>
                     ))}
                 </tbody>

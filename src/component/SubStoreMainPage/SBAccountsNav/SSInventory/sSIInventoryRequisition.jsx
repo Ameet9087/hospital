@@ -8,6 +8,7 @@ import SSSIInvenReqCreateReq from './sSSIInvenReqCreateReq';
 import SSSIInvenReqView from './sSSIInvenReqView';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
+import CustomModal from '../../../CustomModel/CustomModal';
 
 function SSIInventoryRequisition() {
   const {store} = useParams();
@@ -18,14 +19,14 @@ function SSIInventoryRequisition() {
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
   const [statusFilter, setStatusFilter] = useState('Pending');
   const [storeFilter, setStoreFilter] = useState('');
+  const [datas,setDatas]=useState([])
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/inventory-requisitions/getAll`)
+    fetch(`${API_BASE_URL}/inventory-requisitions`)
       .then(response => response.json())
       .then(data => {
-        const filteredData = data.filter(item => item.storeName === store)
-        setRequisitions(filteredData);
-        setFilteredRequisitions(filteredData);
+        setRequisitions(data);
+        setFilteredRequisitions(data);
       })
       .catch(error => console.error('Error fetching data:', error));
   }, []);
@@ -42,7 +43,10 @@ function SSIInventoryRequisition() {
     setShowCreateRequisition(true);
   };
 
-  const handleViewClick = () => {
+  const handleViewClick = (req) => {
+    console.log(req);
+    
+    setDatas(req)
     setShowViewRequisition(true);
   };
 
@@ -64,20 +68,21 @@ function SSIInventoryRequisition() {
 
   return (
     <div className="sSIInventoryRequisition-active-imaging-request">
-      {/* Popup for Create Requisition */}
-      {showCreateRequisition && (
-        <div className="sSIInventoryRequisition-popup-overlay">
-          <div className="sSIInventoryRequisition-popup-content">
-            <SSSIInvenReqCreateReq onClose={closePopups} />
-          </div>
-        </div>
-      )}
+    
+        <CustomModal isOpen={showCreateRequisition} onClose={closePopups}>
+        {/* <div className="sSIInventoryRequisition-popup-overlay">
+          <div className="sSIInventoryRequisition-popup-content"> */}
+            <SSSIInvenReqCreateReq  />
+          {/* </div>
+        </div> */}
+        </CustomModal>
+   
 
       {/* Popup for View Requisition */}
       {showViewRequisition && (
         <div className="sSIInventoryRequisition-popup-overlay">
           <div className="sSIInventoryRequisition-popup-content">
-            <SSSIInvenReqView onClose={closePopups} />
+            <SSSIInvenReqView onClose={closePopups} requisition={datas} />
           </div>
         </div>
       )}
@@ -176,34 +181,7 @@ function SSIInventoryRequisition() {
           <button className='sSIInventoryRequisition-print-button' onClick={handlePrint}><i class="fa-solid fa-print"></i> Print</button>
         </div>
       </div>
-      <div style={{ display: 'none' }}>
-        <div ref={printRef}>
-          <h2>Inventory Requisition Report</h2>
-          <p>Printed On: {new Date().toLocaleString()}</p>
-          <table>
-            <thead>
-              <tr>
-                <th>Req.No</th>
-                <th>Requested To</th>
-                <th>Date</th>
-                <th>Verification Status</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredRequisitions.map(req => (
-                <tr key={req.id}>
-                  <td>{req.id}</td>
-                  <td>{req.storeName}</td>
-                  <td>{new Date(req.requestDate).toLocaleDateString()}</td>
-                  <td>{req.status}</td>
-                  <td>{req.verificationStatus}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      
       <div className="sSIInventoryRequisition-table-N-paginat">
         <table>
           <thead>
@@ -217,16 +195,16 @@ function SSIInventoryRequisition() {
             </tr>
           </thead>
           <tbody>
-            {filteredRequisitions.map(req => (
+            {filteredRequisitions.map((req) => (
               <tr key={req.id}>
                 <td>{req.id}</td>
-                <td>{req.storeName}</td>
-                <td>{new Date(req.requisitionDate).toLocaleDateString()}</td>
+                <td>{req.subStoreId}</td>
+                <td>{req.requisitionDate}</td>
                 <td>{req.status}</td>
-                <td>{req.verificationStatus}</td>
+                <td>{req.verifyOrNot}</td>
                 <td>
                   <div className='sSIInventoryRequisition-view-btn'>
-                    <button onClick={handleViewClick}>View</button>
+                    <button onClick={()=>handleViewClick(req)}>View</button>
                     <button>... ▾</button>
                   </div>
                 </td>

@@ -53,7 +53,6 @@
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  width: 100%; /* Make buttons full width of list item */
 }
 
 .maternity-header-button:hover {

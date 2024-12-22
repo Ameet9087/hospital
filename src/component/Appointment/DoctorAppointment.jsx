@@ -25,11 +25,12 @@ const [appointment,setAppointment]= useState([]);
     if (!locationId || !doctorId || !appointmentDate) {
       alert("Please select location, doctor, and date before loading slots.");
       return;
+
     }
-  
+     console.log(locationId);
     try {
       const response = await axios.get(
-        `${API_BASE_URL}/schedules/by-location-and-doctor?locationId=${locationId}&doctorId=${doctorId}`
+        `${API_BASE_URL}/schedules/by-location-and-doctor?locationId=${locationId}&doctorId=${doctorId}&givenDate=${appointmentDate}`
       );
       const scheduleData = response.data;
   
@@ -61,29 +62,28 @@ const [appointment,setAppointment]= useState([]);
 
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const locationResponse = await axios.get(
-          `${API_BASE_URL}/location-masters`
-        );
-        setLocations(locationResponse.data);
-        
-        const doctorResponse = await axios.get(
-          `${API_BASE_URL}/doctors`
-        );
-        setDoctors(doctorResponse.data);  
+  const fetchData = async () => {
+    try {
+      const locationResponse = await axios.get(`${API_BASE_URL}/location-masters`);
+      setLocations(locationResponse.data);
+      
+      const doctorResponse = await axios.get(`${API_BASE_URL}/doctors`);
+      setDoctors(doctorResponse.data);
 
-        const allSchedulesResponse = await axios.get(`${API_BASE_URL}/appointments`)
-        setAppointment(allSchedulesResponse.data);
-        console.log(allSchedulesResponse.data);
-        
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+      const allSchedulesResponse = await axios.get(`${API_BASE_URL}/appointments`);
+      const appointmentsData = Array.isArray(allSchedulesResponse.data)
+        ? allSchedulesResponse.data
+        : allSchedulesResponse.data.appointments || []; // Adjust based on response
+      setAppointment(appointmentsData);
+      console.log(appointmentsData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-    fetchData();
-  }, []);
+  fetchData();
+}, []);
+
   // Generate time slots
   const generateTimeSlots = (start, end, reviewTime) => {
     const slots = [];
@@ -207,6 +207,8 @@ const [appointment,setAppointment]= useState([]);
           appointmentDate: formData.appointmentDate,
         });
       }
+      console.log(formData.location);
+      
     }
   };
   
@@ -257,9 +259,9 @@ const [appointment,setAppointment]= useState([]);
           onChange={handleInputChange}
         >
           <option value="">Select Location</option>
-          {locations.map((location, index) => (
-            <option key={index} value={location.id}>
-              {location.locationName}
+          {locations?.map((location, index) => (
+            <option key={index} value={location?.id}>
+              {location?.locationName}
             </option>
           ))}
         </select>
@@ -279,7 +281,6 @@ const [appointment,setAppointment]= useState([]);
           <select
           className="DoctorAppointments-input"
           name="doctor"
-         disabled={!formData.location}
           value={formData.doctor}
           onChange={(e) => {
             handleInputChange(e); // Update the doctor value in formData
@@ -287,7 +288,7 @@ const [appointment,setAppointment]= useState([]);
           }}
         >
           <option value="">Select Doctor</option>
-          {doctors.map((doctor, index) => (
+          {doctors?.map((doctor, index) => (
             <option key={index} value={doctor.doctorId}>
               {doctor.doctorName}
             </option>
@@ -310,7 +311,7 @@ const [appointment,setAppointment]= useState([]);
             </tr>
           </thead>
           <tbody>
-            {timeSlots.map((timeSlot) => {
+            {timeSlots?.map((timeSlot) => {
                const appointmentObj = appointment.find(
                 (appt) =>
                   appt.appointmentTime === timeSlot &&

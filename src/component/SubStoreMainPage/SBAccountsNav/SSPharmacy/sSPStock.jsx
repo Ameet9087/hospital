@@ -208,8 +208,8 @@ function SSPStock() {
         return <SSPConsumption />;
       case 'Store Transfer':
         return <SSPStoreTransfer />;
-      case 'Issues':
-        return <SSPIssues />;
+      // case 'Issues':
+      //   return <SSPIssues />;
       case 'Reports':
         return <SSPReports />; // Return the Reports component
       default:
@@ -226,7 +226,7 @@ function SSPStock() {
         <li className={activeTab === 'Requisition' ? 'active' : ''} onClick={() => setActiveTab('Requisition')}>Requisition</li>
         <li className={activeTab === 'Consumption' ? 'active' : ''} onClick={() => setActiveTab('Consumption')}>Consumption</li>
         <li className={activeTab === 'Store Transfer' ? 'active' : ''} onClick={() => setActiveTab('Store Transfer')}>Store Transfer</li>
-        <li className={activeTab === 'Issues' ? 'active' : ''} onClick={() => setActiveTab('Issues')}>Issues</li>
+        {/* <li className={activeTab === 'Issues' ? 'active' : ''} onClick={() => setActiveTab('Issues')}>Issues</li> */}
         <li className={activeTab === 'Reports' ? 'active' : ''} onClick={() => setActiveTab('Reports')}>Reports</li>
       </ul>
     </nav>

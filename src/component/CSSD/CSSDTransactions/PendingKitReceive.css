@@ -1,0 +1,44 @@
+.pendingkitreceive-container {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: var(--background-color);
+    padding: 20px;
+  }
+  
+  .pendingkitreceive-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .pendingkitreceive-inputs label {
+    display: inline-block;
+    margin-right: 10px;
+    color: black;
+  }
+  
+  .pendingkitreceive-inputs input {
+    margin-left: 5px;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .pendingkitreceive-table td input {
+    width: 100%;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .pendingkitreceivesearch-icon{
+    margin-right: 20px;
+
+  }
+
+ 

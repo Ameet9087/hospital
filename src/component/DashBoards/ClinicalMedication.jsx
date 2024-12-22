@@ -4,7 +4,7 @@ import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 
-const ClinicalMedication = ({ patientId, newPatientVisitId }) => {
+const ClinicalMedication = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [showForm, setShowForm] = useState(false);
@@ -21,7 +21,9 @@ const ClinicalMedication = ({ patientId, newPatientVisitId }) => {
       comments: "",
       status: "pending",
       medicationDate: new Date().toLocaleDateString(),
-      ...(patientId ? { patientDTO: { patientId } } : { newPatientVisitDTO: { newPatientVisitId } }),
+      ...(patientId
+        ? { inPatientDTO: { inPatientId: patientId } }
+        : { outPatientDTO: { outPatientId } }),
     },
   ]);
 
@@ -44,7 +46,9 @@ const ClinicalMedication = ({ patientId, newPatientVisitId }) => {
         comments: "",
         status: "pending",
         medicationDate: new Date().toLocaleDateString(),
-        ...(patientId ? { patientDTO: { patientId } } : { newPatientVisitDTO: { newPatientVisitId } }),
+        ...(patientId
+          ? { patientDTO: { inPatientId: patientId } }
+          : { outPatientDTO: { outPatientId } }),
       },
     ]);
   };
@@ -59,12 +63,11 @@ const ClinicalMedication = ({ patientId, newPatientVisitId }) => {
     });
   };
 
-
   useEffect(() => {
     const fetchMedications = async () => {
       let endpoint = "";
-      if (newPatientVisitId) {
-        endpoint = `${API_BASE_URL}/medications/by-opd-id?opdPatientId=${newPatientVisitId}`;
+      if (outPatientId) {
+        endpoint = `${API_BASE_URL}/medications/by-opd-id?opdPatientId=${outPatientId}`;
       } else if (patientId) {
         endpoint = `${API_BASE_URL}/medications/by-ipd-id?ipdPatientId= ${patientId}`;
       }
@@ -80,23 +83,23 @@ const ClinicalMedication = ({ patientId, newPatientVisitId }) => {
     fetchMedications();
   }, []);
 
-
-
   useEffect(() => {
     axios
       .get(`${API_BASE_URL}/add-items`)
       .then((response) => {
         setMedicationType(response.data);
       })
-      .catch((error) => console.error("Error fetching medication types:", error));
+      .catch((error) =>
+        console.error("Error fetching medication types:", error)
+      );
   }, []);
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try { 
+    try {
       console.log(medicationList);
-      
+
       const response = await axios.post(
         `${API_BASE_URL}/medications/save-medication-details`,
         medicationList // Sending the entire formData array as the payload
@@ -106,8 +109,6 @@ const ClinicalMedication = ({ patientId, newPatientVisitId }) => {
       console.error("Error submitting medication list:", error);
     }
   };
-
-
 
   return (
     <div className="clinical-medication-container">
@@ -131,7 +132,7 @@ const ClinicalMedication = ({ patientId, newPatientVisitId }) => {
                 "Route",
                 "Last Taken",
                 "Frequency",
-                "Comments"
+                "Comments",
               ].map((header, index) => (
                 <th
                   key={index}
@@ -142,7 +143,10 @@ const ClinicalMedication = ({ patientId, newPatientVisitId }) => {
                     <span>{header}</span>
                     <div
                       className="resizer"
-                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
                     ></div>
                   </div>
                 </th>

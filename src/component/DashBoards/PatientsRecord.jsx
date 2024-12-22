@@ -4,6 +4,7 @@ import "./PatientsRecords.css";
 import PatientDashboard from "./PatientDashboard";
 import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
+import { useFilter } from "../ShortCuts/useFilter";
 
 const PatientRecord = () => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -13,19 +14,20 @@ const PatientRecord = () => {
   const [filterFavourites, setFilterFavourites] = useState(false);
   const [filterPending, setFilterPending] = useState(false);
   const [isPatientOpen, setIsPatientOPEN] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const componentRef = useRef();
   const [patients, setPatients] = useState([]);
+  const filteredItems = useFilter(patients, searchTerm);
 
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/admissions/fetch`);
+        const response = await fetch(`${API_BASE_URL}/ip-admissions`);
         const data = await response.json();
-        console.log(data);
-        
         setPatients(data);
       } catch (error) {
-        console.error('Error fetching patient data:', error);
+        console.error("Error fetching patient data:", error);
       }
     };
 
@@ -48,8 +50,11 @@ const PatientRecord = () => {
   };
 
   const handlePatientClick = (patient) => {
-    setIsPatientOPEN(!isPatientOpen)
+    setIsPatientOPEN(!isPatientOpen);
     setSelectedPatient(patient); // Set the selected patient to open the dashboard
+  };
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
   };
 
   if (isPatientOpen) {
@@ -62,46 +67,41 @@ const PatientRecord = () => {
   }
   return (
     <div className="patient-record">
-      <div className="patient-record-date-range">
+      {/* <div className="patient-record-date-range">
         <div className="patient-date-ranges">
           <label>From:</label>
           <input type="date" value="2024-08-11" />
           <label>To:</label>
           <input type="date" value="2024-08-18" />
         </div>
-        <div>
-          <button className="patient-record-star">☆</button>
-          <button className="patient-record-reset">-</button>
-          <button className="patient-record-ok">OK</button>
-        </div>
-        
-      </div>
+      </div> */}
 
       <div className="patient-record-search-bar">
         <div className="patient-record-sub-div">
           <input
-            className="patient-record-select"
             type="text"
-            placeholder="Search"
+            placeholder="Search by substore name"
+            className="manage-substore-search-input"
+            value={searchTerm}
+            onChange={handleSearch}
           />
-          <button className="patient-record-button">🔍</button>
         </div>
-        <div className="patient-record-department-filter">
+        {/* <div className="patient-record-department-filter">
           <label>Department Filter :</label>
           <select className="patient-record-select">
             <option>ALL</option>
           </select>
-        </div>
+        </div> */}
         <div>
           <span className="patient-record-results">
             Showing {filteredPatients.length} / {patients.length} results
           </span>
-          <ReactToPrint
-            trigger={() => (
-              <button className="patient-record-print">Print</button>
-            )}
-            content={() => componentRef.current}
-          />
+          {/* <ReactToPrint
+              trigger={() => (
+                <button className="patient-record-print">Print</button>
+              )}
+              content={() => componentRef.current}
+            /> */}
         </div>
       </div>
 
@@ -111,7 +111,7 @@ const PatientRecord = () => {
           <thead>
             <tr>
               {[
-                "Hospital No.",
+                "Uhid",
                 "Name",
                 "Age/Sex",
                 "Admission Status",
@@ -141,25 +141,47 @@ const PatientRecord = () => {
             </tr>
           </thead>
           <tbody>
-          {patients.map((patient, index) => (
-            <tr key={index}>
-              <td>{patient.patientDTO.hospitalNo}</td>
-              <td>{`${patient.patientDTO.firstName} ${patient.patientDTO.lastName}`}</td>
-              <td>{ patient.patientDTO.age}/{patient.patientDTO.gender}</td>
-              <td>{patient.admissionStatus}</td>
-              <td>{patient.admissionDate}</td>
-              <td>{patient?.manageBedDTO?.bedNumber}</td>
-              <td>{patient?.wardDepartmentDTO?.wardName}</td>
-              <td>{patient?.admittedDoctorDTO?.firstName}</td>
-              <td>
-                <button className='in-patient-button' onClick={() => handlePatientClick(patient)}>👤</button>
-                <button className='in-patient-button' >🔔</button>
-                <button className='in-patient-button' >🖼</button>
-                <button className='in-patient-button' onClick={() => handleOrdersClick(patient)}>📄</button>
-                <button className='in-patient-button' >♥</button>
-              </td>
-            </tr>
-          ))}
+            {filteredItems?.map((patient, index) => (
+              <tr key={index}>
+                <td>{patient.patient.uhid}</td>
+                <td>{`${patient.patient.firstName} ${patient.patient.lastName}`}</td>
+                <td>
+                  {patient.patient.age} {patient.patient.ageUnit}/
+                  {patient.patient.gender}
+                </td>
+                <td>{patient.admissionStatus}</td>
+                <td>{patient.admissionDate}</td>
+                <td>{patient.roomDetails?.bedDTO?.bedNo}</td>
+                <td>{patient.roomDetails?.roomTypeDTO?.wardName}</td>
+                <td>
+                  {
+                    patient.admissionUnderDoctorDetail.consultantDoctor
+                      ?.salutation
+                  }{" "}
+                  {
+                    patient?.admissionUnderDoctorDetail.consultantDoctor
+                      ?.doctorName
+                  }
+                </td>
+                <td>
+                  <button
+                    className="in-patient-button"
+                    onClick={() => handlePatientClick(patient)}
+                  >
+                    👤
+                  </button>
+                  <button className="in-patient-button">🔔</button>
+                  <button className="in-patient-button">🖼</button>
+                  <button
+                    className="in-patient-button"
+                    onClick={() => handleOrdersClick(patient)}
+                  >
+                    📄
+                  </button>
+                  <button className="in-patient-button">♥</button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

@@ -8,6 +8,7 @@ import { useReactToPrint } from 'react-to-print';
 import SSIRetunReturnItemBtn from './sSIRetunReturnItemBtn';
 import SSIPatientConsumNewPCbtn from './sSIPatientConsumNewPCbtn';
 import { API_BASE_URL } from '../../../api/api';
+import CustomModal from '../../../CustomModel/CustomModal';
 
 function SSIReturn() {
   const printRef = useRef();
@@ -90,7 +91,7 @@ function SSIReturn() {
 
   return (
     <div className="sSIReturn-active-imaging-request">
-            {!showNewPatientConsumption ? ( // Render the main content only if showNewPatientConsumption is false
+           
       <>
         <header className='sSIReturn-header'>
           <div className="sSIReturn-status-filters">
@@ -213,11 +214,10 @@ function SSIReturn() {
           </div> */}
         </div>
       </>
-      ) : (
+     <CustomModal isOpen={showNewPatientConsumption} onClose={handleBack}>
 
-<SSIRetunReturnItemBtn onBack={handleBack} /> // Render the SSIPatientConsumNewPCbtn component if showNewPatientConsumption is true
-      )}
-
+<SSIRetunReturnItemBtn /> 
+</CustomModal>
     </div>
   );
 }

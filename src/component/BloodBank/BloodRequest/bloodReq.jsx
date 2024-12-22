@@ -1,17 +1,25 @@
-/* Ajhar Tamboli bloodReq.jsx 19-09-24 */
-
-
 import React, { useState, useRef, useEffect } from 'react';
 import * as XLSX from 'xlsx'; // Import the xlsx library
-// import "../BloodRequest/bloodReq.css"
-import "../BloodRequest/bloodReq.css"
+import "../BloodRequest/bloodReq.css";
 import { useReactToPrint } from 'react-to-print';
+import CustomModal from '../../CustomModel/CustomModal';
+import BloodBankRequestForm from './BloodBankRequestForm';
+import { API_BASE_URL } from '../../api/api';
+import BloodBankIssueForm from './BloodBankIssueForm';
 
 function BloodReq() {
   const printRef = useRef();
-  const [showCreateRequisition, setShowCreateRequisition] = useState(false);
-  const [showViewRequisition, setShowViewRequisition] = useState(false);
+  const [showCreateRequest, setShowCreateRequest] = useState(false);
+  const [showIssueRequest, setShowIssueRequest] = useState(false);
   const [stockData, setStockData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]); // Filtered data for the table
+  const [searchQuery, setSearchQuery] = useState(""); // Search input state
+  const [dateRange, setDateRange] = useState({
+    from: "2024-08-09",
+    to: "2024-08-16",
+  }); // Date range state
+
+  const [selectedRequestId, setSelectedRequestId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -19,31 +27,56 @@ function BloodReq() {
     fetchStockData();
   }, []);
 
+  // Fetch Data from API
   const fetchStockData = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8080/api/......./getAll');
-      
-      // Check if the response is ok (status code in the range 200-299)
+      const response = await fetch(`${API_BASE_URL}/bloodrequest`);
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
+
       const data = await response.json();
-      console.log('Fetched data:', data); // Log the data for debugging
-  
-      // Ensure 'store' is defined and valid
-      const store = 'Accounts'; // Replace with your store value or dynamically determine it
-      const filteredData = data.filter(item => item.storeName === store);
-  
-      setStockData(filteredData);
+
+      // Map the response data to match the table structure
+      const mappedData = data.map((item) => ({
+        requestId: item.requestId,
+        firstName: item.patientDTO.firstName,
+        requiredUnits: item.requiredUnits,
+        requestedDate: item.requestDate,
+        requiredDate: item.requiredDate,
+        status: item.status,
+        contactInformation: item.contactInformation,
+        bloodGroup: item.bloodGroup,
+      }));
+
+      setStockData(mappedData);
+      setFilteredData(mappedData); // Initialize filtered data
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching stock data:', error); // Log the error for debugging
+      console.error('Error fetching stock data:', error);
       setError(error.message);
       setLoading(false);
     }
   };
+
+  // Filter Data Based on Search and Date Range
+  useEffect(() => {
+    const filtered = stockData.filter((item) => {
+      const matchesSearch =
+    (item.firstName && item.firstName.toLowerCase().includes(searchQuery.toLowerCase())) ||
+    (item.requestId && item.requestId.toString().includes(searchQuery));
+
+  const withinDateRange =
+    new Date(item.requestedDate) >= new Date(dateRange.from) &&
+    new Date(item.requestedDate) <= new Date(dateRange.to);
+
+  return matchesSearch && withinDateRange;
+    });
+
+    setFilteredData(filtered);
+  }, [searchQuery, dateRange, stockData]);
 
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
@@ -59,17 +92,15 @@ function BloodReq() {
   const handleExportToExcel = () => {
     const tableData = [
       ['Req.ID', ' Patient Name', 'Required Units', 'Request Date', 'Required Date', 'Status', 'Hospital Name', 'Contact Information', 'Doctor Name', 'Blood Group'],
-      ...stockData.map(item => [
-        item.reqId, // Assuming reqId is the field for request ID
-        item.patientName, 
+      ...filteredData.map(item => [
+        item.requestId,
+        item.firstName,
         item.requiredUnits,
         item.requestedDate,
         item.requiredDate,
         item.status,
-        item.hospitalName,
         item.contactInformation,
-        item.doctorName, 
-        item.bloodGroup, 
+        item.bloodGroup,
       ]),
     ];
 
@@ -87,35 +118,51 @@ function BloodReq() {
         </div>
       </header>
       <div className="bloodReq-controls">
-      <div className="bloodReq-date-range">
-      <label>
-        From:
-        <input type="date" defaultValue="2024-08-09" />
-      </label>
-      <label>
-        To:
-        <input type="date" defaultValue="2024-08-16" />
-      </label>
-     
-    </div>
-
+        <div className="bloodReq-date-range">
+          <label>
+            From:
+            <input
+              type="date"
+              value={dateRange.from}
+              onChange={(e) =>
+                setDateRange((prev) => ({ ...prev, from: e.target.value }))
+              }
+            />
+          </label>
+          <label>
+            To:
+            <input
+              type="date"
+              value={dateRange.to}
+              onChange={(e) =>
+                setDateRange((prev) => ({ ...prev, to: e.target.value }))
+              }
+            />
+          </label>
+        </div>
         <div className="bloodReq-filter">
-          <button className='bloodReq-print-btn' onClick={() => { /* Handle report generation */ }}>
-            Show Report
-          </button>
+          <button className='bloodReq-print-btn'>Show Report</button>
         </div>
       </div>
       <div className="bloodReq-search-N-results">
+        <div>
+          <button className='bloodReq-print-btn' onClick={() => setShowCreateRequest(true)}> + Send Blood Request</button>
+        </div>
         <div className="bloodReq-search-bar">
           <i className="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
         <div className="bloodReq-results-info">
-          Showing {stockData.length} results
+          Showing {filteredData.length} results
           <button className='bloodReq-print-btn' onClick={handleExportToExcel}>
             <i className="fa-regular fa-file-excel"></i> Export
           </button>
-          <button className='bloodReq-print-btn' onClick={handlePrint}><i class="fa-solid fa-print"></i> Print</button>
+          <button className='bloodReq-print-btn' onClick={handlePrint}><i className="fa-solid fa-print"></i> Print</button>
         </div>
       </div>
       <div style={{ display: 'none' }}>
@@ -131,32 +178,56 @@ function BloodReq() {
                 <th>Request Date</th>
                 <th>Required Date</th>
                 <th>Status</th>
-                <th>Hospital Name</th>
                 <th>Contact Information</th>
-                <th>Doctor Name</th>
                 <th>Blood Group</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {stockData.map((item, index) => (
+              {filteredData.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.reqId}</td>
-                  <td>{item.patientName}</td>
+                  <td>{item.requestId}</td>
+                  <td>{item.firstName}</td>
                   <td>{item.requiredUnits}</td>
                   <td>{item.requestedDate}</td>
                   <td>{item.requiredDate}</td>
                   <td>{item.status}</td>
-                  <td>{item.hospitalName}</td>
                   <td>{item.contactInformation}</td>
-                  <td>{item.doctorName}</td>
                   <td>{item.bloodGroup}</td>
-                
+                  <td>
+                    <button
+                      className="bloodbankrequest-submit-btn"
+                      onClick={() => {
+                        setSelectedRequestId(item.requestId);
+                        setShowIssueRequest(true);
+                      }}
+                    >
+                      Issue
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
+      {showCreateRequest && (
+        <CustomModal
+          onClose={() => setShowCreateRequest(false)}
+          isOpen={showCreateRequest}
+        >
+          <BloodBankRequestForm />
+        </CustomModal>
+      )}
+
+      {showIssueRequest && (
+        <CustomModal
+          onClose={() => setShowIssueRequest(false)}
+          isOpen={showIssueRequest}
+        >
+          <BloodBankIssueForm requestId={selectedRequestId} />
+        </CustomModal>
+      )}
       <div className="bloodReq-table-N-paginat">
         <table>
           <thead>
@@ -167,38 +238,37 @@ function BloodReq() {
               <th>Request Date</th>
               <th>Required Date</th>
               <th>Status</th>
-              <th>Hospital Name</th>
               <th>Contact Information</th>
-              <th>Doctor Name</th>
               <th>Blood Group</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {stockData.map((item, index) => (
+            {filteredData.map((item, index) => (
               <tr key={index}>
-                <td>{item.reqId}</td>
-                <td>{item.patientName}</td>
+                <td>{item.requestId}</td>
+                <td>{item.firstName}</td>
                 <td>{item.requiredUnits}</td>
                 <td>{item.requestedDate}</td>
                 <td>{item.requiredDate}</td>
                 <td>{item.status}</td>
-                <td>{item.hospitalName}</td>
                 <td>{item.contactInformation}</td>
-                <td>{item.doctorName}</td>
                 <td>{item.bloodGroup}</td>
-       
+                <td>
+                  <button
+                    className="bloodbankrequest-submit-btn"
+                    onClick={() => {
+                      setSelectedRequestId(item.requestId);
+                      setShowIssueRequest(true);
+                    }}
+                  >
+                    Issue
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
-        {/* <div className="bloodReq-pagination">
-          <span>0 to {stockData.length} of {stockData.length}</span>
-          <button>First</button>
-          <button>Previous</button>
-          <span>Page 1 of 1</span>
-          <button>Next</button>
-          <button>Last</button>
-        </div> */}
       </div>
     </div>
   );

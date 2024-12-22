@@ -53,7 +53,7 @@ const AddDepartment = ({ onClose }) => {
       );
 
       if (response.ok) {
-            console.error("Server responded with error:", errorData);
+            // console.error("Server responded with error:", errorData);
         setSuccess("Department added successfully!");
         // Optionally, you can reset the form or perform other actions
         // Resetting form fields

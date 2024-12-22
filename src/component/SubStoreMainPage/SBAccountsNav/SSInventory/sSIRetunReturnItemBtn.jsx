@@ -1,15 +1,19 @@
 /* Ajhar Tamboli sSIRetunReturnItemBtn.jsx 19-09-24 */
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../SSInventory/sSIRetunReturnItemBtn.css';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 
 const SSIRetunReturnItemBtn = ({ onBack }) => {
   const { store } = useParams();
   const [returnDate, setReturnDate] = useState('');
   const [items, setItems] = useState([]);
+    const tableRef = useRef(null);
+
+  const [columnWidths,setColumnWidths]=useState([])
   
   // State for the table row
   const [rowData, setRowData] = useState({
@@ -178,7 +182,7 @@ const SSIRetunReturnItemBtn = ({ onBack }) => {
   };
 
   return (
-    <div className="sSIRetunReturnItemBtn-entry">
+    <div className="">
       <h2 className="sSIRetunReturnItemBtn-title">
         <i className="fa-solid fa-star-of-life"></i> Add Return
       </h2>
@@ -194,7 +198,7 @@ const SSIRetunReturnItemBtn = ({ onBack }) => {
       </div>
 
       {/* Inventory Selection */}
-      <div className="sSIRetunReturnItemBtn-form-section">
+      <div >
         <label>Select Inventory:</label>
         <select value={rowData.itemName} onChange={handleItemChange}>
           <option value="">Select Item</option>
@@ -207,24 +211,46 @@ const SSIRetunReturnItemBtn = ({ onBack }) => {
       </div>
 
       {/* Return Items Table */}
-      <div className="sSIRetunReturnItemBtn-table-section">
-        <div className="sSIRetunReturnItemBtn-table-header">
-          <div>Item Category*</div>
-          <div>Item Name*</div>
-          <div>Vendor Name*</div>
-          <div>Code</div>
-          <div>Batch No.*</div>
-          <div>Expiry Date*</div>
-          <div>Barcode No.*</div>
-          <div>Store Name*</div>
-          <div>Available Qty.</div>
-          <div>Return Qty*</div>
-          <div>Returned By*</div> {/* Added header */}
-        </div>
-        <div className="sSIRetunReturnItemBtn-table-row">
-          <button className="sSIRetunReturnItemBtn-delete-btn" onClick={handleDiscard}>x</button>
-
-          {/* Item Category */}
+      <div className="table-container">
+  <table className="sSIReturnItem-table" ref={tableRef}>
+    <thead>
+      <tr>
+          {[
+        "Item Category*",
+        "Item Name*",
+        "Vendor Name*",
+        "Code",
+        "Batch No.*",
+        "Expiry Date*",
+        "Barcode No.*",
+        "Store Name*",
+        "Available Qty",
+        "Return Qty*",
+        "Returned By*",
+        "Actions",
+         ].map((header, index) => (
+                  <th
+                    key={index}
+                    style={{ width: columnWidths[index] }}
+                    className="resizable-th"
+                  ><div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
+                      ></div>
+                    </div>
+                  </th>
+                ))}
+              </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {/* Item Category */}
+        <td>
           <select
             name="itemCategory"
             value={rowData.itemCategory}
@@ -235,8 +261,10 @@ const SSIRetunReturnItemBtn = ({ onBack }) => {
             <option value="Capital Goods">Capital Goods</option>
             {/* Add more categories as needed */}
           </select>
+        </td>
 
-          {/* Item Name */}
+        {/* Item Name */}
+        <td>
           <select
             name="itemName"
             value={rowData.itemName}
@@ -249,78 +277,86 @@ const SSIRetunReturnItemBtn = ({ onBack }) => {
               </option>
             ))}
           </select>
+        </td>
 
-          {/* Vendor Name */}
-          <input 
-          className='ssi-return-return'
+        {/* Vendor Name */}
+        <td>
+          <input
             type="text"
             name="vendorName"
             value={rowData.vendorName}
             onChange={handleFieldChange}
             placeholder="Enter Vendor Name"
           />
+        </td>
 
-          {/* Code (Auto-Filled) */}
+        {/* Code */}
+        <td>
           <input
-            className='ssi-return-return'
             type="text"
             name="code"
             value={rowData.code}
             readOnly
             placeholder="Auto-filled Code"
           />
+        </td>
 
-          {/* Batch No. */}
+        {/* Batch No. */}
+        <td>
           <input
-            className='ssi-return-return'
             type="text"
             name="batchNo"
             value={rowData.batchNo}
             onChange={handleFieldChange}
             placeholder="Enter Batch No."
           />
+        </td>
 
-          {/* Expiry Date */}
+        {/* Expiry Date */}
+        <td>
           <input
-            className='ssi-return-return'
             type="date"
             name="expiryDate"
             value={rowData.expiryDate}
             onChange={handleFieldChange}
           />
+        </td>
 
-          {/* Barcode No. */}
+        {/* Barcode No. */}
+        <td>
           <input
-            className='ssi-return-return'
             type="text"
             name="barcodeNumber"
             value={rowData.barcodeNumber}
             onChange={handleFieldChange}
             placeholder="Enter Barcode No."
           />
+        </td>
 
-          {/* Store Name */}
+        {/* Store Name */}
+        <td>
           <input
-             className='ssi-return-return'
             type="text"
             name="storeName"
             value={rowData.storeName}
             onChange={handleFieldChange}
             placeholder="Enter Store Name"
           />
+        </td>
 
-          {/* Available Qty (Auto-Filled) */}
+        {/* Available Qty */}
+        <td>
           <input
-            className='ssi-return-return'
             type="number"
             name="availableQty"
             value={rowData.availableQty}
             readOnly
           />
+        </td>
 
-          {/* Return Qty */}
+        {/* Return Qty */}
+        <td>
           <input
-            className='ssi-return-return'
             type="number"
             name="returnQty"
             value={rowData.returnQty}
@@ -328,18 +364,33 @@ const SSIRetunReturnItemBtn = ({ onBack }) => {
             min="1"
             placeholder="Enter Quantity"
           />
+        </td>
 
-          {/* Returned By */}
+        {/* Returned By */}
+        <td>
           <input
-            className='ssi-return-return'
             type="text"
             name="returnedBy"
             value={returnBy}
             onChange={(e) => setReturnBy(e.target.value)}
             placeholder="Enter Returner's Name"
           />
-        </div>
-      </div>
+        </td>
+
+        {/* Actions */}
+        <td>
+          <button
+            className="sSIReturnItem-delete-btn"
+            onClick={handleDiscard}
+          >
+            x
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
       {/* Remark Section */}
       <div className="sSIRetunReturnItemBtn-remark-section">
@@ -355,8 +406,12 @@ const SSIRetunReturnItemBtn = ({ onBack }) => {
 
       {/* Button Section */}
       <div className="sSIRetunReturnItemBtn-buttons">
-        <button className="sSIRetunReturnItemBtn-save-button" onClick={handleSave}>Save</button>
-        <button className="sSIRetunReturnItemBtn-discard-button" onClick={handleDiscard}>Discard</button>
+<button
+    className="sSIRetunReturnItemBtn-save-button"
+    onClick={handleSave}
+    disabled={!returnDate || !rowData.itemName || !rowData.itemCategory || !returnBy}
+  > </button>  
+       <button className="sSIRetunReturnItemBtn-discard-button" onClick={handleDiscard}>Discard</button>
       </div>
     </div>
   );

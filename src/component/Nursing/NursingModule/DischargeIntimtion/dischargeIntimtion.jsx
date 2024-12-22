@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./dischargeIntimtion.css";
 
-const DischargeIntimtion = () => {
+const DischargeIntimation = () => {
   const [formData, setFormData] = useState({
     ipNo: "",
     patientName: "",
@@ -129,7 +129,7 @@ const DischargeIntimtion = () => {
 
   return (
     <div className="discharge-information-container">
-      <h2 className="discharge-information-header">Discharge Intimation</h2>
+      <h2 className="discharge-information-header">Discharge Patient</h2>
 
       {/* IP Search Section */}
       <h4>Patient Details</h4>

@@ -27,6 +27,12 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.instrumenttrack-form{
+    display: flex;
+    padding:5px;
+    gap: 5px;
+}
+
 /* .surgicaltrack-modal-content {
     background-color: #fefefe;
     margin: 15% auto;
@@ -81,53 +87,30 @@
 
 
 
-
 .surgicaltrack-modal-content-h2 {
-
     margin-bottom: 20px; /* Space below the heading */
     text-align: center; /* Center the heading */
 }
 
-
 .surgical-instrument-tracking label {
-
     display: block; /* Make labels block elements */
     margin: 10px 0 5px; /* Space around the labels */
     font-weight: bold; /* Bold font for labels */
 }
 
-
 .surgical-instrument-tracking input[type="text"],
 .surgical-instrument-tracking input[type="number"],
 .surgical-instrument-tracking select {
-
-    width: 100%; /* Full width input fields */
-    padding: 10px; /* Padding inside input fields */
-    border: 1px solid #ccc; /* Light grey border */
-    border-radius: 4px; /* Rounded corners */
-    margin-bottom: 15px; /* Space below input fields */
+    width: 250px; 
+    padding: 5px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    margin-bottom: 15px; 
 }
 
 .surgical-instrumenttrack-modalbtn {
     display: flex; /* Use flexbox for button alignment */
     justify-content: space-between; /* Space between buttons */
-}
-
-
-.surgicaltrack-modal-content button {
-    padding: 10px 15px; /* Padding inside buttons */
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor for buttons */
-    font-weight: bold; /* Bold font for buttons */
-}
-
-.surgicaltrack-modal-content button:hover {
-    background-color:var(--button-color); /* Light grey background on hover */
-}
-
-.surgicaltrack-modal-content button:active {
-    background-color: #ddd; /* Darker grey when pressed */
 }
 
 .surgicalinstrumenttrackingedit-btn{
@@ -150,3 +133,50 @@
     border: 1px solid var(--button-hover-border-color);
 }
 
+.surgical-isntu-track-filter {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 1px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+}
+
+.surgical-isntu-track-filter-date-utlt {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.surgical-isntu-track-filter-date-range {
+    display: flex;
+    align-items: center;
+}
+
+.surgical-isntu-track-filter-input {
+    margin: 0 10px;
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.surgical-isntu-track-filter-search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.surgical-isntu-track-filter-search-input {
+    padding: 5px;
+    margin-right: 10px;
+    width: 250px;
+}
+
+.surgical-isntu-track-filter-search-btn {
+    padding: 5px;
+    color: white;
+    background-color: var(--button-color);
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}

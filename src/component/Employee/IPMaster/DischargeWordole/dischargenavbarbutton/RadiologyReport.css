@@ -1,0 +1,35 @@
+.radiologyreport-container {
+    padding: 20px;
+  }
+  
+  .radiologyreport-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .radiologyreport-table th, .radiologyreport-table td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .radiologyreport-table th {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .radiologyreport-table input {
+    padding: 5px;
+    margin: 2px;
+    
+  }
+  
+  .radiologyreport-table button {
+    padding: 5px;
+    margin: 5px;
+    cursor: pointer;
+
+    
+  }
+  

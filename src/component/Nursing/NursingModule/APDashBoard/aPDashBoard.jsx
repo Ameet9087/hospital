@@ -1,101 +1,119 @@
-import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import './aPDashBoard.css';
-import BedTransferNote from '../BedTranferNote/bedTranferNote';
-import DischargeIntimtion from '../DischargeIntimtion/dischargeIntimtion';
-import DischargeTrack from '../DischargeTrack/dischargeTrack';
-import IpMedicineIndent from '../IPMedicineIndent/iPMedicineIndent';
-import IpdReturnIndent from '../IpdReturnIndent/ipdReturnIndent';
-import IPBilling from '../IPBilling/iPBilling';
-import IpdIssueWard from '../IPDIssuedWard/ipdissuedward';
-import { useSelector } from 'react-redux';
-import PatientDashboard from '../../../DashBoards/PatientDashboard';
-import IPChangeRoom from '../IPChangeRoom/IPChangeRoom';
-import DischargeipMainNav from '../dischargeintimationNav/dischargeipMainNav';
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import "./aPDashBoard.css";
+import BedTransferNote from "../BedTranferNote/bedTranferNote";
+// import DischargeIntimtion from '../DischargeIntimtion/dischargeIntimtion';
+import DischargeTrack from "../DischargeTrack/dischargeTrack";
+import IpMedicineIndent from "../IPMedicineIndent/iPMedicineIndent";
+import IpdReturnIndent from "../IpdReturnIndent/ipdReturnIndent";
+import IPBilling from "../IPBilling/iPBilling";
+import IpdIssueWard from "../IPDIssuedWard/ipdissuedward";
+import { useSelector } from "react-redux";
+import PatientDashboard from "../../../DashBoards/PatientDashboard";
+import IPChangeRoom from "../IPChangeRoom/IPChangeRoom";
+import DischargeipMainNav from "../dischargeintimationNav/dischargeipMainNav";
+import DischargePatient from "../DischargePatient/DischargePatient";
 
 const APDashBoard = () => {
-  const activePatient = useSelector((state) => state.patient.activePatient);
-
   const navigate = useNavigate();
   const location = useLocation();
   const [activeComponent, setActiveComponent] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
-  const patientData = useSelector((state) => state.patient?.patientData);
+
+  const patientData = useSelector((state) => state.patient.patientData);
+
   const { patientName, patientAge, patientGender, mrNo } = location.state || {};
 
   const handleSidebarItemClick = (item) => {
-    console.log('Sidebar item clicked:', item);  // Debugging log
+    console.log("Sidebar item clicked:", item); // Debugging log
     setSelectedItem(selectedItem === item ? null : item);
     switch (item) {
-      case 'Bed Transfer Note':
-        setActiveComponent('bedTransferNote');
+      // case 'Bed Transfer Note':
+      //   setActiveComponent('bedTransferNote');
+      //   break;
+      case "Discharge Intimtion":
+        setActiveComponent("dischargeIntimtion");
         break;
-      case 'Discharge Intimtion':
-        setActiveComponent('dischargeIntimtion');
+      case "Discharge Track":
+        setActiveComponent("dischargeTrack");
         break;
-      case 'Discharge Track':
-        setActiveComponent('dischargeTrack');
+      case "Ip Medicine Indent":
+        setActiveComponent("ipMedicineIndent");
         break;
-      case 'Ip Medicine Indent':
-        setActiveComponent('ipMedicineIndent');
+      case "Ipd Return Indent":
+        setActiveComponent("ipdReturnIndent");
         break;
-      case 'Ipd Return Indent':
-        setActiveComponent('ipdReturnIndent');
+      case "IP Billing":
+        setActiveComponent("iPBilling");
         break;
-      case 'IP Billing':
-        setActiveComponent('iPBilling');
+      case "IPD Issues Ward":
+        setActiveComponent("ipdissuedward");
         break;
-      case 'IPD Issues Ward':
-        setActiveComponent('ipdissuedward');
+      case "IPD Returns Ward":
+        setActiveComponent("ipdreturnward");
         break;
-      case 'IPD Returns Ward':
-        setActiveComponent('ipdreturnward');
+      case "Orders":
+        setActiveComponent("Orders");
         break;
-      case 'Orders':
-        setActiveComponent('Orders');
-        break;
-      case 'IP Change Room':
-        setActiveComponent('IPChangeRoom');
-        console.log('Active component set to: IPChangeRoom');  // Debugging log
+      case "IP Change Room":
+        setActiveComponent("IPChangeRoom");
+        console.log("Active component set to: IPChangeRoom"); // Debugging log
         break;
 
-        case 'Discharge main':
-          setActiveComponent('dischargeipMainNav');
-          break;
+      case "Discharge main":
+        setActiveComponent("dischargeipMainNav");
+        break;
 
-          
+      case "Discharge Patient":
+        setActiveComponent("DischargePatient");
+        break;
+      case "Exit":
+        handleLogout();
+        break;
+
       default:
         setActiveComponent(null);
     }
   };
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/nursing/nursingdashboard");
+  };
   const renderContent = () => {
     switch (activeComponent) {
-      case 'bedTransferNote':
-        return <BedTransferNote />;
-      case 'dischargeIntimtion':
-        return <DischargeIntimtion />;
-      case 'dischargeTrack':
+      // case 'bedTransferNote':
+      //   return <BedTransferNote />;
+      // case 'dischargeIntimtion':
+      //   return <DischargeIntimtion />;
+      case "dischargeTrack":
         return <DischargeTrack />;
-      case 'ipMedicineIndent':
-        return <IpMedicineIndent />;
-      case 'ipdReturnIndent':
-        return <IpdReturnIndent />;
-      case 'iPBilling':
+      // case 'ipMedicineIndent':
+      //   return <IpMedicineIndent />;
+      // case 'ipdReturnIndent':
+      //   return <IpdReturnIndent />;
+      case "iPBilling":
         return <IPBilling />;
-      case 'ipdissuedward':
+      case "ipdissuedward":
         return <IpdIssueWard />;
-      case 'ipdreturnward':
+      case "ipdreturnward":
         return <IpdReturnIndent />;
-      case 'Orders':
+      case "Orders":
         return <PatientDashboard patient={patientData} />;
-      case 'IPChangeRoom':
+      case "IPChangeRoom":
         return <IPChangeRoom />;
-        case 'dischargeipMainNav':
-            return <DischargeipMainNav/>;
-            break;
+      case "dischargeipMainNav":
+        return <DischargeipMainNav />;
+        break;
+      case "DischargePatient":
+        return <DischargePatient />;
+        break;
       default:
-        return <section className="aPDashBoard-content">Select an option from the sidebar</section>;
+        return (
+          <section className="aPDashBoard-content">
+            Select an option from the sidebar
+          </section>
+        );
     }
   };
 
@@ -103,11 +121,16 @@ const APDashBoard = () => {
     <div className="aPDashBoard-container">
       <header className="aPDashBoard-header">
         <div className="aPDashBoard-profile">
-          <img src="profile-placeholder.png" alt="Profile" className="aPDashBoard-profile-pic" />
+          <img
+            src="profile-placeholder.png"
+            alt="Profile"
+            className="aPDashBoard-profile-pic"
+          />
           <div className="aPDashBoard-profile-info">
-            <h2>{patientName || 'Patient Name'}</h2>
+            <h2>{patientName || "Patient Name"}</h2>
             <p>
-              Age: {patientAge || 'Age'} Years / {patientGender || 'Gender'} | MR No: {mrNo || 'MR No'}
+              Age: {patientAge || "Age"} Years / {patientGender || "Gender"} |
+              MR No: {mrNo || "MR No"}
             </p>
           </div>
         </div>
@@ -124,23 +147,27 @@ const APDashBoard = () => {
         <aside className="aPDashBoard-sidebar-right">
           <ul>
             {[
-              { text: 'Orders', value: 'Orders' },
-              { text: '+ Bed Transfer Note', value: 'Bed Transfer Note' },
-              { text: 'IP Change Room', value: 'IP Change Room' },
-              { text: '+ Discharge Intimtion', value: 'Discharge Intimtion' },
-              { text: '+ Discharge Tracking', value: 'Discharge Track' },
-              { text: '+ IP Medicine Indent', value: 'Ip Medicine Indent' },
-              { text: '+ IPD Returns Indent', value: 'Ipd Return Indent' },
-              { text: '+ IP Billing', value: 'IP Billing' },
-              { text: '+ IPD Issues Ward', value: 'IPD Issues Ward' },
-              { text: '+ IPD Returns Ward', value: 'IPD Returns Ward' },
-              { text:'Discharge main' , value:'Discharge main' },
-              { text: 'Exit', value: null },
+              { text: "Orders", value: "Orders" },
+              // { text: '+ Bed Transfer Note', value: 'Bed Transfer Note' },
+              { text: "IP Change Room", value: "IP Change Room" },
+
+              // { text: '+ IP Medicine Indent', value: 'Ip Medicine Indent' },
+              // { text: '+ IPD Returns Indent', value: 'Ipd Return Indent' },
+              { text: "+ IP Billing", value: "IP Billing" },
+              // { text: '+ IPD Issues Ward', value: 'IPD Issues Ward' },
+              // { text: '+ IPD Returns Ward', value: 'IPD Returns Ward' },
+              { text: "Discharge Patient", value: "Discharge Patient" },
+              // { text: '+ Discharge Intimtion', value: 'Discharge Intimtion' },
+              // { text: '+ Discharge Tracking', value: 'Discharge Track' },
+              // { text:'Discharge main' , value:'Discharge main' },
+              { text: "Exit", value: "Exit" },
             ].map((item, index) => (
               <li
                 key={index}
-                className={selectedItem === item.value ? 'selected' : ''}
-                onClick={() => item.value !== null && handleSidebarItemClick(item.value)}
+                className={selectedItem === item.value ? "selected" : ""}
+                onClick={() =>
+                  item.value !== null && handleSidebarItemClick(item.value)
+                }
               >
                 {item.text}
               </li>

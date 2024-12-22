@@ -1,41 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import "../DonationList/donationList.css"
 import "./donationList.css"
+import axios from 'axios';
+import { API_BASE_URL } from '../../../api/api';
 
 function Donarlist() {
-    const donors = [
-        {
-            id: 1,
-            fullName: 'John Doe',
-            dob: '1990-01-01',
-            gender: 'Male',
-            bloodGroup: 'A+',
-            phoneNumber: '123-456-7890',
-            email: 'john@example.com',
-            address: '123 Elm St',
-            city: 'Somewhere',
-            state: 'CA',
-            postalCode: '90210',
-            weight: '75kg',
-            lastDonationDate: '2023-06-15',
-            medication: 'None',
-            surgeries: 'Appendectomy',
-            chronicIllness: 'None',
-            travelHistory: 'None',
-            infectiousDisease: 'None',
-            healthComments: 'Healthy',
-            donationDate: '2023-07-01',
-            donationType: 'Whole Blood',
-            donationCenter: 'Main Center',
-            timeSlot: '10:00 AM',
-            consent: true,
-            shareInfo: true,
-        },
-        // Other donors...
-    ];
+    const [donors, setDonors] = useState([]); // Store submitted donors
+
 
     const [showModal, setShowModal] = useState(false);
     const [selectedDonor, setSelectedDonor] = useState(null);
+    
+
     const [formData, setFormData] = useState({
         hemoglobinLevel: '',
         pulse: '',
@@ -51,6 +27,17 @@ function Donarlist() {
         volumeCollected: '',
         collectionBagNumber: '',
     });
+
+    useEffect(() => {
+        axios.get(`${API_BASE_URL}/donors/allDonors`)
+            .then(response => {
+                setDonors(response.data); // Update the donors state with fetched data
+            })
+            .catch(error => {
+                console.error("Error fetching donor data:", error);
+            });
+    }, [donors]);
+
 
     const handleAddInfo = (donor) => {
         // This opens the modal with the form.
@@ -70,8 +57,14 @@ function Donarlist() {
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-
-        // Data to send in the API call
+    
+        // Validate formData before submission
+        if (!formData.hemoglobinLevel || isNaN(parseFloat(formData.hemoglobinLevel))) {
+            alert("Hemoglobin Level must be a valid number.");
+            return;
+        }
+    
+        // Prepare payload
         const dataToSend = {
             fullName: selectedDonor.fullName,
             dateOfBirth: selectedDonor.dob,
@@ -83,7 +76,7 @@ function Donarlist() {
             healthEligibilityInfo: {
                 dateOfLastDonation: selectedDonor.lastDonationDate,
                 weight: parseFloat(selectedDonor.weight),
-                bloodPressure: "120/80", // Placeholder value
+                bloodPressure: "120/80",
                 hemoglobinLevel: parseFloat(formData.hemoglobinLevel),
                 pulseAndTemperature: `${formData.pulse}, ${formData.temperature}`,
                 medicalHistory: selectedDonor.medication,
@@ -109,27 +102,29 @@ function Donarlist() {
                 barcodeOrQrCode: 'QR123456789',
             }
         };
-
+    
         try {
-            // Submit data to backend API
-            const response = await fetch('http://localhost:9092/api/basic-info', {
+            const response = await fetch(`${API_BASE_URL}/basic-info`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dataToSend),
             });
-
+    
             if (response.ok) {
                 console.log('Data submitted successfully');
+                alert('Collection details submitted successfully!');
                 handleCloseModal();
             } else {
-                console.error('Failed to submit data');
+                const errorData = await response.json();
+                console.error('Failed to submit data:', errorData);
+                alert(`Error: ${errorData.message || 'Submission failed.'}`);
             }
         } catch (error) {
             console.error('Error:', error);
+            alert('An error occurred while submitting the data.');
         }
     };
+    
 
     return (
         <div className="bloodcollection">
@@ -170,115 +165,142 @@ function Donarlist() {
                 <div className="bloodcollection-modal">
                     <div className="bloodcollection-modal-content">
                         <h6>Add Advanced Information for {selectedDonor?.fullName}</h6>
-                        <form className='bloodcollectionform' onSubmit={handleFormSubmit}>
-                            <label>Hemoglobin Level:</label>
-                            <input
-                                type="text"
-                                name="hemoglobinLevel"
-                                value={formData.hemoglobinLevel}
-                                onChange={handleFormChange}
-                                required
-                            />
-                            <label>Pulse:</label>
-                            <input
-                                type="text"
-                                name="pulse"
-                                value={formData.pulse}
-                                onChange={handleFormChange}
-                                required
-                            />
-                            <label>Temperature:</label>
-                            <input
-                                type="text"
-                                name="temperature"
-                                value={formData.temperature}
-                                onChange={handleFormChange}
-                                required
-                            />
-                            <label>Vaccination Status:</label>
-                            <input
-                                type="text"
-                                name="vaccinationStatus"
-                                value={formData.vaccinationStatus}
-                                onChange={handleFormChange}
-                            />
-                            <label>Tattoos or Piercings:</label>
-                            <input
-                                type="text"
-                                name="tattoosOrPiercings"
-                                value={formData.tattoosOrPiercings}
-                                onChange={handleFormChange}
-                            />
-                            <label>Allergies or Reactions:</label>
-                            <input
-                                type="text"
-                                name="allergiesOrReactions"
-                                value={formData.allergiesOrReactions}
-                                onChange={handleFormChange}
-                            />
-                            <label>Blood Group:</label>
-                            <input
-                                type="text"
-                                name="bloodGroup"
-                                value={formData.bloodGroup}
-                                onChange={handleFormChange}
-                                required
-                            />
-                            <label>RH Factor:</label>
-                            <input
-                                type="text"
-                                name="rhFactor"
-                                value={formData.rhFactor}
-                                onChange={handleFormChange}
-                                required
-                            />
-                            <label>Collection Date and Time:</label>
-                            <input
-                                type="datetime-local"
-                                name="collectionDateTime"
-                                value={formData.collectionDateTime}
-                                onChange={handleFormChange}
-                                required
-                            />
-                            <label>Collection Site:</label>
-                            <input
-                                type="text"
-                                name="collectionSite"
-                                value={formData.collectionSite}
-                                onChange={handleFormChange}
-                                required
-                            />
-                            <label>Collection Method:</label>
-                            <input
-                                type="text"
-                                name="collectionMethod"
-                                value={formData.collectionMethod}
-                                onChange={handleFormChange}
-                                required
-                            />
-                            <label>Volume Collected (ml):</label>
-                            <input
-                                type="number"
-                                name="volumeCollected"
-                                value={formData.volumeCollected}
-                                onChange={handleFormChange}
-                                required
-                            />
-                            <label>Collection Bag Number:</label>
-                            <input
-                                type="text"
-                                name="collectionBagNumber"
-                                value={formData.collectionBagNumber}
-                                onChange={handleFormChange}
-                                required
-                            />
-                            <button className='bloodcollection-btn' type="submit">
-                                Submit
-                            </button>
-                            <button type="button" className='bloodcollection-btn' onClick={handleCloseModal}>
-                                Cancel
-                            </button>
-                        </form>
+                       <form className="bloodcollectionform" onSubmit={handleFormSubmit}>
+    <div className="form-group">
+        <label>Hemoglobin Level:</label>
+        <input
+            type="text"
+            name="hemoglobinLevel"
+            value={formData.hemoglobinLevel}
+            onChange={handleFormChange}
+            required
+        />
+    </div>
+    <div className="form-group">
+        <label>Pulse:</label>
+        <input
+            type="text"
+            name="pulse"
+            value={formData.pulse}
+            onChange={handleFormChange}
+            required
+        />
+    </div>
+    <div className="form-group">
+        <label>Temperature:</label>
+        <input
+            type="text"
+            name="temperature"
+            value={formData.temperature}
+            onChange={handleFormChange}
+            required
+        />
+    </div>
+    <div className="form-group">
+        <label>Vaccination Status:</label>
+        <input
+            type="text"
+            name="vaccinationStatus"
+            value={formData.vaccinationStatus}
+            onChange={handleFormChange}
+        />
+    </div>
+    <div className="form-group">
+        <label>Tattoos or Piercings:</label>
+        <input
+            type="text"
+            name="tattoosOrPiercings"
+            value={formData.tattoosOrPiercings}
+            onChange={handleFormChange}
+        />
+    </div>
+    <div className="form-group">
+        <label>Allergies or Reactions:</label>
+        <input
+            type="text"
+            name="allergiesOrReactions"
+            value={formData.allergiesOrReactions}
+            onChange={handleFormChange}
+        />
+    </div>
+    <div className="form-group">
+        <label>Blood Group:</label>
+        <input
+            type="text"
+            name="bloodGroup"
+            value={formData.bloodGroup}
+            onChange={handleFormChange}
+            required
+        />
+    </div>
+    <div className="form-group">
+        <label>RH Factor:</label>
+        <input
+            type="text"
+            name="rhFactor"
+            value={formData.rhFactor}
+            onChange={handleFormChange}
+            required
+        />
+    </div>
+    <div className="form-group">
+        <label>Collection Date and Time:</label>
+        <input
+            type="datetime-local"
+            name="collectionDateTime"
+            value={formData.collectionDateTime}
+            onChange={handleFormChange}
+            required
+        />
+    </div>
+    <div className="form-group">
+        <label>Collection Site:</label>
+        <input
+            type="text"
+            name="collectionSite"
+            value={formData.collectionSite}
+            onChange={handleFormChange}
+            required
+        />
+    </div>
+    <div className="form-group">
+        <label>Collection Method:</label>
+        <input
+            type="text"
+            name="collectionMethod"
+            value={formData.collectionMethod}
+            onChange={handleFormChange}
+            required
+        />
+    </div>
+    <div className="form-group">
+        <label>Volume Collected (ml):</label>
+        <input
+            type="number"
+            name="volumeCollected"
+            value={formData.volumeCollected}
+            onChange={handleFormChange}
+            required
+        />
+    </div>
+    <div className="form-group">
+        <label>Collection Bag Number:</label>
+        <input
+            type="text"
+            name="collectionBagNumber"
+            value={formData.collectionBagNumber}
+            onChange={handleFormChange}
+            required
+        />
+    </div>
+    <button className="bloodcollection-btn" type="submit">
+        Submit
+    </button>
+    <button type="button" className="bloodcollection-btn" onClick={handleCloseModal}>
+        Cancel
+    </button>
+</form>
+
                     </div>
                 </div>
             )}

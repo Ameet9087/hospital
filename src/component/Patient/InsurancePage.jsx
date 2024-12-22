@@ -12,45 +12,53 @@ function InsurancePage({ sendinsurancedata, insuranceData }) {
     initialBalance: '0',
   });
 
+  // Update state when insuranceData changes
   useEffect(() => {
-    // Only update the state if the incoming insuranceData is different from the current state
-    if (insuranceData && (
-      insuranceData.insuranceProvider !== insuranceDataPatient.insuranceProvider ||
-      insuranceData.insuranceName !== insuranceDataPatient.insuranceName ||
-      insuranceData.cardNo !== insuranceDataPatient.cardNo ||
-      insuranceData.insuranceNo !== insuranceDataPatient.insuranceNo ||
-      insuranceData.facilityCode !== insuranceDataPatient.facilityCode ||
-      insuranceData.initialBalance !== insuranceDataPatient.initialBalance
-    )) {
-      setInsuranceDataPatient({
-        insuranceProvider: insuranceData.insuranceProvider || 'NHIF',
-        insuranceName: insuranceData.insuranceName || '',
-        cardNo: insuranceData.cardNo || '',
-        insuranceNo: insuranceData.insuranceNo || '',
-        facilityCode: insuranceData.facilityCode || '',
-        initialBalance: insuranceData.initialBalance || '0',
+    if (insuranceData) {
+      setInsuranceDataPatient(prevState => {
+        // Only update if the values are different
+        if (
+          insuranceData.insuranceProvider !== prevState.insuranceProvider ||
+          insuranceData.insuranceName !== prevState.insuranceName ||
+          insuranceData.cardNo !== prevState.cardNo ||
+          insuranceData.insuranceNo !== prevState.insuranceNo ||
+          insuranceData.facilityCode !== prevState.facilityCode ||
+          insuranceData.initialBalance !== prevState.initialBalance
+        ) {
+          return {
+            insuranceProvider: insuranceData.insuranceProvider || 'NHIF',
+            insuranceName: insuranceData.insuranceName || '',
+            cardNo: insuranceData.cardNo || '',
+            insuranceNo: insuranceData.insuranceNo || '',
+            facilityCode: insuranceData.facilityCode || '',
+            initialBalance: insuranceData.initialBalance || '0',
+          };
+        }
+        return prevState; // If no changes, do nothing
       });
     }
   }, [insuranceData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInsuranceDataPatient(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    sendinsurancedata(insuranceDataPatient); // Send the correct state object
-    alert("Insurance Information Saved Successfully");
+    // Update state with form input change
+    const updatedInsuranceData = {
+      ...insuranceDataPatient,
+      [name]: value,
+    };
+
+    // Set the updated state
+    setInsuranceDataPatient(updatedInsuranceData);
+
+    // Immediately pass updated data to the parent component
+    sendinsurancedata(updatedInsuranceData);
   };
 
   return (
     <div className="insurance-page">
       <h5 style={{marginBottom:'20px'}}>Insurance Information</h5>
-      <form onSubmit={handleSubmit} className='insurance-page-form'>
+      <form className='insurance-page-form'>
         <div>
           <label htmlFor="insuranceProvider">Insurance Provider<span className='mandatory'>*</span>:</label>
           <select
@@ -122,10 +130,6 @@ function InsurancePage({ sendinsurancedata, insuranceData }) {
             required
           />
         </div>
-        <div style={{textAlign:"right"}}>
-         
-       </div>
-        <button type="submit" className="add-insurance-btn" style={{width:'fit-content',marginLeft:'2%'}}>Add Insurance</button>
       </form>
     </div>
   );

@@ -113,11 +113,8 @@
     color: var(--button-hover-text-color);
     background-color: var(--button-hover-background-color);
   }
-  /* .dispenPatientConsumption-table-N-paginationDiv{
-    background-color: #f8f2f2;
-  }
-   */
-  /* .dispenPatientConsumption-requisition-table {
+  
+  .dispenPatientConsumption-requisition-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
@@ -134,7 +131,7 @@
     background-color: #F3F3F3;
     font-size: var(--font-size);
     color:black;
-  } */
+  }
   
   /* .no-data {
     background-color: #fff9c4;
@@ -169,6 +166,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .dispenPatientConsumption-table-N-paginationDiv{
+    background-color: #f8f2f2;
   }
 
 
