@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './CreatePurchaseOrder.css';
+import { API_BASE_URL } from '../../api/api';
 
 const CreatePurchaseOrder = () => {
   const [purchaseOrder, setPurchaseOrder] = useState({
@@ -92,7 +93,7 @@ const CreatePurchaseOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/api/purchase-orders/savePurchaseOrder', purchaseOrder);
+      const response = await axios.post(`${API_BASE_URL}/purchase-orders/savePurchaseOrder`, purchaseOrder);
       console.log('Purchase Order created:', response.data);
     } catch (error) {
       console.error('Error creating Purchase Order:', error.response?.data || error.message);

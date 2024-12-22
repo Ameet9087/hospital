@@ -5,6 +5,10 @@ import UnitOfMeasurement from "./UnitOfMeasurement"; // Popup component for Unit
 import ItemCompany from "./AddCompany"; // Popup component for Item Company
 import PackagingFile from "./PackagingType"; // Popup component for Packaging Type
 import "./AddItem.css"; // Import the CSS file
+import CustomModal from "../../../CustomModel/CustomModal";
+import AddUnitOfMeasurement from "./AddUnitOfMeasurement";
+import AddPackagingType from "./AddPackagingType";
+import { API_BASE_URL } from "../../api/api";
 
 const AddItem = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -63,7 +67,7 @@ const AddItem = ({ isOpen, onClose }) => {
   const fetchSubCategories = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/subcategories/fetchAll"
+        `${API_BASE_URL}/subcategories/fetchAll`
       );
       const data = await response.json();
       setSubCategories(data);
@@ -75,7 +79,7 @@ const AddItem = ({ isOpen, onClose }) => {
   const fetchUnitMeasurements = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/unitofmeasurement/fetchAll"
+        `${API_BASE_URL}/unitofmeasurement/fetchAll`
       );
       const data = await response.json();
       setUnitMeasurements(data);
@@ -87,7 +91,7 @@ const AddItem = ({ isOpen, onClose }) => {
   const fetchCompanies = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/company/allCompany"
+        `${API_BASE_URL}/company/allCompany`
       );
       const data = await response.json();
       setCompanies(data);
@@ -99,7 +103,7 @@ const AddItem = ({ isOpen, onClose }) => {
   const fetchPackagingTypes = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/packageType/getAllPackageType"
+        `${API_BASE_URL}/packageType/getAllPackageType`
       );
       const data = await response.json();
       setPackagingTypes(data);
@@ -130,30 +134,39 @@ const AddItem = ({ isOpen, onClose }) => {
       setErrors(newErrors);
     } else {
       // Prepare the data object in the required format
-      const requestData = { // Assuming id might be provided
-        itemName: formValues.itemName,
-        minStockQuantity: Number(formValues.minStockQuantity),
-        description: formValues.description,
-        standardRate: parseFloat(formValues.standardRate),
-        itemCode: formValues.itemCode,
-        inventory: formValues.inventory,
-        itemCompany: formValues.itemCompany.companyName || "",
-        reOrderQuantity: Number(formValues.reOrderQuantity),
-        unitQuantity: Number(formValues.unitQuantity),
-        isVatApplicable: formValues.isVatApplicable,
-        isCssdApplicable: formValues.isCssdApplicable,
-        isColdStorageApplicable: formValues.isColdStorageApplicable,
-        isPatientConsumptionApplicable: formValues.isPatientConsumptionApplicable,
-        isActive: formValues.isActive,
-        packagingType: formValues.packagingType.packagingTypeName || "",
-        unitOfMeasurement: formValues.unitOfMeasurement.unitOfMeasurementName || "",
-        subCategory: formValues.itemSubCategory.subCategoryName || "",
-        company: formValues.itemCompany.companyName || "",
-      };
+      const requestData = {
+        itemName: formValues.itemName || "",
+        minStockQuantity: Number(formValues.minStockQuantity) || 0,
+        description: formValues.description || "",
+        standardRate: parseFloat(formValues.standardRate) || 0.0,
+        itemCode: formValues.itemCode || "",
+        inventory: formValues.inventory || "",
+        itemCompany: formValues.itemCompany.name || "", // If `itemCompany` includes the name
+        reOrderQuantity: Number(formValues.reOrderQuantity) || 0,
+        unitQuantity: Number(formValues.unitQuantity) || 0,
+        isVatApplicable: formValues.isVatApplicable || false,
+        isCssdApplicable: formValues.isCssdApplicable || false,
+        isColdStorageApplicable: formValues.isColdStorageApplicable || false,
+        isPatientConsumptionApplicable: formValues.isPatientConsumptionApplicable || false,
+        isActive: formValues.isActive || false,
+        packagingType: {
+            id: formValues.packagingType?.id || 0
+        },
+        unitOfMeasurement: {
+            id: formValues.unitOfMeasurement?.id || 0
+        },
+        subCategory: {
+            id: formValues.itemSubCategory?.id || 0
+        },
+        company: {
+            id: formValues.itemCompany?.id || 0
+        }
+    };
+    
       console.log(requestData);
       
       try {
-        const response = await fetch("http://localhost:8080/api/items/addItem", {
+        const response = await fetch(`${API_BASE_URL}/items/addItem`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -380,27 +393,39 @@ const AddItem = ({ isOpen, onClose }) => {
           </button>
         </div>
       </div>
-      <Popup open={isSubCategoryModalOpen} onClose={() => setIsSubCategoryModalOpen(false)}>
+      <CustomModal isOpen={isSubCategoryModalOpen} onClose={() => setIsSubCategoryModalOpen(false)}>
         <AddItemSubCategory onClose={() => setIsSubCategoryModalOpen(false)} />
-      </Popup>
+      </CustomModal>
 
-      <Popup open={isUnitModalOpen} onClose={() => setIsUnitModalOpen(false)}>
-        <UnitOfMeasurement onClose={() => setIsUnitModalOpen(false)} />
-      </Popup>
+      <CustomModal isOpen={isUnitModalOpen} onClose={() => setIsUnitModalOpen(false)}>
+        <AddUnitOfMeasurement onClose={() => setIsUnitModalOpen(false)} />
+      </CustomModal>
 
-      <Popup open={isCompanyModalOpen} onClose={() => setIsCompanyModalOpen(false)}>
+      <CustomModal isOpen={isCompanyModalOpen} onClose={() => setIsCompanyModalOpen(false)}>
         <ItemCompany onClose={() => setIsCompanyModalOpen(false)} />
-      </Popup>
+      </CustomModal>
 
-      <Popup open={isPackagingModalOpen} onClose={() => setIsPackagingModalOpen(false)}>
-        <PackagingFile onClose={() => setIsPackagingModalOpen(false)} />
-      </Popup>
+      <CustomModal isOpen={isPackagingModalOpen} onClose={() => setIsPackagingModalOpen(false)}>
+        <AddPackagingType onClose={() => setIsPackagingModalOpen(false)} />
+      </CustomModal>
     </div>
   );
 };
 
 // Component to render form rows
-const AadddFormRow = ({ label, name, value, onChange, options = [], placeholder, required, elementType = "text", error, checked,onModalOpen }) => {
+const AadddFormRow = ({
+  label,
+  name,
+  value,
+  onChange,
+  options = [],
+  placeholder,
+  required,
+  elementType = "text",
+  error,
+  checked,
+  onModalOpen,
+}) => {
   return (
     <div className="aadddFormRow">
       <label className="aadddLabel">
@@ -414,22 +439,48 @@ const AadddFormRow = ({ label, name, value, onChange, options = [], placeholder,
           onChange={onChange}
           className="aadddCheckbox"
         />
+      ) : label === "Item Category" ? (
+        <div className="aadddSelect">
+          <select
+            name={name}
+            value={value}
+            onChange={onChange}
+            className="aadddInput"
+          >
+            <option value="">{`Select ${label}`}</option>
+            <option value="Consumable">Consumable</option>
+            <option value="Capital Good">Capital Good</option>
+          </select>
+        </div>
       ) : options.length > 0 ? (
         <div className="aadddSelect">
-        <select
-          name={name}
-          value={value}
-          onChange={onChange}
-          className="aadddInput"
-        >
-          <option value="">{`Select ${label}`}</option>
-          {options.map((option) => (
-            <option key={option.id} value={option.subCategoryName || option.unitOfMeasurementName || option.companyName || option.packagingTypeName}>
-              {option.subCategoryName || option.unitOfMeasurementName || option.companyName || option.packagingTypeName}
-            </option>
-          ))}
-        </select>
-        <span className="aadddSelect-span" onClick={onModalOpen}>?</span>
+          <select
+            name={name}
+            value={value}
+            onChange={onChange}
+            className="aadddInput"
+          >
+            <option value="">{`Select ${label}`}</option>
+            {options.map((option) => (
+              <option
+                key={option.id}
+                value={
+                  option.subCategoryName ||
+                  option.unitOfMeasurementName ||
+                  option.companyName ||
+                  option.packagingTypeName
+                }
+              >
+                {option.subCategoryName ||
+                  option.unitOfMeasurementName ||
+                  option.companyName ||
+                  option.packagingTypeName}
+              </option>
+            ))}
+          </select>
+          <span className="aadddSelect-span" onClick={onModalOpen}>
+            ?
+          </span>
         </div>
       ) : (
         <input
@@ -445,5 +496,6 @@ const AadddFormRow = ({ label, name, value, onChange, options = [], placeholder,
     </div>
   );
 };
+
 
 export default AddItem;

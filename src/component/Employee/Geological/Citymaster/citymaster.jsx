@@ -71,6 +71,7 @@ function CityMaster() {
 
   const { columns, data } = getPopupData();
 
+
   const handleSelect = (data) => {
     if (openModel) {
       setSelectedStates(data);

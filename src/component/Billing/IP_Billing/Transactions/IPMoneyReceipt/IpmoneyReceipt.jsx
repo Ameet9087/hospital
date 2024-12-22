@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./IPMoneyReceipt.css";
 import ReceiptDisplay from './ReceiptDisplay';
-import { API_BASE_URL } from "../../../../api/api";
 
 const Ipmoneyreceipt = () => {
   const [formData, setFormData] = useState({
@@ -50,7 +49,7 @@ const Ipmoneyreceipt = () => {
   const [showReceipt, setShowReceipt] = useState(false); 
   // Fetch IP admissions data
   useEffect(() => {
-    fetch(`${API_BASE_URL}/ip-admissions`)
+    fetch("http://localhost:4069/api/ip-admissions")
       .then((response) => response.json())
       .then((data) => {
         setIpAdmissions(data);
@@ -141,7 +140,7 @@ const Ipmoneyreceipt = () => {
     };
 console.log("-----------------",postData)
     // Send POST request to the backend
-    fetch(`${API_BASE_URL}/IPD-bills/create`, {
+    fetch("http://localhost:4069/api/IPD-bills/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

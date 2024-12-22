@@ -4,6 +4,7 @@ import PopupTable from "./PopupTable";
 import { FaSearch } from "react-icons/fa";
 // import { API_BASE_URL } from "../../../api/api";
 import axios from "axios";
+
 import { API_BASE_URL } from "../api/api";
 
 const IPChangeRoom = ({ patient, onClose }) => {
@@ -11,6 +12,7 @@ const IPChangeRoom = ({ patient, onClose }) => {
   const [beds, setBeds] = useState([]);
   const [selectedBedId, setSelectedBedId] = useState(null);
   const [selectedBedDetails, setSelectedBedDetails] = useState(null);
+
 
   const getPopupData = () => {
     if (activePopup === "bed") {
@@ -31,6 +33,7 @@ const IPChangeRoom = ({ patient, onClose }) => {
   };
 
   useEffect(() => {
+
     fetch(`${API_BASE_URL}/beds`)
       .then((response) => response.json())
       .then((data) => setBeds(data))
@@ -71,7 +74,20 @@ const IPChangeRoom = ({ patient, onClose }) => {
       console.error("Error saving room change:", error);
       alert("An error occurred while saving changes.");
     }
+
   };
+
+  // Handle bed selection
+  const handleBedSelection = (e) => {
+    const bedId = parseInt(e.target.value, 10);
+    setSelectedBedId(bedId);
+
+    // Find and set the selected bed details
+    const bedDetails = beds.find((bed) => bed.id === bedId);
+    setSelectedBedDetails(bedDetails || null);
+  };
+
+
 
   return (
     <>
@@ -258,6 +274,7 @@ const IPChangeRoom = ({ patient, onClose }) => {
                   </div>
                 </div> */}
                 {/* <div className="iPChangeRoom-form-row">
+
                 <label>Remarks:</label>
                 <textarea name="" id=""></textarea>
               </div> */}
@@ -269,6 +286,7 @@ const IPChangeRoom = ({ patient, onClose }) => {
               Save
             </button>
           </div>
+
         </div>
       </div>
       {activePopup && (
@@ -284,3 +302,4 @@ const IPChangeRoom = ({ patient, onClose }) => {
 };
 
 export default IPChangeRoom;
+

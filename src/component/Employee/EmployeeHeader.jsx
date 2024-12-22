@@ -116,6 +116,7 @@ const EmployeeHeader = () => {
                 Doctor Master
               </NavLink>
             </li>
+
             <li>
               <NavLink
                 to="/settings/serviceMaster/serviceMaster"
@@ -126,6 +127,7 @@ const EmployeeHeader = () => {
                 Service Master
               </NavLink>
             </li>
+
           </ul>
         </nav>
       </header>
@@ -557,6 +559,7 @@ const EmployeeHeader = () => {
           </ul>
         </div>
       )} */}
+
       {location.pathname.includes("/settings/geolocation") && (
         <div className="sub-nav-container">
           <ul>

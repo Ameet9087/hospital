@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios
 import "../DisSales/dispenSales.css";
 import SalesSales from './dispenSalesSales';
-import { API_BASE_URL } from '../../api/api';
 
 const DispenSales = () => {
   const [selectedCounter, setSelectedCounter] = useState(() => {
@@ -35,7 +34,7 @@ const DispenSales = () => {
     console.log(finalcounter);
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/counter`, finalcounter);
+      const response = await axios.post('http://localhost:3155/api/counter', finalcounter);
       const { id } = response.data;
       setCounterData(response.data);
 

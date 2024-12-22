@@ -1,13 +1,37 @@
-import React, { useState } from "react";
-import Modal from "react-modal";
+import React, { useState, useEffect } from "react";
+import axios from "axios"; // For API call
 import "./Items.css";
 import AddItem from "../components/AddItem";
 import UpdateItem from "../components/UpdateItem";
+import CustomModal from "../../../CustomModel/CustomModal";
+import { API_BASE_URL } from "../../api/api";
 
 const ItemList = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [items, setItems] = useState([]); // State to store fetched items
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch items from API on component mount
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/items/getAllItem`);
+        setItems(response.data); // Set fetched data to state
+        console.log(response.data);
+        
+      } catch (err) {
+        console.error("Error fetching items:", err);
+        setError("Failed to load items.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchItems();
+  }, []);
 
   const openAddModal = () => {
     setIsAddModalOpen(true);
@@ -27,109 +51,75 @@ const ItemList = () => {
     setSelectedItem(null);
   };
 
-  const dummyItemData = {
-    itemCategory: "Capital Goods",
-    itemSubCategory: "Some Subcategory",
-    itemName: "Towel",
-    itemCode: "0001001",
-    unitOfMeasurement: "Piece",
-    description: "",
-    minStockQuantity: 100,
-    standardRate: 0,
-    isVatApplicable: false,
-    isActive: true,
-    inventory: "Common",
-  };
-
   return (
     <div className="ItemList-item-list-container">
       <div className="ItemList-header">
         <button className="ItemList-add-button" onClick={openAddModal}>
           Add Item
         </button>
+        <div className="ItemList-sub-div">
         <div className="ItemList-search-bar">
           <input type="text" placeholder="Search" />
-          <button className="ItemList-search-button">🔍</button>
         </div>
         <div className="ItemList-results-info">
           <button className="ItemList-export-button">Export</button>
           <button className="ItemList-Emergencyprint-button">Print</button>
         </div>
+        </div>
       </div>
-
-      <table className="ItemList-item-table">
-        <thead>
-          <tr>
-            <th>Item Type</th>
-            <th>Subcategory Name</th>
-            <th>Item Name</th>
-            <th>Item Code</th>
-            <th>Unit</th>
-            <th>Description</th>
-            <th>Min Stock</th>
-            <th>Standard Rate</th>
-            <th>Is VAT Applicable</th>
-            <th>Is Active</th>
-            <th>Inventory Type</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{dummyItemData.itemCategory}</td>
-            <td>{dummyItemData.itemSubCategory}</td>
-            <td>{dummyItemData.itemName}</td>
-            <td>{dummyItemData.itemCode}</td>
-            <td>{dummyItemData.unitOfMeasurement}</td>
-            <td>{dummyItemData.description}</td>
-            <td>{dummyItemData.minStockQuantity}</td>
-            <td>{dummyItemData.standardRate}</td>
-            <td>{dummyItemData.isVatApplicable ? "true" : "false"}</td>
-            <td>{dummyItemData.isActive ? "true" : "false"}</td>
-            <td>{dummyItemData.inventory}</td>
-            <td>
-              <button
-                className="ItemList-Emergencyedit-button"
-                onClick={() => openEditModal(dummyItemData)}
-              >
-                Edit
-              </button>
-            </td>
-          </tr>
-          {/* Add more rows as needed */}
-        </tbody>
-      </table>
+        <table className="ItemList-item-table">
+          <thead>
+            <tr>
+              <th>Item Type</th>
+              <th>Subcategory Name</th>
+              <th>Item Name</th>
+              <th>Item Code</th>
+              <th>Unit</th>
+              <th>Description</th>
+              <th>Min Stock</th>
+              <th>Standard Rate</th>
+              <th>Is VAT Applicable</th>
+              <th>Is Active</th>
+              <th>Inventory Type</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item) => (
+              <tr key={item.id}>
+                <td>{item.subCategory?.category || "N/A"}</td>
+                <td>{item.subCategory?.subCategoryName || "N/A"}</td>
+                <td>{item.itemName}</td>
+                <td>{item.itemCode}</td>
+                <td>{item.unitOfMeasurement?.unitOfMeasurementName || "N/A"}</td>
+                <td>{item.description || "N/A"}</td>
+                <td>{item.minStockQuantity}</td>
+                <td>{item.standardRate}</td>
+                <td>{item.isVatApplicable ? "true" : "false"}</td>
+                <td>{item.isActive ? "true" : "false"}</td>
+                <td>{item.inventory}</td>
+                <td>
+                  <button
+                    className="ItemList-Emergencyedit-button"
+                    onClick={() => openEditModal(item)}
+                  >
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
       {/* Add Item Modal */}
-      <Modal
-        isOpen={isAddModalOpen}
-        onRequestClose={closeAddModal}
-        contentLabel="Add Item Modal"
-        className="ItemList-Modal"
-        overlayClassName="ItemList-Overlay"
-      >
+      <CustomModal isOpen={isAddModalOpen} onClose={closeAddModal}>
         <AddItem isOpen={isAddModalOpen} onClose={closeAddModal} />
-        <button className="ItemList-close-modal-button" onClick={closeAddModal}>
-          Close
-        </button>
-      </Modal>
+      </CustomModal>
 
       {/* Edit Item Modal */}
-      <Modal
-        isOpen={isEditModalOpen}
-        onRequestClose={closeEditModal}
-        contentLabel="Edit Item Modal"
-        className="ItemList-Modal"
-        overlayClassName="ItemList-Overlay"
-      >
+      <CustomModal isOpen={isEditModalOpen} onClose={closeEditModal}>
         <UpdateItem item={selectedItem} onClose={closeEditModal} />
-        <button
-          className="ItemList-close-modal-button"
-          onClick={closeEditModal}
-        >
-          Close
-        </button>
-      </Modal>
+      </CustomModal>
     </div>
   );
 };

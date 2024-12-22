@@ -6,6 +6,7 @@ import { API_BASE_URL } from "../../../api/api";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 
 export default function PaytypeMaster() {
+
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   // const [rows, setRows] = useState([
@@ -22,6 +23,7 @@ export default function PaytypeMaster() {
     categoryCode: "",
   });
 
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -34,6 +36,7 @@ export default function PaytypeMaster() {
   useEffect(() => {
     handleLoadData();
   }, []);
+
 
   // const [roomTypes, setRoomTypes] = useState([]);
   // const [isTableVisible, setIsTableVisible] = useState(false);
@@ -83,6 +86,7 @@ export default function PaytypeMaster() {
       alert("Data saved successfully!");
       console.log(response.data);
       setIsModalOpen(false);
+
       handleLoadData();
     } catch (error) {
       console.error("Error saving data:", error);
@@ -94,6 +98,7 @@ export default function PaytypeMaster() {
   const handleLoadData = async () => {
     const response = await axios.get(`${API_BASE_URL}/pay-type`);
     setAllData(response.data);
+
   };
 
   return (
@@ -110,6 +115,7 @@ export default function PaytypeMaster() {
                 "Pay Type Order",
                 "Active Status",
                 "categoryCode",
+
               ].map((header, index) => (
                 <th
                   key={index}
@@ -169,6 +175,7 @@ export default function PaytypeMaster() {
           {/* Order */}
           <div className="paytypemaster-row">
             <label className="paytypemaster-label">Order :</label>
+
             <input
               type="text"
               className="paytypemaster-input"
@@ -218,12 +225,14 @@ export default function PaytypeMaster() {
           {/* OPD Category */}
           <div className="paytypemaster-row-doctorfee">
             <label className="doctorFee">
+
               For OPD Category wise Doctor Fee :
             </label>
             <input
               type="checkbox"
               name="opdCategory"
               value={"OPD"}
+
               className="paytypemaster-checkbox"
               checked={formdata.opdCategory}
               onChange={handleChange}

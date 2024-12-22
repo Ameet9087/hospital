@@ -290,6 +290,7 @@ const Rooms = () => {
                 <label>Floor</label>
                 <div className="rooms-input-with-search">
                   <input type="text" value={selectedFloor?.floorNumber} onChange={handleChange}
+
                     placeholder='Search Floor' />
                     <i onClick={()=>setActivePopup("floor")} className='fa-solid fa-magnifying-glass'></i>
                 </div>

@@ -116,21 +116,21 @@ const SampleCollection = () => {
                 <tr key={index}>
                   <td>{test.requisitionDate}</td>
                   <td>
-                    {test.patientDTO?.firstName ||
-                      test.newPatientVisitDTO?.firstName}{" "}
-                    {test.patientDTO?.lastName ||
-                      test.newPatientVisitDTO?.lastName}
+                    {test.inPatientDTO?.firstName ||
+                      test.outPatientDTO?.firstName}{" "}
+                    {test.inPatientDTO?.lastName ||
+                      test.outPatientDTO?.lastName}
                   </td>
                   <td>
-                    {test.patientDTO?.age || test.newPatientVisitDTO?.age} Y
+                    {test.inPatientDTO?.age || test.outPatientDTO?.age} Y
                   </td>
                   <td>
-                    {test.patientDTO?.phoneNumber ||
-                      test.newPatientVisitDTO?.phoneNumber}
+                    {test.inPatientDTO?.phoneNumber ||
+                      test.outPatientDTO?.phoneNumber}
                   </td>
                   <td>{test.labTestName}</td>
                   <td>
-                    {test.patientDTO?.isIPD?.toLowerCase() === "yes"
+                    {test.inPatientDTO?.isIPD?.toLowerCase() === "yes"
                       ? "IPD"
                       : "OPD"}
                   </td>

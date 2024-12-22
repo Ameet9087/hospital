@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./IPMoneyReceipt.css";
 import { jsPDF } from "jspdf";
-import { API_BASE_URL } from "../../../../api/api";
 const Ipmoneyreceipt = ({value}) => {
   const [receiptData, setReceiptData] = useState(null); // To store fetched receipt data
   const [loading, setLoading] = useState(true); // To track loading state
@@ -181,7 +180,7 @@ const Ipmoneyreceipt = ({value}) => {
   };
   // Fetch receipt data from the API
   useEffect(() => {
-    fetch(`${API_BASE_URL}/IPD-bills/patient/${value}`)
+    fetch(`http://localhost:4069/api/IPD-bills/patient/${value}`)
       .then((response) => response.json())
       .then((data) => {
         setReceiptData(data); // Store the fetched data

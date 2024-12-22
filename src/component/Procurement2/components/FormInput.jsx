@@ -13,7 +13,7 @@ const FormInput = ({
 }) => {
   if (type === "select") {
     return (
-      <div className="form-group">
+      <div className="goods-receipts-form-group">
         <label>{label}</label>
         <select
           value={value}
@@ -30,7 +30,7 @@ const FormInput = ({
     );
   } else if (type === "textarea") {
     return (
-      <div className="form-group">
+      <div className="goods-receipts-form-group">
         <label>{label}</label>
         <textarea
           value={value}
@@ -44,7 +44,7 @@ const FormInput = ({
     );
   } else {
     return (
-      <div className="form-group">
+      <div className="goods-receipts-form-group">
         <label>{label}</label>
         <input
           type={type}

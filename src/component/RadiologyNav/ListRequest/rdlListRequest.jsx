@@ -77,6 +77,8 @@ function RDLListRequest() {
     fetchImagingRequest();
   }, [dateFrom, dateTo]);
 
+
+  
   const updateStatus = (id, filmTypeId, quantity, status, scannedOn) => {
     fetch(
       `${API_BASE_URL}/imaging-requisitions/update-film-type-and-quantity?filmTypeId=${filmTypeId}&quantity=${quantity}&status=${status}&scannedOn=${scannedOn}&imagingId=${id}`,
@@ -148,9 +150,11 @@ function RDLListRequest() {
 };
 
 
+
   const filteredRequests = applyFilters().filter(
     (request) => request.status?.toLowerCase() !== "completed"
   );
+  console.log(filteredRequests);
 
   return (
     <div className="rDLListRequest-active-imaging-request">
@@ -264,6 +268,7 @@ function RDLListRequest() {
                   </td>
                   <td>
                     {request.inPatientDTO?.age || request.outPatient?.age}
+
                   </td>
                   <td>{request.prescriberDTO?.employeeName || "self"}</td>
                   <td>{request.imagingTypeDTO?.imagingTypeName}</td>

@@ -24,6 +24,7 @@ const Beds = () => {
     bedStatus: "active",
     gender: "male",
     bedType: "standard"
+
   });
 
   const fetchRooms = async () => {
@@ -235,6 +236,7 @@ const Beds = () => {
             <div className="beds-form-row">
               <label>Charge Type:</label>
               <select value={formData.chargeType} name="chargeType" onChange={handleInputChange}>
+
                 <option value="free">Free</option>
                 <option value="paid">Paid</option>
                 <option value="partially_paid">Partially Paid</option>
@@ -276,6 +278,7 @@ const Beds = () => {
               </select>
             </div>
             {/* <div className="beds-form-row">
+
               <label>Chronological order:</label>
               <div className="beds-input-with-search">
                 <input
@@ -289,6 +292,7 @@ const Beds = () => {
             </div> */}
             {/* Checkboxes */}
             {/* <div className="beds-form-row">
+
               <input
                 value={"sharingBed"}
                 type="checkbox"
@@ -303,6 +307,7 @@ const Beds = () => {
             </div> */}
 
             {/* <div className="beds-form-row">
+
               <input
                 type="checkbox"
                 value={"dummy"}
@@ -317,6 +322,7 @@ const Beds = () => {
             </div> */}
 
             {/* <div className="beds-form-row">
+
               <input
                 type="checkbox"
                 id="adjustableBed"
@@ -330,6 +336,7 @@ const Beds = () => {
             </div> */}
 
             {/* <div className="beds-form-row">
+
               <input
                 type="checkbox"
                 id="bunkBed"
@@ -344,6 +351,7 @@ const Beds = () => {
             </div> */}
 
             {/* <div className="beds-form-row">
+
               <input
                 type="checkbox"
                 id="sofaBed"
@@ -356,6 +364,7 @@ const Beds = () => {
                 Sofa Bed
               </label>
             </div> */}
+
           </div>
           <div className="beds-action-buttons">
             <button className="btn-blue" onClick={handleSave}>

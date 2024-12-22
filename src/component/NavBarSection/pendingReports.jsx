@@ -210,25 +210,25 @@ function PendingReports() {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>
-                    {result.labRequestDTO?.newPatientVisitDTO?.firstName ||
-                      result.labRequestDTO?.patientDTO?.firstName}{" "}
-                    {result.labRequestDTO?.newPatientVisitDTO?.lastName ||
-                      result.labRequestDTO?.patientDTO?.lastName}
+                    {result.labRequestDTO?.outPatientDTO?.firstName ||
+                      result.labRequestDTO?.inPatientDTO?.firstName}{" "}
+                    {result.labRequestDTO?.outPatientDTO?.lastName ||
+                      result.labRequestDTO?.inPatientDTO?.lastName}
                   </td>
                   <td>
-                    {result.labRequestDTO?.newPatientVisitDTO?.age ||
-                      result?.labRequestDTO?.patientDTO?.age}
+                    {result.labRequestDTO?.outPatientDTO?.age ||
+                      result?.labRequestDTO?.inPatientDTO?.age}
                     {" Y / "}
-                    {result.labRequestDTO?.newPatientVisitDTO?.gender ||
-                      result.labRequestDTO?.patientDTO?.gender}
+                    {result.labRequestDTO?.outPatientDTO?.gender ||
+                      result.labRequestDTO?.inPatientDTO?.gender}
                   </td>
                   <td>
-                    {result.labRequestDTO?.newPatientVisitDTO?.phoneNumber ||
-                      result.labRequestDTO?.patientDTO?.phoneNumber}
+                    {result.labRequestDTO?.outPatientDTO?.phoneNumber ||
+                      result.labRequestDTO?.inPatientDTO?.phoneNumber}
                   </td>
                   <td>{result.labRequestDTO?.labTestName}</td>
                   <td>
-                    {result.labRequestDTO?.patientDTO != null
+                    {result.labRequestDTO?.inPatientDTO != null
                       ? "InPatient"
                       : "Outpatient"}
                   </td>

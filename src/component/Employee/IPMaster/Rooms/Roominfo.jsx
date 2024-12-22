@@ -61,6 +61,7 @@ const Roominfo = () => {
       setSelectedFloor(data)
       console.log(data);
       
+
     } else if (activePopup === "roomType") {
       setSelectedRoomType(data)
     }

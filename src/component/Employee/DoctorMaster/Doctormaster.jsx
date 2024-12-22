@@ -17,6 +17,7 @@ const DoctorMaster = () => {
   const [allPaytype, setAllPaytype] = useState([]);
   const [formdata, setFormdata] = useState({
     salutation: "Dr",
+
     doctorName: "",
     gender: "",
     dob: "",
@@ -138,6 +139,7 @@ const DoctorMaster = () => {
         columns: ["specialisationId", "specialisationName"],
         data: specialisation,
       };
+
     } else {
       return { columns: [], data: [] };
     }
@@ -506,6 +508,7 @@ const DoctorMaster = () => {
           Add Doctor
         </button>
 
+
         <table ref={tableRef}>
           <thead>
             <tr>
@@ -521,6 +524,7 @@ const DoctorMaster = () => {
                 "Registration No",
                 "Employee Type",
                 "Residence Address",
+
               ].map((header, index) => (
                 <th
                   key={index}

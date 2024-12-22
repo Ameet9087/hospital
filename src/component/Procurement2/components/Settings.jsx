@@ -7,7 +7,7 @@ import CompanyTable from "../components/Company";
 import PackagingType from "../components/PackagingType";
 import UnitOfMeasurementComponent from "../components/UnitOfMeasurement";
 import AccountHead from "../components/AccountHead";
-// import ItemList from '../components/Items';
+import ItemList from '../components/Items';
 import Vendors from "../components/Vendors";
 import Terms from "../components/Terms";
 import SubCategoryList from "../components/SubCategory";
@@ -89,6 +89,14 @@ const Settings = () => {
       >
         Invoice Headers
       </NavLink>
+      <NavLink
+        to="items"
+        className={({ isActive }) =>
+          isActive ? "Settings-tab-item active" : "Settings-tab-item"
+        }
+      >
+        Item
+      </NavLink>
     </nav>
 
       <div className="Settings-content">
@@ -101,7 +109,7 @@ const Settings = () => {
             element={<UnitOfMeasurementComponent />}
           />
           <Route path="/account-head" element={<AccountHead />} />
-          {/* <Route path="/items" element={<ItemList />} /> */}
+          <Route path="/items" element={<ItemList />} />
           <Route path="/vendors" element={<Vendors />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/sub-category" element={<SubCategoryList />} />

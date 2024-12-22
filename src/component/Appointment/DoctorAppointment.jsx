@@ -28,6 +28,7 @@ const [appointment,setAppointment]= useState([]);
 
     }
      console.log(locationId);
+
     try {
       const response = await axios.get(
         `${API_BASE_URL}/schedules/by-location-and-doctor?locationId=${locationId}&doctorId=${doctorId}&givenDate=${appointmentDate}`

@@ -233,23 +233,23 @@ function AddResults() {
                 <tr key={test.labRequestId}>
                   <td>{index + 1}</td>
                   <td>
-                    {test.patientDTO?.firstName ||
-                      test.newPatientVisitDTO?.firstName}{" "}
-                    {test.patientDTO?.lastName ||
-                      test.newPatientVisitDTO?.lastName}
+                    {test.inPatientDTO?.firstName ||
+                      test.outPatientDTO?.firstName}{" "}
+                    {test.inPatientDTO?.lastName ||
+                      test.outPatientDTO?.lastName}
                   </td>
                   <td>
-                    {test.patientDTO?.age || test.newPatientVisitDTO?.age} Y /
-                    {test.patientDTO?.gender || test.newPatientVisitDTO?.gender}
+                    {test.inPatientDTO?.age || test.outPatientDTO?.age} Y /
+                    {test.inPatientDTO?.gender || test.outPatientDTO?.gender}
                   </td>
                   <td>
-                    {test.patientDTO?.phoneNumber ||
-                      test.newPatientVisitDTO?.phoneNumber}
+                    {test.inPatientDTO?.phoneNumber ||
+                      test.outPatientDTO?.phoneNumber}
                   </td>
                   <td>{test.labTestName}</td>
                   <td>{test.labTestCategory}</td>
                   <td>
-                    {test.patientDTO != null ? "InPatient" : "OutPatient"}
+                    {test.inPatientDTO != null ? "InPatient" : "OutPatient"}
                   </td>
                   <td>{test.runNumber}</td>
                   <td>{test.barcode}</td>

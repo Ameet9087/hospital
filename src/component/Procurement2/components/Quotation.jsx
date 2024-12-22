@@ -1,22 +1,42 @@
-import React, { useState } from 'react';
-import Modal from 'react-modal';
-import './Quotation.css';
-import RequestForQuotation from '../components/RequestForQuotation';
-import RFQDetails from '../components/RFQDetails';
-import CustomModal from '../../../CustomModel/CustomModal';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Modal from "react-modal";
+import "./Quotation.css";
+import RequestForQuotation from "../components/RequestForQuotation";
+import RFQDetails from "../components/RFQDetails";
+import CustomModal from "../../../CustomModel/CustomModal";
 
-Modal.setAppElement('#root'); 
+Modal.setAppElement("#root");
 
 function QuotationRequest() {
   const [modalIsOpen, setModalIsOpen] = useState(false); // For RequestForQuotation modal
   const [detailsModalIsOpen, setDetailsModalIsOpen] = useState(false); // For RFQDetails modal
+  const [rfqData, setRfqData] = useState([]); // Store RFQ data
+  const [selectedRfq, setSelectedRfq] = useState(null); // Store selected RFQ for details modal
+
+  const API_BASE_URL = "http://localhost:8080/api";
+
+  // Fetch RFQ data on component mount
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/rfq/getAll`)
+      .then((response) => {
+        setRfqData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching RFQ data:", error);
+      });
+  }, []);
 
   // Functions for RequestForQuotation modal
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
 
   // Functions for RFQDetails modal
-  const openDetailsModal = () => setDetailsModalIsOpen(true);
+  const openDetailsModal = (rfq) => {
+    setSelectedRfq(rfq);
+    setDetailsModalIsOpen(true);
+  };
   const closeDetailsModal = () => setDetailsModalIsOpen(false);
 
   return (
@@ -45,7 +65,7 @@ function QuotationRequest() {
 
       {/* Results info and Print button */}
       <div className="QuotationRequest-results-info">
-        <span>Showing 1 / 1 results</span>
+        <span>Showing {rfqData.length} / {rfqData.length} results</span>
         <button className="QuotationRequest-print-button">Print</button>
       </div>
 
@@ -58,37 +78,43 @@ function QuotationRequest() {
             <th>Subject</th>
             <th>Description</th>
             <th>Status</th>
+            <th>Vendor</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>2023-11-29</td>
-            <td>napkins</td>
-            <td>test</td>
-            <td>active</td>
-            <td>
-              {/* Button to open the RFQ Details modal */}
-              <button className="QuotationRequest-action-button" onClick={openDetailsModal}>
-                RFQ Details
-              </button>
-            </td>
-          </tr>
+          {rfqData.map((rfq) => (
+            <tr key={rfq.id}>
+              <td>{rfq.id}</td>
+              <td>{rfq.requestDate}</td>
+              <td>{rfq.subject}</td>
+              <td>{rfq.description}</td>
+              <td>Active</td>
+              <td>{rfq.vendor.vendorName}</td>
+              <td>
+                {/* Button to open the RFQ Details modal */}
+                <button
+                  className="QuotationRequest-action-button"
+                  onClick={() => openDetailsModal(rfq)}
+                >
+                  RFQ Details
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 
       {/* Modal for RFQ Details */}
       <CustomModal
         isOpen={detailsModalIsOpen}
-     onClose={()=>setDetailsModalIsOpen(false)}
-         contentLabel="RFQ Details"
+        onClose={closeDetailsModal}
+        contentLabel="RFQ Details"
       >
-        <RFQDetails /> {/* Pass the close function to the RFQDetails component */}
+    
+          <RFQDetails rfq={selectedRfq} />
+      
       </CustomModal>
-
-
-       
     </div>
   );
 }

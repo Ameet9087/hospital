@@ -191,9 +191,9 @@ const DisPrescription = () => {
     const patientName = `${patient?.firstName || ''} ${patient?.middleName || ''} ${patient?.lastName || ''}`;
     return (
       <tr key={patientId}>
-        <td>{patient?.outPatientId || 'Unknown ID'}</td>
+        <td>{patient?.newPatientVisitId || 'Unknown ID'}</td>
         <td>{patientName}</td>
-        <td>{group[0]?.employeeDTO?.doctorName || 'Unknown Requester'}</td>
+        <td>{group[0]?.requestedBy || 'Unknown Requester'}</td>
         <td>{group[0]?.medicationDate || 'Unknown Date'}</td>
         <td>{group[0]?.status}</td>
         <td className="disPrescription-action-column">

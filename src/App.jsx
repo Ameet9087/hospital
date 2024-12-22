@@ -50,7 +50,7 @@ const modules = {
   },
   Patient:{
       logo:"fa-solid fa-address-card",
-      submodules:['Search Patient', 'Register Patient'],
+      submodules:['Search Patient', 'Register Patient',"OPD"],
   },
   DynamicReport:{
       logo:"fa-solid fa-clipboard-question",

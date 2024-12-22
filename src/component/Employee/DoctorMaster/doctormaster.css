@@ -49,6 +49,7 @@
     border-radius: 0px;
     border-bottom: 3px solid var(--button-bg-color);
   }
+
   .doctormaster-button,.add-doctor-btn {
     background-color: var(--button-bg-color);
     color: var(--button-hover-background-color);
@@ -58,6 +59,7 @@
     border-radius: 5px;
     cursor: pointer;
     margin: 10px;
+ 
   }
   
   .doctormaster-button:hover {
@@ -75,6 +77,7 @@
   .doctormaster-main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+
     gap: 15px;
     background: white;
     border: 1px solid #ccc;
@@ -85,6 +88,7 @@
     width:1200px;
     overflow-y: scroll;
   }
+
 
   .doctormaster-doctor-details,
   .doctormaster-residence-details,
@@ -198,3 +202,4 @@ width: 60%;
   .services-table table{
   table-layout: auto;  
 }
+

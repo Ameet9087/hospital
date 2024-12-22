@@ -27,7 +27,7 @@ const MedicationOrder = ({
       medicationDate: new Date().toISOString().slice(0, 10),
       ...(inPatientId
         ? { patientDTO: { inPatientId } }
-        : { newPatientVisitDTO: { outPatientId } }),
+        : { outPatientDTO: { outPatientId } }),
     }))
   );
 
