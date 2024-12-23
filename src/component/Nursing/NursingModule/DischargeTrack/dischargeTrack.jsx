@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import './dischargeTrack.css';
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 
 export default function DischargeTrack() {
   const [columnWidths, setColumnWidths] = useState({});

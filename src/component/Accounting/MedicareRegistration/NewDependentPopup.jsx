@@ -1,5 +1,5 @@
 import React from "react";
-import "./NewDependentPopup.css";
+import "./newDependentPopup.css";
 
 function NewDependentPopup({ onClose }) {
   return (

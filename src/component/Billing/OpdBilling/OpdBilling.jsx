@@ -4,7 +4,6 @@ import PopupTable from './PopupTable';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../../api/api';
 
-
 const OpdBilling = () => {
   const [opdPatients, setOpdPatients] = useState([]);
   const [selectedTab, setSelectedTab] = useState('services');
@@ -15,8 +14,8 @@ const OpdBilling = () => {
   const [selectedPatient, setSelectedPatient] = useState(null)
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState("");
-  
-
+  const [serviceDetails, setServiceDetails] = useState([]);
+const [selectedService, setSelectedService] = useState([]);
   const [fileName, setFileName] = useState("No file chosen");
   const identification = "someValue"; 
   const [formData,setFormData] = useState({
@@ -38,19 +37,18 @@ const OpdBilling = () => {
   }
   )
 
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setFileName(file ? file.name : "No file chosen");
   };
   // State to manage table rows
  const [testGridTableRowsableRows, setTestGridTableRowsableRows] = useState([
-  { sn: 1, code: '', serviceName: '', doctorName: '', rate: '', qty: '', totalAmt: '', lessDisc: '', discAmt: '', netAmt: '', emerg: '', emergAmt: '', doctorPercent: '', docShareAmt: '', toHospital1: '', toHospital2: '', tokenNo: '', orderBillId: '' },
+  { sn:0, code: '', serviceName: '', doctorName: '', rate: '', qty: '', totalAmt: '', lessDisc: '', discAmt: '', netAmt: '', emerg: '', emergAmt: '' },
 ]);
-
 const [identificationTableRows, setIdentificationTableRows] = useState([
   { sn: 1, Date: '', dCode: '' },
 ]);
+
 
   
   const [paymentDetailsTableRows, setpaymentDetailsTableRows] = useState([{
@@ -80,6 +78,9 @@ const [identificationTableRows, setIdentificationTableRows] = useState([
     if (activePopup === "patient") {
       return { columns: ["uhid", "firstName", "lastName"], data: opdPatients };
     }
+    else if (activePopup === "services") {
+        return { columns: ["serviceName", "rates"], data: serviceDetails };
+      } 
     else if (activePopup === "mobilenumber") {
       return { columns: ["outPatientId", "phoneNumber"], data: opdPatients };
     } else {
@@ -91,11 +92,70 @@ const [identificationTableRows, setIdentificationTableRows] = useState([
     if (activePopup === "patient") {
       setSelectedPatient(data)
     }
+    else if(activePopup === "services") {
+        setSelectedService(data);
+       
+          setTestGridTableRowsableRows((prevRows) => {
+            // Find an empty row to update
+            const emptyRowIndex = prevRows.findIndex(
+              (row) => !row.code && !row.serviceName
+            );
+      
+            if (emptyRowIndex !== -1) {
+              // Update the existing empty row
+              const updatedRows = [...prevRows];
+              updatedRows[emptyRowIndex] = {
+                ...updatedRows[emptyRowIndex],
+                code: data.serviceCode,
+                serviceName: data.serviceName,
+                doctorName:"" ,
+                rate: data.rates[0] || "",
+                qty: 1, // Default quantity
+                totalAmt: data.rates[0] || "",
+                lessDisc: "",
+                discAmt: "",
+                netAmt: data.rates[0] || "",
+                emerg: "",
+                emergAmt: "", 
+                doctorPercent: "",
+                docShareAmt: "",
+                toHospital1: "",
+                toHospital2: "",
+                tokenNo: "",
+                orderBillId: "",
+              };
+              return updatedRows;
+            }
+      
+            // If no empty row, add as a new row
+            return [
+              ...prevRows,
+              {
+                sn: prevRows.length + 1,
+                code: data.serviceCode,
+                serviceName: data.serviceName,
+                doctorName: "",
+                rate: data.rates[0] || "",
+                qty: 1,
+                totalAmt: data.rates[0] || "",
+                lessDisc: "",
+                discAmt: "",
+                netAmt: data.rates[0] || "",
+                emerg: "",
+                emergAmt: "",
+               
+              },
+            ];
+          });
+
+        console.log("selected service++++++++++++",selectedService)
+    }
     else (activePopup === "mobilenumber")
     {
       setSelectedPatient(data)
 
     }
+
     console.log("Selected Data:", data);
     setActivePopup(null); // Close the popup after selection
   };
@@ -120,12 +180,7 @@ const handleAddRow = (type) => {
         netAmt: '',
         emerg: '',
         emergAmt: '',
-        doctorPercent: '',
-        docShareAmt: '',
-        toHospital1: '',
-        toHospital2: '',
-        tokenNo: '',
-        orderBillId: '',
+      
       },
     ]);
   } else if (type === 'identification') {
@@ -162,12 +217,26 @@ const handleAddRow = (type) => {
     }
   };
 
+  const fetchServiceDetails = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/service-details/sorted-map?serviceTypeName=Investigation`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch service details");
+      }
+      const data = await response.json();
+      setServiceDetails(data); // Store the fetched data in state
+    } catch (error) {
+      console.error("Error fetching service details:", error);
+      setError(error.message); // Set error message in state
+    }
+  };
+
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/doctors`);
         if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          throw new Error(`${response.status}`);
         }
         const data = await response.json();
         setDoctors(data);
@@ -177,7 +246,9 @@ const handleAddRow = (type) => {
       }
     };
     fetchDoctors();
+    fetchServiceDetails();
   }, []);
+
   const renderTable = () => {
     switch (selectedTab) {
       case 'testGrid':
@@ -201,12 +272,7 @@ const handleAddRow = (type) => {
                     "Net Amt",
                     "Emerg",
                     "Emerg Amt",
-                    "Doctor %",
-                    "Doc Share Amt",
-                    "To Hospital",
-                    "To Hospital",
-                    "Token No",
-                    "orderbillid"
+                  
 
                   ].map((header, index) => (
                     <th
@@ -255,23 +321,121 @@ const handleAddRow = (type) => {
                     <td>{row.serviceName}</td>
                     <td>{row.doctorName}</td>
                     <td>{row.rate}</td>
-                    <td>{row.qty}</td>
+                    <td> <input
+                  type="number"
+                  value={row.qty}
+                  onChange={(e) => {
+                    const qty = parseInt(e.target.value, 10);
+                    setTestGridTableRowsableRows((prevRows) => {
+                      const updatedRows = [...prevRows];
+                      updatedRows[index].qty = qty;
+                      updatedRows[index].totalAmt =
+                        (row.rate || 0) * (qty || 1);
+                      updatedRows[index].netAmt =
+                        (row.rate || 0) * (qty || 1);
+                      return updatedRows;
+                    });
+                  }}
+                /></td>
                     <td>{row.totalAmt}</td>
                     <td>{row.lessDisc}</td>
                     <td>{row.discAmt}</td>
                     <td>{row.netAmt}</td>
                     <td>{row.emerg}</td>
                     <td>{row.emergAmt}</td>
-                    <td>{row.doctorPercent}</td>
-                    <td>{row.docShareAmt}</td>
-                    <td>{row.toHospital1}</td>
-                    <td>{row.toHospital2}</td>
-                    <td>{row.tokenNo}</td>
-                    <td>{row.orderBillId}</td>
+                 
                   </tr>
                 ))}
               </tbody>
             </table>
+              {/* <table ref={tableRef}>
+        <thead>
+          <tr>
+            {[
+              "Actions",
+              "SN",
+              "Service Type",
+              "Code",
+              "Service Name",
+              "Doctor Name ",
+              "Rate",
+              "Qty",
+              "Total Amt",
+              "Less Disc(%)",
+              "Disc Amt",
+              "Net Amt",
+            
+             
+            ].map((header, index) => (
+                <th
+                key={index}
+                style={{ width: columnWidths[index] }}
+                className="resizable-th"
+              >
+                <div className="header-content">
+                  <span>{header}</span>
+                  <div
+                    className="resizer"
+                    onMouseDown={startResizing(
+                      tableRef,
+                      setColumnWidths
+                    )(index)}
+                  ></div>
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {testGridTableRowsableRows.map((row, index) => (
+            <tr key={index}>
+              <td>
+                <div className="table-actions">
+                  <button
+                    className="billing-opd-com-add-btn"
+                    onClick={handleAddRow}
+                  >
+                    Add
+                  </button>
+                  <button
+                    className="billing-opd-com-del-btn"
+                    onClick={() => handleDeleteRow(index)}
+                    disabled={testGridTableRowsableRows.length <= 1}
+                  >
+                    Del
+                  </button>
+                  <button
+                    className="billing-opd-com-select-btn"
+                    onClick={() => handleServiceSelection(index)}
+                  >
+                    Select
+                  </button>
+                </div>
+              </td>
+              <td>{row.sn}</td>
+              <td>
+                <input type="text" />
+                <button
+                  className="billing-opd-com-magnifier-btn"
+                  onClick={() => setActivePopup("services")}
+                >
+                  🔍
+                </button>
+              </td>
+              <td>{row.code}</td>
+              <td>{row.serviceName}</td>
+              <td>{row.doctorName}</td>
+              <td>{row.rate}</td>
+              <td>{row.qty}</td>
+              <td>{row.totalAmt}</td>
+              <td>{row.lessDisc}</td>
+              <td>{row.discAmt}</td>
+              <td>{row.netAmt}</td>
+             
+            </tr>
+          ))}
+        </tbody>
+      </table> */}
             <div className="billing-opd-com-summary-section">
               <div className="billing-opd-com-summary-row">
                 <div className="billing-opd-com-summary-field">

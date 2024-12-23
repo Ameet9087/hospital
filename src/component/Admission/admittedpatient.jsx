@@ -14,7 +14,7 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
-import IPChangeRoom from "./IPChangeRoom";
+import IPChangeRoom from "../IPChangeRoom";
 import CustomModal from "../../CustomModel/CustomModal";
 import PatientCard from "./PatientCard";
 import PrintWristWindow from "./PrintWristWindow";
