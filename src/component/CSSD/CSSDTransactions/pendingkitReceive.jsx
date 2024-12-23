@@ -1,7 +1,7 @@
 import React, { useState, useEffect , useRef} from "react";
 import { useParams } from "react-router-dom";
 import "./PendingKitReceive.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
