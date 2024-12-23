@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './bedTranferNote.css';
+<<<<<<< HEAD
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import PopupTable from '../PopUpTableBedTransfer/PopupTable';
 import axios from 'axios';
+=======
+>>>>>>> deb73ac (pull 23-12-24)
 
 const BedTransferNote = () => {
   const [formData, setFormData] = useState({
@@ -435,6 +438,7 @@ const BedTransferNote = () => {
        </aside>
       </div>
 
+<<<<<<< HEAD
        {showPatientPopup && (
         <PopupTable 
          columns={patientColumns}
@@ -499,3 +503,6 @@ const BedTransferNote = () => {
  };
 
  export default BedTransferNote;
+=======
+export default BedTransferNote;
+>>>>>>> deb73ac (pull 23-12-24)
