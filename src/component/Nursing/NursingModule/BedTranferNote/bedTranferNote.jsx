@@ -436,7 +436,6 @@ const BedTransferNote = () => {
        </aside>
       </div>
 
-<<<<<<< HEAD
        {showPatientPopup && (
         <PopupTable 
          columns={patientColumns}
@@ -501,6 +500,4 @@ const BedTransferNote = () => {
  };
 
  export default BedTransferNote;
-=======
-export default BedTransferNote;
->>>>>>> deb73ac (pull 23-12-24)
+
