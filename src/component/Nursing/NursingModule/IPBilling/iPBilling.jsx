@@ -9,7 +9,7 @@ import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 // import ServicesPopup from "../Services/services_popup";
 import axios from "axios";
 
-import "./IpBilling.css";
+import "./iPBilling.css";
 import { API_BASE_URL } from "../../../api/api";
 const IPBilling = () => {
   const [selectedTab, setSelectedTab] = useState("services");
