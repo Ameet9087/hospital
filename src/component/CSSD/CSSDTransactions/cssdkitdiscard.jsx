@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "./CSSDKitDiscard.css";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 
 const CSSDKitDiscard = () => {
   const [columnWidths, setColumnWidths] = useState({});
