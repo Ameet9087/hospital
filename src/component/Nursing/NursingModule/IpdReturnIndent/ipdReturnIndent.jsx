@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./ipdReturnIndent.css";
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 
 const IpdReturnIndent = () => {
   const [formData, setFormData] = useState({
