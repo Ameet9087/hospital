@@ -146,6 +146,8 @@
   
   .services-table {
     padding: 8px;
+    overflow-x: scroll;
+    width: 85%;
   }
   
   /* .table-actions {

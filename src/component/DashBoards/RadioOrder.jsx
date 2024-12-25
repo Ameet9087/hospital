@@ -48,7 +48,7 @@ const RadioOrder = ({
       },
       requisitionRemark: order.note,
       prescriberDTO: {
-        employeeId: 12,
+        employeeId: 1,
       },
       urgency: order.urgency,
       requestedDate: new Date().toISOString().split("T")[0],

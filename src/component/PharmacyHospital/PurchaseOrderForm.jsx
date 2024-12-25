@@ -87,7 +87,7 @@ const PurchaseOrderForm = () => {
   const tableRef = useRef(null);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/suppliers')
+    axios.get(`${API_BASE_URL}/suppliers`)
 
       .then(response => {
         setSuppliers(response.data);
@@ -96,7 +96,7 @@ const PurchaseOrderForm = () => {
         console.error('There was an error fetching the suppliers!', error);
       });
 
-    axios.get('http://localhost:8080/api/add-items')
+    axios.get(`${API_BASE_URL}/add-items`)
       .then(response => {
         setAvailableItems(response.data);  // Store the available items
       })
@@ -238,7 +238,7 @@ const PurchaseOrderForm = () => {
       ).toFixed(2),
       vatAmount: items.reduce((acc, item) => acc + parseFloat(item.vatAmount || 0), 0).toFixed(2),
       ccCharge: items.reduce((acc, item) => acc + parseFloat(item.ccChargeAmount || 0), 0).toFixed(2),
-      discountAmount: formData.discountAmount,
+      // discountAmount: formData.discountAmount,
       totalAmount: items.reduce((acc, item) => acc + parseFloat(item.totalAmount || 0), 0).toFixed(2),
       inWords: formData.inWords,
       goodReceiptItems: items.map(item => ({
@@ -266,7 +266,7 @@ const PurchaseOrderForm = () => {
     };
 
     // Now, send this data in the required format to the backend
-    axios.post('http://localhost:8080/api/purchase-orders', data)
+    axios.post(`${API_BASE_URL}/purchase-orders`, data)
       .then(response => {
         alert('Purchase order saved successfully!');
       })
@@ -282,7 +282,7 @@ const PurchaseOrderForm = () => {
   }
 
   return (
-    <form className="purchase-order-form-component" onSubmit={handleSubmit}>
+    <form  onSubmit={handleSubmit}>
 
       {/* <button className="purchase-order-close-button" onClick={handleCloseForm}>
         &times;

@@ -259,9 +259,9 @@ const SettingItemComponent = () => {
                   <td>{item.rackNo || 'N/A'}</td>
                   <td>{item.active ? 'Active' : 'Inactive'}</td>
                   <td className="setting-supplier-action-buttons">
-                    <button className="setting-supplier-action-button">
+                    {/* <button className="setting-supplier-action-button">
                       Add To Rack
-                    </button>
+                    </button> */}
                     <button
                       className="setting-supplier-action-button"
                       onClick={() => handleShowModal(item)}

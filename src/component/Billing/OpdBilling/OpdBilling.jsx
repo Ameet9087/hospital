@@ -3,6 +3,7 @@ import './OpdBilling.css'
 import PopupTable from './PopupTable';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../../api/api';
+import axios from 'axios';
 
 const OpdBilling = () => {
   const [opdPatients, setOpdPatients] = useState([]);
@@ -16,7 +17,15 @@ const OpdBilling = () => {
   const [selectedDoctor, setSelectedDoctor] = useState("");
   const [serviceDetails, setServiceDetails] = useState([]);
 const [selectedService, setSelectedService] = useState([]);
-  const [fileName, setFileName] = useState("No file chosen");
+  const [fileName, setFileName] = useState("No file chosen")
+  const [overallDiscPercent, setOverallDiscPercent] = useState(0);
+  const [overallDiscAmt, setOverallDiscAmt] = useState(0);
+  const [finalDiscountAmt, setFinalDiscountAmt] = useState(0);
+  const [discountPercentage, setDiscountPercentage] = useState(0); // For Less Disc% on total
+const [totalAmount, setTotalAmount] = useState(0); // For Total Amt
+const [discountAmount, setDiscountAmount] = useState(0); // For Less Disc Amt
+const [netAmount, setNetAmount] = useState(0); 
+const [appointments, setAppointments] = useState([]);
   const identification = "someValue"; 
   const [formData,setFormData] = useState({
     "patientCategory": "",
@@ -41,14 +50,76 @@ const [selectedService, setSelectedService] = useState([]);
     const file = event.target.files[0];
     setFileName(file ? file.name : "No file chosen");
   };
+
+
+  
   // State to manage table rows
  const [testGridTableRowsableRows, setTestGridTableRowsableRows] = useState([
-  { sn:0, code: '', serviceName: '', doctorName: '', rate: '', qty: '', totalAmt: '', lessDisc: '', discAmt: '', netAmt: '', emerg: '', emergAmt: '' },
+  { sn:1, code: '', serviceName: '', doctorName: '', rate: '', qty: '', totalAmt: '', lessDisc: '', discAmt: '', netAmt: '', emerg: '', emergAmt: '' },
 ]);
 const [identificationTableRows, setIdentificationTableRows] = useState([
   { sn: 1, Date: '', dCode: '' },
 ]);
 
+useEffect(() => {
+  // Calculate the total amount from all rows
+  const total = testGridTableRowsableRows.reduce(
+    (acc, row) => acc + (row.totalAmt || 0),
+    0
+  );
+  setTotalAmount(total);
+
+  // Calculate the discount and net amount
+  const discount = (total * discountPercentage) / 100;
+  setDiscountAmount(discount);
+  setNetAmount(total - discount);
+}, [testGridTableRowsableRows, discountPercentage]);
+
+
+
+const handleOverallDiscountPercentChange = (e) => {
+    const percent = parseFloat(e.target.value) || 0;
+    setOverallDiscPercent(percent);
+
+    setTestGridTableRowsableRows((prevRows) => {
+      let totalDiscount = 0;
+      const updatedRows = prevRows.map((row) => {
+        const discAmt = (row.totalAmt * percent) / 100;
+        totalDiscount += discAmt;
+        return {
+          ...row,
+          lessDisc: percent,
+          discAmt,
+          netAmt: row.totalAmt - discAmt,
+        };
+      });
+      setFinalDiscountAmt(totalDiscount);
+      return updatedRows;
+    });
+  };
+
+  const handleOverallDiscountAmountChange = (e) => {
+    const amount = parseFloat(e.target.value) || 0;
+    setOverallDiscAmt(amount);
+
+    setTestGridTableRowsableRows((prevRows) => {
+      const totalAmt = prevRows.reduce((sum, row) => sum + row.totalAmt, 0);
+      const percent = (amount / totalAmt) * 100;
+
+      const updatedRows = prevRows.map((row) => {
+        const discAmt = (row.totalAmt * percent) / 100;
+        return {
+          ...row,
+          lessDisc: percent,
+          discAmt,
+          netAmt: row.totalAmt - discAmt,
+        };
+      });
+      setFinalDiscountAmt(amount);
+      setOverallDiscPercent(percent);
+      return updatedRows;
+    });
+  };
 
   
   const [paymentDetailsTableRows, setpaymentDetailsTableRows] = useState([{
@@ -88,80 +159,177 @@ const [identificationTableRows, setIdentificationTableRows] = useState([
     }
   };
   const { columns, data } = getPopupData();
-  const handleSelect = async (data) => {
-    if (activePopup === "patient") {
-      setSelectedPatient(data)
-    }
-    else if(activePopup === "services") {
-        setSelectedService(data);
-       
-          setTestGridTableRowsableRows((prevRows) => {
-            // Find an empty row to update
-            const emptyRowIndex = prevRows.findIndex(
-              (row) => !row.code && !row.serviceName
-            );
-      
-            if (emptyRowIndex !== -1) {
-              // Update the existing empty row
-              const updatedRows = [...prevRows];
-              updatedRows[emptyRowIndex] = {
-                ...updatedRows[emptyRowIndex],
-                code: data.serviceCode,
-                serviceName: data.serviceName,
-                doctorName:"" ,
-                rate: data.rates[0] || "",
-                qty: 1, // Default quantity
-                totalAmt: data.rates[0] || "",
-                lessDisc: "",
-                discAmt: "",
-                netAmt: data.rates[0] || "",
-                emerg: "",
-                emergAmt: "", 
-                doctorPercent: "",
-                docShareAmt: "",
-                toHospital1: "",
-                toHospital2: "",
-                tokenNo: "",
-                orderBillId: "",
-              };
-              return updatedRows;
-            }
-      
-            // If no empty row, add as a new row
-            return [
-              ...prevRows,
-              {
-                sn: prevRows.length + 1,
-                code: data.serviceCode,
-                serviceName: data.serviceName,
-                doctorName: "",
-                rate: data.rates[0] || "",
+
+
+
+const handleSelect = async (data) => {
+    if (activePopup === "patient" || activePopup === "mobilenumber") {
+      setSelectedPatient(data);
+      console.log("Selected patient:", data);
+    
+      try {
+        // Fetch appointments based on the selected patient and use the returned data
+        const fetchedAppointments = await fetchAppointmentsByOutPatientId(data.outPatientId);
+        console.log("Appointments fetched:", fetchedAppointments);
+    
+        if (fetchedAppointments && fetchedAppointments.length > 0) {
+          const doctorId = fetchedAppointments[0].addDoctor?.doctorId;
+          if (doctorId) {
+            console.log("Doctor ID:", doctorId);
+    
+            // Fetch doctor details using the doctorId
+            const doctorDetails = await fetchDoctorDetails(doctorId);
+            
+    
+            if (doctorDetails) {
+              const generalOpdFee = doctorDetails.orgDoctorFees?.[0]?.generalOpdFee || "N/A";
+              console.log("Fetched Doctor Details:", doctorDetails);
+    
+              // Prepare the new row
+              const newRow = {
+                sn: 0, // This will be dynamically set
+                serviceType: "",
+                code: "",
+                serviceName: "Consultation",
+                doctorName: doctorDetails.doctorName,
+                rate: generalOpdFee,
                 qty: 1,
-                totalAmt: data.rates[0] || "",
+                totalAmt: generalOpdFee,
                 lessDisc: "",
                 discAmt: "",
-                netAmt: data.rates[0] || "",
+                netAmt: generalOpdFee,
                 emerg: "",
                 emergAmt: "",
-               
-              },
-            ];
-          });
-
-        console.log("selected service++++++++++++",selectedService)
+              };
+            
+              setTestGridTableRowsableRows((prevRows) => {
+                // Find an empty row to update
+                const emptyRowIndex = prevRows.findIndex(
+                  (row) => !row.code && !row.serviceName && !row.doctorName
+                );
+            
+                if (emptyRowIndex !== -1) {
+                  // Update the existing empty row
+                  const updatedRows = [...prevRows];
+                  updatedRows[emptyRowIndex] = {
+                    ...updatedRows[emptyRowIndex],
+                    ...newRow, // Update only the necessary fields
+                    sn: updatedRows[emptyRowIndex].sn || emptyRowIndex + 1, // Preserve the serial number
+                  };
+                  console.log("Updated existing empty row:", updatedRows);
+                  return updatedRows;
+                }
+            
+                // If no empty row, add a new row
+                const updatedRows = [
+                  ...prevRows,
+                  {
+                    ...newRow,
+                    sn: prevRows.length + 1, // Set the serial number
+                  },
+                ];
+                console.log("Added a new row:", updatedRows);
+                return updatedRows;
+              });
+            } else {
+              console.error("Doctor details not found");
+            }
+          } else {
+            console.error("Doctor ID not found in appointment");
+          }
+        } else {
+          console.error("No appointments found for the patient");
+        }
+      } catch (error) {
+        console.error("Error in handleSelect:", error);
+      }
     }
-    else (activePopup === "mobilenumber")
-    {
-      setSelectedPatient(data)
-
+     else if (activePopup === "services") {
+      setSelectedService(data);
+  
+      setTestGridTableRowsableRows((prevRows) => {
+        // Find an empty row to update
+        const emptyRowIndex = prevRows.findIndex(
+          (row) => !row.code && !row.serviceName
+        );
+  
+        if (emptyRowIndex !== -1) {
+          // Update the existing empty row
+          const updatedRows = [...prevRows];
+          updatedRows[emptyRowIndex] = {
+            ...updatedRows[emptyRowIndex],
+            code: data.serviceCode,
+            serviceName: data.serviceName,
+            doctorName: "",
+            rate: data.rates[0] || "",
+            qty: 1,
+            totalAmt: data.rates[0] || "",
+            lessDisc: "",
+            discAmt: "",
+            netAmt: data.rates[0] || "",
+            emerg: "",
+            emergAmt: "",
+          };
+          return updatedRows;
+        }
+  
+        // If no empty row, add as a new row
+        return [
+          ...prevRows,
+          {
+            sn: prevRows.length + 1,
+            code: data.serviceCode,
+            serviceName: data.serviceName,
+            doctorName: "",
+            rate: data.rates[0] || "",
+            qty: 1,
+            totalAmt: data.rates[0] || "",
+            lessDisc: "",
+            discAmt: "",
+            netAmt: data.rates[0] || "",
+            emerg: "",
+            emergAmt: "",
+          },
+        ];
+      });
+      console.log("selected service++++++++++++", selectedService);
+    } else if (activePopup === "mobilenumber") {
+      setSelectedPatient(data);
     }
-
+  
     console.log("Selected Data:", data);
     setActivePopup(null); // Close the popup after selection
   };
 
+const fetchDoctorDetails = async (doctorId) => { 
+    console.log("Fetching doctor details", doctorId);
+    try {
+      const response = await fetch(`${API_BASE_URL}/doctors/${doctorId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch doctor details');
+      }
+      const doctorData = await response.json();
+      setSelectedDoctor(doctorData || 'N/A');
+      return doctorData; // Explicitly return the fetched data
+    } catch (error) {
+      console.error('Error fetching doctor details:', error);
+      return null; // Return null in case of an error
+ }
+ };
 
 
+const fetchAppointmentsByOutPatientId = async (outPatientId) => {
+    console.log('Fetching appointment id: ' + outPatientId);
+    try {
+      const response = await axios.get(`${API_BASE_URL}/appointments/outpatient/list/${outPatientId}`);
+      console.log("Fetched Appointments:", response.data);
+      setAppointments(response.data); // Update the state
+      return response.data; // Explicitly return the data
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      return []; // Return an empty array on error
+ }
+};
 
 const handleAddRow = (type) => {
   if (type === 'package') {
@@ -196,7 +364,6 @@ const handleAddRow = (type) => {
 };
 
 
-
   const fetchAllBedsAndRoomByPaytype = async (id) => {
     const response = await axios.get(
       `${API_BASE_URL}/rooms/available-by-paytype/${id}`
@@ -219,7 +386,7 @@ const handleAddRow = (type) => {
 
   const fetchServiceDetails = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/service-details/sorted-map?serviceTypeName=Investigation`);
+      const response = await fetch(`${API_BASE_URL}/service-details/sorted-map`);
       if (!response.ok) {
         throw new Error("Failed to fetch service details");
       }
@@ -295,156 +462,106 @@ const handleAddRow = (type) => {
                 </tr>
               </thead>
               <tbody>
-                {testGridTableRowsableRows.map((row, index) => (
-                  <tr key={index}>
-                    <td>
-                      <div className="table-actions">
-                        <button
-                          className="billing-opd-com-add-btn"
-                          onClick={() => handleAddRow('package')}
-                        >
-                          Add
-
-                        </button>
-                        <button
-                          className="billing-opd-com-del-btn"
-                          onClick={() => handleDeleteRow('package', index)}
-                          disabled={testGridTableRowsableRows.length <= 1}
-                        >
-                          Del
-                        </button>
-                      </div>
-                    </td>
-                    <td>{row.sn}</td>
-                    <td><input type="text" /> <button className="billing-opd-com-magnifier-btn" onClick={() => setActivePopup("services")}>🔍</button></td>
-                    <td>{row.code}</td>
-                    <td>{row.serviceName}</td>
-                    <td>{row.doctorName}</td>
-                    <td>{row.rate}</td>
-                    <td> <input
-                  type="number"
-                  value={row.qty}
-                  onChange={(e) => {
-                    const qty = parseInt(e.target.value, 10);
-                    setTestGridTableRowsableRows((prevRows) => {
-                      const updatedRows = [...prevRows];
-                      updatedRows[index].qty = qty;
-                      updatedRows[index].totalAmt =
-                        (row.rate || 0) * (qty || 1);
-                      updatedRows[index].netAmt =
-                        (row.rate || 0) * (qty || 1);
-                      return updatedRows;
-                    });
-                  }}
-                /></td>
-                    <td>{row.totalAmt}</td>
-                    <td>{row.lessDisc}</td>
-                    <td>{row.discAmt}</td>
-                    <td>{row.netAmt}</td>
-                    <td>{row.emerg}</td>
-                    <td>{row.emergAmt}</td>
-                 
-                  </tr>
-                ))}
+  {testGridTableRowsableRows.map((row, index) => (
+    <tr key={index}>
+      <td>
+        <div className="table-actions">
+          <button
+            className="billing-opd-com-add-btn"
+            onClick={() => handleAddRow("package")}
+          >
+            Add
+          </button>
+          <button
+            className="billing-opd-com-del-btn"
+            onClick={() => handleDeleteRow("package", index)}
+            disabled={testGridTableRowsableRows.length <= 1}
+          >
+            Del
+          </button>
+        </div>
+      </td>
+      <td>{row.sn}</td>
+      <td>
+        <input type="text" />
+        <button
+          className="billing-opd-com-magnifier-btn"
+          onClick={() => setActivePopup("services")}
+        >
+          🔍
+        </button>
+      </td>
+      <td>{row.code}</td>
+      <td>{row.serviceName}</td>
+      <td>{row.doctorName}</td>
+      <td>{row.rate}</td>
+      <td>
+        <input
+          type="number"
+          value={row.qty}
+          onChange={(e) => {
+            const qty = parseInt(e.target.value, 10) || 0;
+            setTestGridTableRowsableRows((prevRows) => {
+              const updatedRows = [...prevRows];
+              updatedRows[index].qty = qty;
+              updatedRows[index].totalAmt = (row.rate || 0) * qty;
+              updatedRows[index].netAmt =
+                updatedRows[index].totalAmt -
+                (updatedRows[index].discAmt || 0);
+              return updatedRows;
+            });
+          }}
+        />
+      </td>
+      <td>{row.totalAmt}</td>
+      <td>
+        <input
+          type="number"
+          value={row.lessDisc || 0}
+          onChange={(e) => {
+            const lessDisc = parseFloat(e.target.value) || 0;
+            setTestGridTableRowsableRows((prevRows) => {
+              const updatedRows = [...prevRows];
+              updatedRows[index].lessDisc = lessDisc;
+              updatedRows[index].discAmt =
+                (updatedRows[index].totalAmt * lessDisc) / 100;
+              updatedRows[index].netAmt =
+                updatedRows[index].totalAmt -
+                updatedRows[index].discAmt;
+              return updatedRows;
+            });
+          }}
+        />
+      </td>
+      <td>
+        <input
+          type="number"
+          value={row.discAmt || 0}
+          readOnly
+        />
+      </td>
+      <td>{row.netAmt}</td>
+      <td>{row.emerg}</td>
+      <td>{row.emergAmt}</td>
+    </tr>
+  ))}
               </tbody>
             </table>
-              {/* <table ref={tableRef}>
-        <thead>
-          <tr>
-            {[
-              "Actions",
-              "SN",
-              "Service Type",
-              "Code",
-              "Service Name",
-              "Doctor Name ",
-              "Rate",
-              "Qty",
-              "Total Amt",
-              "Less Disc(%)",
-              "Disc Amt",
-              "Net Amt",
-            
              
-            ].map((header, index) => (
-                <th
-                key={index}
-                style={{ width: columnWidths[index] }}
-                className="resizable-th"
-              >
-                <div className="header-content">
-                  <span>{header}</span>
-                  <div
-                    className="resizer"
-                    onMouseDown={startResizing(
-                      tableRef,
-                      setColumnWidths
-                    )(index)}
-                  ></div>
-                </div>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {testGridTableRowsableRows.map((row, index) => (
-            <tr key={index}>
-              <td>
-                <div className="table-actions">
-                  <button
-                    className="billing-opd-com-add-btn"
-                    onClick={handleAddRow}
-                  >
-                    Add
-                  </button>
-                  <button
-                    className="billing-opd-com-del-btn"
-                    onClick={() => handleDeleteRow(index)}
-                    disabled={testGridTableRowsableRows.length <= 1}
-                  >
-                    Del
-                  </button>
-                  <button
-                    className="billing-opd-com-select-btn"
-                    onClick={() => handleServiceSelection(index)}
-                  >
-                    Select
-                  </button>
-                </div>
-              </td>
-              <td>{row.sn}</td>
-              <td>
-                <input type="text" />
-                <button
-                  className="billing-opd-com-magnifier-btn"
-                  onClick={() => setActivePopup("services")}
-                >
-                  🔍
-                </button>
-              </td>
-              <td>{row.code}</td>
-              <td>{row.serviceName}</td>
-              <td>{row.doctorName}</td>
-              <td>{row.rate}</td>
-              <td>{row.qty}</td>
-              <td>{row.totalAmt}</td>
-              <td>{row.lessDisc}</td>
-              <td>{row.discAmt}</td>
-              <td>{row.netAmt}</td>
-             
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
             <div className="billing-opd-com-summary-section">
               <div className="billing-opd-com-summary-row">
                 <div className="billing-opd-com-summary-field">
                   <label>Less Disc% On All Services:</label>
-                  <input type="text" value="" />
+                  <input
+            type="number"
+            value={discountPercentage}
+            onChange={(e) => setDiscountPercentage(parseFloat(e.target.value) || 0)}
+          />
                 </div>
                 <div className="billing-opd-com-summary-field">
                   <label> Less Disc Amt on All Services :</label>
-                  <input type="text" value="" />
+                            <input type="number" value={discountAmount} readOnly />
+
                 </div>
               </div>
             </div>
@@ -930,16 +1047,16 @@ const handleAddRow = (type) => {
               <div className="billing-opd-com-form-row">
                 <label>Total Amt:<span className="billing-opd-required">*</span>
                 </label>
-                <input type="text" value="0" name='totalAmount' onChange={handleChange} />
-
+                <input type="text" value={totalAmount} readOnly />
               </div>
               <div className="billing-opd-com-form-row">
                 <label> Final Disc Amt: </label>
-                <input type="text" value="0" name='financialDiscAmt' onChange={handleChange} />
+                 <input type="text" value={discountAmount} readOnly />
               </div>
               <div className="billing-opd-com-form-row">
                 <label>Net Amt:</label>
-                <input type="text" value="0" />
+                          <input type="text" value={netAmount} readOnly />
+
               </div>
               <div className="billing-opd-com-form-row">
                 <label>Paid Amt:</label>
@@ -1047,7 +1164,7 @@ const handleAddRow = (type) => {
                           </div>
                         </th>
                       ))}
-                    </tr>
+                    </tr> 
                   </thead>
                   <tbody>
                     {advancesTableRows.map((row, index) => (
