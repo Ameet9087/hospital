@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 import './CSSDItemMaster.css';
+import { API_BASE_URL } from '../../api/api';
 
 const CSSDItemMaster = () => {
   const [status, setStatus] = useState("Active");
@@ -33,7 +34,7 @@ const CSSDItemMaster = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/machines",
+        `${API_BASE_URL}/machines`,
         machineData
       );
       console.log("Machine saved successfully:", response.data);

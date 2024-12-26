@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../api/api";
 
 const InventoryGrid = () => {
   const [inventoryData, setInventoryData] = useState([]);
@@ -9,7 +10,7 @@ const InventoryGrid = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://192.168.0.100:8080/api/inventory");
+        const response = await axios.get(`${API_BASE_URL}/inventory`);
         setInventoryData(response.data); // Assuming response.data is an array
       } catch (error) {
         console.error("Error fetching inventory data:", error);

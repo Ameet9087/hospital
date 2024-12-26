@@ -1,4 +1,3 @@
-
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom"; // Import useNavigate
 import { RiTeamFill } from "react-icons/ri";
@@ -8,7 +7,6 @@ const SuperUserNavBar = () => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
 
   const handleLogOut = () => {
-
     console.log("hellloooooo");
     // navigate("/dispenCouter");
   };
@@ -16,15 +14,14 @@ const SuperUserNavBar = () => {
   return (
     <nav className="superUserNav-Navigation-bar">
       <ul>
-
         <div className="superUserNav-Navbttn-N-act">
-          <li>
+          {/* <li>
             <NavLink to="/superuser/revenuemanagement">Revenue Management</NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink to="/superuser/usermanagement">User Management</NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink to="/superuser/billingdiscountapproval">Billing Discount Approval </NavLink>
           </li>
           <li>
@@ -41,7 +38,7 @@ const SuperUserNavBar = () => {
           </li>
           <li>
             <NavLink to="/superuser/controlalldepartment">Control All Department</NavLink>
-          </li>
+          </li> */}
           {/* <li>
             <NavLink
               to="/patientmgnt"
@@ -73,7 +70,6 @@ const SuperUserNavBar = () => {
       </ul>
     </nav>
   );
-
 };
 
 export default SuperUserNavBar;

@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import './AssignFunctionalityTable.css';
-import { API_BASE_URL } from '../../api/api';
+import React, { useEffect, useState } from "react";
+import "./AssignFunctionalityTable.css";
+import { API_BASE_URL } from "../../api/api";
 
+const AssignFunctionalityTable = ({ id }) => {
+  const [expanded, setExpanded] = useState({}); // Track expanded nodes
+  const [role, setRole] = useState({}); // Store the tree structure
 
-
-const AssignFunctionalityTable = ({id}) => {
-  console.log(id);
-  
-  const [expanded, setExpanded] = useState({});
-  const [role,setRole] =useState({});
+  // Fetch roles and tree data from API
   const fetchRoles = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/admin/role-details/${id}`);
@@ -16,62 +14,80 @@ const AssignFunctionalityTable = ({id}) => {
         throw new Error("Failed to fetch roles");
       }
       const data = await response.json();
-      setRole(data);
       console.log(data);
-      
+
+      setRole(data); // Set tree root node
     } catch (error) {
       console.error("Error fetching roles:", error);
     }
   };
-  useEffect(()=>{
-    fetchRoles();
-  },[])
 
-  const toggleExpansion = (id) => {
+  useEffect(() => {
+    fetchRoles();
+  }, [id]);
+
+  // Toggle expansion for a node
+  const toggleExpansion = (nodeId) => {
     setExpanded((prevExpanded) => ({
       ...prevExpanded,
-      [id]: !prevExpanded[id]
+      [nodeId]: !prevExpanded[nodeId], // Toggle the current node's state
     }));
   };
 
-  const renderTree = (node) => {
+  const renderTree = (node, parentId = "") => {
+    if (!node) return null;
+
+    // Create a unique ID for this node using parentId
+    const nodeId = `${parentId}-${node.moduleId || node.submoduleId || "root"}`;
+
+    // Determine if this node has children
+    const hasChildren = !!(node.modules || node.submodules);
+
     return (
-      <div className="AssignFunctionalityTable-family-node" key={node.id}>
-        <span>{node?.roleName}</span>
-        <div className="AssignFunctionalityTable-family-person">
-          <span>{node?.moduleName}</span>
-          {(node.modules || node.submodules) && (
-            <button
-              onClick={() => toggleExpansion(node.id)}
-              className="AssignFunctionalityTable-expand-btn"
+      <div className="tree-node" key={nodeId}>
+        <div className="tree-node-header">
+          {/* Expand/Collapse Button - Only ONE button for all children */}
+          {hasChildren && (
+            <span
+              className={`tree-node-toggle ${
+                expanded[nodeId] ? "expanded" : "collapsed"
+              }`}
+              onClick={() => toggleExpansion(nodeId)}
             >
-              {expanded[node.id] ? 'Collapse' : 'Expand'}
-            </button>
+              {expanded[nodeId] ? "▼" : "▶"}
+            </span>
           )}
+
+          {/* Node Name */}
+          <span className="tree-node-name">
+            {node.roleName || node.moduleName || "No Name"}
+          </span>
         </div>
-        {node.modules && (
-          <div className="AssignFunctionalityTable-children">
-            {node.modules.map((module) => renderTree(module))}
-          </div>
-        )}
-        {expanded[node.id] && node.submodules && (
-          <div className="AssignFunctionalityTable-children">
-            {node.submodules.map((submodule) => (
-              <div key={submodule.id} className="AssignFunctionalityTable-child">
-                {submodule.submoduleName}
-              </div>
-            ))}
+
+        {/* Render Children (Modules and Submodules) */}
+        {expanded[nodeId] && (
+          <div className="tree-children">
+            {/* Render Modules */}
+            {node.modules &&
+              node.modules.map((module) => renderTree(module, nodeId))}
+
+            {/* Render Submodules */}
+            {node.submodules &&
+              node.submodules.map((submodule) => (
+                <div
+                  key={`${nodeId}-${submodule.submoduleId}`}
+                  className="tree-leaf"
+                >
+                  {submodule.submoduleName}
+                </div>
+              ))}
           </div>
         )}
       </div>
     );
   };
 
-  return (
-    <div className="AssignFunctionalityTable-family-tree-container">
-      {renderTree(role)}
-    </div>
-  );
+  return <div className="tree-container">{renderTree(role)}</div>;
 };
 
 export default AssignFunctionalityTable;

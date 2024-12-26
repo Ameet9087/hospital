@@ -7,16 +7,16 @@ const CSSDTransactionMenu = () => {
 
   const handleButtonClick = (action) => {
     if (action === "1 Kit Request") {
-      navigate("/cssd-kit-request-indent");
+      navigate("cssd-kit-request-indent");
     } else  if (action === "Bubble Pending Kit Issue") {
-      navigate("/cssd-bubble-kit-issue");
+      navigate("cssd-bubble-kit-issue");
     }else if(action === "Bubble Pending Kit Receive"){
-      navigate("/bubble-pending-kit-receive");
+      navigate("bubble-pending-kit-receive");
       
     }else if(action === "6 Kit Discard"){
-      navigate("/cssd-kit-Discard");
+      navigate("cssd-kit-Discard");
     }else if(action === "Bubble Kit Returns"){
-      navigate("/cssd-pending-kit-return")
+      navigate("cssd-pending-kit-return")
     }
     
     

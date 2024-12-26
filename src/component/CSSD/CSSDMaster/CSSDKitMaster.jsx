@@ -3,6 +3,8 @@ import axios from "axios";
 import "./CSSDKitMaster.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { API_BASE_URL } from "../../api/api";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const KitMaster = () => {
   const [kitName, setKitName] = useState("");
@@ -15,12 +17,14 @@ const KitMaster = () => {
   const [modalItems, setModalItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+    const navigate = useNavigate();
+  const location = useLocation();
 
   // Fetch items for the modal
   useEffect(() => {
     if (showModal) {
       axios
-        .get("http://localhost:8080/api/itemmaster")
+        .get(`${API_BASE_URL}/itemmaster`)
         .then((response) => {
           setModalItems(response.data);
         })
@@ -43,6 +47,10 @@ const KitMaster = () => {
       });
     }
   }, [selectedItem]);
+
+  const handleClose = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
 
   const addItem = () => {
     const incompleteRow = items.find((item) => !item.name || !item.quantity);
@@ -88,7 +96,7 @@ const KitMaster = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:8080/api/kit-masters", payload);
+      const response = await axios.post(`${API_BASE_URL}/kit-masters`, payload);
       if (response.status === 201) {
         alert("Kit Master added successfully!");
         setKitName("");
@@ -122,7 +130,7 @@ const KitMaster = () => {
           <FontAwesomeIcon
             icon={faArrowLeftLong}
             className="back-icon"
-            onClick={() => console.log("Back")}
+            onClick={handleClose}
           />
           <h2>CSSD Kit Master</h2>
         </div>

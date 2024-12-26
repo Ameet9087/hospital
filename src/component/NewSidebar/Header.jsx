@@ -2,10 +2,20 @@ import React from "react";
 import { GoBell } from "react-icons/go";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import "./Header.css";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Header = ({ isOpen, setIsOpen }) => {
+  const navigate = useNavigate();
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const toggleLogout = () => {
+    sessionStorage.clear();
+    Cookies.remove("isAuthenticated");
+    Cookies.remove("moduleOrder");
+    window.location.reload();
   };
 
   return (
@@ -14,15 +24,9 @@ const Header = ({ isOpen, setIsOpen }) => {
         {isOpen ? <LuChevronLeft size={20} /> : <LuChevronRight size={20} />}
       </button>
       <div className="hrmsDashHeaderRight">
-        <button className="hrmsDashNotificationButton">
-          <GoBell size={28} />
-          <span className="hrmsDashNotificationBadge">9</span>
+        <button className="hrmsDashNotificationButton" onClick={toggleLogout}>
+          Log out
         </button>
-        <img
-          className="hrmsDashProfileImage"
-          src="https://randomuser.me/api/portraits/women/50.jpg"
-          alt="Profile"
-        />
       </div>
     </div>
   );

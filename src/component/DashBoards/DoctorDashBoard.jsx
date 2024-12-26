@@ -1,9 +1,15 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
-import './DoctorDashBoard.css';
-import PatientRecord from './OutPatient';
-import InPatient from '../DashBoards/InPatient';
-import Records from '../DashBoards/PatientsRecord';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  useLocation,
+} from "react-router-dom";
+import "./DoctorDashBoard.css";
+import PatientRecord from "./OutPatient";
+import InPatient from "../DashBoards/InPatient";
+import Records from "../DashBoards/PatientsRecord";
 
 const DrDashboard = () => {
   const location = useLocation(); // Get the current path
@@ -15,7 +21,7 @@ const DrDashboard = () => {
         <Link to="/doctor/outpatient">
           <button
             className={`dashboard-button ${
-              location.pathname === '/doctor/outpatient' ? 'active' : ''
+              location.pathname === "/doctor/outpatient" ? "active" : ""
             }`}
           >
             Out Patient
@@ -24,7 +30,9 @@ const DrDashboard = () => {
         <Link to="/doctor/in-patientdepartment">
           <button
             className={`dashboard-button ${
-              location.pathname === '/doctor/in-patientdepartment' ? 'active' : ''
+              location.pathname === "/doctor/in-patientdepartment"
+                ? "active"
+                : ""
             }`}
           >
             In Patient Department
@@ -33,7 +41,7 @@ const DrDashboard = () => {
         <Link to="/doctor/patientrecord">
           <button
             className={`dashboard-button ${
-              location.pathname === '/doctor/patientrecord' ? 'active' : ''
+              location.pathname === "/doctor/patientrecord" ? "active" : ""
             }`}
           >
             Patient Record
@@ -45,7 +53,7 @@ const DrDashboard = () => {
       <div className="dashboard-content">
         <Routes>
           <Route path="/outpatient" element={<PatientRecord />} />
-          <Route path="/in-patientdepartment" element={<InPatient />} />
+          <Route path="/inpatientdepartment" element={<InPatient />} />
           <Route path="/patientrecord" element={<Records />} />
         </Routes>
       </div>

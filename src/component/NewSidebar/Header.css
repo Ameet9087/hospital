@@ -22,9 +22,11 @@
   .hrmsDashNotificationButton {
     position: relative;
     font-size: 0.75rem;
-    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--button-color);
     border: none;
-    background-color: transparent;
+    background-color: white;
   }
   
   .hrmsDashNotificationBadge {

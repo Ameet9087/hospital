@@ -8,6 +8,7 @@ const AssignFunctionality = () => {
     {
       id: 1,
       name: "Dispensary",
+      logo: "fa-solid fa-notes-medical",
       subcomponents: [
         "Prescription",
         "Sale",
@@ -20,6 +21,7 @@ const AssignFunctionality = () => {
     {
       id: 2,
       name: "Chemotherapy",
+      logo: "fa-solid fa-user-doctor",
       subcomponents: [
         "Surgery Management",
         "Chemotherapy Scheduling",
@@ -31,6 +33,7 @@ const AssignFunctionality = () => {
     {
       id: 3,
       name: "MedicalRecord",
+      logo: "fa-solid fa-book",
       subcomponents: [
         "MR Outpatient List",
         "MR Inpatient List",
@@ -43,6 +46,7 @@ const AssignFunctionality = () => {
     {
       id: 4,
       name: "Transport",
+      logo: "fa-solid fa-truck-medical",
       subcomponents: [
         "Patient Transport",
         "Ambulance",
@@ -55,20 +59,27 @@ const AssignFunctionality = () => {
     {
       id: 5,
       name: "BloodBank",
+      logo: "fa-solid fa-droplet",
       subcomponents: [
         "Blood Donation Registration",
-        " Blood Collection",
+        "Blood Collection",
         "Blood Testing and Screening",
-        " Blood Storage",
+        "Blood Storage",
         "Blood Request",
         "Blood Issues",
         "Report",
       ],
     },
-    { id: 6, name: "Billing", subcomponents: ["IP Billing", "OPD Billing"] },
+    {
+      id: 6,
+      name: "Billing",
+      logo: "fa-solid fa-money-bill",
+      subcomponents: ["IP Billing", "OPD Billing"],
+    },
     {
       id: 7,
       name: "Pharmacy",
+      logo: "fa-solid fa-prescription-bottle-medical",
       subcomponents: [
         "Order",
         "Supplier",
@@ -82,6 +93,7 @@ const AssignFunctionality = () => {
     {
       id: 8,
       name: "Procurement",
+      logo: "fa-solid fa-table-list",
       subcomponents: [
         "Purchase Request",
         "Purchase Order",
@@ -94,10 +106,11 @@ const AssignFunctionality = () => {
     {
       id: 9,
       name: "Verification",
+      logo: "fa-solid fa-check-double",
       subcomponents: [
         "Inventory",
         "Pharmacy",
-        " Document & Employment Verification",
+        "Document & Employment Verification",
         "Identity Verification",
         "Insurance Verification",
       ],
@@ -105,18 +118,21 @@ const AssignFunctionality = () => {
     {
       id: 10,
       name: "Patient",
-      subcomponents: ["Search Patient", "Register Patient"],
+      logo: "fa-solid fa-address-card",
+      subcomponents: ["Search Patient", "Register Patient", "OPD"],
     },
     {
       id: 11,
       name: "Dynamic Report",
-      subcomponents: [],
+      logo: "fa-solid fa-clipboard-question",
+      subcomponents: ["Write SQL Query Here"],
     },
     {
       id: 12,
       name: "Opration Theater",
+      logo: "fa-solid fa-bandage",
       subcomponents: [
-        " Booing List",
+        "Booking List",
         "Setting",
         "Surgery Scheduling",
         "OT Resource Management",
@@ -128,16 +144,19 @@ const AssignFunctionality = () => {
     {
       id: 13,
       name: "Doctor",
+      logo: "fa-solid fa-stethoscope",
       subcomponents: ["Out Patient", "In Patient Department", "Patient Record"],
     },
     {
       id: 14,
       name: "Clinical",
+      logo: "fa-solid fa-circle-h",
       subcomponents: ["Clinical Assesments And Plan"],
     },
     {
       id: 15,
       name: "Accounting",
+      logo: "fa-solid fa-file-invoice",
       subcomponents: [
         "Transactions",
         "Settings",
@@ -150,40 +169,36 @@ const AssignFunctionality = () => {
     {
       id: 16,
       name: "Nursing",
-      subcomponents: [
-        "Out Patient",
-        "In Patient",
-        "Requisition List",
-        "Discharge Summary",
-      ],
+      logo: "fa-solid fa-user-nurse",
+      subcomponents: ["Nursing Dashboard", "Out Patient"],
     },
     {
       id: 17,
       name: "Appointment",
+      logo: "fa-solid fa-bell",
       subcomponents: [
         "Appointment Booking List",
-        " Book Appointment",
-        "List Visits",
-        "New Visit",
-        "Online Appointment",
+        "Doctor Appointment",
+        "Doctor Schedule Std",
+        "Break Time",
       ],
     },
     {
       id: 18,
       name: "Settings",
+      logo: "fa-solid fa-gear",
       subcomponents: [
         "Departments",
         "Radiology",
-        "ADT",
-        "Security",
-        "Billing",
         "Employee",
-        "Clinical",
+        "IpMaster",
+        "Geolocation",
       ],
     },
     {
       id: 19,
       name: "Inventory",
+      logo: "fa-solid fa-warehouse",
       subcomponents: [
         "Internal",
         "Stock",
@@ -195,14 +210,15 @@ const AssignFunctionality = () => {
     {
       id: 20,
       name: "Incentive",
+      logo: "fa-solid fa-money-check-dollar",
       subcomponents: ["Transaction", "Reports", "Setting"],
     },
     {
       id: 21,
       name: "Laboratory",
+      logo: "fa-solid fa-flask",
       subcomponents: [
-        " Notification",
-        "OPD Billing",
+        "Notification",
         "Sample Collection",
         "Add Results",
         "Pending Reports",
@@ -213,6 +229,7 @@ const AssignFunctionality = () => {
     {
       id: 22,
       name: "Utilites",
+      logo: "fa-solid fa-screwdriver-wrench",
       subcomponents: [
         "Scheme Refund List",
         "Change Visit Scheme",
@@ -223,20 +240,13 @@ const AssignFunctionality = () => {
     {
       id: 23,
       name: "Emergency",
-      subcomponents: [
-        " New Patients",
-        "Triaged Patients",
-        "Finalized Patients",
-        " Bed Information",
-        "Emergency Code Response",
-        "Response Log",
-        " Incident Summary",
-        "Emergency Drill Report",
-      ],
+      logo: "fa-solid fa-hospital",
+      subcomponents: ["New Patients", "Triaged Patients", "Finalized Patients"],
     },
     {
       id: 24,
       name: "System Admin",
+      logo: "fa-solid fa-window-restore",
       subcomponents: [
         "Database Backup",
         "Materialized Sales View",
@@ -248,28 +258,25 @@ const AssignFunctionality = () => {
     {
       id: 25,
       name: "Social Service",
+      logo: "fa-solid fa-hand-holding-medical",
       subcomponents: ["SSU Patient List", "Patient Counseling"],
     },
     {
       id: 26,
-      name: "QueueMngmt",
-      subcomponents: [
-        "OPD",
-        "Patient Queue Display",
-        "Queue Prioritization",
-        "Real-Time Queue Monitoring",
-        "Service Time Tracking",
-        "Patient Notification",
-      ],
+      name: "Queuemanagement",
+      logo: "fa-solid fa-list-check",
+      subcomponents: ["OPD"],
     },
     {
       id: 27,
       name: "SubStore",
-      subcomponents: ["Pharmacy", "Inventory"],
+      logo: "fa-solid fa-pills",
+      subcomponents: ["stores"],
     },
     {
       id: 28,
       name: "Reports",
+      logo: "fa-solid fa-layer-group",
       subcomponents: [
         "Admission",
         "Billing Reports",
@@ -284,11 +291,13 @@ const AssignFunctionality = () => {
     {
       id: 29,
       name: "HI",
+      logo: "fa-solid fa-file-medical",
       subcomponents: ["Patient List", "Visit List", "IPD Billing", "Report"],
     },
     {
       id: 30,
       name: "ADT",
+      logo: "fa-solid fa-hospital-user",
       subcomponents: [
         "Search Patient",
         "Admitted Patients",
@@ -300,10 +309,9 @@ const AssignFunctionality = () => {
     {
       id: 31,
       name: "Maternity",
+      logo: "fa-solid fa-hands-holding-child",
       subcomponents: [
         "Maternity List",
-        "Payments",
-        "Reports",
         "Antenatal Care",
         "Postnatal Care",
         "Labor Room Management",
@@ -314,16 +322,13 @@ const AssignFunctionality = () => {
     {
       id: 32,
       name: "Radioloagy",
-      subcomponents: [
-        "List Requests",
-        "List Reports",
-        "Edit Doctors",
-        "OPD Billing",
-      ],
+      logo: "fa-solid fa-x-ray",
+      subcomponents: ["List Requests", "List Reports", "Edit Doctors"],
     },
     {
       id: 33,
       name: "MktReferral",
+      logo: "fa-solid fa-people-line",
       subcomponents: [
         "Transaction",
         "Setting",
@@ -337,11 +342,13 @@ const AssignFunctionality = () => {
     {
       id: 34,
       name: "CSSD",
+      logo: "fa-solid fa-microscope",
       subcomponents: ["Sterilization", "Reports"],
     },
     {
       id: 35,
       name: "Fix Assests",
+      logo: "fa-solid fa-building",
       subcomponents: [
         "Assets Management",
         "Assets Maintainance",
@@ -352,6 +359,7 @@ const AssignFunctionality = () => {
     {
       id: 36,
       name: "Helpdesk",
+      logo: "fa-solid fa-circle-info",
       subcomponents: [
         "Employee Information",
         "Bed Information",
@@ -359,10 +367,87 @@ const AssignFunctionality = () => {
         "Queue Information",
       ],
     },
+    {
+      id: 37,
+      name: "SuperUser",
+      logo: "fa-solid fa-user-tie",
+      subcomponents: [
+        "Revenue Management",
+        "User Management",
+        "Billing Discount Approval",
+        "Message Broadcast",
+        "Facility Services",
+        "Administration",
+        "Vendor and Supply Management",
+        "Control All Department",
+      ],
+    },
+    {
+      id: 38,
+      name: "HomeHealthcare",
+      logo: "fa-solid fa-house-medical",
+      subcomponents: ["Patient Registration"],
+    },
+    {
+      id: 39,
+      name: "Pediatric",
+      logo: "fa-solid fa-baby",
+      subcomponents: ["Out Patient", "In Patient"],
+    },
+    {
+      id: 39,
+      name: "Physiotherapy",
+      logo: "fa-solid fa-circle-h",
+      subcomponents: ["Session Form", "Session List"],
+    },
+    {
+      id: 40,
+      name: "Vaccination",
+      logo: "fa-solid fa-syringe",
+      subcomponents: ["Patient List", "Reports"],
+    },
+    {
+      id: 41,
+      name: "HR",
+      logo: "fa-solid fa-user-large",
+      subcomponents: [
+        "Employee List",
+        "Attendance",
+        "Employee Schedule",
+        "Employee Leave",
+        "Performance Evaluation",
+        "Payroll",
+        "Recruitment Management",
+      ],
+    },
+    {
+      id: 42,
+      name: "RadiationTherapy",
+      logo: "fa-solid fa-circle-h",
+      subcomponents: [
+        "Patient Therapy Plan",
+        "Dosage Tracking",
+        "Equipment Usage Logs",
+        "Radiation Safety Compliance",
+        "Appointment And Scheduling",
+      ],
+    },
+    {
+      id: 43,
+      name: "Pulmonology",
+      logo: "fa-solid fa-circle-h",
+      subcomponents: [
+        "Respiratory Function Tests",
+        "Pulmonary Rehabilitation",
+        "Imaging and Lab Reports",
+        "Medication Management",
+        "Follow-Up Scheduling",
+      ],
+    },
   ];
-  const [roles, setRoles] = useState([]); 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchId,setSearchId] = useState();
+  const [roles, setRoles] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchId, setSearchId] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const { success, error, CustomAlerts } = useCustomAlert();
   const [roleData, setRoleData] = useState({
@@ -378,9 +463,9 @@ const AssignFunctionality = () => {
     })),
   });
 
-  useEffect (()=>{
+  useEffect(() => {
     fetchRoles();
-  },[])
+  }, []);
   const toggleMain = (index) => {
     setRoleData((prevState) => {
       const newModules = prevState.modules.map((module, i) => {
@@ -453,36 +538,40 @@ const AssignFunctionality = () => {
   const handleSubmit = async () => {
     // Filter modules to include only those with selected subcomponents or main checks
     const selectedModules = roleData.modules
-      .filter((module) => module.isMainChecked || module.subcomponents.some((sub) => sub.isChecked))
+      .filter(
+        (module) =>
+          module.isMainChecked ||
+          module.subcomponents.some((sub) => sub.isChecked)
+      )
       .map((module) => ({
         id: module.id,
-        name:module.name,
+        name: module.name,
         isMainChecked: module.isMainChecked,
         subcomponents: module.subcomponents.filter((sub) => sub.isChecked), // Only include checked subcomponents
       }));
 
-      
-  
-      const transformedData = {
-        modules: selectedModules.map((component) => ({
-          name: component.name,
-          submodules: component.subcomponents.map((subName) => ({
-            name: subName.name.trim(),
-          })),
+    const transformedData = {
+      modules: selectedModules.map((component) => ({
+        name: component.name,
+        submodules: component.subcomponents.map((subName) => ({
+          name: subName.name.trim(),
         })),
-      };
-  
-      console.log(transformedData);
+      })),
+    };
+
+    console.log(transformedData);
     try {
-      
-      const response = await fetch(`${API_BASE_URL}/admin/update-role-functionality/${searchId}`, {
-        method: 'PUT', // or 'POST', depending on your API
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(transformedData), // Convert the data to JSON
-      });
-  
+      const response = await fetch(
+        `${API_BASE_URL}/admin/update-role-permissions/${searchId}`,
+        {
+          method: "PUT", // or 'POST', depending on your API
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(transformedData), // Convert the data to JSON
+        }
+      );
+
       if (response.ok) {
         success("Role functionality updated successfully:");
         setRoleData({
@@ -497,9 +586,11 @@ const AssignFunctionality = () => {
             })),
           })),
         });
-
       } else {
-        console.error("Failed to update role functionality:", response.statusText);
+        console.error(
+          "Failed to update role functionality:",
+          response.statusText
+        );
         // Handle error response
       }
     } catch (error) {
@@ -507,11 +598,10 @@ const AssignFunctionality = () => {
       // Handle network errors
     }
   };
-  
 
   const dropdownRef = useRef(null);
 
-  const filteredOptions = roles.filter(option =>
+  const filteredOptions = roles.filter((option) =>
     option.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -521,7 +611,7 @@ const AssignFunctionality = () => {
   };
 
   const handleOptionClick = (option) => {
-    console.log(option)
+    console.log(option);
     setSearchTerm(option.name); // Set searchTerm to the selected option
     setSearchId(option.rolesId);
     setIsOpen(false); // Close dropdown after selecting an option
@@ -534,12 +624,11 @@ const AssignFunctionality = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  
 
   return (
     <div className="AssignFunctionality-container">
@@ -550,32 +639,32 @@ const AssignFunctionality = () => {
         <div className="AssignFunctionality-right">
           <label>Select Role</label>
           <div ref={dropdownRef}>
-      <input
-        type="text"
-        className="search-search-input"
-        placeholder="Select option..."
-        value={searchTerm}
-        onChange={handleSearchChange}
-        onFocus={() => setIsOpen(true)} // Open dropdown on focus
-      />
+            <input
+              type="text"
+              className="search-search-input"
+              placeholder="Select option..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              onFocus={() => setIsOpen(true)} // Open dropdown on focus
+            />
 
-      {isOpen && (
-        <ul className="search-dropdown-list-new">
-          {filteredOptions.map((option) => (
-            <li
-              key={option.rolesId}
-              onClick={() => handleOptionClick(option)}
-              className="search-dropdown-item"
-            >
-              {option.name}
-            </li>
-          ))}
-          {filteredOptions.length === 0 && (
-            <li className="search-dropdown-item">No options found</li>
-          )}
-        </ul>
-      )}
-    </div>
+            {isOpen && (
+              <ul className="search-dropdown-list-new">
+                {filteredOptions.map((option) => (
+                  <li
+                    key={option.rolesId}
+                    onClick={() => handleOptionClick(option)}
+                    className="search-dropdown-item"
+                  >
+                    {option.name}
+                  </li>
+                ))}
+                {filteredOptions.length === 0 && (
+                  <li className="search-dropdown-item">No options found</li>
+                )}
+              </ul>
+            )}
+          </div>
         </div>
         <button className="AssignFunctionality-submit" onClick={handleSubmit}>
           Submit
@@ -583,68 +672,85 @@ const AssignFunctionality = () => {
       </div>
 
       <div className="AssignFunctionality-main-content">
-  {/* First Column - First Half of Modules */}
-  <div className="AssignFunctionality-column">
-    {roleData.modules.slice(0, Math.ceil(roleData.modules.length / 2)).map((module, index) => (
-      <div key={module.id} className="AssignFunctionality-Main-component">
-        <label>
-          <input
-            type="checkbox"
-            checked={module.isMainChecked}
-            onChange={() => toggleMain(index)}
-          />
-          {module.name}
-        </label>
-        {module.isMainChecked && (
-          <div className="subcomponent-list three-column">
-            {module.subcomponents.map((sub, subIndex) => (
-              <label key={sub.name} className="subcomponent-item">
-                <input
-                  type="checkbox"
-                  checked={sub.isChecked}
-                  onChange={() => toggleSubComponent(index, subIndex)}
-                />
-                {sub.name}
-              </label>
+        {/* First Column - First Half of Modules */}
+        <div className="AssignFunctionality-column">
+          {roleData.modules
+            .slice(0, Math.ceil(roleData.modules.length / 2))
+            .map((module, index) => (
+              <div
+                key={module.id}
+                className="AssignFunctionality-Main-component"
+              >
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={module.isMainChecked}
+                    onChange={() => toggleMain(index)}
+                  />
+                  {module.name}
+                </label>
+                {module.isMainChecked && (
+                  <div className="subcomponent-list three-column">
+                    {module.subcomponents.map((sub, subIndex) => (
+                      <label key={sub.name} className="subcomponent-item">
+                        <input
+                          type="checkbox"
+                          checked={sub.isChecked}
+                          onChange={() => toggleSubComponent(index, subIndex)}
+                        />
+                        {sub.name}
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
-          </div>
-        )}
-      </div>
-    ))}
-  </div>
+        </div>
 
-  {/* Second Column - Second Half of Modules */}
-  <div className="AssignFunctionality-column">
-    {roleData.modules.slice(Math.ceil(roleData.modules.length / 2)).map((module, index) => (
-      <div key={module.id} className="AssignFunctionality-Main-component">
-        <label>
-          <input
-            type="checkbox"
-            checked={module.isMainChecked}
-            onChange={() => toggleMain(index + Math.ceil(roleData.modules.length / 2))}
-          />
-          {module.name}
-        </label>
-        {module.isMainChecked && (
-          <div className="subcomponent-list three-column">
-            {module.subcomponents.map((sub, subIndex) => (
-              <label key={sub.name} className="subcomponent-item">
-                <input
-                  type="checkbox"
-                  checked={sub.isChecked}
-                  onChange={() => toggleSubComponent(index + Math.ceil(roleData.modules.length / 2), subIndex)}
-                />
-                {sub.name}
-              </label>
+        {/* Second Column - Second Half of Modules */}
+        <div className="AssignFunctionality-column">
+          {roleData.modules
+            .slice(Math.ceil(roleData.modules.length / 2))
+            .map((module, index) => (
+              <div
+                key={module.id}
+                className="AssignFunctionality-Main-component"
+              >
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={module.isMainChecked}
+                    onChange={() =>
+                      toggleMain(index + Math.ceil(roleData.modules.length / 2))
+                    }
+                  />
+                  {module.name}
+                </label>
+                {module.isMainChecked && (
+                  <div className="subcomponent-list three-column">
+                    {module.subcomponents.map((sub, subIndex) => (
+                      <label key={sub.name} className="subcomponent-item">
+                        <input
+                          type="checkbox"
+                          checked={sub.isChecked}
+                          onChange={() =>
+                            toggleSubComponent(
+                              index + Math.ceil(roleData.modules.length / 2),
+                              subIndex
+                            )
+                          }
+                        />
+                        {sub.name}
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
-          </div>
-        )}
+        </div>
       </div>
-    ))}
-  </div>
-</div>
 
-<CustomAlert />
+      <CustomAlert />
     </div>
   );
 };

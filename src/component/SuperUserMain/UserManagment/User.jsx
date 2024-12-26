@@ -1,19 +1,20 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import "./User.css";
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
-import CustomModal from '../../CustomModel/CustomModal';
-import NewUserForm from './NewUserForm';
-import { API_BASE_URL } from '../../api/api';
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import CustomModal from "../../CustomModel/CustomModal";
+import NewUserForm from "./NewUserForm";
+import { API_BASE_URL } from "../../api/api";
+import axios from "axios";
 
 const User = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
   const [roles, setRoles] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchUsername, setSearchUsername] = useState('');
-  const [searchCode, setSearchCode] = useState('');
-  const [searchEmail, setSearchEmail] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchUsername, setSearchUsername] = useState("");
+  const [searchCode, setSearchCode] = useState("");
+  const [searchEmail, setSearchEmail] = useState("");
   const [userDetails, setUserDetails] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -39,9 +40,11 @@ const User = () => {
 
   const fetchUserDetails = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/admin/get-user-permission`);
+      const response = await fetch(`${API_BASE_URL}/admin/user-permissions`);
       if (!response.ok) throw new Error("Failed to fetch user details");
       const data = await response.json();
+      console.log(data);
+
       setUserDetails(data);
       setFilteredUserDetails(data); // Set initial filtered data
     } catch (error) {
@@ -55,11 +58,10 @@ const User = () => {
   };
 
   const filterData = () => {
-    const filteredData = userDetails.filter((user) =>
-      (searchUsername === '' || user.username.toLowerCase().includes(searchUsername.toLowerCase())) &&
-      (searchCode === '' || user.employeeCode?.toLowerCase().includes(searchCode.toLowerCase())) &&
-      (searchEmail === '' || user.email?.toLowerCase().includes(searchEmail.toLowerCase())) &&
-      (searchTerm === '' || user.role?.roleName.toLowerCase().includes(searchTerm.toLowerCase()))
+    const filteredData = userDetails.filter(
+      (user) =>
+        searchUsername === "" ||
+        user.username.toLowerCase().includes(searchUsername.toLowerCase())
     );
     setFilteredUserDetails(filteredData);
   };
@@ -73,100 +75,96 @@ const User = () => {
     setIsEdit(true);
   };
 
+  const handleDelete = async (username) => {
+    await axios.delete(`${API_BASE_URL}/admin/delete?userName=${username}`);
+    fetchRoles();
+  };
+
   return (
-    <div className='User-container'>
-      <div className='User-heading'>
+    <div className="User-container">
+      <div className="User-heading">
         <input
-          className='User-Add-New-In'
+          className="User-Add-New-In"
           type="text"
-          placeholder="Search by name"
+          placeholder="Search by username"
           value={searchUsername}
           onChange={(e) => setSearchUsername(e.target.value)}
         />
-        <input
-          className='User-Add-New-In'
-          type="text"
-          placeholder="Search by code"
-          value={searchCode}
-          onChange={(e) => setSearchCode(e.target.value)}
-        />
-        <input
-          className='User-Add-New-In'
-          type="text"
-          placeholder="Search by email"
-          value={searchEmail}
-          onChange={(e) => setSearchEmail(e.target.value)}
-        />
         <div ref={dropdownRef}>
-          <input
-            type="text"
-            className="search-search-input"
-            placeholder="Select option..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onFocus={() => setIsOpen(true)}
-          />
-
           {isOpen && (
             <ul className="search-dropdown-list-new">
-              {roles.filter(option => option.name.toLowerCase().includes(searchTerm.toLowerCase())).map((option) => (
-                <li
-                  key={option.rolesId}
-                  onClick={() => {
-                    setSearchTerm(option.name);
-                    setIsOpen(false);
-                  }}
-                  className="search-dropdown-item"
-                >
-                  {option.name}
-                </li>
-              ))}
+              {roles
+                .filter((option) =>
+                  option.name.toLowerCase().includes(searchTerm.toLowerCase())
+                )
+                .map((option) => (
+                  <li
+                    key={option.rolesId}
+                    onClick={() => {
+                      setSearchTerm(option.name);
+                      setIsOpen(false);
+                    }}
+                    className="search-dropdown-item"
+                  >
+                    {option.name}
+                  </li>
+                ))}
               {roles.length === 0 && (
                 <li className="search-dropdown-item">No options found</li>
               )}
             </ul>
           )}
         </div>
-        <button className='User-Add-New-Btn' onClick={() => setShowModal(true)}>Add New</button>
+        <button className="User-Add-New-Btn" onClick={() => setShowModal(true)}>
+          Add New
+        </button>
       </div>
 
-      <div className='User-table-container'>
+      <div className="User-table-container">
         <table ref={tableRef}>
           <thead>
             <tr>
-              {["Sr.No", "Employee Name", "Employee Code", "User Name", "Employee Type", "Units", "Roles", "Department", "Mobile", "Email", "Action"].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
+              {["Sr.No", "User Name", "Role Name", "Action"].map(
+                (header, index) => (
+                  <th
+                    key={index}
+                    style={{ width: columnWidths[index] }}
+                    className="resizable-th"
+                  >
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
+                      ></div>
+                    </div>
+                  </th>
+                )
+              )}
             </tr>
           </thead>
           <tbody>
             {filteredUserDetails.map((data, index) => (
               <tr key={index}>
-                <td>{data?.userId}</td>
-                <td>{data?.employeeName || ''}</td>
-                <td>{data?.employeeCode || ''}</td>
-                <td>{data?.username}</td>
-                <td>{data?.employeeType || ''}</td>
-                <td>{data?.units || ''}</td>
-                <td>{data?.role?.roleName || ''}</td>
-                <td>{data?.department || ''}</td>
-                <td>{data?.mobile || ''}</td>
-                <td>{data?.email || ''}</td>
+                <td>{index + 1}</td>
+                <td>{data?.username || ""}</td>
+                <td>{data.role?.roleName || ""}</td>
                 <td>
-                  <button onClick={() => handleEdit(data)}>Edit</button>
-                  <button>Delete</button>
+                  <button
+                    className="User-edit-btn"
+                    onClick={() => handleEdit(data)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="User-delete-btn"
+                    onClick={() => handleDelete(data.username)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

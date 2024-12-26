@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 import './CSSDKitCategory.css';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { API_BASE_URL } from '../../api/api';
 
 const CSSDItemMaster = () => {
   const [itemName, setItemName] = useState('');
@@ -19,7 +20,7 @@ const CSSDItemMaster = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/api/kit-categories', data);
+      const response = await axios.post(`${API_BASE_URL}/kit-categories`, data);
       console.log('Save Successful:', response.data);
       alert('Kit category saved successfully!');
     } catch (error) {

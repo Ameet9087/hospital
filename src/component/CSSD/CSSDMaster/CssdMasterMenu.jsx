@@ -7,10 +7,10 @@ function CssdMaster() {
   const navigate = useNavigate();
 
   const buttons = [
-    { label: "CSSD Item Master", path: "/CSSDItemMaster" },
-    { label: "CSSD Kit Category", path: "/cssd-kit-category" },
-    { label: "CSSD Kit Master", path: "/cssd-kit-master" },
-    { label: "Machine Master", path: "/cssd-machine-master" },
+    { label: "CSSD Item Master", path: "CSSDItemMaster" },
+    { label: "CSSD Kit Category", path: "cssd-kit-category" },
+    { label: "CSSD Kit Master", path: "cssd-kit-master" },
+    { label: "Machine Master", path: "cssd-machine-master" },
   ];
 
   const handleClick = (index, path) => {

@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 import './CSSDItemMaster.css';
+import { API_BASE_URL } from '../../api/api';
 
 const CSSDItemMaster = () => {
   const [status, setStatus] = useState("Active");
@@ -37,11 +38,10 @@ const CSSDItemMaster = () => {
       sterlleType: sterileType,
       mapItemFromInventory,
       status,
-      kitId: kitId ? parseInt(kitId) : null,
     };
 
     axios
-      .post("http://localhost:8080/api/itemmaster", payload)
+      .post(`${API_BASE_URL}/itemmaster`, payload)
       .then((response) => {
         console.log("Item saved successfully:", response.data);
         alert("Item saved successfully!");

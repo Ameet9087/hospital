@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import "./Role.css";
-import CreateRole from './CreateRole';
-import CustomModal from '../../CustomModel/CustomModal';
+import CreateRole from "./CreateRole";
+import CustomModal from "../../CustomModel/CustomModal";
 
-import AssignFunctionalityTable from './AssignFunctionalityTable';
-import useCustomAlert from '../../../alerts/useCustomAlert';
-import { API_BASE_URL } from '../../api/api';
+import AssignFunctionalityTable from "./AssignFunctionalityTable";
+import useCustomAlert from "../../../alerts/useCustomAlert";
+import { API_BASE_URL } from "../../api/api";
 
 const Role = () => {
   const [showModal, setShowModal] = useState(false);
@@ -13,8 +13,8 @@ const Role = () => {
   const [roles, setRoles] = useState([]); // State to store roles
   const [selectedRole, setSelectedRole] = useState(null); // Track role to edit
   const { success, error, CustomAlerts } = useCustomAlert();
-  const [showView,setShowView] = useState(false);
-  const [selectedId,setSelectedId] = useState();
+  const [showView, setShowView] = useState(false);
+  const [selectedId, setSelectedId] = useState();
 
   const fetchRoles = async () => {
     try {
@@ -45,36 +45,38 @@ const Role = () => {
     setSelectedRole(null); // Reset selected role after closing
   };
 
-  const handleDelete = async(id) => {
+  const handleDelete = async (id) => {
     console.log(id);
-    
+
     try {
-      const response = await fetch(`${API_BASE_URL}/admin/remove-role/${id}`,{
-        method:"DELETE"
-      })
+      const response = await fetch(`${API_BASE_URL}/admin/remove-role/${id}`, {
+        method: "DELETE",
+      });
 
       if (!response.ok) {
         error("Failed to fetch roles");
       }
       success("Role Deleted Successfully");
-      fetchRoles()
+      fetchRoles();
     } catch (e) {
       error("Error fetching roles:", error);
     }
-  }
+  };
 
-  const handleView = (id)=>{
+  const handleView = (id) => {
     setSelectedId(id);
     setShowView(true);
-  }
+  };
 
   return (
     <>
-      <div className='Role-container'>
-        <div className='Role-heading'>
-          <button className='Role-btn' onClick={() => setShowModal(true)}>Add New Role</button>
+      <div className="Role-container">
+        <div className="Role-heading">
+          <button className="Role-btn" onClick={() => setShowModal(true)}>
+            Add New Role
+          </button>
         </div>
-        <div className='Role-table'>
+        <div className="Role-table">
           <table>
             <thead>
               <tr>
@@ -90,11 +92,34 @@ const Role = () => {
                 <tr key={role.rolesId}>
                   <td>{role.name}</td>
                   <td>{role.roleDescription}</td>
-                  <td>{(role.isActive)?<button className='role-active'>Active</button>:<button className='role-Inactive'>Inactive</button>}</td>
-                  <td><button onClick={()=>handleView(role.rolesId)}>View</button></td>
                   <td>
-                    <button className='role-edit-btn' onClick={() => handleEditClick(role)}>Edit</button>
-                    <button className='role-delete-btn' onClick={() =>handleDelete(role.rolesId)}>Delete</button>
+                    {role.isActive ? (
+                      <button className="role-active">Active</button>
+                    ) : (
+                      <button className="role-Inactive">Inactive</button>
+                    )}
+                  </td>
+                  <td>
+                    <button
+                      className="role-edit-btn"
+                      onClick={() => handleView(role.rolesId)}
+                    >
+                      View
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className="role-edit-btn"
+                      onClick={() => handleEditClick(role)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="role-delete-btn"
+                      onClick={() => handleDelete(role.rolesId)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -103,15 +128,15 @@ const Role = () => {
         </div>
       </div>
       <CustomModal isOpen={showModal || showUpdate} onClose={handleCloseModal}>
-        <CreateRole 
+        <CreateRole
           onClose={handleCloseModal}
           initialRole={selectedRole} // Pass selected role for editing
-          isEditMode={showUpdate}    // Indicate if it's in edit mode
+          isEditMode={showUpdate} // Indicate if it's in edit mode
         />
       </CustomModal>
       <CustomAlerts />
       <CustomModal isOpen={showView} onClose={handleCloseModal}>
-        <AssignFunctionalityTable id={selectedId}/>
+        <AssignFunctionalityTable id={selectedId} />
       </CustomModal>
     </>
   );
