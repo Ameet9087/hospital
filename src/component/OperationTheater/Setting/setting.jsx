@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import Ot_machine from './settingsubfils/Ot_machine/Ot_machine';
+import Ot_machine from './settingsubfils/OtMachine/OtMachine';
 import OTMaster from './settingsubfils/OTMaster/Otmaster';
 import './setting.css';
 import Otpkgmaster from './settingsubfils/OTPkgMaster/Otpkgmaster';
@@ -41,7 +41,7 @@ const Setting = () => {
             >
               OT Pkg Master
             </li> */}
-               <li
+            <li
               className={isActive('/oprationtheater/setting/operationmaster') ? 'setting-nav-item active' : 'setting-nav-item'}
               onClick={() => handleNavClick('/oprationtheater/setting/operationmaster')}
             >
@@ -57,7 +57,7 @@ const Setting = () => {
           <Route path="otmachine" element={<Ot_machine />} />
           <Route path="otmaster" element={<OTMaster />} />
           <Route path="otpkgmaster" element={<Otpkgmaster />} />
-          <Route path="operationmaster" element={<OperationMaster/>}/>
+          <Route path="operationmaster" element={<OperationMaster />} />
         </Routes>
       </main>
     </div>

@@ -13,7 +13,7 @@ import PostSurgeryCare from './Postcaresurgery/postcaresurgery';
 import SurgeryEvents from './SurgeryEvent/SurgeryEventsPage';
 import OperationMaster from './Setting/settingsubfils/OperationMaster/OperationMaster';
 import OTMaster from './Setting/settingsubfils/OTMaster/Otmaster';
-import Ot_machine from './Setting/settingsubfils/Ot_machine/Ot_machine';
+import Ot_machine from './Setting/settingsubfils/OtMachine/OtMachine';
 import OperationNotes from './OperationNotes/OperationNotes';
 import PostOpInstructions from "./PostOpInstruction/PostOpInstructions"
 import SurgeryScheduling from './SurgeryScheduling/sugeryscheduling';
