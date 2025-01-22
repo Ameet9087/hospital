@@ -6,7 +6,6 @@ import NursingMainComponent from "./NursingMainComponent";
 import OutPatient from "./NursingMainComponent";
 import Layout from "./Layout";
 import NurseRoute from "./NursingModule/nurseRoute";
-import AddDasboard from "./NursingModule/APDashBoard/aPDashBoard";
 import WardNurseDashboard from "./NursingModule/WardNurseDashboard/wardNurseDashboard";
 import { Provider } from "react-redux";
 import { store } from "./NursingModule/ReduxNursing/store";
@@ -25,7 +24,6 @@ function NurisingMainRouting() {
               path="/nurse-dashboard"
               element={<WardNurseDashboard />}
             ></Route>
-            <Route path="/patient-dashboard" element={<AddDasboard />} />
             <Route path="/login-nursing" element={<WardNurseDashboard />} />
             <Route path="/services-all" element={<ServicePopup />} />
           </Routes>

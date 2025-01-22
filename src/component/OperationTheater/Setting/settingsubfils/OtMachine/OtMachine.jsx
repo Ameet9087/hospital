@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import './Ot_machine.css';
+import './OtMachine.css';
 import { API_BASE_URL } from "../../../../api/api"
 
 // const API_BASE_URL = 'http://192.168.210.48:8080/api/ot-machines';
@@ -20,7 +20,7 @@ function Ot_machine() {
   // Load all machines
   const loadMachines = async () => {
     try {
-      const response = await axios.get(`${ API_BASE_URL }/ot-machines`);
+      const response = await axios.get(`${API_BASE_URL}/ot-machines`);
       const normalizedData = response.data.map((machine) => ({
         id: Number(machine.otMachineId), // Ensure ID is a number
         machineName: machine.machineName,
@@ -52,7 +52,7 @@ function Ot_machine() {
         );
       } else {
         // Add new machine
-        const response = await axios.post(`${ API_BASE_URL }/ot-machines`, payload);
+        const response = await axios.post(`${API_BASE_URL}/ot-machines`, payload);
         setMachines((prevMachines) => [
           ...prevMachines,
           {
