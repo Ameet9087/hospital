@@ -4,7 +4,7 @@ import OtMachine from './settingsubfils/OtMachine/OtMachine';
 import OTMaster from './settingsubfils/OTMaster/Otmaster';
 import './setting.css';
 import OperationMaster from './settingsubfils/OperationMaster/OperationMaster';
-import Otpkgmaster from './settingsubfils/OTPMaster/Otpkgmaster';
+import OtpKgMaster from './settingsubfils/OtpMaster/OtpKgMaster';
 
 const Setting = () => {
   const location = useLocation();
@@ -56,7 +56,7 @@ const Setting = () => {
         <Routes>
           <Route path="otmachine" element={<OtMachine />} />
           <Route path="otmaster" element={<OTMaster />} />
-          <Route path="otpkgmaster" element={<Otpkgmaster />} />
+          <Route path="otpkgmaster" element={<OtpKgMaster />} />
           <Route path="operationmaster" element={<OperationMaster />} />
         </Routes>
       </main>
