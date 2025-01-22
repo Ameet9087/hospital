@@ -3,14 +3,14 @@ import "./Equipmentutilisationform.css";
 import CustomModal from "../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import EquipmentUtilisationFormPopUp from "./EquipmentUtilisationFormPopUp";
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../../api/api";
 
 const EquipmentUtilisationForm = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
-  const [utilisationDetails, setUtilisationDetails] = useState([]); 
+  const [utilisationDetails, setUtilisationDetails] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   // Fetch utilisation data
