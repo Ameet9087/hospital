@@ -24,8 +24,6 @@ const OtMain = () => {
   return (
     <>
       <Navbar />
-
-
       <div className="app-container">
         <Routes>
           <Route path="bookinglist" element={<BookingList />} />
