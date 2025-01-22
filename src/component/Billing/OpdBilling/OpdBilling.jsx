@@ -301,10 +301,10 @@ const OpdBilling = () => {
 
   const handleSelect = async (data) => {
 
-    console.log("ssssssssssssss",data)
+    console.log("ssssssssssssss", data)
     if (activePopup === "patient" || activePopup === "mobilenumber") {
       setSelectedPatient(data.originalObject);
-      
+
       console.log("Registration Id", data.patientRegistrationId);
 
       try {
@@ -312,7 +312,7 @@ const OpdBilling = () => {
           data?.originalObject?.patientRegistrationId
         );
 
-        console.log("apppppppppppp",fetchedAppointments.outPatientId)
+        console.log("apppppppppppp", fetchedAppointments.outPatientId)
         setOutPatientId(fetchedAppointments.outPatientId);
 
         const doctorId = fetchedAppointments.addDoctor?.doctorId;
@@ -324,7 +324,7 @@ const OpdBilling = () => {
             doctorDetails?.orgDoctorFees?.[0]?.generalOpdFee || 0;
 
           // Check if fees are unpaid before creating the row
-          if (fetchedAppointments.feespaid !=="yes")    {
+          if (fetchedAppointments.feespaid !== "yes") {
             const doctorRow = {
               sn: 0,
               serviceType: "Doctor",
@@ -379,7 +379,7 @@ const OpdBilling = () => {
         console.log("Fetched doctor services:", doctorServices);
 
         doctorServices
-          .filter((service) => service.payStatus === "no" )
+          .filter((service) => service.payStatus === "no")
           .forEach((service) => {
             const serviceRow = {
               sn: 0,
@@ -556,7 +556,7 @@ const OpdBilling = () => {
         quantity: row.qty,
         netAmount: row.totalAmt,
         discountAmount: row.discAmt,
-        netAmount: row.netAmt,
+        // netAmount: row.netAmt,
       })),
       doctorservice: testGridTableRowsableRows
         .filter((row) => row.serviceType === "Doctor")
@@ -942,9 +942,8 @@ const OpdBilling = () => {
     };
     return (
       <div
-        className={`OpdBilling-floating-field ${
-          isFocused || hasValue ? "active" : ""
-        }`}
+        className={`OpdBilling-floating-field ${isFocused || hasValue ? "active" : ""
+          }`}
       >
         <input
           type={type}
@@ -968,9 +967,8 @@ const OpdBilling = () => {
     const [hasValue, setHasValue] = useState(false);
     return (
       <div
-        className={`OpdBilling-floating-field ${
-          isFocused || hasValue ? "active" : ""
-        }`}
+        className={`OpdBilling-floating-field ${isFocused || hasValue ? "active" : ""
+          }`}
       >
         <select
           className="OpdBilling-floating-select"
@@ -982,7 +980,7 @@ const OpdBilling = () => {
           onChange={(e) => setHasValue(e.target.value !== "")}
           {...props}
         >
-          <option value="">{}</option>
+          <option value="">{ }</option>
           {options.map((option, index) => (
             <option key={index} value={option.value}>
               {option.label}
@@ -1085,7 +1083,7 @@ const OpdBilling = () => {
             type="text"
             focused={
               selectedPatient?.patient?.patient?.hasOwnProperty("firstName") &&
-              paymentDetails.firstName !== null
+                paymentDetails.firstName !== null
                 ? true
                 : false
             }
@@ -1327,17 +1325,15 @@ const OpdBilling = () => {
         <div className="iPBilling-services-section">
           <div className="iPBilling-tab-bar">
             <button
-              className={`iPBilling-tab ${
-                selectedTab === "testGrid" ? "active" : ""
-              }`}
+              className={`iPBilling-tab ${selectedTab === "testGrid" ? "active" : ""
+                }`}
               onClick={() => setSelectedTab("testGrid")}
             >
               Test Grid
             </button>
             <button
-              className={`iPBilling-tab ${
-                selectedTab === "paymentDetails" ? "active" : ""
-              }`}
+              className={`iPBilling-tab ${selectedTab === "paymentDetails" ? "active" : ""
+                }`}
               onClick={() => setSelectedTab("paymentDetails")}
             >
               Payment Details

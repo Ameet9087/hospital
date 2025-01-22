@@ -48,11 +48,11 @@ import Chemotherapy from "../../component/ChemotherapyModule/ChemotherapyRoute";
 import DynamicReport from "../../component/DynamicReport/DynamicReport";
 import Procurementmain from "../../component/Procurement2/procurmentmain";
 import HelpDeskRouting from "../../component/HelpD/HelpDeskRouting";
-import BillingRouting from "../../component/Billing/Billing";
 import Dashboard from "../../component/LoginDashboard/Dashboard/";
 import MainVisitorFile from "../VisitorMgt/MainVisitorFile";
 import Otmain from "../OT/otmain";
 import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
+import Billing from "../Billing/Billing";
 // Define modules and submodules
 
 function Layout({ }) {
@@ -126,7 +126,7 @@ function Layout({ }) {
           <Route path="/chemotherapy/*" element={<Chemotherapy />} />
           <Route path="/dynamicreport/*" element={<DynamicReport />} />
           <Route path="/helpdesk/*" element={<HelpDeskRouting />} />
-          <Route path="/billing/*" element={<BillingRouting />} />
+          <Route path="/billing/*" element={<Billing />} />
           <Route path="/visit/*" element={<MainVisitorFile />} />
           <Route path="/oprationtheater/*" element={<Otmain />} />
 
