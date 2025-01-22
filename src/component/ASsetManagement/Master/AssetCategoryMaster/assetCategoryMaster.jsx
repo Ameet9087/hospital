@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./assetCategoryMaster.css";
 import AssetCategoryMasterPopUp from "./assetCategoryMasterPopUp";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 

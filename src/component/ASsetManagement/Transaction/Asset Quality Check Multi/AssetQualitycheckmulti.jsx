@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './AssetQualityCheckMulti.css';
 import { API_BASE_URL } from '../../../api/api';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 
 const AssetQualityCheckMulti = () => {
   const [id, setId] = useState('');

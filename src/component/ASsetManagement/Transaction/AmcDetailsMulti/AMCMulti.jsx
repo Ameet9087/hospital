@@ -3,7 +3,7 @@ import "./AMCMulti.css";
 import CustomModal from "../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import AMCDetailsMulti from "./AMCDetailsmulti";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 
 const AMCMulti = () => {
   const [showPopup, setShowPopup] = useState(false);
