@@ -16,7 +16,6 @@ const Billing = () => {
                         <Route path="/OPDBillingCancel" element={<OPDBillCancellation />} />
                   </Routes>
             </>
-
       )
 }
 
