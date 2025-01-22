@@ -3,7 +3,7 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Ot_machine from './settingsubfils/OtMachine/OtMachine';
 import OTMaster from './settingsubfils/OTMaster/Otmaster';
 import './setting.css';
-import Otpkgmaster from './settingsubfils/OTPkgmaster/Otpkgmaster';
+import Otpkgmaster from './settingsubfils/OTPkgmaster/OtpkgMaster';
 import OperationMaster from './settingsubfils/OperationMaster/OperationMaster';
 
 const Setting = () => {
