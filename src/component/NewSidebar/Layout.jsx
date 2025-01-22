@@ -52,8 +52,7 @@ import Dashboard from "../../component/LoginDashboard/Dashboard/";
 import MainVisitorFile from "../VisitorMgt/MainVisitorFile";
 import Otmain from "../OT/otmain";
 import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
-import Billing from "../Billing/Billing";
-// Define modules and submodules
+import BillingRoute from "../Billings/Billing";
 
 function Layout({ }) {
   return (
@@ -126,7 +125,7 @@ function Layout({ }) {
           <Route path="/chemotherapy/*" element={<Chemotherapy />} />
           <Route path="/dynamicreport/*" element={<DynamicReport />} />
           <Route path="/helpdesk/*" element={<HelpDeskRouting />} />
-          <Route path="/billing/*" element={<Billing />} />
+          <Route path="/billing/*" element={<BillingRoute />} />
           <Route path="/visit/*" element={<MainVisitorFile />} />
           <Route path="/oprationtheater/*" element={<Otmain />} />
 
