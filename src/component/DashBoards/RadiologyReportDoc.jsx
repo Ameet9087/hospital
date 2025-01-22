@@ -31,22 +31,22 @@ const RadiologyReportDoc = ({ reportData, onClose }) => {
               <div className="RadiologyReportPopup-patient-info-group">
                 <span>
                   Name:
-                  {reportData.inPatientDTO?.firstName ||
-                    reportData.outPatientDTO?.firstName +
+                  {reportData.inPatientDTO?.patient?.firstName ||
+                    reportData.outPatientDTO?.patient?.firstName +
                       " " +
-                      reportData.outPatientDTO?.lastName ||
-                    reportData.outPatientDTO?.firstName ||
+                      reportData.outPatientDTO?.patient?.lastName ||
+                    reportData.outPatientDTO?.patient?.firstName ||
                     "N/A"}
                 </span>
                 <span>
                   Age/Sex:{" "}
-                  {reportData.inPatientDTO?.age ||
-                    reportData.outPatientDTO?.age}{" "}
-                  {reportData.inPatientDTO?.ageUnit ||
-                    reportData.outPatientDTO?.ageUnit}{" "}
+                  {reportData.inPatientDTO?.patient?.age ||
+                    reportData.outPatientDTO?.patient?.age}{" "}
+                  {reportData.inPatientDTO?.patient?.ageUnit ||
+                    reportData.outPatientDTO?.patient?.ageUnit}{" "}
                   /{" "}
-                  {reportData.outPatientDTO?.gender ||
-                    reportData.inPatientDTO?.gender ||
+                  {reportData.outPatientDTO?.patient?.gender ||
+                    reportData.inPatientDTO?.patient?.gender ||
                     "N/A"}
                 </span>
                 <span>
@@ -57,12 +57,12 @@ const RadiologyReportDoc = ({ reportData, onClose }) => {
               <div className="RadiologyReportPopup-patient-info-group">
                 <span>
                   Address/Contact No:{" "}
-                  {reportData.inPatientDTO?.address ||
-                    reportData.outPatientDTO?.address ||
+                  {reportData.inPatientDTO?.patient?.address ||
+                    reportData.outPatientDTO?.patient?.address ||
                     "NA"}{" "}
                   /{" "}
-                  {reportData.inPatientDTO?.phoneNumber ||
-                    reportData.outPatientDTO?.phoneNumber ||
+                  {reportData.inPatientDTO?.patient?.mobileNumber ||
+                    reportData.outPatientDTO?.patient?.mobileNumber ||
                     "N/A"}
                 </span>
                 <span>

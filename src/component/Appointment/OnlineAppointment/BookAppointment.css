@@ -1,0 +1,85 @@
+.BookAppointment-app-container {
+    text-align: center;
+    /* padding: 20px; */
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    background-color: var(--background-color);
+    
+  }
+  .BookAppointment-section{
+    width:100%;
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    justify-self: center;
+    background-color: white;
+    
+  }
+  /* Header Section */
+  .BookAppointment-header {
+    margin-bottom: 20px;
+  }
+  
+  .BookAppointment-header-title {
+    margin: 0;
+    font-size: 2rem;
+  }
+  
+  .BookAppointment-header-subtitle {
+    font-size: 1.2rem;
+    color: #00796b;
+    margin-bottom: 20px;
+  }
+  
+  /* Tabs Section */
+  .BookAppointment-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .BookAppointment-tab {
+    padding: 10px 40px;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    background-color:var(--button-color);
+    color:white;
+  }
+  .BookAppointment-tab:hover{
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  .BookAppointment-active-tab {
+    background-color: var(--button-bg-color);
+    border: 1px solid var(--button-bg-color);
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Search Bar Section */
+  .BookAppointment-search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .BookAppointment-search-input {
+    width: 300px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 33%;
+  }
+  
+  .BookAppointment-search-button {
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  

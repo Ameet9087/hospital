@@ -190,7 +190,6 @@
 .patient-registration .form-group {
   display: flex;
   align-items: center;
-  gap: 5px;
 }
 
 .radio-option {

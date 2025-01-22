@@ -3,7 +3,6 @@ import VerifyModal from "./VerifyModal";
 import "./RequisitionPage.css";
 import { API_BASE_URL } from "../api/api";
 import { startResizing } from "../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../CustomModel/CustomModal";
 
 function RequisitionPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,16 +12,37 @@ function RequisitionPage() {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
 
-   useEffect(() => {
+  useEffect(() => {
+    // Fetch the requisition data
     fetch(`${API_BASE_URL}/inventory-requisitions`)
-      .then(response => response.json())
-      .then(data => {
-        setRequisitions(data);
-        // setFilteredRequisitions(data);
-        console.log(requisitions);
-        
+      .then((response) => response.json())
+      .then(async (data) => {
+        // For each requisition, fetch the corresponding substore name
+        const updatedRequisitions = await Promise.all(
+          data.map(async (requisition) => {
+            try {
+              const substoreResponse = await fetch(
+                `${API_BASE_URL}/substores/${requisition.subStoreId}`
+              );
+              const substoreData = await substoreResponse.json();
+              console.log(substoreData);
+              
+              // Add the substore name to the requisition
+              return {
+                ...requisition,
+                substoreName: substoreData.subStoreName, // Assuming 'name' is the field holding the substore name
+              };
+            } catch (error) {
+              console.error("Error fetching substore data:", error);
+              return requisition; // Return the requisition without the substore name if there's an error
+            }
+          })
+        );
+
+        // Update the state with the updated requisitions
+        setRequisitions(updatedRequisitions);
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching requisition data:", error));
   }, []);
 
   const handleVerifyClick = (requisition) => {
@@ -142,9 +162,9 @@ function RequisitionPage() {
           </thead>
           <tbody>
             {filteredRequisitions.map((requisition) => (
-              <tr key={requisition.issueNo}>
-                <td>{requisition.issueNo}</td>
-                <td>{requisition.subStoreId}</td>
+              <tr key={requisition.id}>
+                <td>{requisition.id}</td>
+                <td>{requisition.substoreName}</td>
                 <td>{requisition.requisitionDate}</td>
                 <td>{requisition.status}</td>
                 <td>
@@ -163,13 +183,13 @@ function RequisitionPage() {
         </table>
       </div>
 
-
-<CustomModal></CustomModal>
+      {isModalOpen && (
         <VerifyModal
           isOpen={isModalOpen}
           onClose={closeModal}
           requisitionDetails={selectedRequisition}
         />
+      )}
     </div>
   );
 }

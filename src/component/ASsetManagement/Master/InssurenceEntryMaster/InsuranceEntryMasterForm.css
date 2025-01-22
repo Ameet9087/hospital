@@ -1,0 +1,105 @@
+.newInsuranceEntryMasterForm-container {
+    padding: 10px;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+.newInsuranceEntryMasterForm-add-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.newInsuranceEntryMasterForm-add-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.newInsuranceEntryMasterForm-search-bar{
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}  
+  .newInsuranceEntryMasterForm-search-bar input {
+    padding: 5px;
+    font-size: var(--font-size);
+    width: 200px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  .newInsuranceEntryMasterForm-search-bar i{
+    color:gray;
+    position: absolute;
+    right: 5px;  
+}
+.newInsuranceEntryMasterForm-search-N-result{
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.newInsuranceEntryMasterForm-results-info {
+  display: flex;
+  align-items: center;
+  /* padding-top: 10px; */
+}
+.newInsuranceEntryMasterForm-results-info span {
+  /* display: flex;
+  align-items: center; */
+  /* padding-top: 10px; */
+  /* color: #008CBA; */
+  font-size: var(--font-size);
+  /* font-weight: bold; */
+  margin-right: 10px;
+}
+.newInsuranceEntryMasterForm-edit-button, .newInsuranceEntryMasterForm-deactivate-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 1px 5px;
+}
+
+.newInsuranceEntryMasterForm-edit-button:hover, .newInsuranceEntryMasterForm-deactivate-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+
+
+.newInsuranceEntryMasterForm-print-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.newInsuranceEntryMasterForm-print-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+

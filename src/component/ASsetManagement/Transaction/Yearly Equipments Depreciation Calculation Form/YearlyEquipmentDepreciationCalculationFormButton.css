@@ -1,0 +1,78 @@
+
+  /* Overall Container */
+  .YearlyEquipmentDepreciationCalculationFormButton-container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+    padding: 20px;
+  }
+  
+  /* Add Button */
+  .YearlyEquipmentDepreciationCalculationFormButton-addBtn {
+    margin-bottom: 20px;
+  }
+  
+  .YearlyEquipmentDepreciationCalculationFormButton-add-button {
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .YearlyEquipmentDepreciationCalculationFormButton-add-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  /* Search and Result Info Section */
+  .YearlyEquipmentDepreciationCalculationFormButton-search-N-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .YearlyEquipmentDepreciationCalculationFormButton-search-bar {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .YearlyEquipmentDepreciationCalculationFormButton-search-bar input {
+    border: none;
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    outline: none;
+  }
+  
+  .YearlyEquipmentDepreciationCalculationFormButton-results-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .YearlyEquipmentDepreciationCalculationFormButton-print-button {
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+    border: none;
+    padding: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .YearlyEquipmentDepreciationCalculationFormButton-print-button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+
+
+  

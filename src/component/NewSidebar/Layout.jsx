@@ -40,7 +40,6 @@ import PediatricInPatientNavbar from "../../component/pediatricModule/AppRoutes"
 import PediatricOutPatientNavbar from "../../component/PediatricOutpatient/PaediatricOutpatientRoutes";
 import PhysiotherapyRotes from "../../component/PhysiotherapyModule/PhysiotherapyRotes";
 import Mkrtrefrrance from "../../component/MarketingRefferal/mrktreferrance";
-import FixedAssests from "../../component/FixedAssests/FixedAssests";
 import CSSD from "../../component/CSSD/Cssd";
 import HRRouting from "../../component/HRHome/HRHome";
 import RadiationTherapy from "../../component/RadiationTherapy/radiationtherapy";
@@ -49,11 +48,14 @@ import Chemotherapy from "../../component/ChemotherapyModule/ChemotherapyRoute";
 import DynamicReport from "../../component/DynamicReport/DynamicReport";
 import Procurementmain from "../../component/Procurement2/procurmentmain";
 import HelpDeskRouting from "../../component/HelpD/HelpDeskRouting";
-import BillingRouting from "../../component/Billing/IP_Billing/ipbilling";
+import BillingRouting from "../../component/Billing/Billing";
 import Dashboard from "../../component/LoginDashboard/Dashboard/";
+import MainVisitorFile from "../VisitorMgt/MainVisitorFile";
+import Otmain from "../OT/otmain";
+import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
 // Define modules and submodules
 
-function Layout({}) {
+function Layout({ }) {
   return (
     <>
       {/* <div className='layout-container'> */}
@@ -91,13 +93,13 @@ function Layout({}) {
           <Route path="bloodbank/*" element={<BloodBank />} />
           <Route path="/pharmacy/*" element={<PharmacyRouting />} />
           <Route path="/transport/*" element={<TransportMainRouting />} />
-          <Route path="/radiology/*" element={<RadiologyRouting />} />
+          <Route path="/radioloagy/*" element={<RadiologyRouting />} />
           <Route path="/clinical/*" element={<Clinical />} />
           <Route path="/patient/*" element={<PatientRouting />} />
           <Route path="/doctor/*" element={<DoctorDashBoard />} />
           <Route path="/systemadmin/*" element={<SystemAdmin />} />
           <Route path="socialservice/*" element={<SocialServicesMainRoute />} />
-          <Route path="/queuemanagement/*" element={<PatientQueueRouting />} />
+          <Route path="/queuemngmt/*" element={<PatientQueueRouting />} />
           <Route path="/substore/*" element={<SubstoreRouting />} />
           <Route path="/report/*" element={<ReportRoute />} />
           <Route path="/hi/*" element={<Nhif />} />
@@ -115,7 +117,7 @@ function Layout({}) {
           />
           <Route path="/physiotherapy/*" element={<PhysiotherapyRotes />} />
           <Route path="/mktreferral/*" element={<Mkrtrefrrance />} />
-          <Route path="/fixedassets/*" element={<FixedAssests />} />
+          <Route path="/fixedassets/*" element={<AssetmgntNavBar />} />
           <Route path="/cssd/*" element={<CSSD />} />
           <Route path="/hr/*" element={<HRRouting />} />
           <Route path="/radiationtherapy/*" element={<RadiationTherapy />} />
@@ -125,7 +127,9 @@ function Layout({}) {
           <Route path="/dynamicreport/*" element={<DynamicReport />} />
           <Route path="/helpdesk/*" element={<HelpDeskRouting />} />
           <Route path="/billing/*" element={<BillingRouting />} />
-          
+          <Route path="/visit/*" element={<MainVisitorFile />} />
+          <Route path="/oprationtheater/*" element={<Otmain />} />
+
         </Routes>
       </div>
       {/* </div> */}

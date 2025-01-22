@@ -15,12 +15,12 @@ const Navbar = ({ handleNavigation }) => {
       </div>
       <nav className="nav-links">
         <Link
-          to="/adt/searchpatient"
+          to="/adt/ipadmission"
           className={`adt-header-button ${
-            location.pathname === "/adt/searchpatient" ? "active" : ""
+            location.pathname === "/adt/ipadmission" ? "active" : ""
           }`}
         >
-          Search Patient
+          Ip Admission
         </Link>
         <Link
           to="/adt/admittedpatients"
@@ -37,6 +37,14 @@ const Navbar = ({ handleNavigation }) => {
           }`}
         >
           Discharged Patients
+        </Link>
+        <Link
+          to="/adt/ip-information"
+          className={`adt-header-button ${
+            location.pathname === "/adt/ip-information" ? "active" : ""
+          }`}
+        >
+          Ip Information
         </Link>
         {/* <Link
           to="/adt/exchangebed"

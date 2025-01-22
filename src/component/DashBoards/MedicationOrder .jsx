@@ -1,23 +1,20 @@
-// SwapnilRokade_MedicationOrder_Adding_New_MedicationOrder_13/09
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import "./MedicationOrder.css";
 import { API_BASE_URL } from "../api/api";
 import { startResizing } from "../TableHeadingResizing/resizableColumns";
 
 const MedicationOrder = ({
-  selectedOrders,
   inPatientId,
   outPatientId,
   setActiveSection,
 }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
-
-  const [medicationList, setMedicationList] = useState(
-    selectedOrders.map((order) => ({
-      type: order?.genericNameDTO?.genericName || "",
-      medicationName: order?.itemName || "",
+  const [medicationList, setMedicationList] = useState([
+    {
+      type: "",
+      medicationName: "",
       dose: "",
       route: "mouth",
       frequency: 0,
@@ -28,8 +25,41 @@ const MedicationOrder = ({
       ...(inPatientId
         ? { patientDTO: { inPatientId } }
         : { outPatientDTO: { outPatientId } }),
-    }))
-  );
+      selectedOrderId: "",  // Add this field to each medication object
+      selectedOrder: null,  // Add this field to each medication object
+    },
+  ]); // Initially one row is displayed
+  const [orderGenericData, setOrderGenericData] = useState([]);
+  const [orderData, setOrderData] = useState([]);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const apiUrl = `${API_BASE_URL}/add-items`;
+
+      if (apiUrl) {
+        try {
+          const response = await fetch(apiUrl, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            setOrderData(data);
+            setOrderGenericData(data);
+          } else {
+            console.error("Error fetching data:", response.status);
+          }
+        } catch (error) {
+          console.error("Error fetching orders:", error);
+        }
+      }
+    };
+
+    fetchOrders();
+  }, []);
 
   const handleInputChange = (index, e) => {
     const { name, value } = e.target;
@@ -39,19 +69,58 @@ const MedicationOrder = ({
     setMedicationList(updatedMedications);
   };
 
-  const handleSubmit = async () => {
-    console.log(medicationList);
+  const handleAddRow = () => {
+    const newMedication = {
+      type: "",
+      medicationName: "",
+      dose: "",
+      route: "mouth",
+      frequency: 0,
+      lastTaken: "",
+      comments: "",
+      status: "pending",
+      medicationDate: new Date().toISOString().slice(0, 10),
+      ...(inPatientId
+        ? { patientDTO: { inPatientId } }
+        : { outPatientDTO: { outPatientId } }),
+      selectedOrderId: "",  // Add this field to new row
+      selectedOrder: null,  // Add this field to new row
+    };
+    setMedicationList([...medicationList, newMedication]);
+  };
 
+  const handleRemoveRow = (index) => {
+    const updatedMedications = medicationList.filter((_, i) => i !== index);
+    setMedicationList(updatedMedications);
+  };
+
+  const handleSubmit = async () => {
     try {
       const response = await axios.post(
         `${API_BASE_URL}/medications/save-medication-details`,
-        medicationList // Sending the entire formData array as the payload
+        medicationList
       );
       setActiveSection("dashboard");
       console.log("Success:", response.data);
     } catch (error) {
       console.error("Error submitting medication list:", error);
     }
+  };
+
+  const handleOrderSelect = (index, e) => {
+    const orderId = e.target.value;
+    const updatedMedications = [...medicationList];
+    updatedMedications[index].selectedOrderId = orderId;
+
+    if (orderId) {
+      const selected = orderData.find((order) => order.addItemId == orderId);
+      if (selected) {
+        updatedMedications[index].selectedOrder = selected;  // Set selected order for this row
+        updatedMedications[index].genericName = selected.genericNameDTO?.genericName || "";  // Set generic name for this row
+      }
+    }
+
+    setMedicationList(updatedMedications);
   };
 
   return (
@@ -62,6 +131,7 @@ const MedicationOrder = ({
           <tr>
             {[
               "",
+              "Order Item",
               "Generic",
               "Brand Name",
               "Dose",
@@ -69,6 +139,7 @@ const MedicationOrder = ({
               "Frequency",
               "Duration (days)",
               "Remarks",
+              "Actions",
             ].map((header, index) => (
               <th
                 key={index}
@@ -95,39 +166,61 @@ const MedicationOrder = ({
               <td>
                 <button
                   className="MedicationOrder-deleteBtn"
-                  onClick={() => console.log("Delete Row", index)}
+                  onClick={() => handleRemoveRow(index)}
                 >
                   X
                 </button>
               </td>
               <td>
+                <div className="action-dropdown-container">
+                  <label htmlFor="orderItem" className="action_record_label">
+                    <select
+                      id="orderItem"
+                      className="action_record_dropdown"
+                      value={medication.selectedOrderId}
+                      onChange={(e) => handleOrderSelect(index, e)}
+                    >
+                      <option value="">Select an order item</option>
+                      {orderData.map((order) => (
+                        <option
+                          key={order.id || order.addItemId}
+                          value={order.addItemId}
+                        >
+                          {order.itemName}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                </div>
+              </td>
+              <td>
                 <input
                   type="text"
                   name="type"
-                  value={medication.type}
-                  onChange={(e) => handleInputChange(index, e)}
+                  value={medication.genericName || ""}
                   placeholder="Generic Name"
                   className="MedicationOrder-input"
+                  readOnly
                 />
               </td>
               <td>
                 <input
                   type="text"
                   name="medicationName"
-                  value={medication.medicationName}
-                  onChange={(e) => handleInputChange(index, e)}
+                  value={medication.selectedOrder?.itemName || ""}
                   placeholder="Brand Name"
                   className="MedicationOrder-input"
+                  readOnly
                 />
               </td>
               <td>
                 <input
                   type="number"
                   name="dose"
-                  value={medication.dose}
-                  onChange={(e) => handleInputChange(index, e)}
+                  value={medication.dose || ""}
                   placeholder="Dose"
                   className="MedicationOrder-input"
+                  onChange={(e) => handleInputChange(index, e)}
                 />
               </td>
               <td>
@@ -146,31 +239,39 @@ const MedicationOrder = ({
                 <input
                   type="text"
                   name="frequency"
-                  value={medication.frequency}
-                  onChange={(e) => handleInputChange(index, e)}
+                  value={medication.frequency || ""}
                   placeholder="Frequency"
                   className="MedicationOrder-input"
+                  onChange={(e) => handleInputChange(index, e)}
                 />
               </td>
               <td>
                 <input
                   type="date"
                   name="lastTaken"
-                  value={medication.lastTaken}
-                  onChange={(e) => handleInputChange(index, e)}
+                  value={medication.lastTaken || ""}
                   placeholder="Duration"
                   className="MedicationOrder-input"
+                  onChange={(e) => handleInputChange(index, e)}
                 />
               </td>
               <td>
                 <input
                   type="text"
                   name="comments"
-                  value={medication.comments}
-                  onChange={(e) => handleInputChange(index, e)}
+                  value={medication.comments || ""}
                   placeholder="Remarks"
                   className="MedicationOrder-input"
+                  onChange={(e) => handleInputChange(index, e)}
                 />
+              </td>
+              <td>
+                <button
+                  className="MedicationOrder-submitBtn"
+                  onClick={handleAddRow}
+                >
+                  +
+                </button>
               </td>
             </tr>
           ))}

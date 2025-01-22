@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import './Bubble_Pending_Returns.css';
+import { API_BASE_URL } from "../../api/api";
 
 const BubblePendingReturns = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const BubblePendingReturns = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/kit-receiving");
+        const response = await axios.get(`${API_BASE_URL}/kit-receiving`);
         console.log("API Response:", response.data);
 
         if (response.data && Array.isArray(response.data)) {
@@ -50,7 +51,7 @@ const BubblePendingReturns = () => {
   };
 
   const handleBubbleClick = (id, receivingId) => {
-    navigate(`/pending-return/${id}?receivingId=${receivingId}`);
+    navigate(`pending-return/${id}?receivingId=${receivingId}`);
   };
 
   return (

@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
 import './VerifyPurchaseDetails.css';
+import { API_BASE_URL } from '../api/api';
 
 const VerifyPurchaseDetails = ({ onclose, request,handleCloseForm  }) => {
-  console.log(request);
-
   const [status, setStatus] = useState(request.status || 'active');
   const [remarks, setRemarks] = useState(request.remarks || '');
+  const [verifiedBy,setVerifiedBy] = useState();
+
   const currentDate = new Date(Date.now()).toLocaleDateString();
 
   const handleSubmit = async () => {
-    const apiUrl = `${API_BASE_URL}/purchase-requests/${request.purchaseId}/updateStatusAndRemarks`;
-
+    if (!status || !verifiedBy) {
+      alert('Please fill out both the status and verified by fields.');
+      return; // Stop execution if validation fails
+    }
+  
     try {
-      const response = await fetch(`${apiUrl}?status=${status}&remarks=${remarks}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
+      const response = await fetch(
+        `${API_BASE_URL}/purchase-requests/${request.id}/verify?status=${status}&verifyOrNot=Yes&verifyBy=${verifiedBy}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+  
       if (response.ok) {
         alert('Purchase request updated successfully!');
         handleCloseForm();
@@ -30,6 +37,7 @@ const VerifyPurchaseDetails = ({ onclose, request,handleCloseForm  }) => {
       alert('An error occurred. Please try again.');
     }
   };
+  
 
   const handleRejectAll = async () => {
     setStatus('reject');
@@ -38,8 +46,6 @@ const VerifyPurchaseDetails = ({ onclose, request,handleCloseForm  }) => {
 
   return (
     <div className="verify-purchase-container">
-      <button className="verify-purchase-approve" onClick={onclose}>Back</button>
-
       <header className="verify-purchase-header">
         <div className="verify-purchase-logo">
           <img src="/path-to-base-health-logo.png" alt="Base Health" />
@@ -55,12 +61,12 @@ const VerifyPurchaseDetails = ({ onclose, request,handleCloseForm  }) => {
 
       <div className="verify-purchase-details">
         <div className="verify-purchase-row">
-          <span>PR No: {request.purchaseId}</span>
-          <span>Requested Date: {request.requestDate}</span>
+          <span>PR No: {request?.id}</span>
+          <span>Requested Date: {request?.requestDate}</span>
         </div>
         <div className="verify-purchase-row">
-          <span>Selected Vendor: {request.vendor.vendorName}</span>
-          <span>Request From : {request.requestedBy}</span>
+          <span>Selected Vendor: {request?.vendor?.vendorName}</span>
+          <span>Request From : {request?.requestedBy}</span>
         </div>
       </div>
 
@@ -76,38 +82,32 @@ const VerifyPurchaseDetails = ({ onclose, request,handleCloseForm  }) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{request.item.itemName}</td>
-            <td>{request.item.unitOfMeasurement.name}</td>
-            <td>{request.quantity}</td>
-            <td>{request.status}</td>
-          </tr>
+          {request.items.length > 0 &&
+          request.items.map((item,index)=>(
+            <tr key={index}>
+              <td>{item?.itemId?.itemName}</td>
+              <td>{item?.itemId?.unitOfMeasurement?.name}</td>
+              <td>{item?.requiredQty}</td>
+              <td>{request?.status}</td>
+            </tr>
+          ))
+          }
         </tbody>
       </table>
-
+<div className='verify-purchase-update-container'>
       <div className="verify-purchase-status">
         <label htmlFor="status">Status:</label>
         <select id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option value="active">Active</option>
-          <option value="approved">Approved</option>
-          <option value="reject">Reject</option>
+          <option value="">Select Status</option>
+          <option value="Approved">Approved</option>
+          <option value="Reject">Reject</option>
         </select>
       </div>
 
-      <div className="verify-purchase-remarks">
-        <label htmlFor="remarks">Remarks:</label>
-        <textarea
-          id="remarks"
-          rows="4"
-          value={remarks}
-          onChange={(e) => setRemarks(e.target.value)}
-        />
+      <div className="verify-purchase-status">
+        <label htmlFor="status">Verified By:</label>
+        <input type="text" name='verifiedBy' value={verifiedBy} onChange={(e)=>setVerifiedBy(e.target.value)}/>
       </div>
-
-      <div className="verify-purchase-requester">
-        <p>Requested By:</p>
-        <p>Mr. admin admin</p>
-        <p>{currentDate}</p>
       </div>
 
       <div className="verify-purchase-actions">

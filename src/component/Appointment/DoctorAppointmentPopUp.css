@@ -1,12 +1,17 @@
 .operationschedule-modal {
-  padding: 20px;
   background-color: #fff;
   border-radius: 8px;
-  max-height: 600px;
+  max-height: 400px;
   overflow-y: scroll;
   scrollbar-width: none;
 }
-
+.operationschedule-form-col-sub-div
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .operationschedule-modal-title {
   font-size: var(--heading-font);
   text-align: center;
@@ -25,9 +30,7 @@
   gap: 10px;
 }
 
-.operationschedule-form-col {
-  flex: 1;
-}
+
 
 .operationschedule-form-col label {
   display: block;
@@ -47,37 +50,26 @@
 
 .operationschedule-modal-buttons {
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-.operationschedule-modal-buttons button {
-  padding: 10px 15px;
-  font-size: var(--font-size);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  gap: 10px;
 }
 
 .operationschedule-save-btn {
-  background-color: #4caf50;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--button-color);
+  background-color:var(--button-color);
   color: white;
 }
 
-.operationschedule-update-btn {
-  background-color: #ffa500;
-  color: white;
-}
 
 .operationschedule-delete-btn {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
   background-color: #f44336;
   color: white;
 }
 
-.update-highlight {
-  background-color: #f0ad4e; /* Highlight color */
-  border: 1px solid #eea236;
-}
 
 .error-text {
   color: red;

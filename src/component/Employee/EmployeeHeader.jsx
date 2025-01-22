@@ -127,10 +127,63 @@ const EmployeeHeader = () => {
                 Service Master
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/settings/locationmaster"
+                className={
+                  location.pathname === "/settings/locationmaster" ? "active" : ""
+                }
+              >
+                Location Master
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/socmaster"
+                className={
+                  location.pathname === "/settings/socmaster" ? "active" : ""
+                }
+              >
+                Soc Master
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to="/settings/dgmaster"
+                className={
+                  location.pathname === "/settings/dgmaster" ? "active" : ""
+                }
+              >
+                DG Master
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/specialisations"
+                className={
+                  location.pathname === "/settings/specialisations" ? "active" : ""
+                }
+              >
+                Specialisations
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/hospitalSpecialityGroup"
+                className={
+                  location.pathname === "/settings/hospitalSpecialityGroup" ? "active" : ""
+                }
+              >
+                Speciality Group
+              </NavLink>
+            </li>
 
           </ul>
         </nav>
       </header>
+
+      
 
       {location.pathname.includes("/settings/departments") && (
         <div className="sub-nav-container">
@@ -163,7 +216,32 @@ const EmployeeHeader = () => {
           </ul>
         </div>
       )}
-
+{location.pathname.includes("/settings/locationmaster") && (
+        <div className="sub-nav-container">
+          <ul>
+            <li>
+              <NavLink to="/settings/locationmaster/locationform" className={
+                location.pathname ==="/settings/locationmaster/locationform"?"active":""
+              }>
+                Location Form
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      )}
+      {location.pathname.includes("/settings/socmaster") && (
+        <div className="sub-nav-container">
+          <ul>
+            <li>
+              <NavLink to="/settings/socmaster/socform" className={
+                location.pathname ==="/settings/socmaster/socform"?"active":""
+              }>
+                Soc Form
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      )}
       {location.pathname.includes("/settings/radiology") && (
         <div className="sub-nav-container">
           <ul>
@@ -191,6 +269,32 @@ const EmployeeHeader = () => {
                 }
               >
                 Imaging Item
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/radiology/manage-radiology-template"
+                className={
+                  location.pathname ===
+                  "/settings/radiology/manage-radiology-template"
+                    ? "active"
+                    : ""
+                }
+              >
+                Radiology Template
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/radiology/default-signatories"
+                className={
+                  location.pathname ===
+                  "/settings/radiology/default-signatories"
+                    ? "active"
+                    : ""
+                }
+              >
+                Default Signatories
               </NavLink>
             </li>
           </ul>
@@ -602,6 +706,57 @@ const EmployeeHeader = () => {
           </ul>
         </div>
       )}
+      {location.pathname.includes("/settings/dgmaster") && (
+        <div className="sub-nav-container">
+          <ul>
+          <li>
+              <NavLink
+                to="/settings/dgmaster/create-dgmaster"
+                className={
+                  location.pathname === "/settings/dgmaster/create-dgmaster"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create Dg Master
+              </NavLink>
+            </li>
+            
+            </ul></div>)}
+            {location.pathname.includes("/settings/specialisations") && (
+        <div className="sub-nav-container">
+          <ul>
+          <li>
+              <NavLink
+                to="/settings/specialisations/create-specialisations"
+                className={
+                  location.pathname === "/settings/specialisations/create-specialisations"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create Specialisations
+              </NavLink>
+            </li>
+            
+            </ul></div>)}
+            {location.pathname.includes("/settings/hospitalSpecialityGroup") && (
+        <div className="sub-nav-container">
+          <ul>
+          <li>
+              <NavLink
+                to="/settings/hospitalSpecialityGroup/create-hospitalSpecialityGroup"
+                className={
+                  location.pathname === "/settings/hospitalSpecialityGroup/create-hospitalSpecialityGroup"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create Speciality Group
+              </NavLink>
+            </li>
+            
+            </ul></div>)}
     </>
   );
 };

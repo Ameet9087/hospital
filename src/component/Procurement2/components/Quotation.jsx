@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import axios from "axios";
 import Modal from "react-modal";
 import "./Quotation.css";
 import RequestForQuotation from "../components/RequestForQuotation";
 import RFQDetails from "../components/RFQDetails";
 import CustomModal from "../../../CustomModel/CustomModal";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import * as XLSX from 'xlsx';
+import { API_BASE_URL } from "../../api/api";
 
 Modal.setAppElement("#root");
 
@@ -14,7 +17,9 @@ function QuotationRequest() {
   const [rfqData, setRfqData] = useState([]); // Store RFQ data
   const [selectedRfq, setSelectedRfq] = useState(null); // Store selected RFQ for details modal
 
-  const API_BASE_URL = "http://localhost:8080/api";
+
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef=useRef(null);
 
   // Fetch RFQ data on component mount
   useEffect(() => {
@@ -38,6 +43,17 @@ function QuotationRequest() {
     setDetailsModalIsOpen(true);
   };
   const closeDetailsModal = () => setDetailsModalIsOpen(false);
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
 
   return (
     <div className="QuotationRequest-container">
@@ -54,43 +70,64 @@ function QuotationRequest() {
         className="QuotationRequest-modal"
         overlayClassName="QuotationRequest-overlay"
       >
-        <RequestForQuotation />
+        <RequestForQuotation onClose={closeModal} />
       </CustomModal>
 
       {/* Search bar */}
       <div className="QuotationRequest-search-bar">
         <input type="text" placeholder="Search" />
-        <button className="QuotationRequest-search-button">Q</button>
+        {/* <button className="QuotationRequest-search-button">Q</button> */}
       </div>
 
       {/* Results info and Print button */}
       <div className="QuotationRequest-results-info">
         <span>Showing {rfqData.length} / {rfqData.length} results</span>
-        <button className="QuotationRequest-print-button">Print</button>
+        <button className="QuotationRequest-print-button" onClick={handleExport}>Export</button>
+        <button className="QuotationRequest-print-button" onClick={handlePrint}>Print</button>
       </div>
 
       {/* Data table */}
-      <table className="QuotationRequest-data-table">
-        <thead>
-          <tr>
-            <th>RFQ No</th>
-            <th>Requested Date</th>
-            <th>Subject</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Vendor</th>
-            <th>Action</th>
-          </tr>
-        </thead>
+      <table  ref={tableRef}>
+          <thead>
+            <tr>
+              {[
+                 "RFQ No",
+                 "Requested Date",
+                 "Subject",
+                 "Description",
+                 "Status",
+                 "Vendor",
+                 "Action"
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+ </thead>
+
         <tbody>
           {rfqData.map((rfq) => (
             <tr key={rfq.id}>
-              <td>{rfq.id}</td>
-              <td>{rfq.requestDate}</td>
-              <td>{rfq.subject}</td>
-              <td>{rfq.description}</td>
+              <td>{rfq?.id}</td>
+              <td>{rfq?.requestDate}</td>
+              <td>{rfq?.subject}</td>
+              <td>{rfq?.description}</td>
               <td>Active</td>
-              <td>{rfq.vendor.vendorName}</td>
+              <td>{rfq?.vendor?.vendorName}</td>
               <td>
                 {/* Button to open the RFQ Details modal */}
                 <button

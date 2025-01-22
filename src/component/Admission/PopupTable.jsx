@@ -111,6 +111,7 @@ const styles = {
     width: "100%",
     borderCollapse: "collapse",
     marginBottom: "20px",
+    tableLayout: "auto",
   },
   row: {
     cursor: "pointer",

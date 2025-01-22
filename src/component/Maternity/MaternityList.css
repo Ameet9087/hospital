@@ -276,3 +276,25 @@
 .mater-popup button:hover {
   background-color: #f0f0f0;
 }
+
+
+/* =========================================== */
+
+.mater-action-col .mater-edit-btn,
+.mater-action-col .mater-delete-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-hover-border-color);
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+
+.mater-action-col .mater-edit-btn:hover,
+.mater-action-col .mater-delete-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+
+}

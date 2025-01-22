@@ -1,51 +1,9 @@
-
-
-.rDLListRequest-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  overflow: auto;
-  padding: 20px;
-}
-
-.rDLListRequest-modal-content {
-  background: var(--background-color);
-  padding: 20px;
-  width: 80%;
-  border-radius: 8px;
-  position: relative;
-  overflow: auto;
-  height: 90%;
-}
-
-.rDLListRequest-modal-content::-webkit-scrollbar {
-  display: none;
-}
-
-.rDLListRequest-close-modal {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: red;
-  border: none;
-  cursor: pointer;
-  color: white;
-  border-radius: 50%;
-  padding: 5px 12px;
-}
-
 .rDLListRequest-add-report-form {
+  width: 1000px;
+  height: 600px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  overflow-y: scroll;
 }
 
 .rdlAddReport-prescrider-name {
@@ -83,17 +41,10 @@
 
 .rDLListRequest-add-report-text-editor {
   margin-top: 20px;
-  max-height: 300px;
-}
-.quill-editor {
-  height: 300px;
-  max-height: 250px; /* Ensures the editor does not exceed 300px */
-  /* Enables scrolling if content exceeds height */
 }
 
 
 .rDLListRequest-add-report-toolbar {
-  background-color: #f0f0f0;
   padding: 5px;
   margin-bottom: 5px;
 }
@@ -110,8 +61,7 @@
 }
 
 .rDLListRequest-add-report-signature-box {
-  flex: 1;
-  background-color: #f0f0f0;
+  /* flex: 1; */
   padding: 10px;
   margin: 0 5px;
   text-align: center;
@@ -238,4 +188,7 @@
   display: flex;
   align-items: center;
   font-size: 14px;
+}
+.rDLListRequest-add-report-footer{
+  
 }

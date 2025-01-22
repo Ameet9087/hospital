@@ -2,31 +2,60 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './OTResourceManagement.css';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
-import CustomModal from '../../../CustomModel/CustomModal';
-import useCustomAlert from '../../../alerts/useCustomAlert';  // Import useCustomAlert
+import CustomModal from '../../CustomModel/CustomModal';
+import useCustomAlert from '../../../alerts/useCustomAlert';
+import { API_BASE_URL } from "../../api/api";
 
 const OTResourceManagement = () => {
     const [columnWidths, setColumnWidths] = useState({});
     const tableRef = useRef(null);
     const [OTs, setOTs] = useState([]);
+    const [otNames, setOTNames] = useState([]);
+    const [equipmentOptions, setEquipmentOptions] = useState([]);
     const [newOT, setNewOT] = useState({
-        OTID: '', OTName: '', AvailabilityStatus: '', EquipmentAvailable: '', Capacity: ''
+        OTID: '',
+        OTName: '',
+        AvailabilityStatus: '',
+        EquipmentAvailable: '',
+        Capacity: ''
     });
     const [openStickerPopup, setOpenStickerPopup] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
 
-    // Custom alert hook
     const { success, error, CustomAlerts } = useCustomAlert();
 
+    // Define the base URL for API requests
+    // const baseURL = 'http://192.168.210.48:8080';
+
+    // Fetch data on component mount
     useEffect(() => {
-        axios.get('http://localhost:8051/api/ot-resources')
+        // Fetch OT resources
+        axios.get(`${ API_BASE_URL }/ot-resources`)
             .then(response => {
-                console.log(response.data);
-                setOTs(response.data); 
+                setOTs(response.data);
             })
             .catch(err => {
                 error('Error fetching OT data');
                 console.error('Error fetching OT data:', err);
+            });
+
+        // Fetch OT names
+        axios.get(`${ API_BASE_URL }/otmasters`)
+            .then(response => setOTNames(response.data))
+            .catch(err => {
+                error('Error fetching OT names');
+                console.error('Error fetching OT names:', err);
+            });
+
+        // Fetch equipment data
+        axios.get(`${ API_BASE_URL }/ot-machines`)
+            .then(response => {
+                setEquipmentOptions(response.data);
+            })
+            .catch(err => {
+                error('Error fetching equipment data');
+                console.error('Error fetching equipment data:', err);
+                setEquipmentOptions([]);
             });
     }, []);
 
@@ -34,69 +63,93 @@ const OTResourceManagement = () => {
         setSearchTerm(event.target.value);
     };
 
+    const filteredOTs = OTs.filter((ot) => {
+        const searchTermLower = searchTerm.toLowerCase();
+        return (
+            (ot.otResourceManagementId && ot.otResourceManagementId.toString().toLowerCase().includes(searchTermLower)) ||
+            (ot.otName && ot.otName.toLowerCase().includes(searchTermLower))
+        );
+    });
+
     const printList = () => {
         window.print();
     };
 
     const handleAddOT = () => {
-        if (newOT.OTID) { 
-            axios.put(`http://localhost:8051/api/ot-resources/${newOT.OTID}`, {
-                otName: newOT.OTName,
-                availabilityStatus: newOT.AvailabilityStatus,
-                equipmentAvailable: newOT.EquipmentAvailable,
-                capacity: newOT.Capacity,
-            })
-            .then(response => {
-                setOTs(OTs.map(ot => (ot.otId === newOT.OTID ? response.data : ot)));
-                setNewOT({ OTID: '', OTName: '', AvailabilityStatus: '', EquipmentAvailable: '', Capacity: '' });
-                setOpenStickerPopup(false);
-                success('OT updated successfully!'); // Trigger success alert
-            })
-            .catch(err => {
-                error('Error updating OT'); // Trigger error alert
-                console.error('Error updating OT:', err);
-            });
-        } else { 
-            axios.post('http://localhost:8051/api/ot-resources', {
-                otName: newOT.OTName,
-                availabilityStatus: newOT.AvailabilityStatus,
-                equipmentAvailable: newOT.EquipmentAvailable,
-                capacity: newOT.Capacity,
-            })
-            .then(response => {
-                setOTs([...OTs, response.data]); 
-                setNewOT({ OTID: '', OTName: '', AvailabilityStatus: '', EquipmentAvailable: '', Capacity: '' });
-                setOpenStickerPopup(false);
-                success('New OT added successfully!'); // Trigger success alert
-            })
-            .catch(err => {
-                error('Error adding new OT'); // Trigger error alert
-                console.error('Error adding new OT:', err);
-            });
+        if (!newOT.OTName || !newOT.AvailabilityStatus || !newOT.EquipmentAvailable || !newOT.Capacity) {
+            error('All fields are required');
+            return;
+        }
+
+        // Find the corresponding OT Master and Machine from their names
+        const selectedOTMaster = otNames.find((otName) => otName.otName === newOT.OTName);
+        const selectedMachine = equipmentOptions.find((equipment) => equipment.machineName === newOT.EquipmentAvailable);
+
+        if (!selectedOTMaster || !selectedMachine) {
+            error('Invalid OT Name or Equipment');
+            return;
+        }
+
+        const payload = {
+  availableStatus: newOT.AvailabilityStatus,
+  capacity: parseInt(newOT.Capacity),
+  otMasterDTO: { id: selectedOTMaster.id },
+  otMachineDTO: { otMachineId: selectedMachine.otMachineId },
+};
+
+        if (newOT.OTID) {
+            // Edit existing OT
+            axios.put(`${ API_BASE_URL }/ot-resources/${newOT.OTID}`, payload)
+                .then((response) => {
+                    setOTs((prevOTs) =>
+                        prevOTs.map((ot) =>
+                            ot.otResourceManagementId === newOT.OTID ? response.data : ot
+                        )
+                    );
+                    success('OT updated successfully!');
+                    setNewOT({ OTID: '', OTName: '', AvailabilityStatus: '', EquipmentAvailable: '', Capacity: '' });
+                    setOpenStickerPopup(false);
+                })
+                .catch((err) => {
+                    error('Error updating OT');
+                    console.error('Error updating OT:', err);
+                });
+        } else {
+            // Add new OT
+            axios.post(`${ API_BASE_URL }/ot-resources`, payload)
+                .then((response) => {
+                    setOTs([...OTs, response.data]);  // Add the new OT to the state
+                    success('New OT added successfully!');
+                    setNewOT({ OTID: '', OTName: '', AvailabilityStatus: '', EquipmentAvailable: '', Capacity: '' });
+                    setOpenStickerPopup(false);
+                })
+                .catch((err) => {
+                    error('Error adding new OT');
+                    console.error('Error adding new OT:', err);
+                });
         }
     };
 
     const handleEditOT = (ot) => {
         setNewOT({
-            OTID: ot.otId,
-            OTName: ot.otName,
-            AvailabilityStatus: ot.availabilityStatus,
-            EquipmentAvailable: ot.equipmentAvailable,
+            OTID: ot.otResourceManagementId,
+            OTName: ot.otMasterDTO.otName,
+            AvailabilityStatus: ot.availableStatus,
+            EquipmentAvailable: ot.otMachineDTO.machineName,
             Capacity: ot.capacity,
         });
-        setOpenStickerPopup(true); 
+        setOpenStickerPopup(true);
     };
-
     return (
-        <div className="">
+        <div>
             <div className="otresoucefilter">
                 <div className="otresource-date-utlt">
                     <div className="ot-resorcefilter-patient">
                         <div className="date-range">
                             <label>From: </label>
-                            <input className="ot-otresource-input" type="date" value="2024-08-05" />
+                            <input className="ot-otresource-input" type="date" />
                             <label> To: </label>
-                            <input className="ot-otresource-input" type="date" value="2024-08-12" />
+                            <input className="ot-otresource-input" type="date" />
                         </div>
                     </div>
                 </div>
@@ -104,64 +157,52 @@ const OTResourceManagement = () => {
                 <div className='ot-resource-patient-search'>
                     <input
                         type="text"
-                        placeholder="Search by PatientName/PatientId"
-                        className="otsearch-otresource-search-input "
+                        placeholder="Search by OT ID or OT Name"
+                        className="otsearch-otresource-search-input"
                         value={searchTerm}
                         onChange={handleSearch}
                     />
-                    <button
-                        onClick={printList}
-                        className="otsearch-otresource-container-button"
-                    >
+                    <button onClick={printList} className="otsearch-otresource-container-button">
                         Print
                     </button>
                 </div>
             </div>
 
             <button className='otresourcemgntbtn' onClick={() => setOpenStickerPopup(true)}>Add OT</button>
-            <CustomModal/>
 
             <table ref={tableRef}>
                 <thead>
                     <tr>
-                        {[
-                            "OTID",
-                            "OT Name",
-                            "Availability Status",
-                            "Equipment Available",
-                            "Capacity",
-                            "Actions"
-                        ].map((header, index) => (
-                            <th
-                                key={index}
-                                style={{ width: columnWidths[index] }}
-                                className="resizable-th"
-                            >
+                        {["OTID", "OT Name", "Availability Status", "Machine Name", "Capacity", "Actions"].map((header, index) => (
+                            <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
                                 <div className="header-content">
                                     <span>{header}</span>
-                                    <div
-                                        className="resizer"
-                                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                                    ></div>
+                                    <div className="resizer" onMouseDown={startResizing(tableRef, setColumnWidths)(index)}></div>
                                 </div>
                             </th>
                         ))}
                     </tr>
                 </thead>
                 <tbody>
-                    {OTs.map((ot, index) => (
-                        <tr key={index}>
-                            <td>{ot.otId}</td>
-                            <td>{ot.otName}</td>
-                            <td>{ot.availabilityStatus}</td>
-                            <td>{ot.equipmentAvailable}</td>
-                            <td>{ot.capacity}</td>
-                            <td>
-                                <button className='otresourcemgntedit-btn' onClick={() => handleEditOT(ot)}>Edit</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
+    {filteredOTs.length > 0 ? (
+        filteredOTs.map((ot, index) => (
+            <tr key={index}>
+                <td>{ot.otResourceManagementId}</td>
+                <td>{ot.otMasterDTO?.otName}</td>
+                <td>{ot.availableStatus}</td>
+                <td>{ot.otMachineDTO?.machineName}</td>
+                <td>{ot.capacity}</td>
+                <td>
+                    <button className="otresourcemgntedit-btn" onClick={() => handleEditOT(ot)}>
+                        Edit
+                    </button>
+                </td>
+            </tr>
+        ))
+    ) : (
+        <tr><td colSpan="6">No data available</td></tr>
+    )}
+</tbody>
             </table>
 
             {openStickerPopup && (
@@ -169,33 +210,34 @@ const OTResourceManagement = () => {
                     <div className="ot-resource-modal-content" onClick={(e) => e.stopPropagation()}>
                         <h2>{newOT.OTID ? 'Edit OT' : 'Add New OT'}</h2>
                         <label>OT Name:</label>
-                        <input
-                            type="text"
-                            value={newOT.OTName}
-                            onChange={(e) => setNewOT({ ...newOT, OTName: e.target.value })}
-                        />
+                        <select value={newOT.OTName} onChange={(e) => setNewOT({ ...newOT, OTName: e.target.value })}>
+                            <option value="">Select OT Name</option>
+                            {otNames.map((otName, index) => (
+                                <option key={index} value={otName.otName}>
+                                    {otName.otName}
+                                </option>
+                            ))}
+                        </select>
                         <label>Availability Status:</label>
-                        <select
-                            value={newOT.AvailabilityStatus}
-                            onChange={(e) => setNewOT({ ...newOT, AvailabilityStatus: e.target.value })}
-                        >
+                        <select value={newOT.AvailabilityStatus} onChange={(e) => setNewOT({ ...newOT, AvailabilityStatus: e.target.value })}>
                             <option value="">Select</option>
                             <option value="Available">Available</option>
                             <option value="Occupied">Occupied</option>
                             <option value="Under Maintenance">Under Maintenance</option>
                         </select>
-                        <label>Equipment Available:</label>
-                        <input
-                            type="text"
-                            value={newOT.EquipmentAvailable}
-                            onChange={(e) => setNewOT({ ...newOT, EquipmentAvailable: e.target.value })}
-                        />
+                        <label>Machine Name:</label>
+                        <select value={newOT.EquipmentAvailable} onChange={(e) => setNewOT({ ...newOT, EquipmentAvailable: e.target.value })}>
+                            <option value="">Select Equipment</option>
+                            {equipmentOptions
+                                .filter(equipment => equipment.isActive === 'Yes')
+                                .map((equipment) => (
+                                    <option key={equipment.otMachineId} value={equipment.machineName}>
+                                        {equipment.machineName}
+                                    </option>
+                                ))}
+                        </select>
                         <label>Capacity:</label>
-                        <input
-                            type="number"
-                            value={newOT.Capacity}
-                            onChange={(e) => setNewOT({ ...newOT, Capacity: e.target.value })}
-                        />
+                        <input type="number" value={newOT.Capacity} onChange={(e) => setNewOT({ ...newOT, Capacity: e.target.value })} />
                         <div className='otresource-btn'>
                             <button onClick={handleAddOT}>Save</button>
                             <button onClick={() => setOpenStickerPopup(false)}>Cancel</button>
@@ -204,7 +246,6 @@ const OTResourceManagement = () => {
                 </div>
             )}
 
-            {/* Render the CustomAlerts component */}
             <CustomAlerts />
         </div>
     );

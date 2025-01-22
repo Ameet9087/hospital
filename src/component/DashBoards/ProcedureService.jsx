@@ -7,19 +7,26 @@ const ProcedureService = ({ inPatientId, outPatientId }) => {
   const [selectedProcedures, setSelectedProcedures] = useState([]);
   const [availableProcedures, setAvailableProcedures] = useState([]);
   const [selectedProcedure, setSelectedProcedure] = useState("");
+  const [procedureType, setProcedureType] = useState(""); // Type of procedure
+  const [serviceTypes] = useState(["Radiology", "Lab"]); // Procedure types
 
+  // Fetch procedures based on selected type
   useEffect(() => {
-    const fetchProcedures = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/services`);
-        setAvailableProcedures(response.data);
-      } catch (error) {
-        console.error("Error fetching procedures:", error);
-        alert("Failed to load procedures. Please try again later.");
-      }
-    };
-    fetchProcedures();
-  }, []);
+    if (procedureType) {
+      const fetchProcedures = async () => {
+        try {
+          const response = await axios.get(
+            `${API_BASE_URL}/service-details/service?typeName=${procedureType}`
+          );
+          setAvailableProcedures(response.data);
+        } catch (error) {
+          console.error("Error fetching procedures:", error);
+          alert("Failed to load procedures. Please try again later.");
+        }
+      };
+      fetchProcedures();
+    }
+  }, [procedureType]);
 
   const addProcedure = () => {
     if (selectedProcedure && !selectedProcedures.includes(selectedProcedure)) {
@@ -70,12 +77,30 @@ const ProcedureService = ({ inPatientId, outPatientId }) => {
   return (
     <div className="procedures-service-container">
       <h3>Procedures/Services</h3>
+
+      <div className="procedures-service-content">
+        <label htmlFor="procedure-type">Procedure Type:</label>
+        <select
+          id="procedure-type"
+          value={procedureType}
+          onChange={(e) => setProcedureType(e.target.value)}
+        >
+          <option value="">--Select Type--</option>
+          {serviceTypes.map((type, index) => (
+            <option key={index} value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="procedures-service-content">
         <label htmlFor="procedures">Procedures/Services:</label>
         <select
           id="procedures"
           value={selectedProcedure}
           onChange={(e) => setSelectedProcedure(e.target.value)}
+          disabled={!procedureType}
         >
           <option value="">--Select--</option>
           {availableProcedures.map((procedure, index) => (

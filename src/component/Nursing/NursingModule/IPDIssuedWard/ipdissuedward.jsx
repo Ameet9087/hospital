@@ -5,10 +5,117 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import PopupTable from "../Services/PopupTable";
 import { API_BASE_URL } from "../../../api/api";
+import { useSelector } from "react-redux";
 
-const IPDIssuesWard = () => {
+const calculateTotalAmount = (rows) => {
+  return rows.reduce((total, row) => {
+    const amount = parseFloat(row.totalAmount) || 0;
+    return total + amount;
+  }, 0);
+};
+
+const IPDIssuesWard = ({ ipAdmission }) => {
   const [activePopup, setActivePopup] = useState(null);
   const [selectedIPNo, setSelectedIPNo] = useState(null);
+  const patientData = useSelector((state) => state.patient?.patientData);
+
+  const [subStores, setSubStores] = useState([]);
+  const [selectedSubStore, setSelectedSubStore] = useState("");
+  const [selectedItemData, setSelectedItemData] = useState({});
+
+  useEffect(() => {
+    const fetchSubStores = async () => {
+      try {
+        const response = await axios.get(
+          `${API_BASE_URL}/substores/get-all-substores`
+        );
+        setSubStores(response.data); // Assuming the API returns an array of objects with 'subStoreName'
+      } catch (error) {
+        console.error("Error fetching sub-stores:", error);
+      }
+    };
+
+    fetchSubStores();
+  }, []);
+
+  const postIssueData = async () => {
+    const items = rows.map((row) => ({
+      consumedQty: row.issueQty,
+      inventoryRequisitionItemId: row.id,
+    }));
+
+    console.log("Items Dataaaaaaaaaaaa:", items);
+
+    const issueData = {
+      issueQuantity: rows.reduce((sum, row) => sum + Number(row.issueQty), 0),
+      subStoreId: selectedSubStore,
+      patientId: patientData.ipAdmmissionId,
+      totalAmount: rows.reduce(
+        (sum, row) => sum + Number(row.totalAmount || 0),
+        0
+      ),
+      items,
+    };
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/ip-issue-ward`,
+        issueData
+      );
+
+      console.log("Data posted successfully:", response.data);
+      alert("Data posted successfully");
+    } catch (error) {
+      console.error("Error posting data:", error);
+      alert("Error posting data. Please check the console for more details.");
+    }
+  };
+
+  const handleSelectionChange = async (subStoreId) => {
+    alert("Selected SubStore ID: " + subStoreId);
+    setSelectedSubStore(subStoreId);
+
+    if (subStoreId) {
+      try {
+        const response = await axios.get(
+          `${API_BASE_URL}/inventory-requisitions/received?subStoreId=${subStoreId}`
+        );
+        const transformedData = response.data.map((item) => {
+          const packagingType = item.item.packagingType || {};
+          const unitOfMeasurement = item.item.unitOfMeasurement || {};
+          const subCategory = item.item.subCategory || {};
+          const invCompany = item.item.invCompany || {};
+
+          return {
+            id: item.id,
+            invItemId: item.item.invItemId,
+            itemName: item.item.itemName,
+            itemCode: item.item.itemCode,
+            availableQty: item.item.availableQty,
+            standardRate: item.item.standardRate,
+            minStockQuantity: item.item.minStockQuantity,
+            description: item.item.description,
+            inventory: item.item.inventory,
+            requiredQuantity: item.requiredQuantity,
+            dispatchQuantity: item.dispatchQuantity,
+            remark: item.remark,
+            packagingTypeName: packagingType.packagingTypeName || "",
+            unitOfMeasurementName: unitOfMeasurement.name || "",
+            subCategoryName: subCategory.subCategoryName || "",
+            companyName: invCompany.companyName || "",
+            companyCode: invCompany.code || "",
+          };
+        });
+
+        setItemCodedata(transformedData);
+        alert(JSON.stringify(transformedData));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    } else {
+      setRows([]);
+    }
+  };
+
   const [rows, setRows] = useState([
     {
       id: 1,
@@ -32,25 +139,23 @@ const IPDIssuesWard = () => {
     "address",
   ];
   const itemcodeHeading = [
+    "invItemId",
     "itemName",
-    "batchNumber",
-    "expiryDate",
-    "mrp",
-    "tstock",
-    "bstock",
+    "standardRate",
+    "availableQty",
+    "description",
   ];
   const [itemCodedata, setItemCodedata] = useState([]);
   const [selectedItemCode, setSelectedItemCode] = useState([]);
 
   const activePatient = useSelector(
-    (state) => state.patient.patientData.patient
+    (state) => state?.patient?.patientData?.patient
   );
 
   const fetchItemCode = async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/ipd-issue-ward`);
       console.log("Response Data:", response.data);
-
       const itemCode = response.data.map((code) => {
         const itemDetail = code.itemDetailsDTOs[0].itemDetailIssueWardDTO;
         const taxAmount =
@@ -60,7 +165,7 @@ const IPDIssuesWard = () => {
         const totalAmount = parseFloat(itemDetail.mrp || 0) + taxAmount;
 
         return {
-          itemDetailIssueWardId: itemDetail.itemDetailIssueWardId, // Make sure this field is populated
+          itemDetailIssueWardId: itemDetail.itemDetailIssueWardId,
           scanCode: itemDetail.scanCode,
           itemName: itemDetail.itemName,
           pack: itemDetail.pack,
@@ -77,85 +182,49 @@ const IPDIssuesWard = () => {
           totalAmount: totalAmount.toFixed(2),
         };
       });
-
-      console.log("Mapped Item Code:", itemCode); // Check if data is mapped correctly
-      setItemCodedata(itemCode);
+      console.log("Mapped Item Code:", itemCode);
     } catch (error) {
       console.error("Error Fetching item codes:", error);
     }
   };
 
-  // const updateIssueQty = (itemDetailIssueWardId, newQty) => {
-
-  //     setRows((prevRows) =>
-  //         prevRows.map((row) => {
-  //             if (row.itemDetailIssueWardId === itemDetailIssueWardId) {
-  //                 // Ensure selectedItemCode exists for each row
-  //                 const itemDetail = row.selectedItemCode || {};
-  //                 const mrp = parseFloat(itemDetail.mrp || 0);  // Safeguard for missing MRP
-  //                 const qty = parseInt(newQty) || 0;  // Ensure quantity is a number
-
-  //                 // Calculate total amount: issueQty * MRP
-  //                 const totalAmount = mrp * qty;
-
-  //                 return {
-  //                     ...row,
-  //                     issueQty: newQty,  // Update the issue quantity
-  //                     totalAmount: totalAmount.toFixed(2),  // Update total amount (formatted to 2 decimal places)
-  //                 };
-  //             }
-  //             return row;
-  //         })
-  //     );
-  // };
-
   const updateIssueQty = (itemId, value) => {
     const updatedRows = rows.map((row) => {
       if (row.itemDetailIssueWardId === itemId) {
         const issueQty = parseFloat(value) || 0;
-        const mrp = parseFloat(selectedItemCode.mrp || 0);
+        const mrp = parseFloat(selectedItemCode.standardRate || 0);
         const discount = parseFloat(selectedItemCode.discount || 0);
         const taxPercent = parseFloat(selectedItemCode.taxPercent || 0);
-
-        // Calculate the subtotal after discount
         const subtotal = (mrp - discount) * issueQty;
-
-        // Calculate the tax amount
         const taxAmount = (subtotal * taxPercent) / 100;
-
-        // Calculate the total amount
         const totalAmount = subtotal + taxAmount;
 
         return {
           ...row,
           issueQty,
-          totalAmount: totalAmount.toFixed(2), // Ensure 2 decimal places
+          totalAmount: totalAmount.toFixed(2),
         };
       }
       return row;
     });
-    setRows(updatedRows); // Update the state with the new row data
+    setRows(updatedRows);
   };
 
   const updateTax = (itemId, taxAmtInput) => {
     const updatedRows = rows.map((row) => {
       if (row.itemDetailIssueWardId === itemId) {
-        const taxPercent = parseFloat(taxAmtInput) || 0; // Ensure tax percentage is a number
-        const issueQty = parseFloat(row.issueQty) || 0; // Ensure issueQty is a number
-        const mrp = parseFloat(selectedItemCode.mrp) || 0; // Ensure MRP is a number
-        const discount = parseFloat(selectedItemCode.discount) || 0; // Ensure discount is a number
-
-        // Calculate tax amount
+        const taxPercent = parseFloat(taxAmtInput) || 0;
+        const issueQty = parseFloat(row.issueQty) || 0;
+        const mrp = parseFloat(selectedItemCode.standardRate) || 0;
+        const discount = parseFloat(selectedItemCode.discount) || 0;
         const taxAmount = (issueQty * mrp * taxPercent) / 100;
-
-        // Calculate total amount: (MRP * Qty) - Discount + TaxAmount
         const totalAmount = issueQty * mrp - discount + taxAmount;
 
         return {
           ...row,
           tax: taxPercent,
-          colTax: taxAmount.toFixed(2), // Tax Amount
-          totalAmount: totalAmount.toFixed(2), // Total Amount
+          colTax: taxAmount.toFixed(2),
+          totalAmount: totalAmount.toFixed(2),
         };
       }
       return row;
@@ -166,23 +235,60 @@ const IPDIssuesWard = () => {
 
   // const updateFinancial=(itemId,totalAmount){}
 
-  useEffect(() => {
-    fetchItemCode();
-  }, []);
+  // useEffect(() => {
+  //   fetchItemCode();
+  // }, []);
 
-  useEffect(() => {
-    console.log("Updated itemCodedata:", itemCodedata);
-  }, [itemCodedata]);
+  // useEffect(() => {
+  //   console.log("Updated itemCodedata:", itemCodedata);
+  // }, [itemCodedata]);
 
   // Handle popup data
   const handleSelect = (data) => {
     if (activePopup === "IpNo") {
       setSelectedIPNo(data);
     } else if (activePopup === "ItemCode") {
-      setSelectedItemCode(data);
+      setSelectedItemCode({
+        invItemId: data.invItemId,
+        itemName: data.itemName,
+        itemCode: data.itemCode,
+        availableQty: data.availableQty,
+        standardRate: data.standardRate,
+        minStockQuantity: data.minStockQuantity,
+        description: data.description,
+        inventory: data.inventory,
+        requiredQuantity: data.requiredQuantity,
+        dispatchQuantity: data.dispatchQuantity,
+        remark: data.remark,
+        packagingTypeName: data.packagingTypeName,
+        unitOfMeasurementName: data.unitOfMeasurementName,
+        subCategoryName: data.subCategoryName,
+        companyName: data.companyName,
+        companyCode: data.companyCode,
+      });
     }
     setActivePopup(null);
   };
+
+  const [formData, setFormData] = useState({
+    totalAmount: 0,
+    lessDiscount: 0,
+    netAmount: 0,
+    taxAmount: 0,
+    paidAmount: 0,
+    dueAmount: 0,
+    currentDue: 0,
+    remarks: "",
+    amountInWords: "",
+  });
+
+  useEffect(() => {
+    const totalAmount = calculateTotalAmount(rows);
+    setFormData((prevData) => ({
+      ...prevData,
+      totalAmount,
+    }));
+  }, [rows]);
 
   const getPopupData = () => {
     if (activePopup === "IpNo") {
@@ -197,7 +303,6 @@ const IPDIssuesWard = () => {
 
   const { columns, data } = getPopupData();
 
-  // Add new row
   const addRow = () => {
     setRows([
       ...rows,
@@ -250,95 +355,185 @@ const IPDIssuesWard = () => {
 
         <div className="detail">
           <label>IP No:</label>
-          <input type="text" value={selectedIPNo?.inPatientId || ""} />
-          <FontAwesomeIcon
-            icon={faSearch}
-            onClick={() => setActivePopup("IpNo")}
+          <input
+            type="text"
+            value={patientData?.ipAdmmissionId || ipAdmission?.ipAdmmissionId}
+            disabled
           />
         </div>
 
         <div className="detail">
           <label>Patient Name:</label>
-          <input type="text" value={selectedIPNo?.patientName || ""} />
+          <input
+            type="text"
+            value={`${
+              patientData?.patient?.firstName ||
+              ipAdmission?.patient?.patient?.firstName
+            } ${
+              patientData?.patient?.lastName ||
+              ipAdmission?.patient?.patient?.lastName
+            }`}
+            disabled
+          />
         </div>
 
         <div className="detail">
           <label>Age:</label>
-          <input type="text" value={selectedIPNo?.age || ""} />
+          <input
+            type="text"
+            value={
+              patientData?.patient?.age || ipAdmission?.patient?.patient?.age
+            }
+            disabled
+          />
         </div>
 
         <div className="detail">
           <label>Sex:</label>
-          <input type="text" value={selectedIPNo?.gender || ""} />
+          <input
+            type="text"
+            value={
+              patientData?.patient?.gender ||
+              ipAdmission?.patient?.patient?.gender
+            }
+            disabled
+          />
         </div>
 
         <div className="detail">
           <label>Relative Name:</label>
-          <input type="text" value={selectedIPNo?.relative || ""} />
+          <input
+            type="text"
+            value={
+              patientData?.patient?.guarantorDTO?.relationWithPatient ||
+              ipAdmission?.patient?.patient?.relationName
+            }
+            disabled
+          />
         </div>
 
         <div className="detail">
           <label>Doctor Name:</label>
-          <input type="text" value={selectedIPNo?.consultantDoctor || ""} />
+          <input
+            type="text"
+            value={
+              patientData?.admissionUnderDoctorDetail?.consultantDoctor
+                ?.doctorName ||
+              ipAdmission?.admissionUnderDoctorDetail?.consultantDoctor
+                ?.doctorName
+            }
+            disabled
+          />
         </div>
 
         <div className="detail">
           <label>Unit Name:</label>
-          <input type="text" />
+          <input
+            type="text"
+            value={
+              patientData?.admissionUnderDoctorDetail?.unitMaster ||
+              ipAdmission?.admissionUnderDoctorDetail?.unitMaster ||
+              ""
+            }
+            disabled
+          />
         </div>
 
         <div className="detail">
           <label>Mobile Number:</label>
-          <input type="text" value={selectedIPNo?.mobileNo || ""} />
+          <input
+            type="text"
+            value={
+              patientData?.patient?.phoneNumber ||
+              ipAdmission?.patient?.patient?.mobileNumber
+            }
+            disabled
+          />
         </div>
 
         <div className="detail">
           <label>Type:</label>
-          <select>
+          <select disabled>
             <option>General</option>
           </select>
         </div>
 
         <div className="detail">
           <label>Bed No:</label>
-          <input type="text" value={selectedIPNo?.bedNo || ""} />
+          <input
+            type="text"
+            value={
+              patientData?.roomDetails?.bedDTO?.bedNo ||
+              ipAdmission?.roomDetails?.bedDTO?.bedNo
+            }
+            disabled
+          />
         </div>
 
         <div className="detail">
           <label>Room No:</label>
-          <input type="text" value={selectedIPNo?.roomNo || ""} />
+          <input
+            type="text"
+            value={
+              patientData?.roomDetails?.roomDTO?.roomNumber ||
+              ipAdmission?.roomDetails?.roomDTO?.roomNumber
+            }
+            disabled
+          />
         </div>
 
         <div className="detail">
           <label>Floor No:</label>
-          <input type="text" />
+          <input
+            type="text"
+            value={
+              patientData?.roomDetails?.floorDTO?.floorNumber ||
+              ipAdmission?.roomDetails?.floorDTO?.floorNumber
+            }
+            disabled
+          />
         </div>
 
         <div className="detail">
           <label>Room Type:</label>
-          <input type="text" />
+          <input
+            type="text"
+            value={
+              patientData?.roomDetails?.roomTypeDTO?.type ||
+              ipAdmission?.roomDetails?.roomTypeDTO?.type
+            }
+            disabled
+          />
         </div>
 
         <div className="detail">
           <label>Pay Type:</label>
-          <input type="text" />
+          <input
+            type="text"
+            value={
+              patientData?.roomDetails?.payTypeDTO?.payTypeName ||
+              ipAdmission?.roomDetails?.payTypeDTO?.payTypeName
+            }
+            disabled
+          />
         </div>
-
-        {/* <a>Previous Bills</a>
-
-                <div className="detail">
-                    <label>MR No:</label>
-                    <input type="text" />
-                    <i className="fa fa-search"></i>
-                </div>
-
-                <div className="detail">
-                    <label>Template Name:</label>
-                    <input type="text" />
-                    <i className="fa fa-search"></i>
-                </div> */}
       </div>
 
+      <div className="subStoreDropdown-div">
+        <label htmlFor="subStoreDropdown">Select Sub-Store:</label>
+        <select
+          id="subStoreDropdown"
+          value={selectedSubStore}
+          onChange={(e) => handleSelectionChange(e.target.value)}
+        >
+          <option value="">-- Select Sub-Store --</option>
+          {subStores.map((store, index) => (
+            <option key={index} value={store.subStoreId}>
+              {store.subStoreName}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="item-details">
         <h6>
           <b>Item Details</b>
@@ -349,16 +544,15 @@ const IPDIssuesWard = () => {
             <tr>
               <th>Add</th>
               <th>Del</th>
-              <th>Scan Code</th>
+              <th>invItemId</th>
               <th>Item Name</th>
-
-              <th>Pack</th>
-              <th>TStock</th>
-              <th>BStock</th>
+              <th>description</th>
+              <th>availableQty</th>
+              {/* <th>BStock</th> */}
               <th>Issue Qty</th>
-              <th>Batch No</th>
-              <th>Expiry</th>
-              <th>MRP</th>
+              <th>itemCode</th>
+              {/* <th>Expiry</th> */}
+              <th>standardRate</th>
               {/* <th>Discount</th> */}
               <th>Tax %</th>
               <th>Tax Amount</th>
@@ -384,7 +578,7 @@ const IPDIssuesWard = () => {
                   </button>
                 </td>
                 <td>
-                  <input type="text" value={selectedItemCode.scanCode || ""} />
+                  <input type="text" value={selectedItemCode.invItemId || ""} />
                 </td>
                 <td>
                   <input
@@ -398,14 +592,20 @@ const IPDIssuesWard = () => {
                   />
                 </td>
                 <td>
-                  <input type="text" value={selectedItemCode?.pack || ""} />
+                  <input
+                    type="text"
+                    value={selectedItemCode?.description || ""}
+                  />
                 </td>
                 <td>
-                  <input type="text" value={selectedItemCode.tStock || "0"} />
+                  <input
+                    type="text"
+                    value={selectedItemCode.dispatchQuantity || "0"}
+                  />
                 </td>
-                <td>
+                {/* <td>
                   <input type="text" value={selectedItemCode.bStock || "0"} />
-                </td>
+                </td> */}
                 <td>
                   {/* <input type="text" value={row.issueQty || ''} onChange={(e) => updateIssueQty(row.itemDetailIssueWardId, e.target.value)} /> */}
 
@@ -418,14 +618,17 @@ const IPDIssuesWard = () => {
                   />
                 </td>
                 <td>
-                  <input type="text" value={selectedItemCode.batchNo || ""} />
+                  <input type="text" value={selectedItemCode.itemCode || ""} />
                 </td>
-                <td>
+                {/* <td>
                   <input type="text" value={selectedItemCode.expiry || ""} />
-                </td>
+                </td> */}
 
                 <td>
-                  <input type="text" value={selectedItemCode.mrp || ""} />
+                  <input
+                    type="text"
+                    value={selectedItemCode.standardRate || ""}
+                  />
                 </td>
                 {/* <td><input type='text' value={row.tax || ''} onChange={(e)=>updateTax(row.itemDetailIssueWardId,e.target.value)} /></td> */}
                 {/* <td><input type="text" value={row.discount || ''} /></td> */}
@@ -480,14 +683,23 @@ const IPDIssuesWard = () => {
             <label>{field.label}:</label>
             <input
               type="text"
-              // name={field.name}
-              // value={formData[field.name]}
-              // onChange={handleChange}
-              // readOnly={field.readOnly || false}
+              name={field.name}
+              value={
+                field.name === "totalAmount"
+                  ? formData.totalAmount
+                  : formData[field.name]
+              }
+              readOnly={field.readOnly || false}
             />
           </div>
         ))}
       </div>
+      <div className="ipdissuedward-buttons">
+        <button className="postIssue-buttons" onClick={postIssueData}>
+          Post Data
+        </button>
+      </div>
+      <br />
 
       {/* Popup for IP Number selection */}
       {activePopup && (

@@ -241,7 +241,7 @@ const NewUserForm = ({ user, onClose }) => {
     const payload = {
       username: updatedFormData.username,
       password: updatedFormData.password,
-      doctorId: updatedFormData.doctorId, // Add doctorId to the payload if available
+      addDoctorId: updatedFormData.addDoctorId, // Add doctorId to the payload if available
       employeeId: updatedFormData.employeeId, // Add employeeId to the payload if available
       updatedRole: [
         {

@@ -1,0 +1,127 @@
+.NursingCarePlan-form-container{
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    font-size: 12px;
+    height: auto;
+    padding: 10px;
+    /* overflow: scroll; */
+}
+.NursingCarePlan-header{
+    background-color: var(--upperBar-bg-color);
+      color: white;
+      padding: 8px;
+      border-radius: 7px;
+      margin-bottom: 4px;
+      font-size: var(--heading-font);
+    }
+    .NursingCarePlan-content{
+    display: flex;
+    
+}
+.NursingCarePlan-Section-header{
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 4px 8px;
+    font-size: var(--heading-font);
+    margin: 5px;
+    margin-bottom: 10px;
+}
+.NursingCarePlan-form-section {
+    padding: 8px;
+    width: 100%;
+    height: 500px;
+    border: 1px solid #ccc;
+    background-color: white;
+    overflow-y: scroll;
+
+    /* Optional: Smooth scrolling */
+    scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar Styling */
+.NursingCarePlan-form-section::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.NursingCarePlan-form-section::-webkit-scrollbar-thumb {
+    background: #888; /* Scrollbar color */
+    border-radius: 4px; /* Round edges */
+}
+
+.NursingCarePlan-form-section::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color on hover */
+}
+
+.NursingCarePlan-form-section::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track background */
+    border-radius: 4px; /* Round edges for the track */
+}
+
+.NursingCarePlan-data,.NursingCarePlan-form-search-icon{
+    display: flex;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+.NursingCarePlan-data label,
+.NursingCarePlan-form-search-icon label
+{
+    width: 300px;
+   font-size: var(--font-size);
+}
+
+.NursingCarePlan-diagnoses label{
+    width: 250px;
+}
+.NursingCarePlan-diagnosis-label{
+    width: 280px;
+}
+
+.NursingCarePlan-data input,.NursingCarePlan-data select,.NursingCarePlan-data textarea{
+    width: 100%;
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.NursingCarePlan-form-search-icon input{
+    width: 80%;
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.NursingCarePlan-diagnosis{
+    display: flex;
+    margin-bottom: 10px;
+}
+.NursingCarePlan-radio{
+    display: flex;
+    gap: 35px;
+    margin-left: 30px;
+}
+.NursingCarePlan-navbar-btns{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+    overflow-y: auto;
+}
+.NursingCarePlan-navbar button{
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+}
+.NursingCarePlan-navbar button:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color); 
+}
+  
+ 
+
+  

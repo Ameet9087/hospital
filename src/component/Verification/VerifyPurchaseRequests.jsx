@@ -3,6 +3,7 @@ import { Search } from 'lucide-react';
 import './VerifyPurchaseRequests.css';
 import VerifyPurchaseDetails from './VerifyPurchaseDetails';
 import { API_BASE_URL } from '../api/api';
+import CustomModal from '../../CustomModel/CustomModal';
 
 const VerifyPurchaseRequests = () => {
   const [dateFrom, setDateFrom] = useState('');
@@ -14,7 +15,7 @@ const VerifyPurchaseRequests = () => {
   const [selectedRequest, setSelectedRequest] = useState(null); // State to hold selected purchase request
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/purchase-requests/fetchAllPurchase`)
+    fetch(`${API_BASE_URL}/purchase-requests`)
       .then((response) => response.json())
       .then((data) => {
         setPurchaseRequests(data);
@@ -50,7 +51,6 @@ const VerifyPurchaseRequests = () => {
 
   return (
     <>
-      {!showForm ? (
         <div className="verify-purchase-container">
           <div className="verify-purchase-header">
             <div className="verify-purchase-title">
@@ -131,7 +131,7 @@ const VerifyPurchaseRequests = () => {
             <tbody>
               {filteredRequests.map((request) => (
                 <tr key={request.id}>
-                  <td>{request.purchaseId}</td>
+                  <td>{request.id}</td>
                   <td>{request.requestDate}</td>
                   <td>{request.requestFrom}</td>
                   <td>{request.requestedBy}</td>
@@ -154,13 +154,14 @@ const VerifyPurchaseRequests = () => {
             </tbody>
           </table>
         </div>
-      ) : (
+        <CustomModal isOpen={showForm} onClose={handleCloseForm} >
         <VerifyPurchaseDetails 
           request={selectedRequest} // Pass selected request as prop
           onClose={handleCloseForm}
           handleCloseForm={handleCloseForm} 
         />
-      )}
+        </CustomModal>
+      
     </>
   );
 };

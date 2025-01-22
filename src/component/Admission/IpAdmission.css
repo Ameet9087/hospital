@@ -1,6 +1,9 @@
 .ip-addmission-sh-container {
-    padding: 20px;
-    background-color: var(--background-color);
+    /* padding: 20px; */
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: white;
+    margin-bottom: 10px;
     /* height: 90vh; */
     /* overflow-y: scroll; */
 }
@@ -16,7 +19,8 @@
     color: white;
     font-weight: bold;
     background: #00968f;
-    padding: 5px;
+    padding: 10px;
+
 }
 .ip-admission-headers h3{
     font-size: var(--heading-font);
@@ -37,7 +41,7 @@
     gap: 6px;
     margin: 20px 5px;
     border-radius: 5px;
-    background-color: var(--background-color);
+    /* background-color: var(--background-color); */
 }
 
 .ip-addmission-sh-section {
@@ -58,7 +62,7 @@
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 3px;
-    /* width: 200px; */
+    width: 200px;
 }
 
 

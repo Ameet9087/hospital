@@ -29,6 +29,7 @@ const AddItem = ({ isOpen, onClose }) => {
     unitQuantity: 0,
     packagingType: "",
     vendorName: "",
+    availableQty:"",
     isCssdApplicable: false,
     isColdStorageApplicable: false,
     isPatientConsumptionApplicable: false,
@@ -144,6 +145,7 @@ const AddItem = ({ isOpen, onClose }) => {
         itemCompany: formValues.itemCompany.name || "", // If `itemCompany` includes the name
         reOrderQuantity: Number(formValues.reOrderQuantity) || 0,
         unitQuantity: Number(formValues.unitQuantity) || 0,
+        availableQty: Number(formValues.availableQty) || 0,
         isVatApplicable: formValues.isVatApplicable || false,
         isCssdApplicable: formValues.isCssdApplicable || false,
         isColdStorageApplicable: formValues.isColdStorageApplicable || false,
@@ -153,12 +155,12 @@ const AddItem = ({ isOpen, onClose }) => {
             id: formValues.packagingType?.id || 0
         },
         unitOfMeasurement: {
-            id: formValues.unitOfMeasurement?.id || 0
+          unitOfMeasurementId: formValues.unitOfMeasurement?.unitOfMeasurementId || 0
         },
         subCategory: {
             id: formValues.itemSubCategory?.id || 0
         },
-        company: {
+        invCompany: {
             id: formValues.itemCompany?.id || 0
         }
     };
@@ -192,12 +194,13 @@ const AddItem = ({ isOpen, onClose }) => {
             unitQuantity: 0,
             packagingType: "",
             vendorName: "",
+            availableQuantity:"",
             isCssdApplicable: false,
             isColdStorageApplicable: false,
             isPatientConsumptionApplicable: false,
             isActive: true,
           });
-          onClose(); // Close the modal after submission
+          onClose();
         } else {
           const errorData = await response.json();
           console.error("Error adding item:", errorData);
@@ -259,11 +262,11 @@ const AddItem = ({ isOpen, onClose }) => {
             <AadddFormRow
               label="Unit of Measurement"
               name="unitOfMeasurement"
-              value={formValues.unitOfMeasurement.unitOfMeasurementName || ""}
+              value={formValues.unitOfMeasurement.name || ""}
               onChange={(e) =>
                 handleDropdownChange(
                   "unitOfMeasurement",
-                  unitMeasurements.find((unit) => unit.unitOfMeasurementName === e.target.value)
+                  unitMeasurements.find((unit) => unit.name === e.target.value)
                 )
               }
               options={unitMeasurements}
@@ -349,12 +352,20 @@ const AddItem = ({ isOpen, onClose }) => {
               error={errors.unitQuantity}
             />
             <AadddFormRow
-              label="Vendor Name"
-              name="vendorName"
-              value={formValues.vendorName}
+              label="Standard Rate"
+              name="standardRate"
+              value={formValues.standardRate}
               onChange={handleInputChange}
-              placeholder="Vendor Name"
+              placeholder="rate Name"
               error={errors.vendorName}
+            />
+              <AadddFormRow
+              label="Available Quantity"
+              name="availableQty"
+              value={formValues.availableQty}
+              onChange={handleInputChange}
+              placeholder="availableQuantity"
+              error={errors.availableQuantity}
             />
             <AadddFormRow
               label="Is Cssd Applicable"
@@ -472,7 +483,7 @@ const AadddFormRow = ({
                 }
               >
                 {option.subCategoryName ||
-                  option.unitOfMeasurementName ||
+                  option.name ||
                   option.companyName ||
                   option.packagingTypeName}
               </option>

@@ -1,18 +1,31 @@
 import React, { useState, useEffect } from "react";
 import "../ListRequest/rdlAddReport.css";
 import { API_BASE_URL } from "../../api/api";
+import ReactQuill from "react-quill";
+import axios from "axios";
 
 function UpdateReportForm({ onClose, selectedRequest }) {
   const [formData, setFormData] = useState({
     indication: selectedRequest?.indication || "",
-    mrixrayctno: selectedRequest?.mrixrayctno || "",
-    selectedSignatory: selectedRequest?.signatureList,
+    mriXRayCTNo: selectedRequest?.mriXRayCTNo || "",
+    signatureList: selectedRequest?.signatureList,
     imagingDate: selectedRequest?.imagingDate || "",
     prescriberId: selectedRequest?.prescriberId || 0,
     notes: selectedRequest?.notes,
   });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
+
+  const [defaultSignatories, setDefaultSignatories] = useState([]);
+
+  const fetchDefaultSignatories = async () => {
+    const response = await axios.get(`${API_BASE_URL}/radiology-signatories`);
+    setDefaultSignatories(response.data);
+  };
+
+  useEffect(() => {
+    fetchDefaultSignatories();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,13 +48,11 @@ function UpdateReportForm({ onClose, selectedRequest }) {
     formDataToSend.append("file", imageFile);
     formDataToSend.append("requisition", JSON.stringify(restData));
 
-    fetch(
-      `${API_BASE_URL}/imaging-requisitions/update/${selectedRequest.imagingId}`,
-      {
-        method: "PUT",
-        body: formDataToSend,
-      }
-    )
+    axios
+      .put(
+        `${API_BASE_URL}/imaging-requisitions/update/${selectedRequest.imagingId}`,
+        formDataToSend
+      )
       .then((response) => {
         if (!response.ok)
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -55,38 +66,33 @@ function UpdateReportForm({ onClose, selectedRequest }) {
     <div className="rDLListRequest-add-report-form">
       <h2>
         Update report of {selectedRequest.imagingItemDTO?.imagingItemName} (
-        {selectedRequest.imagingTypeDTO?.imagingTypeName})
+        {selectedRequest.imagingItemDTO?.imagingType?.imagingTypeName})
       </h2>
       <div className="rDLListRequest-add-report-patient-info">
         {/* Display patient information */}
         <div className="rDLListRequest-add-report-info-row">
           <span>
             <strong>Patient Name:</strong>{" "}
-            {selectedRequest.patientDTO?.firstName ||
-              selectedRequest.newPatientVisitDTO?.firstName}{" "}
-            {selectedRequest.patientDTO?.lastName ||
-              selectedRequest.newPatientVisitDTO?.lastName}
+            {selectedRequest.inPatientDTO?.firstName ||
+              selectedRequest.outPatientDTO?.firstName}{" "}
+            {selectedRequest.inPatientDTO?.lastName ||
+              selectedRequest.outPatientDTO?.lastName}
           </span>
           <span>
             <strong>Prescriber:</strong>{" "}
-            <input
-              type="text"
-              name="prescriberName"
-              value={selectedRequest?.prescriberDTO?.employeeName || "self"}
-              onChange={handleChange}
-            />
+            {selectedRequest?.prescriberDTO?.doctorName || "self"}
           </span>
         </div>
         <div className="rDLListRequest-add-report-info-row">
           <span>
             <strong>Address:</strong>{" "}
-            {selectedRequest.patientDTO?.address ||
-              selectedRequest.newPatientVisitDTO?.address}
+            {selectedRequest.inPatientDTO?.address ||
+              selectedRequest.outPatientDTO?.address}
           </span>
           <span>
             <strong>Phone No:</strong>{" "}
-            {selectedRequest.patientDTO?.phoneNumber ||
-              selectedRequest.newPatientVisitDTO?.phoneNumber}
+            {selectedRequest.inPatientDTO?.phoneNumber ||
+              selectedRequest.outPatientDTO?.phoneNumber}
           </span>
           <span>
             <strong>Req. On:</strong> {selectedRequest.requestedDate}
@@ -125,40 +131,52 @@ function UpdateReportForm({ onClose, selectedRequest }) {
             <strong>MRI/CT/X-ray No:</strong>{" "}
             <input
               type="text"
-              name="mrixrayctno"
+              name="mriXRayCTNo"
               placeholder="MRI/CT/X-ray Number"
-              value={formData?.mrixrayctno}
+              value={formData?.mriXRayCTNo}
               onChange={handleChange}
             />
           </span>
         </div>
       </div>
       <div className="rDLListRequest-add-report-text-editor">
-        <div className="rDLListRequest-add-report-toolbar">
-          {/* Add toolbar buttons here */}
-        </div>
-
-
-        <textarea
-          rows="10"
-          name="notes"
+        <ReactQuill
           className="rDLListRequest-add-report-textarea"
           value={formData?.notes}
+          name={"notes"}
           onChange={handleChange}
-        ></textarea> 
-  
+        />
       </div>
       <div className="rDLListRequest-add-report-form-actions">
+        {formData.signatureList && (
+          <img
+            src={`data:image/jpeg;base64,${formData?.signatureList}`}
+            alt="Signature"
+            style={{ maxWidth: "100%", height: "150px" }}
+          />
+        )}
+        <p>Signature</p>
         <div className="rDLListRequest-add-report-select-signatories">
           <strong>Select Signatories:</strong>
           <select
-            name="selectedSignatory"
-            value={formData.selectedSignatory}
+            name="signatureList"
+            value={formData.signatureList || ""}
             onChange={handleChange}
           >
-            <option>DR. ANN NJOKI THIONG'O</option>
-            <option>Mr. Immam</option>
-            <option>Prof. DR. Suresh</option>
+            <option value="" disabled>
+              Select a signature
+            </option>
+            {defaultSignatories.length > 0 &&
+              defaultSignatories.map((signatories, index) => (
+                <option
+                  key={index}
+                  value={signatories.employeeDTO?.signatureImage}
+                >
+                  {signatories.employeeDTO?.salutation}{" "}
+                  {signatories.employeeDTO?.firstName}{" "}
+                  {signatories.employeeDTO?.lastName}
+                </option>
+              ))}
           </select>
         </div>
         <div className="rDLListRequest-add-report-upload-images">
@@ -175,15 +193,17 @@ function UpdateReportForm({ onClose, selectedRequest }) {
           >
             Choose Files
           </label>
-          {selectedRequest?.uploadFile && (
-            <div className="rDLListRequest-add-report-image-preview">
+          <div className="rDLListRequest-add-report-image-preview">
+            {imagePreview == null ? (
               <img
                 src={`data:image/jpeg;base64,${selectedRequest?.uploadFile}`}
                 alt="Image preview"
                 width={"300px"}
               />
-            </div>
-          )}
+            ) : (
+              <img src={imagePreview} alt="Image preview" />
+            )}
+          </div>
         </div>
         <div className="rDLListRequest-add-report-submit-actions">
           <button

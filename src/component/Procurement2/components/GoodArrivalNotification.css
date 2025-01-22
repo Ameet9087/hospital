@@ -25,13 +25,14 @@
 
 .DonationInterface-date-range {
   display: flex;
+  background-color: white;
   align-items: center;
+  width: 45%;
   margin-bottom: 10px;
+  padding: 5px;
 }
 
-.DonationInterface-date-range input[type="date"] {
-  margin: 0 10px;
-}
+
 
 .DonationInterface-btn-star {
   background-color: var(--button-color);
@@ -54,8 +55,9 @@
 }
 
 .DonationInterface-search-bar input {
-  flex-grow: 1;
+ font-size: var(--font-size);
   margin-right: 5px;
+  padding: 5px;
 }
 
 .DonationInterface-btn-search {
@@ -65,15 +67,17 @@
 
 .DonationInterface-results-info {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+  justify-content: flex-end; /* Aligns content to the right */
+  margin-bottom: 5px;
+  gap: 10px;
 }
+
 
 .DonationInterface-btn-secondary {
   background-color: var(--button-color);
   color: white;
   border: none;
-  padding: 5px 10px;
+  padding: 5px ;
   cursor: pointer;
 }
 

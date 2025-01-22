@@ -109,7 +109,7 @@ const handleSubmit = async (e) => {
     verifiedBy: "", // Adjust as per requirements
     checkedBy: checkedBy,
     remarks: remarks,
-    subStoreId: store, // Using store as subStoreId
+    subStore:{ subStoreId:store}, // Using store as subStoreId
     requisitionItems: rows.map((row) => ({
       id: row.id || null, // Add ID if available
       requiredQuantity: row.requiredQuantity,

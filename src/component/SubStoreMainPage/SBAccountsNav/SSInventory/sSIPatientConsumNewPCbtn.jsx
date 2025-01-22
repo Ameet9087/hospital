@@ -1,5 +1,3 @@
-/* Ajhar Tamboli sSIPatientConsumNewPCbtn.jsx 19-09-24 */
-
 import React, { useState, useEffect } from "react";
 import "../SSInventory/sSIPatientConsumNewPCbtn.css";
 import { useParams } from "react-router-dom";
@@ -11,56 +9,69 @@ const SSIPatientConsumNewPCbtn = ({ onBack }) => {
   const [consumptionDate, setConsumptionDate] = useState("");
   const [patient, setPatient] = useState("");
   const [remark, setRemark] = useState("");
-  const [items, setItems] = useState([]); // All items from API
+  const [patients, setPatients] = useState([]);
+  const [items, setItems] = useState([]);
   const [rows, setRows] = useState([
     {
-      itemId: "",
+      inventoryRequisitionItemId: "",
       itemName: "",
       unit: "",
       availableQty: "",
-      code: "",
       consumedQty: 1,
     },
-  ]); // Table rows with consumption items
+  ]);
 
-  const [units, setUnits] = useState("YourUnitValue"); // Replace with actual unit logic
-  const [consumptionTypeName, setConsumptionTypeName] = useState("YourTypeName"); // Replace with actual type logic
-
-  // Fetch Items on component load
+  // Fetch Patients
   useEffect(() => {
-   const fetchItems = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/items/getAllItem`);
-    if (response.ok) {
-      const data = await response.json();
-      const fetchedItems = Array.isArray(data) ? data : data.items || [];
-      setItems(fetchedItems); // Ensure items is always an array
-    } else {
-      console.error("Failed to fetch items.");
-    }
-  } catch (error) {
+    const fetchPatients = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/inpatients/getAllPatients`);
+        if (response.ok) {
+          const data = await response.json();
+          setPatients(data);
+        } else {
+          console.error("Failed to fetch patients.");
+        }
+      } catch (error) {
+        console.error("Error fetching patients:", error);
+      }
+    };
+    fetchPatients();
+  }, []);
 
-    console.error("Error fetching items:", error);
-  }
-};
-
+  // Fetch Items
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/inventory-requisitions/received?subStoreId=1`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setItems(data);
+        } else {
+          console.error("Failed to fetch items.");
+        }
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      }
+    };
 
     fetchItems();
   }, []);
 
   // Handle table row item selection
-  const handleItemChange = (index, selectedItemName) => {
-    const selectedItem = items.find((item) => item.itemName === selectedItemName);
+  const handleItemChange = (index, selectedItemId) => {
+    const selectedItem = items.find((item) => item.id === parseInt(selectedItemId, 10));
 
     const updatedRows = rows.map((row, i) =>
       i === index
         ? {
             ...row,
-            itemId: selectedItem?.id || "",
-            itemName: selectedItemName,
-            unit: selectedItem?.unitOfMeasurement?.unitOfMeasurementName || "",
-            availableQty: selectedItem?.availableQty || 0,
-            code: selectedItem?.itemCode || "",
+            inventoryRequisitionItemId: selectedItem?.id || "",
+            itemName: selectedItem?.itemName || "",
+            unit: selectedItem?.item.unitOfMeasurement.unitOfMeasurementName || "",
+            availableQty: selectedItem?.dispatchQuantity || "",
           }
         : row
     );
@@ -70,48 +81,47 @@ const SSIPatientConsumNewPCbtn = ({ onBack }) => {
 
   const handleSave = async () => {
     try {
-      // Prepare the payload for the backend
-      const consumptionData = rows.map((row) => ({
-        hospitalNo: "h112",
-        consumptionDate: consumptionDate,
-        itemName: row.itemName,
-        availableQty: row.availableQty,
-        patientName: patient,
-        consumedQty: row.consumedQty,
-        unit: row.unit,
-        itemCode: row.code,
-        consumptionTypeName,
-        enteredBy: "mr.admin",
+      const payload = {
+        patientId: parseInt(patient, 10),
+        consumptionDate,
+        enteredBy: "Dr. John Doe", // Replace with dynamic user
         remark,
-        substoreName: store,
-      }));
+        substoreId: parseInt(store, 10),
+        items: rows.map((row) => ({
+          inventoryRequisitionItemId: row.inventoryRequisitionItemId,
+          consumedQty: row.consumedQty,
+        })),
+      };
 
-      // Save each consumption entry
-      for (const data of consumptionData) {
-        await fetch(`${API_BASE_URL}/inventory-consumption/add`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
+      const response = await fetch(`${API_BASE_URL}/patient-consumption/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        alert("Consumption saved successfully!");
+      } else {
+        alert("Failed to save consumption.");
       }
-
-      alert("Saved successfully!");
     } catch (error) {
-      console.error("Error:", error);
-      alert("Failed to save!");
+      console.error("Error saving consumption:", error);
+      alert("An error occurred while saving.");
     }
-  };
-
-  const handleDiscard = () => {
-    alert("Discarded!");
   };
 
   const addNewRow = () => {
     setRows([
       ...rows,
-      { itemId: "", itemName: "", unit: "", availableQty: "", code: "", consumedQty: 1 },
+      {
+        inventoryRequisitionItemId: "",
+        itemName: "",
+        unit: "",
+        availableQty: "",
+        consumedQty: 1,
+      },
     ]);
   };
 
@@ -121,7 +131,7 @@ const SSIPatientConsumNewPCbtn = ({ onBack }) => {
   };
 
   return (
-    <div >
+    <div>
       <h2 className="sSIPatientConsumNewPCbtn-title">
         <i className="fa-solid fa-star-of-life"></i> Consumption Entry
       </h2>
@@ -133,26 +143,28 @@ const SSIPatientConsumNewPCbtn = ({ onBack }) => {
           value={consumptionDate}
           onChange={(e) => setConsumptionDate(e.target.value)}
         />
-        
       </div>
 
       <div className="sSIPatientConsumNewPCbtn-form-section">
         <label>Select Patient *</label>
-        <input
-          type="text"
-          placeholder="Search By HospitalNo, Patient Name"
+        <select
           value={patient}
           onChange={(e) => setPatient(e.target.value)}
-        />
+        >
+          <option value="">Select Patient</option>
+          {patients.map((p) => (
+            <option key={p.inPatientId} value={p.inPatientId}>
+              {p?.patient?.uhid}/({p?.patient?.firstName} {p?.patient?.middleName} {p?.patient?.lastName})
+            </option>
+          ))}
+        </select>
       </div>
 
-      {/* Table Section */}
       <div className="sSIPatientConsumNewPCbtn-table-section">
         <table className="sSIPatientConsumConsumEntry-table">
           <thead>
             <tr>
               <th>Item Name</th>
-              <th>Code</th>
               <th>Unit</th>
               <th>Available Qty.</th>
               <th>Consumed Qty.</th>
@@ -165,19 +177,16 @@ const SSIPatientConsumNewPCbtn = ({ onBack }) => {
                 <td>
                   <select
                     className="sSSIInvenReqCreateReq-table-select"
-                    value={row.itemName}
+                    value={row.inventoryRequisitionItemId}
                     onChange={(e) => handleItemChange(index, e.target.value)}
                   >
                     <option value="">Select Item</option>
                     {items.map((item) => (
-                      <option key={item.id} value={item.itemName}>
-                        {item.itemName}
+                      <option key={item.id} value={item.id}>
+                        {item.item.itemName}
                       </option>
                     ))}
                   </select>
-                </td>
-                <td>
-                  <input type="text" value={row.code} readOnly />
                 </td>
                 <td>
                   <input type="text" value={row.unit} readOnly />
@@ -210,29 +219,27 @@ const SSIPatientConsumNewPCbtn = ({ onBack }) => {
         </table>
       </div>
 
-      {/* Remark Section */}
       <div className="sSIPatientConsumNewPCbtn-remark-section">
-        <div className="sSIPatientConsumNewPCbtn-remark">
-          <label>Remark:</label>
-          <textarea
-            value={remark}
-            onChange={(e) => setRemark(e.target.value)}
-          />
-        </div>
-        <div className="sSIPatientConsumNewPCbtn-button-section">
-          <button
-            className="sSIPatientConsumNewPCbtn-save-btn"
-            onClick={handleSave}
-          >
-            Save
-          </button>
-          <button
-            className="sSIPatientConsumNewPCbtn-discard-btn"
-            onClick={handleDiscard}
-          >
-            Discard
-          </button>
-        </div>
+        <label>Remark:</label>
+        <textarea
+          value={remark}
+          onChange={(e) => setRemark(e.target.value)}
+        />
+      </div>
+
+      <div className="sSIPatientConsumNewPCbtn-button-section">
+        <button
+          className="sSIPatientConsumNewPCbtn-save-btn"
+          onClick={handleSave}
+        >
+          Save
+        </button>
+        <button
+          className="sSIPatientConsumNewPCbtn-discard-btn"
+          onClick={() => alert("Discarded!")}
+        >
+          Discard
+        </button>
       </div>
     </div>
   );

@@ -20,14 +20,14 @@ const MaternityHeader = () => {
       >
         Maternity List
       </NavLink>
-      <NavLink 
+      {/* <NavLink 
         to="/maternity/paymentsreports" 
         className={`maternity-header-button ${location.pathname === '/maternity/paymentsreports' ? 'active' : ''}`}
       >
         Payments
 
-      </NavLink>
-      <NavLink to="/maternity/antenatalcare" className={`maternity-header-button ${location.pathname.startsWith('/antenatalcare') ? 'active' : ''}`} activeClassName="active">Antenatal Care</NavLink>     
+      </NavLink> */}
+      {/* <NavLink to="/maternity/antenatalcare" className={`maternity-header-button ${location.pathname.startsWith('/antenatalcare') ? 'active' : ''}`} activeClassName="active">Antenatal Care</NavLink>     
                   
       <NavLink to="/maternity/postnatalcare" className={`maternity-header-button ${location.pathname.startsWith('/postnatalcare') ? 'active' : ''}`} activeClassName="active">Postnatal Care</NavLink>
                     
@@ -36,19 +36,21 @@ const MaternityHeader = () => {
       <NavLink to="/maternity/breastfeedingsupport" className={`maternity-header-button ${location.pathname.startsWith('/breastfeedingsupport') ? 'active' : ''}`} activeClassName="active">Breastfeeding Support</NavLink>
                
       <NavLink to="/maternity/familyplanningservice" className={`maternity-header-button ${location.pathname.startsWith('/familyplanningservice') ? 'active' : ''}`} activeClassName="active">Family Planning Service</NavLink>
-    </div>
+   
+   */}
+      </div> 
 
-{/* <div className="content">
+<div className="content">
 <Routes>
   <Route path="/maternitylist" element={<MaternityList />} />
-  <Route path="/paymentsreports" element={<Payment />} />
+  {/* <Route path="/paymentsreports" element={<Payment />} /> */}
   <Route path="/antenatalcare" element={<AntenatalCare />} />
   <Route path="/postnatalcare" element={<PostnatalCareManagement />} />
   <Route path="/laborroommanagement" element={<LabourStaffManagement />} />
   <Route path="/breastfeedingsupport" element={<BreastfeedingSupportManagement />} />
   <Route path="/familyplanningservice" element={<FamilyPlanningSupportManagement />} />
 </Routes>
-</div> */}
+</div>
 </>
 
   );

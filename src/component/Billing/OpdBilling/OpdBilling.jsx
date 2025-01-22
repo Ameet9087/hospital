@@ -1,83 +1,205 @@
-import React, { useState, useRef, useEffect } from 'react';
-import './OpdBilling.css'
-import PopupTable from './PopupTable';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
-import { API_BASE_URL } from '../../api/api';
-import axios from 'axios';
+import React, { useState, useRef, useEffect } from "react";
+import "./OpdBilling.css";
+import PopupTable from "./PopupTable";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { API_BASE_URL } from "../../api/api";
+import axios from "axios";
 
 const OpdBilling = () => {
   const [opdPatients, setOpdPatients] = useState([]);
-  const [selectedTab, setSelectedTab] = useState('services');
+  const [selectedTab, setSelectedTab] = useState("testGrid");
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [advancesTableRows, setAdvancesTableRows] = useState([]);
-  const [activePopup, setActivePopup] = useState("")
-  const [selectedPatient, setSelectedPatient] = useState(null)
+  const [activePopup, setActivePopup] = useState("");
+  const [selectedPatient, setSelectedPatient] = useState();
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState("");
   const [serviceDetails, setServiceDetails] = useState([]);
-const [selectedService, setSelectedService] = useState([]);
-  const [fileName, setFileName] = useState("No file chosen")
+  const [selectedService, setSelectedService] = useState([]);
+  const [fileName, setFileName] = useState("No file chosen");
   const [overallDiscPercent, setOverallDiscPercent] = useState(0);
   const [overallDiscAmt, setOverallDiscAmt] = useState(0);
   const [finalDiscountAmt, setFinalDiscountAmt] = useState(0);
   const [discountPercentage, setDiscountPercentage] = useState(0); // For Less Disc% on total
-const [totalAmount, setTotalAmount] = useState(0); // For Total Amt
-const [discountAmount, setDiscountAmount] = useState(0); // For Less Disc Amt
-const [netAmount, setNetAmount] = useState(0); 
-const [appointments, setAppointments] = useState([]);
-  const identification = "someValue"; 
-  const [formData,setFormData] = useState({
-    "patientCategory": "",
-    "finanacialDetails": "",
-    "patientType": "",
-    "totalAmount": "",
-    "financialDiscAmt": "",
-    "paidAmt": "",
-    "creditAmt": "",
-    "currBalance": "",
-    "discReason": "",
-    "discAuthorization": "",
-    "remarks": "",
-    "lastConsultDoctor": "",
-    "lastConsultDate": "",
-    "lastConsultFee": "",
-    "opBalanceAmount": ""
-  }
-  )
+  const [totalAmount, setTotalAmount] = useState(0); // For Total Amt
+  const [discountAmount, setDiscountAmount] = useState(0); // For Less Disc Amt
+  const [netAmount, setNetAmount] = useState(0);
+  const [appointments, setAppointments] = useState([]);
+  const identification = "someValue";
+  const [outPatientId, setOutPatientId] = useState();
+  const [doctorservice, setdoctorservice] = useState([]);
+  const [patientType, setPatientType] = useState("");
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setFileName(file ? file.name : "No file chosen");
+  const fetchDoctorService = async (outPatientId) => {
+    try {
+      const response = await fetch(
+        `${API_BASE_URL}/services/out-patient/${outPatientId}`
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      return data; // Return the fetched data
+    } catch (error) {
+      console.error("Error fetching doctor services:", error);
+      return []; // Return an empty array or handle error gracefully
+    }
+  };
+  // console.log("seeeeeee",selectedPatient.outPatientId);
+
+  const [formData, setFormData] = useState({
+    patientCategory: "",
+    finanacialDetails: "",
+    patientType: "",
+    totalAmount: "",
+    financialDiscAmt: "",
+    paidAmt: "",
+    creditAmt: "",
+    currBalance: "",
+    discReason: "",
+    discAuthorization: "",
+    remarks: "",
+    lastConsultDoctor: "",
+    lastConsultDate: "",
+    lastConsultFee: "",
+    opBalanceAmount: "",
+  });
+
+  const [newpatientformData, newpatientsetFormData] = useState({
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    gender: "",
+    age: "",
+    ageUnit: "Years",
+    maritalStatus: "",
+    relation: "",
+    adharCardId: "",
+    relationName: "",
+    address: "",
+    mobileNumber: "",
+    emailId: "",
+    patientCategory: "",
+    materialStatus: "",
+    relationWithPatient: "",
+    referralType: "",
+    pkgType: "",
+  });
+
+  const [selectedPaymentMode, setSelectedPaymentMode] = React.useState("");
+  const [paymentDetails, setPaymentDetails] = React.useState({});
+  const [addedPayments, setAddedPayments] = React.useState([]);
+  const [editableRow, setEditableRow] = React.useState(null);
+  const [editingPayment, setEditingPayment] = React.useState({});
+  const [totalPaidAmount, setTotalPaidAmount] = useState(0); // State to track total paid amount
+  const [currentBalance, setCurrentBalance] = useState(totalAmount);
+
+  const calculateBalance = (total, paid) => {
+    const balance = total - paid;
+    console.log("balance", balance);
+    setCurrentBalance(balance >= 0 ? balance : 0); // Prevent negative balance
   };
 
+  const calculateTotalPaidAmount = (payments) => {
+    const total = payments.reduce(
+      (sum, payment) => sum + parseFloat(payment.amount || 0),
+      0
+    );
+    setTotalPaidAmount(total.toFixed(2));
+    // Ensure fixed precision
+  };
 
-  
+  console.log("Total paid amoun", totalPaidAmount);
+  const handleAddPayment = (
+    paymentMode = "Cash",
+    paymentAmount = 0,
+    paymentDetails = {}
+  ) => {
+    if (!paymentAmount || parseFloat(paymentAmount) <= 0) {
+      alert("Please enter a valid amount.");
+      return;
+    }
+
+    const newPayment = {
+      mode: paymentMode,
+      amount: parseFloat(paymentAmount).toFixed(2),
+      details: paymentDetails,
+    };
+
+    const updatedPayments = [...addedPayments, newPayment];
+    setAddedPayments(updatedPayments);
+    calculateTotalPaidAmount(updatedPayments); // Update total paid amount
+    setSelectedPaymentMode(""); // Reset payment mode
+    setPaymentDetails({});
+    //calculateBalance(totalAmount,totalPaidAmount);
+  };
+
+  const handleEditPayment = (index) => {
+    setEditableRow(index);
+    setEditingPayment({ ...addedPayments[index].details });
+  };
+
+  const handleSaveEdit = (index) => {
+    const updatedPayments = [...addedPayments];
+    updatedPayments[index] = {
+      ...updatedPayments[index],
+      details: editingPayment,
+      amount: parseFloat(editingPayment.amount).toFixed(2), // Update amount in payment
+    };
+    setAddedPayments(updatedPayments);
+    calculateTotalPaidAmount(updatedPayments); // Update total paid amount
+    setEditableRow(null);
+    setEditingPayment({});
+  };
+
+  useEffect(() => {
+    calculateBalance(totalAmount, totalPaidAmount);
+  }, [totalPaidAmount, totalAmount]);
+
+  const handleRemovePayment = (index) => {
+    const updatedPayments = addedPayments.filter((_, i) => i !== index);
+    setAddedPayments(updatedPayments);
+    calculateTotalPaidAmount(updatedPayments); // Update total paid amount
+  };
+
   // State to manage table rows
- const [testGridTableRowsableRows, setTestGridTableRowsableRows] = useState([
-  { sn:1, code: '', serviceName: '', doctorName: '', rate: '', qty: '', totalAmt: '', lessDisc: '', discAmt: '', netAmt: '', emerg: '', emergAmt: '' },
-]);
-const [identificationTableRows, setIdentificationTableRows] = useState([
-  { sn: 1, Date: '', dCode: '' },
-]);
+  const [testGridTableRowsableRows, setTestGridTableRowsableRows] = useState([
+    {
+      sn: 1,
+      serviceDetailsId: "",
+      code: "",
+      serviceName: "",
+      doctorName: "",
+      rate: "",
+      qty: "",
+      totalAmt: "",
+      lessDisc: "",
+      discAmt: "",
+      netAmt: "",
+      emerg: "",
+      emergAmt: "",
+    },
+  ]);
+  const [identificationTableRows, setIdentificationTableRows] = useState([
+    { sn: 1, Date: "", dCode: "" },
+  ]);
 
-useEffect(() => {
-  // Calculate the total amount from all rows
-  const total = testGridTableRowsableRows.reduce(
-    (acc, row) => acc + (row.totalAmt || 0),
-    0
-  );
-  setTotalAmount(total);
+  useEffect(() => {
+    // Calculate the total amount from all rows
+    const total = testGridTableRowsableRows.reduce(
+      (acc, row) => acc + (row.totalAmt || 0),
+      0
+    );
+    setTotalAmount(total);
 
-  // Calculate the discount and net amount
-  const discount = (total * discountPercentage) / 100;
-  setDiscountAmount(discount);
-  setNetAmount(total - discount);
-}, [testGridTableRowsableRows, discountPercentage]);
+    // Calculate the discount and net amount
+    const discount = (total * discountPercentage) / 100;
+    setDiscountAmount(discount);
+    setNetAmount(total - discount);
+  }, [testGridTableRowsableRows, discountPercentage]);
 
-
-
-const handleOverallDiscountPercentChange = (e) => {
+  const handleOverallDiscountPercentChange = (e) => {
     const percent = parseFloat(e.target.value) || 0;
     setOverallDiscPercent(percent);
 
@@ -121,25 +243,25 @@ const handleOverallDiscountPercentChange = (e) => {
     });
   };
 
-  
-  const [paymentDetailsTableRows, setpaymentDetailsTableRows] = useState([{
-    sn: 1,
-    head: "",
-    amount: ""
-  }]);
+  const [paymentDetailsTableRows, setpaymentDetailsTableRows] = useState([
+    {
+      sn: 1,
+      head: "",
+      amount: "",
+    },
+  ]);
   // Function to delete a row from the appropriate table
   const handleDeleteRow = (type, index) => {
-  if (type === 'package') {
-    setTestGridTableRowsableRows((prevRows) =>
-      prevRows.filter((_, rowIndex) => rowIndex !== index)
-    );
-  } else if (type === 'identification') {
-    setIdentificationTableRows((prevRows) =>
-      prevRows.filter((_, rowIndex) => rowIndex !== index)
-    );
-  }
-};
-
+    if (type === "package") {
+      setTestGridTableRowsableRows((prevRows) =>
+        prevRows.filter((_, rowIndex) => rowIndex !== index)
+      );
+    } else if (type === "identification") {
+      setIdentificationTableRows((prevRows) =>
+        prevRows.filter((_, rowIndex) => rowIndex !== index)
+      );
+    }
+  };
 
   useEffect(() => {
     fetchOpdData();
@@ -147,117 +269,190 @@ const handleOverallDiscountPercentChange = (e) => {
 
   const getPopupData = () => {
     if (activePopup === "patient") {
-      return { columns: ["uhid", "firstName", "lastName"], data: opdPatients };
-    }
-    else if (activePopup === "services") {
-        return { columns: ["serviceName", "rates"], data: serviceDetails };
-      } 
-    else if (activePopup === "mobilenumber") {
-      return { columns: ["outPatientId", "phoneNumber"], data: opdPatients };
+      return {
+        columns: ["uhid", "firstName", "lastName", "mobileNumber"],
+        data: opdPatients.map((item) => ({
+          uhid: item.uhid,
+          firstName: item.firstName,
+          lastName: item.lastName,
+          mobileNumber: item.mobileNumber,
+          originalObject: item,
+        })),
+      };
+    } else if (activePopup === "services") {
+      return { columns: ["serviceName", "rates"], data: serviceDetails };
+    } else if (activePopup === "mobilenumber") {
+      return {
+        columns: ["patientRegistrationId", "mobileNumber", "patientName"],
+        data: opdPatients.map((item) => ({
+          patientRegistrationId: item.patientRegistrationId,
+          mobileNumber: item.mobileNumber,
+          relationName: item.relationName,
+          patientName: item.firstName + " " + item.lastName,
+          originalObject: item,
+        })),
+      };
     } else {
       return { columns: [], data: [] };
     }
   };
+
   const { columns, data } = getPopupData();
 
+  const handleSelect = async (data) => {
 
-
-const handleSelect = async (data) => {
+    console.log("ssssssssssssss",data)
     if (activePopup === "patient" || activePopup === "mobilenumber") {
-      setSelectedPatient(data);
-      console.log("Selected patient:", data);
-    
+      setSelectedPatient(data.originalObject);
+      
+      console.log("Registration Id", data.patientRegistrationId);
+
       try {
-        // Fetch appointments based on the selected patient and use the returned data
-        const fetchedAppointments = await fetchAppointmentsByOutPatientId(data.outPatientId);
-        console.log("Appointments fetched:", fetchedAppointments);
-    
-        if (fetchedAppointments && fetchedAppointments.length > 0) {
-          const doctorId = fetchedAppointments[0].addDoctor?.doctorId;
-          if (doctorId) {
-            console.log("Doctor ID:", doctorId);
-    
-            // Fetch doctor details using the doctorId
-            const doctorDetails = await fetchDoctorDetails(doctorId);
-            
-    
-            if (doctorDetails) {
-              const generalOpdFee = doctorDetails.orgDoctorFees?.[0]?.generalOpdFee || "N/A";
-              console.log("Fetched Doctor Details:", doctorDetails);
-    
-              // Prepare the new row
-              const newRow = {
-                sn: 0, // This will be dynamically set
-                serviceType: "",
-                code: "",
-                serviceName: "Consultation",
-                doctorName: doctorDetails.doctorName,
-                rate: generalOpdFee,
-                qty: 1,
-                totalAmt: generalOpdFee,
-                lessDisc: "",
-                discAmt: "",
-                netAmt: generalOpdFee,
-                emerg: "",
-                emergAmt: "",
-              };
-            
-              setTestGridTableRowsableRows((prevRows) => {
-                // Find an empty row to update
-                const emptyRowIndex = prevRows.findIndex(
-                  (row) => !row.code && !row.serviceName && !row.doctorName
-                );
-            
-                if (emptyRowIndex !== -1) {
-                  // Update the existing empty row
-                  const updatedRows = [...prevRows];
-                  updatedRows[emptyRowIndex] = {
-                    ...updatedRows[emptyRowIndex],
-                    ...newRow, // Update only the necessary fields
-                    sn: updatedRows[emptyRowIndex].sn || emptyRowIndex + 1, // Preserve the serial number
-                  };
-                  console.log("Updated existing empty row:", updatedRows);
-                  return updatedRows;
-                }
-            
-                // If no empty row, add a new row
-                const updatedRows = [
-                  ...prevRows,
+        const fetchedAppointments = await fetchunpaidAppointmentsByOutPatientId(
+          data?.originalObject?.patientRegistrationId
+        );
+
+        console.log("apppppppppppp",fetchedAppointments.outPatientId)
+        setOutPatientId(fetchedAppointments.outPatientId);
+
+        const doctorId = fetchedAppointments.addDoctor?.doctorId;
+        if (doctorId) {
+          const doctorDetails = await fetchDoctorDetails(doctorId);
+          console.log("Doctor Details Id +++++++++++", doctorDetails);
+
+          const generalOpdFee =
+            doctorDetails?.orgDoctorFees?.[0]?.generalOpdFee || 0;
+
+          // Check if fees are unpaid before creating the row
+          if (fetchedAppointments.feespaid !=="yes")    {
+            const doctorRow = {
+              sn: 0,
+              serviceType: "Doctor",
+              code: "",
+              serviceName: "Consultation",
+              doctorName: doctorDetails.doctorName,
+              rate: generalOpdFee,
+              qty: 1,
+              totalAmt: generalOpdFee,
+              lessDisc: "",
+              discAmt: "",
+              netAmt: generalOpdFee,
+              emerg: "",
+              emergAmt: "",
+              feePending: "Yes",
+            };
+
+            setTestGridTableRowsableRows((prevRows) => {
+              const validRows = prevRows.filter(
+                (row) => row.code || row.serviceName || row.doctorName
+              );
+
+              const isDuplicate = validRows.some(
+                (row) =>
+                  row.serviceName === doctorRow.serviceName &&
+                  row.code === doctorRow.code
+              );
+
+              if (!isDuplicate) {
+                return [
+                  ...validRows,
                   {
-                    ...newRow,
-                    sn: prevRows.length + 1, // Set the serial number
+                    ...doctorRow,
+                    sn: validRows.length + 1,
                   },
                 ];
-                console.log("Added a new row:", updatedRows);
-                return updatedRows;
-              });
-            } else {
-              console.error("Doctor details not found");
-            }
+              } else {
+                console.log(
+                  "Duplicate row detected, skipping addition for doctor row."
+                );
+                return validRows;
+              }
+            });
           } else {
-            console.error("Doctor ID not found in appointment");
+            console.log("Fees already paid, skipping addition.");
           }
-        } else {
-          console.error("No appointments found for the patient");
         }
+
+        const doctorServices = await fetchDoctorService(
+          fetchedAppointments.outPatientId
+        );
+        console.log("Fetched doctor services:", doctorServices);
+
+        doctorServices
+          .filter((service) => service.payStatus === "no" )
+          .forEach((service) => {
+            const serviceRow = {
+              sn: 0,
+              serviceType: "Doctor",
+              serviceDetailsId: service.serviceId,
+              serviceName: service.serviceName,
+              doctorName: "N/A",
+              rate: service.rate,
+              qty: 1,
+              totalAmt: service.rate,
+              lessDisc: "",
+              discAmt: "",
+              netAmt: service.rate,
+              emerg: "",
+              emergAmt: "",
+              feePending: "Yes",
+            };
+
+            setTestGridTableRowsableRows((prevRows) => {
+              const validRows = prevRows.filter(
+                (row) => row.code || row.serviceName || row.doctorName
+              );
+
+              const isDuplicate = validRows.some(
+                (row) =>
+                  row.serviceName === serviceRow.serviceName &&
+                  row.serviceDetailsId === serviceRow.serviceDetailsId
+              );
+
+              if (!isDuplicate) {
+                return [
+                  ...validRows,
+                  {
+                    ...serviceRow,
+                    sn: validRows.length + 1,
+                  },
+                ];
+              } else {
+                console.log(
+                  "Duplicate row detected, skipping addition for service row."
+                );
+                return validRows;
+              }
+            });
+          });
       } catch (error) {
-        console.error("Error in handleSelect:", error);
+        console.error("Error fetching appointments or doctor details:", error);
       }
-    }
-     else if (activePopup === "services") {
+    } else if (activePopup === "services") {
       setSelectedService(data);
-  
+
       setTestGridTableRowsableRows((prevRows) => {
-        // Find an empty row to update
+        const isDuplicate = prevRows.some(
+          (row) =>
+            row.code === data.serviceCode &&
+            row.serviceName === data.serviceName &&
+            row.serviceDetailsId === data.serviceDetailsId
+        );
+
+        if (isDuplicate) {
+          console.log("Duplicate service detected, skipping addition");
+          return prevRows;
+        }
+
         const emptyRowIndex = prevRows.findIndex(
           (row) => !row.code && !row.serviceName
         );
-  
+
         if (emptyRowIndex !== -1) {
-          // Update the existing empty row
           const updatedRows = [...prevRows];
           updatedRows[emptyRowIndex] = {
             ...updatedRows[emptyRowIndex],
+            serviceDetailsId: data.serviceDetailsId,
             code: data.serviceCode,
             serviceName: data.serviceName,
             doctorName: "",
@@ -272,14 +467,14 @@ const handleSelect = async (data) => {
           };
           return updatedRows;
         }
-  
-        // If no empty row, add as a new row
-        return [
+
+        const updatedRows = [
           ...prevRows,
           {
             sn: prevRows.length + 1,
             code: data.serviceCode,
             serviceName: data.serviceName,
+            serviceDetailsId: data.serviceDetailsId,
             doctorName: "",
             rate: data.rates[0] || "",
             qty: 1,
@@ -291,94 +486,184 @@ const handleSelect = async (data) => {
             emergAmt: "",
           },
         ];
+        return updatedRows;
       });
-      console.log("selected service++++++++++++", selectedService);
-    } else if (activePopup === "mobilenumber") {
-      setSelectedPatient(data);
     }
-  
-    console.log("Selected Data:", data);
     setActivePopup(null); // Close the popup after selection
   };
 
-const fetchDoctorDetails = async (doctorId) => { 
+  // -------------------------------------------------------------------------------------------------------------------
+
+  const handleSubmit = async () => {
+    // Construct the payload with updated fields
+    console.log(
+      "================================================",
+      testGridTableRowsableRows
+    );
+    const payload = {
+      patientCategory: formData.patientCategory,
+      patientType: formData.patientType,
+      totalAmount: parseFloat(formData.totalAmount || 0),
+      financialDiscAmt: parseFloat(formData.financialDiscAmt || 0),
+      paidAmt: parseFloat(formData.paidAmt || 0),
+      creditAmt: parseFloat(formData.creditAmt || 0),
+      currBalance: parseFloat(formData.currBalance || 0),
+      discReason: formData.discReason,
+      discAuthorization: formData.discAuthorization,
+      remarks: formData.remarks,
+      lastConsultDoctor: formData.lastConsultDoctor,
+      lastConsultDate: formData.lastConsultDate,
+      lastConsultFee: parseFloat(formData.lastConsultFee || 0),
+      opBalanceAmount: parseFloat(formData.opBalanceAmount || 0),
+      outPatientDTO: {
+        outPatientId: outPatientId,
+        financialDetaildto: {
+          id: selectedPatient.financialDetails?.id || null,
+          totalAmount: parseFloat(
+            selectedPatient.financialDetails?.totalAmount || 0
+          ),
+          lessDiscount: parseFloat(
+            selectedPatient.financialDetails?.lessDiscount || 0
+          ),
+          netAmount: parseFloat(
+            selectedPatient.financialDetails?.netAmount || 0
+          ),
+          paidAmount: parseFloat(totalPaidAmount || 0),
+          dueAmount: parseFloat(currentBalance || 0),
+          totalDoctorShareAmount: parseFloat(
+            selectedPatient.financialDetails?.totalDoctorShareAmount || 0
+          ),
+          totalHospitalAmount: parseFloat(
+            selectedPatient.financialDetails?.totalHospitalAmount || 0
+          ),
+        },
+      },
+
+      paymentModeDTO: addedPayments.map((payment) => ({
+        paymentMode: payment.mode,
+        amount: parseFloat(payment.details.amount || 0),
+        chqDt: payment.details.checkNumber
+          ? parseFloat(payment.details.checkNumber)
+          : null,
+        cardNumber: payment.details.cardNumber
+          ? parseFloat(payment.details.cardNumber)
+          : null,
+      })),
+      testGridOpdBillDTO: testGridTableRowsableRows.map((row) => ({
+        serviceDetailsId: row.serviceDetailsId || null,
+        serviceName: row.serviceName,
+        rate: row.rate,
+        quantity: row.qty,
+        netAmount: row.totalAmt,
+        discountAmount: row.discAmt,
+        netAmount: row.netAmt,
+      })),
+      doctorservice: testGridTableRowsableRows
+        .filter((row) => row.serviceType === "Doctor")
+        .map((row) => ({
+          serviceId: row.serviceDetailsId,
+          serviceNames: row.serviceName,
+        })),
+    };
+    console.log("Payload------:", payload);
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/opdBilling`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status === 200) {
+        alert("Data submitted successfully!");
+        console.log("Response:", response.data);
+      } else {
+        alert("Failed to submit data. Please try again.");
+        console.error("Response status:", response.status);
+      }
+    } catch (error) {
+      console.error("Error submitting data:", error);
+      alert(
+        "An error occurred while submitting data. Please check the console."
+      );
+    }
+  };
+
+  const fetchDoctorDetails = async (doctorId) => {
     console.log("Fetching doctor details", doctorId);
     try {
       const response = await fetch(`${API_BASE_URL}/doctors/${doctorId}`);
       if (!response.ok) {
-        throw new Error('Failed to fetch doctor details');
+        throw new Error("Failed to fetch doctor details");
       }
       const doctorData = await response.json();
-      setSelectedDoctor(doctorData || 'N/A');
+      setSelectedDoctor(doctorData || "N/A");
       return doctorData; // Explicitly return the fetched data
     } catch (error) {
-      console.error('Error fetching doctor details:', error);
+      console.error("Error fetching doctor details:", error);
       return null; // Return null in case of an error
- }
- };
+    }
+  };
 
-
-const fetchAppointmentsByOutPatientId = async (outPatientId) => {
-    console.log('Fetching appointment id: ' + outPatientId);
+  const fetchunpaidAppointmentsByOutPatientId = async (outPatientId) => {
+    console.log("Fetching appointment id: " + outPatientId);
     try {
-      const response = await axios.get(`${API_BASE_URL}/appointments/outpatient/list/${outPatientId}`);
+      const response = await axios.get(
+        `${API_BASE_URL}/out-patient/${outPatientId}/today`
+      );
       console.log("Fetched Appointments:", response.data);
       setAppointments(response.data); // Update the state
       return response.data; // Explicitly return the data
     } catch (error) {
-      console.error('Error fetching appointments:', error);
+      console.error("Error fetching appointments:", error);
       return []; // Return an empty array on error
- }
-};
-
-const handleAddRow = (type) => {
-  if (type === 'package') {
-    setTestGridTableRowsableRows((prevRows) => [
-      ...prevRows,
-      {
-        sn: prevRows.length + 1,
-        code: '',
-        serviceName: '',
-        doctorName: '',
-        rate: '',
-        qty: '',
-        totalAmt: '',
-        lessDisc: '',
-        discAmt: '',
-        netAmt: '',
-        emerg: '',
-        emergAmt: '',
-      
-      },
-    ]);
-  } else if (type === 'identification') {
-    setIdentificationTableRows((prevRows) => [
-      ...prevRows,
-      {
-        sn: prevRows.length + 1,
-        Date: '',
-        dCode: '',
-      },
-    ]);
-  }
-};
-
-
-  const fetchAllBedsAndRoomByPaytype = async (id) => {
-    const response = await axios.get(
-      `${API_BASE_URL}/rooms/available-by-paytype/${id}`
-    );
-    return response.data;
+    }
   };
+
+  const handleAddRow = (type) => {
+    if (type === "package") {
+      setTestGridTableRowsableRows((prevRows) => [
+        ...prevRows,
+        {
+          sn: prevRows.length + 1,
+          code: "",
+          serviceName: "",
+          doctorName: "",
+          rate: "",
+          qty: "",
+          totalAmt: "",
+          lessDisc: "",
+          discAmt: "",
+          netAmt: "",
+          emerg: "",
+          emergAmt: "",
+        },
+      ]);
+    } else if (type === "identification") {
+      setIdentificationTableRows((prevRows) => [
+        ...prevRows,
+        {
+          sn: prevRows.length + 1,
+          Date: "",
+          dCode: "",
+        },
+      ]);
+    }
+  };
+
   const fetchOpdData = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/out-patient`);
+      const response = await fetch(
+        `
+        ${API_BASE_URL}/patient-register/all
+        `
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
       const data = await response.json();
       setOpdPatients(data);
-      console.log(data);
+      console.log("data++", data);
     } catch (err) {
       console.error(err);
     }
@@ -386,7 +671,9 @@ const handleAddRow = (type) => {
 
   const fetchServiceDetails = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/service-details/sorted-map`);
+      const response = await fetch(
+        `${API_BASE_URL}/service-details/sorted-map`
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch service details");
       }
@@ -416,14 +703,15 @@ const handleAddRow = (type) => {
     fetchServiceDetails();
   }, []);
 
+  console.log("selext dsads", selectedPatient);
   const renderTable = () => {
     switch (selectedTab) {
-      case 'testGrid':
+      case "testGrid":
         return (
-          <div className="services-table">
+          <div className="testgrid-table">
             <table ref={tableRef}>
               <thead>
-                <tr >
+                <tr>
                   {[
                     "Actions",
                     "SN",
@@ -439,8 +727,6 @@ const handleAddRow = (type) => {
                     "Net Amt",
                     "Emerg",
                     "Emerg Amt",
-                  
-
                   ].map((header, index) => (
                     <th
                       key={index}
@@ -462,207 +748,147 @@ const handleAddRow = (type) => {
                 </tr>
               </thead>
               <tbody>
-  {testGridTableRowsableRows.map((row, index) => (
-    <tr key={index}>
-      <td>
-        <div className="table-actions">
-          <button
-            className="billing-opd-com-add-btn"
-            onClick={() => handleAddRow("package")}
-          >
-            Add
-          </button>
-          <button
-            className="billing-opd-com-del-btn"
-            onClick={() => handleDeleteRow("package", index)}
-            disabled={testGridTableRowsableRows.length <= 1}
-          >
-            Del
-          </button>
-        </div>
-      </td>
-      <td>{row.sn}</td>
-      <td>
-        <input type="text" />
-        <button
-          className="billing-opd-com-magnifier-btn"
-          onClick={() => setActivePopup("services")}
-        >
-          🔍
-        </button>
-      </td>
-      <td>{row.code}</td>
-      <td>{row.serviceName}</td>
-      <td>{row.doctorName}</td>
-      <td>{row.rate}</td>
-      <td>
-        <input
-          type="number"
-          value={row.qty}
-          onChange={(e) => {
-            const qty = parseInt(e.target.value, 10) || 0;
-            setTestGridTableRowsableRows((prevRows) => {
-              const updatedRows = [...prevRows];
-              updatedRows[index].qty = qty;
-              updatedRows[index].totalAmt = (row.rate || 0) * qty;
-              updatedRows[index].netAmt =
-                updatedRows[index].totalAmt -
-                (updatedRows[index].discAmt || 0);
-              return updatedRows;
-            });
-          }}
-        />
-      </td>
-      <td>{row.totalAmt}</td>
-      <td>
-        <input
-          type="number"
-          value={row.lessDisc || 0}
-          onChange={(e) => {
-            const lessDisc = parseFloat(e.target.value) || 0;
-            setTestGridTableRowsableRows((prevRows) => {
-              const updatedRows = [...prevRows];
-              updatedRows[index].lessDisc = lessDisc;
-              updatedRows[index].discAmt =
-                (updatedRows[index].totalAmt * lessDisc) / 100;
-              updatedRows[index].netAmt =
-                updatedRows[index].totalAmt -
-                updatedRows[index].discAmt;
-              return updatedRows;
-            });
-          }}
-        />
-      </td>
-      <td>
-        <input
-          type="number"
-          value={row.discAmt || 0}
-          readOnly
-        />
-      </td>
-      <td>{row.netAmt}</td>
-      <td>{row.emerg}</td>
-      <td>{row.emergAmt}</td>
-    </tr>
-  ))}
-              </tbody>
-            </table>
-             
-            <div className="billing-opd-com-summary-section">
-              <div className="billing-opd-com-summary-row">
-                <div className="billing-opd-com-summary-field">
-                  <label>Less Disc% On All Services:</label>
-                  <input
-            type="number"
-            value={discountPercentage}
-            onChange={(e) => setDiscountPercentage(parseFloat(e.target.value) || 0)}
-          />
-                </div>
-                <div className="billing-opd-com-summary-field">
-                  <label> Less Disc Amt on All Services :</label>
-                            <input type="number" value={discountAmount} readOnly />
-
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 'paymentDetails':
-        return (
-          <div className="services-table">
-            <table ref={tableRef}>
-              <thead>
-                <tr>{[
-
-                  "SN",
-                  "Head",
-                  "Amount"
-                ].map((header, index) => (
-                  <th
-                    key={index}
-                    style={{ width: columnWidths[index] }}
-                    className="resizable-th"
-                  >
-                    <div className="header-content">
-                      <span>{header}</span>
-                      <div
-                        className="resizer"
-                        onMouseDown={startResizing(
-                          tableRef,
-                          setColumnWidths
-                        )(index)}
-                      ></div>
-                    </div>
-                  </th>
-                ))}
-                </tr>
-              </thead>
-              <tbody>
-                {paymentDetailsTableRows.map((row, index) => (
-                  <tr key={index}>
-
-                    <td>{row.sn}</td>
-                    <td>{row.head}</td>
-                    <td>{row.amount}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        );
-      case 'identification':
-        return (
-          <div className="services-table">
-            <table ref={tableRef}>
-              <thead>
-                <tr>{[
-                  "Actions",
-                  "SN",
-                  "Id No",
-                  "Id Name"
-                ].map((header, index) => (
-                  <th
-                    key={index}
-                    style={{ width: columnWidths[index] }}
-                    className="resizable-th"
-                  >
-                    <div className="header-content">
-                      <span>{header}</span>
-                      <div
-                        className="resizer"
-                        onMouseDown={startResizing(
-                          tableRef,
-                          setColumnWidths
-                        )(index)}
-                      ></div>
-                    </div>
-                  </th>
-                ))}
-                </tr>
-              </thead>
-              <tbody>
-                {identificationTableRows.map((row, index) => (
+                {testGridTableRowsableRows.map((row, index) => (
                   <tr key={index}>
                     <td>
                       <div className="table-actions">
                         <button
                           className="billing-opd-com-add-btn"
-                          onClick={() => handleAddRow('identification')}
+                          onClick={() => handleAddRow("package")}
                         >
                           Add
                         </button>
                         <button
                           className="billing-opd-com-del-btn"
-                          onClick={() => handleDeleteRow('identification', index)}
-                          disabled={identificationTableRows.length <= 1}
+                          onClick={() => handleDeleteRow("package", index)}
+                          disabled={testGridTableRowsableRows.length <= 1}
                         >
                           Del
                         </button>
                       </div>
                     </td>
                     <td>{row.sn}</td>
-                    <td>{row.Date}</td>
-                    <td>{row.dCode}</td>
+                    <td>
+                      <div className="OpdBilling-test-search-field">
+                        <FloatingInput label="MR No * " type="text" />
+                        <button
+                          className="OpdBilling-search-icon"
+                          onClick={() => setActivePopup("services")}
+                        >
+                          <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path
+                              fill="currentColor"
+                              d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </td>
+                    <td>{row.code}</td>
+                    <td>{row.serviceName}</td>
+                    <td>{row.doctorName}</td>
+                    <td>{row.rate}</td>
+                    <td>
+                      <input
+                        type="number"
+                        value={row.qty}
+                        onChange={(e) => {
+                          const qty = parseInt(e.target.value, 10) || 0;
+                          setTestGridTableRowsableRows((prevRows) => {
+                            const updatedRows = [...prevRows];
+                            updatedRows[index].qty = qty;
+                            updatedRows[index].totalAmt = (row.rate || 0) * qty;
+                            updatedRows[index].netAmt =
+                              updatedRows[index].totalAmt -
+                              (updatedRows[index].discAmt || 0);
+                            return updatedRows;
+                          });
+                        }}
+                      />
+                    </td>
+                    <td>{row.totalAmt}</td>
+                    <td>
+                      <FloatingInput
+                        type="number"
+                        value={row.lessDisc || 0}
+                        onChange={(e) => {
+                          const lessDisc = parseFloat(e.target.value) || 0;
+                          setTestGridTableRowsableRows((prevRows) => {
+                            const updatedRows = [...prevRows];
+                            updatedRows[index].lessDisc = lessDisc;
+                            updatedRows[index].discAmt =
+                              (updatedRows[index].totalAmt * lessDisc) / 100;
+                            updatedRows[index].netAmt =
+                              updatedRows[index].totalAmt -
+                              updatedRows[index].discAmt;
+                            return updatedRows;
+                          });
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <input type="number" value={row.discAmt || 0} readOnly />
+                    </td>
+                    <td>{row.netAmt}</td>
+                    <td>{row.emerg}</td>
+                    <td>{row.emergAmt}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div className="billing-opd-com-summary-section">
+              <div className="billing-opd-com-summary-row">
+                <div className="billing-opd-com-summary-field">
+                  <label>Less Disc% On All Services:</label>
+                  <input
+                    type="number"
+                    value={discountPercentage}
+                    onChange={(e) =>
+                      setDiscountPercentage(parseFloat(e.target.value) || 0)
+                    }
+                  />
+                </div>
+                <div className="billing-opd-com-summary-field">
+                  <label> Less Disc Amt on All Services :</label>
+                  <input type="number" value={discountAmount} readOnly />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case "paymentDetails":
+        return (
+          <div className="services-table">
+            <table ref={tableRef}>
+              <thead>
+                <tr>
+                  {["SN", "Head", "Amount"].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {paymentDetailsTableRows.map((row, index) => (
+                  <tr key={index}>
+                    <td>{row.sn}</td>
+                    <td>{row.head}</td>
+                    <td>{row.amount}</td>
                   </tr>
                 ))}
               </tbody>
@@ -673,12 +899,99 @@ const handleAddRow = (type) => {
         return null;
     }
   };
+
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
+
+    // Determine which state to update based on field name
+    if (Object.keys(formData).includes(name)) {
+      // Update `formData` for fields present in it
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: type === "checkbox" ? checked : value,
+      }));
+    } else if (Object.keys(newpatientformData).includes(name)) {
+      // Update `newpatientformData` for fields present in it
+      newpatientsetFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+
+  const FloatingInput = ({ label, type = "text", value, ...props }) => {
+    const [isFocused, setIsFocused] = useState(true);
+    const [hasValue, setHasValue] = useState(false);
+    const inputRef = useRef(null);
+
+    useEffect(() => {
+      if (value && value.length > 0 && inputRef.current) {
+        inputRef.current.focus(); // Programmatically set focus
+        setIsFocused(true);
+      }
+    }, [value]);
+
+    // Update hasValue state when value changes
+    useEffect(() => {
+      setHasValue(value && value.length > 0);
+    }, [value]);
+
+    const handleChange = (e) => {
+      setHasValue(e.target.value.length > 0);
+      if (props.onChange) props.onChange(e);
+    };
+    return (
+      <div
+        className={`OpdBilling-floating-field ${
+          isFocused || hasValue ? "active" : ""
+        }`}
+      >
+        <input
+          type={type}
+          className="OpdBilling-floating-input"
+          ref={inputRef}
+          value={value || ""}
+          onFocus={() => setIsFocused(true)}
+          onBlur={(e) => {
+            setIsFocused(false);
+            setHasValue(e.target.value.length > 0);
+          }}
+          onChange={handleChange}
+          {...props}
+        />
+        <label className="OpdBilling-floating-label">{label}</label>
+      </div>
+    );
+  };
+  const FloatingSelect = ({ label, options = [], ...props }) => {
+    const [isFocused, setIsFocused] = useState(false);
+    const [hasValue, setHasValue] = useState(false);
+    return (
+      <div
+        className={`OpdBilling-floating-field ${
+          isFocused || hasValue ? "active" : ""
+        }`}
+      >
+        <select
+          className="OpdBilling-floating-select"
+          onFocus={() => setIsFocused(true)}
+          onBlur={(e) => {
+            setIsFocused(false);
+            setHasValue(e.target.value !== "");
+          }}
+          onChange={(e) => setHasValue(e.target.value !== "")}
+          {...props}
+        >
+          <option value="">{}</option>
+          {options.map((option, index) => (
+            <option key={index} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <label className="OpdBilling-floating-label">{label}</label>
+      </div>
+    );
   };
 
   return (
@@ -688,154 +1001,313 @@ const handleAddRow = (type) => {
           <span>OPD Billing </span>
         </div>
       </div>
-      <div className="billing-opd-com-content-wrapper">
-        <div className="billing-opd-com-main-section">
-          <div className="billing-opd-com-panel dis-templates">
-
-            <div className="billing-opd-com-panel-content">
-              <div className="billing-opd-com-form-row">
-                <label>Mobile No:</label>
-                <div className="billing-opd-com-input-with-search">
-                  <input type="text" value={selectedPatient?.phoneNumber} />
-                  <button className="billing-opd-com-magnifier-btn" onClick={() => setActivePopup("mobilenumber")}>🔍</button>
-                </div>
-              </div>
+      <div className="OpdBilling-section">
+        <div className="OpdBilling-grid">
+          <div className="billing-opd-com-form-row">
+            <label>Mobile No:</label>
+            <div className="billing-opd-com-input-with-search">
+              <input
+                type="text"
+                value={selectedPatient?.originalObject?.patient?.mobileNumber}
+              />
+              <button
+                className="billing-opd-com-magnifier-btn"
+                onClick={() => setActivePopup("mobilenumber")}
+              >
+                🔍
+              </button>
             </div>
-            <div className="billing-opd-com-panel-header">Patient Details</div>
-            <div className="billing-opd-com-panel-content">
-              <div className="billing-opd-com-form-row">
-                <label htmlFor="patientCategory">Patient Category: </label>
-                <select id="patientCategory"  className="billing-opd-com-patient-category" name='patientCategory' value={formData.patientCategory} onChange={handleChange}>
-                  <option value="IPD">IPD</option>
-                  <option value="OPD">OPD</option>
-                </select>
-              </div>
-
-              <div className="billing-opd-com-form-row">
-                <label htmlFor="patientCategory">Category Counter: </label>
-                <select id="patientCategory" className="billing-opd-com-patient-category">
-                  <option value="general">Private OPD</option>
-                  <option value="private">General OPD</option>
-
-                </select>
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Patient Type: </label>
-
-                <select id="patientType" className="billing-opd-com-patient-category" name='patientType' value={formData.patientCategory} onChange={handleChange}>
-                  <option value="Old Patient">Old Patient</option>
-                  <option value="New Patient">New Patient</option>
-
-                </select>
-              </div>
-
-              <div className="billing-opd-com-form-row">
-                <label>Employee:</label>
-                <input type="checkbox" value="" />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>MR No:<span className="billing-opd-required">*</span>
-                </label>
-                <div className="billing-opd-com-input-with-search">
-                  <input type="text" value={selectedPatient?.uhid} />
-                  <button className="billing-opd-com-magnifier-btn" onClick={() => setActivePopup("patient")}>🔍</button>
-                </div>
-              </div>
-
-              <div className="billing-opd-com-form-row">
-                <label>Name Initial:<span className="billing-opd-required">*</span>
-                </label>
-                <select value="" className="name-initial-select">
-                  <option value="" disabled>Select</option>
-                  <option value="Mr.">Mr.</option>
-                  <option value="Mrs.">Mrs.</option>
-                  <option value="Ms.">Ms.</option>
-                  <option value="Dr.">Dr.</option>
-                  <option value="Prof.">Prof.</option>
-                </select>
-              </div>
-
-
-              <div className="billing-opd-com-form-row">
-                <label>F Name:<span className="billing-opd-required">*</span>
-                </label>
-                <input type="text" value={selectedPatient?.firstName} />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>M Name:</label>
-                <input type="text" value={selectedPatient?.middleName} />
-
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>L Name:</label>
-                <input type="text" value={selectedPatient?.lastName} />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Gender:<span className="billing-opd-required">*</span>
-                </label>
-                <select value={selectedPatient?.gender} className="name-initial-select">
-                  <option value="" disabled>Select</option>
-                  <option value="Mr.">Male</option>
-                  <option value="Mrs.">Femal.</option>
-                  <option value="Ms.">Other</option>
-
-                </select>
-              </div>
-
-
-              <div className="billing-opd-com-form-row">
-                <label>Material Status:<span className="billing-opd-required">*</span>
-                </label>
-                <select value="Male" className="material-status-select">
-                  <option value="Single">Single</option>
-                  <option value="Married">Married</option>
-                  <option value="Divorced">Divorced</option>
-                  <option value="Widowed">Widowed</option>
-                </select>
-              </div>
-
-              <div className="billing-opd-com-form-row">
-                <label>Relation:<span className="billing-opd-required">*</span>
-                </label>
-                <select value={selectedPatient?.relationWithPatient} className="relation-select">
-                  <option value="Father">Father</option>
-                  <option value="Mother">Mother</option>
-                  <option value="Brother">Brother</option>
-                  <option value="Sister">Sister</option>
-                  <option value="Son">Son</option>
-                  <option value="Daughter">Daughter</option>
-                  <option value="Spouse">Spouse</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-
-              <div className="billing-opd-com-form-row">
-                <label>RelativeName:<span className="billing-opd-required">*</span>
-                </label>
-                <input type="text" value={selectedPatient?.careOfPerson} />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Age:</label>
-                <input type="text" value={selectedPatient?.age} />
-
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Address:<span className="billing-opd-required">*</span>
-                </label>
-                <input type="text" value={selectedPatient?.address} />
-
-              </div>
-
-
-            </div>
-
-
-
-
-
-
           </div>
 
+          <div className="billing-opd-com-form-row">
+            <label>
+              MR No:<span className="billing-opd-required">*</span>
+            </label>
+            <div className="billing-opd-com-input-with-search">
+              <input type="text" value={selectedPatient?.uhid} />
+              <button
+                className="billing-opd-com-magnifier-btn"
+                onClick={() => setActivePopup("patient")}
+              >
+                🔍
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="OpdBilling-section">
+        <div className="OpdBilling-header">Patient Details</div>
+        <div className="OpdBilling-grid">
+          <select
+            id="patientType"
+            name="patientType"
+            className="form-control"
+            value={patientType} // Bind to the appropriate state
+            onChange={(e) => setPatientType(e.target.value)} // Update state on change
+          >
+            <option value="">Select Patient Type</option>
+            <option value="new patient">New Patient</option>
+            <option value="old patient">Returning Patient</option>
+          </select>
+
+          <FloatingSelect
+            label="Category Counter"
+            id="patientCategory"
+            name="patientCategory"
+            options={[
+              { value: "general", label: "Private OPD" },
+              { value: "private", label: "General OPD" },
+            ]}
+          />
+          <div className="billing-opd-com-form-row">
+            <label>Employee:</label>
+            <input type="checkbox" value="" />
+          </div>
+
+          <div className="billing-opd-com-form-row">
+            <label>
+              Name Initial:<span className="billing-opd-required">*</span>
+            </label>
+            <select value="" className="name-initial-select">
+              <option value="" disabled>
+                Select
+              </option>
+              <option value="Mr.">Mr.</option>
+              <option value="Mrs.">Mrs.</option>
+              <option value="Ms.">Ms.</option>
+              <option value="Dr.">Dr.</option>
+              <option value="Prof.">Prof.</option>
+            </select>
+          </div>
+
+          <FloatingInput
+            label="F Name"
+            type="text"
+            focused={
+              selectedPatient?.patient?.patient?.hasOwnProperty("firstName") &&
+              paymentDetails.firstName !== null
+                ? true
+                : false
+            }
+            value={selectedPatient?.firstName}
+          />
+          <FloatingInput
+            label="M Name"
+            type="text"
+            value={selectedPatient?.middleName}
+          />
+          <FloatingInput
+            label="L Name"
+            type="text"
+            value={selectedPatient?.lastName}
+          />
+          <select
+            id="genderSelect"
+            className="form-control"
+            value={selectedPatient?.gender || ""}
+            onChange={(e) =>
+              setSelectedPatient({ ...selectedPatient, gender: e.target.value })
+            }
+          >
+            <option value="" disabled>
+              Select Gender
+            </option>
+            <option value="Mr">Male</option>
+            <option value="Mrs">Female</option>
+            <option value="Ms">Other</option>
+          </select>
+          <FloatingSelect
+            label="Material Status *"
+            onChange={handleChange}
+            options={[
+              { value: "Single", label: "Single" },
+              { value: "Married", label: "Married" },
+              { value: "Divorced", label: "Divorced" },
+              { value: "Widowed", label: "Widowed" },
+            ]}
+            value={selectedPatient?.maritalStatus}
+          />
+          <FloatingSelect
+            label="Relation"
+            value={selectedPatient?.relationWithPatient}
+            onChange={(newValue) =>
+              setSelectedPatient({
+                ...selectedPatient,
+                relationWithPatient: newValue,
+              })
+            }
+            options={[
+              { value: "Father", label: "Father" },
+              { value: "Mother", label: "Mother" },
+              { value: "Brother", label: "Brother" },
+              { value: "Sister", label: "Sister" },
+              { value: "Son", label: "Son" },
+              { value: "Daughter", label: "Daughter" },
+              { value: "Spouse", label: "Spouse" },
+              { value: "Other", label: "Other" },
+            ]}
+          />
+
+          <FloatingInput
+            label="Relative Name"
+            type="text"
+            onChange={handleChange}
+            value={selectedPatient?.patient?.careOfPerson}
+          />
+          <FloatingInput label="Age" type="text" value={selectedPatient?.age} />
+          <FloatingInput
+            label="Address"
+            type="text"
+            onChange={handleChange}
+            value={selectedPatient?.address}
+          />
+          <FloatingInput
+            label="City/Village"
+            type="text"
+            onChange={handleChange}
+            value={selectedPatient?.address}
+          />
+          <FloatingInput
+            label="PinCode"
+            type="text"
+            onChange={handleChange}
+            value={selectedPatient?.pinCode}
+          />
+          <FloatingInput
+            label="Country"
+            type="text"
+            onChange={handleChange}
+            value={selectedPatient?.nationality}
+          />
+          <FloatingInput label="Source Of Registration" type="text" value="" />
+          <FloatingInput
+            label="Mobile No"
+            type="text"
+            onChange={handleChange}
+            value={selectedPatient?.mobileNumber}
+          />
+          <FloatingInput
+            label="Phone"
+            type="text"
+            onChange={handleChange}
+            value={selectedPatient?.patient?.alternateNumber}
+          />
+          <FloatingInput
+            label="Email Id *"
+            type="text"
+            onChange={handleChange}
+            value={selectedPatient?.emailId}
+          />
+          <div className="billing-opd-com-form-row">
+            <label>
+              Doctor Name:<span className="billing-opd-required">*</span>
+            </label>
+            <div className="billing-opd-com-input-with-search">
+              <select
+                name="admittedDoctor"
+                className="create-admission-form-input"
+                onChange={handleChange}
+                value={selectedDoctor}
+              >
+                <option value="">Select Doctor</option>
+                {doctors.map((doctor) => (
+                  <option key={doctor.employeeId} value={doctor.employeeId}>
+                    {doctor.salutation} {doctor.doctorName} {doctor.lastName}
+                  </option>
+                ))}
+              </select>
+              <button className="billing-opd-com-magnifier-btn">🔍</button>
+            </div>
+          </div>
+
+          <FloatingSelect
+            label="Referral Type"
+            options={[
+              { value: "walkin", label: "Walk in" },
+              { value: "website", label: "Website" },
+              { value: "other", label: "other" },
+            ]}
+          />
+          <FloatingInput
+            label="Referred Dr"
+            type="text"
+            name="referredDoctor"
+            value={formData.referredDoctor}
+            onChange={handleChange}
+          />
+
+          <FloatingInput
+            label="Bill No"
+            type="text"
+            name="billNo"
+            value={formData.billNo}
+            onChange={handleChange}
+          />
+
+          <FloatingInput
+            label="NonRegular DoctorNM"
+            type="text"
+            name="nonregulardctorname"
+            value={formData.nonregulardctorname}
+            onChange={handleChange}
+          />
+          <div className="billing-opd-com-form-row">
+            <label>Package:</label>
+            <input type="checkbox" value="" />
+          </div>
+
+          <FloatingSelect
+            label="Pkg Type"
+            id="patientCategory"
+            options={[
+              { value: "general", label: "OPD Package" },
+              { value: "general", label: "Private OPD" },
+              { value: "private", label: " Other" },
+            ]}
+          />
+          <FloatingInput
+            label="Old Mrno"
+            type="text"
+            name="oldmrno"
+            value={formData.oldmrno}
+            onChange={handleChange}
+          />
+
+          <FloatingInput
+            label="Empdiscountpolicy"
+            type="text"
+            name="Empdiscountpolicy"
+            value={formData.Empdiscountpolicy}
+            onChange={handleChange}
+          />
+          {/* <div className="billing-opd-com-form-row">
+                <label>Empdiscountpolicy:</label>
+                <input
+                  type="text"
+                  name="Empdiscountpolicy"
+                  value={formData.Empdiscountpolicy}
+                  onChange={handleChange}
+                />
+              </div> */}
+          <FloatingInput
+            label="Diagnosis"
+            type="text"
+            name="diagnosis"
+            value={formData.diagnosis}
+            onChange={handleChange}
+          />
+
+          <FloatingInput
+            label="Last Consulta"
+            type="text"
+            name="lastconsult"
+            value={formData.lastconsult}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+      <div className="billing-opd-com-content-wrapper">
+        <div className="billing-opd-com-main-section">
           {activePopup && (
             <PopupTable
               columns={columns}
@@ -845,167 +1317,11 @@ const handleAddRow = (type) => {
             />
           )}
           <div className="billing-opd-com-panel operation-details">
-            <div className="billing-opd-com-panel-content">
-
-              <div className="billing-opd-com-form-row">
-                <label>City/Village: </label>
-                <div className="billing-opd-com-input-with-search">
-
-                  <input type="text" value={selectedPatient?.address} />
-
-                  
-                </div>
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>PinCode:<span className="billing-opd-required">*</span>
-                </label>
-                <div className="billing-opd-com-input-with-search">
-
-                  <input type="text"  value={selectedPatient?.zipCode} />
-                  
-                </div>
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Country: </label>
-                <div className="billing-opd-com-input-with-search">
-
-
-                  <input type="text" value="" />
-
-                  
-                </div>
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Nationality: </label>
-                <div className="billing-opd-com-input-with-search">
-
-
-                  <input type="text" value="" />
-                
-                </div>
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Source Of Registration:</label>
-                <input type="text" value="" />
-              </div>
-
-              <div className="billing-opd-com-form-row">
-                <label>Mobile No:<span className="billing-opd-required">*</span>
-                </label>
-                <input type="text" value={selectedPatient?.phoneNumber} />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Phone:</label>
-                <input type="text" value={selectedPatient?.alternateNumber} />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Email Id:<span className="billing-opd-required">*</span>
-                </label>
-                <input type="text" value={selectedPatient?.email} />
-              </div>
-              {/* <div className="billing-opd-com-form-row">
-                <label>Type:<span className="billing-opd-required">*</span>
-                </label>
-                <input type="text" value="" />
-              </div> */}
-
-              <div className="billing-opd-com-form-row">
-                <label>Doctor Name:<span className="billing-opd-required">*</span>
-                </label>
-                <div className="billing-opd-com-input-with-search">
-                <select
-          name="admittedDoctor"
-          className="create-admission-form-input"
-          onChange={handleChange}
-          value={selectedDoctor}
-        >
-          <option value="">Select Doctor</option>
-          {doctors.map((doctor) => (
-            <option key={doctor.employeeId} value={doctor.employeeId}>
-              {doctor.salutation} {doctor.doctorName} {doctor.lastName}
-            </option>
-          ))}
-        </select>
-                  <button className="billing-opd-com-magnifier-btn">🔍</button>
-                </div>
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Referral Type:</label>
-                <select>
-                  <option value="walkin">Walk in</option>
-                  <option value="website">Website</option>
-                  <option value="other">other</option>
-
-                </select>
-              </div>
-            </div>
+            <div className="billing-opd-com-panel-content"></div>
           </div>
           <div className="billing-opd-com-panel operation-details">
             {/* <div className="billing-opd-com-panel-header">Surgery Details</div>  */}
-            <div className="billing-opd-com-panel-content">
-              <div className="billing-opd-com-form-row">
-                <label>Referred Dr:<span className="billing-opd-required">*</span>
-                </label>
-                <div className="billing-opd-com-input-with-search">
-                  <input type="text" 
-                  name="referredDoctor"
-                  value={formData.referredDoctor}
-                  onChange={handleChange} />
-                  {/* <button className="billing-opd-com-magnifier-btn">🔍</button> */}
-                </div>
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Bill No:</label>
-                <input type="text"  name="billNo"
-                  value={formData.billNo}
-                  onChange={handleChange} />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>NonRegular DoctorNM:</label>
-                <input type="text" name='nonregulardctorname'
-                value={formData.nonregulardctorname}
-                onChange={handleChange} />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Package:</label>
-                <input type="checkbox" value="" />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Pkg Type:</label>
-                <select id="patientCategory" className="billing-opd-com-patient-category">
-                  <option value="general"> OPD Package</option>
-                  <select id="patientCategory" className="billing-opd-com-patient-category">
-                    <option value="general">Private OPD</option>
-                    <option value="private">Other</option>
-                  </select>
-                </select>
-                </div>
-             
-              <div className="billing-opd-com-form-row">
-                <label>Old Mrno:</label>
-                <input type="text"name='oldmrno'
-                value={formData.oldmrno}
-                onChange={handleChange}/>
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Empdiscountpolicy:</label>
-                <input type="text" name='Empdiscountpolicy'
-                value={formData.Empdiscountpolicy}
-                onChange={handleChange} />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Diagnosis:</label>
-                <input type="text" name='diagnosis'
-                value={formData.diagnosis}
-                onChange={handleChange} />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Last Consulta:</label>
-                <input type="text" name='lastconsult'
-                value={formData.lastconsult}
-                onChange={handleChange} />
-              </div>
-            </div>
+            <div className="billing-opd-com-panel-content"></div>
           </div>
         </div>
         <div className="iPBilling-services-section">
@@ -1026,166 +1342,414 @@ const handleAddRow = (type) => {
             >
               Payment Details
             </button>
-            {/* <button
-              className={`iPBilling-tab ${
-                selectedTab === "bhs" ? "active" : ""
-              }`}
-              onClick={() => setSelectedTab("bhs")}
-            >
-              Previous Cancelled Test Details
-            </button> */}
           </div>
 
           {/* Dynamically render tables based on selected tab */}
           {renderTable()}
         </div>
-        <div className="billing-opd-com-main-section">
-          <div className="billing-opd-com-panel dis-templates">
 
-            <div className="billing-opd-com-panel-header">Financial Details</div>
-            <div className="billing-opd-com-panel-content">
-              <div className="billing-opd-com-form-row">
-                <label>Total Amt:<span className="billing-opd-required">*</span>
-                </label>
-                <input type="text" value={totalAmount} readOnly />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label> Final Disc Amt: </label>
-                 <input type="text" value={discountAmount} readOnly />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Net Amt:</label>
-                          <input type="text" value={netAmount} readOnly />
-
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Paid Amt:</label>
-                <input type="text" value="" name='paidAmt' onChange={handleChange} />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Credit Amt:</label>
-                <input type="text" value="0" name='creditAmt' onChange={handleChange} />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Curr Balance :</label>
-                <input type="text" value="0.00" name='currBalance' onChange={handleChange} />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Disc Reason:<span className="billing-opd-required">*</span>
-                </label>
-                <div className="billing-opd-com-input-with-search">
-                  <input type="text" name='discReason' value={handleChange} />
-                </div>
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Disc Authorization:<span className="billing-opd-required">*</span>
-                </label>
-                <div className="billing-opd-com-input-with-search">
-                  <input type="text" name='discAuthorization' value={handleChange} />
-                </div>
-              </div>
+        {/* ---------------------------------------------------------------------------------------------------------------------      */}
+        <div className="billing-opd-com-main-section-payment">
+          <div className="OpdBilling-section">
+            <div className="OpdBilling-header">Financial Details</div>
+            <div className="OpdBilling-grid-sec">
+              <FloatingInput
+                label="Total Amt *"
+                type="text"
+                value={totalAmount}
+                readOnly
+              />
+              <FloatingInput
+                label="Final Disc Amt"
+                type="text"
+                value={discountAmount}
+                readOnly
+              />
+              <FloatingInput
+                label="Net Amt"
+                type="text"
+                value={netAmount}
+                readOnly
+              />
+              <FloatingInput
+                label="Paid Amt"
+                type="text"
+                value={selectedPatient?.financialDetaildto?.paidAmount}
+                name="paidAmt"
+                onChange={handleChange}
+              />
+              <FloatingInput
+                label="Credit Amt"
+                type="text"
+                value="0"
+                name="creditAmt"
+                onChange={handleChange}
+              />
+              <FloatingInput
+                label="Curr Balance"
+                type="text"
+                value={currentBalance.toFixed(2)}
+                name="currBalance"
+                onChange={handleChange}
+              />
+              <FloatingInput
+                label="Due Amount"
+                type="text"
+                name="discReason"
+                value={selectedPatient?.financialDetaildto?.dueAmount}
+                readOnly
+              />
+              <FloatingInput
+                label="Remarks *"
+                type="text"
+                name="remarks"
+                value={handleChange}
+              />
+              <FloatingInput label="OP Bal Amt" type="text" value="" />
             </div>
           </div>
-          <div className="billing-opd-com-panel operation-details">
-            <div className="billing-opd-com-panel-content">
 
-              <div className="billing-opd-com-form-row">
-                <label>Remarks:<span className="billing-opd-required">*</span>
-                </label> 
-                <input type="text" name='remarks' value={handleChange} />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>OP Bal Amt :</label>
-                <input type="text" value="" />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Appt No :</label>
-                <div className="billing-opd-com-input-with-search">
-                  <input type="text" value="" />
-                  <button className="billing-opd-com-magnifier-btn">🔍</button>
+          <div className="OpdBilling-section">
+            <div className="OpdBilling-header">Payment Mode</div>
+            <div className="billing-opd-com-panel-content">
+              <div className="payment-mode-selection">
+                <div className="OpdBilling-grid-sec">
+                  <FloatingSelect
+                    label="Select Payment Mode"
+                    htmlFor="paymentMode"
+                    id="paymentMode"
+                    onChange={(e) => {
+                      setSelectedPaymentMode(e.target.value);
+                      setPaymentDetails({}); // Reset payment details when mode changes
+                    }}
+                    options={[
+                      { value: "", label: "-- Select Payment Mode --" },
+                      { value: "cash", label: "Cash" },
+                      { value: "card", label: " Card" },
+                      { value: "upi", label: " UPI" },
+                      { value: "check", label: " Check" },
+                    ]}
+                  />
                 </div>
+                {selectedPaymentMode && (
+                  <div className="OpdBilling-grid-sec">
+                    <FloatingInput
+                      label="Amount"
+                      htmlFor="amount"
+                      type="number"
+                      id="amount"
+                      // placeholder="Enter Amount"
+                      value={paymentDetails.amount || ""}
+                      onChange={(e) =>
+                        setPaymentDetails({
+                          ...paymentDetails,
+                          amount: e.target.value,
+                        })
+                      }
+                    />
+
+                    {/* <div className="payment-details-row">
+            <label htmlFor="amount">Amount:</label>
+            <input
+              type="number"
+              id="amount"
+              placeholder="Enter Amount"
+              value={paymentDetails.amount || ""}
+              onChange={(e) =>
+                setPaymentDetails({
+                  ...paymentDetails,
+                  amount: e.target.value,
+                })
+              }
+            />
+          </div> */}
+                    {selectedPaymentMode === "card" && (
+                      <FloatingInput
+                        label="Card Number"
+                        htmlFor="cardNumber"
+                        type="text"
+                        id="cardNumber"
+                        value={paymentDetails.cardNumber || ""}
+                        onChange={(e) =>
+                          setPaymentDetails({
+                            ...paymentDetails,
+                            cardNumber: e.target.value,
+                          })
+                        }
+                      />
+
+                      // <div className="payment-details-row">
+                      //   <label htmlFor="cardNumber">Card Number:</label>
+                      //   <input
+                      //     type="text"
+                      //     placeholder="Enter Card Number"
+                      //     id="cardNumber"
+                      //     value={paymentDetails.cardNumber || ""}
+                      //     onChange={(e) =>
+                      //       setPaymentDetails({
+                      //         ...paymentDetails,
+                      //         cardNumber: e.target.value,
+                      //       })
+                      //     }
+                      //   />
+                      // </div>
+                    )}
+                    {selectedPaymentMode === "upi" && (
+                      <FloatingInput
+                        label="UPI ID"
+                        htmlFor="upiId"
+                        type="text"
+                        id="upiId"
+                        value={paymentDetails.upiId || ""}
+                        onChange={(e) =>
+                          setPaymentDetails({
+                            ...paymentDetails,
+                            upiId: e.target.value,
+                          })
+                        }
+                      />
+
+                      // <div className="payment-details-row">
+                      //   <label htmlFor="upiId">UPI ID:</label>
+                      //   <input
+                      //     type="text"
+                      //     placeholder="Enter UPI ID"
+                      //     id="upiId"
+                      //     value={paymentDetails.upiId || ""}
+                      //     onChange={(e) =>
+                      //       setPaymentDetails({
+                      //         ...paymentDetails,
+                      //         upiId: e.target.value,
+                      //       })
+                      //     }
+                      //   />
+                      // </div>
+                    )}
+                    {selectedPaymentMode === "check" && (
+                      <>
+                        <FloatingInput
+                          label="Check Number"
+                          htmlFor="checkNumber"
+                          type="text"
+                          id="checkNumber"
+                          focused={
+                            paymentDetails.checkNumber != null ? true : false
+                          }
+                          value={paymentDetails.checkNumber || ""}
+                          onChange={(e) =>
+                            setPaymentDetails({
+                              ...paymentDetails,
+                              checkNumber: e.target.value,
+                            })
+                          }
+                        />
+
+                        {/* <div className="payment-details-row">
+                <label htmlFor="checkNumber">Check Number:</label>
+                <input
+                  type="text"
+                  placeholder="Enter Check Number"
+                  id="checkNumber"
+                  value={paymentDetails.checkNumber || ""}
+                  onChange={(e) =>
+                    setPaymentDetails({
+                      ...paymentDetails,
+                      checkNumber: e.target.value,
+                    })
+                  }
+                />
+              </div> */}
+                        <FloatingInput
+                          label="Check Date"
+                          type="date"
+                          id="checkDate"
+                          value={paymentDetails.checkDate || ""}
+                          onChange={(e) =>
+                            setPaymentDetails({
+                              ...paymentDetails,
+                              checkDate: e.target.value,
+                            })
+                          }
+                        />
+
+                        {/* <div className="payment-details-row">
+                <label htmlFor="checkDate">Check Date:</label>
+                <input
+                  type="date"
+                  id="checkDate"
+                  value={paymentDetails.checkDate || ""}
+                  onChange={(e) =>
+                    setPaymentDetails({
+                      ...paymentDetails,
+                      checkDate: e.target.value,
+                    })
+                  }
+                />
+              </div> */}
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
+              {selectedPaymentMode && (
+                <div className="payment-actions">
+                  <button
+                    onClick={() =>
+                      handleAddPayment(
+                        selectedPaymentMode,
+                        paymentDetails.amount,
+                        paymentDetails
+                      )
+                    }
+                  >
+                    Add Payment
+                  </button>
+                </div>
+              )}
             </div>
           </div>
-         
-          <div className="billing-opd-com-panel operation-details">
-            <div className="billing-opd-com-panel-header"></div>
+          <div className="billing-opd-com-panel-payment">
             <div className="billing-opd-com-panel-content">
-
-              <div className="billing-opd-com-form-row">
-                <label>Appt Date:</label>
-                <select>
-
-                  <option value="Other">Other</option>
-                </select>                      </div>
-              <div className="billing-opd-com-form-row">
-                <label>Employee Credit:</label>
-                <input type="text" value="" />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Employee Outstanding:</label>
-                <input type="text" value="" />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Current Discount Policy:</label>
-                <div className="billing-opd-com-input-with-search">
-
-
-                  <input type="text" value="" />
-                  <button className="billing-opd-com-magnifier-btn">🔍</button>
-                </div>
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Total Doctor share Amount:</label>
-                <input type="text" value="0.00" />
-              </div>
-              <div className="billing-opd-com-form-row">
-                <label>Total To Hospital:</label>
-                <input type="text" value="0.00" />
-              </div>
-
-              <div className="billing-opd-com-panel-header">Attach Mode</div>
-              <div className="billing-opd-com-sh-section">
-                <table ref={tableRef}>
+              <div className="payment-summary">
+                <h4>Added Payments</h4>
+                <table className="payment-table">
                   <thead>
                     <tr>
-                      {["SN", "Payment", "Amount", "Card Number", "ChqDt"].map((header, index) => (
-                        <th
-                          key={index}
-                          style={{ width: columnWidths[index] }}
-                          className="resizable-th"
-                        >
-                          <div className="header-content">
-                            <span>{header}</span>
-                            <div
-                              className="resizer"
-                              onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                            ></div>
-                          </div>
-                        </th>
-                      ))}
-                    </tr> 
+                      <th>Mode</th>
+                      <th>Amount</th>
+                      <th>Details</th>
+                      <th>Actions</th>
+                    </tr>
                   </thead>
                   <tbody>
-                    {advancesTableRows.map((row, index) => (
+                    {addedPayments.map((payment, index) => (
                       <tr key={index}>
-                        <td>{row.sn}</td>
-                        <td>{row.payment}</td>
-                        <td>{row.amount}</td>
-                        <td>{row.cardNumber}</td>
-                        <td>{row.chqdt}</td>
+                        <td>{payment.mode}</td>
+                        <td>
+                          {editableRow === index ? (
+                            <input
+                              type="number"
+                              value={editingPayment.amount || ""}
+                              onChange={(e) =>
+                                setEditingPayment({
+                                  ...editingPayment,
+                                  amount: e.target.value,
+                                })
+                              }
+                            />
+                          ) : (
+                            payment.details.amount
+                          )}
+                        </td>
+                        <td>
+                          {payment.mode === "card" && (
+                            <span>
+                              Card Number:{" "}
+                              {editableRow === index ? (
+                                <input
+                                  type="text"
+                                  value={editingPayment.cardNumber || ""}
+                                  onChange={(e) =>
+                                    setEditingPayment({
+                                      ...editingPayment,
+                                      cardNumber: e.target.value,
+                                    })
+                                  }
+                                />
+                              ) : (
+                                payment.details.cardNumber
+                              )}
+                            </span>
+                          )}
+                          {payment.mode === "upi" && (
+                            <span>
+                              UPI ID:{" "}
+                              {editableRow === index ? (
+                                <input
+                                  type="text"
+                                  value={editingPayment.upiId || ""}
+                                  onChange={(e) =>
+                                    setEditingPayment({
+                                      ...editingPayment,
+                                      upiId: e.target.value,
+                                    })
+                                  }
+                                />
+                              ) : (
+                                payment.details.upiId
+                              )}
+                            </span>
+                          )}
+                          {payment.mode === "check" && (
+                            <span>
+                              Check Number:{" "}
+                              {editableRow === index ? (
+                                <input
+                                  type="text"
+                                  value={editingPayment.checkNumber || ""}
+                                  onChange={(e) =>
+                                    setEditingPayment({
+                                      ...editingPayment,
+                                      checkNumber: e.target.value,
+                                    })
+                                  }
+                                />
+                              ) : (
+                                payment.details.checkNumber
+                              )}
+                              , Check Date:{" "}
+                              {editableRow === index ? (
+                                <input
+                                  type="date"
+                                  value={editingPayment.checkDate || ""}
+                                  onChange={(e) =>
+                                    setEditingPayment({
+                                      ...editingPayment,
+                                      checkDate: e.target.value,
+                                    })
+                                  }
+                                />
+                              ) : (
+                                payment.details.checkDate
+                              )}
+                            </span>
+                          )}
+                        </td>
+                        <td>
+                          {editableRow === index ? (
+                            <button
+                              className="opd-billing-button"
+                              onClick={() => handleSaveEdit(index)}
+                            >
+                              Save
+                            </button>
+                          ) : (
+                            <button
+                              className="opd-billing-button"
+                              onClick={() => handleEditPayment(index)}
+                            >
+                              Edit
+                            </button>
+                          )}
+                          <button
+                            className="opd-billing-button-remove"
+                            onClick={() => handleRemovePayment(index)}
+                          >
+                            X
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-
             </div>
           </div>
-
         </div>
         <div className="billing-opd-com-action-buttons">
-          <button className="btn-blue">Save</button>
+          <button className="btn-blue" onClick={handleSubmit}>
+            Save
+          </button>
         </div>
       </div>
     </div>

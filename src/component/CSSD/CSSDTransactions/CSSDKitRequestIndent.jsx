@@ -3,6 +3,7 @@ import axios from "axios";
 import "./CSSDKitRequestIndent.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { API_BASE_URL } from "../../api/api";
 
 const KitRequestIndent = () => {
   const [indentTo, setIndentTo] = useState("");
@@ -22,7 +23,7 @@ const KitRequestIndent = () => {
   useEffect(() => {
     const fetchKits = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/kit-masters");
+        const response = await axios.get(`${API_BASE_URL}/kit-masters`);
         setKits(response.data); // Store all kits
         setFilteredKits(response.data); // Set filtered kits initially to all kits
       } catch (error) {
@@ -63,7 +64,7 @@ const KitRequestIndent = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/kit-request-indent",
+        `${API_BASE_URL}/kit-request-indent`,
         payload
       );
       alert("Kit request successfully saved!");

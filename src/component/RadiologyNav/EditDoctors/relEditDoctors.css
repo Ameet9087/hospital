@@ -65,13 +65,14 @@ font-size: var(--font-size);
     border: 1px solid gray;
     align-items: center;
     justify-content: center;
-
     padding: 3px;
+    margin-bottom: 10px;
   }
   
   .relEditDoctors-search-bar input {
    outline: none;
    border: none;
+   height: 25px;
    background-color: transparent;
   }
   .relEditDoctors-search-bar i{

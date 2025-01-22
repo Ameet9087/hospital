@@ -22,7 +22,7 @@ const BloodBankNavBar = () => {
           <li><NavLink to="/bloodbank/bloodrequest">Blood Request</NavLink></li>
           <li><NavLink to="/bloodbank/bloodissues">Blood Issues</NavLink></li>
           {/* <li><NavLink to="/">Inventory and Stock Management</NavLink></li> */}
-          <li><NavLink to="/bloodbank/reports">Reports</NavLink></li>
+          {/* <li><NavLink to="/bloodbank/reports">Reports</NavLink></li> */}
         </div>
         <div className='bloodBank-Activebtn-N-LogOut'>
           {/* <button className='activebloodBank-btn'>Active Blood Bank: Main-Blood Bank</button> */}

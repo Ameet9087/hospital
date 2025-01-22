@@ -10,7 +10,7 @@ const AddItemSubCategory = ({onClose}) => {
   const [accountingLedger, setAccountingLedger] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
-  const [isActive, setIsActive] = useState(true);
+  const [active, setActive] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
@@ -24,7 +24,7 @@ const AddItemSubCategory = ({onClose}) => {
       accountingLedger,
       description,
       category,
-      isActive
+      active
     };
 
     try {
@@ -49,7 +49,7 @@ const AddItemSubCategory = ({onClose}) => {
       setAccountingLedger('');
       setDescription('');
       setCategory('');
-      setIsActive(true);
+      setActive(true);
     } catch (error) {
       // Handle error
       setError('Failed to add SubCategory: ' + error.message);
@@ -118,8 +118,8 @@ const AddItemSubCategory = ({onClose}) => {
           <label>Is Active</label>
           <input
             type="checkbox"
-            checked={isActive}
-            onChange={() => setIsActive(!isActive)}
+            value={active}
+            onChange={() => setActive(e.target.check)}
           />
         </div>
         

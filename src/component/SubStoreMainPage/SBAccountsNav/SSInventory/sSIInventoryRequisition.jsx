@@ -9,6 +9,7 @@ import SSSIInvenReqView from './sSSIInvenReqView';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
 import CustomModal from '../../../CustomModel/CustomModal';
+import SSIReceivedRequisition from './sSIReceivedRequisition';
 
 function SSIInventoryRequisition() {
   const {store} = useParams();
@@ -19,6 +20,9 @@ function SSIInventoryRequisition() {
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
   const [statusFilter, setStatusFilter] = useState('Pending');
   const [storeFilter, setStoreFilter] = useState('');
+  const [selectedItem,setSelectedItem] = useState("");
+  const [showReceived,setShowReceived] = useState(false);
+
   const [datas,setDatas]=useState([])
 
   useEffect(() => {
@@ -54,7 +58,10 @@ function SSIInventoryRequisition() {
     setShowCreateRequisition(false);
     setShowViewRequisition(false);
   };
-
+  const handleReceived=(item)=>{
+    setSelectedItem(item);
+    setShowReceived(true);
+  }
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
     documentTitle: 'Requisition_Report',
@@ -68,6 +75,9 @@ function SSIInventoryRequisition() {
 
   return (
     <div className="sSIInventoryRequisition-active-imaging-request">
+      <CustomModal isOpen={showReceived} onClose={()=>setShowReceived(false)}>
+        <SSIReceivedRequisition selectedItem={selectedItem} onClose={()=>setShowReceived(false)}/>
+      </CustomModal>
     
         <CustomModal isOpen={showCreateRequisition} onClose={closePopups}>
         {/* <div className="sSIInventoryRequisition-popup-overlay">
@@ -204,8 +214,8 @@ function SSIInventoryRequisition() {
                 <td>{req.verifyOrNot}</td>
                 <td>
                   <div className='sSIInventoryRequisition-view-btn'>
-                    <button onClick={()=>handleViewClick(req)}>View</button>
-                    <button>... ▾</button>
+                    <button className='sSIInventoryRequisition-view' onClick={()=>handleViewClick(req)}>View</button>
+                    {req.status=="Dispatch" && (<button className='sSIInventoryRequisition-view' onClick={()=>handleReceived(req)}>Received</button>)}
                   </div>
                 </td>
               </tr>

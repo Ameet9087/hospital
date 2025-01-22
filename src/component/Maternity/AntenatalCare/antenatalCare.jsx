@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios'; // Import Axios
 import './AntenatalCare.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
-
+import { API_BASE_URL } from '../../api/api';
 
 const AntenatalCare = () => {
     const [columnWidths, setColumnWidths] = useState({});
@@ -24,8 +24,36 @@ const AntenatalCare = () => {
         doctorName: '',
         doctorNotes: ''
     });
-
+    const [patients, setPatients] = useState([]);
+    const [selectedPatient, setSelectedPatient] = useState('');
     const [showAddVisitModal, setShowAddVisitModal] = useState(false);
+
+    useEffect(() => {
+        const fetchPatients = async () => {
+          try {
+            const response = await fetch(`${API_BASE_URL}/inpatients/getAllPatients`);
+            if (!response.ok) {
+              throw new Error('Failed to fetch patients');
+            }
+            const data = await response.json();
+            setPatients(data);
+          } catch (error) {
+            console.error('Error fetching patients:', error);
+          }
+        };
+      
+        fetchPatients();
+      }, []);
+      
+      const handlePatientSelect = (e) => {
+        const patientId = e.target.value;
+        setSelectedPatient(patientId);
+      
+        const selectedPatientData = patients.find((patient) => String(patient.inPatientId) === String(patientId));
+      
+      
+       
+      };
 
     // Fetch visits data when the component mounts
     useEffect(() => {
@@ -42,17 +70,17 @@ const AntenatalCare = () => {
         fetchVisits();
     }, []); // Empty dependency array means this runs once on mount
 
-    const   handleAddVisit = async () => {
+    const handleAddVisit = async () => {
         //if (!newVisit.visitDate || !newVisit.gestationalAge) return; // Basic validation
 
-        console.log("before submitting",newVisit)
+        console.log("before submitting", newVisit)
         try {
             // Send POST request to add new visit
-            const response = await axios.post(`${API_BASE_URL}/antenatal-care`, {
+            const response = await axios.post(`${API_BASE_URL}/antenatal-care/save`, {
                 ...newVisit,
                 visitDate: new Date(newVisit.visitDate),
                 nextVisitDate: new Date(newVisit.nextVisitDate),
-                patientId:101
+                patientId: 101
             });
 
             // Update local state with the new visit
@@ -77,7 +105,7 @@ const AntenatalCare = () => {
                 nextVisitDate: new Date(newVisit.nextVisitDate)
             };
 
-            console.log("data before updating",updatedVisit);
+            console.log("data before updating", updatedVisit);
 
             await axios.put(`${API_BASE_URL}/antenatal-care/${visits[editIndex].ancId}`, updatedVisit); // Use visit ID for the PUT request
 
@@ -120,7 +148,7 @@ const AntenatalCare = () => {
     return (
         <div className="maternity-antenatalcare">
             <button className='maternity-antenatalcare-btn' onClick={() => setShowAddVisitModal(true)}>Add Visit</button>
-            
+
             <table ref={tableRef}>
                 <thead>
                     <tr>
@@ -174,8 +202,8 @@ const AntenatalCare = () => {
                             <td>{visit.doctorName}</td>
                             <td>{visit.doctorNotes}</td>
                             <td>
-                                <button 
-                                    className='maternity-antenatalcare-edit-btn' 
+                                <button
+                                    className='maternity-antenatalcare-edit-btn'
                                     onClick={() => openEditModal(index)}
                                 >
                                     Edit
@@ -190,6 +218,20 @@ const AntenatalCare = () => {
                 <div className="maternity-antenatalcare-modal" onClick={() => setShowAddVisitModal(false)}>
                     <div className="maternity-antenatalcare-modal-content" onClick={(e) => e.stopPropagation()}>
                         <h4>Add New Visit</h4>
+                        <div className="new-patient-regidter-modal-section select-patient-section">
+          <h4>Select Patient</h4>
+          <div className="antenatalmaturnity-modalform">
+            <label>Patient:</label>
+            <select value={selectedPatient} onChange={handlePatientSelect}>
+              <option value="">--Select Patient--</option>
+              {patients.map((patient) => (
+                <option key={patient.inPatientId} value={patient.inPatientId}>
+                  {patient.firstName} {patient.lastName}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
                         <div className='aaa' style={{ display: "flex" }}>
                             <div className='bbbb' style={{ display: "flex", flexDirection: "column", width: "90%" }}>
                                 {/* Modal form fields */}
@@ -292,7 +334,7 @@ const AntenatalCare = () => {
                                 </div>
                             </div>
                         </div>
-                        <button className='maternity-antenatalcare-submit-btn' onClick={handleAddVisit}>Submit</button>
+                        <button className='maternity-antenatalcare-btn' onClick={handleAddVisit}>Submit</button>
                     </div>
                 </div>
             )}

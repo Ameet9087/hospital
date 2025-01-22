@@ -1,0 +1,29 @@
+.DoctorBlockingTable-container{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.DoctorBlockingTable-addButton
+{
+    width:100% ;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.DoctorBlockingTable-btn
+{
+    width: 100px;
+    padding: 5px 10px;
+    color: white;
+    
+    background-color: var(--button-color);
+}
+.DoctorBlockingTable-addButton input[type="text"]
+{
+    width: 500px;
+    border: 1px solid gray;
+    padding: 5px;
+    border-radius: 5px;
+}

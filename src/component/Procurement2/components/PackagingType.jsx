@@ -6,6 +6,8 @@ import UpdatePackagingType from '../components/UpdatePackagingType';
 import './PackagingType.css';
 import CustomModal from '../../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../../api/api';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
 
 Modal.setAppElement('#root');
 
@@ -15,7 +17,9 @@ const PackagingType = () => {
   const [selectedPackagingType, setSelectedPackagingType] = useState(null);
   const [packagingTypes, setPackagingTypes] = useState([]);
 
-  const tableRef = useRef();  
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef=useRef(null);
+
 
   useEffect(() => {
     const fetchPackagingTypes = async () => {
@@ -47,11 +51,6 @@ const PackagingType = () => {
 
   const closeEditModal = () => setShowEditModal(false);
 
-  const handlePrint = useReactToPrint({
-    content: () => tableRef.current,
-    documentTitle: 'Packaging Types',
-  });
-
   const handleAddPackagingType = (newPackagingType) => {
     setPackagingTypes([...packagingTypes, newPackagingType]);
     closeAddModal();
@@ -63,6 +62,23 @@ const PackagingType = () => {
     ));
     closeEditModal();
   };
+
+  
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
+
 
   return (
     <div className="PackagingType-container">
@@ -77,20 +93,42 @@ const PackagingType = () => {
           </div>
           <div>
         <span>Showing {packagingTypes.length} / {packagingTypes.length} results</span>
+        <button className="PackagingType-print-button" onClick={handleExport}>Export</button>
         <button className="PackagingType-print-button" onClick={handlePrint} aria-label="Print">Print</button>
         </div>
       </div>
 
       <div ref={tableRef} className='table-container'>
-        <table className="PackagingType-table">
+      <table  ref={tableRef}>
           <thead>
             <tr>
-              <th>Packaging Type Name</th>
-              <th>Description</th>
-              <th>Is Active</th>
-              <th>Action</th>
+              {[
+               "Packaging Type Name",
+  "Description",
+  "Is Active",
+  "Action"
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
             </tr>
-          </thead>
+  </thead>
+
+
           <tbody>
             {packagingTypes.map((type) => (
               <tr key={type.id}>

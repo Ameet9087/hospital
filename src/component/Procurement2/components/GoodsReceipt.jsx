@@ -5,7 +5,9 @@ import FormInput from "../components/FormInput";
 import "./GoodsReceipt.css";
 import { API_BASE_URL } from "../../api/api";
 
-const GoodsReceipt = () => {
+const GoodsReceipt = ({goodReceipt}) => {
+  console.log(goodReceipt);
+  
   const [vendorBillDate, setVendorBillDate] = useState("");
   const [goodsReceiptDate, setGoodsReceiptDate] = useState("");
   const [vendorName, setVendorName] = useState("");
@@ -25,8 +27,6 @@ const GoodsReceipt = () => {
   const [items, setItems] = useState([
     {
       itemId:"",
-      category: "",
-      itemName: "",
       batchNo: "",
       expiryDate: "",
       quantity: 0,
@@ -40,6 +40,30 @@ const GoodsReceipt = () => {
       remarks: "",
     },
   ]);
+
+  useEffect(() => {
+    // Set vendor name from goodReceipt
+    setVendorName(goodReceipt?.vendor?.id || "");
+
+    // Map items from the request object
+    const updatedItems = goodReceipt?.items?.map((item) => ({
+      itemId: item?.item?.invItemId || 0,
+      batchNo: "", // Default value
+      expiryDate: "", // Default value
+      quantity: item?.quantity || 0,
+      freeQuantity: 0, // Default value
+      rate: item?.item?.standardRate || 0,
+      discountPercentage: 0, // Default value
+      vatPercentage: item?.item?.isVatApplicable ? 0 : 0, // Default value
+      ccChargePercentage: 0, // Default value
+      otherCharge: 0, // Default value
+      totalAmount: 0,
+      remarks: item?.itemRemark || "",
+    }));
+
+    // Update the items state
+    setItems(updatedItems || []);
+  }, [goodReceipt]);
 
   useEffect(() => {
     const calcSubTotal = items.reduce(
@@ -76,7 +100,6 @@ const GoodsReceipt = () => {
     ]);
   };
 
-  // Fetch vendors and items on component mount
   useEffect(() => {
     axios
       .get(`${API_BASE_URL}/vendors/getAllVendors`)
@@ -90,35 +113,36 @@ const GoodsReceipt = () => {
   }, []);
 
   
-
   const handleItemChange = (index, field, value) => {
     const newItems = [...items];
     newItems[index][field] = value;
+
+    // Recalculate totalAmount for the updated item
+    const subTotal = newItems[index].quantity * newItems[index].rate;
+    const discount = (subTotal * newItems[index].discountPercentage) / 100;
+    const vat = (subTotal * newItems[index].vatPercentage) / 100;
+    const ccCharge = (subTotal * newItems[index].ccChargePercentage) / 100;
+
+    newItems[index].totalAmount =
+      subTotal + vat + ccCharge + newItems[index].otherCharge - discount;
+
     setItems(newItems);
   };
   const handleVendorChange = (e) => {
-    setVendorName(e.target.value); // Set the selected vendor's ID
+    setVendorName(e.target.value); 
   };
 
   const handleItemSelect = (e, index) => {
     const selectedItem = itemlist.find(
       (item) => item.itemName === e.target.value
     );
+
     if (selectedItem) {
-      handleItemChange(index,"itemId",selectedItem.id);
-      handleItemChange(index, "category", selectedItem.category);
+      handleItemChange(index, "itemId", selectedItem.invItemId);
+      handleItemChange(index, "rate", selectedItem.standardRate);
+      handleItemChange(index, "vatPercentage", selectedItem.isVatApplicable ? 12 : 0); // Example VAT logic
+      handleItemChange(index, "remarks", selectedItem.remarks || "");
       handleItemChange(index, "itemName", selectedItem.itemName);
-      handleItemChange(index, "batchNo", selectedItem.batchNo);
-      handleItemChange(index, "expiryDate", selectedItem.expiryDate);
-      handleItemChange(index, "quantity", selectedItem.quantity);
-      handleItemChange(index, "freeQuantity", selectedItem.freeQuantity);
-      handleItemChange(index, "rate", selectedItem.rate);
-      handleItemChange(index, "discountPercentage", selectedItem.discountPercentage);
-      handleItemChange(index, "vatPercentage", selectedItem.vatPercentage);
-      handleItemChange(index, "ccChargePercentage", selectedItem.ccChargePercentage);
-      handleItemChange(index, "otherCharge", selectedItem.otherCharge);
-      handleItemChange(index, "totalAmount", selectedItem.totalAmount);
-      handleItemChange(index, "remarks", selectedItem.remarks);
     }
   };
 
@@ -148,7 +172,6 @@ const GoodsReceipt = () => {
       items,
     };
     console.log(data);
-    
     try {
       await axios.post(`${API_BASE_URL}/goods-receipts/create`, data);
       alert("Goods Receipt saved successfully!");
@@ -189,7 +212,7 @@ const GoodsReceipt = () => {
           <option value="">Select Vendor</option>
           {vendor.map((vendor) => (
             <option key={vendor.id} value={vendor.id}>
-              {vendor.vendorName} {/* Display vendor name */}
+              {vendor?.vendorName} 
             </option>
           ))}
         </select>

@@ -1,0 +1,105 @@
+.EquipmentGatePassOut-container {
+    padding: 10px;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+.EquipmentGatePassOut-add-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.EquipmentGatePassOut-add-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.EquipmentGatePassOut-search-bar{
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}  
+  .EquipmentGatePassOut-search-bar input {
+    padding: 5px;
+    font-size: var(--font-size);
+    width: 200px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  .EquipmentGatePassOut-search-bar i{
+    color:gray;
+    position: absolute;
+    right: 5px;  
+}
+.EquipmentGatePassOut-search-N-result{
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.EquipmentGatePassOut-results-info {
+  display: flex;
+  align-items: center;
+  /* padding-top: 10px; */
+}
+.EquipmentGatePassOut-results-info span {
+  /* display: flex;
+  align-items: center; */
+  /* padding-top: 10px; */
+  /* color: #008CBA; */
+  font-size: var(--font-size);
+  /* font-weight: bold; */
+  margin-right: 10px;
+}
+.EquipmentGatePassOut-edit-button, .EquipmentGatePassOut-deactivate-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 1px 5px;
+}
+
+.EquipmentGatePassOut-edit-button:hover, .EquipmentGatePassOut-deactivate-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+
+
+.EquipmentGatePassOut-print-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.EquipmentGatePassOut-print-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+

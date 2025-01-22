@@ -7,7 +7,10 @@ import AddPurchaseOrderDraft from "../components/AddPurchaseOrder";
 import PurchaseOrderDraftList from "../components/PurchaseOrderDraftList";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
-
+import * as XLSX from 'xlsx';
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import GoodsReceipt from "./GoodsReceipt";
+import PurchaseOrderView from "./PurchaseOrderView";
 const customStyles = {
   content: {
     top: "50%",
@@ -24,10 +27,17 @@ const customStyles = {
 
 function PurchaseOrder() {
   const [showCreatePO, setShowCreatePO] = useState(false);
-  const [showDraftModal, setShowDraftModal] = useState(false);
+  const [show, setShow] = useState(false);
   const [showDraftListModal, setShowDraftListModal] = useState(false);
+  const [selectedItem,setSelectedItem] =useState();
   const [data, setData] = useState([]);
+  const [goodReceipt,setGoodsReceipt]=useState({});
   const componentRef = useRef();
+ 
+
+const [columnWidths,setColumnWidths] = useState({});
+const tableRef=useRef(null);
+
 
   const handleCreatePOClick = () => {
     setShowCreatePO(true);
@@ -37,7 +47,8 @@ function PurchaseOrder() {
     setShowDraftModal(true);
   };
 
-  const handleViewDraftListClick = () => {
+  const handleViewDraftListClick = (item) => {
+    setSelectedItem(item)
     setShowDraftListModal(true); // Open draft list modal
   };
 
@@ -61,6 +72,28 @@ function PurchaseOrder() {
 
     fetchData();
   }, []);
+
+   const handleExport = () => {
+      if (tableRef.current) {
+        // Converts table to worksheet
+        const ws = XLSX.utils.table_to_sheet(tableRef.current);
+        const wb = XLSX.utils.book_new(); // Creates a new workbook
+        XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Adds the worksheet to the workbook
+        XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+      } else {
+        console.error('Table reference is missing.');
+      }
+    };
+  
+    const handlePrint = () => {
+      window.print(); 
+    };
+
+    const handleGoodsReceipt=(item)=>{
+      setGoodsReceipt(item);
+      setShow(true);
+    }
+    
 
   return (
     <>
@@ -86,10 +119,10 @@ function PurchaseOrder() {
             <span className="PurchaseOrder-results">
               Showing {data.length} results
             </span>
-            <button className="PurchaseOrder-export-button">Export</button>
+            <button className="PurchaseOrder-export-button"onClick={handleExport}>Export</button>
             <ReactToPrint
               trigger={() => (
-                <button className="PurchaseOrder-print-button">Print</button>
+                <button className="PurchaseOrder-print-button" onClick={handlePrint}> Print</button>
               )}
               content={() => componentRef.current}
             />
@@ -97,49 +130,67 @@ function PurchaseOrder() {
         </div>
 
         <div ref={componentRef}>
-          <table className="PurchaseOrder-po-table">
-            <thead>
-              <tr>
-                <th>PO No</th>
-                <th>PO Date</th>
-                <th>PR No</th>
-                <th>Vendor Name</th>
-                <th>Vendor Contact</th>
-                <th>Total Amount</th>
-                <th>PO Status</th>
-                <th>Verification Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
+        <table  ref={tableRef}>
+          <thead>
+            <tr>
+              {[
+                 "PO No",
+                 "PO Date",
+                 "PR No",
+                 "Vendor Name",
+                 "Vendor Contact",
+                 "Total Amount",
+                 "PO Status",
+                 "Verification Status",
+                 "Actions"
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+  </thead>
+
             <tbody>
               {data.length > 0 ? (
-                data.map((row) => (
+                data?.map((row) => (
                   <tr key={row.id}>
                     <td>{row.id}</td>
                     <td>{row.poDate}</td>
                     <td>PR{row.id}</td>
-                    <td>{row.vendor.vendorName}</td>
-                    <td>{row.vendor.contactNumber}</td>
+                    <td>{row?.vendor?.vendorName}</td>
+                    <td>{row?.vendor?.contactNumber}</td>
                     <td>{row.totalAmount}</td>
                     <td>{row.status}</td>
                     <td>{row.status}</td>
                     <td>
+                      <div className="PurchaseOrder-buttons">
                       <button
                         className="PurchaseOrder-view-button"
-                        onClick={() => {
-                          /* View logic here */
-                        }}
+                        onClick={() => handleGoodsReceipt(row)}
+                      >
+                        Add To Goods Receipt
+                      </button>
+                      <button
+                        className="PurchaseOrder-view-button"
+                        onClick={() =>{handleViewDraftListClick(row)} }
                       >
                         View
                       </button>
-                      <button
-                        className="PurchaseOrder-edit-button"
-                        onClick={() => {
-                          /* Edit logic here */
-                        }}
-                      >
-                        Edit
-                      </button>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -165,37 +216,15 @@ function PurchaseOrder() {
         <AddPurchaseOrderDraft />
       </CustomModal>
 
-      {/* Modal for starting a new draft */}
-      {/* <CustomModal
-        isOpen={showDraftModal}
-        onRequestClose={closeDraftModal}
-        style={customStyles}
-        contentLabel="Start New Draft Modal"
-      >
-        <button
-          onClick={closeDraftModal}
-          className="PurchaseOrder-close-modal-button"
-        >
-          Close
-        </button>
-        <AddPurchaseOrderDraft />
-      </CustomModal> */}
 
-      {/* Modal for View Draft List */}
-      {/* <CustomModal
-        isOpen={showDraftListModal}
-        onRequestClose={closeDraftListModal}
-        style={customStyles}
-        contentLabel="View Draft List Modal"
-      >
-        <button
-          onClick={closeDraftListModal}
-          className="PurchaseOrder-close-modal-button"
-        >
-          Close
-        </button>
-        <PurchaseOrderDraftList />
-      </CustomModal> */}
+      <CustomModal isOpen={show} onClose={()=>setShow(false)}>
+        <GoodsReceipt goodReceipt={goodReceipt}/>
+      </CustomModal>
+
+      <CustomModal isOpen={showDraftListModal} onClose={closeDraftListModal}>
+        <PurchaseOrderView item={selectedItem}/>
+
+      </CustomModal>
     </>
   );
 }

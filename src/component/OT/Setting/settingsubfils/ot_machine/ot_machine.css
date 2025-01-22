@@ -133,6 +133,7 @@
   
   .ot_machine_save {
     background-color: var(--button-color);
+    color: white;
   }
   
   .ot_machine_clear {

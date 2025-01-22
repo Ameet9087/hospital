@@ -65,14 +65,17 @@
 }
 
 .athensiarecordmodalform-save-btn {
+  background-color: #4CAF50; /* Green background color */
   color: white;
-  background-color: var(--button-color);
-  text-align: center;
-  padding: 5px;
-  text-decoration: none;
-  font-size: 16px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.athensiarecordmodalform-save-btn:hover {
+  background-color: #45a049; /* Darker green on hover */
 }
 
 
@@ -92,6 +95,7 @@
     border: 1px solid var(--button-hover-border-color);
   }
 
+  
 /* filter-section */
 .ot-filtersection {
   display: flex;

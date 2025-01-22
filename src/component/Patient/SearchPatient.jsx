@@ -19,7 +19,7 @@ function SearchPatient() {
 
   useEffect(() => {
     // Fetch patients from the API when the component mounts
-    axios.get(`${API_BASE_URL}/inpatients/getAllPatients`)
+    axios.get(`${API_BASE_URL}/patient-register/all`)
       .then(response => {
         setPatients(response.data);
         console.log(response.data);
@@ -50,13 +50,6 @@ function SearchPatient() {
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
-
-  const handlePageChange = (newPage) => {
-    if (newPage < 1) newPage = 1;
-    if (newPage > Math.ceil(filteredPatients.length / patientsPerPage)) newPage = Math.ceil(filteredPatients.length / patientsPerPage);
-    setCurrentPage(newPage);
-  };
-
   const startIndex = (currentPage - 1) * patientsPerPage;
   const endIndex = startIndex + patientsPerPage;
   const displayedPatients = filteredPatients.slice(startIndex, endIndex);
@@ -66,7 +59,7 @@ function SearchPatient() {
   };
 
   const handleEdit = (patient) => {    
-    navigate(`/patient/registerpatient#basic-info/${patient?.patientId}`, { state: { patient } });
+    navigate(`/patient/registerpatient#basic-info`, { state: { patient } });
   };
 
   return (
@@ -113,6 +106,7 @@ function SearchPatient() {
           <tr>
             {[
               "Serial No",
+              "UHID",
               "Patient Name",
               "Age/Sex",
               "Address",
@@ -139,10 +133,11 @@ function SearchPatient() {
           {filteredPatients.map((patient, index) => (
             <tr key={index}>
               <td>{startIndex + index + 1}</td>
+              <td>{patient.uhid}</td>
               <td>{patient.firstName} {patient.lastName}</td>
               <td>{patient.age} / {patient.gender}</td>
               <td>{patient.address}</td>
-              <td>{patient.phoneNumber}</td>
+              <td>{patient.mobileNumber}</td>
               <td>
                 <button onClick={() => handleEdit(patient)} className="action-btn edit">Edit</button>
               </td>

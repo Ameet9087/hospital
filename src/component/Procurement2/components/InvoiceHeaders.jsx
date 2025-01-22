@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import "./InvoiceHeaders.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import InvoiceHeaderForm from "../components/AddInvoiceHeader";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import * as XLSX from 'xlsx';
 
 const InvoiceHeaders = () => {
   const [invoiceHeaders, setInvoiceHeaders] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef=useRef(null);
+
 
   const fetchInvoiceHeaders = async () => {
     try {
@@ -26,6 +33,23 @@ const InvoiceHeaders = () => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
+
 
   return (
     <div className="InvoiceHeaders">
@@ -48,30 +72,48 @@ const InvoiceHeaders = () => {
       </div>
       <div>
         <span>Showing 0 / 0 results</span>
-        <button className="InvoiceHeaders__print-button">Print</button>
+        <button className="InvoiceHeaders__print-button" onClick={handleExport}>Export</button>
+        <button className="InvoiceHeaders__print-button"onClick={handlePrint}>Print</button>
         </div>
       </div>
 
       {/* Table Section */}
-      <table className="InvoiceHeaders__table">
-        <thead>
-          <tr>
-            {[
-              "Hospital Name",
-              "Address",
-              "Telephone",
-              "Email",
-              "Pin",
-              "DDA",
-              "Header Description",
-              "Created Date",
-              "Is Active",
-              "Action",
-            ].map((header) => (
-              <th key={header}>{header}</th>
-            ))}
-          </tr>
-        </thead>
+      <table  ref={tableRef}>
+          <thead>
+            <tr>
+              {[
+                 "Hospital Name",
+                 "Address",
+                 "Telephone",
+                 "Email",
+                 "Pin",
+                 "DDA",
+                 "Header Description",
+                 "Created Date",
+                 "Is Active",
+                 "Action"
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+  </thead>
+
+
         <tbody>
           {invoiceHeaders.length > 0 ? (
             invoiceHeaders.map((header) => (

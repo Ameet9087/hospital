@@ -4,8 +4,8 @@ import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 
 const LabReportResult = ({ reportData, onClose }) => {
-    console.log(reportData);
-    
+  console.log(reportData);
+
   const [labResult, setLabResult] = useState(null);
   useEffect(() => {
     const fetchLabResult = async () => {
@@ -56,15 +56,17 @@ const LabReportResult = ({ reportData, onClose }) => {
               <div>
                 <p>
                   Name:{" "}
-                  {labResult?.labRequestDTO?.newPatientVisitDTO?.firstName ||
-                    labResult?.labRequestDTO?.patientDTO?.firstName}{" "}
-                  {labResult?.labRequestDTO?.newPatientVisitDTO?.lastName ||
-                    labResult?.labRequestDTO?.patientDTO?.lastName}
+                  {labResult?.labRequestDTO?.outPatientDTO?.patient
+                    ?.firstName ||
+                    labResult?.labRequestDTO?.patientDTO?.patient
+                      .firstName}{" "}
+                  {labResult?.labRequestDTO?.outPatientDTO?.patient?.lastName ||
+                    labResult?.labRequestDTO?.patientDTO?.patient?.lastName}
                 </p>
                 <p>
                   Address:{" "}
-                  {labResult?.labRequestDTO?.newPatientVisitDTO?.address ||
-                    labResult?.labRequestDTO?.patientDTO?.address}
+                  {labResult?.labRequestDTO?.outPatientDTO?.patient?.address ||
+                    labResult?.labRequestDTO?.patientDTO?.patient?.address}
                 </p>
                 {/* <p>
                   Prescriber Name:{" "}
@@ -78,17 +80,16 @@ const LabReportResult = ({ reportData, onClose }) => {
               <div>
                 <p>
                   Patient No.:{" "}
-                  {labResult?.labRequestDTO?.newPatientVisitDTO
-                    ?.newPatientVisitId ||
-                    labResult?.labRequestDTO?.patientDTO?.patientId}
+                  {labResult?.labRequestDTO?.outPatientDTO?.outPatientId ||
+                    labResult?.labRequestDTO?.patientDTO?.inPatientId}
                 </p>
                 <p>
                   Age/Sex:{" "}
-                  {labResult?.labRequestDTO?.newPatientVisitDTO?.age ||
-                    labResult?.labRequestDTO?.patientDTO?.age}{" "}
+                  {labResult?.labRequestDTO?.outPatientDTO?.patient?.age ||
+                    labResult?.labRequestDTO?.patientDTO?.patient?.age}{" "}
                   {"Y / "}
-                  {labResult?.labRequestDTO?.newPatientVisitDTO?.gender ||
-                    labResult?.labRequestDTO?.patientDTO?.gender}
+                  {labResult?.labRequestDTO?.outPatientDTO?.patient?.gender ||
+                    labResult?.labRequestDTO?.patientDTO?.patient.gender}
                 </p>
                 <p>
                   Collection Date:{" "}

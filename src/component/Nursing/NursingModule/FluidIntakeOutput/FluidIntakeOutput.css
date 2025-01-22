@@ -1,0 +1,160 @@
+
+.FluidIntakeOutput-form-container{
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    padding: 4px;
+    font-size: 12px;
+    height: auto;
+}
+.FluidIntakeOutput-header{
+    background-color: var(--upperBar-bg-color);
+      color: white;
+      padding: 8px;
+      margin-bottom: 4px;
+      font-size: var(--heading-font);
+      border-radius: 7px;
+      display: flex;
+      justify-content: space-between;
+}
+.FluidInTakeOutput-viewBtn{
+    border: none;
+    background-color: white;
+    padding: 2px 5px;
+    border-radius: 7px;
+}
+.FluidIntakeOutput-Section-header{
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    border-radius: 7px;
+    padding: 4px 8px;
+    font-size: var(--heading-font);
+    margin: 5px;
+    margin-bottom: 10px;
+}
+.FluidIntakeOutput-section-content{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 5px;
+}
+.FluidIntakeOutput-form-section {
+    padding: 8px;
+    width: 100%;
+    height: 500px;
+    border: 1px solid #ccc;
+    background-color: white;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+.FluidIntakeOutput-ViewHeader h3{
+    font-size: 18px;
+}
+
+/* Custom Scrollbar Styling */
+.FluidIntakeOutput-form-section::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.FluidIntakeOutput-form-section::-webkit-scrollbar-thumb {
+    background: #888; /* Scrollbar color */
+    border-radius: 4px; /* Round edges */
+}
+
+.FluidIntakeOutput-form-section::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color on hover */
+}
+
+.FluidIntakeOutput-form-section::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track background */
+    border-radius: 4px; /* Round edges for the track */
+}
+
+.FluidIntakeOutput-form-content h2{
+    font-size: var(--heading-font);
+    padding: 5px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+.FluidIntakeOutput-section-content h3{
+    font-size: var(--heading-font);
+    margin-bottom: 20px;
+}
+.FluidIntakeOutput-data,.FluidIntakeOutput-form-search-icon{
+    display: flex;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+.FluidIntakeOutput-data label,.FluidIntakeOutput-form-search-icon label{
+    width: 300px;
+   font-size: var(--font-size);
+}
+.FluidIntakeOutput-data input,.FluidIntakeOutput-data select,.FluidIntakeOutput-data textarea{
+    width: 100%;
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.FluidIntakeOutput-form-search-icon input{
+    width: 90%;
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.FluidIntakeOutput-search-icon{
+    top: 5%;
+}
+
+.FluidIntakeOutput-navbar-btns{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+    overflow-y: auto;
+}
+.FluidIntakeOutput-navbar button{
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+}
+.FluidIntakeOutput-navbar button:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color); 
+}
+
+.FluidIntakeOutput-viewCon{
+    height: 600px;
+}
+
+.FluidIntakeOutput-table-container {
+    max-height: 220px;
+    overflow-y: auto; 
+    margin-bottom: 20px;
+    border-radius: 4px; 
+    background-color: #f9f9f9; 
+}
+
+/* Custom Scrollbar Styling for Tables */
+.FluidIntakeOutput-table-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.FluidIntakeOutput-table-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.FluidIntakeOutput-table-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.FluidIntakeOutput-table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}

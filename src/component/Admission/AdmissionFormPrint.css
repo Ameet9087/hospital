@@ -16,7 +16,9 @@
     margin-left: 5px;
     margin-right: 5px; 
 }
-
+.AdmissionFormPrint-mainSection{
+    border: 1px solid black;
+}
 
 .AdmissionFormPrint-heading{
     text-align: center;
@@ -41,7 +43,7 @@
    
     display: flex;
     justify-content: space-around;
-    border-bottom: 1px solid black;
+    border-bottom: none;
     padding: 5px;
    
 }
@@ -50,7 +52,7 @@
   border-collapse: collapse;
 }
 .AdmissionFormPrint-mainSection-subtable input{
-    border: 1px solid black;
+    border: none;
 }
 .AdmissionFormPrint-mainSection-table table tr th{
     text-align: start;
@@ -60,29 +62,29 @@
     width: 100%;
 }
 .AdmissionFormPrint-mainSection-subtable p{
-    border: 1px solid black;
+    border: none;
     width: 99%;
     margin-top: 5px;
     text-align: center;
     font-weight: bold;
 }
 .AdmissionFormPrint-mainSection-subtable-input{
-    border: 1px solid black;
+    border: none;
     width: 99%;
     margin-top: 5px;
 }
 .AdmissionFormPrint-mainSection-subtable-joint{
-    border: 1px solid black;
+    border: none;
     padding: 5px;
 }
 .AdmissionFormPrint-mainSection-fiiledByDoctor{
     display: flex;
     justify-content: space-between;
-    border: 1px solid black;
+    border: none;
     margin: 10px;
 }
 .AdmissionFormPrint-mainSection-fiiledByDoctor-section{
-    border: 1px solid black;
+    border: none;
     width: 80%;
 }
 .AdmissionFormPrint-mainSection-fiiledByDoctor-section-icd{
@@ -93,7 +95,7 @@
     
 }
 .AdmissionFormPrint-mainSection-fiiledByDoctor-section-icd p{
-    border-bottom: 1px solid black;
+    border-bottom: none;
 }
 .AdmissionFormPrint-mainSection-fiiledByDoctor-a{
   align-self: center;
@@ -117,10 +119,14 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    border: 1px solid  black;
+    border:none;
     margin: 10px;
 }
   
+.AdmissionFormPrint-subsection input{
+    font-size: 14px;
+    padding:0 10px;
+}
   
   
 .AdmissionFormPrint-form-section label {
@@ -135,6 +141,7 @@
   
 .AdmissionFormPrint-checkbox-group input {
     margin-right: 5px;
+    font-size: 14px;
 }
   
 .AdmissionFormPrint-consent-details {

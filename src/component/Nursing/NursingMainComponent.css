@@ -401,3 +401,19 @@
   color: var(--button-hover-text-color);
   background-color: var(--button-hover-background-color);
 }
+
+.Actions-actions{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.Actions-btn{
+  border: none;
+  padding: 3px 5px;
+  border-radius: 7px;
+}
+.Actions-consumption{
+  background-color: #28a745;
+  color: white;
+}

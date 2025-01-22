@@ -11,8 +11,7 @@ const Pur = () => {
           <input type="date" defaultValue="2024-07-11" />
           <label>To:</label>
           <input type="date" defaultValue="2024-07-29" />
-          <button className="PurchaseReport-order-star-button">★</button>
-          <button className="PurchaseReport-order-more-button">-</button>
+        
         </div>
         <div className="PurchaseReport-order-vendor-item-filters">
           <div>
@@ -27,18 +26,19 @@ const Pur = () => {
               <option>Select Item Name</option>
             </select>
           </div>
-        </div>
-        <div className="PurchaseReport-order-item-subcategory-filters">
           <div>
             <label>Item Code:</label>
             <input type="text" placeholder="Enter Item Code" />
           </div>
+        </div>
+        <div className="PurchaseReport-order-item-subcategory-filters">
+         
           <div>
             <label>Sub-Category:</label>
             <input type="text" placeholder="Enter Sub-Category" />
           </div>
-        </div>
-        <div className="PurchaseReport-order-item-type-filter">
+     
+        <div >
           <input type="radio" id="all" name="itemType" defaultChecked />
           <label htmlFor="all">All</label>
           <input type="radio" id="consumables" name="itemType" />
@@ -46,13 +46,19 @@ const Pur = () => {
           <input type="radio" id="capitalGoods" name="itemType" />
           <label htmlFor="capitalGoods">Capital Goods</label>
         </div>
-        <div className="PurchaseReport-order-search-bar">
-          <input type="text" placeholder="Search" />
-          <button>🔍</button>
-        </div>
+        <div className="purchase-re-btn">
         <button className="PurchaseReport-order-report-button">
           🔍 Report
         </button>
+        </div>
+        </div>
+       
+        <div className="PurchaseReport-order-search-bar">
+          <input type="text" placeholder="Search" />
+        
+        </div>
+      
+      
       </div>
       <div className="PurchaseReport-order-results">
         <div className="PurchaseReport-order-results-header">
@@ -85,14 +91,7 @@ const Pur = () => {
             </tr>
           </tbody>
         </table>
-        <div className="PurchaseReport-order-pagination">
-          <span>0 to 0 of 0</span>
-          <button disabled>First</button>
-          <button disabled>Previous</button>
-          <span>Page 0 of 0</span>
-          <button disabled>Next</button>
-          <button disabled>Last</button>
-        </div>
+      
       </div>
     </div>
   );

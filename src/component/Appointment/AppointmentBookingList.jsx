@@ -32,7 +32,7 @@ const AppointmentBookingList = () => {
   const fetchAppointments = () => {
     console.log("Fetching appointments..."); // Debug log
     const url = new URL(`${API_BASE_URL}/appointments/between?fromDate=${dateFrom}&toDate=${dateTo}`);
-    
+    console.log(url);
     fetch(url)
       .then((response) => {
         if (!response.ok) {
@@ -175,11 +175,11 @@ const AppointmentBookingList = () => {
         <td className={`appointments__status--${appointment.status}`}>
           {appointment?.status}
         </td>
-        <td>{appointment.appointmentDate}</td>
-        <td>{appointment.appointmentTime}</td>
-        <td>{appointment.id}</td>
-        <td>{`${appointment.firstName} ${appointment.middleName} ${appointment.lastName}`}</td>
-        <td>{appointment.mobileNo}</td>
+        <td>{appointment?.appointmentDate}</td>
+        <td>{appointment?.appointmentTime}</td>
+        <td>{appointment?.outPatientId}</td>
+        <td>{`${appointment?.patient?.firstName} ${appointment?.patient?.middleName} ${appointment?.patient?.lastName}`}</td>
+        <td>{appointment?.patient?.contactNumber}</td>
         <td>
           {appointment?.addDoctor != null
             ? `${appointment?.addDoctor?.doctorName}`
@@ -228,8 +228,9 @@ const AppointmentBookingList = () => {
             className="appointments__dropdown"
           >
             <option>All</option>
-            <option value="newPatient">New Patient</option>
-            <option value="oldPatient">Old Patient</option>
+            <option value="New Patient">New Patient</option>
+            <option value="Old patient">Old Patient</option>
+            <option value="Follow up patient">Follow up patient</option>
           </select>
         </div>
         <div className="appointments__filter-group">

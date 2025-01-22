@@ -69,7 +69,7 @@ const Procurementmain = () => {
             Settings
           </NavLink>
         </li>
-        <li className="RoutesProcurement-li">
+        {/* <li className="RoutesProcurement-li">
           <NavLink
             to="/procurement/reports"
             className={({ isActive }) =>
@@ -78,7 +78,7 @@ const Procurementmain = () => {
           >
             Reports
           </NavLink>
-        </li>
+        </li> */}
       </ul>
     </nav>
       <div>
@@ -102,7 +102,7 @@ const Procurementmain = () => {
             path="/goodsReceiptTracking/"
             element={<GoodsReceiptTracking />}
           />
-          <Route path="/reports/*" element={<Reports />} />
+          {/* <Route path="/reports/*" element={<Reports />} /> */}
           {/* Ensure to use wildcard for nested routes */}
         </Routes>
       </div>

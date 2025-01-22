@@ -1,0 +1,395 @@
+.ReplacementInstrumentsPopUp-container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 5px;
+    background-color: var(--background-color);
+}
+  
+.ReplacementInstrumentsPopUp-header {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 5px;
+    font-size: var(--heading-font);
+    border-radius: 5px 5px 0 0;
+}
+  
+.ReplacementInstrumentsPopUp-form-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    background-color: white;
+    padding: 5px;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+  
+.ReplacementInstrumentsPopUp-form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+  
+.ReplacementInstrumentsPopUp-form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 32px;
+}
+  
+.ReplacementInstrumentsPopUp-label {
+    width: 130px;
+    font-size: var(--font-size);
+    color: black;
+}
+  
+.ReplacementInstrumentsPopUp-separator {
+    color: #718096;
+}
+  
+.ReplacementInstrumentsPopUp-input-field {
+    flex: 1;
+    padding: 5px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: var(--font-size);
+    transition: border-color 0.2s;
+}
+  
+.ReplacementInstrumentsPopUp-input-field:focus {
+    outline: none;
+    border-color: #008cba;
+    box-shadow: 0 0 0 2px rgba(22, 160, 133, 0.1);
+}
+  
+.ReplacementInstrumentsPopUp-date-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+  
+.ReplacementInstrumentsPopUp-calendar-icon {
+    width: 20px;
+    height: 20px;
+    color: black;
+    cursor: pointer;
+}
+  
+.ReplacementInstrumentsPopUp-calendar-icon:hover {
+    color: #16a085;
+}
+  
+.ReplacementInstrumentsPopUp-section-header {
+    background-color: var(--upperBar-bg-color);
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    color: white;
+    border-radius: 5px;
+}
+  
+.ReplacementInstrumentsPopUp-format-section {
+    margin-top: 10px;
+    padding: 5px;
+    background-color: white;
+    border-radius: 5px;
+}
+  
+.ReplacementInstrumentsPopUp-file-upload {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+  
+.ReplacementInstrumentsPopUp-btn-secondary {
+    padding: 5px 10px;
+    background-color: #e2e8f0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    transition: background-color 0.2s;
+}
+  
+.ReplacementInstrumentsPopUp-btn-secondary:hover {
+    background-color: #cbd5e0;
+}
+  
+.ReplacementInstrumentsPopUp-tabs-section {
+    margin-top: 10px;
+}
+  
+.ReplacementInstrumentsPopUp-tab-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+  
+.ReplacementInstrumentsPopUp-tab-btn {
+    padding: 5px 10px;
+    background-color: #e2e8f0;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 5px 5px 0 0;
+}
+  
+.ReplacementInstrumentsPopUp-tab-btn:hover {
+    background-color: #cbd5e0;
+}
+  
+.ReplacementInstrumentsPopUp-tab-btn.active {
+    background-color: #16a085;
+    color: white;
+}
+  
+.ReplacementInstrumentsPopUp-table-container {
+    background-color: white;
+    padding: 10px;
+    border-radius: 0 5px 5px 5px;
+}
+  
+.ReplacementInstrumentsPopUp-table-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: var(--font-size);
+    color: black;
+}
+  
+.ReplacementInstrumentsPopUp-btn-add {
+    color: #16a085;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: color 0.2s;
+}
+  
+.ReplacementInstrumentsPopUp-btn-add:hover {
+    color: #13896f;
+    text-decoration: underline;
+}
+  
+.ReplacementInstrumentsPopUp-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 5px;
+    overflow: hidden;
+}
+  
+.ReplacementInstrumentsPopUp-data-table th,
+.ReplacementInstrumentsPopUp-data-table td {
+    border: 1px solid gray;
+    padding: 5px;
+    text-align: left;
+}
+  
+.ReplacementInstrumentsPopUp-data-table th {
+    background-color: #f7fafc;
+    color: black;
+    font-size: var(--font-size);
+}
+  
+.ReplacementInstrumentsPopUp-data-table tr:hover {
+    background-color: #f7fafc;
+}
+  
+.ReplacementInstrumentsPopUp-data-table input,
+.ReplacementInstrumentsPopUp-data-table select {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: var(--font-size);
+}
+  
+.ReplacementInstrumentsPopUp-data-table input:focus,
+.ReplacementInstrumentsPopUp-data-table select:focus {
+    outline: none;
+    border-color: #16a085;
+    box-shadow: 0 0 0 2px rgba(22, 160, 133, 0.1);
+}
+  
+.ReplacementInstrumentsPopUp-btn-delete {
+    color: red;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+  
+.ReplacementInstrumentsPopUp-btn-delete:hover {
+    color: #c53030;
+    text-decoration: underline;
+}
+  
+/* Required field indicator */
+.ReplacementInstrumentsPopUp-label:has(+ .ReplacementInstrumentsPopUp-separator + .ReplacementInstrumentsPopUp-input-field[required])::after {
+    content: "*";
+    color: #e53e3e;
+    margin-left: 5px;
+}
+
+/* =========================================================================== */
+.ReplacementInstrumentsPopUp-input-field {
+    width: 100%; /* Adjust width as needed */
+    font-size: var(--font-size); /* Adjust font size as needed */
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .ReplacementInstrumentsPopUp-input-field:focus {
+    outline: none;
+    border-color: #008cba; /* Highlight color on focus */
+    box-shadow: 0 0 3px rgba(0, 140, 186, 0.5); /* Optional: glowing effect */
+  }
+  
+  .ReplacementInstrumentsPopUp-input-field option {
+    color: black;
+    background-color: white;
+  }
+  
+
+  .ReplacementInstrumentsPopUp-status {
+    display: flex;
+    align-items: center;
+  }
+  
+  .ReplacementInstrumentsPopUp-label {
+    margin-right: 10px; /* Space between the label and the radio buttons */
+  }
+  
+  .ReplacementInstrumentsPopUp-radio-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .ReplacementInstrumentsPopUp-radio-buttons input {
+    margin-right: 5px; /* Space between the radio button and its label */
+  }
+  
+  .ReplacementInstrumentsPopUp-radio-buttons label {
+    margin-right: 20px; /* Space between the two labels */
+  }
+  
+
+
+  .ReplacementInstrumentsPopUp-btn-container {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    align-items: center; /* Center the buttons vertically if needed */
+    gap: 10px; /* Space between buttons */
+    margin-top: 10px; /* Add some spacing from the content above */
+  }
+  
+  .ReplacementInstrumentsPopUp-btn {
+    padding: 5px 10px;
+    font-size: var(--font-size);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .ReplacementInstrumentsPopUp-btn:first-child {
+    background-color: red; /* Submit button color */
+  }
+  
+  .ReplacementInstrumentsPopUp-btn:last-child {
+    background-color: green; /* Close button color */
+  }
+  
+  .ReplacementInstrumentsPopUp-btn:hover {
+    opacity: 0.8; /* Slight fade effect on hover */
+  }
+  
+
+
+
+  
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .ReplacementInstrumentsPopUp-form-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .ReplacementInstrumentsPopUp-table-container {
+        overflow-x: auto;
+    }
+    
+    .ReplacementInstrumentsPopUp-data-table {
+        min-width: 800px;
+    }
+}
+  
+@media (max-width: 640px) {
+    .ReplacementInstrumentsPopUp-container {
+        padding: 10px;
+    }
+    
+    .ReplacementInstrumentsPopUp-form-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .ReplacementInstrumentsPopUp-label {
+        width: 100%;
+    }
+    
+    .ReplacementInstrumentsPopUp-input-field {
+        width: 100%;
+    }
+    
+    .ReplacementInstrumentsPopUp-file-upload {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .ReplacementInstrumentsPopUp-tab-buttons {
+        flex-direction: column;
+    }
+    
+    .ReplacementInstrumentsPopUp-tab-btn {
+        width: 100%;
+        border-radius: 4px;
+    }
+}
+  
+/* Print styles */
+@media print {
+    .ReplacementInstrumentsPopUp-container {
+        padding: 0;
+        max-width: none;
+    }
+    
+    .ReplacementInstrumentsPopUp-btn-add,
+    .ReplacementInstrumentsPopUp-btn-delete,
+    .ReplacementInstrumentsPopUp-btn-secondary {
+        display: none;
+    }
+    
+    .ReplacementInstrumentsPopUp-table-container {
+        background-color: white;
+    }
+    
+    .ReplacementInstrumentsPopUp-data-table {
+        border: 1px solid #000;
+    }
+    
+    .ReplacementInstrumentsPopUp-data-table th,
+    .ReplacementInstrumentsPopUp-data-table td {
+        border: 1px solid #000;
+    }
+}

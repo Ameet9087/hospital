@@ -7,6 +7,9 @@ import { useReactToPrint } from 'react-to-print'; // Import for print functional
 import './AccountHead.css';
 import CustomModal from '../../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../../api/api';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
+
 Modal.setAppElement('#root'); // Set the app element for accessibility
 
 const AccountHead = () => {
@@ -14,7 +17,10 @@ const AccountHead = () => {
   const [accountHeads, setAccountHeads] = useState([]);
   const [selectedAccountHead, setSelectedAccountHead] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
-  const tableRef = useRef(); // Ref for the table to be printed
+
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef=useRef(null);
+
 
   useEffect(() => {
     // Fetch account heads from the API
@@ -31,10 +37,7 @@ const AccountHead = () => {
     fetchAccountHeads();
   }, []); // Empty dependency array means this effect runs once on mount
 
-  const handlePrint = useReactToPrint({
-    content: () => tableRef.current, // Reference to the content to be printed
-    documentTitle: 'Account Heads', // Title for the print document
-  });
+ 
 
   const openAddModal = () => setShowAddModal(true);
   const closeAddModal = () => setShowAddModal(false);
@@ -57,6 +60,22 @@ const AccountHead = () => {
     closeEditModal();
   };
 
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
+
+
   return (
     <div className="account-head-container">
       <div className="account-head-header">
@@ -70,23 +89,43 @@ const AccountHead = () => {
         </div>
           <div>
           Showing {accountHeads.length} / {accountHeads.length} results
+          <button className="account-head-print-button"onClick={handleExport}>Export</button>
           <button className="account-head-print-button" onClick={handlePrint}>
             Print
           </button>
           </div>
         </div>
 
-      {/* Table of account heads */}
       <div ref={tableRef} className='table-container'>
-        <table className="account-head-table">
+      <table  ref={tableRef}>
           <thead>
             <tr>
-              <th>Account Head Name</th>
-              <th>Description</th>
-              <th>Is Active</th>
-              <th>Action</th>
+              {[
+               "Account Head Name",
+  "Description",
+  "Is Active",
+  "Action"
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
             </tr>
-          </thead>
+  </thead>
+
           <tbody>
             {accountHeads.length > 0 ? (
               accountHeads.map((accountHead, index) => (

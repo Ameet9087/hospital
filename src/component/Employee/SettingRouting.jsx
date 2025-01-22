@@ -28,6 +28,12 @@ import PaytypeMaster from "./IPMaster/PayTypeMaster/PaytypeMaster";
 import Roominfo from "./IPMaster/Rooms/Roominfo";
 import DoctorMaster from "./DoctorMaster/Doctormaster"
 import ServiceMaster from './ServiceMaster/ServiceMaster';
+import SOCMaster from "./SOCMaster/SocMaster"
+import Location from "./LocationMaster/Location"
+import Dgmaster from './DGMasters/dgmaster';
+import Specialisations from './Specialisations/Specialisations';
+import HospitalSpecialisation from './Specialisations/HospitalSpecialisation';
+import HospitalSpecialityGroup from './SpecialityGroup/HospitalSpecialityGroup';
 
 
 const SettingRouting = () => {
@@ -47,22 +53,23 @@ const SettingRouting = () => {
     <Route path="/adt/manage-bed" element = { <ManageBed/>}/>
     <Route path="/radiology/manage-imaging-type" element={<ManageImagingType/>}/>
     <Route path="/radiology/manage-imaging-item" element={<ManageImagingItem/>}/>
-    <Route path="manage-radiology-template" element={<ManageRadiologyTempltate/>}/>
-    <Route path="default-signatories" element={<DefaultSignatories/>}/>
+    <Route path="/radiology/manage-radiology-template" element={<ManageRadiologyTempltate/>}/>
+    <Route path="/radiology/default-signatories" element={<DefaultSignatories/>}/>
     <Route path='/geolocation/manage-country' element={<Countrymaster/>}></Route>
     <Route path='/geolocation/manage-state' element={<StateMaster/>}></Route>
     <Route path='/geolocation/manage-city' element={<CityMaster/>}></Route>
     <Route path='/doctor/add-doctor' element={<DoctorMaster/>}/>
-
+    <Route path='/dgmaster/create-dgmaster' element={<Dgmaster/>}/>
+    <Route path='/specialisations/create-specialisations' element={<HospitalSpecialisation/>}/>
+    <Route path='/hospitalSpecialityGroup/create-hospitalSpecialityGroup' element={<HospitalSpecialityGroup/>}/>
     <Route path="/ipmaster/IP-master-room" element={<Rooms />} />
     <Route path="/ipmaster/IP-master-Floor" element={<Floor />} />
     <Route path="/ipmaster/IP-master-Beds" element={<Beds />} />
     <Route path="/ipmaster/IP-master-Pay-type-master" element={<PaytypeMaster />}/>
     <Route path="/ipmaster/IP-master-room-info" element={<Roominfo />} />
         <Route path="/serviceMaster/serviceMaster" element={<ServiceMaster />} />
-
-
-
+<Route path='/locationmaster/locationform' element={<Location/>}/>
+    <Route path='/socmaster/socform' element={<SOCMaster/>}/>
         {/* <Route
           path="/ipmaster/IP-master-OTPackageMaster"
           element={<OTPackageMaster />}

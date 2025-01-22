@@ -1,0 +1,105 @@
+.newCondemnationReasonMaster-container {
+    padding: 10px;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+.newCondemnationReasonMaster-add-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.newCondemnationReasonMaster-add-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.newCondemnationReasonMaster-search-bar{
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}  
+  .newCondemnationReasonMaster-search-bar input {
+    padding: 5px;
+    font-size: var(--font-size);
+    width: 200px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  .newCondemnationReasonMaster-search-bar i{
+    color:gray;
+    position: absolute;
+    right: 5px;  
+}
+.newCondemnationReasonMaster-search-N-result{
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.newCondemnationReasonMaster-results-info {
+  display: flex;
+  align-items: center;
+  /* padding-top: 10px; */
+}
+.newCondemnationReasonMaster-results-info span {
+  /* display: flex;
+  align-items: center; */
+  /* padding-top: 10px; */
+  /* color: #008CBA; */
+  font-size: var(--font-size);
+  /* font-weight: bold; */
+  margin-right: 10px;
+}
+.newCondemnationReasonMaster-edit-button, .newCondemnationReasonMaster-deactivate-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 1px 5px;
+}
+
+.newCondemnationReasonMaster-edit-button:hover, .newCondemnationReasonMaster-deactivate-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+
+
+.newCondemnationReasonMaster-print-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.newCondemnationReasonMaster-print-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+

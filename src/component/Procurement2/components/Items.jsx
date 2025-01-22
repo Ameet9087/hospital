@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef} from "react";
 import axios from "axios"; // For API call
 import "./Items.css";
 import AddItem from "../components/AddItem";
 import UpdateItem from "../components/UpdateItem";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
-
+import * as XLSX from 'xlsx';
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 const ItemList = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -13,6 +14,10 @@ const ItemList = () => {
   const [items, setItems] = useState([]); // State to store fetched items
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef=useRef(null);
 
   // Fetch items from API on component mount
   useEffect(() => {
@@ -51,6 +56,23 @@ const ItemList = () => {
     setSelectedItem(null);
   };
 
+
+
+  
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
   return (
     <div className="ItemList-item-list-container">
       <div className="ItemList-header">
@@ -62,28 +84,50 @@ const ItemList = () => {
           <input type="text" placeholder="Search" />
         </div>
         <div className="ItemList-results-info">
-          <button className="ItemList-export-button">Export</button>
-          <button className="ItemList-Emergencyprint-button">Print</button>
+        <span>Showing 0 / 0 results</span>
+          <button className="ItemList-export-button"onClick={handleExport}>Export</button>
+          <button className="ItemList-Emergencyprint-button"onClick={handlePrint}>Print</button>
         </div>
         </div>
       </div>
-        <table className="ItemList-item-table">
+      <table  ref={tableRef}>
           <thead>
             <tr>
-              <th>Item Type</th>
-              <th>Subcategory Name</th>
-              <th>Item Name</th>
-              <th>Item Code</th>
-              <th>Unit</th>
-              <th>Description</th>
-              <th>Min Stock</th>
-              <th>Standard Rate</th>
-              <th>Is VAT Applicable</th>
-              <th>Is Active</th>
-              <th>Inventory Type</th>
-              <th>Action</th>
+              {[
+               "Item Type",
+  "Subcategory Name",
+  "Item Name",
+  "Item Code",
+  "Unit",
+  "Description",
+  "Min Stock",
+  "Standard Rate",
+  "Is VAT Applicable",
+  "Is Active",
+  "Inventory Type",
+  "Action"
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
             </tr>
-          </thead>
+  </thead>
+
+
           <tbody>
             {items.map((item) => (
               <tr key={item.id}>

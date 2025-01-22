@@ -64,7 +64,6 @@ const MaterializedSalesView = () => {
     }
   ];
 
-  // Handler to show the report
   const handleShowReport = () => {
     setShowTable(true);
   };
@@ -82,9 +81,9 @@ const MaterializedSalesView = () => {
           <label>To:</label>
           <input type="date" value="2024-08-13" />
         </div>
-        <button className="MaterializedSalesView-star-button">☆</button>
+        {/* <button className="MaterializedSalesView-star-button">☆</button>
         <button className="MaterializedSalesView-minus-button">-</button>
-        <button className="MaterializedSalesView-show-report-button" onClick={handleShowReport}>Show Report</button>
+        <button className="MaterializedSalesView-show-report-button" onClick={handleShowReport}>Show Report</button> */}
       </div>
       
       <div className="MaterializedSalesView-search-bar">

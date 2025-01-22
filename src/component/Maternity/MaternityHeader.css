@@ -53,6 +53,7 @@
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  margin: 0 5px
 }
 
 .maternity-header-button:hover {

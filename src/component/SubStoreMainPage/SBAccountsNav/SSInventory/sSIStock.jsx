@@ -53,16 +53,9 @@ function SSIStock() {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-         // Filter based on store
-        // const sortedData = data.sort((a, b) => {
-        //   return sortDirection === 'asc'
-        //     ? a.storeName.localeCompare(b.storeName)
-        //     : b.storeName.localeCompare(a.storeName);
-        // });
-
         setRequisitions(data);
         // Filter requisitions with status 'Approved'
-        setFilteredRequisitions(data.filter(req => req.status === 'Approved'));
+        // setFilteredRequisitions(data.filter(req => req.status === 'Approved'));
       })
       .catch(error => console.error('Error fetching data:', error));
   }, [store, sortDirection]); // Sort direction as a dependency

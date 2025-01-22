@@ -1,55 +1,66 @@
-import React, { useState } from 'react';
-import { Link, Route, Routes, useLocation } from 'react-router-dom';
-import Ot_machine from './settingsubfils/ot_machine/ot_machine';
-import Ot_personnelType from './settingsubfils/ot_PersonnelType/Ot_personal_type';
-import ManageOtChecklist from './settingsubfils/Manage_ot_checklist/manage_checklist';
+import React from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import Ot_machine from './settingsubfils/Ot_machine/Ot_machine';
+import OTMaster from './settingsubfils/OTMaster/Otmaster';
 import './setting.css';
+import Otpkgmaster from './settingsubfils/OTPkgMaster/Otpkgmaster';
+import OperationMaster from './settingsubfils/OperationMaster/OperationMaster';
 
 const Setting = () => {
   const location = useLocation();
-  const [activeNav, setActiveNav] = useState(null);
+  const navigate = useNavigate();
 
-  const handleNavClick = (navType) => {
-    setActiveNav(navType);
+  // Function to determine if a path is active
+  const isActive = (path) => location.pathname.startsWith(path);
+
+  const handleNavClick = (path) => {
+    navigate(path);
   };
 
-  const isActive = (path) => location.pathname.includes(path);
-
   return (
-    <>
+    <div className="setting-container">
+      {/* Navigation Bar */}
       <header className="setting-header">
         <nav>
-          <ul className="setting-header-nav">
+          <ul className="setting-nav">
             <li
-              className={isActive('ot-machine') ? 'active-nav' : ''}
-              onClick={() => handleNavClick('Ot_machine')}
+              className={isActive('/oprationtheater/setting/otmachine') ? 'setting-nav-item active' : 'setting-nav-item'}
+              onClick={() => handleNavClick('/oprationtheater/setting/otmachine')}
             >
-              <Link to="ot-machine" className="nav-link">Manage OT Machine</Link>
+              Manage OT Machine
             </li>
             <li
-              className={isActive('Ot_personnelType') ? 'active-nav' : ''}
-              onClick={() => handleNavClick('Ot_personnelType')}
+              className={isActive('/oprationtheater/setting/otmaster') ? 'setting-nav-item active' : 'setting-nav-item'}
+              onClick={() => handleNavClick('/oprationtheater/setting/otmaster')}
             >
-              <Link to="Ot_personnelType" className="nav-link">Manage OT Personnel Type</Link>
+              OT MASTER
             </li>
-            <li
-              className={isActive('ManageOtChecklist') ? 'active-nav' : ''}
-              onClick={() => handleNavClick('ManageOtChecklist')}
+            {/* <li
+              className={isActive('/otpkgmaster') ? 'setting-nav-item active' : 'setting-nav-item'}
+              onClick={() => handleNavClick('/otpkgmaster')}
             >
-              <Link to="ManageOtChecklist" className="nav-link">Manage OT Checklist</Link>
+              OT Pkg Master
+            </li> */}
+               <li
+              className={isActive('/oprationtheater/setting/operationmaster') ? 'setting-nav-item active' : 'setting-nav-item'}
+              onClick={() => handleNavClick('/oprationtheater/setting/operationmaster')}
+            >
+              OPERATION MASTER
             </li>
           </ul>
         </nav>
       </header>
 
-      <div>
+      {/* Content Area */}
+      <main className="setting-content">
         <Routes>
-          <Route path="ot-machine" element={<Ot_machine />} />
-          <Route path="Ot_personnelType" element={<Ot_personnelType />} />
-          <Route path="ManageOtChecklist" element={<ManageOtChecklist />} />
+          <Route path="otmachine" element={<Ot_machine />} />
+          <Route path="otmaster" element={<OTMaster />} />
+          <Route path="otpkgmaster" element={<Otpkgmaster />} />
+          <Route path="operationmaster" element={<OperationMaster/>}/>
         </Routes>
-      </div>
-    </>
+      </main>
+    </div>
   );
 };
 

@@ -18,7 +18,7 @@ const AppConfig = () => {
     <>
     <MaternityHeader/>
     <Routes>
-      <Route path="/maternitylist" element={<MaternityComponent />} />
+      <Route path="maternitylist" element={<MaternityComponent />} />
       <Route path="/reports" element={<ReportComponent />} />
       <Route path="/paymentsreports" element={<PatientComponent />} />
 
@@ -26,7 +26,7 @@ const AppConfig = () => {
       <Route path="/maternity-allowance-report" element={<MaternityAllowanceReportComponent />} />
               <Route path="/AntenatalCare" element={<AntenatalCare />} />
               <Route path='/PostnatalCare' element={<PostnatalCareManagement/>}></Route>
-              <Route path='/laborroommanagement/*' element={<Labourmgnt/>}></Route>
+              <Route path='/Labourmgnt/*' element={<Labourmgnt/>}></Route>
               <Route path='/BreastfeedingSupport' element={<BreastfeedingSupportManagement/>}></Route>
               <Route path='/FamilyPlanningService' element={<FamilyPlanningSupportManagement/>}></Route>
     </Routes>

@@ -1,6 +1,4 @@
-/* PurchaseRequest.css */
-/* Swapnil ROkade purchase-request adding className And Applying colors 14/09 */
-/* General Styles */
+
 .purchase-request-content {
   padding: 20px;
   background-color: var(--background-color);
@@ -9,6 +7,12 @@
 .purchase-request-header {
   font-size: var(--font-size); 
   /* margin-bottom: 20px; */
+}
+.purchase-request-subdiv input[type="date"]
+{
+  border: 1px solid gray;
+  padding: 5px;
+  border-radius: 5px;
 }
 .purchase-request-star
 {
@@ -55,7 +59,9 @@
 
 .Inv-purchase-request-input-subDiv
 {
-  width: 80%;
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 
@@ -124,6 +130,8 @@
 .Inv-purchase-request-input
 {
   width: 100%;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
 .purchase-request-discard-button:hover {
   background-color: #c82333;
@@ -235,6 +243,8 @@
 .purchase-remark
 {
   width: 100%;
+  border-radius: 5px;
+  padding: 5px;
 }
 .Add-Item-Modal-Container{
   position: absolute;
@@ -249,10 +259,67 @@
   height: 100vh;
   z-index: 99;
 }
+.Inv-purchase-request-date{
+  width: 100%;
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+.PO-created
+{
+  width: 100px;
+  background-color: green;
+  color: white;
+  text-align: center;
+  padding: 2px 5px;
+}
+.PO-Remaining
+{
+  width: 100px;
+  text-align: center;
+  background-color: red;
+  color: white;
+  padding: 2px 5px;
+}
 .Add-Item-Modal-overlay
 {
   width: 90%;
   height: 90vh;
+}
+
+.add-Inv-Item
+{
+  padding: 2px 5px;
+  border-radius: 5px;
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+}
+.add-Inv-Item:hover{
+  background-color: white;
+  color: var(--button-color);
+}
+.purchase-request-cancel-btn
+{
+  padding: 2px 5px;
+  border-radius: 5px;
+  background-color:red;
+  color: white;
+  border: 1px solid red;
+}
+.purchase-request-subdiv
+{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.purchase-request-create-heading
+{
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @media (max-width: 768px) {

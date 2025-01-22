@@ -264,6 +264,8 @@ const PurchaseOrderForm = () => {
         remarks: item.remarks
       }))
     };
+    
+console.log(data);
 
     // Now, send this data in the required format to the backend
     axios.post(`${API_BASE_URL}/purchase-orders`, data)
@@ -274,6 +276,7 @@ const PurchaseOrderForm = () => {
         console.error('There was an error saving the purchase order!', error);
         alert('Failed to save purchase order.');
       });
+      
   };
 
 

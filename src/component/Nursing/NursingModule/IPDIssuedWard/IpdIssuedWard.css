@@ -3,14 +3,10 @@
 .ipd-issues-ward-container {
   display: flex;
   flex-direction: column;
-  padding:2px;
+  padding:12px;
   font-family: Arial, sans-serif;
   background-color: var(--background-color);
-
-  max-height: 550px; /* Set a max height to trigger vertical scroll */
-  max-width: 90%;   /* Optional: Set a max width for horizontal scroll */
-  overflow-y: scroll;  /* Vertical scrollbar when needed */
-  overflow-x: scroll;  /* Horizontal scrollbar when needed */
+  overflow-y: scroll;
 }
 
 .ipd-issues-ward-container h2 {
@@ -28,7 +24,7 @@
 
 .detail {
   display: grid;
-  grid-template-columns: 100px 150px 40px; /* Fixed widths for label and input */
+  grid-template-columns: 80px 150px 40px; /* Fixed widths for label and input */
   align-items: center;
   gap: 2px;
 }
@@ -65,10 +61,13 @@
 
 .item-details {
   margin-top: 20px;
+  /* overflow-x: scroll; */
 }
 
 .item-table {
   width:100%;
+  overflow-x: scroll;
+  table-layout: auto;
   border-collapse: collapse;
 }
 
@@ -110,13 +109,10 @@
 }
 
 
-.ipdissuedward-form
-{
+.ipdissuedward-form{
    display: grid;
    grid-template-columns: repeat(3, 1fr);
    gap: 6px;
-  
-   /* padding: 20px; */
    border-radius: 5px;
    background-color: var(--background-color);
  }
@@ -129,7 +125,7 @@
  .ipdissuedward-section label {
    flex: 1;
    font-size: 14px;
-   width: 200px;
+   width: 50px;
  }
  
  .ipdissuedward-section input {
@@ -153,22 +149,63 @@
    background-color: #f44336;
  }
  
- .item-table input[type="text"] {
+ .item-table input[type="text"],.ipdissuedward-form input[type="text"] {
   width: 100%; 
-  padding: 5px; /* Adds padding for a clean and spacious look */
-  border: 1px solid #ccc; /* Adds a light border for visibility */
-  border-radius: 4px; /* Slightly rounds the corners */
-  box-sizing: border-box; /* Ensures padding doesn't affect width */
-  font-size: 14px; /* Makes text legible */
-  background-color: #f9f9f9; /* Light gray background for subtle contrast */
-  transition: border-color 0.2s ease-in-out; /* Smooth transition for border color */
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  transition: border-color 0.2s ease-in-out;
 }
 
-/* Focus state for input fields */
 .item-table input[type="text"]:focus {
-  border-color: #007bff; /* Changes border color to blue on focus */
-  outline: none; /* Removes default browser outline */
-  background-color: #fff; /* Highlights input field background on focus */
+  border-color: #007bff;
+  outline: none;
+  background-color: #fff;
+}
+.item-table input[type="number"] {
+  width: 100%; 
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.item-table input[type="number"]:focus {
+  border-color: #007bff;
+  outline: none;
+  background-color: #fff;
+}
+.subStoreDropdown-div select{
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 200px;
+  margin-top: 10px;
+  font-size: 12px; 
+}
+.subStoreDropdown-div label{
+  font-size: 12px;; 
+  font-weight: bold;
 }
 
 
+.postIssue-buttons {
+  margin-top: 20px;
+  background-color: var(--button-bg-color);
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
+  float: right;
+}
+.postIssue-buttons:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+}

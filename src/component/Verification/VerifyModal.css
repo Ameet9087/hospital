@@ -12,6 +12,12 @@
     z-index: 999; /* Makes sure the modal is above all other content */
   }
   
+  .VerifyRemarkContainer
+  {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
   /* Modal container */
   .verifyModalContainer {
     background: white;

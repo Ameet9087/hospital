@@ -66,7 +66,7 @@ const MainVisitorFile = () => {
         <div className="visitormgt-container">
             <nav className="visitormgt-nav">
                 <NavLink
-                    to="/visitors"
+                    to="/visit/visitors"
                     className={({ isActive }) =>
                         isActive ? "visitormgt-navigation-link active" : "visitormgt-navigation-link"
                     }
@@ -74,7 +74,7 @@ const MainVisitorFile = () => {
                     Visitors
                 </NavLink>
                 <NavLink
-                    to="/visiting-hours-management"
+                    to="/visitormanagement/visitinghoursmanagement"
                     className={({ isActive }) =>
                         isActive ? "visitormgt-navigation-link active" : "visitormgt-navigation-link"
                     }
@@ -82,7 +82,7 @@ const MainVisitorFile = () => {
                     Visiting Hours Management
                 </NavLink>
                 <NavLink
-                    to="/visitor-badges"
+                    to="/visit/visitor-badges"
                     className={({ isActive }) =>
                         isActive ? "visitormgt-navigation-link active" : "visitormgt-navigation-link"
                     }
@@ -99,9 +99,9 @@ const MainVisitorFile = () => {
 
             <div className="visitormgt-content">
                 <Routes>
-                    <Route path="/visitors" element={<Visitor />} />
-                    <Route path="/visiting-hours-management" element={<Visitinghours />} />
-                    <Route path="/visitor-badges" element={<Visitorbadges />} />
+                    <Route path="/visit/visitors" element={<Visitor />} />
+                    <Route path="/visitormanagement/visitinghoursmanagement" element={<Visitinghours />} />
+                    <Route path="/visit/visitor-badges" element={<Visitorbadges />} />
                   
                 </Routes>
             </div>

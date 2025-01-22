@@ -1,0 +1,159 @@
+.DailyNursingAssessment-container{
+    /* font-family: Arial, sans-serif; */
+    background-color: var(--background-color);
+    padding: 4px;
+    font-size: var(--font-size);
+    height: auto;
+}
+.DailyNursingAssessment-header{
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 8px;
+    border-radius: 7px;
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--heading-font);
+}
+.DailyNursingAssessment-content{
+    display: flex;
+    gap: 10px;
+}
+.DailyNursingAssessment-viewBtn{
+    border: none;
+    background-color: white;
+    padding: 2px 5px;
+    border-radius: 7px;
+}
+.DailyNursingAssessment-section{
+    padding: 8px;
+    height: 500px;
+    border: 1px solid #ccc;
+    background-color: white;
+    margin-bottom: 30px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar Styling */
+.DailyNursingAssessment-section::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.DailyNursingAssessment-section::-webkit-scrollbar-thumb {
+    background: #888; /* Scrollbar color */
+    border-radius: 4px; /* Round edges */
+}
+
+.DailyNursingAssessment-section::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color on hover */
+}
+
+.DailyNursingAssessment-section::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track background */
+    border-radius: 4px; /* Round edges for the track */
+}
+
+.DailyNursingAssessment-Section-header{
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    border-radius: 7px;
+    padding: 4px 8px;
+    font-size: var(--heading-font);
+    margin: 5px px;
+    margin-bottom: 10px;
+}
+
+.DailyNursingAssessment-data{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.DailyNursingAssessment-data label,.DailyNursingAssessment-radio label {
+    width: 200px;
+    font-size: var(--font-size);
+}
+.DailyNursingAssessment-data input ,.DailyNursingAssessment-data textarea{
+    width: 100%;
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+/* .DailyNursingAssessment-radio input {
+    margin-bottom: 10px;
+    font-size: var(--font-size);
+    border: 1px solid #ddd;
+    margin-left: 20px;
+} */
+.DailyNursingAssessment-radio {
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: space-between; /* Push label to the left and inputs to the right */
+    width: 100%; /* Ensures full-width layout */
+  }
+  .DailyNursingAssessment-radio input {
+   margin-left: 10px;
+  }
+
+  /* --------prachi----------- */
+
+
+  .nursingAssessmentbtn {
+    background-color: var(--button-bg-color);
+    color: white;
+    float: right;
+    border: none;
+    margin-bottom: 6px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: var(--font-size);
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border 0.3s;
+  }
+  
+  .nursingAssessmentbtn:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  
+  
+  
+.DailyNursingAssessment-viewCon{
+    height: 600px;
+    width: 1200px;
+    overflow: hidden;
+}
+
+.DailyNursingAssessment-table-container {
+    overflow: auto; 
+    margin-bottom: 20px;
+    border-radius: 4px; 
+    background-color: #f9f9f9; 
+}
+.DailyNursingAssessment-table-container table{
+    table-layout: auto;
+}
+
+/* Custom Scrollbar Styling for Tables */
+.DailyNursingAssessment-table-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.DailyNursingAssessment-table-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.DailyNursingAssessment-table-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.DailyNursingAssessment-table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}

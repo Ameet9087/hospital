@@ -14,7 +14,7 @@ const StockList = () => {
   const [selectedItem, setSelectedItem] = useState(null); // Track selected item for StockManage
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/items/all`)
+    fetch(`${API_BASE_URL}/items/getAllItem`)
       .then(response => response.json())
       .then(data => setItems(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -122,7 +122,7 @@ const StockList = () => {
                   <td>{item?.itemName}</td>
                   <td>{item?.itemCode}</td>
                   <td>{item?.unitOfMeasurement?.name}</td>
-                  <td>{item?.minStockQuantity}</td>
+                  <td>{item?.availableQty}</td>
                   <td>
                     <button className="stock-view-button">View</button>
                     <button

@@ -1,0 +1,174 @@
+.AssetDashboard-container {
+    padding: 5px;
+    background-color: var(--background-color);
+    min-height: 100vh;
+}
+
+.AssetDashboard-header {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.AssetDashboard-header-title {
+    font-size: var(--heading-font);
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.AssetDashboard-header-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.AssetDashboard-date-filters {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.AssetDashboard-filter-container {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto; /* Horizontal scroll */
+    white-space: nowrap; /* Prevent buttons from wrapping to the next line */
+    max-width: 100%;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+.AssetDashboard-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    background-color: #f5f5f5;
+  }
+  
+  .AssetDashboard-section-count {
+    color: #333;
+    font-size: 0.9rem;
+    background-color: #e0e0e0;
+    border-radius: 12px;
+    padding: 2px 8px;
+  }
+
+  
+
+.AssetDashboard-filter-container::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+.AssetDashboard-filter-btn {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 18px;
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.AssetDashboard-filter-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.AssetDashboard-date-display {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.AssetDashboard-date-display input {
+    padding: 5px;
+    width: 100px;
+}
+
+.AssetDashboard-refresh-btn, .AssetDashboard-close-btn {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.AssetDashboard-refresh-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.AssetDashboard-close-btn {
+    background-color: #f44336;
+    color: white;
+    border: 1px solid var(--button-hover-border-color);
+}
+
+.AssetDashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 sections per row */
+    gap: 10px;
+}
+
+.AssetDashboard-grid-item {
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.AssetDashboard-section-header {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    padding: 5px;
+}
+
+.AssetDashboard-section-content {
+    height: 200px; /* Fixed height for each section */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    padding: 5px;
+}
+
+.AssetDashboard-no-records {
+    color: red;
+    text-align: center;
+}
+
+.AssetDashboard-datepicker {
+    padding: 5px;
+    width: 150px;
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+
+/* Scroll buttons for filter container */
+.AssetDashboard-filter-btn {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 18px;
+    white-space: nowrap; /* Prevent text from wrapping */
+}
+
+.AssetDashboard-arrow-btn {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.AssetDashboard-arrow-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    .AssetDashboard-grid {
+        grid-template-columns: repeat(1, 1fr); /* Stack sections on small screens */
+    }
+}

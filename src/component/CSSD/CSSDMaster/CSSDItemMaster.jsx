@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 import './CSSDItemMaster.css';
 import { API_BASE_URL } from '../../api/api';
+import PopupTable from "../../Admission/PopupTable";
+
 
 const CSSDItemMaster = () => {
   const [status, setStatus] = useState("Active");
@@ -14,6 +16,10 @@ const CSSDItemMaster = () => {
   const [instruments, setInstruments] = useState(false);
   const [mapItemFromInventory, setMapItemFromInventory] = useState("");
   const [kitId, setKitId] = useState("");
+    const [inventoryData, setInventoryData] = useState([]);
+    const [activePopup,setActivePopup]=useState([])
+    const [selectedInventoryItem,setSelectedInventoryItem]=useState([])
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,6 +33,27 @@ const CSSDItemMaster = () => {
   const handleSearchClick = () => {
     navigate('/display-CSSD-ItemMaster');
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/inventory`);
+        setInventoryData(response.data); // Assuming response.data is an array
+      } catch (error) {
+        console.error("Error fetching inventory data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+
+    const handleSelect = async (data) => {
+    if (activePopup === "inventoryItem") {
+        setSelectedInventoryItem(data);
+    }
+    setActivePopup(null); // Close the popup after selection
+  };
+  
 
   const handleSave = () => {
     const payload = {
@@ -55,6 +82,20 @@ const CSSDItemMaster = () => {
   const handleClose = () => {
     navigate(-1); // Navigate back to the previous page
   };
+
+
+const getPopupData = () => {
+    if (activePopup === "inventoryItem") {
+      return { columns: ["inventoryId","itemName"], data: inventoryData };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
+
+  const { columns, data } = getPopupData();
+
+ 
+
 
   return (
     <div className="CSSDItemMaster-container">
@@ -124,7 +165,7 @@ const CSSDItemMaster = () => {
             <div className="search-input-container">
               <input
                 type="text"
-                value={mapItemFromInventory}
+                 value={selectedInventoryItem?.itemName}
                 onChange={(e) => setMapItemFromInventory(e.target.value)}
                 className="CSSDItemMaster-input"
                 placeholder="Search Item"
@@ -132,7 +173,7 @@ const CSSDItemMaster = () => {
               <FontAwesomeIcon
                 icon={faSearch}
                 className="search-icon-inventory"
-                onClick={handleSearchClick}
+                 onClick={() => setActivePopup("inventoryItem")}
               />
             </div>
           </div>
@@ -171,7 +212,18 @@ const CSSDItemMaster = () => {
           <button>Info</button>
         </div>
       </div>
+
+      {activePopup && (
+        <PopupTable
+          columns={columns}
+          data={data}
+          onSelect={handleSelect}
+          onClose={() => setActivePopup(null)}
+        />
+      )}
     </div>
+
+    
   );
 };
 

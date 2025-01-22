@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./AddUnitOfMeasurement.css";
 import { API_BASE_URL } from "../../api/api";
 
-const AddUnitOfMeasurement = ({ onClose }) => {
+const AddUnitOfMeasurement = ({onClose}) => {
   const [unitOfMeasurementName, setUnitName] = useState("");
   const [description, setDescription] = useState("");
   const [isActive, setIsActive] = useState(true);
@@ -11,9 +11,9 @@ const AddUnitOfMeasurement = ({ onClose }) => {
     event.preventDefault();
 
     const newUnit = {
-      unitOfMeasurementName,
+      name:unitOfMeasurementName,
       description,
-      isActive,
+      isActive:isActive
     };
 
     try {

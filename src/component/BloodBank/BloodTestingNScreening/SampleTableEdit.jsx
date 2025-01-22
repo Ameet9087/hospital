@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
 import './SampleTableEdit.css'; 
+import { API_BASE_URL } from '../../api/api';
 
 const SampleTestCard = ({ testData, onClose }) => {
     const [testType, setTestType] = useState('');
@@ -35,7 +36,7 @@ const SampleTestCard = ({ testData, onClose }) => {
         // Sufiyan_ SampleTestCard_24/09_Start
 
         try {
-            await axios.put(`http://localhost:8085/blood-testing/update-test/${testData.test_id}`, updatedData);
+            await axios.put(`${API_BASE_URL}/blood-testing/update-test/${testData.test_id}`, updatedData);
             console.log('Updated:', updatedData);
             onClose(); 
         } catch (err) {

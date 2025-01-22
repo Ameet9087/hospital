@@ -25,7 +25,7 @@ function RDLEditDoctors() {
         setFilteredData(data); // Initialize filteredData with full data
       })
       .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+  }, [showPopup]);
 
   // Function to handle filter change
   const handleFilterChange = (e) => {
@@ -96,7 +96,7 @@ function RDLEditDoctors() {
             To:
             <input type="date" defaultValue="2024-08-16" />
           </label>
- </div>
+        </div>
       </div>
       <div className="relEditDoctors-search-N-results">
         <div className="relEditDoctors-search-bar">
@@ -175,19 +175,21 @@ function RDLEditDoctors() {
                 <td>{item.imagingDate}</td>
                 {/* <td>{item.invoiceNumber}</td> */}
                 <td>
-                  {item.patientDTO?.firstName ||
-                    item.newPatientVisitDTO?.firstName}{" "}
-                  {item.patientDTO?.lastName ||
-                    item.newPatientVisitDTO?.lastName}
+                  {item.inPatientDTO?.firstName ||
+                    item.outPatientDTO?.firstName}{" "}
+                  {item.inPatientDTO?.lastName || item.outPatientDTO?.lastName}
                 </td>
                 <td>
-                  {item.patientDTO?.age || item.newPatientVisitDTO?.age} Y
+                  {item.inPatientDTO?.age || item.outPatientDTO?.age}{" "}
+                  {item.inPatientDTO?.ageUnit || item.outPatientDTO?.ageUnit}{" "}
+                  {" / "}
+                  {item.inPatientDTO?.gender || item.outPatientDTO?.gender}
                 </td>
-                <td>{item.imagingTypeDTO?.imagingTypeName}</td>
+                <td>{item.imagingItemDTO?.imagingType?.imagingTypeName}</td>
                 <td>{item.imagingItemDTO?.imagingItemName}</td>
                 <td>
                   {item.prescriberDTO?.salutation}{" "}
-                  {item.prescriberDTO?.firstName} {item.prescriberDTO?.lastName}
+                  {item.prescriberDTO?.doctorName}{" "}
                 </td>
                 {/* <td>{item.performerDTO?.firstName}</td> */}
                 <td>

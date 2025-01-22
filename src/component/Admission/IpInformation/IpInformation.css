@@ -1,0 +1,88 @@
+.bed-booking {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  
+  .bed-booking__heading {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .bed-booking__filters {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .bed-booking__filter-select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .bed-booking__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  .bed-booking__table th,
+  .bed-booking__table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .bed-booking__table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+  
+  .bed-booking__status--Available {
+    color: #155724;
+    background-color: #d4edda;
+    padding: 5px;
+    border-radius: 4px;
+  }
+  
+  .bed-booking__status--Occupied {
+    color: #721c24;
+    background-color: #f4b3b9;
+    padding: 5px;
+    border-radius: 4px;
+  }
+  
+  .bed-booking__status--reserved {
+    color: #856404;
+    background-color: #fff3cd;
+    padding: 5px;
+    border-radius: 4px;
+  }
+  
+  .bed-booking__action-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .bed-booking__action-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .bed-booking__action-disabled {
+    color: #aaa;
+    font-style: italic;
+  }
+  
+  .bed-booking__no-data {
+    text-align: center;
+    color: #888;
+    font-size: 16px;
+  }
+  

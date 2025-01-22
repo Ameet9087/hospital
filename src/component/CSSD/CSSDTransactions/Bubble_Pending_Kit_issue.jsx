@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import './Bubble_Pending_Kit_issue.css';
+import { API_BASE_URL } from "../../api/api";
 
 const BubbleView = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const BubbleView = () => {
   useEffect(() => {
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/kit-request-indent");
+      const response = await axios.get(`${API_BASE_URL}/kit-request-indent`);
       console.log("API Response:", response.data);
 
       if (response.data && Array.isArray(response.data)) {
@@ -53,7 +54,9 @@ const BubbleView = () => {
   };
 
   const handleBubbleClick = (id, requestNumber) => {
-    navigate(`/Pending_kit_issue/${id}?requestNumber=${requestNumber}`);
+    navigate(`Pending_kit_issue/${id}?requestNumber=${requestNumber}`);
+        // navigate(`/cssd/cssd-transaction-mainmenu`);
+
   };
 
   return (

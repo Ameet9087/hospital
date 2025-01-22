@@ -16,11 +16,10 @@
 }
 
 .guarantor-page-form-group {
-  align-items: center;
   display: flex;
+  align-items: left!important;
   justify-content: space-between;
   margin-bottom: 15px;
-  gap: 5px;
 }
 
 .guarantor-page-form-group label {
@@ -83,20 +82,28 @@
     background-color: var(--button-hover-background-color);
 }
 
-.guarantor-page-relationpatient{ 
+.guarantor-page-relationpatient{
+
+ 
     display: flex;
-    align-items: center;
+    align-items: left!important;
     justify-content: space-between;
     margin-bottom: 15px;
   
+
 }
 
 .guarantor-page-relationpatient label{
-  font-weight: bold;
+
+font-weight: bold;
   padding-right: 4%;;
+
+
 }
 
-.guarantor-page-relationpatient input{ 
+.guarantor-page-relationpatient input{
+
+ 
   width: calc(100% - 10px); /* Adjusted width for text inputs */
   padding: 5px 5px;
   border: 1px solid #ccc;

@@ -1,0 +1,155 @@
+.nurse-indent-com-container {
+  width: 100%;
+  max-width: 100%; /* Ensures it does not go beyond the viewport width */
+  font-family: Arial, sans-serif;
+  margin: 0 0; /* Centers the content */
+  padding: 0 0; /* Adds some padding around the edges */
+  background-color: var(--background-color);
+  height: 650px;
+}
+
+.nurse-indent-com-header {
+  background-color: var(--upperBar-bg-color);
+  color: white;
+  padding: 8px;
+  margin-bottom: 4px;
+  font-size: var(--heading-font);
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.nurse-indent-com-header h4 {
+  font-size: var(--heading-font);
+  margin: 0;
+}
+
+.nurse-indent-com-close-btn {
+  background-color: #E52F3E;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.nurse-indent-com-form .nurse-indent-com-nurse-indent-com-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.nurse-indent-com-form-group {
+  display: flex;
+ /* text-align: center;
+  align-items: center;*/
+  font-size: var(--font-size);
+  /*width: 100%; /* Set to 100% for responsive design */
+}
+
+.nurse-indent-com-form-group label {
+  display: block;
+  margin-bottom: 4px;
+  width: 75%;
+}
+
+.nurse-indent-com-form-group-checkbox {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.nurse-indent-com-form-group input,
+.nurse-indent-com-form-group select,
+.nurse-indent-com-form-group textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-left: 20px;
+}
+
+.nurse-indent-com-form-group-options {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.nurse-indent-com-form-group-options label {
+  margin-right: 20px;
+  font-size: var(--font-size);
+  display: flex;
+  align-items: center;
+}
+
+.nurse-indent-com-form-group-options input {
+  margin-right: 5px;
+}
+
+.nurse-indent-com-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  font-size: var(--font-size);
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.nurse-indent-com-add-btn {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.nurse-indent-com-add-btn:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.nurse-indent-com-form-group-1row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nurse-indent-com-add-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px;
+  font-size: var(--font-size);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.nurse-indent-com-del-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px;
+  font-size: var(--font-size);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.nurse-indent-com-form-group select {
+  width: 100%; /* Ensure the select element takes full width */
+  max-width: 100%; /* Prevent overflow */
+  padding: 8px; /* Space inside the select element */
+  margin-bottom: 8px; /* Space below */
+  border: 1px solid #ddd; /* Border for the select */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 14px; /* Set font size for readability */
+}
+.form-select.d-inline-block.w-auto {
+  width: auto; /* Adjust width as needed */
+  font-size: 0.875rem; /* Decrease the font size */
+  padding: 0.25rem 0.5rem; /* Adjust padding for a smaller size */
+}

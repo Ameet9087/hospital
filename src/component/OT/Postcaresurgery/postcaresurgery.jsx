@@ -2,51 +2,71 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './postsurgerycare.css';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
-import CustomModal from '../../../CustomModel/CustomModal';
+import CustomModal from '../../CustomModel/CustomModal';
 import useCustomAlert from '../../../alerts/useCustomAlert';
+
+import { API_BASE_URL } from "../../api/api";
+
 
 const PostSurgeryCare = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
-
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [formData, setFormData] = useState({
-    postCareId: '',
-    surgeryId: '',
-    patientId: '',
+    postSurgeryCareId: '',
+    surgeryEventId: '',
+    operationName: '',
+    firstName: '',
+    lastName: '',
     postCareNotes: '',
     followUpDate: '',
     complicationsObserved: ''
   });
   const [careRecords, setCareRecords] = useState([]);
-  const [openStickerPopup, setOpenStickerPopup] = useState(false); 
+  const [openStickerPopup, setOpenStickerPopup] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const { success, error, CustomAlerts } = useCustomAlert();
+  const [surgeryEvents, setSurgeryEvents] = useState([]);
 
+  // Fetch Surgery Events
   useEffect(() => {
-    const fetchCareRecords = async () => {
+    const fetchSurgeryEvents = async () => {
       try {
-        const response = await axios.get('http://localhost:8051/api/post-surgery-care');
-        const data = response.data;
-        
-        // Check if data exists in the response
-        if (data && data.length > 0) {
-          setCareRecords(data);
-          success('Records fetched successfully!');
-        } else {
-          error('No post-surgery care records found.');
-        }
+        const response = await axios.get(`${ API_BASE_URL }/surgery-events`);
+        setSurgeryEvents(response.data);
       } catch (err) {
-        console.error('Error fetching care records:', err);
-        error('Error fetching post-surgery care records');
+        console.error('Error fetching surgery events:', err);
+        error('Failed to fetch surgery events.');
       }
     };
-    fetchCareRecords();
-  }, [success, error]);
-  
+    fetchSurgeryEvents();
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'surgeryEventId') {
+      const selectedEvent = surgeryEvents.find(
+        (event) => event.surgeryEventId.toString() === value
+      );
+      if (selectedEvent) {
+        setFormData((prevData) => ({
+          ...prevData,
+          surgeryEventId: value,
+          operationName: selectedEvent.operationMasterDTO?.operationName || '',
+          firstName: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.firstName || '',
+          lastName: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.lastName || ''
+        }));
+      }
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value
+      }));
+    }
+  };
 
   const handleAddOrEditRecord = async (e) => {
     e.preventDefault();
@@ -54,111 +74,96 @@ const PostSurgeryCare = () => {
       let response;
       if (editMode) {
         response = await axios.put(
-          `http://localhost:8051/api/post-surgery-care/${formData.postCareId}`,
-          formData
+          `${ API_BASE_URL }/post-surgery-care/${formData.postSurgeryCareId}`,
+          {
+            postCareNotes: formData.postCareNotes,
+            followUpDate: formData.followUpDate,
+            complicationsObserved: formData.complicationsObserved,
+            surgeryEventDTO: {
+              surgeryEventId: parseInt(formData.surgeryEventId, 10)
+            }
+          }
         );
-  
-        if (response.status === 200 && response.data) {
+        if (response.status === 200) {
           setCareRecords((prevRecords) =>
             prevRecords.map((record) =>
-              record.postCareId === formData.postCareId ? response.data : record
+              record.postSurgeryCareId === formData.postSurgeryCareId
+                ? { ...record, ...response.data }
+                : record
             )
           );
           success('Record updated successfully!');
-        } else {
-          error('Failed to update the record.');
         }
       } else {
-        response = await axios.post('http://localhost:8051/api/post-surgery-care', formData);
-  
-        if (response.status === 201 && response.data) {
+        response = await axios.post(`${ API_BASE_URL }/post-surgery-care`, {
+          postCareNotes: formData.postCareNotes,
+          followUpDate: formData.followUpDate,
+          complicationsObserved: formData.complicationsObserved,
+          surgeryEventDTO: {
+            surgeryEventId: parseInt(formData.surgeryEventId, 10)
+          }
+        });
+        if (response.status === 201) {
           setCareRecords((prevRecords) => [...prevRecords, response.data]);
           success('Record added successfully!');
-        } else {
-          error('Failed to add the record.');
         }
       }
       resetForm();
       setOpenStickerPopup(false);
     } catch (err) {
       console.error(`Error ${editMode ? 'updating' : 'adding'} record:`, err);
-      error(`Error ${editMode ? 'updating' : 'adding'} post-surgery care record`);
+      error(`Failed to ${editMode ? 'update' : 'add'} the record.`);
     }
   };
-  
+
+  // Fetch Post-Surgery Care Records
+  useEffect(() => {
+    const fetchPostSurgeryCareRecords = async () => {
+      try {
+        const response = await axios.get(`${ API_BASE_URL }/post-surgery-care`);
+        setCareRecords(response.data);
+      } catch (err) {
+        console.error('Error fetching post-surgery care records:', err);
+        error('Failed to fetch post-surgery care records.');
+      }
+    };
+    fetchPostSurgeryCareRecords();
+  }, []);
 
   const handleEditRecord = (record) => {
-    setFormData(record);
+    setFormData({
+      postSurgeryCareId: record.postSurgeryCareId,
+      surgeryEventId: record.surgeryEventDTO?.surgeryEventId || '',
+      operationName: record.surgeryEventDTO?.operationMasterDTO?.operationName || 'N/A',
+      firstName: record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.firstName || 'N/A',
+      lastName: record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.lastName || 'N/A',
+      postCareNotes: record.postCareNotes || '',
+      followUpDate: record.followUpDate || '',
+      complicationsObserved: record.complicationsObserved || ''
+    });
     setEditMode(true);
-    setOpenStickerPopup(true);
-  };
-
-  const handleAddRecord = () => {
-    resetForm();
-    setEditMode(false);
     setOpenStickerPopup(true);
   };
 
   const resetForm = () => {
     setFormData({
-      postCareId: '',
-      surgeryId: '',
-      patientId: '',
+      postSurgeryCareId: '',
+      surgeryEventId: '',
+      operationName: '',
+      firstName: '',
+      lastName: '',
       postCareNotes: '',
       followUpDate: '',
       complicationsObserved: ''
     });
+    setEditMode(false);
   };
-  
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-  useEffect(() => {
-    const filterData = () => {
-      let updatedRecords = careRecords;
-      if (fromDate && toDate) {
-        updatedRecords = updatedRecords.filter((record) =>
-          record.followUpDate >= fromDate && record.followUpDate <= toDate
-        );
-      }
-      if (searchTerm) {
-        updatedRecords = updatedRecords.filter((record) =>
-          record.patientId.toString().includes(searchTerm) ||
-          record.patientName?.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      }
-      setFilteredRecords(updatedRecords);
-    };
-    filterData();
-  }, [searchTerm, fromDate, toDate, careRecords]);
-
 
   const handleSearch = (e) => setSearchTerm(e.target.value);
 
   return (
     <div className="postsurgerycare-container">
-       <div className="postsurgerycare-filter-container">
-        <div className="postsurgerycare-filter-date-range">
-          <label>From: </label>
-          <input
-            className="postsurgerycare-filter-input"
-            type="date"
-            value={fromDate}
-            onChange={(e) => setFromDate(e.target.value)}
-          />
-          <label> To: </label>
-          <input
-            className="postsurgerycare-filter-input"
-            type="date"
-            value={toDate}
-            onChange={(e) => setToDate(e.target.value)}
-          />
-        </div>
-
+      <div className="postsurgerycare-filter-container">
         <input
           type="text"
           placeholder="Search by Patient Name/Patient ID"
@@ -170,23 +175,20 @@ const PostSurgeryCare = () => {
           Print
         </button>
       </div>
-      <button className="postsurgerycare-add-btn" onClick={handleAddRecord}>
+      <button
+        className="postsurgerycare-add-btn"
+        onClick={() => {
+          resetForm();
+          setOpenStickerPopup(true);
+        }}
+      >
         Add Post-Surgery Care Record
       </button>
-
       <div className="postsurgerycare-records-table">
         <table ref={tableRef}>
           <thead>
             <tr>
-              {[
-                "Post Care ID",
-                "Surgery ID",
-                "Patient ID",
-                "Post-Care Notes",
-                "Follow-Up Date",
-                "Complications Observed",
-                "Actions"
-              ].map((header, index) => (
+              {["Surgery ID", "Operation Name", "First Name", "Last Name", "Post-Care Notes", "Follow-Up Date", "Complications Observed", "Actions"].map((header, index) => (
                 <th
                   key={index}
                   style={{ width: columnWidths[index] }}
@@ -204,25 +206,30 @@ const PostSurgeryCare = () => {
             </tr>
           </thead>
           <tbody>
-            {careRecords.map((record, index) => (
-              <tr key={index}>
-                <td>{record.postCareId}</td>
-                <td>{record.surgeryId}</td>
-                <td>{record.patientId}</td>
-                <td>{record.postCareNotes}</td>
-                <td>{record.followUpDate}</td>
-                <td>{record.complicationsObserved}</td>
-                <td>
-                  <button
-                    className="postsurgerycare-edit-btn"
-                    onClick={() => handleEditRecord(record)}
-                  >
-                    Edit
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          {careRecords.map((record, index) => {
+  console.log('Rendering record:', record); // Debug log
+  return (
+    <tr key={index}>
+      <td>{record.surgeryEventDTO?.surgeryEventId || 'N/A'}</td>
+      <td>{record.surgeryEventDTO?.operationMasterDTO?.operationName || 'N/A'}</td>
+      <td>{record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.firstName || 'N/A'}</td>
+      <td>{record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.lastName || 'N/A'}</td>
+      <td>{record.postCareNotes || 'N/A'}</td>
+      <td>{record.followUpDate || 'N/A'}</td>
+      <td>{record.complicationsObserved || 'N/A'}</td>
+      <td>
+        <button className="postsurgerycare-edit-btn" onClick={() => handleEditRecord(record)}>
+          Edit
+        </button>
+      </td>
+    </tr>
+  );
+})}
+
+</tbody>
+
+
+
         </table>
       </div>
 
@@ -233,33 +240,55 @@ const PostSurgeryCare = () => {
             <form onSubmit={handleAddOrEditRecord}>
               <div className="postsurgerycare-form-group">
                 <label>Surgery ID</label>
-                <input
-                  type="number"
-                  name="surgeryId"
-                  value={formData.surgeryId}
-                  onChange={handleInputChange}
-                  required
-                />
+                <select
+  name="surgeryEventId"
+  value={formData.surgeryEventId}
+  onChange={handleInputChange}
+  required
+>
+  <option value="">Select Surgery ID</option>
+  {surgeryEvents.map((event) => (
+    <option key={event.surgeryEventId} value={event.surgeryEventId}>
+      {event.surgeryEventId}
+    </option>
+  ))}
+</select>
+
               </div>
+
               <div className="postsurgerycare-form-group">
-                <label>Patient ID</label>
+                <label>Operation Name</label>
                 <input
-                  type="number"
-                  name="patientId"
-                  value={formData.patientId}
+                  type="text"
+                  name="operationName"
+                  value={formData.operationName}
                   onChange={handleInputChange}
-                  required
+                  readOnly
                 />
               </div>
+
               <div className="postsurgerycare-form-group">
-                <label>Post-Care Notes</label>
-                <textarea
-                  name="postCareNotes"
-                  value={formData.postCareNotes}
+                <label>First Name</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
                   onChange={handleInputChange}
-                  rows="4"
+                  readOnly
                 />
               </div>
+
+              <div className="postsurgerycare-form-group">
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  readOnly
+                />
+              </div>
+
               <div className="postsurgerycare-form-group">
                 <label>Follow-Up Date</label>
                 <input
@@ -271,6 +300,17 @@ const PostSurgeryCare = () => {
                 />
               </div>
               <div className="postsurgerycare-form-group">
+  <label>Post-Care Notes</label>
+  <textarea
+    name="postCareNotes"
+    value={formData.postCareNotes}
+    onChange={handleInputChange}
+    rows="4"
+    required
+  />
+</div>
+
+              <div className="postsurgerycare-form-group">
                 <label>Complications Observed</label>
                 <textarea
                   name="complicationsObserved"
@@ -279,6 +319,7 @@ const PostSurgeryCare = () => {
                   rows="4"
                 />
               </div>
+
               <div>
                 <button type="submit" className="postsurgerymodalbtn">
                   {editMode ? 'Save Changes' : 'Add Record'}
@@ -286,10 +327,7 @@ const PostSurgeryCare = () => {
                 <button
                   type="button"
                   className="postsurgerymodalbtn"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setOpenStickerPopup(false);
-                  }}
+                  onClick={() => setOpenStickerPopup(false)}
                 >
                   Cancel
                 </button>

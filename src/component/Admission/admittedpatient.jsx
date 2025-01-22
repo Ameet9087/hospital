@@ -134,13 +134,6 @@ const AdmittedPatient = () => {
             setShowOptionWindow={setShowOptionWindow}
           />
         );
-      case "CancelAdmission":
-        return (
-          <CancelAdmission
-            patient={selectPatient}
-            setShowOptionWindow={setShowOptionWindow}
-          />
-        );
       case "AdmissionSlip":
         return (
           <AdmissionSlip
@@ -210,13 +203,14 @@ const AdmittedPatient = () => {
             {patients
               ?.filter((patient) => {
                 const searchLowerCase = searchTerm.toLowerCase();
-                const firstNameMatch = patient.patient?.firstName
+                const firstNameMatch = patient.patient.patient?.firstName
                   ?.toLowerCase()
                   .includes(searchLowerCase);
-                const lastNameMatch = patient.patient?.lastName
+                const lastNameMatch = patient.patient.patient?.lastName
                   ?.toLowerCase()
                   .includes(searchLowerCase);
-                const patientIdMatch = patient.patient?.patientId == searchTerm;
+                const patientIdMatch =
+                  patient.patient.patient?.inPatientId == searchTerm;
 
                 return firstNameMatch || lastNameMatch || patientIdMatch;
               })
@@ -225,13 +219,13 @@ const AdmittedPatient = () => {
                   <td>{patient.admissionDate || "N/A"}</td>
                   <td>{patient.patient?.inPatientId || "N/A"}</td>
                   <td>{patient.caseType || "N/A"}</td>
-                  <td>{`${patient.patient?.firstName || ""} ${
-                    patient.patient?.lastName || ""
+                  <td>{`${patient.patient.patient?.firstName || ""} ${
+                    patient.patient.patient?.lastName || ""
                   }`}</td>
 
-                  <td>{`${patient.patient?.age || "N/A"} ${
-                    patient.patient?.ageUnit
-                  } / ${patient.patient?.gender || "N/A"}`}</td>
+                  <td>{`${patient.patient.patient?.age || "N/A"} ${
+                    patient.patient.patient?.ageUnit
+                  } / ${patient.patient.patient?.gender || "N/A"}`}</td>
 
                   <td>{patient.roomDetails?.roomDTO?.roomNumber || "N/A"}</td>
                   <td>{patient.roomDetails?.bedDTO?.bedNo}</td>
@@ -246,12 +240,12 @@ const AdmittedPatient = () => {
                   <td>{patient.admissionStatus}</td>
                   <td>
                     <div className="admit-actions">
-                      <button
+                      {/* <button
                         onClick={() => handleShow(patient)}
                         className="admitbtn"
                       >
                         Transfer
-                      </button>
+                      </button> */}
                       <button
                         onClick={() => handlePrint(patient)}
                         className="admitbtn"
@@ -272,9 +266,6 @@ const AdmittedPatient = () => {
                         <option value="PrintGenericStickers">
                           Print Generic Stickers
                         </option>
-                        <option value="CancelAdmission">
-                          Cancel Admission
-                        </option>
                         <option value="AdmissionSlip">Admission Slip</option>
                       </select>
                     </div>
@@ -290,12 +281,6 @@ const AdmittedPatient = () => {
         <PatientCard patient={selectPatient} />
       </CustomModal>
 
-      {/* Modal for ward transfer */}
-      <CustomModal isOpen={showModal} onClose={handleClose}>
-        <IPChangeRoom patient={selectPatient} setShowModal={setShowModal} />
-      </CustomModal>
-
-      {/* Modal for handling dropdown options */}
       <CustomModal isOpen={showOptionWindow} onClose={handleClose}>
         {renderModalContent()}
       </CustomModal>

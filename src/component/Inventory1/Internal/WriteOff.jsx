@@ -28,7 +28,7 @@ const WriteOff = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/items/all`);
+        const response = await fetch(`${API_BASE_URL}/items/getAllItem`);
         if (response.ok) {
          
           const data = await response.json();
@@ -72,10 +72,10 @@ const WriteOff = () => {
         if (i === index) {
           return {
             ...row,
-            itemId:selectedItem.itemId,
+            itemId:selectedItem.invItemId,
             itemName: selectedItem.itemName,
             code: selectedItem.itemCode, // Use `id` to map to backend requirements
-            availableQty: selectedItem.unitQuantity,
+            availableQty: selectedItem.availableQty,
             itemRate: selectedItem.standardRate,
             writeOffQty: '0',
             subTotal: '0',
@@ -132,13 +132,16 @@ const WriteOff = () => {
         writeOffQty: parseFloat(row.writeOffQty),
         writeOffDate: row.writeOffDate,
         remark: row.remark,
+        subTotal:row.subTotal,
+        vat:row.vat,
         totalAmount: parseFloat(row.totalAmount),
-        item: { id: row.itemId }, // Ensure `code` corresponds to `item.id` in your backend
+       items:
+       {invItemId: row.itemId }, // Ensure `code` corresponds to `item.id` in your backend
       }));
       
   console.log(formattedData);
   
-      const response = await fetch(`${API_BASE_URL}/writeoffgoods/create`, {
+      const response = await fetch(`${API_BASE_URL}/write-off-goods`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

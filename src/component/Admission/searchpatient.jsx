@@ -18,7 +18,7 @@ const SearchPatient = () => {
 
   // Fetch data from the new API
   useEffect(() => {
-    fetch(`${API_BASE_URL}/inpatients/getAllPatients`, {
+    fetch(`${API_BASE_URL}/patient-register/all`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -50,6 +50,8 @@ const SearchPatient = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
+
         setAdmitted(data);
         mapAdmittedPatients(data);
       })
@@ -68,8 +70,10 @@ const SearchPatient = () => {
   const mapAdmittedPatients = (admittedPatients) => {
     const admittedMap = {};
     admittedPatients.forEach((admittedPatient) => {
-      admittedMap[admittedPatient.patient.inPatientId] = true;
+      admittedMap[admittedPatient.patient.patient?.uhid] = true;
     });
+    console.log(admittedMap);
+
     setAdmittedPatientsMap(admittedMap);
   };
 
@@ -79,7 +83,7 @@ const SearchPatient = () => {
     <div className="search-patient-container">
       {showModal ? (
         <>
-          <IpAdmission patient={selectedPatient} onClose={handleClose} />
+          <IpAdmission patientData={selectedPatient} onClose={handleClose} />
         </>
       ) : (
         <>
@@ -99,13 +103,12 @@ const SearchPatient = () => {
               <thead>
                 <tr>
                   {[
-                    "Patient Id",
+                    "SN",
                     "Name",
                     "Age",
                     "Gender",
                     "Phone",
                     "Address",
-                    "Visit Type",
                     "Status",
                   ].map((header, index) => (
                     <th
@@ -141,21 +144,22 @@ const SearchPatient = () => {
 
                     return firstNameMatch || lastNameMatch || patientIdMatch;
                   })
-                  .map((patient) => (
-                    <tr key={patient.inPatientId}>
-                      <td>{patient.inPatientId || "N/A"}</td>
+                  .map((patient, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
                       <td>
                         {`${patient.firstName} ${
                           patient.middleName ? patient.middleName + " " : ""
                         }${patient.lastName}`}
                       </td>
-                      <td>{patient.age}</td>
-                      <td>{patient.gender}</td>
-                      <td>{patient.phoneNumber}</td>
-                      <td>{patient.address}</td>
-                      <td>{patient.isIPD}</td>
                       <td>
-                        {admittedPatientsMap[patient.inPatientId] ? (
+                        {patient.age} {patient.ageUnit} / {patient.gender}
+                      </td>
+                      <td>{patient.gender}</td>
+                      <td>{patient.mobileNumber}</td>
+                      <td>{patient.address}</td>
+                      <td>
+                        {admittedPatientsMap[patient?.uhid] ? (
                           <span className="Addmitted-btn">Admitted</span> // Display if admitted
                         ) : (
                           <button

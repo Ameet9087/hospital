@@ -5,7 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { API_BASE_URL } from '../../api/api';
 
-const AddPurchaseOrderDraft = () => {
+const AddPurchaseOrderDraft = ({request}) => {
+  console.log(request);
+  
   const date=new Date();
   const [vendors, setVendors] = useState([]);
   const [currentDate,setCurrentDate]=useState(date)
@@ -17,7 +19,7 @@ const [filteredItems, setFilteredItems] = useState([]);
     return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
   };
   const [formData, setFormData] = useState({
-    vendorId: "",
+    vendorId:"",
     vendorName: "",
     currencyCode: "",
     vendorContactNo: "",
@@ -34,8 +36,32 @@ const [filteredItems, setFilteredItems] = useState([]);
     items: [],
   });
 
-
-
+  useEffect(() => {
+    setFormData((prevState) => ({
+      ...prevState,
+      vendorId: request?.vendor.id,
+      vendorName: request?.vendor.vendorName,
+      vendorContactNo: request?.vendor.contactNumber,
+      vendorAddress: request?.vendor.contactAddress,
+      contactPerson: request?.vendor.contactPerson,
+      contactEmail: request?.vendor.email,
+      currencyCode: request?.vendor.currencyCode,
+      items: request?.items.map((item) => ({
+        itemId: item?.itemId?.invItemId || 0,
+        itemName: item?.itemId?.itemName || "",
+        vendorItemCode: "", // Default value
+        mssNo: "", // Default value
+        hsnCode: "", // Default value
+        itemCode: item?.itemId?.itemCode || "",
+        unit: item?.itemId?.unitOfMeasurement?.name || "",
+        quantity: item?.requiredQty || 0,
+        standardRate: item?.itemId?.standardRate || 0,
+        vat: item?.itemId?.isVatApplicable ? 0 : 0, // Set to 0 as default
+        totalAmount: 0, // Default value
+        remarks: item?.itemRemark || "", // Default value
+      })) || [], 
+    }));
+  }, [request]);
 useEffect(() => {
   axios.get(`${API_BASE_URL}/items/getAllItem`)
     .then((response) => setItems(response.data))
@@ -75,7 +101,7 @@ console.log(items);
     const updatedItems = [...formData.items];
     updatedItems[index] = {
       ...updatedItems[index],
-      itemId: selectedItem.id,
+      itemId: selectedItem.invItemId,
       itemName: selectedItem.itemName,
       standardRate: selectedItem.standardRate,
       totalAmount: updatedItems[index].quantity * selectedItem.standardRate,
@@ -92,7 +118,7 @@ console.log(items);
   };
 
   const handleVendorSelect = (vendorId) => {
-    const vendor = vendors.find((v) => v.id === vendorId);
+    const vendor = vendors.find((v) => v.id === vendorId );
     setSelectedVendor(vendor);
     setFormData({
       ...formData,
@@ -115,8 +141,6 @@ console.log(items);
     updatedItems[index][field] = value;
     setFormData({ ...formData, items: updatedItems });
   };
-  
-
   const addNewRow = () => {
     setFormData({
       ...formData,
@@ -124,7 +148,6 @@ console.log(items);
         ...formData.items,
         {
           itemId:0,
-          category: "",
           itemName: "",
           vendorItemCode: "",
           mssNo: "",
@@ -146,53 +169,61 @@ console.log(items);
     setFormData({ ...formData, items: updatedItems });
   };
 
- const handleSubmit = () => {
-  const cleanedItems = formData.items.map((item) => ({
-    itemId: item.itemId,
-    category: item.category || "",
-    itemName: item.itemName || "",
-    vendorItemCode: item.vendorItemCode || "",
-    mssNo: item.mssNo || "",
-    hsnCode: item.hsnCode || "",
-    itemCode: item.itemCode || "",
-    unit: item.unit || "",
-    quantity: parseFloat(item.quantity) || 0,
-    standardRate: parseFloat(item.standardRate) || 0,
-    vat: parseFloat(item.vat) || 0,
-    totalAmount: parseFloat(item.totalAmount) || 0,
-    remarks: item.remarks || "",
-  }));
-
-  const payload = {
-    poDate: formData.poDate,
-    deliveryDate: formData.deliveryDate,
-    currencyCode: selectedVendor?.currencyCode || "",
-    referenceNo: formData.referenceNo || "",
-    invoicingAddress: formData.invoicingAddress || "",
-    deliveryAddress: formData.deliveryAddress || "",
-    contactPerson: formData.contactPerson || "",
-    contactEmail: formData.contactEmail || "",
-    paymentMode: formData.paymentMode || "",
-    remarks: formData.remarks || "",
-    subTotal: cleanedItems.reduce((sum, item) => sum + Number(item.totalAmount || 0), 0),
-    vat: cleanedItems.reduce((sum, item) => sum + Number(item.vat || 0), 0),
-    totalAmount: cleanedItems.reduce((sum, item) => sum + Number(item.totalAmount || 0), 0),
-    status: "Draft",
-    vendorId: formData.vendorId,
-    items: cleanedItems,
+  const handleSubmit = () => {
+    // Calculate subTotal, vat, and totalAmount from formData.items
+    const subTotal = formData.items.reduce(
+      (sum, item) => sum + Number(item.totalAmount || 0),
+      0
+    );
+    const vat = formData.items.reduce(
+      (sum, item) => sum + Number(item.vat || 0),
+      0
+    );
+    const totalAmount = formData.items.reduce(
+      (sum, item) => sum + Number(item.totalAmount || 0),
+      0
+    );
+  
+    // Map items to only include itemId
+    const cleanedItems = formData.items.map((item) => ({
+      itemId: item.itemId,
+    }));
+  
+    // Create the payload
+    const payload = {
+      poDate: formData.poDate,
+      deliveryDate: formData.deliveryDate,
+      currencyCode: selectedVendor?.currencyCode || "",
+      referenceNo: formData.referenceNo || "",
+      invoicingAddress: formData.invoicingAddress || "",
+      deliveryAddress: formData.deliveryAddress || "",
+      contactPerson: formData.contactPerson || "",
+      contactEmail: formData.contactEmail || "",
+      paymentMode: formData.paymentMode || "",
+      remarks: formData.remarks || "",
+      subTotal, // Calculated subTotal
+      vat,      // Calculated VAT
+      totalAmount, // Calculated totalAmount
+      status: "Draft",
+      vendorId: formData.vendorId,
+      items: cleanedItems, // Only itemId included
+    };
+  
+    console.log("Payload:", payload);
+  
+    // Send the payload to the server
+    axios
+      .post(`${API_BASE_URL}/purchase-orders/create`, payload)
+      .then((response) => {
+        alert("Purchase Order saved successfully!");
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error saving purchase order:", error);
+        alert("Failed to save purchase order.");
+      });
   };
-  console.log(payload);
-  axios
-    .post(`${API_BASE_URL}/purchase-orders/create`, payload)
-    .then((response) => {
-      alert("Purchase Order saved successfully!");
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.error("Error saving purchase order:", error);
-      alert("Failed to save purchase order.");
-    });
-};
+  
 
   return (
     <div className="AddPurchaseOrder-add-purchase-order">
@@ -204,7 +235,7 @@ console.log(items);
           <label>Select Vendor:</label>
           <select
             onChange={(e) => handleVendorSelect(Number(e.target.value))}
-            value={formData.vendorId || ''}
+            value={request?.vendor?.vendorId|| formData.vendorId || ''}
           >
             <option value="" disabled>Select a vendor</option>
             {vendors.map(vendor => (
@@ -217,7 +248,6 @@ console.log(items);
       </div>
 
       {/* Autofill Vendor Data */}
-      {selectedVendor && (
         <div className="AddPurchaseOrder-form-row">
           <div className="AddPurchaseOrder-form-group">
             <label>Vendor Name:</label>
@@ -241,7 +271,6 @@ console.log(items);
             <input type="text" value={formData.contactPerson} disabled />
           </div> */}
         </div>
-      )}
 
       {/* Additional Form Fields */}
       <div className="AddPurchaseOrder-form-row">
@@ -313,8 +342,10 @@ console.log(items);
     );
     handleItemChange(index, "itemName", e.target.value);
 
+    console.log(selectedItem);
+    
     if (selectedItem) {
-      handleItemChange(index, "itemId", selectedItem.id);
+      handleItemChange(index, "itemId", selectedItem.invItemId);
       handleItemChange(index, "itemCode", selectedItem.itemCode);
       handleItemChange(index, "unit", selectedItem.unitOfMeasurement.unitOfMeasurementName);
       handleItemChange(index, "standardRate", selectedItem.standardRate);

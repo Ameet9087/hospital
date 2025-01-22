@@ -53,10 +53,10 @@ const RequisitionDetail = ({ requisition, onClose }) => {
         <div className="inventory-requisition-details">
           <h2 className="inventory-requi-h2">Inventory Unit</h2>
           <p>
-            Requisition No: <strong>{requisition.inventoryRequisitionId}</strong>
+            Requisition No: <strong>{requisition?.id}</strong>
           </p>
           <p>
-            Request From: <strong>{requisition.subStoreDTO.subStoreName}</strong>
+            Request From: <strong>{requisition?.subStore?.subStoreName}</strong>
           </p>
           <hr />
           <table className="inventory-requi-table">
@@ -73,7 +73,7 @@ const RequisitionDetail = ({ requisition, onClose }) => {
               </tr>
             </thead>
             <tbody>
-                {requisition?.itemRequisitionsDtos?.map((item) => (
+                {requisition?.requisitionItems?.map((item) => (
                   <tr key={item.id}>
                     <td>
                     <input
@@ -82,13 +82,13 @@ const RequisitionDetail = ({ requisition, onClose }) => {
                       onChange={() => handleCheckboxChange(item.id)}
                     />
                   </td>
-                    <td>{item.itemCategory}</td>
-                    <td>{item.item.itemName}</td>
-                    <td>{item.item.itemCode}</td>
-                    <td>{item.requestedQuantity}</td>
-                    <td>{item.dispatchQty}</td>
-                    <td>{item.requestedQuantity - item.dispatchQty}</td>
-                    <td>{item.remarks}</td>
+                    <td>{item?.item?.subCategory?.subCategoryName}</td>
+                    <td>{item?.item?.itemName}</td>
+                    <td>{item?.item?.itemCode}</td>
+                    <td>{item?.requiredQuantity}</td>
+                    <td>{item?.dispatchQuantity}</td>
+                    <td>{item?.requiredQuantity - item?.dispatchQuantity}</td>
+                    <td>{item?.remark}</td>
                   </tr>
                 ))}
               </tbody>
@@ -99,11 +99,11 @@ const RequisitionDetail = ({ requisition, onClose }) => {
           <p>
               <strong>Status:</strong> <br />{requisition.status}
             </p>
-            <p>
+            {/* <p>
               <strong>Dispatched By:</strong> <br />{requisition.dispatchBy} {requisition.dispatchDate}
-            </p>
+            </p> */}
             <p>
-              <strong>Rem:</strong> {requisition.remark}
+              <strong>Remark:</strong> {requisition.remarks}
             </p>
           </div>
           <div className="inventory-status-steps">

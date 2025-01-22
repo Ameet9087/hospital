@@ -4,40 +4,46 @@ import CustomModal from "../CustomModel/CustomModal";
 import AddCancel from "./AddCancel";
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
+import AppoitmentPopupTable from "./AppoitmentPopupTable";
+import AppointmentReschedule from "./AppointmentReschedule";
 
 export default function DoctorAppointmentPopUp({
   date,
   selectedDoctor,
   updatedAppointments,
   selectedTimeSlot,
+  slots,
   handleSave,
   handleUpdate,
   handleDelete,
   closeModal,
 }) {
+  console.log(updatedAppointments);
+
   const [formData, setFormData] = useState({
     appointmentDate: updatedAppointments?.appointmentDate || date,
     appointmentTime: updatedAppointments?.appointmentTime || selectedTimeSlot,
     typeOfAppointment: updatedAppointments?.typeOfAppointment || "",
-    mobileNo: updatedAppointments?.mobileNo || "",
-    alternateMobileNo: updatedAppointments?.altMobileNo || "",
-    initial: updatedAppointments?.initial || "",
-    firstName: updatedAppointments?.firstName || "",
-    middleName: updatedAppointments?.middleName || "",
-    lastName: updatedAppointments?.lastName || "",
-    dob: updatedAppointments?.dob || "",
-    age: updatedAppointments?.age || "",
-    sex: updatedAppointments?.sex || "",
-    relativeName: updatedAppointments?.relativeName || "",
-    address: updatedAppointments?.address || "",
+    contactNumber: updatedAppointments?.patient?.contactNumber || "",
+    salutation: updatedAppointments?.patient?.salutation || "",
+    firstName: updatedAppointments?.patient?.firstName || "",
+    middleName: updatedAppointments?.patient?.middleName || "",
+    lastName: updatedAppointments?.patient?.lastName || "",
+    birthOfDate: updatedAppointments?.patient?.birthOfDate || "",
+    age: updatedAppointments?.patient?.age || "",
+    gender: updatedAppointments?.patient?.gender || "",
+    relation: updatedAppointments?.patient?.relation || "",
+    relativeName: updatedAppointments?.patient?.relativeName || "",
+    address: updatedAppointments?.patient?.address || "",
     remarks: updatedAppointments?.remarks || "",
-    adharCardId: updatedAppointments?.adharCardId || "",
-    email: updatedAppointments?.email || "",
-    country: updatedAppointments?.country||"",
-    state:updatedAppointments?.state|| "",
-    city:updatedAppointments?.city|| "",
-    pinCode:updatedAppointments?.pinCode|| "",
+    adharCardId: updatedAppointments?.patient?.adharCardId || "",
+    emailId: updatedAppointments?.patient?.emailId || "",
+    country: updatedAppointments?.patient?.country || "",
+    state: updatedAppointments?.patient?.state || "",
+    cityDistrict: updatedAppointments?.patient?.cityDistrict || "",
+    pinCode: updatedAppointments?.patient?.pinCode || "",
     appointmentSourceType: updatedAppointments?.appointmentSourceType || "",
+    consultationType: updatedAppointments?.consultationType || "",
     status: updatedAppointments?.status || "",
     reason: updatedAppointments?.reason || "",
     addDoctor: {
@@ -45,19 +51,26 @@ export default function DoctorAppointmentPopUp({
     },
   });
 
+  console.log(formData);
+
   const [errors, setErrors] = useState({});
+  const [outPatient, setOutPatient] = useState();
+  const [activePopup, setActivePopup] = useState(null);
   const [outPatientId, setOutPatientId] = useState();
+  const [selectedOutPatient, setSelectedOutpatient] = useState(null);
 
   const [showPopup, setShowPopup] = useState(false);
 
+  const [showReschedule, setShowReschedule] = useState(false);
+
+  const [update, setUpdate] = useState();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     const currentDate = new Date();
     let updatedFormData = { ...formData, [name]: value };
 
-    if (name === "dob" && value) {
-      // Calculate age when DOB is entered
+    if (name === "birthOfDate" && value) {
       const birthDate = new Date(value);
       const age = currentDate.getFullYear() - birthDate.getFullYear();
       const isBeforeBirthday =
@@ -72,7 +85,7 @@ export default function DoctorAppointmentPopUp({
       const years = parseInt(value, 10);
       const dobYear = currentDate.getFullYear() - years;
       const dobFromJanuary = new Date(dobYear, 0, 1); // January 1st of the calculated year
-      updatedFormData.dob = dobFromJanuary.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+      updatedFormData.birthOfDate = dobFromJanuary.toISOString().split("T")[0]; // Format as YYYY-MM-DD
     }
 
     setFormData(updatedFormData);
@@ -97,36 +110,40 @@ export default function DoctorAppointmentPopUp({
       appointmentDate: date,
       appointmentTime: selectedTimeSlot,
       typeOfAppointment: formData?.typeOfAppointment || "",
-      mobileNo: formData?.mobileNo || "",
-      alternateMobileNo: formData?.altMobileNo || "",
-      initial: formData?.initial || "",
-      firstName: formData?.firstName || "",
-      middleName: formData?.middleName || "",
-      lastName: formData?.lastName || "",
-      dob: formData?.dob || "",
-      age: formData?.age || "",
-      sex: formData?.sex || "",
-      relativeName: formData?.relativeName || "",
-      address: formData?.address || "",
-      remarks: formData?.remarks || "",
-      adharCardId: formData?.adharCardId || "",
-      email: formData?.email || "",
-      country: "",
-      state: "",
-      city: "",
-      pinCode: "",
       appointmentSourceType: formData?.appointmentSourceType || "",
+      consultationType: formData?.consultationType || "",
       status: "Initialized",
       reason: formData?.reason || "",
+      remarks: formData?.remarks || "",
+      patient: selectedOutPatient
+        ? {
+            uhid: selectedOutPatient?.uhid,
+          }
+        : {
+            contactNumber: formData?.contactNumber || "",
+            salutation: formData?.salutation || "",
+            firstName: formData?.firstName || "",
+            middleName: formData?.middleName || "",
+            lastName: formData?.lastName || "",
+            dateOfBirth: formData?.birthOfDate || "",
+            age: formData?.age || "",
+            ageUnit: formData?.ageUnit || "",
+            gender: formData?.gender || "",
+            address: formData?.address || "",
+            adharCardId: formData?.adharCardId || "",
+            emailId: formData?.emailId || "",
+            country: formData?.country || "",
+            relation: formData?.relation || "",
+            state: formData?.state || "",
+            cityDistrict: formData?.cityDistrict || "",
+            pinCode: formData?.pinCode || "",
+          },
       addDoctor: {
         doctorId: selectedDoctor || 0,
       },
     };
-    if (formData.typeOfAppointment) {
-      updateFormData.outPatient = {
-        outPatientId: outPatientId,
-      };
-    }
+    console.log(updateFormData);
+
     try {
       const response = await fetch(`${API_BASE_URL}/appointments`, {
         method: "POST",
@@ -135,7 +152,7 @@ export default function DoctorAppointmentPopUp({
       });
       const result = await response.json();
       if (response.ok) {
-        alert("Appointment saved successfully!");
+        alert(`Appointment saved successfully ${result?.patient?.uhid}`);
         handleSave(result);
         closeModal();
       } else {
@@ -154,10 +171,10 @@ export default function DoctorAppointmentPopUp({
       ...prevState,
       country: response.data.countryName,
       state: response.data.stateName,
-      city: response.data.cityName,
+      cityDistrict: response.data.cityName,
     }));
   };
- 
+
   useEffect(() => {
     fetchDataByPinCode();
   }, [formData.pinCode]);
@@ -184,15 +201,10 @@ export default function DoctorAppointmentPopUp({
     }
   };
 
-  const fetchPatientData = async () => {
-    if (!formData.mrNo) {
-      alert("Please enter MR No.");
-      return;
-    }
-
+  const fetchPatientData = async (uhid) => {
     try {
       const response = await fetch(
-        `${API_BASE_URL}/patients/outpatient?uhid=${formData.mrNo}`,
+        `${API_BASE_URL}/patients/outpatient?uhid=${uhid}`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -203,33 +215,8 @@ export default function DoctorAppointmentPopUp({
         const patientData = await response.json();
         console.log("Hello World ", patientData);
         setOutPatientId(patientData[0]?.outPatientId);
-        setFormData((prevData) => ({
-          ...prevData,
-          typeOfAppointment: "oldPatient",
-          mobileNo: patientData[0]?.phoneNumber || "",
-          adharCardId: patientData[0]?.adharCardId || "",
-          alternateMobileNo: patientData[0]?.alternateMobileNo || "",
-          initial: patientData[0]?.initial || "",
-          firstName: patientData[0]?.firstName || "",
-          middleName: patientData[0]?.middleName || "",
-          lastName: patientData[0]?.lastName || "",
-          dob: patientData[0]?.dateOfBirth || "",
-          age: patientData[0]?.age || "",
-          sex: patientData[0]?.gender || "",
-          relativeName: patientData[0]?.relativeName || "",
-          address: patientData[0]?.address || "",
-          remarks: patientData[0]?.remarks || "",
-          email: patientData[0]?.email || "",
-          appointmentSourceType: patientData[0]?.appointmentSourceType || "",
-          status: "Initialized",
-          reason: patientData?.reason || "",
-          outPatient: {
-            outPatientId: patientData[0].outPatientId,
-          },
-          addDoctor: {
-            doctorId: selectedDoctor || 0, // Map doctorId if needed
-          },
-        }));
+
+        console.log(patientData);
       } else {
         const errorResult = await response.json();
         alert(errorResult.message || "Unable to fetch patient details.");
@@ -240,6 +227,15 @@ export default function DoctorAppointmentPopUp({
     }
   };
 
+  const fetchOutPatientData = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/patient-register/all`);
+      setOutPatient(response.data);
+    } catch (error) {
+      console.error("Error fetching patient details:", error);
+    }
+  };
+
   const handleCancelClick = () => {
     setShowPopup(true);
   };
@@ -247,271 +243,406 @@ export default function DoctorAppointmentPopUp({
     setShowPopup(false);
     closeModal();
   };
-  return (
-    <div className="operationschedule-modal">
-      <h2 className="operationschedule-modal-title">
-        Schedule Appointment for {selectedTimeSlot}
-      </h2>
-      <form className="operationschedule-modal-form">
-        {/* Row 1 */}
-        <div className="operationschedule-form-row">
-          <div className="operationschedule-form-col">
-            <label>Type of Appointment</label>
-            <select
-              name="typeOfAppointment"
-              value={formData.typeOfAppointment}
-              onChange={handleInputChange}
-            >
-              <option value="">Select visit</option>
-              <option value="newPatient">New Patient</option>
-              <option value="oldPatient">Old Patient</option>
-            </select>
-          </div>
-        </div>
+  const getPopupData = () => {
+    if (activePopup === "uhid") {
+      return {
+        columns: ["uhid", "firstName", "lastName", "adharCardId"],
+        data: outPatient,
+      };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
 
-        {formData.typeOfAppointment === "oldPatient" && (
+  const { columns, data } = getPopupData();
+
+  const handleSelect = async (data) => {
+    if (activePopup === "uhid") {
+      setFormData((prevData) => ({
+        ...prevData,
+        typeOfAppointment: "oldPatient",
+        contactNumber: data?.contactNumber || "",
+        adharCardId: data?.adharCardId || "",
+        salutation: data?.salutation || "",
+        firstName: data?.firstName || "",
+        middleName: data?.middleName || "",
+        lastName: data?.lastName || "",
+        dateOfBirth: data?.dateOfBirth || "",
+        age: data?.age || "",
+        gender: data?.gender || "",
+        relativeName: data?.relativeName || "",
+        relation: data?.relation || "",
+        country: data?.country || "",
+        state: data?.state || "",
+        pinCode: data?.pinCode || "",
+        cityDistrict: data?.cityDistrict || "",
+        address: data?.address || "",
+        remarks: data?.remarks || "",
+        emailId: data?.emailId || "",
+        appointmentSourceType: data?.appointmentSourceType || "",
+        status: "Initialized",
+        reason: data?.reason || "",
+        outPatient: {
+          outPatientId: data?.outPatientId,
+        },
+        addDoctor: {
+          doctorId: selectedDoctor || 0, // Map doctorId if needed
+        },
+      }));
+      setSelectedOutpatient(data);
+      await fetchPatientData(data.patient.uhid);
+    }
+    setActivePopup(null);
+  };
+
+  useEffect(() => {
+    fetchOutPatientData();
+  }, []);
+
+  const RescheduleAppointment = (item) => {
+    setUpdate(item);
+    setShowReschedule(true);
+  };
+
+  return (
+    <>
+      <div className="operationschedule-modal">
+        <h2 className="operationschedule-modal-title">
+          Schedule Appointment for {selectedTimeSlot}
+        </h2>
+        <form className="operationschedule-modal-form">
+          {/* Row 1 */}
           <div className="operationschedule-form-row">
             <div className="operationschedule-form-col">
-              <label>MR No</label>
+              <label>Type of Appointment</label>
+              <select
+                name="typeOfAppointment"
+                value={formData.typeOfAppointment}
+                onChange={handleInputChange}
+              >
+                <option value="">Select visit</option>
+                <option value="newPatient">New Patient</option>
+                <option value="oldPatient">Old Patient</option>
+              </select>
+            </div>
+            {formData.typeOfAppointment === "oldPatient" && (
+              <div className="operationschedule-form-col">
+                <div>
+                  <label>MR No</label>
+                  <div className="operationschedule-form-col-sub-div">
+                    <input
+                      type="text"
+                      name="mrNo"
+                      value={selectedOutPatient?.uhid}
+                    />
+                    <i
+                      onClick={() => setActivePopup("uhid")}
+                      className="fa-solid fa-magnifying-glass"
+                    ></i>
+                  </div>
+                </div>
+                {errors.mrNo && (
+                  <span className="error-text">{errors.mrNo}</span>
+                )}
+              </div>
+            )}
+          </div>
+
+          <div className="operationschedule-form-row">
+            <div className="operationschedule-form-col">
+              <label>Mobile No</label>
               <input
                 type="text"
-                name="mrNo"
-                value={formData.mrNo || ""}
+                name="contactNumber"
+                value={formData.contactNumber || ""}
                 onChange={handleInputChange}
-                onBlur={fetchPatientData}
               />
-              {errors.mrNo && <span className="error-text">{errors.mrNo}</span>}
+            </div>
+            {/* <div className="operationschedule-form-col">
+              <label>Alter Mobile No</label>
+              <input
+                type="text"
+                name="alternateMobileNo"
+                value={formData.alternateMobileNo || ""}
+                onChange={handleInputChange}
+              />
+            </div> */}
+            <div className="operationschedule-form-col">
+              <label>Aadhar Card Number:</label>
+              <input
+                type="text"
+                name="adharCardId"
+                value={formData.adharCardId || ""}
+                onChange={handleInputChange}
+              />
             </div>
           </div>
-        )}
 
-        {/* Row 3 */}
-        <div className="operationschedule-form-row">
-          <div className="operationschedule-form-col">
-            <label>Mobile No</label>
-            <input
-              type="text"
-              name="mobileNo"
-              value={formData.mobileNo || ""}
-              onChange={handleInputChange}
-            />
+          {/* Row 4 */}
+          <div className="operationschedule-form-row">
+            <div className="operationschedule-form-col">
+              <label>Initial</label>
+              <select
+                name="salutation"
+                value={formData.salutation || ""}
+                onChange={handleInputChange}
+              >
+                <option value="Mrs">Mrs</option>
+                <option value="Mr">Mr</option>
+                <option value="Ms">Ms</option>
+                <option value="Baby of">Baby of</option>
+                <option value="Miss">Miss</option>
+                <option value="Master">Master</option>
+                <option value="Dr.">Dr.</option>
+                <option value="Baby">Baby</option>
+                <option value="Empty">Empty</option>
+              </select>
+            </div>
+            <div className="operationschedule-form-col">
+              <label>First Name</label>
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName || ""}
+                onChange={handleInputChange}
+              />
+            </div>
           </div>
-          <div className="operationschedule-form-col">
-            <label>Alter Mobile No</label>
-            <input
-              type="text"
-              name="alternateMobileNo"
-              value={formData.alternateMobileNo || ""}
-              onChange={handleInputChange}
-            />
+          <div className="operationschedule-form-row">
+            <div className="operationschedule-form-col">
+              <label>Middle Name</label>
+              <input
+                type="text"
+                name="middleName"
+                value={formData.middleName || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="operationschedule-form-col">
+              <label>Last Name</label>
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName || ""}
+                onChange={handleInputChange}
+              />
+            </div>
           </div>
-          <div className="operationschedule-form-col">
-            <label>Aadhar Card Number:</label>
-            <input
-              type="text"
-              name="adharCardId"
-              value={formData.adharCardId || ""}
-              onChange={handleInputChange}
-            />
+
+          {/* Row 5 */}
+          <div className="operationschedule-form-row">
+            <div className="operationschedule-form-col">
+              <label>DOB</label>
+              <input
+                type="date"
+                name="birthOfDate"
+                value={formData.birthOfDate || ""}
+                onChange={handleInputChange}
+              />
+              {errors.dob && <span className="error-text">{errors.dob}</span>}
+            </div>
+            <div className="operationschedule-form-col">
+              <label>Age</label>
+              <input
+                type="number"
+                name="age"
+                value={formData.age || ""}
+                onChange={handleInputChange}
+              />
+            </div>
           </div>
+
+          {/* Row 6 */}
+          <div className="operationschedule-form-row">
+            <div className="operationschedule-form-col">
+              <label>Gender</label>
+              <select
+                name="gender"
+                value={formData.gender || ""}
+                onChange={handleInputChange}
+              >
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div className="operationschedule-form-col">
+              <label>Email</label>
+              <input
+                type="email"
+                name="emailId"
+                value={formData.emailId || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          {/* Row 7 */}
+          <div className="operationschedule-form-row">
+            <div className="operationschedule-form-col">
+              <label>Address</label>
+              <textarea
+                name="address"
+                value={formData.address || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="operationschedule-form-col">
+              <label>Remarks</label>
+              <textarea
+                name="remarks"
+                value={formData.remarks || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          <div className="operationschedule-form-row">
+            <div className="operationschedule-form-col">
+              <label>Relation</label>
+              <input
+                type="text"
+                name="relation"
+                value={formData.relation || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="operationschedule-form-col">
+              <label>Relative Name</label>
+              <input
+                type="text"
+                name="relativeName"
+                value={formData.relativeName || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          {/* Row 8 */}
+          <div className="operationschedule-form-row">
+            <div className="operationschedule-form-col">
+              <label>Pin Code</label>
+              <input
+                className="checkIn__input"
+                type="text"
+                placeholder="PinCode"
+                name="pinCode"
+                value={formData.pinCode}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="operationschedule-form-col">
+              <label>City</label>
+              <input
+                type="text"
+                name="cityDistrict"
+                value={formData.cityDistrict || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+          <div className="operationschedule-form-row">
+            <div className="operationschedule-form-col">
+              <label>State</label>
+              <input
+                type="text"
+                name="state"
+                value={formData.state || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="operationschedule-form-col">
+              <label>Country</label>
+              <input
+                type="text"
+                name="country"
+                value={formData.country || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+          <div className="operationschedule-form-row">
+            <div className="operationschedule-form-col">
+              <label>Appointment Source</label>
+              <select
+                name="appointmentSourceType"
+                value={formData.appointmentSourceType}
+                onChange={handleInputChange}
+              >
+                <option value="">Select option</option>
+                <option value="web">Web</option>
+                <option value="app">App</option>
+                <option value="call">Call</option>
+                <option value="visit">Visit</option>
+                <option value="others">others</option>
+              </select>
+            </div>
+            <div className="operationschedule-form-col">
+              <label>Consultation Type</label>
+              <select
+                name="consultationType"
+                value={formData.consultationType}
+                onChange={handleInputChange}
+              >
+                <option value="">Select option</option>
+                <option value="in-hospital">In-Hospital</option>
+                <option value="Online-Tele-Consult">Online-Tele-Consult</option>
+              </select>
+            </div>
+          </div>
+        </form>
+
+        {/* Action Buttons */}
+        <div className="operationschedule-modal-buttons">
+          <button
+            onClick={handleSaveClick}
+            className="operationschedule-save-btn"
+          >
+            Save
+          </button>
+          {updatedAppointments != null && (
+            <>
+              <button
+                onClick={() => RescheduleAppointment(updatedAppointments)}
+                className="operationschedule-save-btn"
+              >
+                Reschedule
+              </button>
+              <button
+                onClick={handleCancelClick}
+                className="operationschedule-delete-btn"
+              >
+                Cancel Appointment
+              </button>
+            </>
+          )}
         </div>
 
-        {/* Row 4 */}
-        <div className="operationschedule-form-row">
-          <div className="operationschedule-form-col">
-            <label>Initial</label>
-            <input
-              type="text"
-              name="initial"
-              value={formData.initial || ""}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="operationschedule-form-col">
-            <label>First Name</label>
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName || ""}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        <div className="operationschedule-form-row">
-          <div className="operationschedule-form-col">
-            <label>Middle Name</label>
-            <input
-              type="text"
-              name="middleName"
-              value={formData.middleName || ""}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="operationschedule-form-col">
-            <label>Last Name</label>
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName || ""}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-
-        {/* Row 5 */}
-        <div className="operationschedule-form-row">
-          <div className="operationschedule-form-col">
-            <label>DOB</label>
-            <input
-              type="date"
-              name="dob"
-              value={formData.dob || ""}
-              onChange={handleInputChange}
-            />
-            {errors.dob && <span className="error-text">{errors.dob}</span>}
-          </div>
-          <div className="operationschedule-form-col">
-            <label>Age</label>
-            <input
-              type="number"
-              name="age"
-              value={formData.age || ""}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-
-        {/* Row 6 */}
-        <div className="operationschedule-form-row">
-          <div className="operationschedule-form-col">
-            <label>Sex</label>
-            <select
-              name="sex"
-              value={formData.sex || ""}
-              onChange={handleInputChange}
-            >
-              <option value="">Select</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div className="operationschedule-form-col">
-            <label>Relative Name</label>
-            <input
-              type="text"
-              name="relativeName"
-              value={formData.relativeName || ""}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-
-        {/* Row 7 */}
-        <div className="operationschedule-form-row">
-          <div className="operationschedule-form-col">
-            <label>Address</label>
-            <textarea
-              name="address"
-              value={formData.address || ""}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="operationschedule-form-col">
-            <label>Remarks</label>
-            <textarea
-              name="remarks"
-              value={formData.remarks || ""}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-
-        {/* Row 8 */}
-        <div className="operationschedule-form-row">
-          <div className="operationschedule-form-col">
-            <label>Pin Code</label>
-            <input
-              className="checkIn__input"
-              type="text"
-              placeholder="PinCode"
-              name="pinCode"
-              value={formData.pinCode}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="operationschedule-form-col">
-            <label>City</label>
-            <input
-              type="text"
-              name="city"
-              value={formData.city || ""}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-
-        <div className="operationschedule-form-row">
-          <div className="operationschedule-form-col">
-            <label>State</label>
-            <input
-              type="text"
-              name="state"
-              value={formData.state || ""}
-              onChange={handleInputChange}
-            />
-          </div>
-        </div>
-        {/* Row 9 */}
-        <div className="operationschedule-form-row">
-          <div className="operationschedule-form-col">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email || ""}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="operationschedule-form-col">
-            <label>Appointment Source</label>
-            <select
-              name="appointmentSourceType"
-              value={formData.appointmentSourceType}
-              onChange={handleInputChange}
-            >
-              <option value="">Select option</option>
-              <option value="website">Website</option>
-              <option value="app">App</option>
-            </select>
-          </div>
-        </div>
-      </form>
-
-      {/* Action Buttons */}
-      <div className="operationschedule-modal-buttons">
-        <button
-          onClick={handleSaveClick}
-          className="operationschedule-save-btn"
-        >
-          Save
-        </button>
-        <button
-          onClick={handleCancelClick}
-          className="operationschedule-delete-btn"
-        >
-          Delete
-        </button>
+        <CustomModal isOpen={showPopup} onClose={() => setShowPopup(false)}>
+          <AddCancel
+            formData={formData}
+            updatedAppointments={updatedAppointments}
+            onClose={handleCancelClose}
+          />
+        </CustomModal>
+        <CustomModal isOpen={showReschedule} onClose={handleCancelClose}>
+          <AppointmentReschedule
+            slots={slots}
+            update={update}
+            onClose={handleCancelClose}
+          />
+        </CustomModal>
       </div>
-
-      <CustomModal isOpen={showPopup} onClose={() => setShowPopup(false)}>
-        <AddCancel
-          formData={formData}
-          updatedAppointments={updatedAppointments}
-          onClose={handleCancelClose}
+      {activePopup && (
+        <AppoitmentPopupTable
+          columns={columns}
+          data={data}
+          onSelect={handleSelect}
+          onClose={() => setActivePopup(null)}
         />
-      </CustomModal>
-    </div>
+      )}
+    </>
   );
 }

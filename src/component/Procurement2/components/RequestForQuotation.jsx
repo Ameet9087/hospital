@@ -3,7 +3,7 @@ import axios from "axios";
 import "./RequestForQuotation.css";
 import { API_BASE_URL } from "../../api/api";
 
-function RequestForQuotation() {
+function RequestForQuotation({onClose}) {
   const [formData, setFormData] = useState({
     subject: "",
     description: "",
@@ -84,11 +84,11 @@ function RequestForQuotation() {
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
+    e.preventDefault();    
     try {
       const response = await axios.post(`${API_BASE_URL}/rfq/create`, formData);
       console.log("RFQ Created:", response.data);
+      onClose();
     } catch (error) {
       console.error("Error submitting RFQ:", error);
     }
@@ -100,7 +100,7 @@ function RequestForQuotation() {
       <form onSubmit={handleSubmit}>
         <div className="RequestforQuotation-form-row">
           <div className="RequestforQuotation-form-group">
-            <label htmlFor="subject">Subject *</label>
+            <label htmlFor="subject">Subject * :</label>
             <input
               type="text"
               id="subject"
@@ -112,15 +112,21 @@ function RequestForQuotation() {
             />
           </div>
           <div className="RequestforQuotation-form-group">
-            <label htmlFor="description">Description *</label>
-            <textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              placeholder="Description"
+            <label htmlFor="vendor">Select Vendor * :</label>
+            <select
+              id="vendor"
+              name="vendorId"
+              value={formData.vendorId}
               required
               onChange={(e) => handleChange(e)}
-            ></textarea>
+            >
+              <option value="">---Select Vendor---</option>
+              {vendors.map((vendor) => (
+                <option key={vendor.id} value={vendor.id}>
+                  {vendor.vendorName}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="RequestforQuotation-form-row">
@@ -147,25 +153,7 @@ function RequestForQuotation() {
             />
           </div>
         </div>
-        <div className="RequestforQuotation-form-row">
-          <div className="RequestforQuotation-form-group">
-            <label htmlFor="vendor">Select Vendor *</label>
-            <select
-              id="vendor"
-              name="vendorId"
-              value={formData.vendorId}
-              required
-              onChange={(e) => handleChange(e)}
-            >
-              <option value="">---Select Vendor---</option>
-              {vendors.map((vendor) => (
-                <option key={vendor.id} value={vendor.id}>
-                  {vendor.vendorName}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+        
         <table className="RequestforQuotation-table">
           <thead>
             <tr>
@@ -187,7 +175,7 @@ function RequestForQuotation() {
                   >
                     <option value="">---Select Item---</option>
                     {items.map((itemOption) => (
-                      <option key={itemOption.id} value={itemOption.id}>
+                      <option key={itemOption.id} value={itemOption.invItemId}>
                         {itemOption.itemName}
                       </option>
                     ))}
@@ -237,6 +225,17 @@ function RequestForQuotation() {
             ))}
           </tbody>
         </table>
+        <div className="RequestforQuotation-form-group">
+            <label htmlFor="description">Description *</label>
+            <textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              placeholder="Description"
+              required
+              onChange={(e) => handleChange(e)}
+            ></textarea>
+          </div>
         <div className="RequestforQuotation-form-actions">
           <button type="submit" className="RequestforQuotation-btn-request">
             Request

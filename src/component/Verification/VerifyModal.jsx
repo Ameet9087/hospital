@@ -1,44 +1,51 @@
-import React, { useState } from 'react';
-import './VerifyModal.css';
-import { API_BASE_URL } from '../api/api';
+import React, { useState } from "react";
+import "./VerifyModal.css";
+import { API_BASE_URL } from "../api/api";
 
 function VerifyModal({ isOpen, onClose, requisitionDetails }) {
-  console.log(requisitionDetails);
-  
-  const [verifyRemark, setVerifyRemark] = useState('');
-  
+  const [verifyRemark, setVerifyRemark] = useState("");
+  const [verifiedBy, setVerifiedBy] = useState(""); // Dynamic value for verifier
+  const [checkedBy, setCheckedBy] = useState("");  // Dynamic value for checker
+  const [withdrawRemark, setWithdrawRemark] = useState(""); // Dynamic value for withdraw remark
+  const [status, setStatus] = useState(""); // Dynamic value for status (Approved/Rejected)
+
   if (!isOpen) return null;
 
   // Function to handle approval
   const handleApprove = async () => {
     const updateData = {
-      verifyOrNot: 'Verified' , // Set to 'Approved' when approved
-      verifiedBy: 'Mr.admin', // Replace with the actual verifier's name or ID
-      requiredQuantity: requisitionDetails.requiredQuantity,
-      status: 'Approved', // Assuming status should be updated to 'Verified'
+      verifyOrNot: "Verified", // Automatically set as 'Verified'
+      verifiedBy: verifiedBy || "AdminUser", // Use dynamic value from input or fallback to "AdminUser"
+      status: status || "Approved", // Use dynamic value from input or fallback to "Approved"
+      withdrawRemark: withdrawRemark || "No issues noted during verification", // Use dynamic value for withdraw remark
+      checkedBy: checkedBy || "John Doe", // Use dynamic value for checkedBy
+      remarks: verifyRemark || "Requisition successfully verified", // Use dynamic value for remarks
     };
 
-    console.log(updateData);
-    
+    console.log("Payload to API:", updateData);
+
     try {
-      const response = await fetch(`${API_BASE_URL}/inventory-requisitions/update/${requisitionDetails.inventoryRequisitionId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updateData),
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/inventory-requisitions/${requisitionDetails.id}/verify`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updateData),
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
-        console.log('Update successful:', result);
+        console.log("Update successful:", result);
         // Close the modal after a successful update
         onClose();
       } else {
-        console.error('Error updating requisition:', response.statusText);
+        console.error("Error updating requisition:", response.statusText);
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -47,13 +54,22 @@ function VerifyModal({ isOpen, onClose, requisitionDetails }) {
       <div className="verifyModalContainer">
         <div className="verifyModalHeader">
           <h2>Check and Verify Requisition</h2>
-          <button onClick={onClose} className="verifyCloseButton">×</button>
+          <button onClick={onClose} className="verifyCloseButton">
+            ×
+          </button>
         </div>
         <div className="verifyModalContent">
           <div className="verifyRequisitionDetails">
-            <p><strong>Requisition No:</strong> {requisitionDetails.inventoryRequisitionId}</p>
-            <p><strong>Store Name:</strong> {requisitionDetails.storeName}</p>
-            <p><strong>Requisition Date:</strong> {requisitionDetails.requisitionDate}</p>
+            <p>
+              <strong>Requisition No:</strong> {requisitionDetails.id}
+            </p>
+            <p>
+              <strong>Store Name:</strong> {requisitionDetails.substoreName}
+            </p>
+            <p>
+              <strong>Requisition Date:</strong>{" "}
+              {requisitionDetails.requisitionDate}
+            </p>
           </div>
           <table className="verifyDataTable">
             <thead>
@@ -66,27 +82,81 @@ function VerifyModal({ isOpen, onClose, requisitionDetails }) {
               </tr>
             </thead>
             <tbody>
-                <tr>
-                  <td>{requisitionDetails.itemName}</td>
-                  <td>{requisitionDetails.requiredQuantity || requisitionDetails.requestingQuantity }</td>
-                  <td>{requisitionDetails.unit || 'N/A'}</td>
-                  <td>{requisitionDetails.remark || 'N/A'}</td>
-                  <td>{requisitionDetails.status}</td>
+              {requisitionDetails.requisitionItems.map((item) => (
+                <tr key={item.id}>
+                  <td>{item?.item?.itemName || "N/A"}</td>
+                  <td>{item.requiredQuantity || "N/A"}</td>
+                  <td>
+                    {item?.item?.unitOfMeasurement?.unitOfMeasurementName ||
+                      "N/A"}
+                  </td>
+                  <td>{item.remark || "N/A"}</td>
+                  <td>{requisitionDetails.status || "N/A"}</td>
                 </tr>
+              ))}
             </tbody>
           </table>
           <div className="verifyRemarksSection">
             <label>Requisition Remark:</label>
-            <textarea 
+            <textarea
               className="verifyRemarksInput"
               value={verifyRemark}
               onChange={(e) => setVerifyRemark(e.target.value)}
             />
           </div>
+          <div className="VerifyRemarkContainer">
+          <div className="verifyRemarksSection">
+            <label>Verified By:</label>
+            <input
+              type="text"
+              className="verifyInput"
+              value={verifiedBy}
+              onChange={(e) => setVerifiedBy(e.target.value)}
+              placeholder="Enter verifier's name"
+            />
+          </div>
+          <div className="verifyRemarksSection">
+            <label>Checked By:</label>
+            <input
+              type="text"
+              className="verifyInput"
+              value={checkedBy}
+              onChange={(e) => setCheckedBy(e.target.value)}
+              placeholder="Enter checker’s name"
+            />
+          </div>
+          </div>
+          <div className="VerifyRemarkContainer">
+          <div className="verifyRemarksSection">
+            <label>Withdraw Remark:</label>
+            <input
+              type="text"
+              className="verifyInput"
+              value={withdrawRemark}
+              onChange={(e) => setWithdrawRemark(e.target.value)}
+              placeholder="Enter withdrawal remark"
+            />
+          </div>
+          <div className="verifyRemarksSection">
+            <label>Status:</label>
+            <select
+              className="verifyInput"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+            </div>
+          </div>
         </div>
         <div className="verifyModalFooter">
-          <button onClick={handleApprove} className="verifyApproveButton">Approve</button>
-          <button onClick={onClose} className="verifyRejectButton">Reject All</button>
+          <button onClick={handleApprove} className="verifyApproveButton">
+            Approve
+          </button>
+          <button onClick={onClose} className="verifyRejectButton">
+            Reject All
+          </button>
         </div>
       </div>
     </div>

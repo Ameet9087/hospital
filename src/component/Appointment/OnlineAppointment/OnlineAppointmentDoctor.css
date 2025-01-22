@@ -1,0 +1,111 @@
+.doctor-card-list {
+    display: flex;
+    flex-wrap: wrap; /* Wrap the cards to the next row */
+    gap: 20px;
+    justify-content: center;
+    width: 100%; /* Use the full width of the page */
+    padding: 20px;
+    margin: 0; /* Remove margins if any */
+    background-color: #f9f9f9;
+    box-sizing: border-box; /* Include padding in width calculation */
+    margin-top: 50px;
+  }
+    
+    .doctor-card {
+      flex-basis: calc(25% - 16px); /* Four cards per row */
+      max-width: calc(25% - 16px); /* Ensure proper sizing */
+      background-color: #f1f1f1;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 16px;
+    }
+    
+    .doctor-card-image {
+      width: 80px;
+      height: 80px;
+      background-color: #d9e0ec;
+      border-radius: 50%;
+      margin-bottom: 12px;
+    }
+    
+    .doctor-card-content h3 {
+      font-size: 16px;
+      margin: 8px 0;
+      font-weight: bold;
+    }
+    
+    .doctor-card-content p {
+      font-size: 14px;
+      color: #555;
+      margin: 4px 0;
+    }
+    
+    .appointment-button {
+      margin-top: 12px;
+      background-color: #e95909;
+      color: #fff;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    
+    .appointment-button:hover {
+      background-color: #d44808;
+    }
+    
+  
+   
+    
+    
+    .doctor-card-image {
+      width: 80px;
+      height: 80px;
+      background-color: #d9e0ec;
+      border-radius: 50%;
+      margin-bottom: 12px;
+    }
+    
+    .doctor-card-content h3 {
+      font-size: 16px;
+      margin: 8px 0;
+      font-weight: bold;
+    }
+    
+    .doctor-card-content p {
+      font-size: 14px;
+      color: #555;
+      margin: 4px 0;
+    }
+    
+    .appointment-button {
+      margin-top: 12px;
+      background-color: #e95909;
+      color: #fff;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    
+    .appointment-button:hover {
+      background-color: #d44808;
+    }
+    
+    @media (max-width: 768px) {
+      .doctor-card-list {
+        flex-direction: column;
+        gap: 24px;
+      }
+    
+      .doctor-card {
+        flex-basis: 100%; /* Full width for smaller screens */
+        max-width: 100%;
+      }
+    }

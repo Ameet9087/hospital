@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios"; 
 import "./SampleTable.css";
 import SampleTestCard from "./SampleTableEdit"; 
+import { API_BASE_URL } from "../../api/api";
 
 const HIMSSampleDataTable = () => {
   const [data, setData] = useState([]); 
@@ -17,7 +18,7 @@ const HIMSSampleDataTable = () => {
     const fetchData = async () => {
       setLoading(true); 
       try {
-        const response = await axios.get( "http://localhost:8085/blood-testing/get-all-tests"); 
+        const response = await axios.get(`${API_BASE_URL}/blood-testing/get-all-tests`); 
         console.log(response.data)
         setData(response.data); 
         setLoading(false); 
@@ -45,14 +46,7 @@ const HIMSSampleDataTable = () => {
   };
 
   
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
 
-  
-  // if (error) {
-  //   return <div className="error-message">{error}</div>;
-  // }
 
   return (
     <div className="HIMSSampleDataTable-container">
@@ -62,8 +56,8 @@ const HIMSSampleDataTable = () => {
           <thead>
             <tr>
               <th>test_id</th>
-              <th>collection_id</th>
-              <th>test_date</th>
+              {/* <th>collection_id</th> */}
+              {/* <th>test_date</th> */}
               <th>test_type</th>
               <th>result</th>
               <th>remarks</th>
@@ -74,13 +68,13 @@ const HIMSSampleDataTable = () => {
           <tbody>
             {data.map((item) => (
               <tr key={item.test_id}>
-                <td>{item.test_id}</td>
-                <td>{item.bloodCollection.collectionID}</td>
-                <td>{item.test_date}</td>
-                <td>{item.test_type}</td>
+                {/* <td>{item.test_id}</td> */}
+                 <td>{item.testId}</td> 
+                {/* <td>{item.test_date}</td> */}
+                <td>{item.testType}</td>
                 <td>{item.result}</td>
                 <td>{item.remarks}</td>
-                <td>{item.tested_by}</td>
+                <td>{item.testedBy}</td>
                 <td>
                   <button
                     className="edit-button"

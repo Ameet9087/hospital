@@ -29,14 +29,12 @@ const AddPackagingType = ({onclose}) => {
         throw new Error('Network response was not ok');
       }
 
-      // Handle successful response here (e.g., show a success message or reset the form)
       alert('Packaging Type added successfully!');
       setPackagingTypeName('');
       setDescription('');
       setIsActive(true);
       onclose();
     } catch (error) {
-      // Handle error here (e.g., show an error message)
       console.error('There was a problem with the fetch operation:', error);
     }
   };

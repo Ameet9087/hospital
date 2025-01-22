@@ -1,41 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios'; 
 import './PurchaseRequest.css';
-
+import * as XLSX from 'xlsx';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { API_BASE_URL } from '../../api/api';
+import CustomModal from '../../CustomModel/CustomModal';
+import AddPurchaseOrderDraft from './AddPurchaseOrder';
+import PurchaseView from '../../Inventory1/Internal/PurchaseView';
 const Table = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [data, setData] = useState([]); 
-  const navigate = useNavigate(); 
+  const [show,setShow] = useState(false);
+  const [display,setDisplay] = useState(false);
+  const [selectedItem,setSelectedItem] = useState({});
+  const [selectedRow,setSelectedRow] = useState();
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef=useRef(null);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+  const toggleDropdown = (item) => {
+    setSelectedRow(item);
+    setDisplay(true);
   };
 
-  const printTable = () => {
-    const printWindow = window.open('', '', 'height=600,width=800');
-    printWindow.document.write('<html><head><title>Print</title>');
-    printWindow.document.write('<style>'); 
-    printWindow.document.write(`
-      body { font-family: Arial, sans-serif; }
-      .tabb-table { width: 100%; border-collapse: collapse; }
-      .tabb-th, .tabb-td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-      .tabb-th { background-color: #f2f2f2; }
-      .tabb-po-created { color: red; text-align: center; }
-    `);
-    printWindow.document.write('</style></head><body>');
-    printWindow.document.write(document.querySelector('.tabb-table').outerHTML);
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-  };
-
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/purchase-requests/fetchAllPurchase');
+        const response = await axios.get(`${API_BASE_URL}/purchase-requests`);
         setData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -44,15 +35,31 @@ const Table = () => {
 
     fetchData();
   }, []);
+  const handleExport = () => {
+    if (tableRef.current) {
+      const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts table to a worksheet
+      const wb = XLSX.utils.book_new(); // Creates a new workbook
+      XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Adds the worksheet to the workbook
+      XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+    } else {
+      console.error('Table reference is missing.');
+    }
+  };
 
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+  const handlePurchaseOrder=(item)=>{
+    setSelectedItem(item);
+    setShow(true);
+  }
   return (
     <div className="tabb-table-container">
       <div className="tabb-date-range">
         <span>From: <input type="date" defaultValue="2024-08-18" /></span>
         <span>To: <input type="date" defaultValue="2024-08-25" /></span>
-        <button className="tabb-star-button">☆</button>
-        <button className="tabb-minus-button" onClick={toggleDropdown}>-</button>
-        <button className="tabb-ok-button">OK</button>
+      
       </div>
       {isDropdownOpen && (
         <div className="tabb-dropdown">
@@ -65,51 +72,67 @@ const Table = () => {
       )}
       <div className="tabb-search-bar">
         <input type="text" placeholder="Search" />
-        <span className="tabb-search-icon">🔍</span>
       </div>
       <div className="tabb-results-info">
         <span>Showing {data.length} results</span>
-        <button className="tabb-print-button" onClick={printTable}>Print</button>
+        <button className="tabb-print-button"onClick={handleExport}>Export</button>
+        <button className="tabb-print-button" onClick={handlePrint}>Print</button>
       </div>
-      <table className="tabb-table">
-        <thead>
-          <tr>
-            <th>P.No.</th>
-            <th>Request Date</th>
-            <th>Vendor</th>
-            <th>Status</th>
-            <th>Verification Status</th>
-            <th>RequestedBy</th>
-            <th>PO Created</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+      <table  ref={tableRef}>
+          <thead>
+            <tr>
+              {[
+                 "P.No.",
+                 "Request Date",
+                 "Vendor",
+                 "Status",
+                 "PO Created",
+                 "Verified By",
+                 "Actions"
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+  </thead>
+
         <tbody>
-          {data.map((row) => (
-            <tr key={row.p}>
-              <td>{row.id}</td>
-              <td>{row.requestDate}</td>
-              <td>{row.vendor}</td>
-              <td>{row.status}</td>
-              <td>pending</td>
-              <td>{row.requestedBy}</td>
-              <td className="tabb-po-created">No</td>
+          {data?.length > 0 && data?.map((row) => (
+            <tr key={row?.p}>
+              <td>{row?.id}</td>
+              <td>{row?.requestDate}</td>
+              <td>{row?.vendor?.vendorName}</td>
+              <td>{row?.status}</td>
+              <td>{(row?.status ==="Approved")?(<div className="PO-created">Yes</div>):(<div className="PO-Remaining">No</div>)}</td>
+              <td>{row?.verifyBy}</td>
               <td>
-                <button className="tabb-view-button" onClick={() => navigate('/purchase-request-view')}>View</button>
-                <button className="tabb-add-po-button">Add Purchase Order</button>
+                <button className="tabb-view-button" onClick={()=>toggleDropdown(row)}>View</button>
+                <button className="tabb-add-po-button" onClick={()=>handlePurchaseOrder(row)} >Add Purchase Order</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {/* <div className="tabb-pagination">
-        <span>1 to {data.length} of {data.length}</span>
-        <button>First</button>
-        <button>Previous</button>
-        <span>Page 1 of 1</span>
-        <button>Next</button>
-        <button>Last</button>
-      </div> */}
+      <CustomModal isOpen={display} onClose={()=>setDisplay(false)}>
+        <PurchaseView item={selectedRow} />
+      </CustomModal>
+      <CustomModal isOpen={show} onClose={()=>setShow(false)}>
+      <AddPurchaseOrderDraft request={selectedItem}/>
+      </CustomModal>
     </div>
   );
 };

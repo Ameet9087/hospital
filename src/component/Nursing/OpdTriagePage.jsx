@@ -7,6 +7,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 import NursingCustomModal from "./NursingCustomModal";
 import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import CustomModal from "../CustomModel/CustomModal";
 
 function OPDTriagePage({ onClose, data }) {
   console.log(data);
@@ -254,36 +255,6 @@ function OPDTriagePage({ onClose, data }) {
     onClose();
   };
 
-  const handleChiefComplaintChange = (event) => {
-    setChiefComplaint(event.target.value);
-  };
-
-  const handleChiefComplaintSave = async (e) => {
-    e.preventDefault();
-    const formData =
-      data.patientId > 0
-        ? {
-            cheifComplaint: chiefComplaint,
-            patientDTO: { inPatientId: data.inPatientId },
-          }
-        : {
-            cheifComplaint: chiefComplaint,
-            outPatientDTO: { outPatientId: data.outPatient?.outPatientId },
-          };
-    try {
-      console.log(formData);
-
-      const response = await axios.post(
-        `${API_BASE_URL}/cheifComplaints/create`,
-        formData
-      );
-      console.log("Chief Complaint saved successfully");
-      setChiefComplaint("");
-    } catch (error) {
-      console.error("Error saving Chief Complaint:", error);
-    }
-  };
-
   useEffect(() => {
     const fetchVitals = () => {
       let endpoint = "";
@@ -390,7 +361,7 @@ function OPDTriagePage({ onClose, data }) {
 
   return (
     <>
-      <NursingCustomModal
+      <CustomModal
         isOpen={isTriageModalOpen}
         onClose={closeTriAgeModal}
         title="OPD Triage"
@@ -664,26 +635,6 @@ function OPDTriagePage({ onClose, data }) {
                     </form>
                   </div>
                 )}
-              </div>
-              <div className="triage-Chief-Complaint">
-                <section className="triage-chief-complaint-card">
-                  <h3>Chief Complaint</h3>
-                  <form className="triage-complaint-form">
-                    <label>Description:</label>
-                    <textarea
-                      className="triage-complaint-form-textarea"
-                      name="cheifComplaint"
-                      value={chiefComplaint}
-                      onChange={handleChiefComplaintChange}
-                    ></textarea>
-                    <button
-                      className="triage-allergy-add-new-button"
-                      onClick={handleChiefComplaintSave}
-                    >
-                      Add New Complaint
-                    </button>
-                  </form>
-                </section>
               </div>
             </section>
             <section className="triage-allergy-container">
@@ -1020,7 +971,7 @@ function OPDTriagePage({ onClose, data }) {
             </section>
           </main>
         </div>
-      </NursingCustomModal>
+      </CustomModal>
     </>
   );
 }

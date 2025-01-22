@@ -15,6 +15,7 @@
 .ateg-print-button{
    background-color:var(--button-color);
   color: white;
+  margin-left: 5px;
   padding: 5px;
   border: none;
   border-radius: 5px;
@@ -43,9 +44,9 @@
   cursor: pointer;
 }
 
-.ateg-results-info {
+/* .ateg-results-info {
   margin-bottom: 20px;
-}
+} */
 
 .ateg-sub-category-table {
   width: 100%;

@@ -1,53 +1,117 @@
-/* General styling for the navbar */
-.oprationtheator-schedullist-navbar {
-    list-style-type: none;
-  
-    padding: 10px;
-    background-color: white;
-    overflow: hidden;
-    display: flex;
-    justify-content: left;
-    margin-right: 50px;
-  
-    
-  }
-  
-  /* Styling for each link */
-  .oprationtheator-schedullist-nav-link {
-    color: white;
-    background-color: var(--button-color);
-    text-align: center;
-    padding: 5px;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    border-radius: 5px;
-    margin-right: 50px;
-  }
-  
-  /* Hover effect on links */
-  .oprationtheator-schedullist-nav-link:hover {
-    background-color: var(--button-hover-background-color);
-    color: var(--button-hover-text-color);
-    border: 1px solid var(--button-hover-border-color);
-  }
-  
-  /* Active class for the currently active link */
-  .active {
-    background-color: var(--button-bg-color); /* Highlight color for active link */
-  }
-  
-  /* Responsive layout for smaller screens */
-  @media (max-width: 600px) {
-    .oprationtheator-schedullist-navbar {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .oprationtheator-schedullist-nav-link {
-      padding: 10px;
-      font-size: 14px;
-    }
-  }
-  
+.surgerySchedulings-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.surgerySchedulings-add-row-button {
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.surgerySchedulings-add-row-button:hover {
+  background-color: #0056b3;
+}
+
+.surgerySchedulings-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.surgerySchedulings-table th,
+.surgerySchedulings-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.surgerySchedulings-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.surgerySchedulings-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.surgerySchedulings-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.surgerySchedulings-edit-button {
+  padding: 5px 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.surgerySchedulings-edit-button:hover {
+  background-color: #218838;
+}
+
+
+
+.surgerySchedulings-popup-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.surgerySchedulings-popup-content h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.surgerySchedulings-popup-content div {
+  margin-bottom: 15px;
+}
+
+.surgerySchedulings-popup-content label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.surgerySchedulings-popup-content input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.surgerySchedulings-save-button,
+.surgerySchedulings-cancel-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.surgerySchedulings-save-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.surgerySchedulings-save-button:hover {
+  background-color: #0056b3;
+}
+
+.surgerySchedulings-cancel-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.surgerySchedulings-cancel-button:hover {
+  background-color: #c82333;
+}

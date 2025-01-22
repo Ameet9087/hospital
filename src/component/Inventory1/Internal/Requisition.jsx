@@ -6,6 +6,8 @@ import RequisitionDetail from "./RequisitionDetail";
 import axios from "axios";
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from "../../api/api";
+import CustomModal from "../../../CustomModel/CustomModal";
+import DispatchRequisition from "./DispatchRequisition";
 
 const Requisition = () => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -14,6 +16,7 @@ const Requisition = () => {
   const [dateTo, setDateTo] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [showDirect, setShowDirect] = useState(false);
+  const [showDirectDispatch,setShowDirectDispatch] = useState(false);
   const [status, setStatus] = useState("All");
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +28,7 @@ const Requisition = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/inventory-requisitions/getAll`);
+        const response = await axios.get(`${API_BASE_URL}/inventory-requisitions`);
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -33,9 +36,10 @@ const Requisition = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
+
+  
 
   const handleSearch = () => {
     console.log("Searching for:", searchQuery);
@@ -90,14 +94,10 @@ const Requisition = () => {
 
   return (
     <div className="requisition-inventory-content">
-      {!showDirect ? (
-        <>
-          {!showDispatchTable ? (
-            <>
               <div className="requisition-inventory-status-filter">
                 <button
                   className="requisition-inventory-direct-dispatch"
-                  onClick={() => setShowDirect(true)}
+                  onClick={() => setShowDirectDispatch(true)}
                 >
                   Direct Dispatch
                 </button>
@@ -157,7 +157,6 @@ const Requisition = () => {
                         "Req.No",
                         "StoreName",
                         "Req.Date",
-                        "Requested By",
                         "Received By",
                         "Status",
                         "Verified Or Not",
@@ -187,13 +186,12 @@ const Requisition = () => {
                     ) : filteredData?.length > 0 ? (
                       filteredData?.map((item, index) => (
                         <tr key={index}>
-                          <td>{item.inventoryRequisitionId}</td>
-                          <td>{item.subStoreDTO.subStoreName}</td>
-                          <td>{item.requisitionDate}</td>
-                          <td>{item.requestedBy}</td>
-                          <td>{item.receivedBy}</td>
-                          <td>{item.status}</td>
-                          <td>{item.verifyOrNot}</td>
+                          <td>{item?.id}</td>
+                          <td>{item?.subStore?.subStoreName}</td>
+                          <td>{item?.requisitionDate}</td>
+                          <td>{item?.receivedBy}</td>
+                          <td>{item?.status}</td>
+                          <td>{item?.verifyOrNot}</td>
                           <td>
                             <button
                               className="requisition-inventory-direct-button"
@@ -218,26 +216,25 @@ const Requisition = () => {
                   </tbody>
                 </table>
               </div>
-            </>
-          ) : (
-            <div className="requisition-dispatch-modal-overlay">
-              <div className="requisition-dispatch-modal-content">
-                <DispatchTable dispatch={selectedDispatch} />
-                <button className="requisition-dispatch-modal-close" onClick={closeDispatchTable}>Close</button>
-              </div>
-            </div>
-          )}
-        </>
-      ) : (
-        <DirectDispatch setShowDirect={setShowDirect} />
-      )}
+          
+        <CustomModal isOpen={selectedDispatch} onClose={closeDispatchTable} >
+          <DispatchTable dispatch={selectedDispatch} />
+        </CustomModal>     
+      <CustomModal isOpen={showDirect || showDispatchTable} onClose={()=>setShowDirect(false)|| setShowDispatchTable(false)}>
+        <DispatchRequisition request={selectedDispatch} onClose={()=>setShowDirect(false)|| setShowDispatchTable(false)} />
+      </CustomModal>
+      <CustomModal isOpen={showDirectDispatch} onClose={()=>setShowDirectDispatch(false)}>
+        <DirectDispatch onClose={()=>setShowDirectDispatch(false)}/>
+      </CustomModal>
+  
 
-      {showRequisitionDetail && selectedRequisition && (
+      <CustomModal isOpen={showRequisitionDetail} onClose={()=>setShowRequisitionDetail(false)}>
         <RequisitionDetail
           requisition={selectedRequisition}
           onClose={closeRequisitionDetail}
         />
-      )}
+        </CustomModal>
+     
     </div>
   );
 };

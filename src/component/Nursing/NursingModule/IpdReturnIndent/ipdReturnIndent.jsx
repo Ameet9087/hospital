@@ -1,8 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./ipdReturnIndent.css";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import axios from "axios";
 
 const IpdReturnIndent = () => {
+
+  const [issueWards, setIssueWards] = useState([]);
+  const [selectedId, setSelectedId] = useState('');
+
   const [formData, setFormData] = useState({
     ipNo: "1",
     doctorName: "",
@@ -29,6 +34,21 @@ const IpdReturnIndent = () => {
   const [packageTableRows, setPackageTableRows] = useState([
     { sn: 1, issuedItemName: "", batchNo: "", totalIssQty: 0, issuedQty: 0, balQty: 0, returnQty: 0 },
   ]);
+
+
+  useEffect(()=>{
+    axios.get('http://localhost:4069/api/ip-issue-ward')
+    .then(response=>{
+      setIssueWards(response.data);
+    })
+    .catch(error => {
+      console.error("There was an error fetching the issue wards!", error);
+    });
+  },[])
+
+  const handleChangeSelect = (event) => {
+    setSelectedId(event.target.value);
+  };
 
   const handleAddRow = () => {
     setPackageTableRows((prevRows) => [
@@ -83,13 +103,27 @@ const IpdReturnIndent = () => {
       <div className="ipd-return-indent-form">
       <div className="ipd-return-indent-section">
           <label>Return No:</label>
-          <input
+          {/* <input
             type="text"
             name="returnNo"
             value={formData.returnNo}
             onChange={handleChange}
             
-          />
+          /> */}
+
+          <select
+          id="issueWardSelect"
+          value={selectedId}
+          onChange={handleChangeSelect}
+          >
+            <option value="">-----Select----- </option>
+            {
+              issueWards.map(ward=>(
+                <option key={ward.id} value={ward.id}>{ward.id}</option>
+              ))
+            }
+          
+          </select>
         </div>        
         <div className="ipd-return-indent-section">
           <label>IP  No:</label>

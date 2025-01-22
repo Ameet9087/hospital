@@ -1,14 +1,29 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./IpAdmission.css";
 import axios from "axios";
-
+import { useLocation, useNavigate } from "react-router-dom";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import PopupTable from "./PopupTable";
 
-const IpAdmission = ({ patient, onClose }) => {
+const IpAdmission = ({ patientData, onClose }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
+  const [country, setCountry] = useState([]);
+  const [patient, setPatient] = useState();
+  const [admissionSlipId, setAdmissionSlipId] = useState(0);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const response = location.state?.patientData || null;
+    if (patientData != null) {
+      setPatient(patientData);
+    } else {
+      setAdmissionSlipId(response?.admissionSlipId);
+      setPatient(response);
+    }
+  }, [patientData]);
 
   const handleAddRow = () => {
     setPackageTableRows((prevRows) => [
@@ -53,6 +68,14 @@ const IpAdmission = ({ patient, onClose }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchAllCountry = async () => {
+      const response = await axios.get(`${API_BASE_URL}/country`);
+      setCountry(response.data);
+    };
+    fetchAllCountry();
+  }, []);
+
   const [activePopup, setActivePopup] = useState(null);
   const [paytype, setPaytype] = useState();
   const payTypeHeading = ["id", "payTypeName"];
@@ -67,6 +90,15 @@ const IpAdmission = ({ patient, onClose }) => {
   const consultantDoctorHeading = ["doctorName", "specialization"];
   const specialityHeading = ["specialisationId", "specialisationName"];
   const hospitalPanelHeading = ["panalId", "name"];
+  const patientHeading = [
+    "uhid",
+    "salutation",
+    "firstName",
+    "lastName",
+    "mobileNumber",
+    "age",
+    "gender",
+  ];
 
   const [selectedPaytype, setSelectedPaytype] = useState(null);
   const [rooms, setRooms] = useState([]);
@@ -79,6 +111,8 @@ const IpAdmission = ({ patient, onClose }) => {
   const [selectedDoctor, setSelectedDoctor] = useState();
   const [coConsultant, setCoConsultant] = useState([]);
   const [selectedCoConsultant, setSelectedCoConsultant] = useState(null);
+  const [selectedSecondCoConsultant, setSelectedSecondCoConsultant] =
+    useState(null);
   const [floor, setFloor] = useState([]);
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [roomTypes, setRoomTypes] = useState([]);
@@ -86,12 +120,9 @@ const IpAdmission = ({ patient, onClose }) => {
   const [files, setFiles] = useState([]);
   const [hospitalPanel, setHospitalPanel] = useState([]);
   const [selectedHospitalPanel, setSelectedHospitalPanel] = useState(null);
-  const [roomData, setRoomData] = useState({
-    rooms: [],
-    beds: [],
-    floor: [],
-    roomType: [],
-  });
+  const [allPatient, setAllPatient] = useState([]);
+  const [referedDoctor, setReferedDoctor] = useState([]);
+  const [selectedReferredDoctor, setSelectedReferredDoctor] = useState(null);
 
   const [formData, setFormData] = useState({
     diagnosis: "",
@@ -101,7 +132,7 @@ const IpAdmission = ({ patient, onClose }) => {
     passportNo: "",
     passportIssueDate: "",
     passportAddress: "",
-    nationality: "",
+    nationality: "india",
     pancardNo: "",
     visaNo: "",
     visaExpiryDate: "",
@@ -122,7 +153,9 @@ const IpAdmission = ({ patient, onClose }) => {
   });
 
   const getPopupData = () => {
-    if (activePopup === "paytype") {
+    if (activePopup === "patient") {
+      return { columns: patientHeading, data: allPatient };
+    } else if (activePopup === "paytype") {
       return { columns: payTypeHeading, data: paytype };
     } else if (activePopup === "room") {
       return { columns: roomHeadings, data: rooms };
@@ -130,12 +163,21 @@ const IpAdmission = ({ patient, onClose }) => {
       return { columns: bedHeadings, data: beds };
     } else if (activePopup === "consultantDoctor") {
       return { columns: consultantDoctorHeading, data: consultantDoctor };
+    } else if (activePopup === "secondCoConsultant") {
+      return { columns: consultantDoctorHeading, data: coConsultant };
     } else if (activePopup === "speciality") {
       return { columns: specialityHeading, data: speciality };
     } else if (activePopup === "coConsultant") {
       return { columns: consultantDoctorHeading, data: coConsultant };
+    } else if (activePopup === "referredDoctors") {
+      return { columns: consultantDoctorHeading, data: referedDoctor };
     } else if (activePopup === "hospitalPanel") {
       return { columns: hospitalPanelHeading, data: hospitalPanel };
+    } else if (activePopup === "nationality") {
+      return {
+        columns: ["countryId", "countryName", "countryShortName"],
+        data: country,
+      };
     } else {
       return { columns: [], data: [] };
     }
@@ -151,6 +193,13 @@ const IpAdmission = ({ patient, onClose }) => {
   const fetchSpeciality = async () => {
     const response = await axios.get(`${API_BASE_URL}/specialisations`);
     setSpecialtiy(response.data);
+  };
+
+  const fetchAllReferredDoctors = async () => {
+    const response = await axios.get(
+      `${API_BASE_URL}/doctors/doctors/non-employees`
+    );
+    setReferedDoctor(response.data);
   };
 
   const fetchAllDoctorUnderSepciality = async (id) => {
@@ -175,7 +224,14 @@ const IpAdmission = ({ patient, onClose }) => {
     setHospitalPanel(response.data);
   };
 
+  const fetchPatientRegistration = async () => {
+    const response = await axios.get(`${API_BASE_URL}/patient-register/all`);
+    setAllPatient(response.data);
+  };
+
   useEffect(() => {
+    fetchPatientRegistration();
+    fetchAllReferredDoctors();
     fetchPaytypes();
     fetchAllCoConsultant();
     fetchAllHospitalPanel();
@@ -188,7 +244,9 @@ const IpAdmission = ({ patient, onClose }) => {
   }, []);
 
   const handleSelect = async (data) => {
-    if (activePopup === "paytype") {
+    if (activePopup === "patient") {
+      setPatient(data);
+    } else if (activePopup === "paytype") {
       try {
         setSelectedPaytype(data);
         const details = await fetchAllBedsAndRoomByPaytype(data.id);
@@ -286,9 +344,20 @@ const IpAdmission = ({ patient, onClose }) => {
       setSelectedDoctor(data);
     } else if (activePopup === "coConsultant") {
       setSelectedCoConsultant(data);
+    } else if (activePopup === "secondCoConsultant") {
+      setSelectedSecondCoConsultant(data);
+    } else if (activePopup === "referredDoctors") {
+      setSelectedReferredDoctor(data);
     } else if (activePopup === "hospitalPanel") {
       setSelectedHospitalPanel(data);
+    } else if (activePopup === "nationality") {
+      const countryName = data?.countryName?.toLowerCase() || "india";
+      setFormData((prevState) => ({
+        ...prevState,
+        nationality: countryName,
+      }));
     }
+
     setActivePopup(null); // Close the popup after selection
   };
 
@@ -297,19 +366,6 @@ const IpAdmission = ({ patient, onClose }) => {
       `${API_BASE_URL}/rooms/available-by-paytype/${id}`
     );
     return response.data;
-  };
-
-  const getRoomsAndBeds = (details) => {
-    const rooms = [];
-    const beds = [];
-    const roomType = [];
-    const floor = [];
-    if (!Array.isArray(details)) {
-      return { rooms: [], beds: [], roomType: [], floor: [] };
-    }
-    console.log(details);
-
-    return { rooms, beds, roomType, floor };
   };
 
   const handleSubmit = async () => {
@@ -333,21 +389,40 @@ const IpAdmission = ({ patient, onClose }) => {
     }
 
     const payload = {
+      ...(admissionSlipId > 0 && {
+        admissionSlipId: admissionSlipId,
+      }),
       organisationDetail,
+      ...(selectedReferredDoctor && {
+        referredDoctor: {
+          doctorId: selectedReferredDoctor?.doctorId,
+        },
+      }),
       admissionUnderDoctorDetail: {
         consultantDoctor: {
-          doctorId: selectedDoctor?.doctorId,
+          doctorId:
+            selectedDoctor?.doctorId || patient?.admittingDoctor?.doctorId,
         },
-        coConsultant: {
-          doctorId: selectedCoConsultant?.doctorId,
+        firstCoConsultant: {
+          doctorId:
+            selectedCoConsultant?.doctorId || patient?.consultant?.doctorId,
         },
+        ...(selectedSecondCoConsultant && {
+          secondCoConsultant: {
+            doctorId: selectedSecondCoConsultant?.doctorId,
+          },
+        }),
         diagnosis: formData.diagnosis,
         remarks: formData.remarks,
         pharmacyCredit: formData.pharmacyCredit,
         patientStatus: formData.patientStatus,
       },
       patient: {
-        inPatientId: patient?.inPatientId, // Replace with the actual patient ID
+        patient: {
+          patientRegistrationId:
+            patient.patientRegistrationId ||
+            patient.outPatient?.patient?.patientRegistrationId,
+        },
       },
       financials: {
         currentSOC: formData.currentSOC,
@@ -384,12 +459,13 @@ const IpAdmission = ({ patient, onClose }) => {
     try {
       formdata.append("ipAdmissionDTO", JSON.stringify(payload));
       if (files.length > 0) {
-        formdata.append("documents", files); // Use the key 'documents[]' for all files
+        formdata.append("documents", files);
       }
 
       console.log(payload);
 
-      const response = await axios.post(`
+      const response = await axios.post(
+        `
         ${API_BASE_URL}/ip-admissions`,
         formdata,
         {
@@ -398,11 +474,12 @@ const IpAdmission = ({ patient, onClose }) => {
           },
         }
       );
+      console.log(response.data);
+
       console.log("Submission successful");
-      onClose();
+      navigate("/adt/admittedpatients");
     } catch (error) {
       console.error("Error submitting form:", error);
-      // Handle error (e.g., show an error message)
     }
   };
 
@@ -471,11 +548,14 @@ const IpAdmission = ({ patient, onClose }) => {
             <label>MR No</label>
             <input
               type="search"
-              value={patient?.uhid}
+              value={patient?.uhid || patient?.outPatient?.patient?.uhid}
               id="description"
               placeholder="UHID"
-              disabled
             />
+            <i
+              onClick={() => setActivePopup("patient")}
+              className="fa-solid fa-magnifying-glass"
+            ></i>
           </div>
           {/* More fields as per your requirement */}
           {/* Attachments */}
@@ -492,7 +572,9 @@ const IpAdmission = ({ patient, onClose }) => {
             <label>Name Initial</label>
             <input
               type="text"
-              value={patient?.salutation}
+              value={
+                patient?.salutation || patient?.outPatient?.patient?.salutation
+              }
               placeholder="Name intial"
               disabled
             />
@@ -501,32 +583,57 @@ const IpAdmission = ({ patient, onClose }) => {
             <label>Patient Name</label>
             <input
               type="text"
-              value={`${patient?.firstName} ${patient.middleName} ${patient?.lastName}`}
+              value={`${
+                patient?.firstName || patient?.outPatient?.patient?.firstName
+              } ${
+                patient?.middleName || patient?.outPatient?.patient?.middleName
+              } ${patient?.lastName || patient?.outPatient?.patient?.lastName}`}
               placeholder="Patient Name"
               disabled
             />
           </div>
           <div className="ip-addmission-sh-section">
             <label>DOB</label>
-            <input type="date" value={patient?.dateOfBirth} disabled />
+            <input
+              type="date"
+              value={
+                patient?.dateOfBirth ||
+                patient?.outPatient?.patient?.dateOfBirth
+              }
+              disabled
+            />
           </div>
           <div className="ip-addmission-sh-section">
             <label>Sex</label>
-            <select disabled value={patient?.gender}>
+            <select
+              disabled
+              value={patient?.gender || patient?.outPatient?.patient?.gender}
+            >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
           </div>
           <div className="ip-addmission-sh-section">
             <label>Marital Status</label>
-            <select disabled value={patient?.maritalStatus}>
+            <select
+              disabled
+              value={
+                patient?.maritalStatus ||
+                patient?.outPatient?.patient?.maritalStatus
+              }
+            >
               <option value="Married">Married</option>
               <option value="Unmarried">Unmarried</option>
             </select>
           </div>
           <div className="ip-addmission-sh-section">
             <label>Relation Suffix</label>
-            <select disabled value={patient.guarantorDTO?.relationWithPatient}>
+            <select
+              disabled
+              value={
+                patient?.relation || patient?.outPatient?.patient?.relation
+              }
+            >
               <option value="">Select Relation Suffix</option>
               <option value="CO">C/O (Care Of)</option>
               <option value="SO">S/O (Son Of)</option>
@@ -538,7 +645,10 @@ const IpAdmission = ({ patient, onClose }) => {
             <label>Relative Name</label>
             <input
               type="text"
-              value={patient.guarantorDTO?.guarantorName}
+              value={
+                patient?.relationName ||
+                patient?.outPatient?.patient?.relationName
+              }
               placeholder="Relative Name"
               disabled
             />
@@ -548,7 +658,7 @@ const IpAdmission = ({ patient, onClose }) => {
             <input
               type="text"
               id="description"
-              value={patient.addressDTO?.street1}
+              value={patient?.address || patient?.outPatient?.patient?.address}
               placeholder="Address"
               disabled
             />
@@ -558,7 +668,10 @@ const IpAdmission = ({ patient, onClose }) => {
             <input
               type="text"
               id="description"
-              value={patient.guarantorDTO?.street2}
+              value={
+                patient?.areaVillage ||
+                patient?.outPatient?.patient?.areaVillage
+              }
               placeholder="Area/Village"
               disabled
             />
@@ -567,7 +680,10 @@ const IpAdmission = ({ patient, onClose }) => {
             <label>City/District</label>
             <input
               type="text"
-              value={patient.guarantorDTO?.city}
+              value={
+                patient?.cityDistrict ||
+                patient?.outPatient?.patient?.cityDistrict
+              }
               placeholder="District Name"
               disabled
             />
@@ -576,7 +692,7 @@ const IpAdmission = ({ patient, onClose }) => {
             <label>Country</label>
             <input
               type="text"
-              value={patient.guarantorDTO?.birthCountry}
+              value={patient?.country || patient?.outPatient?.patient?.country}
               placeholder="Country"
               disabled
             />
@@ -585,7 +701,7 @@ const IpAdmission = ({ patient, onClose }) => {
             <label>State</label>
             <input
               type="text"
-              value={patient.guarantorDTO?.state}
+              value={patient?.state || patient?.outPatient?.patient?.state}
               placeholder="State Name"
               disabled
             />
@@ -594,7 +710,7 @@ const IpAdmission = ({ patient, onClose }) => {
             <label>Pincode</label>
             <input
               type="text"
-              value={patient.guarantorDTO?.zipCode}
+              value={patient?.pinCode || patient?.outPatient?.patient?.pinCode}
               placeholder="Pincode"
               disabled
             />
@@ -603,12 +719,16 @@ const IpAdmission = ({ patient, onClose }) => {
             <label>Mobile No</label>
             <input
               type="text"
-              value={patient?.phoneNumber}
+              value={
+                patient?.mobileNumber ||
+                patient?.outPatient?.patient?.mobileNumber
+              }
               placeholder="Phone No"
               disabled
             />
           </div>
-          <div className="ip-addmission-sh-section">
+          <div className="ip-addmission-sh-section"></div>
+          {/* <div className="ip-addmission-sh-section">
             <label>Alternte No</label>
             <input
               type="text"
@@ -616,7 +736,7 @@ const IpAdmission = ({ patient, onClose }) => {
               placeholder="Alternate number"
               disabled
             />
-          </div>
+          </div> */}
           {/* <div className="ip-addmission-sh-section">
             <label>Religion</label>
             <select>
@@ -631,11 +751,9 @@ const IpAdmission = ({ patient, onClose }) => {
             </select>
           </div> */}
           <div></div>
-          <div className="ip-admission-headers">
-            <h3>Room Details</h3>
-          </div>
-          <div></div>
-          <div></div>
+        </div>
+        <h3>Room Details</h3>
+        <div className="ip-addmission-sh-form">
           <div className="ip-addmission-sh-section">
             <label>Pay Type</label>
             <input
@@ -694,18 +812,20 @@ const IpAdmission = ({ patient, onClose }) => {
           <div className="ip-addmission-sh-section">
             <label>Expected Days of Stay</label>
             <input type="number" />
-          </div>{" "}
-          <div className="ip-admission-headers">
-            <h3>Admission Under Dr Details</h3>
           </div>
-          <div></div> <div></div>
+        </div>
+        <h3>Admission Under Dr Details</h3>
+        <div className="ip-addmission-sh-form">
           <div className="ip-addmission-sh-section">
             {/* <h3>Admission Under Dr Details</h3> */}
             <label>Consultant Dr</label>
             <input
               type="text"
               id="description"
-              value={selectedDoctor?.doctorName}
+              value={
+                selectedDoctor?.doctorName ||
+                patient?.admittingDoctor?.doctorName
+              }
               placeholder="Search Consultant Doctor"
             />
             <i
@@ -721,7 +841,8 @@ const IpAdmission = ({ patient, onClose }) => {
               placeholder="Search Speciality"
               value={
                 selectedSpeciality?.specialisationName ||
-                selectedDoctor?.specialization
+                selectedDoctor?.specialization ||
+                patient?.admittingDoctor?.specialisationId?.specialisationName
               }
             />
             <i
@@ -734,11 +855,40 @@ const IpAdmission = ({ patient, onClose }) => {
             <input
               type="text"
               id="description"
-              value={selectedCoConsultant?.doctorName}
+              value={
+                selectedCoConsultant?.doctorName ||
+                patient?.consultant?.doctorName
+              }
               placeholder="Search Co Consultant "
             />
             <i
               onClick={() => setActivePopup("coConsultant")}
+              className="fas fa-search"
+            ></i>
+          </div>
+          <div className="ip-addmission-sh-section">
+            <label>Second Co Consultant</label>
+            <input
+              type="text"
+              id="description"
+              value={selectedSecondCoConsultant?.doctorName}
+              placeholder="Search Second Co Consultant "
+            />
+            <i
+              onClick={() => setActivePopup("secondCoConsultant")}
+              className="fas fa-search"
+            ></i>
+          </div>
+          <div className="ip-addmission-sh-section">
+            <label>Referred Doctors</label>
+            <input
+              type="text"
+              id="description"
+              value={selectedReferredDoctor?.doctorName}
+              placeholder="Search Referred Doctors"
+            />
+            <i
+              onClick={() => setActivePopup("referredDoctors")}
               className="fas fa-search"
             ></i>
           </div>
@@ -786,10 +936,9 @@ const IpAdmission = ({ patient, onClose }) => {
           </div>
           <div></div>
           <div></div>
-          <div className="ip-admission-headers">
-            <h3>Organisation Details</h3>
-          </div>
-          <div></div> <div></div>
+        </div>
+        <h3>Organisation Details</h3>
+        <div className="ip-addmission-sh-form">
           <div className="ip-addmission-sh-section">
             <label>Type</label>
             <select
@@ -885,11 +1034,9 @@ const IpAdmission = ({ patient, onClose }) => {
           ) : null}
           <div></div>
           <div></div>
-          <div className="ip-admission-header">
-            <h3>Current Bed Details</h3>
-          </div>
-          <div></div>
-          <div></div>
+        </div>
+        <h3>Current Bed Details</h3>
+        <div className="ip-addmission-sh-form">
           <div className="ip-addmission-sh-section">
             {/* <h3>Current Bed Details</h3> */}
             <label>Current Bed No</label>
@@ -945,13 +1092,24 @@ const IpAdmission = ({ patient, onClose }) => {
           <div className="ip-addmission-sh-section">
             <label htmlFor="nationality">Nationality:</label>
             <input
+              id="nationality"
+              placeholder="Enter Nationality"
+              value={formData.nationality}
+              name="nationality"
+              onChange={handleChange}
+            />
+            <i
+              onClick={() => setActivePopup("nationality")}
+              className="fa-solid fa-magnifying-glass"
+            ></i>
+            {/* <input
               type="text"
               value={formData.nationality}
               onChange={handleChange}
               name="nationality"
               id="nationality"
               placeholder="Enter Nationality"
-            />
+            /> */}
           </div>
           <div className="ip-addmission-sh-section">
             <label htmlFor="pancardNo">PanCard No:</label>
@@ -985,11 +1143,9 @@ const IpAdmission = ({ patient, onClose }) => {
               id="visaExpiryDate"
             />
           </div>
-          <div className="ip-admission-headers">
-            <h3>Financials</h3>
-          </div>
-          <div></div>
-          <div></div>
+        </div>
+        <h3>Financials</h3>
+        <div className="ip-addmission-sh-form">
           <div className="ip-addmission-sh-section">
             {/* <h3>Financials</h3> */}
             <label>Current SOC</label>
@@ -1069,11 +1225,9 @@ const IpAdmission = ({ patient, onClose }) => {
           </div>
           <div></div>
           <div></div>
-          <div className="ip-admission-headers">
-            <h3>Add Attachments</h3>
-          </div>
-          <div></div>
-          <div></div>
+        </div>
+        <h3>Add Attachments</h3>
+        <div className="ip-addmission-sh-form">
           <div className="ip-addmission-sh-section">
             <input type="file" onChange={handleFileChange} />
           </div>

@@ -3,11 +3,12 @@ import './AddCancel.css';
 import { API_BASE_URL } from '../api/api';
 
 const AddCancel = ({ formData, onClose, handleUpdate,updatedAppointments }) => {
+  console.log(formData);
+  
   console.log(updatedAppointments);
   
   const [localFormData, setLocalFormData] = useState({
-    ...formData,
-    reason: formData.reason || "", // Initialize reason from formData
+    reason: formData.reason || "",
   });
 
   const handleInputChange = (e) => {
@@ -21,12 +22,12 @@ const AddCancel = ({ formData, onClose, handleUpdate,updatedAppointments }) => {
   const handleCancelClick = async () => {
     try {
       const updatedFormData = {
-        ...localFormData,
+        reason:localFormData.reason,
         status: "Cancelled", // Set the status for cancellation
       };
   
       const response = await fetch(
-        `${API_BASE_URL}/appointments/${updatedAppointments.id}/cancellation`,
+        `${API_BASE_URL}/appointments/${updatedAppointments.outPatientId}/cancellation`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -66,7 +67,7 @@ const AddCancel = ({ formData, onClose, handleUpdate,updatedAppointments }) => {
         value={localFormData.reason} // Controlled input
         onChange={handleInputChange} // Update state on input change
       />
-      <button onClick={handleCancelClick}>Save</button>
+      <button className='add-cancel-btn' onClick={handleCancelClick}>Save</button>
     </div>
   );
 };

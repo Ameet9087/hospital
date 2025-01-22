@@ -3,89 +3,119 @@ import '../SSPharmacy/sSPConsumInternalConsum.css';
 import { API_BASE_URL } from '../../../api/api';
 import { useParams } from 'react-router-dom';
 
-function SSPConsumInternalConsum({onClose}) {
+function SSPConsumInternalConsum({ onClose }) {
   const { store } = useParams();
-  const [formData, setFormData] = useState({
-    itemName: '',
-    availableQuantity: 0,
-    quantity: 0,
-    batchNo: '',
-    expiryDate: '',
-    salePrice: 0.0,
-    totalAmount: 0.0,
-    consumedBy: '',
-    remark: '',
-    storeName: store
-  });
+  const [consumedBy,setConsumedBy] = useState();
+  const [remark,setRemark] = useState();
+  const [formData, setFormData] = useState([
+    {
+      itemName: '',
+      availableQuantity: 0,
+      quantity: 0,
+      batchNo: '',
+      expiryDate: '',
+      salePrice: 0.0,
+      totalAmount: 0.0,
+    },
+  ]);
 
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/pharmacyRequisitions/getAll`);
+        const response = await fetch(`${API_BASE_URL}/subpharm-requisitions/requisition-items?subStoreId=${store}`);
         const data = await response.json();
-        const filteredData = data.filter(item => item.storeName === store);
-        setItems(filteredData); // Adjust based on actual API response structure
+        setItems(data); // Adjust based on actual API response structure
       } catch (error) {
         console.error('Error fetching items:', error);
       }
     };
 
     fetchItems();
-  }, []);
+  }, [store]);
 
-  const handleChange = (e) => {
+  const addRow = () => {
+    setFormData([
+      ...formData,
+      {
+        itemName: '',
+        availableQuantity: 0,
+        quantity: 0,
+        batchNo: '',
+        expiryDate: '',
+        salePrice: 0.0,
+        totalAmount: 0.0,
+      },
+    ]);
+  };
+
+  const removeRow = (index) => {
+    setFormData(formData.filter((_, i) => i !== index));
+  };
+
+  const handleChange = (index, e) => {
     const { name, value } = e.target;
   
-    // Update formData with the new value
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value
-    }));
-  
-    // Calculate totalAmount if 'quantity' or 'salePrice' is being updated
-    if (name === 'quantity' || name === 'salePrice') {
-      const quantity = name === 'quantity' ? value : formData.quantity;
-      const salePrice = name === 'salePrice' ? value : formData.salePrice;
-  
-      const totalAmount = quantity * salePrice;
-    
-      setFormData((prevData) => ({
-        ...prevData,
-        totalAmount
-      }));
-    }
-  };
-  
+    const updatedData = [...formData];
+    updatedData[index][name] = value;
 
-  const handleItemChange = (e) => {
-    console.log("-----------------------------------------------");
-    
-    const selectedItem = items.find(item => item.itemName === e.target.value);  
-    console.log(selectedItem)  
-    setFormData({
-      ...formData,
-      itemName: e.target.value,
-      availableQuantity: selectedItem ? selectedItem.requiredQuantity : 0,
-      salePrice: selectedItem ? selectedItem.salePrice : 0,
-      batchNo: selectedItem ? selectedItem.batchNo : '',
-      expiryDate: selectedItem ? selectedItem.expiryDate : '',
-    });
-  };
+    // Recalculate totalAmount if 'quantity' or 'salePrice' changes
+    if (name === 'quantity' || name === 'salePrice') {
+      const quantity = name === 'quantity' ? value : updatedData[index].quantity;
+      const salePrice = name === 'salePrice' ? value : updatedData[index].salePrice;
   
+      updatedData[index].totalAmount = quantity * salePrice;
+    }
+
+    setFormData(updatedData);
+  };
+
+  const handleItemChange = (index, e) => {
+    const selectedItem = items.find(
+      (item) => item.subPharmRequisitionItemId == e.target.value
+    );
+
+    const updatedData = [...formData];
+    updatedData[index] = {
+      ...updatedData[index],
+      itemName: e.target.value,
+      availableQuantity: selectedItem?.dispatchQuantity || 0,
+      salePrice: selectedItem?.items?.salesRate || 0.0,
+      batchNo: selectedItem?.batchNo || '',
+      expiryDate: selectedItem?.expiryDate || '',
+    };
+
+    setFormData(updatedData);
+  };
+  const totalAmount = formData.reduce((sum, item) => sum + item.totalAmount, 0);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const itemsData = formData.map((data) => ({
+      subPharmRequisitionItemId:{subPharmRequisitionItemId: data.itemName},
+      consumedQty: data.quantity,
+      totalAmount: data.totalAmount,
+    }));
+  
+    // Prepare the request body based on the provided structure
+    const requestData = {
+      consumedDate: new Date().toISOString(), // Current date for consumedDate
+      totalAmount: totalAmount, // Sum up all total amounts
+      consumedBy: consumedBy, // Assuming consumedBy is part of formData
+      remark: remark, // Assuming remark is part of formData
+      storeName: {
+        subStoreId: store, // Using store param from URL
+      },
+      items: itemsData,
+    };
     try {
-      const response = await fetch(`${API_BASE_URL}/internal-consumption/add`, {
+      const response = await fetch(`${API_BASE_URL}/subPharmConsumption`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          expiryDate: new Date(formData.expiryDate).toISOString(), // Ensure date format compatibility
-        })
+        body: JSON.stringify(requestData),
       });
 
       if (response.ok) {
@@ -100,15 +130,18 @@ function SSPConsumInternalConsum({onClose}) {
     }
   };
 
+  // Calculate total amount of all items
+  
+
   return (
     <div className="sSPConsumInternalConsum-container">
       <div className="sSPConsumInternalConsum-header">
         <i className="fa fa-shopping-cart"></i> New Internal Consumption
-        <button className="sSPConsumInternalConsum-close-button"></button>
+        <button className="sSPConsumInternalConsum-close-button" onClick={onClose}>X</button>
       </div>
       <div className="sSPConsumInternalConsum-content">
         <form onSubmit={handleSubmit}>
-          <table >
+          <table>
             <thead>
               <tr>
                 <th>Item Name</th>
@@ -118,109 +151,118 @@ function SSPConsumInternalConsum({onClose}) {
                 <th>Expiry Date</th>
                 <th>Sale Price</th>
                 <th>Total Amount</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  {/* <button type="button" className="delete-button">✖</button> */}
-                  <select name="itemName" value={formData.itemName} onChange={handleItemChange} className='sSPConsumInternalConsum-input'>
-                    <option>--Select Item--</option>
-                    {items.map((item) => (
-                      <option key={item.itemName} value={item.itemName}>
-                        {item.itemName}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td>
-                  <input
-                 className='sSPConsumInternalConsum-input'
-                    type="number"
-                    name="availableQuantity"
-                    value={formData.availableQuantity}
-                    onChange={handleChange}
-                    readOnly
-                  />
-                </td>
-                <td>
-                  <input
-                   className='sSPConsumInternalConsum-input'
-                    type="number"
-                    name="quantity"
-                    value={formData.quantity}
-                    onChange={handleChange}
-                  />
-                </td>
-                <td>
-                  <input
-                   className='sSPConsumInternalConsum-input'
-                    type="text"
-                    name="batchNo"
-                    value={formData.batchNo}
-                    onChange={handleChange}
-                  />
-                </td>
-                <td>
-                  <input
-                  className='sSPConsumInternalConsum-input'
-                    type="date"
-                    name="expiryDate"
-                    value={formData.expiryDate}
-                    onChange={handleChange}
-                  />
-                </td>
-                <td>
-                  <input
-                    className='sSPConsumInternalConsum-input'
-                    type="number"
-                    name="salePrice"
-                    value={formData.salePrice}
-                    onChange={handleChange}
-                    readOnly
-                  />
-                </td>
-                <td>
-                  <input
-                    className='sSPConsumInternalConsum-input'
-                    type="number"
-                    name="totalAmount"
-                    value={formData.totalAmount}
-                    readOnly
-                  />
-                </td>
-              </tr>
+              {formData.map((data, index) => (
+                <tr key={index}>
+                  <td>
+                    <select
+                      name="itemName"
+                      value={data.itemName}
+                      onChange={(e) => handleItemChange(index, e)}
+                      className="sSPConsumInternalConsum-input"
+                    >
+                      <option>--Select Item--</option>
+                      {items.map((item) => (
+                        <option key={item.subPharmRequisitionItemId} value={item.subPharmRequisitionItemId}>
+                          {item.items.itemName}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                  <td>
+                    <input
+                      className="sSPConsumInternalConsum-input"
+                      type="number"
+                      name="availableQuantity"
+                      value={data.availableQuantity}
+                      readOnly
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="sSPConsumInternalConsum-input"
+                      type="number"
+                      name="quantity"
+                      value={data.quantity}
+                      onChange={(e) => handleChange(index, e)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="sSPConsumInternalConsum-input"
+                      type="text"
+                      name="batchNo"
+                      value={data.batchNo}
+                      onChange={(e) => handleChange(index, e)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="sSPConsumInternalConsum-input"
+                      type="date"
+                      name="expiryDate"
+                      value={data.expiryDate}
+                      onChange={(e) => handleChange(index, e)}
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="sSPConsumInternalConsum-input"
+                      type="number"
+                      name="salePrice"
+                      value={data.salePrice}
+                      readOnly
+                    />
+                  </td>
+                  <td>
+                    <input
+                      className="sSPConsumInternalConsum-input"
+                      type="number"
+                      name="totalAmount"
+                      value={data.totalAmount}
+                      readOnly
+                    />
+                  </td>
+                  <td>
+                    <button type="button" onClick={() => removeRow(index)}>Remove</button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
+          <button type="button" onClick={addRow}>Add Row</button>
 
           <div className="sSPConsumInternalConsum-details">
             <div className="sSPConsumInternalConsum-total-amount">
-              <span className='sSPConsumInternalConsum-total-span'>Total Amount:</span>
-              <input type="number" value={formData.totalAmount} className="sSPConsumInternalConsum-total-input" readOnly />
+              <span className="sSPConsumInternalConsum-total-span">Total Amount:</span>
+              <input type="number" value={totalAmount} className="sSPConsumInternalConsum-total-input" readOnly />
             </div>
             <div className="sSPConsumInternalConsum-total-amount">
-              <span className='sSPConsumInternalConsum-total-span'>Consumed By:</span>
+              <span className="sSPConsumInternalConsum-total-span">Consumed By:</span>
               <input
                 type="text"
                 name="consumedBy"
-                value={formData.consumedBy}
-                onChange={handleChange}
+                value={consumedBy}
+                onChange={(e)=>setConsumedBy(e.target.value)}
                 className="sSPConsumInternalConsum-total-input"
               />
             </div>
             <div className="sSPConsumInternalConsum-total-amount">
-              <span className='sSPConsumInternalConsum-total-span'>Remark:</span>
+              <span className="sSPConsumInternalConsum-total-span">Remark:</span>
               <textarea
                 name="remark"
-                value={formData.remark}
-                onChange={handleChange}
+                value={remark}
+                onChange={(e)=>setRemark(e.target.value)}
                 className="sSPConsumInternalConsum-total-input"
               ></textarea>
             </div>
             <div className="sSPConsumInternalConsum-footer">
-            <button type="submit" className="sSPConsumInternalConsum-save-button">Save</button>
-            <button type="button" className="sSPConsumInternalConsum-cancel-button">Cancel</button>
-          </div>
+              <button type="submit" className="sSPConsumInternalConsum-save-button">Save</button>
+              <button type="button" className="sSPConsumInternalConsum-cancel-button" onClick={onClose}>Cancel</button>
+            </div>
           </div>
         </form>
       </div>

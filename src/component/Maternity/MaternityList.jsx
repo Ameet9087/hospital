@@ -2,26 +2,42 @@ import React, { useState, useEffect, useRef } from 'react';
 import './MaternityList.css';
 import NewPatientRegistrationForm from './NewPatientRegistrationForm';
 import { API_BASE_URL } from '../api/api';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import MaternityANCPopUp from "./MaternityANC/MaternityANCPopUp";
+import MaternityRegisterPopUp from "./MaternityANC/MaternityRegisterPopUp";
+import MaternityUploadFilesPopUp from "./MaternityANC/MaternityUploadFilesPopUp";
+import CustomModal from '../../CustomModel/CustomModal';
 
 const MaternityList = () => {
-  const [isPopupVisible, setPopupVisible] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isANCModalOpen, setIsANCModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [isUploadPopupOpen, setIsUploadPopupOpen] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState(null);
   const [patients, setPatients] = useState([]);
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
+  const [filteredPatients, setFilteredPatients] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [dateRange, setDateRange] = useState({ from: "", to: "" });
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
+
+  const openPopup = () => {
+    setShowPopup(true);
+  };
+  const closePopup = () => {
+    setShowPopup(false);
+  };
 
   useEffect(() => {
-    // Fetch patient data from the API
-    fetch(`${API_BASE_URL}/patients/fetch-all-patient-registration`)
-      .then(response => response.json())
-      .then(data => setPatients(data))
-      .catch(error => console.error('Error fetching patient data:', error));
+    fetch(`${API_BASE_URL}/patients/all`)
+      .then((response) => response.json())
+      .then((data) => {
+        setPatients(data);
+        setFilteredPatients(data);
+      })
+      .catch((error) => console.error('Error fetching patient data:', error));
   }, []);
-
-  const handleClearButtonClick = () => {
-    setPopupVisible(!isPopupVisible);
-  };
 
   const handlePrint = () => {
     window.print();
@@ -35,113 +51,222 @@ const MaternityList = () => {
     setIsModalOpen(false);
   };
 
+  const handleANCClick = (patient) => {
+    setSelectedPatient(patient);
+    setIsANCModalOpen(true);
+  };
+
+  const handleCloseANCModal = () => {
+    setIsANCModalOpen(false);
+    setSelectedPatient(null);
+  };
+
+  const handleRegisterClick = (patient) => {
+    setSelectedPatient(patient);
+    setIsRegisterModalOpen(true);
+  };
+
+  const handleCloseRegisterModal = () => {
+    setIsRegisterModalOpen(false);
+    setSelectedPatient(null);
+  };
+
+  const handleUploadClick = (patient) => {
+    setSelectedPatient(patient);
+    setIsUploadPopupOpen(true);
+  };
+
+  const handleCloseUploadPopup = () => {
+    setIsUploadPopupOpen(false);
+    setSelectedPatient(null);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleDateChange = (e) => {
+    const { name, value } = e.target;
+    setDateRange({ ...dateRange, [name]: value });
+  };
+
+  useEffect(() => {
+    let filtered = patients;
+
+    if (searchQuery) {
+      filtered = filtered.filter((patient) =>
+        `${patient?.inPatientDTO?.firstName} ${patient?.inPatientDTO?.lastName}`
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      );
+    }
+
+    if (dateRange.from && dateRange.to) {
+      filtered = filtered.filter((patient) => {
+        const lmpDate = new Date(patient.firstDayOfMenstruation);
+        const fromDate = new Date(dateRange.from);
+        const toDate = new Date(dateRange.to);
+        return lmpDate >= fromDate && lmpDate <= toDate;
+      });
+    }
+
+    setFilteredPatients(filtered);
+  }, [searchQuery, dateRange, patients]);
+
   return (
     <div className="maternity-component">
       <div className="maternity-list">
         <div className="matern-content">
           <div className="matern-edit-info">
-            <span>Edit Information Of</span>
-            <input
-              type="text"
-              placeholder="Existing Patient Name"
-              onClick={handleInputClick}
-            />
-            <a href="#" className="matern-view-all">View all Maternity Patients</a>
+            <button className="mater-print-btn" onClick={handleInputClick}>
+              + Add New Patient Registration
+            </button>
+            <a href="#" className="matern-view-all">
+              View all Maternity Patients
+            </a>
           </div>
 
           <div className="mater-date-range">
             <label>From:</label>
-            <input type="date" value="2024-08-13" />
+            <input
+              type="date"
+              name="from"
+              value={dateRange.from}
+              onChange={handleDateChange}
+            />
             <label>To:</label>
-            <input type="date" value="2024-08-13" />
-          
+            <input
+              type="date"
+              name="to"
+              value={dateRange.to}
+              onChange={handleDateChange}
+            />
           </div>
 
           <div className="mater-search-bar">
-            <input type="text" placeholder="Search" />
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
           </div>
 
           <div className="mater-results">
-            <span className="mater-span">Showing {patients.length} / {patients.length} results</span>
-            <button className="mater-print-btn" onClick={handlePrint}>Print</button>
+            <span className="mater-span">
+              Showing {filteredPatients.length} / {patients.length} results
+            </span>
+            <button className="mater-print-btn" onClick={handlePrint}>
+              Print
+            </button>
           </div>
 
-          {/* <div className="maternity-table"> */}
-          <table  ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-                 "Hosp No",
-                 "Name",
-                 "Age/Sex",
-                 "Address",
-                 "Phone No",
-                 "Husband's Name",
-                 "Ht",
-                 "Wt",
-                 "LMP",
-                 "EDD"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-              <tbody>
-                {patients.length > 0 ? (
-                  patients.map((patient) => (
-                    <tr key={patient.id}>
-                      <td className="mater-hosp-col">{patient.id}</td>
-                      <td className="mater-name-col">{patient.firstName} {patient.middleName} {patient.lastName}</td>
-                      <td className="mater-age-col">{patient.age}</td>
-                      <td className="mater-address-col">{patient.address}</td>
-                      <td className="mater-phone-col">{patient.contactNumber}</td>
-                      <td className="mater-husband-col">{patient.husbandName}</td>
-                      <td className="mater-h-col">{patient.patientHeight} cm</td>
-                      <td className="mater-w-col">{patient.patientWeight} kg</td>
-                      <td className="mater-lmp-col">{patient.lastMenstruationDate}</td>
-                      <td className="mater-edd-col">{patient.expectedDeliveryDate}</td>
-                      {/* <td className="mater-action-col">
-                        <button className="mater-edit-btn">Edit</button>
-                        <button className="mater-delete-btn">Delete</button>
-                      </td> */}
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="10" className="mater-no-rows">No Rows To Show</td>
-                  </tr>
+          <table ref={tableRef}>
+            <thead>
+              <tr>
+                {["Name", "Age/Sex", "Address", "Phone No", "Husband's Name", "Ht", "Wt", "LMP", "EDD", "Action"].map(
+                  (header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  )
                 )}
-              </tbody>
-            </table>
+              </tr>
+            </thead>
 
-            {/* <div className="maternity-pagination">
-              <span>{patients.length} to {patients.length} of {patients.length}</span>
-              <button>First</button>
-              <button>Previous</button>
-              <span>Page 1 of 1</span>
-              <button>Next</button>
-              <button>Last</button>
-            </div> */}
-          {/* </div> */}
+            <tbody>
+              {filteredPatients.length > 0 ? (
+                filteredPatients.map((patient) => (
+                  <tr key={patient.id}>
+                    <td className="mater-name-col">
+                      {patient?.inPatientDTO?.firstName} {" "}
+                      {patient?.inPatientDTO?.lastName}
+                    </td>
+                    <td className="mater-age-col">
+                      {patient?.inPatientDTO?.age}/{patient?.inPatientDTO?.gender}
+                    </td>
+                    <td className="mater-address-col">
+                      {patient?.inPatientDTO?.addressDTO?.city}
+                    </td>
+                    <td className="mater-phone-col">
+                      {patient?.inPatientDTO?.phoneNumber}
+                    </td>
+                    <td className="mater-husband-col">{patient.husbandName}</td>
+                    <td className="mater-h-col">{patient.patientHeight} cm</td>
+                    <td className="mater-w-col">{patient.patientWeight} kg</td>
+                    <td className="mater-lmp-col">{patient.firstDayOfMenstruation}</td>
+                    <td className="mater-edd-col">{patient.expectedDateOfDelivery}</td>
+                    <td className="mater-action-col">
+                      <button
+                      
+                        className="mater-delete-btn"
+                        onClick={() => handleANCClick(patient)}
+                      >
+                        ANC
+                      </button>
+                      <button
+                        className="mater-delete-btn"
+                        onClick={() => handleRegisterClick(patient)}
+                      >
+                        Mat-Register
+                      </button>
+                      <button
+                        className="mater-delete-btn"
+                        onClick={() => handleUploadClick(patient)}
+                      >
+                        Upload
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="11" className="mater-no-rows">
+                    No Rows To Show
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
 
-      {isModalOpen && <NewPatientRegistrationForm onClose={handleCloseModal} />}
+      {isModalOpen && (
+        <CustomModal isOpen={isModalOpen} onClose={handleCloseModal}>
+          <NewPatientRegistrationForm />
+        </CustomModal>
+      )}
+
+      {isANCModalOpen && (
+        <CustomModal isOpen={isANCModalOpen} onClose={handleCloseANCModal}>
+          <MaternityANCPopUp patientData={selectedPatient} />
+        </CustomModal>
+      )}
+
+      {isRegisterModalOpen && (
+        <CustomModal isOpen={isRegisterModalOpen} onClose={handleCloseRegisterModal}>
+          <MaternityRegisterPopUp patientData={selectedPatient} />
+        </CustomModal>
+      )}
+
+      {isUploadPopupOpen && (
+        <CustomModal isOpen={isUploadPopupOpen} onClose={handleCloseUploadPopup}>
+          <MaternityUploadFilesPopUp patientData={selectedPatient} />
+        </CustomModal>
+      )}
     </div>
   );
 };

@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./IpdReturnsWard.css";
 
 import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 
-const IpdReturnsWard = () => {
+const IpdReturnsWard = ({ ipAdmission }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
 
@@ -17,9 +17,7 @@ const IpdReturnsWard = () => {
     uhId: "",
     sex: "",
     age: "",
-    dobDay: "",
-    dobMonth: "",
-    dobYear: "",
+    dob: "",
     bedNo: "",
     mrNo: "",
     totalAmount: "0.00",
@@ -31,26 +29,59 @@ const IpdReturnsWard = () => {
     remarks: "",
   });
 
+  useEffect(() => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      returnNo: ipAdmission?.returnNo || "",
+      creditNote: ipAdmission?.creditNote || "",
+      ipNo: ipAdmission?.patient?.patient?.inPatientId || "",
+      billNo: ipAdmission?.billNo || "",
+      patientName:
+        ipAdmission?.patient?.patient?.firstName +
+          " " +
+          ipAdmission?.patient?.patient?.lastName || "",
+      doctorName:
+        ipAdmission?.admissionUnderDoctorDetails?.consultant?.doctorName || "",
+      uhId: ipAdmission?.patient?.patient?.uhid || "",
+      sex: ipAdmission?.patient?.patient?.gender || "",
+      age: ipAdmission?.patient?.patient?.age || "",
+      dob: ipAdmission?.patient?.patient?.dateOfBirth || "",
+    }));
+  }, []);
+
   const [tableData, setTableData] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  const [packageTableRows, setPackageTableRows] = useState([
+    {
+      sn: 1,
+      issuedItemName: "",
+      batchNo: "",
+      totalIssQty: 0,
+      issuedQty: 0,
+      balQty: 0,
+      returnQty: 0,
+    },
+  ]);
 
   const handleAddRow = () => {
-    setTableData([
-      ...tableData,
+    setPackageTableRows((prevRows) => [
+      ...prevRows,
       {
+        sn: prevRows.length + 1,
         issuedItemName: "",
         totalIssQty: "",
         issuedQty: "",
+        balQty: "",
         returnQty: "",
         batchNo: "",
         mrp: "",
         billDisc: "",
         amount: "",
-        taxPerUnit: "",
+        taxUnit: "",
         collTax: "",
         expDate: "",
         taxPercent: "",
@@ -58,32 +89,36 @@ const IpdReturnsWard = () => {
     ]);
   };
 
-  const handleRemoveRow = (index) => {
-    setTableData(tableData.filter((_, i) => i !== index));
+  const handleDeleteRow = (index) => {
+    setPackageTableRows((prevRows) => {
+      const updatedRows = prevRows.filter((_, rowIndex) => rowIndex !== index);
+      return updatedRows.map((row, idx) => ({
+        ...row,
+        sn: idx + 1, // Reassign serial numbers
+      }));
+    });
   };
-
   return (
     <div className="ipdreturnsward-container">
-      <h2 className="ipdreturnsward-header">IPD Returns Ward</h2>
+      <h5 className="ipdreturnsward-header">IPD Returns Ward</h5>
 
       {/* Patient Details */}
-      <h4>Patient Details</h4>
+      <h6>
+        <b>Patient Details</b>
+      </h6>
       <div className="ipdreturnsward-form">
         {[
           { label: "Return No", name: "returnNo" },
           { label: "Credit Note", name: "creditNote" },
-          { label: "IP No", name: "ipNo" },
+          { label: "IP No", name: "inPatientId" },
           { label: "Select Bill No", name: "billNo" },
           { label: "Patient Name", name: "patientName" },
           { label: "Doctor Name", name: "doctorName" },
           { label: "UH ID", name: "uhId" },
           { label: "Sex", name: "sex" },
           { label: "Age", name: "age" },
-          { label: "DOB (DD)", name: "dobDay" },
-          { label: "DOB (MM)", name: "dobMonth" },
-          { label: "DOB (YYYY)", name: "dobYear" },
+          { label: "DOB", name: "dob" },
           { label: "Bed No", name: "bedNo" },
-          { label: "MR No", name: "mrNo" },
         ].map((field, index) => (
           <div key={index} className="ipdreturnsward-section">
             <label>{field.label}:</label>
@@ -98,78 +133,117 @@ const IpdReturnsWard = () => {
       </div>
 
       {/* Item Details Table */}
-      <h4>Item Details</h4>
-      <table className="ipdreturnsward-table" ref={tableRef}>
-        <thead>
-          <tr>
-            {[
-              "SN",
-              "Issued Item Name",
-              "Total Iss Qty",
-              "Issued Qty",
-              "Return Qty",
-              "Batch No",
-              "MRP",
-              "Bill Disc",
-              "Amount",
-              "Tax/Unit",
-              "Coll Tax",
-              "Exp Date",
-              "Tax Percent",
-              "Actions",
-            ].map((header, index) => (
-              <th
-                key={index}
-                style={{ width: columnWidths[index] }}
-                className="resizable-th"
-              >
-                <div className="header-content">
-                  <span>{header}</span>
-                  <div
-                    className="resizer"
-                    onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                  ></div>
-                </div>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((row, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              {Object.keys(row).map((key, i) => (
-                <td key={i}>
+      <h6>
+        <b>Item Details</b>
+      </h6>
+      <div className="ipd-return-indent-table">
+        <table ref={tableRef}>
+          <thead>
+            <tr>
+              {[
+                "Actions",
+                "SN",
+                "Issued Item Name",
+                "Total Issued Qty",
+                "Issued Qty",
+                "Batch No",
+                "MRP",
+                "Bill Disc",
+                "Amount",
+                "Tax/Unit",
+                "Coll Tax",
+                "Exp Date",
+                "Bal Qty",
+                "Return Qty",
+                "Tax Percent",
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {packageTableRows.map((row, index) => (
+              <tr key={index}>
+                <td>
+                  <div className="table-actions">
+                    <button
+                      className="final-bill-add-btn"
+                      onClick={handleAddRow}
+                    >
+                      Add
+                    </button>
+                    <button
+                      className="final-bill-del-btn"
+                      onClick={() => handleDeleteRow(index)}
+                      disabled={packageTableRows.length <= 1} // This condition ensures delete is disabled if there's only one row
+                    >
+                      Del
+                    </button>
+                  </div>
+                </td>
+                <td>{row.sn}</td>
+                <td>
                   <input
                     type="text"
-                    value={row[key]}
-                    onChange={(e) => {
-                      const updatedRow = { ...row, [key]: e.target.value };
-                      const updatedTableData = [...tableData];
-                      updatedTableData[index] = updatedRow;
-                      setTableData(updatedTableData);
-                    }}
+                    value={row.issuedItemName}
+                    onChange={(e) =>
+                      setPackageTableRows((prevRows) =>
+                        prevRows.map((r, i) =>
+                          i === index
+                            ? { ...r, issuedItemName: e.target.value }
+                            : r
+                        )
+                      )
+                    }
+                    placeholder="Search..."
                   />
                 </td>
-              ))}
-              <td>
-                <button className="ipdreturnwardadd-btn" onClick={handleAddRow}>
-                  Add
-                </button>
-                <button
-                  className="ipdreturnwardremove-btn"
-                  onClick={() => handleRemoveRow(index)}
-                >
-                  Del
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
 
-      {/* Financial Details */}
-      <h4>Financial Details</h4>
+                <td>{row.totalIssQty}</td>
+                <td>{row.issuedQty}</td>
+                <td>
+                  <input
+                    type="search"
+                    id="description"
+                    placeholder="Search Country "
+                  />
+
+                  {row.batchNo}
+                </td>
+                <td>{row.mrp}</td>
+                <td>{row.billDisc}</td>
+                <td>{row.amount}</td>
+                <td>{row.taxUnit}</td>
+                <td>{row.collTax}</td>
+                <td>{row.expDate}</td>
+                <td>{row.balQty}</td>
+                <td>{row.returnQty}</td>
+                <td>{row.taxPercent}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <br />
+      <h6>
+        <b>Financial Details</b>
+      </h6>
       <div className="ipdreturnsward-form">
         {[
           { label: "Total Amount", name: "totalAmount" },

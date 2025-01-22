@@ -4,12 +4,12 @@ import React, { useState } from 'react';
 import "./addGoodsReceiptTracking.css";
 
 const AddGoodsReceiptTracking = ({ onClose, selectedData, onSubmit }) => {
+  console.log(selectedData);
+  
   const [formData, setFormData] = useState({
     reciept_id: selectedData?.reciept_id || '',
     purchaseOrderID: selectedData?.purchaseOrder?.order_id || '',
     vendorID: selectedData?.purchaseOrder?.vendormanagement?.vendor_id || '',
-
-
     receiptDate: selectedData?.receiptDate || '',
     itemName: selectedData?.itemName || '',
     quantityOrdered: selectedData?.quantityOrdered || '',

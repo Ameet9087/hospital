@@ -12,6 +12,10 @@ const ReturnForm = ({ selectedItem }) => {
   const [rowData, setRowData] = useState([]);
   // const [loading, setLoading] = useState(false);
 
+
+console.log(selectedItem);
+
+
   const [formData, setFormData] = useState({
     addItemId: selectedItem?.addItem?.addItemId || "",
     breakageQty: "",
@@ -24,84 +28,87 @@ const ReturnForm = ({ selectedItem }) => {
     vatPercent: selectedItem?.vatPercentage || "",
     totalAmount: selectedItem?.totalAmount || "",
     purchaserate: selectedItem?.purchaseRate || "",
+    goodsReceiptItemDTO:{
+      goodReceiptItemId:selectedItem?.grItems?.[0]?.goodReceiptItemId || "",
+    } ,
+    goodReceiptDTO:{
+      goodReceiptId: selectedItem?.goodReceiptId || "",
+    },
     breakageDate: "",
     remark: "",
     isActive: true,
   });
 
+  console.log(formData.goodReceiptDTO.goodReceiptId);
+  
+
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    setLoading(true);
-  
-    // Validate required fields
-    if (!formData.breakageQty || !formData.returnRate) {
+   setLoading(true);
+
+   if (!formData.breakageQty || !formData.returnRate) {
       alert("Please fill in all required fields!");
       setLoading(false);
       return;
-    }
-  
-    // Construct the `returnItemsDTO` array dynamically
-    const returnItemsDTO = [
+   }
+
+   
+   const returnItemsDTO = [
       {
-        returnQty: parseFloat(formData.breakageQty) || 0,
-        returnRate: parseFloat(formData.returnRate) || 0,
-        returnDisAmt: parseFloat(formData.discountAmt) || 0,
-        returnVatAmt: parseFloat(formData.vatPercent) || 0,
-        returnCcAmt: parseFloat(formData.ccAmount) || 0,
+         returnQty: parseFloat(formData.breakageQty) || 0,
+         returnRate: parseFloat(formData.returnRate) || 0,
+         returnDisAmt: parseFloat(formData.discountAmt) || 0,
+         returnVatAmt: parseFloat(formData.vatPercent) || 0,
+         returnCcAmt: parseFloat(formData.ccAmount) || 0,
       },
-    ];
-  
-    // Construct the payload object
-    const payload = {
-      creditNoteNumber: "CN1234654654", // Example value, replace as needed
-      returnDate: new Date().toISOString().split("T")[0], // Today's date in YYYY-MM-DD format
-      remarks: formData.remark || "No remarks", // Default value for remarks
-      returnStatus: "done", // Example value
+   ];
+
+   const payload = {
+      creditNoteNumber: "CN1234654654",
+      returnDate: new Date().toISOString().split("T")[0],
+      remarks: formData.remark || "No remarks",
+      returnStatus: "done",
       goodReceiptDTO: {
-        goodReceiptId: selectedItem?.grItems?.[0]?.goodReceiptItemId || 0,
+         goodReceiptId: formData.goodReceiptDTO.goodReceiptId,
       },
-      invoiceNumber: selectedItem?.supplier?.invoiceNumber || "N/A",
-      paymentMode: "Credit", // Example value
-      creditPeriod: 3, // Example value
       goodsReceiptItemDTO: {
-        goodReceiptItemId: selectedItem?.grItems?.[0]?.goodReceiptItemId || 0,
+         goodReceiptItemId: formData.goodsReceiptItemDTO.goodReceiptItemId,
       },
-      returnItemsDTO, // Add the dynamically created array here
-    };
-  
-    console.log("Payload:", payload);
-  
-    try {
+      returnItemsDTO,
+   };
+
+   console.log("Payload:", payload);
+
+   try {
       const response = await fetch(`${API_BASE_URL}/returnsupplier`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify(payload),
       });
-  
+
       if (response.ok) {
-        alert("Data submitted successfully!");
-        setRowData([]); // Clear table data
-        setFormData({
-          ...formData,
-          breakageQty: "",
-          returnRate: "",
-          remark: "",
-        }); // Reset form
+         alert("Data submitted successfully!");
+         setRowData([]);
+         setFormData({
+            ...formData,
+            breakageQty: "",
+            returnRate: "",
+            remark: "",
+         });
       } else {
-        alert(`Failed to submit data. Status: ${response.status}`);
-        const errorResponse = await response.json();
-        console.error("Error response:", errorResponse);
+         const errorResponse = await response.json();
+         console.error("Error response:", errorResponse);
+         alert(`Failed to submit data. Status: ${response.status}`);
       }
-    } catch (error) {
+   } catch (error) {
       console.error("Error submitting data:", error);
-    } finally {
+   } finally {
       setLoading(false);
-    }
-  };
-  
+   }
+};
+
+
     
   useEffect(() => {
     const { breakageQty, returnRate } = formData;

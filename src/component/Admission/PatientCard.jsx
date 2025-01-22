@@ -54,13 +54,14 @@ const PatientCard = ({ patient }) => {
         {patient?.admissionUnderDoctorDetail?.consultantDoctor?.doctorName}
       </h2>
       <p>
-        <strong>Patient:</strong> {patient?.patient?.firstName}{" "}
-        {patient?.patient?.lastName} {patient?.patient?.age}{" "}
-        {patient?.patient?.ageUnit}/ {patient?.patient?.gender}
+        <strong>Patient:</strong> {patient?.patient?.patient?.firstName}{" "}
+        {patient?.patient?.patient?.lastName} {patient?.patient?.patient?.age}{" "}
+        {patient?.patient?.patient?.ageUnit}/{" "}
+        {patient?.patient?.patient?.gender}
       </p>
       <p>
-        <strong>Contact:</strong> {patient?.patient?.phoneNumber} /{" "}
-        {patient?.patient?.address}
+        <strong>Contact:</strong> {patient?.patient?.patient?.mobileNumber} /{" "}
+        {patient?.patient?.patient?.address}
       </p>
       <p>
         <strong>IP No.:</strong> {patient?.ipAdmmissionId}

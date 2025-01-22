@@ -45,8 +45,21 @@ function SSIPatientConsumption() {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        const filteredData = data.filter(item => item.substoreName === store)
-        setPatientConsumptions(filteredData); // Adjust based on your API response structure
+        const filteredData = data.filter((item) => item.substoreId == store);
+
+        // Fetch patient details and map the patient name
+        const updatedData = await Promise.all(
+          filteredData.map(async (consumption) => {
+            const patientResponse = await fetch(`${API_BASE_URL}/inpatients/${consumption.patientId}`);
+            if (patientResponse.ok) {
+              const patientData = await patientResponse.json();
+              return { ...consumption, patientName: patientData.firstName };
+            }
+            return { ...consumption, patientName: 'Unknown' };
+          })
+        );
+
+        setPatientConsumptions(updatedData);
       } catch (error) {
         setError('Failed to fetch data');
       } finally {
@@ -55,15 +68,8 @@ function SSIPatientConsumption() {
     };
 
     fetchPatientConsumptions();
-  }, []);
+  }, [store]);
 
-  const handleFromDateChange = (e) => {
-    setFromDate(e.target.value);
-  };
-
-  const handleToDateChange = (e) => {
-    setToDate(e.target.value);
-  };
 
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
@@ -76,15 +82,12 @@ function SSIPatientConsumption() {
     `,
   });
 
-  const handleViewClick = () => {
-    setShowViewRequisition(true);
-  };
 
   // Function to handle exporting the table to an Excel file
   const handleExportToExcel = () => {
     // Get the table data
     const tableData = [
-      ['  Hospital No', 'Patient Name', 'Consumption Date', 'Entered By', 'Remarks', 'Action'],
+      [ 'Patient Name', 'Consumption Date', 'Entered By', 'Remarks'],
       
     ];
    
@@ -146,7 +149,6 @@ function SSIPatientConsumption() {
             <table>
               <thead>
                 <tr>
-                <th> Hospital No</th>
                   <th>Patient Name</th>
                   <th>Consumption Date</th>
                   <th>Entered By</th>
@@ -157,7 +159,6 @@ function SSIPatientConsumption() {
             {patientConsumptions.length > 0 ? (
               patientConsumptions.map((consumption, index) => (
                 <tr key={index}>
-                  <td>{consumption.hospitalNo}</td>
                   <td>{consumption.patientName}</td>
                   <td>{consumption.consumptionDate}</td>
                   <td>{consumption.enteredBy}</td>
@@ -178,7 +179,6 @@ function SSIPatientConsumption() {
           <table>
             <thead>
               <tr>
-              <th> Hospital No</th>
                   <th>Patient Name</th>
                   <th>Consumption Date</th>
                   <th>Entered By</th>
@@ -191,7 +191,6 @@ function SSIPatientConsumption() {
             {patientConsumptions.length > 0 ? (
               patientConsumptions.map((consumption, index) => (
                 <tr key={index}>
-                  <td>{consumption.hospitalNo}</td>
                   <td>{consumption.patientName}</td>
                   <td>{consumption.consumptionDate}</td>
                   <td>{consumption.enteredBy}</td>

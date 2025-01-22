@@ -16,6 +16,11 @@
 .nav-links {
   display: flex;
   gap: 10px;
+  align-items: center;
+}
+
+.admission-header .logo{
+  font-size: 18px;
 }
 
 .nav-links a ,.logo{

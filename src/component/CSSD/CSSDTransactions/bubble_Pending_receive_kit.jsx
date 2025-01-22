@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "./Bubble_Pending_Kit_Receive.css";
 import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../../api/api";
 
 const PendingKitReceiveRecord = () => {
   const { issueId } = useParams(); // Get the 'issueId' from the URL
@@ -20,7 +21,7 @@ const PendingKitReceiveRecord = () => {
   useEffect(() => {
     const fetchKitDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/kit-issues/${issueId}`);
+        const response = await fetch(`${API_BASE_URL}/kit-issues/${issueId}`);
         if (!response.ok) {
           throw new Error(`Failed to fetch: ${response.statusText}`);
         }
@@ -83,7 +84,7 @@ const PendingKitReceiveRecord = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/api/kit-receiving", {
+      const response = await fetch(`${API_BASE_URL}/kit-receiving`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formattedData),

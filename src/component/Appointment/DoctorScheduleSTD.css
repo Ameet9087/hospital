@@ -2,7 +2,7 @@
 .DoctorScheduleSTD-medical-interface {
     padding: 5px;
     background-color: var(--background-color);
-    max-height: 70vh;
+    max-height: 80vh;
     overflow-y: scroll;
     scrollbar-width: none;
   }
@@ -15,6 +15,7 @@
     margin-bottom: 10px;
 }
   .DoctorScheduleSTD-field-row input{
+    width: 60%;
     padding: 0px;
   }
   /* DoctorScheduleSTD.section */
@@ -30,7 +31,7 @@
     background-color: var(--upperBar-bg-color);
     padding: 5px;
     font-weight: bold;
-    color: black;
+    color: white;
     font-size: var(--font-size);
   }
   
@@ -41,7 +42,9 @@
   
   /* DoctorScheduleSTD.field-row */
   .DoctorScheduleSTD-field-row {
+    width: 100%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 5px 5px;
     gap: 10px;
@@ -49,6 +52,8 @@
   .DoctorScheduleSTD-submit-button
   {
     padding: 5px 10px;
+    margin-top: 2px;
+    border-radius: 5px;
     color:white;
     background-color: var(--button-color);
     border: 1px solid var(--button-color);
@@ -85,13 +90,16 @@
   
   /* DoctorScheduleSTD.field-input */
   .DoctorScheduleSTD-field-input {
-    flex: 1;
-    height: 28px;
-    padding: 0 5px;
+    width: 60%;
+    padding: 5px;
+    border-radius: 5px;
     border: 1px solid gray;
-    border-radius: 4px;
-    font-size: var(--font-size);
-    width: 10px;
+  }
+  .DoctorScheduleSTD-field-row input[type="date"],
+  .DoctorScheduleSTD-field-row input[type="time"],
+  .DoctorScheduleSTD-field-row input[type="number"]{
+    border: 1px solid gray;
+    padding: 5px;
   }
   
   /* DoctorScheduleSTD.icon-button */
@@ -272,17 +280,20 @@
   }
   
   /* DoctorScheduleSTD.add-button, DoctorScheduleSTD.del-button */
-  .DoctorScheduleSTD-add-button,
+  .DoctorScheduleSTD-add-button
+  {
+    padding: 5px 10px;
+    border: 1px solid var(--button-color);
+    background-color: var(--button-color);
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
   .DoctorScheduleSTD-del-button {
     padding: 5px 10px;
     border: 1px solid gray;
     border-radius: 4px;
     cursor: pointer;
-  }
-  
-  .DoctorScheduleSTD-add-button {
-    background: #4caf50;
-    color: white;
   }
   
   .DoctorScheduleSTD-del-button {

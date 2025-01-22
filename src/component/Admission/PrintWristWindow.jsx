@@ -11,16 +11,16 @@ function PrintWristWindow({ patient }) {
     const patientInfo = `
       <div style="display:flex; gap:20px, font-family: Arial, sans-serif; padding: 20px; border: 1px dashed black; width: 600px;">
         <div>
-          <p><strong>Name:</strong> ${patient.patient?.firstName}</p>
-          <p><strong>Age:</strong> ${patient.patient?.age} ${patient.patient?.ageUnit}</p>
-          <p><strong>Gender:</strong> ${patient.patient?.gender}</p>
-          <p><strong>DOB:</strong> ${patient.patient?.dateOfBirth}</p>
+          <p><strong>Name:</strong> ${patient?.patient?.patient?.firstName}</p>
+          <p><strong>Age:</strong> ${patient?.patient?.patient?.age} ${patient?.patient?.patient?.ageUnit}</p>
+          <p><strong>Gender:</strong> ${patient?.patient?.patient?.gender}</p>
+          <p><strong>DOB:</strong> ${patient?.patient?.patient?.dateOfBirth}</p>
           <p><strong>DOA:</strong> ${patient?.admissionDate}</p>
         </div>
         <div>
-          <p><strong>IP No.:</strong> ${patient.patient?.inPatientId}</p>
+          <p><strong>IP No.:</strong> ${patient?.patient?.patient?.inPatientId}</p>
           <p><strong>Ward:</strong> ${patient.roomDetails?.roomDTO?.roomNumber} / ${patient.roomDetails?.bedDTO?.bedNo}</p>
-          <p><strong>Blood Group:</strong> ${patient.patient?.bloodGroup}</p>
+          <p><strong>Blood Group:</strong> ${patient?.patient?.patient?.bloodGroup}</p>
           <p><strong>Consultant:</strong> ${patient.admissionUnderDoctorDetail.consultantDoctor?.salutation} 
             ${patient.admissionUnderDoctorDetail?.consultantDoctor?.doctorName}</p>
         </div>
@@ -40,7 +40,7 @@ function PrintWristWindow({ patient }) {
           <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
           <script>
             var qrCode = new QRCode(document.getElementById("qr-code"), {
-              text: "Name: ${patient.patient?.firstName} ${patient.patient?.lastName}, IP No.: ${patient.patient?.patientId}",
+              text: "Name: ${patient?.patient?.patient?.firstName} ${patient?.patient?.patient?.lastName}, IP No.: ${patient?.patient?.patient?.patientId}",
               width: 100,
               height: 100,
             });
@@ -54,10 +54,10 @@ function PrintWristWindow({ patient }) {
     doc.close();
   };
 
-  const patientInfo = `Name: ${patient.patient?.firstName} ${patient.patient?.lastName}
-  Age: ${patient.patient?.age} ${patient.patient?.ageUnit}
-  Gender: ${patient.patient?.gender}
-  IP No.: ${patient.patient?.patientId}
+  const patientInfo = `Name: ${patient?.patient?.patient?.firstName} ${patient?.patient?.patient?.lastName}
+  Age: ${patient?.patient?.patient?.age} ${patient?.patient?.patient?.ageUnit}
+  Gender: ${patient?.patient?.patient?.gender}
+  IP No.: ${patient?.patient?.patient?.patientId}
   Ward: ${patient.roomDetails?.roomDTO?.roomNumber} / ${patient.roomDetails?.bedDTO?.bedNo}`;
 
   const handleIframeLoad = () => {
@@ -69,22 +69,23 @@ function PrintWristWindow({ patient }) {
     <>
       <div className="printWristWindowContainer">
         <div className="printWristWindowData_1">
-          <p>Name : {patient.patient?.firstName}</p>
+          <p>Name : {patient?.patient?.patient?.firstName}</p>
           <p>
-            Age : {patient.patient?.age} {patient.patient?.ageUnit}
+            Age : {patient?.patient?.patient?.age}{" "}
+            {patient?.patient?.patient?.ageUnit}
           </p>
-          <p>Gender : {patient.patient?.gender}</p>
-          <p>DOB : {patient.patient?.dateOfBirth}</p>
+          <p>Gender : {patient?.patient?.patient?.gender}</p>
+          <p>DOB : {patient?.patient?.patient?.dateOfBirth}</p>
           <p>DOA : {patient?.admissionDate}</p>
         </div>
         <div className="printWristWindowData_2">
-          <p>IP No. : {patient.patient?.inPatientId}</p>
+          <p>IP No. : {patient?.patient?.patient?.inPatientId}</p>
           <p>
             {patient.roomDetails?.roomDTO?.roomNumber}
             {" / "}
             {patient.roomDetails?.bedDTO?.bedNo}
           </p>
-          <p>Blood Group : {patient.patient?.bloodGroup}</p>
+          <p>Blood Group : {patient?.patient?.patient?.bloodGroup}</p>
           <p>
             Consultant :
             {patient.admissionUnderDoctorDetail.consultantDoctor?.salutation}

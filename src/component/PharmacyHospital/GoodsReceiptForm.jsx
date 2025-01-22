@@ -28,7 +28,7 @@ const GoodsReceiptForm = () => {
   const [adjustment, setAdjustment] = useState(0); // State for adjustment
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/good-receipts/good-receipts`)
+    axios.get(`${API_BASE_URL}/good-receipts`)
       .then(response => {
         setItems(response.data.items || []);
       })

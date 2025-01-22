@@ -45,8 +45,23 @@
   }
   
   .verify-purchase-title {
+    font-size: 15px;
     text-align: center;
-    /* margin-bottom: 20px; */
+  }
+
+  .verify-purchase-update-container
+  {
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .verify-purchase-status select{
+    padding: 5px;
+    border-radius: 5px;
+  }
+  .verify-purchase-status input{
+    border-radius: 5px;
   }
   
   .verify-purchase-table {

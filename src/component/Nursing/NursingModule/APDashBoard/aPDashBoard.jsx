@@ -4,6 +4,7 @@ import "./aPDashBoard.css";
 import BedTransferNote from "../BedTranferNote/bedTranferNote";
 // import DischargeIntimtion from '../DischargeIntimtion/dischargeIntimtion';
 import DischargeTrack from "../DischargeTrack/dischargeTrack";
+import NursingCarePlan from "../NursingCarePlan/NursingCarePlan";
 import IpMedicineIndent from "../IPMedicineIndent/iPMedicineIndent";
 import IpdReturnIndent from "../IpdReturnIndent/ipdReturnIndent";
 import IPBilling from "../IPBilling/iPBilling";
@@ -13,6 +14,10 @@ import PatientDashboard from "../../../DashBoards/PatientDashboard";
 import IPChangeRoom from "../IPChangeRoom/IPChangeRoom";
 import DischargeipMainNav from "../dischargeintimationNav/dischargeipMainNav";
 import DischargePatient from "../DischargePatient/DischargePatient";
+import FluidIntakeOutput from "../FluidIntakeOutput/FluidIntakeOutput";
+import ExtraAttenderDietNurseIndent from "../ExtraAndAttenderDietIndent/ExtraAndAttenderDietIndent";
+import DietNurseIndents from "../DietNurseIndent/DietNurseIndent";
+import DailyNursingAssessments from "../DailyNursingAssessments/DailyNursingAssessment";
 
 const APDashBoard = () => {
   const navigate = useNavigate();
@@ -67,6 +72,23 @@ const APDashBoard = () => {
       case "Discharge Patient":
         setActiveComponent("DischargePatient");
         break;
+      case "Nursing Care Plan":
+        setActiveComponent("NursingCarePlan");
+        break;
+      case "Fluid Intake Output":
+        setActiveComponent("FluidIntakeOutput");
+        break;
+      case "Extra and Attender Diet Nurse Indent":
+        setActiveComponent("ExtraAttenderDietNurseIndent");
+        break;
+      case "Diet Nurse Indent":
+        setActiveComponent("DietNurseIndent");
+        break;
+
+      case "Daily Nursing Assessment":
+        setActiveComponent("DailyNursingAssessment");
+        break;
+
       case "Exit":
         handleLogout();
         break;
@@ -108,6 +130,21 @@ const APDashBoard = () => {
       case "DischargePatient":
         return <DischargePatient />;
         break;
+      case "NursingCarePlan":
+        return <NursingCarePlan />;
+        break;
+      case "FluidIntakeOutput":
+        return <FluidIntakeOutput />;
+        break;
+      case "ExtraAttenderDietNurseIndent":
+        return <ExtraAttenderDietNurseIndent />;
+        break;
+      case "DietNurseIndent":
+        return <DietNurseIndents />;
+        break;
+      case "DailyNursingAssessment":
+        return <DailyNursingAssessments />;
+        break;
       default:
         return (
           <section className="aPDashBoard-content">
@@ -148,14 +185,25 @@ const APDashBoard = () => {
           <ul>
             {[
               { text: "Orders", value: "Orders" },
+              { text: "Nursing Care Plan", value: "Nursing Care Plan" },
+              { text: "Fluid Intake Output", value: "Fluid Intake Output" },
+              { text: "Diet Nurse Indent", value: "Diet Nurse Indent" },
+              {
+                text: "Extra and Attender Diet Nurse Indent",
+                value: "Extra and Attender Diet Nurse Indent",
+              },
+              {
+                text: "Daily Nursing Assessment",
+                value: "Daily Nursing Assessment",
+              },
               // { text: '+ Bed Transfer Note', value: 'Bed Transfer Note' },
               { text: "IP Change Room", value: "IP Change Room" },
 
               // { text: '+ IP Medicine Indent', value: 'Ip Medicine Indent' },
               // { text: '+ IPD Returns Indent', value: 'Ipd Return Indent' },
               { text: "+ IP Billing", value: "IP Billing" },
-              // { text: '+ IPD Issues Ward', value: 'IPD Issues Ward' },
-              // { text: '+ IPD Returns Ward', value: 'IPD Returns Ward' },
+              { text: "+ IPD Issues Ward", value: "IPD Issues Ward" },
+              { text: "+ IPD Returns Ward", value: "IPD Returns Ward" },
               { text: "Discharge Patient", value: "Discharge Patient" },
               // { text: '+ Discharge Intimtion', value: 'Discharge Intimtion' },
               // { text: '+ Discharge Tracking', value: 'Discharge Track' },

@@ -16,12 +16,12 @@ function PrintGenericSticker({ patient }) {
       patientInfoHTML += `
         <div style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-weight:bold; padding: 5px; border: 1px dashed black; margin-bottom:5px">
           <div>
-            <p style="margin:5px">${patient.patient?.firstName} ${patient.patient?.age} ${patient.patient?.ageUnit} / ${patient.patient?.gender}</p>
+            <p style="margin:5px">${patient?.patient?.patient?.firstName} ${patient?.patient?.patient?.age} ${patient?.patient?.patient?.ageUnit} / ${patient?.patient?.patient?.gender}</p>
             <p style="margin:5px"><strong>Ward:</strong> ${patient.roomDetails?.roomDTO?.roomNumber} / ${patient.roomDetails?.bedDTO?.bedNo}</p>
             <p style="margin:5px"><strong>Consultant:</strong> ${patient.admissionUnderDoctorDetail.consultantDoctor?.salutation}
             ${patient.admissionUnderDoctorDetail?.consultantDoctor?.doctorName}</p>
           </div>
-          <div style="margin-top: 10px;">
+          <div>
             <svg id="barcode-${i}"></svg>
           </div>
         </div>
@@ -36,14 +36,14 @@ function PrintGenericSticker({ patient }) {
           <title>Print Generic Sticker</title>
         </head>
         <body>
-        <div style="display:flex;flex-wrap:wrap;gap:5px">
+        <div style="display:flex;flex-wrap:wrap;">
           ${patientInfoHTML}
           <div>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
           <script>
             window.onload = function() {
               for (let i = 0; i < ${numOfPrints}; i++) {
-                JsBarcode("#barcode-" + i, "${patient.patient?.uhid}", {width: 2, height: 50, displayValue:false});
+                JsBarcode("#barcode-" + i, "${patient?.patient?.patient?.uhid}", {width: 2, height: 15, displayValue:false});
               }
               window.print();
             };
@@ -63,11 +63,13 @@ function PrintGenericSticker({ patient }) {
       <div className="printGenericWindowContainer">
         <div className="printGenericWindowData">
           <p>
-            Patient Name : {patient.patient?.firstName}{" "}
-            {patient.patient?.lastName} {patient.patient?.age}{" "}
-            {patient.patient?.ageUnit} / {patient.patient?.gender}
+            Patient Name : {patient?.patient?.patient?.firstName}{" "}
+            {patient?.patient?.patient?.lastName}{" "}
+            {patient?.patient?.patient?.age}{" "}
+            {patient?.patient?.patient?.ageUnit} /{" "}
+            {patient?.patient?.patient?.gender}
           </p>
-          <p>Uhid : {patient.patient?.uhid}</p>
+          <p>Uhid : {patient?.patient?.patient?.uhid}</p>
           <p>
             Room/Bed : {patient.roomDetails?.roomDTO?.roomNumber} {" / "}
             {patient.roomDetails?.bedDTO?.bedNo}
@@ -84,7 +86,7 @@ function PrintGenericSticker({ patient }) {
           </p>
           <div className="printGenericStickerBarcode">
             <Barcode
-              value={patient.patient?.uhid}
+              value={patient?.patient?.patient?.uhid}
               width={2}
               height={30}
               displayValue={false}

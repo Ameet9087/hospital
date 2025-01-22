@@ -5,17 +5,19 @@ import { API_BASE_URL } from '../../../api/api';
 import { useParams } from 'react-router-dom';
 
 const SSPharmacyReqCreateReq = ({ onClose }) => {
-  // General Form States
   const { store } = useParams();
-  const [requisitionDate, setRequisitionDate] = useState('2024-08-29');
+
+  // General Form States
+  const [requisitionDate, setRequisitionDate] = useState('');
   const [issueNo, setIssueNo] = useState('');
   const [remarks, setRemarks] = useState('');
   const [needVerification, setNeedVerification] = useState(true);
   const [checkedBy, setCheckedBy] = useState('Mr. admin admin');
   const [chooseItem, setChooseItem] = useState([]);
 
-  // Inventory Item State (single object)
+  // Inventory Item State
   const [item, setItem] = useState({
+    itemId: '',
     itemName: '',
     unit: '',
     availableQtyInStore: '',
@@ -26,6 +28,9 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
     expiryDate: '',
     salePrice: ''
   });
+
+  // Array for storing multiple items
+  const [itemsList, setItemsList] = useState([]);
 
   // Fetch items on mount
   useEffect(() => {
@@ -40,67 +45,88 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
 
   // Handle item selection from dropdown
   const handleItemSelection = (e) => {
-    const selectedItemName = e.target.value;
-
-    // Find the selected item from chooseItem array
-    const selectedItem = chooseItem.find(item => item.itemName === selectedItemName);
-
-    // Update the state with the selected item details
+    const selectedItemId = e.target.value;
+    console.log(selectedItemId);
+  
+    // Find the selected item from the chooseItem array
+    const selectedItem = chooseItem.find((item) => item.addItemId == selectedItemId);
+  
     if (selectedItem) {
       console.log(selectedItem);
-      
       setItem({
-        itemName: selectedItem.itemName,
-        unit: selectedItem.unitOfMeasurementPayload.name,
-        availableQtyInStore: selectedItem.minStockQuantity,
-        requiredQuantity: '', // You might want this to remain empty
-        remark: selectedItem.remark,
-        genericName: selectedItem?.genericNameDTO?.genericName,
-        batchNo: selectedItem.batchNo,
-        expiryDate: selectedItem.expiryDate,
-        salePrice: selectedItem.salesRate
+        itemId: selectedItem.addItemId || '', // Default to empty string
+        itemName: selectedItem.itemName || '', // Default to empty string
+        unit: selectedItem.unitOfMeasurementPayload?.name || '', // Default to empty string
+        availableQtyInStore: selectedItem.budgetedQuantity || 0, // Default to 0
+        requiredQuantity: '', // Keep it empty for user input
+        remark:'', // Default to empty string
+        genericName: selectedItem.genericNameDTO?.genericName || '', // Default to empty string
+        batchNo: selectedItem.batchNo || '', // Default to empty string
+        expiryDate: selectedItem.expiryDate || '', // Default to empty string
+        salePrice: selectedItem.salesRate || 0, // Default to 0
       });
     }
   };
+  const handleAddItem = () => {
+    if (!item.itemId || !item.requiredQuantity) {
+      alert("Please select an item and enter required quantity.");
+      return;
+    }
 
+    setItemsList(prevItems => [...prevItems, item]);
+
+    // Reset item fields
+    setItem({
+      itemId: '',
+      itemName: '',
+      unit: '',
+      availableQtyInStore: '',
+      requiredQuantity: '',
+      remark: '',
+      genericName: '',
+      batchNo: '',
+      expiryDate: '',
+      salePrice: ''
+    });
+  };
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate form fields as needed
     if (!issueNo) {
       alert('Issue No is required.');
       return;
     }
 
-    const requisitionData = {
-      itemName: item.itemName,
-      unit: item.unit,
-      availableQtyInStore: Number(item.availableQtyInStore),
-      requiredQuantity: Number(item.requiredQuantity),
-      requestedBy: 'Dr. Smith', // This can be dynamic based on your application
-      remark: item.remark,
+    const payload = {
+      issueNo: issueNo,
       requestedDate: requisitionDate,
-      storeName: store, 
-      genericName: item.genericName,
-      batchNo: item.batchNo,
-      expiryDate: item.expiryDate,
-      salePrice: parseFloat(item.salePrice),
-      isVerify: needVerification ? 'Yes' : 'No',
-      verifiedBy: 'N/A', // Update as necessary
-      needsVerification: needVerification ? 'Yes' : 'No',
       status: 'Pending',
-      dispatchQty: 0
+      verifyBy: checkedBy,
+      remarks: remarks,
+      subStore: {
+        subStoreId: store // Assuming `store` from useParams is equivalent to `subStoreId`
+      },
+      subPharmRequisitionItems:itemsList.map((item) => ({
+        items: {
+          addItemId: item.itemId,
+        },
+        requiredQuantity: Number(item.requiredQuantity),
+        dispatchQuantity: 0,
+        remark: item.remark,
+      })),
     };
 
     try {
-      console.log(requisitionData);
+      console.log(payload);
 
-      const response = await fetch(`${API_BASE_URL}/pharmacyRequisitions/create`, {
+      const response = await fetch(`${API_BASE_URL}/subpharm-requisitions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(requisitionData)
+        body: JSON.stringify(payload)
       });
 
       if (response.ok) {
@@ -118,12 +144,7 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
       alert('An error occurred while submitting the requisition.');
     }
   };
-  const handleItemChange = (field, value) => {
-    setItem(prevItem => ({
-      ...prevItem,
-      [field]: value
-    }));
-  };
+
   return (
     <div className="sSPharmacyReqCreateReq-form">
       <h2 className="sSPharmacyReqCreateReq-form-title">Add Requisition</h2>
@@ -167,96 +188,77 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
               <th>Expiry Date</th>
               <th>Sale Price</th>
               <th>Remark</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr>
+            <td>
+  <select
+    value={item.itemId}
+    onChange={handleItemSelection}
+    className="SSPharmacy-input"
+  >
+    <option value="">Select Item</option>
+    {chooseItem.map((item, index) => (
+      <option key={index} value={item.addItemId}>
+        {item.itemName}
+      </option>
+    ))}
+  </select>
+</td>
+
               <td>
-                <select
-                  value={item.itemName}
-                  onChange={handleItemSelection}
-                  className='SSPharmacy-input'
-                  required
-                >
-                  <option value="">Select Item</option>
-                  {chooseItem.map((item, index) => (
-                    <option key={index} value={item.itemName}>
-                      {item.itemName}
-                    </option>
-                  ))}
-                </select>
+                <input type="text" className='SSPharmacy-input' value={item.unit} readOnly />
               </td>
               <td>
-                <input
-                  type="text"
-                  className='SSPharmacy-input'
-                  value={item.unit}
-                  onChange={(e) => handleItemChange('unit', e.target.value)}
-                  required
-                />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  value={item.availableQtyInStore}
-                  className='SSPharmacy-input'
-                  onChange={(e) => handleItemChange('availableQtyInStore', e.target.value)}
-                  min="0"
-                />
+                <input type="number" className='SSPharmacy-input' value={item.availableQtyInStore} readOnly />
               </td>
               <td>
                 <input
                   type="number"
+                  className='SSPharmacy-input'
                   value={item.requiredQuantity}
-                  className='SSPharmacy-input'
-                  onChange={(e) => handleItemChange('requiredQuantity', e.target.value)}
+                  onChange={(e) => setItem({ ...item, requiredQuantity: e.target.value })}
                   min="1"
-                  required
                 />
               </td>
+              <td><input type="text" className='SSPharmacy-input' value={item.genericName} readOnly /></td>
+              <td><input type="text" className='SSPharmacy-input' value={item.batchNo} readOnly /></td>
+              <td><input type="date" className='SSPharmacy-input' value={item.expiryDate} readOnly /></td>
+              <td><input type="number" className='SSPharmacy-input' value={item.salePrice} readOnly /></td>
+              <td><input type="text" className='SSPharmacy-input' value={item.remark}  onChange={(e) => setItem({ ...item, remark: e.target.value })} /></td>
               <td>
-                <input
-                  type="text"
-                  value={item.genericName}
-                  className='SSPharmacy-input'
-                  onChange={(e) => handleItemChange('genericName', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={item.batchNo}
-                  className='SSPharmacy-input'
-                  onChange={(e) => handleItemChange('batchNo', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="date"
-                  value={item.expiryDate}
-                  className='SSPharmacy-input'
-                  onChange={(e) => handleItemChange('expiryDate', e.target.value)}
-                />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  step="0.01"
-                  value={item.salePrice}
-                  className='SSPharmacy-input'
-                  onChange={(e) => handleItemChange('salePrice', e.target.value)}
-                  min="0"
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={item.remark}
-                  className='SSPharmacy-input'
-                  onChange={(e) => handleItemChange('remark', e.target.value)}
-                />
+                <button type="button" onClick={handleAddItem}>Add</button>
               </td>
             </tr>
+          </tbody>
+        </table>
+
+        {/* Added Items List */}
+        <h3>Added Items</h3>
+        <table className="sSPharmacyReqCreateReq-inventory-table">
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Required Quantity</th>
+              <th>Remark</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {itemsList.map((addedItem, index) => (
+              <tr key={index}>
+                <td>{addedItem.itemName}</td>
+                <td>{addedItem.requiredQuantity}</td>
+                <td>{addedItem.remark}</td>
+                <td>
+                  <button onClick={() => setItemsList(itemsList.filter((_, i) => i !== index))}>
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
 

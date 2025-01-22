@@ -29,9 +29,9 @@ const AdmissionFormPrint = ({ patient }) => {
           margin-top: 50px;
           font-weight: bold;
         }
-      .AdmissionFormPrint-Container input{
-        border: none;
-        outline:none;
+      input{
+        border: none !important;
+        outline:none !important;
       }
   .AdmissionFormPrint-section{
     margin-left: 5px;
@@ -43,27 +43,31 @@ const AdmissionFormPrint = ({ patient }) => {
     text-align: center;
   }
 .AdmissionFormPrint-subContainer{
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
     justify-self: center;
     gap: 5px;
+    margin-bottom:10px;
 }
 .AdmissionFormPrint-section{
     display: flex;
     justify-content: space-between;
     
 }
+    .AdmissionFormPrint-mainSection{
+      border:1px solid black;
+      margin-bottom:10px;
+    }
 .AdmissionFormPrint-mainSection-table{
     display: flex;
     justify-content: space-around;
-    border-bottom: 1px solid black;
     padding: 5px;
    
 }
 .AdmissionFormPrint-mainSection-table table{
   width: 99%;
   border-collapse: collapse;
+  background: #ccc;
 }
 .AdmissionFormPrint-mainSection-table table tr th{
     text-align: start;
@@ -73,24 +77,21 @@ const AdmissionFormPrint = ({ patient }) => {
     width: 100%;
 }
 .AdmissionFormPrint-mainSection-subtable p{
-    border: 1px solid black;
     width: 99%;
     margin-top: 5px;
     text-align: center;
     font-weight: bold;
 }
 .AdmissionFormPrint-mainSection-subtable-joint{
-    border: 1px solid black;
     padding: 5px;
 }
 .AdmissionFormPrint-mainSection-fiiledByDoctor{
     display: flex;
     justify-content: space-between;
-    border: 1px solid black;
+
     margin: 10px;
 }
 .AdmissionFormPrint-mainSection-fiiledByDoctor-section{
-    border: 1px solid black;
     width: 80%;
 }
 .AdmissionFormPrint-mainSection-fiiledByDoctor-section-icd{
@@ -99,9 +100,6 @@ const AdmissionFormPrint = ({ patient }) => {
     justify-content: center;
     align-items: center;
     
-}
-.AdmissionFormPrint-mainSection-fiiledByDoctor-section-icd p{
-    border-bottom: 1px solid black;
 }
 .AdmissionFormPrint-mainSection-fiiledByDoctor-a{
   align-self: center;
@@ -125,7 +123,6 @@ const AdmissionFormPrint = ({ patient }) => {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    border: 1px solid  black;
     margin: 10px;
     page-break-before: always;
 }
@@ -190,19 +187,12 @@ const AdmissionFormPrint = ({ patient }) => {
       <div ref={printRef} className="AdmissionFormPrint-subContainer">
         <h2 className="AdmissionFormPrint-heading">Admission Form</h2>
         <div className="AdmissionFormPrint-mainSection">
-          <div
-            className="AdmissionFormPrint-section"
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              borderLeft: "1px solid black",
-            }}
-          >
+          <div className="AdmissionFormPrint-section">
             <div className="AdmissionFormPrint-subsection">
               <label>Uhid : </label>
               <input
                 type="text"
-                value={patient?.patient?.uhid || ""}
+                value={patient?.patient?.patient?.uhid || ""}
                 placeholder="UHID"
               />
             </div>
@@ -215,20 +205,13 @@ const AdmissionFormPrint = ({ patient }) => {
               />
             </div>
           </div>
-          <div
-            className="AdmissionFormPrint-section"
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              borderLeft: "1px solid black",
-            }}
-          >
+          <div className="AdmissionFormPrint-section">
             <div className="AdmissionFormPrint-subsection">
               <label>Patient Name :</label>
               <input
                 type="text"
                 value={
-                  `${patient?.patient?.firstName} ${patient.patient?.middleName} ${patient.patient?.lastName}` ||
+                  `${patient?.patient?.patient?.firstName} ${patient?.patient?.patient?.middleName} ${patient?.patient?.patient?.lastName}` ||
                   ""
                 }
                 placeholder="Patient Name"
@@ -239,7 +222,7 @@ const AdmissionFormPrint = ({ patient }) => {
                 <label>Age :</label>
                 <input
                   type="text"
-                  value={patient?.patient?.age || ""}
+                  value={patient?.patient?.patient?.age || ""}
                   placeholder="Age"
                 />
               </div>
@@ -247,26 +230,18 @@ const AdmissionFormPrint = ({ patient }) => {
                 <label>Sex : </label>
                 <input
                   type="text"
-                  value={patient?.patient?.gender || ""}
+                  value={patient?.patient?.patient?.gender || ""}
                   placeholder="Sex"
                 />
               </div>
             </div>
           </div>
-          <div
-            className="AdmissionFormPrint-section"
-            style={{
-              borderTop: "1px solid black",
-              borderRight: "1px solid black",
-              borderBottom: "1px solid black",
-              borderLeft: "1px solid black",
-            }}
-          >
+          <div className="AdmissionFormPrint-section">
             <div className="AdmissionFormPrint-subsection">
               <label>D.O.B :</label>
               <input
                 type="date"
-                value={patient?.patient?.dateOfBirth || ""}
+                value={patient?.patient?.patient?.patient?.dateOfBirth || ""}
                 placeholder="D.O.B"
               />
             </div>
@@ -274,7 +249,7 @@ const AdmissionFormPrint = ({ patient }) => {
               <label>Marital Status :</label>
               <input
                 type="text"
-                value={patient?.patient?.maritalStatus || ""}
+                value={patient?.patient?.patient?.maritalStatus || ""}
                 placeholder="Marital Status"
               />
             </div>
@@ -282,7 +257,7 @@ const AdmissionFormPrint = ({ patient }) => {
               <label>Nationality : </label>
               <input
                 type="text"
-                value={patient?.patient?.country || ""}
+                value={patient?.patient?.patient?.country || ""}
                 placeholder="Nationality"
               />
             </div>
@@ -297,15 +272,11 @@ const AdmissionFormPrint = ({ patient }) => {
                   <tbody>
                     <tr>
                       <th>Pin Code</th>
-                      <td>{patient?.patient?.addressDTO?.pinCode || ""}</td>
+                      <td>{patient?.patient?.patient?.pinCode || ""}</td>
                     </tr>
                     <tr>
                       <th>Mobile No</th>
-                      <td>{patient?.patient?.phoneNumber || ""}</td>
-                    </tr>
-                    <tr>
-                      <th>Alternate No</th>
-                      <td>{patient?.patient?.alternateNumber || ""}</td>
+                      <td>{patient?.patient?.patient?.mobileNumber || ""}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -316,26 +287,15 @@ const AdmissionFormPrint = ({ patient }) => {
                   <tbody>
                     <tr>
                       <th>Name</th>
-                      <td>
-                        {patient?.patient?.guarantorDTO?.guarantorName || ""}
-                      </td>
+                      <td>{patient?.patient?.patient?.relationName || ""}</td>
                     </tr>
                     <tr>
                       <th>Relationship</th>
-                      <td>
-                        {patient?.patient?.guarantorDTO?.relationWithPatient ||
-                          ""}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Pin Code</th>
-                      <td>{patient?.patient?.guarantorDTO?.zipCode || ""}</td>
+                      <td>{patient?.patient?.patient?.relation || ""}</td>
                     </tr>
                     <tr>
                       <th>Phone No</th>
-                      <td>
-                        {patient?.patient?.guarantorDTO?.phoneNumber || ""}
-                      </td>
+                      <td>{patient?.patient?.patient?.contactNumber || ""}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -350,13 +310,17 @@ const AdmissionFormPrint = ({ patient }) => {
                 <label>Policy No. & Validity :</label>
                 <input
                   type="text"
-                  value={patient?.patient?.insuranceDTO?.InsuranceNo || ""}
+                  value={patient?.patient?.patient?.policyNumber || ""}
                   placeholder="Policy No. & Validity"
                 />
               </div>
               <div className="AdmissionFormPrint-mainSection-subtable-input">
                 <label>Referred By :</label>
-                <input type="text" placeholder="Referred By" />
+                <input
+                  type="text"
+                  placeholder="Referred By"
+                  value={patient?.referredDoctor?.doctorName}
+                />
               </div>
             </div>
           </div>
@@ -422,7 +386,7 @@ const AdmissionFormPrint = ({ patient }) => {
             <input
               type="text"
               value={
-                `${patient?.admissionUnderDoctorDetail?.coConsultant?.salutation} ${patient?.admissionUnderDoctorDetail?.coConsultant?.doctorName}` ||
+                `${patient?.admissionUnderDoctorDetail?.firstCoConsultant?.salutation} ${patient?.admissionUnderDoctorDetail?.firstCoConsultant?.doctorName}` ||
                 ""
               }
               placeholder="Joint Consultant(S)"

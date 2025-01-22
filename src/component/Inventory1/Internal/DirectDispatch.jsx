@@ -3,7 +3,9 @@ import "./DirectDispatch.css";
 import { API_BASE_URL } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 
-const DirectDispatch = ({ setShowDirect }) => {
+const DirectDispatch = ({ onClose,request }) => {
+  console.log(request);
+  
   const [storeName, setStoreName] = useState("");
   const [dispatchDate, setDispatchDate] = useState("");
   const navigate = useNavigate();
@@ -23,10 +25,41 @@ const DirectDispatch = ({ setShowDirect }) => {
   const [subStore, setSubStore] = useState([]);
 
   useEffect(() => {
-    // Fetch items when the component mounts
+    if (request) {
+      setStoreName(request?.subStore?.subStoreId);
+      setDispatchDate("");
+  
+      // Map the data from request and assign it to items
+      const mappedItems = request.items?.map(item => ({
+        itemCategory: item.item.subCategory.category,
+        itemName: item.item.itemName,
+        code: item.item.itemCode,
+        unit: item.item.unitOfMeasurement.name,
+        availableQty: item.item.availableQty,
+        dispatchedQty: item.dispatchQuantity,
+        remark: item.remark,
+      })) || [
+        {
+          itemCategory: "",
+          itemName: "",
+          code: "",
+          unit: "",
+          availableQty: "",
+          dispatchedQty: "",
+          remark: "",
+        },
+      ];
+  
+      setItems(mappedItems);
+      setRemarks("");
+    }
+  }, [request]);
+  
+
+  useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/items/all`);
+        const response = await fetch(`${API_BASE_URL}/items/getAllItem`);
         const data = await response.json();
         setAllItems(data); // Assuming data is an array of items
       } catch (error) {
@@ -38,19 +71,16 @@ const DirectDispatch = ({ setShowDirect }) => {
   }, []);
 
   useEffect(() => {
-    // Fetch items when the component mounts
     const fetchSubstore = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/substores`);
+        const response = await fetch(`${API_BASE_URL}/substores/get-all-substores`);
         const data = await response.json();
         console.log(data);
-
-        setSubStore(data); // Assuming data is an array of items
+        setSubStore(data);
       } catch (error) {
         console.error("Error fetching items:", error);
       }
     };
-
     fetchSubstore();
   }, []);
 
@@ -65,17 +95,17 @@ const DirectDispatch = ({ setShowDirect }) => {
   };
 
   const handleItemSelect = (index, itemId) => {
-    const selectedItem = allItems.find(item => item.itemId === parseInt(itemId)); // Match by itemId
+    const selectedItem = allItems.find(item => item.invItemId === parseInt(itemId)); // Match by itemId
     
     if (selectedItem) {
       const newItems = [...items];
       newItems[index] = {
         ...newItems[index],
-        itemId: selectedItem.itemId, // Store the itemId
+        itemId: selectedItem.invItemId, // Store the itemId
         itemName: selectedItem.itemName, // Update the item name
         code: selectedItem.itemCode, // Update the item code
         unit: selectedItem.unitOfMeasurement.name, // Update the unit
-        availableQty: selectedItem.minStockQuantity // Update available quantity
+        availableQty: selectedItem.availableQty // Update available quantity
       };
       setItems(newItems);
     }
@@ -108,16 +138,18 @@ const DirectDispatch = ({ setShowDirect }) => {
     const payload = {
       issueNo: "REQ123", // You can dynamically generate or fetch this value if needed
       requisitionDate: dispatchDate,
-      dispatchBy: "Mr.Jhon",
-      itemCategory: items[0]?.itemCategory || "",
-      remark: remarks,
-      status: "Approved", // You can change this based on form input if needed
-      subStoreId: parseInt(storeName), // Assuming storeName contains subStoreId
-      itemRequisitions: items.map((item) => ({
-        itemId: item.itemId,
-        dispatchQty: item.dispatchedQty,
-        requestedQuantity: item.dispatchedQty,
-        remarks: item.remark,
+      withdrawRemark: remarks,
+      status: "Dispatch", // You can change this based on form input if needed
+      verifyOrNot:"Yes",
+      verifiedBy:"General Inventory",
+      checkedBy:"General Inventory",
+      subStore:{ subStoreId:storeName}, // Assuming storeName contains subStoreId
+      requisitionItems: items.map((item) => ({
+        item: {
+        invItemId:item.itemId},
+        dispatchQuantity: item.dispatchedQty,
+        requiredQuantity: item.dispatchedQty,
+        remark: item.remark,
       })),
     };
 
@@ -125,7 +157,7 @@ const DirectDispatch = ({ setShowDirect }) => {
 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/inventory-requisitions/create`,
+        `${API_BASE_URL}/inventory-requisitions`,
         {
           method: "POST",
           headers: {
@@ -136,23 +168,19 @@ const DirectDispatch = ({ setShowDirect }) => {
       );
 
       if (response.ok) {
-        console.log("Dispatch to substore saved successfully");
-        setShowDirect(false);
-        
-        // Handle success (e.g., show a success message, clear the form, etc.)
+        alert("Dispatch to substore saved successfully");
+        onClose();
       } else {
         console.error("Error saving dispatch");
-        // Handle error (e.g., show an error message)
       }
     } catch (error) {
       console.error("Network error:", error);
-      // Handle network error
     }
   };
 
   const handleDiscard = () => {
     setStoreName("");
-    setDispatchDate("2024-08-21");
+    setDispatchDate("");
     setItems([
       {
         itemCategory: "Consumables",
@@ -248,7 +276,7 @@ const DirectDispatch = ({ setShowDirect }) => {
                       Select Item
                     </option>
                     {allItems.map((allItem, idx) => (
-                      <option key={idx} value={allItem.itemId}>
+                      <option key={idx} value={allItem.invItemId}>
                         {allItem.itemName}
                       </option>
                     ))}

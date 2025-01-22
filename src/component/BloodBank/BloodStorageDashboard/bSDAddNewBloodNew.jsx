@@ -1,24 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-// import './Modal.css';
-import "./bSDAddNewBloodNew.css"
+import './bSDAddNewBloodNew.css';
 import { API_BASE_URL } from '../../api/api';
 
 const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
-    const [test_id, settest_id] = useState('');
+    const [testId, setTestId] = useState('');
     const [storagedate, setstoragedate] = useState(null);
     const [bloodgroup, setbloodgroup] = useState('');
     const [volume, setvolume] = useState('');
     const [expirydate, setexpirydate] = useState(null);
     const [storagelocation, setstoragelocation] = useState('');
     const [status, setStatus] = useState('');
+    const [testOptions, setTestOptions] = useState([]);
+
+    // Fetch test IDs on component mount
+    useEffect(() => {
+        const fetchTestOptions = async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/blood-testing/get-all-tests`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch test IDs');
+                }
+                const data = await response.json();
+                setTestOptions(data); // Assuming API returns an array of test objects
+            } catch (error) {
+                console.error('Error fetching test IDs:', error);
+            }
+        };
+
+        fetchTestOptions();
+    }, []);
 
     const handleSave = async () => {
         const data = {
             bloodTestingDTO: {
-                testId: 1
-
+                testId: parseInt(testId, 10), // Convert to integer
             },
             storagedate: storagedate ? storagedate.toISOString() : null,
             bloodgroup,
@@ -60,12 +77,18 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
 
                 <div className="modal-form-group">
                     <label>Test ID:</label>
-                    <input
-                        type="text"
-                        value={test_id}
-                        onChange={(e) => settest_id(e.target.value)}
-                        placeholder="Enter Test ID"
-                    />
+                    <select
+                        value={testId}
+                        onChange={(e) => setTestId(e.target.value)}
+                        placeholder="Select Test ID"
+                    >
+                        <option value="">Select Test ID</option>
+                        {testOptions.map((test) => (
+                            <option key={test.testId} value={test.testId}>
+                                {test.testName || `Test ID: ${test.testId}`}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 <div className="modal-form-group">

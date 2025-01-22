@@ -192,7 +192,7 @@ function RDLListReports() {
               onChange={handleDateToChange}
             />
           </label>
-          </div>
+        </div>
       </div>
       <div className="rDLListReport-search-N-results">
         <div className="rDLListReport-search-bar">
@@ -219,6 +219,7 @@ function RDLListReports() {
               {[
                 "Sr No",
                 "Date",
+                "uhid",
                 "Patient Name",
                 "Age/Sex",
                 "Phone No",
@@ -252,21 +253,28 @@ function RDLListReports() {
                 <td>{index + 1}</td>
                 <td>{report.imagingDate}</td>
                 <td>
-                  {report.patientDTO?.firstName ||
-                    report.newPatientVisitDTO?.firstName}{" "}
-                  {report.patientDTO?.lastName ||
-                    report.newPatientVisitDTO?.lastName}
+                  {report.inPatientDTO?.uhid || report.outPatientDTO?.uhid}
                 </td>
                 <td>
-                  {report.patientDTO?.age || report.newPatientVisitDTO?.age} Y
+                  {report.inPatientDTO?.firstName ||
+                    report.outPatientDTO?.firstName}{" "}
+                  {report.inPatientDTO?.lastName ||
+                    report.outPatientDTO?.lastName}
                 </td>
                 <td>
-                  {report.patientDTO?.phoneNumber ||
-                    report.newPatientVisitDTO?.phoneNumber ||
+                  {report.inPatientDTO?.age || report.outPatientDTO?.age}{" "}
+                  {report.inPatientDTO?.ageUnit ||
+                    report.outPatientDTO?.ageUnit}{" "}
+                  {" / "}{" "}
+                  {report.inPatientDTO?.gender || report.outPatientDTO?.gender}
+                </td>
+                <td>
+                  {report.inPatientDTO?.phoneNumber ||
+                    report.outPatientDTO?.phoneNumber ||
                     "N/A"}
                 </td>
-                <td>{report.prescriberDTO?.employeeName || "Self"}</td>
-                <td>{report.imagingTypeDTO?.imagingTypeName}</td>
+                <td>{report.prescriberDTO?.doctorName || "Self"}</td>
+                <td>{report.imagingItemDTO?.imagingType?.imagingTypeName}</td>
                 <td>{report.imagingItemDTO?.imagingItemName}</td>
                 <td>
                   <button

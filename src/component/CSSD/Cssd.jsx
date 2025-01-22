@@ -73,15 +73,15 @@ function Cssd() {
           <Route path="cssd-transaction-mainmenu" element={<CSSDTransactionMainMenu/>} />
           <Route path="/cssd-transaction-mainmenu/cssd-kit-request-indent" element={<CSSDKitRequestIndent/>} />
           <Route path="cssd-transaction-mainmenu/cssd-bubble-kit-issue" element={<CSSDBubbleKitIssue/>} />
-          <Route path="cssd-transaction-mainmenu/Pending_kit_issue/:id" element={<PendingKitIssue />} />
+          <Route path="/cssd-transaction-mainmenu/cssd-bubble-kit-issue/Pending_kit_issue/:id" element={<PendingKitIssue />} />
           <Route path="cssd-transaction-mainmenu/bubble-pending-kit-receive" element={<BubblePendingReceives/>}></Route>
           {/* <Route path="pending-kit-receive" element={<PendingKitReceive/>}></Route> */}
           <Route path="cssd-transaction-mainmenu/cssd-kit-Discard" element={<CSSDKitDiscard/>}></Route>
           <Route path="cssd-transaction-mainmenu/cssd-kit-return" element={<CssdKitReturn/>}></Route>
           <Route path="cssd-transaction-mainmenu/cssd-pending-kit-return" element={<BubblePendingReturns/>}></Route>
           {/* <Route path="pending-kit-receive/:id" element={<BubblePendingKitReceive/>}></Route> */}
-          <Route path="cssd-transaction-mainmenu/pending-kit-receive/:issueId" element={<BubblePendingKitReceive />} />
-          <Route path="cssd-transaction-mainmenu/pending-return/:receivingId" element={<CssdKitReturn />} />
+          <Route path="cssd-transaction-mainmenu/bubble-pending-kit-receive/pending-kit-receive/:issueId" element={<BubblePendingKitReceive />} />
+          <Route path="/cssd-transaction-mainmenu/cssd-pending-kit-return/pending-return/:receivingId" element={<CssdKitReturn />} />
 
 
 

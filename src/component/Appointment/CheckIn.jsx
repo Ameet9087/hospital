@@ -18,29 +18,54 @@ const CheckIn = () => {
     firstName: patient?.firstName || "",
     middleName: patient?.middleName || "",
     lastName: patient?.lastName || "",
-    religion: patient?.religion || "",
     dateOfBirth: patient?.dateOfBirth || "",
     age: patient?.age || "",
     ageUnit: patient?.ageUnit || "",
     gender: patient?.gender || "",
     phoneNumber: patient?.contactNumber || patient?.phoneNumber || "",
     alternateNumber: patient?.alternateNumber || "",
-    country: "",
-    state: "",
-    city: "",
-    zipCode: "",
+    country: patient?.country,
+    state: patient?.state,
+    city: patient?.city,
+    zipCode: patient?.zipCode,
     address: patient?.address || "",
     email: patient?.email || "",
+    visitType: "OPD",
     careOfPerson: patient?.careOfPerson || "",
     relationWithPatient: patient?.relationWithPatient || "",
     careOfPersonContact: patient?.careOfPersonContact || "",
   });
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    const currentDate = new Date();
+
+    setFormData((prevState) => {
+      let updatedData = {
+        ...prevState,
+        [name]: type === "checkbox" ? checked : value,
+      };
+
+      if (name === "dateOfBirth" && value) {
+        // Calculate age when DOB is entered
+        const birthDate = new Date(value);
+        const age = currentDate.getFullYear() - birthDate.getFullYear();
+        const isBeforeBirthday =
+          currentDate.getMonth() < birthDate.getMonth() ||
+          (currentDate.getMonth() === birthDate.getMonth() &&
+            currentDate.getDate() < birthDate.getDate());
+        updatedData.age = isBeforeBirthday ? age - 1 : age;
+      }
+
+      if (name === "age" && value) {
+        // Calculate DOB when age is entered, starting from January 1st
+        const years = parseInt(value, 10);
+        const dobYear = currentDate.getFullYear() - years;
+        const dobFromJanuary = new Date(dobYear, 0, 1); // January 1st of the calculated year
+        updatedData.dateOfBirth = dobFromJanuary.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+      }
+
+      return updatedData;
+    });
   };
 
   const fetchDataByPinCode = async () => {
@@ -60,12 +85,14 @@ const CheckIn = () => {
     setCountry(response.data);
   };
 
-  const fetchAllCities=async(id)=>{
-    const response = await axios.get(`${API_BASE_URL}/cities/getAllStatesId/${id}`);
+  const fetchAllCities = async (id) => {
+    const response = await axios.get(
+      `${API_BASE_URL}/cities/getAllStatesId/${id}`
+    );
     console.log(response.data);
-    
-    setAllCities(response.data)
-  }
+
+    setAllCities(response.data);
+  };
 
   useEffect(() => {
     fetchAllCountry();
@@ -74,11 +101,11 @@ const CheckIn = () => {
 
   const getPopupData = () => {
     if (activePopup === "country") {
-      return { columns: ["countryId","countryName"], data: country };
+      return { columns: ["countryId", "countryName"], data: country };
     } else if (activePopup === "state") {
-      return { columns: ["statesId","stateName"], data: states };
+      return { columns: ["statesId", "stateName"], data: states };
     } else if (activePopup === "city") {
-      return { columns: ["cityId","cityName"], data: cities };
+      return { columns: ["cityId", "cityName"], data: cities };
     } else {
       return { columns: [], data: [] };
     }
@@ -92,7 +119,7 @@ const CheckIn = () => {
       const response = await fetch(
         `${API_BASE_URL}/out-patient/update/${patient?.outPatientId}`,
         {
-          method: `${patient?.newPatientVisitId > 0 ? "PUT" : "POST"}`,
+          method: `${patient?.outPatientId > 0 ? "PUT" : "POST"}`,
           headers: {
             "Content-Type": "application/json",
           },
@@ -101,10 +128,10 @@ const CheckIn = () => {
             middleName: formData.middleName,
             lastName: formData.lastName,
             dateOfBirth: formData.dateOfBirth,
-            religion: formData.religion,
             age: parseInt(formData.age, 10),
             ageUnit: formData.ageUnit,
             gender: formData.gender,
+            visitType: "OPD",
             phoneNumber: formData.phoneNumber,
             alternateNumber: formData.alternateNumber,
             country: formData.country,
@@ -153,7 +180,6 @@ const CheckIn = () => {
                 <span className="checkIn__section-icon">👤</span> Patient
                 Information
               </h3>
-              {/* <div className="checkIn__form"> */}
               <div className="checkIn__form-group">
                 <label className="checkIn__label">
                   First Name <span className="checkIn__required">*</span>
@@ -194,7 +220,7 @@ const CheckIn = () => {
                     type="date"
                     className="checkIn__input"
                     name="dateOfBirth"
-                    checked={formData.dateOfBirth}
+                    value={formData.dateOfBirth}
                     onChange={handleChange}
                   />
                   {/* <div>

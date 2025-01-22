@@ -1,214 +1,143 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaSearch } from 'react-icons/fa';
-import './ot_machine.css';
-import { startResizing } from '../../../../../TableHeadingResizing/ResizableColumns';
+import axios from 'axios';
+import './Ot_machine.css';
+import { API_BASE_URL } from "../../../../api/api"
+
+// const API_BASE_URL = 'http://192.168.210.48:8080/api/ot-machines';
 
 function Ot_machine() {
   const [machines, setMachines] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
   const [editingMachine, setEditingMachine] = useState(null);
   const [machineName, setMachineName] = useState('');
   const [isActive, setIsActive] = useState(false);
   const tableRef = useRef(null);
-  const [columnWidths, setColumnWidths] = useState(0);
 
-  // const { success, error, CustomAlerts } = useCustomAlert(); 
-
-  // Fetch machines from API
+  // Fetch machines on component mount
   useEffect(() => {
-    fetchMachines();
+    loadMachines();
   }, []);
 
-  const fetchMachines = async () => {
+  // Load all machines
+  const loadMachines = async () => {
     try {
-      const response = await fetch('http://localhost:1415/api/ot-machines');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      setMachines(data); // Assuming the API returns an array of machines
+      const response = await axios.get(`${ API_BASE_URL }/ot-machines`);
+      const normalizedData = response.data.map((machine) => ({
+        id: Number(machine.otMachineId), // Ensure ID is a number
+        machineName: machine.machineName,
+        active: machine.isActive === 'Yes',
+      }));
+      setMachines(normalizedData);
     } catch (err) {
-      error('Error fetching machines'); // Show error alert
-      console.error('Error fetching machines:', err);
+      console.error('Error fetching machines:', err.message);
     }
   };
 
-  // Handle search input change
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
+  // Add or update machine
+  const handleAddOrUpdate = async () => {
+    try {
+      const payload = {
+        machineName,
+        isActive: isActive ? 'Yes' : 'No',
+      };
+
+      if (editingMachine) {
+        // Update existing machine
+        const machineId = Number(editingMachine.id); // Ensure ID is a number
+        await axios.put(`${API_BASE_URL}/${machineId}`, payload);
+
+        setMachines((prevMachines) =>
+          prevMachines.map((m) =>
+            m.id === machineId ? { ...payload, id: machineId, active: isActive } : m
+          )
+        );
+      } else {
+        // Add new machine
+        const response = await axios.post(`${ API_BASE_URL }/ot-machines`, payload);
+        setMachines((prevMachines) => [
+          ...prevMachines,
+          {
+            ...response.data,
+            id: Number(response.data.otMachineId), // Ensure ID is a number
+            active: response.data.isActive === 'Yes',
+          },
+        ]);
+      }
+
+      clearForm();
+    } catch (err) {
+      console.error('Error saving machine:', err.message);
+    }
   };
 
-  // Handle edit button click
+  // // Delete machine
+  // const handleDelete = async (id) => {
+  //   try {
+  //     await axios.delete(${API_BASE_URL}/${Number(id)}); // Ensure ID is a number
+  //     setMachines((prevMachines) => prevMachines.filter((m) => m.id !== id));
+  //   } catch (err) {
+  //     console.error('Error deleting machine:', err.message);
+  //   }
+  // };
+
+  // Edit existing machine
   const handleEdit = (machine) => {
     setEditingMachine(machine);
     setMachineName(machine.machineName);
     setIsActive(machine.active);
   };
 
-  // Handle add new machine
-  const handleAdd = async () => {
-    try {
-      const response = await fetch('http://localhost:1415/api/ot-machines', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          machineName,
-          active: isActive,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(`Network response was not ok: ${errorData}`);
-      }
-
-      const newMachine = await response.json();
-      setMachines((prevMachines) => [...prevMachines, newMachine]);
-
-      success('Machine added successfully'); // Show success alert
-      clearForm();
-    } catch (err) {
-      error('Error adding machine'); // Show error alert
-      console.error('Error adding machine:', err);
-    }
-  };
-
-  // Handle update machine
-  const handleUpdate = async () => {
-    if (!editingMachine) return;
-
-    try {
-      const response = await fetch(`http://localhost:1415/api/ot-machines/${editingMachine.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          machineName,
-          active: isActive,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.text();
-        throw new Error(`Network response was not ok: ${errorData}`);
-      }
-
-      const updatedMachine = await response.json();
-      setMachines((prevMachines) =>
-        prevMachines.map((machine) =>
-          machine.id === updatedMachine.id ? updatedMachine : machine
-        )
-      );
-
-      success('Machine updated successfully'); // Show success alert
-      clearForm();
-    } catch (err) {
-      error('Error updating machine'); // Show error alert
-      console.error('Error updating machine:', err);
-    }
-  };
-
-  // Handle clear form and cancel edit
+  // Clear form
   const clearForm = () => {
     setEditingMachine(null);
     setMachineName('');
     setIsActive(false);
   };
 
-  // Filter machines based on search term
-  const filteredMachines = machines.filter((machine) =>
-    (machine.machineName || '').toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   return (
-    <div className='ot_machine_main'>
-      {/* Custom Alerts */}
-      {/* <CustomAlerts /> */}
-
+    <div className="ot_machine_main">
+      {/* Form Section */}
       <div className="ot_machine_container">
-        <div className="ot_machine_input">
-          <label htmlFor="machine-name">Machine Name:</label>
+        <div>
+          <label>Machine Name:</label>
           <input
             type="text"
-            id="machine-name"
             value={machineName}
             onChange={(e) => setMachineName(e.target.value)}
             placeholder="Machine Name"
           />
         </div>
-        <div className="ot_machine_checkbox">
+        <div>
           <input
             type="checkbox"
-            id="is-active"
             checked={isActive}
             onChange={(e) => setIsActive(e.target.checked)}
           />
-          <label htmlFor="is-active">Is Active</label>
+          <label>Is Active</label>
         </div>
-        <div className="ot_machine_buttons">
-          <button
-            className="ot_machine_save"
-            onClick={editingMachine ? handleUpdate : handleAdd}
-          >
+        <div>
+          <button onClick={handleAddOrUpdate}>
             {editingMachine ? 'Update' : 'Add'}
           </button>
-          <button
-            className="ot_machine_clear"
-            onClick={clearForm}
-          >
-            Clear
-          </button>
+          <button onClick={clearForm}>Clear</button>
         </div>
       </div>
 
-      <div className="ot_machine_search_bar">
-        <input
-          type="text"
-          placeholder="Search"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-      </div>
-
-      <table className="ot_machine_table">
+      {/* Machines Table */}
+      <table ref={tableRef} className="ot_machine_table">
         <thead>
           <tr>
-            {[
-              'Machine Name',
-              'IsActive',
-              'Action'
-            ].map((header, index) => (
-              <th
-                key={index}
-                style={{ width: columnWidths[index] }}
-                className="rd-resizable-th"
-              >
-                <div className="header-content">
-                  <span>{header}</span>
-                  <div
-                    className="resizer"
-                    onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                  ></div>
-                </div>
-              </th>
-            ))}
+            <th>Machine Name</th>
+            <th>Is Active</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {filteredMachines.map((machine) => (
+          {machines.map((machine) => (
             <tr key={machine.id}>
-              <td className='ot_machine_tabledata'>{machine.machineName}</td>
-              <td className='ot_machine_tabledata'>{machine.active.toString()}</td>
-              <td className='ot_machine_tabledata'>
-                <button
-                  onClick={() => handleEdit(machine)}
-                  className="ot_machine_edit_button"
-                >
-                  Edit
-                </button>
+              <td>{machine.machineName}</td>
+              <td>{machine.active ? 'Yes' : 'No'}</td>
+              <td>
+                <button onClick={() => handleEdit(machine)}>Edit</button>
               </td>
             </tr>
           ))}

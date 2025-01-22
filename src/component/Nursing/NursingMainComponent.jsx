@@ -17,9 +17,6 @@ const OutPatientComponent = () => {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
   const [patients, setPatients] = useState([]);
-  const [filterOption, setFilterOption] = useState("All");
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
   const [modalData, setModalData] = useState({});
   const [isPatientOPEN, setIsPatientOPEN] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState(null);
@@ -47,7 +44,7 @@ const OutPatientComponent = () => {
       const today = new Date().toISOString().split("T")[0];
 
       const patientsWithoutTodaysVitals = appointments.filter((appointment) => {
-        const outPatientId = appointment.outPatient?.outPatientId;
+        const outPatientId = appointment?.outPatientId;
 
         const hasTodayVitals = allVitals.some(
           (vital) =>
@@ -148,14 +145,8 @@ const OutPatientComponent = () => {
                       placeholder="Search by Department Name"
                       style={{ marginRight: "3%" }}
                     />
-                    {/* <button className="Actions-btn Actions-consumption" onClick={openTriAgeModal}> Add Triage</button> */}
                   </div>
-                  <div className="nurse-action-buttons">
-                    {/* <button className="nurse-action-button">Check In</button>
-              <button className="nurse-action-button">Refer</button>
-              <button className="nurse-action-button">Exchange Doc/Dept</button>
-              <button className="nurse-action-button">Conclude</button> */}
-                  </div>
+                  <div className="nurse-action-buttons"></div>
                   <table className="patientList-table" ref={tableRef}>
                     <thead>
                       <tr>
@@ -195,11 +186,11 @@ const OutPatientComponent = () => {
                           <td>{index + 1}</td>
                           <td>{patient.appointmentDate}</td>
                           <td>{patient.appointmentTime}</td>
-                          <td>{`${patient.outPatient?.firstName} ${
-                            patient.outPatient?.middleName || ""
-                          } ${patient.outPatient?.lastName}`}</td>
-                          <td>{`${patient.outPatient?.age} ${patient.outPatient?.ageUnit} / ${patient.outPatient?.gender}`}</td>
-                          <td>{patient.outPatient?.phoneNumber}</td>
+                          <td>{`${patient.patient?.firstName} ${
+                            patient.patient?.middleName || ""
+                          } ${patient.patient?.lastName}`}</td>
+                          <td>{`${patient.patient?.age} ${patient.patient?.ageUnit} / ${patient.patient?.gender}`}</td>
+                          <td>{patient.patient?.phoneNumber}</td>
                           <td>{`${patient.addDoctor?.salutation || ""} ${
                             patient.addDoctor?.doctorName
                           }`}</td>
@@ -214,9 +205,7 @@ const OutPatientComponent = () => {
                                 Add Triage
                               </button>
                               <button
-                                onClick={() =>
-                                  handlePatientClick(patient.outPatient)
-                                }
+                                onClick={() => handlePatientClick(patient)}
                                 className="Actions-btn Actions-wardRequest"
                               >
                                 &#x1F5A5;
@@ -237,71 +226,7 @@ const OutPatientComponent = () => {
               {activeTab === "Past Days" && (
                 <>
                   <div className="OutPatient_PastDays-tableContainer">
-                    {/* <div className="nursing-filter-options">
-                      <label>
-                        <input
-                          type="radio"
-                          value="All"
-                          checked={filterOption === "All"}
-                        />
-                        <b>All</b>
-                      </label>
-                      <label>
-                        <input
-                          type="radio"
-                          value="Triage Done"
-                          checked={filterOption === "Triage Done"}
-                        />
-                        <b>Triage Done</b>
-                      </label>
-                      <label>
-                        <input
-                          type="radio"
-                          value="Triage Pending"
-                          checked={filterOption === "Triage Pending"}
-                        />
-                        <b>Triage Pending</b>
-                      </label>
-                    </div> */}
-
-                    {/* <div className="date-filter">
-                      <label>
-                        From:
-                        <input
-                          type="date"
-                          value={fromDate}
-                          onChange={(e) => setFromDate(e.target.value)}
-                        />
-                      </label>
-                      <label>
-                        To:
-                        <input
-                          type="date"
-                          value={toDate}
-                          onChange={(e) => setToDate(e.target.value)}
-                        />
-                      </label>
-                      <button className="datefilter-from-to">OK</button>
-                    </div> */}
-                    <div className="OutPatient_PastDays-Header">
-                      {/* <input
-                        type="text"
-                        placeholder="Search"
-                        className="OutPatient_PastDays-searchInput"
-                      /> */}
-
-                      {/* <div className="OutPatient_PastDays-actions">
-                        <span className="OutPatient_PastDays-results">
-                          Showing {patients.length}/{patients.length} results
-                        </span>
-                        <button className="OutPatient_PastDays-button">
-                          Export
-                        </button>
-                        <button className="OutPatient_PastDays-button">
-                          Print
-                        </button>
-                      </div> */}
-                    </div>
+                    <div className="OutPatient_PastDays-Header"></div>
                     <table className="patientList-table" ref={tableRef}>
                       <thead>
                         <tr>
@@ -341,11 +266,11 @@ const OutPatientComponent = () => {
                             <td>{index + 1}</td>
                             <td>{patient.appointmentDate}</td>
                             <td>{patient.appointmentTime}</td>
-                            <td>{`${patient.outPatient?.firstName} ${
-                              patient.outPatient?.middleName || ""
-                            } ${patient.outPatient?.lastName}`}</td>
-                            <td>{`${patient.outPatient?.age} ${patient.outPatient?.ageUnit} / ${patient.outPatient?.gender}`}</td>
-                            <td>{patient.outPatient?.phoneNumber}</td>
+                            <td>{`${patient.patient?.firstName} ${
+                              patient.patient?.middleName || ""
+                            } ${patient.patient?.lastName}`}</td>
+                            <td>{`${patient.patient?.age} ${patient.patient?.ageUnit} / ${patient.patient?.gender}`}</td>
+                            <td>{patient.patient?.mobileNumber}</td>
                             <td>{`${patient.addDoctor?.salutation || ""} ${
                               patient.addDoctor?.doctorName
                             }`}</td>
@@ -360,9 +285,7 @@ const OutPatientComponent = () => {
                                   Add Triage
                                 </button>
                                 <button
-                                  onClick={() =>
-                                    handlePatientClick(patient.outPatient)
-                                  }
+                                  onClick={() => handlePatientClick(patient)}
                                   className="Actions-btn Actions-wardRequest"
                                 >
                                   &#x1F5A5;

@@ -38,7 +38,7 @@ const PatientQueue = () => {
       const response = await axios.get(
         `${API_BASE_URL}/patient-queues/employee/${selectedDoctor}`
       );
-      setData(response.data);
+      setData(response.data);            
       setShowTable(true);
     } catch (error) {
       console.error("Error fetching patient data:", error);
@@ -80,9 +80,12 @@ const PatientQueue = () => {
     }
   };
 
-  const filteredData = data.filter(
-    (row) => selectedStatus === "all" || row.status === selectedStatus
-  );
+  const filteredData = Array.isArray(data)
+  ? data.filter(
+      (row) => selectedStatus === "all" || row.status === selectedStatus
+    )
+  : [];
+
 
   return (
     <div className="patient-queue-management-container">

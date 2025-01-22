@@ -60,7 +60,7 @@ const DoctorScheduleSTD = () => {
   };
   const handleLocationChange = (e) => {
     console.log(e.target.value);
-    
+
     setSelectedLocation(e.target.value);
   };
 
@@ -76,16 +76,12 @@ const DoctorScheduleSTD = () => {
           `${API_BASE_URL}/location-masters`
         );
         setLocations(locationResponse.data);
-        
-        const doctorResponse = await axios.get(
-          `${API_BASE_URL}/doctors`
-        );
+
+        const doctorResponse = await axios.get(`${API_BASE_URL}/doctors`);
         setDoctors(doctorResponse.data);
 
-        const breakTimeResponse = await axios.get(
-          `${API_BASE_URL}/breakTime`
-        );
-        setBreakTimeOptions(breakTimeResponse.data);     
+        const breakTimeResponse = await axios.get(`${API_BASE_URL}/breakTime`);
+        setBreakTimeOptions(breakTimeResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -136,10 +132,9 @@ const DoctorScheduleSTD = () => {
     setIsEditing(true);
     setBreakTimings([
       ...breakTimings,
-      { breakTimeIds: [], breakToTime: '', breakRemarks: '' }
+      { breakTimeIds: [], breakToTime: "", breakRemarks: "" },
     ]);
   };
- 
 
   // Handle removing a row
   const handleRemoveRow = (index) => {
@@ -194,18 +189,20 @@ const DoctorScheduleSTD = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Prepare the breakTimes array
-    const breakTimes = breakTimings.map((timing) =>
-      timing.breakTimeIds.map((breakTimeId) => ({ breakTimeId }))
-    ).flat();
-  
+    const breakTimes = breakTimings
+      .map((timing) =>
+        timing.breakTimeIds.map((breakTimeId) => ({ breakTimeId }))
+      )
+      .flat();
+
     // Prepare weekdays as an array of selected days
     const weekdays = Object.entries(selectedWeekdays)
-    .filter(([_, isChecked]) => isChecked)
-    .map(([day]) => day.charAt(0).toUpperCase() + day.slice(1)) // Capitalize the day names
-    .join(", ");
-  
+      .filter(([_, isChecked]) => isChecked)
+      .map(([day]) => day.charAt(0).toUpperCase() + day.slice(1)) // Capitalize the day names
+      .join(", ");
+
     // Create the form data object
     const formData = {
       doctorId: selectedDoctor,
@@ -219,20 +216,16 @@ const DoctorScheduleSTD = () => {
       weekdays: weekdays,
       active: true,
     };
-  console.log(formData);
-  
+    console.log(formData);
+
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/schedules`,
-        formData
-      );
+      const response = await axios.post(`${API_BASE_URL}/schedules`, formData);
       console.log("Schedule Added Successfully:", response.data);
-      alert("Schedule Added Successfully")
+      alert("Schedule Added Successfully");
     } catch (error) {
       console.error("Error adding schedule:", error);
     }
   };
-  
 
   return (
     <div className="DoctorScheduleSTD-medical-interface">
@@ -254,11 +247,12 @@ const DoctorScheduleSTD = () => {
                 className="DoctorScheduleSTD-field-input"
               >
                 <option value="">Select option</option>
-                {locations?.map((data, index) => (
-                  <option key={index} value={data.id}>
-                    {data.locationName}
-                  </option>
-                ))}
+                {locations.length > 0 &&
+                  locations?.map((data, index) => (
+                    <option key={index} value={data.id}>
+                      {data.locationName}
+                    </option>
+                  ))}
               </select>
             </div>
             <div className="DoctorScheduleSTD-field-row">
@@ -460,7 +454,7 @@ const DoctorScheduleSTD = () => {
         </div>
       </div>
 
-      <div className="DoctorScheduleSTD-table-header">Schedule Grid</div>
+      <div className="DoctorScheduleSTD-section-header">Schedule Grid</div>
       <div className="DoctorScheduleSTD-table-section">
         <table className="DoctorScheduleSTD-table" ref={tableRef}>
           <thead>
@@ -502,98 +496,103 @@ const DoctorScheduleSTD = () => {
         </table>
       </div>
       <div className="DoctorScheduleSTD-break-timings">
-      <div className="DoctorScheduleSTD-break-header">
-        <div>Break Timings (Control + Enter For New Row)</div>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            {["SN", "Break Time(s)", "Action"].map((header, index) => (
-              <th key={index}>
-                <div className="header-content">
-                  <span>{header}</span>
-                </div>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {/* Display existing rows */}
-          {breakTimings.map((timing) => (
-            <tr key={timing.sn}>
-              <td>{timing.sn}</td>
-              <td>
-                {timing.breakTimeIds
-                  .map((id) =>
-                    breakTimeOptions.find((option) => option.breakTimeId === id)
-                  )
-                  .map((bt) =>
-                    bt ? `${bt.breakTimeStart} - ${bt.breakTimeEnd}` : "N/A"
-                  )
-                  .join(", ")}
-              </td>
-              <td>
-                <button
-                  className="DoctorScheduleSTD-del-button"
-                  onClick={() => handleDelete(timing.sn)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-
-          {/* Row for adding new break times */}
-          {isEditing && (
+        <div className="DoctorScheduleSTD-section-header">
+          <div>Break Timings (Control + Enter For New Row)</div>
+        </div>
+        <table>
+          <thead>
             <tr>
-              <td>{breakTimings.length + 1}</td>
-              <td>
-                <select
-                  multiple
-                  value={newBreakTimeIds}
-                  onChange={handleSelectChange}
-                >
-                  {breakTimeOptions.map((option) => (
-                    <option key={option.breakTimeId} value={option.breakTimeId}>
-                      {option.breakTimeStart} - {option.breakTimeEnd}
-                    </option>
-                  ))}
-                </select>
-              </td>
-              <td>
-                <button
-                  className="DoctorScheduleSTD-add-button"
-                  onClick={handleSaveNewBreak}
-                >
-                  Save
-                </button>
-                <button
-                  className="DoctorScheduleSTD-del-button"
-                  onClick={() => setIsEditing(false)}
-                >
-                  Cancel
-                </button>
-              </td>
+              {["SN", "Break Time(s)", "Action"].map((header, index) => (
+                <th key={index}>
+                  <div className="header-content">
+                    <span>{header}</span>
+                  </div>
+                </th>
+              ))}
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {/* Display existing rows */}
+            {breakTimings.map((timing) => (
+              <tr key={timing.sn}>
+                <td>{timing.sn}</td>
+                <td>
+                  {timing.breakTimeIds
+                    .map((id) =>
+                      breakTimeOptions.find(
+                        (option) => option.breakTimeId === id
+                      )
+                    )
+                    .map((bt) =>
+                      bt ? `${bt.breakTimeStart} - ${bt.breakTimeEnd}` : "N/A"
+                    )
+                    .join(", ")}
+                </td>
+                <td>
+                  <button
+                    className="DoctorScheduleSTD-del-button"
+                    onClick={() => handleDelete(timing.sn)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
 
-      {/* Button to add a new row */}
-      {!isEditing && (
-        <button className="DoctorScheduleSTD-add-button" onClick={handleAdd}>
-          Add New Break Timing
-        </button>
-      )}
-    </div>
+            {/* Row for adding new break times */}
+            {isEditing && (
+              <tr>
+                <td>{breakTimings.length + 1}</td>
+                <td>
+                  <select
+                    multiple
+                    value={newBreakTimeIds}
+                    onChange={handleSelectChange}
+                  >
+                    {breakTimeOptions.map((option) => (
+                      <option
+                        key={option.breakTimeId}
+                        value={option.breakTimeId}
+                      >
+                        {option.breakTimeStart} - {option.breakTimeEnd}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  <button
+                    className="DoctorScheduleSTD-add-button"
+                    onClick={handleSaveNewBreak}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="DoctorScheduleSTD-del-button"
+                    onClick={() => setIsEditing(false)}
+                  >
+                    Cancel
+                  </button>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+
+        {/* Button to add a new row */}
+        {!isEditing && (
+          <button className="DoctorScheduleSTD-add-button" onClick={handleAdd}>
+            Add New Break Timing
+          </button>
+        )}
+      </div>
 
       <div className="DoctorScheduleSTD-action-buttons">
         <button className="btn-blue" onClick={handleSubmit}>
           Save
         </button>
-        <button className="btn-red">Delete</button>
+        {/* <button className="btn-red">Delete</button>
         <button className="btn-orange">Clear</button>
-        <button className="btn-gray">Close</button>
+        <button className="btn-gray">Close</button> */}
         {/* <button className="btn-blue" onClick={handleSearchClick}>
           Search
         </button>

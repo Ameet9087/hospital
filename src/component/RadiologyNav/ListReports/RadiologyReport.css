@@ -27,13 +27,16 @@
     text-align: center; /* Centers the span text */
     margin-top: 10px; /* Adds space above the span */
   }
-  
-  .RadiologyReportPopup-popup-content {
-    padding: 20px;
-    background-color: #f0f0f0;  
-    width: 90%;
-    /* height: 500px; */
+  .RadiologyReportPopup-container{
     position: relative;
+    background-color: #f0f0f0;  
+    display: flex;
+    justify-content: center;
+    /* width: 90%; */
+  }
+  .RadiologyReportPopup-popup-content {
+    height: 600px;
+    overflow-y: scroll;
   }
   .RadiologyReportPopup-close-btn{
     position: absolute;

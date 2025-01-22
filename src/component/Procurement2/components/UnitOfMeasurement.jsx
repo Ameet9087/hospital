@@ -7,6 +7,9 @@ import { useReactToPrint } from "react-to-print";
 import "./UnitOfMeasurement.css";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import * as XLSX from 'xlsx';
+
 Modal.setAppElement("#root");
 
 const UnitOfMeasurementComponent = () => {
@@ -16,7 +19,9 @@ const UnitOfMeasurementComponent = () => {
   const [unitOfMeasurements, setUnitOfMeasurements] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const tableRef = useRef();
+
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef=useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,14 +48,26 @@ const UnitOfMeasurementComponent = () => {
   };
   const closeEditModal = () => setShowEditModal(false);
 
-  const handlePrint = useReactToPrint({
-    content: () => tableRef.current,
-    documentTitle: "Unit of Measurement",
-  });
+ 
 
   if (loading) {
     return <div>Loading...</div>;
   }
+
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
 
   return (
     <div className="unit-of-measurement-container">
@@ -66,6 +83,7 @@ const UnitOfMeasurementComponent = () => {
         <div className="uom-results-info">
           Showing {unitOfMeasurements.length} / {unitOfMeasurements.length}{" "}
           results
+          <button className="uom-print-button"onClick={handleExport}>Export</button>
           <button className="uom-print-button" onClick={handlePrint}>
             Print
           </button>
@@ -73,19 +91,39 @@ const UnitOfMeasurementComponent = () => {
         </div>
 
       <div ref={tableRef} className="table-container">
-        <table className="uom-table">
+      <table  ref={tableRef}>
           <thead>
             <tr>
-              <th>Unit of Measurement Name</th>
-              <th>Description</th>
-              <th>Is Active</th>
-              <th>Action</th>
+              {[
+                "Unit of Measurement Name",
+                "Description",
+                "Is Active",
+                "Action"
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
             </tr>
-          </thead>
+  </thead>
+
           <tbody>
             {unitOfMeasurements.map((unit, index) => (
               <tr key={index}>
-                <td>{unit.unitOfMeasurementName}</td>
+                <td>{unit.name}</td>
                 <td>{unit.description}</td>
                 <td>{unit.active ? "true" : "false"}</td>
                 <td>

@@ -1,89 +1,174 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './anesthesiarecordmgnt.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
-import CustomModal from '../../../CustomModel/CustomModal';
+import CustomModal from '../../CustomModel/CustomModal';
 import useCustomAlert from '../../../alerts/useCustomAlert';
+import { API_BASE_URL } from "../../api/api"
 
 const AnesthesiaRecordManagement = () => {
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
-  const { success, warning, error, CustomAlerts } = useCustomAlert();
-  const [records, setRecords] = useState([]); 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [records, setRecords] = useState([]);
+  const [surgeryEvents, setSurgeryEvents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [newRecord, setNewRecord] = useState({
-    surgeryId: '',
-    surgenId: '',
+    surgeryEventId: '',
+    startTime: '',
+    endTime: '',
+    notes: '',
+    operationName: '',
+    firstName: '',
+    lastName: '',
     anesthesiaType: '',
-    anesthesiaStartTime: '',
-    anesthesiaEndTime: '',
-    notes: ''
+    doctorName: ''
   });
-  
-  // Declare openStickerPopup state
-  const [openStickerPopup, setOpenStickerPopup] = useState(false); 
+
+  const { success, error, CustomAlerts } = useCustomAlert();
+  const [openStickerPopup, setOpenStickerPopup] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editRecordId, setEditRecordId] = useState(null);
 
   useEffect(() => {
     const fetchRecords = async () => {
       try {
-        const response = await axios.get('http://localhost:8051/api/anesthesia-records');
+        const response = await axios.get(`${ API_BASE_URL }/anesthesia-records`);
         setRecords(response.data);
         success('Records fetched successfully!');
-      } catch (error) {
-        console.error('Error fetching anesthesia records:', error);
+      } catch (err) {
+        console.error('Error fetching anesthesia records:', err);
         error('Error fetching anesthesia records');
       }
     };
+
+    const fetchSurgeryEvents = async () => {
+      try {
+        const response = await axios.get(`${ API_BASE_URL }/surgery-events`);
+        setSurgeryEvents(response.data);
+      } catch (err) {
+        console.error('Error fetching surgery events:', err);
+        error('Error fetching surgery events');
+      }
+    };
+
     fetchRecords();
+    fetchSurgeryEvents();
   }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setNewRecord({
-      ...newRecord,
-      [name]: value
-    });
+
+    setNewRecord((prevRecord) => ({
+      ...prevRecord,
+      [name]: value,
+    }));
+
+    if (name === 'surgeryEventId' && value) {
+      const selectedEvent = surgeryEvents.find(
+        (event) => event.surgeryEventId.toString() === value
+      );
+
+      if (selectedEvent) {
+        setNewRecord((prevRecord) => ({
+          ...prevRecord,
+          operationName: selectedEvent.operationMasterDTO?.operationName || 'N/A',
+          firstName: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.firstName || 'N/A',
+          lastName: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.lastName || 'N/A',
+          doctorName: selectedEvent.docterDTO?.doctorName || 'N/A',
+          anesthesiaType: selectedEvent.anesthesiaType || 'N/A',
+        }));
+      } else {
+        setNewRecord((prevRecord) => ({
+          ...prevRecord,
+          operationName: '',
+          firstName: '',
+          lastName: '',
+          anesthesiaType: '',
+          doctorName: ''
+        }));
+      }
+    }
   };
 
   const handleAddRecord = async () => {
     try {
-      const response = await axios.post('http://localhost:8051/api/anesthesia-records', newRecord);
-      setRecords([...records, response.data]);
-    } catch (error) {
-      console.error('Error adding record:', error);
+      const payload = {
+        startTime: newRecord.startTime,
+        endTime: newRecord.endTime,
+        notes: newRecord.notes,
+        surgeryEventDTO: {
+          surgeryEventId: parseInt(newRecord.surgeryEventId, 10),
+        }
+      };
+
+      const response = await axios.post(`${ API_BASE_URL }/anesthesia-records`, payload);
+      setRecords((prevRecords) => [...prevRecords, response.data]);
+      success('Record added successfully!');
+    } catch (err) {
+      console.error('Error adding record:', err);
+      error('Failed to add record');
     }
+
     resetForm();
   };
 
   const handleEditRecord = (record) => {
-    setNewRecord(record);
+    setNewRecord({
+      surgeryEventId: record.surgeryEventDTO?.surgeryEventId || '',
+      startTime: record.startTime || '',
+      endTime: record.endTime || '',
+      notes: record.notes || '',
+      operationName: record.surgeryEventDTO?.operationMasterDTO?.operationName || 'N/A',
+      firstName: record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.firstName || 'N/A',
+      lastName: record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.lastName || 'N/A',
+      anesthesiaType: record.surgeryEventDTO?.anesthesiaType || 'N/A',
+      doctorName: record.surgeryEventDTO?.docterDTO?.doctorName || 'N/A',
+    });
     setIsEditing(true);
     setEditRecordId(record.anesthesiaRecordId);
-    setOpenStickerPopup(true); // Show modal when editing
+    setOpenStickerPopup(true);
   };
 
   const handleUpdateRecord = async () => {
     try {
-      const response = await axios.put(`http://localhost:8051/api/anesthesia-records/${editRecordId}`, newRecord);
-      setRecords(records.map(record => (record.anesthesiaRecordId === editRecordId ? response.data : record)));
-    } catch (error) {
-      console.error('Error updating record:', error);
+      const payload = {
+        startTime: newRecord.startTime,
+        endTime: newRecord.endTime,
+        notes: newRecord.notes,
+        surgeryEventDTO: {
+          surgeryEventId: parseInt(newRecord.surgeryEventId, 10),
+        },
+      };
+
+      const response = await axios.put(`${ API_BASE_URL }/anesthesia-records/${editRecordId}`, payload);
+
+      setRecords((prevRecords) =>
+        prevRecords.map((record) =>
+          record.anesthesiaRecordId === editRecordId
+            ? { ...record, ...response.data }
+            : record
+        )
+      );
+
+      success('Record updated successfully!');
+    } catch (err) {
+      console.error('Error updating record:', err);
+      error('Failed to update record');
     }
+
     resetForm();
   };
 
   const resetForm = () => {
     setNewRecord({
-      surgeryId: '',
-      surgenId: '',
+      surgeryEventId: '',
+      startTime: '',
+      endTime: '',
+      notes: '',
+      operationName: '',
+      firstName: '',
+      lastName: '',
       anesthesiaType: '',
-      anesthesiaStartTime: '',
-      anesthesiaEndTime: '',
-      notes: ''
+      doctorName: ''
     });
-    setOpenStickerPopup(false); // Close the modal after saving
+    setOpenStickerPopup(false);
     setIsEditing(false);
     setEditRecordId(null);
   };
@@ -91,154 +176,178 @@ const AnesthesiaRecordManagement = () => {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
-  const handlePrint = () => {
-    window.print();  // Trigger the print dialog
-};
+
+  const filteredRecords = records.filter(
+    (record) =>
+      record.surgeryEventDTO?.surgeryEventId?.toString().includes(searchTerm) ||
+      record.notes.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <div className="anesthesia-record-container">
-      <button onClick={() => { resetForm(); setOpenStickerPopup(true); }} className="add-record-btnathensia">
+      <button
+        onClick={() => {
+          resetForm();
+          setOpenStickerPopup(true);
+        }}
+        className="add-record-btn"
+      >
         Add Anesthesia Record
       </button>
-      
 
-      <div className="ot-filtersection">
-  <div className="ot-datefilter">
-    <div className="ot-daterange">
-      <label>From: </label>
-      <input
-        className="ot-input"
-        type="date"
-        value="2024-08-05"
-      />
-      <label> To: </label>
-      <input
-        className="ot-input"
-        type="date"
-        value="2024-08-12"
-      />
-    </div>
-  </div>
-
-  
-</div>
-<div className="ot-searchsection">
-    <input
-      type="text"
-      placeholder="Search by Patient Name/ID"
-      className="ot-search-input"
-      value={searchTerm}
-      onChange={handleSearch}
-    />
-    <button className="ot-print-button" onClick={handlePrint}>
-      Print
-    </button>
-  </div>
-
+      <div className="ot-searchsection">
+        <input
+          type="text"
+          placeholder="Search by Surgery ID or Notes"
+          className="ot-search-input"
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </div>
 
       <div className="records-table">
-          
-          <table ref={tableRef}>
-            <thead>
-              <tr>
-                {[
-                  "Surgery ID",
-                  "Surgeon ID",
-                  "Anesthesia Type",
-                  "Anesthesia Start Time",
-                  "Anesthesia End Time",
-                  "Notes",
-                  "Actions"
-                ].map((header, index) => (
-                  <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                    <div className="header-content">
-                      <span>{header}</span>
-                      <div className="resizer" onMouseDown={startResizing(tableRef, setColumnWidths)(index)}></div>
-                    </div>
-                  </th>
-                ))}
+        <table>
+          <thead>
+            <tr>
+              <th>Surgery ID</th>
+              <th>Operation Name</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Anesthesia Type</th>
+              <th>Doctor Name</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Notes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredRecords.map((record) => (
+              <tr key={record.anesthesiaRecordId}>
+                <td>{record.surgeryEventDTO?.surgeryEventId ?? "N/A"}</td>
+                <td>{record.surgeryEventDTO?.operationMasterDTO?.operationName ?? "N/A"}</td>
+                <td>{record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.firstName ?? "N/A"}</td>
+                <td>{record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.lastName ?? "N/A"}</td>
+                <td>{record.surgeryEventDTO?.anesthesiaType ?? "N/A"}</td>
+                <td>{record.surgeryEventDTO?.docterDTO?.doctorName ?? "N/A"}</td>
+                <td>{record.startTime ?? "N/A"}</td>
+                <td>{record.endTime ?? "N/A"}</td>
+                <td>{record.notes}</td>
+                <td>
+                  <button
+                    onClick={() => handleEditRecord(record)}
+                    className="edit-btn"
+                  >
+                    Edit
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {records.map((record) => (
-                <tr key={record.anesthesiaRecordId}>
-                  <td>{record.surgeryId}</td>
-                  <td>{record.surgenId}</td>
-                  <td>{record.anesthesiaType}</td>
-                  <td>{record.anesthesiaStartTime}</td>
-                  <td>{record.anesthesiaEndTime}</td>
-                  <td>{record.notes}</td>
-                  <td>
-                    <button onClick={() => handleEditRecord(record)} className="edit-btn">Edit</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>        </table>
+      </div>
 
       {openStickerPopup && (
         <CustomModal
-          isOpen={openStickerPopup} 
-          onClose={() => setOpenStickerPopup(false)} 
+          isOpen={openStickerPopup}
+          onClose={() => setOpenStickerPopup(false)}
         >
-          <div className="anesthesia-record-modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h4>{isEditing ? 'Edit Anesthesia Record' : 'Add Anesthesia Record'}</h4>
-            <div className='athensiarecordmodalform'>
+
+            <div className="form-group">
               <label>Surgery ID</label>
-              <input
-                type="number"
-                name="surgeryId"
-                value={newRecord.surgeryId}
+              <select
+                name="surgeryEventId"
+                value={newRecord.surgeryEventId}
                 onChange={handleInputChange}
                 required
+              >
+                <option value="">Select Surgery ID</option>
+                {surgeryEvents.map((event) => (
+                  <option key={event.surgeryEventId} value={event.surgeryEventId}>
+                    {event.surgeryEventId} - {event.bookingType || "N/A"}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Operation Name</label>
+              <input
+                type="text"
+                name="operationName"
+                value={newRecord.operationName}
+                onChange={handleInputChange}
+                readOnly
               />
             </div>
 
-            <div className='athensiarecordmodalform'>
-              <label>Surgeon ID</label>
+            <div className="form-group">
+              <label>First Name</label>
               <input
-                type="number"
-                name="surgenId"
-                value={newRecord.surgenId}
+                type="text"
+                name="firstName"
+                value={newRecord.firstName}
                 onChange={handleInputChange}
-                required
+                readOnly
               />
             </div>
 
-            <div className='athensiarecordmodalform'>
+            <div className="form-group">
+              <label>Last Name</label>
+              <input
+                type="text"
+                name="lastName"
+                value={newRecord.lastName}
+                onChange={handleInputChange}
+                readOnly
+              />
+            </div>
+
+            <div className="form-group">
               <label>Anesthesia Type</label>
               <input
                 type="text"
                 name="anesthesiaType"
                 value={newRecord.anesthesiaType}
                 onChange={handleInputChange}
-                required
+                readOnly
+              />
+            </div>
+            
+            <div className="form-group">
+              <label>Doctor Name</label>
+              <input
+                type="text"
+                name="doctorName"
+                value={newRecord.doctorName}
+                onChange={handleInputChange}
+                readOnly
               />
             </div>
 
-            <div className='athensiarecordmodalform'>
-              <label>Anesthesia Start Time</label>
+            <div className="form-group">
+              <label>Start Time</label>
               <input
-                type="time"
-                name="anesthesiaStartTime"
-                value={newRecord.anesthesiaStartTime}
+                type="text"
+                name="startTime"
+                value={newRecord.startTime}
                 onChange={handleInputChange}
                 required
               />
             </div>
 
-            <div className='athensiarecordmodalform'>
-              <label>Anesthesia End Time</label>
+            <div className="form-group">
+              <label>End Time</label>
               <input
-                type="time"
-                name="anesthesiaEndTime"
-                value={newRecord.anesthesiaEndTime}
+                type="text"
+                name="endTime"
+                value={newRecord.endTime}
                 onChange={handleInputChange}
                 required
               />
             </div>
 
-            <div className='athensiarecordmodalform'>
+            <div className="form-group">
               <label>Notes</label>
               <textarea
                 name="notes"
@@ -248,11 +357,15 @@ const AnesthesiaRecordManagement = () => {
               />
             </div>
 
-            <div>
-              <button onClick={isEditing ? handleUpdateRecord : handleAddRecord} className="athensiarecordmodalform-save-btn">
+            <div className="form-actions">
+              <button
+                onClick={isEditing ? handleUpdateRecord : handleAddRecord}
+                className="athensiarecordmodalform-save-btn"
+              >
                 {isEditing ? 'Update Record' : 'Save Record'}
               </button>
-              <button onClick={resetForm} className="athensiarecordmodalform-cancel-btn">
+
+              <button onClick={resetForm} className="cancel-btn">
                 Cancel
               </button>
             </div>
@@ -260,10 +373,10 @@ const AnesthesiaRecordManagement = () => {
         </CustomModal>
       )}
 
-    
       <CustomAlerts />
     </div>
   );
 };
 
 export default AnesthesiaRecordManagement;
+

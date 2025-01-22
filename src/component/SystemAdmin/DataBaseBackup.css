@@ -1,6 +1,6 @@
 /* Dhanashree_DatabaseBackup_19/09 */
 
-.database-backup-container {
+/* .database-backup-container {
   background-color: var(--background-color);
   padding: 20px;
 }
@@ -164,7 +164,7 @@
 
 .DatabaseBackup-print-btn {
   background-color: var(--button-color);
-  color: white; /* You can change the text color as needed */
+  color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
@@ -173,12 +173,12 @@
 
 
 .DatabaseBackupexport-btn {
-  background-color: var(--button-color); /* Using the same CSS variable */
-  color: white; /* Adjust text color if needed */
+  background-color: var(--button-color); 
+  color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
-}
+} */
 
 /* Dhanashree_DatabaseBackup_19/09 */

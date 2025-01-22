@@ -17,11 +17,13 @@ function SSPConsumption() {
   };
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/internal-consumption/getAll`)
+    fetch(`${API_BASE_URL}/subPharmConsumption`)
       .then(response => response.json())
       .then(data => {
-        const filteredData = data.filter(item => item.storeName === store);
-        setConsumptions(data);
+        const filteredData = data.filter(item => item.storeName.subStoreId == store);
+        console.log(filteredData);
+        
+        setConsumptions(filteredData);
       })
       .catch(error => console.error('Error fetching data:', error));
   }, [store]);
@@ -41,10 +43,6 @@ function SSPConsumption() {
           </div>
         </div>
       )}
-      
-      
-      
-
       <div className="sSPConsumption-search-N-results">
           <div className="sSPConsumption-search-bar">
             <i className="fa-solid fa-magnifying-glass"></i>
@@ -71,19 +69,15 @@ function SSPConsumption() {
             <th>SubStore Name</th>
             <th>Consumed By</th>
             <th>Remark</th>
-            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {consumptions.map((consumption) => (
             <tr key={consumption.id}>
               <td>{new Date(consumption.consumedDate).toLocaleString()}</td>
-              <td>{consumption.itemName}</td>
+              <td>{consumption.storeName.subStoreName}</td>
               <td>{consumption.consumedBy}</td>
               <td>{consumption.remark}</td>
-              <td>
-                <button className="btn-view">View</button>
-              </td>
             </tr>
           ))}
         </tbody>

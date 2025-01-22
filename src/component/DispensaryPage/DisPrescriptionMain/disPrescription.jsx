@@ -31,21 +31,32 @@ const DisPrescription = () => {
     }
   }, [showModal]);
 
-  const fetchPrescriptions = async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/medications`);
-      console.log(response.data)
-      setPrescriptions(response.data);  // assuming response is an array of medications
-      setLoading(false);
-    } catch (err) {
-      setError('Failed to fetch prescriptions');
-      setLoading(false);
-    }
-  };
+const fetchPrescriptions = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/medications`);
+    const data = response.data; // Assuming this is the JSON you provided
+    setPrescriptions(data);
+    setLoading(false);
+  } catch (err) {
+    setError('Failed to fetch prescriptions');
+    setLoading(false);
+  }
+};
+
+const filteredPrescriptions = prescriptions.filter(prescription => {
+    const searchStr = searchTerm.toLowerCase();
+    const patient = prescription.newPatientVisitDTO || {};
+    return (
+      prescription.medicationName?.toLowerCase().includes(searchStr) ||
+      patient.firstName?.toLowerCase().includes(searchStr) ||
+      patient.lastName?.toLowerCase().includes(searchStr)
+    );
+  });
+
 
   const handleViewAvailabilityClick = (prescription) => {
     const patientMedications = prescriptions.filter(
-      med => med.newPatientVisitDTO?.newPatientVisitId === prescription.newPatientVisitDTO?.newPatientVisitId
+      med => med.newPatientVisitDTO?.outPatientId === prescription.newPatientVisitDTO?.outPatientId
     );
   
     setSelectedPrescription({
@@ -96,7 +107,7 @@ const DisPrescription = () => {
   };
 
   const groupedPrescriptions = prescriptions.reduce((acc, prescription) => {
-    const patientId = prescription.newPatientVisitDTO?.newPatientVisitId;
+    const patientId = prescription.newPatientVisitDTO?.outPatientId;
     if (!acc[patientId]) {
       acc[patientId] = [];
     }
@@ -149,64 +160,59 @@ const DisPrescription = () => {
         </div>
       </div>
 
-      <div className='disPrescription-table-N-paginationDiv'>
-        <table ref={tableRef}>
-          <thead>
-            <tr>{[
-              "Patient ID",
-              "Patient Name",
-              "Requested By",
-              "Date",
-              "Status",
-              "Actions",
-            ].map((header, index) => (
-              <th
-              key={index}
-              style={{ width: columnWidths[index] }}
-              className="resizable-th"
-            >
-                 <div className="header-content">
-                      <span>{header}</span>
-                      <div
-                        className="resizer"
-                        onMouseDown={startResizing(
-                          tableRef,
-                          setColumnWidths
-                        )(index)}
-                      ></div>
-                    </div>
-                  </th>
-                ))}
-            </tr>
-          </thead>
-          <tbody className="disPrescription-requisition-tableBody">
-  {filteredGroups.map(patientId => {
-    const group = groupedPrescriptions[patientId].filter(
-      prescription => prescription.status !== 'completed'  // Exclude completed prescriptions here
-    );
-    
-    if (group.length === 0) return null;  // Skip rendering if no prescriptions remain after filtering
-
-    const patient = group[0]?.newPatientVisitDTO;
-    const patientName = `${patient?.firstName || ''} ${patient?.middleName || ''} ${patient?.lastName || ''}`;
-    return (
-      <tr key={patientId}>
-        <td>{patient?.newPatientVisitId || 'Unknown ID'}</td>
-        <td>{patientName}</td>
-        <td>{group[0]?.requestedBy || 'Unknown Requester'}</td>
-        <td>{group[0]?.medicationDate || 'Unknown Date'}</td>
-        <td>{group[0]?.status}</td>
-        <td className="disPrescription-action-column">
-          <button onClick={() => handleViewAvailabilityClick(group[0])}>
-            View Availability
-          </button>
-        </td>
+     <div className="disPrescription-table-N-paginationDiv">
+  <table ref={tableRef}>
+    <thead>
+      <tr>
+        {[
+          "Patient ID",
+          "Patient Name",
+          "Requested By",
+          "Date",
+          "Status",
+          "Actions",
+        ].map((header, index) => (
+          <th
+            key={index}
+            style={{ width: columnWidths[index] }}
+            className="resizable-th"
+          >
+            <div className="header-content">
+              <span>{header}</span>
+              <div
+                className="resizer"
+                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+              ></div>
+            </div>
+          </th>
+        ))}
       </tr>
-    );
-  })}
-</tbody>
-        </table>
-      </div>
+    </thead>
+    <tbody className="disPrescription-requisition-tableBody">
+      {filteredPrescriptions.map((prescription, index) => {
+              const patient = prescription.newPatientVisitDTO || {};
+              const patientName = `${patient.firstName || ''} ${patient.lastName || ''}`.trim();
+              return (
+                <tr key={index}>
+                  <td>{patient.outPatientId || 'Unknown'}</td>
+                  <td>{patient?.patient?.firstName || 'Unknown'}</td>
+                  <td>{prescription.medicationName || 'Unknown'}</td>
+                  <td>{prescription.dose || 'Unknown'}</td>
+                  <td>{prescription.frequency || 'Unknown'}</td>
+                  <td>{prescription.medicationDate || 'Unknown'}</td>
+                   <td className="disPrescription-action-column">
+                <button onClick={() => handleViewAvailabilityClick(prescription)}>
+                  View Availability
+                </button>
+              </td>
+                </tr>
+              );
+            })}
+    </tbody>
+  </table>
+</div>
+
+
       
       {showModal && selectedPrescription && (
         <div className="disPrescription-modal-overlay">

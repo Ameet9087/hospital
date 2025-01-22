@@ -6,12 +6,16 @@ import "../SSPharmacy/sSPRequisition.css";
 import { useParams } from 'react-router-dom';
 import SSPharmacyReqCreateReq from './sSPharmacyReqCreateReq';
 import { API_BASE_URL } from '../../../api/api';
+import CustomModal from '../../../../CustomModel/CustomModal';
+import RequisitionDetails from './RequisitionDetails';
 
 function SSPRequisition() {
   const { store } = useParams();
   const [requisitions, setRequisitions] = useState([]);
+  const [showView,setShowView] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedRequest,setSelectedRequest] = useState({});
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleOpenPopup = () => {
@@ -25,16 +29,15 @@ function SSPRequisition() {
   useEffect(() => {
     const fetchRequisitions = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/pharmacyRequisitions/getAll`);
+        const response = await fetch(`${API_BASE_URL}/subpharm-requisitions`);
         if (!response.ok) {
           throw new Error('Failed to fetch requisitions');
         }
         const data = await response.json();
-        const filteredData = data.filter(item => item.storeName === store);
+        const filteredData = data.filter(item => item.subStore.subStoreId == store);
         console.log(filteredData);
         
         setRequisitions(filteredData);
-        setLoading(false);
       } catch (error) {
         setError(error.message);
         setLoading(false);
@@ -43,6 +46,12 @@ function SSPRequisition() {
 
     fetchRequisitions();
   }, [store]);
+
+
+  const handleView=(item)=>{
+    setSelectedRequest(item);
+    setShowView(true);
+  }
 
   return (
     <div className="sSPRequisition-container">
@@ -67,7 +76,7 @@ function SSPRequisition() {
             <input type="text" placeholder="Search" />
           </div>
           <div className="sSPRequisition-results-info">
-        <span>Showing {requisitions.length} / {requisitions.length} results</span>
+        <span>Showing {requisitions?.length} / {requisitions?.length} results</span>
             {/* Showing 2 / 2 results */}
             <button className='sSPRequisition-print-btn' 
             // onClick={handleExportToExcel}
@@ -79,12 +88,6 @@ function SSPRequisition() {
             ><i class="fa-solid fa-print"></i> Print</button>
           </div>
         </div>
-
-      {loading ? (
-        <p>Loading requisitions...</p>
-      ) : error ? (
-        <p>Error: {error}</p>
-      ) : (
         <table className="sSPRequisition-table">
           <thead>
             <tr>
@@ -97,32 +100,26 @@ function SSPRequisition() {
           </thead>
           <tbody>
             {requisitions.map((req) => (
-              <tr key={req.id}>
-                <td>{req.pharmacyRequisitionId}</td>
-                <td>{req.requestedBy}</td>
-                <td>{req.requestedDate}</td>
-                <td>{req.status}</td>
+              <tr key={req?.id}>
+                <td>{req?.pharRequisitionId}</td>
+                <td>{req?.subStore?.subStoreName}</td>
+                <td>{req?.requestedDate}</td>
+                <td>{req?.status}</td>
                 <td>
-                  <button className="sSPRequisition-btn-view">View</button>
-                  {req.status === 'pending' ? null : (
+                  <button className="sSPRequisition-btn-view" onClick={()=>handleView(req)} >View</button>
+                  {req?.status === 'Dispatch' ? (
                     <button className="sSPRequisition-btn-receive">Receive Items</button>
-                  )}
+                  ): null  }
                 </td>
               </tr>
             ))}
           </tbody>
-        </table>
-      )}
-
-      {/* <div className="sSPRequisition-pagination">
-        <span>1 to {requisitions.length} of {requisitions.length}</span>
-        <button disabled>First</button>
-        <button disabled>Previous</button>
-        <button className="sSPRequisition-active">Page 1 of 1</button>
-        <button disabled>Next</button>
-        <button disabled>Last</button>
-      </div> */}
+        </table> 
+        <CustomModal isOpen={showView} onClose={()=>setShowView(false)}>
+          <RequisitionDetails request={selectedRequest}/>
+      </CustomModal>
     </div>
+   
   );
 }
 

@@ -1,142 +1,130 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
-import './SurgicalInstrumentTracking.css'; 
+import axios from 'axios'; // Import Axios
+import './SurgicalInstrumentTracking.css';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
-import useCustomAlert from '../../../alerts/useCustomAlert';
+import { API_BASE_URL } from "../../api/api";
+
+// const baseURL = 'http://192.168.210.48:8080'; 
 
 const SurgicalInstrumentTracking = () => {
     const [columnWidths, setColumnWidths] = useState({});
     const tableRef = useRef(null);
-    
+
     const [instruments, setInstruments] = useState([]);
     const [newInstrument, setNewInstrument] = useState({
-        instrumentId: '',
+        surgicalInstrumentId: '', // Use 'surgicalInstrumentId' instead of 'instrumentId'
         instrumentName: '',
         availableQuantity: '',
-        conditionStatus: ''
+        conditionStatus: 'New' // Default to "New" for new instruments
     });
     const [showAddInstrumentModal, setShowAddInstrumentModal] = useState(false);
-    
-    const { success, warning, error, CustomAlerts } = useCustomAlert(); // Use custom alert
-
-    const [searchTerm, setSearchTerm] = useState('');
 
     // Fetch instrument data when component mounts
     useEffect(() => {
         const fetchInstruments = async () => {
             try {
-                const response = await axios.get('http://localhost:8051/api/instruments');
-                setInstruments(response.data);
-            } catch (err) {
-                error('Error fetching instrument data');
+                const response = await axios.get(`${ API_BASE_URL }/surgical-instruments`);
+                setInstruments(response.data); // Set the instruments state with the fetched data
+            } catch (error) {
+                console.error('Error fetching instrument data:', error);
+                alert('Failed to load instruments. Please try again later.');
             }
         };
 
         fetchInstruments();
     }, []);
 
+    // Handle adding or updating an instrument
     const handleAddInstrument = async () => {
+        // Validate instrument data before sending
+        if (!newInstrument.instrumentName || !newInstrument.availableQuantity || !newInstrument.conditionStatus) {
+            alert('All fields are required!');
+            return;
+        }
+
         try {
-            if (newInstrument.instrumentId) {
-                const response = await axios.put(`http://localhost:8051/api/instruments/${newInstrument.instrumentId}`, newInstrument);
-                setInstruments(instruments.map(instrument => 
-                    (instrument.instrumentId === newInstrument.instrumentId ? response.data : instrument)
+            let response;
+            if (newInstrument.surgicalInstrumentId) {
+                // If surgicalInstrumentId exists, update the existing instrument via PUT request
+                response = await axios.put(
+                    `${ API_BASE_URL }/surgical-instruments/${newInstrument.surgicalInstrumentId}`,
+                    {
+                        instrumentName: newInstrument.instrumentName,
+                        availableQuantity: newInstrument.availableQuantity,
+                        conditionStatus: newInstrument.conditionStatus
+                    }
+                );
+                setInstruments(instruments.map(instrument =>
+                    instrument.surgicalInstrumentId === newInstrument.surgicalInstrumentId ? response.data : instrument
                 ));
-                success('Instrument updated successfully!');
             } else {
-                const response = await axios.post('http://localhost:8051/api/instruments', newInstrument);
+                // If no surgicalInstrumentId, treat it as a new instrument and send a POST request
+                response = await axios.post(`${API_BASE_URL}/surgical-instruments`, {
+                    instrumentName: newInstrument.instrumentName,
+                    availableQuantity: newInstrument.availableQuantity,
+                    conditionStatus: newInstrument.conditionStatus
+                });
                 setInstruments([...instruments, response.data]);
-                success('Instrument added successfully!');
             }
-            setNewInstrument({ instrumentId: '', instrumentName: '', availableQuantity: '', conditionStatus: '' });
+
+            // Reset the form and close the modal
+            setNewInstrument({ surgicalInstrumentId: '', instrumentName: '', availableQuantity: '', conditionStatus: 'New' });
             setShowAddInstrumentModal(false);
-        } catch (err) {
-            error('Error saving instrument');
+        } catch (error) {
+            console.error('Error saving instrument:', error);
+            if (error.response) {
+                console.error('Error response:', error.response.data); // Log the error response from the server
+            } else {
+                console.error('Error message:', error.message);
+            }
+            alert('Failed to save the instrument. Please try again later.');
         }
     };
 
+    // Open modal to edit an existing instrument
     const handleEditInstrument = (instrument) => {
         setNewInstrument({
-            instrumentId: instrument.instrumentId,
+            surgicalInstrumentId: instrument.surgicalInstrumentId, // Use surgicalInstrumentId for editing
             instrumentName: instrument.instrumentName,
             availableQuantity: instrument.availableQuantity,
             conditionStatus: instrument.conditionStatus,
         });
-        setShowAddInstrumentModal(true);
-    };
-
-    const handleSearch = (e) => {
-        setSearchTerm(e.target.value);
-        // Add search logic if necessary
-    };
-
-    const handlePrint = () => {
-        window.print();  // Trigger the print dialog
+        setShowAddInstrumentModal(true); // Show the modal
     };
 
     return (
         <div className="surgical-instrument-tracking">
-            <div className="surgical-isntu-track-filter">
-                <div className="surgical-isntu-track-filter-date-utlt">
-                    <div className="surgical-isntu-track-filter-date-range">
-                        <label>From: </label>
-                        <input type="date" className="surgical-isntu-track-filter-input" />
-                        <label>To: </label>
-                        <input type="date" className="surgical-isntu-track-filter-input" />
-                    </div>
-                </div>
-
-               
-            </div>
-            <div className='surgical-isntu-track-filter-search'>
-                    <input
-                        type="text"
-                        placeholder="Search by InstrumentName/InstrumentId"
-                        className="surgical-isntu-track-filter-search-input"
-                        value={searchTerm}
-                        onChange={handleSearch}
-                    />
-                    <button
-                        className="surgical-isntu-track-filter-search-btn"
-                    onClick={handlePrint}>
-                        Print
-                    </button>
-                </div>
-
-            <button className='surgicalinstrumenttrackingbtn' onClick={() => setShowAddInstrumentModal(true)}>Add Instrument</button>
+            <button className="surgicalinstrumenttrackingbtn" onClick={() => setShowAddInstrumentModal(true)}>
+                Add Instrument
+            </button>
 
             <table ref={tableRef}>
                 <thead>
                     <tr>
-                    {["Instrument ID", "Instrument Name", "Available Quantity", "Condition Status", "Actions"].map((header, index) => (
-                        <th
-                            key={index}
-                            style={{ width: columnWidths[index] }}
-                            className="resizable-th"
-                        >
-                            <div className="header-content">
-                                <span>{header}</span>
-                                <div
-                                    className="resizer"
-                                    onMouseDown={startResizing(
-                                        tableRef,
-                                        setColumnWidths
-                                    )(index)}
-                                ></div>
-                            </div>
-                        </th>
-                    ))}
+                        {["Instrument ID", "Instrument Name", "Available Quantity", "Condition Status", "Actions"].map((header, index) => (
+                            <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                <div className="header-content">
+                                    <span>{header}</span>
+                                    <div
+                                        className="resizer"
+                                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                    ></div>
+                                </div>
+                            </th>
+                        ))}
                     </tr>
                 </thead>
                 <tbody>
                     {instruments.map((instrument, index) => (
                         <tr key={index}>
-                            <td>{instrument.instrumentId}</td>
+                            <td>{instrument.surgicalInstrumentId}</td> {/* Use surgicalInstrumentId */}
                             <td>{instrument.instrumentName}</td>
                             <td>{instrument.availableQuantity}</td>
                             <td>{instrument.conditionStatus}</td>
                             <td>
-                                <button className='surgicalinstrumenttrackingedit-btn' onClick={() => handleEditInstrument(instrument)}>Edit</button>
+                                <button className="surgicalinstrumenttrackingedit-btn" onClick={() => handleEditInstrument(instrument)}>
+                                    Edit
+                                </button>
                             </td>
                         </tr>
                     ))}
@@ -146,43 +134,40 @@ const SurgicalInstrumentTracking = () => {
             {showAddInstrumentModal && (
                 <div className="surgicaltrack-modal" onClick={() => setShowAddInstrumentModal(false)}>
                     <div className="surgicaltrack-modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2 className='surgicaltrack-modal-content-h2'>{newInstrument.instrumentId ? 'Edit Instrument' : 'Add New Instrument'}</h2>
-                        <div className='instrumenttrack-form'>
+                        <h2>{newInstrument.surgicalInstrumentId ? 'Edit Instrument' : 'Add New Instrument'}</h2>
                         <label>Instrument Name:</label>
                         <input
                             type="text"
                             value={newInstrument.instrumentName}
                             onChange={(e) => setNewInstrument({ ...newInstrument, instrumentName: e.target.value })}
                         />
-                        </div>
-                        <div className='instrumenttrack-form'>
                         <label>Available Quantity:</label>
                         <input
                             type="number"
                             value={newInstrument.availableQuantity}
                             onChange={(e) => setNewInstrument({ ...newInstrument, availableQuantity: e.target.value })}
                         />
-                        </div>
-                        <div className='instrumenttrack-form'>
                         <label>Condition Status:</label>
-                        <select 
+                        <select
                             value={newInstrument.conditionStatus}
                             onChange={(e) => setNewInstrument({ ...newInstrument, conditionStatus: e.target.value })}
                         >
-                            <option value="">Select</option>
                             <option value="Good">Good</option>
                             <option value="Needs Repair">Needs Repair</option>
                             <option value="Out of Service">Out of Service</option>
+                            <option value="New">New</option>
                         </select>
-                        </div>
                         <div>
-                            <button className='surgicalinstrumenttrackingedit-btn' onClick={handleAddInstrument}>Save</button>
-                            <button className='surgicalinstrumenttrackingedit-btn' onClick={() => setShowAddInstrumentModal(false)}>Cancel</button>
+                            <button className="surgicalinstrumenttrackingedit-btn" onClick={handleAddInstrument}>
+                                Save
+                            </button>
+                            <button className="surgicalinstrumenttrackingedit-btn" onClick={() => setShowAddInstrumentModal(false)}>
+                                Cancel
+                            </button>
                         </div>
                     </div>
                 </div>
             )}
-            <CustomAlerts /> {/* Custom Alert Section */}
         </div>
     );
 };

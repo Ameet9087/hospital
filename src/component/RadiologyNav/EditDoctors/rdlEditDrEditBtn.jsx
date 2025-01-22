@@ -1,95 +1,140 @@
 /* Ajhar Tamboli rdlEditDrEditBtn.jsx 19-09-24 */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../EditDoctors/rdlEditDrEditBtn.css";
 import { API_BASE_URL } from "../../api/api";
+import axios from "axios";
+import RadiologyPopupTable from "../RadiologyPopupTable";
 
 function TransactionDetails({ onClose, selectedRequest }) {
   const [reportingDoctor, setReportingDoctor] = useState();
+  const [doctorList, setDoctorList] = useState([]);
+  const [activePopup, setActivePopup] = useState(false);
 
-  const handleUpdate = () => {
-    const prescriberId = reportingDoctor;
+  const fetchAllDoctors = async () => {
+    const response = await axios.get(`${API_BASE_URL}/doctors`);
+    setDoctorList(response.data);
+  };
+
+  useEffect(() => {
+    fetchAllDoctors();
+  }, []);
+
+  const getPopupData = () => {
+    if (activePopup) {
+      return {
+        columns: ["doctorId", "doctorName"],
+        data: doctorList,
+      };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
+
+  const { columns, data } = getPopupData();
+
+  const handleSelect = (data) => {
+    if (activePopup) {
+      setReportingDoctor(data);
+    }
+  };
+
+  const handleUpdate = async () => {
+    const prescriberId = reportingDoctor?.doctorId;
     const imagingId = selectedRequest.imagingId;
-
-    fetch(
-      `${API_BASE_URL}/imaging-requisitions/update-prescriber?prescriberId=${prescriberId}&imagingId=${imagingId}`,
-      {
-        method: "POST",
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Doctor updated successfully:", data);
-        onClose(); // Close the popup after successful update
-      })
-      .catch((error) => {
-        console.error("Error updating doctor:", error);
-      });
+    try {
+      await axios.put(
+        `${API_BASE_URL}/imaging-requisitions/update-prescriber?prescriberId=${prescriberId}&imagingId=${imagingId}`
+      );
+      onClose();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <div className="rdlEditDrEditBtn-popup-overlay">
-      <div className="rdlEditDrEditBtn-popup-content">
-        <div className="rdlEditDrEditBtn-transaction-container">
-          <div className="rdlEditDrEditBtn-transaction-header">
-            <div className="rdlEditDrEditBtn-transaction-date">
-              <span>Transaction Date:</span>
-              <span>
-                {new Date(selectedRequest.imagingDate).toDateString()}
-              </span>
+    <>
+      <div className="rdlEditDrEditBtn-popup-overlay">
+        <div className="rdlEditDrEditBtn-popup-content">
+          <div className="rdlEditDrEditBtn-transaction-container">
+            <div className="rdlEditDrEditBtn-transaction-header">
+              <div className="rdlEditDrEditBtn-transaction-date">
+                <span>Transaction Date:</span>
+                <span>
+                  {new Date(selectedRequest.imagingDate).toDateString()}
+                </span>
+              </div>
+              <div className="rdlEditDrEditBtn-patient-name">
+                <span>Patient Name:</span>
+                <span>
+                  {selectedRequest.inPatientDTO?.patient?.salutation ||
+                    selectedRequest.outPatientDTO?.patient?.salutation}{" "}
+                  {selectedRequest.inPatientDTO?.patient?.firstName ||
+                    selectedRequest.outPatientDTO?.patient?.firstName}{" "}
+                  {selectedRequest.inPatientDTO?.patient?.lastName ||
+                    selectedRequest.outPatientDTO?.patient?.lastName}
+                </span>
+              </div>
             </div>
-            <div className="rdlEditDrEditBtn-patient-name">
-              <span>Patient Name:</span>
-              <span>{selectedRequest.patientDTO?.firstName}</span>
+
+            <table className="rdlEditDrEditBtn-transaction-table">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Item Name</th>
+                  <th>Reporting Doctor (Radiologist)</th>
+                  <th>Prescriber Dr. Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    {
+                      selectedRequest.imagingItemDTO?.imagingType
+                        ?.imagingTypeName
+                    }
+                  </td>
+                  <td>{selectedRequest.imagingItemDTO.imagingItemName}</td>
+                  <td>{selectedRequest.performerDTO?.firstName}</td>
+                  <td>
+                    {selectedRequest.prescriberDTO?.salutation}
+                    {selectedRequest.prescriberDTO?.doctorName}{" "}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div className="rdlEditDrEditBtn-reporting-doctor">
+              <span>Reporting Doctor:</span>
+              <input type="text" value={reportingDoctor?.doctorName} />
+              <button className="rdlEditDrEditBtn-search-button">
+                <i
+                  onClick={() => setActivePopup(true)}
+                  className="fa-solid fa-magnifying-glass"
+                ></i>
+              </button>
             </div>
-          </div>
-
-          <table className="rdlEditDrEditBtn-transaction-table">
-            <thead>
-              <tr>
-                <th>Department</th>
-                <th>Item Name</th>
-                <th>Reporting Doctor (Radiologist)</th>
-                <th>Prescriber Dr. Name</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{selectedRequest.imagingTypeDTO.imagingTypeName}</td>
-                <td>{selectedRequest.imagingItemDTO.imagingItemName}</td>
-                <td>{selectedRequest.performerDTO?.firstName}</td>
-                <td>
-                  {selectedRequest.prescriberDTO?.salutation}
-                  {selectedRequest.prescriberDTO?.firstName}{" "}
-                  {selectedRequest.prescriberDTO?.lastName}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div className="rdlEditDrEditBtn-reporting-doctor">
-            <span>Reporting Doctor (Radiologist):</span>
-            <input
-              type="text"
-              value={reportingDoctor}
-              onChange={(e) => setReportingDoctor(e.target.value)}
-            />
-            <button className="rdlEditDrEditBtn-search-button">
-              <i className="fa-solid fa-magnifying-glass"></i>
+            <button
+              className="rdlEditDrEditBtn-update-button"
+              onClick={handleUpdate}
+            >
+              Update
+            </button>
+            <button className="rdlEditDrEditBtn-close-button" onClick={onClose}>
+              ×
             </button>
           </div>
-          <button
-            className="rdlEditDrEditBtn-update-button"
-            onClick={handleUpdate}
-          >
-            Update
-          </button>
-          <button className="rdlEditDrEditBtn-close-button" onClick={onClose}>
-            ×
-          </button>
         </div>
       </div>
-    </div>
+      {activePopup && (
+        <RadiologyPopupTable
+          columns={columns}
+          data={data}
+          onSelect={handleSelect}
+          onClose={() => setActivePopup(false)}
+        />
+      )}
+    </>
   );
 }
 

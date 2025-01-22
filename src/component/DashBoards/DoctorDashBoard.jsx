@@ -8,11 +8,13 @@ import {
 } from "react-router-dom";
 import "./DoctorDashBoard.css";
 import PatientRecord from "./OutPatient";
-import InPatient from "../DashBoards/InPatient";
-import Records from "../DashBoards/PatientsRecord";
+import InPatient from "./InPatient";
+import Records from "./PatientsRecord";
+import DoctorMainPage from "./OpDoctorMainPage";
+import IpDoctorMainPage from "./IpDoctorMainPage";
 
 const DrDashboard = () => {
-  const location = useLocation(); // Get the current path
+  const location = useLocation();
 
   return (
     <div className="doctor-dashboard-container">
@@ -27,10 +29,10 @@ const DrDashboard = () => {
             Out Patient
           </button>
         </Link>
-        <Link to="/doctor/in-patientdepartment">
+        <Link to="/doctor/inpatientdepartment">
           <button
             className={`dashboard-button ${
-              location.pathname === "/doctor/in-patientdepartment"
+              location.pathname === "/doctor/inpatientdepartment"
                 ? "active"
                 : ""
             }`}
@@ -52,8 +54,8 @@ const DrDashboard = () => {
       {/* Content Rendering */}
       <div className="dashboard-content">
         <Routes>
-          <Route path="/outpatient" element={<PatientRecord />} />
-          <Route path="/inpatientdepartment" element={<InPatient />} />
+          <Route path="/outpatient" element={<DoctorMainPage />} />
+          <Route path="/inpatientdepartment" element={<IpDoctorMainPage />} />
           <Route path="/patientrecord" element={<Records />} />
         </Routes>
       </div>

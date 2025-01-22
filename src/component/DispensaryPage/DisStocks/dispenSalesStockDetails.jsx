@@ -10,6 +10,7 @@ import 'jspdf-autotable';
 import "../DisStocks/dispenSalesStockDetails.css";
 import DispenTransfer from "./dispenTransfer";
 import DispenStockRequisition from "./dispenStockRequisition";
+import { API_BASE_URL } from "../../api/api";
 
 const SalesStockDetails = () => {
     const [activeTab, setActiveTab] = useState("StockDetails");
@@ -23,7 +24,7 @@ const SalesStockDetails = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:4069/api/hospital/fetch-fetch-medicine-details'); // API call to the backend
+                const response = await axios.get(`${API_BASE_URL}/hospital/fetch-fetch-medicine-details`); // API call to the backend
                 setSalesData(response.data); // Update state with the fetched data
                 setLoading(false); // Set loading to false
                 console.log(response.data);

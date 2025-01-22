@@ -3,6 +3,7 @@ import "./CSSDKitDiscard.css";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { API_BASE_URL } from "../../api/api";
 
 const CSSDKitDiscard = () => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -31,7 +32,7 @@ const CSSDKitDiscard = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch("http://localhost:8080/api/kit-masters"); // Replace with your API URL
+        const response = await fetch(`${API_BASE_URL}/kit-masters`); // Replace with your API URL
         if (!response.ok) {
           throw new Error("Failed to fetch kits");
         }
@@ -86,7 +87,7 @@ const CSSDKitDiscard = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/api/kit-discard", {
+      const response = await fetch(`${API_BASE_URL}/kit-discard`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,92 +1,45 @@
-/* Setting.css */
-/* // neha-OT-OT-setting-14-9-24 */
+/* setting.css */
 
-.setting-header {
-  background-color: white;
-  padding: 10px;
-  font-size: var(--heading-font);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adding shadow for better visual separation */
+/* Basic styling for the container */
+.setting-container {
+  display: flex;
+  flex-direction: column;
 }
 
-/* Navigation container */
-.setting-header-nav {
-  list-style: none;
+/* Navigation Bar */
+.setting-header {
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.setting-nav {
+  list-style-type: none;
   padding: 0;
   margin: 0;
   display: flex;
-  gap: 30px;
+  gap: 20px;
 }
 
-/* Individual nav items */
-.setting-header-nav li {
-  padding: 5px;
-  border-radius: 5px;
+.setting-nav-item {
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 14px;
+  padding: 10px;
+  transition: background-color 0.3s;
 }
 
-/* Link styling */
-.nav-link {
-  text-decoration: none;
-  color: black;
-  
+.setting-nav-item:hover {
+  background-color: #f0f0f0;
 }
 
-/* Hover effect for nav items */
-.setting-header-nav li:hover {
-  background-color: var(--button-hover-background-color);
-    color: var(--button-hover-text-color);
-    border-bottom: 4px solid var(--button-bg-color);
-
+/* Active navigation item */
+.setting-nav-item.active {
+  font-weight: bold;
+  color: #007bff; /* Adjust the active color */
+  border-bottom: 2px solid #007bff; /* Underline active item */
 }
 
-/* Active nav item styling */
-.active-nav {
-  background-color: var(--button-bg-color); /* Custom color for active state */
-  color: black;
-  border-bottom: 4px solid var(--button-bg-color); /* Stronger indicator */
-}
-
-.active-nav .nav-link {
-  color: white; /* Ensure the link text is white in active state */
-}
-
-/* Sub-navigation styles */
-.setting-sub-nav {
-  background-color: #f8f9fa;
-  padding: 5px ;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-top: 10px;
-}
-
-.setting-sub-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.setting-sub-nav ul li a {
-  color: black;
-  text-decoration: none;
-  font-size: 14px;
-  transition: color 0.3s ease;
-}
-
-.setting-sub-nav ul li a:hover {
-  color: #6a5555;
-}
-
-/* Responsive design for smaller screens */
-@media (max-width: 768px) {
-  .setting-header-nav {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .setting-header-nav li {
-    width: 100%;
-    text-align: center;
-  }
+/* Content Area */
+.setting-content {
+  padding: 20px;
+  background-color: #fff;
+  flex-grow: 1;
 }

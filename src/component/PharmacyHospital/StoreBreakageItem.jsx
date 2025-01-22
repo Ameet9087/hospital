@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './SettingTerm.css';
 import * as XLSX from 'xlsx';
-import ReturnForm from './ReturnForm';
+// import ReturnForm from './ReturnForm';
+import AddBreakageItem  from "./AddBreakeageItem"
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../api/api';
 
@@ -163,7 +164,7 @@ const StoreBreakageItem = () => {
       {showReturnForm && (
         <div className="return-form-overlay-model">
           <div className="return-form-container-com">
-            <ReturnForm />
+            <AddBreakageItem />
             <button className="return-form-com-close-btn" onClick={handleCloseReturnForm}>
               X
             </button>

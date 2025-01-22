@@ -24,19 +24,19 @@ const Navbar = () => {
         >
           Stock
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/inventory/reports"
           className={({ isActive }) => (isActive ? 'active' : '')}
         >
           Reports
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to="/inventory/returntovendor"
           className={({ isActive }) => (isActive ? 'active' : '')}
         >
           Return To Vendor
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/inventory/drugregistration"
           className={({ isActive }) => (isActive ? 'active' : '')}
         >
@@ -47,7 +47,7 @@ const Navbar = () => {
           className={({ isActive }) => (isActive ? 'active' : '')}
         >
           Expiry Notification
-        </NavLink>
+        </NavLink> */}
       </div>
     </nav>
   );

@@ -37,19 +37,15 @@ function SSIReturn() {
   useEffect(() => {
     const fetchReturns = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/inventory-return/getAll`);
+        const response = await fetch(`${API_BASE_URL}/substore-return-items`);
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
         console.log(data);
-        
-        // const filteredData = data.filter(item => item.storeName === store)
         setReturns(data); // Adjust based on your API response structure
       } catch (error) {
         setError("Failed to fetch data");
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -204,14 +200,6 @@ function SSIReturn() {
             )}
           </tbody>
           </table>
-          {/* <div className="sSIReturn-pagination">
-            <span>0 to 0 of 0</span>
-            <button>First</button>
-            <button>Previous</button>
-            <span>Page 0 of 0</span>
-            <button>Next</button>
-            <button>Last</button>
-          </div> */}
         </div>
       </>
      <CustomModal isOpen={showNewPatientConsumption} onClose={handleBack}>

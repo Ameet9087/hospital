@@ -252,26 +252,25 @@ const SalesSales = () => {
     setItems(newItems);
   };
 
-  console.log(options);
   useEffect(() => {
     axios
-      .get(`${API_BASE_URL}/patients/get-all`)
+      .get(`${API_BASE_URL}/patient-register/get-all`)
       .then((response) => {
         const patientData = response.data.map((patient) => ({
-          uhid: patient.uhid,
-          firstName: patient.firstName,
-          middleName: patient.middleName,
-          lastName: patient.lastName,
-          gender: patient.gender,
-          age: patient.age,
-          phoneNumber: patient.phoneNumber,
-          address: patient.address,
-          country: patient.country,
-          pinCode: patient.pinCode,
-          department: patient.department,
+          uhid: patient?.patient?.uhid,
+          firstName: patient?.patient?.firstName,
+          middleName: patient?.patient?.middleName,
+          lastName: patient?.patient?.lastName,
+          gender: patient?.patient?.gender,
+          age: patient?.patient?.age,
+          phoneNumber: patient?.patient?.phoneNumber,
+          address: patient?.patient?.address,
+          country: patient?.patient?.country,
+          pinCode: patient?.patient?.pinCode,
+          department: patient?.patient?.department,
         }));
         setPatients(patientData);
-        console.log(patientData);
+        console.log("patient data" ,patientData);
       })
       .catch((error) => {
         console.error("Error fetching patients data:", error);
@@ -322,6 +321,9 @@ const SalesSales = () => {
       (patient.uhid && patient.uhid.toString().includes(searchTerm))
     );
   });
+
+    console.log(options);
+
 
   const handleExternalPopupOpen = () => {
     setShowExternalPopup(true);
@@ -440,12 +442,12 @@ const SalesSales = () => {
                         setSelectedPatientId(patient.uhid);
                         setSelectedPatientInfo(patient); // Set selected patient info directly
                         setSearchTerm(
-                          `${patient.firstName} ${patient.lastName}`
+                          `${patient?.firstName} ${patient?.lastName}`
                         ); // Set search term to patient's name
                       }}
                       className="dispenSalesSales-dropdown-option"
                     >
-                      {`${patient.firstName} ${patient.lastName} - UHID: ${patient.uhid}`}
+                      {`${patient?.firstName} ${patient?.lastName} - UHID: ${patient?.uhid}`}
                     </div>
                   ))}
                 </div>
@@ -505,7 +507,7 @@ const SalesSales = () => {
             {selectedPatientInfo && (
               <div className="dispenSalesSales-hospital-info">
                 <div className="dispenSalesSales-hospital-info-subDiv">
-                  <div>Hospital No: {selectedPatientInfo.outPatientId}</div>
+                  <div>UHID: {selectedPatientInfo.uhid}</div>
                   <div>
                     Name:{" "}
                     {`${selectedPatientInfo.firstName} ${selectedPatientInfo.lastName}`}

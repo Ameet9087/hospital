@@ -1,53 +1,25 @@
-/* neha-Billing-20/09/24 */
+// src/Routes.jsx
+
 import React from "react";
-import Ipbilling from "./IP_Billing/ipbilling";
-import IpViewDetail from "./IP_Billing/ipviewDetail";
-// import BillingHome from './Billing_Home/billing_home';
-import Search_Patient from "./Billing_Search_Patient/Search_Patient";
-
-// import Provisinal_Main from './Provisinal Clearence/Provisinal_Main';
-import { FaHome } from "react-icons/fa";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import { Provider } from "react-redux";
+import { Routes, Route } from "react-router-dom";
+import NavigationBilling from "./BillingNav";
+import IPBilling from "./IP_Billing/IpBilling";
 import OpdBilling from "./OpdBilling/OpdBilling";
-// import "./billing.css";
-// import CancelBillList from './Cancle_Bill/canclebill';
-// import ReturnBill from './Return_bill/return_bill';
+import Ipmoneyreceipt from "./IP_Billing/Transactions/IPMoneyReceipt/IpmoneyReceipt"
+import OPDBillCancellation from "./OpdBilling/OPDBillCancellation";
 
-function Billing() {
+const Billing = () => {
   return (
-    <div>
-      <header className="opd-ipd-billing">
-        <nav>
-          <ul className="billing-navBar">
-            <Link to="/ipbilling">
-              <li>IP Billing</li>
-            </Link>
-            {/* <Link to="/billing_home"><li><FaHome /></li></Link> */}
-            <Link to="/opbilling">
-              <li>OPD Billing</li>
-            </Link>
-            {/* <Link to="/Provisinal_clearence/out-patient-ander"><li>Provisional Clearance</li></Link> */}
-            {/* <Link to="/CancelBillList"><li>Cancle Bill</li></Link> */}
-            {/* <Link to="/ReturnBill"><li>ReturnBill</li></Link> */}
-          </ul>
-        </nav>
-      </header>
-      <Provider store={store}>
-
+    <>
+      <NavigationBilling />
       <Routes>
-        <Route path="/ipbilling" element={<Ipbilling />} />
-        {/* <Route path="/IpViewDetail" element={<IpViewDetail />} /> */}
-        {/* <Route path="/billing_home" element={<BillingHome />} /> */}
-        <Route path="/Search_Patient" element={<Search_Patient />} />
-        {/* <Route path="/Provisinal_clearence/*" element={<Provisinal_Main />} /> */}
-        {/* <Route path="/CancelBillList" element={<CancelBillList/>} /> */}
-        {/* <Route path='/ReturnBill' element={<ReturnBill/>}> </Route> */}
-        <Route path="/opbilling" element={<OpdBilling/>}/>
+        <Route path="/IPBilling/*" element={<IPBilling/>} />
+        <Route path="/opdbilling" element={<OpdBilling/>} />
+        <Route path="/IpdMoneyReceipt" element={<Ipmoneyreceipt/>} />
+        <Route path="/OPDBillingCancel" element={<OPDBillCancellation/>} />
       </Routes>
-      </Provider>
-    </div>
+    </>
   );
-}
+};
 
 export default Billing;

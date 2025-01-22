@@ -7,13 +7,19 @@ import ReactToPrint from 'react-to-print'; // Import ReactToPrint
 import './Currency.css';
 import CustomModal from '../../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../../api/api';
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import * as XLSX from 'xlsx';
 
 const CurrencyTable = () => {
   const [currencies, setCurrencies] = useState([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState(null);
-  const tableRef = useRef(); // Reference to the table for printing
+
+
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef=useRef(null);
+
 
   // Fetch currencies from the API on component mount
   useEffect(() => {
@@ -47,6 +53,24 @@ const CurrencyTable = () => {
     setSelectedCurrency(null);
   };
 
+
+
+  // Function to export table to Excel
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+  };
+
+  // Function to trigger print
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
+  };
+
+
+
+
   return (
     <div className="procurment-add-container">
       <button className="procurment-add-currency" onClick={openAddModal}>Add Currency</button>
@@ -56,22 +80,44 @@ const CurrencyTable = () => {
       </div>
       <div className='procurment-add-print-section'>
         <span>Showing {currencies.length} / {currencies.length} results</span>
+        <button className="procurment-add-button" onClick={handleExport}>Export</button>
         <ReactToPrint
-          trigger={() => <button className="procurment-add-button" aria-label="Print">Print</button>}
+          trigger={() => <button className="procurment-add-button" aria-label="Print" onClick={handlePrint}>Print</button>}
           content={() => tableRef.current}
         />
         </div>
       </div>
 
-      <table ref={tableRef}> {/* Attach the ref to the table */}
-        <thead>
-          <tr>
-            <th>Currency Code</th>
-            <th>Description</th>
-            <th>Is Active</th>
-            <th>Action</th>
-          </tr>
-        </thead>
+      <table  ref={tableRef}>
+          <thead>
+            <tr>
+              {[
+               "Currency Code",
+  "Description",
+  "Is Active",
+  "Action"
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+  </thead>
+
+
         <tbody>
           {currencies.map((currency, index) => (
             <tr key={index}>
@@ -99,7 +145,7 @@ const CurrencyTable = () => {
         contentLabel="Add Currency Modal"
         
       >
-        <AddCurrency />
+        <AddCurrency  onClose={closeAddModal}/>
       </CustomModal>
 
       {/* Modal for Updating Currency */}

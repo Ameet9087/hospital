@@ -1,0 +1,206 @@
+.IpPostDiscount-container {
+    margin: 0 auto;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    background-color:var(--background-color);
+  }
+  .IpPostDiscount-section {
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .IpPostDiscount-header {
+    background-color: #00897b;
+    color: white;
+    padding: 7px 20px;
+    font-size: var(--heading-font);
+    font-weight: 500;
+  }
+ 
+  .IpPostDiscount-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+
+.IpPostDiscount-floating-field {
+  position: relative;
+}
+.IpPostDiscount-floating-input,
+.IpPostDiscount-floating-select {
+  padding: 5px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+  transition: all 0.2s ease;
+}
+.IpPostDiscount-floating-input{
+  width: 92%;
+}
+.IpPostDiscount-floating-select {
+  width: 100%;
+}
+.IpPostDiscount-floating-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: var(--font-size);
+}
+.IpPostDiscount-floating-field.active .IpPostDiscount-floating-label {
+  top: 0;
+  font-size: 12px;
+  color: #00897b;
+}
+.IpPostDiscount-floating-field.active .IpPostDiscount-floating-input,
+.IpPostDiscount-floating-field.active .IpPostDiscount-floating-select {
+  border-color: #00897b;
+}
+.IpPostDiscount-search-field {
+    position: relative;
+  }
+  .IpPostDiscount-search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .IpDPostDiscount-services-table{
+    padding: 8px;
+    overflow-x: scroll;
+  }
+  .IpDPostDiscount-services-table table{
+    table-layout: auto;
+  }
+
+  .IPDPostDiscount-services-section {
+    background: white;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+  }
+
+  .IPDPostDiscount-tab-bar {
+    display: flex;
+    gap: 5px;
+    padding: 4px;
+    background: var(--upperBar-bg-color);
+    overflow-x: auto; 
+    scrollbar-width: none;
+    white-space: nowrap; 
+  }
+  .IPDPostDiscount-tab-bar::-webkit-scrollbar {
+    display: none; 
+  }
+
+  .IPDPostDiscount-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .IPDPostDiscount-tab {
+    background-color: #00897b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+  }
+  .IPDPostDiscount-tab:hover {
+    background-color: #00796b;
+  }
+  .IPDPostDiscount-bottom-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 5px;
+  }
+  .IPDPostDiscount-section.half-width {
+    margin-bottom: 0;
+  }
+  .OPDPostDiscount-floating-input:focus,
+  .IPDPostDiscount-floating-select:focus {
+    outline: none;
+    border-color: #00897b;
+    box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+  }
+  .IPDPostDiscount-services-section {
+    background: white;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+  }
+  .IPDPostDiscount-tab-bar {
+    display: flex;
+    gap: 5px;
+    padding: 4px;
+    background: var(--upperBar-bg-color);
+    overflow-x: auto; 
+    scrollbar-width: none;
+    white-space: nowrap; 
+  }
+  .IPDPostDiscount-tab-bar::-webkit-scrollbar {
+    display: none; 
+  }
+  .IPDPostDiscount-tab {
+    padding: 4px 12px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    color: var(--button-color);
+    font-size: var(--font-size);
+    background: var(--button-hover-background-color);
+    cursor: pointer;
+    white-space: nowrap; 
+  }
+  .IPDPostDiscount-tab:hover {
+    background-color:var(--button-color);
+    color: var(--button-hover-background-color);
+  }
+  .IPDPostDiscount-tab.active {
+    background: var(--button-color);
+    color: var(--button-hover-background-color);
+  }
+
+  .IPDPostDiscount-buttons {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    gap: 5px;
+    font-size: var(--font-size);
+  }
+  .IPDPostDiscount-buttons button, .IPDPostDiscount-Upload {
+    background-color: var(--button-color);
+    font-size: var(--font-size);
+    border-radius: 5px;
+    padding: 8px 12px;
+    border: 1px solid var(--button-hover-background-color);
+    color: white;
+    cursor: pointer;
+  }
+  .IPDPostDiscount-buttons button:hover, .IPDPostDiscount-Upload:hover {
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+  }
+  

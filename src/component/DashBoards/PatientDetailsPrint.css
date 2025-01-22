@@ -1,0 +1,129 @@
+/* General Container Styling */
+.patientDetailsPrint-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  margin: 20px auto;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  max-width: 900px;
+  border-radius: 8px;
+}
+
+/* Navbar Styling */
+.patientDetailsPrint-navbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.patientDetailsPrint-navbar a {
+  cursor: pointer;
+  text-decoration: none;
+}
+.patientDetailsPrint-content{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.patientDetailsPrint-details{
+  display: flex;
+  gap: 10px;
+}
+.patientDetailsPrint-image{
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+}
+.patientDetailsPrint-visit{
+  margin-top: 5px;
+  height: 60px;
+  width: 100px;
+  border: 1px solid black;
+}
+/* PDF Container Styling */
+.patientDetailsPrint-pdf-container {
+  background-color: #fff;
+  padding: 20px;
+  /* border: 1px solid #ddd; */
+  border-radius: 8px;
+}
+
+/* Individual Page Styling */
+.patientDetailsPrint-page {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  page-break-before: always;
+}
+
+/* Headings */
+.patientDetailsPrint-page h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+}
+
+/* Labels and Details */
+.patientDetailsPrint-page label {
+  font-weight: bold;
+  color: #555;
+}
+
+.patientDetailsPrint-page span {
+  margin-left: 5px;
+  font-weight: normal;
+  color: #333;
+}
+
+.patientDetailsPrint-page img {
+  border-radius: 8px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+/* Responsive Styling */
+@media screen and (max-width: 768px) {
+  .patientDetailsPrint-container {
+    padding: 15px;
+  }
+
+  .patientDetailsPrint-navbar a {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .patientDetailsPrint-page {
+    padding: 15px;
+  }
+}
+
+/* Print-Specific Styles */
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+  }
+
+  .patientDetailsPrint-container {
+    box-shadow: none;
+    border: none;
+  }
+
+  .patientDetailsPrint-navbar {
+    display: none; /* Hide navbar in print */
+  }
+
+  .patientDetailsPrint-page {
+    page-break-before: always;
+    border: none;
+    padding: 20px;
+    margin: 0;
+  }
+}

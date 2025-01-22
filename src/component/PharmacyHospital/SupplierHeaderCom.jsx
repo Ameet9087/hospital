@@ -18,7 +18,7 @@ const SettingSupplierComponent = () => {
 
    const fetchSuppliers = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/suppliers/get-all-suppliers`);
+      const response = await axios.get(`${API_BASE_URL}/suppliers`);
       setSuppliers(response.data);
     } catch (error) {
       console.error('Error fetching suppliers:', error.response ? error.response.data : error.message);

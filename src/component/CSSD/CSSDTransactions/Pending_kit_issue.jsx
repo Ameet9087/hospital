@@ -3,6 +3,7 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import './Pending_kit_issue.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
+import { API_BASE_URL } from "../../api/api";
 
 const KitDetailsPage = () => {
   const { id } = useParams(); // Get the bubble ID from the URL
@@ -60,7 +61,7 @@ const KitDetailsPage = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/api/kit-issues", {
+      const response = await fetch(`${API_BASE_URL}/kit-issues`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +83,7 @@ const KitDetailsPage = () => {
   useEffect(() => {
     const fetchKitDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/kit-request-indent/${id}`);
+        const response = await fetch(`${API_BASE_URL}/kit-request-indent/${id}`);
         if (!response.ok) {
           throw new Error(`Failed to fetch: ${response.statusText}`);
         }

@@ -15,7 +15,7 @@ const WriteOffItemsList = () => {
     const fetchWriteOffGoods = async () => {
       try {
         const response = await fetch(
-          `${API_BASE_URL}/writeoffgoods/getAll`
+          `${API_BASE_URL}/write-off-goods`
         );
         if (response.ok) {
           const data = await response.json();
@@ -34,14 +34,6 @@ const WriteOffItemsList = () => {
     fetchWriteOffGoods();
   }, []);
 
-  useEffect(() => {
-    // Filter goods based on the search query
-    const results = writeOffGoods.filter((item) =>
-      item.item.itemName.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredGoods(results);
-  }, [searchQuery, writeOffGoods]);
-
   const handlePrint = () => {
     console.log("Printing...");
 
@@ -59,7 +51,7 @@ const WriteOffItemsList = () => {
         />
         <div>
           <span className="writeOffList-inventory-span">
-            Showing {filteredGoods.length} / {writeOffGoods.length} results
+            Showing {writeOffGoods.length} / {writeOffGoods.length} results
           </span>
           <button
             className="writeOffList-inventory-button"
@@ -101,15 +93,15 @@ const WriteOffItemsList = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredGoods.length > 0 ? (
-              filteredGoods.map((item, index) => (
+            {writeOffGoods.length > 0 ? (
+              writeOffGoods.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.item.itemName}</td>
-                  <td>{item.writeOffQty}</td>
-                  <td>{item.writeOffDate}</td>
-                  <td>{item.item.standardRate}</td>
-                  <td>{item.totalAmount}</td>
-                  <td>{item.remark}</td>
+                  <td>{item?.items.itemName}</td>
+                  <td>{item?.writeOffQty}</td>
+                  <td>{item?.writeOffDate}</td>
+                  <td>{item?.items?.standardRate}</td>
+                  <td>{item?.totalAmount}</td>
+                  <td>{item?.remark}</td>
                 </tr>
               ))
             ) : (

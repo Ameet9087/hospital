@@ -4,9 +4,11 @@ import "./cssdkitreturn.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { API_BASE_URL } from "../../api/api";
 
 const KitReturnsDetails = () => {
   const { receivingId } = useParams(); // Get the 'receivingId' from the URL
+console.log(receivingId);
 
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -25,7 +27,7 @@ const KitReturnsDetails = () => {
   useEffect(() => {
     const fetchKits = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/kit-receiving/${receivingId}`);
+        const response = await fetch(`${API_BASE_URL}/kit-receiving/${receivingId}`);
         const data = await response.json();
         const kitItems = data?.kitReceivingItems || [];
         setKits(kitItems);
@@ -82,7 +84,7 @@ const KitReturnsDetails = () => {
 
     try {
       // Send POST request to API
-      const response = await fetch("http://localhost:8080/api/kit-returns", {
+      const response = await fetch(`${API_BASE_URL}/kit-returns`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

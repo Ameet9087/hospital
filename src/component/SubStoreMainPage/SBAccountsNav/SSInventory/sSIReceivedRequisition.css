@@ -1,0 +1,67 @@
+.sSIReceivedRequisition-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    margin: auto;
+  }
+  
+  .sSIReceivedRequisition-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .sSIReceivedRequisition-header div {
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .sSIReceivedRequisition-header span {
+    font-weight: normal;
+  }
+  
+  .sSIReceivedRequisition-details {
+    margin-bottom: 20px;
+  }
+  
+  .sSIReceivedRequisition-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .sSIReceivedRequisition-row div {
+    font-size: 14px;
+  }
+  
+  .sSIReceivedRequisition-remarks {
+    margin-bottom: 20px;
+  }
+  
+  .sSIReceivedRequisition-remarks label {
+    font-weight: bold;
+  }
+  
+  .sSIReceivedRequisition-remarks textarea {
+    width: 100%;
+    height: 60px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 10px;
+  }
+  
+  .sSIReceivedRequisition-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .sSIReceivedRequisition-button:hover {
+    background-color: #218838;
+  }
+  

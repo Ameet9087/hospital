@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import "../ListRequest/rdlScanDone.css";
 import { API_BASE_URL } from "../../api/api";
 
-function RDLAddScanDoneDetails({ onClose, onUpdateStatus }) {
+function RDLAddScanDoneDetails({ onClose, onUpdateStatus, patient }) {
+  console.log(patient);
+
   const [scannedOn, setScannedOn] = useState("");
   const [filmType, setFilmType] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -28,7 +30,10 @@ function RDLAddScanDoneDetails({ onClose, onUpdateStatus }) {
   return (
     <div className="rDLListRequest-ScanDone-modal-backdrop">
       <div className="rDLListRequest-ScanDone-modal">
-        <h2>Add Scan Done Details of Sachin Ramesh</h2>
+        <h2>
+          Add Scan Done Details of {patient?.outPatientDTO?.salutation}{" "}
+          {patient?.outPatientDTO?.firstName} {patient?.outPatientDTO?.lastName}
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="rDLListRequest-ScanDone-form-group">
             <label htmlFor="scannedOn">Scanned On</label>
@@ -59,6 +64,7 @@ function RDLAddScanDoneDetails({ onClose, onUpdateStatus }) {
           <div className="rDLListRequest-ScanDone-form-group">
             <label htmlFor="quantity">Quantity</label>
             <input
+              min={0}
               type="number"
               id="quantity"
               value={quantity}
@@ -87,13 +93,6 @@ function RDLAddScanDoneDetails({ onClose, onUpdateStatus }) {
             </button>
           </div>
         </form>
-        <button
-          className="rDLListRequest-ScanDone-close-btn"
-          aria-label="Close"
-          onClick={onClose}
-        >
-          &times;
-        </button>
       </div>
     </div>
   );

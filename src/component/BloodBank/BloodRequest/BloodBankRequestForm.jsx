@@ -4,13 +4,12 @@ import { API_BASE_URL } from "../../api/api";
 
 const BloodBankRequestForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
-    storage_id: "",
-    storagedate: "",
-    bloodgroup: "",
-    volume: "",
-    expirydate: "",
-    storagelocation: "",
+    bloodGroup: "",
+    requiredUnits: "",
+    requestDate: "",
+    requiredDate: "",
     status: "",
+    contactInformation: "",
     inPatientId: "",
   });
 
@@ -47,17 +46,15 @@ const BloodBankRequestForm = ({ onSubmit }) => {
 
     // Prepare data in the desired format
     const bloodRequestPayload = {
-      storageId: formData.storage_id,
-      storageDate: formData.storagedate,
-      bloodGroup: formData.bloodgroup,
-      volume: formData.volume,
-      expiryDate: formData.expirydate,
-      storageLocation: formData.storagelocation,
+      bloodGroup: formData.bloodGroup,
+      requiredUnits: formData.requiredUnits,
+      requestDate: formData.requestDate,
+      requiredDate: formData.requiredDate,
       status: formData.status,
-
+      contactInformation: formData.contactInformation,
       patientDTO: {
-        inPatientId: formData.inPatientId
-      }
+        inPatientId: formData.inPatientId,
+      },
     };
 
     try {
@@ -73,7 +70,6 @@ const BloodBankRequestForm = ({ onSubmit }) => {
         const responseData = await response.json();
         console.log("Request submitted successfully:", responseData);
         alert("Request submitted successfully!");
-
       } else {
         console.error("Failed to submit request:", response.statusText);
         alert("Failed to submit request. Please try again.");
@@ -86,7 +82,7 @@ const BloodBankRequestForm = ({ onSubmit }) => {
 
   return (
     <div className="bloodbankrequest-container">
-      <h2 className="bloodbankrequest-title">Blood Request</h2>
+      <h2 className="bloodbankrequest-title">Blood Request Form</h2>
       <form className="bloodbankrequest-form" onSubmit={handleSubmit}>
         {/* Patient Select */}
         <div className="bloodbankrequest-form-row">
@@ -102,17 +98,17 @@ const BloodBankRequestForm = ({ onSubmit }) => {
               <option value="">Select Patient</option>
               {patients.map((patient) => (
                 <option key={patient.inPatientId} value={patient.inPatientId}>
-                  {patient.patientName}
+                  {patient.firstName} {patient.middleName} {patient.lastName} (UHID: {patient.uhid})
                 </option>
               ))}
             </select>
           </div>
           <div className="bloodbankrequest-form-group">
-            <label htmlFor="bloodgroup">Blood Group:</label>
+            <label htmlFor="bloodGroup">Blood Group:</label>
             <select
-              id="bloodgroup"
-              name="bloodgroup"
-              value={formData.bloodgroup}
+              id="bloodGroup"
+              name="bloodGroup"
+              value={formData.bloodGroup}
               onChange={handleChange}
               required
             >
@@ -129,61 +125,62 @@ const BloodBankRequestForm = ({ onSubmit }) => {
           </div>
         </div>
 
-        {/* Second Row */}
+        {/* Required Units and Contact Information */}
         <div className="bloodbankrequest-form-row">
           <div className="bloodbankrequest-form-group">
-            <label htmlFor="volume">Volume (ml):</label>
+            <label htmlFor="requiredUnits">Required Units:</label>
             <input
               type="number"
-              id="volume"
-              name="volume"
-              value={formData.volume}
+              id="requiredUnits"
+              name="requiredUnits"
+              value={formData.requiredUnits}
               onChange={handleChange}
-              placeholder="Enter Volume"
+              placeholder="Enter Required Units"
+              min="1"
               required
             />
           </div>
           <div className="bloodbankrequest-form-group">
-            <label htmlFor="expirydate">Expiry Date:</label>
-            <input
-              type="date"
-              id="expirydate"
-              name="expirydate"
-              value={formData.expirydate}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </div>
-
-        {/* Third Row */}
-        <div className="bloodbankrequest-form-row">
-          <div className="bloodbankrequest-form-group">
-            <label htmlFor="storagedate">Storage Date:</label>
-            <input
-              type="date"
-              id="storagedate"
-              name="storagedate"
-              value={formData.storagedate}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="bloodbankrequest-form-group">
-            <label htmlFor="storagelocation">Storage Location:</label>
+            <label htmlFor="contactInformation">Contact Information:</label>
             <input
               type="text"
-              id="storagelocation"
-              name="storagelocation"
-              value={formData.storagelocation}
+              id="contactInformation"
+              name="contactInformation"
+              value={formData.contactInformation}
               onChange={handleChange}
-              placeholder="Enter Storage Location"
+              placeholder="Enter Contact Information"
               required
             />
           </div>
         </div>
 
-        {/* Fourth Row */}
+        {/* Request Date and Required Date */}
+        <div className="bloodbankrequest-form-row">
+          <div className="bloodbankrequest-form-group">
+            <label htmlFor="requestDate">Request Date:</label>
+            <input
+              type="date"
+              id="requestDate"
+              name="requestDate"
+              value={formData.requestDate}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="bloodbankrequest-form-group">
+            <label htmlFor="requiredDate">Required Date:</label>
+            <input
+              type="date"
+              id="requiredDate"
+              name="requiredDate"
+              value={formData.requiredDate}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        {/* Status */}
         <div className="bloodbankrequest-form-row">
           <div className="bloodbankrequest-form-group">
             <label htmlFor="status">Status:</label>
@@ -195,9 +192,9 @@ const BloodBankRequestForm = ({ onSubmit }) => {
               required
             >
               <option value="">Select Status</option>
-              <option value="Available">Available</option>
-              <option value="Reserved">Reserved</option>
-              <option value="Unavailable">Unavailable</option>
+              <option value="Pending">Pending</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
             </select>
           </div>
         </div>

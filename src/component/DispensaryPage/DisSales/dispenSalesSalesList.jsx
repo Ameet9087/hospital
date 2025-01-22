@@ -64,12 +64,12 @@ function DispenSalesSalesList() {
             {salesList.map((sale) => (
               <tr key={sale.invoiceId}>
                 <td>{sale.invoiceId}</td>
-                <td>{sale.inPatient.firstName}</td>
+                <td>{sale.inPatient?.firstName || sale.outPatient?.firstName}</td>
                 <td>{sale.total_amt}</td>
                 <td>{sale.discountAmount || "0.00"}</td>
                 <td>{sale.total_amt}</td>
                 <td>{sale.transactionDate}</td>
-                <td>{sale.inPatient.patientType}</td>
+                <td>{sale.inPatient?.patientType}</td>
                 <td>
                   <button
                     className="action-button"

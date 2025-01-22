@@ -1,203 +1,486 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import "./wardNurseDashboard.css";
-import { useDispatch } from "react-redux";
-import { setPatientData } from "../ReduxNursing/patientSlice";
+import axios from "axios";
 import { API_BASE_URL } from "../../../api/api";
+import NursingPatientDashboard from "./NursingPatientDashboard";
 
-const WardNurseDashboard = () => {
-  const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("admitted");
-  const [admittedPatients, setAdmittedPatients] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const dispatch = useDispatch();
+function wardNurseDashboard() {
+  const [selectedPatient, setSelectedPatient] = useState();
+  const [selectedIpAdmission, setSelectedIpAdmission] = useState([]);
+  const [confirmBox, setConfirmBox] = useState(false);
+  const [wardReceiving, setWardRecieving] = useState([]);
+  const [admittedPatient, setAdmittedpatient] = useState([]);
+  const [selectedIpAdmissionId, setSelectedIpAdmissionId] = useState();
+  const [wardRequest, setWardRequest] = useState([]);
+  const [pendingRequest, setPendingRequest] = useState([]);
 
-  const panels = [
-    {
-      id: "admitted",
-      title: "Admitted Patients",
-      count: admittedPatients.length,
-    },
-    { id: "receiving", title: "Ward Receiving", count: 4 },
-    { id: "nursing", title: "Initial Nursing Assessment", count: 0 },
-    { id: "daily", title: "Daily Assessment", count: 0 },
-    { id: "reassessment", title: "Re Assessment After 5 Days", count: 0 },
-    { id: "devices", title: "Devices Expired", count: 0 },
-    { id: "pharmacy", title: "Pending Pharmacy Indent", count: 0 },
-    { id: "orders", title: "Pending Orders", count: 0 },
-    { id: "referrals", title: "Pending Referrals", count: 0 },
-    { id: "pain", title: "Pain Score > 2", count: 0 },
-  ];
+  const [isPatientOPEN, setIsPatientOPEN] = useState(false);
 
-  useEffect(() => {
-    // Fetch data from the API when the component mounts
+  const fetchAllWardReceiving = async () => {
+    const response = await axios.get(`${API_BASE_URL}/ip-admissions/pending`);
+    console.log(response.data);
 
-    axios
-      .get(`${API_BASE_URL}/ip-admissions/admitted`)
-      .then((response) => {
-        setAdmittedPatients(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError("Error fetching data");
-        setLoading(false);
-      });
-  }, []);
-
-  const handlePatientClick = (patient) => {
-    dispatch(setPatientData(patient));
-    navigate("/nursing/patient-dashboard", {
-      state: {
-        patientName: patient.patient.firstName,
-        patientAge: patient.patient.age,
-        patientGender: patient.patient.gender,
-        mrNo: patient.patient.uhid,
-      },
-    });
+    setWardRecieving(response.data);
   };
 
-  const renderPatientCard = (patient) => (
-    <div
-      key={patient.ipAdmmissionId}
-      className={`wardNurseDashboard-patient-card ${
-        activeTab === "admitted" ? "clickable" : ""
-      }`}
-      onClick={() => handlePatientClick(patient)}
-    >
-      <div
-        className={`wardNurseDashboard-patient-marker ${
-          patient.financials.typeAdmission === "General"
-            ? "wardNurseDashboard-marker-red"
-            : "wardNurseDashboard-marker-blue"
-        }`}
-      >
-        {patient.patient.uhid}
-      </div>
-      <div className="wardNurseDashboard-patient-info">
-        <div className="wardNurseDashboard-patient-primary">
-          <div className="wardNurseDashboard-patient-name">
-            {`${patient.patient.firstName} ${patient.patient.lastName}`}
-          </div>
-          <div className="wardNurseDashboard-patient-identifiers">
-            <span>UHID - {patient.patient.uhid}</span>
-            <span>Age: {patient.patient.age} Years</span>
-            <span>{patient.patient.gender}</span>
-          </div>
-        </div>
-        <div className="wardNurseDashboard-patient-secondary">
-          <div className="wardNurseDashboard-info-row">
-            <label>Admission Date:</label>
-            <span>{patient.financials.issued}</span>
-          </div>
-          <div className="wardNurseDashboard-info-row">
-            <label>Room:</label>
-            <span>{patient.roomDetails.roomDTO.roomNumber}</span>
-          </div>
-          <div className="wardNurseDashboard-info-row">
-            <label>Doctor:</label>
-            <span>
-              {patient.admissionUnderDoctorDetail.consultantDoctor.doctorName}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  const fetchAllAdmittedPatient = async () => {
+    const response = await axios.get(`${API_BASE_URL}/ip-admissions/admitted`);
+    setAdmittedpatient(response.data);
+  };
+  const fetchAllRequestedWardData = async () => {
+    const response = await axios.get(`${API_BASE_URL}/ward-request-change/all`);
+    setWardRequest(response.data);
+  };
 
-  const renderPanelContent = (panelId) => {
-    if (panelId === "admitted") {
-      if (loading) {
-        return <div>Loading...</div>;
-      }
-      if (error) {
-        return <div>{error}</div>;
-      }
-      return (
-        <div className="wardNurseDashboard-panel-content">
-          {admittedPatients.map(renderPatientCard)}
-        </div>
+  // const fetchAllPendingRequest = async () => {
+  //   const response = await axios.get(`${API_BASE_URL}/`);
+  //   setPendingRequest(response.data);
+  // };
+
+  useEffect(() => {
+    fetchAllWardReceiving();
+    fetchAllAdmittedPatient();
+    fetchAllRequestedWardData();
+    // fetchAllPendingRequest();
+  }, [isPatientOPEN, confirmBox]);
+
+  const handleSelectPatient = (data) => {
+    setSelectedPatient(data.patient);
+    setSelectedIpAdmission(data);
+    setIsPatientOPEN(true);
+  };
+
+  const handleConfirmBtn = async (id) => {
+    console.log(id);
+    try {
+      await axios.put(
+        `${API_BASE_URL}/ip-admissions/${id}/admit?admissionStatus=ADMITTED`
       );
+      setConfirmBox(false);
+    } catch (error) {
+      console.log(error);
     }
-    return <div className="wardNurseDashboard-panel-content empty"></div>;
   };
 
   return (
-    <div className="wardNurseDashboard-container">
-      <header className="wardNurseDashboard-header">
-        <div className="wardNurseDashboard-header-left">
-          <div className="wardNurseDashboard-hospital-logo"></div>
-          <div className="wardNurseDashboard-hospital-info">
-            <h1>Lopmudra Hospital</h1>
-            <h2>Wards Nurse Working Dashboard</h2>
-          </div>
-        </div>
-        {/* <div className="wardNurseDashboard-header-icons">
-          <button className="wardNurseDashboard-icon-btn patient">Patient</button>
-          <button className="wardNurseDashboard-icon-btn bed">Bed Tr.</button>
-          <button className="wardNurseDashboard-icon-btn wards">Wards</button>
-          <button className="wardNurseDashboard-icon-btn food">Food M.</button>
-          <button className="wardNurseDashboard-icon-btn nursing">Nursing</button>
-          <button className="wardNurseDashboard-icon-btn daily">Daily P.</button>
-          <button className="wardNurseDashboard-icon-btn discharge">Discharge</button>
-          <button className="wardNurseDashboard-icon-btn reports">Reports</button>
-          <button className="wardNurseDashboard-icon-btn settings">Settings</button>
-        </div> */}
-      </header>
-
-      <main className="wardNurseDashboard-dashboard-content">
-        <div className="wardNurseDashboard-panels-grid">
-          {panels.map((panel) => (
-            <div
-              key={panel.id}
-              className={`wardNurseDashboard-panel ${
-                activeTab === panel.id ? "active" : ""
-              }`}
-            >
-              <div
-                className="wardNurseDashboard-panel-header"
-                onClick={() => setActiveTab(panel.id)}
-              >
-                <span className="wardNurseDashboard-panel-count">
-                  {panel.count}
-                </span>
-                <span className="wardNurseDashboard-panel-title">
-                  {panel.title}
-                </span>
-                <button className="wardNurseDashboard-info-icon">?</button>
+    <>
+      {isPatientOPEN ? (
+        <NursingPatientDashboard
+          isPatientOPEN={isPatientOPEN}
+          setIsPatientOPEN={setIsPatientOPEN}
+          patient={selectedPatient}
+          ipAdmission={selectedIpAdmission}
+        />
+      ) : (
+        <>
+          <div className="nurseMainPage-container">
+            <div className="nurseMainPage-subcontainer">
+              <div className="nurseMainPage-header">
+                <h1>Ward Receiving</h1>
               </div>
-              {renderPanelContent(panel.id)}
+              <div className="nurseMainPage-boxes">
+                {wardReceiving.length > 0 ? (
+                  wardReceiving.map((item) => (
+                    <div className="nurseMainPage-box">
+                      <div class="nurseMainPage-patient-info">
+                        <div class="nurseMainPage-patient-data-img-con">
+                          <div class="nurseMainPage-patient-avatar">
+                            {!item?.patient?.patient?.hasOwnProperty(
+                              "fileAttachment"
+                            ) ? (
+                              <span>
+                                {item?.patient?.patient?.firstName?.[0]}
+                              </span>
+                            ) : (
+                              <img
+                                src={`data:image/png;base64,${item?.patient?.patient?.fileAttachment}`}
+                                alt="patient attachment"
+                              />
+                            )}
+                          </div>
+                          <div className="nurseMainPage-patient-personal-details">
+                            <div class="nurseMainPage-info-row">
+                              <span class="value">
+                                {item.patient?.patient?.firstName}{" "}
+                                {item.patient?.patient?.lastName}
+                              </span>
+                            </div>
+                            <div class="nurseMainPage-info-row">
+                              <span class="value">
+                                {item.patient?.patient?.uhid}
+                              </span>
+                            </div>
+                            <div class="nurseMainPage-info-row">
+                              <span class="value">
+                                {item.patient?.patient?.age}{" "}
+                                {item.patient?.patient?.ageUnit} /{" "}
+                                {item.patient?.patient?.gender}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="nurseMainPage-patient-details">
+                          <div class="nurseMainPage-info-row">
+                            <span class="label">Add. Date/Time:</span>
+                            <span class="value">{item.admissionDate}</span>
+                          </div>
+                          <div class="nurseMainPage-info-row">
+                            <span class="label">Ward/Bed:</span>
+                            <span class="value">
+                              {item.roomDetails.roomTypeDTO?.wardName} /{" "}
+                              {item.roomDetails.bedDTO?.bedNo}
+                            </span>
+                          </div>
+                          <div class="nurseMainPage-info-row">
+                            <span class="label">Doctor:</span>
+                            <span class="value">
+                              {
+                                item.admissionUnderDoctorDetail.consultantDoctor
+                                  ?.salutation
+                              }{" "}
+                              {
+                                item.admissionUnderDoctorDetail.consultantDoctor
+                                  ?.doctorName
+                              }
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="nurseMainPage-ward-receiving-btns">
+                        <button
+                          onClick={() => {
+                            setSelectedIpAdmissionId(item?.ipAdmmissionId);
+                            setConfirmBox(true);
+                          }}
+                        >
+                          Approve <i className="fas fa-check"></i>
+                        </button>
+                        <button>
+                          Decline <i className="fas fa-times"></i>
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    Data Not Available
+                  </div>
+                )}
+              </div>
             </div>
-          ))}
-        </div>
-      </main>
 
-      <footer className="wardNurseDashboard-footer">
-        <div className="wardNurseDashboard-footer-left">
-          <span>Screen Search</span>
-          <button className="wardNurseDashboard-btn-adv-search">
-            Adv Search
-          </button>
-          <div className="wardNurseDashboard-search-box">
-            <input type="text" placeholder="Enter MR No" />
-            <button className="wardNurseDashboard-btn-go">Go</button>
-            <button className="wardNurseDashboard-btn-home">🏠</button>
+            <div className="nurseMainPage-subcontainer">
+              <div className="nurseMainPage-header">
+                <h1>Addmitted Patients</h1>
+              </div>
+              <div className="nurseMainPage-boxes">
+                {admittedPatient.length > 0 ? (
+                  admittedPatient.map((item) => (
+                    <div
+                      onClick={() => handleSelectPatient(item)}
+                      className="nurseMainPage-box"
+                    >
+                      <div class="nurseMainPage-patient-info">
+                        <div class="nurseMainPage-patient-data-img-con">
+                          <div class="nurseMainPage-patient-avatar">
+                            {!item?.patient?.patient?.hasOwnProperty(
+                              "fileAttachment"
+                            ) ? (
+                              <span>
+                                {item?.patient?.patient?.firstName?.[0]}
+                              </span>
+                            ) : (
+                              <img
+                                src={`data:image/png;base64,${item?.patient?.patient?.fileAttachment}`}
+                                alt="patient attachment"
+                              />
+                            )}
+                          </div>
+                          <div className="nurseMainPage-patient-personal-details">
+                            <div class="nurseMainPage-info-row">
+                              <span class="value">
+                                {item.patient?.patient?.firstName}{" "}
+                                {item.patient?.patient?.lastName}
+                              </span>
+                            </div>
+                            <div class="nurseMainPage-info-row">
+                              <span class="value">
+                                {item.patient?.patient?.uhid}
+                              </span>
+                            </div>
+                            <div class="nurseMainPage-info-row">
+                              <span class="value">
+                                {item.patient?.patient?.age}{" "}
+                                {item.patient?.patient?.ageUnit} /{" "}
+                                {item.patient?.patient?.gender}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="nurseMainPage-patient-details">
+                          <div class="nurseMainPage-info-row">
+                            <span class="label">Add. Date/Time:</span>
+                            <span class="value">{item.admissionDate}</span>
+                          </div>
+                          <div class="nurseMainPage-info-row">
+                            <span class="label">Ward/Bed:</span>
+                            <span class="value">
+                              {item.roomDetails.roomTypeDTO?.wardName} /{" "}
+                              {item.roomDetails.bedDTO?.bedNo}
+                            </span>
+                          </div>
+                          <div class="nurseMainPage-info-row">
+                            <span class="label">Doctor:</span>
+                            <span class="value">
+                              {
+                                item.admissionUnderDoctorDetail.consultantDoctor
+                                  ?.salutation
+                              }{" "}
+                              {
+                                item.admissionUnderDoctorDetail.consultantDoctor
+                                  ?.doctorName
+                              }
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    Data Not Available
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="nurseMainPage-subcontainer">
+              <div className="nurseMainPage-header">
+                <h1>Transfer Request</h1>
+              </div>
+              <div className="nurseMainPage-boxes">
+                {wardRequest.length > 0 ? (
+                  wardRequest.map((item) => {
+                    const previousWard = item.previousWardRequestData
+                      ? JSON.parse(item.previousWardRequestData)
+                      : null;
+
+                    const requestedWard = item.updateWardRequestData
+                      ? JSON.parse(item.updateWardRequestData)
+                      : null;
+
+                    return (
+                      <div className="nurseMainPage-box" key={item.id}>
+                        <div className="nurseMainPage-patient-info">
+                          <div className="nurseMainPage-patient-data-img-con">
+                            <div className="nurseMainPage-patient-avatar">
+                              {!item?.ipAdmission?.patient?.patient?.hasOwnProperty(
+                                "fileAttachment"
+                              ) ? (
+                                <span>
+                                  {
+                                    item?.ipAdmission?.patient?.patient
+                                      ?.firstName?.[0]
+                                  }
+                                </span>
+                              ) : (
+                                <img
+                                  src={`data:image/png;base64,${item?.ipAdmission?.patient?.patient?.fileAttachment}`}
+                                  alt="patient attachment"
+                                />
+                              )}
+                            </div>
+                            <div className="nurseMainPage-patient-personal-details">
+                              <div className="nurseMainPage-info-row">
+                                <span className="value">
+                                  {
+                                    item.ipAdmission?.patient?.patient
+                                      ?.firstName
+                                  }{" "}
+                                  {item.ipAdmission?.patient?.patient?.lastName}
+                                </span>
+                              </div>
+                              <div className="nurseMainPage-info-row">
+                                <span className="value">
+                                  {item.ipAdmission?.patient?.patient?.uhid}
+                                </span>
+                              </div>
+                              <div className="nurseMainPage-info-row">
+                                <span className="value">
+                                  {item.ipAdmission?.patient?.patient?.age}{" "}
+                                  {item.ipAdmission?.patient?.patient?.ageUnit}{" "}
+                                  / {item.ipAdmission?.patient?.patient?.gender}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="nurseMainPage-patient-details">
+                            <div className="nurseMainPage-info-row">
+                              <span className="label">Request:</span>
+                              <span className="value">{item.status}</span>
+                            </div>
+                            <div className="nurseMainPage-info-row">
+                              <span className="label">Prev. Ward:</span>
+                              <span className="value">
+                                {previousWard?.roomType?.roomType} /{" "}
+                                {previousWard?.bed?.bedNo}
+                              </span>
+                            </div>
+                            <div className="nurseMainPage-info-row">
+                              <span className="label">Req. Ward:</span>
+                              <span className="value">
+                                {requestedWard?.roomType?.roomType} /{" "}
+                                {requestedWard?.bed?.bedNo}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    Data Not Available
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* <div className="nurseMainPage-subcontainer">
+              <div className="nurseMainPage-header">
+                <h1>Pending Request</h1>
+              </div>
+              <div className="nurseMainPage-boxes">
+                {wardRequest.length > 0 ? (
+                  wardRequest.map((item) => {
+                    const previousWard = item.previousWardRequestData
+                      ? JSON.parse(item.previousWardRequestData)
+                      : null;
+
+                    const requestedWard = item.updateWardRequestData
+                      ? JSON.parse(item.updateWardRequestData)
+                      : null;
+
+                    return (
+                      <div className="nurseMainPage-box" key={item.id}>
+                        <div className="nurseMainPage-patient-info">
+                          <div className="nurseMainPage-patient-data-img-con">
+                            <div className="nurseMainPage-patient-avatar">
+                              {!item?.ipAdmission?.patient?.patient?.hasOwnProperty(
+                                "fileAttachment"
+                              ) ? (
+                                <span>
+                                  {
+                                    item?.ipAdmission?.patient?.patient
+                                      ?.firstName?.[0]
+                                  }
+                                </span>
+                              ) : (
+                                <img
+                                  src={`data:image/png;base64,${item?.ipAdmission?.patient?.patient?.fileAttachment}`}
+                                  alt="patient attachment"
+                                />
+                              )}
+                            </div>
+                            <div className="nurseMainPage-patient-personal-details">
+                              <div className="nurseMainPage-info-row">
+                                <span className="value">
+                                  {
+                                    item.ipAdmission?.patient?.patient
+                                      ?.firstName
+                                  }{" "}
+                                  {item.ipAdmission?.patient?.patient?.lastName}
+                                </span>
+                              </div>
+                              <div className="nurseMainPage-info-row">
+                                <span className="value">
+                                  {item.ipAdmission?.patient?.patient?.uhid}
+                                </span>
+                              </div>
+                              <div className="nurseMainPage-info-row">
+                                <span className="value">
+                                  {item.ipAdmission?.patient?.patient?.age}{" "}
+                                  {item.ipAdmission?.patient?.patient?.ageUnit}{" "}
+                                  / {item.ipAdmission?.patient?.patient?.gender}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="nurseMainPage-patient-details">
+                            <div className="nurseMainPage-info-row">
+                              <span className="label">Request:</span>
+                              <span className="value">{item.status}</span>
+                            </div>
+                            <div className="nurseMainPage-info-row">
+                              <span className="label">Prev. Ward:</span>
+                              <span className="value">
+                                {previousWard?.roomType?.roomType} /{" "}
+                                {previousWard?.bed?.bedNo}
+                              </span>
+                            </div>
+                            <div className="nurseMainPage-info-row">
+                              <span className="label">Req. Ward:</span>
+                              <span className="value">
+                                {requestedWard?.roomType?.roomType} /{" "}
+                                {requestedWard?.bed?.bedNo}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    Data Not Available
+                  </div>
+                )}
+              </div>
+            </div> */}
+
+            {confirmBox && (
+              <div className="nurse-ward-receiving-confirmBox">
+                <div className="nurse-ward-receiving-con">
+                  <h1>Confirm Request</h1>
+                  <div className="nurse-ward-receiving-con-btns">
+                    <button
+                      onClick={() => handleConfirmBtn(selectedIpAdmissionId)}
+                    >
+                      Yes
+                    </button>
+                    <button onClick={() => setConfirmBox(false)}>No</button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-        <div className="wardNurseDashboard-footer-center">
-          <span className="wardNurseDashboard-current-date">13/11/2024</span>
-          <button className="wardNurseDashboard-btn-refresh">Refresh</button>
-        </div>
-        <div className="wardNurseDashboard-footer-right">
-          <select className="wardNurseDashboard-cubicle-select">
-            <option>Cubicle: -Select-</option>
-          </select>
-          <button className="wardNurseDashboard-btn-exit">Exit</button>
-        </div>
-      </footer>
-    </div>
+        </>
+      )}
+    </>
   );
-};
+}
 
-export default WardNurseDashboard;
+export default wardNurseDashboard;

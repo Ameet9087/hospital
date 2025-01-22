@@ -3,7 +3,7 @@ import axios from 'axios';
 import './AddCurrency.css';
 import { API_BASE_URL } from '../../api/api';
 
-const AddCurrency = () => {
+const AddCurrency = ({onClose}) => {
   // State to manage form data
   const [formData, setFormData] = useState({
     currencyCode: '',
@@ -27,7 +27,7 @@ const AddCurrency = () => {
     try {
       const response = await axios.post(`${API_BASE_URL}/currency-codes`, formData);
       console.log('Currency added successfully:', response.data);
-      // Clear form or show success message if needed
+      onClose();
       setFormData({ currencyCode: '', description: '', active: true });
     } catch (error) {
       console.error('Error adding currency:', error);
