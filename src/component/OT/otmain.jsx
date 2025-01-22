@@ -20,7 +20,7 @@ import SurgeryScheduling from './SurgeryScheduling/sugeryscheduling';
 import OT_Nurse_Notes from "./OTNurseNotes/OT_Nurse_Notes"
 import OTDisplaySetup from "./OTTveDisplaySetUP/OTDisplaySetup"
 
-const Otmain = () => {
+const OtMain = () => {
   return (
     <>
       <Navbar />
@@ -52,4 +52,4 @@ const Otmain = () => {
   );
 };
 
-export default Otmain;
+export default OtMain;
