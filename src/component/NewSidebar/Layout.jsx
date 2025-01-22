@@ -50,7 +50,7 @@ import Procurementmain from "../../component/Procurement2/procurmentmain";
 import HelpDeskRouting from "../../component/HelpD/HelpDeskRouting";
 import Dashboard from "../../component/LoginDashboard/Dashboard/";
 import MainVisitorFile from "../VisitorMgt/MainVisitorFile";
-import Otmain from "../OT/otmain";
+import Otmain from "../OT/Otmain";
 import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
 import BillingRoute from "../Billings/Billing";
 
