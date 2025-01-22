@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Calendar } from 'lucide-react';
-import './ProposalforAMCMultiplePopUp.css';
+import './ProposalForAMCMultiplePopUp.css';
 import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import { FaSearch } from "react-icons/fa";
 import { API_BASE_URL } from '../../../api/api';
