@@ -3,6 +3,7 @@ import './Visitinghours.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
 import useCustomAlert from '../../../alerts/useCustomAlert';
+import { API_BASE_URL } from '../../api/api';
 
 
 const Visitinghours = () => {
@@ -33,7 +34,7 @@ const Visitinghours = () => {
 
     // Fetch visitors from API when component mounts
     useEffect(() => {
-        fetch('http://localhost:9092/api/visitors')
+        fetch(`${API_BASE_URL}/visitors`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -79,7 +80,7 @@ const Visitinghours = () => {
         e.preventDefault();
         const visitorData = { ...formData, meetingDetails: { ...formData.meetingDetails } };
         if (isUpdating) {
-            fetch(`http://localhost:9092/api/visitors/${formData.id}`, {
+            fetch(`${API_BASE_URL}/visitors/${formData.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -104,7 +105,7 @@ const Visitinghours = () => {
                 })
                 .catch((error) => setError(error.message));
         } else {
-            fetch('http://localhost:9092/api/visitors', {
+            fetch(`${API_BASE_URL}/visitors`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

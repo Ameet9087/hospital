@@ -3,6 +3,7 @@ import "./IPMoneyReceipt.css";
 import axios from "axios";
 import { CiSearch } from "react-icons/ci";
 import PopupTable from "../../../../Admission/PopupTable";
+import { API_BASE_URL } from "../../../../api/api";
 
 const IpMoneyReceiptAdvance = () => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -14,7 +15,6 @@ const IpMoneyReceiptAdvance = () => {
   const [ipNos, setIpNos] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [activePopup, setActivePopup] = useState(null);
-  const API_BASE_URL = "http://192.168.242.48:8080/api";
   const [formData, setFormData] = useState({});
 
   const handlePopupClose = () => {
@@ -26,7 +26,7 @@ const IpMoneyReceiptAdvance = () => {
     try {
       const response = await axios
         .get
-        ("http://192.168.242.48:8080/api/ip-admissions");
+        (`${API_BASE_URL}/ip-admissions`);
       console.log("API Response:", response.data);
 
       // Map through the response data to extract inPatientId and patientName

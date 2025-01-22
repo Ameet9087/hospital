@@ -6,6 +6,7 @@ import VisitorIdModal from './VisitorIdModal'; // Import the new ID modal compon
 import * as XLSX from 'xlsx'; // Import xlsx library
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
+import { API_BASE_URL } from '../../api/api';
 
 const Visitor = () => {
     const [searchQuery, setSearchQuery] = useState('');
@@ -39,7 +40,7 @@ const Visitor = () => {
 
     // Fetch visitors from API when component mounts
     useEffect(() => {
-        fetch('http://localhost:9092/api/visitors')
+        fetch(`${API_BASE_URL}/visitors`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -149,7 +150,7 @@ const Visitor = () => {
 
         if (isUpdating) {
             // Update existing visitor
-            fetch(`http://localhost:9092/api/visitors/${formData.id}`, {
+            fetch(`${API_BASE_URL}/visitors/${formData.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -178,7 +179,7 @@ const Visitor = () => {
 
         } else {
             // Add new visitor
-            fetch('http://localhost:9092/api/visitors', {
+            fetch(`${API_BASE_URL}/visitors`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

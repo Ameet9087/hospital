@@ -1,7 +1,8 @@
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import './DispatchForm.css';
 import axios from 'axios';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { API_BASE_URL } from '../../api/api';
 const DispatchForm = () => {
     const [columnWidths, setColumnWidths] = useState({});
     const tableRef = useRef(null);
@@ -53,7 +54,7 @@ const DispatchForm = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:8000/api/dispatch/dispatch', formattedData);
+            const response = await axios.post(`${API_BASE_URL}/dispatch/dispatch`, formattedData);
             console.log("API Response: ", response.data);
             alert("Dispatch submitted successfully.");
             // Handle successful form submission
@@ -65,62 +66,62 @@ const DispatchForm = () => {
 
     return (
         <div className='dispatch-form-module-container'>
-        { !showForm && (  // Only show the "Add Dispatch" button when form is hidden
-            <button className="dispatch-form-module-com-submit-button" onClick={() => setShowForm(true)}>
-                Add Dispatch
-            </button>
-        )}
-        
-        { !showForm ? (
-            <>
-                {/* Table displaying sample data */}
-               <div className='table-container'>
-               <table ref={tableRef}>
-                        <thead>
-                            <tr>
-                                {["Request ID",
-    "Emergency Type",
-    "Patient Name",
-    "Location",
-    "Destination",
-    "Ambulance Type",
-    "Priority Level"].map((header, index) => (
-                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                                        <div className="header-content">
-                                            <span>{header}</span>
-                                            <div
-                                                className="resizer"
-                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                                            ></div>
-                                        </div>
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
+            {!showForm && (  // Only show the "Add Dispatch" button when form is hidden
+                <button className="dispatch-form-module-com-submit-button" onClick={() => setShowForm(true)}>
+                    Add Dispatch
+                </button>
+            )}
 
-                    <tbody>
-                        <tr>
-                            <td>12345</td>
-                            <td>Heart Attack</td>
-                            <td>John Doe</td>
-                            <td>City Hospital</td>
-                            <td>General Hospital</td>
-                            <td>Type A</td>
-                            <td>High</td>
-                        </tr>
-                        <tr>
-                            <td>67890</td>
-                            <td>Accident</td>
-                            <td>Jane Smith</td>
-                            <td>Park Avenue</td>
-                            <td>Central Medical</td>
-                            <td>Type B</td>
-                            <td>Medium</td>
-                        </tr>
-                    </tbody>
-                </table>
-               </div>
-            </>
+            {!showForm ? (
+                <>
+                    {/* Table displaying sample data */}
+                    <div className='table-container'>
+                        <table ref={tableRef}>
+                            <thead>
+                                <tr>
+                                    {["Request ID",
+                                        "Emergency Type",
+                                        "Patient Name",
+                                        "Location",
+                                        "Destination",
+                                        "Ambulance Type",
+                                        "Priority Level"].map((header, index) => (
+                                            <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                                <div className="header-content">
+                                                    <span>{header}</span>
+                                                    <div
+                                                        className="resizer"
+                                                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                                    ></div>
+                                                </div>
+                                            </th>
+                                        ))}
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>12345</td>
+                                    <td>Heart Attack</td>
+                                    <td>John Doe</td>
+                                    <td>City Hospital</td>
+                                    <td>General Hospital</td>
+                                    <td>Type A</td>
+                                    <td>High</td>
+                                </tr>
+                                <tr>
+                                    <td>67890</td>
+                                    <td>Accident</td>
+                                    <td>Jane Smith</td>
+                                    <td>Park Avenue</td>
+                                    <td>Central Medical</td>
+                                    <td>Type B</td>
+                                    <td>Medium</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </>
             ) : (
                 <form className="dispatch-form-module-com" onSubmit={handleSubmit}>
                     <div className="dispatch-form-module-com-left">

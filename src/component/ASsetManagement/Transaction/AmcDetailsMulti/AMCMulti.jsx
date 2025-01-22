@@ -4,6 +4,7 @@ import CustomModal from "../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import AMCDetailsMulti from "./AMCDetailsmulti";
 import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { API_BASE_URL } from "../../../api/api";
 
 const AMCMulti = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -13,7 +14,7 @@ const AMCMulti = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    fetch("http://192.168.143.48:8080/api/amc-details-multi")
+    fetch(`${API_BASE_URL}/amc-details-multi`)
       .then((res) => res.json())
       .then((data) => setAmcDetails(data))
       .catch((err) => {

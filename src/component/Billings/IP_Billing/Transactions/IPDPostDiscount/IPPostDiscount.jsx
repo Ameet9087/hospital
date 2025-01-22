@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 import './IpPostDiscount.css';
 import PopupTable from '../../PopUpTableBedTransfer/PopupTable';
+import { API_BASE_URL } from '../../../../api/api';
 const FloatingInput = ({ label, type = "text", ...props }) => {
       const [isFocused, setIsFocused] = useState(false);
       const [hasValue, setHasValue] = useState(false);
@@ -106,7 +107,7 @@ const IpPostDiscount = () => {
       }, []);
       const fetcheipbilldetails = async () => {
             try {
-                  const response = await fetch("http://192.168.43.203:4096/api/ipbillings");
+                  const response = await fetch(`${API_BASE_URL}/ipbillings`);
                   if (!response.ok) {
                         throw new Error("Failed to fetch request details");
                   }
@@ -118,7 +119,7 @@ const IpPostDiscount = () => {
       };
       const fetcheautherity = async () => {
             try {
-                  const response = await fetch("http://192.168.43.203:4096/api/discount-authorities");
+                  const response = await fetch(`${API_BASE_URL}/discount-authorities`);
                   if (!response.ok) {
                         throw new Error("Failed to fetch request details");
                   }
@@ -434,7 +435,7 @@ const IpPostDiscount = () => {
 
             console.log("final payload", discountData)
             try {
-                  const response = await fetch('http://192.168.43.203:4096/api/ipd-post-discount', {
+                  const response = await fetch(`${API_BASE_URL}/ipd-post-discount`, {
                         method: 'POST',
                         headers: {
                               'Content-Type': 'application/json',

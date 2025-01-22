@@ -3,6 +3,7 @@ import './AmbulanceList.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 import axios from 'axios';
+import { API_BASE_URL } from '../../api/api';
 
 const AmbulanceList = () => {
   
@@ -15,8 +16,8 @@ const AmbulanceList = () => {
   useEffect(() => {
     const fetchAmbulances = async () => {
       try {
-        const availableResponse = await axios.get('http://localhost:8000/api/ambulances/available');
-        const onDutyResponse = await axios.get('http://localhost:8000/api/ambulances/on-duty');
+        const availableResponse = await axios.get(`${API_BASE_URL}/ambulances/available`);
+        const onDutyResponse = await axios.get(`${API_BASE_URL}/ambulances/on-duty`);
         
         setAvailableAmbulances(availableResponse.data);
         setOnDutyAmbulances(onDutyResponse.data);

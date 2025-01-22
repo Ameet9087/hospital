@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './BookingAppointment.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Import axios if you are using it
+import { API_BASE_URL } from '../../api/api';
 
 const BookingAppointment = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,7 +16,7 @@ const BookingAppointment = () => {
     const fetchPatients = async () => {
       try {
         // Replace with your API endpoint
-        const response = await axios.get('http://192.168.1.34:1415/api/appointments/fetch-all-appointment');
+        const response = await axios.get(`${API_BASE_URL}/appointments/fetch-all-appointment`);
         setPatients(response.data);
       } catch (error) {
         setError('Failed to fetch patient data.');
@@ -48,7 +49,7 @@ const BookingAppointment = () => {
   return (
     <div className="book-appointment">
       <button className="new-patient-btn" onClick={handleNewPatient}>+ New Patient</button>
-      
+
       <div className="search-bar">
         <input
           type="text"

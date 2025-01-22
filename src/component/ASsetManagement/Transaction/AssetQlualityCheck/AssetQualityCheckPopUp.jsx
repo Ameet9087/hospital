@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import "./AssetQualityCheckPopUp.css";
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa"; // Using react-icons
+import { API_BASE_URL } from "../../../api/api";
 
 const AssetQualityCheckPopUp = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -31,7 +32,7 @@ const AssetQualityCheckPopUp = ({ onClose }) => {
 
   // Fetch equipment data from API
   useEffect(() => {
-    fetch("http://192.168.0.119:8080/api/equipmentMaster/all")
+    fetch(`${API_BASE_URL}/equipmentMaster/all`)
       .then((response) => response.json())
       .then((data) => {
         setEquipmentData(data);
@@ -72,19 +73,19 @@ const AssetQualityCheckPopUp = ({ onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(selectedEquipment);
-  const newFormData={
-        date: formData.qualityCheckDate,
-        poNo: formData.poNo,
-        poDate: formData.poDate,
-        invoiceNo: formData.invoiceNo,
-        invoiceDate: formData.invoiceDate,
-        amcFromDate: formData.amcFromDate,
-        amcToDate: formData.amcToDate,
-        serviceFromCompany: formData.serviceCompany,
-        equipmentId:selectedEquipment
-  }
-  console.log(newFormData);
-    fetch("http://192.168.0.126:8080/api/quality-checks", {
+    const newFormData = {
+      date: formData.qualityCheckDate,
+      poNo: formData.poNo,
+      poDate: formData.poDate,
+      invoiceNo: formData.invoiceNo,
+      invoiceDate: formData.invoiceDate,
+      amcFromDate: formData.amcFromDate,
+      amcToDate: formData.amcToDate,
+      serviceFromCompany: formData.serviceCompany,
+      equipmentId: selectedEquipment
+    }
+    console.log(newFormData);
+    fetch(`${API_BASE_URL}/quality-checks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -101,10 +102,10 @@ const AssetQualityCheckPopUp = ({ onClose }) => {
       });
   };
   // ===================================================================
- 
+
   return (
-    <div 
-    className="AssetQualityCheckPopUp-container"
+    <div
+      className="AssetQualityCheckPopUp-container"
     >
       <div className="AssetQualityCheckPopUp-header">
         <h4>Asset Quality Check</h4>
@@ -116,113 +117,113 @@ const AssetQualityCheckPopUp = ({ onClose }) => {
         <div className="AssetQualityCheckPopUp-form-row">
           <div className="AssetQualityCheckPopUp-form-group-1row">
             <div className="AssetQualityCheckPopUp-form-group">
-            <label>Record No:</label>
-          <input type="text" name="recordNo" value={formData.recordNo} onChange={handleInputChange} />
+              <label>Record No:</label>
+              <input type="text" name="recordNo" value={formData.recordNo} onChange={handleInputChange} />
             </div>
             <div className="AssetQualityCheckPopUp-form-group">
-            <label>Quality Check Date:</label>
-          <input type="date" name="qualityCheckDate" value={formData.qualityCheckDate} onChange={handleInputChange} />
+              <label>Quality Check Date:</label>
+              <input type="date" name="qualityCheckDate" value={formData.qualityCheckDate} onChange={handleInputChange} />
             </div>
             <div className="AssetQualityCheckPopUp-form-group">
-            <label>Select Equipment:</label>
-          <select value={selectedEquipment} onChange={handleEquipmentChange}>
-            <option value="">-- Select Equipment --</option>
-            {equipmentData.map((item) => (
-              <option key={item.equId} value={item.equId}>
-                {item.equipmentDTO.name}
-              </option>
-            ))}
-          </select>
-            </div>
-          </div>
-          <div className="AssetQualityCheckPopUp-form-group-1row">
-            <div className="AssetQualityCheckPopUp-form-group">
-            <label>Name of Equipment:</label>
-          <input type="text" name="nameOfEquipment" value={formData.nameOfEquipment} onChange={handleInputChange} />
-            </div>
-            <div className="AssetQualityCheckPopUp-form-group">
-            <label>Equipment No:</label>
-          <input type="text" name="equipmentNo" value={formData.equipmentNo} onChange={handleInputChange} />
-            </div>
-            <div className="AssetQualityCheckPopUp-form-group">
-            <label>Asset No:</label>
-          <input type="text" name="assetNo" value={formData.assetNo} onChange={handleInputChange} />
-            </div>
-          </div>
-            <div className="AssetQualityCheckPopUp-form-group-1row">
-            <div className="AssetQualityCheckPopUp-form-group">
-            <label>Location:</label>
-          <input type="text" name="location" value={formData.location} onChange={handleInputChange} />
-            </div>
-            <div className="AssetQualityCheckPopUp-form-group">
-            <label>Make & Serial No:</label>
-          <input type="text" name="makeSerialNo" value={formData.makeSerialNo} onChange={handleInputChange} />
-            </div>
-            <div className="AssetQualityCheckPopUp-form-group">
-            <label>Category:</label>
-          <input type="text" name="category" value={formData.category} onChange={handleInputChange} />
-            </div>
-            </div>
-          
-          <div className="AssetQualityCheckPopUp-form-group-1row">
-            <div className="AssetQualityCheckPopUp-form-group">
-            <label>Company Brand:</label>
-          <input type="text" name="companyBrand" value={formData.companyBrand} onChange={handleInputChange} />
-            </div>
-            <div className="AssetQualityCheckPopUp-form-group">
-            <label>Depreciation:</label>
-          <input type="text" name="depreciation" value={formData.depreciation} onChange={handleInputChange} />
-             </div>
-            <div className="AssetQualityCheckPopUp-form-group">
-            <label>Model No:</label>
-          <input type="text" name="modelNo" value={formData.modelNo} onChange={handleInputChange} />
+              <label>Select Equipment:</label>
+              <select value={selectedEquipment} onChange={handleEquipmentChange}>
+                <option value="">-- Select Equipment --</option>
+                {equipmentData.map((item) => (
+                  <option key={item.equId} value={item.equId}>
+                    {item.equipmentDTO.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <div className="AssetQualityCheckPopUp-form-group-1row">
             <div className="AssetQualityCheckPopUp-form-group">
-            <label>Responsibility Person:</label>
-          <input type="text" name="responsibilityPerson" value={formData.responsibilityPerson} onChange={handleInputChange} />
-          </div>
-            <div className="AssetQualityCheckPopUp-form-group">
-            <label>PO No:</label>
-          <input type="text" name="poNo" value={formData.poNo} onChange={handleInputChange} />
+              <label>Name of Equipment:</label>
+              <input type="text" name="nameOfEquipment" value={formData.nameOfEquipment} onChange={handleInputChange} />
             </div>
             <div className="AssetQualityCheckPopUp-form-group">
-            <label>PO Date:</label>
-          <input type="date" name="poDate" value={formData.poDate} onChange={handleInputChange} />
-            </div>
-          </div>
-          <div className="AssetQualityCheckPopUp-form-group-1row">
-            <div className="AssetQualityCheckPopUp-form-group">
-            <label>Invoice No:</label>
-          <input type="text" name="invoiceNo" value={formData.invoiceNo} onChange={handleInputChange} />
+              <label>Equipment No:</label>
+              <input type="text" name="equipmentNo" value={formData.equipmentNo} onChange={handleInputChange} />
             </div>
             <div className="AssetQualityCheckPopUp-form-group">
-            <label>Invoice Date:</label>
-          <input type="date" name="invoiceDate" value={formData.invoiceDate} onChange={handleInputChange} />
-            </div>
-            <div className="AssetQualityCheckPopUp-form-group">
-            <label>AMC From Date:</label>
-          <input type="date" name="amcFromDate" value={formData.amcFromDate} onChange={handleInputChange} />
+              <label>Asset No:</label>
+              <input type="text" name="assetNo" value={formData.assetNo} onChange={handleInputChange} />
             </div>
           </div>
           <div className="AssetQualityCheckPopUp-form-group-1row">
             <div className="AssetQualityCheckPopUp-form-group">
-            <label>AMC To Date:</label>
-          <input type="date" name="amcToDate" value={formData.amcToDate} onChange={handleInputChange} />
+              <label>Location:</label>
+              <input type="text" name="location" value={formData.location} onChange={handleInputChange} />
             </div>
             <div className="AssetQualityCheckPopUp-form-group">
-            <label>AMC/CMC Service From Company:</label>
-          <input type="text" name="serviceCompany" value={formData.serviceCompany} onChange={handleInputChange} />
+              <label>Make & Serial No:</label>
+              <input type="text" name="makeSerialNo" value={formData.makeSerialNo} onChange={handleInputChange} />
+            </div>
+            <div className="AssetQualityCheckPopUp-form-group">
+              <label>Category:</label>
+              <input type="text" name="category" value={formData.category} onChange={handleInputChange} />
+            </div>
+          </div>
+
+          <div className="AssetQualityCheckPopUp-form-group-1row">
+            <div className="AssetQualityCheckPopUp-form-group">
+              <label>Company Brand:</label>
+              <input type="text" name="companyBrand" value={formData.companyBrand} onChange={handleInputChange} />
+            </div>
+            <div className="AssetQualityCheckPopUp-form-group">
+              <label>Depreciation:</label>
+              <input type="text" name="depreciation" value={formData.depreciation} onChange={handleInputChange} />
+            </div>
+            <div className="AssetQualityCheckPopUp-form-group">
+              <label>Model No:</label>
+              <input type="text" name="modelNo" value={formData.modelNo} onChange={handleInputChange} />
+            </div>
+          </div>
+          <div className="AssetQualityCheckPopUp-form-group-1row">
+            <div className="AssetQualityCheckPopUp-form-group">
+              <label>Responsibility Person:</label>
+              <input type="text" name="responsibilityPerson" value={formData.responsibilityPerson} onChange={handleInputChange} />
+            </div>
+            <div className="AssetQualityCheckPopUp-form-group">
+              <label>PO No:</label>
+              <input type="text" name="poNo" value={formData.poNo} onChange={handleInputChange} />
+            </div>
+            <div className="AssetQualityCheckPopUp-form-group">
+              <label>PO Date:</label>
+              <input type="date" name="poDate" value={formData.poDate} onChange={handleInputChange} />
+            </div>
+          </div>
+          <div className="AssetQualityCheckPopUp-form-group-1row">
+            <div className="AssetQualityCheckPopUp-form-group">
+              <label>Invoice No:</label>
+              <input type="text" name="invoiceNo" value={formData.invoiceNo} onChange={handleInputChange} />
+            </div>
+            <div className="AssetQualityCheckPopUp-form-group">
+              <label>Invoice Date:</label>
+              <input type="date" name="invoiceDate" value={formData.invoiceDate} onChange={handleInputChange} />
+            </div>
+            <div className="AssetQualityCheckPopUp-form-group">
+              <label>AMC From Date:</label>
+              <input type="date" name="amcFromDate" value={formData.amcFromDate} onChange={handleInputChange} />
+            </div>
+          </div>
+          <div className="AssetQualityCheckPopUp-form-group-1row">
+            <div className="AssetQualityCheckPopUp-form-group">
+              <label>AMC To Date:</label>
+              <input type="date" name="amcToDate" value={formData.amcToDate} onChange={handleInputChange} />
+            </div>
+            <div className="AssetQualityCheckPopUp-form-group">
+              <label>AMC/CMC Service From Company:</label>
+              <input type="text" name="serviceCompany" value={formData.serviceCompany} onChange={handleInputChange} />
             </div>
             <div className="AssetQualityCheckPopUp-form-group">
             </div>
           </div>
-          </div>
-          </div>
-          
-          
-         
+        </div>
+      </div>
+
+
+
 
       <div className="AssetQualityCheckPopUp-form-actions">
         <button
@@ -233,7 +234,7 @@ const AssetQualityCheckPopUp = ({ onClose }) => {
         </button>
         <button className="AssetQualityCheckPopUp-close-btn">Close</button>
       </div>
-      
+
     </div>
   );
 };

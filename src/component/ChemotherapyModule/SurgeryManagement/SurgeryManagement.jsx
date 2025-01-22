@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './SurgeryManagement.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { API_BASE_URL } from '../../api/api';
 
 const SurgeryManagement = () => {
     const [columnWidths, setColumnWidths] = useState({});
     const tableRef = useRef(null);
-    
+
     const [formData, setFormData] = useState({
         patientID: '',
         patientName: '',
@@ -28,7 +29,7 @@ const SurgeryManagement = () => {
 
     // Fetch all surgery records (GET request)
     useEffect(() => {
-        axios.get('http://localhost:8000/api/surgeries/all')
+        axios.get(`${API_BASE_URL}/surgeries/all`)
             .then(response => {
                 setRecords(response.data);  // Set the fetched data to records state
             })
@@ -49,7 +50,7 @@ const SurgeryManagement = () => {
     // Handle form submission (POST request)
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         const surgeryData = {
             patientName: formData.patientName,
             surgeryType: formData.surgeryType,
@@ -65,7 +66,7 @@ const SurgeryManagement = () => {
             comments: formData.comments,
         };
 
-        axios.post(`http://localhost:8000/api/surgeries/patient/${formData.patientID}`, surgeryData)
+        axios.post(`${API_BASE_URL}/surgeries/patient/${formData.patientID}`, surgeryData)
             .then(response => {
                 console.log('Form Data Submitted:', response.data);
                 alert("added Successfully");
@@ -81,7 +82,7 @@ const SurgeryManagement = () => {
         <div className="surgery-management-container">
             {!showForm && (
                 <>
-                    <button 
+                    <button
                         className="surgery-management-submit-btn"
                         onClick={() => setShowForm(true)}
                     >

@@ -3,6 +3,7 @@ import axios from "axios";
 import "./operationType.css";
 import OTSearchPopUp from "./oTSearchPopUp";
 import CustomModal from "../../../../CustomModel/CustomModal";
+import { API_BASE_URL } from "../../../api/api";
 
 const OperationType = () => {
   const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
@@ -47,7 +48,7 @@ const OperationType = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.0.117:8080/api/operation-types",
+        `${API_BASE_URL}/operation-types`,
         payload
       );
       setMessage("Data saved successfully!");

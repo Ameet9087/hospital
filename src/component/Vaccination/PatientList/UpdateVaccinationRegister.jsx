@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./UpdateVaccination.css";
+import { API_BASE_URL } from "../../api/api";
 
 // Indian states and castes for selection
 const indianStates = [
@@ -81,7 +82,7 @@ const UpdateVaccinationRegister = ({ patient, onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { vaccRegdNo, ...updatedData } = formData;
-    fetch(`http://localhost:1415/api/vaccination/${patient?.id}`, {
+    fetch(`${API_BASE_URL}/vaccination/${patient?.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
