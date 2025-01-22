@@ -50,7 +50,7 @@ import Procurementmain from "../../component/Procurement2/procurmentmain";
 import HelpDeskRouting from "../../component/HelpD/HelpDeskRouting";
 import Dashboard from "../../component/LoginDashboard/Dashboard/";
 import MainVisitorFile from "../VisitorMgt/MainVisitorFile";
-import Otmains from "../OT/Otmain";
+import OtMain from "../OT/Otmain";
 import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
 import BillingRoute from "../Billings/Billing";
 
@@ -127,7 +127,7 @@ function Layout({ }) {
           <Route path="/helpdesk/*" element={<HelpDeskRouting />} />
           <Route path="/billing/*" element={<BillingRoute />} />
           <Route path="/visit/*" element={<MainVisitorFile />} />
-          <Route path="/oprationtheater/*" element={<Otmains />} />
+          <Route path="/oprationtheater/*" element={<OtMain />} />
 
         </Routes>
       </div>
