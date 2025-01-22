@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./IpMoneyReceipt.css";
+import "./IPMoneyReceipt.css";
 import axios from "axios";
 import { CiSearch } from "react-icons/ci";
 import PopupTable from "../../../../Admission/PopupTable";
