@@ -1,7 +1,7 @@
 import React from "react";
-import "./Otpkgmaster.css";
+import "./OtpkgMaster.css";
 
-const Otpkgmaster = () => {
+const OtpKgMaster = () => {
   return (
     <div className="otpkgmster-container">
       <div className="otpkgmster-header">
@@ -18,7 +18,7 @@ const Otpkgmaster = () => {
       <table className="otpkgmster-table">
         <thead>
           <tr>
-            
+
             <th>SN</th>
             <th>Item Name</th>
             <th>Qty</th>
@@ -26,7 +26,7 @@ const Otpkgmaster = () => {
         </thead>
         <tbody>
           <tr>
-            
+
             <td>1</td>
             <td>
               <input type="text" className="otpkgmster-item-input" />
@@ -58,4 +58,4 @@ const Otpkgmaster = () => {
   );
 };
 
-export default Otpkgmaster;
+export default OtpKgMaster;

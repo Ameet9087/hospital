@@ -1,10 +1,10 @@
 import React from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import Ot_machine from './settingsubfils/OtMachine/OtMachine';
+import OtMachine from './settingsubfils/OtMachine/OtMachine';
 import OTMaster from './settingsubfils/OTMaster/Otmaster';
 import './setting.css';
-import Otpkgmaster from './settingsubfils/OTPkgmaster/OtpkgMaster';
 import OperationMaster from './settingsubfils/OperationMaster/OperationMaster';
+import Otpkgmaster from './settingsubfils/OTPMaster/Otpkgmaster';
 
 const Setting = () => {
   const location = useLocation();
@@ -54,7 +54,7 @@ const Setting = () => {
       {/* Content Area */}
       <main className="setting-content">
         <Routes>
-          <Route path="otmachine" element={<Ot_machine />} />
+          <Route path="otmachine" element={<OtMachine />} />
           <Route path="otmaster" element={<OTMaster />} />
           <Route path="otpkgmaster" element={<Otpkgmaster />} />
           <Route path="operationmaster" element={<OperationMaster />} />
