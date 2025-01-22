@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./CondemnationandDisposalView.css";
+import "./CondemnationAnddisposalView.css";
 import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
