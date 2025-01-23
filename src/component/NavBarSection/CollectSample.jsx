@@ -1,79 +1,112 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RefreshCw } from "lucide-react";
 import "./CollectSample.css";
 import SampleCodePopup from "./sampleCodePopup";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 
-const CollectSample = ({ sample }) => {
+const CollectSample = ({ sample, setSelectedSample }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedTests, setSelectedTests] = useState({});
   const [selectedSpecimens, setSelectedSpecimens] = useState({});
   const [runNumber, setRunNumber] = useState({ part1: "7", part2: "5" });
   const [barcodeValue, setBarcodeValue] = useState("");
-
+  const [selectedLabTestIds, setSelectedLabTestIds] = useState([]); // New state to track selected labTestIds
+  const [sampleCollectionData, setSampleCollectionData] = useState([]);
   const xorEncrypt = (number) => {
     const randomNum = Math.floor(Math.random() * 10000);
     const combinedString = `${number}-${randomNum}`;
-
     return combinedString;
   };
 
-  const handleTestSelection = (testName) => {
-    setSelectedTests((prevSelectedTests) => ({
-      ...prevSelectedTests,
-      [testName]: !prevSelectedTests[testName],
-    }));
+  const fetchSampleCollection = async () => {
+    const response = await axios.get(
+      `${API_BASE_URL}/samples/labRequest/${sample.labRequestId}`
+    );
+    setSampleCollectionData(response.data);
   };
 
-  const handleSpecimenChange = (testId, specimenValue) => {
+  useEffect(() => {
+    fetchSampleCollection();
+  }, []);
+
+  const handleTestSelection = (index, labTestId) => {
+    console.log(labTestId);
+
+    setSelectedTests((prevSelectedTests) => {
+      const newSelectedTests = { ...prevSelectedTests };
+      newSelectedTests[index] = !newSelectedTests[index];
+
+      setSelectedLabTestIds((prevSelectedLabTestIds) => {
+        if (newSelectedTests[index]) {
+          if (!prevSelectedLabTestIds.includes(labTestId)) {
+            return [...prevSelectedLabTestIds, labTestId];
+          }
+        } else {
+          return prevSelectedLabTestIds.filter((id) => id !== labTestId);
+        }
+        return prevSelectedLabTestIds;
+      });
+
+      if (newSelectedTests[index] && !selectedSpecimens[index]) {
+        setSelectedSpecimens((prevSelectedSpecimens) => ({
+          ...prevSelectedSpecimens,
+          [index]: "Blood",
+        }));
+      }
+
+      if (!newSelectedTests[index]) {
+        setSelectedSpecimens((prevSelectedSpecimens) => {
+          const newSpecimens = { ...prevSelectedSpecimens };
+          delete newSpecimens[index];
+          return newSpecimens;
+        });
+      }
+
+      return newSelectedTests;
+    });
+  };
+
+  const handleSpecimenChange = (index, specimenValue) => {
     setSelectedSpecimens((prevSpecimens) => ({
       ...prevSpecimens,
-      [testId]: specimenValue,
+      [index]: specimenValue,
     }));
   };
 
   const handleCollectSample = async () => {
-    // Collect selected tests
-    const selectedTestNames = Object.keys(selectedTests).filter(
-      (testName) => selectedTests[testName]
-    );
-    if (selectedTestNames.length === 0) {
+    if (selectedLabTestIds.length === 0) {
       alert("Please select at least one test.");
       return;
     }
+
     const labRequestId = sample.labRequestId;
     const encryptedBarcode = xorEncrypt(labRequestId);
     setBarcodeValue(encryptedBarcode);
 
     let labRequestObject = {
-      status: "Active",
-      sampleStatus: "Collected",
-      sampleCollectedDate: new Date().toISOString().split("T")[0],
-      sampleCollectedTime: new Date().toLocaleTimeString(),
-      runNumber: `${runNumber.part1} / ${runNumber.part2}`,
-      specimen: JSON.stringify(
-        Object.keys(selectedTests)
-          .filter((testName) => selectedTests[testName])
-          .map(() => "blood")
-      ),
+      status: "Pending",
       barcode: encryptedBarcode,
+      runNumber: `${runNumber.part1} / ${runNumber.part2}`,
+      labTestSampleMappings: selectedLabTestIds.map((labTestId) => ({
+        labTest: { labTestId },
+        specimenType: selectedSpecimens[labTestId] || "Blood",
+        status: "Collected",
+      })),
     };
 
     console.log(labRequestObject);
 
-    try {0
-      const response = await axios.put(
-        `${API_BASE_URL}/lab-requests/update-sample/${sample.labRequestId}`,
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/samples/${labRequestId}`,
         labRequestObject
       );
 
-      if (response.status === 200) {
-        console.log("Sample Collected");
-        setIsPopupOpen(true);
-      }
+      console.log("Sample Collected Successfully");
+      setIsPopupOpen(true);
     } catch (err) {
-      console.log(err);
+      console.log("Error collecting sample:", err);
     }
   };
 
@@ -82,6 +115,14 @@ const CollectSample = ({ sample }) => {
       ...prevRunNumber,
       [part]: value,
     }));
+  };
+
+  const isTestCollected = (labTestId) => {
+    return sampleCollectionData[0]?.labTestSampleMappings?.some(
+      (mapping) =>
+        mapping.labTest?.labTestSettingId == labTestId &&
+        mapping.status == "Collected"
+    );
   };
 
   return (
@@ -100,15 +141,17 @@ const CollectSample = ({ sample }) => {
         <div className="collectsample-info bg-gray-100 p-4 flex justify-between">
           <div>
             Patient Name:{" "}
-            {sample.patientDTO?.firstName ||
-              sample.newPatientVisitDTO?.firstName}{" "}
-            {sample.patientDTO?.lastName || sample.newPatientVisitDTO?.lastName}
+            {sample?.outPatient?.patient?.firstName ||
+              sample?.inPatient?.patient?.firstName}{" "}
+            {sample?.outPatient?.patient?.lastName ||
+              sample?.inPatient?.patient?.lastName}
           </div>
-          {sample.patientDTO && <div>Ward: Outpatient</div>}
+          {sample?.outPatient && <div>Patient Type: Outpatient</div>}
+          {sample?.inPatient && <div>Ward: Inpatient</div>}
           <div>
             Phone Number:{" "}
-            {sample.patientDTO?.phoneNumber ||
-              sample.newPatientVisitDTO?.phoneNumber}
+            {sample?.outPatient?.patient?.contactNumber ||
+              sample?.inPatient?.patient?.contactNumber}
           </div>
         </div>
 
@@ -125,47 +168,60 @@ const CollectSample = ({ sample }) => {
               </tr>
             </thead>
             <tbody>
-              {sample.labTests?.map((item, index) => (
-                <tr key={index}>
-                  <td>{sample.requisitionDate}</td>
-                  <td>
-                    {sample.prescriber?.salutation}
-                    {sample.prescriber?.firstName} {sample.prescriber?.lastName}
-                  </td>
-                  <td>
-                    <div className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={!!selectedTests[item.labTestId]}
-                        onChange={() => handleTestSelection(item.labTestId)}
-                      />
-                      {item.labTestName}
-                    </div>
-                  </td>
-                  <td>No</td>
-                  <td>
-                    <select
-                      className="border rounded"
-                      onChange={(e) =>
-                        handleSpecimenChange(item.labTestId, e.target.value)
-                      }
-                    >
-                      <option value="Blood">Blood</option>
-                      <option value="Urine">Urine</option>
-                      <option value="Saliva">Saliva</option>
-                      <option value="Stool">Stool</option>
-                    </select>
-                  </td>
-                  <td>Normal</td>
-                </tr>
-              ))}
+              {sample.labTests?.map((item, index) => {
+                const testCollected = isTestCollected(item.labTestSettingId);
+                console.log(testCollected);
+
+                return (
+                  <tr
+                    key={index}
+                    className={testCollected ? "bg-gray-200 opacity-50" : ""}
+                  >
+                    <td>{sample.requisitionDate}</td>
+                    <td>
+                      {sample.prescriber?.salutation}
+                      {sample.prescriber?.doctorName}
+                    </td>
+                    <td>
+                      <div className="flex items-center">
+                        <input
+                          type="checkbox"
+                          checked={!!selectedTests[index]}
+                          onChange={() =>
+                            handleTestSelection(index, item.labTestSettingId)
+                          }
+                          disabled={testCollected} // Disable if test is collected
+                        />
+                        {item.labTestName}
+                      </div>
+                    </td>
+                    <td>No</td>
+                    <td>
+                      <select
+                        className="border rounded"
+                        onChange={(e) =>
+                          handleSpecimenChange(index, e.target.value)
+                        }
+                        value={selectedSpecimens[index] || "Blood"}
+                        disabled={testCollected} // Disable dropdown if test is collected
+                      >
+                        <option value="Blood">Blood</option>
+                        <option value="Urine">Urine</option>
+                        <option value="Saliva">Saliva</option>
+                        <option value="Stool">Stool</option>
+                      </select>
+                    </td>
+                    <td>Normal</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
 
         <div className="collectsample-run-number mt-4 flex items-center">
           <span>
-            {sample.patientDTO != null ? "InPatient" : "OutPatient"} (Normal)
+            {sample?.outPatient != null ? "InPatient" : "OutPatient"} (Normal)
             Run Number:
           </span>
           <input
@@ -197,6 +253,7 @@ const CollectSample = ({ sample }) => {
           isOpen={isPopupOpen}
           onClose={() => setIsPopupOpen(false)}
           data={sample}
+          runNumber={runNumber}
           barcodeValue={barcodeValue}
         />
       )}

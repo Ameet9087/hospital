@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../ListReports/rdlListReports.css";
 import * as XLSX from "xlsx"; // Import xlsx library
-import RadiologyReportPopup from "./RadiologyReportPopup";
+import RadiologyApprovalReport from "./RadiologyApprovalReport";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 
@@ -11,7 +11,7 @@ const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
 };
 
-function RDLListReports() {
+function RadiologyApproval() {
   const [dateFrom, setDateFrom] = useState(getCurrentDate());
   const [dateTo, setDateTo] = useState(getCurrentDate());
   const [columnWidths, setColumnWidths] = useState({});
@@ -40,12 +40,12 @@ function RDLListReports() {
     let link;
 
     if (dateFrom && dateTo) {
-      link = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=Completed&startDate=${dateFrom}&endDate=${dateTo}`;
+      link = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=Active&startDate=${dateFrom}&endDate=${dateTo}`;
     } else {
       const todayDate = getCurrentDate();
       console.log(todayDate);
 
-      link = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=Completed&startDate=${todayDate}&endDate=${todayDate}`;
+      link = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=Active&startDate=${todayDate}&endDate=${todayDate}`;
     }
 
     // Fetch the data
@@ -294,7 +294,7 @@ function RDLListReports() {
       </div>
 
       {showAddReport && (
-        <RadiologyReportPopup
+        <RadiologyApprovalReport
           onClose={closePopups}
           selectedRequest={selectedRequest}
         />
@@ -303,4 +303,4 @@ function RDLListReports() {
   );
 }
 
-export default RDLListReports;
+export default RadiologyApproval;

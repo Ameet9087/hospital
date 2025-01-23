@@ -102,8 +102,8 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
 
     const signature = `
        ${
-         reportData?.signatureList
-           ? `<img src="data:image/jpeg;base64,${reportData?.signatureList}" alt="Radiology Scan" style="max-width: 100%; height: 150px;" />`
+         reportData?.performerDTO?.signatureImage
+           ? `<img src="data:image/jpeg;base64,${reportData?.performerDTO?.signatureImage}" alt="Radiology Scan" style="max-width: 100%; height: 150px;" />`
            : "<p>No image</p>"
        }
        <p>Signature</p>
@@ -238,9 +238,9 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
                   </p>
                 </div>
                 <div>
-                  {reportData.signatureList && (
+                  {reportData?.performerDTO?.signatureImage && (
                     <img
-                      src={`data:image/jpeg;base64,${reportData?.signatureList}`}
+                      src={`data:image/jpeg;base64,${reportData?.performerDTO?.signatureImage}`}
                       alt="Radiology Scan"
                       style={{ maxWidth: "100%", height: "150px" }}
                     />

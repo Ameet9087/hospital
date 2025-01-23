@@ -18,7 +18,7 @@ function RDLEditDoctors() {
 
   // Function to fetch data from API
   useEffect(() => {
-    fetch(`${API_BASE_URL}/imaging-requisitions/getAll-Prescriber`)
+    fetch(`${API_BASE_URL}/imaging-requisitions/getAll-Performer`)
       .then((response) => response.json())
       .then((data) => {
         setImagingData(data);
@@ -175,21 +175,25 @@ function RDLEditDoctors() {
                 <td>{item.imagingDate}</td>
                 {/* <td>{item.invoiceNumber}</td> */}
                 <td>
-                  {item.inPatientDTO?.firstName ||
-                    item.outPatientDTO?.firstName}{" "}
-                  {item.inPatientDTO?.lastName || item.outPatientDTO?.lastName}
+                  {item.inPatientDTO?.patient?.firstName ||
+                    item.outPatientDTO?.patient?.firstName}{" "}
+                  {item.inPatientDTO?.patient?.lastName ||
+                    item.outPatientDTO?.patient?.lastName}
                 </td>
                 <td>
-                  {item.inPatientDTO?.age || item.outPatientDTO?.age}{" "}
-                  {item.inPatientDTO?.ageUnit || item.outPatientDTO?.ageUnit}{" "}
+                  {item.inPatientDTO?.patient?.age ||
+                    item.outPatientDTO?.patient?.age}{" "}
+                  {item.inPatientDTO?.patient?.ageUnit ||
+                    item.outPatientDTO?.patient?.ageUnit}{" "}
                   {" / "}
-                  {item.inPatientDTO?.gender || item.outPatientDTO?.gender}
+                  {item.inPatientDTO?.patient?.gender ||
+                    item.outPatientDTO?.patient?.gender}
                 </td>
                 <td>{item.imagingItemDTO?.imagingType?.imagingTypeName}</td>
                 <td>{item.imagingItemDTO?.imagingItemName}</td>
                 <td>
-                  {item.prescriberDTO?.salutation}{" "}
-                  {item.prescriberDTO?.doctorName}{" "}
+                  {item.performerDTO?.salutation} {item.performerDTO?.firstName}{" "}
+                  {item.performerDTO?.firstName}
                 </td>
                 {/* <td>{item.performerDTO?.firstName}</td> */}
                 <td>

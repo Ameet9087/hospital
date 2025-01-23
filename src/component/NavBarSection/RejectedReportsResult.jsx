@@ -12,13 +12,11 @@ const FinalizedReportLabResult = () => {
   const location = useLocation();
   const { labRequestId } = location.state || {};
   const [labDoctors, setlabDoctors] = useState([]);
-  const [confirmBox, setConfirmBox] = useState(false);
-  const [reason, setReason] = useState("");
   const [selectedRequestId, setSelectedRequestId] = useState();
 
   const fetchResult = async () => {
     const response = await axios.get(
-      `${API_BASE_URL}/lab-result/by-labRequest?labRequestId=${labRequestId}&status=Approved`
+      `${API_BASE_URL}/lab-result/by-labRequest?labRequestId=${labRequestId}&status=Rejected`
     );
     setLabResult(response.data);
   };
@@ -49,22 +47,6 @@ const FinalizedReportLabResult = () => {
   useEffect(() => {
     setDoctorAsSignatory();
   }, [labResult, labDoctors]);
-
-  const handleUnApprove = async () => {
-    if (selectedRequestId == null) {
-      return alert("No selected Request");
-    }
-    try {
-      await axios.post(
-        `${API_BASE_URL}/lab-result/${selectedRequestId}/reject?&comments=${reason}&rejectedById=0`
-      );
-      console.log("Lab result updated successfully!");
-      setConfirmBox(false);
-      navigate("/laboratory/finalreports");
-    } catch (err) {
-      console.error("Error updating lab result:", err);
-    }
-  };
 
   const handlePrint = () => {
     const printContents = document.querySelector(".lab-container2").innerHTML;
@@ -329,33 +311,9 @@ const FinalizedReportLabResult = () => {
             <button onClick={handlePrint} className="lab-print-button">
               Print
             </button>
-            <button
-              onClick={() => {
-                setConfirmBox(true);
-                setSelectedRequestId(labResult?.labResultId);
-              }}
-              className="lab-print-button"
-            >
-              Un Approve
-            </button>
           </div>
         </div>
       </div>
-      {confirmBox && (
-        <CustomModal isOpen={confirmBox} onClose={() => setConfirmBox(false)}>
-          <div className="final-lab-report-confirmBox">
-            <div className="final-lab-report-confirmBox-inputs">
-              <label className="">Reason</label>
-              <input
-                type="text"
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
-              ></input>
-              <button onClick={handleUnApprove}>Submit</button>
-            </div>
-          </div>
-        </CustomModal>
-      )}
     </>
   );
 };

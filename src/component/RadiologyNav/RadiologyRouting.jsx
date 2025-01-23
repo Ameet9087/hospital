@@ -9,6 +9,7 @@ import RDLListReports from "../RadiologyNav/ListReports/rdlListReports";
 import RDLEditDoctors from "../RadiologyNav/EditDoctors/relEditDoctors";
 import RDLWardBilling from "../RadiologyNav/WardBilling/rdlWardBilling";
 import RDopdbilling from "./OPDBilling/reopdbilling";
+import RadiologyApproval from "./Approval/RadiologyApproval";
 
 // import MapGovernmentItemxs from './NavBarSection/LabSetting/mapGovernmentItems';
 
@@ -19,6 +20,7 @@ function RadiologyRouting() {
       <div className="lab-content">
         <Routes>
           <Route path="/listrequests" element={<RDLListRequest />} />
+          <Route path="/approval" element={<RadiologyApproval />} />
           <Route path="/listreports" element={<RDLListReports />} />
           <Route path="/editdoctors" element={<RDLEditDoctors />} />
           <Route path="/rDLWardBilling" element={<RDLWardBilling />} />

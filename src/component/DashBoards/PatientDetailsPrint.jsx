@@ -3,7 +3,6 @@ import { jsPDF } from "jspdf";
 import { FiDownload, FiRotateCcw, FiPrinter } from "react-icons/fi";
 import axios from "axios";
 import "./PatientDetailsPrint.css";
-import { API_BASE_URL } from "../api/api";
 
 const PatientDetailsPrint = () => {
   const [rotateAngle, setRotateAngle] = useState(0);
@@ -19,7 +18,7 @@ const PatientDetailsPrint = () => {
   useEffect(() => {
     // Fetch data from the API when the component mounts
     axios
-      .get(`${API_BASE_URL}/ip-admissions`)
+      .get("http://82.180.163.53:1415/api/ip-admissions")
       .then((response) => {
         // Check if the response contains data
         if (response.data && response.data.length > 0) {

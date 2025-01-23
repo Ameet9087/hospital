@@ -6,6 +6,8 @@ import Notification from "./navNotification";
 import SampleCollection from "./sampleCollection";
 import AddResults from "./addResults";
 import PendingReports from "./pendingReports";
+import RejectedReports from "./RejectedReports";
+import RejectedReportResult from "./RejectedReportsResult";
 
 import FinalReports from "./finalReports";
 import NavSettings from "./navSettings";
@@ -27,6 +29,10 @@ import CollectSample from "./CollectSample";
 import Opdlab from "./OPDBillingLab/opdlab";
 import AddResultForm from "./addResultForm";
 import LabResult from "./labResult";
+import UnCollectSample from "./UnCollectSample";
+import RejectSample from "./RejectSample";
+import SampleRecieving from "./SampleRecieving";
+import FinalizedReportLabResult from "./FinalizedReportLabResult";
 
 const Lab = () => {
   return (
@@ -38,9 +44,13 @@ const Lab = () => {
           <Route path="/Home" element={<NavHome />} />
           <Route path="/notification" element={<Notification />} />
           <Route path="/samplecollection" element={<SampleCollection />} />
+          <Route path="/uncollectsample" element={<UnCollectSample />} />
+          <Route path="/rejectsample" element={<RejectSample />} />
+          <Route path="/samplerecieve" element={<SampleRecieving />} />
           <Route path="/addresults" element={<AddResults />} />
           <Route path="/pendingreports" element={<PendingReports />} />
           <Route path="/finalreports" element={<FinalReports />} />
+          <Route path="/rejectedreports" element={<RejectedReports />} />
           <Route path="/settings/*" element={<NavSettings />} />
           {/* <Route path="/ward-billing" element={<NavWardBilling />} /> */}
           {/* <Route path="/external-labs" element={<NavExternalLabs />} /> */}
@@ -49,8 +59,22 @@ const Lab = () => {
 
           <Route path="/collect-sample/:id" element={<CollectSample />}></Route>
           <Route path="/opdbilling" element={<Opdlab />}></Route>
-          <Route path="/addresults/addResultForm" element={<AddResultForm />}></Route>
-          <Route path="/pendingreports/labResult" element={<LabResult />}></Route>
+          <Route
+            path="/addresults/addResultForm"
+            element={<AddResultForm />}
+          ></Route>
+          <Route
+            path="/pendingreports/labResult"
+            element={<LabResult />}
+          ></Route>
+          <Route
+            path="/finalreports/final-labResult"
+            element={<FinalizedReportLabResult />}
+          ></Route>
+          <Route
+            path="/rejectedreports/rejected-labResult"
+            element={<RejectedReportResult />}
+          ></Route>
         </Routes>
       </div>
     </>

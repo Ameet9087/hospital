@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../LabSetting/labCategoryAddNewLC.css";
+import { API_BASE_URL } from "../../api/api";
 
 const LabCategoryAddNewLC = ({ onClose }) => {
   const [labTestCategoryName, setLabTestCategoryName] = useState("");

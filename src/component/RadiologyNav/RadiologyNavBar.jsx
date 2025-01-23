@@ -14,6 +14,9 @@ const RadiologyNavBar = () => {
           <NavLink to="/radioloagy/listrequests">List Requests</NavLink>
         </li>
         <li>
+          <NavLink to="/radioloagy/approval">Approval</NavLink>
+        </li>
+        <li>
           <NavLink to="/radioloagy/listreports">List Reports</NavLink>
         </li>
         <li>

@@ -3,9 +3,14 @@ import React, { useEffect, useState } from "react";
 import "../LabSetting/lSLabTestAddNLTest.css";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../../api/api";
+import RadiologyPopupTable from "../../Employee/Radiology/RadiologyPopupTable";
+import axios from "axios";
 const LSLabTestAddNLTest = ({ onClose }) => {
   const [labCategories, setLabCategories] = useState([]);
   const [labComponents, setLabComponents] = useState([]);
+  const [serviceDetails, setServiceDetails] = useState([]);
+  const [activePopup, setActivePopup] = useState("");
+  const [selectedServiceDetails, setSelectedServiceDetails] = useState();
   const [labTestData, setLabTestData] = useState({
     labTestName: "",
     labTestCode: "",
@@ -13,7 +18,7 @@ const LSLabTestAddNLTest = ({ onClose }) => {
     serviceDepartment: "",
     selectedSpecimen: "",
     runNoType: "normal",
-    displaySequence: 1000,
+    displaySequence: 0,
     isSmsApplicable: false,
     isLisApplicable: false,
     isValidForReporting: false,
@@ -23,7 +28,10 @@ const LSLabTestAddNLTest = ({ onClose }) => {
     interpretation: "",
     components: [],
   });
-
+  useEffect(() => {
+    fetchServiceDetails();
+  }, []);
+  
   useEffect(() => {
     const fetchLabCategories = async () => {
       try {
@@ -41,7 +49,7 @@ const LSLabTestAddNLTest = ({ onClose }) => {
         console.error("Error:", error);
       }
     };
-
+    
     const fetchLabComponents = async () => {
       try {
         const response = await fetch(
@@ -58,7 +66,7 @@ const LSLabTestAddNLTest = ({ onClose }) => {
         console.error("Error:", error);
       }
     };
-
+    
     fetchLabComponents();
     fetchLabCategories();
   }, []); // Run once on component mount
@@ -70,13 +78,42 @@ const LSLabTestAddNLTest = ({ onClose }) => {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
+  const fetchServiceDetails = async () => {
+    const response = await axios.get(
+      `${API_BASE_URL}/service-details/service?typeName=Lab`
+    );
+    setServiceDetails(response.data);    
+  };
+  const getPopupData = () => {
+    if (activePopup === "labTestName") {
+      return {
+        columns: ["serviceDetailsId", "serviceName", "serviceTypeName"],
+        data: serviceDetails,
+      };
+    }
+    else {
+      return { columns: [], data: [] };
+    }
+  };
+  const { columns, data } = getPopupData();
+  
+
+  const handleSelect = (data) => {
+    if (activePopup === "labTestName") {
+      setLabTestData((prevData) => ({
+        ...prevData,
+        labTestName: data.serviceName, // Update the labTestName property with the selected data
+      }));
+      setSelectedServiceDetails(data); // Assuming this sets some additional selected service details
+    }
+  };
+  
 
   const handleComponentChange = (index, e) => {
     const { value } = e.target;
     const selectedComponent = labComponents.find(
       (comp) => comp.componentName === value
     );
-
     // Update the specific component data based on the selected component
     setLabTestData((prevData) => {
       const newComponents = [...prevData.components];
@@ -123,7 +160,7 @@ const LSLabTestAddNLTest = ({ onClose }) => {
       reportingName: labTestData.reportingName,
       interpretation: labTestData.interpretation,
       runNumberType: labTestData.runNoType,
-      labTestCategoryId: labCategories[0]?.id || null,
+      labTestCategoryId: labCategories?.id || null,
       isOutsourceTest: labTestData.isOutsourcedTest ? "Yes" : "No",
       smsApplicable: labTestData.isSmsApplicable ? "Yes" : "No",
       isLISApplicable: labTestData.isLisApplicable ? "Yes" : "No",
@@ -177,6 +214,10 @@ const LSLabTestAddNLTest = ({ onClose }) => {
                 value={labTestData.labTestName}
                 onChange={handleInputChange}
               />
+              <i
+                onClick={() => setActivePopup("labTestName")}
+                className="fa-solid fa-magnifying-glass"
+              ></i>
             </div>
             <div className="lSLabTestAddNLTest-form-group">
               <label>
@@ -453,6 +494,14 @@ const LSLabTestAddNLTest = ({ onClose }) => {
         </button>
         <button className="lSLabTestAddNLTest-close-btn">Close</button>
       </div>
+      {activePopup && (
+        <RadiologyPopupTable
+          columns={columns}
+          data={data}
+          onSelect={handleSelect}
+          onClose={() => setActivePopup(null)}
+        />
+      )}
     </div>
   );
 };

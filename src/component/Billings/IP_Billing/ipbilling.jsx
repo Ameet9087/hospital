@@ -26,6 +26,16 @@ const IpBilling = () => {
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
   const [finaltotalamt, setTotalAmt] = useState(0);
+  const [finalTotalDrVisit, setFinalTotalDrVisit] = useState([]);
+  // doctor visit
+  const [doctors, setDoctors] = useState([]); // State to store the doctors data
+  const [loading, setLoading] = useState(true); // State to handle loading status
+  const [error, setError] = useState(null); // State to handle errors
+  const [doctorVisit, setDoctorVisit] = useState(null);
+
+
+
+
   // Handle change event when a service is selected
   const handleServiceChange = (event, index) => {
     const selectedId = event.target.value;
@@ -141,10 +151,90 @@ const IpBilling = () => {
       );
 
       setPatientData(ipData);
-      console.log("selectedPatient", ipData)
+      console.log("selectedPatient prachi1", ipData)
       fetchPreviousBills(ipData.ipAdmmissionId);
     }
+    if (activePopup === "doctor") {
+      const mappedDoctors = doctors.map((doctor) => ({
+        doctorId: doctor.doctorId,
+        doctorName: doctor.doctorName,
+        specialization: doctor.specialisationId?.specialisationName || doctor.specialization,
+        email: doctor.emailId,
+        mobileNumber: doctor.mobileNumber,
+        morningFirstVisitFee: doctor.orgDoctorFees?.[0]?.morningFirstVisit || 0,
+        eveningFirstVisitFee: doctor.orgDoctorFees?.[0]?.eveningFirstVisit || 0,
+        referralVisitFee: doctor.orgDoctorFees?.[0]?.referralVisit || 0,
+        generalOpdFee: doctor.orgDoctorFees?.[0]?.generalOpdFee || 0,
+        payTypeName: doctor.orgDoctorFees?.[0]?.payType?.payTypeName || "N/A",
+      }));
+
+      console.log("Mapped Doctors:", mappedDoctors);
+
+      setDoctorVisitRows((prevRows) => {
+        // Check if the selected doctor already exists in the table
+        const isDuplicate = prevRows.some(
+          (row) => row.doctorId === data.doctorId && row.doctorName === data.doctorName
+        );
+
+        if (isDuplicate) {
+          console.log("Duplicate doctor detected, skipping addition.");
+          return prevRows; // Return the existing rows without changes
+        }
+
+        // Find an empty row to update
+        const emptyRowIndex = prevRows.findIndex(
+          (row) => !row.doctorId || row.doctorId === "" || !row.doctorName
+        );
+
+        if (emptyRowIndex !== -1) {
+          console.log(data);
+
+          const updatedRows = [...prevRows];
+          updatedRows[emptyRowIndex] = {
+            ...updatedRows[emptyRowIndex],
+            doctorId: data.doctorId,
+            doctorName: data.doctorName,
+            specialization: data.specialization,
+            generalOpdFee: data.orgDoctorFees[0]?.generalOpdFee || 0,
+            rate: data.generalOpdFee || 0,
+            qty: 1,
+            totalAmt: data.orgDoctorFees[0]?.generalOpdFee || 0,
+            netAmt: data.orgDoctorFees[0]?.generalOpdFee || 0,
+          };
+          console.log("Updated existing empty row with doctor:", updatedRows);
+          return updatedRows;
+        }
+
+        // If no empty row exists, add as a new row
+        const updatedRows = [
+          ...prevRows,
+          {
+            sn: prevRows.length ? prevRows[prevRows.length - 1].sn + 1 : 1, // Ensure unique serial number
+            doctorId: data.doctorId,
+            doctorName: data.doctorName,
+            specialization: data.specialization,
+            generalOpdFee: data.generalOpdFee || 0,
+            rate: data.generalOpdFee || 0,
+            qty: 1,
+            totalAmt: data.generalOpdFee || 0,
+            netAmt: data.generalOpdFee || 0,
+          },
+        ];
+        console.log("Added new doctor row: prachi 2", updatedRows);
+        return updatedRows;
+      });
+    }
+
+
     setActivePopup(null); // Close the popup after selection
+  };
+
+  const handleDoctorNameChange = (e) => {
+    const updatedDoctorVisit = [...doctorVisit];
+    if (updatedDoctorVisit[0]) {
+      updatedDoctorVisit[0].doctorName = e.target.value;
+      setDoctorVisit(updatedDoctorVisit);
+    }
   };
   const getPopupData = () => {
     if (activePopup === "services") {
@@ -171,7 +261,12 @@ const IpBilling = () => {
           data: [], // Return empty data if ipAdmissionPatient is invalid
         };
       }
-    } else {
+    }
+    else if (activePopup === "doctor") {
+      return { columns: ["doctorName", "specialization"], data: doctors };
+    }
+
+    else {
       return { columns: [], data: [] };
     }
   };
@@ -249,6 +344,78 @@ const IpBilling = () => {
       })
       .catch((error) => console.error("Error saving data:", error));
   };
+
+  // prachi dr visit
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${API_BASE_URL}/doctors`);
+        setDoctors(response.data);
+      } catch (err) {
+        console.error("Error fetching doctors data:", err);
+        setError("Failed to fetch doctors data. Please try again later.");
+      } finally {
+        setLoading(false); // Set loading to false after the API call
+      }
+    };
+
+    fetchDoctors();
+  }, []);
+
+  // prachi post Dr
+
+
+  const [formData, setFormData] = useState({
+    doctorVisitId: '',
+    ipAdmissionId: patientData.ipAdmmissionId,
+    doctorId: '',
+    visitDate: currentDate,
+    visitTime: currentTime,
+    doctorName: '',
+    visitReason: '',
+    remarks: ''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+
+  const postDrVisitData = async (e) => {
+    e.preventDefault();
+    console.log("patient id", patientData.ipAdmmissionId)
+    // Prepare the visit data to be sent from the table and form data
+    const visitData = doctorVisitRows.map((row) => ({
+      drVisitId: row.sn,
+      ipAdmissionDto: { ipAdmmissionId: patientData.ipAdmmissionId },
+      addDoctorDto: { doctorId: row.doctorId },
+      visitDate: row.date,
+      visitTime: formData.visitTime,
+      doctorName: row.doctorName,
+      visitReason: row.visitReasons,
+      remarks: formData.remarks,
+    }));
+
+    // Log the visitData to see its structure and contents
+    console.log("visited data", visitData)
+    try {
+      const response = await axios.post('http://localhost:4096/api/dr-visits', visitData);
+      console.log('Data posted successfully:', response.data);
+      alert("Data posted successfully");
+    } catch (error) {
+      console.error('Error posting data:', error);
+    }
+  };
+
+
+
+
+
   const handleRowUpdate = (id, field, value) => {
     setServicesData((prevRows) =>
       prevRows.map((row) => {
@@ -282,6 +449,23 @@ const IpBilling = () => {
       emergAmt: "",
     },
   ]);
+
+
+  const [doctorVisitRows, setDoctorVisitRows] = useState([
+    {
+      sn: 1,
+      date: new Date().toISOString().split("T")[0],
+      dCode: "",
+      doctorName: "",
+      generalOpdFee: "",
+      totalAmt: "",
+      visitReasons: "",
+    },
+  ]);
+
+
+
+
   const fetchServiceDetails = async () => {
     try {
       const response = await fetch(
@@ -297,7 +481,7 @@ const IpBilling = () => {
       setError(error.message); // Set error message in state
     }
   };
-  const handleAddRow = (type) => {
+  const handleAddRow = (type, index) => {
     if (type === "package") {
       setTestGridTableRowsableRows((prevRows) => [
         ...prevRows,
@@ -326,6 +510,35 @@ const IpBilling = () => {
         },
       ]);
     }
+    else if (type === "drvisit") {
+      setDoctorVisitRows((prevRows) => {
+        // Create a new row to add
+        const newRow = {
+          sn: prevRows.length + 1, // Serial number
+          date: "",
+          dCode: "",
+          doctorName: "",
+          generalOpdFee: "",
+          totalAmt: "",
+          visitReasons: "",
+        };
+
+        // Check if a row with identical data already exists
+        const isDuplicate = prevRows.some((row) =>
+          Object.keys(newRow).every((key) => row[key] === newRow[key])
+        );
+
+        // If it's not a duplicate, add the new row; otherwise, log a warning
+        if (!isDuplicate) {
+          return [...prevRows, newRow]; // Add the new row
+        } else {
+          console.log("Duplicate row detected. Row not added.");
+          return prevRows; // Return the same state if duplicate
+        }
+      });
+      console.log(doctorVisitRows + "ppppppppp");
+
+    }
   };
   const handleDeleteRow = (type, index) => {
     if (type === "package") {
@@ -337,6 +550,19 @@ const IpBilling = () => {
         prevRows.filter((_, rowIndex) => rowIndex !== index)
       );
     }
+    else if (type === "drvisit") {
+      setDoctorVisitRows((prevRows) =>
+        prevRows.filter((_, rowIndex) => rowIndex !== index)
+      );
+    }
+  };
+
+  const handleRowChange = (index, field, value) => {
+    setDoctorVisitRows((prevRows) =>
+      prevRows.map((row, i) =>
+        i === index ? { ...row, [field]: value } : row
+      )
+    );
   };
   useEffect(() => {
     const total = testGridTableRowsableRows.reduce(
@@ -345,6 +571,15 @@ const IpBilling = () => {
     );
     setTotalAmt(total);
   }, [testGridTableRowsableRows]);
+
+  useEffect(() => {
+    const total = doctorVisitRows.reduce(
+      (acc, row) => acc + (row.netAmt || 0),
+      0
+    );
+    setFinalTotalDrVisit(total);
+  }, [doctorVisitRows]);
+
   const renderServicesTable = () => {
     return (
       <div className="services-table">
@@ -494,6 +729,9 @@ const IpBilling = () => {
       </div>
     );
   };
+
+
+
   // -------------------------------------------------------------------PRevioustest detail-----------------------------------------------
   const renderTable = () => {
     switch (selectedTab) {
@@ -560,33 +798,22 @@ const IpBilling = () => {
         );
       case "testGrid":
         return renderServicesTable();
-      case "bhs":
+      case "drVisits":
         // Existing BHS table rendering
         return (
-          <div className="iPBilling-table">
-            <table className="ipdreturnsward-table" ref={tableRef}>
+          <div className="services-table">
+            <table ref={tableRef}>
               <thead>
                 <tr>
                   {[
-                    "Action",
+                    "Actions",
                     "SN",
-                    "Bill Date",
-                    "Bill Time",
-                    "Code",
-                    "Service Name",
+                    "Date",
+                    "DCode",
                     "Doctor Name",
-                    "Rate",
-                    "Qty",
-                    "Total",
-                    "Disc",
-                    "Disc Amount",
-                    "Net Amount",
-                    "Emerg",
-                    "Vacutainer",
-                    "Emer Amt",
-                    "Pkg Name",
-                    "Doctor %",
-                    "Doc Share Amt",
+                    "Dr. Fee",
+                    "Total Amt",
+                    "Visit Reason",
                   ].map((header, index) => (
                     <th
                       key={index}
@@ -597,10 +824,7 @@ const IpBilling = () => {
                         <span>{header}</span>
                         <div
                           className="resizer"
-                          onMouseDown={startResizing(
-                            tableRef,
-                            setColumnWidths
-                          )(index)}
+                          onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
                         ></div>
                       </div>
                     </th>
@@ -608,29 +832,141 @@ const IpBilling = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>2024-12-15</td>
-                  <td>10:30 AM</td>
-                  <td>BHS001</td>
-                  <td>Basic Health Service</td>
-                  <td>Dr. John Doe</td>
-                  <td>5000</td>
-                  <td>1</td>
-                  <td>5000</td>
-                  <td>10%</td>
-                  <td>500</td>
-                  <td>4500</td>
-                  <td>No</td>
-                  <td>Yes</td>
-                  <td>200</td>
-                  <td>General Package</td>
-                  <td>5%</td>
-                  <td>225</td>
-                  <td>0000000</td>
-                </tr>
+                {doctorVisitRows.map((row, index) => (
+                  <tr key={index}>
+                    {/* Actions */}
+                    <td>
+                      <div className="table-actions">
+                        <button
+                          className="billing-opd-com-add-btn"
+                          onClick={() => handleAddRow("drvisit", index)}
+                        >
+                          Add
+                        </button>
+                        <button
+                          className="billing-opd-com-del-btn"
+                          onClick={() => handleDeleteRow("drvisit", index)}
+                          disabled={doctorVisitRows.length <= 1}
+                        >
+                          Del
+                        </button>
+                      </div>
+                    </td>
+
+                    {/* Serial Number */}
+                    <td>{row.sn}</td>
+
+                    {/* Date */}
+                    <td>
+                      <input
+                        type="date"
+                        value={row.date || ""}
+                        onChange={(e) =>
+                          setDoctorVisitRows((prevRows) =>
+                            prevRows.map((r, i) =>
+                              i === index ? { ...r, date: e.target.value } : r
+                            )
+                          )
+                        }
+                      />
+                    </td>
+
+                    {/* Doctor Code */}
+                    <td>{row.doctorId || ""}</td>
+
+                    {/* Doctor Name */}
+                    <td>
+                      <input
+                        type="text"
+                        value={row.doctorName || ""}
+                        onChange={(e) =>
+                          setDoctorVisitRows((prevRows) =>
+                            prevRows.map((r, i) =>
+                              i === index ? { ...r, doctorName: e.target.value } : r
+                            )
+                          )
+                        }
+                      />
+                      <button
+                        className="billing-opd-com-magnifier-btn"
+                        onClick={() => setActivePopup("doctor")}
+                      >
+                        🔍
+                      </button>
+                    </td>
+
+                    {/* Doctor Fee */}
+                    <td>
+                      <input
+                        type="number"
+                        value={row.generalOpdFee || ""}
+                        onChange={(e) =>
+                          setDoctorVisitRows((prevRows) =>
+                            prevRows.map((r, i) =>
+                              i === index
+                                ? {
+                                  ...r,
+                                  generalOpdFee: parseFloat(e.target.value) || 0,
+                                  totalAmt:
+                                    (parseFloat(e.target.value) || 0) * (r.qty || 1),
+                                  netAmt:
+                                    (parseFloat(e.target.value) || 0) * (r.qty || 1),
+                                }
+                                : r
+                            )
+                          )
+                        }
+                      />
+                    </td>
+
+                    {/* Total Amount */}
+                    <td>{row.totalAmt || 0}</td>
+
+                    {/* User Name */}
+                    <td>
+                      <input
+                        type="text"
+                        value={row.visitReasons || ""}
+                        onChange={(e) =>
+                          setDoctorVisitRows((prevRows) =>
+                            prevRows.map((r, i) =>
+                              i === index ? { ...r, visitReasons: e.target.value } : r
+                            )
+                          )
+                        }
+                      />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
+
+            <div className="billing-opd-com-summary-section">
+              <div className="billing-opd-com-summary-row">
+                <div className="billing-opd-com-summary-field">
+                  <label>Less Disc% On All Services:</label>
+                  <input
+                    type="number"
+                    value={discountPercentage}
+                    onChange={(e) =>
+                      setDiscountPercentage(parseFloat(e.target.value) || 0)
+                    }
+                  />
+                </div>
+                <div className="billing-opd-com-summary-field">
+                  <label> Less Disc Amt on All Services :</label>
+                  <input type="number" value={discountAmount} readOnly />
+                </div>
+                <div className="billing-opd-com-summary-row">
+                  <div className="billing-opd-com-summary-field">
+                    <label>Total Amount:</label>
+                    <input type="number" value={finalTotalDrVisit.toFixed(2)} readOnly />
+                  </div>
+
+                </div>
+                <button className="btn-blue" onClick={postDrVisitData}>Save Doctor Visit</button>
+              </div>
+            </div>
           </div>
         );
       case "tariff":
@@ -665,7 +1001,7 @@ const IpBilling = () => {
     }
   };
   const FloatingInput = ({ label, type = "text", ...props }) => {
-    const [isFocused, setIsFocused] = useState(false);
+    const [isFocused, setIsFocused] = useState(true);
     const [hasValue, setHasValue] = useState(false);
     const handleChange = (e) => {
       setHasValue(e.target.value.length > 0);
@@ -865,6 +1201,13 @@ const IpBilling = () => {
               onClick={() => setSelectedTab("services")}
             >
               Previous Test Details
+            </button>
+            <button
+              className={`billing-ipBilling-tab ${selectedTab === "drVisits" ? "active" : ""
+                }`}
+              onClick={() => setSelectedTab("drVisits")}
+            >
+              Doctor Visits
             </button>
             {/* <button
               className={`iPBilling-tab ${

@@ -1,0 +1,170 @@
+/* SampleRecieving.css */
+
+.SampleRecieving-Container {
+    padding: 10px;
+  }
+  
+  .SampleRecieving-Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .SampleRecieving-Title {
+    font-size: var(--heading-font);
+    /* font-weight: bold; */
+  }
+  .SampleRecieving-list-btn{
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .SampleRecieving-list-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  
+  }
+  .SampleRecieving-controls {
+    display: flex;
+  }
+  .SampleRecieving-date-range {
+    display: flex;
+    align-items: center;
+    /* width: 95%; */
+    gap: 10px;
+    background-color: #f0f0f0;
+    padding: 3px;
+  }
+  .SampleRecieving-date-range label{
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    font-size: var(--font-size);
+  }
+  
+  .SampleRecieving-date-range input[type="date"] {
+    padding: 3px;
+    margin-left: 10px;
+  }
+  
+  .SampleRecieving-search-bar{
+    position: relative;
+    background-color: #f2f2f2;
+    display: flex;
+    align-items: center;
+  }
+  .SampleRecieving-search-bar input{
+    padding: 5px;
+    font-size: var(--font-size);
+    width: 200px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  .SampleRecieving-search-bar i{
+    position: absolute;
+    right: 5px;
+    color: gray;
+  }
+  .SampleRecieving-print-btn{
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 5px 5px;
+  }
+  .SampleRecieving-print-btn:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .SampleRecieving-search-N-print{
+    display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+  }
+  .SampleRecieving-results-info {
+    display: flex;
+    align-items: center;
+    /* padding-top: 10px; */
+  }
+  .SampleRecieving-results-info span {
+    /* display: flex;
+  align-items: center; */
+    /* padding-top: 10px; */
+    /* color: #008cba; */
+    font-size: var(--font-size);
+    margin-right: 10px;
+    /* font-weight: bold; */
+  }
+  .SampleRecieving-TableWrapper {
+    overflow-x: auto;
+  }
+  .SampleRecieving-viewDetails{
+    background-color:var( --button-color);
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    /* margin-right: 10px; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin: 1px;
+    transition: background-color 0.3s ease;
+    padding: 2px 3px;
+  }
+  .SampleRecieving-viewDetails:hover {
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .SampleRecieving-confirm{
+    display: flex;
+    width: 500px;
+    height: 200px;
+    gap: 10px;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .SampleRecieving-confirm button{
+    border: none;
+    background-color: var(--button-color);
+    color: white;
+    width: fit-content;
+    padding: 10px;
+  }
+  
+  /* .labPagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+  } */
+  
+  /* .labPaginationControls {
+    display: flex;
+    gap: 8px;
+  } */
+  
+  /* .labPaginationButton {
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+  } */
+  

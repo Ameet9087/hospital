@@ -127,6 +127,12 @@
   .RadiologyReportPopup-image{
     width: 500px;
   }
+  .rDLListRequest-add-report-signature-box p{
+    border-top: 1px solid black;
+  }
+  .rDLListRequest-add-report-select-signatories{
+    width: 250px;
+  }
   
 
   @media print {

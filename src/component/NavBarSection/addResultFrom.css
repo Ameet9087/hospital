@@ -88,7 +88,7 @@
   background-color: rgb(187, 179, 179);
 }
 
-.lab-addResult-component,
+/* .lab-addResult-component,
 .lab-addResult-requested,
 .lab-addResult-value,
 .lab-addResult-unit,
@@ -99,7 +99,7 @@
   text-align: left;
   color: black;
   margin: 5px;
-}
+} */
 
 .lab-addResult-row2 {
   display: flex;
@@ -150,7 +150,7 @@
 
 
 
-.lab-addResult-row1 {
+.lab-addResult-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -158,7 +158,10 @@
   padding: 10px;
   background-color: white;
 }
-
+.lab-addResult-row input {
+  border-radius: 7px;
+  border: 1px solid #ccc;
+}
 
 
 .lab-addResult-remove-btn {

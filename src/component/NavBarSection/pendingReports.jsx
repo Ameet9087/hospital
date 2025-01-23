@@ -39,14 +39,18 @@ function PendingReports() {
     let link;
 
     if (dateFrom != "" && dateTo != "") {
-      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?isVerified=No&startDate=${dateFrom}&endDate=${dateTo}`;
+      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?startDate=${dateFrom}&endDate=${dateTo}&approvalStatus=Pending`;
     } else {
       let TodaysDate = new Date().toISOString().split("T")[0];
-      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?isVerified=No&startDate=${TodaysDate}&endDate=${TodaysDate}`;
+      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?startDate=${TodaysDate}&endDate=${TodaysDate}&approvalStatus=Pending`;
     }
     fetch(link)
       .then((res) => res.json())
-      .then((data) => setLabResult(data))
+      .then((data) => {
+        console.log(data);
+
+        setLabResult(data);
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -149,7 +153,6 @@ function PendingReports() {
             {/* Add more options here */}
           </select>
         </div>
-        
       </div>
       <div className="pendingReports-searchbar-N-showing">
         <div className="pendingReports-search-bar">
@@ -163,7 +166,7 @@ function PendingReports() {
         <div className="pendingReports-results-info">
           <span>Showing 0 / 0 results</span>
           <button className="pendingReports-print-button" onClick={handlePrint}>
-          <i className="fa fa-file-excel"></i> Export
+            <i className="fa fa-file-excel"></i> Export
           </button>
           <button className="pendingReports-print-button" onClick={handlePrint}>
             <i className="fa-solid fa-print"></i> Print
@@ -210,37 +213,53 @@ function PendingReports() {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>
-                    {result.labRequestDTO?.outPatientDTO?.firstName ||
-                      result.labRequestDTO?.inPatientDTO?.firstName}{" "}
-                    {result.labRequestDTO?.outPatientDTO?.lastName ||
-                      result.labRequestDTO?.inPatientDTO?.lastName}
+                    {result.labResult?.outPatient?.patient?.firstName ||
+                      result.labRequest?.inPatient?.patient?.firstName}{" "}
+                    {result.labRequest?.outPatient?.patient?.lastName ||
+                      result.labRequest?.inPatient?.patient?.lastName}
                   </td>
                   <td>
-                    {result.labRequestDTO?.outPatientDTO?.age ||
-                      result?.labRequestDTO?.inPatientDTO?.age}
+                    {result.labRequest?.outPatient?.patient?.age ||
+                      result?.labRequest?.inPatient?.patient?.age}
                     {" Y / "}
-                    {result.labRequestDTO?.outPatientDTO?.gender ||
-                      result.labRequestDTO?.inPatientDTO?.gender}
+                    {result.labRequest?.outPatient?.patient?.gender ||
+                      result.labRequest?.inPatient?.patient?.gender}
                   </td>
                   <td>
-                    {result.labRequestDTO?.outPatientDTO?.phoneNumber ||
-                      result.labRequestDTO?.inPatientDTO?.phoneNumber}
+                    {result.labRequest?.outPatient?.patient?.mobileNumber ||
+                      result.labRequest?.inPatient?.patient?.mobileNumber}
                   </td>
-                  <td>{result.labRequestDTO?.labTestName}</td>
                   <td>
-                    {result.labRequestDTO?.inPatientDTO != null
+                    {result?.labRequest.labTests?.map((labTest, index) => (
+                      <span key={index}>
+                        {index > 0 ? " , " : ""}
+                        {labTest.labTestName}
+                      </span>
+                    ))}
+                  </td>
+                  <td>
+                    {result.labRequest?.inPatient != null
                       ? "InPatient"
                       : "Outpatient"}
                   </td>
-                  <td>{result.labRequestDTO?.runNumber}</td>
-                  <td>{result.labRequestDTO?.barcode}</td>
+                  <td>
+                    {result?.labRequest?.sampleCollections?.map(
+                      (labTest, index) => (
+                        <span key={index}>
+                          {index > 0 ? " , " : ""}
+                          {labTest.runNumber}
+                        </span>
+                      )
+                    )}
+                  </td>
+                  <td>{result.labRequest?.barcode}</td>
                   <td>
                     <button
                       className="pendingReports-table-btn"
                       onClick={() =>
                         navigate("/laboratory/pendingreports/labResult", {
                           state: {
-                            labRequestId: result.labRequestDTO?.labRequestId,
+                            labRequestId: result.labRequest?.labRequestId,
                           },
                         })
                       }

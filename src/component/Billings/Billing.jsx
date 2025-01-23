@@ -4,6 +4,7 @@ import IPBilling from '../Nursing/NursingModule/IPBilling/iPBilling'
 import OpdBilling from './OpdBilling/OpdBilling'
 import Ipmoneyreceipt from './IP_Billing/Transactions/IPMoneyReceipt/IpmoneyReceipt'
 import OPDBillCancellation from './OpdBilling/OPDBillCancellation'
+import NavigationBilling from "./BillingNav"
 
 const Billing = () => {
       return (

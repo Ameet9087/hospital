@@ -21,21 +21,10 @@ function AddReportForm({ onClose, selectedRequest }) {
     indication: "",
     type: "",
     status: "",
-    signatureList: "",
   });
 
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
-  const [defaultSignatories, setDefaultSignatories] = useState([]);
-
-  const fetchDefaultSignatories = async () => {
-    const response = await axios.get(`${API_BASE_URL}/radiology-signatories`);
-    setDefaultSignatories(response.data);
-  };
-
-  useEffect(() => {
-    fetchDefaultSignatories();
-  }, []);
 
   useEffect(() => {
     if (selectedRequest) {
@@ -51,7 +40,6 @@ function AddReportForm({ onClose, selectedRequest }) {
         indication: selectedRequest.indication || "",
         type: selectedRequest.type || "",
         status: selectedRequest.status || "",
-        signatureList: selectedRequest.signatureList || "",
         notes:
           selectedRequest.imagingItemDTO?.radiologyTemplateDTO?.templateContent,
       });
@@ -94,12 +82,8 @@ function AddReportForm({ onClose, selectedRequest }) {
         : new Date().toISOString().toString(),
       notes: formData.notes,
       indication: formData.indication,
-      status: "Completed",
+      status: "Active",
       mriXRayCTNo: formData.mriXRayCTNo,
-      signatureList: formData.signatureList,
-      performerDTO: {
-        employeeId: 2,
-      },
     };
 
     formDataToSend.append("requisition", JSON.stringify(requisition));
@@ -197,12 +181,6 @@ function AddReportForm({ onClose, selectedRequest }) {
         <strong>Footer : </strong> ${selectedRequest.imagingItemDTO?.radiologyTemplateDTO?.footerNote}
     </div>
   `;
-    const doctorName = formData.signatureList || "Not Signed";
-    const signatureSection = `
-    <div style=" margin-top: 40px;">
-      <p><strong>Signature:</strong> ${doctorName}</p>
-    </div>
-  `;
 
     const imageSection = `
    ${
@@ -222,7 +200,6 @@ function AddReportForm({ onClose, selectedRequest }) {
     printWindow.document.write(patientInfo);
     printWindow.document.write(template);
     printWindow.document.write(reportBody);
-    printWindow.document.write(signatureSection);
     printWindow.document.write(imageSection);
     printWindow.document.write("</body></html>");
     printWindow.document.close();
@@ -325,40 +302,7 @@ function AddReportForm({ onClose, selectedRequest }) {
           {selectedRequest.imagingItemDTO?.radiologyTemplateDTO?.footerNote}
         </p>
       </div>
-      <div className="rDLListRequest-add-report-signature-section">
-        <div className="rDLListRequest-add-report-signature-box active">
-          {formData.signatureList && (
-            <img
-              src={`data:image/jpeg;base64,${formData?.signatureList}`}
-              alt="Signature"
-              style={{ maxWidth: "100%", height: "150px" }}
-            />
-          )}
-          <p>Signature</p>
-        </div>
-      </div>
       <div className="rDLListRequest-add-report-form-actions">
-        <div className="rDLListRequest-add-report-select-signatories">
-          <strong>Select Signatories:</strong>
-          <select
-            name="signatureList"
-            value={formData.signatureList || ""}
-            onChange={handleChange}
-          >
-            <option>select Signatories</option>
-            {defaultSignatories.length > 0 &&
-              defaultSignatories.map((signatories) => (
-                <option
-                  key={signatories.employeeDTO?.signatureImage}
-                  value={signatories.employeeDTO?.signatureImage}
-                >
-                  {signatories.employeeDTO?.salutation}
-                  {signatories.employeeDTO?.firstName}{" "}
-                  {signatories.employeeDTO?.lastName}
-                </option>
-              ))}
-          </select>
-        </div>
         <div className="rDLListRequest-add-report-upload-images">
           <strong>Upload Images:</strong>
           <input

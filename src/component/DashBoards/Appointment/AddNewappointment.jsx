@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import '../Appointment/AddNewPpointment.css';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from '../../api/api';
 
 const AddNewAppointmentForm = () => {
 
@@ -38,7 +37,7 @@ const AddNewAppointmentForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const apiUrl = `${API_BASE_URL}/appointments/save-new-appointment`;
+        const apiUrl = 'http://192.168.1.34:1415/api/appointments/save-new-appointment';
 
 
         try {

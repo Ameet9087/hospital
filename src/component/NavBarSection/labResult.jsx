@@ -5,26 +5,42 @@ import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 
 const Lab2 = () => {
-  const [selectedSignatory, setSelectedSignatory] = useState("");
+  const [selectedSignatory, setSelectedSignatory] = useState(null);
   const [comment, setComment] = useState("");
   const navigate = useNavigate();
   const [labResult, setLabResult] = useState(null);
   const location = useLocation();
-  const { labRequestId } = location.state;
+  const { labRequestId } = location.state || {};
+  const [labDoctors, setlabDoctors] = useState([]);
+
+  const fetchResult = async () => {
+    const response = await axios.get(
+      `${API_BASE_URL}/lab-result/by-labRequest?labRequestId=${labRequestId}&status=Pending`
+    );
+    console.log(response.data);
+
+    setLabResult(response.data);
+  };
+
+  const fetchAllLabDoctors = async () => {
+    const response = await axios.get(
+      `${API_BASE_URL}/employees/department?departmentName=Laboratory`
+    );
+    setlabDoctors(response.data);
+  };
 
   useEffect(() => {
-    fetch(
-      `${API_BASE_URL}/lab-result/by-labRequest?labRequestId=${labRequestId}`
-    )
-      .then((res) => res.json())
-      .then((res) => setLabResult(res))
-      .catch((err) => {
-        console.log(err);
-      });
+    fetchAllLabDoctors();
+    fetchResult();
   }, []);
 
   const handleSignatoryChange = (event) => {
-    setSelectedSignatory(event.target.value);
+    const doctor = labDoctors.find(
+      (doc) => doc.employeeId == event.target.value
+    );
+    console.log(doctor);
+
+    setSelectedSignatory(doctor); // Store the entire doctor object
   };
 
   const handleCommentChange = (event) => {
@@ -33,31 +49,22 @@ const Lab2 = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Check if a signatory is selected
     if (!selectedSignatory) {
       alert("Please select a signatory.");
       return;
     }
 
-    // Prepare the data for updating the lab result
-    const updatedLabResult = {
-      verifyBy: selectedSignatory,
-      verifyById: 0,
-      comments: comment,
-      isVerified: "Yes",
-      verifiedDate: new Date().toLocaleTimeString().split("-")[0],
-    };
-
     try {
-      // Call the API to update the lab result
-      await axios.put(
-        `${API_BASE_URL}/lab-result/update/${labResult.labResultId}`,
-        updatedLabResult
+      await axios.post(
+        `${API_BASE_URL}/lab-result/${labResult.labResultId}/approve?approver=${
+          selectedSignatory?.salutation +
+          " " +
+          selectedSignatory?.firstName +
+          " " +
+          selectedSignatory?.lastName
+        }&approverId=${selectedSignatory?.employeeId}&comment=${comment}`
       );
       console.log("Lab result updated successfully!");
-
-      // Trigger print after successful update
       handlePrint();
     } catch (err) {
       console.error("Error updating lab result:", err);
@@ -173,167 +180,175 @@ const Lab2 = () => {
     printWindow.focus(); // Focus on the new window for printing
     printWindow.print(); // Trigger the print dialog
     printWindow.close();
-    navigate("/add-results");
   };
 
   const handleBackClick = () => {
-    navigate("/addResultForm");
+    navigate("/laboratory/addResultForm");
   };
 
   return (
     <div className="lab-container-page">
-
-
-    <div className="lab-page2">
-      <button className="back-button" onClick={handleBackClick}>
-        ← Back To Grid
-      </button>
-      <div className="lab-container2" id="printLabResult">
-        <header>
-          <div className="lab-logo">
-            <div className="lab-circle">
-              <span className="lab-plus">+</span>
+      <div className="lab-page2">
+        <button className="back-button" onClick={handleBackClick}>
+          ← Back To Grid
+        </button>
+        <div className="lab-container2" id="printLabResult">
+          <header>
+            <div className="lab-logo">
+              <div className="lab-circle">
+                <span className="lab-plus">+</span>
+              </div>
+              <span className="lab-text">Hims Health</span>
             </div>
-            <span className="lab-text">Hims Health</span>
+            <div className="lab-hospital">
+              <span>Hims Health Hospital</span>
+            </div>
+          </header>
+          <div className="lab-patient-details">
+            <div>
+              <p>
+                Name:{" "}
+                {labResult?.labRequest?.inPatient?.patient?.firstName ||
+                  labResult?.labRequest?.outPatient?.patient?.firstName}{" "}
+                {labResult?.labRequest?.inPatient?.patient?.lastName ||
+                  labResult?.labRequest?.outPatient?.patient?.lastName}
+              </p>
+              <p>
+                Address:{" "}
+                {labResult?.labRequest?.inPatient?.patient?.address ||
+                  labResult?.labRequest?.outPatient?.patient?.address}
+              </p>
+              <p>
+                Prescriber Name:{" "}
+                {labResult?.labRequest?.prescriber?.salutation +
+                  labResult?.labRequest?.prescriber?.doctorName +
+                  " " +
+                  labResult?.labRequest?.prescriber?.lastName ||
+                  labResult?.labRequest?.prescriber?.address}
+              </p>
+              <p>
+                Lab No:{" "}
+                {labResult?.labRequest?.sampleCollections?.map(
+                  (labTest, index) => (
+                    <span key={index}>
+                      {index > 0 ? " , " : ""}
+                      {labTest.runNumber}
+                    </span>
+                  )
+                )}
+              </p>
+            </div>
+            <div>
+              <p>
+                Patient No.:{" "}
+                {labResult?.labRequest?.inPatient?.inPatientId ||
+                  labResult?.labRequest?.outPatient?.outPatientId ||
+                  "N/A"}
+                {" / "}
+                {labResult?.labRequest?.inPatient?.patient?.uhid ||
+                  labResult?.labRequest?.outPatient?.patient?.uhid ||
+                  "N/A"}
+              </p>
+              <p>
+                Age/Sex:{" "}
+                {labResult?.labRequest?.inPatient?.patient?.age ||
+                  labResult?.labRequest?.outPatient?.patient?.age ||
+                  "N/A"}{" "}
+                {"Y / "}
+                {labResult?.labRequest?.inPatient?.patient?.gender ||
+                  labResult?.labRequest?.outPatient?.patient?.gender ||
+                  "N/A"}
+              </p>
+              <p>
+                Collection Date:{" "}
+                {labResult?.labRequest?.sampleCollections?.[0]
+                  ?.collectionDate || "N/A"}
+              </p>
+              <p>
+                Reporting Date: {labResult?.labResultCreatedDate || "N/A"}{" "}
+                {labResult?.labResultCreatedTime || "N/A"}
+              </p>
+            </div>
           </div>
-          <div className="lab-hospital">
-            <span>Hims Health Hospital</span>
+          <div className="lab-table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th colSpan="4">BIOCHEMISTRY REPORT</th>
+                </tr>
+                <tr>
+                  <th>Tests</th>
+                  <th>Findings</th>
+                  <th>Unit</th>
+                  <th>Range</th>
+                </tr>
+              </thead>
+              <tbody>
+                {labResult?.labTestComponentMappings?.map((test) => {
+                  return test.labResultComponentResults?.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.labComponent?.componentName}</td>
+                      <td>{item.resultValue}</td>
+                      <td>{item.labComponent?.unit}</td>
+                      <td>{item.labComponent?.componentRange}</td>
+                    </tr>
+                  ));
+                })}
+              </tbody>
+            </table>
           </div>
-        </header>
-        <div className="lab-patient-details">
-          <div>
-            <p>
-              Name:{" "}
-              {labResult?.labRequestDTO?.newPatientVisitDTO?.firstName ||
-                labResult?.labRequestDTO?.patientDTO?.firstName}{" "}
-              {labResult?.labRequestDTO?.newPatientVisitDTO?.lastName ||
-                labResult?.labRequestDTO?.patientDTO?.lastName}
-            </p>
-            <p>
-              Address:{" "}
-              {labResult?.labRequestDTO?.newPatientVisitDTO?.address ||
-                labResult?.labRequestDTO?.patientDTO?.address}
-            </p>
-            <p>
-              Prescriber Name:{" "}
-              {labResult?.labRequestDTO?.prescriber?.salutation +
-                labResult?.labRequestDTO?.prescriber?.firstName +
-                " " +
-                labResult?.labRequestDTO?.prescriber?.lastName ||
-                labResult?.labRequestDTO?.patientDTO?.address}
-            </p>
-            <p>Lab No: {labResult?.labRequestDTO?.runNumber}</p>
-          </div>
-          <div>
-            <p>
-              Patient No.:{" "}
-              {labResult?.labRequestDTO?.newPatientVisitDTO
-                ?.newPatientVisitId ||
-                labResult?.labRequestDTO?.patientDTO?.patientId}
-            </p>
-            <p>
-            Age/Sex:{" "}
-              {labResult?.labRequestDTO?.newPatientVisitDTO?.age ||
-                labResult?.labRequestDTO?.patientDTO?.age}{" "}
-              {"Y / "}
-              {labResult?.labRequestDTO?.newPatientVisitDTO?.gender ||
-                labResult?.labRequestDTO?.patientDTO?.gender}
-            </p>
-            <p>
-              Collection Date: {labResult?.labRequestDTO?.sampleCollectedDate}{" "}
-              {labResult?.labRequestDTO?.sampleCollectedTime}
-            </p>
-            <p>
-              Reporting Date: {labResult?.labResultCreatedDate}{" "}
-              {labResult?.labResultCreatedTime}
+
+          <div className="lab-comments">
+            <p>Comments:</p>
+            <textarea
+              value={comment}
+              onChange={handleCommentChange}
+              rows={5}
+              placeholder="Enter comments here..."
+            />
+            {selectedSignatory && (
+              <div className="selected-doctor-info">
+                <div className="doctor-info-sig">
+                  <img
+                    src={`data:image/jpeg;base64,${selectedSignatory?.signatureImage}`}
+                    alt={`${selectedSignatory?.firstName} ${selectedSignatory?.lastName}`}
+                  />
+
+                  <p>
+                    {selectedSignatory?.salutation}{" "}
+                    {selectedSignatory?.firstName} {selectedSignatory?.lastName}
+                  </p>
+                </div>
+              </div>
+            )}
+            <p className="lab-disclaimer">
+              This laboratory report must be integrated in conjunction with
+              clinical history of the patient by a clinician test
             </p>
           </div>
         </div>
-        <div className="lab-table-container">
-          <table>
-            <thead>
-              <tr>
-                <th colSpan="3">BIOCHEMISTRY REPORT</th>
-              </tr>
-              <tr>
-                <th>Tests</th>
-                <th>Findings</th>
-                <th>Unit</th>
-                {/* <th>Reference</th>
-                <th>Method</th> */}
-              </tr>
-            </thead>
-            <tbody>
-              {labResult?.componentsJson != null &&
-                JSON.parse(labResult?.componentsJson).map((item) => (
-                  <tr>
-                    <td>{item.componentName}</td>
-                    <td>{item.value}</td>
-                    <td>{item.unit}</td>
-                    {/* <td>{item.}</td>
-                    <td></td> */}
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="lab-comments">
-          <p>Comments:</p>
-          <textarea
-            value={comment}
-            onChange={handleCommentChange}
-            rows={5}
-            placeholder="Enter comments here..."
-          />
-          <p className="lab-disclaimer">
-            This laboratory report must be integrated in conjunction with
-            clinical history of the patient by a clinician test
-          </p>
-        </div>
-
-        
-
-
-
-
-     
-
-      {/* <div className="lab-signatory-section">
-        <div className="lab-signatory">
-          <input type="text" placeholder="Not found" />
-        </div>
-        <div className="lab-signatory">
-          <input type="text" placeholder="BMUTHONI" />
-        </div>
-        <div className="lab-signatory">
-          <input type="text" placeholder="Not found" />
-        </div>
-      </div> */}
-    
-    </div>
-
-
-      
-    
-   </div>
-   <div className="lab-signatories">
-      
+      </div>
+      <div className="lab-signatories">
         <p>Select Signatories:</p>
-        <select value={selectedSignatory} onChange={handleSignatoryChange}>
+        <select
+          value={selectedSignatory?.employeeId}
+          onChange={handleSignatoryChange}
+        >
           <option value="">Select a signatory</option>
-          <option value="Dr. VICTOR OCHIENG OKECH">
-            Dr. VICTOR OCHIENG OKECH
-          </option>
+          {labDoctors.length > 0 &&
+            labDoctors.map((doctor) => (
+              <option key={doctor.employeeId} value={doctor.employeeId}>
+                {doctor.salutation} {doctor.firstName} {doctor.lastName}
+              </option>
+            ))}
         </select>
       </div>
       <div className="lab-update">
         <button onClick={handleSubmit} className="lab-print-button">
           Update Signatories and Print
         </button>
-      </div> 
-   </div>
-
+      </div>
+    </div>
   );
 };
 

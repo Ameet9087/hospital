@@ -3,14 +3,25 @@ import { X } from "lucide-react";
 import Barcode from "react-barcode";
 import "./sampleCodePopup.css";
 
-const SampleCodePopup = ({ isOpen, onClose, data, barcodeValue }) => {
+const SampleCodePopup = ({
+  isOpen,
+  onClose,
+  data,
+  barcodeValue,
+  runNumber,
+}) => {
   const [copies, setCopies] = useState(1);
   const [selectedPrinter, setSelectedPrinter] = useState("");
-
-  // Create a ref for the barcode section
   const printRef = useRef(null);
 
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   if (!isOpen) return null;
+
+  const safeBarcodeValue = barcodeValue || "";
+  const safeRunNumber = runNumber || "";
 
   const handlePrint = () => {
     let stickersContent = "";
@@ -39,15 +50,12 @@ const SampleCodePopup = ({ isOpen, onClose, data, barcodeValue }) => {
   };
 
   const handlePrintEmptySheet = () => {
-    // Get the table content
     const content = document.getElementById(
       "samplecodepopup-emptysheet-info"
     ).outerHTML;
 
-    // Create a new window for printing
     const printWindow = window.open("", "", "height=600,width=800");
 
-    // Write the content to the new window
     printWindow.document.write(`
       <html>
         <head>
@@ -73,52 +81,49 @@ const SampleCodePopup = ({ isOpen, onClose, data, barcodeValue }) => {
         </head>
         <body>
           <div style='display:flex; flex-direction:column;'>
-          <div style='display:flex; justify-content:space-between; '>
-          <div style='padding:0px'>
-          <p>Patient Name : ${
-            data.patientDTO?.firstName || data.newPatientVisitDTO?.firstName
-          }
-          ${data.patientDTO?.lastName || data.newPatientVisitDTO?.lastName}</p>
-          <p>Address : ${
-            data.patientDTO?.address || data.newPatientVisitDTO?.address
-          }</p>
-          <p>Prescribed By : ${
-            data.prescriber != ""
-              ? data.prescriber?.salutation +
-                data.prescriber.firstName +
-                " " +
-                data.prescriber?.lastName
-              : "SELF"
-          }</p>
-          <p>Lab No: ${data.runNumber}</p>
-          </div>
-          <div>
-            <p>Patient No. : ${
-              data.patientDTO?.patientId ||
-              data.newPatientVisitDTO?.newPatientVisitId
-            }</p>
-            <p>Age/Sex : ${
-              data.patientDTO?.age || data.newPatientVisitDTO?.age
-            } Y/${
-      data.patientDTO?.gender || data.newPatientVisitDTO?.gender
+            <div style='display:flex; justify-content:space-between;'>
+              <div style='padding:0px'>
+                <p>Patient Name : ${
+                  data?.outPatient?.patient?.firstName ||
+                  data?.inPatient?.patient?.firstName
+                } ${
+      data?.outPatient?.patient?.lastName || data?.inPatient?.patient?.lastName
     }</p>
-            <p>Receiving Date : ${data.sampleCollectedDate} ${
-      data.sampleCollectedTime
+                <p>Address : ${
+                  data?.outPatient?.patient?.address ||
+                  data?.inPatient?.patient?.address
+                }</p>
+                <p>Prescribed By : ${
+                  data?.prescriber != ""
+                    ? data?.prescriber?.salutation +
+                      data?.prescriber?.doctorName
+                    : "SELF"
+                }</p>
+                <p>Lab No: ${safeRunNumber}</p>
+              </div>
+              <div>
+                <p>Patient No. : ${
+                  data?.outPatient?.patient?.outPatientId ||
+                  data?.inPatient?.patient?.inPatientId
+                }</p>
+                <p>Age/Sex : ${
+                  data?.outPatient?.patient?.age ||
+                  data?.inPatient?.patient?.age
+                } Y/${
+      data?.outPatient?.patient?.gender || data?.inPatient?.patient?.gender
     }</p>
-            <Barcode value=${data.barcode}/>
-          </div>
-          </div>
+                <p>Receiving Date: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}</p>
+                <Barcode value=${safeBarcodeValue}/>
+              </div>
+            </div>
             ${content}
           </div>
         </body>
       </html>
     `);
 
-    // Close and focus on the print window
     printWindow.document.close();
     printWindow.focus();
-
-    // Trigger the print
     printWindow.print();
   };
 
@@ -130,18 +135,22 @@ const SampleCodePopup = ({ isOpen, onClose, data, barcodeValue }) => {
             Sample Code generated successfully
           </h2>
           <button onClick={onClose} className="samplecodepopup-close-button">
-            X
+            <X />
           </button>
         </div>
 
-        {/* Section to be printed */}
+        {/* Patient Information */}
         <div className="samplecodepopup-patient-info">
           <p>
             <strong>Patient Name:</strong>{" "}
-            {data.patientDTO?.firstName || data?.newPatientVisitDTO?.firstName}{" "}
-            {data.patientDTO?.lastName || data?.newPatientVisitDTO?.lastName}
+            {data?.outPatient?.patient?.firstName ||
+              data?.inPatient?.patient?.firstName}{" "}
+            {data?.outPatient?.patient?.lastName ||
+              data?.inPatient?.patient?.lastName}
           </p>
         </div>
+
+        {/* Sample Information Table */}
         <div className="samplecodepopup-divided" ref={printRef}>
           <table
             id="samplecodepopup-emptysheet-info"
@@ -156,36 +165,45 @@ const SampleCodePopup = ({ isOpen, onClose, data, barcodeValue }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="p-2">
-                  {data?.labTests.map((item) => item.labTestName).join(", ")}
-                </td>
-                <td className="p-2">{data.runNumber}</td>
-                <td className="p-2">{barcodeValue}</td>
+                {/* <td className="p-2">
+                  {data?.labTests && Array.isArray(data.labTests)
+                    ? data.labTests
+                        .map((item) => item.labTestName)
+                        .filter(Boolean)
+                        .join(", ")
+                    : "No Lab Tests Available"}
+                </td> */}
+                <td className="p-2">{safeBarcodeValue}</td>
+                <td className="p-2">{safeBarcodeValue}</td>
               </tr>
             </tbody>
           </table>
 
+          {/* Barcode Information */}
           <div className="samplecodepopup-barcode-container">
             <div
               className="samplecodepopup-barcode-info"
               id="samplecodepopup-barcode"
             >
               <p>
-                {data.patientDTO?.firstName ||
-                  data?.newPatientVisitDTO?.firstName}{" "}
-                {data.patientDTO?.lastName ||
-                  data?.newPatientVisitDTO?.lastName}
-                {data.patientDTO?.age || data?.newPatientVisitDTO?.age} Y/
-                {data.patientDTO?.gender || data?.newPatientVisitDTO?.gender}
+                {data?.outPatient?.patient?.firstName ||
+                  data?.inPatient?.patient?.firstName}{" "}
+                {data?.outPatient?.patient?.lastName ||
+                  data?.inPatient?.patient?.lastName}{" "}
+                {data?.outPatient?.patient?.age ||
+                  data?.inPatient?.patient?.age}{" "}
+                Y/
+                {data?.outPatient?.patient?.gender ||
+                  data?.inPatient?.patient?.gender}
               </p>
-              <Barcode width={2} height={30} value={barcodeValue} />
+              <Barcode width={2} height={30} value={safeBarcodeValue} />
               <p>
-                RN: {data.runNumber} | {data.sampleCollectedDate}{" "}
-                {data.sampleCollectedTime}
+                RN: {safeBarcodeValue} | {new Date().toLocaleDateString()}{" "}
+                {new Date().toLocaleTimeString()}
               </p>
-              {/* <div className="samplecodepopup-barcode"> */}
-              {/* </div> */}
             </div>
+
+            {/* Number of copies and Print Button */}
             <div className="samplecodepopup-copies">
               <label className="mr-2">No. of copies:</label>
               <input
@@ -217,25 +235,6 @@ const SampleCodePopup = ({ isOpen, onClose, data, barcodeValue }) => {
           </div>
         </div>
 
-        {/* <div className="samplecodepopup-printer-select">
-          <label className="mr-2">Select Printer:</label>
-          <select
-            value={selectedPrinter}
-            onChange={(e) => setSelectedPrinter(e.target.value)}
-            className="border p-1"
-          >
-            <option value="">Select a printer</option>
-            <option value="printer1">Printer 1</option>
-            <option value="printer2">Printer 2</option>
-          </select>
-          <button
-            onClick={() => console.log("OK clicked")}
-            className="samplecodepopup-ok-button"
-          >
-            OK
-          </button>
-        </div> */}
-
         <div className="samplecodepopup-footer">
           <div>
             <button
@@ -244,9 +243,6 @@ const SampleCodePopup = ({ isOpen, onClose, data, barcodeValue }) => {
             >
               Print Empty Sheet
             </button>
-            {/* <button onClick={onClose} className="samplecodepopup-close-button">
-              Close
-            </button> */}
           </div>
         </div>
       </div>

@@ -6,14 +6,17 @@ import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
 import RadiologyPopupTable from "../RadiologyPopupTable";
 
-function TransactionDetails({ onClose, selectedRequest }) {
+function rdlEditDrEditBtn({ onClose, selectedRequest }) {
   const [reportingDoctor, setReportingDoctor] = useState();
   const [doctorList, setDoctorList] = useState([]);
   const [activePopup, setActivePopup] = useState(false);
 
   const fetchAllDoctors = async () => {
-    const response = await axios.get(`${API_BASE_URL}/doctors`);
-    setDoctorList(response.data);
+    const response = await axios.get(`${API_BASE_URL}/radiology-signatories`);
+    const extractedEmployeeDTOs = response.data.map(
+      (doctor) => doctor.employeeDTO
+    );
+    setDoctorList(extractedEmployeeDTOs);
   };
 
   useEffect(() => {
@@ -23,7 +26,7 @@ function TransactionDetails({ onClose, selectedRequest }) {
   const getPopupData = () => {
     if (activePopup) {
       return {
-        columns: ["doctorId", "doctorName"],
+        columns: ["employeeId", "firstName", "lastName"],
         data: doctorList,
       };
     } else {
@@ -40,11 +43,11 @@ function TransactionDetails({ onClose, selectedRequest }) {
   };
 
   const handleUpdate = async () => {
-    const prescriberId = reportingDoctor?.doctorId;
+    const prescriberId = reportingDoctor?.employeeId;
     const imagingId = selectedRequest.imagingId;
     try {
       await axios.put(
-        `${API_BASE_URL}/imaging-requisitions/update-prescriber?prescriberId=${prescriberId}&imagingId=${imagingId}`
+        `${API_BASE_URL}/imaging-requisitions/update-prescriber?performerId=${prescriberId}&imagingId=${imagingId}`
       );
       onClose();
     } catch (err) {
@@ -83,7 +86,6 @@ function TransactionDetails({ onClose, selectedRequest }) {
                   <th>Type</th>
                   <th>Item Name</th>
                   <th>Reporting Doctor (Radiologist)</th>
-                  <th>Prescriber Dr. Name</th>
                 </tr>
               </thead>
               <tbody>
@@ -95,10 +97,10 @@ function TransactionDetails({ onClose, selectedRequest }) {
                     }
                   </td>
                   <td>{selectedRequest.imagingItemDTO.imagingItemName}</td>
-                  <td>{selectedRequest.performerDTO?.firstName}</td>
                   <td>
-                    {selectedRequest.prescriberDTO?.salutation}
-                    {selectedRequest.prescriberDTO?.doctorName}{" "}
+                    {selectedRequest.performerDTO?.salutation}{" "}
+                    {selectedRequest.performerDTO?.firstName}{" "}
+                    {selectedRequest.performerDTO?.lastName}
                   </td>
                 </tr>
               </tbody>
@@ -106,7 +108,7 @@ function TransactionDetails({ onClose, selectedRequest }) {
 
             <div className="rdlEditDrEditBtn-reporting-doctor">
               <span>Reporting Doctor:</span>
-              <input type="text" value={reportingDoctor?.doctorName} />
+              <input type="text" value={reportingDoctor?.employeeId} />
               <button className="rdlEditDrEditBtn-search-button">
                 <i
                   onClick={() => setActivePopup(true)}
@@ -138,4 +140,4 @@ function TransactionDetails({ onClose, selectedRequest }) {
   );
 }
 
-export default TransactionDetails;
+export default rdlEditDrEditBtn;

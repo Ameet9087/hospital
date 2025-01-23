@@ -62,12 +62,12 @@ function AddResults() {
     let link;
 
     if (dateFrom && dateTo) {
-      link = `${API_BASE_URL}/lab-requests/by-requisition-date-range?startDate=${dateFrom}&endDate=${dateTo}&status=Active`;
+      link = `${API_BASE_URL}/lab-requests/between-date?startDate=${dateFrom}&endDate=${dateTo}&status=Pending`;
     } else {
       const todayDate = getCurrentDate();
       console.log(todayDate);
 
-      link = `${API_BASE_URL}/lab-requests/by-requisition-date-range?startDate=${todayDate}&endDate=${todayDate}&status=Active`;
+      link = `${API_BASE_URL}/lab-requests/between-date?startDate=${todayDate}&endDate=${todayDate}&status=Pending`;
     }
 
     // Fetch the data
@@ -166,7 +166,7 @@ function AddResults() {
             {/* Add more options here */}
           </select>
         </div>
-        
+
         <div className="addResults-worklist">
           <a href="#" onClick={toggleWorkList}>
             WorkList
@@ -185,7 +185,7 @@ function AddResults() {
         <div className="addResults-results-info">
           <span>Showing 0 / 0 results</span>
           <button className="addResults-print-button">
-          <i className="fa fa-file-excel"></i> Export
+            <i className="fa fa-file-excel"></i> Export
           </button>
           <button className="addResults-print-button">
             <i class="fa-solid fa-print"></i> Print
@@ -233,24 +233,32 @@ function AddResults() {
                 <tr key={test.labRequestId}>
                   <td>{index + 1}</td>
                   <td>
-                    {test.inPatientDTO?.firstName ||
-                      test.outPatientDTO?.firstName}{" "}
-                    {test.inPatientDTO?.lastName ||
-                      test.outPatientDTO?.lastName}
+                    {test.inPatient?.patient?.firstName ||
+                      test.outPatient?.patient?.firstName}{" "}
+                    {test.inPatient?.patient?.lastName ||
+                      test.outPatient?.patient?.lastName}
                   </td>
                   <td>
-                    {test.inPatientDTO?.age || test.outPatientDTO?.age} Y /
-                    {test.inPatientDTO?.gender || test.outPatientDTO?.gender}
+                    {test.inPatient?.patient?.age ||
+                      test.outPatient?.patient?.age}{" "}
+                    Y /
+                    {test.inPatient?.patient?.gender ||
+                      test.outPatient?.patient?.gender}
                   </td>
                   <td>
-                    {test.inPatientDTO?.phoneNumber ||
-                      test.outPatientDTO?.phoneNumber}
+                    {test.inPatient?.patient?.mobileNumber ||
+                      test.outPatient?.patient?.phoneNumber}
                   </td>
-                  <td>{test.labTestName}</td>
+                  <td>
+                    {test?.labTests?.map((labTest, index) => (
+                      <span key={index}>
+                        {index > 0 ? " , " : ""}
+                        {labTest.labTestName}
+                      </span>
+                    ))}
+                  </td>
                   <td>{test.labTestCategory}</td>
-                  <td>
-                    {test.inPatientDTO != null ? "InPatient" : "OutPatient"}
-                  </td>
+                  <td>{test.inPatient != null ? "InPatient" : "OutPatient"}</td>
                   <td>{test.runNumber}</td>
                   <td>{test.barcode}</td>
                   <td className="add-result-lab-tableBtn">
@@ -289,10 +297,10 @@ function AddResults() {
               <div>
                 <p>
                   Patient Name :{" "}
-                  {stickerData.patientDTO?.firstName ||
-                    stickerData.newPatientVisitDTO?.firstName}{" "}
-                  {stickerData.patientDTO?.lastName ||
-                    stickerData.newPatientVisitDTO?.lastName}
+                  {stickerData.outPatient?.patient?.firstName ||
+                    stickerData.inPatient?.patient?.firstName}{" "}
+                  {stickerData.outPatient?.patient?.lastName ||
+                    stickerData.inPatient?.patient?.lastName}
                 </p>
                 <table>
                   <thead>
@@ -307,7 +315,7 @@ function AddResults() {
                       <td>
                         {stickerData.prescriber != null
                           ? stickerData.prescriber?.salutation +
-                            stickerData.prescriber?.firstName +
+                            stickerData.prescriber?.doctorName +
                             " " +
                             stickerData.prescriber?.lastName
                           : "SELF"}
@@ -322,15 +330,15 @@ function AddResults() {
                   id="sticker-content"
                 >
                   <span>
-                    {stickerData.patientDTO?.firstName ||
-                      stickerData.newPatientVisitDTO?.firstName}{" "}
-                    {stickerData.patientDTO?.lastName ||
-                      stickerData.newPatientVisitDTO?.lastName}{" "}
-                    {stickerData.patientDTO?.age ||
-                      stickerData.newPatientVisitDTO?.age}{" "}
+                    {stickerData.inPatient?.patient?.firstName ||
+                      stickerData.outPatient?.patient?.firstName}{" "}
+                    {stickerData.inPatient?.patient?.lastName ||
+                      stickerData.outPatient?.patient?.lastName}{" "}
+                    {stickerData.inPatient?.patient?.age ||
+                      stickerData.outPatient?.patient?.age}{" "}
                     Y{" / "}
-                    {stickerData.patientDTO?.gender ||
-                      stickerData.newPatientVisitDTO?.gender}
+                    {stickerData.inPatient?.patient?.gender ||
+                      stickerData.outPatient?.patient?.gender}
                   </span>
                   <span>
                     <Barcode

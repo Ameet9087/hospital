@@ -7,19 +7,28 @@ const NavigationBar = () => {
   return (
     <nav className="navigation-bar">
       <ul>
-        <li>
+        {/* <li>
           <NavLink to="notification">Notification</NavLink>
-        </li>
-        <li>
+        </li> */}
+        {/* <li>
           <NavLink to="opdbilling">OPD Billing</NavLink>
-        </li>
-        <li>
+        </li> */}
+        {/* <li>
           <NavLink to="Home">
             <i className="fa-solid fa-house-chimney"></i>
           </NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink to="samplecollection">Sample Collection</NavLink>
+        </li>
+        <li>
+          <NavLink to="uncollectsample">Uncollect Sample</NavLink>
+        </li>
+        <li>
+          <NavLink to="rejectsample">Reject Sample</NavLink>
+        </li>
+        <li>
+          <NavLink to="samplerecieve">Sample Recieving</NavLink>
         </li>
         <li>
           <NavLink to="addresults">Add Results</NavLink>
@@ -29,6 +38,9 @@ const NavigationBar = () => {
         </li>
         <li>
           <NavLink to="finalreports">Final Reports</NavLink>
+        </li>
+        <li>
+          <NavLink to="rejectedreports">Rejected Reports</NavLink>
         </li>
         <li>
           <NavLink to="settings">Settings</NavLink>

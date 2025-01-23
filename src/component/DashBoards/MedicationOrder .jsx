@@ -7,7 +7,7 @@ import { startResizing } from "../TableHeadingResizing/resizableColumns";
 const MedicationOrder = ({
   inPatientId,
   outPatientId,
-  setActiveSection,
+
 }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -24,9 +24,8 @@ const MedicationOrder = ({
       medicationDate: new Date().toISOString().slice(0, 10),
       ...(inPatientId
         ? { patientDTO: { inPatientId } }
-        : { outPatientDTO: { outPatientId } }),
-      selectedOrderId: "",  // Add this field to each medication object
-      selectedOrder: null,  // Add this field to each medication object
+        : { newPatientVisitDTO: { outPatientId } }),
+
     },
   ]); // Initially one row is displayed
   const [orderGenericData, setOrderGenericData] = useState([]);
@@ -83,8 +82,7 @@ const MedicationOrder = ({
       ...(inPatientId
         ? { patientDTO: { inPatientId } }
         : { outPatientDTO: { outPatientId } }),
-      selectedOrderId: "",  // Add this field to new row
-      selectedOrder: null,  // Add this field to new row
+
     };
     setMedicationList([...medicationList, newMedication]);
   };
@@ -96,14 +94,32 @@ const MedicationOrder = ({
 
   const handleSubmit = async () => {
     try {
+      // Map medicationList to match MedicationDTO structure
+      const payload = medicationList.map((medication) => ({
+        type: medication.type,
+        medicationName: medication.selectedOrder?.itemName || medication.medicationName,
+        dose: medication.dose,
+        route: medication.route,
+        frequency: medication.frequency,
+        lastTaken: medication.lastTaken,
+        comments: medication.comments,
+        status: medication.status,
+        medicationDate: medication.medicationDate,
+        patientDTO: inPatientId ? { inPatientId } : null,
+        newPatientVisitDTO: outPatientId ? { outPatientId } : null,
+      }));
+
+      // Post the payload to the backend
       const response = await axios.post(
         `${API_BASE_URL}/medications/save-medication-details`,
-        medicationList
+        payload
       );
-      setActiveSection("dashboard");
-      console.log("Success:", response.data);
+
+      console.log("Medication data saved successfully:", response.data);
+      alert("Medication orders submitted successfully!");
     } catch (error) {
       console.error("Error submitting medication list:", error);
+      alert("An error occurred while submitting the medication orders.");
     }
   };
 

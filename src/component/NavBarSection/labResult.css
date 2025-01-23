@@ -234,8 +234,52 @@ th {
   background-color: darkblue;
   background-color: white;
 }
-
-
+.selected-doctor-info{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.doctor-info-sig img{
+ border-radius: 0;
+ height: 50px;
+ width: 150px;
+ border-bottom: 1px solid black;
+}
+.doctor-info-sig{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.lab-update-finalBtn{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.final-lab-report-confirmBox{
+  width: 250px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.final-lab-report-confirmBox-inputs{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 16px;
+}
+.final-lab-report-confirmBox-inputs input{
+  border: 1px solid #ccc;
+  border-radius: 7px;
+}
+.final-lab-report-confirmBox-inputs button{
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  background: var(--button-color);
+}
 /* Print Styles */
 @media print {
   body * {
