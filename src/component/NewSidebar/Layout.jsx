@@ -53,7 +53,7 @@ import MainVisitorFile from "../VisitorMgt/MainVisitorFile";
 import OtMain from "../OperationTheater/OtMain";
 
 import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
-import BillingRoute from "../Billings/billing";
+import BillingRoute from "../Billings/Billing";
 
 function Layout({ }) {
   return (
