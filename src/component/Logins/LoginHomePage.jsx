@@ -15,7 +15,10 @@ const LoginHomePage = () => {
 
   return (
     <div className="login-page">
-      {/* Logo Section */}
+      <div className="login-page-frame1"></div>
+      <div className="login-page-frame2"></div>
+      <div className="login-page-frame3"></div>
+      <div className="login-page-frame4"></div>
       <div className="logo-container">
         <h1 className="logo">Hospital Management & Information System</h1>
       </div>

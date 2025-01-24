@@ -149,11 +149,10 @@ const DraggableModule = ({
           <span>{module.moduleName}</span>
           <span>
             <i
-              className={`fa-solid ${
-                activeModule === module.moduleName
-                  ? "fa-chevron-up"
-                  : "fa-chevron-down"
-              }`}
+              className={`fa-solid ${activeModule === module.moduleName
+                ? "fa-chevron-up"
+                : "fa-chevron-down"
+                }`}
             ></i>
           </span>
         </p>
@@ -166,14 +165,13 @@ const DraggableModule = ({
               to={`/${module.moduleName
                 ?.replace(/\s+/g, "")
                 .toLowerCase()}/${submodule.submoduleName
-                .replace(/\s+/g, "")
-                .toLowerCase()}`}
-              className={`submodule-link ${
-                currentPath?.replace(/^\/|\/$/g, "").toLowerCase() ===
+                  .replace(/\s+/g, "")
+                  .toLowerCase()}`}
+              className={`submodule-link ${currentPath?.replace(/^\/|\/$/g, "").toLowerCase() ===
                 submodule.submodulePath?.replace(/^\/|\/$/g, "").toLowerCase()
-                  ? "active"
-                  : ""
-              }`}
+                ? "active"
+                : ""
+                }`}
             >
               {submodule.submoduleName}
             </NavLink>

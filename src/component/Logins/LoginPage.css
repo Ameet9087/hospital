@@ -3,9 +3,20 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #00968f; /* Original Color */
+    background-color: #E3FFFE;
     padding: 20px;
     gap: 20px;
+  }
+  .login-back-btn{
+    background-color: #007973;
+    border: none;
+    padding: 15px 20px;
+    width: fit-content;
+    position: absolute;
+    top: 40px;
+    left: 100px;
+    border-radius: 50%;
+    border: 1px solid #007973;
   }
   
   .login-slogan-container {

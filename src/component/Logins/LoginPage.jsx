@@ -96,7 +96,12 @@ const LoginPage = () => {
         }
 
         if (filteredRoles.length > 0) {
-          setRoles(filteredRoles);
+          if (loginType === "Doctor" || loginType === "Super User") {
+            setRoles([filteredRoles[0]]);
+            setSelectedRole(filteredRoles[0]?.roleId); // Auto-select the first role
+          } else {
+            setRoles(filteredRoles); // Allow selection for Admin
+          }
         } else {
           setError("No matching roles found for this login type.");
         }
@@ -164,76 +169,90 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-slogan-container">
-        <div className="loginpage_advicecontainer">
-          <h2 className="login-slogan-container-h2">
-            Expert advice from top doctors
-          </h2>
-          <ul className="login-slogan-container-ul">
-            <li className="login-slogan-container-li">
-              Expert advice from top doctors.
-            </li>
-            <li className="login-slogan-container-li">
-              Available 24/7 on any device.
-            </li>
-            <li className="login-slogan-container-li">
-              Private questions answered within 24 hrs.
-            </li>
-          </ul>
+    <>
+      <button onClick={() => navigate("/home")} className="login-back-btn">
+        <i className="fas fa-long-arrow-alt-left"></i>
+      </button>
+      <div className="login-container">
+        <div className="login-slogan-container">
+          <div className="loginpage_advicecontainer">
+            <h2 className="login-slogan-container-h2">
+              Expert advice from top doctors
+            </h2>
+            <ul className="login-slogan-container-ul">
+              <li className="login-slogan-container-li">
+                Expert advice from top doctors.
+              </li>
+              <li className="login-slogan-container-li">
+                Available 24/7 on any device.
+              </li>
+              <li className="login-slogan-container-li">
+                Private questions answered within 24 hrs.
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div className="login-box">
-        <div className="login_middlecontainer">
-          <span className="login-toggle-option">{icon}</span>
-          <h2 className="login-box-h2">{title}</h2>
-          <form className="login-box-form" onSubmit={handleSubmit}>
-            <input
-              className="login-box-input"
-              type="text"
-              placeholder="Enter User Name"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              onBlur={fetchRoleId} // Trigger fetchRoleId on blur
-              required
-            />
-            <input
-              className="login-box-input"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+        <div className="login-box">
+          <div className="login_middlecontainer">
+            <span className="login-toggle-option">{icon}</span>
+            <h2 className="login-box-h2">{title}</h2>
+            <form className="login-box-form" onSubmit={handleSubmit}>
+              <input
+                className="login-box-input"
+                type="text"
+                placeholder="Enter User Name"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                onBlur={fetchRoleId} // Trigger fetchRoleId on blur
+                required
+              />
+              <input
+                className="login-box-input"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
 
-            <select
-              onChange={(e) => setSelectedRole(e.target.value)}
-              className="login-box-input"
-            >
-              <option value="">Select Role</option>
-              {roles.map((role) => (
-                <option key={role.roleId} value={role.roleId}>
-                  {role.roleName}
-                </option>
-              ))}
-            </select>
-
-            {isFetchingRole && (
-              <p className="loading-message">Fetching role ID...</p>
+              <select
+                onChange={(e) => setSelectedRole(e.target.value)}
+                className="login-box-input"
+                disabled={loginType === "Doctor" || loginType === "Super User"} // Disable for Doctor and Super User
+              >
+                {loginType === "Admin" ? (
+                  <>
+                    <option value="">Select Role</option>
+                    {roles.map((role) => (
+                      <option key={role.roleId} value={role.roleId}>
+                        {role.roleName}
+                      </option>
+                    ))}
+                  </>
+                ) : (
+                  // Display the pre-selected role for Doctor or Super User
+                  roles.map((role) => (
+                    <option key={role.roleId} value={role.roleId}>
+                      {role.roleName}
+                    </option>
+                  ))
+                )}
+              </select>
+              <button type="submit" disabled={isFetchingRole}>
+                Sign in
+              </button>
+            </form>
+            {loginType === "Super User" && (
+              <p>
+                Don’t have an account?{" "}
+                <a href="/home/login/superuser">Sign up</a>
+              </p>
             )}
-            <button type="submit" disabled={isFetchingRole}>
-              Sign in
-            </button>
-          </form>
-          {error && <p className="error-message">{error}</p>}
-          {loginType === "Super User" && (
-            <p>
-              Don’t have an account? <a href="/home/login/superuser">Sign up</a>
-            </p>
-          )}
+            {error && <p className="error-message">{error}</p>}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

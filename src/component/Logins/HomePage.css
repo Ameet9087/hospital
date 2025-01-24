@@ -5,20 +5,145 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #e6f7f7; /* Slight background color */
+    background-color: #E3FFFE; /* Slight background color */
     padding: 20px;
+    position: relative;
+    overflow: hidden;
   }
+
   
-  /* Logo styling */
+  .login-page-frame1 {
+    position: absolute;
+    top: 400px;
+    left: -546px;
+    border-radius: 50%;
+    width: 1458px;
+    height: 1458px;
+    filter: drop-shadow(54px 61px 90px rgba(108, 198, 188, 0.51));
+    background: radial-gradient(rgba(153, 219, 232, 0.56) 56.44%, rgba(53, 167, 160, 0.71) 71.38%);
+    animation: frame1Entrance 1s ease-out forwards;
+    opacity: 0; /* Start hidden */
+    transform: translateX(-100%); /* Match starting animation */
+}
+
+.login-page-frame2 {
+    position: absolute;
+    bottom: 400px;
+    right: -546px;
+    border-radius: 50%;
+    width: 1458px;
+    height: 1458px;
+    filter: drop-shadow(54px 61px 90px rgba(108, 198, 188, 0.51));
+    background: radial-gradient(rgba(153, 219, 232, 0.56) 56.44%, rgba(53, 167, 160, 0.71) 71.38%);
+    animation: frame2Entrance 1s ease-out 0.2s forwards;
+    opacity: 0; /* Start hidden */
+    transform: translateX(100%); /* Match starting animation */
+}
+
+  
+  .login-page-frame3 {
+    position: absolute;
+    left: 180px;
+    top: 150px;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    filter: drop-shadow(54px 61px 90px rgba(108, 198, 188, 0.51));
+    background: radial-gradient(rgba(153, 219, 232, 0.56), rgba(53, 167, 160, 0.71) 71.38%);
+    animation: frame3Entrance 1s ease-out 0.6s forwards;
+    opacity: 0; /* Start hidden */
+    transform: translateY(-100%); /* Match starting animation */
+  }
+
+  .login-page-frame3::before {
+    content: '';
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 150px;
+    background: rgba(0, 0, 0, 0.149);
+}
+
+  .login-page-frame4 {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    filter: drop-shadow(54px 61px 90px rgba(108, 198, 188, 0.51));
+    background: radial-gradient(rgba(153, 219, 232, 0.56), rgba(53, 167, 160, 0.71) 71.38%);
+    animation: frame4Entrance 1s ease-out 0.9s forwards;
+    opacity: 0; /* Start hidden */
+    transform: translateY(-100%); /* Match starting animation */
+  }
+  .login-page-frame4::before {
+    content: '';
+    position: absolute;
+    top: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 150px;
+    background: rgba(0, 0, 0, 0.149);
+}
+
+@keyframes frame1Entrance {
+  from {
+      transform: translateX(-100%); /* Start off-screen to the left */
+  }
+  to {
+      transform: translateX(0); /* Final position */
+  }
+}
+
+@keyframes frame2Entrance {
+  from {
+      transform: translateX(100%); /* Start off-screen to the right */
+  }
+  to {
+      transform: translateX(0); /* Final position */
+  }
+}
+
+@keyframes frame3Entrance {
+  from {
+      transform: translateY(-100%); /* Start off-screen above */
+  }
+  to {
+      transform: translateY(0); /* Final position */
+  }
+}
+
+@keyframes frame4Entrance {
+  from {
+      transform: translateY(-100%); /* Start off-screen above */
+  }
+  to {
+      transform: translateY(0); /* Final position */
+  }
+}
+
+/* Add this to frames 1-4 */
+.login-page-frame1,
+.login-page-frame2,
+.login-page-frame3,
+.login-page-frame4 {
+  opacity: 1; /* Ensure elements are always visible */
+}
+
+
   .logo-container {
     margin-bottom: 20px;
   }
   
   .logo {
-    font-size: 32px; /* Adjusted size */
-    color: #00968f; /* Use the original color */
+    font-size: 32px;
+    font-weight: bolder;
+    color: #00968f;
   }
-  
   /* Header styling */
   .login-header {
     text-align: center;
@@ -28,6 +153,7 @@
   .login-header h2 {
     color: #007973; /* Darker shade */
     font-size: 24px;
+    font-weight: bolder;
     margin-bottom: 30px;
   }
   
@@ -71,11 +197,11 @@
   
   /* Specific Button Colors */
   .login-button.admin {
-    background-color: #007973; /* Darker shade */
+    background-color: rgb(0, 163, 156); /* Darker shade */
   }
   
   .login-button.receptionist {
-    background-color: #008a80; /* Slightly Darker Shade */
+    background-color: #00a39c; /* Slightly Darker Shade */
   }
   
   .login-button.doctor {

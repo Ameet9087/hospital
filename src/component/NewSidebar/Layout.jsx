@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 import AppointmentRouting from "../../component/Appointment/AppointmentRouting";
 import Inventory from "../../component/Inventory1/Inventory";
 import Lab from "../../component/NavBarSection/Lab";
-import Emergency from "../../component/Emergency/Emergency";
+import Emergency from "../../component/Emergency/ERClinicalEntriesRoute";
 import Utilitiesmain from "../../component/UTILITIES/utilitiesmain";
 import SystemAdmin from "../../component/SystemAdmin/SystemAdmin";
 
@@ -53,7 +53,7 @@ import MainVisitorFile from "../VisitorMgt/MainVisitorFile";
 import OtMain from "../OperationTheater/OtMain";
 
 import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
-import BillingRoute from "../Billings/Billing";
+import BillingRoute from "../Billings/billing";
 
 function Layout({ }) {
   return (

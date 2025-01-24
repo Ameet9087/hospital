@@ -1735,63 +1735,68 @@ const SuperUserSignup = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-slogan-container">
-        <div className="loginpage_advicecontainer">
-          <h2 className="login-slogan-container-h2">
-            Expert advice from top doctors
-          </h2>
-          <ul className="login-slogan-container-ul">
-            <li className="login-slogan-container-li">
-              Expert advice from top doctors.
-            </li>
-            <li className="login-slogan-container-li">
-              Available 24/7 on any device.
-            </li>
-            <li className="login-slogan-container-li">
-              Private questions answered within 24 hrs.
-            </li>
-          </ul>
+    <>
+      <button onClick={() => navigate("/home")} className="login-back-btn">
+        <i className="fas fa-long-arrow-alt-left"></i>
+      </button>
+      <div className="login-container">
+        <div className="login-slogan-container">
+          <div className="loginpage_advicecontainer">
+            <h2 className="login-slogan-container-h2">
+              Expert advice from top doctors
+            </h2>
+            <ul className="login-slogan-container-ul">
+              <li className="login-slogan-container-li">
+                Expert advice from top doctors.
+              </li>
+              <li className="login-slogan-container-li">
+                Available 24/7 on any device.
+              </li>
+              <li className="login-slogan-container-li">
+                Private questions answered within 24 hrs.
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="login-box">
+          <div className="login_middlecontainer">
+            <form onSubmit={handleSubmit}>
+              <h2 className="login-box-h2">Super User Signup</h2>
+
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="username"
+                  className="login-box-input"
+                  placeholder="Enter User Name"
+                  value={formData.username}
+                  onChange={handleFormChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <input
+                  type="password"
+                  name="password"
+                  className="login-box-input"
+                  placeholder="Enter Password"
+                  value={formData.password}
+                  onChange={handleFormChange}
+                />
+              </div>
+              {error && <div className="error-message">{error}</div>}
+              {successMessage && (
+                <div className="success-message">{successMessage}</div>
+              )}
+
+              <button type="submit" className="submit-button">
+                Create Super User
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-      <div className="login-box">
-        <div className="login_middlecontainer">
-          <form onSubmit={handleSubmit}>
-            <h2 className="login-box-h2">Super User Signup</h2>
-
-            <div className="form-group">
-              <input
-                type="text"
-                name="username"
-                className="login-box-input"
-                placeholder="Enter User Name"
-                value={formData.username}
-                onChange={handleFormChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <input
-                type="password"
-                name="password"
-                className="login-box-input"
-                placeholder="Enter Password"
-                value={formData.password}
-                onChange={handleFormChange}
-              />
-            </div>
-            {error && <div className="error-message">{error}</div>}
-            {successMessage && (
-              <div className="success-message">{successMessage}</div>
-            )}
-
-            <button type="submit" className="submit-button">
-              Create Super User
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 
