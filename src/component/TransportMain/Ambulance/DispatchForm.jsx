@@ -1,35 +1,72 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './DispatchForm.css';
 import axios from 'axios';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
-import { API_BASE_URL } from '../../api/api';
-const DispatchForm = () => {
-    const [columnWidths, setColumnWidths] = useState({});
-    const tableRef = useRef(null);
+import { useNavigate } from 'react-router-dom';
+const DispatchForm = ({ patientData }) => {
+
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        requestId: '',
-        emergencyType: '',
+        id: '',
         patientName: '',
-        patientLocation: '',
-        destination: '',
-        ambulanceType: '',
-        ambulanceId: '',
-        driverName: '',
-        driverContactNumber: '',
-        dispatchTime: '',
-        estimatedArrivalTime: '',
+        patientAge: '',
+        gender: '',
+        transportMode: '',
+        contactPersonName: '',
+        contactPhoneNumber: '',
+        emergencyType: '',
+        requestingFacility: '',
+        facilityAddress: '',
+        pickUpLocation: '',
+        destinationLocation: '',
+        patientCondition: '',
+        specialEquipmentNeeded: '',
+        medicationAdministered: '',
         priorityLevel: '',
-        notes: '',
-        confirmDispatch: false,
+        additionalNotes: '',
+        dispatchDate: '',
+        dispatchDateTime: '',
+        status: '',
+        transportInfoDTO: {
+            id: null,
+        },
     });
 
-    const [showForm, setShowForm] = useState(false); // State to toggle form
+    useEffect(() => {
+        if (patientData) {
+            setFormData({
+                id: patientData?.id || '',
+                patientName: patientData?.emergencyRequest?.patientName || '',
+                patientAge: patientData?.emergencyRequest?.patientAge || '',
+                gender: patientData?.emergencyRequest?.gender || '',
+                transportMode: patientData?.modeOfTransport || '',
+                contactPersonName: patientData?.emergencyRequest?.contactPersonName || '',
+                contactPhoneNumber: patientData?.emergencyRequest?.contactPhoneNumber || '',
+                emergencyType: patientData?.emergencyRequest?.emergencyType || '',
+                requestingFacility: patientData.requestingFacility || '',
+                pickUpLocation: patientData?.fromLocation || '',
+                destinationLocation: patientData?.toLocation || '',
+                patientCondition: patientData?.emergencyRequest?.patientCondition || '',
+                specialEquipmentNeeded: patientData?.emergencyRequest?.specialEquipmentNeeded || '',
+                medicationAdministered: patientData?.emergencyRequest?.medicationAdministered || '',
+                priorityLevel: patientData.priorityLevel || '',
+                additionalNotes: patientData.additionalNotes || '',
+                dispatchDate: patientData.dispatchDate || '',
+                dispatchDateTime: patientData.dispatchDateTime || '',
+                transportStaffAssigned:patientData.transportStaffAssigned || '',
+
+                status: patientData.status || '',
+                transportInfoDTO: {
+                    id: patientData?.transportInfoDTO?.id || null,
+                },
+            });
+        }
+    }, [patientData]);
 
     const handleInputChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const { name, value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
-            [name]: type === "checkbox" ? checked : value,
+            [name]: value,
         }));
     };
 
@@ -37,173 +74,101 @@ const DispatchForm = () => {
         e.preventDefault();
 
         const formattedData = {
-            requestId: formData.requestId,
             emergencyType: formData.emergencyType,
             patientName: formData.patientName,
-            patientLocation: formData.patientLocation,
-            destination: formData.destination,
-            ambulanceType: formData.ambulanceType,
-            ambulanceId: formData.ambulanceId,
-            driverName: formData.driverName,
-            driverContactNumber: formData.driverContactNumber,
-            dispatchTime: new Date(`2024-09-26T${formData.dispatchTime}:00`).toISOString(),
-            estimatedArrivalTime: new Date(`2024-09-26T${formData.estimatedArrivalTime}:00`).toISOString(),
+            patientLocation: formData.pickUpLocation,
+            destination: formData.destinationLocation,
+            ambulanceType: formData.transportMode,
+            driverName: formData.contactPersonName, // Adjust if the actual field is different
+            driverContactNumber: formData.contactPhoneNumber,
+            dispatchTime: formData.dispatchDateTime
+                ? new Date(formData.dispatchDateTime).toISOString()
+                : null,
+            estimatedArrivalTime: null, // Update with actual data if available
             priorityLevel: formData.priorityLevel,
-            notes: formData.notes,
-            confirmDispatch: formData.confirmDispatch.toString(),
+            notes: formData.additionalNotes,
+            confirmDispatch: "Yes",
+            transportInfoDTO: {
+                id: formData.id,
+            },
         };
 
+        console.log("Formatted Data:", formattedData);
+
         try {
-            const response = await axios.post(`${API_BASE_URL}/dispatch/dispatch`, formattedData);
+            const response = await axios.post('http://localhost:4069/api/dispatch', formattedData);
             console.log("API Response: ", response.data);
             alert("Dispatch submitted successfully.");
-            // Handle successful form submission
+            navigate(-1);
         } catch (error) {
             console.error("Error submitting form: ", error);
-            // Handle errors (e.g., show an error message)
+            alert("Failed to submit dispatch form. Please try again.");
         }
     };
 
     return (
         <div className='dispatch-form-module-container'>
-            {!showForm && (  // Only show the "Add Dispatch" button when form is hidden
-                <button className="dispatch-form-module-com-submit-button" onClick={() => setShowForm(true)}>
-                    Add Dispatch
-                </button>
-            )}
-
-            {!showForm ? (
-                <>
-                    {/* Table displaying sample data */}
-                    <div className='table-container'>
-                        <table ref={tableRef}>
-                            <thead>
-                                <tr>
-                                    {["Request ID",
-                                        "Emergency Type",
-                                        "Patient Name",
-                                        "Location",
-                                        "Destination",
-                                        "Ambulance Type",
-                                        "Priority Level"].map((header, index) => (
-                                            <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                                                <div className="header-content">
-                                                    <span>{header}</span>
-                                                    <div
-                                                        className="resizer"
-                                                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                                                    ></div>
-                                                </div>
-                                            </th>
-                                        ))}
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                <tr>
-                                    <td>12345</td>
-                                    <td>Heart Attack</td>
-                                    <td>John Doe</td>
-                                    <td>City Hospital</td>
-                                    <td>General Hospital</td>
-                                    <td>Type A</td>
-                                    <td>High</td>
-                                </tr>
-                                <tr>
-                                    <td>67890</td>
-                                    <td>Accident</td>
-                                    <td>Jane Smith</td>
-                                    <td>Park Avenue</td>
-                                    <td>Central Medical</td>
-                                    <td>Type B</td>
-                                    <td>Medium</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </>
-            ) : (
-                <form className="dispatch-form-module-com" onSubmit={handleSubmit}>
-                    <div className="dispatch-form-module-com-left">
-                        <div className='first-div-dispatch-form'>
-                            {/* Left Form Elements */}
-                            <div className="dispatch-form-module-com-group">
-                                <label>Request ID <span className="mandatory">*</span></label>
-                                <input type="text" name="requestId" value={formData.requestId} onChange={handleInputChange} placeholder="Request ID" required />
-                            </div>
-                            <div className="dispatch-form-module-com-group">
-                                <label>Emergency Type <span className="mandatory">*</span></label>
-                                <input type="text" name="emergencyType" value={formData.emergencyType} onChange={handleInputChange} placeholder="Emergency Type" required />
-                            </div>
-                            <div className="dispatch-form-module-com-group">
-                                <label>Patient Name <span className="mandatory">*</span></label>
-                                <input type="text" name="patientName" value={formData.patientName} onChange={handleInputChange} placeholder="Patient Name" required />
-                            </div>
-                            <div className="dispatch-form-module-com-group">
-                                <label>Patient Location <span className="mandatory">*</span></label>
-                                <input type="text" name="patientLocation" value={formData.patientLocation} onChange={handleInputChange} placeholder="Patient Location" required />
-                            </div>
-                            <div className="dispatch-form-module-com-group">
-                                <label>Destination <span className="mandatory">*</span></label>
-                                <input type="text" name="destination" value={formData.destination} onChange={handleInputChange} placeholder="Destination" required />
-                            </div>
-                            <div className="dispatch-form-module-com-group">
-                                <label>Ambulance Type <span className="mandatory">*</span></label>
-                                <input type="text" name="ambulanceType" value={formData.ambulanceType} onChange={handleInputChange} placeholder="Ambulance Type" required />
-                            </div>
-                            <div className="dispatch-form-module-com-group">
-                                <label>Ambulance ID <span className="mandatory">*</span></label>
-                                <select name="ambulanceId" value={formData.ambulanceId} onChange={handleInputChange} required>
-                                    <option value="" disabled>Select Ambulance ID</option>
-                                    <option value="1">1</option>
-                                </select>
-                            </div>
-                            <div className="dispatch-form-module-com-group">
-                                <label>Driver Name <span className="mandatory">*</span></label>
-                                <input type="text" name="driverName" value={formData.driverName} onChange={handleInputChange} placeholder="Driver Name" required />
-                            </div>
-                            <div className="dispatch-form-module-com-group">
-                                <label>Driver Contact Number <span className="mandatory">*</span></label>
-                                <input type="text" name="driverContactNumber" value={formData.driverContactNumber} onChange={handleInputChange} placeholder="Driver Contact Number" required />
-                            </div>
-                            <div className="dispatch-form-module-com-group">
-                                <label>Dispatch Time <span className="mandatory">*</span></label>
-                                <input type="time" name="dispatchTime" value={formData.dispatchTime} onChange={handleInputChange} required />
-                            </div>
-                            <div className="dispatch-form-module-com-group">
-                                <label>Estimated Arrival Time <span className="mandatory">*</span></label>
-                                <input type="time" name="estimatedArrivalTime" value={formData.estimatedArrivalTime} onChange={handleInputChange} required />
-                            </div>
+            <h5>Dispatch Form</h5>
+            <form className="dispatch-form-module-com" onSubmit={handleSubmit}>
+                <div className="dispatch-form-module-com-left">
+                    <div className='first-div-dispatch-form'>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Transport ID</label>
+                            <input type="text" name="id" value={formData.id} onChange={handleInputChange} placeholder=" ID" readOnly />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Patient Name</label>
+                            <input type="text" name="patientName" value={formData.patientName} onChange={handleInputChange} placeholder="Patient Name" readOnly />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Patient Age</label>
+                            <input type="text" name="patientAge" value={formData.patientAge} onChange={handleInputChange} placeholder="Patient Age" readOnly />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Gender</label>
+                            <input type="text" name="gender" value={formData.gender} onChange={handleInputChange} placeholder="Gender" readOnly />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Emergency Type</label>
+                            <input type="text" name="emergencyType" value={formData.emergencyType} onChange={handleInputChange} placeholder="Emergency Type" readOnly />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Transport Mode</label>
+                            <input type="text" name="transportMode" value={formData.transportMode} onChange={handleInputChange} placeholder="Transport Mode" readOnly />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Transport Staff Assigned</label>
+                            <input type="text" name="medicalRecordNumber" value={formData.transportStaffAssigned} onChange={handleInputChange} placeholder="Transport Staff Assigned" readOnly />
                         </div>
                     </div>
+                </div>
 
-                    <div className="dispatch-form-module-com-right">
-                        <div className='second-div-dispatch-form'>
-                            {/* Right Form Elements */}
-                            <div className="dispatch-form-module-com-group">
-                                <label>Priority Level <span className="mandatory">*</span></label>
-                                <select name="priorityLevel" value={formData.priorityLevel} onChange={handleInputChange} required>
-                                    <option value="">Select Priority</option>
-                                    <option value="Low">Low</option>
-                                    <option value="Medium">Medium</option>
-                                    <option value="High">High</option>
-                                </select>
-                            </div>
-                            <div className="dispatch-form-module-com-group">
-                                <label>Notes</label>
-                                <textarea name="notes" value={formData.notes} onChange={handleInputChange} placeholder="Additional Notes" />
-                            </div>
-                            <div className="dispatch-form-module-com-group">
-                                <label>Confirm Dispatch <span className="mandatory">*</span></label>
-                                <input type="checkbox" name="confirmDispatch" checked={formData.confirmDispatch} onChange={handleInputChange} required />
-                            </div>
-                            <div className="dispatch-form-submit-container">
-                                <button type="submit" className="dispatch-form-module-com-submit-button">Submit</button>
-                            </div>
+                <div className="dispatch-form-module-com-right">
+                    <div className='second-div-dispatch-form'>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Contact Person Name</label>
+                            <input type="text" name="contactPersonName" value={formData.contactPersonName} onChange={handleInputChange} placeholder="Contact Person Name" readOnly />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Contact Phone Number</label>
+                            <input type="text" name="contactPhoneNumber" value={formData.contactPhoneNumber} onChange={handleInputChange} placeholder="Contact Phone Number" readOnly />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Pick Up Location</label>
+                            <input type="text" name="pickUpLocation" value={formData.pickUpLocation} onChange={handleInputChange} placeholder="Pick Up Location" readOnly />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Destination Location</label>
+                            <input type="text" name="destinationLocation" value={formData.destinationLocation} onChange={handleInputChange} placeholder="Destination Location" readOnly />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Medication Administered</label>
+                            <input type="text" name="medicationAdministered" value={formData.medicationAdministered} onChange={handleInputChange} placeholder="Medication Administered" readOnly />
                         </div>
                     </div>
-                </form>
-            )}
+                    <button type="submit" className="dispatch-form-module-com-submit-button">Submit</button>
+                </div>
+            </form>
         </div>
     );
 };

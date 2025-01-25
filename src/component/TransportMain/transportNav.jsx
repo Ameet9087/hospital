@@ -27,6 +27,7 @@ const TransportNavBar = () => {
               Patient Transport
             </NavLink>
           </li>
+          
           <li>
             <NavLink 
               to="/transport/ambulance" 
@@ -36,7 +37,7 @@ const TransportNavBar = () => {
               Ambulance
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink 
               to="/transport/stafftransport" 
               className={({ isActive }) => 
@@ -44,8 +45,8 @@ const TransportNavBar = () => {
             >
               Staff Transport
             </NavLink>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <NavLink 
               to="/transport/transportrequest" 
               className={({ isActive }) => 
@@ -53,17 +54,17 @@ const TransportNavBar = () => {
             >
               Transport Request
             </NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink 
               to="/transport/vehiclemaintenance" 
               className={({ isActive }) => 
                 isActive ? "transportNavBar-active-tab" : ""}
             >
-              Vehicle Maintenance
+            Add Vehicle and Maintenance
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink 
               to="/transport/emergencytransport" 
               className={({ isActive }) => 
@@ -71,7 +72,7 @@ const TransportNavBar = () => {
             >
               Emergency Transport
             </NavLink>
-          </li>
+          </li> */}
         </div>
 
         {/* Logout button */}

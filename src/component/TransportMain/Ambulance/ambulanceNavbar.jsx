@@ -8,6 +8,14 @@ const AmbulanceNavbar = () => {
   return (
     <nav className="ambulance-navbar">
       <ul>
+      <li>
+          <Link 
+            to="/transport/ambulance/emergency-request" 
+            className={`ambulance-header-button ${location.pathname === '/emergency-request' ? 'active' : ''}`}
+          >
+            Emergency Request
+          </Link>
+        </li>
         <li>
           <Link 
             to="/transport/ambulance/ambulance-list" 
@@ -32,14 +40,7 @@ const AmbulanceNavbar = () => {
             GPS Tracking
           </Link>
         </li>
-        <li>
-          <Link 
-            to="/transport/ambulance/emergency-request" 
-            className={`ambulance-header-button ${location.pathname === '/emergency-request' ? 'active' : ''}`}
-          >
-            Emergency Request
-          </Link>
-        </li>
+       
       </ul>
     </nav>
   );

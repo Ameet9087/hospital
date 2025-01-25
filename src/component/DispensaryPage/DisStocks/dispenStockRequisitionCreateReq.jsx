@@ -1,152 +1,64 @@
-// import React, { useState } from 'react';
-// import "../DisStocks/dispenStockRequisitionCreateReq.css"
-
-// function DispenStockRequisitionCreateReq({ onClose }) {
-//   const [requisitionDate, setRequisitionDate] = useState('');
-//   const [items, setItems] = useState([{ genericName: '', itemName: '', code: '', uom: '', availableQty: 0, requestingQty: 1, remark: '' }]);
-
-//   const addItem = () => {
-//     setItems([...items, { genericName: '', itemName: '', code: '', uom: '', availableQty: 0, requestingQty: 1, remark: '' }]);
-//   };
-
-//   const removeItem = (index) => {
-//     const newItems = items.filter((_, i) => i !== index);
-//     setItems(newItems);
-//   };
-
-//   const handleInputChange = (index, event) => {
-//     const { name, value } = event.target;
-//     const newItems = [...items];
-//     newItems[index][name] = value;
-//     setItems(newItems);
-//   };
-
-//   return (
-//     <div className="dispenStockRequisitionCreateReq-form">
-//       <h3>* Add Requisition</h3>
-//       <div className="dispenStockRequisitionCreateReq-date-input">
-//         <label>Requisition Date:</label>
-//         <input
-//           type="date"
-//           value={requisitionDate}
-//           onChange={(e) => setRequisitionDate(e.target.value)}
-//         />
-//       </div>
-//       <table>
-//         <thead>
-//           <tr>
-//             <th></th>
-//             <th>GenericName</th>
-//             <th>ItemName</th>
-//             <th>Code</th>
-//             <th>UOM</th>
-//             <th>Available Qty in Store</th>
-//             <th>Requesting Quantity</th>
-//             <th>Remark</th>
-//             <th></th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {items.map((item, index) => (
-//             <tr key={index}>
-//               <td>
-//                 <button className="dispenStockRequisitionCreateReq-remove-btn" onClick={() => removeItem(index)}>X</button>
-//                  </td>
-//               <td>
-//                 <select
-//                   name="genericName"
-//                   value={item.genericName}
-//                   onChange={(e) => handleInputChange(index, e)}
-//                 >
-//                   <option value="">--Select Generic Name--</option>
-//                   {/* Add more options here */}
-//                 </select>
-//               </td>
-//               <td>
-//                 <input type="text" name="itemName" value={item.itemName} onChange={(e) => handleInputChange(index, e)} />
-//                 </td>
-//               <td>
-//                 {/* <input type="text" name="code" value={item.code} onChange={(e) => handleInputChange(index, e)} /> */}
-//                 </td>
-//               <td>
-//                 {/* <input type="text" name="uom" value={item.uom} onChange={(e) => handleInputChange(index, e)} /> */}
-//                 </td>
-//               <td><input type="number" name="availableQty" value={item.availableQty} onChange={(e) => handleInputChange(index, e)} /></td>
-//               <td><input type="number" name="requestingQty" value={item.requestingQty} onChange={(e) => handleInputChange(index, e)} /></td>
-//               <td><input type="text" name="remark" value={item.remark} onChange={(e) => handleInputChange(index, e)} /></td>
-//               <td>
-//                 {index === items.length - 1 && <button className="dispenStockRequisitionCreateReq-add-btn" onClick={addItem}>+</button>}
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//       <div className="dispenStockRequisitionCreateReq-button-group">
-//         <button className="dispenStockRequisitionCreateReq-request-btn">Request</button>
-//         <button className="dispenStockRequisitionCreateReq-cancel-btn"onClick={onClose}>Cancel</button>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default DispenStockRequisitionCreateReq;
-
  /* Ajhar Tamboli dispenStockRequisitionCreateReq.jsx 19-09-24 */
- import React, { useState } from 'react';
 import "../DisStocks/dispenStockRequisitionCreateReq.css";
 import { API_BASE_URL } from '../../api/api';
-
-// Sample list for generic names; you could replace this with an API call
-const availableGenericNames = [
-  "IBUGESIC SYRUP 100ML",
-  "PARACETAMOL 500MG",
-  "AMOXICILLIN CAPSULE 500MG",
-  // Add more generic names here
-];
-
+import React, { useEffect, useState } from 'react';
 
 function DispenStockRequisitionCreateReq({ onClose }) {
-  const [requesterInfo] = useState({
-    requestedBy: 'Admin',  // Static value for Requested By
-    requestedFrom: 'Main Store'  // Static value for Requested From
-  });
   const [requisitionDate, setRequisitionDate] = useState('');
-  const [items, setItems] = useState([{
-    genericName: '',
-    genericItemName: '',
-    genericCode: '',
-    genericQty: '',
-    availableQty: 0,
-    requestingQuantity: 1,
-    genericRemark: ''
-  }]);
+  const [items, setItems] = useState([]);
+
+  // Fetch items from the API
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/add-item`);
+        if (response.ok) {
+          const data = await response.json();
+          setItems(data);
+        } else {
+          console.error('Failed to fetch items:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching items:', error);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
+  const [selectedItems, setSelectedItems] = useState([
+    {
+      addItemId: '',
+      requestingQuantity: 1,
+      remark: '',
+    },
+  ]);
 
   // Add item
   const addItem = () => {
-    setItems([
-      ...items,
-      { genericName: '', genericItemName: '', genericCode: '', genericQty: '', availableQty: 0, requestingQuantity: 1, genericRemark: '' }
+    setSelectedItems([
+      ...selectedItems,
+      { addItemId: '', requestingQuantity: 1, remark: '' },
     ]);
   };
 
   // Remove item
   const removeItem = (index) => {
-    const newItems = items.filter((_, i) => i !== index);
-    setItems(newItems);
+    const newSelectedItems = selectedItems.filter((_, i) => i !== index);
+    setSelectedItems(newSelectedItems);
   };
 
   // Handle input changes
   const handleInputChange = (index, event) => {
     const { name, value } = event.target;
-    const newItems = [...items];
-    newItems[index][name] = value;
-    setItems(newItems);
+    const newSelectedItems = [...selectedItems];
+    newSelectedItems[index][name] = value;
+    setSelectedItems(newSelectedItems);
   };
 
   // Validate form inputs
   const validateForm = () => {
-    // Ensure that all fields are filled for each item
-    return items.every(item => item.genericName && item.genericItemName && item.genericCode && item.genericQty && item.requestingQuantity);
+    return selectedItems.every(item => item.addItemId && item.requestingQuantity);
   };
 
   // Handle form submission to post data
@@ -157,24 +69,40 @@ function DispenStockRequisitionCreateReq({ onClose }) {
     }
 
     try {
-      const payload = { 
-        requestBy: requesterInfo.requestedBy, // Add Requested By to payload
-        requestFrom: requesterInfo.requestedFrom,
-        date:requisitionDate,
-        // Include requisition date
-        pharmacyRequisitions: items.map((item) => ({
-          genericName: item.genericName,
-          itemName: item.genericItemName,
-          batchNo: item.genericCode,
-          availableQtyInStore: item.genericQty,
-          requiredQuantity: item.requestingQuantity,
-          remark: item.genericRemark,
-        }))
-      }; 
+      const payload = {
+        requiredQuantity: selectedItems.reduce(
+          (acc, item) => acc + parseInt(item.requestingQuantity || 0),
+          0
+        ),
+        requestedBy: "John Doe", // Replace with dynamic user if needed
+        remark: "Urgent Requisition", // Update as necessary
+        requestedDate: requisitionDate,
+        storeName: "Main Store", // Replace with dynamic store name if available
+        batchNo: "BATCH1234", // Replace with dynamic batch number if available
+        expiryDate: "2025-12-31", // Replace with dynamic expiry date if applicable
+        isVerify: "Yes", // Replace based on logic
+        verifiedBy: "Admin", // Replace with dynamic verification user
+        needsVerification: "No", // Replace based on logic
+        status: "Pending", // Adjust status if needed
+        dispatchQty: 50, // Replace with calculated dispatch quantity
+        issueNo: "ISSUE123", // Replace with dynamic issue number
+        recieveditem: "Item XYZ", // Replace with dynamic received item
+  
+        // Add Requisition Detail DTOs
+        requisitionDetailDTOs: selectedItems.map((item) => ({
+          requestingQuantity: parseInt(item.requestingQuantity),
+          date: requisitionDate,
+          time: new Date().toLocaleTimeString(), // Capture current time
+          status: "Pending", // Adjust status if required
+          remark: item.remark || "",
+          addItemDTO: {
+            addItemId: parseInt(item.addItemId),
+          },
+        })),
+      };
 
-      console.log(payload);
-
-      const response = await fetch(`${API_BASE_URL}/requisitions`, {
+      console.log(payload)
+      const response = await fetch(`${API_BASE_URL}/pharmacyRequisitions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -186,7 +114,7 @@ function DispenStockRequisitionCreateReq({ onClose }) {
         const result = await response.json();
         console.log('Requisition created successfully:', result);
         alert('Requisition created successfully!');
-        onClose(); // Close the form on successful submission
+        onClose();
       } else {
         console.error('Error creating requisition:', response.statusText);
         alert('Failed to create requisition.');
@@ -201,85 +129,53 @@ function DispenStockRequisitionCreateReq({ onClose }) {
     <div className="dispenStockRequisitionCreateReq-form">
       <h3>* Add Requisition</h3>
       <div className="dispenStockRequisitionCreateReq-date-input">
-        <label>Requisition Date:</label>
+        <label>Requisition Date: </label>
         <input
           type="date"
           value={requisitionDate}
           onChange={(e) => setRequisitionDate(e.target.value)}
+          required
         />
       </div>
       <table>
         <thead>
           <tr>
             <th></th>
-            <th>GenericName</th>
-            <th>ItemName</th>
-            <th>Code</th>
-            <th>UOM</th>
-            <th>Available Qty in Store</th>
+            <th>Item Name</th>
             <th>Requesting Quantity</th>
             <th>Remark</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          {items.map((item, index) => (
+          {selectedItems.map((item, index) => (
             <tr key={index}>
               <td>
-                <button className="dispenStockRequisitionCreateReq-remove-btn" onClick={() => removeItem(index)}>X</button>
+                <button
+                  className="dispenStockRequisitionCreateReq-remove-btn"
+                  onClick={() => removeItem(index)}
+                >
+                  X
+                </button>
               </td>
               <td>
                 <select
-                  className='dispenStockRequisitionCreateReq-select'
-                  name="genericName"
-                  value={item.genericName}
+                  className="dispenStockRequisitionCreateReq-select"
+                  name="addItemId"
+                  value={item.addItemId}
                   onChange={(e) => handleInputChange(index, e)}
                 >
-                  <option value="">--Select Generic Name--</option>
-                  {availableGenericNames.map((name, i) => (
-                    <option key={i} value={name}>{name}</option>
+                  <option value="">--Select Item--</option>
+                  {items.map(({ addItemId, itemMaster }) => (
+                    <option key={addItemId} value={addItemId}>
+                      {itemMaster?.itemName}
+                    </option>
                   ))}
                 </select>
               </td>
               <td>
                 <input
-                  className='dispenStockRequisitionCreateReq-input'
-                  type="text"
-                  name="genericItemName"
-                  value={item.genericItemName}
-                  onChange={(e) => handleInputChange(index, e)}
-                />
-              </td>
-              <td>
-                <input
-                  className='dispenStockRequisitionCreateReq-input'
-                  type="text"
-                  name="genericCode"
-                  value={item.genericCode}
-                  onChange={(e) => handleInputChange(index, e)}
-                />
-              </td>
-              <td>
-                <input
-                  className='dispenStockRequisitionCreateReq-input'
-                  type="text"
-                  name="genericQty"
-                  value={item.genericQty}
-                  onChange={(e) => handleInputChange(index, e)}
-                />
-              </td>
-              <td>
-                <input
-                  className='dispenStockRequisitionCreateReq-input'
-                  type="number"
-                  name="availableQty"
-                  value={item.availableQty}
-                  onChange={(e) => handleInputChange(index, e)}
-                />
-              </td>
-              <td>
-                <input
-                  className='dispenStockRequisitionCreateReq-input'
+                  className="dispenStockRequisitionCreateReq-input"
                   type="number"
                   name="requestingQuantity"
                   value={item.requestingQuantity}
@@ -288,16 +184,21 @@ function DispenStockRequisitionCreateReq({ onClose }) {
               </td>
               <td>
                 <input
-                  className='dispenStockRequisitionCreateReq-input'
+                  className="dispenStockRequisitionCreateReq-input"
                   type="text"
-                  name="genericRemark"
-                  value={item.genericRemark}
+                  name="remark"
+                  value={item.remark}
                   onChange={(e) => handleInputChange(index, e)}
                 />
               </td>
               <td>
-                {index === items.length - 1 && (
-                  <button className="dispenStockRequisitionCreateReq-add-btn" onClick={addItem}>+</button>
+                {index === selectedItems.length - 1 && (
+                  <button
+                    className="dispenStockRequisitionCreateReq-add-btn"
+                    onClick={addItem}
+                  >
+                    +
+                  </button>
                 )}
               </td>
             </tr>
@@ -305,8 +206,18 @@ function DispenStockRequisitionCreateReq({ onClose }) {
         </tbody>
       </table>
       <div className="dispenStockRequisitionCreateReq-button-group">
-        <button className="dispenStockRequisitionCreateReq-request-btn" onClick={handleSubmit}>Request</button>
-        <button className="dispenStockRequisitionCreateReq-cancel-btn" onClick={onClose}>Cancel</button>
+        <button
+          className="dispenStockRequisitionCreateReq-request-btn"
+          onClick={handleSubmit}
+        >
+          Request
+        </button>
+        <button
+          className="dispenStockRequisitionCreateReq-cancel-btn"
+          onClick={onClose}
+        >
+          Cancel
+        </button>
       </div>
     </div>
   );

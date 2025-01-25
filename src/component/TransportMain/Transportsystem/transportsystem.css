@@ -39,6 +39,8 @@
 .transportsystem-header-button.active {
     background-color: var(--button-bg-color, #00968f); /* Fallback active color */
     color: white;
+    
+    
 }
 
 /* Hover effect on link buttons */

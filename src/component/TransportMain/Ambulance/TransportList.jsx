@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import './transferpatientlist.css';
-import CustomModal from '../../../../CustomModel/CustomModal';
-import DispatchForm from '../../Ambulance/DispatchForm';
-import axios from 'axios';
-import { API_BASE_URL } from '../../../api/api';
 
-function Tansferedpatientlist() {
+// import CustomModal from '../../../../CustomModel/CustomModal';
+// import DispatchForm from '../../Ambulance/DispatchForm';
+import CustomModal from '../../../CustomModel/CustomModal';
+import DispatchForm from './DispatchForm';
+
+function TransportList() {
   // State to hold patients data and loading/error states
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [ambulances, setAmbulances] = useState([]);
+
   const [modalType, setModalType] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -24,44 +24,10 @@ function Tansferedpatientlist() {
     modeOfTransport: '',
     transportStaffAssigned: '',
     additionalNotes: '',
-    ambulanceDTO: { ambulanceId: '', driver: '' },
-    emergencyRequest: { emergencyId: '' }
+    ambulanceDTO: { ambulanceId: '', driver: '' }
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedPatient, setSelectedPatient] = useState([]);
-
-
-  useEffect(() => {
-    if (formData.modeOfTransport === "Ambulance") {
-      axios
-        .get(`${API_BASE_URL}/ambulances/available`)
-        .then((response) => {
-          setAmbulances(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching ambulances:", error);
-        });
-    }
-  }, [formData.modeOfTransport]);
-
-  // Handle mode of transport change
-  const handleModeOfTransportChange = (e) => {
-    setFormData({ ...formData, modeOfTransport: e.target.value });
-  };
-
-  // Handle ambulance selection change
-  const handleAmbulanceChange = (e) => {
-    const selectedAmbulance = ambulances.find(
-      (ambulance) => ambulance.licencePlate === e.target.value
-    );
-    setFormData({
-      ...formData,
-      ambulanceDTO: {
-        ambulanceId: selectedAmbulance?.ambulanceId || "",
-        driverName: selectedAmbulance?.driverName || "Not Available",
-      },
-    });
-  };
 
   // Fetch data from API when the component mounts
   useEffect(() => {
@@ -96,52 +62,34 @@ function Tansferedpatientlist() {
     }
   };
 
-  // const handleModeOfTransportChange = (e) => {
-  //   const value = e.target.value;
-  //   setFormData(prev => ({
-  //     ...prev,
-  //     modeOfTransport: value,
-  //     // Reset ambulance details if mode is not ambulance
-  //     ambulanceDTO: value === 'Ambulance' 
-  //       ? prev.ambulanceDTO 
-  //       : { ambulanceId: '', driver: '' }
-  //   }));
-  // };
+  const handleModeOfTransportChange = (e) => {
+    const value = e.target.value;
+    setFormData(prev => ({
+      ...prev,
+      modeOfTransport: value,
+      // Reset ambulance details if mode is not ambulance
+      ambulanceDTO: value === 'Ambulance'
+        ? prev.ambulanceDTO
+        : { ambulanceId: '', driver: '' }
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Construct the payload based on the form data
-    const payload = {
-      transportDate: formData.transportDate,
-      transportTime: formData.transportTime,
-      fromLocation: formData.fromLocation,
-      toLocation: formData.toLocation,
-      modeOfTransport: formData.modeOfTransport,
-      transportStaffAssigned: formData.transportStaffAssigned,
-      additionalNotes: formData.additionalNotes,
-      reasonForTransport: formData.reasonForTransport,
-      ambulanceDTO: {
-        ambulanceId: formData.ambulanceDTO.ambulanceId,
-      },
-      emergencyRequest: {
-        emergencyId: formData.emergencyRequest.emergencyId,
-      }
-    };
-    console.log(payload)
+    setIsSubmitting(true);
     try {
-      const response = await axios.post(`${API_BASE_URL}/transport/create`, payload);
-      console.log('Data submitted successfully:', response.data);
-      alert("Data submitted successfully");
+      // Add your form submission logic here
+      // const response = await fetch('your-api-endpoint', {...});
       setIsOpen(false);
     } catch (error) {
-      console.error('Error submitting the form', error);
+      console.error('Error submitting form:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleTransportFormOpen = (patient) => {
     setSelectedPatient(patient);
-    console.log("patient", patient);
     setFormData({
       ...formData,
       patient: {
@@ -157,10 +105,6 @@ function Tansferedpatientlist() {
       transportStaffAssigned: '',
       additionalNotes: '',
       ambulanceDTO: { ambulanceId: '', driver: '' },
-      emergencyRequest:
-      {
-        emergencyId: patient.emergencyId
-      }
     });
 
     setModalType('transport');
@@ -169,12 +113,34 @@ function Tansferedpatientlist() {
   }
 
 
+  const handleDispatchFormOpen = (patient) => {
+    setSelectedPatient(patient);
+    setFormData({
+      ...formData,
+      patient: {
+        patientId: patient.patientId || '',
+        name: patient.patientName || ''
+      },
+      transportDate: '',
+      transportTime: '',
+      fromLocation: patient?.pickUpLocation,
+      toLocation: patient?.destinationLocation,
+      reasonForTransport: '',
+      modeOfTransport: '',
+      transportStaffAssigned: '',
+      additionalNotes: '',
+      ambulanceDTO: { ambulanceId: '', driver: '' },
+    });
 
+    setModalType('dispatch');
+    setIsOpen(true);
+
+  }
 
   return (
     <>
       <div className="tansportpatientalllist-container">
-        <h2 className="tansportpatientalllist-header">Emergency Request List</h2>
+        <h2 className="tansportpatientalllist-header">Patient Request Transport List</h2>
         <table className="tansportpatientalllist-table">
           <thead>
             <tr>
@@ -198,13 +164,13 @@ function Tansferedpatientlist() {
                   {patientTransport.status || 'N/A'}
                 </td>
                 <td>
-                  <button className="tansportpatientalllist-button" onClick={() => handleTransportFormOpen(patientTransport)}>
-                    Transport Form
-                  </button> &nbsp;&nbsp;
+                  {/* <button className="tansportpatientalllist-button" onClick={()=>handleTransportFormOpen(patientTransport)}>
+                  Transport Form
+                </button> &nbsp;&nbsp; */}
 
-                  {/* <button className="tansportpatientalllist-button" onClick={()=>handleDispatchFormOpen(patientTransport)}>
-                Dispatch Form
-                </button> */}
+                  <button className="tansportpatientalllist-button" onClick={() => handleDispatchFormOpen(patientTransport)}>
+                    Dispatch Form
+                  </button>
 
 
                 </td>
@@ -227,18 +193,18 @@ function Tansferedpatientlist() {
 
             <div className='patient-transport-form-maindiv'>
               <div className='patient-transport-form-group-subdiv'>
-                {/* <div className="patient-transport-form-group">
-              <label htmlFor="patientId">Patient ID:</label>
-              <input 
-                type="text" 
-                id="patientId" 
-                name="patient.patientId" 
-                value={formData.patient?.patientId} 
-                onChange={handleChange} 
-                required 
-                className="patient-transport-input"
-              />
-            </div> */}
+                <div className="patient-transport-form-group">
+                  <label htmlFor="patientId">Patient ID:</label>
+                  <input
+                    type="text"
+                    id="patientId"
+                    name="patient.patientId"
+                    value={formData.patient?.patientId}
+                    onChange={handleChange}
+                    required
+                    className="patient-transport-input"
+                  />
+                </div>
 
                 <div className="patient-transport-form-group">
                   <label htmlFor="patientName">Patient Name:</label>
@@ -337,39 +303,33 @@ function Tansferedpatientlist() {
                 </div>
 
                 {/* Auto-Filled Ambulance Details */}
-                {/* Auto-Filled Ambulance Details */}
-                {formData.modeOfTransport === "Ambulance" && (
+                {formData.modeOfTransport === 'Ambulance' && (
                   <div className="ambulance-details-section">
                     <h6>Ambulance Details</h6>
                     <div className="patient-transport-form-group">
-                      <label htmlFor="ambulancePlate">Ambulance Plate Number:</label>
-                      <select
-                        id="ambulancePlate"
-                        name="ambulanceDTO.ambulanceId"
-                        value={formData.ambulanceDTO.ambulanceId}
-                        onChange={handleAmbulanceChange}
-                        className="patient-transport-input"
-                      >
-                        <option value="">Select Ambulance</option>
-                        {ambulances.map((ambulance) => (
-                          <option
-                            key={ambulance.ambulanceId}
-                            value={ambulance.licencePlate}
-                          >
-                            {ambulance.licencePlate}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="patient-transport-form-group">
-                      <label htmlFor="driverName">Driver Name:</label>
+                      <label htmlFor="ambulanceNumber">Ambulance Number:</label>
                       <input
                         type="text"
-                        id="driverName"
-                        name="ambulanceDTO.driverName"
-                        value={formData.ambulanceDTO.driverName}
+                        id="ambulanceNumber"
+                        name="ambulanceDTO.ambulanceNumber"
+                        value={formData.ambulanceDTO?.ambulanceId || ''}
+                        onChange={handleChange}
                         className="patient-transport-input"
                         readOnly
+                      />
+                    </div>
+
+                    <div className="patient-transport-form-group">
+                      <label htmlFor="driver">Driver's Name:</label>
+                      <input
+                        type="text"
+                        id="driver"
+                        name="ambulanceDTO.driver"
+                        value={formData.ambulanceDTO.driver}
+                        onChange={handleChange}
+                        required
+                        readOnly
+                        className="patient-transport-input"
                       />
                     </div>
                   </div>
@@ -418,4 +378,4 @@ function Tansferedpatientlist() {
   );
 }
 
-export default Tansferedpatientlist;
+export default TransportList;

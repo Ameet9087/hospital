@@ -35,6 +35,7 @@ const fetchPrescriptions = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/medications`);
     const data = response.data; // Assuming this is the JSON you provided
+    console.log("requested data",data)
     setPrescriptions(data);
     setLoading(false);
   } catch (err) {
@@ -167,7 +168,8 @@ const filteredPrescriptions = prescriptions.filter(prescription => {
         {[
           "Patient ID",
           "Patient Name",
-          "Requested By",
+          "Medicine Name",
+
           "Date",
           "Status",
           "Actions",
@@ -197,9 +199,10 @@ const filteredPrescriptions = prescriptions.filter(prescription => {
                   <td>{patient.outPatientId || 'Unknown'}</td>
                   <td>{patient?.patient?.firstName || 'Unknown'}</td>
                   <td>{prescription.medicationName || 'Unknown'}</td>
-                  <td>{prescription.dose || 'Unknown'}</td>
-                  <td>{prescription.frequency || 'Unknown'}</td>
                   <td>{prescription.medicationDate || 'Unknown'}</td>
+                  <td>{prescription.status}</td>
+                  {/* <td>{prescription.dose || 'Unknown'}</td> */}
+                  {/* <td>{prescription.frequency || 'Unknown'}</td> */}
                    <td className="disPrescription-action-column">
                 <button onClick={() => handleViewAvailabilityClick(prescription)}>
                   View Availability

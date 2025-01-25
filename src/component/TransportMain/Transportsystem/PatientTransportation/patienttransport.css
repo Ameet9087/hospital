@@ -2,32 +2,18 @@
 
 /* Container for the form */
 .patient-transport-container {
-    width: 100%;
-   display: flex;
-    margin: 20px auto;
-    padding: 20px;
-    background-color:#e3fffe;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    justify-content: center;
+    font-family: Arial, sans-serif;
+    background-color:var(--background-color);
+    padding: 4px;
+    font-size: 12px;
+    width: 100%; 
+    max-width: 1050px;
+    margin-bottom: 10px;
 }
 
-
-
-/* Header for the form */
-
-.patient-transport-header-h2{
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-}
 .patient-transport-header {
-    font-size: 16px;
+    font-size: var(--heading-font);
     text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-
 }
 
 /* Form styles */
@@ -38,72 +24,94 @@
 }
 .patient-transport-form-maindiv{
     display: flex;
-    padding: 10px;
+    gap: 4px;
 
 }
 .patient-transport-form-group-subdiv{
-    margin-right: 20px;
-}
-
-
-/* Label styles */
-.patient-transport-form-group label {
-    font-size: 16px;
-    margin-bottom: 5px;
-    color: #555;
-    width: 200px;
-}
-
-/* Input and textarea styles */
-.patient-transport-input, 
-.patient-transport-textarea, 
-.patient-transport-select {
-    padding: 1px;
-    margin-top: 10px;
+    flex: 1;
+    padding: 3px;
+    background: var(--background-color);
     border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    background-color: #fff;
+    margin-bottom: 40px;
+}
+.patient-transport-form-group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: var(--font-size);
+    padding: 2px;
+}
+
+.patient-transport-form-group label {
+ max-width: 180px;
+}
+
+
+.patient-transport-form-group input, 
+.patient-transport-form-group select{
+    padding: 5px;
+    border: none;
+    background: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: var(--font-size);
+    width: 43%;
+}
+
+.patient-transport-form-group textarea{
+    width: 43%; 
+    height: 5%; 
+    resize: none;
+    background: none;
+    border: none;
+    border-radius: 3px;
+    border-bottom: 1px solid #ccc;
+    
+    
+}
+.patient-transport-form-group textarea:focus{
     outline: none;
-    transition: border-color 0.3s ease;
-    width: 250px;
+    border: none;  
+    border-bottom: 1px solid #ccc;
 }
-
-/* Input focus styles */
-.patient-transport-input:focus, 
-.patient-transport-textarea:focus, 
-.patient-transport-select:focus {
-    border-color: #007bff;
+.patient-transport-form-group textarea:hover{
+    border:     1px solid lightblue; 
+    box-shadow: 0 0px 4px rgba(0, 0,0, 0.2); /* Optional: Blue glow */
+  
 }
-
-/* Textarea styles */
-.patient-transport-textarea {
-    min-height: 80px;
-    resize: vertical;
-}
-
 /* Select dropdown styles */
 .patient-transport-select {
     appearance: none;
-    background-color: #fff;
+    background-color: #ccc;
     cursor: pointer;
 }
 
 /* Submit button styles */
-.patient-transport-submit-btn {
-    padding: 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
+.patient-transport-submit-div{
+    padding: 10px 20px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: var(--font-size);
+    transition: background-color 0.3s, transform 0.1s;
+    display: flex;
+    justify-content: flex-end; 
 }
 
-.patient-transport-submit-btn:hover {
-    background-color: #0056b3;
-}
+.patient-transport-submit-btn {
+    width: 13%;
+      background-color: var(--button-color);
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+      color: white;
+    }
+    
+    .patient-transport-submit-btn:hover {
+      background-color: var(--button-hover-background-color);
+      color: var(--button-color);
+      border: 1px solid var(--button-color);
+    }
 
 /* Media query for smaller screens */
 @media (max-width: 768px) {
@@ -116,6 +124,6 @@
     }
 
     .patient-transport-form {
-        gap: 10px;
+        gap:10px;
     }
 }

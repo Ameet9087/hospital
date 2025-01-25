@@ -24,65 +24,64 @@ const AddDepartment = ({ onClose }) => {
     setError(null);
     setSuccess(null);
 
-    // Construct the payload
     const payload = {
       departmentCode,
       departmentName,
-      parentDepartmentName: parentDepartment || null, // Assuming optional
+      parentDepartmentName: parentDepartment || null,
       description: departmentDescription || null,
       noticeText: departmentNoticeText || null,
       departmentHead: departmentHead || null,
       roomNumber: roomNumber || null,
-      isActive: isActive ? "Yes" : "No", // Convert to boolean if API expects
-      isAppointmentApplicable: isAppointmentApplicable ? "Yes" : "No", // Convert to boolean if API expects
+      isActive,
+      isAppointmentApplicable,
     };
 
     try {
       console.log(payload);
-        console.log("Sending request to:", `${API_BASE_URL}/departments/add-department`);
-      const response = await fetch(
-        `${API_BASE_URL}/departments/add-department`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            // Include authentication headers if required
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      console.log("Sending request to:", `${API_BASE_URL}/departments/add-department`);
+
+      const response = await fetch(`${API_BASE_URL}/departments/add-department`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
       if (response.ok) {
-            // console.error("Server responded with error:", errorData);
         setSuccess("Department added successfully!");
-        // Optionally, you can reset the form or perform other actions
-        // Resetting form fields
-        setDepartmentCode(""); // Or set to default if necessary
+
+        // Reset form fields
+        setDepartmentCode("");
         setDepartmentName("");
         setParentDepartment("");
         setDepartmentDescription("");
         setDepartmentNoticeText("");
         setDepartmentHead("");
         setRoomNumber("");
-        setIsActive("Yes");
-        setIsAppointmentApplicable("No");
-        // Close the form after a short delay
-        setTimeout(() => {
-          onClose();
-        }, 2000);
+        setIsActive(true);
+        setIsAppointmentApplicable(false);
+
+        const timeout = setTimeout(() => onClose(), 2000);
+        return () => clearTimeout(timeout);
       } else {
-        const errorData = await response.json();
-        setError(errorData.message || "Failed to add department.");
+        let errorMessage = "Failed to add department.";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch {
+          // Keep default message
+        }
+        setError(errorMessage);
       }
     } catch (err) {
-      setError(
-        "An error occurred while adding the department. Please try again."
-      );
+      setError("An error occurred while adding the department. Please try again.");
       console.error("Error adding department:", err);
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="update-setting-department-form-container">
@@ -106,7 +105,7 @@ const AddDepartment = ({ onClose }) => {
           <label>
             Department Name :
           </label>
-  
+
           <input
             type="text"
             value={departmentName}
@@ -186,7 +185,7 @@ const AddDepartment = ({ onClose }) => {
 
         <div className="update-setting-form-group">
           <label>Department Description :</label>
-         
+
           <textarea
             value={departmentDescription}
             onChange={(e) => setDepartmentDescription(e.target.value)}
@@ -195,7 +194,7 @@ const AddDepartment = ({ onClose }) => {
 
         <div className="update-setting-form-group">
           <label>Department Notice Text :</label>
-         
+
           <textarea
             value={departmentNoticeText}
             onChange={(e) => setDepartmentNoticeText(e.target.value)}
@@ -204,7 +203,7 @@ const AddDepartment = ({ onClose }) => {
 
         <div className="update-setting-form-group">
           <label>Department Head :</label>
-        
+
           <input
             type="text"
             value={departmentHead}
@@ -223,7 +222,7 @@ const AddDepartment = ({ onClose }) => {
 
         <div className="update-setting-form-group">
           <label>Is Active :</label>
-          
+
           <select
             value={isActive}
             onChange={(e) => setIsActive(e.target.value)}
@@ -235,7 +234,7 @@ const AddDepartment = ({ onClose }) => {
 
         <div className="update-setting-form-group">
           <label>Is Appointment Applicable :</label>
-          
+
           <select
             value={isAppointmentApplicable}
             onChange={(e) => setIsAppointmentApplicable(e.target.value)}

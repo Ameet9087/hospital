@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './AmbulanceList.css';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
-
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import axios from 'axios';
-import { API_BASE_URL } from '../../api/api';
-
 const AmbulanceList = () => {
-  
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [availableAmbulances, setAvailableAmbulances] = useState([]);
@@ -16,13 +12,10 @@ const AmbulanceList = () => {
   useEffect(() => {
     const fetchAmbulances = async () => {
       try {
-        const availableResponse = await axios.get(`${API_BASE_URL}/ambulances/available`);
-        const onDutyResponse = await axios.get(`${API_BASE_URL}/ambulances/on-duty`);
-        
+        const availableResponse = await axios.get('http://localhost:4069/api/ambulances/available');
+        const onDutyResponse = await axios.get('http://localhost:4069/api/ambulances/on-duty');
         setAvailableAmbulances(availableResponse.data);
         setOnDutyAmbulances(onDutyResponse.data);
-        
-      
       } catch (error) {
         console.error('Error fetching ambulance data:', error);
       }
@@ -45,21 +38,18 @@ const AmbulanceList = () => {
           ))}
         </tr>
       </thead>
-
       <tbody>
         {ambulances.map((ambulance) => (
           <tr key={ambulance.id}>
             <td>{ambulance.licencePlate}</td>
             <td>{ambulance.status}</td>
-            <td>{ambulance.driver}</td>
+            <td>{ambulance.driverName}</td>
             <td>{ambulance.lastChecked}</td>
           </tr>
         ))}
       </tbody>
     </table>
   );
-
- 
   return (
     <div className="ambulance-list-module-com">
       <h1 className="ambulance-details-com-module__heading">Ambulance List</h1>
@@ -99,10 +89,6 @@ const AmbulanceList = () => {
         )}
       </div>
     </div>
-
-
-   
-    
   );
 };
 

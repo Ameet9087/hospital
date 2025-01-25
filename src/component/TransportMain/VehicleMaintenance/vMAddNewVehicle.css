@@ -1,6 +1,4 @@
- /* Ajhar Tamboli vMAddNewVehicle.css 25-09-24 */
-   
-   
+ 
    .vMAddNewVehicle-container {
     width: 100%;
     /* max-width: 1200px; */
@@ -27,15 +25,18 @@
     font-size: var(--heading-font);
   }
   
-  .vMAddNewVehicle-close-btn {
+  /* .vMAddNewVehicle-close-btn {
     background-color: #E31D2D;
-    color: white;
+    color: red;
     border: none;
     border-radius: 14px;
     cursor: pointer;
     padding: 1px 8px;
   }
-  
+  .vMAddNewVehicle-close-btn:hover{
+    color: red;
+  }
+   */
   .vMAddNewVehicle-form .vMAddNewVehicle-vMAddNewVehicle-form-row {
     display: flex;
     flex-wrap: wrap;

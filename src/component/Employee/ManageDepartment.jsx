@@ -7,6 +7,7 @@ import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import CustomModal from "../../CustomModel/CustomModal";
 import { useFilter } from "../ShortCuts/useFilter";
+import axios from "axios";
 
 const ManageDepartment = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -16,6 +17,8 @@ const ManageDepartment = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
   const tableRef = useRef(null);
+  const [message, setMessage] = useState("");
+
 
   // Fetch department data from the API
   useEffect(() => {
@@ -54,6 +57,23 @@ const ManageDepartment = () => {
     setSelectedDepartment(null); // Reset selection on close
   };
 
+  const handleImportDepartment = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:4096/api/departments/insert"
+      );
+
+      if (response) {
+        alert("Predefined department inserted successfully!");
+      } else {
+        alert("Failed to insert employee roles.");
+      }
+    } catch (error) {
+      console.error("Error inserting employee roles:", error);
+      alert("An error occurred while inserting employee roles.");
+    }
+  }
+
   return (
     <div className="manage-department-page">
       <div className="manage-department-table-container">
@@ -66,6 +86,12 @@ const ManageDepartment = () => {
           </h1>
           <div className="manage-department-results-info">
             Showing {filteredItems.length} / {data.length} results
+            <h1
+              className="manage-add-department-btn"
+              onClick={handleImportDepartment}
+            >
+              Import
+            </h1>
           </div>
         </div>
         <div className="sett-search-bar">
@@ -77,63 +103,63 @@ const ManageDepartment = () => {
             onChange={handleSearch}
           />
         </div>
-          <div className="table-container">
-            <table ref={tableRef}>
-              <thead>
-                <tr>
-                  {[
-                    "Code",
-                    "Name",
-                    "Parent Department",
-                    "Description",
-                    "Is Active",
-                    "Is Appointment",
-                    "Action",
-                  ].map((header, index) => (
-                    <th
-                      key={index}
-                      style={{ width: columnWidths[index] }}
-                      className="resizable-th"
-                    >
-                      <div className="header-content">
-                        <span>{header}</span>
-                        <div
-                          className="resizer"
-                          onMouseDown={startResizing(
-                            tableRef,
-                            setColumnWidths
-                          )(index)}
-                        ></div>
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {filteredItems?.map((item, index) => (
-                  <tr key={index}>
-                    <td>{item.departmentCode}</td>
-                    <td>{item.departmentName}</td>
-                    <td>{item.parentDepartmentName}</td>
-                    <td>{item.description}</td>
-                    <td>{item.isActive === "Yes" ? "Yes" : "No"}</td>
-                    <td>
-                      {item.isAppointmentApplicable === "Yes" ? "Yes" : "No"}
-                    </td>
-                    <td>
-                      <Button
-                        className="manage-department-edit-btn"
-                        onClick={() => handleShowUpdateModal(item)}
-                      >
-                        Edit
-                      </Button>
-                    </td>
-                  </tr>
+        <div className="table-container">
+          <table ref={tableRef}>
+            <thead>
+              <tr>
+                {[
+                  "Code",
+                  "Name",
+                  "Parent Department",
+                  "Description",
+                  "Is Active",
+                  "Is Appointment",
+                  "Action",
+                ].map((header, index) => (
+                  <th
+                    key={index}
+                    style={{ width: columnWidths[index] }}
+                    className="resizable-th"
+                  >
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
+                      ></div>
+                    </div>
+                  </th>
                 ))}
-              </tbody>
-            </table>
-          </div>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredItems?.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.departmentCode}</td>
+                  <td>{item.departmentName}</td>
+                  <td>{item.parentDepartmentName}</td>
+                  <td>{item.description}</td>
+                  <td>{item.isActive === "Yes" ? "Yes" : "No"}</td>
+                  <td>
+                    {item.isAppointmentApplicable === "Yes" ? "Yes" : "No"}
+                  </td>
+                  <td>
+                    <Button
+                      className="manage-department-edit-btn"
+                      onClick={() => handleShowUpdateModal(item)}
+                    >
+                      Edit
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+      </div>
 
       {/* Modal for Add or Update Department */}
       <CustomModal isOpen={showUpdateModal} onClose={handleCloseUpdateModal}>

@@ -29,7 +29,7 @@ function AddEmergencyPageTransport() {
     console.log(formData);
   
     // Axios POST request to add new emergency data
-    axios.post("http://localhost:8085/EmergencyTransport/add", formData) // Replace with your actual API URL
+    axios.post("http://localhost:4069/EmergencyTransport/add", formData) // Replace with your actual API URL
       .then((response) => {
         console.log("Emergency Data Added: ", response.data);
         alert("Emergency data successfully added!"); // Optionally, notify the user

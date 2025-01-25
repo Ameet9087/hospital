@@ -23,6 +23,7 @@ import DrDailySalesReport from './DisReport/drDailySalesReport';
 import DrSettlementSummaryReport from './DisReport/drSettlementSummaryReport';
 import DrPaymentModeWiseReport from './DisReport/drPaymentModeWiseReport';
 import DrStockSummaryReport from './DisReport/drStockSummaryReport';
+import PharmacyClearance from './PharmacyClearance';
 function Disprensary() {
 
   return (
@@ -36,7 +37,8 @@ function Disprensary() {
           <Route path="stock" element={<SalesStockDetails />} />          
           {/* <Route path="dispenTransfer" element={<DispenTransfer />} />   */}
 
-          <Route path="counter" element={<DispenCouter />} />
+          <Route path="pharmacy-clear" element={<PharmacyClearance></PharmacyClearance>}></Route>
+          {/* <Route path="counter" element={<DispenCouter />} /> */}
 
           <Route path="reports" element={<DispenReportList />} /> 
                    
@@ -50,7 +52,6 @@ function Disprensary() {
           <Route path="dr-SettlementSummary-Report" element={<DrSettlementSummaryReport />} /> 
           <Route path="dr-PaymentModeWise-Report" element={<DrPaymentModeWiseReport />} /> 
           <Route path="dr-StockSummary-Report" element={<DrStockSummaryReport />} /> 
-                   
 
         </Routes>
       </div>

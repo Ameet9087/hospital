@@ -93,7 +93,7 @@ const DispenSales = () => {
         </div>
       </div>
 
-      {counterData && (
+      {/* {counterData && (
         <div className="counter-info">
           <h4>Counter Details</h4>
           <p><strong>ID:</strong> {counterData.id}</p>
@@ -101,7 +101,7 @@ const DispenSales = () => {
           <p><strong>Entry Time:</strong> {counterData.entryTime}</p>
           <p><strong>Logout Time:</strong> {counterData.logoutTime}</p>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

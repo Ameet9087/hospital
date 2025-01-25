@@ -28,6 +28,8 @@ import TransportRequest from './TransportRequest/TransportRequest';
 import AddEmergencyPageTransport from './EmergencyTransport/AddEmergencyPage';
 
 import VehicleMaintenance from './VehicleMaintenance/vehicleMaintenance';
+import TransportList from './Ambulance/TransportList';
+import DispatchList from './Ambulance/DispatchList';
 
 function TransportMain() {
 
@@ -63,8 +65,9 @@ function TransportMain() {
           
           <Route path="/vehicleMaintenance" element={<VehicleMaintenance />} />           
  
-
-        </Routes>
+          <Route path='/transport/patienttransport/TransportList' element={<TransportList/>} />
+          <Route path="/transport/patienttransport/dispatchList" element={<DispatchList />} />
+          </Routes>
       </div>
     </>
   )

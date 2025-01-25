@@ -15,71 +15,46 @@ function DispenStockRequisition() {
   const [selectedRequisition, setSelectedRequisition] = useState({
     pharmacyRequisitionId: null,
     availableQtyInStore: null,
-    items: [], // Initialize items as an empty array
+    items: [],
   });
 
   // Fetch all requisitions on component mount
   useEffect(() => {
-    fetch(`${API_BASE_URL}/requisitions`)
+    fetch(`${API_BASE_URL}/pharmacyRequisitions`)
       .then((response) => response.json())
       .then((data) => {
         setRequisitions(data);
-        setFilteredRequisitions(data);
+        console.log("requisitions data", data);
       })
       .catch((error) => console.error('Error fetching requisitions:', error));
   }, []);
 
-  // Show the requisition creation popup
   const handleCreateRequisitionClick = () => setShowCreateRequisition(true);
   const closePopups = () => setShowCreateRequisition(false);
 
-  // Handle status filter changes
-  const handleStatusFilterChange = (filter) => {
-    setStatusFilter(filter);
-    setFilteredRequisitions(
-      filter === "All" ? requisitions : requisitions.filter((req) => req.status === filter)
-    );
+ 
+
+  const handleViewClick = async (requisition) => {
+    console.log("onclick", requisition);
+    try {
+      const response = await axios.get(
+        `${API_BASE_URL}/pharmacyRequisitions/${requisition.pharmacyRequisitionId}`
+      );
+      const data = response.data;
+  
+      setSelectedRequisition({
+        pharmacyRequisitionId: data.pharmacyRequisitionId, // Use data from response
+        availableQtyInStore: data.storeName, // Assuming availableQtyInStore maps to storeName
+        items: data.requisitionDetailDTOs || [], // Assign requisitionDetailDTOs to items
+      });
+      setShowModal(true);
+    } catch (error) {
+      console.error("Error fetching requisition details:", error);
+    }
   };
 
-  // View requisition details
-  const handleViewClick = (requisition) => {
-    console.log("Selected Requisition:", requisition);
-    setSelectedRequisition({
-      pharmacyRequisitionId: requisition.requisitionId,
-      availableQtyInStore: requisition.availableQtyInStore,
-      items: [], // Start with an empty array to be updated after fetch
-    });
-    setShowModal(true);
-  };
-
-  // Close the modal
   const closeModal = () => setShowModal(false);
 
-  // Fetch requisition details when the modal is shown
-  useEffect(() => {
-    if (showModal && selectedRequisition?.pharmacyRequisitionId) {
-      const fetchRequisitionDetails = async () => {
-        try {
-          const response = await axios.get(
-            `${API_BASE_URL}/pharmacyRequisitions/requisitonid/${selectedRequisition.pharmacyRequisitionId}`
-          );
-          const data = response.data;
-
-          // Update the selected requisition with fetched items
-          setSelectedRequisition((prev) => ({
-            ...prev,
-            items: Array.isArray(data) ? data : [], // Ensure the response is an array
-          }));
-        } catch (error) {
-          console.error("Error fetching requisition details:", error);
-        }
-      };
-
-      fetchRequisitionDetails();
-    }
-  }, [showModal, selectedRequisition?.pharmacyRequisitionId]);
-
-  // Print functionality
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
     documentTitle: 'Requisition_Report',
@@ -151,34 +126,7 @@ function DispenStockRequisition() {
               <button className="dispenStockRequisition-print-btn" onClick={handlePrint}><i className="fa-solid fa-print"></i> Print</button>
             </div>
           </div>
-          <div style={{ display: 'none' }}>
-            <div ref={printRef}>
-              <h2>Requisition Report</h2>
-              <p>Date and Time: {new Date().toLocaleString()}</p>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Requisition ID</th>
-                    <th>Requested By</th>
-                    <th>Requested From</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredRequisitions.map((req, index) => (
-                    <tr key={index}>
-                      <td>{req.requisitionId}</td>
-                      <td>{req.requestBy}</td>
-                      <td>{req.requestFrom}</td>
-                      <td>{req.date}</td>
-                      <td>{req.status}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          
           <div className="dispenStockRequisition-table-N-paginat">
             <table>
               <thead>
@@ -192,15 +140,15 @@ function DispenStockRequisition() {
                 </tr>
               </thead>
               <tbody>
-                {filteredRequisitions.map((req, index) => (
+                {requisitions.map((req, index) => (
                   <tr key={index}>
-                    <td>{req.requisitionId}</td>
-                    <td>{req.requestBy}</td>
-                    <td>{req.requestFrom}</td>
-                    <td>{req.date}</td>
+                    <td>{req.pharmacyRequisitionId}</td>
+                    <td>{req.requestedBy}</td>
+                    <td>{req.storeName}</td>
+                    <td>{req.requestedDate}</td>
                     <td>{req.status}</td>
                     <td>
-                      <button className="dispenStockRequisition-view-button">Receive item</button>
+                      {/* <button className="dispenStockRequisition-view-button">Receive item</button> */}
                       <button
                         className="dispensarystockrequ-view"
                         onClick={() => handleViewClick(req)}
@@ -237,7 +185,7 @@ function DispenStockRequisition() {
                 <table className="dispensarystockreq-table">
                   <thead>
                     <tr>
-                      <th>Generic Name</th>
+                      {/* <th>Generic Name</th> */}
                       <th>Medicine Name</th>
                       <th>Item Code</th>
                       <th>Unit</th>
@@ -249,17 +197,16 @@ function DispenStockRequisition() {
                       <th>Remarks</th>
                     </tr>
                   </thead>
-                  <tbody>
+<tbody>
                     {selectedRequisition.items && selectedRequisition.items.length > 0 ? (
                       selectedRequisition.items.map((item, index) => (
                         <tr key={index}>
-                          <td>{item.genericName}</td>
-                          <td>{item.itemName || "N/A"}</td>
-                          <td>{item.batchNo}</td>
+                          {/* <td>{item.genericName || "N/A"}</td> */}
+                          <td>{item?.addItemDTO?.itemMaster?.itemName  || "N/A"}</td> {/* Display itemName */}                          <td>{item.batchNo || "N/A"}</td>
                           <td>{item.unit || "N/A"}</td>
-                          <td>{item.requiredQuantity}</td>
-                          <td>{item.dispatchQty}</td>
-                          <td>{item.requiredQuantity - item.dispatchQty}</td>
+                          <td>{item.requestingQuantity || 0}</td>
+                          <td>{item.dispatchQty || 0}</td>
+                          <td>{(item.requiredQuantity || 0) - (item.dispatchQty || 0)}</td>
                           <td>{item.receivedQty || 0}</td>
                           <td>{item.status || "Pending"}</td>
                           <td>{item.remark || "N/A"}</td>
@@ -267,11 +214,12 @@ function DispenStockRequisition() {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="10" style={{ textAlign: "center" }}>
+                        <td colSpan="9" style={{ textAlign: "center" }}>
                           Loading or no items found.
                         </td>
                       </tr>
-                    )}
+                    )
+                    }
                   </tbody>
                 </table>
               </>
@@ -291,5 +239,5 @@ function DispenStockRequisition() {
     </div>
   );
 }
-
+                  
 export default DispenStockRequisition;

@@ -20,6 +20,7 @@ const DispensaryNavBar = () => {
           <li><NavLink to="/dispensary/prescription">Prescription</NavLink></li>
           <li><NavLink to="/dispensary/sale">Sale</NavLink></li>
           <li><NavLink to="/dispensary/stock">Stock</NavLink></li>
+          <li><NavLink to="/dispensary/pharmacy-clear">Pharmacy clearnace</NavLink></li>
           {/* <li><NavLink to="/dispensary/counter">Counter</NavLink></li> */}
           {/* <li><NavLink to="/dispensary/reports">Reports</NavLink></li>
           {/* <li><NavLink to="/dispenPatientConsump">Patient Consumption</NavLink></li> */}

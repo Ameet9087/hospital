@@ -5,6 +5,7 @@ import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import AddEmployeeRoleForm from "./AddEmployeeRole";
 import { API_BASE_URL } from "../api/api";
 import { useFilter } from "../ShortCuts/useFilter";
+import axios from "axios";
 const EmployeeRoleComponent = () => {
   const [showAddRoleModal, setShowAddRoleModal] = useState(false);
   const [roleData, setRoleData] = useState({ role: "", description: "" });
@@ -33,6 +34,24 @@ const EmployeeRoleComponent = () => {
     fetchRoles();
   }, []);
 
+  const handleImportDepartment = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:4096/api/employeeRoles/insert"
+      );
+
+      if (response) {
+        alert("Predefined employee roles inserted successfully!");
+      } else {
+        alert("Failed to insert employee roles.");
+      }
+    } catch (error) {
+      console.error("Error inserting employee roles:", error);
+      alert("An error occurred while inserting employee roles.");
+    }
+  }
+
+
   const handleOpenAddRoleModal = (role = "", description = "") => {
     setRoleData({ role, description });
     setShowAddRoleModal(true);
@@ -56,6 +75,14 @@ const EmployeeRoleComponent = () => {
           >
             +Add Role
           </Button>
+          <div>
+            <h1
+              className="manage-add-department-btn"
+              onClick={handleImportDepartment}
+            >
+              Import
+            </h1>
+          </div>
         </div>
         <input
           type="text"

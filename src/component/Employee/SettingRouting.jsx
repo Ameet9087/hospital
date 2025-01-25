@@ -1,7 +1,7 @@
 // src/Routes.jsx
 
 import React from 'react';
-import { Routes, Route,useLocation,NavLink } from 'react-router-dom';
+import { Routes, Route, useLocation, NavLink } from 'react-router-dom';
 import EmployeeTable from './EmployeeTable';
 import EmployeeRoleComponent from './EmployeeRoleTable';
 import EmployeeTypeComponent from './EmployeeTypeTable';
@@ -39,37 +39,37 @@ import HospitalSpecialityGroup from './SpecialityGroup/HospitalSpecialityGroup';
 const SettingRouting = () => {
   return (
     <>
-    <EmployeeHeader/>
+      <EmployeeHeader />
 
-    <Routes>
-    <Route path="/employee/manage-employee" element={<EmployeeTable />} />
-    <Route path="/employee/manage-employee-role" element={<EmployeeRoleComponent />} />
-    <Route path="/employee/manage-employee-type" element={<EmployeeTypeComponent />} />
-    <Route path="/departments/manage-department" element={<ManageDepartment />} />
-    <Route path="/departments/manage-substore" element={ <ManageSubstore/>}/>
-    <Route path="manage-ward-substore" element={ <ManageWardSubstoreMap/>}/>
-    <Route path="/adt/manage-ward" element={<ManageWard />} />
-    <Route path="/adt/manage-bed-feature" element={<ManageBedFeatureScheme/>}/>
-    <Route path="/adt/manage-bed" element = { <ManageBed/>}/>
-    <Route path="/radiology/manage-imaging-type" element={<ManageImagingType/>}/>
-    <Route path="/radiology/manage-imaging-item" element={<ManageImagingItem/>}/>
-    <Route path="/radiology/manage-radiology-template" element={<ManageRadiologyTempltate/>}/>
-    <Route path="/radiology/default-signatories" element={<DefaultSignatories/>}/>
-    <Route path='/geolocation/manage-country' element={<Countrymaster/>}></Route>
-    <Route path='/geolocation/manage-state' element={<StateMaster/>}></Route>
-    <Route path='/geolocation/manage-city' element={<CityMaster/>}></Route>
-    <Route path='/doctor/add-doctor' element={<DoctorMaster/>}/>
-    <Route path='/dgmaster/create-dgmaster' element={<Dgmaster/>}/>
-    <Route path='/specialisations/create-specialisations' element={<HospitalSpecialisation/>}/>
-    <Route path='/hospitalSpecialityGroup/create-hospitalSpecialityGroup' element={<HospitalSpecialityGroup/>}/>
-    <Route path="/ipmaster/IP-master-room" element={<Rooms />} />
-    <Route path="/ipmaster/IP-master-Floor" element={<Floor />} />
-    <Route path="/ipmaster/IP-master-Beds" element={<Beds />} />
-    <Route path="/ipmaster/IP-master-Pay-type-master" element={<PaytypeMaster />}/>
-    <Route path="/ipmaster/IP-master-room-info" element={<Roominfo />} />
+      <Routes>
+        <Route path="/employee/manage-employee" element={<EmployeeTable />} />
+        <Route path="/employee/manage-employee-role" element={<EmployeeRoleComponent />} />
+        <Route path="/employee/manage-employee-type" element={<EmployeeTypeComponent />} />
+        <Route path="/employee/manage-department" element={<ManageDepartment />} />
+        <Route path="/departments/manage-substore" element={<ManageSubstore />} />
+        <Route path="manage-ward-substore" element={<ManageWardSubstoreMap />} />
+        <Route path="/adt/manage-ward" element={<ManageWard />} />
+        <Route path="/adt/manage-bed-feature" element={<ManageBedFeatureScheme />} />
+        <Route path="/adt/manage-bed" element={<ManageBed />} />
+        <Route path="/radiology/manage-imaging-type" element={<ManageImagingType />} />
+        <Route path="/radiology/manage-imaging-item" element={<ManageImagingItem />} />
+        <Route path="/radiology/manage-radiology-template" element={<ManageRadiologyTempltate />} />
+        <Route path="/radiology/default-signatories" element={<DefaultSignatories />} />
+        <Route path='/geolocation/manage-country' element={<Countrymaster />}></Route>
+        <Route path='/geolocation/manage-state' element={<StateMaster />}></Route>
+        <Route path='/geolocation/manage-city' element={<CityMaster />}></Route>
+        <Route path='/doctor/add-doctor' element={<DoctorMaster />} />
+        <Route path='/dgmaster/create-dgmaster' element={<Dgmaster />} />
+        <Route path='/specialisations/create-specialisations' element={<HospitalSpecialisation />} />
+        <Route path='/hospitalSpecialityGroup/create-hospitalSpecialityGroup' element={<HospitalSpecialityGroup />} />
+        <Route path="/ipmaster/IP-master-room" element={<Rooms />} />
+        <Route path="/ipmaster/IP-master-Floor" element={<Floor />} />
+        <Route path="/ipmaster/IP-master-Beds" element={<Beds />} />
+        <Route path="/ipmaster/IP-master-Pay-type-master" element={<PaytypeMaster />} />
+        <Route path="/ipmaster/IP-master-room-info" element={<Roominfo />} />
         <Route path="/serviceMaster/serviceMaster" element={<ServiceMaster />} />
-<Route path='/locationmaster/locationform' element={<Location/>}/>
-    <Route path='/socmaster/socform' element={<SOCMaster/>}/>
+        <Route path='/locationmaster/locationform' element={<Location />} />
+        <Route path='/socmaster/socform' element={<SOCMaster />} />
         {/* <Route
           path="/ipmaster/IP-master-OTPackageMaster"
           element={<OTPackageMaster />}
@@ -110,7 +110,7 @@ const SettingRouting = () => {
         />
         
         <Route path="/ipmaster/IP-master-OTMaster" element={<OTMaster />} /> */}
-    </Routes>
+      </Routes>
     </>
   );
 };

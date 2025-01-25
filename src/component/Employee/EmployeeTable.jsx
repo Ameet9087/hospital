@@ -82,7 +82,6 @@ const Employeecomponent = () => {
                   "Department",
                   "Role",
                   "Contact No",
-                  "Action",
                   "IsActive",
                   "Type",
                   "DOB",
@@ -93,6 +92,7 @@ const Employeecomponent = () => {
                   "Extension",
                   "Speed Dial",
                   "Office Hour",
+                  "Action",
                 ].map((header, index) => (
                   <th
                     key={index}
@@ -124,14 +124,7 @@ const Employeecomponent = () => {
                   <td>{employee?.departmentDTO?.departmentName}</td>
                   <td>{employee?.employeeRoleDTO?.role}</td>
                   <td>{employee.contactNumber}</td>
-                  <td>
-                    <Button
-                      className="employee-edit-btn"
-                      onClick={() => handleEditClick(employee)}
-                    >
-                      Edit
-                    </Button>
-                  </td>
+
                   <td>{employee.isActive ? "true" : "false"}</td>
                   <td>{employee?.employeeTypeDTO?.employeeType}</td>
                   <td>{employee.dateOfBirth}</td>
@@ -142,6 +135,14 @@ const Employeecomponent = () => {
                   <td>{employee.extension}</td>
                   <td>{employee.speedDial}</td>
                   <td>{employee.officeHour}</td>
+                  <td>
+                    <Button
+                      className="employee-edit-btn"
+                      onClick={() => handleEditClick(employee)}
+                    >
+                      Edit
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
