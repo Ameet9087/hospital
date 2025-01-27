@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./MaintenanceCheckListtypeMasterPopUp.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
 const MaintenanceCheckListtypeMasterPopUp = ({ onSave }) => {
   const [formData, setFormData] = useState({
@@ -162,21 +162,21 @@ const MaintenanceCheckListtypeMasterPopUp = ({ onSave }) => {
             <tbody>
               {checkListRows.map((row, index) => (
                 <tr key={index}>
-<td>
-  <button
-    className="ButtonListsbutton add-button"
-    onClick={handleAddRow}
-  >
-    Add
-  </button>
-  <button
-    className="ButtonListsbutton delete-button"
-    onClick={handleDeleteRow}
-    disabled={checkListRows.length <= 1}
-  >
-    Delete
-  </button>
-</td>
+                  <td>
+                    <button
+                      className="ButtonListsbutton add-button"
+                      onClick={handleAddRow}
+                    >
+                      Add
+                    </button>
+                    <button
+                      className="ButtonListsbutton delete-button"
+                      onClick={handleDeleteRow}
+                      disabled={checkListRows.length <= 1}
+                    >
+                      Delete
+                    </button>
+                  </td>
 
                   <td>{row.sn}</td>
                   <td>
