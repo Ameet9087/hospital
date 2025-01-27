@@ -147,6 +147,27 @@ const EmployeeHeader = () => {
                 Soc Master
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/settings/dicountathority"
+                className={
+                  location.pathname === "/settings/dicountathority" ? "active" : ""
+                }
+              >
+                Discount Athority
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink
+                to="/settings/organaization"
+                className={
+                  location.pathname === "/settings/organaization" ? "active" : ""
+                }
+              >
+                Organization Master
+              </NavLink>
+            </li>
 
             <li>
               <NavLink
@@ -198,6 +219,45 @@ const EmployeeHeader = () => {
                 }
               >
                 Manage SubStore
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      )}
+
+      {location.pathname.includes("/settings/organaization") && (
+        <div className="sub-nav-container">
+          <ul>
+            <li>
+              <NavLink
+                to="/settings/organaization/createorganaization"
+                className={
+                  location.pathname === "/settings/organaization/createorganaization"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create organization
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      )}
+
+
+      {location.pathname.includes("/settings/dicountathority") && (
+        <div className="sub-nav-container">
+          <ul>
+            <li>
+              <NavLink
+                to="/settings/dicountathority/creatediscountathority"
+                className={
+                  location.pathname === "/settings/dicountathority/creatediscountathority"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create Discount Athority
               </NavLink>
             </li>
           </ul>

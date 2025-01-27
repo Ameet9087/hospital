@@ -34,6 +34,8 @@ import Dgmaster from './DGMasters/dgmaster';
 import Specialisations from './Specialisations/Specialisations';
 import HospitalSpecialisation from './Specialisations/HospitalSpecialisation';
 import HospitalSpecialityGroup from './SpecialityGroup/HospitalSpecialityGroup';
+import DiscountAuthorityMaster from './DiscountAuthority/DiscountAuthorityMaster';
+import Organisition_Master from './Organisition_New/Organisition_Master';
 
 
 const SettingRouting = () => {
@@ -60,6 +62,8 @@ const SettingRouting = () => {
         <Route path='/geolocation/manage-city' element={<CityMaster />}></Route>
         <Route path='/doctor/add-doctor' element={<DoctorMaster />} />
         <Route path='/dgmaster/create-dgmaster' element={<Dgmaster />} />
+        <Route path='/dicountathority/creatediscountathority' element={<DiscountAuthorityMaster />} />
+        <Route path="/organaization/createorganaization" element={<Organisition_Master />} />
         <Route path='/specialisations/create-specialisations' element={<HospitalSpecialisation />} />
         <Route path='/hospitalSpecialityGroup/create-hospitalSpecialityGroup' element={<HospitalSpecialityGroup />} />
         <Route path="/ipmaster/IP-master-room" element={<Rooms />} />

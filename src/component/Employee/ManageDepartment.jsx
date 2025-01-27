@@ -60,7 +60,7 @@ const ManageDepartment = () => {
   const handleImportDepartment = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:4096/api/departments/insert"
+        `${API_BASE_URL}/departments/insert`
       );
 
       if (response) {
