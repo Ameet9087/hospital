@@ -3,7 +3,7 @@ import "./EquipmentMaster.css";
 import EquipmentMasterPopUp from "./EquipmentMasterPopUp";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 
 const EquipmentMaster = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -88,14 +88,14 @@ const EquipmentMaster = () => {
             <thead>
               <tr>
                 ${["Type", "Search Equipment", "EQP No", "Type of Equipment", "Equipment Owner", "Equipment Name"]
-                  .map((header) => `<th>${header}</th>`)
-                  .join("")}
+        .map((header) => `<th>${header}</th>`)
+        .join("")}
               </tr>
             </thead>
             <tbody>
               ${filteredEquipmentMasters
-                .map(
-                  (master) => `
+        .map(
+          (master) => `
                     <tr>
                       <td>${master.type}</td>
                       <td>${master.equipmentNo}</td>
@@ -105,8 +105,8 @@ const EquipmentMaster = () => {
                       <td>${master.equipmentName}</td>
                     </tr>
                   `
-                )
-                .join("")}
+        )
+        .join("")}
             </tbody>
           </table>
         </body>
