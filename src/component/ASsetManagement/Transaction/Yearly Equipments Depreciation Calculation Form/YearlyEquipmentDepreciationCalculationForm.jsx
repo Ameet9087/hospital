@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./YearlyEquipmentdepreciationCalculationForm.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
 const YearlyEquipmentDepreciationCalculationForm = ({ bookingId }) => {
   const [id, setId] = useState(bookingId || "");
@@ -110,7 +109,7 @@ const YearlyEquipmentDepreciationCalculationForm = ({ bookingId }) => {
     const headers = selectedType === "Category"
       ? ["SN", "Category Name", "Under Category", "Depreciation"]
       : ["SN", "Equipment Name", "Equipment No", "Cost"];
-    
+
     csvRows.push(headers.join(','));
 
     data.forEach((row, index) => {
