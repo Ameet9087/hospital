@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./nurseClearanceForm.css";
+import "./NurseClearanceForm.css";
 import { API_BASE_URL } from "../../../api/api";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -10,9 +10,8 @@ const FloatingInput = ({ label, type = "text", value, ...props }) => {
 
   return (
     <div
-      className={`diabetic-chart-form-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`diabetic-chart-form-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <input
         type={type}
@@ -34,9 +33,8 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
 
   return (
     <div
-      className={`diabetic-chart-form-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`diabetic-chart-form-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <select
         className="diabetic-chart-form-floating-select"
