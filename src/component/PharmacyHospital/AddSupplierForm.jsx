@@ -1,8 +1,68 @@
-/* Mohini_AddSupplierForm_WholePage_14/sep/2024 */
-import React, { useState } from 'react';
+
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import './AddSupplierForm.css';
 import { API_BASE_URL } from '../api/api';
+const FloatingInput = ({ label, type = "text", value, ...props }) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [hasValue, setHasValue] = useState(!!value);
+  useEffect(() => {
+    setHasValue(!!value);
+  }, [value]);
+  const handleChange = (e) => {
+    setHasValue(e.target.value.length > 0);
+    if (props.onChange) props.onChange(e);
+  };
+  return (
+    <div className={`AddSupplierForm-floating-field ${(isFocused || hasValue) ? 'active' : ''}`}>
+      <input
+        type={type}
+        className="AddSupplierForm-floating-input"
+        value={value}
+        onFocus={() => setIsFocused(true)}
+        onBlur={(e) => {
+          setIsFocused(false);
+          setHasValue(e.target.value.length > 0);
+        }}
+        onChange={handleChange}
+        {...props}
+      />
+      <label className="AddSupplierForm-floating-label">{label}</label>
+    </div>
+  );
+};
+const FloatingSelect = ({ label, options = [], value, ...props }) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [hasValue, setHasValue] = useState(!!value);
+  useEffect(() => {
+    setHasValue(!!value);
+  }, [value]);
+
+  return (
+    <div className={`AddSupplierForm-floating-field ${(isFocused || hasValue) ? 'active' : ''}`}>
+      <select
+        className="AddSupplierForm-floating-select"
+        value={value}
+        onFocus={() => setIsFocused(true)}
+        onBlur={(e) => {
+          setIsFocused(false);
+          setHasValue(e.target.value !== '');
+        }}
+        onChange={(e) => {
+          setHasValue(e.target.value !== '');
+          if (props.onChange) props.onChange(e);
+        }}
+        {...props}
+      >
+        <option value="">{}</option>
+        {options.map((option, index) => (
+          <option key={index} value={option.value}>{option.label}</option>
+        ))}
+      </select>
+      <label className="AddSupplierForm-floating-label">{label}</label>
+    </div>
+  );
+};
 const AddSupplierForm = ({ onClose }) => {
    const [formData, setFormData] = useState({
     name: '',
@@ -18,9 +78,7 @@ const AddSupplierForm = ({ onClose }) => {
     isActive: false,
     isLedgerRequired: false,
   });
-
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
     setFormData(prevFormData => ({
@@ -28,10 +86,8 @@ const AddSupplierForm = ({ onClose }) => {
       [name]: type === 'checkbox' ? checked : value || '', // Ensure value is never undefined
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent page refresh
-    
     try {
       const response = await axios.post(
         `${API_BASE_URL}/suppliers`, 
@@ -51,131 +107,89 @@ const AddSupplierForm = ({ onClose }) => {
       alert('Error saving data. Please try again.');
     }
   };
-  
   console.log("Form Data "+formData);
-
-
-
   return (
     <div className="add-supplier-form-modal-form">
       <div className="add-supplier-form-add-supplier-modal-content">
-        <button className="add-supplier-form-add-supplier-close-btn" onClick={onClose}>+</button>
-        <h2>Add Supplier</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="add-supplier-form-form-group">
-            <label>Supplier Name:</label>
-            <input
-              type="text"
+        <div className="SettingSupplier-container">
+        <div className="SettingSupplier-section">
+        <div className="SettingSupplier-header">Add Supplier</div>
+          <form onSubmit={handleSubmit}>
+        <div className="SettingSupplier-grid">
+        <FloatingInput label="Supplier Name" type="text"
               name="name"
               value={formData.name}
-              onChange={handleChange}
-              placeholder="Enter Supplier"
-            />
-            <label>Description:</label>
-            <input
-              type="text"
+              onChange={handleChange} />
+        <FloatingInput label="Description" type="text"
               name="description"
               value={formData.description}
               onChange={handleChange}
-              placeholder="Enter Description"
-            />
-          </div>
-          
-          <div className="add-supplier-form-form-group">
-            <label>Credit Period:</label>
-            <input
-              type="text"
+              placeholder="Enter Description" />
+        <FloatingInput label="Credit Period" 
+         type="text"
               name="creditPeriod"
               value={formData.creditPeriod}
-              onChange={handleChange}
-              placeholder="Enter Credit Period"
-            />
-            <label>Contact Address:</label>
-            <input
-              type="text"
-              name="contactAddress"
-              value={formData.contactAddress}
-              onChange={handleChange}
-              placeholder="Enter Contact Address"
-            />
-          </div>
-          
-          <div className="add-supplier-form-form-group">
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Enter Email"
-            />
-            <label>Contact Number:</label>
-            <input
-              type="text"
-              name="contactNumber"
-              value={formData.contactNumber}
-              onChange={handleChange}
-              placeholder="Enter Contact Number"
-            />
-          </div>
-      
-          <div className="add-supplier-form-form-group">
-            <label>City:</label>
-            <input
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              placeholder="Enter City"
-            />
-            <label>KRA PIN:</label>
-            <input
-              type="text"
-              name="kraPin"
-              value={formData.kraPin}
-              onChange={handleChange}
-              placeholder="Enter KRA PIN"
-            />
-          </div>
-          
-          <div className="add-supplier-form-form-group">
-             <label>DDA:</label>
-            <input
-              type="text"
-              name="dda"
-              value={formData.dda || ''} // Ensure value is never undefined
-              onChange={handleChange}
-              placeholder="Enter DDA"
-            />
-            <label>Additional Contact Information:</label>
-            <input
-              type="text"
-              name="additionalContact"
-              value={formData.additionalContact}
-              onChange={handleChange}
-              placeholder="Enter Additional Contact Information"
-            />
-          </div>
-         
-          <div className="add-supplier-form-form-group">
-            <label>Is Active:</label>
-            <input
-              type="checkbox"
-              name="isActive"
+              onChange={handleChange}  />
+        <FloatingInput label="Contact Address"  
+        type="text"
+        name="contactAddress"
+        value={formData.contactAddress}
+        onChange={handleChange}/>
+        <FloatingInput label="Email" 
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange} />
+        <FloatingInput label="Contact Number"
+        type="text"
+        name="contactNumber"
+        value={formData.contactNumber}
+        onChange={handleChange}  />
+        <FloatingInput label="City"  
+         type="text"
+         name="city"
+         value={formData.city}
+         onChange={handleChange}/>
+        <FloatingInput label="Pin" 
+        type="text"
+        name="pin"
+        value={formData.kraPin}
+        onChange={handleChange} />
+        <FloatingInput label="DDA"  
+         type="text"
+         name="dda"
+         value={formData.dda || ''} // Ensure value is never undefined
+         onChange={handleChange}/>
+        <FloatingInput label="Additional Contact Information"  
+          type="text"
+          name="additionalContact"
+          value={formData.additionalContact}
+          onChange={handleChange}
+        />
+        <FloatingInput label="Supplier"  />
+        <div className="AddSupplierForm-row-chechbox">
+            <input type="checkbox" name="isActive"
               checked={formData.isActive}
-              onChange={handleChange}
-            />
-            <label>Is Ledger Required:</label>
-            <input
-              type="checkbox"
-              name="isLedgerRequired"
-              checked={formData.isLedgerRequired}
-              onChange={handleChange}
-            />
+              onChange={handleChange} />
+            <label htmlFor="allowMultiple" className="iPBilling-checkbox-label">
+            Is Active
+            </label>
           </div>
-       
-          <button type="submit" onClick={handleSubmit} className="add-supplier-form-save-btn">Save</button>
-        </form>
+              
+        <div className="AddSupplierForm-row-chechbox">
+            <input type="checkbox" name="isLedgerRequired"
+              checked={formData.isLedgerRequired}
+              onChange={handleChange} />
+            <label htmlFor="allowMultiple" className="iPBilling-checkbox-label">
+            Is Ledger Required
+            </label>
+          </div>
+
+          </div>
+</form>
+          </div>
+          <button type="submit" onClick={handleSubmit} className="AddSupplierForm-Upload">Save</button>
+          </div>
         {showSuccessMessage && (
           <div className="add-supplier-form-success-message">
             Data saved successfully!
@@ -185,6 +199,4 @@ const AddSupplierForm = ({ onClose }) => {
     </div>
   );
 };
-
 export default AddSupplierForm;
-/* Mohini_AddSupplierForm_WholePage_14/sep/2024 */

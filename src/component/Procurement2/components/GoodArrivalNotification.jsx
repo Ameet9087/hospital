@@ -6,19 +6,24 @@ import CustomModal from '../../../CustomModel/CustomModal';
 import * as XLSX from 'xlsx';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../../api/api';
+import GoodsReceiptView from './GoodsReceiptView';
 function DonationInterface() {
   const componentRef = useRef();
   const [showReceiptForm, setShowReceiptForm] = useState(false);
   const [goodsReceipts, setGoodsReceipts] = useState([]);
-
-
-
   const [columnWidths,setColumnWidths] = useState({});
+  const [selectedItem,setShowSelectedItem]= useState();
+  const [showView,setShowView] = useState(false);
   const tableRef=useRef(null);
 
   const toggleReceiptForm = () => {
     setShowReceiptForm((prev) => !prev);
   };
+
+  const handleView=(item)=>{
+    setShowSelectedItem(item);
+    setShowView(true);
+  }
 
   const customStyles = {
     content: {
@@ -43,6 +48,8 @@ function DonationInterface() {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
+  
+
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
     const wb = XLSX.utils.book_new(); // Creates a new workbook
@@ -60,7 +67,7 @@ function DonationInterface() {
     <div className="DonationInterface-container">
       <div className="DonationInterface-header">
         <button className="DonationInterface-btn-primary" onClick={toggleReceiptForm}>
-          + Create Goods Receipt
+          Create Goods Receipt
         </button>
         <div className="DonationInterface-status-filter">
           <span>List by Status:</span>
@@ -70,15 +77,6 @@ function DonationInterface() {
           </select>
         </div>
       </div>
-      
-      <div className="DonationInterface-date-range">
-        <span>From:</span>
-        <input type="date" value="2024-07-11" />
-        <span>To:</span>
-        <input type="date" value="2024-07-29" />
-      
-      </div>
-      
       <div className="DonationInterface-search-bar">
         <input type="text" placeholder="Search" />
       </div>
@@ -141,8 +139,7 @@ function DonationInterface() {
                   <td>{receipt?.totalAmount}</td>
                   <td>{receipt?.remarks}</td>
                   <td>
-                    <button className="DonationInterface-btn-action">View</button>
-                    <button className="DonationInterface-btn-action">Edit</button>
+                    <button className="DonationInterface-btn-action" onClick={()=>handleView(receipt)}>View</button>
                   </td>
                 </tr>
               ))
@@ -154,6 +151,9 @@ function DonationInterface() {
           </tbody>
         </table>
       </div>
+      <CustomModal isOpen={showView} onClose={()=>setShowView(false)}>
+       <GoodsReceiptView selectedItem={selectedItem}/> 
+      </CustomModal>
 
       <CustomModal
         isOpen={showReceiptForm}
@@ -161,7 +161,7 @@ function DonationInterface() {
         style={customStyles}
         contentLabel="Add Purchase Order Draft Modal"
       >
-        <AddGoodsReceipt  />
+        <AddGoodsReceipt   onClose={() => setShowReceiptForm(false)}/>
       </CustomModal>
     </div>
   );

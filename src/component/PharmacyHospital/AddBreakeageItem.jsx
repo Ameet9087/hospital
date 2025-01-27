@@ -1,113 +1,213 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './AddBreakageItem.css';
 import { API_BASE_URL } from '../api/api';
 
-const BreakageItemPage = () => {
-  const [items, setItems] = useState([{ id: 1, salePrice: 0, discountAmt: 0, vat: 0, totalAmt: 0 }]);
-  const [availableItems, setAvailableItems] = useState([]);
+const AddBreakeageItem = () => {
+  const [items, setItems] = useState([
+    {
+      itemName: '',
+      avlQty: 0,
+      batch: '',
+      expDate: '',
+      qty: 0,
+      salePrice: 0,
+      subTotal: 0,
+      discount: 0,
+      vat: 0,
+      totalAmount: 0,
+    },
+  ]);
+  const [totalAmountWords, setTotalAmountWords] = useState('Only.');
   const [breakageDate, setBreakageDate] = useState('');
   const [remark, setRemark] = useState('');
+  const [itemList, setItemList] = useState([]);
+  const [successMessage, setSuccessMessage] = useState('');  // New state for success message
 
   useEffect(() => {
-  axios.get(`${API_BASE_URL}/goods-receipt-items`)
-    .then((response) => {
-      console.log('API Response:', response.data); // Ensure correct data is logged
-      setAvailableItems(response.data);
-    })
-    .catch((error) => {
-      console.error('Error fetching items:', error);
-    });
-}, []);
+    fetch(`${API_BASE_URL}/add-item`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        
+        if (Array.isArray(data)) {
+          const extractedItems = data.map((item) => ({
+            id: item?.addItemId,
+            name: item?.itemMaster?.itemName,
+            quantity: item.itemQty,
+            batchNo:item.batchNo,
+            expDate:item.expiryDate,
+            salePrice: item.salePrice,
+          }));
+          setItemList(extractedItems);
+        } else {
+          console.error('API response is not an array');
+        }
+      })
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
 
+  const numberToWords = (num) => {
+    const belowTwenty = [
+      'Zero',
+      'One',
+      'Two',
+      'Three',
+      'Four',
+      'Five',
+      'Six',
+      'Seven',
+      'Eight',
+      'Nine',
+      'Ten',
+      'Eleven',
+      'Twelve',
+      'Thirteen',
+      'Fourteen',
+      'Fifteen',
+      'Sixteen',
+      'Seventeen',
+      'Eighteen',
+      'Nineteen',
+    ];
+    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+    const thousands = ['', 'Thousand', 'Million', 'Billion'];
+
+    if (num === 0) return 'Zero';
+
+    const convert = (n) => {
+      if (n < 20) return belowTwenty[n];
+      if (n < 100)
+        return tens[Math.floor(n / 10)] + (n % 10 !== 0 ? ' ' + belowTwenty[n % 10] : '');
+      if (n < 1000)
+        return (
+          belowTwenty[Math.floor(n / 100)] +
+          ' Hundred' +
+          (n % 100 !== 0 ? ' ' + convert(n % 100) : '')
+        );
+      for (let i = 0, unit = 1; i < thousands.length; i++, unit *= 1000) {
+        if (n < unit * 1000) {
+          return (
+            convert(Math.floor(n / unit)) +
+            ' ' +
+            thousands[i] +
+            (n % unit !== 0 ? ' ' + convert(n % unit) : '')
+          );
+        }
+      }
+    };
+
+    return convert(num);
+  };
 
   const handleAddItem = () => {
-    setItems([...items, { id: items.length + 1, qty: 0, salePrice: 0, discountAmt: 0, vat: 0, totalAmt: 0 }]);
+    setItems([
+      ...items,
+      {
+        itemName: '',
+        avlQty: 0,
+        batch: '',
+        expDate: '',
+        qty: 0,
+        salePrice: 0,
+        subTotal: 0,
+        discount: 0,
+        vat: 0,
+        totalAmount: 0,
+      },
+    ]);
   };
 
-  
-  const handleRemoveItem = (id) => {
-    setItems(items.filter((item) => item.id !== id));
+  const handleRemoveItem = (index) => {
+    const updatedItems = items.filter((_, i) => i !== index);
+    setItems(updatedItems);
+    updateTotalAmountWords(updatedItems);
   };
-const handleChange = (id, field, value) => {
-  if (field === 'itemName') {
-    const selectedItem = availableItems.find((item) => item.itemName === value);
 
-    if (selectedItem) {
-      setItems(
-        items.map((item) =>
-          item.id === id
-            ? {
-                ...item,
-                goodReceiptItemId: selectedItem.goodReceiptItemId,
-                itemName: selectedItem.itemName,
-                avlQty: selectedItem.avlQty || 0,
-                batch: selectedItem.batch || 'N/A',
-                expDate: selectedItem.expDate || 'N/A',
-              }
-            : item
-        )
-      );
+  const updateTotalAmountWords = (updatedItems) => {
+    const grandTotal = updatedItems.reduce((sum, item) => sum + item.totalAmount, 0);
+    setTotalAmountWords(numberToWords(grandTotal) + ' Only.');
+  };
+
+  const handleChange = (index, field, value) => {
+    const updatedItems = [...items];
+    updatedItems[index][field] = value;
+
+    if (field === 'qty' || field === 'salePrice') {
+      const qty = updatedItems[index].qty || 0;
+      const salePrice = updatedItems[index].salePrice || 0;
+      const subTotal = qty * salePrice;
+      updatedItems[index].subTotal = subTotal;
+
+      const discount = updatedItems[index].discount || 0;
+      const vat = updatedItems[index].vat || 0;
+      const amountAfterDiscount = subTotal - discount;
+      const totalAmount = amountAfterDiscount + (amountAfterDiscount * vat) / 100;
+      updatedItems[index].totalAmount = totalAmount;
     }
-  } else {
-    setItems(
-      items.map((item) =>
-        item.id === id ? { ...item, [field]: value, totalAmt: calculateTotal(item, field, value) } : item
-      )
-    );
-  }
-};
 
+    if (field === 'itemName') {
+      const selectedItem = itemList.find((item) => item.id === parseInt(value));
+      if (selectedItem) {
+        updatedItems[index] = {
+          ...updatedItems[index],
+          avlQty: selectedItem.quantity,
+          batch:selectedItem.batchNo,
+          expDate:selectedItem.expDate,
+          salePrice: selectedItem.salePrice,
+        };
+      }
+    }
 
-
-  const calculateTotal = (item, field, value) => {
-    const updatedItem = { ...item, [field]: value };
-    const subtotal = updatedItem.qty * updatedItem.salePrice;
-    const discount = (subtotal * updatedItem.discountAmt) / 100;
-    const vatAmount = ((subtotal - discount) * updatedItem.vat) / 100;
-    return subtotal - discount + vatAmount;
+    setItems(updatedItems);
+    updateTotalAmountWords(updatedItems);
   };
-
-const handleSubmit = () => {
-  const invalidItems = items.filter(item => !item.goodReceiptItemId);
-  if (invalidItems.length > 0) {
-    alert('Please select valid items before submitting.');
-    return;
-  }
-
-  const payload = {
-    breakageDate,
-    remark,
-    brekageItems: items.map(item => ({
-      goodReceiptItemId: item.goodReceiptItemId,
-    })),
-  };
-
-  console.log(payload);
-
-  axios.post(`${API_BASE_URL}/breakage-items`, payload)
-    .then((response) => {
-      alert('Breakage data saved successfully!');
+  const handleRequest = () => {
+    const postData = {
+      subTotal: items.reduce((sum, item) => sum + item.subTotal, 0),
+      discountAmt: items.reduce((sum, item) => sum + item.discount, 0),
+      vatPercent: items.reduce((sum, item) => sum + item.vat, 0) / items.length,
+      totalAmount: items.reduce((sum, item) => sum + item.totalAmount, 0),
+      breakageDate,
+      remark,
+      breakageItemLists: items.map((item) => ({
+        qty: item.qty,
+        total: item.subTotal,
+        addItemDTO: {
+          addItemId: parseInt(item.itemName),
+        },
+      })),
+    };
+  
+    fetch(`${API_BASE_URL}/breakage-items`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(postData),
     })
-    .catch((error) => {
-      console.error('Error saving breakage data:', error);
-    });
-};
-
-
-
-
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Data posted:', data);
+        alert('Data successfully posted');
+      })
+      .catch((error) => console.error('Error posting data:', error));
+  };
+  
   return (
-    <div className="breakageItem-container">
-      <table className="breakageItem-table">
+    <div className="breakage-container">
+      <div className="breakage-header">
+        <span>Breakage Item(s)</span>
+      </div>
+      <table className="breakage-table">
         <thead>
           <tr>
+            <th>Action</th>
             <th>Item Name</th>
             <th>Avl Qty</th>
             <th>Batch</th>
             <th>Exp Date</th>
             <th>Qty</th>
-            <th>SalePrice</th>
+            <th>Sale Price</th>
             <th>Sub Total</th>
             <th>Discount Amt</th>
             <th>VAT %</th>
@@ -115,91 +215,125 @@ const handleSubmit = () => {
           </tr>
         </thead>
         <tbody>
-            {items.map((item) => (
-    <tr key={item.goodReceiptItemId}>
-      <td>
-        <button
-          className="breakageItem-remove-btn"
-          onClick={() => handleRemoveItem(item.id)}
-        >
-          &#x2715;
-        </button>
-        <select
-  className="breakageItem-select"
-  value={item.itemName || ''}
-  onChange={(e) => handleChange(item.id, 'itemName', e.target.value)} // Use item.id here
->
-  <option value="">--Select Medicine--</option>
-  {availableItems.map((availableItem) => (
-    <option key={availableItem.goodReceiptItemId} value={availableItem.itemName}>
-      {availableItem.itemName}
-    </option>
-  ))}
-</select>
-
-      </td>
-      <td><input type="number" value={item.avlQty || 0} readOnly /></td>
-      <td><input type="text" value={item.batch || 'Batch'} readOnly /></td>
-      <td><input type="text" value={item.expDate || 'Exp Date'} readOnly /></td>
-      <td>
-        <input
-          type="number"
-          value={item.qty}
-          onChange={(e) => handleChange(item.id, 'qty', +e.target.value)}
-        />
-      </td>
-      <td>
-        <input
-          type="number"
-          value={item.salePrice}
-          onChange={(e) => handleChange(item.id, 'salePrice', +e.target.value)}
-        />
-      </td>
-      <td>{item.qty * item.salePrice}</td>
-      <td>
-        <input
-          type="number"
-          value={item.discountAmt}
-          onChange={(e) => handleChange(item.id, 'discountAmt', +e.target.value)}
-        />
-      </td>
-      <td>
-        <input
-          type="number"
-          value={item.vat}
-          onChange={(e) => handleChange(item.id, 'vat', +e.target.value)}
-        />
-      </td>
-      <td>{item.totalAmt}</td>
-    </tr>
-  ))}
-  <tr>
-    <td colSpan="10">
-      <button className="breakageItem-add-btn" onClick={handleAddItem}>+</button>
-    </td>
-  </tr>
+          {items.map((item, index) => (
+            <tr key={index}>
+              <td>
+                <button className="remove-button" onClick={() => handleRemoveItem(index)}>
+                  Delete
+                </button>
+              </td>
+              <td>
+                <select
+                  value={item.itemName}
+                  onChange={(e) => handleChange(index, 'itemName', e.target.value)}
+                >
+                  <option value="">Select Item</option>
+                  {itemList.map((item, i) => (
+                    <option key={i} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </td>
+              <td>
+                <input type="number" value={item.avlQty} readOnly />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  value={item.batch}
+                  onChange={(e) => handleChange(index, 'batch', e.target.value)}
+                />
+              </td>
+              <td>
+                <input
+                  type="date"
+                  value={item.expDate}
+                  onChange={(e) => handleChange(index, 'expDate', e.target.value)}
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  value={item.qty}
+                  onChange={(e) => handleChange(index, 'qty', parseFloat(e.target.value) || 0)}
+                />
+              </td>
+              <td>
+                <input type="number" value={item.salePrice} readOnly />
+              </td>
+              <td>
+                <input type="number" value={item.subTotal} readOnly />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  value={item.discount}
+                  onChange={(e) => handleChange(index, 'discount', parseFloat(e.target.value) || 0)}
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  value={item.vat}
+                  onChange={(e) => handleChange(index, 'vat', parseFloat(e.target.value) || 0)}
+                />
+              </td>
+              <td>
+                <input type="number" value={item.totalAmount} readOnly />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
-      <div className="breakageItem-summary">
-        <label>
-          Select Breakage Date: <input type="date" value={breakageDate} onChange={(e) => setBreakageDate(e.target.value)} />
-        </label>
-        <label>
-          Remark: <textarea value={remark} onChange={(e) => setRemark(e.target.value)} />
-        </label>
-        <div>
-          <p>SubTotal: {items.reduce((sum, item) => sum + item.qty * item.salePrice, 0)}</p>
-          <p>Discounted Amount: {items.reduce((sum, item) => sum + (item.qty * item.salePrice * item.discountAmt) / 100, 0)}</p>
-          <p>VAT Amount: {items.reduce((sum, item) => sum + ((item.qty * item.salePrice - (item.qty * item.salePrice * item.discountAmt) / 100) * item.vat) / 100, 0)}</p>
-          <p>Total Amount: {items.reduce((sum, item) => sum + item.totalAmt, 0)}</p>
+
+      <div className="action-row">
+        <button className="add-item-button" onClick={handleAddItem}>
+          Add Item
+        </button>
+      </div>
+
+      <div className="breakage-details">
+        <div className="left-panel">
+          <div className="input-container">
+            <label>Select Breakage Date:</label>
+            <input
+              type="date"
+              value={breakageDate}
+              onChange={(e) => setBreakageDate(e.target.value)}
+            />
+          </div>
+          <div className="input-container">
+            <label>Remark:</label>
+            <textarea
+              value={remark}
+              onChange={(e) => setRemark(e.target.value)}
+            ></textarea>
+          </div>
+        </div>
+
+        <div className="right-panel">
+          <div className="input-container">
+            <label>Total Amount:</label>
+            <input type="number" value={items.reduce((sum, item) => sum + item.totalAmount, 0)} readOnly />
+          </div>
+          <div className="input-container">
+            <label>In Words:</label>
+            <input type="text" value={totalAmountWords} readOnly />
+          </div>
         </div>
       </div>
-      <div className="breakageItem-actions">
-        <button className="breakageItem-request-btn" onClick={handleSubmit}>Request</button>
-        <button className="breakageItem-cancel-btn">Cancel</button>
+
+      <div className="actions">
+        <button className="request-button" onClick={handleRequest}>
+          Request
+        </button>
+        <button className="cancel-button">Cancel</button>
       </div>
+
+      {successMessage && <div className="success-message">{successMessage}</div>} {/* Show success message */}
     </div>
   );
 };
 
-export default BreakageItemPage;
+export default AddBreakeageItem;

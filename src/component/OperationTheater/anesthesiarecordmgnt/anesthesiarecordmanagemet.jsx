@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './anesthesiarecordmgnt.css';
-import CustomModal from '../../CustomModel/CustomModal';
-import useCustomAlert from '../../../alerts/useCustomAlert';
-import { API_BASE_URL } from "../../api/api"
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./anesthesiarecordmgnt.css";
+import CustomModal from "../../CustomModel/CustomModal";
+import useCustomAlert from "../../../alerts/useCustomAlert";
+import { API_BASE_URL } from "../../api/api";
 
 const AnesthesiaRecordManagement = () => {
   const [records, setRecords] = useState([]);
   const [surgeryEvents, setSurgeryEvents] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [newRecord, setNewRecord] = useState({
-    surgeryEventId: '',
-    startTime: '',
-    endTime: '',
-    notes: '',
-    operationName: '',
-    firstName: '',
-    lastName: '',
-    anesthesiaType: '',
-    doctorName: ''
+    surgeryEventId: "",
+    startTime: "",
+    endTime: "",
+    notes: "",
+    operationName: "",
+    firstName: "",
+    lastName: "",
+    anesthesiaType: "",
+    doctorName: "",
   });
 
   const { success, error, CustomAlerts } = useCustomAlert();
@@ -29,22 +29,22 @@ const AnesthesiaRecordManagement = () => {
   useEffect(() => {
     const fetchRecords = async () => {
       try {
-        const response = await axios.get(`${ API_BASE_URL }/anesthesia-records`);
+        const response = await axios.get(`${API_BASE_URL}/anesthesia-records`);
         setRecords(response.data);
-        success('Records fetched successfully!');
+        success("Records fetched successfully!");
       } catch (err) {
-        console.error('Error fetching anesthesia records:', err);
-        error('Error fetching anesthesia records');
+        console.error("Error fetching anesthesia records:", err);
+        error("Error fetching anesthesia records");
       }
     };
 
     const fetchSurgeryEvents = async () => {
       try {
-        const response = await axios.get(`${ API_BASE_URL }/surgery-events`);
+        const response = await axios.get(`${API_BASE_URL}/surgery-events`);
         setSurgeryEvents(response.data);
       } catch (err) {
-        console.error('Error fetching surgery events:', err);
-        error('Error fetching surgery events');
+        console.error("Error fetching surgery events:", err);
+        error("Error fetching surgery events");
       }
     };
 
@@ -60,7 +60,7 @@ const AnesthesiaRecordManagement = () => {
       [name]: value,
     }));
 
-    if (name === 'surgeryEventId' && value) {
+    if (name === "surgeryEventId" && value) {
       const selectedEvent = surgeryEvents.find(
         (event) => event.surgeryEventId.toString() === value
       );
@@ -68,20 +68,25 @@ const AnesthesiaRecordManagement = () => {
       if (selectedEvent) {
         setNewRecord((prevRecord) => ({
           ...prevRecord,
-          operationName: selectedEvent.operationMasterDTO?.operationName || 'N/A',
-          firstName: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.firstName || 'N/A',
-          lastName: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.lastName || 'N/A',
-          doctorName: selectedEvent.docterDTO?.doctorName || 'N/A',
-          anesthesiaType: selectedEvent.anesthesiaType || 'N/A',
+          operationName:
+            selectedEvent.operationMasterDTO?.operationName || "N/A",
+          firstName:
+            selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.patient
+              ?.firstName || "N/A",
+          lastName:
+            selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.patient
+              ?.lastName || "N/A",
+          doctorName: selectedEvent.docterDTO?.doctorName || "N/A",
+          anesthesiaType: selectedEvent.anesthesiaType || "N/A",
         }));
       } else {
         setNewRecord((prevRecord) => ({
           ...prevRecord,
-          operationName: '',
-          firstName: '',
-          lastName: '',
-          anesthesiaType: '',
-          doctorName: ''
+          operationName: "",
+          firstName: "",
+          lastName: "",
+          anesthesiaType: "",
+          doctorName: "",
         }));
       }
     }
@@ -95,15 +100,18 @@ const AnesthesiaRecordManagement = () => {
         notes: newRecord.notes,
         surgeryEventDTO: {
           surgeryEventId: parseInt(newRecord.surgeryEventId, 10),
-        }
+        },
       };
 
-      const response = await axios.post(`${ API_BASE_URL }/anesthesia-records`, payload);
+      const response = await axios.post(
+        `${API_BASE_URL}/anesthesia-records`,
+        payload
+      );
       setRecords((prevRecords) => [...prevRecords, response.data]);
-      success('Record added successfully!');
+      success("Record added successfully!");
     } catch (err) {
-      console.error('Error adding record:', err);
-      error('Failed to add record');
+      console.error("Error adding record:", err);
+      error("Failed to add record");
     }
 
     resetForm();
@@ -111,15 +119,20 @@ const AnesthesiaRecordManagement = () => {
 
   const handleEditRecord = (record) => {
     setNewRecord({
-      surgeryEventId: record.surgeryEventDTO?.surgeryEventId || '',
-      startTime: record.startTime || '',
-      endTime: record.endTime || '',
-      notes: record.notes || '',
-      operationName: record.surgeryEventDTO?.operationMasterDTO?.operationName || 'N/A',
-      firstName: record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.firstName || 'N/A',
-      lastName: record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.lastName || 'N/A',
-      anesthesiaType: record.surgeryEventDTO?.anesthesiaType || 'N/A',
-      doctorName: record.surgeryEventDTO?.docterDTO?.doctorName || 'N/A',
+      surgeryEventId: record.surgeryEventDTO?.surgeryEventId || "",
+      startTime: record.startTime || "",
+      endTime: record.endTime || "",
+      notes: record.notes || "",
+      operationName:
+        record.surgeryEventDTO?.operationMasterDTO?.operationName || "N/A",
+      firstName:
+        record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient
+          ?.patient?.firstName || "N/A",
+      lastName:
+        record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient
+          ?.patient?.lastName || "N/A",
+      anesthesiaType: record.surgeryEventDTO?.anesthesiaType || "N/A",
+      doctorName: record.surgeryEventDTO?.docterDTO?.doctorName || "N/A",
     });
     setIsEditing(true);
     setEditRecordId(record.anesthesiaRecordId);
@@ -137,7 +150,10 @@ const AnesthesiaRecordManagement = () => {
         },
       };
 
-      const response = await axios.put(`${ API_BASE_URL }/anesthesia-records/${editRecordId}`, payload);
+      const response = await axios.put(
+        `${API_BASE_URL}/anesthesia-records/${editRecordId}`,
+        payload
+      );
 
       setRecords((prevRecords) =>
         prevRecords.map((record) =>
@@ -147,10 +163,10 @@ const AnesthesiaRecordManagement = () => {
         )
       );
 
-      success('Record updated successfully!');
+      success("Record updated successfully!");
     } catch (err) {
-      console.error('Error updating record:', err);
-      error('Failed to update record');
+      console.error("Error updating record:", err);
+      error("Failed to update record");
     }
 
     resetForm();
@@ -158,15 +174,15 @@ const AnesthesiaRecordManagement = () => {
 
   const resetForm = () => {
     setNewRecord({
-      surgeryEventId: '',
-      startTime: '',
-      endTime: '',
-      notes: '',
-      operationName: '',
-      firstName: '',
-      lastName: '',
-      anesthesiaType: '',
-      doctorName: ''
+      surgeryEventId: "",
+      startTime: "",
+      endTime: "",
+      notes: "",
+      operationName: "",
+      firstName: "",
+      lastName: "",
+      anesthesiaType: "",
+      doctorName: "",
     });
     setOpenStickerPopup(false);
     setIsEditing(false);
@@ -224,11 +240,22 @@ const AnesthesiaRecordManagement = () => {
             {filteredRecords.map((record) => (
               <tr key={record.anesthesiaRecordId}>
                 <td>{record.surgeryEventDTO?.surgeryEventId ?? "N/A"}</td>
-                <td>{record.surgeryEventDTO?.operationMasterDTO?.operationName ?? "N/A"}</td>
-                <td>{record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.firstName ?? "N/A"}</td>
-                <td>{record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.lastName ?? "N/A"}</td>
+                <td>
+                  {record.surgeryEventDTO?.operationMasterDTO?.operationName ??
+                    "N/A"}
+                </td>
+                <td>
+                  {record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO
+                    ?.patient?.patient?.firstName ?? "N/A"}
+                </td>
+                <td>
+                  {record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO
+                    ?.patient?.patient?.lastName ?? "N/A"}
+                </td>
                 <td>{record.surgeryEventDTO?.anesthesiaType ?? "N/A"}</td>
-                <td>{record.surgeryEventDTO?.docterDTO?.doctorName ?? "N/A"}</td>
+                <td>
+                  {record.surgeryEventDTO?.docterDTO?.doctorName ?? "N/A"}
+                </td>
                 <td>{record.startTime ?? "N/A"}</td>
                 <td>{record.endTime ?? "N/A"}</td>
                 <td>{record.notes}</td>
@@ -242,7 +269,8 @@ const AnesthesiaRecordManagement = () => {
                 </td>
               </tr>
             ))}
-          </tbody>        </table>
+          </tbody>{" "}
+        </table>
       </div>
 
       {openStickerPopup && (
@@ -251,7 +279,9 @@ const AnesthesiaRecordManagement = () => {
           onClose={() => setOpenStickerPopup(false)}
         >
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h4>{isEditing ? 'Edit Anesthesia Record' : 'Add Anesthesia Record'}</h4>
+            <h4>
+              {isEditing ? "Edit Anesthesia Record" : "Add Anesthesia Record"}
+            </h4>
 
             <div className="form-group">
               <label>Surgery ID</label>
@@ -263,7 +293,10 @@ const AnesthesiaRecordManagement = () => {
               >
                 <option value="">Select Surgery ID</option>
                 {surgeryEvents.map((event) => (
-                  <option key={event.surgeryEventId} value={event.surgeryEventId}>
+                  <option
+                    key={event.surgeryEventId}
+                    value={event.surgeryEventId}
+                  >
                     {event.surgeryEventId} - {event.bookingType || "N/A"}
                   </option>
                 ))}
@@ -313,7 +346,7 @@ const AnesthesiaRecordManagement = () => {
                 readOnly
               />
             </div>
-            
+
             <div className="form-group">
               <label>Doctor Name</label>
               <input
@@ -362,7 +395,7 @@ const AnesthesiaRecordManagement = () => {
                 onClick={isEditing ? handleUpdateRecord : handleAddRecord}
                 className="athensiarecordmodalform-save-btn"
               >
-                {isEditing ? 'Update Record' : 'Save Record'}
+                {isEditing ? "Update Record" : "Save Record"}
               </button>
 
               <button onClick={resetForm} className="cancel-btn">
@@ -379,4 +412,3 @@ const AnesthesiaRecordManagement = () => {
 };
 
 export default AnesthesiaRecordManagement;
-

@@ -6,6 +6,7 @@
 
 .DonationInterface-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
 }
@@ -19,6 +20,7 @@
 }
 
 .DonationInterface-status-filter {
+  width: 300px;
   display: flex;
   align-items: center;
 }

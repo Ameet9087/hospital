@@ -1,27 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import './NurseOrder.css';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import "./NurseOrder.css";
+import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 
 const NurseOrder = ({ inPatientId, outPatientId }) => {
   // Form state
-  const [orderName, setOrderName] = useState('');
-  const [nurseTime, setNurseTime] = useState('');
-  const [nursingFrequency, setNursingFrequency] = useState('');
-  const [orderGivenTime, setOrderGivenTime] = useState('');
-  const [remarks, setRemarks] = useState('');
+  const [orderName, setOrderName] = useState("");
+  const [nurseTime, setNurseTime] = useState("");
+  const [nursingFrequency, setNursingFrequency] = useState("");
+  const [orderGivenTime, setOrderGivenTime] = useState("");
+  const [remarks, setRemarks] = useState("");
 
   // State for fetching existing orders
   const [nursingOrders, setNursingOrders] = useState([]);
 
-
   // Handle form cancel
   const handleCancel = () => {
-    setOrderName('');
-    setNurseTime('');
-    setNursingFrequency('');
-    setOrderGivenTime('');
-    setRemarks('');
+    setOrderName("");
+    setNurseTime("");
+    setNursingFrequency("");
+    setOrderGivenTime("");
+    setRemarks("");
   };
 
   // Handle form submission
@@ -44,12 +43,12 @@ const NurseOrder = ({ inPatientId, outPatientId }) => {
       // Send POST request to backend
       await axios.post(`${API_BASE_URL}/nursing-orders`, formData, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
-      console.log('Form submitted:', formData);
-      alert('Nursing order submitted successfully!');
+      console.log("Form submitted:", formData);
+      alert("Nursing order submitted successfully!");
 
       // Reset the form after submission
       handleCancel();
@@ -57,8 +56,8 @@ const NurseOrder = ({ inPatientId, outPatientId }) => {
       // Fetch the updated list of nursing orders
       fetchNursingOrders();
     } catch (error) {
-      console.error('Error submitting nursing order:', error);
-      alert('Failed to submit nursing order.');
+      console.error("Error submitting nursing order:", error);
+      alert("Failed to submit nursing order.");
     }
   };
 
@@ -66,7 +65,7 @@ const NurseOrder = ({ inPatientId, outPatientId }) => {
   const fetchNursingOrders = async () => {
     try {
       let endpoint = "";
-  
+
       if (inPatientId) {
         endpoint = `${API_BASE_URL}/nursing-orders/in-patient/${inPatientId}`;
       } else if (outPatientId) {
@@ -75,14 +74,13 @@ const NurseOrder = ({ inPatientId, outPatientId }) => {
         console.error("No valid patient ID provided for nursing orders.");
         return;
       }
-  
+
       const response = await axios.get(endpoint);
       setNursingOrders(response.data); // Store fetched data in state
     } catch (error) {
       console.error("Error fetching nursing orders:", error);
     }
   };
-  
 
   // Fetch nursing orders on component mount
   useEffect(() => {
@@ -92,9 +90,6 @@ const NurseOrder = ({ inPatientId, outPatientId }) => {
   return (
     <div className="Nurse-Order-container">
       <h3>Nurse Order Form</h3>
-
-     
-     
 
       {/* Nursing order form */}
       <form onSubmit={handleSubmit}>
@@ -163,7 +158,11 @@ const NurseOrder = ({ inPatientId, outPatientId }) => {
         </div>
 
         <div className="Nurse-Order-group-buttons">
-          <button type="button" onClick={handleCancel} className="NurseOrder-cancel-btn">
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="NurseOrder-cancel-btn"
+          >
             Cancel
           </button>
           <button type="submit" className="NurseOrder-submit-btn">
@@ -180,9 +179,9 @@ const NurseOrder = ({ inPatientId, outPatientId }) => {
               <tr>
                 <th>SN</th>
                 <th>Order Name</th>
-                <th>Time</th> 
+                <th>Time</th>
                 <th>Frequency</th>
-                 <th>Order Given Time</th>
+                <th>Order Given Time</th>
                 <th>Remarks</th>
               </tr>
             </thead>
@@ -190,7 +189,7 @@ const NurseOrder = ({ inPatientId, outPatientId }) => {
               {nursingOrders.map((order, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{order.nOrderName || 'N/A'}</td>
+                  <td>{order.nOrderName || "N/A"}</td>
                   <td>{order.nurseTime}</td>
                   <td>{order.nursingFrequency}</td>
                   <td>{order.orderGivenTime}</td>

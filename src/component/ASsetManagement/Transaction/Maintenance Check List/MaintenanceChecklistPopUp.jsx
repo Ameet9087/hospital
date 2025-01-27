@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './MaintenanceCheckListPopUp.css';
+import './MaintenanceChecklistPopUp.css';
 import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import { FaSearch } from 'react-icons/fa';
 import { API_BASE_URL } from '../../../api/api';

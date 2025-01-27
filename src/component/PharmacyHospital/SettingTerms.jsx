@@ -108,7 +108,7 @@ const SettingTerms = () => {
       <CustomAlerts/>
       <div className="setting-supplier-header">
         <button className="setting-supplier-add-user-button" onClick={() => handleShowModal()}>
-          + Add Tax
+          + Add Terms
         </button>
       </div>
       <input
@@ -175,7 +175,7 @@ const SettingTerms = () => {
   className="supplier-setting-supplier-update-modal"
 >
   <div className="supplier-setting-modal-header">
-    <h5>{isEditMode ? `Edit Tax for ${selectedUser.name}` : 'Add New Tax'}</h5>
+    <h5>{isEditMode ? `Update Terms` : 'Add New Terms'}</h5>
     {/* <button className="close" onClick={handleCloseModal}>&times;</button> */}
   </div>
   <div className="supplier-setting-modal-body">

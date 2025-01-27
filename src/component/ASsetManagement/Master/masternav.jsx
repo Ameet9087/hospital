@@ -2,11 +2,11 @@ import React from "react";
 import { NavLink, Routes, Route } from "react-router-dom";
 import "./assetmgntmasterNavBar.css";
 import InsuranceEntryMaster from "./InssurenceEntryMaster/InsuranceEntryMasterForm";
-import AssetLocation from "./AssetLocationForm/AssetLocationForm/assetLocationsMaster"
-import EquipmentMaster from "./EquipmentMaster/EquipmentMaster"
+import AssetLocation from "./AssetLocationForm/AssetLocationForm/assetLocationsMaster";
+import EquipmentMaster from "./EquipmentMaster/EquipmentMaster";
 import CondemnationReasonMaster from "./condenmationreasonmaster/NewCondemnationReasonMaster";
 import AddDelPharmcyForm from "../Transaction/AdditionDeletionPharmacyForm/adddelpharmacyform";
-import AssetCategoryMaster from "./AssetCategoryMaster/assetCategoryMaster"
+import AssetCategoryMaster from "./AssetCategoryMaster/assetCategoryMaster";
 import MaintenanceChecklisttypeMaster from "./MaintenanceCheckListtypeMaster/MaintenanceCheckListtypeMaster";
 import MaintenanceTypeMaster from "./MaintenanceFileMaster/MaintenanceFileMaster";
 import EquipmentPart from "./Equipment Parts/EquipmentParts";
@@ -18,7 +18,7 @@ const Masternav = () => {
         <ul>
           <li>
             <NavLink
-              to="/assetMaster/assetCategoryMaster"
+              to="/assetmaster/assetCategoryMaster"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
@@ -28,7 +28,7 @@ const Masternav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetMaster/assetLocationMaster"
+              to="/assetmaster/assetLocationMaster"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
@@ -38,7 +38,7 @@ const Masternav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetMaster/equipmentMaster"
+              to="/assetmaster/equipmentMaster"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
@@ -48,7 +48,7 @@ const Masternav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetMaster/insuranceEntryForm"
+              to="/assetmaster/insuranceEntryForm"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
@@ -58,7 +58,7 @@ const Masternav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetMaster/condemnationReasonMaster"
+              to="/assetmaster/condemnationReasonMaster"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
@@ -68,50 +68,62 @@ const Masternav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetMaster/maintenancechecklisttypemaster"
+              to="/assetmaster/maintenancechecklisttypemaster"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
             >
-             MaintenanceChecklist Type Master
+              MaintenanceChecklist Type Master
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/assetMaster/mainenancetypemaster"
+              to="/assetmaster/mainenancetypemaster"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
             >
-           MaintenanceType Master 
+              MaintenanceType Master
             </NavLink>
           </li>
 
           <li>
             <NavLink
-              to="/assetMaster/part"
+              to="/assetmaster/part"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
             >
-           Equipment Part 
+              Equipment Part
             </NavLink>
           </li>
-
-
         </ul>
       </nav>
       <div>
         <Routes>
-          <Route path="/assetCategoryMaster" element={<AssetCategoryMaster />} />
+          <Route
+            path="/assetCategoryMaster"
+            element={<AssetCategoryMaster />}
+          />
           <Route path="/assetLocationMaster" element={<AssetLocation />} />
           <Route path="/equipmentMaster" element={<EquipmentMaster />} />
-          <Route path="/insuranceEntryForm" element={<InsuranceEntryMaster />} />
-          <Route path="/condemnationReasonMaster" element={<CondemnationReasonMaster />} />
-          <Route path="/maintenancechecklisttypemaster" element={<MaintenanceChecklisttypeMaster/>}/>
-          <Route  path="/mainenancetypemaster" element={<MaintenanceTypeMaster/>}/>
-          <Route  path="/part" element={<EquipmentPart/>}/>
-
+          <Route
+            path="/insuranceEntryForm"
+            element={<InsuranceEntryMaster />}
+          />
+          <Route
+            path="/condemnationReasonMaster"
+            element={<CondemnationReasonMaster />}
+          />
+          <Route
+            path="/maintenancechecklisttypemaster"
+            element={<MaintenanceChecklisttypeMaster />}
+          />
+          <Route
+            path="/mainenancetypemaster"
+            element={<MaintenanceTypeMaster />}
+          />
+          <Route path="/part" element={<EquipmentPart />} />
         </Routes>
       </div>
     </div>

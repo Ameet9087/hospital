@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import './SettingTerm.css';
-import * as XLSX from 'xlsx';
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import "./SettingTerm.css";
+import * as XLSX from "xlsx";
 // import ReturnForm from './ReturnForm';
-import AddBreakageItem  from "./AddBreakeageItem"
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-import { API_BASE_URL } from '../api/api';
+import AddBreakageItem from "./AddBreakeageItem";
+import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { API_BASE_URL } from "../api/api";
 
 const StoreBreakageItem = () => {
   const [breakageItems, setBreakageItems] = useState([]); // State for breakage items
   const [filteredItems, setFilteredItems] = useState([]); // State for filtered breakage items
   const [showReturnForm, setShowReturnForm] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
-  const [fromDate, setFromDate] = useState('2024-08-15'); // State for "From" date
-  const [toDate, setToDate] = useState('2024-08-22'); // State for "To" date
+  const [fromDate, setFromDate] = useState("2024-08-15"); // State for "From" date
+  const [toDate, setToDate] = useState("2024-08-22"); // State for "To" date
   const tableRef = useRef(null);
 
   useEffect(() => {
@@ -22,12 +22,14 @@ const StoreBreakageItem = () => {
       .get(`${API_BASE_URL}/breakage-items`)
       .then((response) => {
         if (response.data) {
+          console.log(response.data);
+
           setBreakageItems(response.data); // Update state with fetched data
           setFilteredItems(response.data); // Initially show all items
         }
       })
       .catch((error) => {
-        console.error('Error fetching breakage items:', error);
+        console.error("Error fetching breakage items:", error);
       });
   }, []); // Empty dependency array ensures this runs only once
 
@@ -41,8 +43,8 @@ const StoreBreakageItem = () => {
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'BreakageItemsReport');
-    XLSX.writeFile(wb, 'BreakageItemsReport.xlsx');
+    XLSX.utils.book_append_sheet(wb, ws, "BreakageItemsReport");
+    XLSX.writeFile(wb, "BreakageItemsReport.xlsx");
   };
 
   // Function to handle printing
@@ -73,7 +75,10 @@ const StoreBreakageItem = () => {
 
   return (
     <div className="setting-terms-container">
-      <button className="setting-terms-add-terms-btn" onClick={handleAddBreakageClick}>
+      <button
+        className="setting-terms-add-terms-btn"
+        onClick={handleAddBreakageClick}
+      >
         Add Breakage Item
       </button>
       <div className="return-to-supplier-date-filter-container">
@@ -114,22 +119,28 @@ const StoreBreakageItem = () => {
           <thead>
             <tr>
               {[
-                'Breakage Date',
-                'Breakage Id',
-                'Total Qty',
-                'Sub total',
-                'Discount Amount',
-                'VAT Amount',
-                'Total Amount',
-                'Remark',
-                'Is Active',
+                "Breakage Date",
+                "Breakage Id",
+                "Total Qty",
+                "Sub total",
+                "Discount Amount",
+                "VAT Amount",
+                "Total Amount",
+                "Remark"
               ].map((header, index) => (
-                <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
                   <div className="header-content">
                     <span>{header}</span>
                     <div
                       className="resizer"
-                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
                     ></div>
                   </div>
                 </th>
@@ -140,15 +151,14 @@ const StoreBreakageItem = () => {
             {filteredItems.length > 0 ? (
               filteredItems.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.breakageDate}</td>
-                  <td>{item.breakageItemId}</td>
-                  <td>{item.breakageQty}</td>
-                  <td>{item.subTotal}</td>
-                  <td>{item.discountAmt}</td>
-                  <td>{item.vatPercent}</td>
-                  <td>{item.totalAmount}</td>
-                  <td>{item.remark}</td>
-                  <td>{item.isActive ? 'Yes' : 'No'}</td>
+                  <td>{item?.breakageDate}</td>
+                  <td>{item?.breakageItemId}</td>
+                  <td>{item?.breakageItemLists[0]?.qty}</td>
+                  <td>{item?.subTotal}</td>
+                  <td>{item?.discountAmt}</td>
+                  <td>{item?.vatPercent}</td>
+                  <td>{item?.totalAmount}</td>
+                  <td>{item?.remark}</td>
                 </tr>
               ))
             ) : (
@@ -165,7 +175,10 @@ const StoreBreakageItem = () => {
         <div className="return-form-overlay-model">
           <div className="return-form-container-com">
             <AddBreakageItem />
-            <button className="return-form-com-close-btn" onClick={handleCloseReturnForm}>
+            <button
+              className="return-form-com-close-btn"
+              onClick={handleCloseReturnForm}
+            >
               X
             </button>
           </div>

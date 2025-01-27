@@ -57,7 +57,7 @@ const Prescription = ({ patient, handleClose }) => {
     };
 
     fetchMedications();
-  }, [patient.outPatientId, patient.patient?.inPatientId]);
+  }, [patient.outPatientId, patient?.inPatientId]);
 
   // Custom print function using a ref
   const handlePrint = () => {

@@ -11,17 +11,13 @@ function VerifyModalPharmacy({ isOpen, onClose, requisitionDetails }) {
 
   // Function to handle approval
   const handleApprove = async () => {
-    const updateData = {
-      verifyOrNot: 'Verified' , // Set to 'Approved' when approved
-      verifiedBy: 'Mr.admin', // Replace with the actual verifier's name or ID
-      requiredQuantity: requisitionDetails.requiredQuantity,
-      status: 'Approved', // Assuming status should be updated to 'Verified'
-    };
-
-    console.log(updateData);
+    const updateData = requisitionDetails?.subPharmRequisitionItems?.map(item => ({
+      subPharmRequisitionItemId: item.subPharmRequisitionItemId,
+      dispatchQuantity: 0,
+    }))
     
     try {
-      const response = await fetch(`${API_BASE_URL}/pharmacyRequisitions/update/${requisitionDetails. pharmacyRequisitionId}`, {
+      const response = await fetch(`${API_BASE_URL}/subpharm-requisitions/${requisitionDetails. pharRequisitionId}/update?status=Approved`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -32,7 +28,6 @@ function VerifyModalPharmacy({ isOpen, onClose, requisitionDetails }) {
       if (response.ok) {
         const result = await response.json();
         console.log('Update successful:', result);
-        // Close the modal after a successful update
         onClose();
       } else {
         console.error('Error updating requisition:', response.statusText);
@@ -51,8 +46,8 @@ function VerifyModalPharmacy({ isOpen, onClose, requisitionDetails }) {
         </div>
         <div className="verifyModalContent">
           <div className="verifyRequisitionDetails">
-            <p><strong>Requisition No:</strong> {requisitionDetails.pharmacyRequisitionId}</p>
-            <p><strong>Store Name:</strong> {requisitionDetails.storeName}</p>
+            <p><strong>Requisition No:</strong> {requisitionDetails.pharRequisitionId}</p>
+            <p><strong>Store Name:</strong> {requisitionDetails.subStore.subStoreName}</p>
             <p><strong>Requisition Date:</strong> {requisitionDetails.requestedDate}</p>
           </div>
           <table className="verifyDataTable">
@@ -66,13 +61,18 @@ function VerifyModalPharmacy({ isOpen, onClose, requisitionDetails }) {
               </tr>
             </thead>
             <tbody>
-                <tr>
-                  <td>{requisitionDetails.itemName}</td>
-                  <td>{requisitionDetails.requiredQuantity || requisitionDetails.requestingQuantity }</td>
-                  <td>{requisitionDetails.unit || 'N/A'}</td>
-                  <td>{requisitionDetails.remark || 'N/A'}</td>
+              {
+               requisitionDetails.subPharmRequisitionItems.map((requisitionDetail, index) => (
+                  <tr key={index}>
+                  <td>{requisitionDetail?.items?.itemMaster?.itemName}</td>
+                  <td>{requisitionDetail.requiredQuantity}</td>
+                  <td>{requisitionDetail.items?.itemMaster?.unitsOfMeasurement?.name || 'N/A'}</td>
+                  <td>{requisitionDetail.remark || 'N/A'}</td>
                   <td>{requisitionDetails.status}</td>
                 </tr>
+                ))
+              }
+                
             </tbody>
           </table>
           <div className="verifyRemarksSection">

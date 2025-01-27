@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from "react";
-import "./AdmissionDeskHome.css";
+import "./AdmissionDeskHomepage.css";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 import { useNavigate } from "react-router-dom";
+import ReceptionClearance from "./ReceptionClearance/ReceptionClearance";
+import DischargeClearance from "./DischargeClearance/DischargeClearance";
+import CustomModal from "../CustomModel/CustomModal";
+import BlockIPEntries from "./IpBlock/BlockIpEntries";
 
 function AdmissionDeskHomePage() {
   const [admissionRequest, setAdmissionRequest] = useState([]);
   const [admittedpatient, setAdmittedpatient] = useState([]);
   const [wardTransferRequest, setWardTransferRequest] = useState([]);
-  const [cancellationRequest, setCancellationRequest] = useState([]);
+  const [ipBlockingRequest, setIpBlockingRequest] = useState([]);
   const [confirmBox, setConfirmBox] = useState(false);
   const [requestId, setRequestId] = useState();
+  const [dischargeClearaceRequest, setDischargeClearanceRequest] = useState([]);
+  const [activeState, setActiveState] = useState("");
+  const [selectedPatient, setSelectedPatient] = useState();
+
   const navigate = useNavigate();
 
   const fetchAdmissionRequest = async () => {
@@ -33,16 +41,25 @@ function AdmissionDeskHomePage() {
     setWardTransferRequest(response.data);
   };
 
-  const fetchCancellationRequest = async () => {
-    const response = await axios.get(`${API_BASE_URL}`);
-    setCancellationRequest(response.data);
+  const fetchIpBlockinRequest = async () => {
+    const response = await axios.get(
+      `${API_BASE_URL}/discharge-intimations/get-all-clearance`
+    );
+    setIpBlockingRequest(response.data);
+  };
+
+  const fetchDischargeClearance = async () => {
+    const response = await axios.get(`${API_BASE_URL}/discharge-intimations`);
+    setDischargeClearanceRequest(response.data);
   };
 
   useEffect(() => {
     fetchAdmissionRequest();
     fetchAdmittedPatient();
     fetchTransferRequest();
-  }, [confirmBox]);
+    fetchDischargeClearance();
+    fetchIpBlockinRequest();
+  }, [confirmBox, activeState]);
 
   const handleAdmitPatient = (data) => {
     navigate(`/adt/ipadmission`, { state: { patientData: data } });
@@ -55,6 +72,47 @@ function AdmissionDeskHomePage() {
       setConfirmBox(false);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const renderPages = () => {
+    switch (activeState) {
+      case "receptionClearance":
+        return (
+          <CustomModal
+            isOpen={activeState === "receptionClearance" ? true : false}
+            onClose={() => setActiveState("")}
+          >
+            <ReceptionClearance
+              patient={selectedPatient}
+              setActiveState={setActiveState}
+            />
+          </CustomModal>
+        );
+      case "dischargeClearance":
+        return (
+          <CustomModal
+            isOpen={activeState === "dischargeClearance" ? true : false}
+            onClose={() => setActiveState("")}
+          >
+            <DischargeClearance
+              patient={selectedPatient}
+              setActiveState={setActiveState}
+            />
+          </CustomModal>
+        );
+      case "IpBlocking":
+        return (
+          <CustomModal
+            isOpen={activeState === "IpBlocking" ? true : false}
+            onClose={() => setActiveState("")}
+          >
+            <BlockIPEntries
+              patient={selectedPatient}
+              setActiveState={setActiveState}
+            />
+          </CustomModal>
+        );
     }
   };
 
@@ -144,7 +202,6 @@ function AdmissionDeskHomePage() {
             )}
           </div>
         </div>
-
         <div className="admissionDeskHomePage-subcontainer">
           <div className="admissionDeskHomePage-header">
             <h1>Admitted Patients</h1>
@@ -152,10 +209,7 @@ function AdmissionDeskHomePage() {
           <div className="admissionDeskHomePage-boxes">
             {admittedpatient.length > 0 ? (
               admittedpatient.map((item) => (
-                <div
-                  onClick={() => handleSelectPatient(item)}
-                  className="admissionDeskHomePage-box"
-                >
+                <div className="admissionDeskHomePage-box">
                   <div class="admissionDeskHomePage-patient-info">
                     <div class="admissionDeskHomePage-patient-data-img-con">
                       <div class="admissionDeskHomePage-patient-avatar">
@@ -233,7 +287,6 @@ function AdmissionDeskHomePage() {
             )}
           </div>
         </div>
-
         <div className="admissionDeskHomePage-subcontainer">
           <div className="admissionDeskHomePage-header">
             <h1>Transfer Request</h1>
@@ -348,23 +401,249 @@ function AdmissionDeskHomePage() {
         </div>
         <div className="admissionDeskHomePage-subcontainer">
           <div className="admissionDeskHomePage-header">
-            <h1>Cancellation Request</h1>
+            <h1>Reception Clearance</h1>
           </div>
           <div className="admissionDeskHomePage-boxes">
-            {cancellationRequest.length > 0 ? (
-              cancellationRequest.map((item) => (
+            {dischargeClearaceRequest.length > 0 ? (
+              dischargeClearaceRequest.map((item) => {
+                const isToday =
+                  new Date().toDateString() ===
+                  new Date(item.disAdvisedDate).toDateString();
+                const isNotCleared = item.receptionClearance == null;
+
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => {
+                      if (isNotCleared) {
+                        setSelectedPatient(item);
+                        setActiveState("receptionClearance");
+                      }
+                    }}
+                    className={`admissionDeskHomePage-box ${
+                      isToday && isNotCleared ? "highlight-box" : ""
+                    } ${!isNotCleared ? "disabled-box" : ""}`}
+                  >
+                    <div className="admissionDeskHomePage-patient-info">
+                      <div className="admissionDeskHomePage-patient-data-img-con">
+                        <div className="admissionDeskHomePage-patient-avatar">
+                          {!item?.ipAdmissionDto?.patient?.patient?.hasOwnProperty(
+                            "fileAttachment"
+                          ) ? (
+                            <span>
+                              {
+                                item?.ipAdmissionDto?.patient?.patient
+                                  ?.firstName?.[0]
+                              }
+                            </span>
+                          ) : (
+                            <img
+                              src={`data:image/png;base64,${item?.ipAdmissionDto?.patient?.patient?.fileAttachment}`}
+                              alt="patient attachment"
+                            />
+                          )}
+                        </div>
+                        <div className="admissionDeskHomePage-patient-personal-details">
+                          <div className="admissionDeskHomePage-info-row">
+                            <span className="value">
+                              {
+                                item?.ipAdmissionDto?.patient?.patient
+                                  ?.firstName
+                              }{" "}
+                              {item.ipAdmissionDto?.patient?.patient?.lastName}
+                            </span>
+                          </div>
+                          <div className="admissionDeskHomePage-info-row">
+                            <span className="value">
+                              {item.ipAdmissionDto?.patient?.patient?.uhid}
+                            </span>
+                          </div>
+                          <div className="admissionDeskHomePage-info-row">
+                            <span className="value">
+                              {item.ipAdmissionDto?.patient?.patient?.age}{" "}
+                              {item.ipAdmissionDto?.patient?.patient?.ageUnit} /{" "}
+                              {item.ipAdmissionDto?.patient?.patient?.gender}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="admissionDeskHomePage-patient-details">
+                        <div className="admissionDeskHomePage-info-row">
+                          <span className="label">Add. Date/Time:</span>
+                          <span className="value">
+                            {item.ipAdmissionDto?.admissionDate}
+                          </span>
+                        </div>
+                        <div className="admissionDeskHomePage-info-row">
+                          <span className="label">Dis. Date/Time:</span>
+                          <span className="value">
+                            {item.disAdvisedDate} / {item.disAdvisedTime}
+                          </span>
+                        </div>
+                        <div className="admissionDeskHomePage-info-row">
+                          <span className="label">Reception Clearance:</span>
+                          <span className="value">
+                            {item.receptionClearance != null
+                              ? "Done"
+                              : "Not Done"}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                Data Not Available
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="admissionDeskHomePage-subcontainer">
+          <div className="admissionDeskHomePage-header">
+            <h1>Discharge Clearance</h1>
+          </div>
+          <div className="admissionDeskHomePage-boxes">
+            {dischargeClearaceRequest.length > 0 ? (
+              dischargeClearaceRequest.map((item) => {
+                const isToday =
+                  new Date().toDateString() ===
+                  new Date(item.disAdvisedDate).toDateString();
+                const isNotCleared = item.dischargeClearance == null;
+
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => {
+                      if (isNotCleared) {
+                        setSelectedPatient(item);
+                        setActiveState("dischargeClearance");
+                      }
+                    }}
+                    className={`admissionDeskHomePage-box ${
+                      isToday && isNotCleared ? "highlight-box" : ""
+                    } ${!isNotCleared ? "disabled-box" : ""}`}
+                  >
+                    <div className="admissionDeskHomePage-patient-info">
+                      <div className="admissionDeskHomePage-patient-data-img-con">
+                        <div className="admissionDeskHomePage-patient-avatar">
+                          {!item?.ipAdmissionDto?.patient?.patient?.hasOwnProperty(
+                            "fileAttachment"
+                          ) ? (
+                            <span>
+                              {
+                                item?.ipAdmissionDto?.patient?.patient
+                                  ?.firstName?.[0]
+                              }
+                            </span>
+                          ) : (
+                            <img
+                              src={`data:image/png;base64,${item?.ipAdmissionDto?.patient?.patient?.fileAttachment}`}
+                              alt="patient attachment"
+                            />
+                          )}
+                        </div>
+                        <div className="admissionDeskHomePage-patient-personal-details">
+                          <div className="admissionDeskHomePage-info-row">
+                            <span className="value">
+                              {
+                                item?.ipAdmissionDto?.patient?.patient
+                                  ?.firstName
+                              }{" "}
+                              {item.ipAdmissionDto?.patient?.patient?.lastName}
+                            </span>
+                          </div>
+                          <div className="admissionDeskHomePage-info-row">
+                            <span className="value">
+                              {item.ipAdmissionDto?.patient?.patient?.uhid}
+                            </span>
+                          </div>
+                          <div className="admissionDeskHomePage-info-row">
+                            <span className="value">
+                              {item.ipAdmissionDto?.patient.patient?.age}{" "}
+                              {item.ipAdmissionDto?.patient?.patient?.ageUnit} /{" "}
+                              {item.ipAdmissionDto?.patient?.patient?.gender}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="admissionDeskHomePage-patient-details">
+                        <div className="admissionDeskHomePage-info-row">
+                          <span className="label">Add. Date/Time:</span>
+                          <span className="value">
+                            {item.ipAdmissionDto?.admissionDate}
+                          </span>
+                        </div>
+                        <div className="admissionDeskHomePage-info-row">
+                          <span className="label">Dis. Date/Time:</span>
+                          <span className="value">
+                            {item.disAdvisedDate} / {item.disAdvisedTime}
+                          </span>
+                        </div>
+                        <div className="admissionDeskHomePage-info-row">
+                          <span className="label">Discharge Clearance:</span>
+                          <span className="value">
+                            {item.dischargeClearance != null
+                              ? "Done"
+                              : "Not Done"}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                Data Not Available
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="admissionDeskHomePage-subcontainer">
+          <div className="admissionDeskHomePage-header">
+            <h1>Ip Blocking Request</h1>
+          </div>
+          <div className="admissionDeskHomePage-boxes">
+            {ipBlockingRequest.length > 0 ? (
+              ipBlockingRequest.map((item) => (
                 <div
-                  onClick={() => handleSelectPatient(item)}
+                  onClick={() => {
+                    setSelectedPatient(item);
+                    setActiveState("IpBlocking");
+                  }}
                   className="admissionDeskHomePage-box"
                 >
                   <div class="admissionDeskHomePage-patient-info">
                     <div class="admissionDeskHomePage-patient-data-img-con">
                       <div class="admissionDeskHomePage-patient-avatar">
-                        {!item?.patient?.hasOwnProperty("fileAttachment") ? (
-                          <span>{item?.patient?.firstName?.[0]}</span>
+                        {!item?.ipAdmissionDto?.patient?.patient?.hasOwnProperty(
+                          "fileAttachment"
+                        ) ? (
+                          <span>
+                            {
+                              item?.ipAdmissionDto?.patient?.patient
+                                ?.firstName?.[0]
+                            }
+                          </span>
                         ) : (
                           <img
-                            src={`data:image/png;base64,${item?.patient?.fileAttachment}`}
+                            src={`data:image/png;base64,${item?.ipAdmissionDto?.patient?.patient?.fileAttachment}`}
                             alt="patient attachment"
                           />
                         )}
@@ -372,34 +651,35 @@ function AdmissionDeskHomePage() {
                       <div className="admissionDeskHomePage-patient-personal-details">
                         <div class="admissionDeskHomePage-info-row">
                           <span class="value">
-                            {item.patient?.firstName} {item.patient?.lastName}
+                            {item.ipAdmissionDto?.patient?.patient?.firstName}{" "}
+                            {item.ipAdmissionDto?.patient?.patient?.lastName}
                           </span>
                         </div>
                         <div class="admissionDeskHomePage-info-row">
-                          <span class="value">{item.patient?.uhid}</span>
+                          <span class="value">
+                            {item.ipAdmissionDto?.patient?.patient?.uhid}
+                          </span>
                         </div>
                         <div class="admissionDeskHomePage-info-row">
                           <span class="value">
-                            {item.patient?.age} {item.patient?.ageUnit} /{" "}
-                            {item.patient?.gender}
+                            {item.ipAdmissionDto?.patient?.patient?.age}{" "}
+                            {item.ipAdmissionDto?.patient?.patient?.ageUnit} /{" "}
+                            {item.ipAdmissionDto?.patient?.patient?.gender}
                           </span>
                         </div>
                       </div>
                     </div>
                     <div className="admissionDeskHomePage-patient-details">
-                      <div class="admissionDeskHomePage-info-row">
-                        <span class="label">Fees Paid:</span>
-                        <span class="value">{item.feespaid}</span>
+                      <div className="admissionDeskHomePage-info-row">
+                        <span className="label">Add. Date/Time:</span>
+                        <span className="value">
+                          {item.ipAdmissionDto?.admissionDate}
+                        </span>
                       </div>
-                      <div class="admissionDeskHomePage-info-row">
-                        <span class="label">Reason:</span>
-                        <span class="value">{item.remarks}</span>
-                      </div>
-                      <div class="admissionDeskHomePage-info-row">
-                        <span class="label">Doctor:</span>
-                        <span class="value">
-                          {item.addDoctor?.salutation}{" "}
-                          {item.addDoctor?.doctorName}
+                      <div className="admissionDeskHomePage-info-row">
+                        <span className="label">Dis. Date/Time:</span>
+                        <span className="value">
+                          {item.disAdvisedDate} / {item.disAdvisedTime}
                         </span>
                       </div>
                     </div>
@@ -419,18 +699,19 @@ function AdmissionDeskHomePage() {
             )}
           </div>
         </div>
-      </div>
-      {confirmBox && (
-        <div className="nurse-ward-receiving-confirmBox">
-          <div className="nurse-ward-receiving-con">
-            <h1>Confirm Request</h1>
-            <div className="nurse-ward-receiving-con-btns">
-              <button onClick={() => handleConfirmBtn(requestId)}>Yes</button>
-              <button onClick={() => setConfirmBox(false)}>No</button>
+        {confirmBox && (
+          <div className="nurse-ward-receiving-confirmBox">
+            <div className="nurse-ward-receiving-con">
+              <h1>Confirm Request</h1>
+              <div className="nurse-ward-receiving-con-btns">
+                <button onClick={() => handleConfirmBtn(requestId)}>Yes</button>
+                <button onClick={() => setConfirmBox(false)}>No</button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+      {renderPages()}
     </>
   );
 }

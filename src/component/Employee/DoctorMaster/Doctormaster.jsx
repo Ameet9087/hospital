@@ -3,7 +3,7 @@ import "./doctormaster.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faL, faSearch } from "@fortawesome/free-solid-svg-icons";
 import CustomModal from "../../../CustomModel/CustomModal";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import IpMasterPopupTable from "../IPMaster/IpMasterPopupTable";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
@@ -71,6 +71,7 @@ const DoctorMaster = () => {
       referralVisit: 0.0,
       referralVisitToDoctor: 0.0,
       generalOpdFee: 0.0,
+      followupopdfees: 0.0,
     }))
   );
 
@@ -109,6 +110,7 @@ const DoctorMaster = () => {
           referralVisit: 0.0,
           referralVisitToDoctor: 0.0,
           generalOpdFee: 0.0,
+          followupopdfees: 0.0
         }))
       );
     }
@@ -187,9 +189,9 @@ const DoctorMaster = () => {
       prevState.map((row, i) =>
         i === index
           ? {
-              ...row,
-              [name]: value,
-            }
+            ...row,
+            [name]: value,
+          }
           : row
       )
     );
@@ -257,6 +259,7 @@ const DoctorMaster = () => {
         referralVisit: 0.0,
         referralVisitToDoctor: 0.0,
         generalOpdFee: 0.0,
+        followupopdfees: 0.0
       }))
     );
   };
@@ -287,6 +290,7 @@ const DoctorMaster = () => {
           referralVisit: row.referralVisit,
           referralVisitToDoctor: row.referralVisitToDoctor,
           generalOpdFee: row.generalOpdFee,
+          followupopdfees: row.followupopdfees
         })),
       };
       const formDataObj = new FormData();
@@ -297,6 +301,9 @@ const DoctorMaster = () => {
 
       const jsonData = JSON.stringify(doctordata);
       formDataObj.append("addDoctorDTO", jsonData);
+
+      console.log("addeded doc followup", formDataObj);
+
 
       const response = await fetch(`${API_BASE_URL}/doctors`, {
         method: "POST",
@@ -345,6 +352,7 @@ const DoctorMaster = () => {
                     "ReferralVisit",
                     "ReferralVisit(ToDoctor)",
                     "GeneralOpdFee",
+                    "FollowupFees "
                   ].map((header, index) => (
                     <th
                       key={index}
@@ -488,6 +496,14 @@ const DoctorMaster = () => {
                         type="text"
                         name="generalOpdFee"
                         value={row.generalOpdFee}
+                        onChange={(e) => handleDoctorFessChange(e, index)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="followupopdfees"
+                        value={row.followupopdfees}
                         onChange={(e) => handleDoctorFessChange(e, index)}
                       />
                     </td>
@@ -916,9 +932,8 @@ const DoctorMaster = () => {
           </div>
           <div>
             <button
-              className={`doctormaster-service-button ${
-                selectedTab === "doctorFee" ? "active" : ""
-              }`}
+              className={`doctormaster-service-button ${selectedTab === "doctorFee" ? "active" : ""
+                }`}
               onClick={() => setSelectedTab("doctorFee")}
             >
               Doctor Fee
@@ -945,3 +960,4 @@ const DoctorMaster = () => {
 };
 
 export default DoctorMaster;
+

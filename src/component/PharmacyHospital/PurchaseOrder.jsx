@@ -6,14 +6,17 @@ import PurchaseOrderForm from './PurchaseOrderForm';
 import CustomModel from "../../CustomModel/CustomModal";
 import './PurchaseOrder.css';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import GoodsReceiptForm from './GoodsReceiptForm';
 
 const PurchaseOrder = () => {
   const [purchaseOrders, setPurchaseOrders] = useState([]);
-  const [filteredOrders, setFilteredOrders] = useState([]); // State for filtered orders
+  const [filteredOrders, setFilteredOrders] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [addGoodReceipt, setAddGoodReceipt] = useState(false);
+  const [selectedItem,setSelectedItem] =useState();
   const [columnWidths, setColumnWidths] = useState({});
-  const [filterDates, setFilterDates] = useState({ fromDate: '', toDate: '' }); // State for date filters
-  const [searchText, setSearchText] = useState(''); // State for search text
+  const [filterDates, setFilterDates] = useState({ fromDate: '', toDate: '' });
+  const [searchText, setSearchText] = useState('');
   const tableRef = useRef(null);
 
   const handleOpenModal = () => setShowEditModal(true);
@@ -24,14 +27,14 @@ const PurchaseOrder = () => {
   }, []);
 
   useEffect(() => {
-    applyFilters(); // Apply filters when dates, search text, or purchase orders change
+    applyFilters();
   }, [filterDates, searchText, purchaseOrders]);
 
   const fetchPurchaseOrders = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/purchase-orders`);
+      const response = await axios.get(`${API_BASE_URL}/purchaseorders`);
       setPurchaseOrders(response.data);
-      setFilteredOrders(response.data); // Initialize filtered orders with all data
+      setFilteredOrders(response.data);
     } catch (error) {
       console.error('Error fetching purchase orders:', error);
     }
@@ -49,7 +52,6 @@ const PurchaseOrder = () => {
   const applyFilters = () => {
     let filtered = purchaseOrders;
 
-    // Filter by date
     if (filterDates.fromDate || filterDates.toDate) {
       filtered = filtered.filter((order) => {
         const deliveryDate = new Date(order.deliveryDate);
@@ -69,25 +71,20 @@ const PurchaseOrder = () => {
       });
     }
 
-    // Filter by search text
     if (searchText) {
       const searchLower = searchText.toLowerCase();
       filtered = filtered.filter((order) =>
-        order.goodReceiptItems.some((item) => {
-          const genericName = item.genericName ? item.genericName.toLowerCase() : '';
-          const itemName = item.addItem?.itemName ? item.addItem.itemName.toLowerCase() : '';
-          const status = order.status ? order.status.toLowerCase() : '';
-          return (
-            genericName.includes(searchLower) ||
-            itemName.includes(searchLower) ||
-            status.includes(searchLower)
-          );
-        })
+        order.supplierDTO?.supplierName.toLowerCase().includes(searchLower)
       );
     }
     
     setFilteredOrders(filtered);
   };
+
+  const handleAddGoodReceipt=(item)=>{
+    setSelectedItem(item);
+    setAddGoodReceipt(true);
+  }
 
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current);
@@ -103,7 +100,6 @@ const PurchaseOrder = () => {
   return (
     <div className="purchase-order-container">
       <button className='purchaseOrders-add-btn' onClick={handleOpenModal}>+ New Purchase Order</button>
-
       <div className="purchase-order-header">
         <div className="purchase-order-status-filters">
           <label><input type="checkbox" defaultChecked /> Pending</label>
@@ -112,32 +108,14 @@ const PurchaseOrder = () => {
           <label><input type="checkbox" /> All</label>
         </div>
       </div>
-
       <div className="purchase-order-date-range">
         <label htmlFor="fromDate">From:</label>
-        <input
-          type="date"
-          id="fromDate"
-          value={filterDates.fromDate}
-          onChange={handleDateChange}
-        />
+        <input type="date" id="fromDate" value={filterDates.fromDate} onChange={handleDateChange} />
         <label htmlFor="toDate">To:</label>
-        <input
-          type="date"
-          id="toDate"
-          value={filterDates.toDate}
-          onChange={handleDateChange}
-        />
+        <input type="date" id="toDate" value={filterDates.toDate} onChange={handleDateChange} />
       </div>
-
       <div className="purchase-order-search-container">
-        <input
-          type="text"
-          className="purchase-order-search-box"
-          placeholder="Search"
-          value={searchText}
-          onChange={handleSearchChange}
-        />
+        <input type="text" className="purchase-order-search-box" placeholder="Search" value={searchText} onChange={handleSearchChange} />
         <div className="purchase-order-search-right">
           <span className="purchase-results-count-span">Showing {filteredOrders.length} / {purchaseOrders.length} results</span>
           <button className="purchase-order-print-button" onClick={handleExport}>Export</button>
@@ -153,18 +131,11 @@ const PurchaseOrder = () => {
         <table ref={tableRef}>
           <thead>
             <tr>
-              {["Date", "GenericName", "ItemName", "POStatus", "Quantity", "StandardRate", "SubTotal", "TotalAmount"].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
+              {["PO ID", "Date", "Supplier", "Delivery Date", "Total Amount","Action"].map((header, index) => (
+                <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
                   <div className="header-content">
                     <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                    ></div>
+                    <div className="resizer" onMouseDown={startResizing(tableRef, setColumnWidths)(index)}></div>
                   </div>
                 </th>
               ))}
@@ -173,27 +144,31 @@ const PurchaseOrder = () => {
           <tbody>
             {Array.isArray(filteredOrders) && filteredOrders.length > 0 ? (
               filteredOrders.map((order) => (
-                order.goodReceiptItems.map((item, index) => (
-                  <tr key={`${order.orderPurchaseId}-${index}`}>
-                    <td>{order.deliveryDate}</td>
-                    <td>{item.genericName}</td>
-                    <td>{item.addItem.itemName || 'N/A'}</td>
-                    <td>{order.status || 'Pending'}</td>
-                    <td>{item.itemQuantity}</td>
-                    <td>{item.standardRate}</td>
-                    <td>{item.subTotal}</td>
-                    <td>{item.totalAmount}</td>
-                  </tr>
-                ))
+                <tr key={order.purchaseOrderId}>
+                  <td>{order.poId}</td>
+                  <td>{order.poDate}</td>
+                  <td>{order.supplierDTO?.supplierName || 'N/A'}</td>
+                  <td>{order.deliveryDate}</td>
+                  <td>{order.totalAmount}</td>
+                  <td>
+                    <div className='pharmacy-btn'>
+                    {/* <button className='pobtn-view'>View</button> */}
+                    <button className='pobtn-view' onClick={()=>handleAddGoodReceipt(order)}>Add Good Receipt</button>
+                    </div>
+                  </td>
+                </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="10" className="purchase-order-no-rows">No Rows To Show</td>
+                <td colSpan="6" className="purchase-order-no-rows">No Rows To Show</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
+      <CustomModel isOpen={addGoodReceipt} onClose={()=>setAddGoodReceipt(false)}>
+        <GoodsReceiptForm receivedPO={selectedItem} onClose={()=>setAddGoodReceipt(false)} />
+      </CustomModel>
     </div>
   );
 };

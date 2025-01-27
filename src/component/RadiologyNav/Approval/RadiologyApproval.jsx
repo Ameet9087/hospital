@@ -40,12 +40,12 @@ function RadiologyApproval() {
     let link;
 
     if (dateFrom && dateTo) {
-      link = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=Active&startDate=${dateFrom}&endDate=${dateTo}`;
+      link = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=PendingForApproval&startDate=${dateFrom}&endDate=${dateTo}`;
     } else {
       const todayDate = getCurrentDate();
       console.log(todayDate);
 
-      link = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=Active&startDate=${todayDate}&endDate=${todayDate}`;
+      link = `${API_BASE_URL}/imaging-requisitions/by-status-date?status=PendingForApproval&startDate=${todayDate}&endDate=${todayDate}`;
     }
 
     // Fetch the data

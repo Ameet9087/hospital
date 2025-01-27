@@ -3,7 +3,9 @@ import "./AssignFunctionality.css";
 import CustomAlert from "../../../alerts/CustomAlert";
 import useCustomAlert from "../../../alerts/useCustomAlert";
 import { API_BASE_URL } from "../../api/api";
+import { usePopup } from "../../../FidgetSpinner/PopupContext";
 const AssignFunctionality = () => {
+  const { showPopup } = usePopup();
   const mainComponents = [
     {
       id: 1,
@@ -74,7 +76,14 @@ const AssignFunctionality = () => {
       id: 6,
       name: "Billing",
       logo: "fa-solid fa-money-bill",
-      subcomponents: ["IP Billing", "OPD Billing"],
+      subcomponents: [
+        "IP Billing",
+        "OPD Billing",
+        "Opd Post Discount",
+        "Ipd Money Reciept",
+        "Opd Billing Cancel",
+        "Final Bill",
+      ],
     },
     {
       id: 7,
@@ -83,10 +92,8 @@ const AssignFunctionality = () => {
       subcomponents: [
         "Order",
         "Supplier",
-        "Report",
         "Setting",
         "Store",
-        "Supplier Ledger",
         "Substore Request/Dispatch",
       ],
     },
@@ -100,26 +107,19 @@ const AssignFunctionality = () => {
         "Goods Arrival Notification",
         "Quotation",
         "Settings",
-        "Reports",
       ],
     },
     {
       id: 9,
       name: "Verification",
       logo: "fa-solid fa-check-double",
-      subcomponents: [
-        "Inventory",
-        "Pharmacy",
-        "Document & Employment Verification",
-        "Identity Verification",
-        "Insurance Verification",
-      ],
+      subcomponents: ["Inventory", "Pharmacy"],
     },
     {
       id: 10,
       name: "Patient",
       logo: "fa-solid fa-address-card",
-      subcomponents: ["Search Patient", "Register Patient", "OPD"],
+      subcomponents: ["Search Patient", "Register Patient"],
     },
     {
       id: 11,
@@ -145,7 +145,7 @@ const AssignFunctionality = () => {
       id: 13,
       name: "Doctor",
       logo: "fa-solid fa-stethoscope",
-      subcomponents: ["Out Patient", "In Patient Department", "Patient Record"],
+      subcomponents: ["Out Patient", "In Patient Department"],
     },
     {
       id: 14,
@@ -181,6 +181,8 @@ const AssignFunctionality = () => {
         "Doctor Appointment",
         "Doctor Schedule Std",
         "Break Time",
+        "Online Doctor Appointments",
+        "Doctor Blocking",
       ],
     },
     {
@@ -188,11 +190,17 @@ const AssignFunctionality = () => {
       name: "Settings",
       logo: "fa-solid fa-gear",
       subcomponents: [
-        "Departments",
         "Radiology",
         "Employee",
-        "IpMaster",
+        "Ip Master",
         "Geolocation",
+        "Doctor Master",
+        "Service Master",
+        "Location Master",
+        "Soc Master",
+        "Dg Master",
+        "Specialisations",
+        "Speciality Group",
       ],
     },
     {
@@ -218,11 +226,14 @@ const AssignFunctionality = () => {
       name: "Laboratory",
       logo: "fa-solid fa-flask",
       subcomponents: [
-        "Notification",
         "Sample Collection",
+        "Uncollect Sample",
+        "Reject Sample",
+        "Sample Recieving",
         "Add Results",
         "Pending Reports",
         "Final Reports",
+        "Rejected Reports",
         "Settings",
       ],
     },
@@ -299,31 +310,29 @@ const AssignFunctionality = () => {
       name: "ADT",
       logo: "fa-solid fa-hospital-user",
       subcomponents: [
-        "Search Patient",
+        "Home",
+        "Ip Admission",
         "Admitted Patients",
         "Discharged Patients",
-        "Exchange Bed",
-        "Cancel Bed Reservation",
+        "Ip Information",
       ],
     },
     {
       id: 31,
       name: "Maternity",
       logo: "fa-solid fa-hands-holding-child",
-      subcomponents: [
-        "Maternity List",
-        "Antenatal Care",
-        "Postnatal Care",
-        "Labor Room Management",
-        "Breastfeeding Support",
-        "Family Planning Service",
-      ],
+      subcomponents: ["Maternity List"],
     },
     {
       id: 32,
       name: "Radioloagy",
       logo: "fa-solid fa-x-ray",
-      subcomponents: ["List Requests", "List Reports", "Edit Doctors"],
+      subcomponents: [
+        "List Requests",
+        "List Reports",
+        "Approval",
+        "Edit Doctors",
+      ],
     },
     {
       id: 33,
@@ -343,44 +352,25 @@ const AssignFunctionality = () => {
       id: 34,
       name: "CSSD",
       logo: "fa-solid fa-microscope",
-      subcomponents: ["Sterilization", "Reports"],
+      subcomponents: ["Cssd Master", "Cssd Master"],
     },
     {
       id: 35,
       name: "Fix Assests",
       logo: "fa-solid fa-building",
-      subcomponents: [
-        "Assets Management",
-        "Assets Maintainance",
-        "Depreciation And Discarding",
-        "Reports",
-      ],
+      subcomponents: ["Asset Master", "Asset Transaction"],
     },
     {
       id: 36,
       name: "Helpdesk",
       logo: "fa-solid fa-circle-info",
-      subcomponents: [
-        "Employee Information",
-        "Bed Information",
-        "Ward Information",
-        "Queue Information",
-      ],
+      subcomponents: ["Employee Information", "Queue Information"],
     },
     {
       id: 37,
       name: "SuperUser",
       logo: "fa-solid fa-user-tie",
-      subcomponents: [
-        "Revenue Management",
-        "User Management",
-        "Billing Discount Approval",
-        "Message Broadcast",
-        "Facility Services",
-        "Administration",
-        "Vendor and Supply Management",
-        "Control All Department",
-      ],
+      subcomponents: ["User Management"],
     },
     {
       id: 38,
@@ -573,6 +563,9 @@ const AssignFunctionality = () => {
       );
 
       if (response.ok) {
+        showPopup([
+          { url: "/superuser/usermanagement/user", text: "Add Role To User" },
+        ]);
         success("Role functionality updated successfully:");
         setRoleData({
           roleName: "",

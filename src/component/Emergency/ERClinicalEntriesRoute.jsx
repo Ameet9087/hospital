@@ -12,6 +12,7 @@ import NarcoticDrugDispensedForm from './NacoticDrugdispensed/NacoticDrugdispens
 import CprRecordNew from './CprRecordNew/CprRecordNew';
 import PatientCareReport from './PatientCareReport/PatientCareReport';
 import ErInitialAssessment from "./ErInitialAssessmentForm/ErInitialAssessmentForm"
+import ErRegister from './ErRegister/ErRegister';
 
 const ERClinicalEntriesRoute = () => {
   return (
@@ -27,7 +28,9 @@ const ERClinicalEntriesRoute = () => {
       <Route path="narcotic-drugs-dispensed" element={<NarcoticDrugDispensedForm />} />
       <Route path="cpr-record-new" element={<CprRecordNew />} />
       <Route path="patientCareReport" element={<PatientCareReport />} />
-      <Route path="finalizedpatients" element={<ErInitialAssessment />} />
+      <Route path="finalizedpatients" element={<ErRegister />} />
+      <Route path="erinitialassessment" element={<ErInitialAssessment />} />
+
     </Routes>
   );
 };

@@ -3,6 +3,7 @@ import "./addResultFrom.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
+import LabPopupTable from "./LabPopupTable";
 
 const Lab1 = () => {
   const [components, setComponents] = useState([]);
@@ -10,7 +11,20 @@ const Lab1 = () => {
   const [error, setError] = useState(null);
   const [selectedTests, setSelectedTests] = useState([]);
   const location = useLocation();
+  const [allComponents, setAllComponents] = useState([]);
   const { test } = location.state || {};
+  const [activePopup, setActivePopup] = useState(false);
+
+  const fetchAllComponents = async () => {
+    const response = await axios.get(
+      `${API_BASE_URL}/lab-components/getAllComponents`
+    );
+    setAllComponents(response.data);
+  };
+
+  useEffect(() => {
+    fetchAllComponents();
+  }, []);
 
   // Set components based on test.labTests
   useEffect(() => {
@@ -92,6 +106,15 @@ const Lab1 = () => {
   };
 
   const handleAddComponent = (labTestId) => {
+    const hasEmptyRow = displayedComponents[labTestId]?.some(
+      (component) => !component.componentName
+    );
+
+    if (hasEmptyRow) {
+      setError("Please fill the existing empty row before adding another.");
+      return;
+    }
+
     const newComponent = {
       labTestId: labTestId,
       labTestName: "",
@@ -103,21 +126,58 @@ const Lab1 = () => {
       completed: false,
     };
 
-    // Update displayedComponents for the specific labTestId
     setDisplayedComponents((prev) => ({
       ...prev,
       [labTestId]: [...(prev[labTestId] || []), newComponent],
     }));
   };
 
+  const handleRemoveComponent = (labTestId, index) => {
+    setDisplayedComponents((prev) => {
+      const updatedComponents = prev[labTestId].filter(
+        (_, idx) => idx !== index
+      );
+
+      if (updatedComponents.length === 0) {
+        setError(
+          "At least one component must be present for each selected test."
+        );
+        return prev;
+      }
+
+      return {
+        ...prev,
+        [labTestId]: updatedComponents,
+      };
+    });
+  };
+
   const navigate = useNavigate();
 
   const handleBackToGrid = () => {
-    navigate("/add-results");
+    navigate("/laboratory/addresults");
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Check if all selected tests have at least one component
+    const hasEmptyTests = test.labTests.some((labTest, index) => {
+      const labTestId = labTest.labTestSettingId;
+      return (
+        selectedTests[index] &&
+        (!displayedComponents[labTestId] ||
+          displayedComponents[labTestId].length === 0)
+      );
+    });
+
+    if (hasEmptyTests) {
+      setError(
+        "Please add components for all selected tests before submitting."
+      );
+      return;
+    }
+
     const testComponentMappings = test.labTests.map((labTest) => {
       const labTestComponents =
         displayedComponents[labTest.labTestSettingId] || [];
@@ -147,12 +207,53 @@ const Lab1 = () => {
         labResultData
       );
 
-      navigate("/labResult", {
+      navigate("/laboratory/addresults", {
         state: { labRequestId: test.labRequestId },
       });
     } catch (error) {
       console.error("Error saving lab result:", error);
       setError("Failed to save lab result. Please try again.");
+    }
+  };
+
+  const getPopupData = () => {
+    if (activePopup) {
+      return {
+        columns: ["componentId", "componentName", "unit"],
+        data: allComponents,
+      };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
+  const { columns, data } = getPopupData();
+
+  const handleSelect = (selectedComponent) => {
+    if (activePopup) {
+      // Find the labTestId with an empty row to edit
+      const labTestId = Object.keys(displayedComponents).find((key) =>
+        displayedComponents[key].some(
+          (component) => component.componentName === "" // Target rows with no component selected
+        )
+      );
+
+      if (labTestId) {
+        setDisplayedComponents((prev) => ({
+          ...prev,
+          [labTestId]: prev[labTestId].map((component) =>
+            component.componentName === ""
+              ? {
+                  ...component,
+                  componentId: selectedComponent.componentId,
+                  componentName: selectedComponent.componentName,
+                  unit: selectedComponent.unit,
+                  range: selectedComponent.range,
+                }
+              : component
+          ),
+        }));
+        setActivePopup(false); // Close the popup after selection
+      }
     }
   };
 
@@ -209,13 +310,23 @@ const Lab1 = () => {
                     {displayedComponents[item.labTestSettingId].map(
                       (component, idx) => (
                         <div className="lab-addResult-row" key={idx}>
-                          <input
-                            type="text"
-                            name="componentName"
-                            placeholder="Component Name"
-                            value={component.componentName}
-                            readOnly
-                          />
+                          <div>
+                            <input
+                              type="text"
+                              name="componentName"
+                              placeholder="Component Name"
+                              value={component.componentName}
+                              readOnly
+                            />
+                            {/* Show search icon only if componentName is empty */}
+                            {!component.componentName && (
+                              <i
+                                onClick={() => setActivePopup(true)}
+                                className="fa-solid fa-magnifying-glass"
+                              ></i>
+                            )}
+                          </div>
+
                           <input
                             type="text"
                             name="value"
@@ -243,18 +354,15 @@ const Lab1 = () => {
                             value={component.range}
                             readOnly
                           />
-                          <input
-                            type="checkbox"
-                            name="completed"
-                            checked={component.completed}
-                            onChange={(event) =>
-                              handleInputChange(
-                                item.labTestSettingId,
-                                idx,
-                                event
-                              )
+                          <button
+                            type="button"
+                            className="lab-addResult-remove-btn"
+                            onClick={() =>
+                              handleRemoveComponent(item.labTestSettingId, idx)
                             }
-                          />
+                          >
+                            &#10005;{" "}
+                          </button>
                         </div>
                       )
                     )}
@@ -282,6 +390,14 @@ const Lab1 = () => {
           </button>
         </div>
       </div>
+      {activePopup && (
+        <LabPopupTable
+          columns={columns}
+          data={data}
+          onClose={() => setActivePopup(false)}
+          onSelect={handleSelect}
+        />
+      )}
     </div>
   );
 };

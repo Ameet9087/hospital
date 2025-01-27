@@ -148,37 +148,18 @@ function UpdateReportForm({ onClose, selectedRequest }) {
         />
       </div>
       <div className="rDLListRequest-add-report-form-actions">
-        {formData.signatureList && (
+        {selectedRequest?.performerDTO?.signatureImage && (
           <img
-            src={`data:image/jpeg;base64,${formData?.signatureList}`}
+            src={`data:image/jpeg;base64,${selectedRequest?.performerDTO?.signatureImage}`}
             alt="Signature"
             style={{ maxWidth: "100%", height: "150px" }}
           />
         )}
-        <p>Signature</p>
-        <div className="rDLListRequest-add-report-select-signatories">
-          <strong>Select Signatories:</strong>
-          <select
-            name="signatureList"
-            value={formData.signatureList || ""}
-            onChange={handleChange}
-          >
-            <option value="" disabled>
-              Select a signature
-            </option>
-            {defaultSignatories.length > 0 &&
-              defaultSignatories.map((signatories, index) => (
-                <option
-                  key={index}
-                  value={signatories.employeeDTO?.signatureImage}
-                >
-                  {signatories.employeeDTO?.salutation}{" "}
-                  {signatories.employeeDTO?.firstName}{" "}
-                  {signatories.employeeDTO?.lastName}
-                </option>
-              ))}
-          </select>
-        </div>
+        <p>
+          {selectedRequest?.performerDTO?.salutation}{" "}
+          {selectedRequest?.performerDTO?.firstName}{" "}
+          {selectedRequest?.performerDTO?.lastName}
+        </p>
         <div className="rDLListRequest-add-report-upload-images">
           <strong>Upload Images:</strong>
           <input
@@ -194,7 +175,7 @@ function UpdateReportForm({ onClose, selectedRequest }) {
             Choose Files
           </label>
           <div className="rDLListRequest-add-report-image-preview">
-            {imagePreview == null ? (
+            {imagePreview || selectedRequest?.uploadFile != null ? (
               <img
                 src={`data:image/jpeg;base64,${selectedRequest?.uploadFile}`}
                 alt="Image preview"

@@ -3,7 +3,7 @@ import "./Equipmentutilisationform.css";
 import CustomModal from "../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import EquipmentUtilisationFormPopUp from "./EquipmentUtilisationFormPopUp";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
 
 const EquipmentUtilisationForm = () => {

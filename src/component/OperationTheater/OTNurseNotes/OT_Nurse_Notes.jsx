@@ -7,7 +7,7 @@ import { API_BASE_URL } from "../../api/api";
 const OT_Nurse_Notes = () => {
   const [surgeryEvents, setSurgeryEvents] = useState([]); // State to store surgery events
   const [selectedSurgeryEvent, setSelectedSurgeryEvent] = useState(""); // Selected surgery event ID
-  const [patients, setPatients] = useState([]); 
+  const [patients, setPatients] = useState([]);
   const [formData, setFormData] = useState({
     uhid: "",
     patientUHID: "",
@@ -37,8 +37,6 @@ const OT_Nurse_Notes = () => {
     bloodSugar: "",
     remarks: "",
   });
-
- 
 
   useEffect(() => {
     const fetchSurgeryEvents = async () => {
@@ -78,13 +76,13 @@ const OT_Nurse_Notes = () => {
         selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient || {};
       setFormData({
         ...formData,
-        uhid: patient.uhid || "",
-        firstName: patient.firstName,
-        lastName: patient.lastName,
-        age: patient.age || "",
-        gender: patient.gender || "",
-        weight: patient.weight || "",
-        bloodGroup: patient.bloodGroup || "",
+        uhid: patient.patient?.uhid || "",
+        firstName: patient.patient?.firstName,
+        lastName: patient.patient?.lastName,
+        age: patient.patient?.age || "",
+        gender: patient.patient?.gender || "",
+        weight: patient.patient?.weight || "",
+        bloodGroup: patient.patient?.bloodGroup || "",
         anesthesiaType: selectedEvent.anesthesiaType || "",
         otTime: selectedEvent?.operationBookingDTO?.otTime || "",
         surgeryName: selectedEvent?.operationMasterDTO?.operationName || "",
@@ -100,7 +98,6 @@ const OT_Nurse_Notes = () => {
   const [pulse, setPulse] = useState(60);
   const [respiration, setRespiration] = useState(12);
   const [bloodPressure, setBloodPressure] = useState("120/80");
-
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -125,89 +122,43 @@ const OT_Nurse_Notes = () => {
   };
   const handleSave = async (e) => {
     e.preventDefault();
-  
-    // Ensure dataToSave is defined and includes all necessary properties
+
     const dataToSave = {
-      
-      obtainedConsentForSurgery: formData.obtainedConsentForSurgery,
-      obtainedConsentForAnaesthesia: formData.obtainedConsentForAnaesthesia,
-      obtainedConsentForHighRisk: formData.obtainedConsentForHighRisk,
-      obtainedBloodConsent: formData.obtainedBloodConsent,
-      obtainedSpecialConsent: formData.obtainedSpecialConsent,
+      obtainedConsentForSurgery:
+        formData.obtainedConsentForSurgery === "Yes" ? "true" : "false",
+      obtainedConsentForAnaesthesia:
+        formData.obtainedConsentForAnaesthesia === "Yes" ? "true" : "false",
+      obtainedConsentForHighRisk:
+        formData.obtainedConsentForHighRisk === "Yes" ? "true" : "false",
+      obtainedBloodConsent:
+        formData.obtainedBloodConsent === "Present" ? "true" : "false",
+      obtainedSpecialConsent: formData.obtainedSpecialConsent
+        ? "true"
+        : "false",
       bloodSugar: formData.bloodSugar,
-      temperature,
-      pulse,
-      respiration,
+      temperature: temperature.toString(),
+      pulse: pulse.toString(),
+      respiration: respiration.toString(),
       bp: `${bloodPressure.systolic}/${bloodPressure.diastolic}`,
+      recievedFrom: formData.patientReceivedFrom || "Ward",
       surgeryEventDTO: {
         surgeryEventId: selectedSurgeryEvent,
-        useAnesthesia: formData.anesthesiaType ? "Yes" : "No",
-        anesthesiaType: formData.anesthesiaType,
-        reduce: 0.0,
-        operationBookingDTO: {
-          operationBookingId: 1,
-          otDate: formData.otDate,
-          otTime: formData.otTime,
-          ipAdmissionDTO: {
-            ipAdmmissionId: 1,
-            patient: {
-              firstName: formData.firstName,
-              lastName: formData.lastName,
-              gender: formData.gender,
-              age: formData.age,
-              bloodGroup: formData.bloodGroup,
-            },
-          },
-        },
-        operationMasterDTO: {
-          operationMasteId: 1,
-          operationName: formData.surgeryName,
-          operationType: formData.operationType,
-        },
       },
     };
-    
-  
-    console.log("Saving the following data:", dataToSave); // Debug log
-  
+
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/ot-nurse-notes`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dataToSave),
-        }
-      );
-  
+      const response = await fetch(`${API_BASE_URL}/ot-nurse-notes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSave),
+      });
+
       if (response.ok) {
         const savedData = await response.json();
         console.log("Data saved successfully:", savedData);
         alert("Data saved successfully!");
-  
-        // After successful save, update the patients list
-        setPatients((prevPatients) => [
-          ...prevPatients,
-          {
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            nameOfSurgery: formData.surgeryName,
-            dateOfSurgery: formData.otDate,
-            siteOfSurgery: formData.surgerySite,
-            obtainedConsentForSurgery: formData.obtainedConsentForSurgery,
-            obtainedConsentForAnaesthesia: formData.obtainedConsentForAnaesthesia,
-            obtainedConsentForHighRisk: formData.obtainedConsentForHighRisk,
-            obtainedBloodConsent: formData.obtainedBloodConsent,
-            obtainedSpecialConsent: formData.obtainedSpecialConsent,
-            bloodSugar: formData.bloodSugar,
-            temperature,
-            pulse,
-            respiration,
-            bp: `${bloodPressure.systolic}/${bloodPressure.diastolic}`,
-          },
-        ]);
       } else {
         console.error("Error saving data:", response.statusText);
         alert("Failed to save data!");
@@ -216,11 +167,7 @@ const OT_Nurse_Notes = () => {
       console.error("Error saving data:", error);
       alert("An error occurred while saving the data.");
     }
-  
-    setIsPopupOpen(false);
   };
-  
-  
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -242,7 +189,7 @@ const OT_Nurse_Notes = () => {
     setBloodPressure(patient.bp || "");
     setIsPopupOpen(true);
   };
-  
+
   // const handleSave = (e) => {
   //   e.preventDefault();
   //   const updatedPatients = patients.map((p) =>
@@ -265,16 +212,16 @@ const OT_Nurse_Notes = () => {
   //       bp: bloodPressure,
   //     } : p
   //   );
-  
+
   //   setPatients(updatedPatients);
   //   setIsPopupOpen(false);
   // };
-  
+
   const handleClosePopup = () => {
     setIsPopupOpen(false); // Close the modal
     setEditingPatient(null); // Clear the editing state
   };
-  
+
   return (
     <div className="ot_nurse_notes-container">
       <h3 className="ot_nurse_notes-header">OT Nurse Notes</h3>
@@ -304,7 +251,7 @@ const OT_Nurse_Notes = () => {
                 ))}
               </select>
             </div>
-         
+
             <div className="ot_nurse_notes-field">
               <label>UH ID No</label>
               <input
@@ -519,11 +466,6 @@ const OT_Nurse_Notes = () => {
         </div>
       </div>
 
-
-
-
-
-
       <div className="ot_nurse_notes-row">
         {/* Left Panel */}
         <div className="ot_nurse_notes-panel">
@@ -621,268 +563,11 @@ const OT_Nurse_Notes = () => {
       </div>
 
       <div className="surgeryEvents-action-buttons">
-      <button className="btn-blue" onClick={handleSave}>
-  Save
-</button>
+        <button className="btn-blue" onClick={handleSave}>
+          Save
+        </button>
 
         <button className="btn-red">Delete</button>
-      </div>
-
-      <div className="ot_nurse_notes-table-container">
-        <h3>Patient List</h3>
-        <table
-          ref={tableRef}
-          border="1"
-          style={{ width: "100%", borderCollapse: "collapse" }}
-        >
-          <thead>
-            <tr>
-              {[
-                "Patient First Name",
-                "Patient Last Name",
-                "Name Of Surgery",
-                "Date Of Surgery",
-                "Site Of Surgery",
-                "Obtained Consent For Surgery",
-                "Obtained Consent For Anaesthesia",
-                "Obtained Consent For High Risk",
-                "Obtained Blood Consent",
-                "Obtained Special Consent",
-                "Blood Sugar",
-                "Temperature",
-                "Pulse",
-                "Respiration",
-                "BP",
-                "Action",
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-
-          <tbody>
-  {patients.map((patient, index) => (
-    <tr key={index}>
-      <td>{patient.firstName}</td>
-      <td>{patient.lastName}</td>
-      <td>{patient.nameOfSurgery}</td>
-      <td>{patient.dateOfSurgery}</td>
-      <td>{patient.siteOfSurgery}</td>
-      <td>{patient.obtainedConsentForSurgery}</td>
-      <td>{patient.obtainedConsentForAnaesthesia}</td>
-      <td>{patient.obtainedConsentForHighRisk}</td>
-      <td>{patient.obtainedBloodConsent}</td>
-      <td>{patient.obtainedSpecialConsent}</td>
-      <td>{patient.bloodSugar}</td>
-      <td>{patient.temperature}</td>
-      <td>{patient.pulse}</td>
-      <td>{patient.respiration}</td>
-      <td>{patient.bp}</td>
-      <td>
-      <button
-  className="EditButtonNurseNotes"
-  onClick={() => handleButtonClick(patient)}
->
-  Edit
-</button>
-
-      </td>
-    </tr>
-  ))}
-</tbody>
-
-<CustomModal isOpen={isPopupOpen} onClose={handleClosePopup}>
-          <div className="OperationNotesContainer-popup-overlay">
-            <div className="OperationNotesContainer-popup-content">
-              <h2>Pre-Surgery Details</h2>
-
-              <form>
-                <div className="OperationNotesContainer-form-grid">
-                  {/* Patient First Name */}
-                  <div className="OperationNotesContainer-form-group">
-  <label>Patient First Name</label>
-  <input
-    type="text"
-    value={patientFirstName}
-    onChange={(e) => setPatientFirstName(e.target.value)}
-    readOnly={true} // Add this line to make the field read-only
-  />
-</div>
-
-<div className="OperationNotesContainer-form-group">
-  <label>Patient Last Name</label>
-  <input
-    type="text"
-    value={patientLastName}
-    onChange={(e) => setPatientLastName(e.target.value)}
-    readOnly={true} // Add this line to make the field read-only
-  />
-</div>
-
-<div className="OperationNotesContainer-form-group">
-  <label>Name Of Surgery</label>
-  <input
-    type="text"
-    value={surgeryName}
-    onChange={(e) => setSurgeryName(e.target.value)}
-    readOnly={true} // Add this line to make the field read-only
-  />
-</div>
-
-<div className="OperationNotesContainer-form-group">
-  <label>Date Of Surgery</label>
-  <input
-    type="date"
-    value={surgeryDate}
-    onChange={(e) => setSurgeryDate(e.target.value)}
-    readOnly={true} // Add this line to make the field read-only
-  />
-</div>
-
-
-                  {/* Site of Surgery */}
-                  <div className="OperationNotesContainer-form-group">
-                    <label>Site Of Surgery</label>
-                    <input
-                      type="text"
-                      value={surgerySite}
-                      onChange={(e) => setSurgerySite(e.target.value)}
-                    />
-                  </div>
-
-                  {/* Obtained Consent For Surgery */}
-                  <div className="OperationNotesContainer-form-group">
-                    <label>Obtained Consent For Surgery</label>
-                    <input
-                      type="checkbox"
-                      checked={consentSurgery}
-                      onChange={(e) => setConsentSurgery(e.target.checked)}
-                    />
-                  </div>
-
-                  {/* Obtained Consent For Anaesthesia */}
-                  <div className="OperationNotesContainer-form-group">
-                    <label>Obtained Consent For Anaesthesia</label>
-                    <input
-                      type="checkbox"
-                      checked={consentAnaesthesia}
-                      onChange={(e) => setConsentAnaesthesia(e.target.checked)}
-                    />
-                  </div>
-
-                  {/* Obtained Consent For High Risk */}
-                  <div className="OperationNotesContainer-form-group">
-                    <label>Obtained Consent For High Risk</label>
-                    <input
-                      type="checkbox"
-                      checked={consentHighRisk}
-                      onChange={(e) => setConsentHighRisk(e.target.checked)}
-                    />
-                  </div>
-
-                  {/* Obtained Blood Consent */}
-                  <div className="OperationNotesContainer-form-group">
-                    <label>Obtained Blood Consent</label>
-                    <input
-                      type="checkbox"
-                      checked={bloodConsent}
-                      onChange={(e) => setBloodConsent(e.target.checked)}
-                    />
-                  </div>
-
-                  {/* Obtained Special Consent */}
-                  <div className="OperationNotesContainer-form-group">
-                    <label>Obtained Special Consent</label>
-                    <input
-                      type="checkbox"
-                      checked={specialConsent}
-                      onChange={(e) => setSpecialConsent(e.target.checked)}
-                    />
-                  </div>
-
-                  {/* Blood Sugar */}
-                  <div className="OperationNotesContainer-form-group">
-                    <label>Blood Sugar</label>
-                    <input
-                      type="text"
-                      value={bloodSugar}
-                      onChange={(e) => setBloodSugar(e.target.value)}
-                    />
-                  </div>
-
-                  {/* Temperature */}
-                  <div className="OperationNotesContainer-form-group">
-                    <label>Temperature</label>
-                    <input
-                      type="text"
-                      value={temperature}
-                      onChange={(e) => setTemperature(e.target.value)}
-                    />
-                  </div>
-
-                  {/* Pulse */}
-                  <div className="OperationNotesContainer-form-group">
-                    <label>Pulse</label>
-                    <input
-                      type="text"
-                      value={pulse}
-                      onChange={(e) => setPulse(e.target.value)}
-                    />
-                  </div>
-
-                  {/* Respiration */}
-                  <div className="OperationNotesContainer-form-group">
-                    <label>Respiration</label>
-                    <input
-                      type="text"
-                      value={respiration}
-                      onChange={(e) => setRespiration(e.target.value)}
-                    />
-                  </div>
-
-                  {/* BP */}
-                  <div className="OperationNotesContainer-form-group">
-  <label>BP (Systolic/Diastolic)</label>
-  <input
-    type="text"
-    value={bloodPressure}
-    onChange={(e) => setBloodPressure(e.target.value)}
-    placeholder="e.g., 120/80"
-  />
-</div>
-
-                </div>
-
-                <div className="OperationNotesContainer-form-group-buttons">
-                  <button
-                    type="submit"
-                    className="OperationNotesContainer-save-popup-btn"
-                    onClick={handleSave}
-                  >
-                    Save
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </CustomModal>
-        </table>
-
       </div>
     </div>
   );

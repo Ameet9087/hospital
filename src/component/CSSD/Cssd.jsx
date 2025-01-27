@@ -30,7 +30,7 @@ function Cssd() {
           <ul>
             <li>
               <NavLink
-                to="CssdMasterMenu"
+                to="cssdmaster"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 CSSD Master
@@ -38,7 +38,7 @@ function Cssd() {
             </li>
             <li>
               <NavLink
-                to="cssd-transaction-mainmenu"
+                to="cssdtransaction-mainmenu"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 CSSD Transactions
@@ -53,38 +53,84 @@ function Cssd() {
                 CSSD Reports
               </NavLink> */}
             </li>
-           
-
           </ul>
         </nav>
       </header>
       <div className="cssd-component-content">
         <Routes>
-          <Route path="Sterilization/*" element={<Sterilization />} />
+          <Route path="sterilization/*" element={<Sterilization />} />
           <Route path="Reports/*" element={<CssdReports />} />
-          <Route path="/Sterilization/PendingItem" element={<Sterilization />} />
-          <Route path="/CssdMasterMenu/*" element={<CssdMasterMenu /> } />
-          <Route path="/CssdMasterMenu/CSSDItemMaster" element={<CSSDItemMaster/>} />
-          <Route path="display-CSSD-ItemMaster" element={<DisplayCSSDItemMaster/>} />
-          <Route path="/CssdMasterMenu/cssd-kit-category" element={<CSSDKitCategory/>} />
-          <Route path="display-cssd-kitcategory" element={<DisplayCSSDKitCategory/>} />
-          <Route path="/CssdMasterMenu/cssd-kit-master" element={<CSSDKitMaster/>} />
-          <Route path="CssdMasterMenu/cssd-machine-master" element={<CSSDMachineMaster/>} />
-          <Route path="cssd-transaction-mainmenu" element={<CSSDTransactionMainMenu/>} />
-          <Route path="/cssd-transaction-mainmenu/cssd-kit-request-indent" element={<CSSDKitRequestIndent/>} />
-          <Route path="cssd-transaction-mainmenu/cssd-bubble-kit-issue" element={<CSSDBubbleKitIssue/>} />
-          <Route path="/cssd-transaction-mainmenu/cssd-bubble-kit-issue/Pending_kit_issue/:id" element={<PendingKitIssue />} />
-          <Route path="cssd-transaction-mainmenu/bubble-pending-kit-receive" element={<BubblePendingReceives/>}></Route>
+          <Route
+            path="/sterilization/PendingItem"
+            element={<Sterilization />}
+          />
+          <Route path="/cssdmaster/*" element={<CssdMasterMenu />} />
+          <Route
+            path="/cssdmaster/CSSDItemMaster"
+            element={<CSSDItemMaster />}
+          />
+          <Route
+            path="display-CSSD-ItemMaster"
+            element={<DisplayCSSDItemMaster />}
+          />
+          <Route
+            path="/cssdmaster/cssd-kit-category"
+            element={<CSSDKitCategory />}
+          />
+          <Route
+            path="display-cssd-kitcategory"
+            element={<DisplayCSSDKitCategory />}
+          />
+          <Route
+            path="/cssdmaster/cssd-kit-master"
+            element={<CSSDKitMaster />}
+          />
+          <Route
+            path="cssdmaster/cssd-machine-master"
+            element={<CSSDMachineMaster />}
+          />
+          <Route
+            path="cssdtransaction-mainmenu"
+            element={<CSSDTransactionMainMenu />}
+          />
+          <Route
+            path="/cssdtransaction-mainmenu/cssd-kit-request-indent"
+            element={<CSSDKitRequestIndent />}
+          />
+          <Route
+            path="cssdtransaction-mainmenu/cssd-bubble-kit-issue"
+            element={<CSSDBubbleKitIssue />}
+          />
+          <Route
+            path="/cssdtransaction-mainmenu/cssd-bubble-kit-issue/Pending_kit_issue/:id"
+            element={<PendingKitIssue />}
+          />
+          <Route
+            path="cssdtransaction-mainmenu/bubble-pending-kit-receive"
+            element={<BubblePendingReceives />}
+          ></Route>
           {/* <Route path="pending-kit-receive" element={<PendingKitReceive/>}></Route> */}
-          <Route path="cssd-transaction-mainmenu/cssd-kit-Discard" element={<CSSDKitDiscard/>}></Route>
-          <Route path="cssd-transaction-mainmenu/cssd-kit-return" element={<CssdKitReturn/>}></Route>
-          <Route path="cssd-transaction-mainmenu/cssd-pending-kit-return" element={<BubblePendingReturns/>}></Route>
+          <Route
+            path="cssdtransaction-mainmenu/cssd-kit-Discard"
+            element={<CSSDKitDiscard />}
+          ></Route>
+          <Route
+            path="cssdtransaction-mainmenu/cssd-kit-return"
+            element={<CssdKitReturn />}
+          ></Route>
+          <Route
+            path="cssdtransaction-mainmenu/cssd-pending-kit-return"
+            element={<BubblePendingReturns />}
+          ></Route>
           {/* <Route path="pending-kit-receive/:id" element={<BubblePendingKitReceive/>}></Route> */}
-          <Route path="cssd-transaction-mainmenu/bubble-pending-kit-receive/pending-kit-receive/:issueId" element={<BubblePendingKitReceive />} />
-          <Route path="/cssd-transaction-mainmenu/cssd-pending-kit-return/pending-return/:receivingId" element={<CssdKitReturn />} />
-
-
-
+          <Route
+            path="cssdtransaction-mainmenu/bubble-pending-kit-receive/pending-kit-receive/:issueId"
+            element={<BubblePendingKitReceive />}
+          />
+          <Route
+            path="/cssdtransaction/cssd-pending-kit-return/pending-return/:receivingId"
+            element={<CssdKitReturn />}
+          />
         </Routes>
       </div>
     </div>

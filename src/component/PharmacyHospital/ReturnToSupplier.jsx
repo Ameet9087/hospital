@@ -171,7 +171,7 @@ const ReturnToSupplier = () => {
       </div>
 
       <CustomModal isOpen={showReturnForm } onClose={closeModal}>
-         <ReturnForm selectedItem={selectedItem} /> {/* Pass the selected item */}
+         <ReturnForm selectedItem={selectedItem} onClose={closeModal} /> {/* Pass the selected item */}
       </CustomModal>
     </div>
   );

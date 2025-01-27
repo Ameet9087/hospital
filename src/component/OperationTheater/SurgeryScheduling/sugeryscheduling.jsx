@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import CustomModal from '../../CustomModel/CustomModal';
+import React, { useState, useEffect } from "react";
+import CustomModal from "../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
 
 const SurgeryScheduling = () => {
@@ -11,11 +11,11 @@ const SurgeryScheduling = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${ API_BASE_URL }/surgery-events`);
+        const response = await fetch(`${API_BASE_URL}/surgery-events`);
         const data = await response.json();
         setRows(data); // Save the response data to rows state
       } catch (error) {
-        console.error('Error fetching surgery events:', error);
+        console.error("Error fetching surgery events:", error);
       }
     };
 
@@ -42,20 +42,23 @@ const SurgeryScheduling = () => {
   const handleAddRow = () => {
     const newRow = {
       surgeryEventId: rows.length + 1,
-      firstName: '',
-      lastName: '',
-      operationName: '',
-      operationType: '',
-      surgeon: '',
-      assistantNurse: '',
-      remark: '',
+      firstName: "",
+      lastName: "",
+      operationName: "",
+      operationType: "",
+      surgeon: "",
+      assistantNurse: "",
+      remark: "",
     };
     setRows([...rows, newRow]);
   };
 
   return (
     <div className="surgerySchedulings-container">
-      <button onClick={handleAddRow} className="surgerySchedulings-add-row-button">
+      <button
+        onClick={handleAddRow}
+        className="surgerySchedulings-add-row-button"
+      >
         Add Row
       </button>
       <table className="surgerySchedulings-table">
@@ -76,13 +79,23 @@ const SurgeryScheduling = () => {
           {rows.map((row, index) => (
             <tr key={index}>
               <td>{row.surgeryEventId}</td>
-              <td>{row.operationBookingDTO?.ipAdmissionDTO?.patient?.firstName}</td>
-              <td>{row.operationBookingDTO?.ipAdmissionDTO?.patient?.lastName}</td>
+              <td>
+                {
+                  row.operationBookingDTO?.ipAdmissionDTO?.patient?.patient
+                    ?.firstName
+                }
+              </td>
+              <td>
+                {
+                  row.operationBookingDTO?.ipAdmissionDTO?.patient?.patient
+                    ?.lastName
+                }
+              </td>
               <td>{row.operationMasterDTO?.operationName}</td>
               <td>{row.operationMasterDTO?.operationType}</td>
               <td>{row.docterDTO?.doctorName}</td>
               <td>{row.employeeDTO?.firstName}</td>
-              <td>{row.remark || ''}</td>
+              <td>{row.remark || "Scheduled"}</td>
               <td>
                 <button
                   onClick={() => handleEditClick(row)}
@@ -104,59 +117,74 @@ const SurgeryScheduling = () => {
               <label>Patient First Name</label>
               <input
                 type="text"
-                value={popupData?.operationBookingDTO?.ipAdmissionDTO?.patient?.firstName || ''}
-                onChange={(e) => handlePopupChange('firstName', e.target.value)}
+                value={
+                  popupData?.operationBookingDTO?.ipAdmissionDTO?.patient
+                    ?.patient?.firstName || ""
+                }
+                onChange={(e) => handlePopupChange("firstName", e.target.value)}
               />
             </div>
             <div>
               <label>Patient Last Name</label>
               <input
                 type="text"
-                value={popupData?.operationBookingDTO?.ipAdmissionDTO?.patient?.lastName || ''}
-                onChange={(e) => handlePopupChange('lastName', e.target.value)}
+                value={
+                  popupData?.operationBookingDTO?.ipAdmissionDTO?.patient
+                    ?.patient?.lastName || ""
+                }
+                onChange={(e) => handlePopupChange("lastName", e.target.value)}
               />
             </div>
             <div>
               <label>Operation Name</label>
               <input
                 type="text"
-                value={popupData?.operationMasterDTO?.operationName || ''}
-                onChange={(e) => handlePopupChange('operationName', e.target.value)}
+                value={popupData?.operationMasterDTO?.operationName || ""}
+                onChange={(e) =>
+                  handlePopupChange("operationName", e.target.value)
+                }
               />
             </div>
             <div>
               <label>Operation Type</label>
               <input
                 type="text"
-                value={popupData?.operationMasterDTO?.operationType || ''}
-                onChange={(e) => handlePopupChange('operationType', e.target.value)}
+                value={popupData?.operationMasterDTO?.operationType || ""}
+                onChange={(e) =>
+                  handlePopupChange("operationType", e.target.value)
+                }
               />
             </div>
             <div>
               <label>Surgeon</label>
               <input
                 type="text"
-                value={popupData?.docterDTO?.doctorName || ''}
-                onChange={(e) => handlePopupChange('surgeon', e.target.value)}
+                value={popupData?.docterDTO?.doctorName || ""}
+                onChange={(e) => handlePopupChange("surgeon", e.target.value)}
               />
             </div>
             <div>
               <label>Assistant Nurse</label>
               <input
                 type="text"
-                value={popupData?.employeeDTO?.firstName || ''}
-                onChange={(e) => handlePopupChange('assistantNurse', e.target.value)}
+                value={popupData?.employeeDTO?.firstName || ""}
+                onChange={(e) =>
+                  handlePopupChange("assistantNurse", e.target.value)
+                }
               />
             </div>
             <div>
               <label>Remark</label>
               <input
                 type="text"
-                value={popupData?.remark || ''}
-                onChange={(e) => handlePopupChange('remark', e.target.value)}
+                value={popupData?.remark || ""}
+                onChange={(e) => handlePopupChange("remark", e.target.value)}
               />
             </div>
-            <button onClick={handleSave} className="surgerySchedulings-save-button">
+            <button
+              onClick={handleSave}
+              className="surgerySchedulings-save-button"
+            >
               Save
             </button>
             <button

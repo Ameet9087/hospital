@@ -1,106 +1,142 @@
-.breakageItem-container {
-  background-color: #d0f0ff;
+.breakage-container {
   padding: 20px;
-  font-family: Arial, sans-serif;
+  background-color: white;
+  border-radius: 8px;
 }
 
-.breakageItem-table {
+.breakage-header {
+  font-size: var(--heading-font);
+  color: var(--sideBar-bg-color);
+  font-weight: bold;
+}
+
+.breakage-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 }
 
-.breakageItem-table th,
-.breakageItem-table td {
+.breakage-table th,
+.breakage-table td {
   border: 1px solid #ddd;
-  text-align: center;
   padding: 8px;
+  text-align: center;
 }
 
-.breakageItem-table th {
-  background-color: #f5f5f5;
-  font-weight: bold;
+.breakage-table th {
+  background-color: var(--upperBar-bg-color);
+  color: white;
 }
 
-.breakageItem-btn-add,
-.breakageItem-btn-remove {
-  background-color: #007bff;
+.breakage-table input {
+  padding: var(--input-box-padding);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.remove-button {
+  background-color: red;
   color: white;
   border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 5px;
   cursor: pointer;
 }
 
-.breakageItem-btn-add {
-  background-color: #007bff;
+.add-button {
+  background-color: var(--button-bg-color);
+  color: var(--button-color);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
 }
 
-.breakageItem-btn-remove {
-  background-color: #dc3545;
+.add-button:hover {
+  background-color: var(--button-hover-background-color);
+  border-color: var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
 }
 
-.breakageItem-btn-add:hover,
-.breakageItem-btn-remove:hover {
-  opacity: 0.9;
-}
-
-.breakageItem-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.breakageItem-form input,
-.breakageItem-form textarea {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.breakageItem-form input[type="date"] {
-  max-width: 200px;
-}
-
-.breakageItem-summary {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.breakageItem-summary div {
+.breakage-details {
   display: flex;
   justify-content: space-between;
-  font-weight: bold;
-}
-
-.breakageItem-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
   margin-top: 20px;
 }
 
-.breakageItem-actions button {
-  padding: 10px 15px;
-  font-size: 16px;
+.left-panel,
+.center-panel,
+.right-panel {
+  width: 30%;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.center-panel,
+.right-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.input-container label {
+  display: inline-block;
+  width: 150px;
+  font-size: var(--font-size);
+}
+
+.input-container input,
+.input-container textarea {
+  padding: var(--input-box-padding);
+  width: calc(100% - 160px); /* Adjust for the label width */
+  box-sizing: border-box;
+}
+
+.input-container textarea {
+  height: 80px;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.request-button,
+.cancel-button {
+  background-color: var(--button-bg-color);
+  color: var(--button-color);
+  padding: 10px;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
 }
 
-.breakageItem-btn-request {
-  background-color: #007bff;
+.request-button:hover,
+.cancel-button:hover {
+  background-color: var(--button-hover-background-color);
+  border-color: var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+.add-item-button {
+  background-color: #4CAF50;
   color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin: 20px 0;
 }
 
-.breakageItem-btn-cancel {
-  background-color: #dc3545;
-  color: white;
+.add-item-button:hover {
+  background-color: #45a049;
 }
 
-.breakageItem-btn-request:hover,
-.breakageItem-btn-cancel:hover {
-  opacity: 0.9;
+.action-row {
+  display: flex;
+  justify-content: flex-start;
 }

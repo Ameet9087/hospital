@@ -30,7 +30,7 @@ const SettingTax = () => {
       .catch(error => {
         console.error("There was an error fetching the data!", error);
       });
-  }, []);
+  }, [showModal]);
 
   // Filtering users based on the search term
   const filteredUsers = suppliers.filter(user =>
@@ -57,7 +57,7 @@ const SettingTax = () => {
     event.preventDefault();
     if (isEditMode) {
       // Update the existing item
-      axios.put(`${API_BASE_URL}/taxes/update/${selectedUser.id}`, selectedUser)
+      axios.put(`${API_BASE_URL}/taxes/update/${selectedUser.taxesId}`, selectedUser)
         .then(response => {
           setSuppliers(suppliers.map(supplier =>
             supplier.id === selectedUser.id ? response.data : supplier
@@ -71,7 +71,6 @@ const SettingTax = () => {
       // Add a new item
       axios.post(`${API_BASE_URL}/taxes/create-tax`, selectedUser)
         .then(response => {
-          setSuppliers([...suppliers, response.data]);
           handleCloseModal();
         })
         .catch(error => {
@@ -155,7 +154,7 @@ const SettingTax = () => {
                 <td>{user.description}</td>
                 <td className="setting-supplier-action-buttons">
                   <button className="setting-supplier-action-button" onClick={() => handleShowModal(user)}>Edit</button>
-                  <button className="setting-supplier-action-button">Deactivate</button>
+                  {/* <button className="setting-supplier-action-button">Deactivate</button> */}
                 </td>
               </tr>
             ))}

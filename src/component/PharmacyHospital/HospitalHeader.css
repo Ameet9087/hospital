@@ -36,13 +36,10 @@
   color: white;
   background-color: var(--button-bg-color);
 }
-
- /*  */
  .pharmacy-sub-nav-module {
   display: flex; /* Use flexbox for horizontal layout */
   margin: 10px;
   flex-direction: column; /* Stack sub-navigation items vertically */
-  margin-bottom: 20px; /* Add spacing below the sub-nav */
 }
 
 .pharmacy-sub-nav-item-module {

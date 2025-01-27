@@ -40,7 +40,7 @@ const DrDashboard = () => {
             In Patient Department
           </button>
         </Link>
-        <Link to="/doctor/patientrecord">
+        {/* <Link to="/doctor/patientrecord">
           <button
             className={`dashboard-button ${
               location.pathname === "/doctor/patientrecord" ? "active" : ""
@@ -48,7 +48,7 @@ const DrDashboard = () => {
           >
             Patient Record
           </button>
-        </Link>
+        </Link> */}
       </div>
 
       {/* Content Rendering */}
@@ -56,7 +56,7 @@ const DrDashboard = () => {
         <Routes>
           <Route path="/outpatient" element={<DoctorMainPage />} />
           <Route path="/inpatientdepartment" element={<IpDoctorMainPage />} />
-          <Route path="/patientrecord" element={<Records />} />
+          {/* <Route path="/patientrecord" element={<Records />} /> */}
         </Routes>
       </div>
     </div>

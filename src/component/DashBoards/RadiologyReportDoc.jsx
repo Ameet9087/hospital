@@ -22,9 +22,17 @@ const RadiologyReportDoc = ({ reportData, onClose }) => {
     <div>
       <div className="RadiologyReportPopup">
         <div className="RadiologyReportPopup-popup-content">
-          <button className="RadiologyReportPopup-close-btn" onClick={onClose}>
-            &times;
-          </button>
+          <div>
+            <h1>
+              <img src="lopmudralogo.jpeg" class="radiology-hospital-logo" />{" "}
+              LOPMUDRA HOSPITAL
+            </h1>
+            <span class="radiology-address">
+              Survey No 148/4, Vishwakarma Nagar Lopmudra Hospital, CTS No.
+              1338, Pashan - Sus Rd, near NIV, Pashan, Pune, Maharashtra 411021
+              <h2>Radiology Report</h2>
+            </span>
+          </div>
           <h2>Radiology Report</h2>
           <div className="RadiologyReportPopup-report-content">
             <div className="RadiologyReportPopup-patient-info">
@@ -71,6 +79,27 @@ const RadiologyReportDoc = ({ reportData, onClose }) => {
                 </span>
                 <span>Date: {reportData.imagingDate}</span>
               </div>
+            </div>
+            <div dangerouslySetInnerHTML={{ __html: reportData?.notes }} />
+            <div>
+              <p>
+                <strong>Footer :</strong>
+                {reportData.imagingItemDTO?.radiologyTemplateDTO?.footerNote}
+              </p>
+            </div>
+            <div>
+              {reportData?.performerDTO?.signatureImage && (
+                <img
+                  src={`data:image/jpeg;base64,${reportData?.performerDTO?.signatureImage}`}
+                  alt="Radiology Scan"
+                  style={{ maxWidth: "100%", height: "150px" }}
+                />
+              )}
+              <p>
+                {reportData?.performerDTO?.salutation}{" "}
+                {reportData?.performerDTO?.firstName}{" "}
+                {reportData?.performerDTO?.lastName}
+              </p>
             </div>
             <div className="RadiologyReportPopup-report-body">
               {/* <p>{reportData.reportText || "No report text available"}</p> */}

@@ -37,6 +37,9 @@
 .NewUserForm-Details {
   width: 100%;
 }
+.NewUserForm-Search{
+  display: flex;
+}
 .NewUserForm-Details {
   width: 100%;
   display: flex;

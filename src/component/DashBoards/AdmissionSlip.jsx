@@ -4,7 +4,12 @@ import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 import DoctorPopupTable from "./DoctorPopUpTable";
 
-const AdmissionSlip = ({ patient, inPatientId, outPatientId }) => {
+const AdmissionSlip = ({
+  patient,
+  inPatientId,
+  outPatientId,
+  setActiveSection,
+}) => {
   const [patientName, setPatientName] = useState("");
   const [age, setAge] = useState("");
   const [mrNo, setMrNo] = useState("");

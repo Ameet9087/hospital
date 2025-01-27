@@ -15,6 +15,7 @@ const LoginPage = () => {
   const location = useLocation();
   const loginType = location.state?.loginType || "Doctor";
   const [selectedRole, setSelectedRole] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const getLoginDetails = () => {
     switch (loginType) {
@@ -168,6 +169,10 @@ const LoginPage = () => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       <button onClick={() => navigate("/home")} className="login-back-btn">
@@ -206,14 +211,30 @@ const LoginPage = () => {
                 onBlur={fetchRoleId} // Trigger fetchRoleId on blur
                 required
               />
-              <input
-                className="login-box-input"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <div style={{ position: "relative" }}>
+                <input
+                  className="login-box-input"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <i
+                  className={`fa ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
+                  aria-hidden="true"
+                  id="showHidePassword"
+                  style={{
+                    position: "absolute",
+                    fontSize: "20px",
+                    right: "10px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                  }}
+                  onClick={togglePasswordVisibility}
+                ></i>
+              </div>
 
               <select
                 onChange={(e) => setSelectedRole(e.target.value)}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './AssetQualityCheckMulti.css';
 import { API_BASE_URL } from '../../../api/api';
-import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 
 const AssetQualityCheckMulti = () => {
   const [id, setId] = useState('');
@@ -120,7 +120,7 @@ const AssetQualityCheckMulti = () => {
       })),
     };
 
-    fetch(`${API_BASE_URL}/asset-quality-checks`, {
+    fetch('http://192.168.143.48:8080/api/asset-quality-checks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -2,7 +2,7 @@
 // AjharTamboli 22-11-24 iPBilling.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import axios from "axios";
 import "./iP_billing.css";
 import { API_BASE_URL } from "../../api/api";
@@ -340,6 +340,7 @@ const IpBilling = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        alert("Data Successfully posted");
         console.log("Data successfully saved:", data);
       })
       .catch((error) => console.error("Error saving data:", error));

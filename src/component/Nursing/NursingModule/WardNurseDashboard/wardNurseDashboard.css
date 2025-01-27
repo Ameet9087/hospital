@@ -218,3 +218,27 @@ align-items: center;
   scrollbar-width: thin;
   scrollbar-color: #c1c1c1 #f1f1f1;
 }
+
+@keyframes zoomEffect {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.01);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.highlight-box {
+  animation: zoomEffect 1s infinite;
+}
+
+.disabled-box {
+  pointer-events: none;
+  opacity: 0.9;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  cursor: not-allowed;
+}

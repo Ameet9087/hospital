@@ -1,4 +1,3 @@
-// src/components/Navigation.js
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./BillingNav.css";
@@ -7,7 +6,7 @@ function BillingNav() {
   return (
     <nav className="billing-actions-container">
       <NavLink
-        to="/billing/IPBilling"
+        to="/billing/ipbilling"
         className={({ isActive }) =>
           `billing-action-button ${isActive ? "selected" : ""}`
         }
@@ -20,25 +19,42 @@ function BillingNav() {
           `billing-action-button ${isActive ? "selected" : ""}`
         }
       >
-      OPD Billing
+        OPD Billing
+      </NavLink>
+      <NavLink
+        to="/billing/opdpostdiscount"
+        className={({ isActive }) =>
+          `billing-action-button ${isActive ? "selected" : ""}`
+        }
+      >
+        OPD Post discount
       </NavLink>
 
       <NavLink
-        to="/billing/IpdMoneyReceipt"
+        to="/billing/ipdmoneyrecipt"
         className={({ isActive }) =>
           `billing-action-button ${isActive ? "selected" : ""}`
-      }
+        }
       >
         IPd Money  receipt
       </NavLink>
 
       <NavLink
-        to="/billing/OPDBillingCancel"
+        to="/billing/opdbillingcancel"
         className={({ isActive }) =>
           `billing-action-button ${isActive ? "selected" : ""}`
-      }
+        }
       >
-        OPD Bill cancel/refund 
+        OPD Bill cancel/refund
+      </NavLink>
+
+      <NavLink
+        to="/billing/finalbilling"
+        className={({ isActive }) =>
+          `billing-action-button ${isActive ? "selected" : ""}`
+        }
+      >
+        final bill
       </NavLink>
     </nav>
   );

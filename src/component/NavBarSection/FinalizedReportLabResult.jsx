@@ -50,7 +50,7 @@ const FinalizedReportLabResult = () => {
     setDoctorAsSignatory();
   }, [labResult, labDoctors]);
 
-  const handleUnApprove = async () => {
+  const handleReject = async () => {
     if (selectedRequestId == null) {
       return alert("No selected Request");
     }
@@ -179,6 +179,17 @@ const FinalizedReportLabResult = () => {
 
   const handleBackClick = () => {
     navigate("/laboratory/addResultForm");
+  };
+
+  const handleUnApprove = async (id) => {
+    try {
+      await axios.post(`${API_BASE_URL}/lab-result/${id}/unapprove`);
+      console.log("Lab result updated successfully!");
+      setConfirmBox(false);
+      navigate("/laboratory/finalreports");
+    } catch (err) {
+      console.error("Error updating lab result:", err);
+    }
   };
 
   return (
@@ -330,13 +341,19 @@ const FinalizedReportLabResult = () => {
               Print
             </button>
             <button
+              onClick={() => handleUnApprove(labResult?.labResultId)}
+              className="lab-print-button"
+            >
+              Un Approve
+            </button>
+            <button
               onClick={() => {
                 setConfirmBox(true);
                 setSelectedRequestId(labResult?.labResultId);
               }}
               className="lab-print-button"
             >
-              Un Approve
+              Reject
             </button>
           </div>
         </div>
@@ -351,7 +368,7 @@ const FinalizedReportLabResult = () => {
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
               ></input>
-              <button onClick={handleUnApprove}>Submit</button>
+              <button onClick={handleReject}>Submit</button>
             </div>
           </div>
         </CustomModal>

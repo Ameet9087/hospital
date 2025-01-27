@@ -76,6 +76,13 @@
     display: flex;
     justify-content: space-between;
   }
+  .purchaseOrderView-btn
+  {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   
   .purchaseOrderViewSignature p {
     margin: 0;

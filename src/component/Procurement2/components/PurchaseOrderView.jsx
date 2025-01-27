@@ -1,11 +1,104 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./PurchaseOrderView.css";
+import { toWords } from "number-to-words";
 
-const PurchaseOrderView = ({item}) => {
-    console.log(item);
-    
+const PurchaseOrderView = ({ item }) => {
+  const [total,setTotal] = useState();
+  const [totalInWords, setTotalInWords] = useState("");
+  const printRef = useRef(null);
+  useEffect(() => {
+    if (item?.items && item.items.length > 0) {
+      const calculatedTotal = item.items.reduce((sum, data) => {
+        return sum + (data?.totalAmount || 0);
+      }, 0);
+
+      setTotal(calculatedTotal);
+      setTotalInWords(toWords(calculatedTotal)); // Convert total to words
+    }
+  }, [item]);
+  const handlePrint = () => {
+    const printContents = printRef.current.innerHTML; // Get the content to print
+    const newWindow = window.open("");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              margin: 20px;
+              padding: 0;
+            }
+            .purchaseOrderViewContainer {
+              margin: 20px auto;
+              width: 95%;
+              border: 1px solid black;
+              padding: 20px;
+            }
+            .purchaseOrderViewHeader {
+              text-align: center;
+              font-size: 16px;
+              font-weight: bold;
+            }
+            .purchaseOrderViewTitle {
+              text-align: center;
+              font-size: 24px;
+              font-weight: bold;
+              margin: 10px 0;
+            }
+            .purchaseOrderViewDetails {
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 20px;
+              font-size: 14px;
+            }
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              margin: 20px 0;
+              font-size: 14px;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: center;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+            .purchaseOrderViewTotals {
+              margin-top: 20px;
+              font-size: 16px;
+              font-weight: bold;
+            }
+            .purchaseOrderViewValueInWords {
+              font-size: 14px;
+              margin-top: 10px;
+            }
+            .purchaseOrderViewNote {
+              margin-top: 20px;
+              font-size: 12px;
+              text-align: center;
+              font-style: italic;
+            }
+            @media print {
+              .purchaseOrderViewTerms {
+                display: none;
+              }
+            }
+          </style>
+        </head>
+        <body>
+          ${printContents}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+  };
+
   return (
-    <div className="purchaseOrderViewContainer">
+    <>
+    <div className="purchaseOrderViewContainer" ref={printRef}>
       <div className="purchaseOrderViewHeader">
         <p>Procurement Unit</p>
       </div>
@@ -14,20 +107,45 @@ const PurchaseOrderView = ({item}) => {
 
       <div className="purchaseOrderViewDetails">
         <div>
-          <p>PO No. : <span>{item?.id}</span></p>
-          <p>Vendor's Name : <span>{item?.vendor?.vendorName}</span></p>
-          <p>Pin Code : <span>{item?.vendor?.kraPin}</span></p>
-          <p>Address : <span>{item?.vendor?.contactAddress}</span></p>
-          <p>Contact /Mobile Number : <span>{item?.vendor?.contactNumber}</span></p>
-          <p>Invoicing Address : <span>{item?.invoicingAddress}</span></p>
-          <p>Delivery Address : <span>{item?.deliveryAddress}</span></p>
+          <p>
+            PO No. : <span>{item?.id}</span>
+          </p>
+          <p>
+            Vendor's Name : <span>{item?.vendor?.vendorName}</span>
+          </p>
+          <p>
+            Pin Code : <span>{item?.vendor?.kraPin}</span>
+          </p>
+          <p>
+            Address : <span>{item?.vendor?.contactAddress}</span>
+          </p>
+          <p>
+            Contact /Mobile Number : <span>{item?.vendor?.contactNumber}</span>
+          </p>
+          <p>
+            Invoicing Address : <span>{item?.invoicingAddress}</span>
+          </p>
+          <p>
+            Delivery Address : <span>{item?.deliveryAddress}</span>
+          </p>
         </div>
         <div>
-          <p>PO Date : <span>{item?.poDate}</span></p>
-          <p>Payment Mode : <span>{item?.paymentMode}</span></p>
-          <p>Currency : <span>{item?.vendor?.currencyCode}</span></p>
-          <p>Reference No: <span>{item?.referenceNo}</span></p>
-          <p>Contact Person Name and Office Email : <span>{item?.contactEmail}</span></p>
+          <p>
+            PO Date : <span>{item?.poDate}</span>
+          </p>
+          <p>
+            Payment Mode : <span>{item?.paymentMode}</span>
+          </p>
+          <p>
+            Currency : <span>{item?.vendor?.currencyCode}</span>
+          </p>
+          <p>
+            Reference No: <span>{item?.referenceNo}</span>
+          </p>
+          <p>
+            Contact Person Name and Office Email :{" "}
+            <span>{item?.contactEmail}</span>
+          </p>
         </div>
       </div>
 
@@ -44,54 +162,53 @@ const PurchaseOrderView = ({item}) => {
             <th>Standard Rate</th>
             <th>Vat %</th>
             <th>Total Amount</th>
-            <th>Delivery Days</th>
-            <th>Item Status</th>
           </tr>
         </thead>
         <tbody>
-          
-          {item.items.map((index,data)=>(
+          {item.items && item.items.length > 0 ? (
+            item.items.map((data, index) => (
+              <tr key={index}>
+                <td>{index +1}</td>
+                <td>{data?.item?.itemCode || "N/A"}</td>
+                <td>{data?.item?.itemName || "N/A"}</td>
+                <td>{data?.mssNo || "N/A"}</td>
+                <td>{data?.hsnCode || "N/A"}</td>
+                <td>{data?.quantity || 0}</td>
+                <td>{data?.item?.unitOfMeasurement?.name || "N/A"}</td>
+                <td>{data?.item?.standardRate || 0}</td>
+                <td>{data?.vatPercentage || 0}</td>
+                <td>{data?.totalAmount || 0}</td>
+              </tr>
+            ))
+          ) : (
             <tr>
-                <td>1</td>
-            <td>{data.items?.item?.invCompany?.itemCode}</td>
-            <td>{data.items?.item?.itemName}</td>
-         <td></td>
-            <td></td>
-            <td>1</td>
-            <td>pc</td>
-            <td>20</td>
-            <td>12</td>
-            <td>22.4</td>
-            <td>6</td>
-            <td>Active</td>
+              <td colSpan="11">No items available</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
 
       <div className="purchaseOrderViewTotals">
-        <p>Sub Total: <span>20.00</span></p>
-        <p>VAT Amount: <span>2.40</span></p>
-        <p>Total Amount (INR): <span>22.40</span></p>
+        <p>
+          Total Amount (INR): <span>{total}</span>
+        </p>
       </div>
 
       <div className="purchaseOrderViewValueInWords">
-        <p>Total Value In Words: (INR) Twenty Two Point Four Only</p>
+        <p>Total Value In Words: {totalInWords}</p>
       </div>
-
-      {/* <div className="purchaseOrderViewTerms">
-        <h4>Terms & Conditions:</h4>
-        <div className="purchaseOrderViewSignature">
-          <p>Prepared By</p>
-          <p>Mr. admin admin</p>
-          <p>Checked By</p>
-        </div>
-      </div> */}
 
       <div className="purchaseOrderViewNote">
-        <p>Note: This is a computer-generated Purchase Order. Signature not required.</p>
+        <p>
+          Note: This is a computer-generated Purchase Order. Signature not
+          required.
+        </p>
       </div>
     </div>
+    <div className="purchaseOrderView-btn">
+    <button onClick={handlePrint}>Print</button>
+    </div>
+  </>
   );
 };
 

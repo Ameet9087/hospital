@@ -56,6 +56,7 @@ import StockTransferSummary from "../PharmacyHospital/Stock/StockTransferSummary
 import HospitalHeader from "./HospitalHeader";
 import PurchaseOrderReport from "./Report/PurchaseOrderReport";
 import ReturnToSuppliers from "./Report/ReturnToSupplier";
+import SubstoreDisptachList from "./SubstoreDisptachList";
 
 const PharmacyRouting = () => {
   return (
@@ -71,7 +72,8 @@ const PharmacyRouting = () => {
       <Route path="/report/stock" element={<Stock />} />
       <Route path="/report/supplier" element={<Supplier />} />
       <Route path="/supplier" element={<SupplierHeaderCom />} />
-      <Route path="/substorerequest" element={<SubstoreDispatchCom />} />
+      <Route path="/substorerequest/dispensary" element={<SubstoreDispatchCom />} />
+      <Route path="/substorerequest/substore" element={<SubstoreDisptachList />} />
       <Route path="/setting/setting-supplier" element={<SettingSupplierComponent />} />
       <Route path="/setting/setting-company" element={<SettingCompany />} />
       <Route path="/setting/setting-category" element={<SettingCategory />} />

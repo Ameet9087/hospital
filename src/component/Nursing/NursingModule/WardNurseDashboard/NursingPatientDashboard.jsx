@@ -28,6 +28,9 @@ import NursingAssessment from "../DailyNursingAssessments/DailyNursingAssessment
 import IpChangeRoom from "../IPChangeRoom/IPChangeRoom";
 import IpdIssueWard from "../IPDIssuedWard/ipdissuedward";
 import IpdReturnWard from "../IPDReturnsWard/ipdreturnward";
+import DischargeIntimation from "../DischargeIntimition/DischargeIntimationForm";
+import IpBilling from "../IPBilling/iPBilling";
+import AdmissionSlip from "../../../DashBoards/AdmissionSlip";
 
 const Section = ({ title, handleAddClick, children, isAddBTN }) => (
   <div className="Patient-Dashboard-firstBox">
@@ -94,8 +97,8 @@ const NursingPatientDashboard = ({
   useEffect(() => {
     const fetchInfusions = async () => {
       let endpoint = "";
-      if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/infusions/in-patient/${patient.patient?.inPatientId}`;
+      if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/infusions/in-patient/${patient?.inPatientId}`;
       } else if (patient.outPatientId) {
         endpoint = `${API_BASE_URL}/infusions/out-patient/${patient.outPatientId}`;
       } else {
@@ -118,7 +121,7 @@ const NursingPatientDashboard = ({
     };
 
     fetchInfusions();
-  }, [patient.patient?.inPatientId, patient.outPatientId, activeSection]);
+  }, [patient?.inPatientId, patient.outPatientId, activeSection, isModalOpen]);
 
   useEffect(() => {
     // Fetch medications data from the API
@@ -127,8 +130,8 @@ const NursingPatientDashboard = ({
 
       if (patient.outPatientId) {
         endpoint = `${API_BASE_URL}/medications/by-opd-id?opdPatientId=${patient.outPatientId}`;
-      } else if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/medications/by-ipd-id?ipdPatientId= ${patient.patient?.inPatientId}`;
+      } else if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/medications/by-ipd-id?ipdPatientId= ${patient?.inPatientId}`;
       }
       try {
         const response = await fetch(endpoint);
@@ -140,14 +143,14 @@ const NursingPatientDashboard = ({
     };
 
     fetchMedications();
-  }, [activeSection]);
+  }, [activeSection, isModalOpen]);
 
   useEffect(() => {
     const fetchServices = async () => {
       let endpoint = "";
 
-      if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/services/in-patient/${patient.patient?.inPatientId}`;
+      if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/services/in-patient/${patient?.inPatientId}`;
       } else if (patient.outPatientId) {
         endpoint = `${API_BASE_URL}/services/out-patient/${patient.outPatientId}`;
       } else {
@@ -164,18 +167,18 @@ const NursingPatientDashboard = ({
         console.log("Infusion data:", data);
 
         setServices(data);
-      } catch (error) {}
+      } catch (error) { }
     };
 
     fetchServices();
-  }, [activeSection]);
+  }, [activeSection, isModalOpen]);
 
   useEffect(() => {
     const fetchTreatmentGive = async () => {
       let endpoint = "";
 
-      if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/treatments/in-patient/${patient.patient?.inPatientId}`;
+      if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/treatments/in-patient/${patient?.inPatientId}`;
       } else if (patient.outPatientId) {
         endpoint = `${API_BASE_URL}/treatments/out-patient/${patient.outPatientId}`;
       }
@@ -191,15 +194,15 @@ const NursingPatientDashboard = ({
     };
 
     fetchTreatmentGive();
-  }, [activeSection]);
+  }, [activeSection, isModalOpen]);
 
   useEffect(() => {
     const fetchVitals = () => {
       let endpoint = "";
       if (patient.outPatientId) {
         endpoint = `${API_BASE_URL}/doc-vitals/get-by-opd-patient-id/${patient.outPatientId}`;
-      } else if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/doc-vitals/get-by-in-patient-id/${patient.patient?.inPatientId}`;
+      } else if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/doc-vitals/get-by-in-patient-id/${patient?.inPatientId}`;
       }
       if (endpoint) {
         axios
@@ -216,7 +219,12 @@ const NursingPatientDashboard = ({
     };
 
     fetchVitals();
-  }, [patient.patient?.inPatientId, patient.outPatientId, activeSection]);
+  }, [
+    patient?.inPatientId,
+    patient.outPatientId,
+    activeSection,
+    isModalOpen,
+  ]);
 
   useEffect(() => {
     const fetchAllergies = () => {
@@ -224,8 +232,8 @@ const NursingPatientDashboard = ({
 
       if (patient.outPatientId) {
         endpoint = `${API_BASE_URL}/allergies/by-newVisitPatientId/${patient.outPatientId}`;
-      } else if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/allergies/by-patientId/${patient.patient?.inPatientId}`;
+      } else if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/allergies/by-patientId/${patient?.inPatientId}`;
       }
       if (endpoint) {
         axios
@@ -244,7 +252,7 @@ const NursingPatientDashboard = ({
     };
 
     fetchAllergies();
-  }, [patient.outPatientId, patient.patient?.inPatientId, activeSection]); // Dependencies to re-run useEffect when IDs change
+  }, [patient.outPatientId, patient?.inPatientId, activeSection, isModalOpen]); // Dependencies to re-run useEffect when IDs change
 
   useEffect(() => {
     const fetchActiveProblems = () => {
@@ -254,8 +262,8 @@ const NursingPatientDashboard = ({
 
       if (patient.outPatientId) {
         endpoint = `${API_BASE_URL}/active-problems/by-newVisitPatientId/${patient.outPatientId}`;
-      } else if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/active-problems/by-patientId/${patient.patient?.inPatientId}`;
+      } else if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/active-problems/by-patientId/${patient?.inPatientId}`;
       }
 
       // If an endpoint is determined, make the API call
@@ -274,7 +282,7 @@ const NursingPatientDashboard = ({
     };
 
     fetchActiveProblems();
-  }, [patient.outPatientId, patient.patient?.inPatientId, activeSection]); // Dependencies for re-fetching when IDs change
+  }, [patient.outPatientId, patient?.inPatientId, activeSection, isModalOpen]); // Dependencies for re-fetching when IDs change
 
   useEffect(() => {
     const fetchImagingRequisitions = () => {
@@ -284,8 +292,8 @@ const NursingPatientDashboard = ({
 
       if (patient.outPatientId) {
         endpoint = `${API_BASE_URL}/imaging-requisitions/by-opd-patient-id?opdPatientId=${patient.outPatientId}`;
-      } else if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/imaging-requisitions/by-ipd-patient-id?ipdPatientId=${patient.patient?.inPatientId}`;
+      } else if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/imaging-requisitions/by-ipd-patient-id?ipdPatientId=${patient?.inPatientId}`;
       }
 
       // If an endpoint is determined, make the API call
@@ -305,15 +313,15 @@ const NursingPatientDashboard = ({
     };
 
     fetchImagingRequisitions();
-  }, [patient.outPatientId, patient.patient?.inPatientId, activeSection]); // Dependencies to re-run useEffect when patient IDs change
+  }, [patient.outPatientId, patient?.inPatientId, activeSection, isModalOpen]); // Dependencies to re-run useEffect when patient IDs change
 
   useEffect(() => {
     const fetchLabRequests = () => {
       let endpoint = "";
       if (patient.outPatientId) {
         endpoint = `${API_BASE_URL}/lab-requests/by-opd-patient-id?opdPatientId=${patient.outPatientId}`;
-      } else if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/lab-requests/by-ipd-patient-id?ipdPatientId=${patient.patient?.inPatientId}`;
+      } else if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/lab-requests/by-ipd-patient-id?ipdPatientId=${patient?.inPatientId}`;
       }
       if (endpoint) {
         axios
@@ -331,7 +339,7 @@ const NursingPatientDashboard = ({
     };
 
     fetchLabRequests();
-  }, [patient.outPatientId, patient.patient?.inPatientId, activeSection]); // Dependencies to track patient IDs
+  }, [patient.outPatientId, patient?.inPatientId, activeSection, isModalOpen]); // Dependencies to track patient IDs
 
   // useEffect(() => {
   //   if (
@@ -392,7 +400,7 @@ const NursingPatientDashboard = ({
             outPatientId={patient?.outPatientId}
           />
         );
-      case "Vitals":
+      case "vitals":
         return (
           <AddVitalsForm
             patientId={
@@ -464,6 +472,8 @@ const NursingPatientDashboard = ({
             outPatientId={patient?.outPatientId}
           />
         );
+      case "ipbilling":
+        return <IpBilling ipAdmission={ipAdmission} />;
       case "ipchangeroom":
         return (
           <IpChangeRoom
@@ -497,6 +507,30 @@ const NursingPatientDashboard = ({
               patient?.inPatientId
             }
             ipAdmission={ipAdmission}
+            outPatientId={patient?.outPatientId}
+          />
+        );
+      case "dischareintimation":
+        return (
+          <DischargeIntimation
+            patientId={
+              patient?.patient?.inPatientId ||
+              patient?.patientId ||
+              patient?.inPatientId
+            }
+            ipAdmission={ipAdmission}
+            outPatientId={patient?.outPatientId}
+          />
+        );
+      case "admissionslip":
+        return (
+          <AdmissionSlip
+            patientId={
+              patient?.patient?.inPatientId ||
+              patient?.patientId ||
+              patient?.inPatientId
+            }
+            patient={patient}
             outPatientId={patient?.outPatientId}
           />
         );
@@ -542,15 +576,13 @@ const NursingPatientDashboard = ({
                 <div className="patient-Dashboard-details">
                   <span className="Patient-Dashboard-textName">
                     Name :{" "}
-                    {`${
-                      patient?.firstName ||
+                    {`${patient?.firstName ||
                       patient?.patient?.firstName ||
                       patient?.FirstName
-                    } ${
-                      patient?.lastName ||
+                      } ${patient?.lastName ||
                       patient?.patient?.lastName ||
                       patient?.patientLastName
-                    }`}
+                      }`}
                   </span>
                 </div>
               </div>
@@ -566,15 +598,13 @@ const NursingPatientDashboard = ({
                     <div className="Patient-Dashboard-ward">
                       <span className="Patient-Dashboard-detailHeading">
                         Age/Sex :{" "}
-                        {`${
-                          patient?.age ||
+                        {`${patient?.age ||
                           patient?.patient?.age ||
                           patient?.patientAge
-                        } ${patient?.ageUnit || patient?.patient?.ageUnit}/${
-                          patient?.gender ||
+                          } ${patient?.ageUnit || patient?.patient?.ageUnit}/${patient?.gender ||
                           patient?.patient?.gender ||
                           patient?.patientGender
-                        }`}
+                          }`}
                       </span>
                     </div>
                   </>
@@ -599,17 +629,15 @@ const NursingPatientDashboard = ({
                       <span className="Patient-Dashboard-detailHeading">
                         Consultant:
                       </span>
-                      <span>{`${
-                        patient?.employeeDTO?.salutation ||
+                      <span>{`${patient?.employeeDTO?.salutation ||
                         ipAdmission?.admissionUnderDoctorDetail
                           ?.consultantDoctor?.salutation ||
                         patient?.doctorSalutationName
-                      } ${
-                        patient?.employeeDTO?.firstName ||
+                        } ${patient?.employeeDTO?.firstName ||
                         ipAdmission?.admissionUnderDoctorDetail
                           ?.consultantDoctor?.doctorName ||
                         patient?.doctorFirstName
-                      }`}</span>
+                        }`}</span>
                     </div>
                   </>
                 )}
@@ -647,7 +675,14 @@ const NursingPatientDashboard = ({
                             {LabRequest.map((radiology, index) => (
                               <tr key={index}>
                                 <td className="Patient-Dashboard-td">
-                                  {radiology.labTestName}
+                                  {radiology?.labTests?.map(
+                                    (labTest, index) => (
+                                      <span key={index}>
+                                        {index > 0 ? " , " : ""}
+                                        {labTest.labTestName}
+                                      </span>
+                                    )
+                                  )}
                                 </td>
                                 <td className="Patient-Dashboard-td">
                                   {radiology.requisitionDate}
@@ -707,7 +742,10 @@ const NursingPatientDashboard = ({
                             {radiology.map((radiology, index) => (
                               <tr key={index}>
                                 <td className="Patient-Dashboard-td">
-                                  {radiology.imagingTypeDTO.imagingTypeName}
+                                  {
+                                    radiology.imagingItemDTO?.imagingType
+                                      ?.imagingTypeName
+                                  }
                                 </td>
                                 <td className="Patient-Dashboard-td">
                                   {radiology.imagingItemDTO.imagingItemName}
@@ -761,9 +799,11 @@ const NursingPatientDashboard = ({
                         >
                           <thead>
                             <tr>
-                              <th className="Patient-Dashboard-th">Problem</th>
+                              <th className="Patient-Dashboard-th">Allergy</th>
+                              <th className="Patient-Dashboard-th">Severity</th>
+                              <th className="Patient-Dashboard-th">Comment</th>
                               <th className="Patient-Dashboard-th">
-                                Onset Date
+                                Recorded Date
                               </th>
                             </tr>
                           </thead>
@@ -771,10 +811,16 @@ const NursingPatientDashboard = ({
                             {allergies.map((active) => (
                               <tr key={active.activeId}>
                                 <td className="Patient-Dashboard-td">
-                                  {active.searchProblem}
+                                  {active.typeOfAllergy}
                                 </td>
                                 <td className="Patient-Dashboard-td">
-                                  {active.onsetDate}
+                                  {active.severity}
+                                </td>
+                                <td className="Patient-Dashboard-td">
+                                  {active.comments}
+                                </td>
+                                <td className="Patient-Dashboard-td">
+                                  {active.recordedDate}
                                 </td>
                               </tr>
                             ))}
@@ -1089,9 +1135,8 @@ const NursingPatientDashboard = ({
         <div className="Patient-Dashboard-detailsBox">
           <div
             onClick={() => setActiveSection("dashboard")}
-            className={`${
-              activeSection === "dashboard" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
+            className={`${activeSection === "dashboard" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Orders</span>
@@ -1099,10 +1144,9 @@ const NursingPatientDashboard = ({
             </div>
           </div>
           <div
-            onClick={showVitalsPage}
-            className={`${
-              activeSection === "vitals" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
+            onClick={() => setActiveSection("vitals")}
+            className={`${activeSection === "vitals" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Vitals</span>
@@ -1113,9 +1157,8 @@ const NursingPatientDashboard = ({
             onClick={() => {
               setActiveSection("problems");
             }}
-            className={`${
-              activeSection === "problems" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
+            className={`${activeSection === "problems" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Problems</span>
@@ -1126,112 +1169,158 @@ const NursingPatientDashboard = ({
             onClick={() => {
               setActiveSection("clinical");
             }}
-            className={`${
-              activeSection === "clinical" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
+            className={`${activeSection === "clinical" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Clinical</span>
               <i class="fas fa-clinic-medical"></i>
             </div>
           </div>
-          <div
-            onClick={() => {
-              setActiveSection("nursecareplan");
-            }}
-            className={`${
-              activeSection === "nursecareplan" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
-          >
-            <div className="Patient-Dashboard-textAndLogo">
-              <span className="Patient-Dashboard-textOne">Nurse Care Plan</span>
-              <i className="fas fa-hand-holding-medical"></i>
+          {patient?.inPatientId && (
+            <>
+              <div
+                onClick={() => {
+                  setActiveSection("nursecareplan");
+                }}
+                className={`${activeSection === "nursecareplan" ? "isTabActive" : ""
+                  } Patient-Dashboard-boxOne`}
+              >
+                <div className="Patient-Dashboard-textAndLogo">
+                  <span className="Patient-Dashboard-textOne">
+                    Nurse Care Plan
+                  </span>
+                  <i className="fas fa-hand-holding-medical"></i>
+                </div>
+              </div>
+              <div
+                onClick={() => {
+                  setActiveSection("fluidintake");
+                }}
+                className={`${activeSection === "fluidintake" ? "isTabActive" : ""
+                  } Patient-Dashboard-boxOne`}
+              >
+                <div className="Patient-Dashboard-textAndLogo">
+                  <span className="Patient-Dashboard-textOne">
+                    Fluid Intake OutPut
+                  </span>
+                  <i className="fas fa-tint"></i>
+                </div>
+              </div>
+              <div
+                onClick={() => {
+                  setActiveSection("dietnurseindent");
+                }}
+                className={`${activeSection === "dietnurseindent" ? "isTabActive" : ""
+                  } Patient-Dashboard-boxOne`}
+              >
+                <div className="Patient-Dashboard-textAndLogo">
+                  <span className="Patient-Dashboard-textOne">
+                    Diet Nurse Indent
+                  </span>
+                  <i className="fas fa-indent"></i>
+                </div>
+              </div>
+              <div
+                onClick={() => {
+                  setActiveSection("dailynurseassesment");
+                }}
+                className={`${activeSection === "dailynurseassesment" ? "isTabActive" : ""
+                  } Patient-Dashboard-boxOne`}
+              >
+                <div className="Patient-Dashboard-textAndLogo">
+                  <span className="Patient-Dashboard-textOne">
+                    Daily Nurse Assesment
+                  </span>
+                  <i class="fas fa-user-nurse"></i>
+                </div>
+              </div>
+              <div
+                onClick={() => {
+                  setActiveSection("ipbilling");
+                }}
+                className={`${activeSection === "ipbilling" ? "isTabActive" : ""
+                  } Patient-Dashboard-boxOne`}
+              >
+                <div className="Patient-Dashboard-textAndLogo">
+                  <span className="Patient-Dashboard-textOne">Ip Billing</span>
+                  <i class="fas fa-user-nurse"></i>
+                </div>
+              </div>
+              <div
+                onClick={() => {
+                  setActiveSection("ipchangeroom");
+                }}
+                className={`${activeSection === "ipchangeroom" ? "isTabActive" : ""
+                  } Patient-Dashboard-boxOne`}
+              >
+                <div className="Patient-Dashboard-textAndLogo">
+                  <span className="Patient-Dashboard-textOne">
+                    Ip Change Room
+                  </span>
+                  <i className="fas fa-person-booth"></i>
+                </div>
+              </div>
+              <div
+                onClick={() => {
+                  setActiveSection("ipdissueward");
+                }}
+                className={`${activeSection === "ipdissueward" ? "isTabActive" : ""
+                  } Patient-Dashboard-boxOne`}
+              >
+                <div className="Patient-Dashboard-textAndLogo">
+                  <span className="Patient-Dashboard-textOne">
+                    Ipd Issue Ward
+                  </span>
+                  <i className="fas fa-bed"></i>
+                </div>
+              </div>
+              <div
+                onClick={() => {
+                  setActiveSection("ipdreturnward");
+                }}
+                className={`${activeSection === "ipdreturnward" ? "isTabActive" : ""
+                  } Patient-Dashboard-boxOne`}
+              >
+                <div className="Patient-Dashboard-textAndLogo">
+                  <span className="Patient-Dashboard-textOne">
+                    Ipd Return Ward
+                  </span>
+                  <i className="fas fa-undo-alt"></i>
+                </div>
+              </div>
+              <div
+                onClick={() => {
+                  setActiveSection("dischareintimation");
+                }}
+                className={`${activeSection === "dischareintimation" ? "isTabActive" : ""
+                  } Patient-Dashboard-boxOne`}
+              >
+                <div className="Patient-Dashboard-textAndLogo">
+                  <span className="Patient-Dashboard-textOne">
+                    Discharge Intimation
+                  </span>
+                  <i className="fas fa-undo-alt"></i>
+                </div>
+              </div>
+            </>
+          )}
+          {patient?.outPatientId && (
+            <div
+              onClick={() => {
+                setActiveSection("admissionslip");
+              }}
+              className={`${activeSection === "admissionslip" ? "isTabActive" : ""
+                } Patient-Dashboard-boxOne`}
+            >
+              <div className="Patient-Dashboard-textAndLogo">
+                <span className="Patient-Dashboard-textOne">
+                  Admission Slip
+                </span>
+                <i className="fas fa-undo-alt"></i>
+              </div>
             </div>
-          </div>
-          <div
-            onClick={() => {
-              setActiveSection("fluidintake");
-            }}
-            className={`${
-              activeSection === "fluidintake" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
-          >
-            <div className="Patient-Dashboard-textAndLogo">
-              <span className="Patient-Dashboard-textOne">
-                Fluid Intake OutPut
-              </span>
-              <i className="fas fa-tint"></i>
-            </div>
-          </div>
-          <div
-            onClick={() => {
-              setActiveSection("dietnurseindent");
-            }}
-            className={`${
-              activeSection === "dietnurseindent" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
-          >
-            <div className="Patient-Dashboard-textAndLogo">
-              <span className="Patient-Dashboard-textOne">
-                Diet Nurse Indent
-              </span>
-              <i className="fas fa-indent"></i>
-            </div>
-          </div>
-          <div
-            onClick={() => {
-              setActiveSection("dailynurseassesment");
-            }}
-            className={`${
-              activeSection === "dailynurseassesment" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
-          >
-            <div className="Patient-Dashboard-textAndLogo">
-              <span className="Patient-Dashboard-textOne">
-                Daily Nurse Assesment
-              </span>
-              <i class="fas fa-user-nurse"></i>
-            </div>
-          </div>
-          <div
-            onClick={() => {
-              setActiveSection("ipchangeroom");
-            }}
-            className={`${
-              activeSection === "ipchangeroom" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
-          >
-            <div className="Patient-Dashboard-textAndLogo">
-              <span className="Patient-Dashboard-textOne">Ip Change Room</span>
-              <i className="fas fa-person-booth"></i>
-            </div>
-          </div>
-          <div
-            onClick={() => {
-              setActiveSection("ipdissueward");
-            }}
-            className={`${
-              activeSection === "ipdissueward" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
-          >
-            <div className="Patient-Dashboard-textAndLogo">
-              <span className="Patient-Dashboard-textOne">Ipd Issue Ward</span>
-              <i className="fas fa-bed"></i>
-            </div>
-          </div>
-          <div
-            onClick={() => {
-              setActiveSection("ipdreturnward");
-            }}
-            className={`${
-              activeSection === "ipdreturnward" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
-          >
-            <div className="Patient-Dashboard-textAndLogo">
-              <span className="Patient-Dashboard-textOne">Ipd Return Ward</span>
-              <i className="fas fa-undo-alt"></i>
-            </div>
-          </div>
+          )}
         </div>
       </aside>
       {showRadioReport && (
@@ -1241,10 +1330,15 @@ const NursingPatientDashboard = ({
         />
       )}
       {ShowLabReport && (
-        <LabReportResult
-          reportData={selectedLabrotary}
+        <CustomModal
+          isOpen={ShowLabReport}
           onClose={() => setShowLabReport(false)}
-        />
+        >
+          <LabReportResult
+            reportData={selectedLabrotary}
+            onClose={() => setShowLabReport(false)}
+          />
+        </CustomModal>
       )}
 
       {showVitals && (
@@ -1257,7 +1351,6 @@ const NursingPatientDashboard = ({
           }
           isVisible={showVitalsPage}
           setShowVitals={setShowVitals}
-          isFromLeft={false}
           onClose={closeVitalsPage}
         />
       )}
@@ -1277,34 +1370,38 @@ const NursingPatientDashboard = ({
         {modalContent === "medicationOrder" && (
           <MedicationOrder
             // selectedOrders={selectedOrders}
-            setActiveSection={setActiveSection}
+            setIsModalOpen={setIsModalOpen}
             inPatientId={patient?.patientId}
             outPatientId={patient?.outPatientId}
           />
         )}
         {modalContent === "Infusion" && (
           <Infusion
-            inPatientId={patient.patient?.inPatientId}
+            setIsModalOpen={setIsModalOpen}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         )}
 
         {modalContent === "procedures" && (
           <ProcedureService
-            inPatientId={patient.patient?.inPatientId}
+            setIsModalOpen={setIsModalOpen}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         )}
 
         {modalContent === "treatment" && (
           <TreatmentGiven
-            inPatientId={patient.patient?.inPatientId}
+            setIsModalOpen={setIsModalOpen}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         )}
 
         {modalContent === "Allergies" && (
           <Allergy
+            setIsModalOpen={setIsModalOpen}
             patientId={
               patient?.patient?.inPatientId ||
               patient?.patientId ||
@@ -1323,9 +1420,8 @@ const NursingPatientDashboard = ({
 
   return (
     <div
-      className={`patient-dashboard ${
-        isPatientOPEN ? "isPatientDetailsActive" : "isPatientDetailsInActive"
-      }`}
+      className={`patient-dashboard ${isPatientOPEN ? "isPatientDetailsActive" : "isPatientDetailsInActive"
+        }`}
     >
       <nav className="Patient-Dashboard-navbar">
         <div className="Patient-Dashboard-navText">

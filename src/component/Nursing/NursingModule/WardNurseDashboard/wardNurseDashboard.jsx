@@ -3,6 +3,8 @@ import "./wardNurseDashboard.css";
 import axios from "axios";
 import { API_BASE_URL } from "../../../api/api";
 import NursingPatientDashboard from "./NursingPatientDashboard";
+import NurseClearanceForm from "../NurseClearance/NurseClearanceForm";
+import CustomModal from "../../../CustomModel/CustomModal";
 
 function wardNurseDashboard() {
   const [selectedPatient, setSelectedPatient] = useState();
@@ -13,6 +15,8 @@ function wardNurseDashboard() {
   const [selectedIpAdmissionId, setSelectedIpAdmissionId] = useState();
   const [wardRequest, setWardRequest] = useState([]);
   const [pendingRequest, setPendingRequest] = useState([]);
+  const [discharegeRequest, setDischaregeRequest] = useState([]);
+  const [dischargePopup, setDischargePopup] = useState(false);
 
   const [isPatientOPEN, setIsPatientOPEN] = useState(false);
 
@@ -32,6 +36,11 @@ function wardNurseDashboard() {
     setWardRequest(response.data);
   };
 
+  const fetchAllDischargeRequest = async () => {
+    const response = await axios.get(`${API_BASE_URL}/discharge-intimations`);
+    setDischaregeRequest(response.data);
+  };
+
   // const fetchAllPendingRequest = async () => {
   //   const response = await axios.get(`${API_BASE_URL}/`);
   //   setPendingRequest(response.data);
@@ -41,6 +50,7 @@ function wardNurseDashboard() {
     fetchAllWardReceiving();
     fetchAllAdmittedPatient();
     fetchAllRequestedWardData();
+    fetchAllDischargeRequest();
     // fetchAllPendingRequest();
   }, [isPatientOPEN, confirmBox]);
 
@@ -363,38 +373,47 @@ function wardNurseDashboard() {
                 )}
               </div>
             </div>
-            {/* <div className="nurseMainPage-subcontainer">
+
+            <div className="nurseMainPage-subcontainer">
               <div className="nurseMainPage-header">
-                <h1>Pending Request</h1>
+                <h1>Nurse Clearance</h1>
               </div>
               <div className="nurseMainPage-boxes">
-                {wardRequest.length > 0 ? (
-                  wardRequest.map((item) => {
-                    const previousWard = item.previousWardRequestData
-                      ? JSON.parse(item.previousWardRequestData)
-                      : null;
-
-                    const requestedWard = item.updateWardRequestData
-                      ? JSON.parse(item.updateWardRequestData)
-                      : null;
+                {discharegeRequest.length > 0 ? (
+                  discharegeRequest.map((item) => {
+                    const isToday =
+                      new Date().toDateString() ===
+                      new Date(item.disAdvisedDate).toDateString();
+                    const isNotCleared = item.nurseClearance == null;
 
                     return (
-                      <div className="nurseMainPage-box" key={item.id}>
+                      <div
+                        key={item.disId}
+                        className={`nurseMainPage-box ${
+                          isToday && isNotCleared ? "highlight-box" : ""
+                        } ${!isNotCleared ? "disabled-box" : ""}`}
+                        onClick={() => {
+                          if (isNotCleared) {
+                            setSelectedPatient(item);
+                            setDischargePopup(true);
+                          }
+                        }}
+                      >
                         <div className="nurseMainPage-patient-info">
                           <div className="nurseMainPage-patient-data-img-con">
                             <div className="nurseMainPage-patient-avatar">
-                              {!item?.ipAdmission?.patient?.patient?.hasOwnProperty(
+                              {!item?.ipAdmissionDto?.patient?.patient?.hasOwnProperty(
                                 "fileAttachment"
                               ) ? (
                                 <span>
                                   {
-                                    item?.ipAdmission?.patient?.patient
+                                    item?.ipAdmissionDto?.patient?.patient
                                       ?.firstName?.[0]
                                   }
                                 </span>
                               ) : (
                                 <img
-                                  src={`data:image/png;base64,${item?.ipAdmission?.patient?.patient?.fileAttachment}`}
+                                  src={`data:image/png;base64,${item?.ipAdmissionDto?.patient?.patient?.fileAttachment}`}
                                   alt="patient attachment"
                                 />
                               )}
@@ -403,43 +422,55 @@ function wardNurseDashboard() {
                               <div className="nurseMainPage-info-row">
                                 <span className="value">
                                   {
-                                    item.ipAdmission?.patient?.patient
+                                    item.ipAdmissionDto?.patient?.patient
                                       ?.firstName
                                   }{" "}
-                                  {item.ipAdmission?.patient?.patient?.lastName}
+                                  {
+                                    item.ipAdmissionDto?.patient?.patient
+                                      ?.lastName
+                                  }
                                 </span>
                               </div>
                               <div className="nurseMainPage-info-row">
                                 <span className="value">
-                                  {item.ipAdmission?.patient?.patient?.uhid}
+                                  {item.ipAdmissionDto?.patient?.patient?.uhid}
                                 </span>
                               </div>
                               <div className="nurseMainPage-info-row">
                                 <span className="value">
-                                  {item.ipAdmission?.patient?.patient?.age}{" "}
-                                  {item.ipAdmission?.patient?.patient?.ageUnit}{" "}
-                                  / {item.ipAdmission?.patient?.patient?.gender}
+                                  {item.ipAdmissionDto?.patient?.patient?.age}{" "}
+                                  {
+                                    item.ipAdmissionDto?.patient?.patient
+                                      ?.ageUnit
+                                  }{" "}
+                                  /{" "}
+                                  {
+                                    item.ipAdmissionDto?.patient?.patient
+                                      ?.gender
+                                  }
                                 </span>
                               </div>
                             </div>
                           </div>
                           <div className="nurseMainPage-patient-details">
                             <div className="nurseMainPage-info-row">
-                              <span className="label">Request:</span>
-                              <span className="value">{item.status}</span>
-                            </div>
-                            <div className="nurseMainPage-info-row">
-                              <span className="label">Prev. Ward:</span>
+                              <span className="label">Add. Date/Time:</span>
                               <span className="value">
-                                {previousWard?.roomType?.roomType} /{" "}
-                                {previousWard?.bed?.bedNo}
+                                {item.ipAdmissionDto?.admissionDate}
                               </span>
                             </div>
                             <div className="nurseMainPage-info-row">
-                              <span className="label">Req. Ward:</span>
+                              <span className="label">Dis. Date/Time:</span>
                               <span className="value">
-                                {requestedWard?.roomType?.roomType} /{" "}
-                                {requestedWard?.bed?.bedNo}
+                                {item.disAdvisedDate} / {item.disAdvisedTime}
+                              </span>
+                            </div>
+                            <div className="nurseMainPage-info-row">
+                              <span className="label">Nurse Clearance:</span>
+                              <span className="value">
+                                {item.nurseClearance != null
+                                  ? "Done"
+                                  : "Not Done"}
                               </span>
                             </div>
                           </div>
@@ -459,7 +490,7 @@ function wardNurseDashboard() {
                   </div>
                 )}
               </div>
-            </div> */}
+            </div>
 
             {confirmBox && (
               <div className="nurse-ward-receiving-confirmBox">
@@ -478,6 +509,17 @@ function wardNurseDashboard() {
             )}
           </div>
         </>
+      )}
+      {dischargePopup && (
+        <CustomModal
+          isOpen={dischargePopup}
+          onClose={() => setDischargePopup(false)}
+        >
+          <NurseClearanceForm
+            patient={selectedPatient}
+            setDischargePopup={setDischargePopup}
+          />
+        </CustomModal>
       )}
     </>
   );

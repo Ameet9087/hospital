@@ -322,9 +322,13 @@ const OpdBilling = () => {
 
           const generalOpdFee =
             doctorDetails?.orgDoctorFees?.[0]?.generalOpdFee || 0;
+          
+          const followupfees=  doctorDetails?.orgDoctorFees?.[0]?.followupopdfees || 0;
 
+          console.log("fetched apppp=====",fetchedAppointments)
           // Check if fees are unpaid before creating the row
-          if (fetchedAppointments.feespaid !== "yes") {
+          if (fetchedAppointments.feespaid !== "yes" && fetchedAppointments.typeOfAppointment == "New Patient") {
+            // New Patient Logic
             const doctorRow = {
               sn: 0,
               serviceType: "Doctor",
@@ -341,18 +345,18 @@ const OpdBilling = () => {
               emergAmt: "",
               feePending: "Yes",
             };
-
+          
             setTestGridTableRowsableRows((prevRows) => {
               const validRows = prevRows.filter(
                 (row) => row.code || row.serviceName || row.doctorName
               );
-
+          
               const isDuplicate = validRows.some(
                 (row) =>
                   row.serviceName === doctorRow.serviceName &&
                   row.code === doctorRow.code
               );
-
+          
               if (!isDuplicate) {
                 return [
                   ...validRows,
@@ -362,14 +366,57 @@ const OpdBilling = () => {
                   },
                 ];
               } else {
-                console.log(
-                  "Duplicate row detected, skipping addition for doctor row."
-                );
+                console.log("Duplicate row detected, skipping addition for doctor row.");
                 return validRows;
               }
             });
+          
+          } else if (fetchedAppointments.feespaid !== "yes" && fetchedAppointments.typeOfAppointment == "Follow up patient") {
+            // Follow-Up Patient Logic
+            const doctorRow = {
+              sn: 0,
+              serviceType: "Doctor",
+              code: "",
+              serviceName: "follow up",
+              doctorName: doctorDetails.doctorName,
+              rate: followupfees,  // Use follow-up fees instead
+              qty: 1,
+              totalAmt: followupfees,
+              lessDisc: "",
+              discAmt: "",
+              netAmt: followupfees,
+              emerg: "",
+              emergAmt: "",
+              feePending: "Yes",
+            };
+          
+            setTestGridTableRowsableRows((prevRows) => {
+              const validRows = prevRows.filter(
+                (row) => row.code || row.serviceName || row.doctorName
+              );
+          
+              const isDuplicate = validRows.some(
+                (row) =>
+                  row.serviceName === doctorRow.serviceName &&
+                  row.code === doctorRow.code
+              );
+          
+              if (!isDuplicate) {
+                return [
+                  ...validRows,
+                  {
+                    ...doctorRow,
+                    sn: validRows.length + 1,
+                  },
+                ];
+              } else {
+                console.log("Duplicate row detected, skipping addition for doctor row.");
+                return validRows;
+              }
+            });
+          
           } else {
-            console.log("Fees already paid, skipping addition.");
+            console.log("Fees already paid or invalid appointment type.");
           }
         }
 

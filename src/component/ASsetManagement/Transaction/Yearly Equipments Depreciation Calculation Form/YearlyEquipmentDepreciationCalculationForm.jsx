@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./YearlyEquipmentdepreciationCalculationForm.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
 const YearlyEquipmentDepreciationCalculationForm = ({ bookingId }) => {
   const [id, setId] = useState(bookingId || "");

@@ -14,7 +14,7 @@ const HospitalHeader = () => {
     if (location.pathname.includes("/pharmacy/supplierledger")) return "supplierledger";
     if (location.pathname.includes("/pharmacy/order")) return "order";
     if(location.pathname.includes("/pharmacy/supplier")) return "supplier";
-    if (location.pathname.includes("/pharmacy/report")) return "report";
+    // if (location.pathname.includes("/pharmacy/report")) return "report";
     if (location.pathname.includes("/pharmacy/setting")) return "setting";
     if (location.pathname.includes("/pharmacy/store")) return "store";
     if (location.pathname.includes("/pharmacy/substorerequest")) return "substorerequest";
@@ -57,12 +57,12 @@ const HospitalHeader = () => {
       { path: "/pharmacy/order/purchase-order", label: "Purchase Order" },
       { path: "/pharmacy/order/good-receipt", label: "Good Receipt" },
     ],
-    report: [
-      { path: "/pharmacy/report/purchase", label: "Purchase" },
-      { path: "/pharmacy/report/sales", label: "Sales" },
-      { path: "/pharmacy/report/stock", label: "Stock" },
-      { path: "/pharmacy/report/supplier", label: "Supplier" },
-    ],
+    // report: [
+    //   { path: "/pharmacy/report/purchase", label: "Purchase" },
+    //   { path: "/pharmacy/report/sales", label: "Sales" },
+    //   { path: "/pharmacy/report/stock", label: "Stock" },
+    //   { path: "/pharmacy/report/supplier", label: "Supplier" },
+    // ],
     setting: [
       { path: "/pharmacy/setting/setting-supplier", label: "Supplier" },
       { path: "/pharmacy/setting/setting-company", label: "Company" },
@@ -73,7 +73,7 @@ const HospitalHeader = () => {
       { path: "/pharmacy/setting/setting-tax", label: "TAX" },
       { path: "/pharmacy/setting/setting-generic", label: "Generic" },
       // { path: "/pharmacy/setting/setting-dispensary", label: "Dispensary" },
-      { path: "/pharmacy/setting/setting-rack", label: "Rack" },
+      // { path: "/pharmacy/setting/setting-rack", label: "Rack" },
       // { path: "/pharmacy/setting/setting-invoice-headers", label: "Invoice Headers" },
       { path: "/pharmacy/setting/setting-terms", label: "Terms" },
     ],
@@ -82,6 +82,10 @@ const HospitalHeader = () => {
       { path: "/pharmacy/store/return-to-supplier", label: "Return To Supplier", icon: "fa-solid fa-plus" },
       { path: "/pharmacy/store/return-to-supplier-list", label: "Return To Supplier List" },
       { path: "/pharmacy/store/store-details-list", label: "Store Details List" },
+    ],
+    substorerequest: [
+      { path: "/pharmacy/substorerequest/dispensary", label: "Dispensary", icon: "fa-solid fa-plus" },
+      { path: "/pharmacy/substorerequest/substore", label: "Substore", icon: "fa-solid fa-plus" }
     ],
   };
 
@@ -102,12 +106,12 @@ const HospitalHeader = () => {
             <Link to="/pharmacy/supplier" className={`hospital-nav-item-module ${activeNav === "supplier" ? "active":""}`}>
               Supplier
             </Link>
-            <Link
+            {/* <Link
               to="/pharmacy/report"
               className={`hospital-nav-item-module ${activeNav === "report" ? "active" : ""}`}
             >
               Report
-            </Link>
+            </Link> */}
             <Link
               to={"/pharmacy/setting"}
               className={`hospital-nav-item-module ${activeNav === "setting" ? "active" : ""}`}
@@ -120,9 +124,9 @@ const HospitalHeader = () => {
             >
               Store
             </Link>
-            <Link to="/pharmacy/supplierledger" className={`hospital-nav-item-module ${activeNav === "supplierledger" ? "active" : ""}`}>
+            {/* <Link to="/pharmacy/supplierledger" className={`hospital-nav-item-module ${activeNav === "supplierledger" ? "active" : ""}`}>
               Supplier Ledger
-            </Link>
+            </Link> */}
             <Link to="/pharmacy/substorerequest" className={`hospital-nav-item-module ${activeNav === "substorerequest" ? "active" : ""}`}>
               Substore Request/Dispatch
             </Link>

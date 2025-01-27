@@ -213,7 +213,7 @@ const tableRef=useRef(null);
         style={customStyles}
         contentLabel="Add Purchase Order Draft Modal"
       >
-        <AddPurchaseOrderDraft />
+        <AddPurchaseOrderDraft  onClose={() => setShowCreatePO(false)} />
       </CustomModal>
 
 
@@ -223,7 +223,6 @@ const tableRef=useRef(null);
 
       <CustomModal isOpen={showDraftListModal} onClose={closeDraftListModal}>
         <PurchaseOrderView item={selectedItem}/>
-
       </CustomModal>
     </>
   );

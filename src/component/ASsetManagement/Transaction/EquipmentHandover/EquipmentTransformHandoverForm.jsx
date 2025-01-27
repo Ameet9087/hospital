@@ -4,7 +4,7 @@ import EquipmentTransformHandoverFormPopUp from "./EquipmentTransformHandoverFor
 import { API_BASE_URL } from "../../../api/api";
 import jsPDF from "jspdf"; // Import jsPDF for exporting PDF
 import "jspdf-autotable"; // Import the autotable plugin for table support
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 
 const EquipmentTransformHandoverForm = () => {

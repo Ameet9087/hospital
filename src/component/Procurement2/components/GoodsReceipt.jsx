@@ -5,8 +5,7 @@ import FormInput from "../components/FormInput";
 import "./GoodsReceipt.css";
 import { API_BASE_URL } from "../../api/api";
 
-const GoodsReceipt = ({goodReceipt}) => {
-  console.log(goodReceipt);
+const GoodsReceipt = ({goodReceipt,onClose}) => {
   
   const [vendorBillDate, setVendorBillDate] = useState("");
   const [goodsReceiptDate, setGoodsReceiptDate] = useState("");
@@ -63,20 +62,31 @@ const GoodsReceipt = ({goodReceipt}) => {
 
     // Update the items state
     setItems(updatedItems || []);
-  }, [goodReceipt]);
+  }, []);
 
   useEffect(() => {
-    const calcSubTotal = items.reduce(
-      (acc, item) => acc + item.rate * item.quantity,
-      0
-    );
-    setSubTotal(calcSubTotal);
+    const updatedItems = items.map((item) => {
+      const { rate, quantity, discountPercentage, vatPercentage, ccChargePercentage, otherCharge } = item;
+
+      // Calculate the total amount for each item
+      const discount = (rate * quantity * discountPercentage) / 100;
+      const vat = (rate * quantity * vatPercentage) / 100;
+      const ccCharge = (rate * quantity * ccChargePercentage) / 100;
+      const itemTotal = rate * quantity - discount + vat + ccCharge + otherCharge;
+
+      return { ...item, totalAmount: parseFloat(itemTotal.toFixed(2)) }; // Ensure float precision
+    });
+
+    setItems(updatedItems); // Update items with calculated totalAmount
+    const calcSubTotal = updatedItems.reduce((acc, item) => acc + item.totalAmount, 0);
+    setSubTotal(parseFloat(calcSubTotal.toFixed(2)));
   }, [items]);
 
   useEffect(() => {
-    const total = subTotal + ccCharge + vat + otherCharges - discountAmount;
+    const total = parseFloat(subTotal) + parseFloat(ccCharge) + parseFloat(vat) + parseFloat(otherCharges) - parseFloat(discountAmount);
     setTotalAmount(total);
   }, [subTotal, ccCharge, discountAmount, vat, otherCharges]);
+  
 
   const handleAddItem = () => {
     setItems([
@@ -116,8 +126,7 @@ const GoodsReceipt = ({goodReceipt}) => {
   const handleItemChange = (index, field, value) => {
     const newItems = [...items];
     newItems[index][field] = value;
-
-    // Recalculate totalAmount for the updated item
+    
     const subTotal = newItems[index].quantity * newItems[index].rate;
     const discount = (subTotal * newItems[index].discountPercentage) / 100;
     const vat = (subTotal * newItems[index].vatPercentage) / 100;
@@ -125,6 +134,7 @@ const GoodsReceipt = ({goodReceipt}) => {
 
     newItems[index].totalAmount =
       subTotal + vat + ccCharge + newItems[index].otherCharge - discount;
+
 
     setItems(newItems);
   };
@@ -142,7 +152,7 @@ const GoodsReceipt = ({goodReceipt}) => {
       handleItemChange(index, "rate", selectedItem.standardRate);
       handleItemChange(index, "vatPercentage", selectedItem.isVatApplicable ? 12 : 0); // Example VAT logic
       handleItemChange(index, "remarks", selectedItem.remarks || "");
-      handleItemChange(index, "itemName", selectedItem.itemName);
+      // handleItemChange(index, "itemName", selectedItem.itemName);
     }
   };
 
@@ -172,9 +182,12 @@ const GoodsReceipt = ({goodReceipt}) => {
       items,
     };
     console.log(data);
+    
+  
     try {
       await axios.post(`${API_BASE_URL}/goods-receipts/create`, data);
       alert("Goods Receipt saved successfully!");
+      onClose();
     } catch (error) {
       console.error("Error saving goods receipt:", error);
       alert("Failed to save goods receipt.");
@@ -390,6 +403,8 @@ const GoodsReceipt = ({goodReceipt}) => {
             setValue={setCheckedBy}
           />
         </div>
+        </div>
+        <div className="GoodsReceiptSettings-form-calculation">
         <div className="GoodsReceiptSettings-form-row-total-section">
           <FormInput
             label="SubTotal:"
@@ -431,8 +446,8 @@ const GoodsReceipt = ({goodReceipt}) => {
             setValue={setRemarks}
           />
         </div>
-        
-      </div>
+        </div>
+      
       <div className="GoodsReceiptSettings-form-submit">
           <button type="submit" className="GoodsReceiptSettings-add-item-button">
             Submit

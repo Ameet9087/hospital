@@ -52,7 +52,7 @@ const AppointmentRouting = () => {
         >
           List Visits
         </NavLink> */}
-        
+
         <NavLink
           to="/appointment/doctorappointment"
           className={({ isActive }) =>
@@ -94,13 +94,13 @@ const AppointmentRouting = () => {
         >
           Online Doctor Appointments
         </NavLink>
-        <NavLink 
-          to="/appointment/doctor-blocking" 
-          className={({ isActive }) => 
+        <NavLink
+          to="/appointment/doctorblocking"
+          className={({ isActive }) =>
             isActive ? "appointment-booking-list-navigation-link active" : "appointment-booking-list-navigation-link"
           }
         >
-           Doctor Blocking
+          Doctor Blocking
         </NavLink>
 
         {/* <NavLink 
@@ -126,7 +126,7 @@ const AppointmentRouting = () => {
           {/* <Route path="listvisits" element={<ListVisited />} />
           <Route path="newvisit" element={<NewVisitedList />} /> */}
           <Route path="onlineappointment" element={<OnlineAppointment />} />
-          <Route path="doctor-blocking" element={<DoctorBlockingTable />} />
+          <Route path="doctorblocking" element={<DoctorBlockingTable />} />
           <Route path="*" element={<AppointmentBookingList />} />
           <Route
             path="add-new-appointment"
@@ -134,7 +134,7 @@ const AppointmentRouting = () => {
           />
           <Route path="onlinedoctorappts/*" element={<BookAppointment />} />
           <Route
-            path="/onlinedoctorappts/online-doctor-schedule"
+            path="/onlinedoctorappts/onlinedoctorschedule"
             element={<OnlineDoctorScheduleStd />}
           />
         </Routes>

@@ -23,14 +23,14 @@ const ReturnToSupplierList = () => {
         const transformedData = suppliers.map((item) => ({
           creditNoteNumber: item.creditNoteNumber || "N/A",
           supplierName: item.goodReceiptDTO?.supplier?.supplierName || "N/A",
-          returnDate: item.returnDate || "N/A",
-          totalQty: item.goodsReceiptItemDTO?.totalQuantity || 0,
-          subTotal: (item.goodsReceiptItemDTO?.subTotal || 0).toFixed(2),
-          discountAmount: (item.goodsReceiptItemDTO?.discountAmount || 0).toFixed(2),
-          vatAmount: (item.goodsReceiptItemDTO?.vatAmount || 0).toFixed(2),
-          ccAmount: (item.goodsReceiptItemDTO?.ccAmount || 0).toFixed(2),
-          totalAmount: item.goodsReceiptItemDTO?.totalAmount
-            ? item.goodsReceiptItemDTO.totalAmount.toFixed(2)
+          returnDate: item?.returnDate || "N/A",
+          totalQty: item?.totalQuantity || 0,
+          subTotal: (item?.subtotal || 0).toFixed(2),
+          discountAmount: (item?.discountAmount || 0).toFixed(2),
+          vatAmount: (item?.vatAmount || 0).toFixed(2),
+          ccAmount: (item?.ccAmount || 0).toFixed(2),
+          totalAmount: item?.totalAmount
+            ? item?.totalAmount.toFixed(2)
             : "0.00",
         }));
 

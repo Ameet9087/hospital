@@ -145,8 +145,8 @@ const PatientDashboard = ({
   };
 
   const handleOpenModal = (contentType) => {
-    setModalContent(contentType); // Set which content to render
-    setIsModalOpen(true); // Open modal
+    setModalContent(contentType);
+    setIsModalOpen(true);
   };
 
   const handleClearData = () => {
@@ -156,8 +156,8 @@ const PatientDashboard = ({
   useEffect(() => {
     const fetchInfusions = async () => {
       let endpoint = "";
-      if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/infusions/in-patient/${patient.patient?.inPatientId}`;
+      if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/infusions/in-patient/${patient?.inPatientId}`;
       } else if (patient.outPatientId) {
         endpoint = `${API_BASE_URL}/infusions/out-patient/${patient.outPatientId}`;
       } else {
@@ -180,16 +180,25 @@ const PatientDashboard = ({
     };
 
     fetchInfusions();
-  }, [patient?.patient?.inPatientId, patient?.outPatientId, activeSection]);
+  }, [patient?.inPatientId, patient?.outPatientId, activeSection]);
 
   const fetchQueueData = async () => {
     try {
+      // Get today's date in yyyy-mm-dd format
+      const today = new Date().toISOString().split("T")[0];
+
+      // Fetch the queue data
       const response = await axios.get(
         `${API_BASE_URL}/patient-queues/getAllQueue`
       );
+
+      // Filter the data for today's date and pending status
       const filteredData = response.data.filter(
-        (patient) => patient.status.toLowerCase() === "pending"
+        (patient) =>
+          patient.status.toLowerCase() === "pending" && patient.date === today // Assuming queueDate is in yyyy-mm-dd format
       );
+
+      // Update the state with filtered data
       setPatientQueueData(filteredData);
     } catch (error) {
       console.error("Error fetching patient queue data:", error);
@@ -207,8 +216,8 @@ const PatientDashboard = ({
 
       if (patient?.outPatientId) {
         endpoint = `${API_BASE_URL}/medications/by-opd-id?opdPatientId=${patient?.outPatientId}`;
-      } else if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/medications/by-ipd-id?ipdPatientId= ${patient?.patient?.inPatientId}`;
+      } else if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/medications/by-ipd-id?ipdPatientId=${patient?.inPatientId}`;
       }
       try {
         const response = await fetch(endpoint);
@@ -220,14 +229,14 @@ const PatientDashboard = ({
     };
 
     fetchMedications();
-  }, [activeSection]);
+  }, [activeSection, isModalOpen]);
 
   useEffect(() => {
     const fetchServices = async () => {
       let endpoint = "";
 
-      if (patient?.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/services/in-patient/${patient.patient?.inPatientId}`;
+      if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/services/in-patient/${patient?.inPatientId}`;
       } else if (patient?.outPatientId) {
         endpoint = `${API_BASE_URL}/services/out-patient/${patient?.outPatientId}`;
       } else {
@@ -244,18 +253,18 @@ const PatientDashboard = ({
         console.log("Infusion data:", data);
 
         setServices(data);
-      } catch (error) {}
+      } catch (error) { }
     };
 
     fetchServices();
-  }, [activeSection]);
+  }, [activeSection, isModalOpen]);
 
   useEffect(() => {
     const fetchTreatmentGive = async () => {
       let endpoint = "";
 
-      if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/treatments/in-patient/${patient.patient?.inPatientId}`;
+      if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/treatments/in-patient/${patient?.inPatientId}`;
       } else if (patient.outPatientId) {
         endpoint = `${API_BASE_URL}/treatments/out-patient/${patient.outPatientId}`;
       }
@@ -271,15 +280,15 @@ const PatientDashboard = ({
     };
 
     fetchTreatmentGive();
-  }, [activeSection]);
+  }, [activeSection, isModalOpen]);
 
   useEffect(() => {
     const fetchVitals = () => {
       let endpoint = "";
       if (patient?.outPatientId) {
         endpoint = `${API_BASE_URL}/doc-vitals/get-by-opd-patient-id/${patient?.outPatientId}`;
-      } else if (patient?.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/doc-vitals/get-by-in-patient-id/${patient?.patient?.inPatientId}`;
+      } else if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/doc-vitals/get-by-in-patient-id/${patient?.inPatientId}`;
       }
       if (endpoint) {
         axios
@@ -296,7 +305,7 @@ const PatientDashboard = ({
     };
 
     fetchVitals();
-  }, [patient?.patient?.inPatientId, patient?.outPatientId, activeSection]);
+  }, [patient?.inPatientId, patient?.outPatientId, activeSection]);
 
   useEffect(() => {
     const fetchAllergies = () => {
@@ -304,8 +313,8 @@ const PatientDashboard = ({
 
       if (patient?.outPatientId) {
         endpoint = `${API_BASE_URL}/allergies/by-newVisitPatientId/${patient?.outPatientId}`;
-      } else if (patient?.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/allergies/by-patientId/${patient?.patient?.inPatientId}`;
+      } else if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/allergies/by-patientId/${patient?.inPatientId}`;
       }
       if (endpoint) {
         axios
@@ -324,15 +333,15 @@ const PatientDashboard = ({
     };
 
     fetchAllergies();
-  }, [patient?.outPatientId, patient?.patient?.inPatientId, activeSection]); // Dependencies to re-run useEffect when IDs change
+  }, [patient?.outPatientId, patient?.inPatientId, activeSection, isModalOpen]);
 
   useEffect(() => {
     const fetchActiveProblems = () => {
       let endpoint = "";
       if (patient?.outPatientId) {
         endpoint = `${API_BASE_URL}/active-problems/by-newVisitPatientId/${patient?.outPatientId}`;
-      } else if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/active-problems/by-patientId/${patient?.patient?.inPatientId}`;
+      } else if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/active-problems/by-patientId/${patient?.inPatientId}`;
       }
       if (endpoint) {
         axios
@@ -349,15 +358,15 @@ const PatientDashboard = ({
     };
 
     fetchActiveProblems();
-  }, [patient?.outPatientId, patient?.patient?.inPatientId, activeSection]);
+  }, [patient?.outPatientId, patient?.inPatientId, activeSection, isModalOpen]);
 
   useEffect(() => {
     const fetchImagingRequisitions = () => {
       let endpoint = "";
       if (patient?.outPatientId) {
         endpoint = `${API_BASE_URL}/imaging-requisitions/by-opd-patient-id?opdPatientId=${patient?.outPatientId}`;
-      } else if (patient?.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/imaging-requisitions/by-ipd-patient-id?ipdPatientId=${patient?.patient?.inPatientId}`;
+      } else if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/imaging-requisitions/by-ipd-patient-id?ipdPatientId=${patient?.inPatientId}`;
       }
       if (endpoint) {
         axios
@@ -375,7 +384,7 @@ const PatientDashboard = ({
     };
 
     fetchImagingRequisitions();
-  }, [patient?.outPatientId, patient?.patient?.inPatientId, activeSection]);
+  }, [patient?.outPatientId, patient?.inPatientId, activeSection, isModalOpen]);
 
   // -----------------Prachi complaint---------------------
   useEffect(() => {
@@ -552,8 +561,8 @@ const PatientDashboard = ({
       let endpoint = "";
       if (patient.outPatientId) {
         endpoint = `${API_BASE_URL}/lab-requests/by-opd-patient-id?opdPatientId=${patient.outPatientId}`;
-      } else if (patient.patient?.inPatientId) {
-        endpoint = `${API_BASE_URL}/lab-requests/by-ipd-patient-id?ipdPatientId=${patient.patient?.inPatientId}`;
+      } else if (patient?.inPatientId) {
+        endpoint = `${API_BASE_URL}/lab-requests/by-ipd-patient-id?ipdPatientId=${patient?.inPatientId}`;
       }
       if (endpoint) {
         axios
@@ -571,7 +580,7 @@ const PatientDashboard = ({
     };
 
     fetchLabRequests();
-  }, [patient?.outPatientId, patient?.patient?.inPatientId, activeSection]); // Dependencies to track patient IDs
+  }, [patient?.outPatientId, patient?.inPatientId, activeSection, isModalOpen]); // Dependencies to track patient IDs
 
   const handleSkipQueuePatient = async (nextQueue, upcomming) => {
     try {
@@ -701,7 +710,7 @@ const PatientDashboard = ({
             outPatientId={patient?.outPatientId}
           />
         );
-      case "Vitals":
+      case "vitals":
         return (
           <AddVitalsForm
             patientId={
@@ -750,49 +759,49 @@ const PatientDashboard = ({
       case "Infusion":
         return (
           <Infusion
-            inPatientId={patient.patient?.inPatientId}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         );
       case "procedures":
         return (
           <ProcedureService
-            inPatientId={patient.patient?.inPatientId}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         );
       case "treatment":
         return (
           <TreatmentGiven
-            inPatientId={patient.patient?.inPatientId}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         );
       case "diet":
         return (
           <DietOrder
-            inPatientId={patient.patient?.inPatientId}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         );
       case "referral":
         return (
           <ReferralConsultation
-            inPatientId={patient.patient?.inPatientId}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         );
       case "nursing":
         return (
           <NurseOrder
-            inPatientId={patient.patient?.inPatientId}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         );
       case "pacrequest":
         return (
           <PACRequest
-            inPatientId={patient.patient?.inPatientId}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         );
@@ -800,7 +809,7 @@ const PatientDashboard = ({
         return (
           <AdmissionSlip
             patient={patient}
-            inPatientId={patient?.patient?.inPatientId}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         );
@@ -846,15 +855,13 @@ const PatientDashboard = ({
                 <div className="patient-Dashboard-details">
                   <span className="Patient-Dashboard-textName">
                     Name :{" "}
-                    {`${
-                      patient?.firstName ||
+                    {`${patient?.firstName ||
                       patient?.patient?.firstName ||
                       patient?.FirstName
-                    } ${
-                      patient?.lastName ||
+                      } ${patient?.lastName ||
                       patient?.patient?.lastName ||
                       patient?.patientLastName
-                    }`}
+                      }`}
                   </span>
                 </div>
               </div>
@@ -870,15 +877,13 @@ const PatientDashboard = ({
                     <div className="Patient-Dashboard-ward">
                       <span className="Patient-Dashboard-detailHeading">
                         Age/Sex :{" "}
-                        {`${
-                          patient?.age ||
+                        {`${patient?.age ||
                           patient?.patient?.age ||
                           patient?.patientAge
-                        } ${patient?.ageUnit || patient?.patient?.ageUnit}/${
-                          patient?.gender ||
+                          } ${patient?.ageUnit || patient?.patient?.ageUnit}/${patient?.gender ||
                           patient?.patient?.gender ||
                           patient?.patientGender
-                        }`}
+                          }`}
                       </span>
                     </div>
                   </>
@@ -903,17 +908,15 @@ const PatientDashboard = ({
                       <span className="Patient-Dashboard-detailHeading">
                         Consultant:
                       </span>
-                      <span>{`${
-                        patient?.employeeDTO?.salutation ||
+                      <span>{`${patient?.employeeDTO?.salutation ||
                         ipAdmission?.admissionUnderDoctorDetail
                           ?.consultantDoctor?.salutation ||
                         patient?.doctorSalutationName
-                      } ${
-                        patient?.employeeDTO?.firstName ||
+                        } ${patient?.employeeDTO?.firstName ||
                         ipAdmission?.admissionUnderDoctorDetail
                           ?.consultantDoctor?.doctorName ||
                         patient?.doctorFirstName
-                      }`}</span>
+                        }`}</span>
                     </div>
                   </>
                 )}
@@ -1260,7 +1263,14 @@ const PatientDashboard = ({
                             {LabRequest.map((radiology, index) => (
                               <tr key={index}>
                                 <td className="Patient-Dashboard-td">
-                                  {radiology?.labTestName}
+                                  {radiology?.labTests?.map(
+                                    (labTest, index) => (
+                                      <span key={index}>
+                                        {index > 0 ? " , " : ""}
+                                        {labTest.labTestName}
+                                      </span>
+                                    )
+                                  )}
                                 </td>
                                 <td className="Patient-Dashboard-td">
                                   {radiology?.requisitionDate}
@@ -1277,7 +1287,7 @@ const PatientDashboard = ({
                                       </button>
                                     </>
                                   ) : (
-                                    radiology.status
+                                    radiology?.status
                                   )}
                                 </td>
                               </tr>
@@ -1320,7 +1330,10 @@ const PatientDashboard = ({
                             {radiology.map((radiology, index) => (
                               <tr key={index}>
                                 <td className="Patient-Dashboard-td">
-                                  {radiology?.imagingTypeDTO?.imagingTypeName}
+                                  {
+                                    radiology?.imagingItemDTO?.imagingType
+                                      ?.imagingTypeName
+                                  }
                                 </td>
                                 <td className="Patient-Dashboard-td">
                                   {radiology?.imagingItemDTO?.imagingItemName}
@@ -1374,9 +1387,11 @@ const PatientDashboard = ({
                         >
                           <thead>
                             <tr>
-                              <th className="Patient-Dashboard-th">Problem</th>
+                              <th className="Patient-Dashboard-th">Allergy</th>
+                              <th className="Patient-Dashboard-th">Severity</th>
+                              <th className="Patient-Dashboard-th">Comment</th>
                               <th className="Patient-Dashboard-th">
-                                Onset Date
+                                Recorded Date
                               </th>
                             </tr>
                           </thead>
@@ -1384,10 +1399,16 @@ const PatientDashboard = ({
                             {allergies.map((active) => (
                               <tr key={active.activeId}>
                                 <td className="Patient-Dashboard-td">
-                                  {active.searchProblem}
+                                  {active.typeOfAllergy}
                                 </td>
                                 <td className="Patient-Dashboard-td">
-                                  {active.onsetDate}
+                                  {active.severity}
+                                </td>
+                                <td className="Patient-Dashboard-td">
+                                  {active.comments}
+                                </td>
+                                <td className="Patient-Dashboard-td">
+                                  {active.recordedDate}
                                 </td>
                               </tr>
                             ))}
@@ -1702,9 +1723,8 @@ const PatientDashboard = ({
         <div className="Patient-Dashboard-detailsBox">
           <div
             onClick={() => setActiveSection("dashboard")}
-            className={`${
-              activeSection === "dashboard" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
+            className={`${activeSection === "dashboard" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Orders</span>
@@ -1712,10 +1732,9 @@ const PatientDashboard = ({
             </div>
           </div>
           <div
-            onClick={() => setActiveSection("Vitals")}
-            className={`${
-              activeSection === "vitals" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
+            onClick={() => setActiveSection("vitals")}
+            className={`${activeSection === "vitals" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Vitals</span>
@@ -1726,9 +1745,8 @@ const PatientDashboard = ({
             onClick={() => {
               setActiveSection("problems");
             }}
-            className={`${
-              activeSection === "problems" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
+            className={`${activeSection === "problems" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Problems</span>
@@ -1772,9 +1790,8 @@ const PatientDashboard = ({
             onClick={() => {
               setActiveSection("clinical");
             }}
-            className={`${
-              activeSection === "clinical" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
+            className={`${activeSection === "clinical" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Clinical</span>
@@ -1798,9 +1815,8 @@ const PatientDashboard = ({
               onClick={() => {
                 setActiveSection("dischargeSummary");
               }}
-              className={`${
-                activeSection === "dischargeSummary" ? "isTabActive" : ""
-              } Patient-Dashboard-boxOne`}
+              className={`${activeSection === "dischargeSummary" ? "isTabActive" : ""
+                } Patient-Dashboard-boxOne`}
             >
               <div className="Patient-Dashboard-textAndLogo">
                 <span className="Patient-Dashboard-textOne">
@@ -1814,9 +1830,8 @@ const PatientDashboard = ({
             onClick={() => {
               setActiveSection("diet");
             }}
-            className={`${
-              activeSection === "diet" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
+            className={`${activeSection === "diet" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Diet Order</span>
@@ -1828,9 +1843,8 @@ const PatientDashboard = ({
             onClick={() => {
               setActiveSection("referral");
             }}
-            className={`${
-              activeSection === "referral" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
+            className={`${activeSection === "referral" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">
@@ -1844,9 +1858,8 @@ const PatientDashboard = ({
             onClick={() => {
               setActiveSection("nursing");
             }}
-            className={`${
-              activeSection === "nursing" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
+            className={`${activeSection === "nursing" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Nursing Order</span>
@@ -1858,9 +1871,8 @@ const PatientDashboard = ({
             onClick={() => {
               setActiveSection("pacrequest");
             }}
-            className={`${
-              activeSection === "pacrequest" ? "isTabActive" : ""
-            } Patient-Dashboard-boxOne`}
+            className={`${activeSection === "pacrequest" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">PAC Request</span>
@@ -1872,9 +1884,8 @@ const PatientDashboard = ({
               onClick={() => {
                 setActiveSection("admissionslip");
               }}
-              className={`${
-                activeSection === "admissionslip" ? "isTabActive" : ""
-              } Patient-Dashboard-boxOne`}
+              className={`${activeSection === "admissionslip" ? "isTabActive" : ""
+                } Patient-Dashboard-boxOne`}
             >
               <div className="Patient-Dashboard-textAndLogo">
                 <span className="Patient-Dashboard-textOne">
@@ -2046,16 +2057,26 @@ const PatientDashboard = ({
         {/* </div> */}
       </aside>
       {showRadioReport && (
-        <RadiologyReportDoc
-          reportData={selectedRadiology}
+        <CustomModal
+          isOpen={showRadioReport}
           onClose={() => setShowRadioReport(false)}
-        />
+        >
+          <RadiologyReportDoc
+            reportData={selectedRadiology}
+            onClose={() => setShowRadioReport(false)}
+          />
+        </CustomModal>
       )}
       {ShowLabReport && (
-        <LabReportResult
-          reportData={selectedLabrotary}
+        <CustomModal
+          isOpen={ShowLabReport}
           onClose={() => setShowLabReport(false)}
-        />
+        >
+          <LabReportResult
+            reportData={selectedLabrotary}
+            onClose={() => setShowLabReport(false)}
+          />
+        </CustomModal>
       )}
 
       {showPopup && (
@@ -2087,40 +2108,44 @@ const PatientDashboard = ({
               patient?.patientId ||
               patient?.inPatientId
             }
+            setIsModalOpen={setIsModalOpen}
             outPatientId={patient?.outPatientId}
           />
         )}
         {modalContent === "medicationOrder" && (
           <MedicationOrder
-            // selectedOrders={selectedOrders}
-            setActiveSection={setActiveSection}
+            setIsModalOpen={setIsModalOpen}
             inPatientId={patient?.patientId}
             outPatientId={patient?.outPatientId}
           />
         )}
         {modalContent === "Infusion" && (
           <Infusion
-            inPatientId={patient.patient?.inPatientId}
+            setIsModalOpen={setIsModalOpen}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         )}
 
         {modalContent === "procedures" && (
           <ProcedureService
-            inPatientId={patient.patient?.inPatientId}
+            setIsModalOpen={setIsModalOpen}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         )}
 
         {modalContent === "treatment" && (
           <TreatmentGiven
-            inPatientId={patient.patient?.inPatientId}
+            setIsModalOpen={setIsModalOpen}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         )}
 
         {modalContent === "Allergies" && (
           <Allergy
+            setIsModalOpen={setIsModalOpen}
             patientId={
               patient?.patient?.inPatientId ||
               patient?.patientId ||
@@ -2139,9 +2164,8 @@ const PatientDashboard = ({
 
   return (
     <div
-      className={`patient-dashboard ${
-        isPatientOPEN ? "isPatientDetailsActive" : "isPatientDetailsInActive"
-      }`}
+      className={`patient-dashboard ${isPatientOPEN ? "isPatientDetailsActive" : "isPatientDetailsInActive"
+        }`}
     >
       <nav className="Patient-Dashboard-navbar">
         <div className="Patient-Dashboard-navText">

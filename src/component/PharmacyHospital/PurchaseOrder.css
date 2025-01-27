@@ -28,7 +28,7 @@
     justify-content: end;
 }
 /* Add Purchase Order Button */
-.purchase-order-add-purchase-order-button {
+.purchase-order-add-purchase-order-button,.pobtn-view {
     background-color: var(--button-color);
     color: white;
     border: none;
@@ -36,6 +36,12 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: var(--font-size);
+}
+.pharmacy-btn
+{
+    width: 100%;
+    display: flex;
+    gap: 5px;
 }
 .purchase-order-add-purchase-order-button:hover
 {

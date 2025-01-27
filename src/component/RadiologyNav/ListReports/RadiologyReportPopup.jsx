@@ -245,7 +245,11 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
                       style={{ maxWidth: "100%", height: "150px" }}
                     />
                   )}
-                  <p>Signature</p>
+                  <p>
+                    {reportData?.performerDTO?.salutation}{" "}
+                    {reportData?.performerDTO?.firstName}{" "}
+                    {reportData?.performerDTO?.lastName}
+                  </p>
                 </div>
                 <div className="RadiologyReportPopup-report-body">
                   {reportData.uploadFile && (
@@ -253,7 +257,7 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
                       src={`data:image/jpeg;base64,${reportData?.uploadFile}`}
                       alt="Radiology scan"
                       className="RadiologyReportPopup-image"
-                      style={{ maxWidth: "100%", height: "150px" }}
+                      style={{ maxWidth: "100%", height: "500px" }}
                     />
                   )}
                 </div>

@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
-import PatientDashboard from "../DashBoards/PatientDashboard";
 import VitalsPage from "../DashBoards/ClinicalVitals";
 import axios from "axios";
+import NursingPatientDashboard from "./NursingModule/WardNurseDashboard/NursingPatientDashboard";
 
 const OutPatientComponent = () => {
   const [isTriageModalOpen, setIsTriageModalOpen] = useState(false);
@@ -66,6 +66,8 @@ const OutPatientComponent = () => {
       const response = await fetch(`${API_BASE_URL}/appointments`);
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
+
         setPatients(data);
       } else {
         console.error("Failed to fetch patients:", response.statusText);
@@ -369,7 +371,7 @@ const OutPatientComponent = () => {
         </>
       ) : (
         <>
-          <PatientDashboard
+          <NursingPatientDashboard
             isPatientOPEN={isPatientOPEN}
             setIsPatientOPEN={setIsPatientOPEN}
             patient={selectedPatient}

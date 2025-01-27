@@ -1,253 +1,342 @@
+import React, { useEffect, useState } from "react";
+import "./ReturnForm.css";
+import axios from "axios";
+import { API_BASE_URL } from "../api/api";
 
-import React, { useState, useEffect, useRef } from 'react';
-import './ReturnForm.css';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-import { API_BASE_URL } from '../api/api';
+const ReturnForm = ({selectedItem,onClose}) => {
+  console.log(selectedItem);
+  
+  const [items, setItems] = useState([
+    {
+      itemid:"",
+      itemName: "",
+      batchNo: "",
+      receivedInvoicedQty: 0,
+      receivedFreeQty: 0,
+      currentAvlStk: 0,
+      purchaseRate: 0,
+      returnQty: 0,
+      returnRate: 0,
+      subtotal: 0,
+      returnDisAmt: 0,
+      returnVATAmt: 0,
+      returnCCAmt: 0,
+      totalAmount: 0,
+    }
+  ]);
 
-const ReturnForm = ({ selectedItem }) => {
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
-  const [addItems, setAddItems] = useState([]);
-
-  const [rowData, setRowData] = useState([]);
-  // const [loading, setLoading] = useState(false);
-
-
-console.log(selectedItem);
-
-
-  const [formData, setFormData] = useState({
-    addItemId: selectedItem?.addItem?.addItemId || "",
-    breakageQty: "",
-    avlQty: (selectedItem?.itemQuantity || 0) + (selectedItem?.freeQuantity || 0), // Calculating Current Available Stock
-    batchNumber: selectedItem?.batchNumber || "",
-    expiryDate: selectedItem?.expiryDate || "",
-    salePrice: selectedItem?.salePrice || "",
-    subTotal: selectedItem?.subTotal || "",
-    discountAmt: selectedItem?.discountAmount || "",
-    vatPercent: selectedItem?.vatPercentage || "",
-    totalAmount: selectedItem?.totalAmount || "",
-    purchaserate: selectedItem?.purchaseRate || "",
-    goodsReceiptItemDTO:{
-      goodReceiptItemId:selectedItem?.grItems?.[0]?.goodReceiptItemId || "",
-    } ,
-    goodReceiptDTO:{
-      goodReceiptId: selectedItem?.goodReceiptId || "",
-    },
-    breakageDate: "",
-    remark: "",
-    isActive: true,
+  const [formDetails, setFormDetails] = useState({
+    returnDate: "",
+    remarks: "",
+    returnStatus: "",
+    subtotal: 0,
+    discountAmount: 0,
+    vatAmount: 0,
+    ccAmount: 0,
+    totalAmount: 0,
   });
 
-  console.log(formData.goodReceiptDTO.goodReceiptId);
+  useEffect(() => {
+
+    if (selectedItem) {
+      const mappedItems = selectedItem.addItem.map((selectedItems) => ({
+          itemid: selectedItems.addItemId || "",
+          itemName: selectedItems.itemMaster?.itemName || "",
+          batchNo: selectedItems.batchNo || "",
+          receivedInvoicedQty: selectedItems.itemQty || 0,
+          receivedFreeQty: selectedItems.freeQty || 0,
+          currentAvlStk: selectedItems.itemMaster?.quantity || 0,
+          purchaseRate: selectedItems.salePrice || 0,
+          returnQty:0,
+          returnRate:  0,
+          subtotal: 0,
+          returnDisAmt:  0,
+          returnVATAmt: 0,
+          returnCCAmt:  0,
+          totalAmount: 0,
+      }))
+      setItems(mappedItems);
+    }
+  }, [selectedItem]);
   
 
-  const [loading, setLoading] = useState(false);
+  const handleInputChange = (index, field, value) => {
+    const updatedItems = [...items];
+    updatedItems[index][field] = value;
+  
+    // Recalculate the subtotal for the item
+    updatedItems[index].subtotal = updatedItems[index].returnQty * updatedItems[index].returnRate;
+  
+    // Recalculate the total amount for the item
+    updatedItems[index].totalAmount =
+      updatedItems[index].subtotal -
+      updatedItems[index].returnDisAmt +
+      updatedItems[index].returnVATAmt +
+      updatedItems[index].returnCCAmt;
+  
+    // Recalculate the totals for the form
+    let totalSubtotal = 0;
+    let totalDiscountAmount = 0;
+    let totalVatAmount = 0;
+    let totalCcAmount = 0;
+    let totalAmount = 0;
+  
+    updatedItems.forEach(item => {
+      totalSubtotal += item.subtotal;
+      totalDiscountAmount += item.returnDisAmt;
+      totalVatAmount += item.returnVATAmt;
+      totalCcAmount += item.returnCCAmt;
+      totalAmount += item.totalAmount;
+    });
+  
+    // Update form details with the recalculated totals
+    setFormDetails({
+      ...formDetails,
+      subtotal: totalSubtotal,
+      discountAmount: totalDiscountAmount,
+      vatAmount: totalVatAmount,
+      ccAmount: totalCcAmount,
+      totalAmount: totalAmount,
+    });
+  
+    setItems(updatedItems); // Update items state
+  };
 
-  const handleSubmit = async () => {
-   setLoading(true);
 
-   if (!formData.breakageQty || !formData.returnRate) {
-      alert("Please fill in all required fields!");
-      setLoading(false);
-      return;
-   }
+  
+  const handleFormChange = (field, value) => {
+    setFormDetails({ ...formDetails, [field]: value });
+  };
 
-   
-   const returnItemsDTO = [
-      {
-         returnQty: parseFloat(formData.breakageQty) || 0,
-         returnRate: parseFloat(formData.returnRate) || 0,
-         returnDisAmt: parseFloat(formData.discountAmt) || 0,
-         returnVatAmt: parseFloat(formData.vatPercent) || 0,
-         returnCcAmt: parseFloat(formData.ccAmount) || 0,
-      },
-   ];
 
-   const payload = {
-      creditNoteNumber: "CN1234654654",
-      returnDate: new Date().toISOString().split("T")[0],
-      remarks: formData.remark || "No remarks",
-      returnStatus: "done",
-      goodReceiptDTO: {
-         goodReceiptId: formData.goodReceiptDTO.goodReceiptId,
-      },
-      goodsReceiptItemDTO: {
-         goodReceiptItemId: formData.goodsReceiptItemDTO.goodReceiptItemId,
-      },
-      returnItemsDTO,
-   };
+  
 
-   console.log("Payload:", payload);
 
-   try {
-      const response = await fetch(`${API_BASE_URL}/returnsupplier`, {
-         method: "POST",
-         headers: { "Content-Type": "application/json" },
-         body: JSON.stringify(payload),
-      });
-
-      if (response.ok) {
-         alert("Data submitted successfully!");
-         setRowData([]);
-         setFormData({
-            ...formData,
-            breakageQty: "",
-            returnRate: "",
-            remark: "",
-         });
-      } else {
-         const errorResponse = await response.json();
-         console.error("Error response:", errorResponse);
-         alert(`Failed to submit data. Status: ${response.status}`);
+const handleSubmit = () => {
+  const payload = {
+    creditNoteNumber: `CN${Date.now()}`, // Generate a dynamic credit note number based on the current time
+    returnDate: formDetails.returnDate,
+    remarks: formDetails.remarks,
+    returnStatus: formDetails.returnStatus,
+    subtotal:formDetails.subtotal,
+    discountAmount: formDetails.discountAmount,
+    vatAmount: formDetails.vatAmount,
+    ccAmount: formDetails.ccAmount,
+    totalAmount: formDetails.totalAmount,
+    supplierDTO: {
+      suppliersId: selectedItem?.supplier?.suppliersId, // Assume this is the ID of the supplier (you can dynamically set this if needed)
+    },
+    goodReceiptDTO: {
+      goodReceiptId: selectedItem.goodReceiptId, // Assume this is the Good Receipt ID (you can dynamically set this if needed)
+    },
+    returnItemsDTO: items.map((item) => ({
+      returnQty: item.returnQty,
+      returnRate: item.returnRate,
+      returnDisAmt: item.returnDisAmt,
+      returnVatAmt: item.returnVATAmt,
+      returnCcAmt: item.returnCCAmt,
+      addItem: {
+        addItemId: item.itemid, // Use itemid as the AddItem ID
       }
-   } catch (error) {
-      console.error("Error submitting data:", error);
-   } finally {
-      setLoading(false);
-   }
+    }))
+  };
+
+  console.log("Submitting Form with Payload:", payload);
+
+  axios.post(`${API_BASE_URL}/returnsupplier`, payload)
+    .then((response) => {
+      alert(response.data);
+      onClose();
+    })
+    .catch((error) => {
+      console.error("Error submitting form:", error);
+    });
 };
 
 
-    
-  useEffect(() => {
-    const { breakageQty, returnRate } = formData;
-    const subtotal = (parseFloat(breakageQty || 0) * parseFloat(returnRate || 0)).toFixed(2);
-    setFormData((prevData) => ({ ...prevData, subTotal: subtotal }));
-  }, [formData.breakageQty, formData.returnRate]);
-
-  // Populate `addItems` with the grItems data
-  useEffect(() => {
-    if (selectedItem?.grItems) {
-      setAddItems(selectedItem.grItems);
-    }
-  }, [selectedItem]);
-
-
-  
   return (
     <div className="return-form-component">
-      <div className='suppilerdetailsdiv'>
-          <label htmlFor="">Suppiler:{selectedItem.supplier?.supplierName || "N/A"}</label>
-          <label htmlFor="">GRNO. {selectedItem?.grItems?.[0]?.goodReceiptItemId || "N/A"}</label>
-          <label htmlFor="">Invoice No: {selectedItem.invoiceNumber || "N/A"}</label>
+      <h2 className="return-form-title">Return To Supplier</h2>
+
+      <div className="return-form-header">
+      <label>
+          Select Return Date:
+          <input
+            type="date"
+            value={formDetails.returnDate}
+            className="return-form-date"
+            onChange={(e) => handleFormChange("returnDate", e.target.value)}
+          />
+        </label>
+        <div className="return-form-supplierInfo">
+          <p><strong>GR NO:</strong>{selectedItem.goodReceiptId}</p>
+          <p><strong>Supplier Name:</strong>{selectedItem?.supplier.supplierName}</p>
+        </div>
+        <div className="return-form-details-container">
+        <label>
+          Return Status:
+          </label>
+          <select
+          className="return-form-details-select"
+            value={formDetails.returnStatus}
+            onChange={(e) => handleFormChange("returnStatus", e.target.value)}
+          >
+            <option value="">Select</option>
+            <option value="Breakage">Breakage</option>
+            <option value="Expired">Expired </option>
+          </select>
+          </div>
+          
       </div>
-      <table className="return-form-table" ref={tableRef}>
-        <thead>
-          <tr>
-            {[
-              "Item Name",
-              "Batch No",
-              "Received Invoiced Qty",
-              "Received Free Qty",
-              "Current Avl Stk",
-              "Purchase Rate",
-              "Return Qty",
-              "Return Rate",
-              "Subtotal",
-              "Return Dis Amt",
-              "Return VAT Amt",
-              "Return CC Amount",
-              "Total Amount",
-            ].map((header, index) => (
-              <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                <div className="header-content">
-                  <span>{header}</span>
-                  <div
-                    className="resizer"
-                    onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                  ></div>
-                </div>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {addItems.map((item, index) => (
-            <tr key={index}>
-              <td>{item.addItem?.itemName}</td>
-              <td>{item.batchNumber}</td>
-              <td>{item.itemQuantity || 0}</td>
-              <td>{item.freeQuantity || 0}</td>
-              <td>{formData.avlQty}</td>
-              <td>{item.purchaseRate || "N/A"}</td>
-              <td>
-                <input
-                  type="number"
-                  value={formData.breakageQty}
-                  onChange={(e) => setFormData({ ...formData, breakageQty: e.target.value })}
-                />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  value={formData.returnRate}
-                  onChange={(e) => setFormData({ ...formData, returnRate: e.target.value })}
-                />
-              </td>
-              <td>{formData.subTotal}</td>
-              <td>
-                <input
-                  type="number"
-                  value={formData.discountAmt}
-                  onChange={(e) => setFormData({ ...formData, discountAmt: e.target.value })}
-                />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  value={formData.vatPercent}
-                  onChange={(e) => setFormData({ ...formData, vatPercent: e.target.value })}
-                />
-              </td>
-              <td>{item.ccAmount || "N/A"}</td>
-              <td>{formData.totalAmount}</td>
+
+      <div className="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Batch No</th>
+              <th>Received Invoiced Qty</th>
+              <th>Received Free Qty</th>
+              <th>Current Avl Stk</th>
+              <th>Purchase Rate</th>
+              <th>Return Qty</th>
+              <th>Return Rate</th>
+              <th>Subtotal</th>
+              <th>Return Dis Amt</th>
+              <th>Return VAT Amt</th>
+              <th>Return CC Amt</th>
+              <th>Total Amount</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {items.map((item, index) => (
+              <tr key={index}>
+                <td>{item.itemName}</td>
+                <td>{item.batchNo}</td>
+                <td>{item.receivedInvoicedQty}</td>
+                <td>{item.receivedFreeQty}</td>
+                <td>{item.currentAvlStk}</td>
+                <td>{item.purchaseRate}</td>
+                <td>
+                  <input
+                    type="number"
+                    value={item.returnQty}
+                    onChange={(e) =>
+                      handleInputChange(index, "returnQty", +e.target.value)
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    value={item.returnRate}
+                    onChange={(e) =>
+                      handleInputChange(index, "returnRate", +e.target.value)
+                    }
+                  />
+                </td>
+                <td>{item.subtotal}</td>
+                <td>
+                  <input
+                    type="number"
+                    value={item.returnDisAmt}
+                    onChange={(e) =>
+                      handleInputChange(index, "returnDisAmt", +e.target.value)
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    value={item.returnVATAmt}
+                    onChange={(e) =>
+                      handleInputChange(index, "returnVATAmt", +e.target.value)
+                    }
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    value={item.returnCCAmt}
+                    onChange={(e) =>
+                      handleInputChange(index, "returnCCAmt", +e.target.value)
+                    }
+                  />
+                </td>
+                <td>{item.totalAmount}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      <div className="return-summary">
-        <div className="summary-item-com">
-          <label>SubTotal:</label>
-          <input type="text" value={formData.subTotal || "0"} readOnly />
-        </div>
-        <div className="summary-item-com">
-          <label>Discount:</label>
-          <input type="text" value={formData.discountAmt || "0"} readOnly />
-        </div>
-        <div className="summary-item-com">
-          <label>VAT Amount:</label>
-          <input type="text" value={formData.vatPercent || "0"} readOnly />
-        </div>
-        
-        <div className="summary-item-com">
-          <label>CC Amount:</label>
-          <input type="text" value={formData.ccAmount || "0"} readOnly />
-        </div>
-        <div className="summary-item-com">
-          <label>Total Amount:</label>
-          <input type="text" value={formData.totalAmount || "0"} readOnly />
-        </div>
-      <div className="summary-item-com">
-          <label>Remark:</label>
-          <input type="text" value="" />
-        </div>
-
-        <div className="summary-item-com">
-          <label>Return Status:</label>
-         <select name="" id="">
-          <option value="">Breakage</option>
-          <option value="">Expiry</option>
-          <option value="">Breakage and Expiry </option>
-         </select>
-        </div>
-        </div>
+      <div className="return-form-details-textarea">
       
-        
-      <div className="summary-item-com-buttons">
-      <button className="summary-item-com-return-btn" onClick={handleSubmit} disabled={loading}>{loading ? "Submitting..." : "Return"}</button>
-      <button className="summary-item-com-return-btn" onClick={() => setRowData(rowData.map(() => ({})))}>Cancel</button>
+        <label>
+          Remarks:
+          </label>
+          <textarea
+          className="return-form-textarea"
+            value={formDetails.remarks}
+            onChange={(e) => handleFormChange("remarks", e.target.value)}
+          ></textarea>
+       
+      </div>
+      <div className="return-form-details">
+  <label>
+    Sub Total:
+    <input
+      type="number"
+      value={formDetails.subtotal}
+      onChange={(e) => handleFormChange("subtotal", +e.target.value)}  // Update subtotal
+    />
+  </label>
+
+  <label>
+    Discount Amount:
+    <input
+      type="number"
+      value={formDetails.discountAmount}
+      onChange={(e) => handleFormChange("discountAmount", +e.target.value)}  // Update discountAmount
+    />
+  </label>
+
+  <label>
+    VAT Amount:
+    <input
+      type="number"
+      value={formDetails.vatAmount}
+      onChange={(e) => handleFormChange("vatAmount", +e.target.value)}  // Update vatAmount
+    />
+  </label>
+
+  <label>
+    CC Amount:
+    <input
+      type="number"
+      value={formDetails.ccAmount}
+      onChange={(e) => handleFormChange("ccAmount", +e.target.value)}  // Update ccAmount
+    />
+  </label>
+
+  <label>
+    Total Amount:
+    <input
+      type="number"
+      value={formDetails.totalAmount}
+      disabled  // Disable to prevent manual editing of the total amount
+    />
+  </label>
+</div>
+
+
+      <div className="return-form-buttons">
+        <button className="btn-return" onClick={handleSubmit}>
+          Return
+        </button>
+        <button className="btn-cancel" onClick={() => console.log("Cancelled")}>
+          Cancel
+        </button>
       </div>
     </div>
   );

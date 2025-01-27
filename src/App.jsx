@@ -7,6 +7,8 @@ import Sidebar from "./component/NewSidebar/Sidebar";
 import Header from "./component/NewSidebar/Header";
 import SuperUserSignup from "./component/Logins/SuperUserSignup";
 import Cookies from "js-cookie";
+import { PopupProvider } from "./FidgetSpinner/PopupContext";
+import FidgetSpinnerNav from "./FidgetSpinner/FidgetSpinnerNav";
 
 function App() {
   const navigate = useNavigate();
@@ -34,28 +36,31 @@ function App() {
   }, []);
 
   return (
-    <div className="layout-container">
-      {isAuthenticated && <Sidebar modules={userModules} isOpen={isOpen} />}
-      <div className="main-content">
-        {isAuthenticated && <Header isOpen={isOpen} setIsOpen={setIsOpen} />}
-        {!isAuthenticated ? (
-          <>
-            <Routes>
-              <Route path="/home" element={<LoginHomePage />} />
-              <Route path="/home/login" element={<LoginPage />} />
-              <Route
-                path="/home/login/superuser"
-                element={<SuperUserSignup />}
-              />
-            </Routes>
-          </>
-        ) : (
-          <>
-            <Layout />
-          </>
-        )}
+    <PopupProvider>
+      <div className="layout-container">
+        {isAuthenticated && <Sidebar modules={userModules} isOpen={isOpen} />}
+        <div className="main-content">
+          {isAuthenticated && <Header isOpen={isOpen} setIsOpen={setIsOpen} />}
+          {!isAuthenticated ? (
+            <>
+              <Routes>
+                <Route path="/home" element={<LoginHomePage />} />
+                <Route path="/home/login" element={<LoginPage />} />
+                <Route
+                  path="/home/login/superuser"
+                  element={<SuperUserSignup />}
+                />
+              </Routes>
+            </>
+          ) : (
+            <>
+              <Layout />
+            </>
+          )}
+        </div>
       </div>
-    </div>
+      <FidgetSpinnerNav />
+    </PopupProvider>
   );
 }
 

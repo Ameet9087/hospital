@@ -50,7 +50,7 @@ const Transactionnav = () => {
          
           <li>
             <NavLink
-              to="/assetTransaction/amc-details"
+              to="/assettransaction/amc-details"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -62,7 +62,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/amc-details-multi"
+              to="/assettransaction/amc-details-multi"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -74,7 +74,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/amc-tracker"
+              to="/assettransaction/amc-tracker"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -87,7 +87,7 @@ const Transactionnav = () => {
 
           <li>
             <NavLink
-              to="/assetTransaction/asset-dashboard"
+              to="/assettransaction/asset-dashboard"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -100,7 +100,7 @@ const Transactionnav = () => {
 
           <li>
             <NavLink
-              to="/assetTransaction/approval-dashboard"
+              to="/assettransaction/approval-dashboard"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -112,7 +112,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/asset-quaity-check-multi"
+              to="/assettransaction/asset-quaity-check-multi"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -124,7 +124,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/breakDownDetail"
+              to="/assettransaction/breakDownDetail"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -136,7 +136,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/condemnationAndDisposal"
+              to="/assettransaction/condemnationAndDisposal"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -148,7 +148,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/condemnationAndDisposal-request"
+              to="/assettransaction/condemnationAndDisposal-request"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -160,7 +160,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/defectRisingBackege"
+              to="/assettransaction/defectRisingBackege"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -172,7 +172,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/equipmentGatePassIn"
+              to="/assettransaction/equipmentGatePassIn"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -186,7 +186,7 @@ const Transactionnav = () => {
       
           <li>
             <NavLink
-              to="/assetTransaction/equipmentGatePassOut"
+              to="/assettransaction/equipmentGatePassOut"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -198,7 +198,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/equipmentInstallationDetails"
+              to="/assettransaction/equipmentInstallationDetails"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -211,7 +211,7 @@ const Transactionnav = () => {
          
           <li>
             <NavLink
-              to="/assetTransaction/equipmentMaintenance"
+              to="/assettransaction/equipmentMaintenance"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -224,7 +224,7 @@ const Transactionnav = () => {
 
           <li>
             <NavLink
-              to="/assetTransaction/equipment-receive-takeover"
+              to="/assettransaction/equipment-receive-takeover"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -237,7 +237,7 @@ const Transactionnav = () => {
 
           <li>
             <NavLink
-              to="/assetTransaction/equipmenttagging"
+              to="/assettransaction/equipmenttagging"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -250,7 +250,7 @@ const Transactionnav = () => {
             </li>
             <li>
             <NavLink
-              to="/assetTransaction/equipment-transfer-handover"
+              to="/assettransaction/equipment-transfer-handover"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -262,7 +262,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/equipmentUserTraining"
+              to="/assettransaction/equipmentUserTraining"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -275,7 +275,7 @@ const Transactionnav = () => {
 
           <li>
             <NavLink
-              to="/assetTransaction/equipment-utilisation"
+              to="/assettransaction/equipment-utilisation"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -287,7 +287,7 @@ const Transactionnav = () => {
           </li>  
           <li>
             <NavLink
-              to="/assetTransaction/provisionalsale"
+              to="/assettransaction/provisionalsale"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -299,7 +299,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/finalSaleByAccounts"
+              to="/assettransaction/finalSaleByAccounts"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -311,7 +311,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/gate-pass-security-check"
+              to="/assettransaction/gate-pass-security-check"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -323,7 +323,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/maintainance-checklist"
+              to="/assettransaction/maintainance-checklist"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -337,7 +337,7 @@ const Transactionnav = () => {
 
           <li>
             <NavLink
-              to="/assetTransaction/assetNewReplacementRequest"
+              to="/assettransaction/assetNewReplacementRequest"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -349,7 +349,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/pm-callibration"
+              to="/assettransaction/pm-callibration"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -363,7 +363,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/amc-cmc-proposal"
+              to="/assettransaction/amc-cmc-proposal"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -378,7 +378,7 @@ const Transactionnav = () => {
 
           <li>
             <NavLink
-              to="/assetTransaction/preventive-maintenance-callibration"
+              to="/assettransaction/preventive-maintenance-callibration"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -396,7 +396,7 @@ const Transactionnav = () => {
 
           <li>
             <NavLink
-              to="/assetTransaction/preventivemaintenance"
+              to="/assettransaction/preventivemaintenance"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -412,7 +412,7 @@ const Transactionnav = () => {
 
           <li>
             <NavLink
-              to="/assetTransaction/amc-proposal"
+              to="/assettransaction/amc-proposal"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -427,7 +427,7 @@ const Transactionnav = () => {
 
           <li>
             <NavLink
-              to="/assetTransaction/proposalforAMCMultiple"
+              to="/assettransaction/proposalforAMCMultiple"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -439,7 +439,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/replacement-instruments"
+              to="/assettransaction/replacement-instruments"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -454,7 +454,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/security-gate-PassOut"
+              to="/assettransaction/security-gate-PassOut"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -469,7 +469,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/yearly-equipment-depreciation"
+              to="/assettransaction/yearly-equipment-depreciation"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"
@@ -484,7 +484,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetTransaction/complaint-entry-system"
+              to="/assettransaction/complaint-entry-system"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"

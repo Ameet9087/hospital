@@ -6,6 +6,7 @@ import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import AppoitmentPopupTable from "./AppoitmentPopupTable";
 import AppointmentReschedule from "./AppointmentReschedule";
+import { usePopup } from "../../FidgetSpinner/PopupContext";
 
 export default function DoctorAppointmentPopUp({
   date,
@@ -19,7 +20,6 @@ export default function DoctorAppointmentPopUp({
   closeModal,
 }) {
   console.log(updatedAppointments);
-
   const [formData, setFormData] = useState({
     appointmentDate: updatedAppointments?.appointmentDate || date,
     appointmentTime: updatedAppointments?.appointmentTime || selectedTimeSlot,
@@ -52,6 +52,7 @@ export default function DoctorAppointmentPopUp({
   });
 
   console.log(formData);
+  const { showPopup } = usePopup()
 
   const [errors, setErrors] = useState({});
   const [outPatient, setOutPatient] = useState();
@@ -59,7 +60,7 @@ export default function DoctorAppointmentPopUp({
   const [outPatientId, setOutPatientId] = useState();
   const [selectedOutPatient, setSelectedOutpatient] = useState(null);
 
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopups, setShowPopups] = useState(false);
 
   const [showReschedule, setShowReschedule] = useState(false);
 
@@ -117,27 +118,27 @@ export default function DoctorAppointmentPopUp({
       remarks: formData?.remarks || "",
       patient: selectedOutPatient
         ? {
-            uhid: selectedOutPatient?.uhid,
-          }
+          uhid: selectedOutPatient?.uhid,
+        }
         : {
-            contactNumber: formData?.contactNumber || "",
-            salutation: formData?.salutation || "",
-            firstName: formData?.firstName || "",
-            middleName: formData?.middleName || "",
-            lastName: formData?.lastName || "",
-            dateOfBirth: formData?.birthOfDate || "",
-            age: formData?.age || "",
-            ageUnit: formData?.ageUnit || "",
-            gender: formData?.gender || "",
-            address: formData?.address || "",
-            adharCardId: formData?.adharCardId || "",
-            emailId: formData?.emailId || "",
-            country: formData?.country || "",
-            relation: formData?.relation || "",
-            state: formData?.state || "",
-            cityDistrict: formData?.cityDistrict || "",
-            pinCode: formData?.pinCode || "",
-          },
+          contactNumber: formData?.contactNumber || "",
+          salutation: formData?.salutation || "",
+          firstName: formData?.firstName || "",
+          middleName: formData?.middleName || "",
+          lastName: formData?.lastName || "",
+          dateOfBirth: formData?.birthOfDate || "",
+          age: formData?.age || "",
+          ageUnit: formData?.ageUnit || "",
+          gender: formData?.gender || "",
+          address: formData?.address || "",
+          adharCardId: formData?.adharCardId || "",
+          emailId: formData?.emailId || "",
+          country: formData?.country || "",
+          relation: formData?.relation || "",
+          state: formData?.state || "",
+          cityDistrict: formData?.cityDistrict || "",
+          pinCode: formData?.pinCode || "",
+        },
       addDoctor: {
         doctorId: selectedDoctor || 0,
       },
@@ -154,6 +155,7 @@ export default function DoctorAppointmentPopUp({
       if (response.ok) {
         alert(`Appointment saved successfully ${result?.patient?.uhid}`);
         handleSave(result);
+        showPopup([{ url: "/billing/opdbilling", text: "Opd Billing" }])
         closeModal();
       } else {
         alert(result.message || "Failed to save the appointment.");
@@ -237,10 +239,10 @@ export default function DoctorAppointmentPopUp({
   };
 
   const handleCancelClick = () => {
-    setShowPopup(true);
+    setShowPopups(true);
   };
   const handleCancelClose = () => {
-    setShowPopup(false);
+    setShowPopups(false);
     closeModal();
   };
   const getPopupData = () => {
@@ -620,7 +622,7 @@ export default function DoctorAppointmentPopUp({
           )}
         </div>
 
-        <CustomModal isOpen={showPopup} onClose={() => setShowPopup(false)}>
+        <CustomModal isOpen={showPopups} onClose={() => setShowPopups(false)}>
           <AddCancel
             formData={formData}
             updatedAppointments={updatedAppointments}

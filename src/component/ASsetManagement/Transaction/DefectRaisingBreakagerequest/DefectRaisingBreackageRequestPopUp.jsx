@@ -3,7 +3,7 @@ import "./DefectRaisingBreackageRequestPopUp.css";
 import { CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa"; // Using react-icons
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
 const DefectRaisingBreackageRequestPopUp = ({ onClose }) => {
 

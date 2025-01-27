@@ -78,11 +78,11 @@ const PostOpInstructions = () => {
       if (selectedEvent) {
         setPatientData((prevData) => ({
           ...prevData,
-          firstName: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.firstName || 'N/A',
-          lastName: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.lastName || 'N/A',
+          firstName: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.patient?.firstName || 'N/A',
+          lastName: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.patient?.lastName || 'N/A',
           ipNo: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.inPatientId || 'N/A',
-          gender: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.gender || 'N/A',
-          uhidNo: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.uhid || 'N/A',
+          gender: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.patient?.gender || 'N/A',
+          uhidNo: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient?.patient?.uhid || 'N/A',
           doa: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.admissionDate || 'N/A',
           doctorName: selectedEvent.docterDTO?.doctorName || 'N/A',
           consultantDoctor: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.admissionUnderDoctorDetail?.consultantDoctor?.doctorName || 'N/A',
@@ -125,7 +125,7 @@ const PostOpInstructions = () => {
       },
     };
   
-    const apiUrl = `${baseURL}/api/post-op-instructions`;
+    const apiUrl = `${API_BASE_URL}/post-op-instructions`;
     const result = await postData(apiUrl, dataToSubmit);
   
     if (result.success) {

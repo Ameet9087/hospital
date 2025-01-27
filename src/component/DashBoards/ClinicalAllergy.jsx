@@ -5,7 +5,7 @@ import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import OutPatient from "./OutPatient";
 
-const Allergy = ({ patientId, outPatientId }) => {
+const Allergy = ({ patientId, outPatientId, setIsModalOpen }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [showForm, setShowForm] = useState(false);
@@ -168,6 +168,7 @@ const Allergy = ({ patientId, outPatientId }) => {
           reaction: "",
           comments: "",
         });
+        setIsModalOpen(false);
       } else {
         alert("Failed to add allergy");
       }

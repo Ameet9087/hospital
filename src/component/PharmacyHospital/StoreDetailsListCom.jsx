@@ -16,33 +16,37 @@ const StoreDetailsListCom = () => {
   const [showZeroQty, setShowZeroQty] = useState(false);
   const [selectedStore, setSelectedStore] = useState(''); // State for store filtering
   const [columnWidths, setColumnWidths] = useState({});
-  const [salePrice, setSalePrice] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
+  const [salePrice, setSalePrice] = useState();
+  const [expiryDate, setExpiryDate] = useState();
+  const [batchNumber,setBatchNumber]=useState();
   const tableRef = useRef(null);
 
   // Fetch data from API
   useEffect(() => {
     axios
-      .get(`${API_BASE_URL}/goods-receipt-items`)
+      .get(`${API_BASE_URL}/add-item`)
       .then((response) => {
         const data = response.data.map((item) => ({
           goodReceiptItemId: item.goodReceiptItemId || 0,
-          itemName: item.itemName || 'N/A',
-          genericName: item.genericName || 'N/A',
+          itemId:item.addItemId,
+          itemName: item.itemMaster.itemName || 'N/A',
+          genericName: item.itemMaster.genericNames.genericName || 'N/A',
           medicineName: item.addItem || 'N/A',
-          batchNo: item.batchNumber || 'N/A',
+          batchNo: item.batchNo || 'N/A',
           expiryDate: item.expiryDate || 'N/A',
-          availableQty: item.itemQuantity || 0,
+          availableQty: item.totalQty || 0,
           salePrice: item.salePrice || 0, // Assuming no sales data in API, you can modify as needed
           purchases: item.totalQuantity || 0,
           store: 'Store Unknown', // Default value if store data is unavailable
         }));
+        console.log(response.data);
+        
         setSuppliers(data);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, []);
+  }, [showEditExpiry,showEditModal]);
 
   const handleStoreFilterChange = (e) => {
     setSelectedStore(e.target.value);
@@ -66,6 +70,8 @@ const StoreDetailsListCom = () => {
   });
 
   const handleShowEditModal = (user) => {
+    console.log(user);
+    
     setSelectedUser(user);
     
     setShowEditModal(true);
@@ -84,34 +90,36 @@ const StoreDetailsListCom = () => {
     setSelectedUser(null);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    
-
-    if (!selectedUser) return;
-
-    const updateUrl = `${API_BASE_URL}/goods-receipt-items/${selectedUser.goodReceiptItemId}`;
-    const payload = {};
-
-    // Send appropriate data based on the open modal
-    if (showEditModal && salePrice) {
-      payload.salePrice = salePrice;
-    }
-
-    if (showEditExpiry && expiryDate) {
-      payload.expiryDate = expiryDate;
-    }
-
-    axios
-      .put(updateUrl, payload)
-      .then((response) => {
-        console.log('Update successful:', response.data);
-        handleCloseModal(); // Close the modal after successful update
-      })
-      .catch((error) => {
-        console.error('Error updating data:', error);
+  const handleSalePriceSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.patch(`${API_BASE_URL}/add-item/${selectedUser.itemId}/salePrice`, null, {
+        params: { salePrice },
       });
+      setShowEditModal(false); // Close the modal
+      setSalePrice();
+
+    } catch (error) {
+      console.error("Error updating sale price:", error);
+    }
   };
+  
+  const handleExpirySubmit = async (e) => {
+    e.preventDefault();
+    console.log(batchNumber +"" +expiryDate);
+    
+    try {
+      await axios.patch(`${API_BASE_URL}/add-item/${selectedUser.itemId}/batch`, null, {
+        params: { batchNo:batchNumber, expiryDate },
+      })
+      setShowEditExpiry(false); // Close the modal
+      setBatchNumber();
+      setExpiryDate();
+    } catch (error) {
+      console.error("Error updating expiry date:", error);
+    }
+  };
+  
 
   // Function to export table to Excel
   const handleExport = () => {
@@ -265,11 +273,9 @@ const StoreDetailsListCom = () => {
             </div>
           </div>
           <div className="manage-modal-modal-body">
-            <Form onSubmit={handleSubmit}>
-              <Button type="submit" className="manage-modal-employee-btn">
+              <Button type="submit" className="manage-modal-employee-btn" onClick={handleSalePriceSubmit}>
                 Update
               </Button>
-            </Form>
           </div>
         </div>
       </CustomModal>
@@ -293,13 +299,20 @@ const StoreDetailsListCom = () => {
                 onChange={(e) => setExpiryDate(e.target.value)}
               />
             </div>
+            <div>
+              <label>Enter New Batch Number:</label>
+              <input
+                type="text"
+                name="batchNumber"
+                value={batchNumber}
+                onChange={(e) => setBatchNumber(e.target.value)}
+              />
+            </div>
           </div>
           <div className="manage-modal-modal-body">
-            <Form onSubmit={handleSubmit}>
-              <Button type="submit" className="manage-modal-employee-btn">
+              <Button type="submit" className="manage-modal-employee-btn" onClick={handleExpirySubmit}>
                 Update
               </Button>
-            </Form>
           </div>
         </div>
       </CustomModal>

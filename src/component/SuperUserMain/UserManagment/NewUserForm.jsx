@@ -17,6 +17,7 @@ const NewUserForm = ({ user, onClose }) => {
     },
   });
 
+  const [showPassword, setShowPassword] = useState(false);
   const [roles, setRoles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -241,7 +242,7 @@ const NewUserForm = ({ user, onClose }) => {
     const payload = {
       username: updatedFormData.username,
       password: updatedFormData.password,
-      addDoctorId: updatedFormData.addDoctorId, // Add doctorId to the payload if available
+      doctorId: updatedFormData.doctorId, // Add doctorId to the payload if available
       employeeId: updatedFormData.employeeId, // Add employeeId to the payload if available
       updatedRole: [
         {
@@ -284,11 +285,15 @@ const NewUserForm = ({ user, onClose }) => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit} className="NewUserFrom-container">
         <div className="NewUserFrom-header">
-          <div>
+          <div className="NewUserForm-Search">
             <select
               className="newUser-dropdown"
               value={dropdownValue}
@@ -362,14 +367,30 @@ const NewUserForm = ({ user, onClose }) => {
                 setFormData({ ...formData, username: e.target.value })
               }
             />
-            <input
-              type="password"
-              placeholder="Enter Password"
-              value={formData.password}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-            />
+            <div style={{ position: "relative" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter Password"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+              />
+              <i
+                className={`fa ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
+                aria-hidden="true"
+                id="showHidePassword"
+                style={{
+                  position: "absolute",
+                  fontSize: "20px",
+                  right: "10px",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  cursor: "pointer",
+                }}
+                onClick={togglePasswordVisibility}
+              ></i>
+            </div>
             <div ref={dropdownRef}>
               <input
                 type="text"
@@ -385,7 +406,7 @@ const NewUserForm = ({ user, onClose }) => {
                   {roles
                     .filter((option) =>
                       option.name
-                        .toLowerCase()
+                        ?.toLowerCase()
                         .includes(searchTerm.toLowerCase())
                     )
                     .map((option) => (

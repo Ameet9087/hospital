@@ -25,7 +25,7 @@ const User = () => {
   useEffect(() => {
     fetchRoles();
     fetchUserDetails();
-  }, []);
+  }, [showModal]);
 
   const fetchRoles = async () => {
     try {

@@ -48,6 +48,12 @@ h2 {
 .GoodsReceiptSettings-items-container {
   margin-top: 2px;
 }
+.GoodsReceiptSettings-form-calculation
+{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
 
 .GoodsReceiptSettings-item-row {
   display: grid;

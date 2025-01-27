@@ -82,7 +82,7 @@ function AddReportForm({ onClose, selectedRequest }) {
         : new Date().toISOString().toString(),
       notes: formData.notes,
       indication: formData.indication,
-      status: "Active",
+      status: "PendingForApproval",
       mriXRayCTNo: formData.mriXRayCTNo,
     };
 

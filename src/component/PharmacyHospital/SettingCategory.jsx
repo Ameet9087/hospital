@@ -11,6 +11,7 @@ import useCustomAlert from '../../alerts/useCustomAlert';
 
 const SettingCategory = () => {
   const [suppliers, setSuppliers] = useState([]);
+  const [taxs,setTaxs] = useState();
   const [searchTerm, setSearchTerm] = useState('');
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -32,9 +33,15 @@ const SettingCategory = () => {
       });
   }, []);
 
-  const filteredUsers = (suppliers || []).filter(user =>
-  user.name && user.name.toLowerCase().includes(searchTerm.toLowerCase())
-);
+  useEffect(() => {
+    axios.get(`${API_BASE_URL}/taxes/get-all-taxes`)
+      .then(response => {
+        setTaxs(response.data);
+      })
+      .catch(error => {
+        console.error('There was an error fetching the data!', error);
+      });
+  }, []);
 
   const handleShowEditModal = (user = null) => {
     if (user) {
@@ -53,18 +60,31 @@ const SettingCategory = () => {
   };
 
   const handleSubmit = (event) => {
-    console.log(selectedUser);
+    const formData = {
+      subCategoryName:selectedUser.subCategoryName ,
+    categoryName:selectedUser.categoryName,
+    code: selectedUser.code,
+    musting:selectedUser.musting ,
+    general:selectedUser.general,
+    considerForMis: selectedUser.considerForMis,
+    description: selectedUser.description,
+    tax: {
+        taxesId:isEditMode?selectedUser.tax.taxesId:selectedUser.tax
+    }
+    }
+    console.log(formData);
+    
     
     event.preventDefault();
     const apiUrl = isEditMode
-      ? `${API_BASE_URL}/categories/${selectedUser.id}` // Assuming `id` is part of the user object for updates
+      ? `${API_BASE_URL}/categories/${selectedUser.categoryId}` // Assuming `id` is part of the user object for updates
       : `${API_BASE_URL}/categories`;
     const method = isEditMode ? 'put' : 'post';
 
     axios({
       method,
       url: apiUrl,
-      data: selectedUser
+      data: formData
     })
       .then(response => {
         if (isEditMode) {
@@ -90,8 +110,6 @@ const SettingCategory = () => {
     }));
   };
   
-
-  // Function to export table to Excel
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
     const wb = XLSX.utils.book_new(); // Creates a new workbook
@@ -99,7 +117,6 @@ const SettingCategory = () => {
     XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
   };
 
-  // Function to trigger print
   const handlePrint = () => {
     window.print(); // Triggers the browser's print window
   };
@@ -115,7 +132,7 @@ const SettingCategory = () => {
           className="setting-supplier-add-user-button"
           onClick={() => handleShowEditModal()} // Open the form for adding a new category
         >
-          + Add Company Category
+          + Add Category
         </button>
       </div>
       <input
@@ -152,9 +169,9 @@ const SettingCategory = () => {
                         </thead>
 
           <tbody>
-            {filteredUsers.map((user, index) => (
+            {suppliers.map((user, index) => (
               <tr key={index}>
-                <td>{user.name}</td>
+                <td>{user.categoryName}</td>
                 <td>{user.description}</td>
                 <td>{user.isActive ? 'Yes' : 'No'}</td>
                 <td className="setting-supplier-action-buttons">
@@ -210,18 +227,77 @@ const SettingCategory = () => {
       <div className="supplier-setting-form-row">
         <Form.Group controlId="categoryName" className="supplier-setting-form-group col-md-6">
           <Form.Label>
+            Sub Category Name<span className="supplier-setting-text-danger">*</span>:
+          </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter Category Name"
+            name="subCategoryName"
+            required
+            value={selectedUser?.subCategoryName || ''}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+        <Form.Group controlId="categoryName" className="supplier-setting-form-group col-md-6">
+          <Form.Label>
             Category Name<span className="supplier-setting-text-danger">*</span>:
           </Form.Label>
           <Form.Control
             type="text"
             placeholder="Enter Category Name"
-            name="name"
+            name="categoryName"
             required
-            value={selectedUser?.name || ''}
+            value={selectedUser?.categoryName || ''}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+        
+      </div>
+      <div className="supplier-setting-form-row">
+      <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+          <Form.Label>Code:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter Code"
+            name="code"
+            value={selectedUser?.code || ''}
             onChange={handleInputChange}
           />
         </Form.Group>
         <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+          <Form.Label>Musting:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter Musting"
+            name="musting"
+            value={selectedUser?.musting || ''}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+      </div>
+      <div className="supplier-setting-form-row">
+      <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+          <Form.Label>General:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter General"
+            name="general"
+            value={selectedUser?.general || ''}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+        <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+          <Form.Label>Consider For Mis:</Form.Label>
+          <Form.Control
+            type="text"
+            name="considerForMis"
+            value={selectedUser?.considerForMis || ''}
+            onChange={handleInputChange}
+          />
+        </Form.Group>
+      </div>
+      <div className="supplier-setting-form-row">
+      <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
           <Form.Label>Description:</Form.Label>
           <Form.Control
             type="text"
@@ -231,16 +307,26 @@ const SettingCategory = () => {
             onChange={handleInputChange}
           />
         </Form.Group>
+        <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+  <Form.Label>Tax:</Form.Label>
+  <Form.Select
+  name="tax"
+  value={selectedUser?.tax || ''}
+  onChange={handleInputChange}
+>
+  <option value="" disabled>
+    Select Tax
+  </option>
+  {taxs?.map((tax) => (
+    <option key={tax.taxesId} value={tax.taxesId}>
+      {tax.name}
+    </option>
+  ))}
+</Form.Select>
+
+</Form.Group>
+
       </div>
-      <Form.Group controlId="isActive" className="supplier-setting-form-group col-md-6">
-        <Form.Check
-          type="checkbox"
-          label="Is Active"
-          name="isActive"
-          checked={selectedUser?.isActive || false}
-          onChange={handleInputChange}
-        />
-      </Form.Group>
       <div className="supplier-setting-text-right">
         <Button variant="primary" type="submit">
           {isEditMode ? 'Update' : 'Add'}

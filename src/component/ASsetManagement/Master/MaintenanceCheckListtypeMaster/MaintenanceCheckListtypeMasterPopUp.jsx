@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./MaintenanceCheckListtypeMasterPopUp.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
 const MaintenanceCheckListtypeMasterPopUp = ({ onSave }) => {
   const [formData, setFormData] = useState({

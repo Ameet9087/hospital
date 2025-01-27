@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './AMCDetailsMulti.css';
+import './AMCDetailsmulti.css';
 import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../../../api/api';
 import PopupTable from '../../../Admission/PopupTable';

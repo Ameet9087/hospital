@@ -81,7 +81,7 @@ const SettingGeneric = () => {
     try {
       if (isEditMode) {
         // Update existing item
-        await axios.put(`${genericApiUrl}/${selectedGeneric.genericName}`, selectedGeneric);
+        await axios.put(`${genericApiUrl}/${selectedGeneric.genericNameId}`, selectedGeneric);
       } else {
         // Add new item
         await axios.post(genericApiUrl, selectedGeneric);
@@ -222,8 +222,8 @@ const SettingGeneric = () => {
         >
           <option value="">Select Category</option>
           {categories.map((category) => (
-            <option key={category.name} value={category.name}>
-              {category.name}
+            <option key={category.name} value={category.categoryName}>
+              {category.categoryName}
             </option>
           ))}
         </Form.Control>

@@ -18,10 +18,11 @@ const PurchaseView = ({item}) => {
 
 
   const handlePrint = () => {
+    const printableContent = document.getElementById("purchaseRequest-container").innerHTML;
     const newWindow = window.open("", "_blank");
     newWindow.document.open();
-    newWindow.document.write(`
-      <html>
+    newWindow.document.write(
+      `<html>
         <head>
           <title>Print Page</title>
           <style>
@@ -44,19 +45,79 @@ const PurchaseView = ({item}) => {
             th {
               background-color: #f2f2f2;
             }
+            /* Injecting styles from your PurchaseView.css */
+            .PurchaseRequest-container {
+              width: 100%;
+              border: 1px solid #ccc;
+              background-color: var(--background-color);
+              padding: 10px;
+            }
+  
+            .PurchaseRequest-header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              border-bottom: 1px solid #ccc;
+              padding-bottom: 10px;
+              margin-bottom: 20px;
+            }
+  
+            .PurchaseRequest-logo h2 {
+              color: var(--button-color);
+              font-size: 1.5rem;
+            }
+  
+            .PurchaseRequest-hospital-info {
+              text-align: center;
+            }
+  
+            .PurchaseRequest-hospital-info h3 {
+              margin: 0;
+              font-size: 1.2rem;
+            }
+  
+            .PurchaseRequest-barcode {
+              text-align: right;
+            }
+  
+            .PurchaseRequest-prf-details {
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 20px;
+            }
+  
+            .PurchaseRequest-prf-details-div strong {
+              font-size: 14px;
+            }
+  
+            .PurchaseRequest-footer {
+              text-align: center;
+            }
+  
+            .PurchaseRequest-signatures {
+              display: flex;
+              justify-content: space-around;
+              margin-top: 20px;
+            }
+  
+            .PurchaseRequest-footer p {
+              margin: 5px 0;
+            }
           </style>
         </head>
         <body>
-          ${document.body.innerHTML}
+          ${printableContent}
         </body>
-      </html>
-    `);
+      </html>`
+    );
     newWindow.document.close();
     newWindow.print();
   };
+  
 
   return (
-    <div className="PurchaseRequest-container">
+    <>
+    <div id="purchaseRequest-container" className="PurchaseRequest-container">
     <header className="PurchaseRequest-header">
       <div className="PurchaseRequest-logo">
         <h2>HIMS</h2>
@@ -122,12 +183,15 @@ const PurchaseView = ({item}) => {
           <p>Verified By:</p>
           <p>{item?.verifyBy}</p>
           <p>Rem: {item?.verifyOrNot}</p>
-
-          <button onClick={handlePrint}>Print</button>
         </div>
       </div>
     </section>
   </div>
+  <div className="PurchaseRequest-signatures">
+
+   <button onClick={handlePrint}>Print</button>
+  </div>
+   </>
 );
 };
 

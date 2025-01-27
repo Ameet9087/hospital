@@ -10,12 +10,10 @@ import useCustomAlert from '../../alerts/useCustomAlert';
 import * as XLSX from 'xlsx';
 
 const initialUserData = {
-  name: '',
-  contactNumber: '',
+  companyName: '',
+  code: '',
   description: '',
-  contactAddress: '',
-  email: '',
-  isActive: false,
+  status: false,
 };
 
 const SettingCompany = () => {
@@ -62,12 +60,10 @@ const filteredUsers = suppliers.filter(user =>
     const apiUrl = `${API_BASE_URL}/companies`;
     const apiMethod = isEditMode ? axios.put : axios.post;
     const apiData = {
-      companyName: selectedUser.name,
-      contactNumber: selectedUser.contactNo,
+      companyName: selectedUser.companyName,
+      code: selectedUser.code,
       description: selectedUser.description,
-      contactAddress: selectedUser.contactAddress,
-      email: selectedUser.email,
-      isActive: selectedUser.isActive,
+      status: selectedUser.status,
     };
 
     apiMethod(apiUrl, apiData)
@@ -135,10 +131,9 @@ const filteredUsers = suppliers.filter(user =>
                         <thead>
                             <tr>
                                 {[ "Company Name",
-  "Contact No",
+  "Code",
   "Description",
-  "Contact Address",
-  "Email",
+  "Status",
   "Action"].map((header, index) => (
                                     <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
                                         <div className="header-content">
@@ -158,10 +153,9 @@ const filteredUsers = suppliers.filter(user =>
             {filteredUsers.map((user, index) => (
               <tr key={index}>
                 <td>{user.companyName}</td>
-                <td>{user.contactNumber}</td>
+                <td>{user.code}</td>
                 <td>{user.description}</td>
-                <td>{user.contactAddress}</td>
-                <td>{user.email}</td>
+                <td>{user.status}</td>
                 <td className="setting-supplier-action-buttons">
                   <button
                     className="setting-supplier-action-button"
@@ -169,7 +163,7 @@ const filteredUsers = suppliers.filter(user =>
                   >
                     Edit
                   </button>
-                  <button className="setting-supplier-action-button">Deactivate</button>
+                  {/* <button className="setting-supplier-action-button">Deactivate</button> */}
                 </td>
               </tr>
             ))}
@@ -193,7 +187,7 @@ const filteredUsers = suppliers.filter(user =>
 >
   <div className="supplier-setting-form">
     <div className="supplier-setting-header">
-      <h2>{isEditMode ? 'Update Company' : 'Add Company'}</h2>
+      <h2>{isEditMode ? 'Update Manufacture' : 'Add Manufacture'}</h2>
       <button className="close-btn" onClick={handleCloseModal}>×</button>
     </div>
 
@@ -201,24 +195,24 @@ const filteredUsers = suppliers.filter(user =>
       <Form onSubmit={handleSubmit}>
         <div className="supplier-setting-form-row">
           <Form.Group controlId="companyName" className="supplier-setting-form-group col-md-6">
-            <Form.Label>Company Name<span className="supplier-setting-text-danger">*</span>:</Form.Label>
+            <Form.Label>Manufacture Name<span className="supplier-setting-text-danger">*</span>:</Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter Company Name"
-              name="name"
+              name="companyName"
               required
-              value={selectedUser.name}
+              value={selectedUser.companyName}
               onChange={handleInputChange}
             />
           </Form.Group>
           <Form.Group controlId="contactNumber" className="supplier-setting-form-group col-md-6">
-            <Form.Label>Contact Number<span className="supplier-setting-text-danger">*</span>:</Form.Label>
+            <Form.Label>Code:<span className="supplier-setting-text-danger">*</span>:</Form.Label>
             <Form.Control
               type="text"
               placeholder="Enter Contact Number"
-              name="contactNo"
+              name="code"
               required
-              value={selectedUser.contactNo}
+              value={selectedUser.code}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -235,44 +229,22 @@ const filteredUsers = suppliers.filter(user =>
               onChange={handleInputChange}
             />
           </Form.Group>
-          <Form.Group controlId="contactAddress" className="supplier-setting-form-group col-md-6">
-            <Form.Label>Contact Address:</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Contact Address"
-              name="contactAddress"
-              value={selectedUser.contactAddress}
-              onChange={handleInputChange}
-            />
-          </Form.Group>
-        </div>
-
-        <div className="supplier-setting-form-row">
-          <Form.Group controlId="email" className="supplier-setting-form-group col-md-6">
-            <Form.Label>Email:</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter Email"
-              name="email"
-              value={selectedUser.email}
-              onChange={handleInputChange}
-            />
-          </Form.Group>
+        
           <Form.Group controlId="isActive" className="supplier-setting-form-group col-md-6">
             <Form.Check
               type="checkbox"
               label="Is Active"
-              name="isActive"
-              checked={selectedUser.isActive}
+              name="status"
+              checked={selectedUser.status}
               onChange={handleInputChange}
             />
           </Form.Group>
         </div>
 
         <div className="supplier-setting-footer">
-          <Button variant="primary" type="submit">
+          <button className="supplier-setting-btn" type="submit" onClick={handleSubmit}>
             {isEditMode ? 'Update' : 'Add'}
-          </Button>
+          </button>
         </div>
       </Form>
     </div>

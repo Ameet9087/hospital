@@ -249,7 +249,7 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
                     src={`data:image/jpeg;base64,${reportData?.uploadFile}`}
                     alt="Radiology scan"
                     className="RadiologyReportPopup-image"
-                    style={{ maxWidth: "100%", height: "150px" }}
+                    style={{ maxWidth: "100%", height: "50  0px" }}
                   />
                 )}
               </div>

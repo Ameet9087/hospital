@@ -11,7 +11,7 @@ function IpDoctorMainPage() {
   const [selectedIpAdmission, setSelectedIpAdmission] = useState([]);
   const [isPatientOPEN, setIsPatientOPEN] = useState(false);
 
-  const fetchAllAdmittedPatient = async (id = 2) => {
+  const fetchAllAdmittedPatient = async (id = 0) => {
     let response;
     if (id > 0) {
       response = await axios.get(
@@ -23,7 +23,7 @@ function IpDoctorMainPage() {
     setAdmittedPatient(response.data);
   };
 
-  const fetchAllConsultantAdmittedPatient = async (id = 2) => {
+  const fetchAllConsultantAdmittedPatient = async (id = 0) => {
     let response;
     if (id > 0) {
       response = await axios.get(

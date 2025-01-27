@@ -7,8 +7,6 @@ import ReferralSource from "../DashBoards/ReferralSource"; // Placeholder compon
 import "./problem.css";
 
 function Problems({ patientId, outPatientId }) {
-  console.log(outPatientId);
-
   const [activeComponent, setActiveComponent] = useState("ActiveProblems"); // State to manage active section
 
   // Function to render content based on the activeComponent state

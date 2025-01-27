@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./OTMaster.css";
-import { API_BASE_URL } from "../../../../api/api"
+import { API_BASE_URL } from "../../../../api/api";
 
 const OTMaster = () => {
-  const [rows, setRows] = useState([{ id: 1, medicine: "", purchaseRate: "", sellRate: "" }]); // Default row
+  const [rows, setRows] = useState([
+    { id: 1, medicineId: "", purchaseRate: "", sellRate: "" },
+  ]); // Default row
   const [medicineOptions, setMedicineOptions] = useState([]); // For storing medicines
   const [locations, setLocations] = useState([]); // For storing location names
   const [otName, setOtName] = useState("");
@@ -19,8 +21,8 @@ const OTMaster = () => {
   // Fetch medicines from the API
   const fetchMedicines = async () => {
     try {
-      const response = await axios.get(`${ API_BASE_URL }/add-items`);
-      const items = response.data.map(item => ({
+      const response = await axios.get(`${API_BASE_URL}/add-item`);
+      const items = response.data.map((item) => ({
         id: item.addItemId,
         name: item.itemName,
         purchaseRate: item.purchaseRate,
@@ -35,8 +37,8 @@ const OTMaster = () => {
   // Fetch locations from the API
   const fetchLocations = async () => {
     try {
-      const response = await axios.get(`${ API_BASE_URL }/location-masters`);
-      const locationData = response.data.map(location => ({
+      const response = await axios.get(`${API_BASE_URL}/location-masters`);
+      const locationData = response.data.map((location) => ({
         id: location.id,
         locationName: location.locationName,
       }));
@@ -48,7 +50,12 @@ const OTMaster = () => {
 
   // Function to handle adding a new row
   const addRow = () => {
-    const newRow = { id: rows.length + 1, medicine: "", purchaseRate: "", sellRate: "" };
+    const newRow = {
+      id: rows.length + 1,
+      medicineId: "",
+      purchaseRate: "",
+      sellRate: "",
+    };
     setRows([...rows, newRow]);
   };
 
@@ -67,10 +74,17 @@ const OTMaster = () => {
     const updatedRows = rows.map((row) => {
       if (row.id === id) {
         // If the medicine is changed, autofill purchaseRate and salesRate
-        if (field === "medicine") {
-          const selectedMedicine = medicineOptions.find(item => item.name === value);
+        if (field === "medicineId") {
+          const selectedMedicine = medicineOptions.find(
+            (item) => item.id === parseInt(value)
+          );
           if (selectedMedicine) {
-            return { ...row, medicine: value, purchaseRate: selectedMedicine.purchaseRate, sellRate: selectedMedicine.salesRate };
+            return {
+              ...row,
+              medicineId: selectedMedicine.id, // Store ID for submission
+              purchaseRate: selectedMedicine.purchaseRate,
+              sellRate: selectedMedicine.salesRate,
+            };
           }
         }
         return { ...row, [field]: value };
@@ -82,23 +96,40 @@ const OTMaster = () => {
 
   // Submit the OT Master data to the API
   const handleSubmit = async () => {
+    // Validate that at least one medicine is selected
+    const selectedMedicines = rows.filter((row) => row.medicineId);
+
+    if (selectedMedicines.length === 0) {
+      alert("Please select at least one medicine");
+      return;
+    }
+
+    // Prepare addItems with correct item IDs
+    const addItems = selectedMedicines.map((row) => ({
+      addItemId: row.medicineId,
+    }));
+
+    // Validate location selection
+    if (!selectedLocation) {
+      alert("Please select a location");
+      return;
+    }
+
     const otMasterData = {
       otName,
       rentPerTake,
-      locations: [
-    {
-      id: selectedLocation,
-    }
-  ],
-      addItems: rows.map((row) => ({
-        addItemId: medicineOptions.find(item => item.name === row.medicine)?.id,
-      })),
+      locationMasterDTO: {
+        id: parseInt(selectedLocation),
+      },
+      addItems: addItems,
     };
 
     try {
-      const response = await axios.post(`${ API_BASE_URL }/otmasters`, otMasterData);
+      const response = await axios.post(
+        `${API_BASE_URL}/otmasters`,
+        otMasterData
+      );
       alert("OT Master data saved successfully!");
-      console.log("Response:", response.data);
     } catch (error) {
       console.error("Error saving OT Master data:", error);
       alert("Failed to save OT Master data.");
@@ -144,9 +175,6 @@ const OTMaster = () => {
             ))}
           </select>
         </label>
-        <label>
-          <input type="checkbox" className="otmaster-checkbox" /> Medicine Required
-        </label>
       </div>
       <table className="otmaster-table">
         <thead>
@@ -165,14 +193,14 @@ const OTMaster = () => {
               <td>
                 <select
                   className="otmaster-medicine-input"
-                  value={row.medicine}
+                  value={row.medicineId}
                   onChange={(e) =>
-                    handleInputChange(row.id, "medicine", e.target.value)
+                    handleInputChange(row.id, "medicineId", e.target.value)
                   }
                 >
                   <option value="">Select Medicine</option>
-                  {medicineOptions.map((medicine, idx) => (
-                    <option key={idx} value={medicine.name}>
+                  {medicineOptions.map((medicine) => (
+                    <option key={medicine.id} value={medicine.id}>
                       {medicine.name}
                     </option>
                   ))}

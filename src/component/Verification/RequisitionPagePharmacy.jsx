@@ -11,7 +11,7 @@ function RequisitionPagePharmacy() {
   const [filterStatus, setFilterStatus] = useState("pending");
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/pharmacyRequisitions/getAll`)
+    fetch(`${API_BASE_URL}/subpharm-requisitions`)
       .then((response) => response.json())
       .then((data) => setRequisitions(data))
       .catch((error) => console.error("Error fetching data:", error));
@@ -30,6 +30,9 @@ function RequisitionPagePharmacy() {
   const handleFilterChange = (event) => {
     setFilterStatus(event.target.value);
   };
+
+  console.log(requisitions);
+  
 
   const filteredRequisitions = requisitions.filter((requisition) => {
     if (filterStatus === "all") return true;
@@ -116,9 +119,9 @@ function RequisitionPagePharmacy() {
           </thead>
           <tbody>
             {filteredRequisitions.map((requisition) => (
-              <tr key={requisition.pharmacyRequisitionId}>
-                <td>{requisition.pharmacyRequisitionId}</td>
-                <td>{requisition.storeName}</td>
+              <tr key={requisition.pharRequisitionId}>
+                <td>{requisition.pharRequisitionId}</td>
+                <td>{requisition?.subStore?.subStoreName}</td>
                 <td>{requisition.requestedDate}</td>
                 <td>{requisition.status}</td>
                 <td>

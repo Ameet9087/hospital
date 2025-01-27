@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
-import './TreatmentGiven.css';
-import { API_BASE_URL } from '../api/api';
+import React, { useState } from "react";
+import "./TreatmentGiven.css";
+import { API_BASE_URL } from "../api/api";
 
-const TreatmentGiven = ({ inPatientId, outPatientId }) => {
+const TreatmentGiven = ({ inPatientId, outPatientId, setIsModalOpen }) => {
   const [selectedTreatments, setSelectedTreatments] = useState([]);
   const [inputText, setInputText] = useState("");
 
   const addTreatmentsFromInput = () => {
     const treatments = inputText
-      .split('\n')
-      .map(treatment => treatment.trim())
-      .filter(treatment => treatment.length > 0);
-    const newTreatments = treatments.filter(treatment => !selectedTreatments.includes(treatment));
+      .split("\n")
+      .map((treatment) => treatment.trim())
+      .filter((treatment) => treatment.length > 0);
+    const newTreatments = treatments.filter(
+      (treatment) => !selectedTreatments.includes(treatment)
+    );
     setSelectedTreatments([...selectedTreatments, ...newTreatments]);
     setInputText("");
   };
 
   const removeTreatment = (treatment) => {
-    setSelectedTreatments(selectedTreatments.filter(item => item !== treatment));
+    setSelectedTreatments(
+      selectedTreatments.filter((item) => item !== treatment)
+    );
   };
 
   const cancelSelection = () => {
@@ -33,7 +37,7 @@ const TreatmentGiven = ({ inPatientId, outPatientId }) => {
 
     try {
       const data = {
-        treatmentDescriptions: selectedTreatments.join(', '),
+        treatmentDescriptions: selectedTreatments.join(", "),
         ...(inPatientId
           ? { inPatient: { inPatientId } }
           : { outPatient: { outPatientId } }),
@@ -41,13 +45,12 @@ const TreatmentGiven = ({ inPatientId, outPatientId }) => {
       console.log(data);
 
       const response = await fetch(`${API_BASE_URL}/treatments/add`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
 
         body: JSON.stringify(data),
-        
       });
 
       if (!response.ok) {
@@ -57,11 +60,12 @@ const TreatmentGiven = ({ inPatientId, outPatientId }) => {
 
       const result = await response.json();
       console.log("Treatments added:", result);
-      alert('Treatments successfully submitted!');
+      alert("Treatments successfully submitted!");
+      setIsModalOpen(false);
       setSelectedTreatments([]);
       setInputText("");
     } catch (error) {
-      console.error('Error submitting treatments:', error);
+      console.error("Error submitting treatments:", error);
       alert(`Error: ${error.message}`);
     }
   };
@@ -69,8 +73,8 @@ const TreatmentGiven = ({ inPatientId, outPatientId }) => {
   return (
     <div className="Treatment-Given-container">
       <h3>Treatment Given</h3>
-      
-      <div className='Treatment-Given-content'>
+
+      <div className="Treatment-Given-content">
         <div className="Treatment-Given-Add">
           <label htmlFor="treatments">Enter Treatments :</label>
           <textarea
@@ -82,18 +86,28 @@ const TreatmentGiven = ({ inPatientId, outPatientId }) => {
           />
         </div>
 
-        <div className='Treatment-Given-btn'>
-          <button type="button" onClick={addTreatmentsFromInput} className='Treatment-Given-add'>+</button>
+        <div className="Treatment-Given-btn">
+          <button
+            type="button"
+            onClick={addTreatmentsFromInput}
+            className="Treatment-Given-add"
+          >
+            +
+          </button>
         </div>
       </div>
-      
-      <div id="selected-treatments" className='Treatment-Given-showcase'>
+
+      <div id="selected-treatments" className="Treatment-Given-showcase">
         {selectedTreatments.length > 0 && (
           <ul>
             {selectedTreatments.map((treatment, index) => (
               <li key={index}>
                 {index + 1}. {treatment}
-                <button type="button" className='Treatment-Given-cut' onClick={() => removeTreatment(treatment)}>
+                <button
+                  type="button"
+                  className="Treatment-Given-cut"
+                  onClick={() => removeTreatment(treatment)}
+                >
                   X
                 </button>
               </li>
@@ -103,10 +117,22 @@ const TreatmentGiven = ({ inPatientId, outPatientId }) => {
       </div>
 
       <div className="Treatment-Given-action-buttons">
-        <button type="button" onClick={cancelSelection} className='Treatment-Given-action-cancel'>Cancel</button>
-        <button type="button" onClick={submitSelection} className='Treatment-Given-action-submit'>Submit</button>
+        <button
+          type="button"
+          onClick={cancelSelection}
+          className="Treatment-Given-action-cancel"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          onClick={submitSelection}
+          className="Treatment-Given-action-submit"
+        >
+          Submit
+        </button>
       </div>
-    </div>  
+    </div>
   );
 };
 

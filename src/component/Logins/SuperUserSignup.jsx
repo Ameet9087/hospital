@@ -6,9 +6,12 @@ import { API_BASE_URL } from "../../component/api/api";
 
 const SuperUserSignup = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
+    userRole: "Super User",
     updatedRole: [
       {
         name: "Super User",
@@ -286,8 +289,8 @@ const SuperUserSignup = () => {
             logo: "fa-solid fa-gear",
             submodules: [
               {
-                name: "Departments",
-                path: "/settings/departments",
+                name: "Substore",
+                path: "/settings/substore",
                 canEdit: true,
                 canView: true,
                 canAdd: true,
@@ -328,6 +331,70 @@ const SuperUserSignup = () => {
               {
                 name: "Doctor",
                 path: "/settings/employee",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Service Master",
+                path: "/settings/servicemaster",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Service Master",
+                path: "/settings/servicemaster",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Location Master",
+                path: "/settings/locationmaster",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Soc Master",
+                path: "/settings/socmaster",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Dg Master",
+                path: "/settings/dgmaster",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Soc Master",
+                path: "/settings/socmaster",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Specialisations",
+                path: "/settings/specialisations",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Speciality Group",
+                path: "/settings/specialitygroup",
                 canEdit: true,
                 canView: true,
                 canAdd: true,
@@ -406,14 +473,6 @@ const SuperUserSignup = () => {
               {
                 name: "In Patient Department",
                 path: "/doctor/in-patient",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
-              {
-                name: "Patient Record",
-                path: "/doctor/patient-record",
                 canEdit: true,
                 canView: true,
                 canAdd: true,
@@ -570,6 +629,14 @@ const SuperUserSignup = () => {
               },
               {
                 name: "Break Time",
+                path: "/appointment/book-appointment",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Doctor Blocking",
                 path: "/appointment/book-appointment",
                 canEdit: true,
                 canView: true,
@@ -834,6 +901,38 @@ const SuperUserSignup = () => {
                 canAdd: true,
                 canDelete: true,
               },
+              {
+                name: "OPD Post Discount",
+                path: "/billing/opd-billing",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Ipd Money Reciept",
+                path: "/billing/opd-billing",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Opd Billing Cancel",
+                path: "/billing/opd-billing",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Final Billing",
+                path: "/billing/opd-billing",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
             ],
           },
           {
@@ -842,37 +941,37 @@ const SuperUserSignup = () => {
             logo: "fa-solid fa-building",
             submodules: [
               {
-                name: "Depreciation And Discarding",
-                path: "/fix-assests/depreciation-and-discarding",
+                name: "Assest Transaction",
+                path: "/fix-assests/assesttransaction",
                 canEdit: true,
                 canView: true,
                 canAdd: true,
                 canDelete: true,
               },
               {
-                name: "Reports",
-                path: "/fix-assests/reports",
+                name: "Assest Master",
+                path: "/fix-assests/assestmaster",
                 canEdit: true,
                 canView: true,
                 canAdd: true,
                 canDelete: true,
               },
-              {
-                name: "Assets Maintainance",
-                path: "/fix-assests/assets-maintainance",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
-              {
-                name: "Assets Management",
-                path: "/fix-assests/assets-management",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
+              // {
+              //   name: "Assets Maintainance",
+              //   path: "/fix-assests/assets-maintainance",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
+              // {
+              //   name: "Assets Management",
+              //   path: "/fix-assests/assets-management",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
             ],
           },
           {
@@ -927,14 +1026,14 @@ const SuperUserSignup = () => {
                 canAdd: true,
                 canDelete: true,
               },
-              {
-                name: "Reports",
-                path: "/procurement/reports",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
+              // {
+              //   name: "Reports",
+              //   path: "/procurement/reports",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
               {
                 name: "Settings",
                 path: "/procurement/settings",
@@ -982,15 +1081,15 @@ const SuperUserSignup = () => {
                 canDelete: true,
               },
               {
-                name: "OPD Billing",
-                path: "/radioloagy/opd-billing",
+                name: "List Reports",
+                path: "/radioloagy/list-reports",
                 canEdit: true,
                 canView: true,
                 canAdd: true,
                 canDelete: true,
               },
               {
-                name: "List Reports",
+                name: "Approval",
                 path: "/radioloagy/list-reports",
                 canEdit: true,
                 canView: true,
@@ -1074,38 +1173,38 @@ const SuperUserSignup = () => {
             path: "/maternity",
             logo: "fa-solid fa-hands-holding-child",
             submodules: [
-              {
-                name: "Family Planning Service",
-                path: "/maternity/family-planning-service",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
-              {
-                name: "Labor Room Management",
-                path: "/maternity/labor-room-management",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
-              {
-                name: "Postnatal Care",
-                path: "/maternity/postnatal-care",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
-              {
-                name: "Antenatal Care",
-                path: "/maternity/antenatal-care",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
+              // {
+              //   name: "Family Planning Service",
+              //   path: "/maternity/family-planning-service",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
+              // {
+              //   name: "Labor Room Management",
+              //   path: "/maternity/labor-room-management",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
+              // {
+              //   name: "Postnatal Care",
+              //   path: "/maternity/postnatal-care",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
+              // {
+              //   name: "Antenatal Care",
+              //   path: "/maternity/antenatal-care",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
               {
                 name: "Maternity List",
                 path: "/maternity/maternity-list",
@@ -1114,14 +1213,14 @@ const SuperUserSignup = () => {
                 canAdd: true,
                 canDelete: true,
               },
-              {
-                name: "Breastfeeding Support",
-                path: "/maternity/breastfeeding-support",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
+              // {
+              //   name: "Breastfeeding Support",
+              //   path: "/maternity/breastfeeding-support",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
             ],
           },
           {
@@ -1160,14 +1259,6 @@ const SuperUserSignup = () => {
                 canAdd: true,
                 canDelete: true,
               },
-              {
-                name: "OPD",
-                path: "/patient/opd",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
             ],
           },
           {
@@ -1192,13 +1283,21 @@ const SuperUserSignup = () => {
                 canDelete: true,
               },
               {
-                name: "Notification",
-                path: "/laboratory/-notification",
+                name: "Rejected Reports",
+                path: "/laboratory/final-reports",
                 canEdit: true,
                 canView: true,
                 canAdd: true,
                 canDelete: true,
               },
+              // {
+              //   name: "Notification",
+              //   path: "/laboratory/-notification",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
               {
                 name: "Settings",
                 path: "/laboratory/settings",
@@ -1209,6 +1308,30 @@ const SuperUserSignup = () => {
               },
               {
                 name: "Sample Collection",
+                path: "/laboratory/sample-collection",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Uncollect Sample",
+                path: "/laboratory/sample-collection",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Reject Sample",
+                path: "/laboratory/sample-collection",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Sample Recieving",
                 path: "/laboratory/sample-collection",
                 canEdit: true,
                 canView: true,
@@ -1230,14 +1353,14 @@ const SuperUserSignup = () => {
             path: "/helpdesk",
             logo: "fa-solid fa-circle-info",
             submodules: [
-              {
-                name: "Bed Information",
-                path: "/helpdesk/bed-information",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
+              // {
+              //   name: "Bed Information",
+              //   path: "/helpdesk/bed-information",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
               {
                 name: "Employee Information",
                 path: "/helpdesk/employee-information",
@@ -1254,14 +1377,14 @@ const SuperUserSignup = () => {
                 canAdd: true,
                 canDelete: true,
               },
-              {
-                name: "Ward Information",
-                path: "/helpdesk/ward-information",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
+              // {
+              //   name: "Ward Information",
+              //   path: "/helpdesk/ward-information",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
             ],
           },
           {
@@ -1285,14 +1408,14 @@ const SuperUserSignup = () => {
                 canAdd: true,
                 canDelete: true,
               },
-              {
-                name: "Drug Registration",
-                path: "/inventory/drug-registration",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
+              // {
+              //   name: "Drug Registration",
+              //   path: "/inventory/drug-registration",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
               {
                 name: "Return To Vendor",
                 path: "/inventory/return-to-vendor",
@@ -1301,14 +1424,14 @@ const SuperUserSignup = () => {
                 canAdd: true,
                 canDelete: true,
               },
-              {
-                name: "Reports",
-                path: "/inventory/reports",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
+              // {
+              //   name: "Reports",
+              //   path: "/inventory/reports",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
             ],
           },
           {
@@ -1317,16 +1440,16 @@ const SuperUserSignup = () => {
             logo: "fa-solid fa-microscope",
             submodules: [
               {
-                name: "Sterilization",
-                path: "/cssd/sterilization",
+                name: "Cssd Master",
+                path: "/cssd/cssdmaster",
                 canEdit: true,
                 canView: true,
                 canAdd: true,
                 canDelete: true,
               },
               {
-                name: "Reports",
-                path: "/cssd/reports",
+                name: "Cssd Transaction",
+                path: "/cssd/cssdtransaction",
                 canEdit: true,
                 canView: true,
                 canAdd: true,
@@ -1536,6 +1659,14 @@ const SuperUserSignup = () => {
             logo: "fa-solid fa-hospital-user",
             submodules: [
               {
+                name: "Home",
+                path: "/adt/home",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
                 name: "Discharged Patients",
                 path: "/adt/discharged-patients",
                 canEdit: true,
@@ -1552,8 +1683,8 @@ const SuperUserSignup = () => {
                 canDelete: true,
               },
               {
-                name: "Search Patient",
-                path: "/adt/search-patient",
+                name: "Ip Admission",
+                path: "/adt/ipadmission",
                 canEdit: true,
                 canView: true,
                 canAdd: true,
@@ -1574,14 +1705,7 @@ const SuperUserSignup = () => {
                 canAdd: true,
                 canDelete: true,
               },
-              {
-                name: "Report",
-                path: "/pharmacy/report",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
+
               {
                 name: "Store",
                 path: "/pharmacy/store",
@@ -1598,14 +1722,14 @@ const SuperUserSignup = () => {
                 canAdd: true,
                 canDelete: true,
               },
-              {
-                name: "Supplier Ledger",
-                path: "/pharmacy/supplier-ledger",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
+              // {
+              //   name: "Supplier Ledger",
+              //   path: "/pharmacy/supplier-ledger",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
               {
                 name: "Setting",
                 path: "/pharmacy/setting",
@@ -1629,22 +1753,22 @@ const SuperUserSignup = () => {
             path: "/verification",
             logo: "fa-solid fa-check-double",
             submodules: [
-              {
-                name: "Document & Employment Verification",
-                path: "/verification/-document-&-employment-verification",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
-              {
-                name: "Identity Verification",
-                path: "/verification/identity-verification",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
+              // {
+              //   name: "Document & Employment Verification",
+              //   path: "/verification/-document-&-employment-verification",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
+              // {
+              //   name: "Identity Verification",
+              //   path: "/verification/identity-verification",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
               {
                 name: "Pharmacy",
                 path: "/verification/pharmacy",
@@ -1653,14 +1777,14 @@ const SuperUserSignup = () => {
                 canAdd: true,
                 canDelete: true,
               },
-              {
-                name: "Insurance Verification",
-                path: "/verification/insurance-verification",
-                canEdit: true,
-                canView: true,
-                canAdd: true,
-                canDelete: true,
-              },
+              // {
+              //   name: "Insurance Verification",
+              //   path: "/verification/insurance-verification",
+              //   canEdit: true,
+              //   canView: true,
+              //   canAdd: true,
+              //   canDelete: true,
+              // },
               {
                 name: "Inventory",
                 path: "/verification/inventory",
@@ -1734,6 +1858,10 @@ const SuperUserSignup = () => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       <button onClick={() => navigate("/home")} className="login-back-btn">
@@ -1774,15 +1902,29 @@ const SuperUserSignup = () => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="form-group" style={{ position: "relative" }}>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   className="login-box-input"
                   placeholder="Enter Password"
                   value={formData.password}
                   onChange={handleFormChange}
                 />
+                <i
+                  className={`fa ${showPassword ? "fa-eye-slash" : "fa-eye"}`}
+                  aria-hidden="true"
+                  id="showHidePassword"
+                  style={{
+                    position: "absolute",
+                    fontSize: "20px",
+                    right: "10px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    cursor: "pointer",
+                  }}
+                  onClick={togglePasswordVisibility}
+                ></i>
               </div>
               {error && <div className="error-message">{error}</div>}
               {successMessage && (

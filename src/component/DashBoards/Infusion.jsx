@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Infusion.css";
 import { API_BASE_URL } from "../api/api";
 
-const Infusion = ({ inPatientId, outPatientId }) => {
+const Infusion = ({ inPatientId, outPatientId, setIsModalOpen }) => {
   const [formData, setFormData] = useState({
     infusionNm: "",
     infusionGeneric: "",
@@ -74,6 +74,7 @@ const Infusion = ({ inPatientId, outPatientId }) => {
             ? { inPatient: { inPatientId } }
             : { outPatient: { outPatientId } }),
         });
+        setIsModalOpen(false);
       } else {
         console.error("Failed to save data:", response);
       }

@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { Calendar } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import { Calendar } from "lucide-react";
 import "../SSPharmacy/sSPharmacyReqCreateReq.css";
-import { API_BASE_URL } from '../../../api/api';
-import { useParams } from 'react-router-dom';
+import { API_BASE_URL } from "../../../api/api";
+import { useParams } from "react-router-dom";
 
 const SSPharmacyReqCreateReq = ({ onClose }) => {
   const { store } = useParams();
 
   // General Form States
-  const [requisitionDate, setRequisitionDate] = useState('');
-  const [issueNo, setIssueNo] = useState('');
-  const [remarks, setRemarks] = useState('');
+  const [requisitionDate, setRequisitionDate] = useState("");
+  const [issueNo, setIssueNo] = useState("");
+  const [remarks, setRemarks] = useState("");
   const [needVerification, setNeedVerification] = useState(true);
-  const [checkedBy, setCheckedBy] = useState('Mr. admin admin');
+  const [checkedBy, setCheckedBy] = useState("Mr. admin admin");
   const [chooseItem, setChooseItem] = useState([]);
 
   // Inventory Item State
   const [item, setItem] = useState({
-    itemId: '',
-    itemName: '',
-    unit: '',
-    availableQtyInStore: '',
-    requiredQuantity: '',
-    remark: '',
-    genericName: '',
-    batchNo: '',
-    expiryDate: '',
-    salePrice: ''
+    itemId: "",
+    itemName: "",
+    unit: "",
+    availableQtyInStore: "",
+    requiredQuantity: "",
+    remark: "",
+    genericName: "",
+    batchNo: "",
+    expiryDate: "",
+    salePrice: "",
   });
 
   // Array for storing multiple items
@@ -34,7 +34,7 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
 
   // Fetch items on mount
   useEffect(() => {
-    fetch(`${API_BASE_URL}/add-items`)
+    fetch(`${API_BASE_URL}/add-item`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -47,23 +47,25 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
   const handleItemSelection = (e) => {
     const selectedItemId = e.target.value;
     console.log(selectedItemId);
-  
+
     // Find the selected item from the chooseItem array
-    const selectedItem = chooseItem.find((item) => item.addItemId == selectedItemId);
-  
+    const selectedItem = chooseItem.find(
+      (item) => item.addItemId == selectedItemId
+    );
+
     if (selectedItem) {
       console.log(selectedItem);
       setItem({
-        itemId: selectedItem.addItemId || '', // Default to empty string
-        itemName: selectedItem.itemName || '', // Default to empty string
-        unit: selectedItem.unitOfMeasurementPayload?.name || '', // Default to empty string
-        availableQtyInStore: selectedItem.budgetedQuantity || 0, // Default to 0
-        requiredQuantity: '', // Keep it empty for user input
-        remark:'', // Default to empty string
-        genericName: selectedItem.genericNameDTO?.genericName || '', // Default to empty string
-        batchNo: selectedItem.batchNo || '', // Default to empty string
-        expiryDate: selectedItem.expiryDate || '', // Default to empty string
-        salePrice: selectedItem.salesRate || 0, // Default to 0
+        itemId: selectedItem.addItemId || "", // Default to empty string
+        itemName: selectedItem?.itemMaster?.itemName || "", // Default to empty string
+        unit: selectedItem.itemMaster?.unitsOfMeasurement?.name || "", // Default to empty string
+        availableQtyInStore: selectedItem.itemQty || 0, // Default to 0
+        requiredQuantity: "", // Keep it empty for user input
+        remark: "", // Default to empty string
+        genericName: selectedItem.itemMaster?.genericNames?.genericName || "", // Default to empty string
+        batchNo: selectedItem.batchNo || "", // Default to empty string
+        expiryDate: selectedItem.expiryDate || "", // Default to empty string
+        salePrice: selectedItem.salePrice || 0, // Default to 0
       });
     }
   };
@@ -73,42 +75,43 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
       return;
     }
 
-    setItemsList(prevItems => [...prevItems, item]);
+    setItemsList((prevItems) => [...prevItems, item]);
 
     // Reset item fields
     setItem({
-      itemId: '',
-      itemName: '',
-      unit: '',
-      availableQtyInStore: '',
-      requiredQuantity: '',
-      remark: '',
-      genericName: '',
-      batchNo: '',
-      expiryDate: '',
-      salePrice: ''
+      itemId: "",
+      itemName: "",
+      unit: "",
+      availableQtyInStore: "",
+      requiredQuantity: "",
+      remark: "",
+      genericName: "",
+      batchNo: "",
+      expiryDate: "",
+      salePrice: "",
     });
   };
-
+  console.log(itemsList);
+  
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!issueNo) {
-      alert('Issue No is required.');
+      alert("Issue No is required.");
       return;
     }
 
     const payload = {
       issueNo: issueNo,
       requestedDate: requisitionDate,
-      status: 'Pending',
+      status: "Pending",
       verifyBy: checkedBy,
       remarks: remarks,
       subStore: {
-        subStoreId: store // Assuming `store` from useParams is equivalent to `subStoreId`
+        subStoreId: store, // Assuming `store` from useParams is equivalent to `subStoreId`
       },
-      subPharmRequisitionItems:itemsList.map((item) => ({
+      subPharmRequisitionItems: itemsList.map((item) => ({
         items: {
           addItemId: item.itemId,
         },
@@ -122,26 +125,26 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
       console.log(payload);
 
       const response = await fetch(`${API_BASE_URL}/subpharm-requisitions`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {
         const result = await response.json();
-        console.log('Requisition submitted successfully:', result);
-        alert('Requisition submitted successfully!');
+        console.log("Requisition submitted successfully:", result);
+        alert("Requisition submitted successfully!");
         onClose(false); // Close the form/modal
       } else {
         const errorData = await response.json();
-        console.error('Failed to submit requisition:', errorData);
-        alert('Failed to submit requisition. Please try again.');
+        console.error("Failed to submit requisition:", errorData);
+        alert("Failed to submit requisition. Please try again.");
       }
     } catch (error) {
-      console.error('Error submitting requisition:', error);
-      alert('An error occurred while submitting the requisition.');
+      console.error("Error submitting requisition:", error);
+      alert("An error occurred while submitting the requisition.");
     }
   };
 
@@ -193,43 +196,92 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
           </thead>
           <tbody>
             <tr>
-            <td>
-  <select
-    value={item.itemId}
-    onChange={handleItemSelection}
-    className="SSPharmacy-input"
-  >
-    <option value="">Select Item</option>
-    {chooseItem.map((item, index) => (
-      <option key={index} value={item.addItemId}>
-        {item.itemName}
-      </option>
-    ))}
-  </select>
-</td>
+              <td>
+                <select
+                  value={item.itemId}
+                  onChange={handleItemSelection}
+                  className="SSPharmacy-input"
+                >
+                  <option value="">Select Item</option>
+                  {chooseItem.map((item, index) => (
+                    <option key={index} value={item.addItemId}>
+                      {item?.itemMaster?.itemName}
+                    </option>
+                  ))}
+                </select>
+              </td>
 
               <td>
-                <input type="text" className='SSPharmacy-input' value={item.unit} readOnly />
-              </td>
-              <td>
-                <input type="number" className='SSPharmacy-input' value={item.availableQtyInStore} readOnly />
+                <input
+                  type="text"
+                  className="SSPharmacy-input"
+                  value={item.unit}
+                  readOnly
+                />
               </td>
               <td>
                 <input
                   type="number"
-                  className='SSPharmacy-input'
+                  className="SSPharmacy-input"
+                  value={item.availableQtyInStore}
+                  readOnly
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  className="SSPharmacy-input"
                   value={item.requiredQuantity}
-                  onChange={(e) => setItem({ ...item, requiredQuantity: e.target.value })}
+                  onChange={(e) =>
+                    setItem({ ...item, requiredQuantity: e.target.value })
+                  }
                   min="1"
                 />
               </td>
-              <td><input type="text" className='SSPharmacy-input' value={item.genericName} readOnly /></td>
-              <td><input type="text" className='SSPharmacy-input' value={item.batchNo} readOnly /></td>
-              <td><input type="date" className='SSPharmacy-input' value={item.expiryDate} readOnly /></td>
-              <td><input type="number" className='SSPharmacy-input' value={item.salePrice} readOnly /></td>
-              <td><input type="text" className='SSPharmacy-input' value={item.remark}  onChange={(e) => setItem({ ...item, remark: e.target.value })} /></td>
               <td>
-                <button type="button" onClick={handleAddItem}>Add</button>
+                <input
+                  type="text"
+                  className="SSPharmacy-input"
+                  value={item.genericName}
+                  readOnly
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  className="SSPharmacy-input"
+                  value={item.batchNo}
+                  readOnly
+                />
+              </td>
+              <td>
+                <input
+                  type="date"
+                  className="SSPharmacy-input"
+                  value={item.expiryDate}
+                  readOnly
+                />
+              </td>
+              <td>
+                <input
+                  type="number"
+                  className="SSPharmacy-input"
+                  value={item.salePrice}
+                  readOnly
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  className="SSPharmacy-input"
+                  value={item.remark}
+                  onChange={(e) => setItem({ ...item, remark: e.target.value })}
+                />
+              </td>
+              <td>
+                <button type="button" onClick={handleAddItem}>
+                  Add
+                </button>
               </td>
             </tr>
           </tbody>
@@ -253,7 +305,11 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
                 <td>{addedItem.requiredQuantity}</td>
                 <td>{addedItem.remark}</td>
                 <td>
-                  <button onClick={() => setItemsList(itemsList.filter((_, i) => i !== index))}>
+                  <button
+                    onClick={() =>
+                      setItemsList(itemsList.filter((_, i) => i !== index))
+                    }
+                  >
                     Remove
                   </button>
                 </td>
@@ -264,7 +320,12 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
 
         {/* Form Actions */}
         <div className="sSPharmacyReqCreateReq-form-actions">
-          <button type="submit" className="sSPharmacyReqCreateReq-submit-button">Request</button>
+          <button
+            type="submit"
+            className="sSPharmacyReqCreateReq-submit-button"
+          >
+            Request
+          </button>
           <button
             type="button"
             className="sSPharmacyReqCreateReq-cancel-button"

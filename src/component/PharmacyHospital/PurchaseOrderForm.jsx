@@ -1,9 +1,7 @@
-/* Mohini_PurchaseOrderForm_WholePage_14/sep/2024 */
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import './PurchaseOrderForm.css';
-import { API_BASE_URL } from '../api/api';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import "./PurchaseOrderForm.css";
+import { API_BASE_URL } from "../api/api";
 
 const PurchaseOrderForm = () => {
   const [formVisible, setFormVisible] = useState(true);
@@ -25,28 +23,24 @@ const PurchaseOrderForm = () => {
   const [vatPercentage, setVatPercentage] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
   const [remarks, setRemarks] = useState("");
-
-
-
   const [formData, setFormData] = useState({
     supplier: {
-      suppliersId: ''
+      suppliersId: "",
     },
-    poDate: '',
-    deliveryDate: '',
-    referenceNo: '',
-    deliveryAddress: '',
-    contact: '',
-    deliveryDays: '',
-    invoicingAddress: '',
+    poDate: "",
+    deliveryDate: "",
+    referenceNo: "",
+    deliveryAddress: "",
+    contact: "",
+    deliveryDays: "",
+    invoicingAddress: "",
 
     goodReceiptItems: [
       {
-
         addItem: {
-          addItemId: ''
-
+          addItemId: "",
         },
+
         genericName,
         batchNumber,
         rackNumber,
@@ -63,140 +57,221 @@ const PurchaseOrderForm = () => {
         discountPercentage,
         vatPercentage,
         totalAmount,
-        remarks
-      }],
+        remarks,
+      },
+    ],
 
     subtotal: 0,
     discountPercentage: 0,
-    discount: 0,
     taxableAmount: 0,
     nonTaxableAmount: 0,
     vatAmount: 0,
     ccCharge: 0,
     discountAmount: 0,
     totalAmount: 0,
-    remarks: '',
-    inWords: '',
+    remarks: "",
+    inWords: "",
   });
 
   const [items, setItems] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
-  const [availableItems, setAvailableItems] = useState([]);  // Added to store available items
+  const [availableItems, setAvailableItems] = useState([]);
   const [availableGenerics, setAvailableGenerics] = useState([]);
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/suppliers`)
-
-      .then(response => {
+    axios
+      .get(`${API_BASE_URL}/suppliers`)
+      .then((response) => {
         setSuppliers(response.data);
       })
-      .catch(error => {
-        console.error('There was an error fetching the suppliers!', error);
+      .catch((error) => {
+        console.error("There was an error fetching the suppliers!", error);
       });
 
-    axios.get(`${API_BASE_URL}/add-items`)
-      .then(response => {
-        setAvailableItems(response.data);  // Store the available items
+    axios
+      .get(`${API_BASE_URL}/pharmacy-item-master`)
+      .then((response) => {
+        setAvailableItems(response.data);
+        console.log(response.data);
+        console.log(
+          "777777",
+          availableItems?.dependentStocks?.pharmacyDependentStockId
+        );
       })
-      .catch(error => {
-        console.error('There was an error fetching the items!', error);
+      .catch((error) => {
+        console.error("There was an error fetching the items!", error);
       });
-
-    axios.get(`${API_BASE_URL}/generic-names`) // Replace with your API endpoint for generics
-      .then(response => {
-        setAvailableGenerics(response.data);  // Store the available generics
+    axios
+      .get(`${API_BASE_URL}/generic-names`)
+      .then((response) => {
+        setAvailableGenerics(response.data);
       })
-      .catch(error => {
-        console.error('There was an error fetching the generics!', error);
+      .catch((error) => {
+        console.error("There was an error fetching the generics!", error);
       });
-
-
   }, []);
 
   const handleSupplierChange = (e) => {
-    const selectedSupplier = e.target.value;  // Get the selected supplier ID
-    setFormData(prevState => ({
+    const selectedSupplier = e.target.value;
+    setFormData((prevState) => ({
       ...prevState,
-      supplier: selectedSupplier  // Update the state with the selected supplier ID
+      supplier: selectedSupplier,
+      supplierid: selectedSupplier.suppliersId,
     }));
     setSelectedSupplierId(selectedSupplier);
-
-    // Optionally, you can log or alert the selected supplier ID for debugging
   };
-
-  const handleInputChange = (e) => {
+  
+  const handleChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value, // Update the formData directly with the name and value
     }));
   };
 
-
-  const handleItemChange = (index, e) => {
+  const handleInputChange = (index, e) => {
     const { name, value } = e.target;
-    const updatedItems = [...items];
-
-    // Check if the item has a valid addItemId when selecting an item
-    if (name === 'itemName') {
-      const selectedItem = availableItems.find(item => item.itemName === value);
-      if (selectedItem) {
-        updatedItems[index].addItemId = selectedItem.addItemId; // Assign addItemId here
-      }
-    }
-
-    updatedItems[index] = { ...updatedItems[index], [name]: value };
-
-    // Recalculate other fields based on the item changes
-    if (name === 'quantity' || name === 'freeQty') {
-      const quantity = parseFloat(updatedItems[index].quantity) || 0;
-      const freeQty = parseFloat(updatedItems[index].freeQty) || 0;
-      updatedItems[index].totalQty = quantity + freeQty; // Update totalQty
-    }
-    if (name === 'quantity' || name === 'rate') {
-      const quantity = parseFloat(updatedItems[index].quantity) || 0;
-      const rate = parseFloat(updatedItems[index].rate) || 0;
-      updatedItems[index].subtotal = quantity * rate; // Update subtotal
-    }
-
-    if (name === 'discountPercentage' || name === 'vatPercentage' || name === 'ccChargePercentage') {
-      const discountPercentage = parseFloat(updatedItems[index].discountPercentage) || 0;
-      const vatPercentage = parseFloat(updatedItems[index].vatPercentage) || 0;
-      const ccChargePercentage = parseFloat(updatedItems[index].ccChargePercentage) || 0;
-      const subtotal = updatedItems[index].subtotal || 0;
-
-      updatedItems[index].discountAmount = (discountPercentage / 100) * subtotal;
-      updatedItems[index].vatAmount = (vatPercentage / 100) * subtotal;
-      updatedItems[index].ccChargeAmount = (ccChargePercentage / 100) * subtotal;
-
-      updatedItems[index].totalAmount = subtotal - updatedItems[index].discountAmount + updatedItems[index].vatAmount + updatedItems[index].ccChargeAmount;
-    }
-
-    setItems(updatedItems);
+  
+    setItems((prevItems) =>
+      prevItems.map((item, idx) => {
+        if (idx === index) {
+          const updatedItem = { ...item, [name]: value };
+  
+          if (name === "itemName") {
+            const selectedItem = availableItems.find((i) => i.itemName === value);
+            if (selectedItem) {
+              updatedItem.standardRate = parseFloat(selectedItem.mrpItem || 0);
+              updatedItem.pharmacyItemMasterDTO = {
+                pharmacyItemMasterId: selectedItem.pharmacyItemMasterId, // Assign item master ID
+              };
+            }
+          }
+  
+          // Perform calculations only when relevant fields are updated
+          const itemQuantity = parseInt(updatedItem.itemQuantity || 0, 10);
+          const freeQuantity = parseInt(updatedItem.freeQuantity || 0, 10);
+          const standardRate = parseFloat(updatedItem.standardRate || 0);
+          const ccChargePercentage = parseFloat(updatedItem.ccChargePercentage || 0);
+          const discountPercentage = parseFloat(updatedItem.discountPercentage || 0);
+          const vatPercentage = parseFloat(updatedItem.vatPercentage || 0);
+  
+          // Calculate totals
+          updatedItem.totalQuantity = itemQuantity + freeQuantity;
+          updatedItem.subtotal = updatedItem.totalQuantity * standardRate;
+  
+          // CC charge calculation
+          const ccCharge = (updatedItem.subtotal * ccChargePercentage) / 100;
+          const subtotalAfterCC = updatedItem.subtotal + ccCharge;
+  
+          // Discount calculation
+          const discountAmount = (subtotalAfterCC * discountPercentage) / 100;
+          const subtotalAfterDiscount = subtotalAfterCC - discountAmount;
+  
+          // VAT calculation
+          const vatAmount = (subtotalAfterDiscount * vatPercentage) / 100;
+  
+          // Total amount calculation
+          const totalAmount = subtotalAfterDiscount + vatAmount;
+  
+          // Set calculated values
+          updatedItem.ccChargeAmount = ccCharge.toFixed(2);
+          updatedItem.discountAmount = discountAmount.toFixed(2);
+          updatedItem.vatAmount = vatAmount.toFixed(2);
+          updatedItem.totalAmount = totalAmount.toFixed(2);
+  
+          return updatedItem;
+        }
+        return item;
+      })
+    );
   };
+  
+  useEffect(()=>{
+    calculateFormDataTotals()
+  },[items])
+  
+  const calculateFormDataTotals = () => {
+    let overallVatAmount = 0;
+    let overallCcCharge = 0;
+    let overallTaxableAmount = 0;
+    let overallNonTaxableAmount = 0;
+    let overallTotalAmount = 0;
+    let overallDiscountAmount = 0;
+    let overallSubTotal = 0;
+  
+    setItems((prevItems) => {
+      // Check if prevItems is an array
+      if (!Array.isArray(prevItems)) {
+        console.error("prevItems is not an array:", prevItems);
+        return prevItems; // Return the original data without modification
+      }
+  
+      const updatedItems = prevItems.map((item) => {
+        // Convert values to numbers
+        const subtotal = parseFloat(item.subtotal || 0);
+        const discountAmount = parseFloat(item.discountAmount || 0);
+        const vatAmount = parseFloat(item.vatAmount || 0);
+        const ccChargeAmount = parseFloat(item.ccChargeAmount || 0);
+                
+        overallVatAmount += vatAmount;
+        overallCcCharge += ccChargeAmount;
+        overallDiscountAmount += discountAmount;
+        overallSubTotal += subtotal;
+  
+        // Assuming non-taxable amount is simply the discount
+        overallNonTaxableAmount += discountAmount;
+        overallTotalAmount += subtotal;
+  
+        // Taxable amount = subtotal - non-taxable amount
+        overallTaxableAmount += subtotal - discountAmount;
+  
+        return {
+          ...item,
+          subtotal: subtotal.toFixed(2),
+          discountAmount: discountAmount.toFixed(2),
+          vatAmount: vatAmount.toFixed(2),
+          ccChargeAmount: ccChargeAmount.toFixed(2),
+        };
+      });
+      return updatedItems; // Return the updated items
+    });
 
+    setFormData((prevData) => ({
+      ...prevData,
+      subtotal: overallSubTotal.toFixed(2),
+      vatAmount: overallVatAmount.toFixed(2),
+      ccCharge: overallCcCharge.toFixed(2),
+      taxableAmount: overallTaxableAmount.toFixed(2),
+      nonTaxableAmount: overallNonTaxableAmount.toFixed(2),
+      totalAmount: overallTotalAmount.toFixed(2),
+      discountAmount: overallDiscountAmount.toFixed(2),
+    }));
+  };
+  
 
   const addItem = () => {
-    setItems([...items, {
-      genericName: '',
-      quantity: '0',
-      freeQty: '0',
-      totalQty: '0',
-      rate: '0',
-      subtotal: '0',
-      ccChargePercentage: '0',
-      ccChargeAmount: '0',
-      discountPercentage: '0',
-      discountAmount: '0',
-      vatPercentage: '0',
-      vatAmount: '0',
-      totalAmount: '0',
-      remarks: ''
-    }]);
+    setItems([
+      ...items,
+      {
+        genericName: "",
+        quantity: 0,
+        freeQty: 0,
+        totalQty: 0,
+        standardRate: 0,
+        subtotal: 0,
+        ccChargePercentage: 0,
+        ccChargeAmount: 0,
+        discountPercentage: 0,
+        discountAmount: 0,
+        vatPercentage: 0,
+        vatAmount: 0,
+        totalAmount: 0,
+        remarks: "",
+      },
+    ]);
   };
 
+  console.log("added row item ", items);
   const removeItem = (index) => {
     setItems(items.filter((_, i) => i !== index));
   };
@@ -212,293 +287,415 @@ const PurchaseOrderForm = () => {
       alert("Please select a supplier.");
       return;
     }
-
-    // Form data structured according to your format
+    console.log("selected ", selectedSupplierId);
     const data = {
-      supplier: {
-        suppliersId: selectedSupplierId, // Ensure selectedSupplierId is used correctly
-      },
       poDate: formData.poDate,
-      deliveryDate: formData.deliveryDate,
-      referenceNo: formData.referenceNo,
+      deliveryDays: parseInt(formData.deliveryDays) || 0,  // Make sure it's an integer
       deliveryAddress: formData.deliveryAddress,
+      deliveryDate: formData.deliveryDate,
+      referenceNumber: formData.referenceNo,
       contact: formData.contact,
-      deliveryDays: formData.deliveryDays,
       invoicingAddress: formData.invoicingAddress,
-      subtotal: items.reduce((acc, item) => acc + parseFloat(item.subtotal || 0), 0).toFixed(2),
-      discountPercentage: (items.reduce((acc, item) => acc + parseFloat(item.discountPercentage || 0), 0) / items.length).toFixed(2),
-      discount: (items.reduce((acc, item) => acc + parseFloat(item.discountAmount || 0), 0) / items.length).toFixed(2),
-      taxableAmount: items.reduce(
-        (acc, item) => acc + (parseFloat(item.subtotal || 0) - parseFloat(item.discountAmount || 0)),
-        0
-      ).toFixed(2),
-      nonTaxableAmount: items.reduce(
-        (acc, item) => acc + parseFloat(item.discountAmount || 0),
-        0
-      ).toFixed(2),
-      vatAmount: items.reduce((acc, item) => acc + parseFloat(item.vatAmount || 0), 0).toFixed(2),
-      ccCharge: items.reduce((acc, item) => acc + parseFloat(item.ccChargeAmount || 0), 0).toFixed(2),
-      // discountAmount: formData.discountAmount,
-      totalAmount: items.reduce((acc, item) => acc + parseFloat(item.totalAmount || 0), 0).toFixed(2),
+  
+      subTotal: parseInt(formData.subtotal) || 0,  // Convert to int
+      taxableAmount: parseInt(formData.taxableAmount) || 0,  // Convert to int
+      vatAmount: parseInt(formData.vatAmount) || 0,  // Convert to int
+      discountAmount: parseInt(formData.discountAmount) || 0,  // Convert to int
       inWords: formData.inWords,
-      goodReceiptItems: items.map(item => ({
-        addItem: {
-          addItemId: item.addItemId // Ensure addItemId is included
+      discountPercent: parseInt(formData.discountPercentage) || 0,  // Convert to int
+      nonTaxableAmount: parseInt(formData.nonTaxableAmount) || 0,  // Convert to int
+      ccCharge: parseInt(formData.ccCharge) || 0,  // Convert to int
+      totalAmount: parseInt(formData.totalAmount) || 0,  // Convert to int
+      supplierDTO: {
+        suppliersId: selectedSupplierId,
+      },
+      purchaseOrderItemDTOs: items.map((item) => ({
+        quantity: parseInt(item.itemQuantity) || 0,  // Convert to int
+        freeQuantity: parseInt(item.freeQuantity) || 0,  // Convert to int
+        totalQuantity: parseInt(item.totalQuantity) || 0,  // Convert to int
+        vatPercentage: parseInt(item.vatPercentage) || 0,  // Convert to int
+        standardRate:parseInt(item.standardRate) ||0,
+        subTotal: parseInt(item.subtotal) || 0,  // Convert to int
+        ccCharge: parseInt(item.ccCharge) || 0,  // Convert to int
+        discountPercent: parseInt(item.discountPercentage) || 0,  // Convert to int
+        totalAmount: parseInt(item.totalAmount) || 0,  // Convert to int
+        remarks: item.remarks,
+        pharmacyItemMasterDTO: {
+          pharmacyItemMasterId:
+            item.pharmacyItemMasterDTO?.pharmacyItemMasterId || 0,  // Ensure it's an int or 0 if undefined
         },
-        genericName: item.genericName,
-        batchNumber: item.batchNumber,
-        rackNumber: item.rackNumber,
-        expiryDate: item.expiryDate,
-        itemQuantity: item.quantity,
-        freeQuantity: item.freeQty,
-        totalQuantity: item.totalQty,
-        standardRate: item.rate,
-        marginPercentage: item.marginPercentage,
-        salePrice: item.salePrice,
-        freeAmount: item.freeAmount,
-        ccChargePercentage: item.ccChargePercentage,
-        subTotal: item.subtotal,
-        discountPercentage: item.discountPercentage,
-        vatPercentage: item.vatPercentage,
-        totalAmount: item.totalAmount,
-        remarks: item.remarks
-      }))
+      })),
     };
-    
-console.log(data);
 
-    // Now, send this data in the required format to the backend
-    axios.post(`${API_BASE_URL}/purchase-orders`, data)
-      .then(response => {
-        alert('Purchase order saved successfully!');
+    console.log(data);
+
+    axios
+      .post(`${API_BASE_URL}/purchaseorders/add`, data)
+      .then((response) => {
+        alert("Purchase order saved successfully!");
       })
-      .catch(error => {
-        console.error('There was an error saving the purchase order!', error);
-        alert('Failed to save purchase order.');
+      .catch((error) => {
+        console.error("There was an error saving the purchase order!", error);
+        alert("Failed to save purchase order.");
       });
-      
   };
-
 
   if (!formVisible) {
     return null;
   }
 
   return (
-    <form  onSubmit={handleSubmit}>
-
-      {/* <button className="purchase-order-close-button" onClick={handleCloseForm}>
-        &times;
-      </button> */}
-      <div className='div-add-good-purchase'>
-        <h5 >Add Purchase Order</h5>
+    <form className="purchase-order-form" onSubmit={handleSubmit}>
+      <div className="div-add-good-purchase">
+        <h5>Add Purchase Order</h5>
       </div>
-      <div className="purchase-order-form-form-row">
-        <div className="purchase-order-form-form-group">
-          <label>Supplier:*</label>
-          <select name="supplier" value={formData.supplier} onChange={handleSupplierChange}>
+      <div className="purchase-order-form-summary">
+        <div className="purchase-order-form-item">
+          <label>
+            Supplier:<span className="purchase-span">*</span>
+          </label>
+          <select
+            name="supplier"
+            value={formData.supplier}
+            onChange={handleSupplierChange}
+          >
             <option value="">Select Supplier</option>
-            {suppliers.map(supplier => (
-              <option key={supplier.suppliersId} value={supplier.suppliersId}>{supplier.supplierName}</option>
-
-
+            {suppliers.map((supplier) => (
+              <option key={supplier.suppliersId} value={supplier.suppliersId}>
+                {supplier.supplierName}
+              </option>
             ))}
           </select>
         </div>
-        <div className="purchase-order-form-form-group">
-          <label>PO Date:*</label>
-          <input type="date" name="poDate" value={formData.poDate} onChange={handleInputChange} />
+        <div className="purchase-order-form-item">
+          <label>
+            PO Date:<span className="purchase-span">*</span>
+          </label>
+          <input
+            type="date"
+            name="poDate"
+            value={formData.poDate}
+            onChange={handleChangeInput}
+          />
         </div>
-        <div className="purchase-order-form-form-group">
+        <div className="purchase-order-form-item">
           <label>Delivery Days:</label>
-          <input type="number" name="deliveryDays" value={formData.deliveryDays} onChange={handleInputChange} />
+          <input
+            type="number"
+            name="deliveryDays"
+            value={formData.deliveryDays}
+            onChange={handleChangeInput}
+          />
         </div>
-        <div className="purchase-order-form-form-group">
+        <div className="purchase-order-form-item">
           <label>Delivery Address:</label>
-          <textarea className="purchase-order-textare" name="deliveryAddress" value={formData.deliveryAddress} onChange={handleInputChange}></textarea>
+          <input
+            name="deliveryAddress"
+            value={formData.deliveryAddress}
+            onChange={handleChangeInput}
+          ></input>
         </div>
-      </div>
 
-      <div className="purchase-order-form-form-row">
-        <div className="purchase-order-form-form-group">
+        <div className="purchase-order-form-item">
           <label>Delivery Date:</label>
-          <input type="date" name="deliveryDate" value={formData.deliveryDate} onChange={handleInputChange} />
+          <input
+            type="date"
+            name="deliveryDate"
+            value={formData.deliveryDate}
+            onChange={handleChangeInput}
+          />
         </div>
-        <div className="purchase-order-form-form-group">
+        <div className="purchase-order-form-item">
           <label>Reference No.:</label>
-          <input type="text" name="referenceNo" value={formData.referenceNo} onChange={handleInputChange} />
+          <input
+            type="text"
+            name="referenceNo"
+            value={formData.referenceNo}
+            onChange={handleChangeInput}
+          />
         </div>
 
-        <div className="purchase-order-form-form-group">
+        <div className="purchase-order-form-item">
           <label>Contact:</label>
-          <input type="text" name="contact" value={formData.contact} onChange={handleInputChange} />
+          <input
+            type="text"
+            name="contact"
+            value={formData.contact}
+            onChange={handleChangeInput}
+          />
         </div>
-        <div className="purchase-order-form-form-group">
+        <div className="purchase-order-form-item">
           <label>Invoicing Address:</label>
-          <textarea className="purchase-order-textare" name="invoicingAddress" value={formData.invoicingAddress} onChange={handleInputChange}></textarea>
+          <input
+            name="invoicingAddress"
+            value={formData.invoicingAddress}
+            onChange={handleChangeInput}
+          ></input>
         </div>
-
-
+        <div className="purchase-order-form-item"></div>
       </div>
 
-
-
-      <table className="purchase-order-form-items-table" ref={tableRef}>
-        <thead>
-          <tr>
-            {[
-              "Generic Name",
-              "Item Name",
-              "Quantity",
-              "Free Qty",
-              "Total Qty",
-              "Standard Rate",
-              "SubTotal",
-              "CCCharge %",
-              "Dis %",
-              "VAT %",
-              "Total Amt",
-              "Remarks",
-              "Action"
-            ].map((header, index) => (
-              <th
-                key={index}
-                style={{ width: columnWidths[index] }}
-                className="resizable-th"
-              >
-                <div className="header-content">
-                  <span>{header}</span>
-                  <div
-                    className="resizer"
-                    onMouseDown={startResizing(
-                      tableRef,
-                      setColumnWidths
-                    )(index)}
-                  ></div>
-                </div>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item, index) => (
-            <tr key={index}>
-              <td>
-                <select name="genericName" value={item.genericName} onChange={(e) => handleItemChange(index, e)}>
-                  <option value="">Select Generic Name</option>
-                  {availableGenerics.map((availableGeneric) => (
-                    <option key={availableGeneric.genericNameId} value={availableGeneric.genericName}>
-                      {availableGeneric.genericName}
-                    </option>
-                  ))}
-                </select>
-              </td>
-              <td>
-                <select name="itemName" value={item.itemName} onChange={(e) => handleItemChange(index, e)}>
-                  <option value="">Select Item</option>
-                  {availableItems.map((availableItem) => (
-                    <option key={availableItem.itemId} value={availableItem.itemName}>
-                      {availableItem.itemName}
-                    </option>
-                  ))}
-                </select>
-              </td>              <td><input type="number" name="quantity" value={item.quantity} onChange={(e) => handleItemChange(index, e)} /></td>
-              <td><input type="number" name="freeQty" value={item.freeQty} onChange={(e) => handleItemChange(index, e)} /></td>
-              <td><input type="number" name="totalQty" value={item.totalQty} onChange={(e) => handleItemChange(index, e)} disabled /></td>
-              <td><input type="number" name="rate" value={item.rate} onChange={(e) => handleItemChange(index, e)} /></td>
-              <td><input type="number" name="subtotal" value={item.subtotal} onChange={(e) => handleItemChange(index, e)} disabled /></td>
-              <td><input type="number" name="ccChargePercentage" value={item.ccChargePercentage} onChange={(e) => handleItemChange(index, e)} /></td>
-              <td><input type="number" name="discountPercentage" value={item.discountPercentage} onChange={(e) => handleItemChange(index, e)} /></td>
-              <td><input type="number" name="vatPercentage" value={item.vatPercentage} onChange={(e) => handleItemChange(index, e)} /></td>
-              <td><input type="number" name="totalAmount" value={item.totalAmount} onChange={(e) => handleItemChange(index, e)} disabled /></td>
-              <td><input type="text" name="remarks" value={item.remarks} onChange={(e) => handleItemChange(index, e)} /></td>
-              <td>
-                <button type="button" className='purchase-btn-order' onClick={() => removeItem(index)}>Remove</button>
-              </td>
+      <div className="purchase-order-com-tab">
+        <table className="order-purchase-table">
+          <thead>
+            <tr>
+              {[
+                "Generic Name",
+                "Item Name",
+                "Quantity",
+                "Free Qty",
+                "Total Qty",
+                "Standard Rate",
+                "SubTotal",
+                "CCCharge %",
+                "Dis %",
+                "VAT %",
+                "Total Amt",
+                "Remarks",
+                "Action",
+              ].map((header, index) => (
+                <th key={index}>{header}</th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-
-
-      <div className="purchase-order-form-summary-buttons" style={{ textAlign: "right" }}>
-        <button type="button" className='purchase-btn-order' onClick={addItem}>Add Item</button>
-      </div><br></br>
-      <div className='goods-receipt-totals-section'>
-
-
+          </thead>
+          <tbody>
+            {items?.map((item, index) => (
+              <tr key={index}>
+                <td>
+                  <select
+                    className="purchse-order-in"
+                    name="genericName"
+                    value={item.genericNameId}
+                    onChange={(e) => handleInputChange(index, e)} // Use correct function
+                  >
+                    <option value="">Select Generic Name</option>
+                    {availableGenerics.map((availableGeneric) => (
+                      <option
+                        key={availableGeneric.genericNameId}
+                        value={availableGeneric.genericName}
+                      >
+                        {availableGeneric.genericName}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  <select
+                    className="purchse-order-in"
+                    name="itemName"
+                    value={item.itemName}
+                    onChange={(e) => handleInputChange(index, e)}
+                  >
+                    <option value="">Select Item</option>
+                    {availableItems.map((availableItem) => (
+                      <option
+                        key={availableItem.itemId}
+                        value={availableItem.itemName}
+                      >
+                        {availableItem.itemName}
+                      </option>
+                    ))}
+                  </select>
+                </td>{" "}
+                <td>
+                  <input
+                    type="number"
+                    name="itemQuantity"
+                    value={item.itemQuantity}
+                    onChange={(e) => handleInputChange(index, e)}
+                    className="purchse-order-in"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="freeQuantity"
+                    value={item.freeQuantity}
+                    onChange={(e) => handleInputChange(index, e)}
+                    className="purchse-order-in"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="totalQuantity"
+                    value={item.totalQuantity}
+                    onChange={(e) => handleInputChange(index, e)}
+                    className="purchse-order-in"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="standardRate"
+                    value={item.standardRate || "0"} // Use updated standardRate
+                    onChange={(e) => handleInputChange(index, e)}
+                    className="purchse-order-in"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="subtotal"
+                    value={item.subtotal}
+                    onChange={(e) => handleInputChange(index, e)}
+                    className="purchse-order-in"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="ccChargePercentage"
+                    value={item.ccChargePercentage}
+                    onChange={(e) => handleInputChange(index, e)}
+                    className="purchse-order-in"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="discountPercentage"
+                    value={item.discountPercentage}
+                    onChange={(e) => handleInputChange(index, e)}
+                    className="purchse-order-in"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="vatPercentage"
+                    value={item.vatPercentage}
+                    onChange={(e) => handleInputChange(index, e)}
+                    className="purchse-order-in"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="totalAmount"
+                    value={item.totalAmount}
+                    onChange={(e) => handleInputChange(index, e)}
+                    disabled
+                    className="purchse-order-in"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    name="remarks"
+                    value={item.remarks}
+                    onChange={(e) => handleInputChange(index, e)}
+                    className="purchse-order-in"
+                  />
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    className="purchase-btn-order"
+                    onClick={() => removeItem(index)}
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="purchase-order-form-summary-buttons">
+        <button type="button" className="purchase-btn-order" onClick={addItem}>
+          Add Item
+        </button>
+      </div>
+      <br></br>
+      <div className="goods-receipt-totals-section">
         <div className="purchase-order-form-summary">
-          <div className="purchase-order-form-summary-item">
+          <div className="purchase-order-form-item">
             <label>Sub Total:</label>
-            <input type="text" name="subtotal"
-              value={items.reduce((acc, item) => acc + parseFloat(item.subtotal || 0), 0).toFixed(2)}
-
-              readOnly />
-            {/* </div> */}
-            {/* <div className="purchase-order-form-summary-item"> */}
+            <input
+              type="text"
+              name="subtotal"
+              value={formData.subtotal}
+              readOnly
+            />
+          </div>
+          <div className="purchase-order-form-item">
             <label>Discount %:</label>
-            <input type="number" name="discountPercentage"
-              value={
-                items.length > 0
-                  ? (items.reduce((acc, item) => acc + parseFloat(item.discountPercentage || 0), 0) / items.length).toFixed(2)
-                  : 0
-              } onChange={handleInputChange} />
+            <input
+              type="number"
+              name="discountPercentage"
+              onChange={handleInputChange}
+            />
           </div>
-          <div className="purchase-order-form-summary-item">
+          <div className="purchase-order-form-item">
             <label>Taxable Amount:</label>
-            <input type="number" name="taxableAmount"
-              value={items.reduce(
-                (acc, item) =>
-                  acc +
-                  (parseFloat(item.subtotal || 0) - parseFloat(item.discountAmount || 0)),
-                0
-              ).toFixed(2)} onChange={handleInputChange} />
-            {/* </div>
-        <div className="purchase-order-form-summary-item"> */}
+            <input
+              type="number"
+              name="taxableAmount"
+              value={formData.taxableAmount}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="purchase-order-form-item">
             <label>Non-Taxable Amount:</label>
-            <input type="number" name="nonTaxableAmount"
-              value={items.reduce(
-                (acc, item) => acc + parseFloat(item.discountAmount || 0),
-                0
-              ).toFixed(2)} onChange={handleInputChange} />
+            <input
+              type="number"
+              name="nonTaxableAmount"
+              value={formData.nonTaxableAmount}
+              onChange={handleInputChange}
+            />
           </div>
-          <div className="purchase-order-form-summary-item">
+          <div className="purchase-order-form-item">
             <label>VAT Amount:</label>
-            <input type="number" name="vatAmount"
-              value={items.reduce((acc, item) => acc + parseFloat(item.vatAmount || 0), 0).toFixed(2)}
-
-              onChange={handleInputChange} />
-            {/* </div>
-        <div className="purchase-order-form-summary-item"> */}
+            <input
+              type="number"
+              name="vatAmount"
+              value={formData.vatAmount}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="purchase-order-form-item">
             <label>CC Charge:</label>
-            <input type="number" name="ccCharge"
-              value={items.reduce((acc, item) => acc + parseFloat(item.ccChargeAmount || 0), 0).toFixed(2)}
-
-              onChange={handleInputChange} />
+            <input
+              type="number"
+              name="ccCharge"
+              value={formData.ccCharge}
+              onChange={handleInputChange}
+            />
           </div>
-          <div className="purchase-order-form-summary-item">
+          <div className="purchase-order-form-item">
             <label>Discount Amount:</label>
-            <input type="number" name="discount"
-              value={items.reduce((acc, item) => acc + parseFloat(item.discountAmount || 0), 0).toFixed(2)}
-
-              onChange={handleInputChange} />
-            {/* </div>
-        <div className="purchase-order-form-summary-item"> */}
+            <input
+              type="number"
+              name="discount"
+              value={items.discountAmount}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="purchase-order-form-item">
             <label>Total Amount:</label>
-            <input type="text" name="totalAmount"
-              value={items.reduce((acc, item) => acc + parseFloat(item.totalAmount || 0), 0).toFixed(2)}
-
-              onChange={handleInputChange} />
+            <input
+              type="text"
+              name="totalAmount"
+              value={formData.totalAmount}
+              onChange={handleInputChange}
+            />
           </div>
-          <div className="purchase-order-form-summary-item">
+          <div className="purchase-order-form-item">
             <label>In Words:</label>
-            <input type="text" name="inWords" value={formData.inWords} onChange={handleInputChange} />
+            <input
+              type="text"
+              name="inWords"
+              value={formData.inWords}
+              onChange={handleInputChange}
+            />
           </div>
-
         </div>
 
-        <div className="purchase-order-form-summary-buttons" style={{ textAlign: "right" }}>
-          <button type="submit" className="purchase-btn-order">Submit</button>
+        <div className="purchase-order-form-summary-buttons">
+          <button type="submit" className="purchase-btn-order">
+            Submit
+          </button>
         </div>
       </div>
     </form>
@@ -506,4 +703,3 @@ console.log(data);
 };
 
 export default PurchaseOrderForm;
-/* Mohini_PurchaseOrderForm_WholePage_14/sep/2024 */

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./OperationNotes.css";
 import { API_BASE_URL } from "../../api/api";
 
-
-
 const OperationNotes = () => {
   // State management
   const [rows, setRows] = useState([]); // Table rows state
@@ -48,7 +46,7 @@ const OperationNotes = () => {
     npoStatus: "", // NPO Status
     patientMonitoring: "", // Monitoring of patient
     nutritionalRequirements: "", // Nutritional Requirements
-    woundManagement:"",// Wound Management (Details of drains, Dressings, Packs, Catheter care, etc.)
+    woundManagement: "", // Wound Management (Details of drains, Dressings, Packs, Catheter care, etc.)
     specificRequirements: "", // Any specific Requirements
     caseType: "Emergency", // Case type
     painRatingScaleNumeric: "0 No Pain", // Numeric Pain Rating Scale
@@ -60,7 +58,7 @@ const OperationNotes = () => {
   useEffect(() => {
     const fetchSurgeryEvents = async () => {
       try {
-        const response = await fetch(`${ API_BASE_URL }/surgery-events`);
+        const response = await fetch(`${API_BASE_URL}/surgery-events`);
         const data = await response.json();
         setSurgeryEvents(data); // Assuming the API returns an array of surgery events
       } catch (error) {
@@ -80,23 +78,31 @@ const OperationNotes = () => {
     );
 
     if (selectedEvent) {
-      const patient = selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient || {};
-      const operationDetails = selectedEvent.operationBookingDTO?.operationDetails || {};
-      const bedDTO = selectedEvent.operationBookingDTO?.ipAdmissionDTO?.roomDetails?.bedDTO || {};
-      const consultantDoctor = selectedEvent.operationBookingDTO?.ipAdmissionDTO?.admissionUnderDoctorDetail?.consultantDoctor || {};
+      const patient =
+        selectedEvent.operationBookingDTO?.ipAdmissionDTO?.patient || {};
+      const operationDetails =
+        selectedEvent.operationBookingDTO?.operationDetails || {};
+      const bedDTO =
+        selectedEvent.operationBookingDTO?.ipAdmissionDTO?.roomDetails
+          ?.bedDTO || {};
+      const consultantDoctor =
+        selectedEvent.operationBookingDTO?.ipAdmissionDTO
+          ?.admissionUnderDoctorDetail?.consultantDoctor || {};
 
       setFormData({
         ...formData,
-        uhid: patient.uhid || "",
+        uhid: patient.patient?.uhid || "",
         inPatientId: patient.inPatientId || "",
-        firstName: patient.firstName || "",
-        lastName: patient.lastName || "",
-        age: patient.age || "",
-        gender: patient.gender || "",
+        firstName: patient.patient?.firstName || "",
+        lastName: patient.patient?.lastName || "",
+        age: patient.patient?.age || "",
+        gender: patient.patient?.gender || "",
         doctorName: consultantDoctor.doctorName || "",
         roomNo: bedDTO.roomNo || "",
         bloodGroup: patient.bloodGroup || "",
-        doa: selectedEvent.operationBookingDTO?.ipAdmissionDTO?.admissionDate || "",
+        doa:
+          selectedEvent.operationBookingDTO?.ipAdmissionDTO?.admissionDate ||
+          "",
         dateTimeOfSurgery: selectedEvent.operationBookingDTO?.otDate || "",
         patientInTime: selectedEvent.operationBookingDTO?.otTime || "",
         patientOutTime: "",
@@ -141,22 +147,23 @@ const OperationNotes = () => {
       registryNumberOfImplants: "REG123456",
       npoStatus: "NPO for 6 hours before surgery",
       monitoringOfPatient: "Vitals monitored continuously",
-      nutritionalRequirements: "Nil by mouth post-surgery, IV fluids administered",
+      nutritionalRequirements:
+        "Nil by mouth post-surgery, IV fluids administered",
       woundManagement: "Sterile dressing applied, no signs of infection",
       specificRequirements: "Patient needs close monitoring for 24 hours",
       numericPainRatingScale: 4,
       wongBakerFacePainRatingScale: "Mild discomfort",
       remarks: "Follow-up advised in 7 days",
-      notesForDischargeSummary: "Patient recovering well, discharge planned tomorrow",
+      notesForDischargeSummary:
+        "Patient recovering well, discharge planned tomorrow",
       surgeryEventDTO: {
         surgeryEventId: parseInt(selectedSurgeryEvent),
       },
     };
 
-    console.log("Post Data:", JSON.stringify(postData, null, 2));
 
     try {
-      const response = await fetch(`${ API_BASE_URL }/operation-notes`, {
+      const response = await fetch(`${API_BASE_URL}/operation-notes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -165,7 +172,6 @@ const OperationNotes = () => {
       });
 
       const responseJson = await response.json();
-      console.log("Response JSON:", responseJson);
 
       if (response.ok) {
         alert("Operation notes submitted successfully!");
@@ -177,7 +183,6 @@ const OperationNotes = () => {
       console.error("Error submitting operation notes:", error);
     }
   };
-  
 
   return (
     <div className="operationnotes">
@@ -266,14 +271,19 @@ const OperationNotes = () => {
             <div className="operationnotes-panel-content">
               <div className="operationnotes-form-row">
                 <label>Date & Time Of Surgery: </label>
-                <input type="date"  value={formData.dateTimeOfSurgery}/>
+                <input type="date" value={formData.dateTimeOfSurgery} />
               </div>
               <div className="operationnotes-form-row">
                 <label>Pre Operative Diagnosis: </label>
                 <textarea
                   rows="2"
                   value={formData.preOperativeDiagnosis}
-                  onChange={(e) => setFormData({ ...formData,  preOperativeDiagnosis: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      preOperativeDiagnosis: e.target.value,
+                    })
+                  }
                 ></textarea>
               </div>
               <div className="operationnotes-form-row">
@@ -282,15 +292,25 @@ const OperationNotes = () => {
               </div>
               <div className="operationnotes-form-row">
                 <label>Patient Out Time: </label>
-                <input type="time" value={formData.patientOutTime} onChange={(e) => setFormData({...formData,   patientOutTime: e.target.value})} />
-
+                <input
+                  type="time"
+                  value={formData.patientOutTime}
+                  onChange={(e) =>
+                    setFormData({ ...formData, patientOutTime: e.target.value })
+                  }
+                />
               </div>
               <div className="operationnotes-form-row">
                 <label>Post Operative Diagnosis: </label>
                 <textarea
                   rows="2"
                   value={formData.postOperativeDiagnosis}
-                  onChange={(e) => setFormData({ ...formData,    postOperativeDiagnosis: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      postOperativeDiagnosis: e.target.value,
+                    })
+                  }
                 ></textarea>
               </div>
               <div className="operationnotes-form-row">
@@ -301,13 +321,11 @@ const OperationNotes = () => {
                 <label>use Anaesthetist: </label>
                 <input type="text" value={formData.anaesthetist} />
               </div>
-        
-            
+
               <div className="operationnotes-form-row">
                 <label> Assitant Nurse: </label>
-                <input type="text" value={formData.assistantNurse}/>
+                <input type="text" value={formData.assistantNurse} />
               </div>
-            
             </div>
           </div>
 
@@ -315,208 +333,330 @@ const OperationNotes = () => {
             <div className="operationnotes-panel-content">
               <div className="operationnotes-form-row">
                 <label>Anti Biotic Prophylaxis: </label>
-                <input type="text" value={formData.antiBioticProphylaxis} onChange={(e) => setFormData({...formData, antiBioticProphylaxis: e.target.value})} />
+                <input
+                  type="text"
+                  value={formData.antiBioticProphylaxis}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      antiBioticProphylaxis: e.target.value,
+                    })
+                  }
+                />
               </div>
               <div className="operationnotes-form-row">
                 <label>Type Of Anaesthesia: </label>
-                <input type="text" value={formData.anesthesiaType}  />
+                <input type="text" value={formData.anesthesiaType} />
               </div>
 
               <div className="operationnotes-form-row">
                 <label>Tests Names: </label>
-                <input type="text" value={formData.testsNames} onChange={(e) => setFormData({...formData, testsNames: e.target.value})} />
+                <input
+                  type="text"
+                  value={formData.testsNames}
+                  onChange={(e) =>
+                    setFormData({ ...formData, testsNames: e.target.value })
+                  }
+                />
               </div>
               <div className="operationnotes-form-row">
                 <label>Medicines Names: </label>
-                <input type="text" value={formData.medicinesNames} onChange={(e) => setFormData({...formData, medicinesNames: e.target.value})} />
+                <input
+                  type="text"
+                  value={formData.medicinesNames}
+                  onChange={(e) =>
+                    setFormData({ ...formData, medicinesNames: e.target.value })
+                  }
+                />
               </div>
 
               <div className="operationnotes-form-row">
                 <label>Incision: </label>
-                <input type="text" value={formData.incision} onChange={(e) => setFormData({...formData, incision: e.target.value})} />
+                <input
+                  type="text"
+                  value={formData.incision}
+                  onChange={(e) =>
+                    setFormData({ ...formData, incision: e.target.value })
+                  }
+                />
               </div>
 
               <div className="operationnotes-form-row">
                 <label>Findings: </label>
-                <input type="text" value={formData.findings} onChange={(e) => setFormData({...formData, findings: e.target.value})} />
+                <input
+                  type="text"
+                  value={formData.findings}
+                  onChange={(e) =>
+                    setFormData({ ...formData, findings: e.target.value })
+                  }
+                />
               </div>
-
 
               <div className="operationnotes-form-row">
                 <label>Operation Schedule Time: </label>
-                <input type="text" value={formData. operationScheduleTime} />
+                <input type="text" value={formData.operationScheduleTime} />
               </div>
 
               <div className="operationnotes-form-row">
                 <label>Operation Start Time: </label>
-                <input type="time" value={formData.operationStartTime} onChange={(e) => setFormData({...formData, operationStartTime: e.target.value})} />
+                <input
+                  type="time"
+                  value={formData.operationStartTime}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      operationStartTime: e.target.value,
+                    })
+                  }
+                />
               </div>
 
               <div className="operationnotes-form-row">
                 <label>Operation Finish Time: </label>
-                <input type="time" value={formData.operationFinishTime} onChange={(e) => setFormData({...formData, operationFinishTime: e.target.value})} />
+                <input
+                  type="time"
+                  value={formData.operationFinishTime}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      operationFinishTime: e.target.value,
+                    })
+                  }
+                />
               </div>
             </div>
           </div>
 
-
-
-
           <div className="operationnotes-panel operationnotes-details">
-  <div className="operationnotes-panel-content">
-    <div className="operationnotes-form-row">
-      <label>Operative Notes: </label>
-      <input
-        type="text"
-        value={formData.operativeNotes}
-        onChange={(e) => setFormData({ ...formData, operativeNotes: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Intra Operative Complications: </label>
-      <input
-        type="text"
-        value={formData.intraOperativeComplications}
-        onChange={(e) => setFormData({ ...formData, intraOperativeComplications: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Intra Operative Notes: </label>
-      <input
-        type="text"
-        value={formData.intraOperativeNotes}
-        onChange={(e) => setFormData({ ...formData, intraOperativeNotes: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Amount of Blood Loss: </label>
-      <input
-        type="text"
-        value={formData.bloodLossAmount}
-        onChange={(e) => setFormData({ ...formData, bloodLossAmount: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Amount of Transfused Blood (if any): </label>
-      <input
-        type="text"
-        value={formData.transfusedBloodAmount}
-        onChange={(e) => setFormData({ ...formData, transfusedBloodAmount: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Specimen Sent for Histopathology (If Yes, Details): </label>
-      <input
-        type="text"
-        value={formData.histopathologySpecimenDetails}
-        onChange={(e) => setFormData({ ...formData,     histopathologySpecimenDetails: e.target.value })}
-      />
-    </div>
+            <div className="operationnotes-panel-content">
+              <div className="operationnotes-form-row">
+                <label>Operative Notes: </label>
+                <input
+                  type="text"
+                  value={formData.operativeNotes}
+                  onChange={(e) =>
+                    setFormData({ ...formData, operativeNotes: e.target.value })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>Intra Operative Complications: </label>
+                <input
+                  type="text"
+                  value={formData.intraOperativeComplications}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      intraOperativeComplications: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>Intra Operative Notes: </label>
+                <input
+                  type="text"
+                  value={formData.intraOperativeNotes}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      intraOperativeNotes: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>Amount of Blood Loss: </label>
+                <input
+                  type="text"
+                  value={formData.bloodLossAmount}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      bloodLossAmount: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>Amount of Transfused Blood (if any): </label>
+                <input
+                  type="text"
+                  value={formData.transfusedBloodAmount}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      transfusedBloodAmount: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>
+                  Specimen Sent for Histopathology (If Yes, Details):{" "}
+                </label>
+                <input
+                  type="text"
+                  value={formData.histopathologySpecimenDetails}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      histopathologySpecimenDetails: e.target.value,
+                    })
+                  }
+                />
+              </div>
 
+              <div className="operationnotes-form-row">
+                <label>
+                  Registry Number of All Implantable Devices (If Any):{" "}
+                </label>
+                <input
+                  type="text"
+                  value={formData.implantableDeviceRegistry}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      implantableDeviceRegistry: e.target.value,
+                    })
+                  }
+                />
+              </div>
+            </div>
+          </div>
 
-    <div className="operationnotes-form-row">
-      <label>Registry Number of All Implantable Devices (If Any): </label>
-      <input
-        type="text"
-        value={formData.implantableDeviceRegistry}
-        onChange={(e) => setFormData({ ...formData, implantableDeviceRegistry: e.target.value })}
-      />
-    </div>
-  </div>
-</div> 
-
- <div className="operationnotes-panel operationnotes-templates">
-  <div className="operationnotes-panel-content">
-    <div className="operationnotes-form-row">
-      <label>NPO Status: </label>
-      <input
-        type="text"
-        value={formData.npoStatus}
-        onChange={(e) => setFormData({ ...formData, npoStatus: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Monitoring of Patient: </label>
-      <input
-        type="text"
-        value={formData.patientMonitoring}
-        onChange={(e) => setFormData({ ...formData, patientMonitoring: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Nutritional Requirements: </label>
-      <input
-        type="text"
-        value={formData.nutritionalRequirements}
-        onChange={(e) => setFormData({ ...formData, nutritionalRequirements: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Wound Management (Details): </label>
-      <input
-        type="text"
-        value={formData.woundManagement}
-        onChange={(e) => setFormData({ ...formData, woundManagement: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Any Specific Requirements: </label>
-      <input
-        type="text"
-        value={formData.specificRequirements}
-        onChange={(e) => setFormData({ ...formData, specificRequirements: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Case Type: </label>
-      <input
-        type="text"
-        value={formData.caseType}
-        onChange={(e) => setFormData({ ...formData, caseType: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Numeric Pain Rating Scale: </label>
-      <input
-        type="text"
-        value={formData.painRatingScaleNumeric}
-        onChange={(e) => setFormData({ ...formData, painRatingScaleNumeric: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Wong-Baker FACE Pain Rating Scale: </label>
-      <input
-        type="text"
-        value={formData.painRatingScaleFace}
-        onChange={(e) => setFormData({ ...formData, painRatingScaleFace: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Remarks: </label>
-      <input
-        type="text"
-        value={formData.remarks}
-        onChange={(e) => setFormData({ ...formData, remarks: e.target.value })}
-      />
-    </div>
-    <div className="operationnotes-form-row">
-      <label>Notes for Discharge Summary: </label>
-      <input
-        type="text"
-        value={formData.dischargeSummaryNotes}
-        onChange={(e) => setFormData({ ...formData, dischargeSummaryNotes: e.target.value })}
-      />
-    </div>
-  </div>
-</div> 
-
+          <div className="operationnotes-panel operationnotes-templates">
+            <div className="operationnotes-panel-content">
+              <div className="operationnotes-form-row">
+                <label>NPO Status: </label>
+                <input
+                  type="text"
+                  value={formData.npoStatus}
+                  onChange={(e) =>
+                    setFormData({ ...formData, npoStatus: e.target.value })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>Monitoring of Patient: </label>
+                <input
+                  type="text"
+                  value={formData.patientMonitoring}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      patientMonitoring: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>Nutritional Requirements: </label>
+                <input
+                  type="text"
+                  value={formData.nutritionalRequirements}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      nutritionalRequirements: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>Wound Management (Details): </label>
+                <input
+                  type="text"
+                  value={formData.woundManagement}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      woundManagement: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>Any Specific Requirements: </label>
+                <input
+                  type="text"
+                  value={formData.specificRequirements}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      specificRequirements: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>Case Type: </label>
+                <input
+                  type="text"
+                  value={formData.caseType}
+                  onChange={(e) =>
+                    setFormData({ ...formData, caseType: e.target.value })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>Numeric Pain Rating Scale: </label>
+                <input
+                  type="text"
+                  value={formData.painRatingScaleNumeric}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      painRatingScaleNumeric: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>Wong-Baker FACE Pain Rating Scale: </label>
+                <input
+                  type="text"
+                  value={formData.painRatingScaleFace}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      painRatingScaleFace: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>Remarks: </label>
+                <input
+                  type="text"
+                  value={formData.remarks}
+                  onChange={(e) =>
+                    setFormData({ ...formData, remarks: e.target.value })
+                  }
+                />
+              </div>
+              <div className="operationnotes-form-row">
+                <label>Notes for Discharge Summary: </label>
+                <input
+                  type="text"
+                  value={formData.dischargeSummaryNotes}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      dischargeSummaryNotes: e.target.value,
+                    })
+                  }
+                />
+              </div>
+            </div>
+          </div>
         </div>
 
-
-
         <div className="operationnotes-form-row">
-                <button onClick={handleFormSubmit} className="submit-button">Submit</button>
-              </div>
+          <button onClick={handleFormSubmit} className="submit-button">
+            Submit
+          </button>
+        </div>
 
         {/* Room Status Section */}
       </div>

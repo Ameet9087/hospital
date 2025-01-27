@@ -5,6 +5,8 @@ import axios from "axios";
 
 import AppoitmentPopupTable from "../../Admission/PopupTable";
 import { Prev } from "react-bootstrap/esm/PageItem";
+import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../api/api";
 const FloatingInput = ({ label, type = "text", ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);
@@ -66,6 +68,9 @@ const FloatingSelect = ({ label, options = [], ...props }) => {
   );
 };
 const ErInitialAssessmentForm = () => {
+
+  const navigate = useNavigate();
+
   const [patientType, setPatientType] = useState("old");
   const [hr, setHr] = useState(60);
   const [spo2, setSpo2] = useState(82);
@@ -94,6 +99,9 @@ const ErInitialAssessmentForm = () => {
 
   const [selectedMrno, setSelectedMrno] = useState([]);
   const [totalScore, setTotalScore] = useState();
+
+  const handleBack = () => navigate('/emergency/finalizedpatients');
+
 
   const [formData, setFormData] = useState({
     erNumber: "",
@@ -192,7 +200,7 @@ const ErInitialAssessmentForm = () => {
   const fetchPatientDetails = async (mrNo) => {
     try {
       const response = await fetch(
-        `http://localhost:4096/api/patient-register/get-all`
+        `${API_BASE_URL}/patient-register/get-all`
       );
 
       if (!response.ok) {
@@ -212,7 +220,7 @@ const ErInitialAssessmentForm = () => {
   };
   const fetchDoctorDetails = async (doctor) => {
     try {
-      const response = await fetch(`http://localhost:4096/api/doctors`);
+      const response = await fetch(`${API_BASE_URL}/doctors`);
 
       if (!response.ok) {
         throw new Error(`Server error: ${response.statusText}`);
@@ -340,7 +348,7 @@ const ErInitialAssessmentForm = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:4096/api/emergency/er-initial-assessment/save",
+        `${API_BASE_URL}/emergency/er-initial-assessment/save`,
         {
           method: "POST",
           headers: {
@@ -396,7 +404,7 @@ const ErInitialAssessmentForm = () => {
   return (
     <>
       <div className="er-initial-assessment-com-container">
-        <div className="er-initial-assessment-com-section"></div>
+        <div className="er-initial-assessment-com-section"><button onClick={handleBack}>Back</button></div>
 
         <div className="er-initial-assessment-com-section">
           <div className="er-initial-assessment-com-header">

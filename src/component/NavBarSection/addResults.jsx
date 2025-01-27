@@ -62,12 +62,12 @@ function AddResults() {
     let link;
 
     if (dateFrom && dateTo) {
-      link = `${API_BASE_URL}/lab-requests/between-date?startDate=${dateFrom}&endDate=${dateTo}&status=Pending`;
+      link = `${API_BASE_URL}/lab-requests/between-date?startDate=${dateFrom}&endDate=${dateTo}&status=Active`;
     } else {
       const todayDate = getCurrentDate();
       console.log(todayDate);
 
-      link = `${API_BASE_URL}/lab-requests/between-date?startDate=${todayDate}&endDate=${todayDate}&status=Pending`;
+      link = `${API_BASE_URL}/lab-requests/between-date?startDate=${todayDate}&endDate=${todayDate}&status=Active`;
     }
 
     // Fetch the data
