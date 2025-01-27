@@ -395,7 +395,7 @@
 //     // departmentName: "",
 //     // ward: "",
 //     // doctorName: "",
-   
+
 //     // arrivalDate: "",
 //     // arrivalTime: "",
 //     // fatherHusbandName: "",
@@ -424,7 +424,7 @@
 //     hospitalName: "",
 //     registrationNumber: "",
 //   });
-  
+
 //     useEffect(() => {
 //         if (activePopup === "MrNo") {
 //             fetchMrno();
@@ -435,7 +435,7 @@
 //       const handleSubmit = async (e) => {
 //         e.preventDefault();
 //         console.log("Form Submitted:", formData);
-    
+
 //         try {
 //           const response = await fetch("http://192.168.1.35:4068/api/accident-report-details", { 
 //             method: "POST",
@@ -444,11 +444,11 @@
 //             },
 //             body: JSON.stringify(formData),
 //           });
-    
+
 //           if (!response.ok) {
 //             throw new Error("Failed to submit form data");
 //           }
-          
+
 //           const result = await response.json();
 //           console.log("Form submission success:", result);
 //           alert("Form submitted successfully!");
@@ -473,14 +473,14 @@
 //         const response = await axios.get(`http://192.168.1.35:4068/api/ip-admissions`);
 //         setMrNoData(response.data);
 //         console.log(mrNoData);
-        
+
 //     } catch (error) {
 //         console.error("Error fetching data:", error);
 //     }
 // };
 //   const handleSelect = (data) => {
 //     console.log(data ,"selected data");
-    
+
 //     if (activePopup === "MrNo") {
 //         setFormData((prevFormData) => ({
 //             ...prevFormData,
@@ -490,7 +490,7 @@
 //             sex:data.sex,
 //             ipNo:data?.ipAdmmissionId
 
-           
+
 
 //         }));
 //     }
@@ -859,7 +859,7 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
         }}
         {...props}
       >
-        <option value="">{}</option>
+        <option value="">{ }</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>{option.label}</option>
         ))}
@@ -869,9 +869,9 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
   );
 };
 const AccidentReportForm = ({ onClose }) => {
-    const [mrNoData, setMrNoData] = useState([]);
-    const [activePopup, setActivePopup] = useState(null);
-    const [formData, setFormData] = useState({
+  const [mrNoData, setMrNoData] = useState([]);
+  const [activePopup, setActivePopup] = useState(null);
+  const [formData, setFormData] = useState({
     nameOfPolice: "",
     mechanismOfInjury: "",
     landmark: "",
@@ -887,15 +887,15 @@ const AccidentReportForm = ({ onClose }) => {
     medicalOfficerSignature: "",
     preferredFromOtherHospital: "",
     hospitalName: "",
-    identificationMarks:"",
+    identificationMarks: "",
     registrationNumber: "",
-    ipAdmissiondto : {
-      ipAdmmissionId:"",
-  },
+    ipAdmissiondto: {
+      ipAdmmissionId: "",
+    },
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Build the payload dynamically
     const payload = {
       nameOfPolice: formData.nameOfPolice || "",
@@ -915,16 +915,16 @@ const AccidentReportForm = ({ onClose }) => {
       hospitalName: formData.hospitalName || "",
       registrationNumber: formData.registrationNumber || "",
     };
-  
+
     // Add ipAdmissiondto only if ipAdmmissionId exists
     if (formData.ipAdmissiondto?.ipAdmmissionId) {
       payload.ipAdmissiondto = {
         ipAdmmissionId: formData.ipAdmissiondto.ipAdmmissionId,
       };
     }
-  
+
     console.log("Payload to be submitted:", payload);
-  
+
     try {
       const response = await fetch("http://192.168.1.46:4099/api/accident-report-details", {
         method: "POST",
@@ -933,11 +933,11 @@ const AccidentReportForm = ({ onClose }) => {
         },
         body: JSON.stringify(payload),
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to submit form data");
       }
-  
+
       const result = await response.json();
       console.log("Form submission success:", result);
       alert("Form submitted successfully!");
@@ -946,7 +946,7 @@ const AccidentReportForm = ({ onClose }) => {
       alert("Failed to submit form.");
     }
   };
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
@@ -956,59 +956,58 @@ const AccidentReportForm = ({ onClose }) => {
   };
   const fetchMrno = async () => {
     try {
-        const response = await axios.get(`http://192.168.1.46:4096/api/ip-admissions`);
-        setMrNoData(response.data);
-        console.log(data);
-        console.log(mrNoData);
+      const response = await axios.get(`http://192.168.1.46:4096/api/ip-admissions`);
+      setMrNoData(response.data);
+      console.log(data);
+      console.log(mrNoData);
     } catch (error) {
-        console.error("Error fetching data:", error);
+      console.error("Error fetching data:", error);
     }
-};
-useEffect(() => {
-  if (activePopup === "MrNo") {
+  };
+  useEffect(() => {
+    if (activePopup === "MrNo") {
       fetchMrno();
-   }
-}, [activePopup]);
-const handleSelect = (data) => {
-  console.log(data ,"selected data");
-  if (activePopup === "MrNo") {
-    setFormData((prevFormData) => ({
+    }
+  }, [activePopup]);
+  const handleSelect = (data) => {
+    console.log(data, "selected data");
+    if (activePopup === "MrNo") {
+      setFormData((prevFormData) => ({
         ...prevFormData,
         uhid: data.uhid,
-        ipAdmmissionId:data?.realobj?.patient?.inPatientId,
-        patientName:data.firstName,
+        ipAdmmissionId: data?.realobj?.patient?.inPatientId,
+        patientName: data.firstName,
         lastName: data.lastName,
-        age:data?.realobj?.patient?.patient?.age ||"N/A",
-        sex:data?.realobj?.patient?.patient?.gender || "N/A",
-        dateOfAdmission:data?.realobj?.admissionDate|| "N/A",
-        departmentName:data?.realobj?.admissionUnderDoctorDetail?.consultantDoctor?.specialisationId?.specialisationName || "N/A",
-        ward:data?.realobj?.roomDetails?.roomTypeDTO?.wardName || "N/A", 
-        arrivalDate:data?.realobj?.admissionDate || "N/A",
-        arrivalTime:data?.realobj?.admissionTime|| "N/A",
-        fatherHusbandName:data?.realobj?.patient?.patient?.contactName || "N/A",
-        occupation:data?.realobj?.patient?.patient?.occupation || "N/A",
-        address:data?.realobj?.patient?.patient?.address || "N/A",
+        age: data?.realobj?.patient?.patient?.age || "N/A",
+        sex: data?.realobj?.patient?.patient?.gender || "N/A",
+        dateOfAdmission: data?.realobj?.admissionDate || "N/A",
+        departmentName: data?.realobj?.admissionUnderDoctorDetail?.consultantDoctor?.specialisationId?.specialisationName || "N/A",
+        ward: data?.realobj?.roomDetails?.roomTypeDTO?.wardName || "N/A",
+        arrivalDate: data?.realobj?.admissionDate || "N/A",
+        arrivalTime: data?.realobj?.admissionTime || "N/A",
+        fatherHusbandName: data?.realobj?.patient?.patient?.contactName || "N/A",
+        occupation: data?.realobj?.patient?.patient?.occupation || "N/A",
+        address: data?.realobj?.patient?.patient?.address || "N/A",
         // identificationMarks:data?.realobj?.identification || "N/A",
-        doctorName:data?.realobj?.admissionUnderDoctorDetail?.consultantDoctor?.doctorName || "N/A",      
-        consultant:data?.realobj?.admissionUnderDoctorDetail?.coConsultant?.doctorName,
-        roomNumber:data?.realobj?.roomDetails?.roomDTO?.roomNumber,
-        bedNo:data?.realobj?.roomDetails?.bedDTO?.bedNo,
-        ward:data?.realobj?.roomDetails?.roomTypeDTO.wardName
-    }));
-  }
-  setActivePopup(null);
+        doctorName: data?.realobj?.admissionUnderDoctorDetail?.consultantDoctor?.doctorName || "N/A",
+        consultant: data?.realobj?.admissionUnderDoctorDetail?.coConsultant?.doctorName,
+        roomNumber: data?.realobj?.roomDetails?.roomDTO?.roomNumber,
+        bedNo: data?.realobj?.roomDetails?.bedDTO?.bedNo,
+      }));
+    }
+    setActivePopup(null);
   };
-const getPopupData = () => {
+  const getPopupData = () => {
     if (activePopup === "MrNo") {
       const popupData = {
         columns: ["uhid", "firstName", "lastName"],
         data: Array.isArray(mrNoData)
           ? mrNoData.map((user) => ({
-              uhid: user?.patient?.patient?.uhid,
-              firstName: user?.patient?.patient?.firstName,
-              lastName: user?.patient?.patient?.lastName,
-              realobj:user
-            }))
+            uhid: user?.patient?.patient?.uhid,
+            firstName: user?.patient?.patient?.firstName,
+            lastName: user?.patient?.patient?.lastName,
+            realobj: user
+          }))
           : [],
       };
       console.log("Popup Data:", popupData);
@@ -1028,22 +1027,22 @@ const getPopupData = () => {
         <div className="AccidentReportForm-section">
           <div className="AccidentReportForm-header">CPR Reviewed </div>
           <div className="AccidentReportForm-grid">
-          <div className="AccidentReportForm-search-field">
-            <FloatingInput label="MRNO" type="text" name="mrno" value={formData.uhid}/>
-            <button className="AccidentReportForm-search-icon" onClick={() => setActivePopup("MrNo")}>
-              <svg viewBox="0 0 24 24" width="16" height="16">
-                <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/>
-              </svg>
-            </button>
+            <div className="AccidentReportForm-search-field">
+              <FloatingInput label="MRNO" type="text" name="mrno" value={formData.uhid} />
+              <button className="AccidentReportForm-search-icon" onClick={() => setActivePopup("MrNo")}>
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                  <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z" />
+                </svg>
+              </button>
             </div>
             <FloatingInput label="IP No " type="text" name="ipNo" value={formData.ipNo} />
             <FloatingInput
               label="Patient Name"
               type="text"
               name="patientName"
-              value ={formData.patientName}
+              value={formData.patientName}
             />
-            <FloatingInput label="Age" type="text" name="age" value={formData.age} onchange={handleChange}/>
+            <FloatingInput label="Age" type="text" name="age" value={formData.age} onchange={handleChange} />
             <FloatingInput label="Sex" type="text" name="sex" value={formData.sex} />
             <FloatingInput
               label="Date Of Admission"
@@ -1059,7 +1058,7 @@ const getPopupData = () => {
               value={formData.departmentName}
             />
             <FloatingInput label="Ward" type="text" name="ward" value={formData.ward} />
-            <FloatingInput label="Doctor Name" type="text" name="doctorName"  value={formData.doctorName}/>
+            <FloatingInput label="Doctor Name" type="text" name="doctorName" value={formData.doctorName} />
             {/* <FloatingInput label="Hospital No" type="text" name="hospitalNo" /> */}
             <FloatingInput
               label="Arrival Date"
@@ -1077,10 +1076,10 @@ const getPopupData = () => {
               label="Father/Husband Name"
               type="text"
               name="fatherHusbandName"
-              value= {formData.fatherHusbandName}
+              value={formData.fatherHusbandName}
             />
             <FloatingInput label="Occupation" type="text" name="occupation" value={formData.occupation} />
-            <FloatingInput label="Address" type="text" name="Address"  value={formData.address}/>
+            <FloatingInput label="Address" type="text" name="Address" value={formData.address} />
             <FloatingInput
               label="Identification Marks"
               type="text"
@@ -1121,7 +1120,7 @@ const getPopupData = () => {
               name="policeStation"
               value={formData.policeStation}
             />
-            <FloatingInput label="Diagnosis" type="text" name="diagnosis"  value={formData.diagnosis}  onChange={handleChange}/>
+            <FloatingInput label="Diagnosis" type="text" name="diagnosis" value={formData.diagnosis} onChange={handleChange} />
             <FloatingInput
               label="Mechanism Of Injury"
               type="text"
@@ -1130,7 +1129,7 @@ const getPopupData = () => {
               value={formData.mechanismOfInjury}
             />
             <div className="AccidentReportForm-form-group">
-              <label value={formData.siteOfIncident}  onChange={handleChange}>Site Of Incident:</label>
+              <label value={formData.siteOfIncident} onChange={handleChange}>Site Of Incident:</label>
               <div className="AccidentReportForm-radio-button">
                 <label>
                   <input type="radio" name="siteOfIncident" value="home" />
@@ -1157,7 +1156,7 @@ const getPopupData = () => {
               name="otherDetails"
               value={formData.otherDetails}
             />
-            <FloatingInput label="Landmark" type="text" name="landmark" value={formData.landmark}  onChange={handleChange}/>
+            <FloatingInput label="Landmark" type="text" name="landmark" value={formData.landmark} onChange={handleChange} />
             <FloatingInput
               label="Incident Date"
               type="date"
@@ -1173,10 +1172,10 @@ const getPopupData = () => {
               value={formData.incidentTime}
             />
             <div className="AccidentReportForm-form-group">
-              <label  value={formData.injuriesSustained}  onChange={handleChange} >Injuries Sustained:</label>
+              <label value={formData.injuriesSustained} onChange={handleChange} >Injuries Sustained:</label>
               <div className="AccidentReportForm-radio-button">
                 <label>
-                  <input type="radio" name="injuriesSustained" value="simple"  />
+                  <input type="radio" name="injuriesSustained" value="simple" />
                   Simple
                 </label>
                 <label>
@@ -1212,7 +1211,7 @@ const getPopupData = () => {
               value={formData.medicalOfficerSignature}
             />
             <div className="AccidentReportForm-form-group">
-              <label value={formData.preferredFromOtherHospital}  onChange={handleChange}>Preferred From Other Hospital:</label>
+              <label value={formData.preferredFromOtherHospital} onChange={handleChange}>Preferred From Other Hospital:</label>
               <div className="AccidentReportForm-radio-button">
                 <label>
                   <input type="radio" name="preferredFromOtherHospital" value="yes" />
@@ -1230,17 +1229,17 @@ const getPopupData = () => {
               onChange={handleChange}
               name="hospitalName"
             />
-            <FloatingInput label="Regn. Number" type="text" name="registrationNumber" value={formData.registrationNumber} onChange={handleChange}/>
+            <FloatingInput label="Regn. Number" type="text" name="registrationNumber" value={formData.registrationNumber} onChange={handleChange} />
           </div>
         </div>
         {activePopup && (
-        <PopupTable
-        columns={columns}
-        data={data}
-        onSelect={handleSelect}
-         onClose={() => setActivePopup(null)}
-        />
-                )}
+          <PopupTable
+            columns={columns}
+            data={data}
+            onSelect={handleSelect}
+            onClose={() => setActivePopup(null)}
+          />
+        )}
       </div>
       <div className="AccidentReportForm-buttons">
         <button className="btn-blue" onClick={handleSubmit}>Save</button>
