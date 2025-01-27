@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./GatePasssecuritycheckPopUp.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
 
 const GatePassSecurityCheckPopUp = ({ bookingId, closePopup }) => {
@@ -109,7 +109,7 @@ const GatePassSecurityCheckPopUp = ({ bookingId, closePopup }) => {
               </div>
             </div>
           </div>
-          
+
           {/* Gate Pass Selection */}
           <div className="MaintenanceChecklistPopUp-surgeryEvents-panel operation-details">
             <div className="MaintenanceChecklistPopUp-surgeryEvents-panel-content">
