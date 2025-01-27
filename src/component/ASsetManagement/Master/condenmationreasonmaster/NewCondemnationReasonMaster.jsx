@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./NewCondemnationReasonMaster.css";
 import CondemnationReasonMasterPopUp from "./CondemnationReasonMasterPopUp";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 
@@ -89,16 +89,16 @@ const NewCondemnationReasonMaster = () => {
             </thead>
             <tbody>
               ${filteredCondemnationReasons
-                .map(
-                  (reason) => `
+        .map(
+          (reason) => `
                   <tr>
                     <td>${reason.condemnationReasons}</td>
                     <td>${reason.description}</td>
                     <td>${reason.status}</td>
                   </tr>
                 `
-                )
-                .join("")}
+        )
+        .join("")}
             </tbody>
           </table>
         </body>
