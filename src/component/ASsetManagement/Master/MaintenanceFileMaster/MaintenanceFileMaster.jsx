@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./MaintenanceFileMaster.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 import MaintenanceFileMasterPopUp from "../MaintenanceFileMaster/MaintenanceFileMasterPopUp";
 import { API_BASE_URL } from "../../../api/api";
@@ -89,8 +89,8 @@ const MaintenanceTypeMaster = () => {
             </thead>
             <tbody>
               ${filteredRows
-                .map(
-                  (type) => `
+        .map(
+          (type) => `
                   <tr>
                     <td>${type.typeName}</td>
                     <td>${type.code}</td>
@@ -98,8 +98,8 @@ const MaintenanceTypeMaster = () => {
                     <td>${type.status}</td>
                   </tr>
                 `
-                )
-                .join("")}
+        )
+        .join("")}
             </tbody>
           </table>
         </body>
