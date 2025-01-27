@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./BlockIPEntries.css";
+import "./BlockIpEntries.css";
 import PopupTable from "../PopupTable";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
