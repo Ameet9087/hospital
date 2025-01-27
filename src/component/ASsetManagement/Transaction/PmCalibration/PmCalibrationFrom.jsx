@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./PmCalibrationFrom.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 import PmCalibrationFromPopUp from "./PmCalibrationFromPopUp";
 import { API_BASE_URL } from "../../../api/api";
@@ -25,7 +25,7 @@ const PmCalibrationForm = () => {
 
   // Fetch PM Calibration data
   useEffect(() => {
-    fetch(`${ API_BASE_URL }/pm-calibration`)
+    fetch(`${API_BASE_URL}/pm-calibration`)
       .then((res) => res.json())
       .then((data) => setPmCalibrationData(data))
       .catch((err) => {
@@ -147,11 +147,11 @@ const PmCalibrationForm = () => {
         </table>
       </div>
       {showPopup && (
-  <CustomModal isOpen={showPopup} onClose={closePopup}>
-    {/* Pass closePopup as a prop to PmCalibrationFromPopUp */}
-    <PmCalibrationFromPopUp closePopup={closePopup} />
-  </CustomModal>
-)}
+        <CustomModal isOpen={showPopup} onClose={closePopup}>
+          {/* Pass closePopup as a prop to PmCalibrationFromPopUp */}
+          <PmCalibrationFromPopUp closePopup={closePopup} />
+        </CustomModal>
+      )}
 
     </div>
   );
