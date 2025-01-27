@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./NewEquipmentInstallationDetails.css";
 import EquipmentInstallationDetailsPopUp from "./EquipmentInstallationDetailsPopUp";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../../api/api";
 
@@ -119,8 +119,8 @@ const NewEquipmentInstallationDetails = () => {
 
       {showPopup && (
         <CustomModal isOpen={showPopup} onClose={closePopup}>
-    <EquipmentInstallationDetailsPopUp onClose={closePopup} />
-    </CustomModal>
+          <EquipmentInstallationDetailsPopUp onClose={closePopup} />
+        </CustomModal>
       )}
     </div>
   );
