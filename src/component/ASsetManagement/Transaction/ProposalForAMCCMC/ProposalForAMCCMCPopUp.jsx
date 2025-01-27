@@ -122,8 +122,7 @@ const ProposalForAMCCMCPopUp = () => {
       },
       body: JSON.stringify(requestData),
     });
-    if(response.ok)
-    {
+    if (response.ok) {
       alert("Date Save Successfully")
     }
 
