@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./InsuranceEntryMasterForm.css";
 import InsuranceEntryMasterFormPopUp from "./InsuranceEntryMasterFormPopUp";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 
@@ -124,8 +124,8 @@ const NewInsuranceEntryMasterForm = () => {
             </thead>
             <tbody>
               ${filteredInsuranceEntries
-                .map(
-                  (entry) => `
+        .map(
+          (entry) => `
                   <tr>
                     <td>${entry.entryNumber}</td>
                     <td>${entry.insuranceCompanyName}</td>
@@ -136,8 +136,8 @@ const NewInsuranceEntryMasterForm = () => {
                     <td>${entry.policyToDate}</td>
                   </tr>
                 `
-                )
-                .join("")}
+        )
+        .join("")}
             </tbody>
           </table>
         </body>
