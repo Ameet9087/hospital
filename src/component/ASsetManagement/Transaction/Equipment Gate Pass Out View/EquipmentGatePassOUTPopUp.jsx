@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './EquipmentGatePassOutViewPopUp.css';
+import './EquipmentGatePassOutViewpopUp.css';
 import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import { SearchIcon } from 'lucide-react';
 import PopupTable from '../../../Admission/PopupTable';
