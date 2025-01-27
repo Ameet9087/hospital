@@ -5,10 +5,12 @@ import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import PopupTable from "../Nursing/NursingModule/Services/PopupTable";
 import { useLocation, useParams } from "react-router-dom";
+import { usePopup } from "../../FidgetSpinner/PopupContext";
+
 const PatientRegistrationNew = ({ onClose }) => {
   const location = useLocation();
   const patient = location.state?.patient;
-
+  const { showPopup } = usePopup();
 
   const [formData, setFormData] = useState({
     salutation: patient?.salutation || "",
@@ -69,26 +71,37 @@ const PatientRegistrationNew = ({ onClose }) => {
   const [doctors, setDoctors] = useState([]);
   const [organisation, setOrganisation] = useState([]);
   const [organisationId, setOrganisationId] = useState();
-  const [selectedDoctors, setSelectedDoctors] = useState([{
-    doctorId: "",
-    doctorName: "",
-    mobileNumber: "",
-    residenceAddress: "",
-    emailId: ""
-  }])
+  const [selectedDoctors, setSelectedDoctors] = useState([
+    {
+      doctorId: "",
+      doctorName: "",
+      mobileNumber: "",
+      residenceAddress: "",
+      emailId: "",
+    },
+  ]);
 
   const handleDoctorSelect = (selectedDoctorData) => {
     console.log(selectedDoctorData);
     setSelectedDoctors((prevState) => {
-      const allFieldsFilled = selectedDoctorData.doctorName && selectedDoctorData.residenceAddress && selectedDoctorData.mobileNumber && selectedDoctorData.emailId;
+      const allFieldsFilled =
+        selectedDoctorData.doctorName &&
+        selectedDoctorData.residenceAddress &&
+        selectedDoctorData.mobileNumber &&
+        selectedDoctorData.emailId;
 
       if (!allFieldsFilled) {
         return prevState;
       }
-      const doctorIndex = prevState.findIndex(doctor => doctor.doctorId === selectedDoctorData.doctorId);
+      const doctorIndex = prevState.findIndex(
+        (doctor) => doctor.doctorId === selectedDoctorData.doctorId
+      );
       if (doctorIndex !== -1) {
         const updatedDoctors = [...prevState];
-        updatedDoctors[doctorIndex] = { ...updatedDoctors[doctorIndex], ...selectedDoctorData };
+        updatedDoctors[doctorIndex] = {
+          ...updatedDoctors[doctorIndex],
+          ...selectedDoctorData,
+        };
         return updatedDoctors;
       }
       return [selectedDoctorData];
@@ -123,15 +136,20 @@ const PatientRegistrationNew = ({ onClose }) => {
         const years = parseInt(value, 10);
         if (!isNaN(years)) {
           const dobYear = currentDate.getFullYear() - years;
-          const dobFromToday = new Date(dobYear, currentDate.getMonth(), currentDate.getDate());
-          updatedFormData.dateOfBirth = dobFromToday.toISOString().split("T")[0]; // Format as YYYY-MM-DD
+          const dobFromToday = new Date(
+            dobYear,
+            currentDate.getMonth(),
+            currentDate.getDate()
+          );
+          updatedFormData.dateOfBirth = dobFromToday
+            .toISOString()
+            .split("T")[0]; // Format as YYYY-MM-DD
         }
       }
 
       return updatedFormData;
     });
   };
-
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -173,7 +191,7 @@ const PatientRegistrationNew = ({ onClose }) => {
         ...(organisationId > 0 && {
           organisationMaster: {
             masterId: organisationId,
-          }
+          },
         }),
       };
 
@@ -203,13 +221,12 @@ const PatientRegistrationNew = ({ onClose }) => {
       const response = await fetch(url, {
         method: method,
         headers: patient?.patientRegistrationId
-          ? { 'Content-Type': 'application/json' } // Set for JSON
+          ? { "Content-Type": "application/json" } // Set for JSON
           : {},
         body: patient?.patientRegistrationId
           ? formData // Send as JSON if patientRegistrationId is present
           : dataToSend, // Send as FormData otherwise
       });
-
 
       if (response.ok) {
         const result = await response.json();
@@ -219,30 +236,43 @@ const PatientRegistrationNew = ({ onClose }) => {
             : `Patient registered successfully with ID: ${result.uhid}`
         );
         setResult(result);
+        showPopup([
+          { url: "/adt/ipadmission", text: "Ip Admission" },
+          { url: "/appointment/doctorappointment", text: "Appointment" },
+        ]);
       } else {
-        console.error("Error submitting form:", response.status, response.statusText);
+        console.error(
+          "Error submitting form:",
+          response.status,
+          response.statusText
+        );
       }
     } catch (error) {
       console.error("Error occurred:", error);
     }
   };
 
-
   const fetchAllData = async () => {
     try {
-      const [statesResponse, citiesResponse, countryResponse, doctorResponse, organisationResponse] = await Promise.all([
+      const [
+        statesResponse,
+        citiesResponse,
+        countryResponse,
+        doctorResponse,
+        organisationResponse,
+      ] = await Promise.all([
         axios.get(`${API_BASE_URL}/states`),
         axios.get(`${API_BASE_URL}/cities`),
         axios.get(`${API_BASE_URL}/country`),
         axios.get(`${API_BASE_URL}/doctors/doctors/non-employees`),
-        axios.get(`${API_BASE_URL}/organisation-masters`)
+        axios.get(`${API_BASE_URL}/organisation-masters`),
       ]);
 
       setStates(statesResponse.data);
       setCities(citiesResponse.data);
       setCountry(countryResponse.data);
       setDoctors(doctorResponse.data);
-      setOrganisation(organisationResponse.data)
+      setOrganisation(organisationResponse.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -252,33 +282,29 @@ const PatientRegistrationNew = ({ onClose }) => {
     fetchAllData();
   }, []);
 
-
   const handleSelect = (data) => {
     if (activePopup === "cityDistrict") {
       setFormData((prevState) => ({
         ...prevState,
         cityDistrict: data.cityName,
-      }));;
+      }));
     } else if (activePopup === "state") {
       setFormData((prevState) => ({
         ...prevState,
         state: data.stateName,
-      }));;
-    }
-    else if (activePopup === "country") {
+      }));
+    } else if (activePopup === "country") {
       setFormData((prevState) => ({
         ...prevState,
         country: data.countryName,
-      }));;
-    }
-    else if (activePopup === "nationality") {
+      }));
+    } else if (activePopup === "nationality") {
       setFormData((prevState) => ({
         ...prevState,
         nationality: data.countryName,
-      }));;
-    }
-    else if (activePopup === "doctor") {
-      handleDoctorSelect(data)
+      }));
+    } else if (activePopup === "doctor") {
+      handleDoctorSelect(data);
     }
     setActivePopup(null);
   };
@@ -287,26 +313,24 @@ const PatientRegistrationNew = ({ onClose }) => {
     if (activePopup === "cityDistrict") {
       return { columns: ["cityId", "cityName"], data: cities };
     } else if (activePopup === "state") {
-      return { columns: ["statesId", "stateName"], data: states }
+      return { columns: ["statesId", "stateName"], data: states };
     } else if (activePopup === "country") {
-      return { columns: ["countryId", "countryName"], data: country }
+      return { columns: ["countryId", "countryName"], data: country };
     } else if (activePopup === "pinCode") {
-      return { columns: [""], data: departmentDetails }
+      return { columns: [""], data: departmentDetails };
     } else if (activePopup === "nationality") {
-      return { columns: ["countryId", "countryName"], data: country }
-    }
-    else if (activePopup === "doctor") {
-      return { columns: ["doctorName"], data: doctors }
-    }
-    else {
+      return { columns: ["countryId", "countryName"], data: country };
+    } else if (activePopup === "doctor") {
+      return { columns: ["doctorName"], data: doctors };
+    } else {
       return { columns: [], data: [] };
     }
-  }
+  };
   const { columns, data } = getPopupData();
   const addRow = () => {
     setSelectedDoctors((prevState) => [
-      ...prevState,  // Keep the previous data intact
-      { doctorName: "", address: "", mobileNo: "", emailId: "" },  // Add a new row
+      ...prevState, // Keep the previous data intact
+      { doctorName: "", address: "", mobileNo: "", emailId: "" }, // Add a new row
     ]);
   };
 
@@ -323,12 +347,21 @@ const PatientRegistrationNew = ({ onClose }) => {
             <div className="patient-registration-component-form-group">
               <label>ER NO:</label>
 
-              <input type="text" name="erNo" value={formData.erNo} onChange={handleChange} />
-
+              <input
+                type="text"
+                name="erNo"
+                value={formData.erNo}
+                onChange={handleChange}
+              />
             </div>
             <div className="patient-registration-component-form-group">
               <label>MR NO:</label>
-              <input type="text" name="mrNo" value={result?.uhid || patient?.uhid} onChange={handleChange} />
+              <input
+                type="text"
+                name="mrNo"
+                value={result?.uhid || patient?.uhid}
+                onChange={handleChange}
+              />
             </div>
             <div className="patient-registration-component-form-group">
               <label>
@@ -359,15 +392,30 @@ const PatientRegistrationNew = ({ onClose }) => {
                 F Name:
                 <span className="patient-registration-component-span">*</span>
               </label>
-              <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} />
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+              />
             </div>
             <div className="patient-registration-component-form-group">
               <label>M Name:</label>
-              <input type="text" name="middleName" value={formData.middleName} onChange={handleChange} />
+              <input
+                type="text"
+                name="middleName"
+                value={formData.middleName}
+                onChange={handleChange}
+              />
             </div>
             <div className="patient-registration-component-form-group">
               <label>L Name:</label>
-              <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} />
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+              />
             </div>
           </div>
 
@@ -377,25 +425,38 @@ const PatientRegistrationNew = ({ onClose }) => {
                 Birth Date:
                 <span className="patient-registration-component-span">*</span>
               </label>
-              <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} />
+              <input
+                type="date"
+                name="dateOfBirth"
+                value={formData.dateOfBirth}
+                onChange={handleChange}
+              />
             </div>
             <div className="patient-registration-component-form-group">
               <label>
                 Age:
                 <span className="patient-registration-component-span">*</span>
               </label>
-              <input type="text" name="age" value={formData.age} onChange={handleChange} />
+              <input
+                type="text"
+                name="age"
+                value={formData.age}
+                onChange={handleChange}
+              />
             </div>
             <div className="patient-registration-component-form-group">
               <label>
                 Age Unit:
                 <span className="patient-registration-component-span">*</span>
               </label>
-              <select name="ageUnit" value={formData.ageUnit} onChange={handleChange} >
+              <select
+                name="ageUnit"
+                value={formData.ageUnit}
+                onChange={handleChange}
+              >
                 <option value="Years">Years</option>
               </select>
             </div>
-
           </div>
           <div className="patient-registration-component-form-group-1row">
             <div className="patient-registration-component-form-group">
@@ -469,7 +530,12 @@ const PatientRegistrationNew = ({ onClose }) => {
                 Relative Name:
                 <span className="patient-registration-component-span">*</span>
               </label>
-              <input type="text" name="relationName" value={formData.relationName} onChange={handleChange} />
+              <input
+                type="text"
+                name="relationName"
+                value={formData.relationName}
+                onChange={handleChange}
+              />
             </div>
             <div className="patient-registration-component-form-group">
               <label>Religion:</label>
@@ -495,15 +561,30 @@ const PatientRegistrationNew = ({ onClose }) => {
           <div className="patient-registration-component-form-group-1row">
             <div className="patient-registration-component-form-group">
               <label>Caste:</label>
-              <input type="text" name="cast" value={formData.cast} onChange={handleChange} />
+              <input
+                type="text"
+                name="cast"
+                value={formData.cast}
+                onChange={handleChange}
+              />
             </div>
             <div className="patient-registration-component-form-group">
               <label>Occupation:</label>
-              <input type="text" name="occupation" value={formData.occupation} onChange={handleChange} />
+              <input
+                type="text"
+                name="occupation"
+                value={formData.occupation}
+                onChange={handleChange}
+              />
             </div>
             <div className="patient-registration-component-form-group">
               <label>Qualification:</label>
-              <input type="text" name="qualification" value={formData.qualification} onChange={handleChange} />
+              <input
+                type="text"
+                name="qualification"
+                value={formData.qualification}
+                onChange={handleChange}
+              />
             </div>
           </div>
         </div>
@@ -513,21 +594,36 @@ const PatientRegistrationNew = ({ onClose }) => {
         <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
             <label>Mother Name:</label>
-            <input type="text" name="motherName" value={formData.motherName} onChange={handleChange}></input>
+            <input
+              type="text"
+              name="motherName"
+              value={formData.motherName}
+              onChange={handleChange}
+            ></input>
           </div>
           <div className="patient-registration-component-form-group">
             <label>
               Address:
               <span className="patient-registration-component-span">*</span>
             </label>
-            <input type="text" name="address" value={formData.address} onChange={handleChange}></input>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+            ></input>
           </div>
           <div className="patient-registration-component-form-group">
             <label>
               Area
               <span className="patient-registration-component-span">*</span>
             </label>
-            <input type="text" name="areaVillage" value={formData.areaVillage} onChange={handleChange} />
+            <input
+              type="text"
+              name="areaVillage"
+              value={formData.areaVillage}
+              onChange={handleChange}
+            />
           </div>
         </div>
 
@@ -538,10 +634,17 @@ const PatientRegistrationNew = ({ onClose }) => {
               <span className="patient-registration-component-span">*</span>
             </label>
             <div className="patient-registration-sub-input">
-              <input type="text" name="cityDistrict" value={formData.cityDistrict} onChange={handleChange} />
-              <IoSearch style={{ fontSize: '18px', cursor: 'pointer' }} onClick={() => setActivePopup("cityDistrict")} />
+              <input
+                type="text"
+                name="cityDistrict"
+                value={formData.cityDistrict}
+                onChange={handleChange}
+              />
+              <IoSearch
+                style={{ fontSize: "18px", cursor: "pointer" }}
+                onClick={() => setActivePopup("cityDistrict")}
+              />
             </div>
-
           </div>
           <div className="patient-registration-component-form-group">
             <label>
@@ -549,10 +652,17 @@ const PatientRegistrationNew = ({ onClose }) => {
               <span className="patient-registration-component-span">*</span>
             </label>
             <div className="patient-registration-sub-input">
-              <input type="text" name="state" value={formData.state} onChange={handleChange} />
-              <IoSearch style={{ fontSize: '18px', cursor: 'pointer' }} onClick={() => setActivePopup("state")} />
+              <input
+                type="text"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+              />
+              <IoSearch
+                style={{ fontSize: "18px", cursor: "pointer" }}
+                onClick={() => setActivePopup("state")}
+              />
             </div>
-
           </div>
 
           <div className="patient-registration-component-form-group">
@@ -561,10 +671,17 @@ const PatientRegistrationNew = ({ onClose }) => {
               <span className="patient-registration-component-span">*</span>
             </label>
             <div className="patient-registration-sub-input">
-              <input type="text" name="country" value={formData.country} onChange={handleChange} />
-              <IoSearch style={{ fontSize: '18px', cursor: 'pointer' }} onClick={() => setActivePopup("country")} />
+              <input
+                type="text"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+              />
+              <IoSearch
+                style={{ fontSize: "18px", cursor: "pointer" }}
+                onClick={() => setActivePopup("country")}
+              />
             </div>
-
           </div>
         </div>
       </div>
@@ -577,7 +694,12 @@ const PatientRegistrationNew = ({ onClose }) => {
               <span className="patient-registration-component-span">*</span>
             </label>
             <div className="patient-registration-sub-input">
-              <input type="text" name="pinCode" value={formData.pinCode} onChange={handleChange} />
+              <input
+                type="text"
+                name="pinCode"
+                value={formData.pinCode}
+                onChange={handleChange}
+              />
             </div>
           </div>
 
@@ -586,12 +708,21 @@ const PatientRegistrationNew = ({ onClose }) => {
               Mobile No:
               <span className="patient-registration-component-span">*</span>
             </label>
-            <input type="tel" name="mobileNumber" value={formData.mobileNumber} onChange={handleChange} />
-
+            <input
+              type="tel"
+              name="mobileNumber"
+              value={formData.mobileNumber}
+              onChange={handleChange}
+            />
           </div>
           <div className="patient-registration-component-form-group">
             <label>Tel No(Off):</label>
-            <input type="tel" name="telNumberOff" value={formData.telNumberOff} onChange={handleChange} />
+            <input
+              type="tel"
+              name="telNumberOff"
+              value={formData.telNumberOff}
+              onChange={handleChange}
+            />
           </div>
         </div>
 
@@ -601,15 +732,30 @@ const PatientRegistrationNew = ({ onClose }) => {
               Email Id:
               <span className="patient-registration-component-span">*</span>
             </label>
-            <input type="text" name="emailId" value={formData.emailId} onChange={handleChange} />
+            <input
+              type="text"
+              name="emailId"
+              value={formData.emailId}
+              onChange={handleChange}
+            />
           </div>
           <div className="patient-registration-component-form-group">
             <label>Height:</label>
-            <input type="text" name="height" value={formData.height} onChange={handleChange} />
+            <input
+              type="text"
+              name="height"
+              value={formData.height}
+              onChange={handleChange}
+            />
           </div>
           <div className="patient-registration-component-form-group">
             <label>Weight:</label>
-            <input type="text" name="weight" value={formData.weight} onChange={handleChange} />
+            <input
+              type="text"
+              name="weight"
+              value={formData.weight}
+              onChange={handleChange}
+            />
           </div>
         </div>
 
@@ -638,24 +784,52 @@ const PatientRegistrationNew = ({ onClose }) => {
           </div>
           <div className="patient-registration-component-form-group">
             <label>Remarks:</label>
-            <input type="text" name="remarks" value={formData.remarks} onChange={handleChange} />
+            <input
+              type="text"
+              name="remarks"
+              value={formData.remarks}
+              onChange={handleChange}
+            />
           </div>
           <div className="patient-registration-component-form-group">
             <label>Previous Hospital:</label>
-            <input type="text" name="previousHospital" value={formData.previousHospital} onChange={handleChange} />
+            <input
+              type="text"
+              name="previousHospital"
+              value={formData.previousHospital}
+              onChange={handleChange}
+            />
           </div>
         </div>
 
         <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
             <label>Referred Contact No:</label>
-            <input type="text" name="referredContactNumber" value={formData.referredContactNumber} onChange={handleChange}></input>
+            <input
+              type="text"
+              name="referredContactNumber"
+              value={formData.referredContactNumber}
+              onChange={handleChange}
+            ></input>
           </div>
           <div className="patient-registration-component-form-group">
             <label>Nationality:</label>
             <div className="patient-registration-sub-input">
-              <input type="text" name="nationality" value={formData.nationality} onChange={handleChange}></input>
-              <IoSearch style={{ fontSize: '18px', display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={() => setActivePopup("nationality")} />
+              <input
+                type="text"
+                name="nationality"
+                value={formData.nationality}
+                onChange={handleChange}
+              ></input>
+              <IoSearch
+                style={{
+                  fontSize: "18px",
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+                onClick={() => setActivePopup("nationality")}
+              />
             </div>
           </div>
 
@@ -678,7 +852,9 @@ const PatientRegistrationNew = ({ onClose }) => {
             </select>
           </div>
         </div>
-        <h4 className="patient-registration-h4">Local Contact Person In Emergency</h4>
+        <h4 className="patient-registration-h4">
+          Local Contact Person In Emergency
+        </h4>
         <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
             <label>Contact Name Initial:</label>
@@ -705,43 +881,83 @@ const PatientRegistrationNew = ({ onClose }) => {
           </div>
           <div className="patient-registration-component-form-group">
             <label>Contact Name:</label>
-            <input type="text" name="contactName" value={formData.contactName} onChange={handleChange} />
+            <input
+              type="text"
+              name="contactName"
+              value={formData.contactName}
+              onChange={handleChange}
+            />
           </div>
           <div className="patient-registration-component-form-group">
             <label>Contact Relation:</label>
-            <input type="text" name="contactRelation" value={formData.contactRelation} onChange={handleChange} />
+            <input
+              type="text"
+              name="contactRelation"
+              value={formData.contactRelation}
+              onChange={handleChange}
+            />
           </div>
         </div>
         <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
             <label>Tel No(Res):</label>
-            <input type="text" name="telNumberRes1" value={formData.telNumberRes1} onChange={handleChange} />
+            <input
+              type="text"
+              name="telNumberRes1"
+              value={formData.telNumberRes1}
+              onChange={handleChange}
+            />
           </div>
           <div className="patient-registration-component-form-group">
             <label>Tel No(Off):</label>
-            <input type="text" name="telNumberOff1" value={formData.telNumberOff1} onChange={handleChange} />
+            <input
+              type="text"
+              name="telNumberOff1"
+              value={formData.telNumberOff1}
+              onChange={handleChange}
+            />
           </div>
           <div className="patient-registration-component-form-group">
             <label>Contact Mobile No:</label>
-            <input type="text" name="contactNumber" value={formData.contactNumber} onChange={handleChange} />
+            <input
+              type="text"
+              name="contactNumber"
+              value={formData.contactNumber}
+              onChange={handleChange}
+            />
           </div>
         </div>
         <h4 className="patient-registration-h4">Payment Details</h4>
         <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
             <label>GSTIN:</label>
-            <input type="text" name="gstin" value={formData.gstin} onChange={handleChange} />
+            <input
+              type="text"
+              name="gstin"
+              value={formData.gstin}
+              onChange={handleChange}
+            />
           </div>
           <div className="patient-registration-component-form-group">
             <label>PAN:</label>
-            <input type="text" name="pan" value={formData.pan} onChange={handleChange} />
+            <input
+              type="text"
+              name="pan"
+              value={formData.pan}
+              onChange={handleChange}
+            />
           </div>
           <div className="patient-registration-component-form-group">
             <label>
               Adhar Card Number:
               <span className="patient-registration-component-span">*</span>
             </label>
-            <input type="text" name="adharCardId" value={formData.adharCardId} onChange={handleChange} />
+            <input
+              type="text"
+              name="adharCardId"
+              value={formData.adharCardId}
+              onChange={handleChange}
+            />
           </div>
         </div>
 
@@ -792,27 +1008,41 @@ const PatientRegistrationNew = ({ onClose }) => {
               value={organisationId}
               onChange={(e) => setOrganisationId(e.target.value)}
             >
-              <option value="">
-                Select Organisation Name
-              </option>
-              {organisation.length && organisation.map((item, index) => (
-                <option value={item.masterId}>{item.name}</option>
-              ))}
+              <option value="">Select Organisation Name</option>
+              {organisation.length &&
+                organisation.map((item, index) => (
+                  <option value={item.masterId}>{item.name}</option>
+                ))}
             </select>
           </div>
         </div>
         <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
             <label>Policy Number:</label>
-            <input type="text" name="policyNumber" value={formData.policyNumber} onChange={handleChange} />
+            <input
+              type="text"
+              name="policyNumber"
+              value={formData.policyNumber}
+              onChange={handleChange}
+            />
           </div>
           <div className="patient-registration-component-form-group">
             <label>Policy Start Date:</label>
-            <input type="date" name="policyStartDate" value={formData.policyStartDate} onChange={handleChange} />
+            <input
+              type="date"
+              name="policyStartDate"
+              value={formData.policyStartDate}
+              onChange={handleChange}
+            />
           </div>
           <div className="patient-registration-component-form-group">
             <label>Policy End Date:</label>
-            <input type="date" name="policyEndDate" value={formData.policyEndDate} onChange={handleChange} />
+            <input
+              type="date"
+              name="policyEndDate"
+              value={formData.policyEndDate}
+              onChange={handleChange}
+            />
           </div>
         </div>
         <div className="patient-registration-component-form-group-1row">
@@ -829,7 +1059,7 @@ const PatientRegistrationNew = ({ onClose }) => {
           <div className="patient-registration-component-form-group"></div>
         </div>
         <h4 className="patient-registration-h4">Referred Doctors</h4>
-        <table >
+        <table>
           <thead>
             <tr>
               <th>Action</th>
@@ -841,45 +1071,81 @@ const PatientRegistrationNew = ({ onClose }) => {
             </tr>
           </thead>
           <tbody>
-            {selectedDoctors.length > 0 && selectedDoctors.map((doctor, index) => (
-              <tr key={index}>
-                <td>
-                  <button className="patient-re-add" onClick={addRow}>Add</button>
-                  <button className="patient-re-delete" onClick={() => deleteRow(index)}>Delete</button>
-                </td>
-                <td>{index + 1}</td>
-                <td>
-                  <input
-                    type="text"
-                    value={doctor.doctorName}
-                    name="doctorName"
-                    placeholder="Doctor Name"
-                    className="patient-registration-component"
-                  />
-                  <IoSearch style={{ fontSize: '18px', alignItems: 'center', cursor: 'pointer' }} onClick={() => setActivePopup("doctor")} />
-                </td>
-                <td>
-                  <textarea
-                    type="text"
-                    value={doctor.residenceAddress}
-                    placeholder="Address"
-                    className="patient-registration-component-textarea"
-                  />
-                </td>
-                <td>
-                  <input type="text" value={doctor.mobileNumber} className="patient-registration-component" />
-                </td>
-                <td>
-                  <input type="text" value={doctor.emailId} className="patient-registration-component" />
-                </td>
-              </tr>
-            ))}
+            {selectedDoctors.length > 0 &&
+              selectedDoctors.map((doctor, index) => (
+                <tr key={index}>
+                  <td>
+                    <button className="patient-re-add" onClick={addRow}>
+                      Add
+                    </button>
+                    <button
+                      className="patient-re-delete"
+                      onClick={() => deleteRow(index)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                  <td>{index + 1}</td>
+                  <td>
+                    <input
+                      type="text"
+                      value={doctor.doctorName}
+                      name="doctorName"
+                      placeholder="Doctor Name"
+                      className="patient-registration-component"
+                    />
+                    <IoSearch
+                      style={{
+                        fontSize: "18px",
+                        alignItems: "center",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setActivePopup("doctor")}
+                    />
+                  </td>
+                  <td>
+                    <textarea
+                      type="text"
+                      value={doctor.residenceAddress}
+                      placeholder="Address"
+                      className="patient-registration-component-textarea"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      value={doctor.mobileNumber}
+                      className="patient-registration-component"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      value={doctor.emailId}
+                      className="patient-registration-component"
+                    />
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
       <div className="patient-registration-component-form-actions">
-        {patient ? (<button className="patient-registration-component-add-btn" onClick={handleSubmit} >Update</button>) : (<button className="patient-registration-component-add-btn" onClick={handleSubmit} >Add</button>)}
-
+        {patient ? (
+          <button
+            className="patient-registration-component-add-btn"
+            onClick={handleSubmit}
+          >
+            Update
+          </button>
+        ) : (
+          <button
+            className="patient-registration-component-add-btn"
+            onClick={handleSubmit}
+          >
+            Add
+          </button>
+        )}
       </div>
       {activePopup && (
         <PopupTable

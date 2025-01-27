@@ -37,7 +37,7 @@ const EmployeeRoleComponent = () => {
   const handleImportDepartment = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:4096/api/employeeRoles/insert"
+        `${API_BASE_URL}/employeeRoles/insert`
       );
 
       if (response) {

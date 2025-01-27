@@ -60,7 +60,7 @@ const EmployeeTypeComponent = () => {
   const handleImportDepartment = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:4096/api/employeeTypes/insert"
+        `${API_BASE_URL}/employeeTypes/insert`
       );
 
       if (response) {
