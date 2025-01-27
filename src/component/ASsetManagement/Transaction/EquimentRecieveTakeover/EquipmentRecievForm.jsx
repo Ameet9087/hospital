@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./EquipmentRecievForm.css";
 import EquipmentRecievFormPopUp from "./EquipmentRecievFormPopUp";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -107,7 +107,7 @@ const EquipmentRecievForm = () => {
                 "Department",
                 "Sub Location",
                 "Manual Receive No",
-           
+
               ].map((header, index) => (
                 <th
                   key={index}
@@ -137,7 +137,7 @@ const EquipmentRecievForm = () => {
                 <td>{row.equipmentTransferHandoverDTO?.equipmentMasterDTO?.department?.departmentName || "N/A"}</td>
                 <td>{row.equipmentTransferHandoverDTO?.equipmentMasterDTO?.assetLocationMaster?.subLocation || "N/A"}</td>
                 <td>{row.manualReceive || "N/A"}</td>
-            
+
               </tr>
             ))}
           </tbody>
