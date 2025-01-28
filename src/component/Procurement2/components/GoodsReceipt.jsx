@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import ItemRow from "../components/ItemRow";
+
 import FormInput from "../components/FormInput";
 import "./GoodsReceipt.css";
 import { API_BASE_URL } from "../../api/api";
 
-const GoodsReceipt = ({goodReceipt,onClose}) => {
-  
+const GoodsReceipt = ({ goodReceipt, onClose }) => {
+
   const [vendorBillDate, setVendorBillDate] = useState("");
   const [goodsReceiptDate, setGoodsReceiptDate] = useState("");
   const [vendorName, setVendorName] = useState("");
@@ -21,11 +21,13 @@ const GoodsReceipt = ({goodReceipt,onClose}) => {
   const [otherCharges, setOtherCharges] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [remarks, setRemarks] = useState("");
+  const [status, setStatus] = useState("Pending");
   const [itemlist, setLists] = useState([]);
-  const [vendor,setVendor]=useState([]);
+  const [vendor, setVendor] = useState([]);
+  const [isItemAdding, setItemAdding] = useState(false)
   const [items, setItems] = useState([
     {
-      itemId:"",
+      itemId: "",
       batchNo: "",
       expiryDate: "",
       quantity: 0,
@@ -62,37 +64,41 @@ const GoodsReceipt = ({goodReceipt,onClose}) => {
 
     // Update the items state
     setItems(updatedItems || []);
-  }, []);
+  }, [goodReceipt]);
 
   useEffect(() => {
-    const updatedItems = items.map((item) => {
-      const { rate, quantity, discountPercentage, vatPercentage, ccChargePercentage, otherCharge } = item;
+    if (items.length > 0) {
+      const updatedItems = items.map((item) => {
+        const { rate, quantity, discountPercentage, vatPercentage, ccChargePercentage, otherCharge } = item;
 
-      // Calculate the total amount for each item
-      const discount = (rate * quantity * discountPercentage) / 100;
-      const vat = (rate * quantity * vatPercentage) / 100;
-      const ccCharge = (rate * quantity * ccChargePercentage) / 100;
-      const itemTotal = rate * quantity - discount + vat + ccCharge + otherCharge;
+        // Calculate the total amount for each item
+        const discount = (rate * quantity * discountPercentage) / 100;
+        const vat = (rate * quantity * vatPercentage) / 100;
+        const ccCharge = (rate * quantity * ccChargePercentage) / 100;
+        const itemTotal = rate * quantity - discount + vat + ccCharge + otherCharge;
 
-      return { ...item, totalAmount: parseFloat(itemTotal.toFixed(2)) }; // Ensure float precision
-    });
+        return { ...item, totalAmount: parseFloat(itemTotal.toFixed(2)) }; // Ensure float precision
+      });
 
-    setItems(updatedItems); // Update items with calculated totalAmount
-    const calcSubTotal = updatedItems.reduce((acc, item) => acc + item.totalAmount, 0);
-    setSubTotal(parseFloat(calcSubTotal.toFixed(2)));
-  }, [items]);
+      setItems(updatedItems); // Update items with calculated totalAmount
+
+      const calcSubTotal = updatedItems.reduce((acc, item) => acc + item.totalAmount, 0);
+      setSubTotal(parseFloat(calcSubTotal.toFixed(2))); // Calculate subtotal and update state
+    }
+    setItemAdding(false)
+  }, [isItemAdding]);
 
   useEffect(() => {
     const total = parseFloat(subTotal) + parseFloat(ccCharge) + parseFloat(vat) + parseFloat(otherCharges) - parseFloat(discountAmount);
     setTotalAmount(total);
   }, [subTotal, ccCharge, discountAmount, vat, otherCharges]);
-  
+
 
   const handleAddItem = () => {
     setItems([
       ...items,
       {
-        itemId:"",
+        itemId: "",
         category: "",
         itemName: "",
         batchNo: "",
@@ -122,11 +128,12 @@ const GoodsReceipt = ({goodReceipt,onClose}) => {
       .catch((error) => console.error("Error fetching items:", error));
   }, []);
 
-  
+
   const handleItemChange = (index, field, value) => {
+    setItemAdding(true);
     const newItems = [...items];
     newItems[index][field] = value;
-    
+
     const subTotal = newItems[index].quantity * newItems[index].rate;
     const discount = (subTotal * newItems[index].discountPercentage) / 100;
     const vat = (subTotal * newItems[index].vatPercentage) / 100;
@@ -137,9 +144,11 @@ const GoodsReceipt = ({goodReceipt,onClose}) => {
 
 
     setItems(newItems);
+    // setItemAdding(false);
+
   };
   const handleVendorChange = (e) => {
-    setVendorName(e.target.value); 
+    setVendorName(e.target.value);
   };
 
   const handleItemSelect = (e, index) => {
@@ -167,7 +176,7 @@ const GoodsReceipt = ({goodReceipt,onClose}) => {
     const data = {
       vendorBillDate,
       goodsReceiptDate,
-      vendorId:vendorName,
+      vendorId: vendorName,
       billNo,
       paymentMode,
       creditPeriod,
@@ -178,12 +187,13 @@ const GoodsReceipt = ({goodReceipt,onClose}) => {
       vat,
       otherCharges,
       totalAmount,
+      status,
       remarks,
       items,
     };
     console.log(data);
-    
-  
+
+
     try {
       await axios.post(`${API_BASE_URL}/goods-receipts/create`, data);
       alert("Goods Receipt saved successfully!");
@@ -215,20 +225,20 @@ const GoodsReceipt = ({goodReceipt,onClose}) => {
 
       <div className="GoodsReceiptSettings-form-row">
         <div className="goods-receipts-form-group">
-      <label htmlFor="vendorSelect">Vendor Name:</label>
-      <select
-          id="vendorSelect"
-          value={vendorName}
-          onChange={handleVendorChange}
-          required
-        >
-          <option value="">Select Vendor</option>
-          {vendor.map((vendor) => (
-            <option key={vendor.id} value={vendor.id}>
-              {vendor?.vendorName} 
-            </option>
-          ))}
-        </select>
+          <label htmlFor="vendorSelect">Vendor Name:</label>
+          <select
+            id="vendorSelect"
+            value={vendorName}
+            onChange={handleVendorChange}
+            required
+          >
+            <option value="">Select Vendor</option>
+            {vendor.map((vendor) => (
+              <option key={vendor.id} value={vendor.id}>
+                {vendor?.vendorName}
+              </option>
+            ))}
+          </select>
         </div>
         <FormInput
           label="Bill No:"
@@ -403,8 +413,8 @@ const GoodsReceipt = ({goodReceipt,onClose}) => {
             setValue={setCheckedBy}
           />
         </div>
-        </div>
-        <div className="GoodsReceiptSettings-form-calculation">
+      </div>
+      <div className="GoodsReceiptSettings-form-calculation">
         <div className="GoodsReceiptSettings-form-row-total-section">
           <FormInput
             label="SubTotal:"
@@ -439,20 +449,20 @@ const GoodsReceipt = ({goodReceipt,onClose}) => {
             setValue={setTotalAmount}
             readOnly
           />
-           <FormInput
+          <FormInput
             label="Remarks:"
             type="text"
             value={remarks}
             setValue={setRemarks}
           />
         </div>
-        </div>
-      
+      </div>
+
       <div className="GoodsReceiptSettings-form-submit">
-          <button type="submit" className="GoodsReceiptSettings-add-item-button">
-            Submit
-          </button>
-        </div>
+        <button type="submit" className="GoodsReceiptSettings-add-item-button">
+          Submit
+        </button>
+      </div>
     </form>
   );
 };
