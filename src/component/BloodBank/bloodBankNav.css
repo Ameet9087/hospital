@@ -18,12 +18,12 @@
   padding: 10px 0px;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap; /* Enable wrapping for smaller screens */
+  flex-wrap: wrap; 
 }
 
-.bloodBank-Navigation-bar li {
+/* .bloodBank-Navigation-bar li {
   margin: 0;
-}
+} */
 
 .bloodBank-Navigation-bar a {
   
@@ -72,6 +72,7 @@
 
 .disPrescription-Navbttn-N-act {
   display: flex;
+  gap: 10px;
 }
 
 /* .disPrescription-Navbttn-N-act li {
@@ -93,3 +94,5 @@
     flex-direction: column; /* Stack prescription nav buttons vertically */
   }
 }
+
+

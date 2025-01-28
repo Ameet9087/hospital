@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useRef} from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import "./bloodStorageDashboard.css"
+import CustomModal from '../../../CustomModel/CustomModal';
 import BSDAddNewBloodNew from './bSDAddNewBloodNew';
 import { API_BASE_URL } from '../../api/api';
-
+import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 const BloodStorageDashboard = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [storageData, setStorageData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [showModal, setShowModal] = useState(false);
-
+    const [columnWidths,setColumnWidths] = useState({});
+    const tableRef=useRef(null);
     // Fetch the data from the API
     const fetchData = async () => {
         try {
@@ -61,58 +63,66 @@ const BloodStorageDashboard = () => {
         }
     };
 
-    // Handle opening the modal to add a new blood unit
-    const handleAddNewBloodUnit = () => {
-        setShowModal(true);
-    };
+    const handleOpenModal = () => setShowModal(true);
+    const handleCloseModal = () => setShowModal(false);
 
-    // Handle closing the modal
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
-
-    // Callback function to refresh data
     const refreshData = async () => {
         await fetchData();
-        handleCloseModal(); // Close the modal after refreshing data
+        handleCloseModal(); 
     };
 
     return (
         <div className="bloodStorage-dashboard-container-box">
-            <span className='bloodStorage-dashboard-container-heading'>Blood Storage Dashboard</span>
-
-            <div className="bloodStorage-dashboard-controls">
-                <div className="bloodStorage-search-bar">
+            <span className='bloodStorage-dashboard-container-heading'><i className="fa-solid fa-star-of-life"></i>Blood Storage Dashboard</span>
+            <div className="bloodStorage-dashboard-actions">
+                <button onClick={handleOpenModal}>Add New Blood Unit</button>
+            </div>
+         
+               
                     <div className='bloodStorage-search-bar-input-btn'>
                         <input
                             type="text"
                             placeholder="Search by Storage ID or Test ID"
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)} // Update search term on input change
+                            onChange={(e) => setSearchTerm(e.target.value)} 
                         />
                     </div>
-                </div>
-            </div>
+              
 
-            <div className="bloodStorage-dashboard-actions">
-                <button onClick={handleAddNewBloodUnit}>Add New Blood Unit</button>
-                {/* Add your Export functionality here */}
-            </div>
+          
+            <table  ref={tableRef}>
+              <thead>
+                <tr >
+                    {[
+                  "Storage ID",
+                  "Test ID",
+                  "Blood Group",
+                  "Volume",
+                  "Storage Date",
+                  "Expiry Date",
+                  "Storage Location",
+                  "Status"
+                ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
 
-            <table className="bloodStorage-storage-table">
-                <thead>
-                    <tr>
-                        <th>Storage ID</th>
-                        <th>Test ID</th>
-                        <th>Blood Group</th>
-                        <th>Volume</th>
-                        <th>Storage Date</th>
-                        <th>Expiry Date</th>
-                        <th>Storage Location</th>
-                        <th>Status</th>
-                        {/* <th>Actions</th> */}
-                    </tr>
-                </thead>
                 <tbody>
                     {filteredData.map((item) => (
                         <tr key={item.storage_id}>
@@ -132,9 +142,10 @@ const BloodStorageDashboard = () => {
                 </tbody>
             </table>
 
-            {/* Show Modal if showModal is true */}
-            {showModal && <BSDAddNewBloodNew onClose={handleCloseModal} refreshData={refreshData} />}
-        </div>
+            <CustomModal isOpen={showModal} onClose={handleCloseModal}>
+        <BSDAddNewBloodNew onClose={handleCloseModal} refreshData={refreshData} />
+      </CustomModal>
+              </div>
     );
 };
 

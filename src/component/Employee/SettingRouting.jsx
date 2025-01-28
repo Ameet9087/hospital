@@ -36,6 +36,7 @@ import HospitalSpecialisation from './Specialisations/HospitalSpecialisation';
 import HospitalSpecialityGroup from './SpecialityGroup/HospitalSpecialityGroup';
 import DiscountAuthorityMaster from './DiscountAuthority/DiscountAuthorityMaster';
 import Organisition_Master from './Organisition_New/Organisition_Master';
+import Firewall from './Firewall/Firewall';
 
 
 const SettingRouting = () => {
@@ -64,6 +65,7 @@ const SettingRouting = () => {
         <Route path='/dgmaster/create-dgmaster' element={<Dgmaster />} />
         <Route path='/dicountathority/creatediscountathority' element={<DiscountAuthorityMaster />} />
         <Route path="/organaization/createorganaization" element={<Organisition_Master />} />
+        <Route path="/firewall" element={<Firewall />} />
         <Route path='/specialisations/create-specialisations' element={<HospitalSpecialisation />} />
         <Route path='/hospitalSpecialityGroup/create-hospitalSpecialityGroup' element={<HospitalSpecialityGroup />} />
         <Route path="/ipmaster/IP-master-room" element={<Rooms />} />

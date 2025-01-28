@@ -20,6 +20,16 @@ const EmployeeHeader = () => {
                 SubStore
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/settings/firewall"
+                className={
+                  location.pathname === "/settings/firewall" ? "active" : ""
+                }
+              >
+                FireWall
+              </NavLink>
+            </li>
 
             <li>
               <NavLink

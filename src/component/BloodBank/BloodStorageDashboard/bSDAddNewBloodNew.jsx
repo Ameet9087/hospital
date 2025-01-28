@@ -14,7 +14,6 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
     const [status, setStatus] = useState('');
     const [testOptions, setTestOptions] = useState([]);
 
-    // Fetch test IDs on component mount
     useEffect(() => {
         const fetchTestOptions = async () => {
             try {
@@ -23,7 +22,7 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
                     throw new Error('Failed to fetch test IDs');
                 }
                 const data = await response.json();
-                setTestOptions(data); // Assuming API returns an array of test objects
+                setTestOptions(data);   
             } catch (error) {
                 console.error('Error fetching test IDs:', error);
             }
@@ -68,15 +67,14 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
     };
 
     return (
-        <div className="modal-modal-background">
-            <div className="modal-modal-container">
-                <button className="modal-close-button" onClick={onClose}>
-                    &times;
-                </button>
+       
+            <div className="BSDAddNewBloodNew-modal-modal-container">
+              
                 <h3>Add/Edit Blood Storage Entry</h3>
 
-                <div className="modal-form-group">
-                    <label>Test ID:</label>
+                <div className="BSDAddNewBloodNew-modal-form-group">
+                   <div className='BSDAddNewBloodNew-feild'>
+                   <label>Test ID:</label>
                     <select
                         value={testId}
                         onChange={(e) => setTestId(e.target.value)}
@@ -89,19 +87,23 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
                             </option>
                         ))}
                     </select>
-                </div>
-
-                <div className="modal-form-group">
+                   </div>
+                   <div className='BSDAddNewBloodNew-feild'>
                     <label>Storage Date:</label>
                     <DatePicker
                         selected={storagedate}
                         onChange={(date) => setstoragedate(date)}
                         placeholderText="Select Storage Date"
                     />
+                    </div>
+                    
                 </div>
 
-                <div className="modal-form-group">
-                    <label>Blood Group:</label>
+              
+
+                <div className="BSDAddNewBloodNew-modal-form-group">
+                <div className='BSDAddNewBloodNew-feild'>
+                  <label>Blood Group:</label>
                     <select value={bloodgroup} onChange={(e) => setbloodgroup(e.target.value)}>
                         <option value="">Select Blood Group</option>
                         <option value="A+">A+</option>
@@ -110,38 +112,43 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
                         <option value="O+">O+</option>
                         <option value="O-">O-</option>
                     </select>
-                </div>
-
-                <div className="modal-form-group">
-                    <label>Volume (ml):</label>
+                  </div>
+                  <div className='BSDAddNewBloodNew-feild'>
+                  <label>Volume (ml):</label>
                     <input
                         type="number"
                         value={volume}
                         onChange={(e) => setvolume(e.target.value)}
                         placeholder="Enter volume in ml"
                     />
+                  </div>
                 </div>
 
-                <div className="modal-form-group">
-                    <label>Expiry Date:</label>
+               
+
+                <div className="BSDAddNewBloodNew-modal-form-group">
+                <div className='BSDAddNewBloodNew-feild'>
+                   <label>Expiry Date:</label>
                     <DatePicker
                         selected={expirydate}
                         onChange={(date) => setexpirydate(date)}
                         placeholderText="Select Expiry Date"
                     />
-                </div>
-
-                <div className="modal-form-group">
-                    <label>Storage Location:</label>
+                   </div>
+                   <div className='BSDAddNewBloodNew-feild'>
+                   <label>Storage Location:</label>
                     <input
                         type="text"
                         value={storagelocation}
                         onChange={(e) => setstoragelocation(e.target.value)}
                         placeholder="Enter Storage Location"
                     />
+                   </div>
                 </div>
 
-                <div className="modal-form-group">
+             
+
+                <div className="BSDAddNewBloodNew-status">
                     <label>Status:</label>
                     <select value={status} onChange={(e) => setStatus(e.target.value)}>
                         <option value="">Select Status</option>
@@ -150,12 +157,11 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
                     </select>
                 </div>
 
-                <div className="modal-modal-actions">
+                <div className="BSDAddNewBloodNew-modal-modal-actions">
                     <button onClick={handleSave}>Save</button>
-                    <button onClick={onClose}>Cancel</button>
                 </div>
             </div>
-        </div>
+        
     );
 };
 

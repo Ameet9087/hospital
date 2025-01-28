@@ -3,6 +3,7 @@ import * as XLSX from "xlsx"; // Import the xlsx library
 import "../BloodIssue/bloodIssue.css";
 import { useReactToPrint } from "react-to-print";
 import { API_BASE_URL } from "../../api/api";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 
 function BloodIssue() {
   const printRef = useRef();
@@ -12,6 +13,8 @@ function BloodIssue() {
   const [dateRange, setDateRange] = useState({ from: "", to: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef=useRef(null);
 
   useEffect(() => {
     fetchStockData();
@@ -42,8 +45,7 @@ function BloodIssue() {
         requestId: item.bloodRequestDTO?.requestId || "N/A",
         firstName: item.bloodRequestDTO?.patientDTO?.firstName || "N/A",
         inPatientId: item.bloodRequestDTO?.patientDTO?.inPatientId || "N/A",
-        contactInfo:
-          item.bloodRequestDTO?.contactInformation || "N/A",
+        contactInfo: item.bloodRequestDTO?.contactInformation || "N/A",
       }));
 
       setStockData(mappedData);
@@ -192,7 +194,10 @@ function BloodIssue() {
         </div>
         <div className="bloodIssue-results-info">
           Showing {filteredData.length} results
-          <button className="bloodIssue-print-btn" onClick={handleExportToExcel}>
+          <button
+            className="bloodIssue-print-btn"
+            onClick={handleExportToExcel}
+          >
             <i className="fa-regular fa-file-excel"></i> Export
           </button>
           <button className="bloodIssue-print-btn" onClick={handlePrint}>
@@ -205,19 +210,38 @@ function BloodIssue() {
         <div ref={printRef}>
           <h2>Blood Issue Report</h2>
           <p>Printed On: {new Date().toLocaleString()}</p>
-          <table>
+          {/* <table ref={tableRef}>
             <thead>
               <tr>
-                <th>Issue ID</th>
-                <th>Patient ID</th>
-                <th>Patient Name</th>
-                <th>Contact Info</th>
-                <th>Request ID</th>
-                <th>Blood Group</th>
-                <th>Units Issued</th>
-                <th>Issue Date</th>
-                <th>Issued By</th>
-                <th>Status</th>
+                {[
+                  "Issue ID",
+                  "Patient ID",
+                  "Patient Name",
+                  "Contact Info",
+                  "Request ID",
+                  "Blood Group",
+                  "Units Issued",
+                  "Issue Date",
+                  "Issued By",
+                  "Status",
+                ].map((header, index) => (
+                  <th
+                    key={index}
+                    style={{ width: columnWidths[index] }}
+                    className="resizable-th"
+                  >
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
+                      ></div>
+                    </div>
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -236,25 +260,45 @@ function BloodIssue() {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table> */}
         </div>
       </div>
 
       <div className="bloodIssue-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Issue ID</th>
-              <th>Patient Name</th>
-              <th>Contact Info</th>
-              <th>Request ID</th>
-              <th>Blood Group</th>
-              <th>Units Issued</th>
-              <th>Issue Date</th>
-              <th>Issued By</th>
-              <th>Status</th>
-            </tr>
-          </thead>
+      <table ref={tableRef}>
+            <thead>
+              <tr>
+                {[
+                  "Issue ID",
+                  "Patient ID",
+                  "Patient Name",
+                  "Contact Info",
+                  "Request ID",
+                  "Blood Group",
+                  "Units Issued",
+                  "Issue Date",
+                  "Issued By",
+                  "Status",
+                ].map((header, index) => (
+                  <th
+                    key={index}
+                    style={{ width: columnWidths[index] }}
+                    className="resizable-th"
+                  >
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
+                      ></div>
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            </thead>
           <tbody>
             {filteredData.map((item, index) => (
               <tr key={index}>

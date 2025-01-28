@@ -26,9 +26,9 @@ const BloodBankNavBar = () => {
         </div>
         <div className='bloodBank-Activebtn-N-LogOut'>
           {/* <button className='activebloodBank-btn'>Active Blood Bank: Main-Blood Bank</button> */}
-          <button className='bloodBank-LogOut' onClick={handleLogOut}>
+          {/* <button className='bloodBank-LogOut' onClick={handleLogOut}>
             <i className="fa-solid fa-right-from-bracket"></i>
-          </button>
+          </button> */}
         </div>
       </ul>
     </nav>

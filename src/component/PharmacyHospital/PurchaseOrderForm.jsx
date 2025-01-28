@@ -120,7 +120,7 @@ const PurchaseOrderForm = () => {
     }));
     setSelectedSupplierId(selectedSupplier);
   };
-  
+
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -131,12 +131,12 @@ const PurchaseOrderForm = () => {
 
   const handleInputChange = (index, e) => {
     const { name, value } = e.target;
-  
+
     setItems((prevItems) =>
       prevItems.map((item, idx) => {
         if (idx === index) {
           const updatedItem = { ...item, [name]: value };
-  
+
           if (name === "itemName") {
             const selectedItem = availableItems.find((i) => i.itemName === value);
             if (selectedItem) {
@@ -146,7 +146,7 @@ const PurchaseOrderForm = () => {
               };
             }
           }
-  
+
           // Perform calculations only when relevant fields are updated
           const itemQuantity = parseInt(updatedItem.itemQuantity || 0, 10);
           const freeQuantity = parseInt(updatedItem.freeQuantity || 0, 10);
@@ -154,42 +154,42 @@ const PurchaseOrderForm = () => {
           const ccChargePercentage = parseFloat(updatedItem.ccChargePercentage || 0);
           const discountPercentage = parseFloat(updatedItem.discountPercentage || 0);
           const vatPercentage = parseFloat(updatedItem.vatPercentage || 0);
-  
+
           // Calculate totals
           updatedItem.totalQuantity = itemQuantity + freeQuantity;
           updatedItem.subtotal = updatedItem.totalQuantity * standardRate;
-  
+
           // CC charge calculation
           const ccCharge = (updatedItem.subtotal * ccChargePercentage) / 100;
           const subtotalAfterCC = updatedItem.subtotal + ccCharge;
-  
+
           // Discount calculation
           const discountAmount = (subtotalAfterCC * discountPercentage) / 100;
           const subtotalAfterDiscount = subtotalAfterCC - discountAmount;
-  
+
           // VAT calculation
           const vatAmount = (subtotalAfterDiscount * vatPercentage) / 100;
-  
+
           // Total amount calculation
           const totalAmount = subtotalAfterDiscount + vatAmount;
-  
+
           // Set calculated values
           updatedItem.ccChargeAmount = ccCharge.toFixed(2);
           updatedItem.discountAmount = discountAmount.toFixed(2);
           updatedItem.vatAmount = vatAmount.toFixed(2);
           updatedItem.totalAmount = totalAmount.toFixed(2);
-  
+
           return updatedItem;
         }
         return item;
       })
     );
   };
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     calculateFormDataTotals()
-  },[items])
-  
+  }, [items])
+
   const calculateFormDataTotals = () => {
     let overallVatAmount = 0;
     let overallCcCharge = 0;
@@ -198,33 +198,33 @@ const PurchaseOrderForm = () => {
     let overallTotalAmount = 0;
     let overallDiscountAmount = 0;
     let overallSubTotal = 0;
-  
+
     setItems((prevItems) => {
       // Check if prevItems is an array
       if (!Array.isArray(prevItems)) {
         console.error("prevItems is not an array:", prevItems);
         return prevItems; // Return the original data without modification
       }
-  
+
       const updatedItems = prevItems.map((item) => {
         // Convert values to numbers
         const subtotal = parseFloat(item.subtotal || 0);
         const discountAmount = parseFloat(item.discountAmount || 0);
         const vatAmount = parseFloat(item.vatAmount || 0);
         const ccChargeAmount = parseFloat(item.ccChargeAmount || 0);
-                
+
         overallVatAmount += vatAmount;
         overallCcCharge += ccChargeAmount;
         overallDiscountAmount += discountAmount;
         overallSubTotal += subtotal;
-  
+
         // Assuming non-taxable amount is simply the discount
         overallNonTaxableAmount += discountAmount;
         overallTotalAmount += subtotal;
-  
+
         // Taxable amount = subtotal - non-taxable amount
         overallTaxableAmount += subtotal - discountAmount;
-  
+
         return {
           ...item,
           subtotal: subtotal.toFixed(2),
@@ -247,7 +247,7 @@ const PurchaseOrderForm = () => {
       discountAmount: overallDiscountAmount.toFixed(2),
     }));
   };
-  
+
 
   const addItem = () => {
     setItems([
@@ -296,7 +296,7 @@ const PurchaseOrderForm = () => {
       referenceNumber: formData.referenceNo,
       contact: formData.contact,
       invoicingAddress: formData.invoicingAddress,
-  
+
       subTotal: parseInt(formData.subtotal) || 0,  // Convert to int
       taxableAmount: parseInt(formData.taxableAmount) || 0,  // Convert to int
       vatAmount: parseInt(formData.vatAmount) || 0,  // Convert to int
@@ -314,7 +314,7 @@ const PurchaseOrderForm = () => {
         freeQuantity: parseInt(item.freeQuantity) || 0,  // Convert to int
         totalQuantity: parseInt(item.totalQuantity) || 0,  // Convert to int
         vatPercentage: parseInt(item.vatPercentage) || 0,  // Convert to int
-        standardRate:parseInt(item.standardRate) ||0,
+        standardRate: parseInt(item.standardRate) || 0,
         subTotal: parseInt(item.subtotal) || 0,  // Convert to int
         ccCharge: parseInt(item.ccCharge) || 0,  // Convert to int
         discountPercent: parseInt(item.discountPercentage) || 0,  // Convert to int

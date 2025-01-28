@@ -1,4 +1,3 @@
-/* Dhanashree_SampleTestCard_24/09_Start */
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; 
@@ -50,13 +49,14 @@ const SampleTestCard = ({ testData, onClose }) => {
 
 
     return (
-        <div className="SampleTestCard-container">
+       
             <div className="SampleTestCard-card">
                 <div className="SampleTestCard-card-header">
                     <h2>Test Information</h2>
                 </div>
                 <div className="SampleTestCard-card-body">
-                    <div className="SampleTestCard-field">
+                   <div className='SampleTestCard-info'>
+                   <div className="SampleTestCard-field">
                         <label>
                             <strong>Test Type:</strong>
                             <input
@@ -76,7 +76,9 @@ const SampleTestCard = ({ testData, onClose }) => {
                             />
                         </label>
                     </div>
-                    <div className="SampleTestCard-field">
+                   </div>
+                   <div className='SampleTestCard-info'>
+                   <div className="SampleTestCard-field">
                         <label>
                             <strong>Remark:</strong>
                             <input
@@ -96,6 +98,7 @@ const SampleTestCard = ({ testData, onClose }) => {
                             />
                         </label>
                     </div>
+                   </div>
                 </div>
                 <div className="SampleTestCard-footer">
                     {loading ? (
@@ -108,12 +111,11 @@ const SampleTestCard = ({ testData, onClose }) => {
                         </button>
                     )}
                 </div>
-                {error && <div className="error-message">{error}</div>}
+                {error && <div className="SampleTestCard-error-message">{error}</div>}
             </div>
-        </div>
+      
     );
 };
 
 export default SampleTestCard;
 
-/* Dhanashree_SampleTestCard_24/09_End */

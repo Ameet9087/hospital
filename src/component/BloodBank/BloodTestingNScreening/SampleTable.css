@@ -8,8 +8,9 @@
 }
 
 .HIMSSampleDataTable-title {
-  text-align: center;
+  text-align: left;
   margin-bottom: 15px;
+  font-size: var(--heaading-font);
 }
 
 .HIMSSampleDataTable-table-wrapper {

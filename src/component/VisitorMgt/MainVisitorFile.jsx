@@ -66,7 +66,7 @@ const MainVisitorFile = () => {
         <div className="visitormgt-container">
             <nav className="visitormgt-nav">
                 <NavLink
-                    to="/visit/visitors"
+                    to="/hi/patientlist"
                     className={({ isActive }) =>
                         isActive ? "visitormgt-navigation-link active" : "visitormgt-navigation-link"
                     }
@@ -74,7 +74,7 @@ const MainVisitorFile = () => {
                     Visitors
                 </NavLink>
                 <NavLink
-                    to="/visitormanagement/visitinghoursmanagement"
+                    to="/hi/report"
                     className={({ isActive }) =>
                         isActive ? "visitormgt-navigation-link active" : "visitormgt-navigation-link"
                     }
@@ -82,14 +82,14 @@ const MainVisitorFile = () => {
                     Visiting Hours Management
                 </NavLink>
                 <NavLink
-                    to="/visit/visitor-badges"
+                    to="/hi/visitlist"
                     className={({ isActive }) =>
                         isActive ? "visitormgt-navigation-link active" : "visitormgt-navigation-link"
                     }
                 >
                     Visitor Badges
                 </NavLink>
-                
+
 
 
 
@@ -99,10 +99,9 @@ const MainVisitorFile = () => {
 
             <div className="visitormgt-content">
                 <Routes>
-                    <Route path="/visit/visitors" element={<Visitor />} />
-                    <Route path="/visitormanagement/visitinghoursmanagement" element={<Visitinghours />} />
-                    <Route path="/visit/visitor-badges" element={<Visitorbadges />} />
-                  
+                    <Route path="/patientlist" element={<Visitor />} />
+                    <Route path="/report" element={<Visitinghours />} />
+                    <Route path="/visitlist" element={<Visitorbadges />} />
                 </Routes>
             </div>
         </div>

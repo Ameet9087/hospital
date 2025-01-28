@@ -5,6 +5,7 @@ import { useReactToPrint } from "react-to-print";
 import CustomModal from "../../CustomModel/CustomModal";
 import BloodBankRequestForm from "./BloodBankRequestForm";
 import { API_BASE_URL } from "../../api/api";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import BloodBankIssueForm from "./BloodBankIssueForm";
 
 function BloodReq() {
@@ -14,6 +15,8 @@ function BloodReq() {
   const [stockData, setStockData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef=useRef(null);
   const [dateRange, setDateRange] = useState({
     from: "2024-12-01",
     to: "2024-12-31",
@@ -150,8 +153,7 @@ function BloodReq() {
           <button className="bloodReq-print-btn">Show Report</button>
         </div>
       </div>
-      <div className="bloodReq-search-N-results">
-        <div>
+      <div className="bloodReq-send-blood-btn">
           <button
             className="bloodReq-print-btn"
             onClick={() => setShowCreateRequest(true)}
@@ -159,6 +161,8 @@ function BloodReq() {
             + Send Blood Request
           </button>
         </div>
+      <div className="bloodReq-search-N-results">
+       
         <div className="bloodReq-search-bar">
           <i className="fa-solid fa-magnifying-glass"></i>
           <input
@@ -181,21 +185,41 @@ function BloodReq() {
       {loading && <p>Loading data...</p>}
       {error && <p>Error: {error}</p>}
       <div className="bloodReq-table-N-paginat">
-        <table>
-          <thead>
-            <tr>
-              <th>Req.ID</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Required Units</th>
-              <th>Request Date</th>
-              <th>Required Date</th>
-              <th>Status</th>
-              <th>Contact Information</th>
-              <th>Blood Group</th>
-              <th>Action</th>
-            </tr>
-          </thead>
+      <table  ref={tableRef}>
+              <thead>
+                <tr >
+                    {[
+                  "Req.ID",
+                  "First Name",
+                  "Last Name",
+                  "Required Units",
+                  "Request Date",
+                  "Required Date",
+                  "Status",
+                  "Contact Information",
+                  "Blood Group",
+                  "Action"
+                ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+
           <tbody>
             {filteredData.map((item, index) => (
               <tr key={index}>

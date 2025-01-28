@@ -1,75 +1,84 @@
-/* Dhanashree_SampleTestCard_24/09 */
-
-.SampleTestCard-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; 
-}
-
+/* SampleTestCard Card Styles */
 .SampleTestCard-card {
-  background-color: #ffffff;
+  background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 300px;
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+  width: 100%;
+  max-width: 600px;
+  /* margin: 20px auto; */
+  padding: 10px;
+  font-family: Arial, sans-serif;
 }
 
 .SampleTestCard-card-header {
-  border-bottom: 2px solid #007bff;
+  text-align: center;
+  font-size: var(--heading-font);
   margin-bottom: 15px;
 }
 
 .SampleTestCard-card-header h2 {
-  margin: 0;
-  font-size: 1.5em;
-  color: #007bff;
+  font-size: var(--heading-font);
 }
 
 .SampleTestCard-card-body {
   display: flex;
   flex-direction: column;
+  gap: 15px;
+}
+
+.SampleTestCard-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .SampleTestCard-field {
-  margin-bottom: 15px;
+  width: 100%;
 }
 
 .SampleTestCard-field label {
-  display: flex;
-  flex-direction: column;
-}
-
-.SampleTestCard-field strong {
-  color: #333;
+  font-weight: 500;
+  font-size: var(--font-size);
+  margin-bottom: 5px;
 }
 
 .SampleTestCard-field input {
-  margin-top: 5px;
-  padding: 8px;
+  width: 100%;
+  padding: 5px;
+  font-size: var(--font-size);
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 14px;
 }
 
 .SampleTestCard-footer {
-  display: flex;
-  justify-content: flex-end; 
+  text-align: center;
+  margin-top: 10px;
 }
 
 .SampleTestCard-update-button {
-  background-color: #007bff; 
+  background-color: var(--button-color); 
+  border: 1px solid white; 
   color: white; 
-  border: none; 
-  border-radius: 4px; 
-  padding: 10px 15px; 
-  cursor: pointer; 
-  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
 }
+/* 
+.SampleTestCard-update-button:disabled {
+  background-color: #a1c4fd;
+  cursor: not-allowed;
+} */
 
 .SampleTestCard-update-button:hover {
-  background-color: #0056b3; 
+  background-color: white; 
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
 }
 
-
-/* Dhanashree_SampleTestCard_24/09 */
+.SampleTestCard-error-message {
+  color: #ff4d4d;
+  text-align: center;
+  margin-top: 15px;
+}

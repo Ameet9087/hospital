@@ -1,29 +1,22 @@
-/* Container styles */
 .bloodbankrequest-container {
     max-width: 700px;
-    margin: 20px auto;
-    padding: 20px;
-    background: #f9f9f9;
+    margin: 10px auto;
+
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Title */
 .bloodbankrequest-title {
     text-align: center;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: var(--heading-font);
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-/* Form styles */
 .bloodbankrequest-form {
     display: flex;
     flex-direction: column;
 }
 
-/* Form rows for grouping two fields in a row */
 .bloodbankrequest-form-row {
     display: flex;
     justify-content: space-between;
@@ -31,7 +24,6 @@
     margin-bottom: 15px;
 }
 
-/* Form group */
 .bloodbankrequest-form-group {
     flex: 1;
     display: flex;
@@ -40,46 +32,45 @@
 
 .bloodbankrequest-form-group label {
     margin-bottom: 5px;
-    font-weight: bold;
     color: #555;
+    font-size: var(--heading-font);
 }
 
 .bloodbankrequest-form-group input,
 .bloodbankrequest-form-group select {
-    padding: 8px;
-    font-size: 16px;
+    padding: 5px;
+    font-size: var(--font-size);
     border: 1px solid #ccc;
     border-radius: 4px;
     background: #fff;
 }
 
-.bloodbankrequest-form-group input:focus,
-.bloodbankrequest-form-group select:focus {
-    border-color: #007bff;
-    outline: none;
-}
 
-/* Button styles */
+
 .bloodbankrequest-form-actions {
     display: flex;
-    margin-top: 20px;
     justify-content: end;
 }
 
 .bloodbankrequest-submit-btn {
-    padding: 5px 10px;
-    font-size: 16px;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
     background-color: var(--button-color);
+    font-size: var(--font-size);
+    border-radius: 5px;
+    padding: 8px 12px;
+    border: 1px solid var(--button-hover-background-color);
+    color: white;
+    cursor: pointer;
+
+}
+
+.bloodbankrequest-submit-btn:hover{
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+
 }
 
 
-
-
-/* Responsive Design */
 @media (max-width: 768px) {
     .bloodbankrequest-form-row {
         flex-direction: column;

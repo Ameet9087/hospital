@@ -19,9 +19,8 @@ const FloatingInput = ({ label, type = "text", value, ...props }) => {
   };
   return (
     <div
-      className={`GoodsReceiptForm-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`GoodsReceiptForm-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <input
         type={type}
@@ -47,9 +46,8 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
   }, [value]);
   return (
     <div
-      className={`GoodsReceiptForm-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`GoodsReceiptForm-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <select
         className="GoodsReceiptForm-floating-select"
@@ -65,7 +63,7 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
         }}
         {...props}
       >
-        <option value="">{}</option>
+        <option value="">{ }</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -78,7 +76,7 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
 };
 const GoodsReceiptForm = ({ receivedPO }) => {
   console.log(receivedPO);
-  
+
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [suppliers, setSuppliers] = useState([]);
@@ -100,8 +98,8 @@ const GoodsReceiptForm = ({ receivedPO }) => {
   const [paymentMode, setPaymentMode] = useState("");
   const [creditPeriod, setCreditPeriod] = useState("");
   const [remarks, setRemarks] = useState("");
-   const [availableItems, setAvailableItems] = useState([]);
-    const [availableGenerics, setAvailableGenerics] = useState([]);
+  const [availableItems, setAvailableItems] = useState([]);
+  const [availableGenerics, setAvailableGenerics] = useState([]);
   const [items, setItems] = useState([
     {
       genericName: "",
@@ -137,7 +135,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
       // You can set the items state as well based on the receivedPo's purchaseOrderItemDTOs
       if (receivedPO.purchaseOrderItemDTOs && receivedPO.purchaseOrderItemDTOs.length > 0) {
         const itemsData = receivedPO.purchaseOrderItemDTOs.map(item => ({
-          addItemId:item.pharmacyItemMasterDTO.pharmacyItemMasterId,
+          addItemId: item.pharmacyItemMasterDTO.pharmacyItemMasterId,
           itemName: item.pharmacyItemMasterDTO.itemName,
           batchNo: "",
           rackNo: "", // Set rackNo if available in receivedPo
@@ -169,30 +167,30 @@ const GoodsReceiptForm = ({ receivedPO }) => {
         setSuppliers(response.data);
       })
       .catch((error) => console.error("Error fetching suppliers:", error));
-       axios
-            .get(`${API_BASE_URL}/pharmacy-item-master`)
-            .then((response) => {
-              setAvailableItems(response.data);
-            })
-            .catch((error) => {
-              console.error("There was an error fetching the items!", error);
-            });
-          axios
-            .get(`${API_BASE_URL}/generic-names`)
-            .then((response) => {
-              setAvailableGenerics(response.data);
-            })
-            .catch((error) => {
-              console.error("There was an error fetching the generics!", error);
-            });
+    axios
+      .get(`${API_BASE_URL}/pharmacy-item-master`)
+      .then((response) => {
+        setAvailableItems(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the items!", error);
+      });
+    axios
+      .get(`${API_BASE_URL}/generic-names`)
+      .then((response) => {
+        setAvailableGenerics(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the generics!", error);
+      });
   }, []);
 
   const handleItemChange = (index, field, value) => {
     const updatedItems = [...items];
-  
+
     // Update the specific field value
     updatedItems[index][field] = value;
-  
+
     // Perform calculations for dependent fields
     const quantity = parseFloat(updatedItems[index].quantity || 0);
     const freeQuantity = parseFloat(updatedItems[index].freeQuantity || 0);
@@ -201,34 +199,34 @@ const GoodsReceiptForm = ({ receivedPO }) => {
     const discountPercentage = parseFloat(updatedItems[index].discountPercentage || 0);
     const vatPercentage = parseFloat(updatedItems[index].vatPercentage || 0);
     const ccChargePercentage = parseFloat(updatedItems[index].ccChargePercentage || 0);
-  
+
     // Calculate totalQuantity
     updatedItems[index].totalQuantity = quantity + freeQuantity;
-  
+
     // Calculate subTotal (rate * totalQuantity)
     const subTotal = rate * updatedItems[index].totalQuantity;
     updatedItems[index].subTotal = subTotal.toFixed(2);
-  
+
     // Calculate discountAmount
     const discountAmount = (subTotal * discountPercentage) / 100;
     updatedItems[index].discountAmount = discountAmount.toFixed(2);
-  
+
     // Calculate vatAmount
     const vatAmount = ((subTotal - discountAmount) * vatPercentage) / 100;
     updatedItems[index].vatAmount = vatAmount.toFixed(2);
-  
+
     // Calculate ccAmount
     const ccAmount = ((subTotal - discountAmount) * ccChargePercentage) / 100;
     updatedItems[index].ccAmount = ccAmount.toFixed(2);
-  
+
     // Calculate totalAmount
     const totalAmount = subTotal - discountAmount + vatAmount + ccAmount;
     updatedItems[index].totalAmount = totalAmount.toFixed(2);
-  
+
     // Update the state
     setItems(updatedItems);
   };
-  
+
 
 
   const handleAddItem = () => {
@@ -236,23 +234,23 @@ const GoodsReceiptForm = ({ receivedPO }) => {
       ...items,
       {
         genericName: "",
-      itemName: "",
-      batchNo: "",
-      rackNo: "", // Added field for Rack No
-      expiryDate: "",
-      quantity: "",
-      freeQuantity: "",
-      totalQuantity: "", // Added field for Total Qty
-      rate: "",
-      marginPercentage: "", // Added field for Margin%
-      ccChargePercentage: "",
-      ccAmount: "", // Added field for CC Amt
-      subTotal: "", // Added field for Sub Total
-      discountPercentage: "",
-      discountAmount: "", // Added field for Discount Amt
-      vatPercentage: "",
-      vatAmount: "", // Added field for VAT Amt
-      totalAmount: ""
+        itemName: "",
+        batchNo: "",
+        rackNo: "", // Added field for Rack No
+        expiryDate: "",
+        quantity: "",
+        freeQuantity: "",
+        totalQuantity: "", // Added field for Total Qty
+        rate: "",
+        marginPercentage: "", // Added field for Margin%
+        ccChargePercentage: "",
+        ccAmount: "", // Added field for CC Amt
+        subTotal: "", // Added field for Sub Total
+        discountPercentage: "",
+        discountAmount: "", // Added field for Discount Amt
+        vatPercentage: "",
+        vatAmount: "", // Added field for VAT Amt
+        totalAmount: ""
       },
     ]);
   };
@@ -268,13 +266,13 @@ const GoodsReceiptForm = ({ receivedPO }) => {
     let ccCharge = 0;
     let totalAmount = 0;
     console.log(items);
-    
+
 
     items.forEach((item) => {
       const rate = parseFloat(item.rate || 0);
       console.log(rate);
-      
-      const itemQty = parseFloat(item.totalQuantity|| 0);
+
+      const itemQty = parseFloat(item.totalQuantity || 0);
       const discountPercentage = parseFloat(item.discountPercentage || 0);
       const vatPercentage = parseFloat(item.vatPercentage || 0);
       const ccChargePercentage = parseFloat(item.ccChargePercentage || 0);
@@ -286,8 +284,8 @@ const GoodsReceiptForm = ({ receivedPO }) => {
 
       console.log(itemTotal);
       console.log(itemDiscount);
-      
-      
+
+
 
       subTotal += itemTotal;
       discountAmount += itemDiscount;
@@ -311,7 +309,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-  
+
     // Construct the payload
     const data = {
       supplierBillDate: supplierBillDate || "0001-11-11",
@@ -347,11 +345,12 @@ const GoodsReceiptForm = ({ receivedPO }) => {
       })),
     };
     console.log(data);
-    
+
     axios
       .post(`${API_BASE_URL}/good-receipts`, data)
       .then((response) => {
         console.log("Good receipt added successfully:", response.data);
+        alert("Good receipt added successfully")
       })
       .catch((error) => {
         console.error(
@@ -360,7 +359,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
         );
       });
   };
-  
+
 
   const handleSelect = (data) => {
     if (activePopup === "supplier") {
@@ -381,20 +380,20 @@ const GoodsReceiptForm = ({ receivedPO }) => {
 
   const handleItemSelect = (e, index) => {
     const selectedItemName = e.target.value;
-  
+
     // Find the selected item in the availableItems list
     const selectedItem = availableItems.find(
       (item) => item.itemName === selectedItemName
     );
-  
+
     // Update the corresponding item in the items array
     const updatedItems = [...items];
     updatedItems[index] = {
       ...updatedItems[index],
-      addItemId:selectedItem?.pharmacyItemMasterId,
+      addItemId: selectedItem?.pharmacyItemMasterId,
       itemName: selectedItem?.itemName || "",
     };
-  
+
     // Update the state
     setItems(updatedItems);
   };
@@ -607,7 +606,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-                    
+
                     value={item.margin}
                     onChange={(e) =>
                       handleItemChange(
@@ -621,7 +620,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-                    
+
                     value={item.ccChargePercentage}
                     onChange={(e) =>
                       handleItemChange(
@@ -635,7 +634,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-                    
+
                     value={item.ccAmount}
                     onChange={(e) =>
                       handleItemChange(index, "ccAmount", e.target.value)
@@ -645,7 +644,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-                    
+
                     value={item.subTotal}
                     onChange={(e) =>
                       handleItemChange(index, "subTotal", e.target.value)
@@ -655,7 +654,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-                    
+
                     value={item.discountPercentage}
                     onChange={(e) =>
                       handleItemChange(
@@ -669,7 +668,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-                   
+
                     value={item.discountAmount}
                     onChange={(e) =>
                       handleItemChange(
@@ -683,7 +682,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-                    
+
                     value={item.vatPercentage}
                     onChange={(e) =>
                       handleItemChange(index, "vatPercentage", e.target.value)
@@ -693,7 +692,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-                    
+
                     value={item.vatAmount}
                     onChange={(e) =>
                       handleItemChange(index, "vatAmount", e.target.value)
@@ -703,7 +702,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-                    
+
                     value={item.totalAmount}
                     onChange={(e) =>
                       handleItemChange(index, "totalAmount", e.target.value)
@@ -715,20 +714,20 @@ const GoodsReceiptForm = ({ receivedPO }) => {
           </tbody>
         </table>
         <div className="GoodsReceiptForm-btn-grid">
-        <button
-          type="button"
-          onClick={handleAddItem}
-          className="GoodsReceiptSettings-add-item-button"
-        >
-          Add New Row
-        </button>
-        <button
-          type="button"
-          onClick={handleAddItem}
-          className="GoodsReceiptSettings-add-item-button"
-        >
-          Cancel Row
-        </button>
+          <button
+            type="button"
+            onClick={handleAddItem}
+            className="GoodsReceiptSettings-add-item-button"
+          >
+            Add New Row
+          </button>
+          <button
+            type="button"
+            onClick={handleAddItem}
+            className="GoodsReceiptSettings-add-item-button"
+          >
+            Cancel Row
+          </button>
         </div>
         <div className="GoodsReceiptForm-section">
           <div className="GoodsReceiptForm-grid">

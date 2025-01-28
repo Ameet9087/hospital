@@ -31,7 +31,6 @@ const Visitinghours = () => {
     const tableRef = useRef(null);
     const { success, warning, CustomAlerts } = useCustomAlert();
 
-
     // Fetch visitors from API when component mounts
     useEffect(() => {
         fetch(`${API_BASE_URL}/visitors`)

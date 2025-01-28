@@ -87,14 +87,13 @@ const BloodDonationForm = () => {
 
     return (
         <div className='blood-donation-patient-form-container'>
-            {/* <h3 className='header-BloodDonation'>Registered Donors</h3> */}
-
-            {/* Show Add New Donor button only if the form is not displayed */}
+           
             {!showForm && (
                 <button className="blood-donation-submit-btn" onClick={() => setShowForm(true)}>
                     Add New Donor
                 </button>
             )}
+            
 
             {!showForm ? (
                 <div className='table-container'>
