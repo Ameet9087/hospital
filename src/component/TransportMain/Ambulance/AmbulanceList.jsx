@@ -1,19 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './AmbulanceList.css';
-import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import axios from 'axios';
+import { API_BASE_URL } from '../../api/api';
 const AmbulanceList = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [availableAmbulances, setAvailableAmbulances] = useState([]);
   const [onDutyAmbulances, setOnDutyAmbulances] = useState([]);
-  const [isAvailableSelected, setIsAvailableSelected] = useState(true);
+  const [isAvailableSelected, setIsAvailableSelected] = useState(true); 
 
   useEffect(() => {
     const fetchAmbulances = async () => {
       try {
-        const availableResponse = await axios.get('http://localhost:4069/api/ambulances/available');
-        const onDutyResponse = await axios.get('http://localhost:4069/api/ambulances/on-duty');
+        const availableResponse = await axios.get(`${API_BASE_URL}/ambulances/available`);
+        const onDutyResponse = await axios.get(`${API_BASE_URL}/ambulances/on-duty`);
         setAvailableAmbulances(availableResponse.data);
         setOnDutyAmbulances(onDutyResponse.data);
       } catch (error) {
@@ -54,14 +55,14 @@ const AmbulanceList = () => {
     <div className="ambulance-list-module-com">
       <h1 className="ambulance-details-com-module__heading">Ambulance List</h1>
       <div className="ambulance-details-com-module__buttons">
-        <button
-          className={`ambulance-details-com-module__button ${isAvailableSelected ? 'active' : ''}`}
+        <button 
+          className={`ambulance-details-com-module__button ${isAvailableSelected ? 'active' : ''}`} 
           onClick={() => setIsAvailableSelected(true)}
         >
           Available
         </button>
-        <button
-          className={`ambulance-details-com-module__button ${!isAvailableSelected ? 'active' : ''}`}
+        <button 
+          className={`ambulance-details-com-module__button ${!isAvailableSelected ? 'active' : ''}`} 
           onClick={() => setIsAvailableSelected(false)}
         >
           On Duty

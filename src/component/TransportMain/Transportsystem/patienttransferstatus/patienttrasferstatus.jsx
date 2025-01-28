@@ -3,6 +3,7 @@ import "./patienttransferstatus.css";
 
 import CustomModal from '../../../CustomModel/CustomModal';
 import DispatchForm from '../../Ambulance/DispatchForm';
+import { API_BASE_URL } from '../../../api/api';
 
 function PatientTransferStatus() {
   const [patients, setPatients] = useState([]);
@@ -19,7 +20,7 @@ function PatientTransferStatus() {
     fromLocation: '',
     toLocation: '',
     reasonForTransport: '',
-    transportStatus: '',
+    transportStatus:'',
     modeOfTransport: '',
     transportStaffAssigned: '',
     additionalNotes: '',
@@ -66,8 +67,8 @@ function PatientTransferStatus() {
     setFormData(prev => ({
       ...prev,
       modeOfTransport: value,
-      ambulanceDTO: value === 'Ambulance'
-        ? prev.ambulanceDTO
+      ambulanceDTO: value === 'Ambulance' 
+        ? prev.ambulanceDTO 
         : { ambulanceId: '', driver: '' }
     }));
   };

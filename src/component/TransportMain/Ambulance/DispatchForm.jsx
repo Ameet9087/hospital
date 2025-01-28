@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './DispatchForm.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../../api/api';
 const DispatchForm = ({ patientData }) => {
 
     const navigate = useNavigate();
@@ -96,7 +97,7 @@ const DispatchForm = ({ patientData }) => {
         console.log("Formatted Data:", formattedData);
 
         try {
-            const response = await axios.post('http://localhost:4069/api/dispatch', formattedData);
+            const response = await axios.post(`${API_BASE_URL}/dispatch`, formattedData);
             console.log("API Response: ", response.data);
             alert("Dispatch submitted successfully.");
             navigate(-1);

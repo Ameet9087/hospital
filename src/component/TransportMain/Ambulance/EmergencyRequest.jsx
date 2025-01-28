@@ -2,6 +2,7 @@ import React, { useState, useRef,useEffect } from "react";
 import "./EmergencyRequest.css";
 import axios from "axios";
 import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { API_BASE_URL } from "../../api/api";
 
 const EmergencyRequest = () => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -76,7 +77,7 @@ const EmergencyRequest = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4069/api/emergency/create",
+        `${API_BASE_URL}/emergency/create`,
         formattedData
       );
       console.log("Form submitted successfully:", response.data);
@@ -130,7 +131,7 @@ const EmergencyRequest = () => {
   useEffect(() => {
     // Fetch data from the API
     axios
-      .get("http://localhost:4069/api/emergency/all")
+      .get(`${API_BASE_URL}/emergency/all`)
       .then((response) => {
         setTableData(response.data); // Assuming API returns an array
       })

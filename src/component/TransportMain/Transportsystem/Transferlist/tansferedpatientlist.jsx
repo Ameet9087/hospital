@@ -25,15 +25,16 @@ function Tansferedpatientlist() {
     transportStaffAssigned: '',
     additionalNotes: '',
     ambulanceDTO: { ambulanceId: '', driver: '' },
-    emergencyRequest: { emergencyId: '' }
+    emergencyRequest:{emergencyId:''}
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [selectedPatient, setSelectedPatient] = useState([]);
+  const [selectedPatient,setSelectedPatient]=useState([]);
 
 
   useEffect(() => {
     if (formData.modeOfTransport === "Ambulance") {
       axios
+
         .get(`${API_BASE_URL}/ambulances/available`)
         .then((response) => {
           setAmbulances(response.data);
@@ -44,8 +45,8 @@ function Tansferedpatientlist() {
     }
   }, [formData.modeOfTransport]);
 
-  // Handle mode of transport change
-  const handleModeOfTransportChange = (e) => {
+   // Handle mode of transport change
+   const handleModeOfTransportChange = (e) => {
     setFormData({ ...formData, modeOfTransport: e.target.value });
   };
 
@@ -81,7 +82,7 @@ function Tansferedpatientlist() {
     };
 
     fetchPatients(); // Call the fetch function
-  }, []);
+  }, []); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -110,7 +111,7 @@ function Tansferedpatientlist() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     // Construct the payload based on the form data
     const payload = {
       transportDate: formData.transportDate,
@@ -128,7 +129,7 @@ function Tansferedpatientlist() {
         emergencyId: formData.emergencyRequest.emergencyId,
       }
     };
-    console.log(payload)
+  console.log(payload)
     try {
       const response = await axios.post(`${API_BASE_URL}/transport/create`, payload);
       console.log('Data submitted successfully:', response.data);
@@ -139,14 +140,14 @@ function Tansferedpatientlist() {
     }
   };
 
-  const handleTransportFormOpen = (patient) => {
+  const handleTransportFormOpen=(patient)=>{
     setSelectedPatient(patient);
-    console.log("patient", patient);
+    console.log("patient",patient);
     setFormData({
       ...formData,
-      patient: {
-        patientId: patient.patientId || '',
-        name: patient.patientName || ''
+      patient:{
+          patientId:patient.patientId || '',
+          name:patient.patientName || ''
       },
       transportDate: '',
       transportTime: '',
@@ -159,75 +160,75 @@ function Tansferedpatientlist() {
       ambulanceDTO: { ambulanceId: '', driver: '' },
       emergencyRequest:
       {
-        emergencyId: patient.emergencyId
+        emergencyId:patient.emergencyId
       }
     });
 
     setModalType('transport');
-    setIsOpen(true);
+    setIsOpen(true); 
 
   }
 
 
-
+  
 
   return (
     <>
-      <div className="tansportpatientalllist-container">
-        <h2 className="tansportpatientalllist-header">Emergency Request List</h2>
-        <table className="tansportpatientalllist-table">
-          <thead>
-            <tr>
+    <div className="tansportpatientalllist-container">
+      <h2 className="tansportpatientalllist-header">Emergency Request List</h2>
+      <table className="tansportpatientalllist-table">
+        <thead>
+          <tr>
+          
+            <th className="tansportpatientalllist-th">Patient Name</th>
+            <th className="tansportpatientalllist-th">Transport Mode</th>
+            {/* <th className="tansportpatientalllist-th">Ambulance Driver</th> */}
+            <th className="tansportpatientalllist-th">Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {patients.map((patientTransport) => (
+            <tr key={patientTransport.id} className="tansportpatientalllist-tr">
+              
+              <td className="tansportpatientalllist-td">{patientTransport.patientName}</td>
+              <td className="tansportpatientalllist-td">{patientTransport.transportMode}</td>
+              {/* <td className="tansportpatientalllist-td">{patientTransport.transportStaffAssigned}</td> */}
+              {/* <td className="tansportpatientalllist-td">{patientTransport.modeOfTransport === 'Ambulance' ? patientTransport.transportStaffAssigned : 'N/A'}</td> */}
+              <td className={`tansportpatientalllist-td ${patientTransport.transportStatus === 'Transported' ? 'transported' : 'not-transported'}`}>
+                {patientTransport.status || 'N/A'}
+              </td>
+              <td>
+                <button className="tansportpatientalllist-button" onClick={()=>handleTransportFormOpen(patientTransport)}>
+                  Transport Form
+                </button> &nbsp;&nbsp;
 
-              <th className="tansportpatientalllist-th">Patient Name</th>
-              <th className="tansportpatientalllist-th">Transport Mode</th>
-              {/* <th className="tansportpatientalllist-th">Ambulance Driver</th> */}
-              <th className="tansportpatientalllist-th">Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {patients.map((patientTransport) => (
-              <tr key={patientTransport.id} className="tansportpatientalllist-tr">
-
-                <td className="tansportpatientalllist-td">{patientTransport.patientName}</td>
-                <td className="tansportpatientalllist-td">{patientTransport.transportMode}</td>
-                {/* <td className="tansportpatientalllist-td">{patientTransport.transportStaffAssigned}</td> */}
-                {/* <td className="tansportpatientalllist-td">{patientTransport.modeOfTransport === 'Ambulance' ? patientTransport.transportStaffAssigned : 'N/A'}</td> */}
-                <td className={`tansportpatientalllist-td ${patientTransport.transportStatus === 'Transported' ? 'transported' : 'not-transported'}`}>
-                  {patientTransport.status || 'N/A'}
-                </td>
-                <td>
-                  <button className="tansportpatientalllist-button" onClick={() => handleTransportFormOpen(patientTransport)}>
-                    Transport Form
-                  </button> &nbsp;&nbsp;
-
-                  {/* <button className="tansportpatientalllist-button" onClick={()=>handleDispatchFormOpen(patientTransport)}>
+                {/* <button className="tansportpatientalllist-button" onClick={()=>handleDispatchFormOpen(patientTransport)}>
                 Dispatch Form
                 </button> */}
 
 
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <CustomModal
-        title="Patient Transportation Form"
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <CustomModal
+      title="Patient Transportation Form"
+      isOpen={isOpen}
+      onClose={()=>setIsOpen(false)}
       >
 
-        {modalType === 'transport' ? (
-          <form className="patient-transport-form" onSubmit={handleSubmit}>
-            <div className='patient-transport-header-h2'>
-              <h2 className="patient-transport-header">Patient Transportation Form</h2>
-            </div>
+{modalType === 'transport' ? (
+      <form className="patient-transport-form" onSubmit={handleSubmit}>
+        <div className='patient-transport-header-h2'>
+          <h2 className="patient-transport-header">Patient Transportation Form</h2>
+        </div>
 
-            <div className='patient-transport-form-maindiv'>
-              <div className='patient-transport-form-group-subdiv'>
-                {/* <div className="patient-transport-form-group">
+        <div className='patient-transport-form-maindiv'>
+          <div className='patient-transport-form-group-subdiv'>
+            {/* <div className="patient-transport-form-group">
               <label htmlFor="patientId">Patient ID:</label>
               <input 
                 type="text" 
@@ -240,180 +241,180 @@ function Tansferedpatientlist() {
               />
             </div> */}
 
-                <div className="patient-transport-form-group">
-                  <label htmlFor="patientName">Patient Name:</label>
-                  <input
-                    type="text"
-                    id="patient.patientName"
-                    name="patientName"
-                    value={formData.patient?.name}
-                    onChange={handleChange}
-                    required
-                    className="patient-transport-input"
-                  />
-                </div>
-
-                <div className="patient-transport-form-group">
-                  <label htmlFor="transportDate">Transport Date:</label>
-                  <input
-                    type="date"
-                    id="transportDate"
-                    name="transportDate"
-                    value={formData.transportDate}
-                    onChange={handleChange}
-                    required
-                    className="patient-transport-input"
-                  />
-                </div>
-
-                <div className="patient-transport-form-group">
-                  <label htmlFor="transportTime">Transport Time:</label>
-                  <input
-                    type="time"
-                    id="transportTime"
-                    name="transportTime"
-                    value={formData.transportTime}
-                    onChange={handleChange}
-                    required
-                    className="patient-transport-input"
-                  />
-                </div>
-
-                <div className="patient-transport-form-group">
-                  <label htmlFor="fromLocation">From Location:</label>
-                  <input
-                    type="text"
-                    id="fromLocation"
-                    name="patient.pickUpLocation"
-                    value={formData.fromLocation}
-                    onChange={handleChange}
-                    required
-                    className="patient-transport-input"
-                  />
-                </div>
-
-                <div className="patient-transport-form-group">
-                  <label htmlFor="toLocation">To Location:</label>
-                  <input
-                    type="text"
-                    id="toLocation"
-                    name="patient.destinationLocation"
-                    value={formData.toLocation}
-                    onChange={handleChange}
-                    required
-                    className="patient-transport-input"
-                  />
-                </div>
-
-                <div className="patient-transport-form-group">
-                  <label htmlFor="reasonForTransport">Reason for Transport:</label>
-                  <textarea
-                    id="reasonForTransport"
-                    name="reasonForTransport"
-                    value={formData.reasonForTransport}
-                    onChange={handleChange}
-                    required
-                    className="patient-transport-textarea"
-                  ></textarea>
-                </div>
-              </div>
-
-              <div className='patient-transport-form-group-subdiv'>
-                <div className="patient-transport-form-group">
-                  <label htmlFor="modeOfTransport">Mode of Transport:</label>
-                  <select
-                    id="modeOfTransport"
-                    name="modeOfTransport"
-                    value={formData.modeOfTransport}
-                    onChange={handleModeOfTransportChange}
-                    required
-                    className="patient-transport-select"
-                  >
-                    <option value="">Select Mode of Transport</option>
-                    <option value="Ambulance">Ambulance</option>
-                    <option value="Wheelchair">Wheelchair</option>
-                    <option value="Stretcher">Stretcher</option>
-                  </select>
-                </div>
-
-                {/* Auto-Filled Ambulance Details */}
-                {/* Auto-Filled Ambulance Details */}
-                {formData.modeOfTransport === "Ambulance" && (
-                  <div className="ambulance-details-section">
-                    <h6>Ambulance Details</h6>
-                    <div className="patient-transport-form-group">
-                      <label htmlFor="ambulancePlate">Ambulance Plate Number:</label>
-                      <select
-                        id="ambulancePlate"
-                        name="ambulanceDTO.ambulanceId"
-                        value={formData.ambulanceDTO.ambulanceId}
-                        onChange={handleAmbulanceChange}
-                        className="patient-transport-input"
-                      >
-                        <option value="">Select Ambulance</option>
-                        {ambulances.map((ambulance) => (
-                          <option
-                            key={ambulance.ambulanceId}
-                            value={ambulance.licencePlate}
-                          >
-                            {ambulance.licencePlate}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="patient-transport-form-group">
-                      <label htmlFor="driverName">Driver Name:</label>
-                      <input
-                        type="text"
-                        id="driverName"
-                        name="ambulanceDTO.driverName"
-                        value={formData.ambulanceDTO.driverName}
-                        className="patient-transport-input"
-                        readOnly
-                      />
-                    </div>
-                  </div>
-                )}
-
-                <div className="patient-transport-form-group">
-                  <label htmlFor="transportStaffAssigned">Transport Staff Assigned:</label>
-                  <input
-                    type="text"
-                    id="transportStaffAssigned"
-                    name="transportStaffAssigned"
-                    value={formData.transportStaffAssigned}
-                    onChange={handleChange}
-                    required
-                    className="patient-transport-input"
-                  />
-                </div>
-
-                <div className="patient-transport-form-group">
-                  <label htmlFor="additionalNotes">Additional Notes:</label>
-                  <textarea
-                    id="additionalNotes"
-                    name="additionalNotes"
-                    value={formData.additionalNotes}
-                    onChange={handleChange}
-                    className="patient-transport-textarea"
-                  ></textarea>
-                </div>
-              </div>
+            <div className="patient-transport-form-group">
+              <label htmlFor="patientName">Patient Name:</label>
+              <input 
+                type="text" 
+                id="patient.patientName" 
+                name="patientName" 
+                value={formData.patient?.name} 
+                onChange={handleChange} 
+                required 
+                className="patient-transport-input"
+              />
             </div>
 
-            <button type="submit" className="patient-transport-submit-btn" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Submit'}
-            </button>
-          </form>
+            <div className="patient-transport-form-group">
+              <label htmlFor="transportDate">Transport Date:</label>
+              <input 
+                type="date" 
+                id="transportDate" 
+                name="transportDate" 
+                value={formData.transportDate} 
+                onChange={handleChange} 
+                required 
+                className="patient-transport-input"
+              />
+            </div>
+
+            <div className="patient-transport-form-group">
+              <label htmlFor="transportTime">Transport Time:</label>
+              <input 
+                type="time" 
+                id="transportTime" 
+                name="transportTime" 
+                value={formData.transportTime} 
+                onChange={handleChange} 
+                required 
+                className="patient-transport-input"
+              />
+            </div>
+
+            <div className="patient-transport-form-group">
+              <label htmlFor="fromLocation">From Location:</label>
+              <input 
+                type="text" 
+                id="fromLocation" 
+                name="patient.pickUpLocation" 
+                value={formData.fromLocation} 
+                onChange={handleChange} 
+                required 
+                className="patient-transport-input"
+              />
+            </div>
+
+            <div className="patient-transport-form-group">
+              <label htmlFor="toLocation">To Location:</label>
+              <input 
+                type="text" 
+                id="toLocation" 
+                name="patient.destinationLocation" 
+                value={formData.toLocation} 
+                onChange={handleChange} 
+                required 
+                className="patient-transport-input"
+              />
+            </div>
+
+            <div className="patient-transport-form-group">
+              <label htmlFor="reasonForTransport">Reason for Transport:</label>
+              <textarea 
+                id="reasonForTransport" 
+                name="reasonForTransport" 
+                value={formData.reasonForTransport} 
+                onChange={handleChange} 
+                required 
+                className="patient-transport-textarea"
+              ></textarea>
+            </div>
+          </div>
+
+          <div className='patient-transport-form-group-subdiv'>
+          <div className="patient-transport-form-group">
+          <label htmlFor="modeOfTransport">Mode of Transport:</label>
+          <select
+        id="modeOfTransport"
+        name="modeOfTransport"
+        value={formData.modeOfTransport}
+        onChange={handleModeOfTransportChange}
+        required
+        className="patient-transport-select"
+      >
+        <option value="">Select Mode of Transport</option>
+        <option value="Ambulance">Ambulance</option>
+        <option value="Wheelchair">Wheelchair</option>
+        <option value="Stretcher">Stretcher</option>
+      </select>
+        </div>
+
+        {/* Auto-Filled Ambulance Details */}
+        {/* Auto-Filled Ambulance Details */}
+      {formData.modeOfTransport === "Ambulance" && (
+        <div className="ambulance-details-section">
+          <h6>Ambulance Details</h6>
+          <div className="patient-transport-form-group">
+            <label htmlFor="ambulancePlate">Ambulance Plate Number:</label>
+            <select
+              id="ambulancePlate"
+              name="ambulanceDTO.ambulanceId"
+              value={formData.ambulanceDTO.ambulanceId}
+              onChange={handleAmbulanceChange}
+              className="patient-transport-input"
+            >
+              <option value="">Select Ambulance</option>
+              {ambulances.map((ambulance) => (
+                <option
+                  key={ambulance.ambulanceId}
+                  value={ambulance.licencePlate}
+                >
+                  {ambulance.licencePlate}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="patient-transport-form-group">
+            <label htmlFor="driverName">Driver Name:</label>
+            <input
+              type="text"
+              id="driverName"
+              name="ambulanceDTO.driverName"
+              value={formData.ambulanceDTO.driverName}
+              className="patient-transport-input"
+              readOnly
+            />
+          </div>
+        </div>
+      )}
+
+            <div className="patient-transport-form-group">
+              <label htmlFor="transportStaffAssigned">Transport Staff Assigned:</label>
+              <input 
+                type="text" 
+                id="transportStaffAssigned" 
+                name="transportStaffAssigned" 
+                value={formData.transportStaffAssigned} 
+                onChange={handleChange} 
+                required 
+                className="patient-transport-input"
+              />
+            </div>
+
+            <div className="patient-transport-form-group">
+              <label htmlFor="additionalNotes">Additional Notes:</label>
+              <textarea 
+                id="additionalNotes" 
+                name="additionalNotes" 
+                value={formData.additionalNotes} 
+                onChange={handleChange} 
+                className="patient-transport-textarea"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        
+        <button type="submit" className="patient-transport-submit-btn" disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting...' : 'Submit'}
+        </button>
+      </form>
 
         ) : modalType === 'dispatch' ? (
 
-          <DispatchForm patientData={selectedPatient} />
-        ) : null}
-      </CustomModal>
+        <DispatchForm patientData={selectedPatient} />
+        ) : null} 
+              </CustomModal>
 
 
-
+      
     </>
   );
 }

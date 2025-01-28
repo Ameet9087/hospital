@@ -17,7 +17,7 @@ const TransportRequest = () => {
     // Fetch data from the API when the component mounts
     const fetchRequests = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/transportrequest/getall`);
+        const response = await axios.get('http://localhost:8081/api/transportrequest/getall');
         setRequests(response.data); // Assuming the response data is an array of requests
       } catch (error) {
         console.error("Error fetching requests:", error);
@@ -29,7 +29,7 @@ const TransportRequest = () => {
 
   const handleSubmit = async (requestData) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/transportrequest/add`, requestData);
+      const response = await axios.post('http://localhost:8081/api/transportrequest/add', requestData);
       console.log('Request created:', response.data);
 
       // Update the list of requests after successful creation
@@ -42,7 +42,7 @@ const TransportRequest = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API_BASE_URL}/transportrequest/delete/${id}`);
+      await axios.delete(`http://localhost:8081/api/transportrequest/delete/${id}`);
       // Update the requests state by filtering out the deleted request
       setRequests(requests.filter(request => request.request_id !== id));
       console.log(`Request with ID ${id} deleted successfully.`);

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState , useEffect} from 'react';
 import './patienttransport.css';
 import CustomModal from '../../../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../../../api/api';
 
 const PatientTransportForm = () => {
   const [formData, setFormData] = useState({
-
+    
     patient: {
-      patientId: '',
-      name: ''
-    },
+    patientId: '',
+    name: ''
+  },
 
     transportDate: '',
     transportTime: '',
@@ -19,17 +19,17 @@ const PatientTransportForm = () => {
     modeOfTransport: '',
     transportStaffAssigned: '',
     ambulanceDTO: {
-      ambulanceId: '',
+      ambulanceId:'' ,
       driver: '',
     },
     additionalNotes: '',
   });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const [isSubmitting, setIsSubmitting] = useState(false); 
   const [ambulanceData, setAmbulanceData] = useState([]);
 
 
-
+  
   useEffect(() => {
     const fetchAmbulanceData = async () => {
       try {
@@ -104,7 +104,7 @@ const PatientTransportForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-
+  
     // Transform formData to match backend requirements
     const payload = {
       transportDate: formData.transportDate,
@@ -122,7 +122,7 @@ const PatientTransportForm = () => {
         ambulanceId: formData.ambulanceDTO.ambulanceId, // Update this if you have the ambulance ID available
       },
     };
-
+  
     try {
       const response = await fetch(`${API_BASE_URL}/transport/save`, {
         method: 'POST',
@@ -131,20 +131,20 @@ const PatientTransportForm = () => {
         },
         body: JSON.stringify(payload), // Use transformed payload
       });
-
+  
       let result;
       const contentType = response.headers.get('Content-Type');
-
+  
       if (contentType && contentType.includes('application/json')) {
         result = await response.json();
       } else {
         result = await response.text(); // Handle non-JSON responses
       }
-
+  
       if (!response.ok) {
         throw new Error(result || `Error ${response.status}: ${response.statusText}`);
       }
-
+  
       console.log(result);
       alert('Transport details saved successfully!');
       setFormData({
@@ -172,13 +172,13 @@ const PatientTransportForm = () => {
       setIsSubmitting(false);
     }
   };
-
-
-
+  
+  
+  
 
   return (
     <div className="patient-transport-container">
-
+      
     </div>
   );
 };

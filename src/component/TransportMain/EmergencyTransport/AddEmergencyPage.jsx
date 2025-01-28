@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import axios from "axios"; // Import axios
 import "./AddEmergencyPage.css";
+import { API_BASE_URL } from "../../api/api";
 
 function AddEmergencyPageTransport() {
   const [formData, setFormData] = useState({
@@ -29,7 +30,8 @@ function AddEmergencyPageTransport() {
     console.log(formData);
   
     // Axios POST request to add new emergency data
-    axios.post("http://localhost:4069/EmergencyTransport/add", formData) // Replace with your actual API URL
+    // axios.post("http://localhost:4069/EmergencyTransport/add", formData) 
+    axios.post(`${API_BASE_URL}/EmergencyTransport/add`, formData) 
       .then((response) => {
         console.log("Emergency Data Added: ", response.data);
         alert("Emergency data successfully added!"); // Optionally, notify the user

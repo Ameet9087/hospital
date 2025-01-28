@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import axios from 'axios'; 
 import "../VehicleMaintenance/vehicleMaintenance.css";
 import VMAddNewVehicle from './vMAddNewVehicle';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import CustomModal from '../../../CustomModel/CustomModal';
+import { API_BASE_URL } from '../../api/api';
 
 const VehicleMaintenance = () => {
   const [addVehicle, setAddVehicle] = useState([]); // State to hold vehicle data
@@ -12,19 +13,20 @@ const VehicleMaintenance = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [editVehicle, setEditVehicle] = useState(null); // To store the vehicle data for editing
 
-  // Fetch vehicle data when the component mounts
-  const fetchVehicles = async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/ambulances/available`);
-      setAddVehicle(response.data); // Set fetched vehicle data
-    } catch (error) {
-      console.error("Error fetching vehicle data:", error);
-    }
-  };
+ // Fetch vehicle data when the component mounts
+ const fetchVehicles = async () => {
+  try {
+    // const response = await axios.get("http://localhost:4096/api/ambulances/available");
+    const response=await axios.get(`${API_BASE_URL}/ambulances/available`);
+    setAddVehicle(response.data); // Set fetched vehicle data
+  } catch (error) {
+    console.error("Error fetching vehicle data:", error);
+  }
+};
 
-  useEffect(() => {
-    fetchVehicles(); // Call the function to fetch data
-  }, []);
+useEffect(() => {
+  fetchVehicles(); // Call the function to fetch data
+}, []);
 
   // Handle opening the popup for adding a new vehicle
   const handleAddNewLabTestClick = () => {
@@ -113,8 +115,8 @@ const VehicleMaintenance = () => {
           <thead>
             <tr>
               {[
-                "Serial No", "Vehicle Type", "Vehicle Number", "Vehicle Company Name", "Year Of Manufacture",
-                "Fuel Type", "Driver Name", "Driver Contact Number"
+                "Serial No","Vehicle Type", "Vehicle Number", "Vehicle Company Name", "Year Of Manufacture",
+                "Fuel Type", "Driver Name","Driver Contact Number"
                 // "Maintenance Type", "Schedule Date", "Completed Date", "Service Provider", 
                 // "Repair Details", "Parts Replace", "Cost", "Actions"
               ].map((header, index) => (
@@ -130,7 +132,7 @@ const VehicleMaintenance = () => {
           <tbody>
             {addVehicle.map((test, index) => (
               <tr key={index}>
-                <td>{index + 1}</td>
+                <td>{index+1}</td>
                 <td>{test.vehicleType}</td>
                 <td>{test.vehicleNumber}</td>
                 <td>{test.vehicleCompanyName}</td>

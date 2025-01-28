@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../VehicleMaintenance/vMAddNewVehicle.css";
+import { API_BASE_URL } from '../../api/api';
 
 const VMAddNewVehicle = ({ onClose, editVehicle }) => {
   const [formData, setFormData] = useState({
@@ -28,11 +29,11 @@ const VMAddNewVehicle = ({ onClose, editVehicle }) => {
         driverName: editVehicle.driverName || '',
         driverContactNumber: editVehicle.driverContactNumber || '',
         licencePlate: editVehicle.licencePlate || '',
-      });
+        });
     }
   }, [editVehicle]);
 
-
+  
 
   // Handle form field changes
   const handleChange = (e) => {
@@ -55,12 +56,13 @@ const VMAddNewVehicle = ({ onClose, editVehicle }) => {
             },
           }
         );
-
+      
         console.log("Vehicle updated response:", response.data);
         alert("Vehicle updated successfully!");
       } else {
         // If adding, send POST request
         const response = await axios.post(
+          // "http://localhost:4069/api/ambulances/add-vehicle",
           `${API_BASE_URL}/ambulances/add-vehicle`,
           formData,
           {
@@ -122,7 +124,7 @@ const VMAddNewVehicle = ({ onClose, editVehicle }) => {
                 onChange={handleChange}
               />
             </div>
-
+            
           </div>
           <div className="vMAddNewVehicle-form-group-1row">
             <div className="vMAddNewVehicle-form-group">
@@ -194,7 +196,7 @@ const VMAddNewVehicle = ({ onClose, editVehicle }) => {
           </div>
 
           <div className="vMAddNewVehicle-form-group-1row">
-
+           
           </div>
         </div>
         <div className="vMAddNewVehicle-form-actions">
