@@ -46,8 +46,7 @@ const LabLookUpUpdateNewLUp = ({ lookup, onClose }) => {
     const lookUpId = lookup.labLookupId;
     try {
       await axios.put(
-        `${API_BASE_URL}/lab-lookups/update/${lookup}`,
-
+        `${API_BASE_URL}/lab-lookups/update/${lookUpId}`,
         payload
       );
       onClose();

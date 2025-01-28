@@ -3,10 +3,10 @@ import './VerifyModal.css';
 import { API_BASE_URL } from '../api/api';
 
 function VerifyModalPharmacy({ isOpen, onClose, requisitionDetails }) {
-    console.log(requisitionDetails);
-    
+  console.log(requisitionDetails);
+
   const [verifyRemark, setVerifyRemark] = useState('');
-  
+
   if (!isOpen) return null;
 
   // Function to handle approval
@@ -15,9 +15,9 @@ function VerifyModalPharmacy({ isOpen, onClose, requisitionDetails }) {
       subPharmRequisitionItemId: item.subPharmRequisitionItemId,
       dispatchQuantity: 0,
     }))
-    
+
     try {
-      const response = await fetch(`${API_BASE_URL}/subpharm-requisitions/${requisitionDetails. pharRequisitionId}/update?status=Approved`, {
+      const response = await fetch(`${API_BASE_URL}/subpharm-requisitions/${requisitionDetails.pharRequisitionId}/update?status=Approved`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ function VerifyModalPharmacy({ isOpen, onClose, requisitionDetails }) {
 
       if (response.ok) {
         const result = await response.json();
-        console.log('Update successful:', result);
+        alert('Update successfully');
         onClose();
       } else {
         console.error('Error updating requisition:', response.statusText);
@@ -62,22 +62,22 @@ function VerifyModalPharmacy({ isOpen, onClose, requisitionDetails }) {
             </thead>
             <tbody>
               {
-               requisitionDetails.subPharmRequisitionItems.map((requisitionDetail, index) => (
+                requisitionDetails.subPharmRequisitionItems.map((requisitionDetail, index) => (
                   <tr key={index}>
-                  <td>{requisitionDetail?.items?.itemMaster?.itemName}</td>
-                  <td>{requisitionDetail.requiredQuantity}</td>
-                  <td>{requisitionDetail.items?.itemMaster?.unitsOfMeasurement?.name || 'N/A'}</td>
-                  <td>{requisitionDetail.remark || 'N/A'}</td>
-                  <td>{requisitionDetails.status}</td>
-                </tr>
+                    <td>{requisitionDetail?.items?.itemMaster?.itemName}</td>
+                    <td>{requisitionDetail.requiredQuantity}</td>
+                    <td>{requisitionDetail.items?.itemMaster?.unitsOfMeasurement?.name || 'N/A'}</td>
+                    <td>{requisitionDetail.remark || 'N/A'}</td>
+                    <td>{requisitionDetails.status}</td>
+                  </tr>
                 ))
               }
-                
+
             </tbody>
           </table>
           <div className="verifyRemarksSection">
             <label>Requisition Remark:</label>
-            <textarea 
+            <textarea
               className="verifyRemarksInput"
               value={verifyRemark}
               onChange={(e) => setVerifyRemark(e.target.value)}

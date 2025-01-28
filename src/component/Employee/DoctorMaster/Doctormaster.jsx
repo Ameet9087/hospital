@@ -3,7 +3,7 @@ import "./doctormaster.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faL, faSearch } from "@fortawesome/free-solid-svg-icons";
 import CustomModal from "../../../CustomModel/CustomModal";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import IpMasterPopupTable from "../IPMaster/IpMasterPopupTable";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
@@ -71,7 +71,6 @@ const DoctorMaster = () => {
       referralVisit: 0.0,
       referralVisitToDoctor: 0.0,
       generalOpdFee: 0.0,
-      followupopdfees: 0.0,
     }))
   );
 
@@ -110,7 +109,6 @@ const DoctorMaster = () => {
           referralVisit: 0.0,
           referralVisitToDoctor: 0.0,
           generalOpdFee: 0.0,
-          followupopdfees: 0.0
         }))
       );
     }
@@ -141,7 +139,6 @@ const DoctorMaster = () => {
         columns: ["specialisationId", "specialisationName"],
         data: specialisation,
       };
-
     } else {
       return { columns: [], data: [] };
     }
@@ -189,9 +186,9 @@ const DoctorMaster = () => {
       prevState.map((row, i) =>
         i === index
           ? {
-            ...row,
-            [name]: value,
-          }
+              ...row,
+              [name]: value,
+            }
           : row
       )
     );
@@ -259,7 +256,6 @@ const DoctorMaster = () => {
         referralVisit: 0.0,
         referralVisitToDoctor: 0.0,
         generalOpdFee: 0.0,
-        followupopdfees: 0.0
       }))
     );
   };
@@ -290,7 +286,6 @@ const DoctorMaster = () => {
           referralVisit: row.referralVisit,
           referralVisitToDoctor: row.referralVisitToDoctor,
           generalOpdFee: row.generalOpdFee,
-          followupopdfees: row.followupopdfees
         })),
       };
       const formDataObj = new FormData();
@@ -301,9 +296,6 @@ const DoctorMaster = () => {
 
       const jsonData = JSON.stringify(doctordata);
       formDataObj.append("addDoctorDTO", jsonData);
-
-      console.log("addeded doc followup", formDataObj);
-
 
       const response = await fetch(`${API_BASE_URL}/doctors`, {
         method: "POST",
@@ -317,6 +309,7 @@ const DoctorMaster = () => {
         setModelOpen(false);
         clear();
         fetchAllDoctorData();
+        alert("Doctor Added Successfully");
       } else {
         console.error("Failed:", response.statusText);
       }
@@ -352,7 +345,6 @@ const DoctorMaster = () => {
                     "ReferralVisit",
                     "ReferralVisit(ToDoctor)",
                     "GeneralOpdFee",
-                    "FollowupFees "
                   ].map((header, index) => (
                     <th
                       key={index}
@@ -499,14 +491,6 @@ const DoctorMaster = () => {
                         onChange={(e) => handleDoctorFessChange(e, index)}
                       />
                     </td>
-                    <td>
-                      <input
-                        type="text"
-                        name="followupopdfees"
-                        value={row.followupopdfees}
-                        onChange={(e) => handleDoctorFessChange(e, index)}
-                      />
-                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -524,7 +508,6 @@ const DoctorMaster = () => {
           Add Doctor
         </button>
 
-
         <table ref={tableRef}>
           <thead>
             <tr>
@@ -540,7 +523,6 @@ const DoctorMaster = () => {
                 "Registration No",
                 "Employee Type",
                 "Residence Address",
-
               ].map((header, index) => (
                 <th
                   key={index}
@@ -783,7 +765,7 @@ const DoctorMaster = () => {
                 />
               </div>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">City:</label>
+                <label className="doctormaster-label">State:</label>
                 <input
                   value={formdata.residenceState}
                   onChange={handleInputChange}
@@ -932,8 +914,9 @@ const DoctorMaster = () => {
           </div>
           <div>
             <button
-              className={`doctormaster-service-button ${selectedTab === "doctorFee" ? "active" : ""
-                }`}
+              className={`doctormaster-service-button ${
+                selectedTab === "doctorFee" ? "active" : ""
+              }`}
               onClick={() => setSelectedTab("doctorFee")}
             >
               Doctor Fee
@@ -960,4 +943,3 @@ const DoctorMaster = () => {
 };
 
 export default DoctorMaster;
-

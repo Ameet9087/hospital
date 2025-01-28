@@ -1,5 +1,5 @@
 
- /* Ajhar Tamboli dispenSalesStockDetails.jsx 19-09-24 */
+/* Ajhar Tamboli dispenSalesStockDetails.jsx 19-09-24 */
 
 
 import React, { useState, useEffect } from "react";
@@ -19,16 +19,16 @@ const SalesStockDetails = () => {
     const [error, setError] = useState(null); // State to manage error messages
 
     console.log("Helloooo");
-    
+
     // Fetch data from the backend API when the component mounts
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${API_BASE_URL}/hospital/fetch-fetch-medicine-details`); // API call to the backend
+                const response = await axios.get(`${API_BASE_URL}/hospital/fetch-medicine-details`); // API call to the backend
                 setSalesData(response.data); // Update state with the fetched data
                 setLoading(false); // Set loading to false
                 console.log(response.data);
-                
+
             } catch (err) {
                 console.error("Error fetching data", err);
                 setError("Failed to fetch data from the server.");
@@ -80,8 +80,8 @@ const SalesStockDetails = () => {
 
         <div className="dispenSalesStockDetails-container">
             <div className="dispenSalesStockDetails-header-tabs">
-                <span 
-                    className={activeTab === "StockDetails" ? "dispenSalesStockDetails-tab-active" : "dispenSalesStockDetails-tab"} 
+                <span
+                    className={activeTab === "StockDetails" ? "dispenSalesStockDetails-tab-active" : "dispenSalesStockDetails-tab"}
                     onClick={() => setActiveTab("StockDetails")}
 
                 >
@@ -94,8 +94,8 @@ const SalesStockDetails = () => {
                 >
                     Transfer
                 </span> */}
-                <span 
-                    className={activeTab === "Requisition" ? "dispenSalesStockDetails-tab-active" : "dispenSalesStockDetails-tab"} 
+                <span
+                    className={activeTab === "Requisition" ? "dispenSalesStockDetails-tab-active" : "dispenSalesStockDetails-tab"}
                     onClick={() => setActiveTab("Requisition")}
                 >
                     Requisition
@@ -117,26 +117,26 @@ const SalesStockDetails = () => {
                         </label>
                     </div>
                     <div className="dispenSalesStockDetails-controls">
-        {/* Your date range and button controls */}
-          <div className="dispenSalesStockDetails-date-range">
-            <label>
-              From:
-              <input type="date" defaultValue="2024-08-09" />
-            </label>
-            <label>
-              To:
-              <input type="date" defaultValue="2024-08-16" />
-            </label>
-           
-          </div>
-      </div>
+                        {/* Your date range and button controls */}
+                        <div className="dispenSalesStockDetails-date-range">
+                            <label>
+                                From:
+                                <input type="date" defaultValue="2024-08-09" />
+                            </label>
+                            <label>
+                                To:
+                                <input type="date" defaultValue="2024-08-16" />
+                            </label>
+
+                        </div>
+                    </div>
 
                     <div className='dispenSalesStockDetails-search-N-result'>
                         <div className="dispenSalesStockDetails-search-bar">
                             <i className="fa-solid fa-magnifying-glass"></i>
-                            <input 
-                                type="text" 
-                                placeholder="Search..." 
+                            <input
+                                type="text"
+                                placeholder="Search..."
                             />
                         </div>
                         <div className="dispenSalesStockDetails-results-info">
@@ -145,7 +145,7 @@ const SalesStockDetails = () => {
                                 <i className="fa-solid fa-file-excel"></i> Export
                             </button>
                             <button className="dispenSalesStockDetails-print-button" onClick={handlePrint}>
-                            <i class="fa-solid fa-print"></i> Print
+                                <i class="fa-solid fa-print"></i> Print
                             </button>
                         </div>
                     </div>
@@ -182,7 +182,7 @@ const SalesStockDetails = () => {
                             ))}
                         </tbody>
                     </table>
-                    
+
                     {/* <div className="dSSDetails-pagination-bar">
                         <span>1 to 20 of {salesData.length}</span>
                         <button>First</button>
@@ -191,7 +191,7 @@ const SalesStockDetails = () => {
                         <button>Next</button>
                         <button>Last</button>
                     </div> */}
-                    
+
                     <div className="sales-stock-details-summary">
                         <h4>Summary</h4>
                         <strong>Total Stock Value: </strong>{salesData.reduce((acc, item) => acc + (item.availableQty * item.salePrice), 0).toFixed(2)}
@@ -199,8 +199,8 @@ const SalesStockDetails = () => {
                 </>
             )}
 
-            {activeTab === "Transfer" && <DispenTransfer />}  
-            {activeTab === "Requisition" && <DispenStockRequisition />}  
+            {activeTab === "Transfer" && <DispenTransfer />}
+            {activeTab === "Requisition" && <DispenStockRequisition />}
         </div>
     );
 };

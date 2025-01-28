@@ -19,7 +19,7 @@ const BookAppointment = () => {
   return (
     <>
       <div className="BookAppointment-app-container">
-        <h1 className="BookAppointment-header-title">Welcome To Lopmudra</h1>
+        <h1 className="BookAppointment-header-title">Welcome</h1>
         <div className="BookAppointment-section">
           {/* Header Section */}
           <header className="BookAppointment-header">
@@ -31,11 +31,10 @@ const BookAppointment = () => {
           {/* Tabs Section */}
           <div className="BookAppointment-tabs">
             <button
-              className={`BookAppointment-tab ${
-                activeComponent === "Location"
-                  ? "BookAppointment-active-tab"
-                  : ""
-              }`}
+              className={`BookAppointment-tab ${activeComponent === "Location"
+                ? "BookAppointment-active-tab"
+                : ""
+                }`}
               onClick={() => handleTabClick("Location")}
             >
               Location

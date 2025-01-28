@@ -26,34 +26,33 @@ const ClinicalBloodSugarMonitoring = ({ patientId, outPatientId }) => {
     remarks: "",
   });
 
+  const fetchBloodSugarData = () => {
+    let endpoint = "";
+
+    // Determine if newPatientVisitId or admissionId should be used
+    if (outPatientId) {
+      endpoint = `${API_BASE_URL}/blood-sugar-monitoring/by-newPatientVisitId?newPatientVisitId=${outPatientId}`;
+    } else if (patientId) {
+      endpoint = `${API_BASE_URL}/blood-sugar-monitoring/by-patientId?patientId=${patientId}`;
+    }
+
+    // Fetch data if a valid endpoint is determined
+    if (endpoint) {
+      axios
+        .get(endpoint)
+        .then((response) => {
+          if (response.data.length > 0) {
+            setBloodData(response.data);
+            console.log(response.data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching blood sugar data:", error);
+        });
+    }
+  };
   // Fetch blood sugar data
   useEffect(() => {
-    const fetchBloodSugarData = () => {
-      let endpoint = "";
-
-      // Determine if newPatientVisitId or admissionId should be used
-      if (outPatientId) {
-        endpoint = `${API_BASE_URL}/blood-sugar-monitoring/by-newPatientVisitId?newPatientVisitId=${outPatientId}`;
-      } else if (patientId) {
-        endpoint = `${API_BASE_URL}/blood-sugar-monitoring/by-patientId?patientId=${patientId}`;
-      }
-
-      // Fetch data if a valid endpoint is determined
-      if (endpoint) {
-        axios
-          .get(endpoint)
-          .then((response) => {
-            if (response.data.length > 0) {
-              setBloodData(response.data);
-              console.log(response.data);
-            }
-          })
-          .catch((error) => {
-            console.error("Error fetching blood sugar data:", error);
-          });
-      }
-    };
-
     if (outPatientId || patientId) {
       fetchBloodSugarData();
     }
@@ -88,7 +87,7 @@ const ClinicalBloodSugarMonitoring = ({ patientId, outPatientId }) => {
       } else {
         // For new entries, attach patient or visit info
         if (patientId > 0) {
-          bloodData.patientDTO = { inPatientId: patientId };
+          bloodData.inPatientDTO = { inPatientId: patientId };
         } else if (outPatientId) {
           bloodData.outPatientDTO = { outPatientId };
         }

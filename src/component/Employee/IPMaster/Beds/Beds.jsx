@@ -5,8 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { API_BASE_URL } from "../../../api/api";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import IpMasterPopupTable from "../IpMasterPopupTable";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns"
-
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 
 const Beds = () => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -23,8 +22,7 @@ const Beds = () => {
     chargeType: "free",
     bedStatus: "active",
     gender: "male",
-    bedType: "standard"
-
+    bedType: "standard",
   });
 
   const fetchRooms = async () => {
@@ -32,7 +30,6 @@ const Beds = () => {
       const response = await axios.get(`${API_BASE_URL}/rooms`);
       setRooms(response.data);
       console.log(response.data);
-      
     } catch (error) {
       console.error("Error fetching rooms:", error);
     }
@@ -67,41 +64,35 @@ const Beds = () => {
 
   const handleSave = async () => {
     try {
-    
       formData.roomDto = {
         id: selectedRoom?.id,
       };
-  
-      console.log('Saving Data:', formData);
-  
-      // Perform the POST request using Axios
+
+      console.log("Saving Data:", formData);
+
       const response = await axios.post(`${API_BASE_URL}/beds`, formData);
-  
+
       if (response.status === 200 || response.status === 201) {
-        console.log('Data saved successfully:', response.data);
-  
-        // Fetch updated beds list after saving
+        console.log("Data saved successfully:", response.data);
+        alert("Bed Added Successfully");
+
         fetchBeds();
-  
-        // Close the modal after successful save
+
         setIsModalOpen(false);
       } else {
         console.error(`Unexpected response: ${response.status}`);
       }
     } catch (error) {
-      // Handle errors gracefully
-      console.error('Error during save operation:', error);
-      alert('An error occurred while saving the data. Please try again.');
+      console.error("Error during save operation:", error);
+      alert("An error occurred while saving the data. Please try again.");
     }
   };
-  
-  
-  // Helper function to get modal popup data
+
   const getPopupData = () => {
     if (showModal) {
       return {
         columns: ["id", "name"], // Define popup table columns
-        data: rooms,            // Pass room data to the popup
+        data: rooms, // Pass room data to the popup
       };
     } else {
       return {
@@ -110,7 +101,6 @@ const Beds = () => {
       };
     }
   };
-  
 
   const { columns, data } = getPopupData();
 
@@ -143,7 +133,7 @@ const Beds = () => {
                   "Charge Type",
                   "Bed Status",
                   "Bed Type",
-                  "remarks"
+                  "remarks",
                 ].map((header, index) => (
                   <th
                     key={index}
@@ -235,8 +225,11 @@ const Beds = () => {
 
             <div className="beds-form-row">
               <label>Charge Type:</label>
-              <select value={formData.chargeType} name="chargeType" onChange={handleInputChange}>
-
+              <select
+                value={formData.chargeType}
+                name="chargeType"
+                onChange={handleInputChange}
+              >
                 <option value="free">Free</option>
                 <option value="paid">Paid</option>
                 <option value="partially_paid">Partially Paid</option>
@@ -266,15 +259,19 @@ const Beds = () => {
             {/* Bed Type Dropdown */}
             <div className="beds-form-row">
               <label>Bed Type:</label>
-              <select value={formData.bedType} name="bedType" onChange={handleInputChange}>
+              <select
+                value={formData.bedType}
+                name="bedType"
+                onChange={handleInputChange}
+              >
                 <option value="standard">Parent Bed</option>
                 <option value="deluxe">Child Bed</option>
                 <option value="chronologicalOrder">Chronological Order</option>
-               <option value="sharingBed">Sharing Bed</option>
-               <option value="Dummy">Dummy</option>
-               <option value="adjustableBed">Adjustable Bed</option>
-               <option value="bunkBed">Bunk Bed</option>
-               <option value="sofaBed">Sofa Bed</option>
+                <option value="sharingBed">Sharing Bed</option>
+                <option value="Dummy">Dummy</option>
+                <option value="adjustableBed">Adjustable Bed</option>
+                <option value="bunkBed">Bunk Bed</option>
+                <option value="sofaBed">Sofa Bed</option>
               </select>
             </div>
             {/* <div className="beds-form-row">
@@ -364,7 +361,6 @@ const Beds = () => {
                 Sofa Bed
               </label>
             </div> */}
-
           </div>
           <div className="beds-action-buttons">
             <button className="btn-blue" onClick={handleSave}>

@@ -69,14 +69,14 @@ const SalesSales = () => {
     console.log("Printing Invoice...");
     // Add print logic here
   };
-  
+
   const handleShowInvoice = () => setShowInvoice(true);
 
   const handleMedicineSelect = (selectedMedicine) => {
     // Update formData with the selected medicine details
     setFormData({
       ...formData,
-      medicineId:selectedMedicine.medicineId,
+      medicineId: selectedMedicine.medicineId,
       medicineName: selectedMedicine.medicineName,
       genericName: selectedMedicine.genericName,
       expiry: selectedMedicine.expiryDate,
@@ -93,7 +93,7 @@ const SalesSales = () => {
   const fetchMedicineDetails = async () => {
     try {
       const response = await axios.get(
-        `${API_BASE_URL}/hospital/fetch-fetch-medicine-details`
+        `${API_BASE_URL}/hospital/fetch-medicine-details`
       );
       // Store the entire API response in `medicines`
       setMedicines(response.data || []);
@@ -117,7 +117,7 @@ const SalesSales = () => {
       subTotal: parseFloat(item.subTotal), // Ensure subTotal is a double/float
     }));
     console.log(invoiceData)
-    
+
     try {
       const response = await axios.post(
         `${API_BASE_URL}/persons/${selectedPatientId}/medicines`,
@@ -126,9 +126,9 @@ const SalesSales = () => {
 
       if (response.status === 200 || response.status === 201) {
         alert("Invoice Printed Successfully!");
-        setInvoiceData(response.data); 
+        setInvoiceData(response.data);
         console.log(response.data);  // Corrected from response.body to response.data
-       // setShowInvoice(true);
+        // setShowInvoice(true);
         console.log("Response Data:", response.data);
       } else {
         alert("Failed to print the invoice. Please try again.");
@@ -234,7 +234,8 @@ const SalesSales = () => {
   const addItem = () => {
     setItems([
       ...items,
-      {medicineId: "",
+      {
+        medicineId: "",
         genericName: "",
         genericItemName: "",
         genericCode: "",
@@ -270,7 +271,7 @@ const SalesSales = () => {
           department: patient?.patient?.department,
         }));
         setPatients(patientData);
-        console.log("patient data" ,patientData);
+        console.log("patient data", patientData);
       })
       .catch((error) => {
         console.error("Error fetching patients data:", error);
@@ -313,16 +314,15 @@ const SalesSales = () => {
   }, [ccCharge, quantity]);
 
   const filteredPatients = patients.filter((patient) => {
-    const fullName = `${patient.firstName} ${patient.middleName || ""} ${
-      patient.lastName
-    }`.toLowerCase();
+    const fullName = `${patient.firstName} ${patient.middleName || ""} ${patient.lastName
+      }`.toLowerCase();
     return (
       fullName.includes(searchTerm.toLowerCase()) ||
       (patient.uhid && patient.uhid.toString().includes(searchTerm))
     );
   });
 
-    console.log(options);
+  console.log(options);
 
 
   const handleExternalPopupOpen = () => {
@@ -356,37 +356,33 @@ const SalesSales = () => {
       <div className="dispenSalesSales-header">
         <div className="dispenSalesSales-tabs">
           <div
-            className={`dispenSalesSales-tab ${
-              activeTab === "Sale" ? "dispenSalesSales-tab-active" : ""
-            }`}
+            className={`dispenSalesSales-tab ${activeTab === "Sale" ? "dispenSalesSales-tab-active" : ""
+              }`}
             onClick={() => handleTabClick("Sale")}
           >
             Sale
           </div>
           <div
-            className={`dispenSalesSales-tab ${
-              activeTab === "Sale List" ? "dispenSalesSales-tab-active" : ""
-            }`}
+            className={`dispenSalesSales-tab ${activeTab === "Sale List" ? "dispenSalesSales-tab-active" : ""
+              }`}
             onClick={() => handleTabClick("Sale List")}
           >
             Sale List
           </div>
           <div
-            className={`dispenSalesSales-tab ${
-              activeTab === "Return From Customer"
+            className={`dispenSalesSales-tab ${activeTab === "Return From Customer"
                 ? "dispenSalesSales-tab-active"
                 : ""
-            }`}
+              }`}
             onClick={() => handleTabClick("Return From Customer")}
           >
             Return From Customer
           </div>
           <div
-            className={`dispenSalesSales-tab ${
-              activeTab === "Return Sale List"
+            className={`dispenSalesSales-tab ${activeTab === "Return Sale List"
                 ? "dispenSalesSales-tab-active"
                 : ""
-            }`}
+              }`}
             onClick={() => handleTabClick("Return Sale List")}
           >
             Return Sale List
@@ -454,7 +450,7 @@ const SalesSales = () => {
               )}
             </div>
 
-         
+
             <div className="dispenSalesSales-doctor-info">
               {/* <label>Doctor:</label>
               <input type="text" value="ANONYMOUS DOCTOR" readOnly />
@@ -503,7 +499,7 @@ const SalesSales = () => {
           </div>
 
           <div className="dispenSalesSales-hospital-info">
-       
+
             {selectedPatientInfo && (
               <div className="dispenSalesSales-hospital-info">
                 <div className="dispenSalesSales-hospital-info-subDiv">
@@ -542,9 +538,9 @@ const SalesSales = () => {
 
           <div className="dispenSalesSales-medicineInfo-N-paymentSection">
             <div className="dispenSalesSales-medicineInfo-N-invoiceSummary">
-              
+
               <div className="dispenSalesSales-medicine-info">
-                <div style={{position:"relative"}}>
+                <div style={{ position: "relative" }}>
                   <label>Drug/Medicine Name</label>
                   <input
                     type="text"
@@ -568,7 +564,7 @@ const SalesSales = () => {
                     </ul>
                   )}
                 </div>
-                
+
 
                 <div>
                   <label>Generic Name</label>
@@ -779,7 +775,7 @@ const SalesSales = () => {
             </div>
           </div>
 
-         {showInvoice && (
+          {showInvoice && (
             <SalesInvoice
               showInvoice={showInvoice}
               handleClose={() => setShowInvoice(false)}
@@ -787,7 +783,7 @@ const SalesSales = () => {
               handlePrint={handlePrint}
             />
           )}
-          
+
 
           <div className="dispenSalesSales-history-section">
             <div className="dispenSalesSales-invoice-history">

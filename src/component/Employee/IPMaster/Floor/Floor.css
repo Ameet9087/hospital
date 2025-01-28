@@ -7,7 +7,7 @@
   gap: 15px;
   justify-content: center;
 }
-.floors-Detail{
+.floors-Detail {
   background-color: var(--button-bg-color);
   color: #ffff;
   padding: 5px;
@@ -22,7 +22,7 @@
 .floor-form-group label {
   font-weight: bold;
   color: var(--font-color);
-  min-width: 150px; 
+  min-width: 150px;
   text-align: left;
 }
 
@@ -137,7 +137,7 @@
   border-radius: 4px;
   box-sizing: border-box; /* Ensures padding doesn't affect width */
 }
-.add-floor-btn{
+.add-floor-btn {
   background-color: var(--button-bg-color);
   color: white;
   border: none;
@@ -146,7 +146,6 @@
   padding: var(--input-box-padding);
   margin-bottom: 10px;
 }
-
 
 .floor-modal .floor-modal-search-container input[type="button"] {
   padding: 3px 15px;
@@ -157,7 +156,6 @@
   border-radius: 4px;
   cursor: pointer;
   width: 200px;
-
 }
 
 .floor-modal .floor-modal-search-container input[type="button"]:hover {
@@ -226,4 +224,20 @@
   background-color: #004d40;
 }
 
+.floor-delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: var(--input-box-padding);
+  margin-bottom: 10px;
+}
 
+.floor-delete-btn:hover {
+  background-color: darkred; /* Darker shade of red on hover */
+}
+
+.floor-edit-btn:hover {
+  background-color: var(--button-bg-color); /* Darker shade of red on hover */
+}

@@ -28,6 +28,23 @@ const DoctorBlockingTable = () => {
     setEditingData(data); // Set the data for editing
     setShowModal(true); // Open modal
   };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(`${API_BASE_URL}/doctor-blocking/${id}`);
+
+      if (response.status === 200) {
+        alert("Doctor Blocking Deleted Successfully.");
+        // Optionally, you can update the UI, like removing the deleted item from the list
+        // Example: remove the item from the state or refresh the list
+      } else {
+        alert("Failed to delete doctor blocking.");
+      }
+    } catch (error) {
+      console.error("Error deleting doctor blocking data:", error);
+      alert("An error occurred while deleting the doctor blocking. Please try again later.");
+    }
+  };
   const closeModal = (updatedData) => {
     setShowModal(false);
     setEditingData(null);
@@ -36,8 +53,8 @@ const DoctorBlockingTable = () => {
       // Update the table data
       const updatedList = editingData
         ? doctorBlockingData.map((item) =>
-            item.id === updatedData.id ? updatedData : item
-          )
+          item.id === updatedData.id ? updatedData : item
+        )
         : [...doctorBlockingData, updatedData];
       setDoctorBlockingData(updatedList);
     }
@@ -83,10 +100,10 @@ const DoctorBlockingTable = () => {
                   <td>{block.toTime}</td>
                   <td>{block.addDoctorDTO?.doctorName}</td>
                   <td>
-                    <button onClick={() => handleEdit(block)}>Edit</button>
-                    {/* <button onClick={() => handleDelete(block.doctorBlockingId)}>
+                    <button className="doctor-blocking-table-btn" onClick={() => handleEdit(block)}>Edit</button>
+                    <button className="doctor-blocking-table-btn" onClick={() => handleDelete(block.doctorBlockingId)}>
                       Delete
-                    </button> */}
+                    </button>
                   </td>
                 </tr>
               ))

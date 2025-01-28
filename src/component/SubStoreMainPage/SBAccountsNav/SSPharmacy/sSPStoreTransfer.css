@@ -1,70 +1,55 @@
-/* Ajhar tamboli sSPStoreTransfer.css 19-09-24 */
-
+.NormalTransfer-container{
+  background-color: var(--background-color);
+  padding: 4px;
+  font-size: var(--font-size);
+  height:650px
+}
+.NormalTransfer-header{
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+.NormalTransfer-footer{
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px;
+}
+.NormalTransfer-button{
+  background-color: var(--button-bg-color);
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
   
-  .ssp-Transfer-store-container {
-    /* max-width: 1000px; */
-    margin: 0 auto;
-    background-color: var(--background-color);
-    /* padding: 20px; */
-  }
-  
-  .ssp-Transfer-store-transfer-form {
-    background-color: var(--background-color);
-    /* background-color: #fff; */
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .ssp-Transfer-store-transfer-type {
-    padding: 5px;
-    margin-bottom: 20px;
-  }
-  
-  .ssp-Transfer-store {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-  
-  .ssp-Transfer-store th, .ssp-Transfer-store td {
-    border: 1px solid #ddd;
-    padding: 3px;
-    text-align: center;
-    font-size: var(--font-size);
-  }
-  
-  .ssp-Transfer-store th {
-    font-size: var(--heading-font);
-    background-color: #f2f2f2;
-  }
-  
-  .ssp-Transfer-store input[type="text"] {
-    width: 80px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  .ssp-Transfer-store-btn-transfer {
-    
-    display: block;
-    margin: 0 auto;
-    background-color:var( --button-color);
-    border: 1px solid var( --button-hover-border-color);
-    color: white;
-    /* border: none; */
-    /* margin-left: 10px; */
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: var(--font-size);
-    /* margin: 1px; */
-    transition: background-color 0.3s ease;
-    padding: 5px 5px;
-  }
-  .ssp-Transfer-store-btn-transfer:hover {
-    border: 1px solid var( --button-hover-border-color);
-    color: var(--button-hover-text-color);
-    background-color: var(--button-hover-background-color);
-  }
-  
+}
+.NormalTransfer-button:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color); 
+  border-bottom: 1px solid var(--button-bg-color);
+}
+.NormalTransfer-table-actions button{
+  margin-right: 4px;
+  padding: 2px 8px;
+  color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+.NormalTransfer-add-btn{
+  background-color: green    ;
+}
+.NormalTransfer-del-btn{
+background-color: red;
+}
+.NormalTransfer-Custom{
+max-width: 1000px;
+padding: 10px;
+}
+.NormalTransfer-receivedBy{
+  display: flex;
+  gap: 20px;
+  margin: 30px;
+}

@@ -65,11 +65,14 @@
 }
 
   .KitRequestIndent-form-group input,
-  .KitRequestIndent-form-group select {
+  .KitRequestIndent-form-group select
+  
+  {
     padding: 5px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 65%;
   }
   
   /* Button Container */

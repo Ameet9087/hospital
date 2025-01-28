@@ -18,9 +18,20 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: var(--font-size);
-  margin: 1px;
+  margin: 3px;
   transition: background-color 0.3s ease;
-  padding: 5px 5px;
+  padding: 0px 5px;
+}
+.labTestLS-delete-button {
+  background-color:red;
+  margin: 3px;
+  border: 1px solid red;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  transition: background-color 0.3s ease;
+  padding: 0px 5px;
 }
 
 .labTestLS-add-button:hover {

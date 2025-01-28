@@ -3,17 +3,18 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import "../NavBarSection/finalReports.css";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
-import FinalizedReportLabResult from "./FinalizedReportLabResult";
 import { API_BASE_URL } from "../api/api";
 import { useNavigate } from "react-router-dom";
 
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
 };
+
 function FinalReports() {
   const [dateFrom, setDateFrom] = useState(getCurrentDate()); // Set initial state to today's date
   const [dateTo, setDateTo] = useState(getCurrentDate());
   const [category, setCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState(""); // State to store search query
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [labResult, setLabResult] = useState(null);
@@ -39,6 +40,10 @@ function FinalReports() {
 
   const handleDateToChange = (event) => {
     setDateTo(event.target.value);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value); // Update the search query state on input change
   };
 
   const fetchLabResults = () => {
@@ -74,12 +79,32 @@ function FinalReports() {
     fetchLabResults(); // Call to fetch lab results when the component mounts or dates change
   }, [dateFrom, dateTo]);
 
+  // Filter labResult based on the search query
+  const filteredLabResults = labResult?.filter((result) => {
+    const patientName = `${
+      result.labRequest?.outPatient?.patient?.firstName || ""
+    } ${result.labRequest?.outPatient?.patient?.lastName || ""}`.toLowerCase();
+    const patientPhoneNumber =
+      result.labRequest?.inPatient?.patient?.mobileNumber ||
+      result.labRequest?.outPatient?.patient?.mobileNumber;
+    const testName = result?.labRequest.labTests
+      ?.map((test) => test.labTestName)
+      .join(", ")
+      .toLowerCase();
+
+    return (
+      patientName.includes(searchQuery.toLowerCase()) ||
+      patientPhoneNumber?.includes(searchQuery) ||
+      testName.includes(searchQuery.toLowerCase())
+    );
+  });
+
   return (
     <div className="finalReports-work-list">
       <h4>Final Reports</h4>
       <div className="finalReports-header">
         <div className="finalReports-controls">
-          {/* Your date range and button controls */}
+          {/* Date range controls */}
           <div className="finalReports-date-range">
             <label>
               From:
@@ -101,31 +126,6 @@ function FinalReports() {
             </label>
           </div>
         </div>
-        <div className="finalReports-category-select">
-          <label>Category:</label>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="">--Select Lab Category--</option>
-            <option value="">Sellect All</option>
-            <option value="">Search</option>
-            <option value="">Biochemistry</option>
-            <option value="">Hematology</option>
-            <option value="">Microbiology</option>
-            <option value="">Parasitology</option>
-            <option value="">Serology</option>
-            <option value="">Immunoassay</option>
-            <option value="">DEFAULT</option>
-            <option value="">HISTOCYTOLOGY</option>
-            <option value="">OUT SOURCE</option>
-            <option value="">MOLECULAR BIOCHEMISTRY</option>
-            <option value="">PATHOLOGY</option>
-            <option value="">TUMOR MARKER</option>
-            <option value="">VIROLOGY</option>
-            <option value="">Blood Transfusion</option>
-          </select>
-        </div>
       </div>
 
       <div className="finalReports-searchbar-N-showing">
@@ -133,20 +133,16 @@ function FinalReports() {
           <i className="fa-solid fa-magnifying-glass"></i>
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search by name or test"
             className="finalReports-search-input"
+            value={searchQuery} // Bind the input field to the search query state
+            onChange={handleSearchChange} // Handle changes to the input field
           />
         </div>
         <div className="finalReports-results-info">
           <span>
-            Showing {labResult?.length} / {labResult?.length} results
+            Showing {filteredLabResults?.length} / {labResult?.length} results
           </span>
-          <button className="finalReports-print-button" onClick={handlePrint}>
-            <i className="fa-solid fa-file-excel"></i> Export
-          </button>
-          <button className="finalReports-print-button" onClick={handlePrint}>
-            <i class="fa-solid fa-print"></i> Print
-          </button>
         </div>
       </div>
 
@@ -187,8 +183,8 @@ function FinalReports() {
             </tr>
           </thead>
           <tbody>
-            {labResult != null ? (
-              labResult.map((result, index) => (
+            {filteredLabResults?.length > 0 ? (
+              filteredLabResults.map((result, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>
@@ -223,16 +219,29 @@ function FinalReports() {
                       : "Outpatient"}
                   </td>
                   <td>
-                    {result?.labRequest?.sampleCollections?.map(
-                      (labTest, index) => (
-                        <span key={index}>
-                          {index > 0 ? " , " : ""}
-                          {labTest.runNumber}
-                        </span>
-                      )
-                    )}
+                    {result.labRequest?.sampleCollections &&
+                      result.labRequest?.sampleCollections.length > 0 &&
+                      result.labRequest?.sampleCollections.map(
+                        (collection, index) => (
+                          <span key={index}>
+                            {index > 0 ? " , " : ""}
+                            {collection.runNumber}
+                          </span>
+                        )
+                      )}
                   </td>
-                  <td>{result.labRequest?.barcode}</td>
+                  <td>
+                    {result.labRequest?.sampleCollections &&
+                      result.labRequest?.sampleCollections.length > 0 &&
+                      result.labRequest?.sampleCollections.map(
+                        (collection, index) => (
+                          <span key={index}>
+                            {index > 0 ? " , " : ""}
+                            {collection.barcode}
+                          </span>
+                        )
+                      )}
+                  </td>
                   <td>{result.isPrinted ? "YES" : "NO"}</td>
                   <td>
                     <button
@@ -252,20 +261,11 @@ function FinalReports() {
               ))
             ) : (
               <tr>
-                <td colSpan={"9"}>Loading</td>
+                <td colSpan={"11"}>No results found</td>
               </tr>
             )}
           </tbody>
         </table>
-
-        {/* <div className="finalReports-pagination">
-          <span>0 to 0 of 0</span>
-          <button>First</button>
-          <button>Previous</button>
-          <span>Page 0 of 0</span>
-          <button>Next</button>
-          <button>Last</button>
-        </div> */}
       </div>
     </div>
   );

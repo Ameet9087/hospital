@@ -10,9 +10,9 @@ import * as XLSX from 'xlsx';  // Import the XLSX library for exporting to Excel
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import { API_BASE_URL } from '../../api/api';
 
-
 function AllEmployee() {
     const [employees, setEmployees] = useState([]);
+    const [filteredEmployees, setFilteredEmployees] = useState([]); // State for filtered employees
     const [currentPage, setCurrentPage] = useState(1);
     const [showPopup, setShowPopup] = useState(false);
     const [showUpdatePopup, setShowUpdatePopup] = useState(false);
@@ -26,21 +26,22 @@ function AllEmployee() {
 
     const { success, warning, error, CustomAlerts } = useCustomAlert();
 
-
     useEffect(() => {
         fetchEmployees();
     }, []);
+
+    useEffect(() => {
+        handleSearch(); // Update filtered employees whenever searchTerm or employees change
+    }, [searchTerm, employees]);
 
     const fetchEmployees = async () => {
         try {
             const response = await axios.get(`${API_BASE_URL}/employees/get-all-employee`);
             setEmployees(response.data);
-            console.log(employees);
-
+            setFilteredEmployees(response.data); // Initialize filtered employees
         } catch (error) {
             console.error('Error fetching employee data:', error);
             warning('Failed to Fetch Employee');
-
         }
     };
 
@@ -62,24 +63,13 @@ function AllEmployee() {
             });
             success('Employee Added Successfully');
 
-
             handlePopupClose();
             fetchEmployees();
         } catch (error) {
             console.error('Error adding employee:', error);
             warning('Failed to Add Employee');
-
         }
     };
-
-    // const handleDelete = async (empId) => {
-    //     try {
-    //         await axios.delete(`http://localhost:8086/api/employee/delete/${empId}`);
-    //         fetchEmployees();
-    //     } catch (error) {
-    //         console.error('Error deleting employee:', error);
-    //     }
-    // };
 
     const handleEditClick = (employee) => {
         setSelectedEmployee(employee);
@@ -87,8 +77,10 @@ function AllEmployee() {
     };
 
     const handleUpdateSubmit = async (formData) => {
+
+        
         try {
-            await axios.put(`${API_BASE_URL}/employee/update/${selectedEmployee.empId}`, formData, {
+            await axios.put(`${API_BASE_URL}/employees/${selectedEmployee.employeeId}`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -97,23 +89,23 @@ function AllEmployee() {
             handlePopupClose();
             fetchEmployees();
             success('Employee Updated Successfully');
-
         } catch (error) {
             console.error('Error updating employee:', error);
             warning('Failed to Update Employee');
-
         }
     };
 
-    const filteredEmployees = employees.filter((employee) =>
-        (String(employee.employeeId || "").toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (employee.empName?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
-        (employee.mobile?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
-        (employee.email?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
-        (employee.position?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
-        (employee.department?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
-        (employee.dateOfJoining?.toLowerCase() || "").includes(searchTerm.toLowerCase())
-    );
+    const handleSearch = () => {
+        const lowerCaseTerm = searchTerm.toLowerCase();
+        const filtered = employees.filter((employee) =>
+            Object.values(employee)
+                .join(' ')
+                .toLowerCase()
+                .includes(lowerCaseTerm)
+        );
+        setFilteredEmployees(filtered);
+        setCurrentPage(1); // Reset to the first page when searching
+    };
 
     const indexOfLastEmployee = currentPage * employeesPerPage;
     const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
@@ -157,13 +149,8 @@ function AllEmployee() {
     return (
         <div className='employeelist-container'>
             <div className="employeelist-header">
-                <button className="addemp-button" onClick={handleAddEmpClick}>
-                    Add Employee
-                </button>
                 <h2>Employee List</h2>
                 <CustomAlerts />
-
-
             </div>
 
             <div className="employeelist-search-N-results">
@@ -217,7 +204,6 @@ function AllEmployee() {
                                 "Position",
                                 "Department",
                                 "Date of Joining",
-                                "Action",
                             ].map((header, index) => (
                                 <th
                                     key={index}
@@ -238,32 +224,18 @@ function AllEmployee() {
                     <tbody>
                         {currentEmployees.length === 0 ? (
                             <tr>
-                                <td className='nodatatoshow' colSpan="8" style={{ textAlign: 'center', color: 'red' }}>No Rows to Show</td>
+                                <td className='nodatatoshow' colSpan="7" style={{ textAlign: 'center', color: 'red' }}>No Rows to Show</td>
                             </tr>
                         ) : (
                             currentEmployees.map((employee) => (
-                                <tr key={employee.empId}>
-                                    <td>{employee.empId}</td>
-                                    <td>{employee.empName}</td>
-                                    <td>{employee.mobile}</td>
-                                    <td>{employee.email}</td>
-                                    <td>{employee.position}</td>
-                                    <td>{employee.department}</td>
+                                <tr key={employee.employeeId}>
+                                    <td>{employee.employeeId}</td>
+                                    <td>{employee.firstName} {employee.lastName} </td>
+                                    <td>{employee.contactNumber}</td>
+                                    <td>{employee.emailId}</td>
+                                    <td>{employee.employeeRoleDTO.role}</td>
+                                    <td>{employee.departmentDTO?.departmentName}</td>
                                     <td>{employee.dateOfJoining}</td>
-                                    <td>
-                                        <button
-                                            className="allemp-editanddeletebtn"
-                                            onClick={() => handleEditClick(employee)}
-                                        >
-                                            Edit
-                                        </button>
-                                        {/* <button
-                                            className="allemp-editanddeletebtn"
-                                            onClick={() => handleDelete(employee.empId)}
-                                        >
-                                            Delete
-                                        </button> */}
-                                    </td>
                                 </tr>
                             ))
                         )}
@@ -294,6 +266,5 @@ function AllEmployee() {
 }
 
 export default AllEmployee;
-
 
 /* Ravindra_Sanap_AllEmployeelist.jsx_03_10_2024_End */

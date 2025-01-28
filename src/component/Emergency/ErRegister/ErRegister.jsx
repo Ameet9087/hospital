@@ -8,6 +8,7 @@ import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
 import CustomModal from '../../CustomModel/CustomModal';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../../api/api';
 
 const ErRegister = () => {
   const navigate = useNavigate();
@@ -22,14 +23,17 @@ const ErRegister = () => {
   const tableRef = useRef(null);
   const handleOpenModal = () => navigate('/emergency/erinitialassessment');
   const handleCloseModal = () => setShowEditModal(false);
+  const [erData, setErData] = useState([])
 
-  const fetchGoodReceipts = async () => {
+  const fetchErData = async () => {
     try {
       // http://192.168.1.65:8080/api/pharmacy-good-receipt
       // const response = await axios.get(`${API_BASE_URL}/pharmacy-good-receipt`);
-      const response = await axios.get(`http://192.168.1.65:8080/api/pharmacy-good-receipt`);
-      setGoodReceipts(response.data);
-      setFilteredReceipts(response.data);
+      const response = await axios.get(`${API_BASE_URL}/emergency/er-initial-assessment`);
+      setErData(response.data);
+      // setFilteredReceipts(response.data);
+      console.log(response.data);
+
     } catch (error) {
       console.error('Error fetching good receipts:', error);
     } finally {
@@ -37,24 +41,10 @@ const ErRegister = () => {
     }
   };
 
-  const handleSaveReceipt = async (receiptData) => {
-    try {
-      const response = await axios.post(
-        `${API_BASE_URL}/pharmacy-good-receipt`,
-        receiptData,
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-      alert('Good receipt saved successfully!');
-      fetchGoodReceipts(); // Refresh list after saving
-      handleCloseModal();
-    } catch (error) {
-      console.error('Error saving good receipt:', error);
-      alert('Failed to save good receipt.');
-    }
-  };
+
 
   useEffect(() => {
-    fetchGoodReceipts();
+    fetchErData();
   }, []);
 
   const handleExport = () => {
@@ -185,7 +175,7 @@ const ErRegister = () => {
       <table ref={tableRef}>
         <thead>
           <tr>
-            {["Er No", "Patient Type", "Patient Name", "BOD", "Gender", "Relative Name", "Date ", "Bed No", "Room No", "Actions",].map((header, index) => (
+            {["Er No", "Patient Type", "Patient Name", "BOD", "Gender", "Relative Name", "Date ", "Actions",].map((header, index) => (
               <th
                 key={index}
                 style={{ width: columnWidths[index] }}
@@ -209,19 +199,16 @@ const ErRegister = () => {
                 Loading...
               </td>
             </tr>
-          ) : filteredReceipts.length > 0 ? (
-            filteredReceipts.map((receipt) => (
+          ) : erData.length > 0 ? (
+            erData.map((receipt) => (
               <tr key={receipt.goodReceiptId} className="parent-row">
-                <td>{receipt.goodReceiptId}</td>
-                <td>{receipt.goodsReceiptDate || 'N/A'}</td>
-                <td>{receipt.supplierBillDate || 'N/A'}</td>
-                <td>{receipt.invoiceNumber || 'N/A'}</td>
-                <td>{receipt.supplier?.supplierName || 'N/A'}</td>
-                <td>{receipt.subTotal?.toFixed(2)}</td>
-                <td>{receipt.discountAmount?.toFixed(2)}</td>
-                <td>{receipt.vatTotal?.toFixed(2)}</td>
-                <td>{receipt.totalAmount?.toFixed(2)}</td>
-                <td>{receipt.remarks || 'N/A'}</td>
+                <td>{receipt.erNumber}</td>
+                <td>{receipt.patientType || 'N/A'}</td>
+                <td>{receipt.patientName || 'N/A'}</td>
+                <td>{receipt.dob || 'N/A'}</td>
+                <td>{receipt.sex || 'N/A'}</td>
+                <td>{receipt.relativeName}</td>
+                <td>{receipt.date}</td>
                 <td>
                   <button
                     className="ErRegister-print-button"
@@ -247,7 +234,7 @@ const ErRegister = () => {
       </table>
 
       <CustomModal isOpen={showEditModal} onClose={handleCloseModal}>
-        <ErInitialAssessmentForm onSave={handleSaveReceipt} />
+        <ErInitialAssessmentForm />
       </CustomModal>
     </div>
   );

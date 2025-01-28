@@ -62,24 +62,24 @@ const SubstoreDisptachList = () => {
     console.log(updateData); // Logging for debugging
 
     try {
-          const response = await fetch(`${API_BASE_URL}/subpharm-requisitions/${selectedRequisition. pharRequisitionId}/update?status=Dispatch`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updateData),
-          });
-    
-          if (response.ok) {
-            const result = await response.json();
-            console.log('Update successful:', result);
-            setShowModal(false);
-          } else {
-            console.error('Error updating requisition:', response.statusText);
-          }
-        } catch (error) {
-          console.error('Error:', error);
-        }
+      const response = await fetch(`${API_BASE_URL}/subpharm-requisitions/${selectedRequisition.pharRequisitionId}/update?status=Dispatch`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updateData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        alert('Update successfully');
+        setShowModal(false);
+      } else {
+        console.error('Error updating requisition:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -205,65 +205,65 @@ const SubstoreDisptachList = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {selectedRequisition.subPharmRequisitionItems &&
-                  selectedRequisition.subPharmRequisitionItems.length > 0 ? (
-                    selectedRequisition.subPharmRequisitionItems.map(
-                      (item, index) => (
-                        <tr key={index}>
-                          <td>{item?.items?.itemMaster?.itemName || "N/A"}</td>
-                          <td>{item?.items?.batchNo || "N/A"}</td>
-                          <td>
-                            {item?.items?.itemMaster?.unitsOfMeasurement.name ||
-                              "N/A"}
-                          </td>
-                          <td>{item?.requiredQuantity || 0}</td>
-                          <td>
-                            {/* Input box for Dispatch Qty */}
-                            <input
-                              type="number"
-                              value={item?.dispatchQty || 0}
-                              onChange={(e) => {
-                                const updatedItems =
-                                  selectedRequisition.subPharmRequisitionItems.map(
-                                    (currentItem, idx) => {
-                                      // Update the dispatchQty of the correct item
-                                      if (idx === index) {
-                                        return {
-                                          ...currentItem,
-                                          dispatchQty:
-                                            parseInt(e.target.value, 10) || 0, // Handle case where input might be empty
-                                        };
+                  {
+                    selectedRequisition.subPharmRequisitionItems.length > 0 ? (
+                      selectedRequisition.subPharmRequisitionItems.map(
+                        (item, index) => (
+                          <tr key={index}>
+                            <td>{item?.items?.itemMaster?.itemName || "N/A"}</td>
+                            <td>{item?.items?.batchNo || "N/A"}</td>
+                            <td>
+                              {item?.items?.itemMaster?.unitsOfMeasurement.name ||
+                                "N/A"}
+                            </td>
+                            <td>{item?.requiredQuantity || 0}</td>
+                            <td>
+                              {/* Input box for Dispatch Qty */}
+                              <input
+                                type="number"
+                                value={item?.dispatchQty || 0}
+                                onChange={(e) => {
+                                  const updatedItems =
+                                    selectedRequisition.subPharmRequisitionItems.map(
+                                      (currentItem, idx) => {
+                                        // Update the dispatchQty of the correct item
+                                        if (idx === index) {
+                                          return {
+                                            ...currentItem,
+                                            dispatchQty:
+                                              parseInt(e.target.value, 10) || 0, // Handle case where input might be empty
+                                          };
+                                        }
+                                        return currentItem;
                                       }
-                                      return currentItem;
-                                    }
-                                  );
+                                    );
 
-                                // Update the state with the modified items array
-                                setSelectedRequisition({
-                                  ...selectedRequisition,
-                                  subPharmRequisitionItems: updatedItems,
-                                });
-                              }}
-                            />
-                          </td>
-                          <td>{item.items?.itemQty || "N/A"}</td>
-                          <td>
-                            {(item?.requiredQuantity || 0) -
-                              (item.dispatchQty || 0)}
-                          </td>
-                          <td>{item?.receivedQty || 0}</td>
-                          <td>{selectedRequisition?.status || "Pending"}</td>
-                          <td>{item?.remark || "N/A"}</td>
-                        </tr>
+                                  // Update the state with the modified items array
+                                  setSelectedRequisition({
+                                    ...selectedRequisition,
+                                    subPharmRequisitionItems: updatedItems,
+                                  });
+                                }}
+                              />
+                            </td>
+                            <td>{item.items?.itemQty || "N/A"}</td>
+                            <td>
+                              {(item?.requiredQuantity || 0) -
+                                (item.dispatchQty || 0)}
+                            </td>
+                            <td>{item?.receivedQty || 0}</td>
+                            <td>{selectedRequisition?.status || "Pending"}</td>
+                            <td>{item?.remark || "N/A"}</td>
+                          </tr>
+                        )
                       )
-                    )
-                  ) : (
-                    <tr>
-                      <td colSpan="10" style={{ textAlign: "center" }}>
-                        Loading or no items found.
-                      </td>
-                    </tr>
-                  )}
+                    ) : (
+                      <tr>
+                        <td colSpan="10" style={{ textAlign: "center" }}>
+                          Loading or no items found.
+                        </td>
+                      </tr>
+                    )}
                 </tbody>
               </table>
             </div>

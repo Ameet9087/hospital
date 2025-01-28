@@ -1,10 +1,10 @@
-/* Ravindra_Sanap_Attendance.jsx_03_10_2024_Start */
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx'; // Import the xlsx library
 import './Attendance.css';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
+import { API_BASE_URL } from '../../api/api';
 
 function Attendance() {
     const [employees, setEmployees] = useState([]);
@@ -20,12 +20,11 @@ function Attendance() {
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
-                const response = await axios.get('http://localhost:8086/api/employee/getall');
+                const response = await axios.get(`${API_BASE_URL}/employees/get-all-employee`);
                 setEmployees(response.data);
             } catch (error) {
                 console.error('Error fetching employee data:', error);
                 warning('Failed to Fetch Employee');
-
             }
         };
 
@@ -53,13 +52,20 @@ function Attendance() {
         setAttendanceStatus(storedAttendance);
     }, []);
 
-    const filteredEmployees = employees.filter((employee) =>
-        employee.empId.toString().includes(searchTerm) ||
-        employee.empName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.mobile.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.department.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // Filter employees based on search term
+    const filteredEmployees = employees.filter(employee => {
+        const searchLower = searchTerm.toLowerCase();
+        return (
+            employee.employeeId.toString().toLowerCase().includes(searchLower) ||
+            (employee.firstName && employee.firstName.toLowerCase().includes(searchLower)) ||
+            (employee.lastName && employee.lastName.toLowerCase().includes(searchLower)) ||
+            (employee.contactNumber && employee.contactNumber.toLowerCase().includes(searchLower)) ||
+            (employee.emailId && employee.emailId.toLowerCase().includes(searchLower)) ||
+            (employee.employeeRoleDTO?.role && employee.employeeRoleDTO.role.toLowerCase().includes(searchLower)) ||
+            (employee.departmentDTO?.departmentName && employee.departmentDTO.departmentName.toLowerCase().includes(searchLower)) ||
+            (employee.dateOfJoining && employee.dateOfJoining.toLowerCase().includes(searchLower))
+        );
+    });
 
     const indexOfLastEmployee = currentPage * employeesPerPage;
     const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
@@ -82,7 +88,7 @@ function Attendance() {
 
     async function markAttendance(employeeId, isPresent) {
         try {
-            await axios.post(`http://localhost:8086/api/attendance/add/${employeeId}`, {
+            await axios.post(`${API_BASE_URL}/attendance/add/${employeeId}`, {
                 isPresent: isPresent
             });
 
@@ -109,12 +115,12 @@ function Attendance() {
 
         currentEmployees.forEach(employee => {
             printWindow.document.write(`<tr>
-                <td>${employee.empId}</td>
-                <td>${employee.empName}</td>
-                <td>${employee.mobile}</td>
-                <td>${employee.email}</td>
-                <td>${employee.position}</td>
-                <td>${employee.department}</td>
+                <td>${employee.employeeId}</td>
+                <td>${employee.firstName}</td>
+                <td>${employee.contactNumber}</td>
+                <td>${employee.emailId}</td>
+                <td>${employee.employeeRoleDTO.role}</td>
+                <td>${employee.departmentDTO.departmentName}</td>
                 <td>${employee.dateOfJoining}</td>
                 <td>
                     <button>Present</button>
@@ -130,7 +136,7 @@ function Attendance() {
     };
 
     const exportToExcel = () => {
-        const worksheet = XLSX.utils.json_to_sheet(filteredEmployees);
+        const worksheet = XLSX.utils.json_to_sheet(employees);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, "Attendance");
         XLSX.writeFile(workbook, "Attendance_Data.xlsx");
@@ -200,26 +206,26 @@ function Attendance() {
                             </tr>
                         ) : (
                             currentEmployees.map((employee) => (
-                                <tr key={employee.empId}>
-                                    <td>{employee.empId}</td>
-                                    <td>{employee.empName}</td>
-                                    <td>{employee.mobile}</td>
-                                    <td>{employee.email}</td>
-                                    <td>{employee.position}</td>
-                                    <td>{employee.department}</td>
+                                <tr key={employee.employeeId}>
+                                    <td>{employee.employeeId}</td>
+                                    <td>{employee.firstName} {employee.lastName} </td>
+                                    <td>{employee.contactNumber}</td>
+                                    <td>{employee.emailId}</td>
+                                    <td>{employee.employeeRoleDTO.role}</td>
+                                    <td>{employee.departmentDTO.departmentName}</td>
                                     <td>{employee.dateOfJoining}</td>
                                     <td>
                                         <button
                                             className="attendance-btn"
-                                            onClick={() => markAttendance(employee.empId, true)}
-                                            disabled={attendanceStatus[employee.empId]}
+                                            onClick={() => markAttendance(employee.employeeId, true)}
+                                            disabled={attendanceStatus[employee.employeeId]}
                                         >
                                             Present
                                         </button>
                                         <button
                                             className="attendance-btn"
-                                            onClick={() => markAttendance(employee.empId, false)}
-                                            disabled={attendanceStatus[employee.empId]}
+                                            onClick={() => markAttendance(employee.employeeId, false)}
+                                            disabled={attendanceStatus[employee.employeeId]}
                                         >
                                             Absent
                                         </button>
@@ -254,5 +260,3 @@ function Attendance() {
 }
 
 export default Attendance;
-
-/* Ravindra_Sanap_Attendance.jsx_03_10_2024_End */

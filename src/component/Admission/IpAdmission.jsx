@@ -5,8 +5,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import PopupTable from "./PopupTable";
+import { usePopup } from "../../FidgetSpinner/PopupContext";
 
 const IpAdmission = ({ patientData, onClose }) => {
+  const { showPopup } = usePopup()
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [country, setCountry] = useState([]);
@@ -476,8 +478,8 @@ const IpAdmission = ({ patientData, onClose }) => {
       );
       console.log(response.data);
 
+      showPopup([{ url: "/billing/ipdmoneyrecipt", text: "Ip Money Reciept" }])
       console.log("Submission successful");
-      navigate("/adt/admittedpatients");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -583,11 +585,9 @@ const IpAdmission = ({ patientData, onClose }) => {
             <label>Patient Name</label>
             <input
               type="text"
-              value={`${
-                patient?.firstName || patient?.outPatient?.patient?.firstName
-              } ${
-                patient?.middleName || patient?.outPatient?.patient?.middleName
-              } ${patient?.lastName || patient?.outPatient?.patient?.lastName}`}
+              value={`${patient?.firstName || patient?.outPatient?.patient?.firstName
+                } ${patient?.middleName || patient?.outPatient?.patient?.middleName
+                } ${patient?.lastName || patient?.outPatient?.patient?.lastName}`}
               placeholder="Patient Name"
               disabled
             />
@@ -1245,7 +1245,7 @@ const IpAdmission = ({ patientData, onClose }) => {
                     >
                       <div className="header-content">
                         <span>{header}</span>
-                        <div className="resizer" onMouseDown={() => {}}></div>
+                        <div className="resizer" onMouseDown={() => { }}></div>
                       </div>
                     </th>
                   ))}
@@ -1338,7 +1338,7 @@ const IpAdmission = ({ patientData, onClose }) => {
                 </select>
               </td>
               <td>
-                {}
+                { }
                 <input
                   type="text"
                   value={row.idno}

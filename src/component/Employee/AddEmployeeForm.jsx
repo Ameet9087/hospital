@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import { usePopup } from "../../FidgetSpinner/PopupContext";
 
 import "./AddEmployeeForm.css";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 
 const AddEmployeeForm = ({ onClose }) => {
-  const { showPopup } = usePopup()
   const [employeeData, setEmployeeData] = useState({
     salutation: "",
     firstName: "",
@@ -138,7 +136,7 @@ const AddEmployeeForm = ({ onClose }) => {
       );
 
       console.log("Employee added successfully:", response.data);
-      showPopup([{ url: "/superuser/usermanagement/role", text: "Assign Role" }])
+
       // Reset form fields
       setEmployeeData({
         salutation: "",

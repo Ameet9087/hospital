@@ -1,16 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
-import './Dgmaster.css';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
-import axios from 'axios';
-import { FaSearch } from 'react-icons/fa';
-import { API_BASE_URL } from '../../api/api';
-import IpMasterPopupTable from '../IPMaster/IpMasterPopupTable';
+import React, { useState, useRef, useEffect } from "react";
+import "./Dgmaster.css";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import axios from "axios";
+import { FaSearch } from "react-icons/fa";
+import { API_BASE_URL } from "../../api/api";
+import IpMasterPopupTable from "../IPMaster/IpMasterPopupTable";
 function Dgmaster() {
   const [activePopup, setActivePopup] = useState("");
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
-  const [packageType, setPackageType] = useState('');
-  const [status, setStatus] = useState('Active');
+  const [packageType, setPackageType] = useState("");
+  const [status, setStatus] = useState("Active");
   const [packageName, setPackageName] = useState("");
   const [packageCode, setPackageCode] = useState("");
   const [paytypes, setPaytypes] = useState([]);
@@ -29,10 +29,24 @@ function Dgmaster() {
   const [duration, setDuration] = useState();
   const [totalCost, setTotalCost] = useState();
   const [pkgActCost, setPkgActCost] = useState();
-  const [organisationDetails, setOrganisationDetails] = useState(null);
-  const [testDetails, setTestDetails] = useState([{ id: 1, testName: '', testRate: '', specialisation: '', doctor: '', actRate: '', remarks: '' },]);
-  const [packageRates, setPackageRates] = useState([{ id: 1, paytype: '', rate: '', discount: '', discAmt: '', actDiscPer: '' },]);
-  const [organizations, setOrganizations] = useState([{ id: 1, orgName: '', type: '' }]);
+  const [organisationDetails, setOrganisationDetails] = useState("No");
+  const [testDetails, setTestDetails] = useState([
+    {
+      id: 1,
+      testName: "",
+      testRate: "",
+      specialisation: "",
+      doctor: "",
+      actRate: "",
+      remarks: "",
+    },
+  ]);
+  const [packageRates, setPackageRates] = useState([
+    { id: 1, paytype: "", rate: "", discount: "", discAmt: "", actDiscPer: "" },
+  ]);
+  const [organizations, setOrganizations] = useState([
+    { id: 1, orgName: "", type: "" },
+  ]);
   const handleAddRow = (setter) => {
     setter((prev) => [
       ...prev,
@@ -52,7 +66,9 @@ function Dgmaster() {
   };
 
   const handleDeleteRow = (rowId) => {
-    setTestDetails((prevDetails) => prevDetails.filter((row) => row.id !== rowId));
+    setTestDetails((prevDetails) =>
+      prevDetails.filter((row) => row.id !== rowId)
+    );
   };
 
   const updateRowValue = (setter, id, field, value) => {
@@ -64,13 +80,15 @@ function Dgmaster() {
     if (activePopup === "services") {
       return { columns: ["serviceName", "rates"], data: serviceDetails };
     } else if (activePopup === "specialisation") {
-      return { columns: ["specialisationId", "specialisationName"], data: specialisation }
+      return {
+        columns: ["specialisationId", "specialisationName"],
+        data: specialisation,
+      };
     } else if (activePopup === "doctor") {
-      return { columns: ["doctorId", "doctorName"], data: doctor }
+      return { columns: ["doctorId", "doctorName"], data: doctor };
     } else if (activePopup === "organisation") {
       return { columns: ["masterId", "name"], data: organisation };
-    }
-    else {
+    } else {
       return { columns: [], data: [] };
     }
   };
@@ -79,30 +97,40 @@ function Dgmaster() {
     if (activePopup === "services") {
       setSelectedService(data);
       setTestDetails((prevRows) => {
-        const emptyRowIndex = prevRows.findIndex((row) => !row.testName && !row.testRate);
+        const emptyRowIndex = prevRows.findIndex(
+          (row) => !row.testName && !row.testRate
+        );
         if (emptyRowIndex !== -1) {
           const updatedRows = [...prevRows];
           updatedRows[emptyRowIndex] = {
             ...updatedRows[emptyRowIndex],
             testName: data.serviceName,
             testRate: data.rates || "",
+            serviceDetailsId: data.serviceDetailsId, // Add this
           };
-          const newTotalRate = updatedRows.reduce((sum, row) => sum + (parseFloat(row.testRate) || 0), 0);
+          const newTotalRate = updatedRows.reduce(
+            (sum, row) => sum + (parseFloat(row.testRate) || 0),
+            0
+          );
           setTotalRate(newTotalRate);
           return updatedRows;
         }
         return prevRows;
       });
-      console.log("Selected Data:", data);
     } else if (activePopup === "specialisation") {
       setSelectedSpecialisation(data);
-      setTestDetails((prevRows) => {
-        return prevRows.map((row) =>
-          row.specialisation !== data.specialisationName
-            ? { ...row, specialisation: data.specialisationName }
+      setTestDetails((prevRows) =>
+        prevRows.map((row) =>
+          row.id === selectedRowId // Ensure you're updating the correct row
+            ? {
+                ...row,
+                specialisation: data.specialisationName,
+                specialisationId: data.specialisationId, // Add the ID
+              }
             : row
-        );
-      });
+        )
+      );
+
       try {
         const response = await axios.get(
           `${API_BASE_URL}/doctors/specialization/${data.specialisationId}`
@@ -113,9 +141,10 @@ function Dgmaster() {
           prevRows.map((row) =>
             row.id === data.rowId
               ? {
-                ...row,
-                doctor: response.data.length > 0 ? response.data[0].doctorName : "", // Set first doctor's name or empty
-              }
+                  ...row,
+                  doctor:
+                    response.data.length > 0 ? response.data[0].doctorName : "", // Set first doctor's name or empty
+                }
               : row
           )
         );
@@ -126,32 +155,91 @@ function Dgmaster() {
       setTestDetails((prevRows) =>
         prevRows.map((row) =>
           row.id === selectedRowId
-            ? { ...row, doctor: data.doctorName, doctorId: doctor ? data.doctorId : "", }
+            ? {
+                ...row,
+                doctor: data.doctorName,
+                doctorId: data.doctorId, // Add this
+              }
             : row
         )
       );
-    } else if (activePopup === "organisation") {
-      setSelectOrganisation(data);
-      setOrganizations((prevRows) => {
-        const emptyRowIndex = prevRows.findIndex((row) => !row.name && !row.type);
-        if (emptyRowIndex !== -1) {
-          const updatedRows = [...prevRows];
-          updatedRows[emptyRowIndex] = {
-            ...updatedRows[emptyRowIndex],
-            name: data.name,
-            type: data.creditType || "",
-          };
-          return updatedRows;
-        }
-        return prevRows;
-      });
-
-      setActivePopup(null);
     }
-  }
+    if (activePopup === "organisation") {
+      setSelectOrganisation(data);
+
+      // Update the organization name in the corresponding row
+      setOrganizations((prevOrganizations) =>
+        prevOrganizations.map((org) =>
+          org.id === selectedRowId ? { ...org, name: data.name || "" } : org
+        )
+      );
+    }
+
+    setActivePopup(null);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      packageId: "",
+      packageName: packageName,
+      packageCode: packageCode,
+      companyPackageName: companyPackageName,
+      companyPackageCode: companyPackageCode,
+      duration: duration,
+      selectedOrganisationOnly: organisationDetails,
+      packageType: packageType,
+      status: status,
+      total_cost: totalRate,
+      pkgactcost: totalRate,
+      testDetailsDTO: testDetails.map((detail) => ({
+        testId: detail.id,
+        testRate: parseFloat(detail.testRate) || 0,
+        actualRate: parseFloat(detail.actRate) || 0,
+        status: status,
+        remark: detail.remarks,
+        serviceDetailsDTO: {
+          serviceDetailsId: detail.serviceDetailsId,
+        },
+        specialisationDTO: {
+          specialisationId: detail.specialisationId,
+        },
+        doctorDTO: {
+          doctorId: detail.doctorId,
+        },
+      })),
+      packageRates: paytypes.map((rate) => ({
+        id: rate.id,
+        rate: parseFloat(rate.rate) || 0,
+        discount: parseFloat(rate.discount) || 0,
+        disAmount: parseFloat(rate.discAmt) || 0,
+        actDiscountPercentage: parseFloat(rate.actDiscPer) || 0,
+        payTypeDTO: {
+          id: rate.id,
+        },
+      })),
+      organisationMasterDTOS: {
+        masterId: selectOrganisation?.masterId,
+      },
+    };
+    console.log(JSON.stringify(payload, null, 2));
+
+    try {
+      const response = await axios.post(`${API_BASE_URL}/dg-packages`, payload);
+      console.log("Data saved successfully:", response.data);
+      alert("Data saved successfully!");
+    } catch (error) {
+      console.error("Error saving data:", error.response || error.message);
+      alert("Failed to save data. Please try again.");
+    }
+  };
+
   const fetchServiceDetails = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/service-details/sorted-map`);
+      const response = await fetch(
+        `${API_BASE_URL}/service-details/sorted-map`
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch service details");
       }
@@ -179,10 +267,16 @@ function Dgmaster() {
     try {
       const response = await fetch(`${API_BASE_URL}/organisation-masters`);
       if (!response.ok) {
-        throw new Error(`Failed to fetch organization. Status: ${response.status}`);
+        throw new Error(
+          `Failed to fetch organization. Status: ${response.status}`
+        );
+
+        
+
       }
       const data = await response.json();
       setOrganisation(data);
+      
     } catch (error) {
       console.error("Error fetching organization data:", error.message);
     }
@@ -214,7 +308,10 @@ function Dgmaster() {
             const rate = parseFloat(value) || 0;
             const totalRateValue = parseFloat(totalRate) || 0;
             const discountAmount = (totalRateValue - rate).toFixed(2);
-            const discountPercentage = (((totalRateValue - rate) / totalRateValue) * 100).toFixed(2);
+            const discountPercentage = (
+              ((totalRateValue - rate) / totalRateValue) *
+              100
+            ).toFixed(2);
             updatedRow.discAmt = discountAmount;
             updatedRow.discount = discountPercentage;
             updatedRow.actDiscPer = discountPercentage;
@@ -226,142 +323,154 @@ function Dgmaster() {
     });
   };
 
+  useEffect(() => {
+    const total = testDetails.reduce(
+      (acc, row) => acc + (parseFloat(row.testRate) || 0),
+      0
+    );
+    setTotalRate(total);
+  }, [testDetails]);
+
   const totalDiscountedRate = paytypes.reduce(
-    (total, row) => total + (parseFloat(row.rate) || 0) - (parseFloat(row.discAmt) || 0),
+    (total, row) =>
+      total + (parseFloat(row.rate) || 0) - (parseFloat(row.discAmt) || 0),
     0
   );
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const payload = {
-      packageId: '',
-      packageName: packageName,
-      packageCode: packageCode,
-      companyPackageName: companyPackageName,
-      companyPackageCode: companyPackageCode,
-      duration: duration,
-      selectedOrganisationOnly: organisationDetails,
-      packageType: packageType,
-      status: status,
-      total_cost: totalRate,
-      pkgactcost: totalRate,
-      testDetailsDTO: testDetails.map((detail) => ({
-        testId: detail.id, // Default testId if not provided
-        testRate: detail.testRate[0], // Ensure it's a number, not an array
-        actualRate: detail.actRate[0], // Default or dynamic value
-        status: detail.status, // Default or dynamic value
-        remark: detail.remarks, // Default or dynamic value
-        serviceDetailsDTO: {
-          serviceDetailsId: detail.serviceDetailsId, // Default or dynamic value
-          serviceName: detail.serviceName, // Default or dynamic value
-        },
-        specialisationDTO: {
-          specialisationId: data.specialisationId, // Default or dynamic value
-        },
-        doctorDTO: {
-          doctorId: data.doctorId, // Default or dynamic value
-        },
-      })),
-      packageRates: paytypes.map((rate) => ({
-        id: rate.id,
-        rate: rate.rate, // Ensure a valid value
-        discount: rate.discount, // Default or dynamic value
-        disAmount: rate.discAmt, // Default or dynamic value
-        actDiscountPercentage: rate.actDiscPer, // Default or dynamic value
-        payTypeDTO: {
-          id: data.payTypeId, // Default or dynamic value
-        },
-      })),
-      organisationDetailDTOS: {
-        masterId: organisationDetails?.masterId, // Ensure masterId exists
-      },
-    };
-
-    console.log("Formatted Payload:", payload); // Pretty-print payload for clarity
-
-    try {
-      const response = await axios.post(`${API_BASE_URL}/dg-packages`, payload);
-      console.log("Data saved successfully:", response.data);
-      alert("Data saved successfully!");
-    } catch (error) {
-      console.error("Error saving data:", error.response || error.message);
-      alert("Failed to save data. Please try again.");
-    }
-  };
-
-
-
 
   return (
     <div className="dgpkg-container">
       <h2 className="dgpkg-title">DG Master</h2>
       <form className="dgpkg-form">
         <div className="dgpkg-field">
-          <label className="dgpkg-label" htmlFor="packageName">Package Name*</label>
-          <input type="text" id="packageName" className="dgpkg-input" placeholder="Enter package name" onChange={(e) => setPackageName(e.target.value)} required />
+          <label className="dgpkg-label" htmlFor="packageName">
+            Package Name*
+          </label>
+          <input
+            type="text"
+            id="packageName"
+            className="dgpkg-input"
+            placeholder="Enter package name"
+            onChange={(e) => setPackageName(e.target.value)}
+            required
+          />
         </div>
         <div className="dgpkg-field">
-          <label className="dgpkg-label" htmlFor="packageCode">Package Code</label>
-          <input type="text" id="packageCode" className="dgpkg-input" placeholder="Enter package code" onChange={(e) => setPackageCode(e.target.value)} />
+          <label className="dgpkg-label" htmlFor="packageCode">
+            Package Code
+          </label>
+          <input
+            type="text"
+            id="packageCode"
+            className="dgpkg-input"
+            placeholder="Enter package code"
+            onChange={(e) => setPackageCode(e.target.value)}
+          />
         </div>
         <div className="dgpkg-field">
-          <label className="dgpkg-label" htmlFor="companyName">Company Package Name</label>
-          <input type="text" id="companyName" className="dgpkg-input" placeholder="Enter company name" onChange={(e) => setCompanyPackageName(e.target.value)} />
+          <label className="dgpkg-label" htmlFor="companyName">
+            Company Package Name
+          </label>
+          <input
+            type="text"
+            id="companyName"
+            className="dgpkg-input"
+            placeholder="Enter company name"
+            onChange={(e) => setCompanyPackageName(e.target.value)}
+          />
         </div>
         <div className="dgpkg-field">
-          <label className="dgpkg-label" htmlFor="companyCode">Company Package Code</label>
-          <input type="text" id="companyCode" className="dgpkg-input" placeholder="Enter company code" onChange={(e) => setCompanyPackageCode(e.target.value)} />
+          <label className="dgpkg-label" htmlFor="companyCode">
+            Company Package Code
+          </label>
+          <input
+            type="text"
+            id="companyCode"
+            className="dgpkg-input"
+            placeholder="Enter company code"
+            onChange={(e) => setCompanyPackageCode(e.target.value)}
+          />
         </div>
         <div className="dgpkg-field">
-          <label className="dgpkg-label" htmlFor="duration">Duration</label>
-          <input type="text" id="duration" className="dgpkg-input" placeholder="Package duration (day, month, year)" onChange={(e) => setDuration(e.target.value)} />
+          <label className="dgpkg-label" htmlFor="duration">
+            Duration
+          </label>
+          <input
+            type="number"
+            id="duration"
+            className="dgpkg-input"
+            placeholder="Package duration"
+            onChange={(e) => setDuration(e.target.value)}
+          />
         </div>
         <div className="dgpkg-field">
-          <label className="dgpkg-label" htmlFor="status">Status</label>
+          <label className="dgpkg-label" htmlFor="status">
+            Status
+          </label>
           <select
             id="status"
             className="dgpkg-select"
             value={status}
-            onChange={(e) => setStatus(e.target.value)}>
+            onChange={(e) => setStatus(e.target.value)}
+          >
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
           </select>
         </div>
         <div className="dgpkg-field">
-          <label className="dgpkg-label">
-            For Selected Organisation Only
-          </label>
-          <input type="checkbox" className="dgpkg-checkbox" onChange={() => setOrganisationDetails(e.target.value)} />
+          <label className="dgpkg-label">For Selected Organisation Only</label>
+          <input
+            type="checkbox"
+            className="dgpkg-checkbox"
+            onChange={(e) =>
+              setOrganisationDetails(e.target.checked ? "Yes" : "No")
+            }
+          />
         </div>
+
         <div className="dgpkg-field">
-          <label className="dgpkg-label" htmlFor="packageType">Package Type</label>
+          <label className="dgpkg-label" htmlFor="packageType">
+            Package Type
+          </label>
           <select
             id="packageType"
             className="dgpkg-select"
             value={packageType}
-            onChange={(e) => setPackageType(e.target.value)}>
+            onChange={(e) => setPackageType(e.target.value)}
+          >
             <option value="">Select Package Type</option>
             <option value="HEALTH PACKAGE">HEALTH PACKAGE</option>
             <option value="Day Care">Day Care</option>
             <option value="OPD Package">OPD Package</option>
           </select>
         </div>
-        {packageType === 'HEALTH PACKAGE' && (
+        {packageType === "HEALTH PACKAGE" && (
           <>
             <div className="dgpkg-field">
-              <label className="dgpkg-label" htmlFor="fromDate">From Date</label>
-              <input type="date" id="fromDate" className="dgpkg-input" defaultValue="2024-12-26" />
+              <label className="dgpkg-label" htmlFor="fromDate">
+                From Date
+              </label>
+              <input
+                type="date"
+                id="fromDate"
+                className="dgpkg-input"
+                defaultValue="2024-12-26"
+              />
             </div>
             <div className="dgpkg-field">
-              <label className="dgpkg-label" htmlFor="toDate">To Date</label>
-              <input type="date" id="toDate" className="dgpkg-input" defaultValue="2024-12-26" />
+              <label className="dgpkg-label" htmlFor="toDate">
+                To Date
+              </label>
+              <input
+                type="date"
+                id="toDate"
+                className="dgpkg-input"
+                defaultValue="2024-12-26"
+              />
             </div>
           </>
         )}
         <div className="dgpkg-field">
-          <label className="dgpkg-label">
-            Fill All Organisations
-          </label>
+          <label className="dgpkg-label">Fill All Organisations</label>
           <input type="checkbox" className="dgpkg-checkbox" />
         </div>
       </form>
@@ -378,7 +487,7 @@ function Dgmaster() {
                 "Doctor",
                 "ActRate",
                 "Remarks",
-                "Add/Del Row"
+                "Add/Del Row",
               ].map((header, index) => (
                 <th
                   key={index}
@@ -389,7 +498,10 @@ function Dgmaster() {
                     <span>{header}</span>
                     <div
                       className="resizer"
-                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
                     ></div>
                   </div>
                 </th>
@@ -405,10 +517,15 @@ function Dgmaster() {
                     type="text"
                     value={row.testName}
                     onChange={(e) =>
-                      updateRowValue(setTestDetails, row.id, 'testName', e.target.value)
+                      updateRowValue(
+                        setTestDetails,
+                        row.id,
+                        "testName",
+                        e.target.value
+                      )
                     }
                     placeholder="Test Name"
-                    className='table-input-dg'
+                    className="table-input-dg"
                   />
                   <FaSearch
                     className="dg-search-icon"
@@ -420,34 +537,53 @@ function Dgmaster() {
                     type="number"
                     value={row.testRate}
                     onChange={(e) =>
-                      updateRowValue(setTestDetails, row.id, 'testRate', e.target.value)
+                      updateRowValue(
+                        setTestDetails,
+                        row.id,
+                        "testRate",
+                        e.target.value
+                      )
                     }
                     placeholder="Test Rate"
-                    className='table-input-dg'
+                    className="table-input-dg"
                   />
-
                 </td>
                 <td>
                   <input
                     type="text"
                     value={row.specialisation}
                     onChange={(e) =>
-                      updateRowValue(setSelectedSpecialisation, row.id, 'specialisation', e.target.value)
+                      updateRowValue(
+                        setSelectedSpecialisation,
+                        row.id,
+                        "specialisation",
+                        e.target.value
+                      )
                     }
                     placeholder="Specialisation"
-                    className='table-input-dg'
+                    className="table-input-dg"
                   />
-                  <FaSearch className='dg-search-icon' onClick={() => { setActivePopup("specialisation") }} />
+                  <FaSearch
+                    className="dg-search-icon"
+                    onClick={() => {
+                      setActivePopup("specialisation");
+                    }}
+                  />
                 </td>
                 <td>
                   <input
                     type="text"
                     value={row.doctor || ""}
                     onChange={(e) =>
-                      updateRowValue(setDoctor, row.id, "doctor", e.target.value)
+                      updateRowValue(
+                        setDoctor,
+                        row.id,
+                        "doctor",
+                        e.target.value
+                      )
                     }
                     placeholder="Doctor"
-                    className='table-input-dg'
+                    className="table-input-dg"
                     readOnly
                   />
                   <FaSearch
@@ -463,10 +599,15 @@ function Dgmaster() {
                     type="number"
                     value={row.testRate}
                     onChange={(e) =>
-                      updateRowValue(setTestDetails, row.id, 'actRate', e.target.value)
+                      updateRowValue(
+                        setTestDetails,
+                        row.id,
+                        "actRate",
+                        e.target.value
+                      )
                     }
                     placeholder="ActRate"
-                    className='table-input-dg'
+                    className="table-input-dg"
                   />
                 </td>
                 <td>
@@ -474,15 +615,30 @@ function Dgmaster() {
                     type="text"
                     value={row.remarks}
                     onChange={(e) =>
-                      updateRowValue(setTestDetails, row.id, 'remarks', e.target.value)
+                      updateRowValue(
+                        setTestDetails,
+                        row.id,
+                        "remarks",
+                        e.target.value
+                      )
                     }
                     placeholder="Remarks"
-                    className='table-input-dg'
+                    className="table-input-dg"
                   />
                 </td>
                 <td>
-                  <button className='dgpkg-button' onClick={() => handleAddRow(setTestDetails)}>Add</button>
-                  <button className='dgpkg-button' onClick={() => handleDeleteRow(row.id)}>Del</button>
+                  <button
+                    className="dgpkg-button"
+                    onClick={() => handleAddRow(setTestDetails)}
+                  >
+                    Add
+                  </button>
+                  <button
+                    className="dgpkg-button"
+                    onClick={() => handleDeleteRow(row.id)}
+                  >
+                    Del
+                  </button>
                 </td>
               </tr>
             ))}
@@ -498,7 +654,7 @@ function Dgmaster() {
                 "SN",
                 "Organisation Name",
                 "Type",
-                "Add/Del Row"
+                // "Add/Del Row"
               ].map((header, index) => (
                 <th
                   key={index}
@@ -528,10 +684,15 @@ function Dgmaster() {
                     type="text"
                     value={row.name || ""}
                     onChange={(e) =>
-                      updateRowValue(setOrganizations, row.id, "orgName", e.target.value)
+                      updateRowValue(
+                        setOrganizations,
+                        row.id,
+                        "orgName",
+                        e.target.value
+                      )
                     }
                     placeholder="Organization Name"
-                    className='table-input-dg'
+                    className="table-input-dg"
                     readOnly
                   />
                   <FaSearch
@@ -547,38 +708,43 @@ function Dgmaster() {
                     type="text"
                     value={row.type || ""}
                     onChange={(e) =>
-                      updateRowValue(setOrganizations, row.id, "type", e.target.value)
+                      updateRowValue(
+                        setOrganizations,
+                        row.id,
+                        "type",
+                        e.target.value
+                      )
                     }
                     placeholder="Type"
-                    className='table-input-dg'
+                    className="table-input-dg"
                     readOnly
                   />
                 </td>
-                <td>
+                {/* <td>
                   <button
-                    className='dgpkg-button'
+                    className="dgpkg-button"
                     type="button"
                     onClick={() =>
-                      handleAddRow(setOrganizations, { orgName: '', type: '' })
+                      handleAddRow(setOrganizations, { orgName: "", type: "" })
                     }
                   >
                     Add
                   </button>
                   <button
-                    className='dgpkg-button'
+                    className="dgpkg-button"
                     type="button"
                     onClick={() => handleorgDeleteRow(setOrganizations, row.id)}
                   >
                     Del
                   </button>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
       <div>
-        <div className='dgpkg-total'>
+        <div className="dgpkg-total">
           <label htmlFor="">Total Rate:</label>
           <input type="text" value={totalRate} readOnly />
         </div>
@@ -588,7 +754,14 @@ function Dgmaster() {
         <table ref={tableRef}>
           <thead>
             <tr>
-              {["S.NO", "Paytype", "Rate", "Discount (%)", "Disc Amt", "Act DiscPer"].map((header, index) => (
+              {[
+                "S.NO",
+                "Paytype",
+                "Rate",
+                "Discount (%)",
+                "Disc Amt",
+                "Act DiscPer",
+              ].map((header, index) => (
                 <th
                   key={index}
                   style={{ width: columnWidths[index] }}
@@ -598,7 +771,10 @@ function Dgmaster() {
                     <span>{header}</span>
                     <div
                       className="resizer"
-                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
                     ></div>
                   </div>
                 </th>
@@ -616,7 +792,7 @@ function Dgmaster() {
                     name="rate"
                     value={row.rate}
                     onChange={(e) => handleDoctorFessChange(e, index)}
-                    className='table-input-dg'
+                    className="table-input-dg"
                   />
                 </td>
                 <td>
@@ -625,9 +801,14 @@ function Dgmaster() {
                     name="discount"
                     value={row.discount}
                     onChange={(e) =>
-                      updateRowValue(setPackageRates, row.id, 'discount', e.target.value)
+                      updateRowValue(
+                        setPackageRates,
+                        row.id,
+                        "discount",
+                        e.target.value
+                      )
                     }
-                    className='table-input-dg'
+                    className="table-input-dg"
                     readOnly // Calculated dynamically
                   />
                 </td>
@@ -637,9 +818,14 @@ function Dgmaster() {
                     name="discAmt"
                     value={row.discAmt}
                     onChange={(e) =>
-                      updateRowValue(setPackageRates, row.id, 'discAmt', e.target.value)
+                      updateRowValue(
+                        setPackageRates,
+                        row.id,
+                        "discAmt",
+                        e.target.value
+                      )
                     }
-                    className='table-input-dg'
+                    className="table-input-dg"
                     readOnly // Calculated dynamically
                   />
                 </td>
@@ -649,9 +835,14 @@ function Dgmaster() {
                     name="actDiscPer"
                     value={row.actDiscPer}
                     onChange={(e) =>
-                      updateRowValue(setPackageRates, row.id, 'actDiscPer', e.target.value)
+                      updateRowValue(
+                        setPackageRates,
+                        row.id,
+                        "actDiscPer",
+                        e.target.value
+                      )
                     }
-                    className='table-input-dg'
+                    className="table-input-dg"
                     readOnly // Same as Discount (%)
                   />
                 </td>
@@ -661,7 +852,9 @@ function Dgmaster() {
         </table>
       </div>
       <div className="dgpkg-field dgpkg-full-width">
-        <button type="submit" className="dgpkg-button" onClick={handleSubmit}>Submit</button>
+        <button type="submit" className="dgpkg-button" onClick={handleSubmit}>
+          Submit
+        </button>
       </div>
       {activePopup && (
         <IpMasterPopupTable

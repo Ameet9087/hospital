@@ -12,9 +12,8 @@ const FloatingInput = ({ label, type = "text", ...props }) => {
   };
   return (
     <div
-      className={`GCSSheetForm-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`GCSSheetForm-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <input
         type={type}
@@ -36,9 +35,8 @@ const FloatingSelect = ({ label, options = [], ...props }) => {
   const [hasValue, setHasValue] = useState(false);
   return (
     <div
-      className={`GCSSheetForm-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`GCSSheetForm-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <select
         className="GCSSheetForm-floating-select"
@@ -50,7 +48,7 @@ const FloatingSelect = ({ label, options = [], ...props }) => {
         onChange={(e) => setHasValue(e.target.value !== "")}
         {...props}
       >
-        <option value="">{}</option>
+        <option value="">{ }</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -61,7 +59,9 @@ const FloatingSelect = ({ label, options = [], ...props }) => {
     </div>
   );
 };
-const AddItemMaster = ({ onClose }) => {
+const AddItemMaster = ({ selectedItem, onClose }) => {
+  console.log(selectedItem);
+
   const [activePopup, setActivePopup] = useState(null);
   const [generic, setGeneric] = useState([]);
   const [type, setType] = useState([]);
@@ -134,17 +134,68 @@ const AddItemMaster = ({ onClose }) => {
     mrpItem: "",
     mrpForNonMrpItems: 0,
     diet: "",
-    genericNames: { genericNameId: 0 },
-    itemType: { itemTypeId: 0 },
-    taxes: { taxesId: 0 },
-    itemCategories: { categoryId: 0 },
-    manufactures: { companyId: 0 },
-    unitsOfMeasurement: { unitOfMeasurementId: 0 },
-    unitsOfMeasurement2: { unitOfMeasurementId: 0 },
-    pharmacyFrequencies: { pharmacyFrequencyId: 0 },
+    genericNames: { genericNameId: 0, genericName: "" },
+    itemType: { itemTypeId: 0, itemType: "" },
+    taxes: { taxesId: 0, taxName: "" },
+    itemCategories: { categoryId: 0, categoryName: "" },
+    manufactures: { companyId: 0, companyName: "" },
+    unitsOfMeasurement: { unitOfMeasurementId: 0, name: "" },
+    unitsOfMeasurement2: { unitOfMeasurementId: 0, name: "" },
+    pharmacyFrequencies: { pharmacyFrequencyId: 0, name: "" },
     pharmacyConstitutions: { pharmacyConstitutionId: 1 },
     dependentStocks: { pharmacyDependentStockId: 1 },
   });
+
+  useEffect(() => {
+    if (selectedItem) {
+      // Map received object (selectedItem) to the formData
+      setFormData((prevState) => ({
+        ...prevState,
+        ...selectedItem,
+        // Ensure nested objects are updated correctly
+        genericNames: {
+          ...prevState.genericNames,
+          ...selectedItem.genericNames,
+        },
+        itemType: {
+          ...prevState.itemType,
+          ...selectedItem.itemType,
+        },
+        taxes: {
+          ...prevState.taxes,
+          ...selectedItem.taxes,
+        },
+        itemCategories: {
+          ...prevState.itemCategories,
+          ...selectedItem.itemCategories,
+        },
+        manufactures: {
+          ...prevState.manufactures,
+          ...selectedItem.manufactures,
+        },
+        unitsOfMeasurement: {
+          ...prevState.unitsOfMeasurement,
+          ...selectedItem.unitsOfMeasurement,
+        },
+        unitsOfMeasurement2: {
+          ...prevState.unitsOfMeasurement2,
+          ...selectedItem.unitsOfMeasurement2,
+        },
+        pharmacyFrequencies: {
+          ...prevState.pharmacyFrequencies,
+          ...selectedItem.pharmacyFrequencies,
+        },
+        pharmacyConstitutions: {
+          ...prevState.pharmacyConstitutions,
+          ...selectedItem.pharmacyConstitutions,
+        },
+        dependentStocks: {
+          ...prevState.dependentStocks,
+          ...selectedItem.dependentStocks,
+        },
+      }));
+    }
+  }, [selectedItem]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -188,14 +239,14 @@ const AddItemMaster = ({ onClose }) => {
     // Construct the payload using formData directly
     const payload = {
       ...formData,
-      genericNames: formData.genericNames, // Directly use the nested object
-      itemType: formData.itemType, // Directly use the nested object
-      taxes: formData.taxes, // Directly use the nested object
-      itemCategories: formData.itemCategories, // Directly use the nested object
-      manufactures: formData.manufactures, // Directly use the nested object
-      unitsOfMeasurement: formData.unitsOfMeasurement, // Directly use the nested object
-      unitsOfMeasurement2: formData.unitsOfMeasurement2, // Directly use the nested object
-      pharmacyFrequencies: formData.pharmacyFrequencies, // Directly use the nested object
+      genericNames: { genericNameId: formData.genericNames.genericNameId }, // Directly use the nested object
+      itemType: { itemTypeId: formData.itemType.itemTypeId }, // Directly use the nested object
+      taxes: { taxesId: formData.taxes.taxesId }, // Directly use the nested object
+      itemCategories: { categoryId: formData.itemCategories.categoryId }, // Directly use the nested object
+      manufactures: { companyId: formData.manufactures.companyId }, // Directly use the nested object
+      unitsOfMeasurement: { unitOfMeasurementId: formData.unitsOfMeasurement.unitOfMeasurementId }, // Directly use the nested object
+      unitsOfMeasurement2: { unitOfMeasurementId: formData.unitsOfMeasurement.unitOfMeasurementId }, // Directly use the nested object
+      pharmacyFrequencies: { pharmacyFrequencyId: formData.pharmacyFrequencies.pharmacyFrequencyId }, // Directly use the nested object
       pharmacyConstitutions: formData.pharmacyConstitutions, // Directly use the nested object
       dependentStocks: formData.dependentStocks, // Directly use the nested object
     };
@@ -217,7 +268,6 @@ const AddItemMaster = ({ onClose }) => {
       onClose();
     } catch (error) {
       console.error("Error submitting form data:", error);
-      alert("Failed to submit form.");
     }
   };
 
@@ -236,37 +286,46 @@ const AddItemMaster = ({ onClose }) => {
     if (activePopup === "genericName") {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        genericNames: { genericNameId: data.genericNameId }, // Keep it as an object
+        genericNames: {
+          genericNameId: data.genericNameId,
+          genericName: data.genericName
+        }, // Keep it as an object
       }));
     } else if (activePopup === "type") {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        itemType: { itemTypeId: data.itemTypesId }, // Keep it as an object
+        itemType: {
+          itemTypeId: data.itemTypesId,
+          itemType: data.type
+        }, // Keep it as an object
       }));
     } else if (activePopup === "tax") {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        taxes: { taxesId: data.taxesId }, // Keep it as an object
+        taxes: {
+          taxesId: data.taxesId,
+          taxName: data.name
+        }, // Keep it as an object
       }));
     } else if (activePopup === "category") {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        itemCategories: { categoryId: data.categoryId }, // Keep it as an object
+        itemCategories: { categoryId: data.categoryId, categoryName: data.categoryName }, // Keep it as an object
       }));
     } else if (activePopup === "manufacturer") {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        manufactures: { companyId: data.companyId }, // Keep it as an object
+        manufactures: { companyId: data.companyId, companyName: data.companyName }, // Keep it as an object
       }));
     } else if (activePopup === "unit") {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        unitsOfMeasurement: { unitOfMeasurementId: data.unitOfMeasurementId }, // Keep it as an object
+        unitsOfMeasurement: { unitOfMeasurementId: data.unitOfMeasurementId, name: data.name }, // Keep it as an object
       }));
     } else if (activePopup === "frequency") {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        pharmacyFrequencies: { pharmacyFrequencyId: data.pharmacyFrequencyId }, // Keep it as an object
+        pharmacyFrequencies: { pharmacyFrequencyId: data.pharmacyFrequencyId, name: data.frequency }, // Keep it as an object
       }));
     } else if (activePopup === "pharmacyConstitutions") {
       setFormData((prevFormData) => ({
@@ -297,7 +356,7 @@ const AddItemMaster = ({ onClose }) => {
     }
     if (activePopup === "type") {
       const popupData = {
-        columns: ["itemType"],
+        columns: ["type"],
         data: type,
       };
       console.log("Popup Data:", popupData);
@@ -381,7 +440,7 @@ const AddItemMaster = ({ onClose }) => {
                 label="Generic Name"
                 type="text"
                 name="genericname"
-                value={formData.genericNames?.genericNameId || ""}
+                value={formData.genericNames?.genericName || ""}
               />
               <button
                 className="GCSSheetForm-search-icon"
@@ -400,7 +459,7 @@ const AddItemMaster = ({ onClose }) => {
                 label="Type"
                 type="text"
                 name="itemType"
-                value={formData.itemType.itemTypeId}
+                value={formData?.itemType?.itemType}
               />
               <button
                 className="GCSSheetForm-search-icon"
@@ -419,7 +478,7 @@ const AddItemMaster = ({ onClose }) => {
                 label="Tax Category"
                 type="text"
                 name="taxCategory"
-                value={formData?.taxes?.taxesId}
+                value={formData?.taxes?.taxName}
               />
               <button
                 className="GCSSheetForm-search-icon"
@@ -438,7 +497,7 @@ const AddItemMaster = ({ onClose }) => {
                 label=" Category"
                 type="text"
                 name="itemCategories"
-                value={formData?.itemCategories?.categoryId}
+                value={formData?.itemCategories?.categoryName}
               />
               <button
                 className="GCSSheetForm-search-icon"
@@ -457,7 +516,7 @@ const AddItemMaster = ({ onClose }) => {
                 label="Manufacturer"
                 type="text"
                 name="manufacturer"
-                value={formData?.manufactures?.companyId}
+                value={formData?.manufactures?.companyName}
               />
               <button
                 className="GCSSheetForm-search-icon"
@@ -476,7 +535,7 @@ const AddItemMaster = ({ onClose }) => {
                 label="Unit"
                 type="text"
                 name="unit"
-                value={formData?.unitsOfMeasurement?.unitOfMeasurementId}
+                value={formData?.unitsOfMeasurement?.name}
               />
               <button
                 className="GCSSheetForm-search-icon"
@@ -631,7 +690,7 @@ const AddItemMaster = ({ onClose }) => {
               type="text"
               name="othrFreeQty"
               value={formData.othrFreeQty}
-              // onChange={handleChange}
+            // onChange={handleChange}
             />
 
             <FloatingSelect
@@ -863,7 +922,7 @@ const AddItemMaster = ({ onClose }) => {
                 label="Frequency"
                 type="text"
                 name="pharmacyFrequencies"
-                value={formData.pharmacyFrequencies.pharmacyFrequencyId}
+                value={formData.pharmacyFrequencies.name}
               />
               <button
                 className="GCSSheetForm-search-icon"
@@ -1339,3 +1398,4 @@ const AddItemMaster = ({ onClose }) => {
   );
 };
 export default AddItemMaster;
+

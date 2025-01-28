@@ -53,7 +53,7 @@ const UpdateDepartmentForm = ({ department, onClose }) => {
         `${API_BASE_URL}/departments/update-department/${department.departmentId}`,
         departmentData
       );
-      console.log("Department Updated successfully");
+      alert("Department Updated successfully");
       onClose(); // Close modal after successful operation
     } catch (error) {
       console.error("Error submitting the form:", error);

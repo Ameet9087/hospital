@@ -11,33 +11,71 @@ const FormInput = ({
   onChange,
   type = "text",
   disabled = false,
+  label,
 }) => (
-  <input
-    type={type}
-    name={name}
-    placeholder={placeholder}
-    value={value}
-    onChange={onChange}
-    className="labTestInput"
-    disabled={disabled}
-  />
+  <div className="lab-test-form-group">
+    {label && <label htmlFor={name}>{label}</label>}
+    <input
+      type={type}
+      name={name}
+      id={name} // Added an ID for label association
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      className="labTestInput"
+      disabled={disabled}
+    />
+  </div>
 );
 
-const FormTextarea = ({ name, value, placeholder, onChange }) => (
-  <textarea
-    name={name}
-    placeholder={placeholder}
-    value={value}
-    onChange={onChange}
-    className="labTestTextarea"
-  />
+const FormTextarea = ({ name, value, placeholder, onChange, label }) => (
+  <div className="lab-test-form-group">
+    {label && <label htmlFor={name}>{label}</label>}
+    <textarea
+      name={name}
+      id={name} // Added an ID for label association
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      className="labTestTextarea"
+    />
+  </div>
 );
 
-const LabTestComponentsAddNewLTC = ({ onClose }) => {
+const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
   const [lookupData, setLookupData] = useState([]);
   const [componentsArray, setComponentsArray] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
+
+  useEffect(() => {
+    console.log(initialData);
+
+    const fetchInitialData = () => {
+      if (initialData) {
+        // Set formData with initialData values (for editing)
+        setFormData({
+          componentName: initialData.componentName || "",
+          unit: initialData.unit || "",
+          valueType: initialData.valueType || "text",
+          controlType: initialData.controlType || "TextBox",
+          rangeDescription: initialData.rangeDescription || "",
+          method: initialData.method || "",
+          componentRange: initialData.componentRange || "",
+          lookupId: initialData.valueLookup?.labLookupId || null,
+          displayName: initialData.displayName || "",
+          valuePrecision: initialData.valuePrecision || "",
+          maleRange: initialData.maleRange || "",
+          femaleRange: initialData.femaleRange || "",
+          childRange: initialData.childRange || "",
+          minValue: initialData.minValue || "",
+          maxValue: initialData.maxValue || "",
+          createdOn: initialData.createdOn || new Date().toISOString(),
+        });
+      }
+    };
+    fetchInitialData();
+  }, [initialData]); // Runs only when initialData changes
 
   const [formData, setFormData] = useState({
     componentName: "",
@@ -146,11 +184,18 @@ const LabTestComponentsAddNewLTC = ({ onClose }) => {
     }
   };
 
-  const handleEdit = (index) => {
-    const componentToEdit = componentsArray[index];
-    setFormData(componentToEdit);
-    setIsEditing(true);
-    setEditIndex(index);
+  const handleEdit = async (id) => {
+    console.log(formData);
+
+    try {
+      const response = await axios.put(
+        `${API_BASE_URL}/lab-components/${id}`,
+        formData
+      );
+      onClose();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -165,218 +210,217 @@ const LabTestComponentsAddNewLTC = ({ onClose }) => {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit}>
-        <table className="labTestComponentsAddNewLTC-table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Component Name</th>
-              <th>Unit</th>
-              <th>Value Type</th>
-              <th>Control Type</th>
-              <th>Component Range</th>
-              <th>Range Description</th>
-              <th>Method</th>
-              <th>Value Lookup</th>
-              <th>Display Name</th>
-              <th>Value Precision</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <button
-                  type="button"
-                  className="labTestComponentsAddNewLTC-add-button"
-                  onClick={handleAddComponent}
-                >
-                  {isEditing ? "Update" : <i className="fa-solid fa-plus"></i>}
-                </button>
-              </td>
-              <td>
-                <FormInput
-                  name="componentName"
-                  value={formData.componentName}
-                  placeholder="Component Name"
-                  onChange={handleChange}
-                />
-              </td>
-              <td>
-                <FormInput
-                  name="unit"
-                  value={formData.unit}
-                  placeholder="Unit"
-                  onChange={handleChange}
-                />
-              </td>
-              <td>
-                <select
-                  name="valueType"
-                  value={formData.valueType}
-                  onChange={handleChange}
-                  className="labTestSelect"
-                >
-                  <option value="text">Text</option>
-                  <option value="number">Number</option>
-                </select>
-              </td>
-              <td>
-                <select
-                  name="controlType"
-                  value={formData.controlType}
-                  onChange={handleChange}
-                  className="labTestSelect"
-                >
-                  <option value="TextBox">TextBox</option>
-                  <option value="Dropdown">Dropdown</option>
-                  <option value="Checkbox">Checkbox</option>
-                </select>
-              </td>
-              <td>
-                <FormTextarea
-                  name="componentRange"
-                  value={formData.componentRange}
-                  placeholder="Component Range"
-                  onChange={handleChange}
-                />
-              </td>
-              <td>
-                <FormTextarea
-                  name="rangeDescription"
-                  value={formData.rangeDescription}
-                  placeholder="Range Description"
-                  onChange={handleChange}
-                />
-              </td>
-              <td>
-                <FormInput
-                  name="method"
-                  value={formData.method}
-                  placeholder="Method"
-                  onChange={handleChange}
-                />
-              </td>
-              <td>
-                <select
-                  name="lookupId"
-                  value={formData.lookupId}
-                  onChange={handleChange}
-                  className="labTestSelect"
-                >
-                  <option value="">Select Lookup</option>
-                  {lookupData.map((lookup) => (
-                    <option key={lookup.labLookupId} value={lookup.labLookupId}>
-                      {lookup.lookupName}
-                    </option>
-                  ))}
-                </select>
-              </td>
-              <td>
-                <FormInput
-                  name="displayName"
-                  value={formData.displayName}
-                  placeholder="Display Name"
-                  onChange={handleChange}
-                />
-              </td>
-              <td>
-                <FormInput
-                  name="valuePrecision"
-                  value={formData.valuePrecision}
-                  placeholder="Value Precision"
-                  onChange={handleChange}
-                />
-              </td>
-            </tr>
-            {formData.valueType === "number" && (
-              <>
-                <tr>
-                  <td colSpan="2">Male Range</td>
-                  <td colSpan="3">
-                    <FormInput
-                      name="maleRange"
-                      value={formData.maleRange}
-                      placeholder="Male Range"
-                      onChange={handleChange}
-                    />
-                  </td>
-                  <td colSpan="2">Female Range</td>
-                  <td colSpan="4">
-                    <FormInput
-                      name="femaleRange"
-                      value={formData.femaleRange}
-                      placeholder="Female Range"
-                      onChange={handleChange}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan="2">Child Range</td>
-                  <td colSpan="3">
-                    <FormInput
-                      name="childRange"
-                      value={formData.childRange}
-                      placeholder="Child Range"
-                      onChange={handleChange}
-                    />
-                  </td>
-                  <td colSpan="2">Min Value</td>
-                  <td colSpan="4">
-                    <FormInput
-                      name="minValue"
-                      value={formData.minValue}
-                      placeholder="Min Value"
-                      onChange={handleChange}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan="2">Max Value</td>
-                  <td colSpan="3">
-                    <FormInput
-                      name="maxValue"
-                      value={formData.maxValue}
-                      placeholder="Max Value"
-                      onChange={handleChange}
-                    />
-                  </td>
-                </tr>
-              </>
-            )}
-          </tbody>
-        </table>
-
-        <div className="labTestComponentsAddNewLTC-footer">
-          <button
-            type="submit"
-            className="labTestComponentsAddNewLTC-add-footer-button"
+      <form className="labTestComponentsAddNewLTC-form">
+        <FormInput
+          name="componentName"
+          value={formData.componentName}
+          placeholder="Component Name"
+          onChange={handleChange}
+          label="Component Name"
+        />
+        <FormInput
+          name="unit"
+          value={formData.unit}
+          placeholder="Unit"
+          onChange={handleChange}
+          label="Unit"
+        />
+        <div className="lab-test-form-group">
+          <label htmlFor="valueType">Value Type</label>
+          <select
+            name="valueType"
+            id="valueType"
+            value={formData.valueType}
+            onChange={handleChange}
+            className="labTestSelect"
           >
-            Submit
-          </button>
+            <option value="text">Text</option>
+            <option value="number">Number</option>
+          </select>
         </div>
-      </form>
+        <div className="lab-test-form-group">
+          <label htmlFor="controlType">Control Type</label>
+          <select
+            name="controlType"
+            id="controlType"
+            value={formData.controlType}
+            onChange={handleChange}
+            className="labTestSelect"
+          >
+            <option value="TextBox">TextBox</option>
+            <option value="Dropdown">Dropdown</option>
+            <option value="Checkbox">Checkbox</option>
+          </select>
+        </div>
+        <FormTextarea
+          name="componentRange"
+          value={formData.componentRange}
+          placeholder="Component Range"
+          onChange={handleChange}
+          label="Component Range"
+        />
+        <FormTextarea
+          name="rangeDescription"
+          value={formData.rangeDescription}
+          placeholder="Range Description"
+          onChange={handleChange}
+          label="Range Description"
+        />
+        <FormInput
+          name="method"
+          value={formData.method}
+          placeholder="Method"
+          onChange={handleChange}
+          label="Method"
+        />
+        <div className="lab-test-form-group">
+          <label htmlFor="lookupId">Select Lookup</label>
+          <select
+            name="lookupId"
+            id="lookupId"
+            value={formData.lookupId}
+            onChange={handleChange}
+            className="labTestSelect"
+          >
+            <option value="">Select Lookup</option>
+            {lookupData.map((lookup) => (
+              <option key={lookup.labLookupId} value={lookup.labLookupId}>
+                {lookup.lookupName}
+              </option>
+            ))}
+          </select>
+        </div>
+        <FormInput
+          name="displayName"
+          value={formData.displayName}
+          placeholder="Display Name"
+          onChange={handleChange}
+          label="Display Name"
+        />
+        <FormInput
+          name="valuePrecision"
+          value={formData.valuePrecision}
+          placeholder="Value Precision"
+          onChange={handleChange}
+          label="Value Precision"
+        />
 
-      <div className="labTestComponentAddedComponentContainer">
-        <h4>Added Components:</h4>
-        <ul>
-          {componentsArray.map((component, index) => (
-            <li key={index}>
-              {component.componentName} - {component.unit} -{" "}
-              {component.valueType} - {component.controlType}-{" "}
-              {component.rangeDescription} - {component.componentRange} -{" "}
-              {component.rangeDescription} - {component.method} -{" "}
-              {component.lookupId} - {component.displayName} -{" "}
-              {component.valuePrecision}
-              <button
-                className="labTestComponentAddedUpdateBTN"
-                onClick={() => handleEdit(index)}
-              >
-                Edit
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+        {formData.valueType === "number" && (
+          <>
+            <FormInput
+              name="maleRange"
+              value={formData.maleRange}
+              placeholder="Male Range"
+              onChange={handleChange}
+              label="Male Range"
+            />
+            <FormInput
+              name="femaleRange"
+              value={formData.femaleRange}
+              placeholder="Female Range"
+              onChange={handleChange}
+              label="Female Range"
+            />
+            <FormInput
+              name="childRange"
+              value={formData.childRange}
+              placeholder="Child Range"
+              onChange={handleChange}
+              label="Child Range"
+            />
+            <FormInput
+              name="minValue"
+              value={formData.minValue}
+              placeholder="Min Value"
+              onChange={handleChange}
+              label="Min Value"
+            />
+            <FormInput
+              name="maxValue"
+              value={formData.maxValue}
+              placeholder="Max Value"
+              onChange={handleChange}
+              label="Max Value"
+            />
+          </>
+        )}
+      </form>
+      {isDataUpdate ? (
+        <button
+          type="button"
+          onClick={() => handleEdit(initialData?.componentId)}
+          className="labTestComponentsAddNewLTC-add-footer-button"
+        >
+          Update
+        </button>
+      ) : (
+        <>
+          <button
+            type="button"
+            className="labTestComponentsAddNewLTC-add-button"
+            onClick={handleAddComponent}
+          >
+            {isEditing ? "Update" : <i className="fa-solid fa-plus"></i>}
+          </button>
+
+          <div className="labTestComponentPreview">
+            <h4>Preview:</h4>
+            {componentsArray.length > 0 && (
+              <table className="labTestComponentTable">
+                <thead>
+                  <tr>
+                    <th>Component Name</th>
+                    <th>Unit</th>
+                    <th>Value Type</th>
+                    <th>Control Type</th>
+                    <th>Range Description</th>
+                    <th>Component Range</th>
+                    <th>Method</th>
+                    <th>Lookup ID</th>
+                    <th>Display Name</th>
+                    <th>Value Precision</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {componentsArray.map((component, index) => (
+                    <tr key={index}>
+                      <td>{component.componentName}</td>
+                      <td>{component.unit}</td>
+                      <td>{component.valueType}</td>
+                      <td>{component.controlType}</td>
+                      <td>{component.rangeDescription}</td>
+                      <td>{component.componentRange}</td>
+                      <td>{component.method}</td>
+                      <td>{component.lookupId}</td>
+                      <td>{component.displayName}</td>
+                      <td>{component.valuePrecision}</td>
+                      <td>
+                        <button
+                          className="labTestComponentAddedUpdateBTN"
+                          onClick={() => handleEdit(index)}
+                        >
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+
+          <div className="labTestComponentsAddNewLTC-footer">
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="labTestComponentsAddNewLTC-add-footer-button"
+            >
+              Submit
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 };

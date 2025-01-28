@@ -1,66 +1,11 @@
-// import React from 'react';
-// import "../LabSetting/labCategories.css"
-// const lookupData = [
-//   {  name: 'Biochemistry', },
-//   {  name: 'Hematology',},
-//   {  name: 'Microbiology',},
-//   {  name: 'Parasitology', },
-//   {  name: 'Serology',  },
-//   { name: 'Immunoassay',  },
-//   { name: 'DEFAULT', },
-//   {  name: 'HISTOCYTOLOGY',  },
-//   {  name: 'OUT SOURCE', },
-//   {  name: 'MOLECULAR BIOCHEMISTRY',  },
-//   {  name: 'PATHOLOGY',  },
-// ];
-
-// function LabCategories() {
-//   return (
-//     <div className="app">
-//       <button className="add-lookup-btn">+Add New Lab Categories</button>
-//       <div className="search-container">
-//         <input type="text" placeholder="Search" className="search-input" />
-//         <button className="search-btn">🔍</button>
-//       </div>
-//       <div className="results-info">
-//         Showing 29 / 29 results
-//         <button className="print-btn">Print</button>
-//       </div>
-//       <table className="lookup-table">
-//         <thead>
-//           <tr>
-
-//             <th>Category Name</th>
-//             <th>Actions</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {lookupData.map((item) => (
-//             <tr key={item.id}>
-
-//               <td>{item.name}</td>
-
-//               <td>
-//                 <button className="edit-btn">Edit</button>
-//                 <button className="edit-btn">Deactivate</button>
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// }
-
-// export default LabCategories;
-
 import React, { useState, useRef, useEffect } from "react";
 import "../LabSetting/labCategories.css";
 import LabCategoryAddNewLC from "./labCategoryAddNewLC";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import LabCategoryUpdateNewLC from "./LabCategoryUpdateNewLC";
 import { API_BASE_URL } from "../../api/api";
-// import LSLabTestAddNLTest from './lSLabTestAddNLTest';
+import axios from "axios";
+
 const LabCategories = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showUpdatePopup, setShowUpdatePopup] = useState(false);
@@ -70,23 +15,15 @@ const LabCategories = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
 
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/lab-test-categories/getAll-testCategory`)
-      .then((res) => res.json())
-
-      .then((data) => setLabCategory(data))
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  const fetchAllCategories = async () => {
+    const response = await axios.get(
+      `${API_BASE_URL}/lab-test-categories/getAll-testCategory`
+    );
+    setLabCategories(response.data);
+  };
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/lab-test-categories/getAll-testCategory`)
-      .then((res) => res.json())
-      .then((data) => setLabCategories(data))
-      .catch((err) => {
-        console.log(err);
-      });
+    fetchAllCategories();
   }, [showPopup, showUpdatePopup]);
 
   const handleAddNewLabTestClick = () => {
@@ -97,11 +34,30 @@ const LabCategories = () => {
     setShowPopup(false);
     setShowUpdatePopup(false);
   };
+
   const handleUpdateNewLabTestClick = (category) => {
     setLabCategory(category);
     setShowUpdatePopup(true); // Show the popup
     setShowPopup(false);
   };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `${API_BASE_URL}/lab-test-categories/remove/${id}`
+      );
+      fetchAllCategories();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Filtering logic for the search
+  const filteredCategories = labCategories.filter((category) =>
+    category.labTestCategoryName
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="labCategories-container">
@@ -115,36 +71,24 @@ const LabCategories = () => {
           </button>
         </div>
       </div>
-      <div className="labCategories-controls">
-          <div className="labCategories-date-range">
-      <label>
-        From:
-        <input type="date" defaultValue="2024-08-09" />
-      </label>
-      <label>
-        To:
-        <input type="date" defaultValue="2024-08-16" />
-      </label>
 
-    </div>
-</div>
       <div className="labCategories-search-N-result">
         <div className="labCategories-search-bar">
           <i className="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Search..." />
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm} // bind the input to searchTerm
+            onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm on change
+          />
         </div>
         <div className="labCategories-results-info">
           <span>
-            Showing {labCategories?.length} / {labCategories?.length} results
+            Showing {filteredCategories.length} / {labCategories.length} results
           </span>
-          <button className="labCategories-print-button">
-          <i className="fa-solid fa-file-excel"></i> Export
-          </button>
-          <button className="labCategories-print-button">
-            <i class="fa-solid fa-print"></i> Print
-          </button>
         </div>
       </div>
+
       <div className="table-container">
         <table ref={tableRef}>
           <thead>
@@ -170,35 +114,30 @@ const LabCategories = () => {
             </tr>
           </thead>
           <tbody>
-            {labCategories != null &&
-              labCategories?.map((category, index) => (
-                <tr key={index}>
-                  <td>{category.labTestCategoryName}</td>
+            {filteredCategories.map((category, index) => (
+              <tr key={index}>
+                <td>{category.labTestCategoryName}</td>
 
-                  <td>
-                    <button
-                      className="labCategories-edit-button"
-                      onClick={() => handleUpdateNewLabTestClick(category)}
-                    >
-                      Edit
-                    </button>
-                    {/* <button className="labCategories-deactivate-button">
-                      Deactivate
-                    </button> */}
-                  </td>
-                </tr>
-              ))}
+                <td>
+                  <button
+                    className="labCategories-edit-button"
+                    onClick={() => handleUpdateNewLabTestClick(category)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(category.labTestCategoryId)}
+                    className="labCategories-delete-button"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-      {/* <div className="labCategories-pagination">
-          <span>0 to 0 of 0</span>
-          <button>First</button>
-          <button>Previous</button>
-          <span>Page 0 of 0</span>
-          <button>Next</button>
-          <button>Last</button>
-        </div> */}
+
       {/* Modal Popup */}
       {showPopup && (
         <div className="labCategories-modal">

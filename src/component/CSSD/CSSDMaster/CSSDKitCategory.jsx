@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
@@ -10,8 +10,23 @@ const CSSDItemMaster = () => {
   const [itemName, setItemName] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('Active');
+  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/kit-categories`);
+      setCategories(response.data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
 
   const handleSave = async () => {
     const data = {
@@ -34,6 +49,7 @@ const CSSDItemMaster = () => {
   };
 
   return (
+    <>
     <div className="CSSDKitCategory-container">
       <div className="CSSDItemMaster-header">
         <div className="CSSDItemMaster-heading">
@@ -96,6 +112,36 @@ const CSSDItemMaster = () => {
         ''
       </div>
     </div>
+
+    <div className="CSSDKitCategory-tableContainer">
+          <h3>All Categories</h3>
+          <table className="CSSDKitCategory-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {categories.length > 0 ? (
+                categories.map((category) => (
+                  <tr key={category.kitCategoryId}>
+                    <td>{category.kitCategoryId}</td>
+                    <td>{category.description}</td>
+                    <td>{category.status}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="4">No categories found.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+    </>
   );
 };
 

@@ -83,6 +83,7 @@ const DailyNursingAssessment = ({ ipAdmission }) => {
           },
         }
       );
+      fetchAllDailyAssessment();
       alert("Data submitted successfully!");
       console.log("Response:", response.data);
     } catch (error) {

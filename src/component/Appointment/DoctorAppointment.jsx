@@ -10,7 +10,7 @@ export default function DoctorAppointment() {
   const [appointments, setAppointments] = useState({});
   const [schedule, setSchedule] = useState(null);
   const [updatedAppointments, setUpdateAppointments] = useState({});
-  const [doctorBlocking,setDoctorBlocking] = useState(null);
+  const [doctorBlocking, setDoctorBlocking] = useState(null);
   const [timeSlots, setTimeSlots] = useState([]);
   const [locations, setLocations] = useState([]);
   const [doctors, setDoctors] = useState([]);
@@ -35,26 +35,26 @@ export default function DoctorAppointment() {
       return null; // Return null or an appropriate fallback if there's an error
     }
   };
-  
+
   const handleLoadSlots = async ({ locationId, doctorId, appointmentDate }) => {
     if (!locationId || !doctorId || !appointmentDate) {
       alert("Please select location, doctor, and date before loading slots.");
       return;
     }
-  
+
     try {
       // Fetch schedule data
       const response = await axios.get(
         `${API_BASE_URL}/schedules/by-location-and-doctor?locationId=${locationId}&doctorId=${doctorId}&givenDate=${appointmentDate}`
       );
-  
+
       const scheduleData = response.data;
-  
+
       // Fetch doctor blocking data
       const doctorBlockingData = await fetchBlockingData(doctorId);
-  
+
       let loadSlots = true;
-  
+
       if (doctorBlockingData) {
         const appointmentDateObj = new Date(appointmentDate);
         const blockingFromDate = doctorBlockingData.fromDate
@@ -65,7 +65,7 @@ export default function DoctorAppointment() {
           : null;
         const blockingFromTime = doctorBlockingData.fromTime || null;
         const blockingToTime = doctorBlockingData.toTime || null;
-  
+
         // Scenario 1: If blocking dates are present and appointment date falls within the range, do not load slots
         if (
           blockingFromDate &&
@@ -78,7 +78,7 @@ export default function DoctorAppointment() {
             `${doctorBlockingData.message}`
           );
         }
-  
+
         // Scenario 2: If blocking dates and times are present, show all time slots
         if (
           blockingFromDate &&
@@ -89,7 +89,7 @@ export default function DoctorAppointment() {
           loadSlots = true; // Override to allow loading slots
         }
       }
-  
+
       // Load slots if allowed
       if (loadSlots && scheduleData) {
         setSchedule(scheduleData);
@@ -110,9 +110,9 @@ export default function DoctorAppointment() {
       alert("Failed to load appointment slots. Please try again.");
     }
   };
-  
-  
-  
+
+
+
   const isToday = (date) => {
     const today = new Date().toISOString().split("T")[0];
     return today === date;
@@ -143,7 +143,7 @@ export default function DoctorAppointment() {
     };
 
     fetchData();
-  }, []);
+  }, [modalVisible]);
 
   // Generate time slots
   const generateTimeSlots = (start, end, reviewTime) => {
@@ -208,7 +208,7 @@ export default function DoctorAppointment() {
       return;
     }
 
-    const blockingFromTime =doctorBlocking?.fromTime
+    const blockingFromTime = doctorBlocking?.fromTime
     const blockingToTime = doctorBlocking?.toTime
     const appointmentTime = convertTo24HourFormat(appointmentObjOrTimeSlot.timeSlot);
     console.log(doctorBlocking?.fromTime);
@@ -219,7 +219,7 @@ export default function DoctorAppointment() {
       appointmentTime <= blockingToTime
     ) {
       console.log("yess executed");
-      
+
       alert(
         `${doctorBlocking.message}`
       );
@@ -248,18 +248,18 @@ export default function DoctorAppointment() {
   const convertTo24HourFormat = (time12h) => {
     const [time, modifier] = time12h.split(" ");
     let [hours, minutes] = time.split(":").map(Number);
-  
+
     if (modifier === "PM" && hours !== 12) {
       hours += 12;
     } else if (modifier === "AM" && hours === 12) {
       hours = 0;
     }
-  
+
     return `${hours.toString().padStart(2, "0")}:${minutes
       .toString()
       .padStart(2, "0")}`;
   };
-  
+
 
   const updateModel = (object) => {
     console.log(object);

@@ -51,6 +51,7 @@ function StateMaster() {
     if (response.status === 200) {
       fetchStatesData();
       handleClose();
+      alert("State Added Successfully");
     }
   };
 

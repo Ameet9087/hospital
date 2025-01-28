@@ -1,12 +1,10 @@
-/* Ravindra_Sanap_EmpSchedule.jsx_04_10_2024_Start */
-
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './EmpSchedule.css';
 import UpdateEmployeepopup from '../AllEmployee/UpdateEmployeePopup';
 import * as XLSX from 'xlsx';
 import useCustomAlert from '../../../alerts/useCustomAlert';
-
+import { API_BASE_URL } from '../../api/api';
 
 function EmpSchedule() {
     const [employees, setEmployees] = useState([]); // Renamed schedules to employees
@@ -20,14 +18,13 @@ function EmpSchedule() {
 
     const { success, warning, error, CustomAlerts } = useCustomAlert();
 
-
     useEffect(() => {
         fetchEmployees();
     }, []);
 
     const fetchEmployees = async () => {
         try {
-            const response = await axios.get('http://localhost:8086/api/employee/getall');
+            const response = await axios.get(`${API_BASE_URL}/employees/get-all-employee`);
             setEmployees(response.data);
         } catch (error) {
             console.error('Error fetching employee data:', error);
@@ -36,21 +33,11 @@ function EmpSchedule() {
         }
     };
 
-    const filteredEmployees = employees.filter((employee) =>
-        (employee.empId && employee.empId.toString().toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (employee.empName && employee.empName.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (employee.mobile && employee.mobile.toString().includes(searchTerm)) ||
-        (employee.email && employee.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (employee.position && employee.position.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (employee.department && employee.department.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (employee.dateOfJoining && employee.dateOfJoining.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
-
     const indexOfLastEmployee = currentPage * employeesPerPage;
     const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
-    const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+    const currentEmployees = employees.slice(indexOfFirstEmployee, indexOfLastEmployee);
 
-    const totalPages = Math.ceil(filteredEmployees.length / employeesPerPage);
+    const totalPages = Math.ceil(employees.length / employeesPerPage);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -68,12 +55,12 @@ function EmpSchedule() {
 
     const exportToExcel = () => {
         const ws = XLSX.utils.json_to_sheet(currentEmployees.map(employee => ({
-            "EMP. ID": employee.empId,
-            "EMP Name": employee.empName,
-            "Mobile No": employee.mobile,
-            "Email": employee.email,
-            "Position": employee.position,
-            "Department": employee.department,
+            "EMP. ID": employee.employeeId,
+            "EMP Name": employee.firstName,
+            "Mobile No": employee.contactNumber,
+            "Email": employee.emailId,
+            "Position": employee.employeeRoleDTO.role,
+            "Department": employee.departmentDTO.department,
             "Date of Joining": employee.dateOfJoining,
         })));
 
@@ -93,7 +80,7 @@ function EmpSchedule() {
 
     const handleUpdateSubmit = async (formData) => {
         try {
-            await axios.put(`http://localhost:8086/api/employee/update/${selectedEmployee.empId}`, formData, {
+            await axios.put(`${API_BASE_URL}/employee/update/${selectedEmployee.employeeId}`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -136,12 +123,12 @@ function EmpSchedule() {
                                 ? `<tr><td colspan="7" style="text-align: center; color: red;">No Rows to Show</td></tr>`
                                 : currentEmployees.map(employee => `
                                     <tr>
-                                        <td>${employee.empId}</td>
-                                        <td>${employee.empName}</td>
-                                        <td>${employee.mobile}</td>
-                                        <td>${employee.email}</td>
-                                        <td>${employee.position}</td>
-                                        <td>${employee.department}</td>
+                                        <td>${employee.employeeId}</td>
+                                        <td>${employee.firstName}</td>
+                                        <td>${employee.contactNumber}</td>
+                                        <td>${employee.emailId}</td>
+                                        <td>${employee.employeeRoleDTO.role}</td>
+                                        <td>${employee.departmentDTO.department}</td>
                                         <td>${employee.dateOfJoining}</td>
                                     </tr>`).join('')
                             }
@@ -170,7 +157,7 @@ function EmpSchedule() {
                     />
                 </div>
                 <div className="schedule-results-info">
-                    Showing {currentEmployees.length} / {filteredEmployees.length} results
+                    Showing {currentEmployees.length} / {employees.length} results
                     <button
                         className="schedule-ex-pri-buttons"
                         onClick={exportToExcel}
@@ -223,13 +210,13 @@ function EmpSchedule() {
                             </tr>
                         ) : (
                             currentEmployees.map((employee) => (
-                                <tr key={employee.empId}>
-                                    <td>{employee.empId}</td>
-                                    <td>{employee.empName}</td>
-                                    <td>{employee.mobile}</td>
-                                    <td>{employee.email}</td>
-                                    <td>{employee.position}</td>
-                                    <td>{employee.department}</td>
+                                <tr key={employee.employeeId}>
+                                    <td>{employee.employeeId}</td>
+                                    <td>{employee.firstName}</td>
+                                    <td>{employee.contactNumber}</td>
+                                    <td>{employee.emailId}</td>
+                                    <td>{employee.employeeRoleDTO.role}</td>
+                                    <td>{employee.departmentDTO.department}</td>
                                     <td>{employee.dateOfJoining}</td>
                                     <td>
                                         <button
@@ -277,5 +264,3 @@ function EmpSchedule() {
 }
 
 export default EmpSchedule;
-
-/* Ravindra_Sanap_EmpSchedule.jsx_04_10_2024_End */

@@ -3,7 +3,7 @@ import "./Floor.css";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import axios from "axios";
 import { API_BASE_URL } from "../../../api/api";
-import {startResizing} from "../../../../TableHeadingResizing/ResizableColumns"
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 
 export default function Floor() {
   const [columnWidths, setColumnWidths] = useState({});
@@ -46,6 +46,7 @@ export default function Floor() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!form.floorNumber || !form.orderNo || !form.location) {
       alert("Please fill all mandatory fields.");
       return;
@@ -57,9 +58,11 @@ export default function Floor() {
       .toString()
       .padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}`;
 
-    const createdTime = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes()
+    const createdTime = `${now.getHours().toString().padStart(2, "0")}:${now
+      .getMinutes()
       .toString()
       .padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")}`;
+
     const payload = {
       name: form.name,
       createByName: form.createByName,
@@ -69,25 +72,57 @@ export default function Floor() {
       location: form.location,
       status: form.status,
       createDate: createdDate,
-      createTime: createdTime
+      createTime: createdTime,
     };
-    if (isEditing) {
-      payload.id = data[editIndex]?.id;
-    }
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/floors`, payload);
-      setOpenModel(false);
+      if (isEditing) {
+        // Update functionality
+        const id = data[editIndex]?.id; // Get the id from the selected item
+        await axios.put(`${API_BASE_URL}/floors/${id}`, payload);
+        alert("Floor updated successfully!");
+      } else {
+        // Add functionality
+        await axios.post(`${API_BASE_URL}/floors`, payload);
+        alert("Floor added successfully!");
+      }
 
+      setOpenModel(false);
+      setForm({
+        name: "",
+        floorNumber: "",
+        orderNo: "",
+        location: "",
+        remarks: "",
+        createByName: "",
+        status: "Active",
+      });
+      setIsEditing(false);
+      setEditIndex(null);
+
+      // Refresh data
+      const response = await axios.get(`${API_BASE_URL}/floors`);
+      setData(response.data);
     } catch (error) {
       console.error("Error occurred:", error);
+      alert("An error occurred while saving/updating the floor.");
     }
   };
 
   const handleEdit = (index) => {
-    setForm(index);
-    setIsEditing(true);
-    setEditIndex(index);
+    const selectedFloor = data[index];
+    setForm({
+      name: selectedFloor.name || "",
+      floorNumber: selectedFloor.floorNumber || "",
+      orderNo: selectedFloor.orderNo || "",
+      location: selectedFloor.location || "",
+      remarks: selectedFloor.remarks || "",
+      createByName: selectedFloor.createByName || "",
+      status: selectedFloor.status || "Active",
+    });
+    setIsEditing(true); // Enable editing mode
+    setEditIndex(index); // Set the index for editing
+    setOpenModel(true); // Open modal
   };
 
   const handleDelete = async (id) => {
@@ -112,9 +147,26 @@ export default function Floor() {
   return (
     <>
       <div className="container-fluid floor-container">
-        <button className="add-floor-btn" onClick={() => setOpenModel(true)}>
+        <button
+          className="add-floor-btn"
+          onClick={() => {
+            setForm({
+              name: "",
+              floorNumber: "",
+              orderNo: "",
+              location: "",
+              remarks: "",
+              createByName: "",
+              status: "Active",
+            });
+            setIsEditing(false); // Reset editing state
+            setEditIndex(null); // Reset edit index
+            setOpenModel(true); // Open modal
+          }}
+        >
           Add Floor
         </button>
+
         <table ref={tableRef}>
           <thead>
             <tr>

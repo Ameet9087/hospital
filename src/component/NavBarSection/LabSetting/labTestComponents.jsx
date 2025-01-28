@@ -1,56 +1,3 @@
-// import React from 'react';
-// import "../LabSetting/labTestComponents.css"
-// const labTests = [
-//   { componentName: "2 hr PP Blood Sugar", displayName: "2 hr PP Blood Sugar", unit: "mg/dl", range: "70-140", controlType: "TextBox", valueType: "number" },
-//   { componentName: "ALKALINE PHOSPHATASE", displayName: "ALKALINE PHOSPHATASE", unit: "IU/L", range: "30-260", controlType: "TextBox", valueType: "number" },
-//   // Add more rows as needed
-// ];
-
-// const LabTestComponent = () => {
-//   return (
-//     <div className="lab-test-container">
-//       <button className="add-button">+Add New Lab Test Component</button>
-//       <input type="text" className="search-box" placeholder="Search" />
-//       <table className="lab-test-table">
-//         <thead>
-//           <tr>
-//             <th>ComponentName</th>
-//             <th>Display Name</th>
-//             <th>Unit</th>
-//             <th>Range</th>
-//             <th>Range Description</th>
-//             <th>Method</th>
-//             <th>ControlType</th>
-//             <th>ValueType</th>
-//             <th>Value Lookup</th>
-//             <th>Actions</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {labTests.map((test, index) => (
-//             <tr key={index}>
-//               <td>{test.componentName}</td>
-//               <td>{test.displayName}</td>
-//               <td>{test.unit}</td>
-//               <td>{test.range}</td>
-//               <td></td>
-//               <td></td>
-//               <td>{test.controlType}</td>
-//               <td>{test.valueType}</td>
-//               <td></td>
-//               <td><button className="edit-button">Edit</button></td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//       <div className="results-info">Showing 74 / 74 results</div>
-//       <button className="print-button">Print</button>
-//     </div>
-//   );
-// };
-
-// export default LabTestComponent;
-
 import React, { useState, useRef, useEffect } from "react";
 import "../LabSetting/labTestComponents.css";
 import LSLabTestAddNLTest from "./lSLabTestAddNLTest";
@@ -58,23 +5,25 @@ import LabTestComponentsAddNewLTC from "./labTestComponentsAddNewLTC";
 
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
+import axios from "axios";
 
 const LabTestComponent = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [labComponentData, setLabComponentData] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState();
 
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/lab-components/getAllComponents`).then(
-      (res) =>
-        res
-          .json()
-          .then((res) => setLabComponentData(res))
-          .catch((err) => {
-            console.log(err);
-          })
+  const fetchAllLabComponents = async () => {
+    const response = await axios.get(
+      `${API_BASE_URL}/lab-components/getAllComponents`
     );
+    setLabComponentData(response.data);
+  };
+  useEffect(() => {
+    fetchAllLabComponents();
   }, [showPopup]);
 
   const handleAddNewLabTestClick = () => {
@@ -83,7 +32,37 @@ const LabTestComponent = () => {
 
   const handleClosePopup = () => {
     setShowPopup(false); // Hide the popup
+    setIsEditing(false); // Reset editing mode
+    setEditData(null); // Clear edit data
   };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value); // Update search term as user types
+  };
+
+  const handleEdit = (test) => {
+    setIsEditing(true);
+    setEditData(test);
+    setShowPopup(true); // Show the popup
+  };
+
+  const handleDelete = async (testId) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/lab-components/remove/${testId}`);
+      fetchAllLabComponents();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const filteredLabComponents = labComponentData
+    ? labComponentData.filter(
+        (test) =>
+          test.componentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          test.displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          test.unit.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
 
   return (
     <div className="labTestComponents-container">
@@ -97,36 +76,39 @@ const LabTestComponent = () => {
           </button>
         </div>
       </div>
-      <div className="labTestComponents-controls">
-          <div className="labTestComponents-date-range">
-      <label>
-        From:
-        <input type="date" defaultValue="2024-08-09" />
-      </label>
-      <label>
-        To:
-        <input type="date" defaultValue="2024-08-16" />
-      </label>
-
-    </div>
-
-          </div>
+      {/* <div className="labTestComponents-controls">
+        <div className="labTestComponents-date-range">
+          <label>
+            From:
+            <input type="date" defaultValue="2024-08-09" />
+          </label>
+          <label>
+            To:
+            <input type="date" defaultValue="2024-08-16" />
+          </label>
+        </div>
+      </div> */}
       <div className="labTestComponents-search-N-result">
         <div className="labTestComponents-search-bar">
           <i className="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Search..." />
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
         </div>
         <div className="labTestComponents-results-info">
           <span>
-            Showing {labComponentData?.length} / {labComponentData?.length}{" "}
+            Showing {filteredLabComponents.length} / {labComponentData?.length}{" "}
             results
           </span>
-          <button className="labTestComponents-print-button">
-          <i className="fa-solid fa-file-excel"></i> Export
+          {/* <button className="labTestComponents-print-button">
+            <i className="fa-solid fa-file-excel"></i> Export
           </button>
           <button className="labTestComponents-print-button">
-            <i class="fa-solid fa-print"></i> Print
-          </button>
+            <i className="fa-solid fa-print"></i> Print
+          </button> */}
         </div>
       </div>
       <div className="table-container" id="table-to-print">
@@ -143,7 +125,7 @@ const LabTestComponent = () => {
                 "Control Type",
                 "Value Type",
                 "Value Lookup",
-                // "Action",
+                "Action",
               ].map((header, index) => (
                 <th
                   key={index}
@@ -165,8 +147,8 @@ const LabTestComponent = () => {
             </tr>
           </thead>
           <tbody>
-            {labComponentData != null &&
-              labComponentData.map((test, index) => (
+            {filteredLabComponents.length > 0 &&
+              filteredLabComponents.map((test, index) => (
                 <tr key={index}>
                   <td>{test?.componentName}</td>
                   <td>{test?.displayName}</td>
@@ -177,32 +159,33 @@ const LabTestComponent = () => {
                   <td>{test?.controlType}</td>
                   <td>{test?.valueType}</td>
                   <td>{test?.valueLookup?.lookupName}</td>
-                  {/* <td>
-                  <button
-                    className="labTestComponents-edit-button"
-                    onClick={handleAddNewLabTestClick}
-                  >
-                    Edit
-                  </button>
-                </td> */}
+                  <td>
+                    <button
+                      className="labTestComponents-edit-button"
+                      onClick={() => handleEdit(test)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="labTestComponents-delete-button"
+                      onClick={() => handleDelete(test.componentId)}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))}
           </tbody>
         </table>
       </div>
-      {/* <div className="labTestComponents-pagination">
-          <span>0 to 0 of 0</span>
-          <button>First</button>
-          <button>Previous</button>
-          <span>Page 0 of 0</span>
-          <button>Next</button>
-          <button>Last</button>
-        </div> */}
-      {/* Modal Popup */}
       {showPopup && (
         <div className="labTestComponents-modal">
           <div className="labTestComponents-modal-content">
-            <LabTestComponentsAddNewLTC onClose={handleClosePopup} />
+            <LabTestComponentsAddNewLTC
+              onClose={handleClosePopup}
+              initialData={isEditing ? editData : null}
+              isDataUpdate={isEditing}
+            />
           </div>
         </div>
       )}

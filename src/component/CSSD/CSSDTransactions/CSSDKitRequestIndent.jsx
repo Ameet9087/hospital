@@ -49,7 +49,7 @@ const KitRequestIndent = () => {
     }
 
     const payload = {
-      indentTo,
+      // indentTo,
       kitType,
       priority,
       kitRequiredDate,
@@ -60,6 +60,9 @@ const KitRequestIndent = () => {
         quantity: parseInt(item.quantity, 10),
         remarks: item.remarks,
       })),
+      department: {
+        departmentId: selectedDepartment,  
+      },
     };
 
     try {
@@ -107,6 +110,20 @@ const KitRequestIndent = () => {
     setKitRequestItems(updatedItems);
     setShowModal(false); // Close the modal after selecting a kit
   };
+  const [departments, setDepartments] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+
+  useEffect(() => {
+    // Fetch departments from API
+    axios
+      .get("http://localhost:4096/api/departments/getAllDepartments")
+      .then((response) => {
+        setDepartments(response.data); // Save departments in state
+      })
+      .catch((error) => {
+        console.error("Error fetching departments:", error);
+      });
+  }, []);
 
   return (
     <div className="KitRequestIndent-container">
@@ -115,14 +132,30 @@ const KitRequestIndent = () => {
       </header>
       <div className="KitRequestIndent-content">
         <div className="KitRequestIndent-form">
-          <div className="KitRequestIndent-form-group">
-            <label>Indent To:</label>
-            <input
-              type="text"
-              value={indentTo}
-              onChange={(e) => setIndentTo(e.target.value)}
-            />
-          </div>
+        <div className="KitRequestIndent-form-group">
+        <label>Indent To:</label>
+        <select
+          id="departmentDropdown"
+          value={indentTo}
+          onChange={(e) => {
+            const selectedDepartment = departments.find(
+              (dept) => dept.departmentName === e.target.value
+            );
+            setIndentTo(e.target.value); // Set the selected department name
+            setSelectedDepartment(selectedDepartment?.departmentId ); // Set the department ID
+          }}
+        >
+          <option value="" disabled>
+            -- Select a Department --
+          </option>
+          {departments.map((dept) => (
+            <option key={dept.departmentId} value={dept.departmentName}>
+              {dept.departmentName}
+            </option>
+          ))}
+        </select>
+      </div>
+
           <div className="KitRequestIndent-form-group">
             <label>Kit Type:</label>
             <select
@@ -174,15 +207,16 @@ const KitRequestIndent = () => {
                       type="text"
                       value={item.kitName}
                       placeholder="Select Kit"
-                      readOnly
-                    />
-                    <FontAwesomeIcon
-                      icon={faSearch}
-                      className="search-icon"
                       onClick={() => {
                         setSelectedRowIndex(index); // Set the selected row index
                         setShowModal(true); // Open the modal to select the kit
                       }}
+                      
+                    />
+                    <FontAwesomeIcon
+                      icon={faSearch}
+                      className="search-icon"
+                     
                     />
                   </div>
                 </td>

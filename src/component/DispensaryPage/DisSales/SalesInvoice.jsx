@@ -41,7 +41,7 @@ const SalesInvoice = ({
         <strong>UHID:</strong> {invoiceData.inPatient?.inPatientId || "N/A"}
       </p>
       <p>
-        <strong>Patient's Name:</strong> {invoiceData.inPatient?.firstName || "N/A"}
+        <strong>Patient's Name:</strong> {invoiceData.inPatient?.patient?.firstName || "N/A"}
       </p>
       <p>
         <strong>Phone Number:</strong> N/A

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { API_BASE_URL } from '../api/api';
 
-const BreakTimeForm = ({onClose}) => {
+const BreakTimeForm = ({ onClose }) => {
   const [breakTimeStart, setBreakTimeStart] = useState('');
   const [breakTimeEnd, setBreakTimeEnd] = useState('');
   const [breakTimeRemark, setBreakTimeRemark] = useState('');
@@ -24,6 +24,11 @@ const BreakTimeForm = ({onClose}) => {
     // Simple form validation
     if (!breakTimeStart || !breakTimeEnd) {
       setError('Please fill in both break time start and end.');
+      return;
+    }
+
+    if (breakTimeStart >= breakTimeEnd) {
+      setError('Break Time Start must be before Break Time End.');
       return;
     }
 

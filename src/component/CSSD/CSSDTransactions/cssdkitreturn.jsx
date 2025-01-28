@@ -229,7 +229,7 @@ console.log(receivingId);
           )}
         </tbody>
       </table>
-
+      <br></br>
       <div className="kitreturnrecord-add-row">
         <button onClick={handleSave}>Save</button>
       </div>

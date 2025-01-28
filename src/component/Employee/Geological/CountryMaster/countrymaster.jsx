@@ -39,6 +39,7 @@ function Countrymaster() {
     if (response.status === 200) {
       fetchCountriesData();
       handleClose();
+      alert("Country Added Successfully");
     }
   };
 
@@ -112,9 +113,6 @@ function Countrymaster() {
           />
         </div>
         <div className="modal-footer">
-          <button className="countrymasterclose" onClick={handleClose}>
-            Close
-          </button>
           <button className="countrymastersave" onClick={handleAddCountry}>
             Save Changes
           </button>

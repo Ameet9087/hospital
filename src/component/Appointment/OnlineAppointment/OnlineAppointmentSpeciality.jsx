@@ -103,7 +103,7 @@ const Speciality = ({ searchQuery = "", location }) => {
             filteredDoctors.map((doctor, index) => (
               <div key={doctor.doctorId} className="Speciality-doctor-card">
                 <div className="Speciality-doctor-card-image">
-                  <img src={doctorIcon} alt="doctor-icon" />
+                  <img src={doctorIcon} alt="doctor-icon" className="Speciality-doctor-card-image-logo" />
                 </div>
                 <div className="Speciality-doctor-card-content">
                   <h3>{doctor.doctorName}</h3>

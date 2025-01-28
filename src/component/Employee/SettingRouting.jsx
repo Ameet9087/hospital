@@ -27,7 +27,7 @@ import Beds from "./IPMaster/Beds/Beds";
 import PaytypeMaster from "./IPMaster/PayTypeMaster/PaytypeMaster";
 import Roominfo from "./IPMaster/Rooms/Roominfo";
 import DoctorMaster from "./DoctorMaster/Doctormaster"
-import ServiceMaster from './ServiceMaster/ServiceMaster';
+import ServiceList from './ServiceMaster/ServiceList';
 import SOCMaster from "./SOCMaster/SocMaster"
 import Location from "./LocationMaster/Location"
 import Dgmaster from './DGMasters/dgmaster';
@@ -73,7 +73,7 @@ const SettingRouting = () => {
         <Route path="/ipmaster/IP-master-Beds" element={<Beds />} />
         <Route path="/ipmaster/IP-master-Pay-type-master" element={<PaytypeMaster />} />
         <Route path="/ipmaster/IP-master-room-info" element={<Roominfo />} />
-        <Route path="/serviceMaster/serviceMaster" element={<ServiceMaster />} />
+        <Route path="/serviceMaster/serviceMaster" element={<ServiceList />} />
         <Route path='/locationmaster/locationform' element={<Location />} />
         <Route path='/socmaster/socform' element={<SOCMaster />} />
         {/* <Route

@@ -1,7 +1,7 @@
 
 
 // export default DisPrescription;
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import "../DisPrescriptionMain/disPrescription.css";
@@ -31,20 +31,20 @@ const DisPrescription = () => {
     }
   }, [showModal]);
 
-const fetchPrescriptions = async () => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/medications`);
-    const data = response.data; // Assuming this is the JSON you provided
-    console.log("requested data",data)
-    setPrescriptions(data);
-    setLoading(false);
-  } catch (err) {
-    setError('Failed to fetch prescriptions');
-    setLoading(false);
-  }
-};
+  const fetchPrescriptions = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/medications`);
+      const data = response.data; // Assuming this is the JSON you provided
+      console.log("requested data", data)
+      setPrescriptions(data);
+      setLoading(false);
+    } catch (err) {
+      setError('Failed to fetch prescriptions');
+      setLoading(false);
+    }
+  };
 
-const filteredPrescriptions = prescriptions.filter(prescription => {
+  const filteredPrescriptions = prescriptions.filter(prescription => {
     const searchStr = searchTerm.toLowerCase();
     const patient = prescription.newPatientVisitDTO || {};
     return (
@@ -59,7 +59,7 @@ const filteredPrescriptions = prescriptions.filter(prescription => {
     const patientMedications = prescriptions.filter(
       med => med.newPatientVisitDTO?.outPatientId === prescription.newPatientVisitDTO?.outPatientId
     );
-  
+
     setSelectedPrescription({
       ...prescription,
       medications: patientMedications
@@ -119,10 +119,10 @@ const filteredPrescriptions = prescriptions.filter(prescription => {
   const filteredGroups = Object.keys(groupedPrescriptions).filter(patientId => {
     const group = groupedPrescriptions[patientId];
     const searchStr = searchTerm.toLowerCase();
-    return group.some(prescription => 
+    return group.some(prescription =>
       (prescription.status !== 'completed') &&  // Filter out completed prescriptions
       (prescription.newPatientVisitDTO?.firstName?.toLowerCase().includes(searchStr) ||
-       prescription.medicationId.toString().includes(searchStr))
+        prescription.medicationId.toString().includes(searchStr))
     );
   });
 
@@ -143,9 +143,9 @@ const filteredPrescriptions = prescriptions.filter(prescription => {
       <div className='disPrescription-search-N-result'>
         <div className="disPrescription-search-bar">
           <i className="fa-solid fa-magnifying-glass"></i>
-          <input 
-            type="text" 
-            placeholder="Search..." 
+          <input
+            type="text"
+            placeholder="Search..."
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
           />
@@ -161,37 +161,37 @@ const filteredPrescriptions = prescriptions.filter(prescription => {
         </div>
       </div>
 
-     <div className="disPrescription-table-N-paginationDiv">
-  <table ref={tableRef}>
-    <thead>
-      <tr>
-        {[
-          "Patient ID",
-          "Patient Name",
-          "Medicine Name",
+      <div className="disPrescription-table-N-paginationDiv">
+        <table ref={tableRef}>
+          <thead>
+            <tr>
+              {[
+                "Patient ID",
+                "Patient Name",
+                "Medicine Name",
 
-          "Date",
-          "Status",
-          "Actions",
-        ].map((header, index) => (
-          <th
-            key={index}
-            style={{ width: columnWidths[index] }}
-            className="resizable-th"
-          >
-            <div className="header-content">
-              <span>{header}</span>
-              <div
-                className="resizer"
-                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-              ></div>
-            </div>
-          </th>
-        ))}
-      </tr>
-    </thead>
-    <tbody className="disPrescription-requisition-tableBody">
-      {filteredPrescriptions.map((prescription, index) => {
+                "Date",
+                "Status",
+                "Actions",
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="disPrescription-requisition-tableBody">
+            {filteredPrescriptions.map((prescription, index) => {
               const patient = prescription.newPatientVisitDTO || {};
               const patientName = `${patient.firstName || ''} ${patient.lastName || ''}`.trim();
               return (
@@ -203,20 +203,20 @@ const filteredPrescriptions = prescriptions.filter(prescription => {
                   <td>{prescription.status}</td>
                   {/* <td>{prescription.dose || 'Unknown'}</td> */}
                   {/* <td>{prescription.frequency || 'Unknown'}</td> */}
-                   <td className="disPrescription-action-column">
-                <button onClick={() => handleViewAvailabilityClick(prescription)}>
-                  View Availability
-                </button>
-              </td>
+                  <td className="disPrescription-action-column">
+                    <button className="doctor-blocking-table-btn" onClick={() => handleViewAvailabilityClick(prescription)}>
+                      View Availability
+                    </button>
+                  </td>
                 </tr>
               );
             })}
-    </tbody>
-  </table>
-</div>
+          </tbody>
+        </table>
+      </div>
 
 
-      
+
       {showModal && selectedPrescription && (
         <div className="disPrescription-modal-overlay">
           <div className="disPrescription-modal-content">

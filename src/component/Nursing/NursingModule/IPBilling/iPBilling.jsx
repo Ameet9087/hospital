@@ -256,6 +256,23 @@ const IpBilling = ({ ipAdmission }) => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Data successfully saved:", data);
+        setTestGridTableRowsableRows([
+          {
+            sn: 1,
+            serviceDetailsId: "",
+            code: "",
+            serviceName: "",
+            doctorName: "",
+            rate: "",
+            qty: "",
+            totalAmt: "",
+            lessDisc: "",
+            discAmt: "",
+            netAmt: "",
+            emerg: "",
+            emergAmt: "",
+          },
+        ]);
       })
       .catch((error) => console.error("Error saving data:", error));
   };

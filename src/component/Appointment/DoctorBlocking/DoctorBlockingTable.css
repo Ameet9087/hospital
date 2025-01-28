@@ -27,3 +27,21 @@
     padding: 5px;
     border-radius: 5px;
 }
+
+.doctor-blocking-table-btn{
+    background-color: var(--button-color); 
+  border: 1px solid white; 
+  color: white; 
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+
+}
+.doctor-blocking-table-btn:hover{
+    background-color: white; 
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+
+}

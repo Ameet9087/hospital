@@ -1,13 +1,10 @@
-/* Ravindra_Sanap_Payroll.jsx_07_10_2024_Start */
-
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import './Payroll.css';
 import * as XLSX from 'xlsx';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
-
 import useCustomAlert from '../../../alerts/useCustomAlert';
-
+import { API_BASE_URL } from '../../api/api';
 
 function Payroll() {
     const [payrolls, setPayrolls] = useState([]);
@@ -15,9 +12,11 @@ function Payroll() {
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const [employees, setEmployees] = useState([]);
+
     const [editPayroll, setEditPayroll] = useState(null);
     const [newPayroll, setNewPayroll] = useState({
-        empId: '',
+        employeeId: '',
         payDate: '',
         totalSalary: '',
     });
@@ -25,10 +24,7 @@ function Payroll() {
     const payrollsPerPage = 10;
     const tableRef = useRef(null);
     const [columnWidths, setColumnWidths] = useState(['150px', '150px', '200px', '150px', '150px', '100px']);
-
-
     const { success, warning, error, CustomAlerts } = useCustomAlert();
-
 
     useEffect(() => {
         fetchPayrolls();
@@ -36,52 +32,87 @@ function Payroll() {
 
     const fetchPayrolls = async () => {
         try {
-            const response = await axios.get('http://localhost:8086/api/payrolls/getall');
+            const response = await axios.get(`${API_BASE_URL}/payroll`);
             setPayrolls(response.data);
         } catch (error) {
             console.error('Error fetching payroll data:', error);
             warning('Failed to Fetch Employee Payrolls');
-
         }
     };
+
+    useEffect(() => {
+        const fetchEmployees = async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/employees/get-all-employee`);
+                const data = await response.json();
+                setEmployees(data);
+            } catch (error) {
+                console.error('Error fetching employees:', error);
+            }
+        };
+
+        fetchEmployees();
+    }, []);
+    const handleEmployeeChange = (e) => {
+        const employeeId = e.target.value;
+        setNewPayroll({
+            ...newPayroll,
+            employeeId: employeeId // Update the employeeId here for both Add and Edit modals
+        });
+    };
+
 
     const handleAddPayroll = async (e) => {
         e.preventDefault();
+
         try {
             const payrollData = {
-                employeeId: newPayroll.empId,
                 payDate: newPayroll.payDate,
-                totalSalary: newPayroll.totalSalary
+                totalSalary: newPayroll.totalSalary,
+                employeeDTO: {
+                    employeeId: Number(newPayroll.employeeId)
+                }
             };
-            await axios.post('http://localhost:8086/api/payrolls/add', payrollData);
-            fetchPayrolls();
-            setShowAddModal(false);
-            success('Employee Payroll Added Successfully');
-            setNewPayroll({ empId: '', payDate: '', totalSalary: '' });
+            
+            const response = await axios.post(`${API_BASE_URL}/payroll`, payrollData);
+
+            if (response) {
+                fetchPayrolls();
+                setShowAddModal(false);
+                success('Employee Payroll Added Successfully');
+                setNewPayroll({ employeeId: '', payDate: '', totalSalary: '' });
+            } else {
+                
+            }
         } catch (error) {
             console.error('Error adding payroll:', error);
-            warning('Failed to Add Employee Payroll');
-
         }
     };
 
+    
     const handleEditPayroll = async (e) => {
         e.preventDefault();
         try {
             const payrollData = {
-                employeeId: editPayroll.employee.empId,
                 payDate: editPayroll.payDate,
-                totalSalary: editPayroll.totalSalary
+                totalSalary: editPayroll.totalSalary,
+                employeeDTO: {
+                    employeeId: Number(editPayroll.employeeId)
+                }
             };
-            await axios.put(`http://localhost:8086/api/payrolls/update/${editPayroll.payroll_id}`, payrollData);
-            fetchPayrolls();
-            setShowEditModal(false);
-            success('Employee Payroll Updated Successfully');
 
+            const response = await axios.put(`${API_BASE_URL}/payroll/${editPayroll.payroll_id}`, payrollData);
+
+            if (response) {
+                fetchPayrolls();
+                setShowEditModal(false);
+                success('Employee Payroll Updated Successfully');
+            } else {
+                warning('Failed to Update Employee Payroll');
+            }
         } catch (error) {
             console.error('Error editing payroll:', error);
             warning('Failed to Update Employee Payroll');
-
         }
     };
 
@@ -94,8 +125,8 @@ function Payroll() {
 
     const filteredPayrolls = payrolls.filter((payroll) =>
         payroll.payroll_id.toString().includes(searchTerm) ||
-        payroll.employee.empId.toString().includes(searchTerm) ||
-        payroll.employee.empName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        payroll.employeeDTO.employeeId.toString().includes(searchTerm) ||
+        payroll.employeeDTO.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         payroll.payDate.includes(searchTerm) ||
         payroll.totalSalary.toString().includes(searchTerm)
     );
@@ -156,8 +187,8 @@ function Payroll() {
                             ${payrolls.map(payroll => `
                                 <tr>
                                     <td>${payroll.payroll_id}</td>
-                                    <td>${payroll.employee.empId}</td>
-                                    <td>${payroll.employee.empName}</td>
+                                    <td>${payroll.employeeDTO.employeeId}</td>
+                                    <td>${payroll.employeeDTO.firstName} ${payroll.employeeDTO.lastName}</td>
                                     <td>${payroll.payDate}</td>
                                     <td>${payroll.totalSalary}</td>
                                 </tr>
@@ -179,7 +210,6 @@ function Payroll() {
                 </button>
                 <h2>Payroll List</h2>
                 <CustomAlerts />
-
             </div>
             <div className="payroll-search-N-results">
                 <div className="payroll-search">
@@ -228,8 +258,8 @@ function Payroll() {
                             currentPayrolls.map((payroll) => (
                                 <tr key={payroll.payroll_id}>
                                     <td>{payroll.payroll_id}</td>
-                                    <td>{payroll.employee.empId}</td>
-                                    <td>{payroll.employee.empName}</td>
+                                    <td>{payroll.employeeDTO.employeeId}</td>
+                                    <td>{payroll.employeeDTO.firstName} {payroll.employeeDTO.lastName}</td>
                                     <td>{payroll.payDate}</td>
                                     <td>{payroll.totalSalary}</td>
                                     <td>
@@ -262,29 +292,28 @@ function Payroll() {
             </div>
 
             {showAddModal && (
-               
                 <div className="payroll__overlay">
                     <div className="payroll__popup">
                         <div className="payroll__header">
                             <h2>Add Payroll</h2>
-
-                            <button
-                                onClick={onClose}
-                                className="payroll__closeButton"
-                            >
-                                X
-                            </button>
+                            <button onClick={onClose} className="payroll__closeButton">X</button>
                         </div>
                         <form className="payroll__form" onSubmit={handleAddPayroll}>
                             <div className="payroll__formGroup">
-                                <label>Employee ID:</label>
-                                <input
-                                    type="text"
-                                    placeholder="Employee ID"
-                                    value={newPayroll.empId}
-                                    onChange={(e) => setNewPayroll({ ...newPayroll, empId: e.target.value })}
+                                <label>Employee:</label>
+                                <select
+                                    name="employeeId"
+                                    value={newPayroll.employeeId}
+                                    onChange={handleEmployeeChange}
                                     required
-                                />
+                                >
+                                    <option value="" disabled>Select Employee</option>
+                                    {employees.map((employee) => (
+                                        <option key={employee.employeeId} value={employee.employeeId}>
+                                            {employee.firstName} {employee.lastName}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             <div className="payroll__formGroup">
                                 <label>Pay Date:</label>
@@ -306,44 +335,38 @@ function Payroll() {
                                 />
                             </div>
 
-
                             <div className="payroll__formActions">
-                                <button type="button" onClick={onClose}>
-                                    Cancel
-                                </button>
+                                <button type="button" onClick={onClose}>Cancel</button>
                                 <button type="submit">Register</button>
                             </div>
                         </form>
-
                     </div>
                 </div>
-
             )}
 
             {showEditModal && editPayroll && (
-
                 <div className="payroll__overlay">
                     <div className="payroll__popup">
                         <div className="payroll__header">
                             <h2>Edit Payroll</h2>
-
-                            <button
-                                onClick={onClose}
-                                className="payroll__closeButton"
-                            >
-                                X
-                            </button>
+                            <button onClick={onClose} className="payroll__closeButton">X</button>
                         </div>
                         <form className="payroll__form" onSubmit={handleEditPayroll}>
                             <div className="payroll__formGroup">
-                                <label>Employee ID:</label>
-                                <input
-                                    type="text"
-                                    placeholder="Employee ID"
-                                    value={editPayroll.employee.empId}
-                                    onChange={(e) => setEditPayroll({ ...editPayroll, employee: { ...editPayroll.employee, empId: e.target.value } })}
+                                <label>Employee:</label>
+                                <select
+                                    name="employeeId"
+                                    value={editPayroll.employeeId}
+                                    onChange={(e) => setEditPayroll({ ...editPayroll, employeeId: e.target.value })}
                                     required
-                                />
+                                >
+                                    <option value="" disabled>Select Employee</option>
+                                    {employees.map((employee) => (
+                                        <option key={employee.employeeId} value={employee.employeeId}>
+                                            {employee.firstName} {employee.lastName}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             <div className="payroll__formGroup">
                                 <label>Pay Date:</label>
@@ -365,25 +388,16 @@ function Payroll() {
                                 />
                             </div>
 
-
                             <div className="payroll__formActions">
-                                <button type="button" onClick={onClose}>
-                                    Cancel
-                                </button>
+                                <button type="button" onClick={onClose}>Cancel</button>
                                 <button type="submit">Update</button>
                             </div>
                         </form>
-
                     </div>
                 </div>
             )}
-
-
         </div>
     );
 }
 
 export default Payroll;
-
-
-/* Ravindra_Sanap_Payroll.jsx_07_10_2024_End */

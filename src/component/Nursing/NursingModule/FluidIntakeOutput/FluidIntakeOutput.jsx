@@ -15,7 +15,7 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
   const fetchFluidIntakeOutputData = async () => {
     try {
       const response = await fetch(
-        "http://localhost:4096/api/fluid-intake-output/admitted/1"
+        `${API_BASE_URL}/fluid-intake-output/admitted/${ipAdmission.ipAdmmissionId}`
       );
       const data = await response.json();
 
@@ -183,6 +183,7 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
         totalOutPut: "",
         balance: "",
       });
+      fetchFluidIntakeOutputData();
       alert("Data Submitted Successfully!");
     } catch (error) {
       console.error("Error submitting form data:", error);

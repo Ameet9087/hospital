@@ -12,6 +12,7 @@ function PendingReports() {
   const [category, setCategory] = useState("");
   const [labResult, setLabResult] = useState(null);
   const [columnWidths, setColumnWidths] = useState({});
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const tableRef = useRef(null);
 
   const navigate = useNavigate();
@@ -32,29 +33,49 @@ function PendingReports() {
     setDateTo(event.target.value);
   };
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value); // Update search query state on input change
+  };
+
   useEffect(() => {
     const currentDate = getCurrentDate();
     setDateFrom(currentDate);
     setDateTo(currentDate);
     let link;
 
-    if (dateFrom != "" && dateTo != "") {
+    if (dateFrom !== "" && dateTo !== "") {
       link = `${API_BASE_URL}/lab-result/by-verify-dateRange?startDate=${dateFrom}&endDate=${dateTo}&approvalStatus=Pending`;
     } else {
       let TodaysDate = new Date().toISOString().split("T")[0];
       link = `${API_BASE_URL}/lab-result/by-verify-dateRange?startDate=${TodaysDate}&endDate=${TodaysDate}&approvalStatus=Pending`;
     }
+
     fetch(link)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-
         setLabResult(data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [dateFrom, dateTo]);
+
+  // Filter lab results based on the search query
+  const filteredLabResults = labResult?.filter((result) => {
+    const patientName =
+      result.labResult?.outPatient?.patient?.firstName ||
+      result.labRequest?.inPatient?.patient?.firstName;
+
+    const patientLastName =
+      result.labRequest?.outPatient?.patient?.lastName ||
+      result.labRequest?.inPatient?.patient?.lastName;
+
+    const patientFullName = `${patientName} ${patientLastName}`.toLowerCase();
+
+    const searchLowerCase = searchQuery.toLowerCase();
+
+    return patientFullName.includes(searchLowerCase); // Match search query with patient name
+  });
 
   const handlePrint = () => {
     const doc = new jsPDF();
@@ -94,7 +115,6 @@ function PendingReports() {
       <h4>Pending Reports</h4>
       <div className="pendingReports-header">
         <div className="pendingReports-controls">
-          {/* Your date range and button controls */}
           <div className="pendingReports-date-range">
             <label>
               From:
@@ -116,43 +136,15 @@ function PendingReports() {
             </label>
           </div>
         </div>
-        <div className="pendingReports-category-select">
+        {/* <div className="pendingReports-category-select">
           <label>Category:</label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="">--Select Lab Category--</option>
-            <option value="all">
-              <input type="checkbox" /> Select All
-            </option>
-            <option value="biochemistry">
-              <input type="checkbox" /> Biochemistry
-            </option>
-            <option value="hematology">
-              <input type="checkbox" /> Hematology
-            </option>
-            <option value="microbiology">
-              <input type="checkbox" /> Microbiology
-            </option>
-            <option value="parasitology">
-              <input type="checkbox" /> Parasitology
-            </option>
-            <option value="serology">
-              <input type="checkbox" /> Serology
-            </option>
-            <option value="immunoassay">
-              <input type="checkbox" /> Immunoassay
-            </option>
-            <option value="pathology">
-              <input type="checkbox" /> Pathology
-            </option>
-            <option value="virology">
-              <input type="checkbox" /> Virology
-            </option>
-            {/* Add more options here */}
           </select>
-        </div>
+        </div> */}
       </div>
       <div className="pendingReports-searchbar-N-showing">
         <div className="pendingReports-search-bar">
@@ -161,16 +153,12 @@ function PendingReports() {
             type="text"
             placeholder="Search"
             className="pendingReports-search-input"
+            value={searchQuery} // Bind search query value
+            onChange={handleSearchChange} // Handle search input change
           />
         </div>
         <div className="pendingReports-results-info">
-          <span>Showing 0 / 0 results</span>
-          <button className="pendingReports-print-button" onClick={handlePrint}>
-            <i className="fa fa-file-excel"></i> Export
-          </button>
-          <button className="pendingReports-print-button" onClick={handlePrint}>
-            <i className="fa-solid fa-print"></i> Print
-          </button>
+          <span>Showing {filteredLabResults?.length || 0} results</span>
         </div>
       </div>
       <div className="table-container">
@@ -208,8 +196,8 @@ function PendingReports() {
             </tr>
           </thead>
           <tbody>
-            {labResult != null ? (
-              labResult.map((result, index) => (
+            {filteredLabResults?.length > 0 ? (
+              filteredLabResults.map((result, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>
@@ -230,7 +218,7 @@ function PendingReports() {
                       result.labRequest?.inPatient?.patient?.mobileNumber}
                   </td>
                   <td>
-                    {result?.labRequest.labTests?.map((labTest, index) => (
+                    {result?.labRequest?.labTests?.map((labTest, index) => (
                       <span key={index}>
                         {index > 0 ? " , " : ""}
                         {labTest.labTestName}
@@ -243,16 +231,29 @@ function PendingReports() {
                       : "Outpatient"}
                   </td>
                   <td>
-                    {result?.labRequest?.sampleCollections?.map(
-                      (labTest, index) => (
-                        <span key={index}>
-                          {index > 0 ? " , " : ""}
-                          {labTest.runNumber}
-                        </span>
-                      )
-                    )}
+                    {result?.labRequest.sampleCollections &&
+                      result?.labRequest.sampleCollections.length > 0 &&
+                      result?.labRequest.sampleCollections.map(
+                        (collection, index) => (
+                          <span key={index}>
+                            {index > 0 ? " , " : ""}
+                            {collection.runNumber}
+                          </span>
+                        )
+                      )}
                   </td>
-                  <td>{result.labRequest?.barcode}</td>
+                  <td>
+                    {result?.labRequest.sampleCollections &&
+                      result?.labRequest.sampleCollections.length > 0 &&
+                      result?.labRequest.sampleCollections.map(
+                        (collection, index) => (
+                          <span key={index}>
+                            {index > 0 ? " , " : ""}
+                            {collection.barcode}
+                          </span>
+                        )
+                      )}
+                  </td>
                   <td>
                     <button
                       className="pendingReports-table-btn"
@@ -271,19 +272,11 @@ function PendingReports() {
               ))
             ) : (
               <tr>
-                <td colSpan={"9"}>Loading</td>
+                <td colSpan={"9"}>No matching results</td>
               </tr>
             )}
           </tbody>
         </table>
-        {/* <div className="pendingReports-pagination">
-          <span>0 to 0 of 0</span>
-          <button>First</button>
-          <button>Previous</button>
-          <span>Page 0 of 0</span>
-          <button>Next</button>
-          <button>Last</button>
-        </div> */}
       </div>
     </div>
   );

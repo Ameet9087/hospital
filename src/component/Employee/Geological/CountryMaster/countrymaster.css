@@ -41,9 +41,10 @@
 .countrymasterclose,
 .countrymastersave {
   background-color: var(--button-bg-color);
-  color: var(--button-color);
+  color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 5px;
+  margin: 10px;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s;

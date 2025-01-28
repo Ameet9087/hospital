@@ -156,7 +156,7 @@ const Visitor = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(visitorData),
-                
+
             })
                 .then((response) => {
                     if (!response.ok) {
@@ -289,8 +289,8 @@ const Visitor = () => {
                                         ></div>
                                     </div>
                                 </th>
-                                
-                                
+
+
                             )
                         )}
                     </tr>

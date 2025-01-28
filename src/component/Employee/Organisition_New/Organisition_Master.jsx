@@ -5,6 +5,7 @@ import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { CiSearch } from "react-icons/ci";
 import PopupTable from "../../Admission/PopupTable";
 import axios from "axios";
+import { API_BASE_URL } from "../../api/api";
 
 const Organisition_Master = () => {
   const [selectedTab, setSelectedTab] = useState("otherGrid");
@@ -17,8 +18,9 @@ const Organisition_Master = () => {
   const [discountPolicies, setDiscountPolicies] = useState([]);
   const [allPaytype, setAllPaytype] = useState([]);
   const [locations, setLocations] = useState([]);
-  const cityHeading = ["city", "cityId"];
-  const stateHeading = ["stateName", "statesId"];
+  const [selectedlocation, setselectedlocation] = useState([]);
+  const cityHeading = ["cityId", "city"];
+  const stateHeading = ["stateId", "stateName"];
   const districtHeading = ["DistrictName", "DistrictCode"];
   const payModeHeading = ["PayModeName", "PayModeCode"];
   const discountPolicyHeading = ["PolicyName", "DiscountPercentage"];
@@ -51,8 +53,12 @@ const Organisition_Master = () => {
     organisationCode: "",
     organisationCategory: "",
     employeemandatory: "",
-    classification: "",
-    organisationClassificationDTO: {},
+    organisationClassificationDTO: {
+      classificationName: "",
+      description: "",
+      tpa: "",
+      status: "",
+    },
     orgGrdDetailsDTO: {
       contactDetails: "",
       particular: "",
@@ -78,7 +84,6 @@ const Organisition_Master = () => {
       details: "",
     },
   ]);
-
 
   const [doctorFeeTableRowsableRows, setDoctorFeeTableRowsableRows] = useState(
     allPaytype?.map((paytype) => ({
@@ -182,7 +187,6 @@ const Organisition_Master = () => {
     try {
       const response = await fetch(`${API_BASE_URL}/cities`);
       const data = await response.json();
-      console.log("API Response:", data);
       const cities = data.map((item) => ({
         cityId: item.cityId,
         city: item.cityName,
@@ -199,7 +203,6 @@ const Organisition_Master = () => {
     try {
       const response = await fetch(`${API_BASE_URL}/location-masters`);
       const data = await response.json();
-      console.log("API Response:", data);
       const states = data.map((item) => ({
         locationName: item.locationName,
         locationAddress: item.locationAddress,
@@ -217,9 +220,6 @@ const Organisition_Master = () => {
       const finalFormData = {
         ...formData, // Existing form data
         orgDoctorFeeDTO: doctorFeeTableRowsableRows.map((row) => ({
-          payType: {
-            id: row.paytypeId,
-          },
           morningFirstVisit: row.morningFirstVisit,
           morningFirstVisitToDoctor: row.morningFirstVisitToDoctor,
           morningSubVisit: row.morningSubVisit,
@@ -232,14 +232,12 @@ const Organisition_Master = () => {
           eveningSubVisitToDoctor: row.eveningSubVisitToDoctor,
           eveningEmergency: row.eveningEmergency,
           eveningEmergencyToDoctor: row.eveningEmergencyToDoctor,
-
         })),
       };
-      console.log("Final form data to be posted:", finalFormData);
 
       // Post the formData to the API
       const response = await axios.post(
-        "http://192.168.1.62:1415/api/organisation-masters",
+        `${API_BASE_URL}/organisation-masters`,
         finalFormData,
         {
           headers: {
@@ -251,7 +249,6 @@ const Organisition_Master = () => {
       // Check the response status
       if (response.status === 200 || response.status === 201) {
         // Handle success
-        console.log("API Response:", response.data);
         alert("Data saved successfully!");
       } else {
         // Handle unexpected status codes
@@ -264,9 +261,6 @@ const Organisition_Master = () => {
       alert("Error posting data. Please check the console for details.");
     }
   };
-
-
-
 
   useEffect(() => {
     fetchCities();
@@ -294,16 +288,14 @@ const Organisition_Master = () => {
         discountPolicy: selectedData.PolicyName,
       }));
     } else if (activePopup === "Location") {
-
+      setselectedlocation(selectedData);
       setFormData((prevData) => ({
         ...prevData,
         // locationName:selectedData.locationName,
         locationMasterDTO: {
           id: selectedData.id,
         },
-
       }));
-
     }
     handlePopupClose();
   };
@@ -345,7 +337,7 @@ const Organisition_Master = () => {
             <table ref={tableRef} border="1">
               <thead>
                 <tr>
-                  {["Actions", "SN", "Location Name"].map((header, index) => (
+                  {["SN", "Location Name"].map((header, index) => (
                     <th
                       key={index}
                       style={{ width: columnWidths[index] }}
@@ -368,7 +360,7 @@ const Organisition_Master = () => {
               <tbody>
                 {locationTableRows.map((row, index) => (
                   <tr key={index}>
-                    <td>
+                    {/* <td>
                       <div className="table-actions">
                         <button
                           className="Organisition_Master-add-btn"
@@ -384,10 +376,10 @@ const Organisition_Master = () => {
                           Del
                         </button>
                       </div>
-                    </td>
+                    </td> */}
                     <td>{row.sn}</td>
                     <td>
-                      {formData.locationName}
+                      {selectedlocation.locationName}
                       <CiSearch onClick={() => setActivePopup("Location")} />
                     </td>
                   </tr>
@@ -418,7 +410,6 @@ const Organisition_Master = () => {
                     "Evening Sub Visit(ToDoctor)",
                     "Evening Emergency",
                     "Evening Emergency(ToDoctor)",
-
                   ].map((header, index) => (
                     <th
                       key={index}
@@ -541,8 +532,6 @@ const Organisition_Master = () => {
                         onChange={(e) => handleDoctorFessChange(e, index)}
                       />
                     </td>
-
-
                   </tr>
                 ))}
               </tbody>
@@ -558,7 +547,7 @@ const Organisition_Master = () => {
               <thead>
                 <tr>
                   {[
-                    "Actions",
+                    // "Actions",
                     "SN",
                     "Contact Details",
                     "Particular",
@@ -586,7 +575,7 @@ const Organisition_Master = () => {
               <tbody>
                 {otherGridTableRows.map((row, index) => (
                   <tr key={index}>
-                    <td>
+                    {/* <td>
                       <div className="table-actions">
                         <button
                           className="Organisition_Master-add-btn"
@@ -602,7 +591,7 @@ const Organisition_Master = () => {
                           Del
                         </button>
                       </div>
-                    </td>
+                    </td> */}
                     <td>{row.sn}</td>
                     <td>
                       <select
@@ -679,10 +668,12 @@ const Organisition_Master = () => {
             <div className="Organisition_Master-panel-content">
               <div className="Organisition_Master-form-row">
                 <label>Classification:</label>
-                <select value={formData.classification}
+                <select
+                  value={formData.classification}
                   onChange={(e) =>
                     setFormData({ ...formData, classification: e.target.value })
-                  }>
+                  }
+                >
                   <option>select</option>
                   <option>TPA</option>
                   <option>Panel</option>
@@ -1030,29 +1021,101 @@ const Organisition_Master = () => {
                 />
                 <label>Employee Details not mandatory</label>
               </div>
+              <div className="Organisition_Master-header-contact">
+                <h3>Organisation Classification</h3>
+              </div>
+              <div className="Organisition_Master-form-row">
+                <label>Classification Name:</label>
+                <input
+                  type="text"
+                  value={
+                    formData.organisationClassificationDTO.classificationName
+                  }
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      organisationClassificationDTO: {
+                        ...formData.organisationClassificationDTO,
+                        classificationName: e.target.value,
+                      },
+                    })
+                  }
+                />
+              </div>
+              <div className="Organisition_Master-form-row">
+                <label>Description:</label>
+                <input
+                  type="text"
+                  value={formData.organisationClassificationDTO.description}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      organisationClassificationDTO: {
+                        ...formData.organisationClassificationDTO,
+                        description: e.target.value,
+                      },
+                    })
+                  }
+                />
+              </div>
+              <div className="Organisition_Master-form-row">
+                <label>TPA:</label>
+                <input
+                  type="text"
+                  value={formData.organisationClassificationDTO.tpa}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      organisationClassificationDTO: {
+                        ...formData.organisationClassificationDTO,
+                        tpa: e.target.value,
+                      },
+                    })
+                  }
+                />
+              </div>
+              <div className="Organisition_Master-form-row">
+                <label>Status:</label>
+                <input
+                  type="text"
+                  value={formData.organisationClassificationDTO.status}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      organisationClassificationDTO: {
+                        ...formData.organisationClassificationDTO,
+                        status: e.target.value,
+                      },
+                    })
+                  }
+                />
+              </div>
             </div>
           </div>
         </div>
         <div className="Organisition_Master-otherGrid-section">
           <div className="Organisition_Master-tab-bar">
             <button
-              className={`Organisition_Master-tab ${selectedTab === "location" ? "active" : ""
-                }`}
+              className={`Organisition_Master-tab ${
+                selectedTab === "location" ? "active" : ""
+              }`}
               onClick={() => setSelectedTab("location")}
             >
               Loccation
             </button>
 
             <button
-              className={`Organisition_Master-tab ${selectedTab === "orgDoctor" ? "active" : ""
-                }`}
+              className={`Organisition_Master-tab ${
+                selectedTab === "orgDoctor" ? "active" : ""
+              }`}
               onClick={() => setSelectedTab("orgDoctor")}
             >
               Org Doctor Fee
             </button>
             <button
-              className={`Organisition_Master-tab ${selectedTab === "otherGrid" ? "active" : ""
-                }`}
+              className={`Organisition_Master-tab ${
+                selectedTab === "otherGrid" ? "active" : ""
+              }`}
               onClick={() => setSelectedTab("otherGrid")}
             >
               Other Grid Details

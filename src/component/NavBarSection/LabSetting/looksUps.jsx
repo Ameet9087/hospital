@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../LabSetting/looksUps.css";
-// import LSLabTestAddNLTest from './lSLabTestAddNLTest';
 import LabLookUpAddNewLUp from "./labLookUpAddNewLUp";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import LabLookUpUpdateNewLUp from "./LabLookUpUpdateNewLUp";
@@ -14,6 +13,7 @@ const LookUps = () => {
   const [lookup, setLookUp] = useState({});
   const [loading, setLoading] = useState(false); // Loading state
   const [error, setError] = useState("");
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
 
@@ -40,6 +40,7 @@ const LookUps = () => {
   const handleAddNewLabTestClick = () => {
     setShowPopup(true);
   };
+
   const handleUpdateNewLabTestClick = (item) => {
     setLookUp(item);
     setShowUpdatePopup(true);
@@ -50,6 +51,22 @@ const LookUps = () => {
     setShowPopup(false);
     setShowUpdatePopup(false);
   };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/lab-lookups/remove/${id}`);
+      fetchLabLookups();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Filter the lab lookups based on search term
+  const filteredLabTests = labTests.filter(
+    (test) =>
+      test.lookupName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      test.moduleName.toLowerCase().includes(searchTerm.toLowerCase()) // Additional field search
+  );
 
   return (
     <div className="looksUps-container">
@@ -63,36 +80,27 @@ const LookUps = () => {
           </button>
         </div>
       </div>
-      <div className="looksUps-controls">
-          <div className="looksUps-date-range">
-      <label>
-        From:
-        <input type="date" defaultValue="2024-08-09" />
-      </label>
-      <label>
-        To:
-        <input type="date" defaultValue="2024-08-16" />
-      </label>
 
-    </div>
-</div>
       <div className="looksUps-search-N-result">
         <div className="looksUps-search-bar">
           <i className="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Search..." />
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchTerm} // Bind to searchTerm state
+            onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm on input change
+          />
         </div>
         <div className="looksUps-results-info">
-          <span>Showing 0 / 0 results</span>
-          <button className="looksUps-print-button">
-          <i className="fa-solid fa-file-excel"></i> Export
-          </button>
-          <button className="looksUps-print-button">
-            <i class="fa-solid fa-print"></i> Print
-          </button>
+          <span>
+            Showing {filteredLabTests.length} / {labTests.length} results
+          </span>
         </div>
       </div>
+
       {loading && <p>Loading...</p>}
       {error && <p className="looksUps-error">{error}</p>}
+
       <div className="table-container" id="table-to-print">
         <table ref={tableRef}>
           <thead>
@@ -124,8 +132,8 @@ const LookUps = () => {
             </tr>
           </thead>
           <tbody>
-            {labTests.length > 0
-              ? labTests.map((test, index) => (
+            {filteredLabTests.length > 0
+              ? filteredLabTests.map((test, index) => (
                   <tr key={index}>
                     <td>{test.moduleName}</td>
                     <td>{test.lookupName}</td>
@@ -139,6 +147,12 @@ const LookUps = () => {
                       >
                         Edit
                       </button>
+                      <button
+                        className="looksUps-delete-button"
+                        onClick={() => handleDelete(test.labLookupId)}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))
@@ -150,14 +164,7 @@ const LookUps = () => {
           </tbody>
         </table>
       </div>
-      {/* <div className="looksUps-pagination">
-          <span>0 to 0 of 0</span>
-          <button>First</button>
-          <button>Previous</button>
-          <span>Page 0 of 0</span>
-          <button>Next</button>
-          <button>Last</button>
-        </div> */}
+
       {/* Modal Popup */}
       {showPopup && (
         <div className="looksUps-modal">

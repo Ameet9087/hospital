@@ -17,6 +17,7 @@ const KitMaster = () => {
   const [modalItems, setModalItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [kitCategories, setKitCategories] = useState([]);
     const navigate = useNavigate();
   const location = useLocation();
 
@@ -122,6 +123,17 @@ const KitMaster = () => {
     setSelectedItem(item);
     setShowModal(false); // Close the modal after selecting the item
   };
+  useEffect(() => {
+    // Fetch kit categories from the API
+    axios.get("http://localhost:4096/api/kit-categories")
+      .then(response => {
+        setKitCategories(response.data);
+      })
+      .catch(error => {
+        console.error("There was an error fetching the kit categories!", error);
+      });
+  }, []);
+
 
   return (
     <div className="kit-master">
@@ -153,13 +165,18 @@ const KitMaster = () => {
         <label>
           Kit Category <span>*</span>
         </label>
-        <input
-          type="number"
-          value={kitCategoryId}
-          onChange={(e) => setKitCategoryId(e.target.value)}
-          placeholder="Enter Kit Category ID"
-          required
-        />
+        <select
+        value={kitCategoryId}
+        onChange={(e) => setKitCategoryId(e.target.value)}
+        required
+      >
+        <option value="">Select Kit Category</option>
+        {kitCategories.map((kit) => (
+          <option key={kit.kitCategoryId} value={kit.kitCategoryId}>
+            {kit.description}
+          </option>
+        ))}
+      </select>
       </div>
 
       <div className="kit-master-form-group">
@@ -229,11 +246,12 @@ const KitMaster = () => {
                       value={item.name}
                       onChange={(e) => handleInputChange(index, "name", e.target.value)}
                       placeholder="Select Item"
+                      onClick={() => setShowModal(true)}
                     />
                     <FontAwesomeIcon
                       icon={faSearch}
                       className="search-icon"
-                      onClick={() => setShowModal(true)}
+                      
                     />
                   </div>
                 </td>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../../api/api";
 import RadiologyPopupTable from "../../Employee/Radiology/RadiologyPopupTable";
 import axios from "axios";
-const LSLabTestAddNLTest = ({ onClose }) => {
+const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
   const [labCategories, setLabCategories] = useState([]);
   const [labComponents, setLabComponents] = useState([]);
   const [serviceDetails, setServiceDetails] = useState([]);
@@ -31,7 +31,31 @@ const LSLabTestAddNLTest = ({ onClose }) => {
   useEffect(() => {
     fetchServiceDetails();
   }, []);
-  
+
+  useEffect(() => {
+    console.log(intialData);
+
+    if (isDataUpdate && intialData) {
+      setLabTestData({
+        labTestName: intialData.labTestName || "",
+        labTestCode: intialData.labTestCode || "",
+        reportingName: intialData.reportingName || "",
+        serviceDepartment: intialData.serviceDepartment || "",
+        selectedSpecimen: intialData.selectedSpecimen || "",
+        runNoType: intialData.runNoType || "normal",
+        displaySequence: intialData.displaySequence || 0,
+        isSmsApplicable: intialData.isSmsApplicable || false,
+        isLisApplicable: intialData.isLisApplicable || false,
+        isValidForReporting: intialData.isValidForReporting || false,
+        isOutsourcedTest: intialData.isOutsourcedTest || false,
+        taxApplicable: intialData.taxApplicable || false,
+        hasNegativeResults: intialData.hasNegativeResults || false,
+        interpretation: intialData.interpretation || "",
+        components: intialData.labComponents || [],
+      });
+    }
+  }, [isDataUpdate, intialData]);
+
   useEffect(() => {
     const fetchLabCategories = async () => {
       try {
@@ -49,7 +73,7 @@ const LSLabTestAddNLTest = ({ onClose }) => {
         console.error("Error:", error);
       }
     };
-    
+
     const fetchLabComponents = async () => {
       try {
         const response = await fetch(
@@ -66,7 +90,7 @@ const LSLabTestAddNLTest = ({ onClose }) => {
         console.error("Error:", error);
       }
     };
-    
+
     fetchLabComponents();
     fetchLabCategories();
   }, []); // Run once on component mount
@@ -82,7 +106,7 @@ const LSLabTestAddNLTest = ({ onClose }) => {
     const response = await axios.get(
       `${API_BASE_URL}/service-details/service?typeName=Lab`
     );
-    setServiceDetails(response.data);    
+    setServiceDetails(response.data);
   };
   const getPopupData = () => {
     if (activePopup === "labTestName") {
@@ -90,13 +114,11 @@ const LSLabTestAddNLTest = ({ onClose }) => {
         columns: ["serviceDetailsId", "serviceName", "serviceTypeName"],
         data: serviceDetails,
       };
-    }
-    else {
+    } else {
       return { columns: [], data: [] };
     }
   };
   const { columns, data } = getPopupData();
-  
 
   const handleSelect = (data) => {
     if (activePopup === "labTestName") {
@@ -107,7 +129,6 @@ const LSLabTestAddNLTest = ({ onClose }) => {
       setSelectedServiceDetails(data); // Assuming this sets some additional selected service details
     }
   };
-  
 
   const handleComponentChange = (index, e) => {
     const { value } = e.target;
@@ -191,6 +212,41 @@ const LSLabTestAddNLTest = ({ onClose }) => {
       console.error("Error:", error);
     }
   };
+
+  const handleUpdateLabTest = async (id) => {
+    const dataToSend = {
+      labTestCode: labTestData.labTestCode,
+      labTestName: labTestData.labTestName,
+      labTestSpecimen: labTestData.selectedSpecimen,
+      hasNegativeResults: labTestData.hasNegativeResults ? "Yes" : "No",
+      negativeResultText: labTestData.hasNegativeResults
+        ? labTestData.interpretation
+        : "",
+      isValidForReporting: labTestData.isValidForReporting ? "Yes" : "No",
+      displaySequence: labTestData.displaySequence,
+      reportingName: labTestData.reportingName,
+      interpretation: labTestData.interpretation,
+      runNumberType: labTestData.runNoType,
+      labTestCategoryId: labCategories?.id || null,
+      isOutsourceTest: labTestData.isOutsourcedTest ? "Yes" : "No",
+      smsApplicable: labTestData.isSmsApplicable ? "Yes" : "No",
+      isLISApplicable: labTestData.isLisApplicable ? "Yes" : "No",
+      labComponentIds: labTestData.components
+        .map((comp) => comp.id)
+        .filter(Boolean), // Only get IDs that are defined
+    };
+
+    try {
+      const response = await axios.put(
+        `${API_BASE_URL}/labTestSetting/update/${id}`,
+        dataToSend
+      );
+      onClose();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="lSLabTestAddNLTest-container">
       <div className="lSLabTestAddNLTest-header">
@@ -486,13 +542,24 @@ const LSLabTestAddNLTest = ({ onClose }) => {
       </div>
 
       <div className="lSLabTestAddNLTest-form-actions">
-        <button
-          className="lSLabTestAddNLTest-add-btn"
-          onClick={saveLabTestData}
-        >
-          Add
+        {isDataUpdate ? (
+          <button
+            onClick={() => handleUpdateLabTest(intialData?.labTestId)}
+            className="lSLabTestAddNLTest-add-btn"
+          >
+            Update
+          </button>
+        ) : (
+          <button
+            className="lSLabTestAddNLTest-add-btn"
+            onClick={saveLabTestData}
+          >
+            Add
+          </button>
+        )}
+        <button className="lSLabTestAddNLTest-close-btn" onClick={onClose}>
+          Close
         </button>
-        <button className="lSLabTestAddNLTest-close-btn">Close</button>
       </div>
       {activePopup && (
         <RadiologyPopupTable

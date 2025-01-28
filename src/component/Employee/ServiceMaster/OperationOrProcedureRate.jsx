@@ -69,13 +69,13 @@
 //   );
 // }
 // export default OperationOrProcedureRate;
-import React, { useState, useRef } from 'react';
-import './ServiceRate.css';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import React, { useState, useRef } from "react";
+import "./ServiceRate.css";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 
 function OperationOrProcedureRate({ rates, onRateChange }) {
   const [rows, setRows] = useState([
-    { sn: 1, description: '', percentage: '', drRef: '' }
+    { sn: 1, description: "", percentage: "", drRef: "" },
   ]);
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -83,23 +83,29 @@ function OperationOrProcedureRate({ rates, onRateChange }) {
   const addRow = () => {
     const newRow = {
       sn: rows.length + 1,
-      description: '',
-      percentage: '',
-      drRef: ''
+      description: "",
+      percentage: "",
+      drRef: "",
     };
     setRows([...rows, newRow]);
   };
 
   const deleteRow = (index) => {
-    const updatedRows = rows.filter((_, i) => i !== index);
-    setRows(updatedRows);
+    if (rows.length > 1) {
+      const updatedRows = rows.filter((_, i) => i !== index);
+      const reindexedRows = updatedRows.map((row, i) => ({
+        ...row,
+        sn: i + 1, 
+      }));
+      setRows(reindexedRows);
+    }
   };
 
   const updateRow = (index, field, value) => {
     const updatedRows = [...rows];
     updatedRows[index][field] = value;
     setRows(updatedRows);
-    
+
     // Update rates in parent component
     onRateChange(index, field, value);
   };
@@ -110,27 +116,26 @@ function OperationOrProcedureRate({ rates, onRateChange }) {
       <table ref={tableRef}>
         <thead>
           <tr>
-            {[
-              'SN',
-              'Description',
-              'Percentage (%)',
-              'Dr Ref',
-              'Actions'
-            ].map((header, index) => (
-              <th
-                key={index}
-                style={{ width: columnWidths[index] || 'auto' }}
-                className="resizable-th"
-              >
-                <div className="header-content">
-                  <span>{header}</span>
-                  <div
-                    className="resizer"
-                    onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                  ></div>
-                </div>
-              </th>
-            ))}
+            {["SN", "Description", "Percentage (%)", "Dr Ref", "Actions"].map(
+              (header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] || "auto" }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              )
+            )}
           </tr>
         </thead>
         <tbody>
@@ -138,39 +143,52 @@ function OperationOrProcedureRate({ rates, onRateChange }) {
             <tr key={index}>
               <td>{row.sn}</td>
               <td>
-                <input 
+                <input
                   type="text"
                   value={row.description}
-                  onChange={(e) => updateRow(index, 'description', e.target.value)}
-                   className='Service-rate-input'
-                  />
+                  onChange={(e) =>
+                    updateRow(index, "description", e.target.value)
+                  }
+                  className="Service-rate-input"
+                />
               </td>
               <td>
-                <input 
+                <input
                   type="number"
                   value={row.percentage}
-                  onChange={(e) => updateRow(index, 'percentage', e.target.value)}
-                   className='Service-rate-input'
-                  />
+                  onChange={(e) =>
+                    updateRow(index, "percentage", e.target.value)
+                  }
+                  className="Service-rate-input"
+                />
               </td>
               <td>
-                <input 
+                <input
                   type="text"
                   value={row.drRef}
-                  onChange={(e) => updateRow(index, 'drRef', e.target.value)}
-                   className='Service-rate-input'
-                  />
+                  onChange={(e) => updateRow(index, "drRef", e.target.value)}
+                  className="Service-rate-input"
+                />
               </td>
               <td>
-              <button onClick={() => deleteRow(index)} className=''>Del</button>
-                <button onClick={addRow}>Add</button>
+                <div className="button-container">
+                  <button
+                    onClick={() => deleteRow(index)}
+                    className="service-rate-del-button"
+                  >
+                    Del
+                  </button>
+                  <button className="service-rate-add-button" onClick={addRow}>
+                    Add
+                  </button>
+                </div>
               </td>
-              </tr>
-              ))}
-              </tbody>
-          </table>
-          </div>
-   );
-  }
-  
-  export default OperationOrProcedureRate;
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export default OperationOrProcedureRate;

@@ -5,28 +5,23 @@ import './AddEmployeePopup.css';
 
 function UpdateEmployeepopup({ onClose, onSubmit, employee }) {
     const [formData, setFormData] = useState({
-        empName: '',
-        email: '',
-        position: '',
-        department: '',
-        mobile: '',
+        firstName: '',
+        lastName: '',
+        emailId: '',
+        contactNumber: '',
         dateOfJoining: '',
-        schedulestart: '',
-        scheduleend: '',
-        salary: ''
+
     });
 
     useEffect(() => {
         if (employee) {
             setFormData({
-                empName: employee.empName || '',
-                email: employee.email || '',
-                position: employee.position || '',
-                department: employee.department || '',
-                mobile: employee.mobile || '',
+                firstName: employee.firstName || '',
+                lastName: employee.lastName || '',
+                emailId: employee.emailId || '',
+                contactNumber: employee.contactNumber || '',
                 dateOfJoining: employee.dateOfJoining || '',
-                schedulestart: employee.schedulestart || '',
-                scheduleend: employee.scheduleend || '',
+
             });
         }
     }, [employee]);
@@ -44,7 +39,7 @@ function UpdateEmployeepopup({ onClose, onSubmit, employee }) {
     };
 
     return (
-       
+
         <div className="addemployeepopup__overlay">
             <div className="addemployeepopup__popup">
                 <div className="addemployeepopup__header">
@@ -58,28 +53,24 @@ function UpdateEmployeepopup({ onClose, onSubmit, employee }) {
                 </div>
                 <form className="addemployeepopup__form" onSubmit={handleSubmit}>
                     <div className="addemployeepopup__formGroup">
-                        <label>Employee Name:</label>
-                        <input type="text" name="empName" value={formData.empName} onChange={handleChange} required />
+                        <label>First Name:</label>
+                        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
 
                     </div>
                     <div className="addemployeepopup__formGroup">
-                        <label>Email:</label>
-                        <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+                        <label>Last Name:</label>
+                        <input type="text" name="firstName" value={formData.lastName} onChange={handleChange} required />
 
                     </div>
                     <div className="addemployeepopup__formGroup">
-                        <label>Position:</label>
-                        <input type="text" name="position" value={formData.position} onChange={handleChange} required />
+                        <label>emailId:</label>
+                        <input type="emailId" name="emailId" value={formData.emailId} onChange={handleChange} required />
 
                     </div>
-                    <div className="addemployeepopup__formGroup">
-                        <label>Department:</label>
-                        <input type="text" name="department" value={formData.department} onChange={handleChange} required />
 
-                    </div>
                     <div className="addemployeepopup__formGroup">
-                        <label>Mobile:</label>
-                        <input type="text" name="mobile" value={formData.mobile} onChange={handleChange} required />
+                        <label>contactNumber:</label>
+                        <input type="text" name="contactNumber" value={formData.contactNumber} onChange={handleChange} required />
 
                     </div>
                     <div className="addemployeepopup__formGroup">
@@ -87,7 +78,7 @@ function UpdateEmployeepopup({ onClose, onSubmit, employee }) {
                         <input type="date" name="dateOfJoining" value={formData.dateOfJoining} onChange={handleChange} required />
 
                     </div>
-                    <div className="addemployeepopup__formGroup">
+                    {/* <div className="addemployeepopup__formGroup">
                         <label>Schedule Start:</label>
                         <input type="time" name="schedulestart" value={formData.schedulestart} onChange={handleChange} required />
 
@@ -96,7 +87,7 @@ function UpdateEmployeepopup({ onClose, onSubmit, employee }) {
                         <label>Schedule End:</label>
                         <input type="time" name="scheduleend" value={formData.scheduleend} onChange={handleChange} required />
 
-                    </div>
+                    </div> */}
                     <div className="addemployeepopup__formActions">
                         <button type="button" onClick={onClose}>
                             Cancel

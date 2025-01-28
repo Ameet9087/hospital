@@ -128,10 +128,12 @@ function Cssd() {
             element={<BubblePendingKitReceive />}
           />
           <Route
-            path="/cssdtransaction/cssd-pending-kit-return/pending-return/:receivingId"
-            element={<CssdKitReturn />}
-          />
+          path="cssdtransaction-mainmenu/cssd-pending-kit-return/pending-return/:receivingId"
+          element={<CssdKitReturn />}
+        />
         </Routes>
+
+      
       </div>
     </div>
   );

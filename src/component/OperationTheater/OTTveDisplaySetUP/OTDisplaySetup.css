@@ -75,7 +75,7 @@
     box-shadow: 0 0 4px rgba(0, 151, 143, 0.5);
   }
   
-  button {
+  /* button {
     background-color: var(--button-bg-color);
     color: var(--button-color);
     border: none;
@@ -90,4 +90,4 @@
     border-color: var(--button-hover-border-color);
     color: var(--button-hover-text-color);
   }
-  
+   */

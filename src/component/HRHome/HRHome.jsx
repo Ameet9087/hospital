@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
 import './HRHome.css';
 
-
 import AllEmployee from './AllEmployee/AllEmployee';
 import Attendance from './Attendance/Attendance';
 import EmpSchedule from './EmpSchedule/EmpSchedule';
@@ -31,14 +30,14 @@ const HRHome = () => {
                 >
                     Attendance
                 </NavLink>
-                <NavLink
+                {/* <NavLink
                     to="/hr/employeeschedule"
                     className={({ isActive }) =>
                         isActive ? "HRHome-navigation-link active" : "HRHome-navigation-link"
                     }
                 >
                     Employee Schedule
-                </NavLink>
+                </NavLink> */}
                 <NavLink
                     to="/hr/employeeleave"
                     className={({ isActive }) =>
@@ -84,7 +83,7 @@ const HRHome = () => {
                 <Routes>
                     <Route path="/employeelist" element={<AllEmployee />} />
                     <Route path="/attendance" element={<Attendance />} />
-                    <Route path="/employeeschedule" element={<EmpSchedule />} />
+                    {/* <Route path="/employeeschedule" element={<EmpSchedule />} /> */}
                     <Route path="/employeeleave" element={<EmpLeave />} />
                     <Route path="/performanceevaluation" element={<PerformanceEvaluation />} />
                     <Route path="/payroll" element={<Payroll />} />

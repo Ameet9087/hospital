@@ -300,11 +300,17 @@ export default function DoctorAppointmentPopUp({
   useEffect(() => {
     fetchOutPatientData();
   }, []);
+  const getPlaceholder = () => {
+    return formData.relation
+      ? `Enter ${formData.relation.toLowerCase()} name`
+      : "Enter relative name";
+  };
 
   const RescheduleAppointment = (item) => {
     setUpdate(item);
     setShowReschedule(true);
   };
+
 
   return (
     <>
@@ -503,12 +509,30 @@ export default function DoctorAppointmentPopUp({
           <div className="operationschedule-form-row">
             <div className="operationschedule-form-col">
               <label>Relation</label>
-              <input
-                type="text"
+              <select
                 name="relation"
-                value={formData.relation || ""}
+                value={formData.relation}
                 onChange={handleInputChange}
-              />
+                className="form-select"
+              >
+                <option value="">-- Select Relation --</option>
+                <option value="Father">Father</option>
+                <option value="Mother">Mother</option>
+                <option value="Son">Son</option>
+                <option value="Daughter">Daughter</option>
+                <option value="Guardian">Guardian</option>
+                <option value="Sibling">Sibling</option>
+                <option value="Spouse">Spouse</option>
+                <option value="Grandparent">Grandparent</option>
+                <option value="Grandchild">Grandchild</option>
+                <option value="Uncle">Uncle</option>
+                <option value="Aunt">Aunt</option>
+                <option value="Nephew">Nephew</option>
+                <option value="Niece">Niece</option>
+                <option value="Cousin">Cousin</option>
+                <option value="Friend">Friend</option>
+                <option value="Other">Other</option>
+              </select>
             </div>
             <div className="operationschedule-form-col">
               <label>Relative Name</label>
@@ -517,6 +541,7 @@ export default function DoctorAppointmentPopUp({
                 name="relativeName"
                 value={formData.relativeName || ""}
                 onChange={handleInputChange}
+                placeholder={getPlaceholder()}
               />
             </div>
           </div>

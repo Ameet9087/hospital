@@ -3,17 +3,17 @@ import "./AddNewrecrutier.css";
 
 const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
     const [formData, setFormData] = useState({
-        recruitement_id: '',
+        recruitement_id:'',
         name: '',
-        email: '',
         mobile: '',
-        dateOfJoining: '',
+        email: '',
         department: '',
         designation: '',
-        typeofemployee: '',
+        dateOfJoining: '',
+        typeOfEmployee: '',
+        status: '',
         hiredBy: '',
         previousRole: '',
-        status: '',
         remark: ''
     });
 
@@ -23,15 +23,15 @@ const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
             setFormData({
                 recruitement_id: recruiter.recruitement_id || '',
                 name: recruiter.name || '',
-                email: recruiter.email || '',
                 mobile: recruiter.mobile || '',
-                dateOfJoining: recruiter.dateOfJoining || '',
+                email: recruiter.email || '',
                 department: recruiter.department || '',
                 designation: recruiter.designation || '',
-                typeofemployee: recruiter.typeofemployee || '',
+                dateOfJoining: recruiter.dateOfJoining || '',
+                typeOfEmployee: recruiter.typeOfEmployee || '',
+                status: recruiter.status || '',
                 hiredBy: recruiter.hiredBy || '',
                 previousRole: recruiter.previousRole || '',
-                status: recruiter.status || '',
                 remark: recruiter.remark || ''
             });
         }
@@ -49,7 +49,7 @@ const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(formData);  // Send the updated data to parent component
+        onSubmit(formData); // Send the updated data to parent component
     };
 
     return (
@@ -64,17 +64,6 @@ const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
 
                     <div className="addNewrecrutier-form-group-1row">
                         <div className="addNewrecrutier-form-group">
-                            <label>Recruiter Id<span>*</span></label>
-                            <input
-                                type="text"
-                                name="recruitement_id"
-                                value={formData.recruitement_id}
-                                onChange={handleInputChange}
-                                placeholder="Recruiter Id"
-                                disabled
-                            />
-                        </div>
-                        <div className="addNewrecrutier-form-group">
                             <label>Recruiter Name<span>*</span></label>
                             <input
                                 type="text"
@@ -83,19 +72,6 @@ const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
                                 onChange={handleInputChange}
                                 placeholder="Recruiter Name"
                                 required
-                            />
-                        </div>
-                    </div>
-
-                    <div className="addNewrecrutier-form-group-1row">
-                        <div className="addNewrecrutier-form-group">
-                            <label>Email Address</label>
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                placeholder="Email Address"
                             />
                         </div>
                         <div className="addNewrecrutier-form-group">
@@ -113,6 +89,16 @@ const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
 
                     <div className="addNewrecrutier-form-group-1row">
                         <div className="addNewrecrutier-form-group">
+                            <label>Email Address</label>
+                            <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
+                                placeholder="Email Address"
+                            />
+                        </div>
+                        <div className="addNewrecrutier-form-group">
                             <label>Date of Joining</label>
                             <input
                                 type="date"
@@ -122,6 +108,9 @@ const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
                                 placeholder="Date of Joining"
                             />
                         </div>
+                    </div>
+
+                    <div className="addNewrecrutier-form-group-1row">
                         <div className="addNewrecrutier-form-group">
                             <label>Department<span>*</span></label>
                             <input
@@ -129,13 +118,10 @@ const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
                                 name="department"
                                 value={formData.department}
                                 onChange={handleInputChange}
-                                placeholder='Department'
+                                placeholder="Department"
                                 required
                             />
                         </div>
-                    </div>
-
-                    <div className="addNewrecrutier-form-group-1row">
                         <div className="addNewrecrutier-form-group">
                             <label>Designation</label>
                             <input
@@ -146,20 +132,20 @@ const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
                                 placeholder="Designation"
                             />
                         </div>
+                    </div>
+
+                    <div className="addNewrecrutier-form-group-1row">
                         <div className="addNewrecrutier-form-group">
                             <label>Employee Type<span>*</span></label>
                             <input
                                 type="text"
-                                name="typeofemployee"
-                                value={formData.typeofemployee}
+                                name="typeOfEmployee"
+                                value={formData.typeOfEmployee}
                                 onChange={handleInputChange}
-                                placeholder='Employee Type'
+                                placeholder="Employee Type"
                                 required
                             />
                         </div>
-                    </div>
-
-                    <div className="addNewrecrutier-form-group-1row">
                         <div className="addNewrecrutier-form-group">
                             <label>Assigned Hiring Managers</label>
                             <input
@@ -170,6 +156,9 @@ const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
                                 placeholder="Assigned Hiring Managers"
                             />
                         </div>
+                    </div>
+
+                    <div className="addNewrecrutier-form-group-1row">
                         <div className="addNewrecrutier-form-group">
                             <label>Previous Role<span>*</span></label>
                             <input
@@ -177,13 +166,10 @@ const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
                                 name="previousRole"
                                 value={formData.previousRole}
                                 onChange={handleInputChange}
-                                placeholder='Previous Role'
+                                placeholder="Previous Role"
                                 required
                             />
                         </div>
-                    </div>
-
-                    <div className="addNewrecrutier-form-group-1row">
                         <div className="addNewrecrutier-form-group">
                             <label>Status</label>
                             <input
@@ -194,6 +180,9 @@ const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
                                 placeholder="Status"
                             />
                         </div>
+                    </div>
+
+                    <div className="addNewrecrutier-form-group-1row">
                         <div className="addNewrecrutier-form-group">
                             <label>Remarks<span>*</span></label>
                             <input
@@ -201,7 +190,7 @@ const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
                                 name="remark"
                                 value={formData.remark}
                                 onChange={handleInputChange}
-                                placeholder='Remarks'
+                                placeholder="Remarks"
                                 required
                             />
                         </div>

@@ -6,6 +6,7 @@ import AddNewrecrutier from './AddNewrecrutier';
 import Updaterecruiter from './Updaterecruiter'
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
+import { API_BASE_URL } from '../../api/api';
 
 
 const RecrutierMng = () => {
@@ -18,7 +19,7 @@ const RecrutierMng = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-    const [columnWidths, setColumnWidths] = useState([100, 150, 150, 120, 150, 120, 150, 120, 150, 150, 120, 150, 100]); // Example initial widths
+    const [columnWidths, setColumnWidths] = useState([]); // Example initial widths
     const tableRef = useRef(null);
 
     const { success, warning, CustomAlerts } = useCustomAlert();
@@ -38,7 +39,7 @@ const RecrutierMng = () => {
 
     const handleSubmitButton = async (formData) => {
         try {
-            const response = await axios.post('http://localhost:8086/api/recruitments/add', formData);
+            const response = await axios.post(`${API_BASE_URL}/recruitments/add`, formData);
             console.log('Recruiter added:', response.data);
             fetchRecruiters();
             success('Recruitment Added Successfully');
@@ -52,9 +53,10 @@ const RecrutierMng = () => {
     };
 
     const handleUpdateSubmitButton = async (formData) => {
+        console.log(formData);
+        
         try {
-            const response = await axios.put(`http://localhost:8086/api/recruitments/update/${formData.recruitement_id}`, formData);
-            console.log('Recruiter added:', response.data);
+            const response = await axios.put(`${API_BASE_URL}/recruitments/update/${formData.recruitement_id}`, formData);
             fetchRecruiters();
             
             success('Recruitment Updated Successfully');
@@ -71,7 +73,7 @@ const RecrutierMng = () => {
     const fetchRecruiters = async () => {
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:8086/api/recruitments/getall');
+            const response = await axios.get(`${API_BASE_URL}/recruitments/getall`);
             setRecruiters(response.data);
         } catch (err) {
             setError('Error fetching recruiters');

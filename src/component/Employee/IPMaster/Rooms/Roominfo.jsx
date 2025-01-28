@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import './Roominfo.css';
-import { API_BASE_URL } from '../../../api/api';
-import CustomModal from '../../../../CustomModel/CustomModal';
-import IpMasterPopupTable from '../IpMasterPopupTable';
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns"
-import axios from 'axios';
-
+import React, { useState, useEffect, useRef } from "react";
+import "./Roominfo.css";
+import { API_BASE_URL } from "../../../api/api";
+import CustomModal from "../../../../CustomModel/CustomModal";
+import IpMasterPopupTable from "../IpMasterPopupTable";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import axios from "axios";
 
 const Roominfo = () => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -17,36 +16,40 @@ const Roominfo = () => {
     orderNumber: "",
     facilities: "",
     inventoryDepartment: "",
-    defaultID: ""
+    defaultID: "",
   });
-  const [floor, setFloor] = useState([])
-  const [selectedFloor, setSelectedFloor] = useState(null)
-  const [roomType, setRoomType] = useState([])
-  const [selectedRoomType, setSelectedRoomType] = useState(null)
+  const [floor, setFloor] = useState([]);
+  const [selectedFloor, setSelectedFloor] = useState(null);
+  const [roomType, setRoomType] = useState([]);
+  const [selectedRoomType, setSelectedRoomType] = useState(null);
   const [activePopup, setActivePopup] = useState("");
   const [roomData, setRoomData] = useState([]);
-  const [roomName,setRoomName] = useState("");
-  const [floorTypes,setFloorTypes]=useState([]);
-
+  const [roomName, setRoomName] = useState("");
+  const [floorTypes, setFloorTypes] = useState([]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
     setFormdata((prevData) => ({
       ...prevData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
 
     if (name === "roomNumber") {
       setFormdata((prevData) => ({
-        ...prevData, defaultID: `Room_${value}`,name:`Room_${value}`
-      }))
+        ...prevData,
+        defaultID: `Room_${value}`,
+        name: `Room_${value}`,
+      }));
     }
   };
 
   const getPopupData = () => {
     if (activePopup === "floor") {
-      return { columns: ["id", "floorNumber", "floorName", "location"], data: floor };
+      return {
+        columns: ["id", "floorNumber", "floorName", "location"],
+        data: floor,
+      };
     } else if (activePopup === "roomType") {
       return { columns: ["id", "roomtype", "type"], data: roomType };
     } else {
@@ -58,25 +61,21 @@ const Roominfo = () => {
 
   const handleSelect = async (data) => {
     if (activePopup === "floor") {
-      setSelectedFloor(data)
+      setSelectedFloor(data);
       console.log(data);
-      
-
     } else if (activePopup === "roomType") {
-      setSelectedRoomType(data)
+      setSelectedRoomType(data);
     }
     setActivePopup(null); // Close the popup after selection
   };
 
-
   useEffect(() => {
     const fetchAllRooms = async () => {
-      const response = await axios.get(`${API_BASE_URL}/rooms`)
-      setRoomData(response.data)
-    }
-    fetchAllRooms()
-  }, [])
-
+      const response = await axios.get(`${API_BASE_URL}/rooms`);
+      setRoomData(response.data);
+    };
+    fetchAllRooms();
+  }, []);
 
   useEffect(() => {
     const fetchRoomTypes = async () => {
@@ -88,7 +87,7 @@ const Roominfo = () => {
         const data = await response.json();
         setRoomType(data);
       } catch (error) {
-        console.error('Error fetching room types:', error);
+        console.error("Error fetching room types:", error);
       }
     };
     fetchRoomTypes();
@@ -104,7 +103,7 @@ const Roominfo = () => {
         const data = await response.json();
         setFloor(data);
       } catch (error) {
-        console.error('Error fetching floor types:', error);
+        console.error("Error fetching floor types:", error);
       }
     };
     fetchFloors();
@@ -113,38 +112,37 @@ const Roominfo = () => {
   const handleSave = async () => {
     // Update the formdata object with nested properties
     formdata.roomType = {
-      id: selectedRoomType?.id
+      id: selectedRoomType?.id,
     };
-  
+
     formdata.floor = {
-      id: selectedFloor?.id
+      id: selectedFloor?.id,
     };
-  
+
     // Create the updated form data object
     const updateFormData = { ...formdata, name: roomName };
-  
-    console.log('Request Payload:', updateFormData);
-  
+
+    console.log("Request Payload:", updateFormData);
+
     try {
       const response = await fetch(`${API_BASE_URL}/rooms`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         // Convert the object to a JSON string
         body: JSON.stringify(updateFormData),
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
-      console.log('Room created successfully');
+      setShowModal(false);
+      alert("Room Created Successfully");
     } catch (error) {
-      console.error('Error saving room:', error);
+      console.error("Error saving room:", error);
     }
   };
-  
 
   return (
     <>
@@ -154,7 +152,9 @@ const Roominfo = () => {
             <span>Create Rooms</span>
           </div>
         </div> */}
-        <button className='room-add-btn' onClick={() => setShowModal(true)}>Add Room</button>
+        <button className="room-add-btn" onClick={() => setShowModal(true)}>
+          Add Room
+        </button>
 
         <table ref={tableRef}>
           <thead>
@@ -167,7 +167,7 @@ const Roominfo = () => {
                 "Order Number",
                 "Facilities",
                 "Inventory Department",
-                "Room Status"
+                "Room Status",
               ].map((header, index) => (
                 <th
                   key={index}
@@ -225,7 +225,7 @@ const Roominfo = () => {
                     <input
                       type="text"
                       value={formdata.roomNumber}
-                      name='roomNumber'
+                      name="roomNumber"
                       onChange={handleChange}
                       placeholder="Enter Room Number"
                     />
@@ -237,7 +237,7 @@ const Roominfo = () => {
                     <input
                       type="text"
                       value={formdata.defaultID}
-                      name='defaultID'
+                      name="defaultID"
                       placeholder="Enter Default ID"
                       readOnly
                     />
@@ -248,8 +248,8 @@ const Roominfo = () => {
                   <div className="room-info-input-with-search">
                     <input
                       type="text"
-                      onChange={(e)=>setRoomName(e.target.value)}
-                      name='name'
+                      onChange={(e) => setRoomName(e.target.value)}
+                      name="name"
                       placeholder="Enter Name"
                     />
                   </div>
@@ -263,7 +263,10 @@ const Roominfo = () => {
                       placeholder="Search Room Type"
                       readOnly
                     />
-                    <i onClick={() => setActivePopup("roomType")} className='fa-solid fa-magnifying-glass'></i>
+                    <i
+                      onClick={() => setActivePopup("roomType")}
+                      className="fa-solid fa-magnifying-glass"
+                    ></i>
                   </div>
                 </div>
 
@@ -276,7 +279,10 @@ const Roominfo = () => {
                       placeholder="Search Floor"
                       readOnly
                     />
-                    <i onClick={() => setActivePopup("floor")} className='fa-solid fa-magnifying-glass'></i>
+                    <i
+                      onClick={() => setActivePopup("floor")}
+                      className="fa-solid fa-magnifying-glass"
+                    ></i>
                   </div>
                 </div>
               </div>
@@ -290,7 +296,7 @@ const Roominfo = () => {
                   <div className="room-info-input-with-search">
                     <input
                       type="text"
-                      name='orderNumber'
+                      name="orderNumber"
                       value={formdata.orderNumber}
                       onChange={handleChange}
                       placeholder="Enter Order Number"
@@ -302,7 +308,7 @@ const Roominfo = () => {
                   <label>Facilities:</label>
                   <textarea
                     value={formdata.facilities}
-                    name='facilities'
+                    name="facilities"
                     onChange={handleChange}
                     placeholder="Enter Facilities"
                   />
@@ -313,7 +319,7 @@ const Roominfo = () => {
                   <div className="room-info-input-with-search">
                     <input
                       type="text"
-                      name='inventoryDepartment'
+                      name="inventoryDepartment"
                       value={formdata.inventoryDepartment}
                       onChange={handleChange}
                       placeholder="Enter Department"
@@ -323,7 +329,7 @@ const Roominfo = () => {
               </div>
             </div>
           </div>
-          <div className='roomtypeaddbtn'>
+          <div className="roomtypeaddbtn">
             <button className="rooms-add-btn" onClick={handleSave}>
               Save
             </button>

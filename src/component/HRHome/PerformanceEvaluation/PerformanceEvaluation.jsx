@@ -1,6 +1,5 @@
 /* Ravindra_Sanap_PerformanceEvaluation.jsx_04_10_2024_Start */
 
-
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import AddPerformancePopup from './AddPerformancePopup';
@@ -8,35 +7,57 @@ import * as XLSX from 'xlsx'; // Import XLSX
 import './PerformanceEvaluation.css';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
-
+import { API_BASE_URL } from '../../api/api';
 
 function PerformanceEvaluation() {
-    const [evaluations, setEvaluations] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [evaluations, setEvaluations] = useState([]);  // Initialize as an empty array
+    const [filteredEvaluations, setFilteredEvaluations] = useState([]); // Filtered data
     const [showPopup, setShowPopup] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    const evaluationsPerPage = 10;
+
     const tableRef = useRef(null);
-    const [columnWidths, setColumnWidths] = useState([80, 150, 150, 150, 50, 200]);
+    const [columnWidths, setColumnWidths] = useState([50, 100, 100, 150, 100, 80, 200]);
 
     const { success, warning, error, CustomAlerts } = useCustomAlert();
-
 
     useEffect(() => {
         fetchEvaluations();
     }, []);
 
+    useEffect(() => {
+        filterEvaluations();
+    }, [searchTerm, evaluations]);
+
+   
+
     const fetchEvaluations = async () => {
         try {
-            const response = await axios.get('http://localhost:8086/api/performance/getall');
-            setEvaluations(response.data);
-
-
+            const response = await axios.get(`${API_BASE_URL}/performance-evaluation/getall`);
+            if (Array.isArray(response.data)) {
+                setEvaluations(response.data);
+                setFilteredEvaluations(response.data);
+            } else {
+                warning('Fetched data is not an array');
+            }
         } catch (error) {
             console.error('Error fetching evaluation data:', error);
             warning('Failed to Fetch Performance');
-
         }
+    };
+
+    const filterEvaluations = () => {
+        const lowerSearchTerm = searchTerm.toLowerCase();
+        const filtered = evaluations.filter(evaluation => {
+            return (
+                evaluation.evaluationDate?.toLowerCase().includes(lowerSearchTerm) ||
+                evaluation.evaluatorName?.toLowerCase().includes(lowerSearchTerm) ||
+                evaluation.feedback?.toLowerCase().includes(lowerSearchTerm) ||
+                evaluation.score?.toString().includes(lowerSearchTerm) ||
+                evaluation.employeeDTO?.firstName?.toLowerCase().includes(lowerSearchTerm) ||
+                evaluation.employeeDTO?.lastName?.toLowerCase().includes(lowerSearchTerm)
+            );
+        });
+        setFilteredEvaluations(filtered);
     };
 
     const handleAddClick = () => {
@@ -49,39 +70,12 @@ function PerformanceEvaluation() {
 
     const handleAddEvaluation = async (newEvaluation) => {
         try {
-            const response = await axios.post('http://localhost:8086/api/performance/add', newEvaluation);
+            const response = await axios.post(`${API_BASE_URL}/performance-evaluation/add`, newEvaluation);
             setEvaluations([...evaluations, response.data]);
             success('Performance Added Successfully');
-
         } catch (error) {
             console.error('Error adding evaluation:', error);
             warning('Failed to Add Performance');
-
-        }
-    };
-
-    const filteredEvaluations = evaluations.filter((evaluation) =>
-        evaluation.employee.empName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        evaluation.evaluatorName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        evaluation.evaluationDate.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        evaluation.score.toString().includes(searchTerm) ||
-        evaluation.feedback.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    const indexOfLastEvaluation = currentPage * evaluationsPerPage;
-    const indexOfFirstEvaluation = indexOfLastEvaluation - evaluationsPerPage;
-    const currentEvaluations = filteredEvaluations.slice(indexOfFirstEvaluation, indexOfLastEvaluation);
-    const totalPages = Math.ceil(filteredEvaluations.length / evaluationsPerPage);
-
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-    const nextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-    const prevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
         }
     };
 
@@ -111,7 +105,8 @@ function PerformanceEvaluation() {
                     <thead>
                         <tr>
                             <th>EMP. ID</th>
-                            <th>EMP Name</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Evaluation Date</th>
                             <th>Evaluator Name</th>
                             <th>Score</th>
@@ -119,10 +114,11 @@ function PerformanceEvaluation() {
                         </tr>
                     </thead>
                     <tbody>
-                        ${currentEvaluations.map(evaluation => `
+                        ${filteredEvaluations.map(evaluation => `
                             <tr>
-                                <td>${evaluation.employee.empId}</td>
-                                <td>${evaluation.employee.empName}</td>
+                                <td>${evaluation.employeeDTO.employeeId}</td>
+                                <td>${evaluation.employeeDTO.firstName}</td>
+                                <td>${evaluation.employeeDTO.lastName}</td>
                                 <td>${evaluation.evaluationDate}</td>
                                 <td>${evaluation.evaluatorName}</td>
                                 <td>${evaluation.score}</td>
@@ -139,7 +135,6 @@ function PerformanceEvaluation() {
     };
 
     return (
-        
         <div className="performance-evaluation-container">
             <div className="performance-header">
                 <button className="performance-button" onClick={handleAddClick}>
@@ -147,8 +142,6 @@ function PerformanceEvaluation() {
                 </button>
                 <h2>Performance Evaluations</h2>
                 <CustomAlerts />
-
-
             </div>
 
             <div className="performance-evaluation-search-N-results">
@@ -162,9 +155,8 @@ function PerformanceEvaluation() {
                     />
                 </div>
 
-
                 <div className="performance-evaluation-results-info">
-                    Showing {currentEvaluations.length} / {filteredEvaluations.length} results
+                    Showing {filteredEvaluations.length} results
                     <button
                         className="performance-evaluation-ex-pri-buttons"
                         onClick={exportToExcel}
@@ -176,7 +168,6 @@ function PerformanceEvaluation() {
                     </button>
                 </div>
             </div>
-          
 
             {showPopup && (
                 <AddPerformancePopup
@@ -189,14 +180,7 @@ function PerformanceEvaluation() {
                 <table className='evaluation-table' ref={tableRef}>
                     <thead>
                         <tr>
-                            {[
-                                "EMP. ID",
-                                "EMP Name",
-                                "Evaluation Date",
-                                "Evaluator Name",
-                                "Score",
-                                "Feedback",
-                            ].map((header, index) => (
+                            {["EMP. ID", "First Name", "Last Name", "Evaluation Date", "Evaluator Name", "Score", "Feedback"].map((header, index) => (
                                 <th
                                     key={index}
                                     style={{ width: columnWidths[index] }}
@@ -214,17 +198,18 @@ function PerformanceEvaluation() {
                         </tr>
                     </thead>
                     <tbody>
-                        {currentEvaluations.length === 0 ? (
+                        {filteredEvaluations.length === 0 ? (
                             <tr>
-                                <td className='nodatatoshow' colSpan="6" style={{ textAlign: 'center' }}>
+                                <td className='nodatatoshow' colSpan="7" style={{ textAlign: 'center' }}>
                                     No data to show
                                 </td>
                             </tr>
                         ) : (
-                            currentEvaluations.map((evaluation, index) => (
+                            filteredEvaluations.map((evaluation, index) => (
                                 <tr key={index}>
-                                    <td>{evaluation.employee.empId}</td>
-                                    <td>{evaluation.employee.empName}</td>
+                                    <td>{evaluation.employeeDTO.employeeId}</td>
+                                    <td>{evaluation.employeeDTO.firstName}</td>
+                                    <td>{evaluation.employeeDTO.lastName}</td>
                                     <td>{evaluation.evaluationDate}</td>
                                     <td>{evaluation.evaluatorName}</td>
                                     <td>{evaluation.score}</td>
@@ -234,25 +219,6 @@ function PerformanceEvaluation() {
                         )}
                     </tbody>
                 </table>
-            </div>
-
-            <div className="HRpagination">
-                <button onClick={prevPage} className={currentPage === 1 ? 'disabled' : ''} disabled={currentPage === 1}>
-                    Previous
-                </button>
-                {[...Array(totalPages)].map((_, index) => (
-                    <button
-                        key={index + 1}
-                        onClick={() => paginate(index + 1)}
-                        className={currentPage === index + 1 ? 'active' : ''}
-                        disabled={currentPage === index + 1}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-                <button onClick={nextPage} className={currentPage === totalPages ? 'disabled' : ''} disabled={currentPage === totalPages}>
-                    Next
-                </button>
             </div>
         </div>
     );

@@ -184,15 +184,16 @@ const CSSDKitDiscard = () => {
                     type="text"
                     value={row.kitName}
                     placeholder="Select Kit"
+                    onClick={() => {
+                      setSelectedRowIndex(index); // Set selected row index
+                      setShowModal(true); // Open modal to select the kit
+                    }}
                     readOnly
                   />
                   <FontAwesomeIcon
                     icon={faSearch}
                     className="search-icon"
-                    onClick={() => {
-                      setSelectedRowIndex(index); // Set selected row index
-                      setShowModal(true); // Open modal to select the kit
-                    }}
+                    
                   />
                 </div>
               </td>
@@ -265,7 +266,7 @@ const CSSDKitDiscard = () => {
           </div>
         </div>
       )}
-
+      <br></br>
       <button onClick={handleSave} className="cssdkitdiscard-save-button">
         Save
       </button>

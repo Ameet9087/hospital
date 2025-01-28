@@ -19,6 +19,7 @@ function AddResults() {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [printCount, setPrintCount] = useState(1); // Default to 1 print
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const currentDate = getCurrentDate();
@@ -37,7 +38,7 @@ function AddResults() {
   const handlePrint = () => {
     let stickersContent = "";
     for (let i = 0; i < printCount; i++) {
-      const content = document.getElementById("sticker-content").innerHTML;
+      const content = document.getElementById("sticker-data").innerHTML;
       stickersContent += `<div style='display:flex; flex-direction:column; align-items:center; border:1px dashed black; margin-bottom: 10px;'>${content}</div>`;
     }
 
@@ -100,10 +101,31 @@ function AddResults() {
   const handleStickerClick = (patientDetails) => {
     // Set sticker data to display in a modal/popup
     setStickerData(patientDetails);
+    console.log(patientDetails);
   };
   const handleAddResult = (test) => {
     navigate("/laboratory/addresults/addResultForm", { state: { test } });
   };
+
+  const filteredLabTests = labTest?.filter((test) => {
+    const searchLowerCase = searchQuery.toLowerCase();
+    return (
+      test.inPatient?.patient?.firstName
+        .toLowerCase()
+        .includes(searchLowerCase) ||
+      test.outPatient?.patient?.firstName
+        .toLowerCase()
+        .includes(searchLowerCase) ||
+      test.inPatient?.patient?.lastName
+        .toLowerCase()
+        .includes(searchLowerCase) ||
+      test.outPatient?.patient?.lastName
+        .toLowerCase()
+        .includes(searchLowerCase) ||
+      (test.runNumber && test.runNumber.includes(searchQuery)) ||
+      (test.barcode && test.barcode.includes(searchQuery))
+    );
+  });
 
   return (
     <div className="addResults-work-list">
@@ -131,65 +153,22 @@ function AddResults() {
             </label>
           </div>
         </div>
-        <div className="addResults-category-select">
-          <label>Category:</label>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="">--Select Lab Category--</option>
-            <option value="">
-              <input type="checkbox" />
-              Select All
-            </option>
-            <option value="">
-              <input type="checkbox" />
-              Search
-            </option>
-            <option value="">
-              <input type="checkbox" />
-              Biochemistry
-            </option>
-            <option value="">Hematology</option>
-            <option value="">Microbiology</option>
-            <option value="">Parasitology</option>
-            <option value="">Serology</option>
-            <option value="">Immunoassay</option>
-            <option value="">DEFAULT</option>
-            <option value="">HISTOCYTOLOGY</option>
-            <option value="">OUT SOURCE</option>
-            <option value="">MOLECULAR BIOCHEMISTRY</option>
-            <option value="">PATHOLOGY</option>
-            <option value="">TUMOR MARKER</option>
-            <option value="">VIROLOGY</option>
-            <option value="">Blood Transfusion</option>
-            {/* Add more options here */}
-          </select>
-        </div>
-
-        <div className="addResults-worklist">
-          <a href="#" onClick={toggleWorkList}>
-            WorkList
-          </a>
-        </div>
       </div>
       <div className="addResults-searchbar-N-showing">
         <div className="addResults-search-bar">
           <i className="fa-solid fa-magnifying-glass"></i>
           <input
             type="text"
+            onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search"
+            value={searchQuery}
             className="addResults-search-input"
           />
         </div>
         <div className="addResults-results-info">
-          <span>Showing 0 / 0 results</span>
-          <button className="addResults-print-button">
-            <i className="fa fa-file-excel"></i> Export
-          </button>
-          <button className="addResults-print-button">
-            <i class="fa-solid fa-print"></i> Print
-          </button>
+          <span>
+            Showing {filteredLabTests?.length} / {labTest?.length} results
+          </span>
         </div>
       </div>
       <div className="table-container">
@@ -228,8 +207,8 @@ function AddResults() {
             </tr>
           </thead>
           <tbody>
-            {labTest != null &&
-              labTest.map((test, index) => (
+            {filteredLabTests != null &&
+              filteredLabTests.map((test, index) => (
                 <tr key={test.labRequestId}>
                   <td>{index + 1}</td>
                   <td>
@@ -241,7 +220,9 @@ function AddResults() {
                   <td>
                     {test.inPatient?.patient?.age ||
                       test.outPatient?.patient?.age}{" "}
-                    Y /
+                    {test.inPatient?.patient?.ageUnit ||
+                      test.outPatient?.patient?.ageUnit}{" "}
+                    /
                     {test.inPatient?.patient?.gender ||
                       test.outPatient?.patient?.gender}
                   </td>
@@ -259,8 +240,27 @@ function AddResults() {
                   </td>
                   <td>{test.labTestCategory}</td>
                   <td>{test.inPatient != null ? "InPatient" : "OutPatient"}</td>
-                  <td>{test.runNumber}</td>
-                  <td>{test.barcode}</td>
+                  <td>
+                    {test.sampleCollections &&
+                      test.sampleCollections.length > 0 &&
+                      test.sampleCollections.map((collection, index) => (
+                        <span key={index}>
+                          {index > 0 ? " , " : ""}
+                          {collection.runNumber}
+                        </span>
+                      ))}
+                  </td>
+                  <td>
+                    {test.sampleCollections &&
+                      test.sampleCollections.length > 0 &&
+                      test.sampleCollections.map((collection, index) => (
+                        <span key={index}>
+                          {index > 0 ? " , " : ""}
+                          {collection.barcode}
+                        </span>
+                      ))}
+                  </td>
+
                   <td className="add-result-lab-tableBtn">
                     <button onClick={() => handleAddResult(test)}>
                       Add Result
@@ -273,14 +273,6 @@ function AddResults() {
               ))}
           </tbody>
         </table>
-        {/* <div className="addResults-pagination">
-          <span>0 to 0 of 0</span>
-          <button>First</button>
-          <button>Previous</button>
-          <span>Page 0 of 0</span>
-          <button>Next</button>
-          <button>Last</button>
-        </div> */}
       </div>
       {showWorkList && (
         <div className="addResults-popup-overlay">
@@ -310,7 +302,14 @@ function AddResults() {
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{stickerData.labTestName}</td>
+                      <td>
+                        {stickerData?.labTests?.map((labTest, index) => (
+                          <span key={index}>
+                            {index > 0 ? " , " : ""}
+                            {labTest.labTestName}
+                          </span>
+                        ))}
+                      </td>
                       <td>{stickerData.requisitionDate}</td>
                       <td>
                         {stickerData.prescriber != null
@@ -325,33 +324,55 @@ function AddResults() {
                 </table>
               </div>
               <div className="sticker-popup-stickerCreation">
-                <div
-                  className="sticker-popup-container-sticker"
-                  id="sticker-content"
-                >
-                  <span>
-                    {stickerData.inPatient?.patient?.firstName ||
-                      stickerData.outPatient?.patient?.firstName}{" "}
-                    {stickerData.inPatient?.patient?.lastName ||
-                      stickerData.outPatient?.patient?.lastName}{" "}
-                    {stickerData.inPatient?.patient?.age ||
-                      stickerData.outPatient?.patient?.age}{" "}
-                    Y{" / "}
-                    {stickerData.inPatient?.patient?.gender ||
-                      stickerData.outPatient?.patient?.gender}
-                  </span>
-                  <span>
-                    <Barcode
-                      height={20}
-                      width={2}
-                      value={stickerData.barcode}
-                    />
-                  </span>
-                  <span>
-                    R/N: {stickerData.runNumber} |{" "}
-                    {stickerData.sampleCollectedDate}
-                  </span>
+                <div id="sticker-data">
+                  {stickerData.sampleCollections &&
+                    stickerData.sampleCollections.length > 0 &&
+                    // We only want to show the first 2 sample collections, if available
+                    stickerData.sampleCollections
+                      .slice(0, 2)
+                      .map((collection, index) => (
+                        <div
+                          key={index}
+                          className="sticker-popup-container-sticker"
+                          id={`sticker-content-${index}`}
+                        >
+                          <span>
+                            {stickerData.inPatient?.patient?.firstName ||
+                              stickerData.outPatient?.patient?.firstName}{" "}
+                            {stickerData.inPatient?.patient?.lastName ||
+                              stickerData.outPatient?.patient?.lastName}{" "}
+                            {stickerData.inPatient?.patient?.age ||
+                              stickerData.outPatient?.patient?.age}{" "}
+                            Y /{" "}
+                            {stickerData.inPatient?.patient?.gender ||
+                              stickerData.outPatient?.patient?.gender}
+                          </span>
+
+                          {/* Each sample collection will have its own sticker */}
+                          <div className="sticker-content">
+                            {/* Display the Barcode for each sample collection */}
+                            <span>
+                              <Barcode
+                                height={20}
+                                width={2}
+                                value={
+                                  collection.barcode || stickerData.barcode
+                                }
+                              />
+                            </span>
+                            <span>
+                              <center>
+                                {collection.runNumber || stickerData.runNumber}{" "}
+                                | R/N:{" "}
+                                {collection.collectionDate ||
+                                  stickerData.collectionDate}
+                              </center>
+                            </span>
+                          </div>
+                        </div>
+                      ))}
                 </div>
+
                 <div className="sticker-print-controls">
                   <label htmlFor="sticker-printCount">Number of Prints: </label>
                   <input

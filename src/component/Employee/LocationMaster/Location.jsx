@@ -10,8 +10,9 @@ const Location = () => {
   const [show, setShow] = useState(false);
   const [location, setLocation] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [updateLoc,setUpdateLoc] = useState({});
-  const [showUpdate,setShowUpdate] = useState(false);
+  const [updateLoc, setUpdateLoc] = useState({});
+  const [showUpdate, setShowUpdate] = useState(false);
+  const [triggerReload, setTriggerReload] = useState(0); // New state to trigger reload
 
   const handleClose = () => {
     setShow(false);
@@ -30,18 +31,23 @@ const Location = () => {
 
   useEffect(() => {
     fetchLocation();
-  }, []);
+  }, [triggerReload]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
 
+  const handleSuccessfulUpdate = () => {
+    handleClose();
+    setTriggerReload((prev) => prev + 1); // Increment to trigger reload
+  };
+
   const filteredItems = useFilter(location, searchTerm);
 
-  const handleUpdate=(item)=>{
+  const handleUpdate = (item) => {
     setUpdateLoc(item);
     setShowUpdate(true);
-  }
+  };
 
   return (
     <div className="Location">
@@ -69,27 +75,39 @@ const Location = () => {
           </tr>
         </thead>
         <tbody>
-          {Array.isArray(filteredItems) && filteredItems.map((item, index) => (
-  <tr key={index}>
-    <td>{index + 1}</td>
-    <td>{item.locationName}</td>
-    <td>{item.locationCode}</td>
-    <td>{item.locationAddress}</td>
-    <td>{item.phone}</td>
-    <td>
-      <button className="Location-add-btn" onClick={() => handleUpdate(item)}>Edit</button>
-    </td>
-  </tr>
-))}
-
+          {Array.isArray(filteredItems) &&
+            filteredItems.map((item, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{item.locationName}</td>
+                <td>{item.locationCode}</td>
+                <td>{item.locationAddress}</td>
+                <td>{item.phone}</td>
+                <td>
+                  <button
+                    className="Location-add-btn"
+                    onClick={() => handleUpdate(item)}
+                  >
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
 
       <CustomModal isOpen={show} onClose={handleClose}>
-        <LocationMaster onClose={handleClose} />
+        <LocationMaster
+          onClose={handleClose}
+          onSuccess={handleSuccessfulUpdate}
+        />
       </CustomModal>
       <CustomModal isOpen={showUpdate} onClose={handleClose}>
-        <LocationMaster update={updateLoc} onClose={handleClose} />
+        <LocationMaster
+          update={updateLoc}
+          onClose={handleClose}
+          onSuccess={handleSuccessfulUpdate}
+        />
       </CustomModal>
     </div>
   );

@@ -19,6 +19,20 @@
   /* margin: 1px; */
   transition: background-color 0.3s ease;
   padding: 5px 5px;
+  margin: 2px;
+}
+.labCategories-delete-button {
+  background-color:red;
+  border: 1px solid red;
+  color: white;
+  /* border: none; */
+  /* margin-top: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  /* margin: 1px; */
+  transition: background-color 0.3s ease;
+  padding: 0px 5px;
 }
 
 .labCategories-add-button:hover {

@@ -1,22 +1,38 @@
 import React, { useState, useEffect } from "react";
-import "./iPChangeRoom.css";
-import PopupTable from "./PopupTable";
+import "./IPChangeRoom.css";
+import PopupTable from "../Admission/PopupTable";
 import { FaSearch } from "react-icons/fa";
-// import { API_BASE_URL } from "../../../api/api";
 import axios from "axios";
-
 import { API_BASE_URL } from "../api/api";
+import { useSelector } from "react-redux";
 
-const IPChangeRoom = ({ patient, onClose }) => {
+const IPChangeRoom = ({ ipAdmission }) => {
   const [activePopup, setActivePopup] = useState(null);
   const [beds, setBeds] = useState([]);
-  const [selectedBedId, setSelectedBedId] = useState(null);
   const [selectedBedDetails, setSelectedBedDetails] = useState(null);
+  const [payType, setPaytype] = useState([]);
+  const [selectedPaytype, setSelectedPytype] = useState(null);
+  const [roomType, setRoomType] = useState([]);
+  const [selectedRoomType, setSelectedRoomType] = useState([]);
+  const [room, setRoom] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState(null);
 
+  const [floor, setFloor] = useState([]);
+  const [selectedFloor, setSelectedFloor] = useState(null);
+
+  const activePatient = useSelector((state) => state?.patient?.patientData);
 
   const getPopupData = () => {
     if (activePopup === "bed") {
       return { columns: ["id", "bedNo", "bedStatus"], data: beds };
+    } else if (activePopup === "paytype") {
+      return { columns: ["id", "payTypeName"], data: payType };
+    } else if (activePopup === "roomType") {
+      return { columns: ["id", "roomtype"], data: roomType };
+    } else if (activePopup === "room") {
+      return { columns: ["id", "name"], data: room };
+    } else if (activePopup === "floor") {
+      return { columns: ["id", "floorNumber"], data: floor };
     } else {
       return { columns: [], data: [] };
     }
@@ -27,67 +43,122 @@ const IPChangeRoom = ({ patient, onClose }) => {
   const handleSelect = async (data) => {
     if (activePopup === "bed") {
       setSelectedBedDetails(data);
-      set;
+    } else if (activePopup === "paytype") {
+      setSelectedPytype(data);
+    } else if (activePopup === "roomType") {
+      setSelectedRoomType(data);
+      await fetchRoom(data.id);
+    } else if (activePopup === "room") {
+      setSelectedRoom(data);
+      await fetchAllAvailableBeds(data.id);
+    } else if (activePopup === "floor") {
+      setSelectedFloor(data);
+      await fetchRoomTypeByPaytypeId(data.id);
     }
     setActivePopup(null);
   };
 
-  useEffect(() => {
+  const fetchAllAvailableBeds = async (id) => {
+    const response = await axios.get(`${API_BASE_URL}/beds/available/${id}`);
+    setBeds(response.data);
+  };
 
-    fetch(`${API_BASE_URL}/beds`)
-      .then((response) => response.json())
-      .then((data) => setBeds(data))
-      .catch((error) => console.error("Error fetching beds:", error));
+  const fetchAllPaytype = async () => {
+    const response = await axios.get(`${API_BASE_URL}/pay-type`);
+    setPaytype(response.data);
+  };
+  const fetchAllFloor = async () => {
+    const response = await axios.get(`${API_BASE_URL}/floors`);
+    setFloor(response.data);
+  };
+
+  const fetchRoomTypeByPaytypeId = async (id) => {
+    const response = await axios.get(
+      `${API_BASE_URL}/room-types/available/${id}`
+    );
+    setRoomType(response.data);
+  };
+
+  const fetchRoom = async (id) => {
+    const response = await axios.get(`${API_BASE_URL}/rooms/available/${id}`);
+    setRoom(response.data);
+  };
+
+  useEffect(() => {
+    fetchAllPaytype();
+    fetchAllFloor();
   }, []);
 
   const handleSave = async () => {
-    if (!selectedBedDetails || !patient) {
-      alert("Please fill in all required fields");
-      return;
-    }
+    const previousWardData = {
+      payType: {
+        id: ipAdmission.roomDetails?.payTypeDTO?.id,
+        payTypeName: ipAdmission.roomDetails?.payTypeDTO?.payTypeName,
+      },
+      room: {
+        id: ipAdmission.roomDetails?.roomDTO?.id,
+        roomNumber: ipAdmission.roomDetails?.roomDTO?.roomNumber,
+      },
+      roomType: {
+        id: ipAdmission?.roomDetails.roomTypeDTO?.id,
+        roomType: ipAdmission?.roomDetails.roomTypeDTO?.roomType,
+      },
+      bed: {
+        id: ipAdmission?.roomDetails?.bedDTO?.id,
+        bedNo: ipAdmission?.roomDetails?.bedDTO?.bedNo,
+      },
+      floor: {
+        id: ipAdmission?.roomDetails?.floorDTO?.id,
+        floorNumber: ipAdmission?.roomDetails?.floorDTO?.floorNumber,
+      },
+    };
+    const requestedWardData = {
+      payType: {
+        id: selectedPaytype?.id,
+        payTypeName: selectedPaytype?.payTypeName,
+      },
+      room: {
+        id: selectedRoom?.id,
+        roomNumber: selectedRoom?.roomNumber,
+      },
+      roomType: {
+        id: selectedRoomType?.id,
+        roomType: selectedRoomType?.roomtype,
+      },
+      bed: {
+        id: selectedBedDetails?.id,
+        bedNo: selectedBedDetails?.bedNo,
+      },
+      floor: {
+        id: selectedFloor?.id,
+        floorNumber: selectedFloor?.floorNumber,
+      },
+    };
 
-    const { roomDto, id: newBedId } = selectedBedDetails; // New bed details
-    const newRoomId = roomDto.id; // New room ID
-    const newFloorId = roomDto.floorNumber;
-    const oldRoomId = patient.roomDetails?.roomDTO.id;
-    const oldBedId = patient.roomDetails?.bedDTO.id;
-    const ipAdmissionId = patient.patient.inPatientId; // IP Admission ID
-
-    const apiUrl = `${API_BASE_URL}/roomdetails/change?oldRoomId=${oldRoomId}&newRoomId=${newRoomId}&newBedId=${newBedId}&newFloorId=${newFloorId}&ipAdmissionId=${ipAdmissionId}&oldBedId=${oldBedId}`;
-    console.log("API URL:", apiUrl);
-    console.log("Old Room ID:", oldRoomId);
-    console.log("Old Bed ID:", oldBedId);
+    const payload = {
+      previousWardRequestData: JSON.stringify(previousWardData),
+      updateWardRequestData: JSON.stringify(requestedWardData),
+      ipAdmission: {
+        ipAdmmissionId: ipAdmission.ipAdmmissionId,
+      },
+    };
+    console.log(payload);
 
     try {
-      const response = await axios.put(apiUrl);
-
-      // Check for success response
-      if (response.status === 200) {
-        setSelectedBedId(null);
-        setSelectedBedDetails(null);
-        console.log("Response:", response.data);
-        onclose();
-      } else {
-        alert(`Failed to save changes: ${response.data.message}`);
-      }
+      const response = await axios.post(
+        `${API_BASE_URL}/ward-request-change/save`,
+        payload
+      );
+      alert("request Success");
+      setSelectedBedDetails(null); // Or {} if your initial state is an object
+      setSelectedFloor(null); // Or {} if applicable
+      setSelectedPytype(null);
+      setSelectedRoom(null);
+      setSelectedRoomType(null);
     } catch (error) {
-      console.error("Error saving room change:", error);
-      alert("An error occurred while saving changes.");
+      console.log(error);
     }
-
   };
-
-  // Handle bed selection
-  const handleBedSelection = (e) => {
-    const bedId = parseInt(e.target.value, 10);
-    setSelectedBedId(bedId);
-
-    // Find and set the selected bed details
-    const bedDetails = beds.find((bed) => bed.id === bedId);
-    setSelectedBedDetails(bedDetails || null);
-  };
-
-
 
   return (
     <>
@@ -107,7 +178,10 @@ const IPChangeRoom = ({ patient, onClose }) => {
                   <div className="iPChangeRoom-input-with-search">
                     <input
                       type="text"
-                      value={patient?.patient?.inPatientId || ""}
+                      value={
+                        activePatient?.patient?.inPatientId ||
+                        ipAdmission?.patient?.inPatientId
+                      }
                       placeholder="Ip No"
                       readOnly
                     />
@@ -115,21 +189,35 @@ const IPChangeRoom = ({ patient, onClose }) => {
                 </div>
                 <div className="iPChangeRoom-form-row">
                   <label>Admission Date:</label>
-                  <input type="date" value={patient?.admissionDate} />
+                  <input
+                    type="date"
+                    value={
+                      activePatient?.admissionDate || ipAdmission?.admissionDate
+                    }
+                  />
                 </div>
 
                 <div className="iPChangeRoom-form-row">
                   <label>Admission Time:</label>
-                  <input type="text" value={patient?.admissionTime} />
+                  <input
+                    type="text"
+                    value={
+                      activePatient?.admissionTime || ipAdmission?.admissionTime
+                    }
+                  />
                 </div>
 
                 <div className="iPChangeRoom-form-row">
                   <label>Patient Name:</label>
                   <input
                     type="text"
-                    value={`${patient?.patient?.firstName || ""} ${
-                      patient?.patient?.middleName || ""
-                    } ${patient?.patient?.lastName || ""}`}
+                    value={`${activePatient?.patient?.firstName ||
+                      ipAdmission?.patient?.patient?.firstName
+                      } ${activePatient?.patient?.middleName ||
+                      ipAdmission?.patient?.patient?.middleName
+                      } ${activePatient?.patient?.lastName ||
+                      ipAdmission?.patient?.patient?.lastName
+                      }`}
                     readOnly
                   />
                 </div>
@@ -137,13 +225,21 @@ const IPChangeRoom = ({ patient, onClose }) => {
                   <label>Age:</label>
                   <input
                     type="text"
-                    value={patient?.patient?.age || ""}
+                    value={
+                      activePatient?.patient?.age ||
+                      ipAdmission?.patient?.patient?.age
+                    }
                     readOnly
                   />
                 </div>
                 <div className="iPChangeRoom-form-row">
                   <label>Gender:</label>
-                  <select value={patient?.patient?.gender}>
+                  <select
+                    value={
+                      activePatient?.patient?.gender ||
+                      ipAdmission?.patient?.patient?.gender
+                    }
+                  >
                     <option value={"Male"}>Male</option>
                     <option value={"Female"}>Female</option>
                   </select>
@@ -175,35 +271,50 @@ const IPChangeRoom = ({ patient, onClose }) => {
                   <label>Current Pay Type:</label>
                   <input
                     type="text"
-                    value={patient?.roomDetails?.payTypeDTO?.payTypeName}
+                    value={
+                      activePatient?.roomDetails?.payTypeDTO?.payTypeName ||
+                      ipAdmission?.roomDetails?.payTypeDTO?.payTypeName
+                    }
                   />
                 </div>
                 <div className="iPChangeRoom-form-row">
                   <label>Current Room Type:</label>
                   <input
                     type="text"
-                    value={patient?.roomDetails?.roomTypeDTO?.type}
+                    value={
+                      activePatient?.roomDetails?.roomTypeDTO?.roomtype ||
+                      ipAdmission?.roomDetails?.roomTypeDTO?.roomtype
+                    }
                   />
                 </div>
                 <div className="iPChangeRoom-form-row">
                   <label>Current Room No:</label>
                   <input
                     type="text"
-                    value={patient?.roomDetails?.roomDTO?.roomNumber}
+                    value={
+                      activePatient?.roomDetails?.roomDTO?.roomNumber ||
+                      ipAdmission?.roomDetails?.roomDTO?.roomNumber
+                    }
                   />
                 </div>
                 <div className="iPChangeRoom-form-row">
                   <label>Current Bed No:</label>
                   <input
                     type="text"
-                    value={patient?.roomDetails?.bedDTO?.bedNo}
+                    value={
+                      activePatient?.roomDetails?.bedDTO?.bedNo ||
+                      ipAdmission?.roomDetails?.bedDTO?.bedNo
+                    }
                   />
                 </div>
                 <div className="iPChangeRoom-form-row">
                   <label>Current Floor No:</label>
                   <input
                     type="text"
-                    value={patient?.roomDetails?.floorDTO?.location}
+                    value={
+                      activePatient?.roomDetails?.floorDTO?.location ||
+                      ipAdmission?.roomDetails?.floorDTO?.location
+                    }
                   />
                 </div>
               </div>
@@ -215,53 +326,61 @@ const IPChangeRoom = ({ patient, onClose }) => {
               </div>
               <div className="iPChangeRoom-panel-content">
                 <div className="iPChangeRoom-form-row">
-                  <label>Select Bed:</label>
-                  <input type="text" value={selectedBedDetails?.bedNo} />
+                  <label>Select Paytype:</label>
+                  <input
+                    type="text"
+                    value={selectedPaytype?.payTypeName || ""}
+                  />
+                  <i
+                    onClick={() => setActivePopup("paytype")}
+                    className="fa-solid fa-magnifying-glass"
+                  ></i>
+                </div>
+
+                <div className="iPChangeRoom-form-row">
+                  <label>Floor:</label>
+                  <input type="text" value={selectedFloor?.floorNumber || ""} />
+                  <i
+                    onClick={() => setActivePopup("floor")}
+                    className="fa-solid fa-magnifying-glass"
+                  ></i>
+                </div>
+                <div className="iPChangeRoom-form-row">
+                  <label>Room Type:</label>
+                  <input type="text" value={selectedRoomType?.roomtype || ""} />
+                  <i
+                    onClick={() => setActivePopup("roomType")}
+                    className="fa-solid fa-magnifying-glass"
+                  ></i>
+                </div>
+                <div className="iPChangeRoom-form-row">
+                  <label>Room No:</label>
+                  <input type="text" value={selectedRoom?.roomNumber || ""} />
+                  <i
+                    onClick={() => setActivePopup("room")}
+                    className="fa-solid fa-magnifying-glass"
+                  ></i>
+                </div>
+                <div className="iPChangeRoom-form-row">
+                  <label>Bed No:</label>
+                  <input type="text" value={selectedBedDetails?.bedNo || ""} />
                   <i
                     onClick={() => setActivePopup("bed")}
                     className="fa-solid fa-magnifying-glass"
                   ></i>
                 </div>
-                {selectedBedDetails && (
-                  <>
-                    <div className="iPChangeRoom-form-row">
-                      <label>Room Type:</label>
-                      <input
-                        type="text"
-                        value={selectedBedDetails.roomDto.name}
-                        readOnly
-                      />
-                    </div>
-                    <div className="iPChangeRoom-form-row">
-                      <label>Room No:</label>
-                      <input
-                        type="text"
-                        value={selectedBedDetails.roomDto.roomNumber}
-                        readOnly
-                      />
-                    </div>
-                    <div className="iPChangeRoom-form-row">
-                      <label>Floor No:</label>
-                      <input
-                        type="text"
-                        value={selectedBedDetails.roomDto.floorNumber}
-                        readOnly
-                      />
-                    </div>
-                    <div className="iPChangeRoom-form-row">
-                      <label>Charge Type:</label>
-                      <input
-                        type="text"
-                        value={selectedBedDetails.chargeType}
-                        readOnly
-                      />
-                    </div>
-                    <div className="iPChangeRoom-form-row">
-                      <label>Remarks:</label>
-                      <textarea />
-                    </div>
-                  </>
-                )}
+                <div className="iPChangeRoom-form-row">
+                  <label>Charge Type:</label>
+                  <input
+                    type="text"
+                    value={selectedBedDetails?.chargeType || ""}
+                    readOnly
+                  />
+                </div>
+                <div className="iPChangeRoom-form-row">
+                  <label>Remarks:</label>
+                  <textarea />
+                </div>
 
                 {/* <div className="iPChangeRoom-form-row">
                   <label>Change Entitlement:</label>
@@ -274,7 +393,6 @@ const IPChangeRoom = ({ patient, onClose }) => {
                   </div>
                 </div> */}
                 {/* <div className="iPChangeRoom-form-row">
-
                 <label>Remarks:</label>
                 <textarea name="" id=""></textarea>
               </div> */}
@@ -286,7 +404,6 @@ const IPChangeRoom = ({ patient, onClose }) => {
               Save
             </button>
           </div>
-
         </div>
       </div>
       {activePopup && (
@@ -302,4 +419,3 @@ const IPChangeRoom = ({ patient, onClose }) => {
 };
 
 export default IPChangeRoom;
-
