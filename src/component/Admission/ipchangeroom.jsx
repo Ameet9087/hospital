@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Ipchangeroom.css";
+import "../Nursing/NursingModule/IPChangeRoom/IPChangeRoom.css";
 import PopupTable from "../Admission/PopupTable";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
