@@ -12,14 +12,14 @@ const AssetmgntNavBar = () => {
         <ul>
           <li>
             <NavLink to="/assettransaction/*" className={({ isActive }) => isActive ? "assetmgnt-header-button active" : "assetmgnt-header-button"
-              }
+            }
             >
               Transaction
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/assetmaster"
+              to="fixedassets/assestmaster"
               className={({ isActive }) =>
                 isActive ? "assetmgnt-header-button active" : "assetmgnt-header-button"
               }
@@ -38,18 +38,18 @@ const AssetmgntNavBar = () => {
             </NavLink>
           </li> */}
 
-          
+
         </ul>
       </nav>
       <div>
         <Routes>
-        <Route path="assettransaction/*" element={<Transactionnav />}>
-       
-        </Route>
-         
-          <Route path="/assetmaster/*" element={<Masternav/>} />
+          <Route path="assettransaction/*" element={<Transactionnav />}>
+
+          </Route>
+
+          <Route path="/assetmaster/*" element={<Masternav />} />
           {/* <Route path="/assetReports" element={<div>Reports Component</div>} /> */}
-         
+
         </Routes>
       </div>
     </div>
