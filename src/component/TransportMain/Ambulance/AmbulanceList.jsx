@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './AmbulanceList.css';
-import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import axios from 'axios';
 import { API_BASE_URL } from '../../api/api';
 const AmbulanceList = () => {
@@ -8,7 +8,7 @@ const AmbulanceList = () => {
   const tableRef = useRef(null);
   const [availableAmbulances, setAvailableAmbulances] = useState([]);
   const [onDutyAmbulances, setOnDutyAmbulances] = useState([]);
-  const [isAvailableSelected, setIsAvailableSelected] = useState(true); 
+  const [isAvailableSelected, setIsAvailableSelected] = useState(true);
 
   useEffect(() => {
     const fetchAmbulances = async () => {
@@ -55,14 +55,14 @@ const AmbulanceList = () => {
     <div className="ambulance-list-module-com">
       <h1 className="ambulance-details-com-module__heading">Ambulance List</h1>
       <div className="ambulance-details-com-module__buttons">
-        <button 
-          className={`ambulance-details-com-module__button ${isAvailableSelected ? 'active' : ''}`} 
+        <button
+          className={`ambulance-details-com-module__button ${isAvailableSelected ? 'active' : ''}`}
           onClick={() => setIsAvailableSelected(true)}
         >
           Available
         </button>
-        <button 
-          className={`ambulance-details-com-module__button ${!isAvailableSelected ? 'active' : ''}`} 
+        <button
+          className={`ambulance-details-com-module__button ${!isAvailableSelected ? 'active' : ''}`}
           onClick={() => setIsAvailableSelected(false)}
         >
           On Duty
