@@ -936,13 +936,13 @@ const SuperUserSignup = () => {
             ],
           },
           {
-            name: "Fix Assests",
-            path: "/fix-assests",
+            name: "Fixed Assests",
+            path: "/fixedassests",
             logo: "fa-solid fa-building",
             submodules: [
               {
                 name: "Assest Transaction",
-                path: "/fix-assests/assesttransaction",
+                path: "/fixedassests/assesttransaction",
                 canEdit: true,
                 canView: true,
                 canAdd: true,
@@ -950,7 +950,7 @@ const SuperUserSignup = () => {
               },
               {
                 name: "Assest Master",
-                path: "/fix-assests/assestmaster",
+                path: "/fixedassests/assestmaster",
                 canEdit: true,
                 canView: true,
                 canAdd: true,

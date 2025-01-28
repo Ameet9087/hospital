@@ -5,13 +5,13 @@ import Transactionnav from "./Transaction/transactionnav"; // Import Transaction
 import Masternav from "./Master/masternav";
 
 
-const AssetmgntNavBar = () => {
+const assetmgnt = () => {
   return (
     <div className="assetmgnt-header-module">
       <nav className="assetmgnt-navbar">
         <ul>
           <li>
-            <NavLink to="/assettransaction/*" className={({ isActive }) => isActive ? "assetmgnt-header-button active" : "assetmgnt-header-button"
+            <NavLink to="/fixedassests/assesttransaction" className={({ isActive }) => isActive ? "assetmgnt-header-button active" : "assetmgnt-header-button"
             }
             >
               Transaction
@@ -19,7 +19,7 @@ const AssetmgntNavBar = () => {
           </li>
           <li>
             <NavLink
-              to="fixedassets/assestmaster"
+              to="/fixedassests/assestmaster"
               className={({ isActive }) =>
                 isActive ? "assetmgnt-header-button active" : "assetmgnt-header-button"
               }
@@ -43,11 +43,11 @@ const AssetmgntNavBar = () => {
       </nav>
       <div>
         <Routes>
-          <Route path="assettransaction/*" element={<Transactionnav />}>
+          <Route path="assesttransaction/*" element={<Transactionnav />}>
 
           </Route>
 
-          <Route path="/assetmaster/*" element={<Masternav />} />
+          <Route path="assestmaster/*" element={<Masternav />} />
           {/* <Route path="/assetReports" element={<div>Reports Component</div>} /> */}
 
         </Routes>
@@ -56,4 +56,4 @@ const AssetmgntNavBar = () => {
   );
 };
 
-export default AssetmgntNavBar;
+export default assetmgnt;

@@ -117,7 +117,7 @@ function Layout({ }) {
           />
           <Route path="/physiotherapy/*" element={<PhysiotherapyRotes />} />
           <Route path="/mktreferral/*" element={<Mkrtrefrrance />} />
-          <Route path="/fixedassets/*" element={<AssetmgntNavBar />} />
+          <Route path="/fixedassests/*" element={<AssetmgntNavBar />} />
           <Route path="/cssd/*" element={<CSSD />} />
           <Route path="/hr/*" element={<HRRouting />} />
           <Route path="/radiationtherapy/*" element={<RadiationTherapy />} />

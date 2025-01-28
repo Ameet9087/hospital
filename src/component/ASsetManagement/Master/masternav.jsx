@@ -18,7 +18,7 @@ const Masternav = () => {
         <ul>
           <li>
             <NavLink
-              to="/assetmaster/assetCategoryMaster"
+              to="/fixedassests/assestmaster/assetCategoryMaster"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
@@ -28,7 +28,7 @@ const Masternav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetmaster/assetLocationMaster"
+              to="/fixedassests/assestmaster/assetLocationMaster"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
@@ -38,7 +38,7 @@ const Masternav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetmaster/equipmentMaster"
+              to="/fixedassests/assestmaster/equipmentMaster"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
@@ -48,7 +48,7 @@ const Masternav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetmaster/insuranceEntryForm"
+              to="/fixedassests/assestmaster/insuranceEntryForm"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
@@ -58,7 +58,7 @@ const Masternav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetmaster/condemnationReasonMaster"
+              to="/fixedassests/assestmaster/condemnationReasonMaster"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
@@ -68,7 +68,7 @@ const Masternav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetmaster/maintenancechecklisttypemaster"
+              to="/fixedassests/assestmaster/maintenancechecklisttypemaster"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
@@ -78,7 +78,7 @@ const Masternav = () => {
           </li>
           <li>
             <NavLink
-              to="/assetmaster/mainenancetypemaster"
+              to="/fixedassests/assestmaster/mainenancetypemaster"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }
@@ -89,7 +89,7 @@ const Masternav = () => {
 
           <li>
             <NavLink
-              to="/assetmaster/part"
+              to="/fixedassests/assestmaster/part"
               className={({ isActive }) =>
                 isActive ? "masternav-button active" : "masternav-button"
               }

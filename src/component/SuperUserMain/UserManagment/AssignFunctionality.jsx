@@ -356,7 +356,7 @@ const AssignFunctionality = () => {
     },
     {
       id: 35,
-      name: "Fix Assests",
+      name: "Fixed Assests",
       logo: "fa-solid fa-building",
       subcomponents: ["Asset Master", "Asset Transaction"],
     },
