@@ -8,6 +8,7 @@ import AddEmployeePopup from './AddEmployeePopup';
 import UpdateEmployeePopup from './UpdateEmployeePopup';
 import * as XLSX from 'xlsx';  // Import the XLSX library for exporting to Excel
 import useCustomAlert from '../../../alerts/useCustomAlert';
+import { API_BASE_URL } from '../../api/api';
 
 
 function AllEmployee() {
@@ -32,8 +33,10 @@ function AllEmployee() {
 
     const fetchEmployees = async () => {
         try {
-            const response = await axios.get('http://localhost:8086/api/employee/getall');
+            const response = await axios.get(`${API_BASE_URL}/employees/get-all-employee`);
             setEmployees(response.data);
+            console.log(employees);
+
         } catch (error) {
             console.error('Error fetching employee data:', error);
             warning('Failed to Fetch Employee');
@@ -52,7 +55,7 @@ function AllEmployee() {
 
     const handleFormSubmit = async (formData) => {
         try {
-            await axios.post('http://localhost:8086/api/employee/add', formData, {
+            await axios.post(`${API_BASE_URL}/employee/add`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -85,7 +88,7 @@ function AllEmployee() {
 
     const handleUpdateSubmit = async (formData) => {
         try {
-            await axios.put(`http://localhost:8086/api/employee/update/${selectedEmployee.empId}`, formData, {
+            await axios.put(`${API_BASE_URL}/employee/update/${selectedEmployee.empId}`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -103,13 +106,13 @@ function AllEmployee() {
     };
 
     const filteredEmployees = employees.filter((employee) =>
-        employee.empId.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.empName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.mobile.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.dateOfJoining.toLowerCase().includes(searchTerm.toLowerCase())
+        (String(employee.employeeId || "").toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (employee.empName?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+        (employee.mobile?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+        (employee.email?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+        (employee.position?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+        (employee.department?.toLowerCase() || "").includes(searchTerm.toLowerCase()) ||
+        (employee.dateOfJoining?.toLowerCase() || "").includes(searchTerm.toLowerCase())
     );
 
     const indexOfLastEmployee = currentPage * employeesPerPage;

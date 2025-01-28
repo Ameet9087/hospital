@@ -3,8 +3,9 @@ import "./AssetQualityCheck.css"
 import AssetQualityCheckPopUp from "./AssetQualityCheckPopUp";
 import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
+import { API_BASE_URL } from "../../../api/api";
 
-const  AssetQualityCheck = () => {
+const AssetQualityCheck = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -19,7 +20,7 @@ const  AssetQualityCheck = () => {
     },
   ]);
   useEffect(() => {
-    fetch(`/labTestSetting/getAll`)
+    fetch(`${API_BASE_URL}/labTestSetting/getAll`)
       .then((res) => res.json())
       .then((data) => setLabTest(data))
       .catch((err) => {
@@ -57,7 +58,7 @@ const  AssetQualityCheck = () => {
   const handleEmployeeChange = (rowIndex, employeeId) => {
     const selectedEmployee = employees.find((emp) => emp.id === parseInt(employeeId, 10));
     console.log(selectedEmployee);
-    
+
     if (selectedEmployee) {
       const updatedRows = [...packageTableRows];
       updatedRows[rowIndex] = {
@@ -77,16 +78,16 @@ const  AssetQualityCheck = () => {
 
   return (
     <div className="AssetQualityCheck-container">
-        <div className="AssetQualityCheck-addBtn">
-          <button
-            className="AssetQualityCheck-add-button"
-            onClick={openPopup}
-          >
-            + Add New Asset Quality Check
-          </button>
-        </div>
-      
-      
+      <div className="AssetQualityCheck-addBtn">
+        <button
+          className="AssetQualityCheck-add-button"
+          onClick={openPopup}
+        >
+          + Add New Asset Quality Check
+        </button>
+      </div>
+
+
       <div className="AssetQualityCheck-search-N-result">
         <div className="AssetQualityCheck-search-bar">
           <i className="fa-solid fa-magnifying-glass"></i>
@@ -97,7 +98,7 @@ const  AssetQualityCheck = () => {
             Showing {labTest?.length} / {labTest?.length} results
           </span>
           <button className="AssetQualityCheck-print-button">
-          <i className="fa-solid fa-file-excel"></i> Export
+            <i className="fa-solid fa-file-excel"></i> Export
           </button>
           <button className="AssetQualityCheck-print-button">
             <i class="fa-solid fa-print"></i> Print
@@ -109,7 +110,7 @@ const  AssetQualityCheck = () => {
           <thead>
             <tr>
               {[
-                
+
                 "Record No",
                 "Quality Check Date",
                 "Select Equipment",
@@ -176,8 +177,8 @@ const  AssetQualityCheck = () => {
           </tbody>
         </table>
       </div>
-      
-       {showPopup && (
+
+      {showPopup && (
         <CustomModal isOpen={showPopup} onClose={closePopup}>
           <AssetQualityCheckPopUp />
         </CustomModal>

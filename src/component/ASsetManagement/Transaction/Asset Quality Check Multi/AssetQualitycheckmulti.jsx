@@ -120,7 +120,7 @@ const AssetQualityCheckMulti = () => {
       })),
     };
 
-    fetch('http://192.168.143.48:8080/api/asset-quality-checks', {
+    fetch(`${API_BASE_URL}/asset-quality-checks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

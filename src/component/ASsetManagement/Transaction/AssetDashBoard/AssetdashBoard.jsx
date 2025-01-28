@@ -52,7 +52,7 @@ const AssetDashboard = () => {
       const formattedStartDate = start.toISOString().split('T')[0];
       const formattedEndDate = end.toISOString().split('T')[0];
 
-      const response = await axios.get(`http://192.168.143.48:8080/api/equipment-gate-pass-in`, {
+      const response = await axios.get(`${API_BASE_URL}/equipment-gate-pass-in`, {
         params: {
           startDate: formattedStartDate,
           endDate: formattedEndDate,
@@ -70,7 +70,7 @@ const AssetDashboard = () => {
       const formattedStartDate = start.toISOString().split('T')[0];
       const formattedEndDate = end.toISOString().split('T')[0];
 
-      const response = await axios.get(`http://192.168.143.48:8080/api/breakdowns`, {
+      const response = await axios.get(`${API_BASE_URL}/breakdowns`, {
         params: {
           startDate: formattedStartDate,
           endDate: formattedEndDate,
@@ -88,7 +88,7 @@ const AssetDashboard = () => {
       const formattedStartDate = start.toISOString().split('T')[0];
       const formattedEndDate = end.toISOString().split('T')[0];
 
-      const response = await axios.get(`http://192.168.143.48:8080/api/condemnation-disposals`, {
+      const response = await axios.get(`${API_BASE_URL}/condemnation-disposals`, {
         params: {
           startDate: formattedStartDate,
           endDate: formattedEndDate,
