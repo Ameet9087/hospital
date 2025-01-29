@@ -18,7 +18,7 @@ const KitMaster = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [kitCategories, setKitCategories] = useState([]);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
 
   // Fetch items for the modal
@@ -125,7 +125,7 @@ const KitMaster = () => {
   };
   useEffect(() => {
     // Fetch kit categories from the API
-    axios.get("http://localhost:4096/api/kit-categories")
+    axios.get(`${API_BASE_URL}/kit-categories`)
       .then(response => {
         setKitCategories(response.data);
       })
@@ -166,17 +166,17 @@ const KitMaster = () => {
           Kit Category <span>*</span>
         </label>
         <select
-        value={kitCategoryId}
-        onChange={(e) => setKitCategoryId(e.target.value)}
-        required
-      >
-        <option value="">Select Kit Category</option>
-        {kitCategories.map((kit) => (
-          <option key={kit.kitCategoryId} value={kit.kitCategoryId}>
-            {kit.description}
-          </option>
-        ))}
-      </select>
+          value={kitCategoryId}
+          onChange={(e) => setKitCategoryId(e.target.value)}
+          required
+        >
+          <option value="">Select Kit Category</option>
+          {kitCategories.map((kit) => (
+            <option key={kit.kitCategoryId} value={kit.kitCategoryId}>
+              {kit.description}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="kit-master-form-group">
@@ -251,7 +251,7 @@ const KitMaster = () => {
                     <FontAwesomeIcon
                       icon={faSearch}
                       className="search-icon"
-                      
+
                     />
                   </div>
                 </td>
