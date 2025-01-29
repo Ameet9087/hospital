@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import './Bubble_Pending_Returns.css';
 import { API_BASE_URL } from "../../api/api";
+import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const BubblePendingReturns = () => {
   const navigate = useNavigate();
   const [bubbles, setBubbles] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,6 +50,9 @@ const BubblePendingReturns = () => {
         return "blue";
     }
   };
+  const handleClose = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
 
   const handleBubbleClick = (id, receivingId) => {
     navigate(`pending-return/${id}?receivingId=${receivingId}`);
@@ -58,6 +62,12 @@ const BubblePendingReturns = () => {
     <div className="Bubble_Pending_Returns_view">
       <div className="Bubble_Pending_Returns_header">
         <h5>Pending Returns</h5>
+        <FontAwesomeIcon
+            icon={faArrowLeftLong}
+            className="back-icon"
+            onClick={handleClose}
+          />
+
       </div>
 
       <div className="Bubble_Pending_Returns_container bubbles-container">

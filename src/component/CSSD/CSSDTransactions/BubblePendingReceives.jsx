@@ -4,6 +4,9 @@ import axios from "axios";
 import './Bubble_Pending_Receives.css';
 import { API_BASE_URL } from "../../api/api";
 
+import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 const BubblePendingReceives = () => {
   const navigate = useNavigate();
   const [bubbles, setBubbles] = useState([]);
@@ -53,11 +56,20 @@ const BubblePendingReceives = () => {
   const handleBubbleClick = (id, issueId) => {
     navigate(`pending-kit-receive/${id}?issueId=${issueId}`);
   };
+  const handleClose = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
 
   return (
     <div className="Bubble_Pending_Kit_Receive_view">
       <div className="Bubble_Pending_Kit_Receive_header">
         <h5>Pending Kit Receive</h5>
+        <FontAwesomeIcon
+                    icon={faArrowLeftLong}
+                    className="back-icon"
+                    onClick={handleClose}
+                  /> 
+
       </div>
 
       <div className="Bubble_Pending_Kit_Receive_header_container bubbles-container">

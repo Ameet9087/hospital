@@ -254,6 +254,13 @@ const GoodsReceiptForm = ({ receivedPO }) => {
       },
     ]);
   };
+
+
+  // Function to remove the last added row
+  const handleCancelRow = () => {
+    setItems(items.slice(0, -1)); // Remove the last item in the array
+  };
+  
   useEffect(() => {
     recalculateTotals(); // Recalculate totals whenever items change
   }, [items]);
@@ -723,7 +730,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
           </button>
           <button
             type="button"
-            onClick={handleAddItem}
+            onClick={handleCancelRow}
             className="GoodsReceiptSettings-add-item-button"
           >
             Cancel Row

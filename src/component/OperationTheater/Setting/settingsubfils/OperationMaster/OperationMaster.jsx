@@ -177,7 +177,7 @@ const OperationMaster = () => {
               .map((key) => (
                 key !== 'serviceDetailsIds' && (
                   <div className="operationMaster-form-row" key={key}>
-                    <label>{key.replace(/([A-Z])/g, ' $1')}: *</label>
+                    <label>{key.replace(/([A-Z])/g, ' $1')}: <span className='operation-master-span'>*</span></label>
                     <input
                       type={key === 'timeInMinutes' ? 'number' : 'text'}
                       name={key}
@@ -201,7 +201,7 @@ const OperationMaster = () => {
               .map((key) => (
                 key !== 'serviceDetailsIds' && (
                   <div className="operationMaster-form-row" key={key}>
-                    <label>{key.replace(/([A-Z])/g, ' $1')}: *</label>
+                    <label>{key.replace(/([A-Z])/g, ' $1')}: <span className='operation-master-span'>*</span></label>
                     <input
                       type={key === 'timeInMinutes' ? 'number' : 'text'}
                       name={key}

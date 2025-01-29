@@ -15,7 +15,10 @@
   .operationMaster-header {
     font-size: var(--heading-font);
   }
-
+  
+.operation-master-span{
+  color: red;
+}
   .operationMaster-checkbox-label {
     font-weight: normal;
     margin-left: 4px;
