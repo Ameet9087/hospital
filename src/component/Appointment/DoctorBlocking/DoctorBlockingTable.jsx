@@ -31,7 +31,7 @@ const DoctorBlockingTable = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`${API_BASE_URL}/doctor-blocking/${id}`);
+      const response = await axios.delete(`${API_BASE_URL}/doctor-blocking/doctor-blocking/${id}`);
 
       if (response.status === 200) {
         alert("Doctor Blocking Deleted Successfully.");

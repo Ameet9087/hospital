@@ -2,11 +2,12 @@
 // AjharTamboli 22-11-24 iPBilling.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+// import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import axios from "axios";
-import "./iP_billing.css";
-import { API_BASE_URL } from "../../api/api";
-import IpBillingPopupTable from "./IpBillingPopupTable";
+import "./ip_billing.css";
+import { API_BASE_URL } from "../../../api/api";
+import IpBillingPopupTable from "../../../Admission/PopupTable";
 const IpBilling = () => {
   const [selectedTab, setSelectedTab] = useState("testGrid");
   const [currentTime, setCurrentTime] = useState("");
@@ -26,6 +27,7 @@ const IpBilling = () => {
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
   const [finaltotalamt, setTotalAmt] = useState(0);
+
   const [finalTotalDrVisit, setFinalTotalDrVisit] = useState([]);
   // doctor visit
   const [doctors, setDoctors] = useState([]); // State to store the doctors data
@@ -168,6 +170,7 @@ const IpBilling = () => {
         payTypeName: doctor.orgDoctorFees?.[0]?.payType?.payTypeName || "N/A",
       }));
 
+
       console.log("Mapped Doctors:", mappedDoctors);
 
       setDoctorVisitRows((prevRows) => {
@@ -186,6 +189,7 @@ const IpBilling = () => {
           (row) => !row.doctorId || row.doctorId === "" || !row.doctorName
         );
 
+
         if (emptyRowIndex !== -1) {
           console.log(data);
 
@@ -198,7 +202,9 @@ const IpBilling = () => {
             generalOpdFee: data.orgDoctorFees[0]?.generalOpdFee || 0,
             rate: data.generalOpdFee || 0,
             qty: 1,
+
             totalAmt: data.orgDoctorFees[0]?.generalOpdFee || 0,
+            // totalAmt: data.orgDoctorFees[0]?.generalOpdFee || 0,
             netAmt: data.orgDoctorFees[0]?.generalOpdFee || 0,
           };
           console.log("Updated existing empty row with doctor:", updatedRows);
@@ -224,7 +230,6 @@ const IpBilling = () => {
         return updatedRows;
       });
     }
-
 
     setActivePopup(null); // Close the popup after selection
   };
@@ -340,11 +345,11 @@ const IpBilling = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        alert("Data Successfully posted");
         console.log("Data successfully saved:", data);
       })
       .catch((error) => console.error("Error saving data:", error));
   };
+
 
   // prachi dr visit
   useEffect(() => {
@@ -466,7 +471,6 @@ const IpBilling = () => {
 
 
 
-
   const fetchServiceDetails = async () => {
     try {
       const response = await fetch(
@@ -482,6 +486,7 @@ const IpBilling = () => {
       setError(error.message); // Set error message in state
     }
   };
+
   const handleAddRow = (type, index) => {
     if (type === "package") {
       setTestGridTableRowsableRows((prevRows) => [
@@ -556,6 +561,7 @@ const IpBilling = () => {
         prevRows.filter((_, rowIndex) => rowIndex !== index)
       );
     }
+
   };
 
   const handleRowChange = (index, field, value) => {
@@ -732,7 +738,6 @@ const IpBilling = () => {
   };
 
 
-
   // -------------------------------------------------------------------PRevioustest detail-----------------------------------------------
   const renderTable = () => {
     switch (selectedTab) {
@@ -827,6 +832,7 @@ const IpBilling = () => {
                           className="resizer"
                           onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
                         ></div>
+
                       </div>
                     </th>
                   ))}
@@ -1229,6 +1235,8 @@ const IpBilling = () => {
           <button className="btn-red">Delete</button>
           <button className="btn-orange">Clear</button>
           <button className="btn-gray">Close</button>
+
+
           {/* <button className="btn-blue">Search</button>
           <button className="btn-gray">Tracking</button>
           <button className="btn-green">Print</button> */}
