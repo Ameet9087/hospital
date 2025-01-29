@@ -3,13 +3,14 @@ import axios from "axios";
 import "./ProcedureService.css";
 import { API_BASE_URL } from "../api/api";
 
-const ProcedureService = ({ inPatientId, outPatientId, setIsModalOpen }) => {
+const ProcedureService = ({ inPatientId, outPatientId }) => {
   const [selectedProcedures, setSelectedProcedures] = useState([]);
   const [availableProcedures, setAvailableProcedures] = useState([]);
   const [selectedProcedure, setSelectedProcedure] = useState("");
   const [procedureType, setProcedureType] = useState(""); // Type of procedure
   const [serviceTypes] = useState(["Radiology", "Lab"]); // Procedure types
 
+  console.log("check in ", inPatientId)
   // Fetch procedures based on selected type
   useEffect(() => {
     if (procedureType) {
@@ -51,29 +52,28 @@ const ProcedureService = ({ inPatientId, outPatientId, setIsModalOpen }) => {
     }
 
     try {
-      for (const serviceName of selectedProcedures) {
-        const payload = {
-          serviceName: serviceName,
-          ...(inPatientId
-            ? { inPatient: { inPatientId } }
-            : { outPatient: { outPatientId } }),
-        };
+      const payload = selectedProcedures.map((serviceName) => ({
+        serviceName: serviceName,
+        payStatus: "Pending", // Example default value; update as needed
+        rate: 0.0, // Example default value; update as needed
+        ...(inPatientId
+          ? { inPatient: { inPatientId } }
+          : { outPatient: { outPatientId } }),
+      }));
 
-        await axios.post(`${API_BASE_URL}/services`, payload, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-      }
+      await axios.post(`${API_BASE_URL}/services`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       alert("All procedures saved successfully!");
-      setIsModalOpen(false);
       cancelSelection();
     } catch (error) {
       console.error("Error saving procedures:", error.message);
       alert("Failed to save procedures. Please try again later.");
     }
-  };
+  }
 
   return (
     <div className="procedures-service-container">
