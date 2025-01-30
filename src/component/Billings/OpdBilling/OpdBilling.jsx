@@ -109,6 +109,7 @@ const OpdBilling = () => {
   const [doctorservice, setdoctorservice] = useState([]);
   const [patientType, setPatientType] = useState("");
   const [isPrintEnabled, setIsPrintEnabled] = useState(false);
+  const [billFromResponse, setBillFromResponse] = useState("");
 
   const [isEmergency, setemergency] = useState(false);
 
@@ -847,7 +848,8 @@ const OpdBilling = () => {
 
       if (response.status === 200) {
         alert("Data submitted successfully!");
-        setIsPrintEnabled(true)
+        setIsPrintEnabled(true);
+        setBillFromResponse(response.data);
         console.log("Response:", response.data);
       } else {
         alert("Failed to submit data. Please try again.");

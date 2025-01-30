@@ -54,15 +54,17 @@ const BreakTime = () => {
         <button className="add-break-time-btn" onClick={() => setShowPopup(true)}>
           Add Break Time
         </button>
-        <input
+       
+      </div>
+       <div className='break-time-search-bar'>
+       <input
             type="text"
             placeholder="Search by break remark"
             className="manage-department-search-input"
             value={searchTerm}
             onChange={handleSearch}
           />
-      </div>
-
+       </div>
       {/* Display loading state or error message */}
       {loading && <p>Loading...</p>}
       {error && <p className="error-message">{error}</p>}

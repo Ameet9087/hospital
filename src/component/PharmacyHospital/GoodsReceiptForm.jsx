@@ -261,6 +261,7 @@ const GoodsReceiptForm = ({ receivedPO, onClose }) => {
       setItems(items.slice(0, -1));
     }
   };
+
   useEffect(() => {
     recalculateTotals(); // Recalculate totals whenever items change
   }, [items]);
@@ -713,7 +714,6 @@ const GoodsReceiptForm = ({ receivedPO, onClose }) => {
             ))}
           </tbody>
         </table>
-
         <div className="GoodsReceiptForm-section">
           <div className="GoodsReceiptForm-grid">
             <FloatingInput
@@ -787,7 +787,7 @@ const GoodsReceiptForm = ({ receivedPO, onClose }) => {
           </button>
         </div>
         {/* </div> */}
-      </form>
+      </form >
       {/* {isAddGRItemFormOpen && (
         <CustomModal
           title="Add GR Item"
@@ -809,15 +809,17 @@ const GoodsReceiptForm = ({ receivedPO, onClose }) => {
           <AddSupplierForm onClose={() => setIsAddSupplierModalOpen(false)} />
         </CustomModal>
       )} */}
-      {activePopup && (
-        <PopupTable
-          columns={columns}
-          data={data}
-          onSelect={handleSelect}
-          onClose={() => setActivePopup(null)}
-        />
-      )}
-    </div>
+      {
+        activePopup && (
+          <PopupTable
+            columns={columns}
+            data={data}
+            onSelect={handleSelect}
+            onClose={() => setActivePopup(null)}
+          />
+        )
+      }
+    </div >
   );
 };
 export default GoodsReceiptForm;

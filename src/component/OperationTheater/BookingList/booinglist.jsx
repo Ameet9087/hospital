@@ -384,14 +384,14 @@ function BookingList() {
                   <td>{booking.status || "N/A"}</td>
                   <td>
                     <button
-                      className="action-button-btn"
+                      className="booking-list-btn-submit"
                       onClick={() => handleEditAction(booking)}
                     >
                       Edit
                     </button>
                     <button
-                      className="surgery-events-button"
-                      onClick={() => handleSurgeryEventClick(booking)} // Pass the ID
+                      className="booking-list-btn-submit"
+                      onClick={() => handleSurgeryEventClick(booking)} 
                     >
                       Surgery Events
                     </button>

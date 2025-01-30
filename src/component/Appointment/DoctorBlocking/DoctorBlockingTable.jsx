@@ -4,11 +4,14 @@ import CustomModal from "../../CustomModel/CustomModal";
 import DoctorBlocking from "./DoctorBlocking";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
+import { useFilter } from "../../ShortCuts/useFilter";
 
 const DoctorBlockingTable = () => {
   const [showModal, setShowModal] = useState(false);
   const [doctorBlockingData, setDoctorBlockingData] = useState([]);
   const [editingData, setEditingData] = useState(null);
+    const [searchTerm, setSearchTerm] = useState("");
+  
 
   // Fetch doctor blocking data
   useEffect(() => {
@@ -23,11 +26,19 @@ const DoctorBlockingTable = () => {
     fetchDoctorBlockingData();
   }, []);
 
+  const filteredItems = useFilter(doctorBlockingData, searchTerm);
+
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
   // Handle Edit
   const handleEdit = (data) => {
     setEditingData(data); // Set the data for editing
     setShowModal(true); // Open modal
   };
+
+
 
   const handleDelete = async (id) => {
     try {
@@ -70,14 +81,17 @@ const DoctorBlockingTable = () => {
         >
           Add
         </button>
-        <input
-          type="text"
-          placeholder="Search..."
-          className="DoctorBlockingTable-searchInput"
-          aria-label="Search"
-        />
+       
       </div>
-
+      <div className="doctor-blocking-bar-search">
+      <input
+            type="text"
+            placeholder="Search by break remark"
+            className="manage-department-search-input"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+      </div>
       <div className="DoctorBlockingTable-table">
         <table>
           <thead>
@@ -91,8 +105,8 @@ const DoctorBlockingTable = () => {
             </tr>
           </thead>
           <tbody>
-            {doctorBlockingData.length > 0 ? (
-              doctorBlockingData.map((block) => (
+            {filteredItems.length > 0 ? (
+              filteredItems.map((block) => (
                 <tr key={block.id}>
                   <td>{block.fromDate}</td>
                   <td>{block.toDate}</td>

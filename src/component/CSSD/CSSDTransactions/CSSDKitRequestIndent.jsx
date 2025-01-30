@@ -4,6 +4,8 @@ import "./CSSDKitRequestIndent.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { API_BASE_URL } from "../../api/api";
+// import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const KitRequestIndent = () => {
   const [indentTo, setIndentTo] = useState("");
@@ -18,6 +20,7 @@ const KitRequestIndent = () => {
   const [kits, setKits] = useState([]);
   const [filteredKits, setFilteredKits] = useState([]);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null); // Track selected row index
+  const navigate = useNavigate();
 
   // Fetch kits from API
   useEffect(() => {
@@ -116,20 +119,34 @@ const KitRequestIndent = () => {
   useEffect(() => {
     // Fetch departments from API
     axios
-      .get("http://localhost:4096/api/departments/getAllDepartments")
+      // .get("http://localhost:4096/api/departments/getAllDepartments")
+      // .then((response) => {
+      //   setDepartments(response.data); 
+      // })
+      .get(`${API_BASE_URL}/departments/getAllDepartments`) // Use base URL here
       .then((response) => {
-        setDepartments(response.data); // Save departments in state
+        setDepartments(response.data); // Handle the response data
       })
       .catch((error) => {
         console.error("Error fetching departments:", error);
       });
   }, []);
-
+  const handleClose = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
   return (
     <div className="KitRequestIndent-container">
-      <header className="KitRequestIndent-header">
+     <div className="KitRequestIndent">
+     <header className="KitRequestIndent-header">
         <h3>Kit Request Indent</h3>
+        <FontAwesomeIcon
+            icon={faArrowLeftLong}
+            className="back-icon"
+            onClick={handleClose}
+          />
+
       </header>
+     </div>
       <div className="KitRequestIndent-content">
         <div className="KitRequestIndent-form">
         <div className="KitRequestIndent-form-group">

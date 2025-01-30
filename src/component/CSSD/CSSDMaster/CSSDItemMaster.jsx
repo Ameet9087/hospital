@@ -1,45 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
-import './CSSDItemMaster.css';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { API_BASE_URL } from '../../api/api';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate, useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch, faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import "./CSSDItemMaster.css";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { API_BASE_URL } from "../../api/api";
 import PopupTable from "../../Admission/PopupTable";
-
 
 const CSSDItemMaster = () => {
   const [status, setStatus] = useState("Active");
   const [sterileType, setSterileType] = useState("Autoclave");
   const [itemName, setItemName] = useState("");
-  const [quantity,setQuantity]=useState("");
+  const [quantity, setQuantity] = useState("");
   const [description, setDescription] = useState("");
   const [instruments, setInstruments] = useState(false);
   const [mapItemFromInventory, setMapItemFromInventory] = useState("");
   const [kitId, setKitId] = useState("");
-    const [inventoryData, setInventoryData] = useState([]);
-    const [activePopup,setActivePopup]=useState([]);
-    const [selectedInventoryItem,setSelectedInventoryItem]=useState([]);
-    const [items, setItems] = useState([]);
-    const [editingItem, setEditingItem] = useState(null);
+  const [inventoryData, setInventoryData] = useState([]);
+  const [activePopup, setActivePopup] = useState([]);
+  const [selectedInventoryItem, setSelectedInventoryItem] = useState([]);
+  const [items, setItems] = useState([]);
+  const [editingItem, setEditingItem] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    // Check if an itemName was passed in state
     if (location.state?.itemName) {
       setMapItemFromInventory(location.state.itemName);
     }
   }, [location.state]);
 
   useEffect(() => {
-    // Fetch inventory data on component mount
     const fetchData = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/inventory`);
-        setInventoryData(response.data); // Assuming response.data is an array
+        setInventoryData(response.data);
       } catch (error) {
         console.error("Error fetching inventory data:", error);
       }
@@ -54,13 +51,13 @@ const CSSDItemMaster = () => {
   const fetchItems = async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/itemmaster`);
-      setItems(response.data); // Assuming the response contains the items array
+      setItems(response.data);
     } catch (error) {
-      console.error('Error fetching items:', error);
+      console.error("Error fetching items:", error);
     }
   };
   const handleEdit = (item) => {
-    setEditingItem(item); // Set the item to be edited
+    setEditingItem(item);
     setItemName(item.itemName);
     setQuantity(item.quantity);
     setDescription(item.description);
@@ -71,38 +68,33 @@ const CSSDItemMaster = () => {
 
   const resetForm = () => {
     setEditingItem(null);
-    setItemName('');
-    setQuantity('');
-    setDescription('');
-    setSterileType('Autoclave');
-    setStatus('Active');
+    setItemName("");
+    setQuantity("");
+    setDescription("");
+    setSterileType("Autoclave");
+    setStatus("Active");
     setInstruments(false);
   };
 
-  
-
-
-
   const handleDelete = async (itemId) => {
-    if (window.confirm('Are you sure you want to delete this item?')) {
+    if (window.confirm("Are you sure you want to delete this item?")) {
       try {
         await axios.delete(`${API_BASE_URL}/itemmaster/${itemId}`);
-        alert('Item deleted successfully!');
+        alert("Item deleted successfully!");
         fetchItems(); // Refresh the items list
       } catch (error) {
-        console.error('Error deleting item:', error);
-        alert('Error deleting item.');
+        console.error("Error deleting item:", error);
+        alert("Error deleting item.");
       }
     }
   };
 
-    const handleSelect = async (data) => {
+  const handleSelect = async (data) => {
     if (activePopup === "inventoryItem") {
-        setSelectedInventoryItem(data);
+      setSelectedInventoryItem(data);
     }
     setActivePopup(null); // Close the popup after selection
   };
-  
 
   const handleSave = () => {
     const payload = {
@@ -132,19 +124,15 @@ const CSSDItemMaster = () => {
     navigate(-1); // Navigate back to the previous page
   };
 
-
-const getPopupData = () => {
+  const getPopupData = () => {
     if (activePopup === "inventoryItem") {
-      return { columns: ["inventoryId","itemName"], data: inventoryData };
+      return { columns: ["inventoryId", "itemName"], data: inventoryData };
     } else {
       return { columns: [], data: [] };
     }
   };
 
   const { columns, data } = getPopupData();
-
- 
-
 
   return (
     <div className="CSSDItemMaster-container">
@@ -214,8 +202,12 @@ const getPopupData = () => {
               <option value="Chemical">Chemical</option>
               <option value="Radiation">Radiation</option>
               <option value="Infra Red Radiation">Infra Red Radiation</option>
-              <option value="Ultra Violet Radiation">Ultra Violet Radiation</option>
-              <option value="Ionizing/Gamma Radiation">Ionizing/Gamma Radiation</option>
+              <option value="Ultra Violet Radiation">
+                Ultra Violet Radiation
+              </option>
+              <option value="Ionizing/Gamma Radiation">
+                Ionizing/Gamma Radiation
+              </option>
               <option value="ETO">ETO</option>
             </select>
           </div>
@@ -254,13 +246,12 @@ const getPopupData = () => {
               />
               Inactive
             </div>
-          
           </div>
-          <div className="CSSDItemMaster-buttonContainer" >
-          <button onClick={handleSave}>Save</button>
+          <div className="CSSDItemMaster-buttonContainer">
+            <button onClick={handleSave}>Save</button>
           </div>
         </div>
-        
+
         {/* <div className="CSSDItemMaster-buttonContainer">
           <button onClick={handleSave}>Save</button>
           <button>Delete</button>
@@ -277,38 +268,39 @@ const getPopupData = () => {
       </div>
 
       <div className="CSSDItemMaster-tableContainer">
-          <table className="CSSDItemMaster-table">
-            <thead>
-              <tr>
-                <th>Item Name</th>
-                <th>Quantity</th>
-                <th>Description</th>
-                <th>Sterile Type</th>
-                <th>Status</th>
-                <th>Actions</th>
+        <table className="CSSDItemMaster-table">
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Quantity</th>
+              <th>Description</th>
+              <th>Sterile Type</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item) => (
+              <tr key={item.itemId}>
+                <td>{item.itemName}</td>
+                <td>{item.quantity}</td>
+                <td>{item.description}</td>
+                <td>{item.sterileType}</td>
+                <td>{item.status}</td>
+                <td>
+                  <button onClick={() => handleEdit(item)}>
+                    <FontAwesomeIcon icon={faEdit} /> Edit
+                  </button>{" "}
+                  &nbsp;
+                  <button onClick={() => handleDelete(item.itemId)}>
+                    <FontAwesomeIcon icon={faTrash} /> Delete
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {items.map((item) => (
-                <tr key={item.itemId}>
-                  <td>{item.itemName}</td>
-                  <td>{item.quantity}</td>
-                  <td>{item.description}</td>
-                  <td>{item.sterileType}</td>
-                  <td>{item.status}</td>
-                  <td>
-                    <button onClick={() => handleEdit(item)}  >
-                      <FontAwesomeIcon icon={faEdit} /> Edit
-                    </button> &nbsp;
-                    <button onClick={() => handleDelete(item.itemId)}>
-                      <FontAwesomeIcon icon={faTrash} /> Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* {activePopup && (
         <PopupTable
@@ -319,8 +311,6 @@ const getPopupData = () => {
         />
       )} */}
     </div>
-
-    
   );
 };
 

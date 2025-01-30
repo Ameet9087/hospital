@@ -190,7 +190,7 @@ const IpdReturnsWard = ({ ipAdmission }) => {
                     <button
                       className="final-bill-del-btn"
                       onClick={() => handleDeleteRow(index)}
-                      disabled={packageTableRows.length <= 1} // This condition ensures delete is disabled if there's only one row
+                      disabled={packageTableRows.length <= 1} 
                     >
                       Del
                     </button>

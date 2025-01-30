@@ -4,10 +4,14 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
+import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+
 
 const CSSDKitDiscard = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
+  const navigate = useNavigate();
 
   const [rows, setRows] = useState([
     { kitId: "", kitName: "", quantity: " ", remarks: "" },
@@ -51,6 +55,9 @@ const CSSDKitDiscard = () => {
   const filteredKits = kits.filter((kit) =>
     kit.kitName.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  const handleClose = () => {
+    navigate(-1);
+  };
 
   const addRow = () => {
     setRows([
@@ -111,7 +118,15 @@ const CSSDKitDiscard = () => {
   return (
     <div className="cssdkitdiscard-container">
       <header className="cssdkitdiscard-header">
+     
+
+
         <h3>Kit Discard</h3>
+        <FontAwesomeIcon
+            icon={faArrowLeftLong}
+            className="back-icon"
+            onClick={handleClose}
+          />
       </header>
       <div className="cssdkitdiscard-form">
         <label>

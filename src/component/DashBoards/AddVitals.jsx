@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./AddVitals.css"; // Separate CSS file
+import "./AddVitals.css"; 
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import CustomModal from "../CustomModel/CustomModal";
@@ -31,7 +31,6 @@ const Vitals = ({
   useEffect(() => {
     const fetchVitals = () => {
       let endpoint = "";
-      // Determine which endpoint to use based on available IDs
       if (outPatientId) {
         endpoint = `${API_BASE_URL}/doc-vitals/get-by-opd-patient-id/${outPatientId}`;
       } else if (patientId) {
@@ -55,39 +54,41 @@ const Vitals = ({
     if (outPatientId || patientId) {
       fetchVitals();
     }
-  }, [outPatientId, patientId, showForm]); // Dependencies to track ID changes
+  }, [outPatientId, patientId, showForm]); 
 
   const handleAddVitals = () => {
-    setShowForm(true); // Show form when "Add Vitals" button is clicked
+    setShowForm(true); 
   };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    // Update the form state
+  
+    if (parseFloat(value) < 0) {
+      alert(`${name} should be greater than zero.`);
+      return;
+    }
+  
     setVitalData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-
-    // If height or weight changes, calculate BMI
+  
     if (name === "height" || name === "weight") {
       const newBMI = calculateBMI(
         name === "height" ? value : vitalData.height,
         name === "weight" ? value : vitalData.weight
       );
-
-      // Set the calculated BMI value
+  
       setVitalData((prevState) => ({
         ...prevState,
         bmi: newBMI,
       }));
     }
   };
-
+  
   const calculateBMI = (height, weight) => {
-    const heightInMeters = height / 100; // Convert height from cm to meters
+    const heightInMeters = height / 100; 
     if (heightInMeters > 0 && weight > 0) {
-      return (weight / (heightInMeters * heightInMeters)).toFixed(1); // BMI formula
+      return (weight / (heightInMeters * heightInMeters)).toFixed(1); 
     }
     return "";
   };
@@ -111,7 +112,6 @@ const Vitals = ({
       if (response.ok) {
         console.log("Vitals saved successfully");
         setShowForm(false);
-        // Clear the form after successful submission
         setVitalData({
           addedOn: "",
           height: "",
@@ -273,6 +273,7 @@ const Vitals = ({
                         className="vitals-form-form-row-input"
                         type="number"
                         name="temperature"
+                        placeholder="	°F"
                         value={vitalData.temperature}
                         onChange={handleInputChange}
                       />
@@ -284,6 +285,7 @@ const Vitals = ({
                         className="vitals-form-form-row-input"
                         type="number"
                         name="pulse"
+                        placeholder="bpm"
                         value={vitalData.pulse}
                         onChange={handleInputChange}
                       />
@@ -296,7 +298,7 @@ const Vitals = ({
                           className="vitals-form-form-row-input"
                           type="number"
                           name="bpSystolic"
-                          placeholder="BP Systolic"
+                          placeholder="mmHg"
                           value={vitalData.bpSystolic}
                           onChange={handleInputChange}
                         />
@@ -304,7 +306,7 @@ const Vitals = ({
                           className="vitals-form-form-row-input"
                           type="number"
                           name="bpDiastolic"
-                          placeholder="BP Diastolic"
+                          placeholder="mmHg"
                           value={vitalData.bpDiastolic}
                           onChange={handleInputChange}
                         />
@@ -317,6 +319,7 @@ const Vitals = ({
                         className="vitals-form-form-row-input"
                         type="number"
                         name="respiratoryRate"
+                        placeholder="breaths/min"
                         value={vitalData.respiratoryRate}
                         onChange={handleInputChange}
                       />
@@ -328,6 +331,7 @@ const Vitals = ({
                         className="vitals-form-form-row-input"
                         type="number"
                         name="spO2"
+                        placeholder="%"
                         value={vitalData.spO2}
                         onChange={handleInputChange}
                       />
@@ -339,6 +343,7 @@ const Vitals = ({
                         className="vitals-form-form-row-input"
                         type="text"
                         name="o2DeliveryPlan"
+                        placeholder="L/min"
                         value={vitalData.o2DeliveryPlan}
                         onChange={handleInputChange}
                       />
@@ -350,6 +355,7 @@ const Vitals = ({
                         className="vitals-form-form-row-input"
                         type="number"
                         name="painScale"
+                        placeholder="Scale 0-10"
                         value={vitalData.painScale}
                         onChange={handleInputChange}
                       />

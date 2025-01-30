@@ -1296,7 +1296,7 @@ const PatientDashboard = ({
                         </table>
                       </div>
                     ) : (
-                      <p>No Radiology order for this patient or visit.</p>
+                      <p>No  Previous Radiology order Found  for this patient or visit.</p>
                     )}
                   </>
                 }
@@ -1798,18 +1798,18 @@ const PatientDashboard = ({
               <i class="fas fa-clinic-medical"></i>
             </div>
           </div>
-          <div className="Patient-Dashboard-boxOne">
+          {/* <div className="Patient-Dashboard-boxOne">
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Notes</span>
               <i class="fas fa-notes-medical"></i>
             </div>
-          </div>
-          <div className="Patient-Dashboard-boxOne">
+          </div> */}
+          {/* <div className="Patient-Dashboard-boxOne">
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Scanned images</span>
               <i class="fas fa-images"></i>
             </div>
-          </div>
+          </div> */}
           {patient.admissionId && (
             <div
               onClick={() => {
@@ -1896,14 +1896,14 @@ const PatientDashboard = ({
             </div>
           )}
 
-          <div className="Patient-Dashboard-boxOne">
+          {/* <div className="Patient-Dashboard-boxOne">
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">
                 Doctor Appointment
               </span>
               <i class="fas fa-calendar-check"></i>
             </div>
-          </div>
+          </div> */}
 
           <div className="Patient-Dashboard-boxOne">
             <div className="Patient-Dashboard-textAndLogo">

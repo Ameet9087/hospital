@@ -128,13 +128,15 @@
 }
 
 .booking-list-btn-submit {
-  background-color: var(--button-bg-color);
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
+  background-color: var(--button-color); 
+  border: 1px solid white; 
+  color: white; 
+  padding: 5px 10px;
+  border-radius: 5px;
   cursor: pointer;
-  border: 1px solid var(--button-bg-color);
+  margin-right: 10px;
+  transition: all 0.3s ease;
+
 }
 
 .booking-list-btn-cancel {
@@ -148,9 +150,10 @@
 
 .booking-list-btn-submit:hover,
 .booking-list-btn-cancel:hover {
-  background-color: var(--button-hover-background-color);
+  background-color: white; 
+  border: 1px solid var(--button-hover-border-color);
   color: var(--button-hover-text-color);
-  border-color: var(--button-hover-border-color);
+
 }
 
 .ot-filtersection {

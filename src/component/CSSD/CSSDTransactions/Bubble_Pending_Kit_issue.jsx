@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import './Bubble_Pending_Kit_issue.css';
 import { API_BASE_URL } from "../../api/api";
+import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const BubbleView = () => {
   const navigate = useNavigate();
+  
   const [bubbles, setBubbles] = useState([]);
 
   useEffect(() => {
@@ -58,11 +61,20 @@ const BubbleView = () => {
         // navigate(`/cssd/cssd-transaction-mainmenu`);
 
   };
+  const handleClose = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
+
 
   return (
     <div className="Bubble_Pending_Kit_Receive_view">
       <div className="Bubble_Pending_Kit_Receive_header">
         <h5>Pending Kit Record</h5>
+         <FontAwesomeIcon
+                    icon={faArrowLeftLong}
+                    className="back-icon"
+                    onClick={handleClose}
+                  /> 
       </div>
 
       <div className="Bubble_Pending_Kit_Receive_header_container bubbles-container">
@@ -82,7 +94,7 @@ const BubbleView = () => {
         )}
       </div>
 
-      <div className="Bubble_buttons">
+      {/* <div className="Bubble_buttons">
         <button>Today</button>
         <button>Yesterday</button>
         <button>Last Week</button>
@@ -90,7 +102,7 @@ const BubbleView = () => {
         <button>Last Month</button>
         <button>Last 3 Months</button>
         <button id="Bubble_buttons_close">Close</button>
-      </div>
+      </div> */}
     </div>
   );
 };
