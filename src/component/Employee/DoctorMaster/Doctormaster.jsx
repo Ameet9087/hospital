@@ -638,6 +638,7 @@ const DoctorMaster = () => {
                 <label className="doctormaster-label">Doctor Type:</label>
                 <select value={formdata.doctorType} onChange={handleInputChange} name="doctorType" className="doctormaster-select">
                   <option value="">Select Doctor Type</option>
+                  <option value="Employee">Employee</option>
                   <option value="Referral">Referral</option>
                   <option value="Consultant">Consultant</option>
                   <option value="Both">Both</option>
