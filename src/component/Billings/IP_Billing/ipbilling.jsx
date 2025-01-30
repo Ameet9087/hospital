@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 // import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import axios from "axios";
-import "./iP_billing.css";
+import "./ipbilling.css";
 import { API_BASE_URL } from "../../api/api";
 import IpBillingPopupTable from "./IpBillingPopupTable";
 const IpBilling = () => {
@@ -1232,7 +1232,7 @@ const IpBilling = () => {
           <button className="btn-blue" onClick={handleSaveData}>
             Save
           </button>
-          <button className="btn-green">Print</button> 
+          <button className="btn-green">Print</button>
 
           {/* <button className="btn-red">Delete</button>
           <button className="btn-orange">Clear</button>
