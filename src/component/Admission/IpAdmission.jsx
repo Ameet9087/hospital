@@ -1335,6 +1335,10 @@ const IpAdmission = ({ patientData, onClose }) => {
                 >
                   <option value={""}>select</option>
                   <option value={"aadhar"}>aadhar card</option>
+                  <option value={"pan"}>Pan card</option>
+                  <option value={"Driving Licence"}>Driving Licence</option>
+
+
                 </select>
               </td>
               <td>
@@ -1359,14 +1363,14 @@ const IpAdmission = ({ patientData, onClose }) => {
       <hr />
       <div className="ip-addmission-sh-btn">
         <button onClick={handleSubmit} className="ip-addmission-sh-sav">
-          Save
+          Admit
         </button>
-        <button onClick={handleClear} className="ip-addmission-sh-sav">
+        {/* <button onClick={handleClear} className="ip-addmission-sh-sav">
           Clear
         </button>
         <button onClick={onClose} className="ip-addmission-sh-sav">
           Close
-        </button>
+        </button> */}
       </div>
 
       {activePopup && (

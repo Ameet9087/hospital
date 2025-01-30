@@ -16,7 +16,7 @@ function AccountComponent() {
           <ul>
             <li>
               <NavLink
-                to="accounting/transactions/*"
+                to="/accounting/transactions/*"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Transactions
@@ -24,7 +24,7 @@ function AccountComponent() {
             </li>
             <li>
               <NavLink
-                to="accounting/settings/*"
+                to="/accounting/settings/*"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Settings
@@ -32,7 +32,7 @@ function AccountComponent() {
             </li>
             <li>
               <NavLink
-                to="accounting/reports"
+                to="/accounting/reports"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Reports
@@ -40,7 +40,7 @@ function AccountComponent() {
             </li>
             <li>
               <NavLink
-                to="voucher-verification"
+                to="/accounting/voucher-verification"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Voucher Verification
@@ -56,7 +56,7 @@ function AccountComponent() {
             </li>
             <li>
               <NavLink
-                to="accounting/bankreconciliation"
+                to="/accounting/bankreconciliation"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Bank Reconciliation
@@ -75,7 +75,7 @@ function AccountComponent() {
             element={<VoucherVerification />}
           />
           <Route
-            path="medicareregistration`````"
+            path="medicareregistration"
             element={<MedicarePatientList />}
           />
           <Route
