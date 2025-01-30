@@ -1,0 +1,244 @@
+import React, { useRef } from "react";
+import "./OpdBillingPrint.css"; // Make sure the CSS file is created for styling
+import { useLocation } from "react-router-dom";
+
+const OpdBillingPrint = () => {
+  const printRef = useRef(null);
+  const location = useLocation();
+  const { selectedPatient, testGridTableRowsableRows, netAmount,selectedPaymentMode,billFromResponse,selectedDoctor } = location.state || {};
+
+  // Function to convert number to words
+  const convertNumberToWords = (num) => {
+    const singleDigits = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
+    const doubleDigits = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+    const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+    const thousandPowers = ["", "Thousand", "Million", "Billion"];
+
+    if (num === 0) return "Zero";
+
+    let words = "";
+
+    const getWords = (n, index) => {
+      if (n === 0) return "";
+      if (n < 10) return singleDigits[n] + " ";
+      if (n < 20) return doubleDigits[n - 10] + " ";
+      if (n < 100) return tens[Math.floor(n / 10)] + " " + getWords(n % 10, 0);
+      return singleDigits[Math.floor(n / 100)] + " Hundred " + getWords(n % 100, 0);
+    };
+
+    const chunks = [];
+    let chunkCount = 0;
+    while (num > 0) {
+      chunks.push(num % 1000);
+      num = Math.floor(num / 1000);
+      chunkCount++;
+    }
+
+    for (let i = 0; i < chunks.length; i++) {
+      if (chunks[i] > 0) {
+        words = getWords(chunks[i], 0) + thousandPowers[i] + " " + words;
+      }
+    }
+
+    return words.trim();
+  };
+
+  const handlePrint = () => {
+    const printContent = printRef.current; // Access the ref content
+    const printWindow = window.open("", "_blank", "width=800,height=600");
+
+    printWindow.document.open();
+    printWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Print Preview</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              margin: 20px;
+              padding: 20px;
+            }
+            .OpdBillingPrint-container {
+              width: 100%;
+              max-width: 1000px;
+              margin: 0 auto;
+            }
+            .OpdBillingPrint-bill-info {
+              display: flex;
+              justify-content: space-between;
+            }
+            .OpdBillingPrint-header {
+              text-align: center;
+              margin-bottom: 20px;
+            }
+            .OpdBillingPrint-info {
+              display: flex;
+              justify-content: space-between;
+              margin-bottom: 20px;
+            }
+            .OpdBillingPrint-info .OpdBillingPrint-left, .OpdBillingPrint-right {
+              width: 48%;
+            }
+            .OpdBillingPrint-table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-bottom: 20px;
+            }
+            .OpdBillingPrint-table th, .OpdBillingPrint-table td {
+              border: 1px solid #000;
+              padding: 8px;
+              text-align: left;
+            }
+            .OpdBillingPrint-table th {
+              background-color: #f4f4f4;
+            }
+            .OpdBillingPrint-footer {
+              text-align: left;
+              margin-top: 20px;
+            }
+            .OpdBillingPrint-signature {
+              text-align: right;
+              margin-top: 30px;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="OpdBillingPrint-container">
+            ${printContent.innerHTML}
+          </div>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+  };
+
+  return (
+    <div>
+      {/* Bill Design */}
+      <div ref={printRef} className="OpdBillingPrint-container">
+        <div className="OpdBillingPrint-header">
+          <h2>Hospital</h2>
+          <p>
+            A/12, Shrenik Park, Opposite Jain Temple,
+            <br />
+            Shrenik Park Cow Circle, Pune - 390020
+            <br />
+            Mb. No.: 9727955514
+          </p>
+          <h3>OPD BILL</h3>
+        </div>
+        <div>
+          <div className="OpdBillingPrint-bill-info">
+            <label htmlFor="">
+              Bill Date: <span>{billFromResponse?.billing_date}</span>
+            </label>
+            <label htmlFor="">
+              Bill No: <span>{billFromResponse?.opdBillingId}</span>
+            </label>
+            <label htmlFor="">
+              Consulting Doctor: <span>{selectedDoctor?.doctorName}</span>
+            </label>
+          </div>
+        </div>
+
+        <div className="OpdBillingPrint-info">
+          <div className="OpdBillingPrint-left">
+            <p>
+              Patient Name: <span>{selectedPatient?.firstName}</span>
+            </p>
+            <p>
+              Age: <span>{selectedPatient?.age}</span>
+            </p>
+            <p>
+              Address: <span>{selectedPatient?.address}</span>
+            </p>
+          </div>
+          <div className="OpdBillingPrint-right">
+            <p>
+              Gender: <span>{selectedPatient?.gender}</span>
+            </p>
+            <p>
+              Patient ID: <span>{selectedPatient?.patientRegistrationId}</span>
+            </p>
+            <p>
+              Mobile No: <span>{selectedPatient?.contactNumber}</span>
+            </p>
+          </div>
+        </div>
+        {testGridTableRowsableRows && testGridTableRowsableRows.length > 0 && (
+          <table className="OpdBillingPrint-table">
+            <thead>
+              <tr>
+                <th>Sr No</th>
+                <th>OPD Services Details</th>
+                <th>QTY</th>
+                <th>Rate</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {testGridTableRowsableRows.map((row, index) => (
+                <tr key={index}>
+                  <td>{row.sn}</td>
+                  <td>{row.serviceName}</td>
+                  <td>{row.qty}</td>
+                  <td>{row.rate}</td>
+                  <td>{row.netAmt}</td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colSpan={"2"}>
+                  Amount Received
+                  <br />
+                  {/* Displaying netAmount in words */}
+                  {convertNumberToWords(netAmount)}
+                </td>
+
+                <td colSpan={"2"}>
+                  Total Amount by: 
+                  {billFromResponse.paymentModeDTO?.map((paymentModeObj, index) => (
+                    <span key={paymentModeObj.opdbillingPaymentModeID}>
+                      {paymentModeObj.paymentMode} ({paymentModeObj.amount})
+                      {index < billFromResponse.paymentModeDTO.length - 1 && ', '}
+                    </span>
+                  ))}
+                </td>
+                {/* <td>Total Amount by {billFromResponse.paymentModeDTO?.[0]?.paymentMode}</td> */}
+                <td>{netAmount}</td>
+              </tr>
+            </tfoot>
+          </table>
+        )}
+
+        <div className="OpdBillingPrint-footer">
+          <p>
+            Terms & Conditions:
+            <br />
+            - Subject to Vadodara Jurisdiction E & OE
+            <br />
+            - Mediclaim Payment Receipts are provided
+            <br />- Discharge Card will be provided once Patient Discharge is
+            Done
+          </p>
+        </div>
+
+        <div className="OpdBillingPrint-signature">
+          <p>For, Hospital</p>
+        </div>
+      </div>
+
+      {/* Print Button */}
+      <button onClick={handlePrint} className="OpdBillingPrint-print-button">
+        Print Bill
+      </button>
+    </div>
+  );
+};
+
+export default OpdBillingPrint;

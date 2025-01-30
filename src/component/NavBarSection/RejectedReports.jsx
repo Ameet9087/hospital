@@ -93,7 +93,7 @@ function RejectedReports() {
 
   return (
     <div className="finalReports-work-list">
-      <h4>Final Reports</h4>
+      <h4>Rejected Reports</h4>
       <div className="finalReports-header">
         <div className="finalReports-controls">
           <div className="finalReports-date-range">

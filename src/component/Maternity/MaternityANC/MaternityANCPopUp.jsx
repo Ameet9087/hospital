@@ -227,7 +227,7 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
                   id="name"
                   type="text"
                   name="name"
-                  value={`${patientData?.inPatientDTO?.firstName} ${patientData?.inPatientDTO?.lastName}`}
+                  value={`${patientData?.inPatientDTO?.patient?.firstName} ${patientData?.inPatientDTO?.patient?.lastName}`}
 
                   placeholder="Enter Name"
                   onChange={handleInputChange}
@@ -239,7 +239,7 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
                   id="contactNo"
                   type="text"
                   name="contactNo"
-                  value={patientData?.inPatientDTO?.phoneNumber}
+                  value={patientData?.inPatientDTO?.patient?.contactNumber}
 
                   placeholder="Enter Contact No"
                   onChange={handleInputChange}
@@ -251,7 +251,7 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
                   id="age-sex"
                   type="text"
                   name="ageSex"
-                  value={`${patientData?.inPatientDTO?.age}/${patientData?.inPatientDTO?.gender}`}
+                  value={`${patientData?.inPatientDTO?.patient?.age}/${patientData?.inPatientDTO?.patient?.gender}`}
                   placeholder="Enter Age/Sex"
                   onChange={handleInputChange}
                 />
@@ -264,7 +264,7 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
                   id="visitDate"
                   type="date"
                   name="visitDate"
-                  value={patientData?.inPatientDTO?.dateOfBirth}
+                  value={patientData?.inPatientDTO?.patient?.dateOfBirth}
                   onChange={handleInputChange}
                 />
               </div>
@@ -274,7 +274,7 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
                   id="address"
                   type="text"
                   name="address"
-                  value={patientData?.inPatientDTO?.addressDTO?.city}
+                  value={patientData?.inPatientDTO?.patient?.address}
 
                   placeholder="Enter Address"
                   onChange={handleInputChange}
@@ -359,7 +359,7 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
 
           <div className="MaternityANCPopUp-form-actions">
             <button className="MaternityANCPopUp-add-btn" onClick={handleSubmit}>
-              Add
+              Save
             </button>
             <button className="MaternityANCPopUp-add-btn" onClick={handleReset}>
               Reset

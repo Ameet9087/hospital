@@ -39,9 +39,15 @@
   font-size: var(--font-size);
 }
 .NormalTransfer-add-btn{
+  padding: 2px 5px;
+  color: white;
+  margin-right: 2px;
   background-color: green    ;
 }
 .NormalTransfer-del-btn{
+  padding: 2px 2px;
+  color: white;
+  margin-right: 2px;
 background-color: red;
 }
 .NormalTransfer-Custom{
@@ -52,4 +58,7 @@ padding: 10px;
   display: flex;
   gap: 20px;
   margin: 30px;
+}
+.NormalTransfer-returnQty{
+  width: 100%;
 }

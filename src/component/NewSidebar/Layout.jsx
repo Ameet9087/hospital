@@ -102,7 +102,7 @@ function Layout({ }) {
           <Route path="/queuemngmt/*" element={<PatientQueueRouting />} />
           <Route path="/substore/*" element={<SubstoreRouting />} />
           <Route path="/report/*" element={<ReportRoute />} />
-          <Route path="/hi/*" element={<MainVisitorFile />} />
+          <Route path="/visitormanagement/*" element={<MainVisitorFile />} />
           <Route path="/adt/*" element={<ADTRouting />} />
           <Route path="/maternity/*" element={<MaternityHeader />} />
           <Route path="/procurement/*" element={<Procurementmain />} />

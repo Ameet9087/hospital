@@ -67,8 +67,8 @@ const RequisitionDetails = ({ request }) => {
             </thead>
             <tbody>
               ${requisitionInfo.medicineName
-                .map(
-                  (item) => `
+        .map(
+          (item) => `
                   <tr>
                     <td>${item.items.itemName}</td>
                     <td>${item.items.budgetedQuantity}</td>
@@ -78,8 +78,8 @@ const RequisitionDetails = ({ request }) => {
                     <td>${requisitionInfo.remarks}</td>
                   </tr>
                 `
-                )
-                .join("")}
+        )
+        .join("")}
             </tbody>
           </table>
           <div class="requisition-footer">
@@ -109,7 +109,10 @@ const RequisitionDetails = ({ request }) => {
         </div>
         <div ref={qrCodeRef}>
           <p>Requisition Date: {requisitionInfo.date}</p>
-          <QRCode value={JSON.stringify(requisitionInfo)} size={80} />
+          <QRCode value={JSON.stringify({
+            requisitionId: requisitionInfo?.requisitionNo,
+            date: requisitionInfo?.date
+          })} size={80} />
         </div>
       </header>
       <main>

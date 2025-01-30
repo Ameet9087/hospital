@@ -583,6 +583,7 @@ import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import './DiabeticChartForm.css';
 import PopupTable from "../popup";
 import axios from "axios";
+import { API_BASE_URL } from "../../api/api";
 
 // FloatingInput component remains exactly the same
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
@@ -735,7 +736,7 @@ const DiabeticChartForm = () => {
     };
 
     try {
-      const response = await fetch("http://192.168.1.46:4096/api/diabeticChart", {
+      const response = await fetch(`${API_BASE_URL}/diabeticChart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -767,7 +768,7 @@ const DiabeticChartForm = () => {
 
   const fetchMrno = async () => {
     try {
-      const response = await axios.get("http://192.168.1.46:4096/api/ip-admissions");
+      const response = await axios.get(`${API_BASE_URL}/ip-admissions`);
       setMrNoData(response.data);
       console.log(response.data)
     } catch (error) {

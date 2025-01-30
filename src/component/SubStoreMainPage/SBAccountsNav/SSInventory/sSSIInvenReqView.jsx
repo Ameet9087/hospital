@@ -1,44 +1,44 @@
-  import React, { useRef } from 'react';
-  // import './RequisitionDetailsPrint.css';
-  import "../SSInventory/sSSIInvenReqView.css"
+import React, { useRef } from 'react';
+// import './RequisitionDetailsPrint.css';
+import "../SSInventory/sSSIInvenReqView.css"
 
-  const SSSIInvenReqView = ({onClose,requisition}) => {
-    console.log(requisition);
+const SSSIInvenReqView = ({ onClose, requisition }) => {
+  console.log(requisition);
 
-    const printRef = useRef();
+  const printRef = useRef();
 
 
-    const handlePrint = () => {
-      // Get the content to print, but exclude the print button
+  const handlePrint = () => {
+    // Get the content to print, but exclude the print button
 
-      let printContent = printRef.current.innerHTML;
+    let printContent = printRef.current.innerHTML;
 
-      printContent = printContent.replace(
-        /<button[^>]*class="subStore-print-button"[^>]*>.*?<\/button>/g,
-        ""
-      );
+    printContent = printContent.replace(
+      /<button[^>]*class="subStore-print-button"[^>]*>.*?<\/button>/g,
+      ""
+    );
 
-      printContent = printContent.replace(
-        /<div[^>]*class="subStore-step subStore-completed"[^>]*>.*?<\/div>/g,
-        ""
-      );
-      
+    printContent = printContent.replace(
+      /<div[^>]*class="subStore-step subStore-completed"[^>]*>.*?<\/div>/g,
+      ""
+    );
 
-      printContent = printContent.replace(
-        /<div[^>]*class="subStore-step subStore-active"[^>]*>.*?<\/div>/g,
-        ""
-      );
-      printContent = printContent.replace(
-        /<div[^>]*class="subStore-step"[^>]*>.*?<\/div>/g,
-        ""
-      );
-      // Remove the status steps section
-    
-      
-      const printWindow = window.open("", "_blank"); // Open a new blank window
 
-      // Write HTML with styles and print content
-      printWindow.document.write(`
+    printContent = printContent.replace(
+      /<div[^>]*class="subStore-step subStore-active"[^>]*>.*?<\/div>/g,
+      ""
+    );
+    printContent = printContent.replace(
+      /<div[^>]*class="subStore-step"[^>]*>.*?<\/div>/g,
+      ""
+    );
+    // Remove the status steps section
+
+
+    const printWindow = window.open("", "_blank"); // Open a new blank window
+
+    // Write HTML with styles and print content
+    printWindow.document.write(`
         <html>
           <head>
             <title>Print</title>
@@ -101,14 +101,14 @@
         </html>
       `);
 
-      printWindow.document.close(); // Close document stream
-      printWindow.print(); // Trigger print
-      printWindow.close(); // Close print window after printing
-    };
+    printWindow.document.close(); // Close document stream
+    printWindow.print(); // Trigger print
+    printWindow.close(); // Close print window after printing
+  };
 
-    return (
-      <div className="subStore-requisition-details-container" ref={printRef}>
-        {/* <div className="header">  
+  return (
+    <div className="subStore-requisition-details-container" ref={printRef}>
+      {/* <div className="header">  
           <div className="logo-title">
             <div className="logo">+</div>
             <div className="title">Sasa Health</div>
@@ -124,66 +124,66 @@
           </div> 
         </div>*/}
 
-        <div className="subStore-requisition-table" >
-          <div className="subStore-table-header"><h1>REQUISITION DETAILS PRINT</h1> <span className='closeButton' onClick={()=>onClose(false)}>X</span></div>
-          <table>
-            <thead>
-              <tr>
-                <th>Item Category</th>
-                <th>Item Name</th>
-                <th>Code</th>
-                <th>Quantity</th>
-                <th>Dispatched Qty.</th>
-                <th>Pending Qty.</th>
-                <th>Received Qty.</th>
-                <th>Status</th>
-                <th>Remarks</th>
+      <div className="subStore-requisition-table" >
+        <div className="subStore-table-header"><h1>REQUISITION DETAILS PRINT</h1> <span className='closeButton' onClick={() => onClose(false)}>X</span></div>
+        <table>
+          <thead>
+            <tr>
+              <th>Item Category</th>
+              <th>Item Name</th>
+              <th>Code</th>
+              <th>Quantity</th>
+              <th>Dispatched Qty.</th>
+              <th>Pending Qty.</th>
+              <th>Received Qty.</th>
+              <th>Status</th>
+              <th>Remarks</th>
+            </tr>
+          </thead>
+          <tbody>
+            {requisition?.requisitionItems?.map((item, index) => (
+              <tr key={index}>
+                <td>{item?.item?.subCategory?.category}</td>
+                <td>{item?.item?.itemName}</td>
+                <td>{item?.item?.itemCode}</td>
+                <td>{item.requiredQuantity}</td>
+                <td>{item.dispatchQuantity}</td>
+                <td>{item.pendingQty}</td>
+                <td>{item.requiredQuantity}</td>
+                <td>{item.status}</td>
+                <td>{item.remark || "-"}</td>
               </tr>
-            </thead>
-            <tbody>
-              {requisition?.requisitionItems?.map((item, index) => (
-                <tr key={index}>
-                  <td>{item?.item?.subCategory?.category}</td>
-                  <td>{item?.item?.itemName}</td>
-                  <td>{item?.item?.itemCode}</td>
-                  <td>{item.requiredQuantity}</td>
-                  <td>{item.dispatchQuantity}</td>
-                  <td>{item.pendingQty}</td>
-                  <td>{item.requiredQuantity}</td>
-                  <td>{item.status}</td>
-                  <td>{item.remark || "-"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="subStore-requisition-info">
-          <div className="subStore-requested-by">
-            <strong>Requested By:</strong>
-            <div>Mr. admin admin</div>
-            <div>Aug 27, 2024, 7:22:15 PM</div>
-          </div>
-          <div className="subStore-verified-by">
-            <strong>Verified By:</strong>
-            <div>1 Mr. admin admin (Aug 27, 2024, 7:23:00 PM)</div>
-          </div>
-        </div>
-
-        <div className="subStore-status-steps">
-          <div className="subStore-step subStore-completed">Requested</div>
-          <div className="subStore-step subStore-active">Verified(1)</div>
-          <div className="subStore-step">Dispatched</div>
-          <div className="subStore-step">Received</div>
-        </div>
-
-        <div className="subStore-buttons">
-          {/* <button className="subStore-edit-button">Edit</button>
-          <button className="subStore-withdraw-button">Withdraw Request</button> */}
-          <button className="subStore-print-button" onClick={handlePrint}>Print</button>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
-    );
-  };
 
-  export default SSSIInvenReqView;
+      <div className="subStore-requisition-info">
+        {/* <div className="subStore-requested-by">
+          <strong>Requested By:</strong>
+          <div>Mr. admin admin</div>
+          <div>Aug 27, 2024, 7:22:15 PM</div>
+        </div> */}
+        {/* <div className="subStore-verified-by">
+          <strong>Verified By:</strong>
+          <div>1 Mr. admin admin (Aug 27, 2024, 7:23:00 PM)</div>
+        </div> */}
+      </div>
+
+      <div className="subStore-status-steps">
+        <div className={"subStore-step subStore-completed"}>Requested</div>
+        <div className={`subStore-step subStore-active`}>Verified(1)</div>
+        <div className="subStore-step subStore-dispatch">Dispatched</div>
+        <div className="subStore-step subStore-receive">Received</div>
+      </div>
+
+      <div className="subStore-buttons">
+        {/* <button className="subStore-edit-button">Edit</button>
+          <button className="subStore-withdraw-button">Withdraw Request</button> */}
+        <button className="subStore-print-button" onClick={handlePrint}>Print</button>
+      </div>
+    </div>
+  );
+};
+
+export default SSSIInvenReqView;

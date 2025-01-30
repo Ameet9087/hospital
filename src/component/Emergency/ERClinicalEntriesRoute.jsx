@@ -17,7 +17,7 @@ import ErRegister from './ErRegister/ErRegister';
 const ERClinicalEntriesRoute = () => {
   return (
     <Routes>
-      <Route path="bedinformation" element={<ERClinicalEntries />} />
+      <Route path="erclinicalentries" element={<ERClinicalEntries />} />
       <Route path="diabetic-chart" element={<DiabeticChartForm />} />
       <Route path="wound-certificate" element={< WoundCertificate />} />
       <Route path="accident-report" element={<AccidentReportForm />} />
@@ -28,7 +28,7 @@ const ERClinicalEntriesRoute = () => {
       <Route path="narcotic-drugs-dispensed" element={<NarcoticDrugDispensedForm />} />
       <Route path="cpr-record-new" element={<CprRecordNew />} />
       <Route path="patientCareReport" element={<PatientCareReport />} />
-      <Route path="finalizedpatients" element={<ErRegister />} />
+      <Route path="erinitial" element={<ErRegister />} />
       <Route path="erinitialassessment" element={<ErInitialAssessment />} />
 
     </Routes>

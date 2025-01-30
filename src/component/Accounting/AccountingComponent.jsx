@@ -16,7 +16,7 @@ function AccountComponent() {
           <ul>
             <li>
               <NavLink
-                to="transactions"
+                to="accounting/transactions/*"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Transactions
@@ -24,7 +24,7 @@ function AccountComponent() {
             </li>
             <li>
               <NavLink
-                to="settings"
+                to="accounting/settings/*"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Settings
@@ -32,7 +32,7 @@ function AccountComponent() {
             </li>
             <li>
               <NavLink
-                to="reports"
+                to="accounting/reports"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Reports
@@ -48,7 +48,7 @@ function AccountComponent() {
             </li>
             <li>
               <NavLink
-                to="medicare-registration"
+                to="/accounting/medicareregistration"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Medicare Registration
@@ -56,7 +56,7 @@ function AccountComponent() {
             </li>
             <li>
               <NavLink
-                to="bank-reconciliation"
+                to="accounting/bankreconciliation"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 Bank Reconciliation
@@ -67,19 +67,19 @@ function AccountComponent() {
       </header>
       <div className="accounting-component-content">
         <Routes>
-          <Route path="transactions/*" element={<TransactionComponent />} />
-          <Route path="settings/*" element={<Settings />} />
+          <Route path="/transactions/*" element={<TransactionComponent />} />
+          <Route path="/settings/*" element={<Settings />} />
           <Route path="reports" element={<Reports />} />
           <Route
             path="voucher-verification"
             element={<VoucherVerification />}
           />
           <Route
-            path="medicare-registration"
+            path="medicareregistration`````"
             element={<MedicarePatientList />}
           />
           <Route
-            path="bank-reconciliation/*"
+            path="bankreconciliation/*"
             element={<BankReconciliation />}
           />
           <Route path="transactions/*" element={<TransactionComponent />} />

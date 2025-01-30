@@ -22,10 +22,16 @@ function AdmissionDeskHomePage() {
   const navigate = useNavigate();
 
   const fetchAdmissionRequest = async () => {
-    const response = await axios.get(`${API_BASE_URL}/admissionsSlip`);
-    console.log(response.data);
-    setAdmissionRequest(response.data);
+    try {
+      const response = await axios.get(`${API_BASE_URL}/admissionsSlip`);
+      const pendingRequests = response.data.filter(request => request.requestStatus.toLowerCase() === "pending");
+      console.log(pendingRequests);
+      setAdmissionRequest(pendingRequests);
+    } catch (error) {
+      console.error("Error fetching admission requests:", error);
+    }
   };
+
 
   const fetchAdmittedPatient = async () => {
     const response = await axios.get(`${API_BASE_URL}/ip-admissions/admitted`);
@@ -420,9 +426,8 @@ function AdmissionDeskHomePage() {
                         setActiveState("receptionClearance");
                       }
                     }}
-                    className={`admissionDeskHomePage-box ${
-                      isToday && isNotCleared ? "highlight-box" : ""
-                    } ${!isNotCleared ? "disabled-box" : ""}`}
+                    className={`admissionDeskHomePage-box ${isToday && isNotCleared ? "highlight-box" : ""
+                      } ${!isNotCleared ? "disabled-box" : ""}`}
                   >
                     <div className="admissionDeskHomePage-patient-info">
                       <div className="admissionDeskHomePage-patient-data-img-con">
@@ -528,9 +533,8 @@ function AdmissionDeskHomePage() {
                         setActiveState("dischargeClearance");
                       }
                     }}
-                    className={`admissionDeskHomePage-box ${
-                      isToday && isNotCleared ? "highlight-box" : ""
-                    } ${!isNotCleared ? "disabled-box" : ""}`}
+                    className={`admissionDeskHomePage-box ${isToday && isNotCleared ? "highlight-box" : ""
+                      } ${!isNotCleared ? "disabled-box" : ""}`}
                   >
                     <div className="admissionDeskHomePage-patient-info">
                       <div className="admissionDeskHomePage-patient-data-img-con">

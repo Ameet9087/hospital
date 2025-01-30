@@ -9,7 +9,7 @@ function DoctorMainPage() {
   const [myAppointment, setMyAppointment] = useState([]);
   const [newPatient, setNewPatient] = useState([]);
   const [followUpPatient, setFollowUpPatient] = useState([]);
-
+  const [patientRecord, setPatientRecord] = useState([])
   const [isPatientOPEN, setIsPatientOPEN] = useState(false);
 
   const fetchAllMyAppointments = async (id = 0) => {
@@ -49,11 +49,17 @@ function DoctorMainPage() {
     }
     setFollowUpPatient(response.data);
   };
+  const fetchAllOutPatientRecord = async () => {
+    const response = await axios.get(`${API_BASE_URL}/out-patient`)
+    console.log(response.data);
 
+    setPatientRecord(response.data);
+  }
   useEffect(() => {
     fetchAllMyAppointments();
     fetchAllNewPatientWhosePaymentIsDone();
     fetchFollowUpWhosePaymentIsDone();
+    fetchAllOutPatientRecord()
   }, []);
 
   const handleSelectPatient = (data) => {
@@ -289,6 +295,81 @@ function DoctorMainPage() {
               )}
             </div>
           </div>
+
+          <div className="doctorMainPage-subcontainer">
+            <div className="doctorMainPage-header">
+              <h1>Opd Records</h1>
+            </div>
+            <div className="doctorMainPage-boxes">
+              {patientRecord.length > 0 ? (
+                patientRecord.map((item) => (
+                  <div
+                    onClick={() => handleSelectPatient(item)}
+                    className="doctorMainPage-box"
+                  >
+                    <div class="doctorMainPage-patient-info">
+                      <div class="doctorMainPage-patient-data-img-con">
+                        <div class="doctorMainPage-patient-avatar">
+                          {!item?.patient?.hasOwnProperty("fileAttachment") ? (
+                            <span>{item?.patient?.firstName?.[0]}</span>
+                          ) : (
+                            <img
+                              src={`data:image/png;base64,${item?.patient?.fileAttachment}`}
+                              alt="patient attachment"
+                            />
+                          )}
+                        </div>
+                        <div className="doctorMainPage-patient-personal-details">
+                          <div class="doctorMainPage-info-row">
+                            <span class="value">
+                              {item.patient?.firstName} {item.patient?.lastName}
+                            </span>
+                          </div>
+                          <div class="doctorMainPage-info-row">
+                            <span class="value">{item.patient?.uhid}</span>
+                          </div>
+                          <div class="doctorMainPage-info-row">
+                            <span class="value">
+                              {item.patient?.age} {item.patient?.ageUnit} /{" "}
+                              {item.patient?.gender}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="doctorMainPage-patient-details">
+                        <div class="doctorMainPage-info-row">
+                          <span class="label">Fees Paid:</span>
+                          <span class="value">{item.feespaid}</span>
+                        </div>
+                        <div class="doctorMainPage-info-row">
+                          <span class="label">Reason:</span>
+                          <span class="value">{item.remarks}</span>
+                        </div>
+                        <div class="doctorMainPage-info-row">
+                          <span class="label">Doctor:</span>
+                          <span class="value">
+                            {item.addDoctor?.salutation}{" "}
+                            {item.addDoctor?.doctorName}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  Data Not Available
+                </div>
+              )}
+            </div>
+          </div>
+
         </div>
       )}
     </>
