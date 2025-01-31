@@ -1644,19 +1644,28 @@ const OpdBilling = () => {
                 {selectedPaymentMode && (
                   <div className="OpdBilling-grid-sec">
                     <FloatingInput
-                      label="Amount"
-                      htmlFor="amount"
-                      type="number"
-                      id="amount"
-                      // placeholder="Enter Amount"
-                      value={paymentDetails.amount || ""}
-                      onChange={(e) =>
-                        setPaymentDetails({
-                          ...paymentDetails,
-                          amount: e.target.value,
-                        })
-                      }
-                    />
+  label="Amount"
+  htmlFor="amount"
+  type="number"
+  id="amount"
+  value={paymentDetails.amount || ""}
+  onChange={(e) => {
+    const amount = e.target.value;
+
+    // Ensure that the amount is a number and does not exceed the current balance
+    if (amount <= currentBalance) {
+      setPaymentDetails({
+        ...paymentDetails,
+        amount: amount,
+      });
+    } else {
+      alert("please Enter valid amount ")
+
+      // Optionally, you can add an error message or do nothing if the condition fails
+      // For example, show an alert or set a state to display an error message
+    }
+  }}
+/>
 
                     {/* <div className="payment-details-row">
             <label htmlFor="amount">Amount:</label>

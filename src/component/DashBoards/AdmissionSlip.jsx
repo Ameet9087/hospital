@@ -148,7 +148,7 @@ const AdmissionSlip = ({
       setSelectedConsultantDoctor(data);
     }
   };
-
+  const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
   return (
     <>
       <div className="AdmissionSlip-container">
@@ -215,7 +215,8 @@ const AdmissionSlip = ({
                   value={admissionDate}
                   onChange={(e) => setAdmissionDate(e.target.value)}
                   required
-                />
+                  min={today} // Ensure the date is today or in the future
+                  />
               </div>
 
               <div className="AdmissionSlip-group">
@@ -350,13 +351,13 @@ const AdmissionSlip = ({
           </div>
 
           <div className="AdmissionSlip-group-buttons">
-            <button
+            {/* <button
               type="button"
               onClick={handleCancel}
               className="AdmissionSlip-cancel-btn"
             >
               Cancel
-            </button>
+            </button> */}
             <button type="submit" className="AdmissionSlip-submit-btn">
               Submit
             </button>

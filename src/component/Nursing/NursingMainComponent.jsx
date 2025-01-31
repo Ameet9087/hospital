@@ -141,12 +141,12 @@ const OutPatientComponent = () => {
                       placeholder="Search by Hospital No/Patient Name/Department Name"
                     />
 
-                    <input
+                    {/* <input
                       type="text"
                       className="department-input"
                       placeholder="Search by Department Name"
                       style={{ marginRight: "3%" }}
-                    />
+                    /> */}
                   </div>
                   <div className="nurse-action-buttons"></div>
                   <table className="patientList-table" ref={tableRef}>

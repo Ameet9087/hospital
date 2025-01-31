@@ -212,7 +212,7 @@ const DiscountAuthorityMaster = () => {
           <div className="DiscountAuthorityMaster-data">
             <label>Mobile No :</label>
             <input
-              type="number"
+              type="text"
               name="mobileNo"
               value={formData.mobileNo}
               onChange={handleInputChange}
@@ -240,7 +240,7 @@ const DiscountAuthorityMaster = () => {
           <div className="DiscountAuthorityMaster-data">
             <label>Discount % Authorized To Give:</label>
             <input
-              type="number"
+              type="text"
               name="discountPercentage"
               value={formData.discountPercentage}
               onChange={handleInputChange}
@@ -332,12 +332,7 @@ const DiscountAuthorityMaster = () => {
           <button onClick={handleSubmit} disabled={isLoading}>
             {isLoading ? "Saving..." : "Save"}
           </button>
-          <button>Delete</button>
-          <button>Clear</button>
-          <button>Close</button>
-          <button>Search</button>
-          <button>Tracking</button>
-          <button>Print</button>
+         
         </aside>
       </div>
     </div>
