@@ -33,6 +33,8 @@ const NewPatientRegistrationForm = ({ onClose }) => {
           throw new Error('Failed to fetch patients');
         }
         const data = await response.json();
+        
+        console.log("Fetched Patient Data:prachi1", data); // Debugging log
         setPatients(data);
       } catch (error) {
         console.error('Error fetching patients:', error);
@@ -41,6 +43,7 @@ const NewPatientRegistrationForm = ({ onClose }) => {
   
     fetchPatients();
   }, []);
+
   
   const handlePatientSelect = (e) => {
     const patientId = e.target.value;
@@ -52,19 +55,19 @@ const NewPatientRegistrationForm = ({ onClose }) => {
     if (selectedPatientData) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        firstName: selectedPatientData.firstName || '',
-        middleName: selectedPatientData.middleName || '',
-        lastName: selectedPatientData.lastName || '',
-        contactNumber: selectedPatientData.phoneNumber || '',
-        address: selectedPatientData.address || '',
-        gender: selectedPatientData.gender || '',
-        age: selectedPatientData.age || '',
-        country: selectedPatientData.country || 'Kenya',
-        state: selectedPatientData.state || '',
-        husbandName: selectedPatientData.maritalStatus === 'Married' ? selectedPatientData.previousLastName || '' : '',
-        bloodGroup: selectedPatientData.bloodGroup || '',
-        email: selectedPatientData.email || '',
-        obsHistory: selectedPatientData.occupation || '',
+        firstName: selectedPatientData.patient?.firstName || '',
+        middleName: selectedPatientData.patient?.middleName || '',
+        lastName: selectedPatientData.patient?.lastName || '',
+        contactNumber: selectedPatientData.patient?.contactNumber || '',
+        address: selectedPatientData.patient?.address || '',
+        gender: selectedPatientData.patient?.gender || '',
+        age: selectedPatientData.patient?.age || '',
+        country: selectedPatientData.patient?.country || 'India',
+        state: selectedPatientData.patient?.state || '',
+        husbandName: selectedPatientData.patient?.maritalStatus === 'Married' ? selectedPatientData.previousLastName || '' : '',
+        bloodGroup: selectedPatientData.patient?.bloodGroup || '',
+        email: selectedPatientData.patient?.email || '',
+        obsHistory: selectedPatientData.patient?.occupation || '',
       }));
     } else {
     }
@@ -80,7 +83,7 @@ const NewPatientRegistrationForm = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const dataToSend = {
       firstDayOfMenstruation: formData.lastMenstruationDate,
       expectedDateOfDelivery: formData.expectedDeliveryDate,
@@ -92,28 +95,30 @@ const NewPatientRegistrationForm = ({ onClose }) => {
         inPatientId: selectedPatient,
       },
     };
-
+  
+    console.log("Data to Send:", JSON.stringify(dataToSend, null, 2)); // Logs formatted JSON data
+  
     try {
       const response = await fetch(`${API_BASE_URL}/patients/save`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(dataToSend),
       });
-
+  
       if (!response.ok) {
-        throw new Error('Failed to register patient');
+        throw new Error("Failed to register patient");
       }
-
-      // Handle success
-      alert('Patient registered successfully');
+  
+      alert("Patient registered successfully");
       onClose();
     } catch (error) {
-      console.error('Error:', error);
-      alert('Error registering patient');
+      console.error("Error:", error);
+      alert("Error registering patient");
     }
   };
+  
 
   return (
     <div 
@@ -135,7 +140,7 @@ const NewPatientRegistrationForm = ({ onClose }) => {
               <option value="">--Select Patient--</option>
               {patients.map((patient) => (
                 <option key={patient.inPatientId} value={patient.inPatientId}>
-                  {patient.firstName} {patient.lastName}
+                  {patient.patient?.firstName} {patient.patient?.lastName}
                 </option>
               ))}
             </select>

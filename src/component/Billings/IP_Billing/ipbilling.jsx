@@ -3,11 +3,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 // import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import axios from "axios";
-import "./ip_billing.css";
-import { API_BASE_URL } from "../../../api/api";
-import IpBillingPopupTable from "../../../Admission/PopupTable";
+import "./ipbilling.css";
+import { API_BASE_URL } from "../../api/api";
+import IpBillingPopupTable from "./IpBillingPopupTable";
 const IpBilling = () => {
   const [selectedTab, setSelectedTab] = useState("testGrid");
   const [currentTime, setCurrentTime] = useState("");
@@ -410,7 +410,7 @@ const IpBilling = () => {
     // Log the visitData to see its structure and contents
     console.log("visited data", visitData)
     try {
-      const response = await axios.post('http://localhost:4096/api/dr-visits', visitData);
+      const response = await axios.post(`${API_BASE_URL}/dr-visits`, visitData);
       console.log('Data posted successfully:', response.data);
       alert("Data posted successfully");
     } catch (error) {
@@ -1232,14 +1232,15 @@ const IpBilling = () => {
           <button className="btn-blue" onClick={handleSaveData}>
             Save
           </button>
-          <button className="btn-red">Delete</button>
+          <button className="btn-green">Print</button>
+
+          {/* <button className="btn-red">Delete</button>
           <button className="btn-orange">Clear</button>
-          <button className="btn-gray">Close</button>
+          <button className="btn-gray">Close</button> */}
 
 
           {/* <button className="btn-blue">Search</button>
           <button className="btn-gray">Tracking</button>
-          <button className="btn-green">Print</button> */}
           {/* <button className="btn-blue">Export</button>
           <button className="btn-gray">Import</button>
           <button className="btn-green">Health</button>

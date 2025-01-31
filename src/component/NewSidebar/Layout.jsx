@@ -54,6 +54,7 @@ import OtMain from "../OperationTheater/OtMain";
 
 import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
 import BillingRoute from "../Billings/Billing";
+import AccountComponent from "../Accounting/AccountingComponent";
 
 function Layout({ }) {
   return (
@@ -83,7 +84,7 @@ function Layout({ }) {
           <Route path="/inventory/*" element={<Inventory />} />
           <Route path="/incentive/*" element={<IncentiveApp />} />
           <Route path="/laboratory/*" element={<Lab />} />
-          <Route path="/utilities/*" element={<Utilitiesmain />} />
+          <Route path="/utilites/*" element={<Utilitiesmain />} />
           <Route path="/emergency/*" element={<Emergency />} />
           <Route path="/vaccination/*" element={<Vaccination />} />
           <Route path="/nursing/*" element={<NursingRouting />} />
@@ -101,12 +102,13 @@ function Layout({ }) {
           <Route path="socialservice/*" element={<SocialServicesMainRoute />} />
           <Route path="/queuemngmt/*" element={<PatientQueueRouting />} />
           <Route path="/substore/*" element={<SubstoreRouting />} />
-          <Route path="/report/*" element={<ReportRoute />} />
-          <Route path="/hi/*" element={<MainVisitorFile />} />
+          <Route path="/reports/*" element={<ReportRoute />} />
+          <Route path="/visitormanagement/*" element={<MainVisitorFile />} />
           <Route path="/adt/*" element={<ADTRouting />} />
           <Route path="/maternity/*" element={<MaternityHeader />} />
           <Route path="/procurement/*" element={<Procurementmain />} />
           <Route path="/homehealthcare/*" element={<HomeHealthRoutes />} />
+          <Route path="/accounting/*" element={<AccountComponent />} />
           <Route
             path="/pediatric/inpatient/*"
             element={<PediatricInPatientNavbar />}

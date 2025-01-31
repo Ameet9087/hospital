@@ -47,7 +47,7 @@ function rdlEditDrEditBtn({ onClose, selectedRequest }) {
     const imagingId = selectedRequest.imagingId;
     try {
       await axios.put(
-        `${API_BASE_URL}/imaging-requisitions/update-prescriber?performerId=${prescriberId}&imagingId=${imagingId}`
+        `${API_BASE_URL}/imaging-requisitions/approve-by?performerId=${prescriberId}&imagingId=${imagingId}`
       );
       onClose();
     } catch (err) {

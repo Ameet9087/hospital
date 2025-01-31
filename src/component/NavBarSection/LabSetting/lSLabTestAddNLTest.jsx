@@ -10,6 +10,7 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
   const [labComponents, setLabComponents] = useState([]);
   const [serviceDetails, setServiceDetails] = useState([]);
   const [activePopup, setActivePopup] = useState("");
+    const [showPopup, setShowPopup] = useState(false);
   const [selectedServiceDetails, setSelectedServiceDetails] = useState();
   const [labTestData, setLabTestData] = useState({
     labTestName: "",
@@ -101,6 +102,16 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
     }));
+  };
+
+  const handleAddNewLabTestClick = () => {
+    setShowPopup(true);
+    
+  };
+
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
   };
   const fetchServiceDetails = async () => {
     const response = await axios.get(
@@ -533,12 +544,12 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
         >
           Add New Component
         </button>
-        <Link
-          to="/labTestComponent"
+        {/* <Link
+          onClick={handleAddNewLabTestClick}
           className="lSLabTestAddNLTest-create-new-component"
         >
           Create New Component?
-        </Link>
+        </Link> */}
       </div>
 
       <div className="lSLabTestAddNLTest-form-actions">

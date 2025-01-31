@@ -1,23 +1,82 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const Firewall = () => {
-      // State to manage the toggle and progress
       const [isScanning, setIsScanning] = useState(
             JSON.parse(localStorage.getItem("isScanning")) || false
       );
       const [progress, setProgress] = useState(0);
       const [timer, setTimer] = useState(null);
+      const [consoleText, setConsoleText] = useState([]);
+      const consoleRef = useRef(null);
+
+      // Predefined messages
+      const messages = [
+            "Starting network setup...",
+            "Network setup complete. Scanning hospital data...",
+            "Checking hospital_patients data...",
+            "Checking hospital_doctors data...",
+            "Checking hospital_visits data...",
+            "Checking hospital_billing data...",
+            "Network vulnerabilities detected: Critical issues found.",
+            "Scanning complete. Preparing vulnerability report...",
+            "Warning: High vulnerability detected in network firewall.",
+            "Table scan complete. Validating data integrity...",
+            "Security breach detected in the billing system.",
+            "Network setup initialization failed. Retrying...",
+            "Successfully connected to hospital database.",
+            "Table data scan complete. No anomalies found.",
+            "Vulnerability scan complete. No issues detected.",
+            "Performing deep packet inspection...",
+            "Scanning database schema for inconsistencies...",
+            "Network traffic encrypted. Secure connection established.",
+            "Checking system configurations...",
+            "Firewall status: Active and secure.",
+            "Scanning complete. No issues detected.",
+            "Firewall settings verified and updated.",
+            "Data integrity check completed successfully.",
+            "Starting backup system for database.",
+            "Backup completed. Ready to proceed with scanning.",
+            "Preparing firewall settings for verification.",
+            "Running database vulnerability checks...",
+            "Connection to database stable.",
+            "Security protocols updated successfully.",
+            "Firewall configuration errors resolved.",
+            "Performing system health check...",
+            "Critical vulnerability identified in user authentication module.",
+            "Performing system reboot for updates...",
+            "Table hospital_patients schema update required.",
+            "Vulnerability scanning paused for updates.",
+            "Vulnerability scan resumed after update.",
+            "System update complete. Restarting network check...",
+            "Hostnames verified. DNS lookup successful.",
+            "Checking network latency for data transmission.",
+            "Database optimization started.",
+            "Database optimization completed successfully.",
+            "Network resources optimized for better performance.",
+            "Attempting to resolve network configuration error.",
+            "Network configuration successfully resolved.",
+            "Scanning for outdated software versions...",
+            "Software versions up to date.",
+            "Warning: Network congestion detected.",
+            "Warning: Unverified source detected in traffic analysis.",
+            "System performance optimized during scan.",
+            "Database table hospital_visits updated successfully.",
+            "Security patches installed successfully.",
+            "Network scan completed. No issues found.",
+      ];
+
+      const [messageIndex, setMessageIndex] = useState(0);
 
       // Sync isScanning state with local storage
       useEffect(() => {
             localStorage.setItem("isScanning", JSON.stringify(isScanning));
+
             if (!isScanning) {
-                  setProgress(0); // Reset progress when scanning stops
                   clearInterval(timer);
             } else {
-                  startScanning(); // Start scanning if toggled ON
+                  startNetworkSetup();
             }
-            // Clean up timer on unmount
+
             return () => clearInterval(timer);
       }, [isScanning]);
 
@@ -26,27 +85,67 @@ const Firewall = () => {
             setIsScanning((prevState) => !prevState);
       };
 
+      // Simulate 10-second network setup
+      const startNetworkSetup = () => {
+            setConsoleText((prevText) => [
+                  ...prevText,
+                  "Starting network setup...",
+            ]);
+
+            setTimeout(() => {
+                  setConsoleText((prevText) => [
+                        ...prevText,
+                        "Network setup complete. Scanning hospital-related tables...",
+                  ]);
+
+                  setTimeout(() => {
+                        startScanning();
+                  }, 1000);
+            }, 10000);
+      };
+
       // Start scanning and progress bar
       const startScanning = () => {
-            setProgress(0); // Reset progress before starting
-
             const newTimer = setInterval(() => {
                   setProgress((prevProgress) => {
                         if (prevProgress >= 100) {
-                              clearInterval(newTimer); // Stop when 100% progress is reached
-                              alert("Network is secured!"); // Show popup after scanning completes
+                              clearInterval(newTimer);
+                              alert("Network is secured!");
                               return 100;
                         }
-                        return prevProgress + 0.833; // 100% / 120s = 0.833% per second
+                        return prevProgress + 0.833;
                   });
-            }, 1000); // Update every second
+            }, 1000);
 
             setTimer(newTimer);
       };
 
+      // Add console screen rendering during scanning
+      useEffect(() => {
+            if (isScanning) {
+                  const interval = setInterval(() => {
+                        if (messageIndex < messages.length) {
+                              setConsoleText((prevText) => [...prevText, messages[messageIndex]]);
+                              setMessageIndex(messageIndex + 1);
+                        } else {
+                              clearInterval(interval);
+                        }
+                  }, 1000);
+
+                  return () => clearInterval(interval);
+            }
+      }, [isScanning, messageIndex]);
+
+      // Automatically scroll the console screen to the bottom
+      useEffect(() => {
+            if (consoleRef.current) {
+                  consoleRef.current.scrollTop = consoleRef.current.scrollHeight;
+            }
+      }, [consoleText]);
+
       return (
             <div style={styles.container}>
-                  <h2 style={styles.title}>🔥 Firewall Scanning 🔥</h2>
+                  <h2 style={styles.title}>Firewall Scanning</h2>
                   <div style={styles.toggleWrapper}>
                         <span style={styles.toggleLabel}>
                               {isScanning ? "🟢 Firewall ON" : "🔴 Firewall OFF"}
@@ -84,6 +183,15 @@ const Firewall = () => {
                         <div style={styles.progressInfo}>
                               <span>{Math.round(progress)}% Complete</span>
                         </div>
+
+                        <div style={styles.consoleScreen} ref={consoleRef}>
+                              <h4>Console Screen:</h4>
+                              <div style={styles.consoleText}>
+                                    {consoleText.map((line, index) => (
+                                          <p key={index}>{line}</p>
+                                    ))}
+                              </div>
+                        </div>
                   </div>
             </div>
       );
@@ -93,7 +201,7 @@ const styles = {
       container: {
             width: "100%",
             maxWidth: "600px",
-            margin: "20px auto",
+            margin: "0 auto",
             padding: "20px",
             textAlign: "center",
             fontFamily: "'Poppins', sans-serif",
@@ -167,6 +275,20 @@ const styles = {
             fontSize: "16px",
             fontWeight: "bold",
             color: "#333",
+      },
+      consoleScreen: {
+            marginTop: "20px",
+            padding: "10px",
+            backgroundColor: "#333",
+            color: "#fff",
+            borderRadius: "10px",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)",
+            height: "200px", // Fixed height for console
+            overflowY: "auto", // Enable scrolling when content overflows
+      },
+      consoleText: {
+            fontSize: "14px",
+            whiteSpace: "pre-wrap", // Preserves formatting of text
       },
 };
 

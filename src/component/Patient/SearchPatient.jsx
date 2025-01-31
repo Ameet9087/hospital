@@ -37,7 +37,7 @@ function SearchPatient() {
         `${patient.firstName} ${patient.lastName}`.toLowerCase();
       const matchesSearchTerm = patientName.includes(searchTerm.toLowerCase());
 
-     
+
       const patientDate = new Date(patient.date);
       const isWithinDateRange =
         (!fromDate || patientDate >= new Date(fromDate)) &&

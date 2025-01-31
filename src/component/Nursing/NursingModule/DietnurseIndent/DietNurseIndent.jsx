@@ -35,7 +35,7 @@ const nurseIndent = ({ ipAdmission }) => {
 
   useEffect(() => {
     axios
-      .get(`${API_BASE_URL}/api/floors`)
+      .get(`${API_BASE_URL}/floors`)
       .then((response) => {
         setFloors(response.data);
       })

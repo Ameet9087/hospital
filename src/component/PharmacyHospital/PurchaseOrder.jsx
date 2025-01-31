@@ -7,57 +7,51 @@ import CustomModel from "../../CustomModel/CustomModal";
 import './PurchaseOrder.css';
 import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import GoodsReceiptForm from './GoodsReceiptForm';
-
+import PurchaseOrderBillPrint from './PurchaseOrderBillPrint';
 const PurchaseOrder = () => {
   const [purchaseOrders, setPurchaseOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [addGoodReceipt, setAddGoodReceipt] = useState(false);
-  const [selectedItem,setSelectedItem] =useState();
+  const [viewBillModal, setViewBillModal] = useState(false); // New state for PurchaseOrderBillPrint modal
+  const [selectedItem, setSelectedItem] = useState();
   const [columnWidths, setColumnWidths] = useState({});
   const [filterDates, setFilterDates] = useState({ fromDate: '', toDate: '' });
   const [searchText, setSearchText] = useState('');
   const tableRef = useRef(null);
-
   const handleOpenModal = () => setShowEditModal(true);
   const handleCloseModal = () => setShowEditModal(false);
-
   useEffect(() => {
     fetchPurchaseOrders();
   }, []);
-
   useEffect(() => {
     applyFilters();
   }, [filterDates, searchText, purchaseOrders]);
-
   const fetchPurchaseOrders = async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/purchaseorders`);
+      console.log(`${API_BASE_URL}/purchaseorders`);
+
       setPurchaseOrders(response.data);
       setFilteredOrders(response.data);
     } catch (error) {
       console.error('Error fetching purchase orders:', error);
     }
   };
-
   const handleDateChange = (e) => {
     const { id, value } = e.target;
     setFilterDates((prev) => ({ ...prev, [id]: value }));
   };
-
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
   };
-
   const applyFilters = () => {
     let filtered = purchaseOrders;
-
     if (filterDates.fromDate || filterDates.toDate) {
       filtered = filtered.filter((order) => {
         const deliveryDate = new Date(order.deliveryDate);
         const fromDate = filterDates.fromDate ? new Date(filterDates.fromDate) : null;
         const toDate = filterDates.toDate ? new Date(filterDates.toDate) : null;
-
         if (fromDate && toDate) {
           return deliveryDate >= fromDate && deliveryDate <= toDate;
         }
@@ -70,36 +64,36 @@ const PurchaseOrder = () => {
         return true;
       });
     }
-
     if (searchText) {
       const searchLower = searchText.toLowerCase();
       filtered = filtered.filter((order) =>
         order.supplierDTO?.supplierName.toLowerCase().includes(searchLower)
       );
     }
-    
     setFilteredOrders(filtered);
   };
-
-  const handleAddGoodReceipt=(item)=>{
+  const handleAddGoodReceipt = (item) => {
     setSelectedItem(item);
     setAddGoodReceipt(true);
-  }
-
+  };
+  const handleViewBill = (item) => {
+    setSelectedItem(item); // Set the selected item to view
+    setViewBillModal(true); // Open the modal
+  };
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport');
     XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
   };
-
   const handlePrint = () => {
     window.print();
   };
-
   return (
     <div className="purchase-order-container">
-      <button className='purchaseOrders-add-btn' onClick={handleOpenModal}>+ New Purchase Order</button>
+      <button className="purchaseOrders-add-btn" onClick={handleOpenModal}>
+        + New Purchase Order
+      </button>
       <div className="purchase-order-header">
         <div className="purchase-order-status-filters">
           <label><input type="checkbox" defaultChecked /> Pending</label>
@@ -115,30 +109,43 @@ const PurchaseOrder = () => {
         <input type="date" id="toDate" value={filterDates.toDate} onChange={handleDateChange} />
       </div>
       <div className="purchase-order-search-container">
-        <input type="text" className="purchase-order-search-box" placeholder="Search" value={searchText} onChange={handleSearchChange} />
+        <input
+          type="text"
+          className="purchase-order-search-box"
+          placeholder="Search"
+          value={searchText}
+          onChange={handleSearchChange}
+        />
         <div className="purchase-order-search-right">
           <span className="purchase-results-count-span">Showing {filteredOrders.length} / {purchaseOrders.length} results</span>
-          <button className="purchase-order-print-button" onClick={handleExport}>Export</button>
-          <button className="purchase-order-print-button" onClick={handlePrint}>Print</button>
+          <button className="purchase-order-print-button" onClick={handleExport}>
+            <i className="fa-solid fa-file-excel"></i> Export
+          </button>
+          <button className="purchase-order-print-button" onClick={handlePrint}>
+            <i className="fa-solid fa-print"></i> Print
+          </button>
         </div>
       </div>
-
       <CustomModel isOpen={showEditModal} onClose={handleCloseModal}>
         <PurchaseOrderForm />
       </CustomModel>
-
       <div className="table-container">
         <table ref={tableRef}>
           <thead>
             <tr>
-              {["PO ID", "Date", "Supplier", "Delivery Date", "Total Amount","Action"].map((header, index) => (
-                <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div className="resizer" onMouseDown={startResizing(tableRef, setColumnWidths)(index)}></div>
-                  </div>
-                </th>
-              ))}
+              {["PO ID", "Date", "Supplier", "Delivery Date", "Total Amount", "Action"].map(
+                (header, index) => (
+                  <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                      ></div>
+                    </div>
+                  </th>
+                )
+              )}
             </tr>
           </thead>
           <tbody>
@@ -151,9 +158,9 @@ const PurchaseOrder = () => {
                   <td>{order.deliveryDate}</td>
                   <td>{order.totalAmount}</td>
                   <td>
-                    <div className='pharmacy-btn'>
-                    {/* <button className='pobtn-view'>View</button> */}
-                    <button className='pobtn-view' onClick={()=>handleAddGoodReceipt(order)}>Add Good Receipt</button>
+                    <div className="pharmacy-btn">
+                      <button className="pobtn-view" onClick={() => handleViewBill(order)}>View</button>
+                      <button className="pobtn-view" onClick={() => handleAddGoodReceipt(order)}>Add Good Receipt</button>
                     </div>
                   </td>
                 </tr>
@@ -166,8 +173,11 @@ const PurchaseOrder = () => {
           </tbody>
         </table>
       </div>
-      <CustomModel isOpen={addGoodReceipt} onClose={()=>setAddGoodReceipt(false)}>
-        <GoodsReceiptForm receivedPO={selectedItem} onClose={()=>setAddGoodReceipt(false)} />
+      <CustomModel isOpen={addGoodReceipt} onClose={() => setAddGoodReceipt(false)}>
+        <GoodsReceiptForm receivedPO={selectedItem} onClose={() => setAddGoodReceipt(false)} />
+      </CustomModel>
+      <CustomModel isOpen={viewBillModal} onClose={() => setViewBillModal(false)}>
+        <PurchaseOrderBillPrint purchaseOrder={selectedItem} />
       </CustomModel>
     </div>
   );

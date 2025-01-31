@@ -163,20 +163,20 @@ const MaternityUploadFilesPopUp = ({ patientData, onClose }) => {
               <div className="MaternityUploadFilesPopUp-form-group">
                 <label htmlFor="actual-sale-no">Name:</label>
                 <input id="actual-sale-no" type="text"
-                  value={`${patientData?.inPatientDTO?.firstName} ${patientData?.inPatientDTO?.lastName}`}
+                  value={`${patientData?.inPatientDTO?.patient?.firstName} ${patientData?.inPatientDTO?.patient?.lastName}`}
                   placeholder="Enter Name" />
               </div>
               <div className="MaternityUploadFilesPopUp-form-group">
                 <label htmlFor="equipment-name">Contact No:</label>
                 <input id="equipment-name" type="text"
-                  value={patientData?.inPatientDTO?.phoneNumber}
+                  value={patientData?.inPatientDTO?.patient?.contactNumber}
 
                   placeholder="Enter Contact No" />
               </div>
               <div className="MaternityUploadFilesPopUp-form-group">
                 <label htmlFor="actual-sale-date">Age/Sex:</label>
                 <input id="actual-sale-date" type="text"
-                  value={`${patientData?.inPatientDTO?.age}/${patientData?.inPatientDTO?.gender}`}
+                  value={`${patientData?.inPatientDTO?.patient?.age}/${patientData?.inPatientDTO?.patient?.gender}`}
                 />
               </div>
             </div>
@@ -184,13 +184,13 @@ const MaternityUploadFilesPopUp = ({ patientData, onClose }) => {
               <div className="MaternityUploadFilesPopUp-form-group">
                 <label htmlFor="provisional-sale-no">Date of Birth:</label>
                 <input id="provisional-sale-no" type="date"
-                  value={patientData?.inPatientDTO?.dateOfBirth}
+                  value={patientData?.inPatientDTO?.patient?.dateOfBirth}
                   placeholder="Enter Provisional Sale No" />
               </div>
               <div className="MaternityUploadFilesPopUp-form-group">
                 <label htmlFor="condemnation-date">Address:</label>
                 <input id="condemnation-date" type="text"
-                  value={patientData?.inPatientDTO?.addressDTO?.city}
+                  value={patientData?.inPatientDTO?.patient?.address}
                 />
               </div>
               <div className="MaternityUploadFilesPopUp-form-group">

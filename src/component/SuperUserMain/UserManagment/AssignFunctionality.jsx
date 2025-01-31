@@ -252,7 +252,7 @@ const AssignFunctionality = () => {
       id: 23,
       name: "Emergency",
       logo: "fa-solid fa-hospital",
-      subcomponents: ["New Patients", "Triaged Patients", "Finalized Patients"],
+      subcomponents: ["Er Initial", "Er Clinical Entries"],
     },
     {
       id: 24,
@@ -301,9 +301,9 @@ const AssignFunctionality = () => {
     },
     {
       id: 29,
-      name: "HI",
+      name: "Visitor Management",
       logo: "fa-solid fa-file-medical",
-      subcomponents: ["Patient List", "Visit List", "IPD Billing", "Report"],
+      subcomponents: ["Visitors", "Visiting Hour", "Visitor Badges"],
     },
     {
       id: 30,

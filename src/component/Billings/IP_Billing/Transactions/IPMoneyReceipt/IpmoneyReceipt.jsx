@@ -16,6 +16,12 @@ const IpMoneyReceiptAdvance = () => {
   const [tableData, setTableData] = useState([]);
   const [activePopup, setActivePopup] = useState(null);
   const [formData, setFormData] = useState({});
+  const [isPrintEnabled, setIsPrintEnabled] = useState(false);
+  const handlePrintBilling = () => {
+    console.log("Navigating with state:", { selectedIPNo, formData, moneyReceiptData });
+    navigate("/billing/IPMoneyReceiptPrint", { state: { selectedIPNo, formData, moneyReceiptData } });
+
+  };
 
   const handlePopupClose = () => {
     setActivePopup(null);
@@ -124,15 +130,18 @@ const IpMoneyReceiptAdvance = () => {
       })
       .then((response) => {
         alert("Successfully saved");
+        setIsPrintEnabled(true)
         console.log("Response received:", response.data);
       })
       .catch((error) => {
         console.error("Error posting data:", error);
+
         if (error.response) {
           console.error("Response error:", error.response.data);
           alert(
             `Error posting data: ${error.response.status} - ${error.response.data}`
           );
+          setIsPrintEnabled(false)
         } else if (error.request) {
           console.error("Request error:", error.request);
           alert("No response received from the server.");
@@ -584,6 +593,14 @@ const IpMoneyReceiptAdvance = () => {
       <button className="ipmoneyreceiptadvance-save-btn" onClick={handleSubmit}>
         Save
       </button>
+      <button
+        className="ipmoneyreceiptadvance-save-btn"
+        onClick={() => handlePrintBilling()}
+        disabled={!isPrintEnabled}
+      >
+        Print
+      </button>
+
 
       {/* Table Section */}
       {/* <h3>Previous Receipt Details</h3>

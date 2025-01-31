@@ -129,6 +129,7 @@ function AddResults() {
 
   return (
     <div className="addResults-work-list">
+      <h6>Add Result</h6>
       <div className="addResults-header">
         <div className="addResults-controls">
           {/* Your date range and button controls */}
@@ -314,9 +315,9 @@ function AddResults() {
                       <td>
                         {stickerData.prescriber != null
                           ? stickerData.prescriber?.salutation +
-                            stickerData.prescriber?.doctorName +
-                            " " +
-                            stickerData.prescriber?.lastName
+                          stickerData.prescriber?.doctorName +
+                          " " +
+                          stickerData.prescriber?.lastName
                           : "SELF"}
                       </td>
                     </tr>

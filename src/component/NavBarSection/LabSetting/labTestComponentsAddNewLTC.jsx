@@ -117,6 +117,13 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
       ...prevFormData,
       [name]: name === "lookupId" ? parseInt(value) : value,
     }));
+    if (e.target.type === "number") {
+      if (value === "" || /^\d+(\.\d+)?$/.test(value)) {
+        setFormData((prev) => ({ ...prev, [name]: value }));
+      }
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleAddComponent = () => {
@@ -197,6 +204,13 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
       console.log(error);
     }
   };
+  const handleEditClick = (index) => {
+    const componentToEdit = componentsArray[index];
+    setFormData({ ...componentToEdit });
+    setIsEditing(true);
+    setEditIndex(index);
+  };
+  
 
   return (
     <div className="labTestComponentsAddNewLTC-container">
@@ -313,6 +327,8 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
               placeholder="Male Range"
               onChange={handleChange}
               label="Male Range"
+               type="number"
+      min="0"
             />
             <FormInput
               name="femaleRange"
@@ -320,6 +336,8 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
               placeholder="Female Range"
               onChange={handleChange}
               label="Female Range"
+               type="number"
+      min="0"
             />
             <FormInput
               name="childRange"
@@ -327,6 +345,8 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
               placeholder="Child Range"
               onChange={handleChange}
               label="Child Range"
+               type="number"
+      min="0"
             />
             <FormInput
               name="minValue"
@@ -334,6 +354,8 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
               placeholder="Min Value"
               onChange={handleChange}
               label="Min Value"
+               type="number"
+      
             />
             <FormInput
               name="maxValue"
@@ -341,6 +363,8 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
               placeholder="Max Value"
               onChange={handleChange}
               label="Max Value"
+               type="number"
+     
             />
           </>
         )}
@@ -398,7 +422,7 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
                       <td>
                         <button
                           className="labTestComponentAddedUpdateBTN"
-                          onClick={() => handleEdit(index)}
+                          onClick={() => handleEditClick(index)}
                         >
                           Edit
                         </button>

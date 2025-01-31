@@ -1,9 +1,8 @@
-
 .nacotic-drug-dispensed-form-container {
   margin: 0 auto;
   padding: 10px;
   font-family: Arial, sans-serif;
-  background-color:var(--background-color);
+  background-color: var(--background-color);
 }
 .nacotic-drug-dispensed-form-section {
   background-color: #ffffff;
@@ -21,7 +20,7 @@
 }
 .nacotic-drug-dispensed-form-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
   padding: 10px;
 }
@@ -40,8 +39,8 @@
   background: white;
   transition: all 0.2s ease;
 }
-.nacotic-drug-dispensed-form-floating-input{
-  width: 92%;
+.nacotic-drug-dispensed-form-floating-input {
+  width: 100%;
 }
 .nacotic-drug-dispensed-form-floating-select {
   width: 100%;
@@ -58,13 +57,16 @@
   transition: all 0.2s ease;
   font-size: var(--font-size);
 }
-.nacotic-drug-dispensed-form-floating-field.active .nacotic-drug-dispensed-form-floating-label {
+.nacotic-drug-dispensed-form-floating-field.active
+  .nacotic-drug-dispensed-form-floating-label {
   top: 0;
   font-size: 12px;
   color: #00897b;
 }
-.nacotic-drug-dispensed-form-floating-field.active .nacotic-drug-dispensed-form-floating-input,
-.nacotic-drug-dispensed-form-floating-field.active .nacotic-drug-dispensed-form-floating-select {
+.nacotic-drug-dispensed-form-floating-field.active
+  .nacotic-drug-dispensed-form-floating-input,
+.nacotic-drug-dispensed-form-floating-field.active
+  .nacotic-drug-dispensed-form-floating-select {
   border-color: #00897b;
 }
 .nacotic-drug-dispensed-form-full-width {
@@ -74,32 +76,34 @@
   position: relative;
 }
 
-.nacotic-drug-dispensed-form-add-btn
-{
-  background-color: red; 
-  color: black; 
-  border: none; 
-  border-radius: 5px; 
-  padding: 5px 10px; 
+.nacotic-drug-dispensed-form-add-btn {
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  padding: 5px;
   font-size: var(--font-size);
   cursor: pointer;
   margin: 0 5px;
+}
+.nacotic-drug-dispensed-form-del-btn:hover {
+  color: red;
+  border: 1px solid red;
 }
 .nacotic-drug-dispensed-form-del-btn {
-  background-color: green; 
-  color: black; 
-  border: none; 
-  border-radius: 5px; 
-  padding: 5px 10px; 
+  background-color: red;
+  color: white;
+  border: 1px solid red;
+  border-radius: 5px;
+  padding: 5px;
   font-size: var(--font-size);
   cursor: pointer;
   margin: 0 5px;
 }
-
 
 .nacotic-drug-dispensed-form-search-icon {
   position: absolute;
-  right: 10px;
+  right: 5%;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -172,12 +176,12 @@
   gap: 5px;
   padding: 4px;
   background: var(--upperBar-bg-color);
-  overflow-x: auto; 
+  overflow-x: auto;
   scrollbar-width: none;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 .nacotic-drug-dispensed-form-tab-bar::-webkit-scrollbar {
-  display: none; 
+  display: none;
 }
 .nacotic-drug-dispensed-form-tab {
   padding: 4px 12px;
@@ -187,10 +191,10 @@
   font-size: var(--font-size);
   background: var(--button-hover-background-color);
   cursor: pointer;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 .nacotic-drug-dispensed-form-tab:hover {
-  background-color:var(--button-color);
+  background-color: var(--button-color);
   color: var(--button-hover-background-color);
 }
 .nacotic-drug-dispensed-form-tab.active {
@@ -199,73 +203,81 @@
 }
 .nacotic-drug-dispensed-form-summary-row {
   display: flex;
-  flex-wrap: nowrap; 
+  flex-wrap: nowrap;
   gap: 10px;
-  }
-  .nacotic-drug-dispensed-form-summary-field {
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-    flex-shrink: 0; 
-    }
-    .nacotic-drug-dispensed-form-summary-field label {
-    font-size: var(--font-size); 
-    white-space: nowrap; 
-    }
-    .nacotic-drug-dispensed-form-summary-field input {
-    font-size: var(--font-size); 
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    }
-    .nacotic-drug-dispensed-form-services-table{
-      padding: 8px;
-      overflow-x: scroll;
-    }
-    .nacotic-drug-dispensed-form-services-table table{
-      table-layout: auto;
-    }
-    .nacotic-drug-dispensed-form-summary-section {
-      display: flex;
-      margin-top: 10px;
-      flex-wrap: nowrap; 
-      gap: 10px; 
-      overflow-x: auto; 
-      white-space: nowrap;
-      scrollbar-width: none; 
-      -ms-overflow-style: none; 
-      }
-      .nacotic-drug-dispensed-form-summary-section::-webkit-scrollbar {
-      display: none; 
-      }
-      .nacotic-drug-dispensed-form-form-for-file{
-        display: flex;
-        gap: 15px;
-        justify-content: end;
-      }
-      .nacotic-drug-dispensed-form-buttons {
-        /* position: fixed;
+}
+.nacotic-drug-dispensed-form-summary-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.nacotic-drug-dispensed-form-summary-field label {
+  font-size: var(--font-size);
+  white-space: nowrap;
+}
+.nacotic-drug-dispensed-form-summary-field input {
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.nacotic-drug-dispensed-form-services-table {
+  padding: 8px;
+  overflow-x: scroll;
+}
+.nacotic-drug-dispensed-form-services-table table {
+  table-layout: auto;
+}
+.nacotic-drug-dispensed-form-summary-section {
+  display: flex;
+  margin-top: 10px;
+  flex-wrap: nowrap;
+  gap: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.nacotic-drug-dispensed-form-summary-section::-webkit-scrollbar {
+  display: none;
+}
+.nacotic-drug-dispensed-form-form-for-file {
+  display: flex;
+  gap: 15px;
+  justify-content: end;
+}
+.nacotic-drug-dispensed-form-buttons {
+  /* position: fixed;
         right: 16px;
         bottom: 16px; */
-        margin-top: 20px;
-        display: flex;
-        gap: 5px;
-        font-size: var(--font-size);
-      }
-      .nacotic-drug-dispensed-form-buttons button, .nacotic-drug-dispensed-form-Upload {
-        background-color: var(--button-color);
-        font-size: var(--font-size);
-        border-radius: 5px;
-        padding: 8px 12px;
-        border: 1px solid var(--button-hover-background-color);
-        color: white;
-        cursor: pointer;
-      }
-      .nacotic-drug-dispensed-form-buttons button:hover, .nacotic-drug-dispensed-form-Upload:hover {
-        background-color: var(--button-hover-background-color);
-        border: 1px solid var(--button-hover-border-color);
-        color: var(--button-hover-text-color);
-      }
+  margin-top: 20px;
+  display: flex;
+  gap: 5px;
+  font-size: var(--font-size);
+}
+.nacotic-drug-dispensed-form-buttons button,
+.nacotic-drug-dispensed-form-Upload {
+  background-color: var(--button-color);
+  font-size: var(--font-size);
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid var(--button-hover-background-color);
+  color: white;
+  cursor: pointer;
+}
+.nacotic-drug-dispensed-form-buttons button:hover,
+.nacotic-drug-dispensed-form-Upload:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+}
+.nacotic-drug-dispensed-form-tableinput {
+  padding: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  /* margin-right: 10px */
+}
 @media (max-width: 1024px) {
   .nacotic-drug-dispensed-form-grid {
     grid-template-columns: repeat(2, 1fr);

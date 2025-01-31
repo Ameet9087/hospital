@@ -3,7 +3,7 @@ import axios from "axios";
 import "./ProcedureService.css";
 import { API_BASE_URL } from "../api/api";
 
-const ProcedureService = ({ inPatientId, outPatientId }) => {
+const ProcedureService = ({ setIsModalOpen, inPatientId, outPatientId }) => {
   const [selectedProcedures, setSelectedProcedures] = useState([]);
   const [availableProcedures, setAvailableProcedures] = useState([]);
   const [selectedProcedure, setSelectedProcedure] = useState("");
@@ -66,8 +66,7 @@ const ProcedureService = ({ inPatientId, outPatientId }) => {
           "Content-Type": "application/json",
         },
       });
-
-      alert("All procedures saved successfully!");
+      setIsModalOpen(false)
       cancelSelection();
     } catch (error) {
       console.error("Error saving procedures:", error.message);

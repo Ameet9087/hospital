@@ -448,18 +448,18 @@ const NursingPatientDashboard = ({
             outPatientId={patient?.outPatientId}
           />
         );
-      case "dietnurseindent":
-        return (
-          <DietNurseIndent
-            patientId={
-              patient?.patient?.inPatientId ||
-              patient?.patientId ||
-              patient?.inPatientId
-            }
-            ipAdmission={ipAdmission}
-            outPatientId={patient?.outPatientId}
-          />
-        );
+      // case "dietnurseindent":
+      //   return (
+      //     <DietNurseIndent
+      //       patientId={
+      //         patient?.patient?.inPatientId ||
+      //         patient?.patientId ||
+      //         patient?.inPatientId
+      //       }
+      //       ipAdmission={ipAdmission}
+      //       outPatientId={patient?.outPatientId}
+      //     />
+      //   );
       case "dailynurseassesment":
         return (
           <NursingAssessment
@@ -1207,7 +1207,7 @@ const NursingPatientDashboard = ({
                   <i className="fas fa-tint"></i>
                 </div>
               </div>
-              <div
+              {/* <div
                 onClick={() => {
                   setActiveSection("dietnurseindent");
                 }}
@@ -1220,7 +1220,7 @@ const NursingPatientDashboard = ({
                   </span>
                   <i className="fas fa-indent"></i>
                 </div>
-              </div>
+              </div> */}
               <div
                 onClick={() => {
                   setActiveSection("dailynurseassesment");

@@ -297,26 +297,40 @@
   position: relative;
 }
 
-.GoodsReceiptForm-add-btn
-{
-  background-color: red; 
-  color: black; 
-  border: none; 
-  border-radius: 5px; 
-  padding: 5px 10px; 
-  font-size: var(--font-size);
-  cursor: pointer;
-  margin: 0 5px;
+.GoodsReceiptForm-btn{
+  display: flex;
+  gap: 5px;
+  margin: 5px 0 ;
 }
-.GoodsReceiptForm-del-btn {
-  background-color: green; 
-  color: black; 
-  border: none; 
-  border-radius: 5px; 
-  padding: 5px 10px; 
-  font-size: var(--font-size);
+.GoodsReceiptForm-add-item-button {
+  margin-top: 2px;
+  padding: 5px 8px;
+  background: var(--button-color);
+  color: #fff;
+  border: 1px solid var(--button-hover-border-color);
+  border-radius: 4px;
   cursor: pointer;
-  margin: 0 5px;
+  display: block;
+  font-size: var(--font-size);
+}
+.GoodsReceiptForm-add-item-button:hover {
+  background: white;
+  color: var(--button-hover-text-color);
+}
+.GoodsReceiptForm-del-item-button {
+  margin-top: 2px;
+  padding: 5px 8px;
+  background: red;
+  color: #fff;
+  border: 1px solid red;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  font-size: var(--font-size);
+}
+.GoodsReceiptForm-del-item-button:hover {
+  background: white;
+  color: red;
 }
 .GoodsReceiptForm-search-icon {
   position: absolute;

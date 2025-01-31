@@ -230,7 +230,7 @@ const DischargeIntimationForm = ({ ipAdmission }) => {
         <button className="btn-blue" onClick={handleSubmit}>
           Save
         </button>
-        <button className="btn-red">Close</button>
+       
       </div>
     </div>
   );

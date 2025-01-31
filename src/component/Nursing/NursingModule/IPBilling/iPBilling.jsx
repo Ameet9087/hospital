@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import axios from "axios";
-import "../../../Billings/IP_Billing/ip_billing.css";
+import "../../../Billings/IP_Billing/ipbilling.css";
 import { API_BASE_URL } from "../../../api/api";
 import IpBillingPopupTable from "./IpBillingPopupTable";
 const IpBilling = ({ ipAdmission }) => {

@@ -338,7 +338,7 @@ const IPDIssuesWard = ({ ipAdmission }) => {
       </h6>
 
       <div className="detail">
-        <label>MIssue No:</label>
+        <label>Issue No:</label>
         <input type="text" />
       </div>
 

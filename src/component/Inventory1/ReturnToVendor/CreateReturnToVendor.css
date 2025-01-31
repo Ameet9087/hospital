@@ -1,87 +1,32 @@
-.create-ReturnToVendor {
-  width: 100%;
-  padding: 20px;
-  background-color:var(--background-color);
-  border-radius: 8px;
-  /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); */
-}
 
 .create-return-to-vendor-form-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  margin-bottom: 20px;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0 0 0;
 }
-
-.create-return-to-vendor-item-table::-webkit-scrollbar{
-  display: none; /* Hide scrollbar */
-
-}
-
 .create-return-to-vendor-table-container::-webkit-scrollbar{
-  display: none; /* Hide scrollbar */
-
+  display: none;
 }
-
-
 .create-return-to-vendor-table-container {
   width: 100%;
-  
-  max-height: 300px; /* Set a max height for the table container */
+  max-height: 300px; 
   margin-bottom: 20px;
-  border: 1px solid #ddd; /* Optional: Add border to the container */
-  border-radius: 8px;
-  /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); */
+  border: 1px solid #ddd; 
+  border-radius: 5px;
 }
-
-.create-return-to-vendor-item-table {
-  width: 100%;
-  margin-bottom: 20px;
-  overflow-x: auto;  /* Enable horizontal scrolling if the table is too wide */
-  overflow-y: auto;  /* Enable vertical scrolling if the table content is too tall */
-  min-width: 1000px; /* Ensure the table won't shrink smaller than this */
-  border-collapse: collapse;
-  background-color: #fff;
-}
-
-.create-return-to-vendor-item-table th,
-.create-return-to-vendor-item-table td {
-  padding: 12px 3px;
-  border: 1px solid #ddd;
-  text-align: left;
-  white-space: nowrap; /* Prevents text wrapping */
-}
-
-.create-return-to-vendor-item-table th {
-  background-color: var(--button-color);
-  color: white;
-}
-
-.create-return-to-vendor-item-table td {
-  background-color: #f1f1f1;
-}
-
-.create-return-to-vendor-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
-
 .create-return-to-vendor-return-btn {
   background-color: var(--button-color);
   color: white;
   padding: 10px 20px;
-  border: none;
+  border: 1px solid var(--button-hover-border-color);
   border-radius: 5px;
   cursor: pointer;
 }
-
 .create-return-to-vendor-return-btn:hover {
   background-color: var(--button-hover-background-color);
   color: var(--button-hover-text-color);
-  border: 1px solid var(--button-hover-border-color);
 }
-
 .create-return-to-vendor-cancel-btn {
   background-color: #f44336;
   color: white;
@@ -90,112 +35,202 @@
   border-radius: 5px;
   cursor: pointer;
 }
-
 .create-return-to-vendor-cancel-btn:hover {
   background-color: #e53935;
 }
-
 @media (max-width: 768px) {
   .create-return-to-vendor-form-row {
     flex-direction: column;
   }
-
-  .create-return-to-vendor-buttons {
-    flex-direction: column;
-  }
 }
-
 .create-return-to-vendor-table-container {
-  overflow-x: auto; /* Enables horizontal scrolling */
-  max-width: 100%; /* Ensures the container doesn't exceed the parent width */
+  overflow-x: auto;
+  max-width: 100%;
 }
-
-
-/*  */
-
 .create-render-to-add {
-  background-color: var(--button-color); /* Green background */
-  color: white; /* White text color */
-  border: none; /* Remove default border */
-  border-radius: 5px; /* Optional: rounded corners */
-  padding: 5px 10px; /* Optional: adjust padding */
-  cursor: pointer; /* Change cursor to pointer on hover */
-  font-size: var(--heading-font); /* Optional: adjust font size */
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-size: var(--heading-font);
 }
 .create-render-to-remove{
-  background-color: red; /* Green background */
-  color: white; /* White text color */
-  border: none; /* Remove default border */
-  border-radius: 5px; /* Optional: rounded corners */
-  padding: 5px 10px; /* Optional: adjust padding */
-  cursor: pointer; /* Change cursor to pointer on hover */
-  font-size: var(--heading-font); /* Optional: adjust font size */
+  background-color: red;
+  color: white;
+  border: 1px solid red;
+  border-radius: 5px;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-size: var(--heading-font);
 }
-
-
-
-
-/*  */
-
-.create-return-to-vendor-totals-container {
-  display: flex;
-  justify-content: flex-end; /* Align the totals section to the right */
-}
-
-.create-return-to-vendor-totals {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Align items to the left within the totals section */
-}
-
-.create-return-to-vendor-total-field {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px; /* Space between rows */
-}
-
-.create-return-to-vendor-total-field label {
-  margin-right: 10px; /* Space between label and input */
-  width: 100px; /* Optional: set a width to align labels */
-  text-align: right; /* Align the text to the right for better appearance */
-}
-
-.Inv-Return-Input{
+.CreateReturnToVendor-Inv-Return-Input{
   width: 100%;
-}
-.create-return-to-vendor-form-row {
-  display: flex;
-  justify-content: center; /* Center the buttons horizontally */
-  gap: 10px; /* Space between buttons */
-  margin-top: 20px; /* Space above the buttons */
+  padding: 1px 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .create-return-to-vendor-form-row-submit-btn {
-  background-color: var(--button-color); /* Green background for submit button */
-  color: white; /* White text color */
-  border: none; /* Remove border */
-  padding: 5px; /* Padding for button */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-hover-border-color);
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
 }
-
 .create-return-to-vendor-form-row-submit-btn:hover {
   background-color: var(--button-hover-background-color);
   color: var(--button-hover-text-color);
-  border: 1px solid var(--button-hover-border-color);
 }
-
 .create-return-to-vendor-form-row-cancel {
-  background-color: red; /* Red background for cancel button */
-  color: white; /* White text color */
-  border: none; /* Remove border */
-  padding: 5px; /* Padding for button */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
+  font-size: var(--font-size);
+  background-color: red;
+  color: white;
+  border: 1px solid red;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
 }
-
 .create-return-to-vendor-form-row-cancel:hover {
-  background-color: darkred; /* Darker red on hover */
+  background-color: white;
+  color: red;
 }
-
-
+.CreateReturnToVendor-Words{
+  font-size: var(--font-size);
+  color: #666;
+}
+/* ******************************************************************************************* */
+.CreateReturnToVendor-btn-div{
+  display: flex;
+  gap: 5px;
+}
+.CreateReturnToVendor-container {
+  margin: 0 auto;
+  width: 1200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  font-family: Arial, sans-serif;
+  background-color:var(--background-color);
+}
+.CreateReturnToVendor-header {
+  background-color: #00897b;
+  color: white;
+  padding: 7px 20px;
+  font-size: var(--font-size);
+  font-weight: 500;
+}
+.CreateReturnToVendor-section.half-width {
+  margin-bottom: 0;
+}
+.CreateReturnToVendor-section-div{
+  width: 50%;
+}
+.CreateReturnToVendor-section {
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.CreateReturnToVendor-floating-field {
+  position: relative;
+}
+.CreateReturnToVendor-floating-field.active .CreateReturnToVendor-floating-label {
+  top: 0;
+  font-size: 12px;
+  color: #00897b;
+}
+.CreateReturnToVendor-floating-field.active .CreateReturnToVendor-floating-input,
+.CreateReturnToVendor-floating-field.active .CreateReturnToVendor-floating-select {
+  border-color: #00897b;
+}
+.CreateReturnToVendor-floating-input,
+.CreateReturnToVendor-floating-select {
+  padding: 4px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: var(--font-size);
+  background: white;
+  transition: all 0.2s ease;
+}
+.CreateReturnToVendor-floating-input{
+  width: 100%;
+}
+.CreateReturnToVendor-floating-input:focus,
+.CreateReturnToVendor-floating-select:focus {
+  outline: none;
+  border-color: #00897b;
+  box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+}
+.CreateReturnToVendor-search-field {
+    position: relative;
+  }
+  .CreateReturnToVendor-search-icon {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+.CreateReturnToVendor-floating-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: 12px;
+}
+.CreateReturnToVendor-floating-select {
+  width: 100%;
+}
+.CreateReturnToVendor-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+.CreateReturnToVendor-grid.two-columns {
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (max-width: 1024px) {
+  .CreateReturnToVendor-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .CreateReturnToVendor-full-width {
+    grid-column: span 2;
+  }
+}
+@media (max-width: 768px) {
+  .CreateReturnToVendor-bottom-container {
+    grid-template-columns: 1fr;
+  }
+  .CreateReturnToVendor-tabs {
+    flex-direction: column;
+  }
+}
+@media (max-width: 480px) {
+  .CreateReturnToVendor-grid {
+    grid-template-columns: 1fr;
+  }
+  .CreateReturnToVendor-grid.two-columns {
+    grid-template-columns: 1fr;
+  }
+  .CreateReturnToVendor-full-width {
+    grid-column: span 1;
+  }
+}

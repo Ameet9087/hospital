@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom';
 
 function SSPConsumInternalConsum({ onClose }) {
   const { store } = useParams();
-  const [consumedBy,setConsumedBy] = useState();
-  const [remark,setRemark] = useState();
+  const [consumedBy, setConsumedBy] = useState();
+  const [remark, setRemark] = useState();
   const [formData, setFormData] = useState([
     {
       itemName: '',
@@ -56,7 +56,7 @@ function SSPConsumInternalConsum({ onClose }) {
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
-  
+
     const updatedData = [...formData];
     updatedData[index][name] = value;
 
@@ -64,7 +64,7 @@ function SSPConsumInternalConsum({ onClose }) {
     if (name === 'quantity' || name === 'salePrice') {
       const quantity = name === 'quantity' ? value : updatedData[index].quantity;
       const salePrice = name === 'salePrice' ? value : updatedData[index].salePrice;
-  
+
       updatedData[index].totalAmount = quantity * salePrice;
     }
 
@@ -81,9 +81,9 @@ function SSPConsumInternalConsum({ onClose }) {
       ...updatedData[index],
       itemName: e.target.value,
       availableQuantity: selectedItem?.dispatchQuantity || 0,
-      salePrice: selectedItem?.items?.salesRate || 0.0,
-      batchNo: selectedItem?.batchNo || '',
-      expiryDate: selectedItem?.expiryDate || '',
+      salePrice: selectedItem?.items?.salePrice || 0.0,
+      batchNo: selectedItem?.items?.batchNo || '',
+      expiryDate: selectedItem?.items?.expiryDate || '',
     };
 
     setFormData(updatedData);
@@ -93,11 +93,11 @@ function SSPConsumInternalConsum({ onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const itemsData = formData.map((data) => ({
-      subPharmRequisitionItemId:{subPharmRequisitionItemId: data.itemName},
+      subPharmRequisitionItemId: { subPharmRequisitionItemId: data.itemName },
       consumedQty: data.quantity,
       totalAmount: data.totalAmount,
     }));
-  
+
     // Prepare the request body based on the provided structure
     const requestData = {
       consumedDate: new Date().toISOString(), // Current date for consumedDate
@@ -131,7 +131,7 @@ function SSPConsumInternalConsum({ onClose }) {
   };
 
   // Calculate total amount of all items
-  
+
 
   return (
     <div className="sSPConsumInternalConsum-container">
@@ -167,7 +167,7 @@ function SSPConsumInternalConsum({ onClose }) {
                       <option>--Select Item--</option>
                       {items.map((item) => (
                         <option key={item.subPharmRequisitionItemId} value={item.subPharmRequisitionItemId}>
-                          {item.items.itemName}
+                          {item.items?.itemMaster?.itemName}
                         </option>
                       ))}
                     </select>
@@ -246,7 +246,7 @@ function SSPConsumInternalConsum({ onClose }) {
                 type="text"
                 name="consumedBy"
                 value={consumedBy}
-                onChange={(e)=>setConsumedBy(e.target.value)}
+                onChange={(e) => setConsumedBy(e.target.value)}
                 className="sSPConsumInternalConsum-total-input"
               />
             </div>
@@ -255,7 +255,7 @@ function SSPConsumInternalConsum({ onClose }) {
               <textarea
                 name="remark"
                 value={remark}
-                onChange={(e)=>setRemark(e.target.value)}
+                onChange={(e) => setRemark(e.target.value)}
                 className="sSPConsumInternalConsum-total-input"
               ></textarea>
             </div>

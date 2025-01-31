@@ -290,6 +290,10 @@ function OPDTriagePage({ onClose, data }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
+    if (parseFloat(value) < 0) {
+      alert(`${name} should be greater than zero.`);
+      return;
+    }
     // Update the form state
     setVitalData((prevState) => ({
       ...prevState,
@@ -335,6 +339,7 @@ function OPDTriagePage({ onClose, data }) {
 
       if (response.ok) {
         console.log("Vitals saved successfully");
+        alert("Vitals saved successfully!"); // Success alert
         setShowForm(false);
         // Clear the form after successful submission
         setVitalData({
@@ -353,20 +358,38 @@ function OPDTriagePage({ onClose, data }) {
         });
       } else {
         alert("Failed to save vitals");
+
       }
     } catch (error) {
       console.error("Error:", error);
     }
   };
+  const vitalsData = [
+    {
+      addedOn: "",
+      height: "",
+      weight: "",
+      bmi: "",
+      temperature: "",
+      bpSystolic: "",
+      bpDiastolic: "",
+      respiratoryRate: "",
+      spO2: "",
+      o2DeliveryPlan: "",
+      painScale: "",
+    }
+   
+  ];
 
   return (
     <>
-      <CustomModal
+    
+    <CustomModal
         isOpen={isTriageModalOpen}
         onClose={closeTriAgeModal}
         title="OPD Triage"
       >
-        <div className="triage-container">
+       <div className="triage-container">
           <header>
             <h2>
               OPD Triage of {data?.firstName} {data?.lastName}
@@ -479,16 +502,16 @@ function OPDTriagePage({ onClose, data }) {
                 )}
               </div>
               <div className="triage-vital-Form">
-                {showForm && (
+              <CustomModal isOpen={showForm} onClose={() => setShowForm(false)}>
                   <div className="triage-vitals-form">
                     <div className="triage-vitals-form-header">
                       <h3>Add New Vitals</h3>
-                      <button
+                      {/* <button
                         className="vitals-form-header-close"
                         onClick={() => setShowForm(!showForm)}
                       >
                         X
-                      </button>
+                      </button> */}
                     </div>
                     <form>
                       <div className="vitals-form-form-row">
@@ -498,7 +521,9 @@ function OPDTriagePage({ onClose, data }) {
                           type="date"
                           name="addedOn"
                           value={vitalData.addedOn}
+                          min={new Date().toISOString().split("T")[0]} 
                           onChange={handleInputChange}
+                          
                         />
                       </div>
 
@@ -627,16 +652,68 @@ function OPDTriagePage({ onClose, data }) {
 
                       <button
                         type="button"
-                        className="triage-vitals-form-save-button"
+                        className="triage-allergy-add-new-button"
                         onClick={handleSave}
                       >
                         Save
                       </button>
                     </form>
                   </div>
-                )}
+                  </CustomModal>
               </div>
             </section>
+         <div className="opd-triage-page-table">
+          <table>
+              <thead>
+                <tr>
+                  {[
+                    "Added On",
+                    "Height (cm)",
+                    "Weight (kg)",
+                    "BMI",
+                    "Temperature",
+                    "Blood Pressure",
+                    "Respiratory",
+                    "SpO₂",
+                    "O₂ Delivery Plan",
+                    "Pain Scale (/10)",
+                  ].map((header, index) => (
+                    <th key={index} className="resizable-th">
+                      <div className="header-content">
+                        <span>{header}</span>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {vitalsData && vitalsData.length > 0 ? (
+                  vitalsData.map((vital, index) => (
+                    <tr key={index}>
+                      <td>{vital.addedOn}</td>
+                      <td>{vital.height} cm</td>
+                      <td>{vital.weight} kg</td>
+                      <td>{vital.bmi}</td>
+                      <td>{vital.temperature}°C</td>
+                      <td>
+                        {vital.bpSystolic}/{vital.bpDiastolic} mmHg
+                      </td>
+                      <td>{vital.respiratoryRate} bpm</td>
+                      <td>{vital.spO2}%</td>
+                      <td>{vital.o2DeliveryPlan}</td>
+                      <td>{vital.painScale}/10</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="10" style={{ textAlign: "center" }}>
+                      No data available
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
             <section className="triage-allergy-container">
               <div className="allergy-list">
                 <div className="triage-allergy-list-subdiv">
@@ -648,7 +725,8 @@ function OPDTriagePage({ onClose, data }) {
                     + Add New
                   </button>
                 </div>
-                <table className="patientList-table" ref={tableRef}>
+               <div className="opd-triage-page-table">
+               <table ref={tableRef}>
                   <thead>
                     <tr>
                       {[
@@ -707,19 +785,19 @@ function OPDTriagePage({ onClose, data }) {
                     )}
                   </tbody>
                 </table>
+               </div>
               </div>
 
               <div className="triage-allergy-add-new-section">
-                {showAllergyForm && (
-                  <div className="triage-add-allergy-form">
+              <CustomModal isOpen={showAllergyForm} onClose={handleCloseForm}>    <div className="triage-add-allergy-form">
                     <div className="triage-allergy-form-header">
                       <h3>Add Allergy</h3>
-                      <button
+                      {/* <button
                         className="allergy-close-button"
                         onClick={handleCloseForm}
                       >
                         ✖
-                      </button>
+                      </button> */}
                     </div>
                     <form onSubmit={handleSubmit}>
                       <div className="allergy-form-row">
@@ -837,18 +915,19 @@ function OPDTriagePage({ onClose, data }) {
                       </button>
                     </form>
                   </div>
-                )}
+                  </CustomModal>
 
                 {showUpdateForm && (
+                  
                   <div className="triage-add-allergy-form">
                     <div className="allergy-form-header">
                       <h3>Update Allergy</h3>
-                      <button
+                      {/* <button
                         className="allergy-close-button"
                         onClick={handleCloseForm}
                       >
                         ✖
-                      </button>
+                      </button> */}
                     </div>
                     <form onSubmit={handleUpdateSubmit}>
                       <div className="allergy-form-row">
@@ -970,8 +1049,9 @@ function OPDTriagePage({ onClose, data }) {
               </div>
             </section>
           </main>
-        </div>
+          </div>
       </CustomModal>
+   
     </>
   );
 }

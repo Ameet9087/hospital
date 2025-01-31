@@ -2,7 +2,7 @@
   margin: 0 auto;
   padding: 10px;
   font-family: Arial, sans-serif;
-  background-color:var(--background-color);
+  background-color: var(--background-color);
 }
 .CprReviewForm-section {
   background-color: #ffffff;
@@ -19,7 +19,7 @@
 }
 .CprReviewForm-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
   padding: 10px;
 }
@@ -35,8 +35,8 @@
   background: white;
   transition: all 0.2s ease;
 }
-.CprReviewForm-floating-input{
-  width: 92%;
+.CprReviewForm-floating-input {
+  width: 100%;
 }
 .CprReviewForm-floating-select {
   width: 100%;
@@ -73,7 +73,7 @@
 }
 .CprReviewForm-search-icon {
   position: absolute;
-  right: 10px;
+  right: 5%;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -94,50 +94,57 @@
   box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
 }
 
+.CprReviewForm-buttons {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 5px;
+  font-size: var(--font-size);
+}
+.CprReviewForm-buttons button,
+.CprReviewForm-Upload {
+  background-color: var(--button-color);
+  font-size: var(--font-size);
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid var(--button-hover-background-color);
+  color: white;
+  cursor: pointer;
+}
+.CprReviewForm-buttons button:hover,
+.CprReviewForm-Upload:hover {
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}
+.CprReviewForm-radio-button {
+  display: flex;
+  align-items: center;
+  color: #666;
+  font-size: 12px;
+  gap: 2px;
+  white-space: nowrap;
+}
 
-      .CprReviewForm-buttons {
-        position: fixed;
-        right: 16px;
-        bottom: 16px;
-        display: flex;
-        gap: 5px;
-        font-size: var(--font-size);
-      }
-      .CprReviewForm-buttons button, .CprReviewForm-Upload {
-        background-color: var(--button-color);
-        font-size: var(--font-size);
-        border-radius: 5px;
-        padding: 8px 12px;
-        border: 1px solid var(--button-hover-background-color);
-        color: white;
-        cursor: pointer;
-      }
-      .CprReviewForm-buttons button:hover, .CprReviewForm-Upload:hover {
-        background-color: var(--button-hover-background-color);
-        border: 1px solid var(--button-hover-border-color);
-        color: var(--button-hover-text-color);
-      }
-      .CprReviewForm-radio-button {
-        display: flex;
-        align-items: center;
-        color: #666;
-      }
-      
-      .CprReviewForm-radio-button label {
-        display: flex;
-        align-items: center;
-        margin-right: 40px;
-        font-size: var(--font-size);
-      }
-      .CprReviewForm-form-group {
-        color: #666;
-        display: flex;
-        text-align: center;
-        align-items: center;
-        font-size: var(--font-size);
-        /* width: 400px; */
-        /* border: 1px solid red; */
-      }      
+.CprReviewForm-radio-button label {
+  display: flex;
+  white-space: nowrap;
+  gap: 2px;
+  align-items: center;
+  margin-right: 4px;
+  font-size: var(--font-size);
+  font-size: 12px;
+}
+.CprReviewForm-form-group {
+  color: #666;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  font-size: var(--font-size);
+  /* width: 400px; */
+  /* border: 1px solid red; */
+}
 @media (max-width: 1024px) {
   .CprReviewForm-grid {
     grid-template-columns: repeat(2, 1fr);

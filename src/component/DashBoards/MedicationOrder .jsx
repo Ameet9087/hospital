@@ -196,7 +196,7 @@ const MedicationOrder = ({ inPatientId, outPatientId, setActiveSection }) => {
               </td>
               <td>
                 <input
-                  type="date"
+                  type="text"
                   name="lastTaken"
                   value={medication.lastTaken || ""}
                   onChange={(e) => handleInputChange(index, e)}

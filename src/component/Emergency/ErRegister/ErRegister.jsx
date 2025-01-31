@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 // import { Modal } from 'react-bootstrap';
-import axios from 'axios';
-import './ErRegister.css';
-import ErInitialAssessmentForm from '../ErInitialAssessmentForm/ErInitialAssessmentForm';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import axios from "axios";
+import "./ErRegister.css";
+import ErInitialAssessmentForm from "../ErInitialAssessmentForm/ErInitialAssessmentForm";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 // import { API_BASE_URL } from '../api/api';
-import * as XLSX from 'xlsx';
-import CustomModal from '../../CustomModel/CustomModal';
-import { useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from '../../api/api';
+import * as XLSX from "xlsx";
+import CustomModal from "../../CustomModel/CustomModal";
+import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../api/api";
 
 const ErRegister = () => {
   const navigate = useNavigate();
@@ -18,40 +18,47 @@ const ErRegister = () => {
   const [filteredReceipts, setFilteredReceipts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [columnWidths, setColumnWidths] = useState({});
-  const [searchText, setSearchText] = useState('');
-  const [dateRange, setDateRange] = useState({ from: '', to: '' });
+  const [searchText, setSearchText] = useState("");
+  const [dateRange, setDateRange] = useState({ from: "", to: "" });
   const tableRef = useRef(null);
-  const handleOpenModal = () => navigate('/emergency/erinitialassessment');
+  const handleOpenModal = () => navigate("/emergency/erinitialassessment");
   const handleCloseModal = () => setShowEditModal(false);
-  const [erData, setErData] = useState([])
+  const [erData, setErData] = useState([]);
 
   const fetchErData = async () => {
     try {
       // http://192.168.1.65:8080/api/pharmacy-good-receipt
       // const response = await axios.get(`${API_BASE_URL}/pharmacy-good-receipt`);
-      const response = await axios.get(`${API_BASE_URL}/emergency/er-initial-assessment`);
+      const response = await axios.get(
+        `${API_BASE_URL}/emergency/er-initial-assessment`
+      );
       setErData(response.data);
       // setFilteredReceipts(response.data);
       console.log(response.data);
-
     } catch (error) {
-      console.error('Error fetching good receipts:', error);
+      console.error("Error fetching good receipts:", error);
     } finally {
       setLoading(false);
     }
   };
 
-
-
   useEffect(() => {
     fetchErData();
   }, []);
 
+  const handleAddPatient = (receipt) => {
+    navigate("/patient/registerpatient", { state: { receipt } });
+  };
+
+  const handleERClinicalEntries = (receipt) => {
+    navigate("/emergency/erclinicalentries", { state: { receipt } });
+  };
+
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport');
-    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
+    XLSX.utils.book_append_sheet(wb, ws, "PurchaseOrderReport");
+    XLSX.writeFile(wb, "PurchaseOrderReport.xlsx");
   };
 
   const handlePrint = () => {
@@ -64,7 +71,7 @@ const ErRegister = () => {
     if (searchText) {
       filtered = filtered.filter((receipt) =>
         Object.values(receipt)
-          .join(' ')
+          .join(" ")
           .toLowerCase()
           .includes(searchText.toLowerCase())
       );
@@ -156,16 +163,10 @@ const ErRegister = () => {
             <span className="purchase-results-count-span">
               Showing {filteredReceipts.length} / {goodReceipts.length} results
             </span>
-            <button
-              className="ErRegister-print-button"
-              onClick={handleExport}
-            >
+            <button className="ErRegister-print-button" onClick={handleExport}>
               <i className="fa-solid fa-file-excel"></i> Export
             </button>
-            <button
-              className="ErRegister-print-button"
-              onClick={handlePrint}
-            >
+            <button className="ErRegister-print-button" onClick={handlePrint}>
               <i className="fa-solid fa-print"></i> Print
             </button>
           </div>
@@ -175,7 +176,17 @@ const ErRegister = () => {
       <table ref={tableRef}>
         <thead>
           <tr>
-            {["Er No", "Patient Type", "Patient Name", "BOD", "Gender", "Relative Name", "Date ", "Actions",].map((header, index) => (
+            {[
+              "Er No",
+              "Patient Type",
+              "Patient Name",
+              "DOB",
+              "Contact Number",
+              "Gender",
+              "Relative Name",
+              "Date ",
+              "Actions",
+            ].map((header, index) => (
               <th
                 key={index}
                 style={{ width: columnWidths[index] }}
@@ -185,7 +196,10 @@ const ErRegister = () => {
                   <span>{header}</span>
                   <div
                     className="resizer"
-                    onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                    onMouseDown={startResizing(
+                      tableRef,
+                      setColumnWidths
+                    )(index)}
                   ></div>
                 </div>
               </th>
@@ -203,20 +217,29 @@ const ErRegister = () => {
             erData.map((receipt) => (
               <tr key={receipt.goodReceiptId} className="parent-row">
                 <td>{receipt.erNumber}</td>
-                <td>{receipt.patientType || 'N/A'}</td>
-                <td>{receipt.patientName || 'N/A'}</td>
-                <td>{receipt.dob || 'N/A'}</td>
-                <td>{receipt.sex || 'N/A'}</td>
-                <td>{receipt.relativeName}</td>
-                <td>{receipt.date}</td>
+                <td>{receipt.patientType || "N/A"}</td>
+                <td>
+                  {receipt.firstName || ""} {receipt.middleName || ""}{" "}
+                  {receipt.lastName || ""}
+                </td>
+                <td>{receipt.dob || "N/A"}</td>
+                <td>{receipt.contactNumber || "N/A"}</td>
+                <td>{receipt.sex || "N/A"}</td>
+                <td>{receipt.relativeName || "N/A"}</td>
+                <td>{receipt.date || "N/A"}</td>
                 <td>
                   <button
                     className="ErRegister-print-button"
+                    onClick={() => handleAddPatient(receipt)}
+                    disabled={receipt.patientType === "old"}
                   >
-                    Add
+                    {receipt.patientType === "new"
+                      ? "Generate MR NO"
+                      : "Alredy MR No"}
                   </button>
                   <button
                     className="ErRegister-print-button"
+                    onClick={() => handleERClinicalEntries(receipt)}
                   >
                     Add
                   </button>

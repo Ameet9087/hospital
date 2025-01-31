@@ -186,9 +186,9 @@ const DoctorMaster = () => {
       prevState.map((row, i) =>
         i === index
           ? {
-              ...row,
-              [name]: value,
-            }
+            ...row,
+            [name]: value,
+          }
           : row
       )
     );
@@ -634,17 +634,14 @@ const DoctorMaster = () => {
                   onClick={() => setShowModal(true)}
                 ></i>
               </div>
-              <div className="docmasterformdata">
+              <div className='docmasterformdata'>
                 <label className="doctormaster-label">Doctor Type:</label>
-                <select
-                  value={formdata.doctorType}
-                  onChange={handleInputChange}
-                  name="doctorType"
-                  className="doctormaster-select"
-                >
-                  <option>Select Type</option>
+                <select value={formdata.doctorType} onChange={handleInputChange} name="doctorType" className="doctormaster-select">
+                  <option value="">Select Doctor Type</option>
                   <option value="Employee">Employee</option>
+                  <option value="Referral">Referral</option>
                   <option value="Consultant">Consultant</option>
+                  <option value="Both">Both</option>
                 </select>
               </div>
 
@@ -712,17 +709,12 @@ const DoctorMaster = () => {
             </div>
 
             <div className="doctormaster-residence-details">
-              <div className="docmasterformdata">
+              <div className='docmasterformdata'>
                 <label className="doctormaster-label">Employee Type:</label>
-                <select
-                  value={formdata.employeeType}
-                  onChange={handleInputChange}
-                  name="employeeType"
-                  className="doctormaster-select"
-                >
-                  <option>Select Employee Type</option>
-                  <option value="Permanent">Permanent</option>
-                  <option value="Part Time">Part Time</option>
+                <select value={formdata.employeeType} onChange={handleInputChange} name="employeeType" className="doctormaster-select">
+                  <option value="">select employee type</option>
+                  <option value="employee">employee</option>
+                  <option value="non employee">non employee</option>
                 </select>
               </div>
 
@@ -914,9 +906,8 @@ const DoctorMaster = () => {
           </div>
           <div>
             <button
-              className={`doctormaster-service-button ${
-                selectedTab === "doctorFee" ? "active" : ""
-              }`}
+              className={`doctormaster-service-button ${selectedTab === "doctorFee" ? "active" : ""
+                }`}
               onClick={() => setSelectedTab("doctorFee")}
             >
               Doctor Fee

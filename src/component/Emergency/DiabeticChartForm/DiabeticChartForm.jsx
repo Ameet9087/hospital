@@ -1,588 +1,10 @@
-// import React, { useState, useRef, useEffect } from "react";
-// import { startResizing } from "../../TableHeadingResizing/resizableColumns"; 
-// import './DiabeticChartForm.css';
-// import PopupTable from "../popup";
-// import axios from "axios";
-// const FloatingInput = ({ label, type = "text", ...props }) => {
-//   const [isFocused, setIsFocused] = useState(false);
-//   const [hasValue, setHasValue] = useState(false);
-//   const handleChange = (e) => {
-//     setHasValue(e.target.value.length > 0);
-//     if (props.onChange) props.onChange(e);
-//   };
-//   return (
-//     <div className={`diabetic-chart-form-floating-field ${(isFocused || hasValue) ? 'active' : ''}`}>
-//       <input
-//         type={type}
-//         className="diabetic-chart-form-floating-input"
-//         onFocus={() => setIsFocused(true)}
-//         onBlur={(e) => {
-//           setIsFocused(false);
-//           setHasValue(e.target.value.length > 0);
-//         }}
-//         onChange={handleChange}
-//         {...props}
-//       />
-//       <label className="diabetic-chart-form-floating-label">{label}</label>
-//     </div>
-//   );
-// };
-// const FloatingSelect = ({ label, options = [], ...props }) => {
-//   const [isFocused, setIsFocused] = useState(false);
-//   const [hasValue, setHasValue] = useState(false);
-//   return (
-//     <div className={`diabetic-chart-form-floating-field ${(isFocused || hasValue) ? 'active' : ''}`}>
-//       <select
-//         className="diabetic-chart-form-floating-select"
-//         onFocus={() => setIsFocused(true)}
-//         onBlur={(e) => {
-//           setIsFocused(false);
-//           setHasValue(e.target.value !== '');
-//         }}
-//         onChange={(e) => setHasValue(e.target.value !== '')}
-//         {...props}
-//       >
-//         <option value="">{}</option>
-//         {options.map((option, index) => (
-//           <option key={index} value={option.value}>{option.label}</option>
-//         ))}
-//       </select>
-//       <label className="diabetic-chart-form-floating-label">{label}</label>
-//     </div>
-//   );
-// };
-// const DiabeticChartForm = () => {
-//   const [rows, setRows] = useState([
-//     { sn: 1, drug: "", dose: "", route: "", remarks: "" }
-//   ]); // Added initial dummy data
-//     const tableRef = useRef(null);
-//   const handleAddRow = () => {
-//     setRows((prevRows) => [
-//       ...prevRows,
-//       { sn: prevRows.length + 1, drug: "", dose: "", route: "", remarks: "" }
-//     ]);
-//   };
-//   const handleDeleteRow = (index) => {
-//     setRows((prevRows) => prevRows.filter((_, i) => i !== index));
-//   };
-//   const [mrNoData, setMrNoData] = useState([]);
-//   const [activePopup, setActivePopup] = useState(null);
-//   const [formData, setFormData] = useState({
-// uhid: "",
-// ipNo: "",
-// patientName: "",
-// patientLName: "",
-// age: "",
-// sex: "",
-// admissionDate: "",
-// consultant: "",
-// roomBedNo: "",
-// bedNo:"",
-// ward:"",
-// eyesOpen: "",
-// eyeClosedBy: "",
-// bestVerbalResponse: "",
-// ettubeOfTrochosTubeT: "",
-// bestMotorResponse: "",
-// usuallyRecordBestArmResponse: "",
-// totalScore: "",
-// bpSystolic: "",
-// bpDiastolic: "",
-// pulse: "",
-// respiratoryRate: "",
-// rightSizeReaction: "",
-// leftSizeReaction: "",
-// arms: "",
-// legs: "",
-// });
-// useEffect(() => {
-//     if (activePopup === "MrNo") {
-//         fetchMrno();
-//      }
-//   }, [activePopup]);
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     console.log("Form Submitted:", formData);
-//     try {
-//       const response = await fetch("http://192.168.1.36:4068/api/diabeticChart", { 
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(formData),
-//       });
-//       if (!response.ok) {
-//         throw new Error("Failed to submit form data");
-//       }
-//       const result = await response.json();
-//       console.log("Form submission success:", result);
-//       alert("Form submitted successfully!");
-//     } catch (error) {
-//       console.error("Error submitting form data:", error);
-//       alert("Failed to submit form.");
-//     }
-//   };
-// const handleChange = (e) => {
-// const { name, value, type, checked } = e.target;
-// const fieldValue = type === "checkbox" ? checked : value;
-// setFormData((prevData) => ({
-//   ...prevData,
-//   [name]: fieldValue,
-// }));
-// }
-// const fetchMrno = async () => {
-// try {
-//     const response = await axios.get(`http://192.168.1.36:4068/api/ip-admissions`);
-//     setMrNoData(response.data);
-//     console.log(mrNoData);
-//     console.log(data)
-// } catch (error) {
-//     console.error("Error fetching data:", error);
-// }
-// };
-// const handleSelect = (data) => {
-// console.log(data ,"selected data");
-// if (activePopup === "MrNo") {
-//   setFormData((prevFormData) => ({
-//       ...prevFormData,
-//       uhid: data.uhid,
-//       firstName: data.firstName,
-//       lastName: data.lastName,
-//       age:data.age,
-//       sex:data?.realobj?.sex,
-//       ipNo:data?.realobj?.patient?.inPatientId,
-//       consultant:data?.realobj?.admissionUnderDoctorDetail?.coConsultant?.doctorName,
-//       roomNumber:data?.realobj?.roomDetails?.roomDTO?.roomNumber,
-//       bedNo:data?.realobj?.roomDetails?.bedDTO?.bedNo,
-//       ward:data?.realobj?.roomDetails?.roomTypeDTO.wardName
-//   }));
-// }
-// setActivePopup(null);
-// };
-// const getPopupData = () => {
-// if (activePopup === "MrNo") {
-// const popupData = {
-//   columns: ["uhid", "firstName", "lastName"],
-//   data: Array.isArray(mrNoData)
-//     ? mrNoData.map((user) => ({
-//         uhid: user?.patient?.patient?.uhid,
-//         ipNo: user?.patient?.patient?.ipNo,
-//         firstName: user?.patient?.patient?.firstName,
-//         lastName: user?.patient?.patient?.lastName,
-//         age: user?.patient?.patient?.age,
-//         sex:user?.patient?.patient?.sex,
-//         roomNumber:user?.patient?.roomNumber,
-//         realobj:user
-//       }))
-//     : [],
-// };
-// console.log("Popup Data:", popupData);
-// return popupData;
-// }
-// return { columns: [], data: [] };
-// };
-// const { columns, data } = getPopupData();
-//   return (
-//     <>
-//     <div className="diabetic-chart-form-container">
-//       <div className="diabetic-chart-form-section">
-//       </div>
-//       <div className="diabetic-chart-form-section">
-//         <div className="diabetic-chart-form-header">Diabetic Chart Details</div>
-//         <div className="diabetic-chart-form-grid">
-//           <div className="diabetic-chart-form-search-field">
-//             <FloatingInput label="MRNO" type="text" name="mrno" value={formData.uhid}/>
-//             <button className="diabetic-chart-form-search-icon" onClick={() => setActivePopup("MrNo")}>
-//               <svg viewBox="0 0 24 24" width="16" height="16">
-//                 <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/>
-//               </svg>
-//             </button>
-//             </div>
-//           <FloatingInput label="IPNo" value={formData.ipNo} />
-//           <FloatingInput label="Patient Name" value={`${formData.firstName} ${formData.lastName}`} />
-//           <FloatingInput label="Age" value={formData.age} />
-//           <FloatingInput label="Ward" value={formData.ward}/>
-//           <FloatingInput label="Room NO/ Bed No" value={`${formData.roomNumber}/ ${formData.bedNo}`}/>
-//           <FloatingInput label="Consultant" value={formData.consultant}/>
-//           <FloatingInput label="Date" type='date' />
-//           <FloatingInput label="Time" type='time' />
-//           <FloatingInput label="Blood Sugar Values" />
-//           <FloatingInput label="Urine Acetone" />
-//         </div>
-//       </div>
-//     </div>
-//     <div className="diabetic-chart-form-header">Diabetic Chart Details</div>
-//     <table ref={tableRef} className="diabetic-chart-form-table">
-//         <thead>
-//           <tr>
-//             <th>Actions</th>
-//             <th>SN</th>
-//             <th>Drug</th>
-//             <th>Dose</th>
-//             <th>Route</th>
-//             <th>Remarks</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {rows.map((row, index) => (
-//             <tr key={index}>
-//               <td>
-//                 <button
-//                   className="diabetic-chart-form-add-btn"
-//                   onClick={handleAddRow}
-//                 >
-//                   Add
-//                 </button>
-//                 <button
-//                   className="diabetic-chart-form-del-btn"
-//                   onClick={() => handleDeleteRow(index)}
-//                   disabled={rows.length <= 1}
-//                 >
-//                   Del
-//                 </button>
-//               </td>
-//               <td>{row.sn}</td>
-//               <td><input type="text"  /></td>
-//               <td><input type="text" /></td>
-//               <td><input type="text"  /></td>
-//               <td><input type="text"  /></td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//       {activePopup && (
-//               <PopupTable
-//               columns={columns}
-//               data={data}
-//               onSelect={handleSelect}
-//                onClose={() => setActivePopup(null)}
-//               />
-//                       )}
-//           <div className="diabetic-chart-form-buttons">
-//               <button className="btn-blue" >Save</button>
-//             </div>
-//             </>
-//   );
-// };
-// export default DiabeticChartForm;
-
-
-
-// import React, { useState, useRef, useEffect } from "react";
-// import { startResizing } from "../../TableHeadingResizing/resizableColumns"; 
-// import './DiabeticChartForm.css';
-// import PopupTable from "../popup";
-// import axios from "axios";
-
-// const FloatingInput = ({ label, type = "text", value, ...props }) => {
-//   const [isFocused, setIsFocused] = useState(false);
-//   const [hasValue, setHasValue] = useState(!!value);
-
-//   useEffect(() => {
-//     setHasValue(!!value);
-//   }, [value]);
-
-//   const handleChange = (e) => {
-//     setHasValue(e.target.value.length > 0);
-//     if (props.onChange) props.onChange(e);
-//   };
-
-//   return (
-//     <div className={`diabetic-chart-form-floating-field ${(isFocused || hasValue) ? 'active' : ''}`}>
-//       <input
-//         type={type}
-//         className="diabetic-chart-form-floating-input"
-//         value={value}
-//         onFocus={() => setIsFocused(true)}
-//         onBlur={(e) => {
-//           setIsFocused(false);
-//           setHasValue(e.target.value.length > 0);
-//         }}
-//         onChange={handleChange}
-//         {...props}
-//       />
-//       <label className="diabetic-chart-form-floating-label">{label}</label>
-//     </div>
-//   );
-// };
-
-// const FloatingSelect = ({ label, options = [], value, ...props }) => {
-//   const [isFocused, setIsFocused] = useState(false);
-//   const [hasValue, setHasValue] = useState(!!value);
-
-//   useEffect(() => {
-//     setHasValue(!!value);
-//   }, [value]);
-
-//   return (
-//     <div className={`diabetic-chart-form-floating-field ${(isFocused || hasValue) ? 'active' : ''}`}>
-//       <select
-//         className="diabetic-chart-form-floating-select"
-//         value={value}
-//         onFocus={() => setIsFocused(true)}
-//         onBlur={(e) => {
-//           setIsFocused(false);
-//           setHasValue(e.target.value !== '');
-//         }}
-//         onChange={(e) => {
-//           setHasValue(e.target.value !== '');
-//           if (props.onChange) props.onChange(e);
-//         }}
-//         {...props}
-//       >
-//         <option value="">{}</option>
-//         {options.map((option, index) => (
-//           <option key={index} value={option.value}>{option.label}</option>
-//         ))}
-//       </select>
-//       <label className="diabetic-chart-form-floating-label">{label}</label>
-//     </div>
-//   );
-// };
-
-// const DiabeticChartForm = () => {
-//   const [rows, setRows] = useState([
-//     { sn: 1, drug: "", dose: "", route: "", remarks: "" }
-//   ]);
-//   const tableRef = useRef(null);
-//   const [mrNoData, setMrNoData] = useState([]);
-//   const [activePopup, setActivePopup] = useState(null);
-//   const [formData, setFormData] = useState({
-//     uhid: "",
-//     ipNo: "",
-//     firstName: "",
-//     lastName: "",
-//     age: "",
-//     sex: "",
-//     admissionDate: "",
-//     consultant: "",
-//     roomNumber: "",
-//     bedNo: "",
-//     ward: "",
-//   });
-
-//   useEffect(() => {
-//     if (activePopup === "MrNo") {
-//       fetchMrno();
-//     }
-//   }, [activePopup]);
-
-//   const handleAddRow = () => {
-//     setRows((prevRows) => [
-//       ...prevRows,
-//       { sn: prevRows.length + 1, drug: "", dose: "", route: "", remarks: "" }
-//     ]);
-//   };
-
-//   const handleDeleteRow = (index) => {
-//     setRows((prevRows) => prevRows.filter((_, i) => i !== index));
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       const response = await fetch("http://192.168.1.36:4068/api/diabeticChart", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(formData),
-//       });
-//       if (!response.ok) {
-//         throw new Error("Failed to submit form data");
-//       }
-//       const result = await response.json();
-//       console.log("Form submission success:", result);
-//       alert("Form submitted successfully!");
-//     } catch (error) {
-//       console.error("Error submitting form data:", error);
-//       alert("Failed to submit form.");
-//     }
-//   };
-
-//   const handleChange = (e) => {
-//     const { name, value, type, checked } = e.target;
-//     const fieldValue = type === "checkbox" ? checked : value;
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [name]: fieldValue,
-//     }));
-//   };
-
-//   const fetchMrno = async () => {
-//     try {
-//       const response = await axios.get("http://192.168.1.36:4068/api/ip-admissions");
-//       setMrNoData(response.data);
-//     } catch (error) {
-//       console.error("Error fetching data:", error);
-//     }
-//   };
-
-//   const handleSelect = (data) => {
-//     if (activePopup === "MrNo") {
-//       setFormData((prevFormData) => ({
-//         ...prevFormData,
-//         uhid: data.uhid,
-//         firstName: data.firstName,
-//         lastName: data.lastName,
-//         age: data.age,
-//         sex: data?.realobj?.sex,
-//         ipNo: data?.realobj?.patient?.inPatientId,
-//         consultant: data?.realobj?.admissionUnderDoctorDetail?.coConsultant?.doctorName,
-//         roomNumber: data?.realobj?.roomDetails?.roomDTO?.roomNumber,
-//         bedNo: data?.realobj?.roomDetails?.bedDTO?.bedNo,
-//         ward: data?.realobj?.roomDetails?.roomTypeDTO.wardName
-//       }));
-//     }
-//     setActivePopup(null);
-//   };
-
-//   const getPopupData = () => {
-//     if (activePopup === "MrNo") {
-//       return {
-//         columns: ["uhid", "firstName", "lastName"],
-//         data: Array.isArray(mrNoData)
-//           ? mrNoData.map((user) => ({
-//               uhid: user?.patient?.patient?.uhid,
-//               ipNo: user?.patient?.patient?.ipNo,
-//               firstName: user?.patient?.patient?.firstName,
-//               lastName: user?.patient?.patient?.lastName,
-//               age: user?.patient?.patient?.age,
-//               sex: user?.patient?.patient?.sex,
-//               roomNumber: user?.patient?.roomNumber,
-//               realobj: user
-//             }))
-//           : [],
-//       };
-//     }
-//     return { columns: [], data: [] };
-//   };
-
-//   const { columns, data } = getPopupData();
-
-//   return (
-//     <>
-//       <div className="diabetic-chart-form-container">
-//         <div className="diabetic-chart-form-section">
-//           <div className="diabetic-chart-form-header">Diabetic Chart Details</div>
-//           <div className="diabetic-chart-form-grid">
-//             <div className="diabetic-chart-form-search-field">
-//               <FloatingInput
-//                 label="MRNO"
-//                 type="text"
-//                 name="uhid"
-//                 value={formData.uhid}
-//                 onChange={handleChange}
-//               />
-//               <button className="diabetic-chart-form-search-icon" onClick={() => setActivePopup("MrNo")}>
-//                 <svg viewBox="0 0 24 24" width="16" height="16">
-//                   <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/>
-//                 </svg>
-//               </button>
-//             </div>
-//             <FloatingInput label="IPNo" value={formData.ipNo} name="ipNo" onChange={handleChange} />
-//             <FloatingInput
-//               label="Patient Name"
-//               value={`${formData.firstName}${formData.lastName}`}
-//               readOnly
-//             />
-//             <FloatingInput label="Age" value={formData.age} name="age" onChange={handleChange} />
-//             <FloatingInput label="Ward" value={formData.ward} name="ward" onChange={handleChange} />
-//             <FloatingInput
-//               label="Room NO/ Bed No"
-//               value={`${formData.roomNumber} / ${formData.bedNo}`}
-//               readOnly
-//             />
-//             <FloatingInput
-//               label="Consultant"
-//               value={formData.consultant}
-//               name="consultant"
-//               onChange={handleChange}
-//             />
-//             <FloatingInput label="Date" type="date" name="date" onChange={handleChange} />
-//             <FloatingInput label="Time" type="time" name="time" onChange={handleChange} />
-//             <FloatingInput
-//               label="Blood Sugar Values"
-//               name="bloodSugarValues"
-//               onChange={handleChange}
-//             />
-//             <FloatingInput
-//               label="Urine Acetone"
-//               name="urineAcetone"
-//               onChange={handleChange}
-//             />
-//           </div>
-//         </div>
-//       </div>
-//       <div className="diabetic-chart-form-header">Diabetic Chart Details</div>
-//       <table ref={tableRef} className="diabetic-chart-form-table">
-//         <thead>
-//           <tr>
-//             <th>Actions</th>
-//             <th>SN</th>
-//             <th>Drug</th>
-//             <th>Dose</th>
-//             <th>Route</th>
-//             <th>Remarks</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {rows.map((row, index) => (
-//             <tr key={index}>
-//               <td>
-//                 <button
-//                   className="diabetic-chart-form-add-btn"
-//                   onClick={handleAddRow}
-//                 >
-//                   Add
-//                 </button>
-//                 <button
-//                   className="diabetic-chart-form-del-btn"
-//                   onClick={() => handleDeleteRow(index)}
-//                   disabled={rows.length <= 1}
-//                 >
-//                   Del
-//                 </button>
-//               </td>
-//               <td>{row.sn}</td>
-//               <td><input type="text" /></td>
-//               <td><input type="text" /></td>
-//               <td><input type="text" /></td>
-//               <td><input type="text" /></td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//       {activePopup && (
-//         <PopupTable
-//           columns={columns}
-//           data={data}
-//           onSelect={handleSelect}
-//           onClose={() => setActivePopup(null)}
-//         />
-//       )}
-//       <div className="diabetic-chart-form-buttons">
-//         <button className="btn-blue" onClick={handleSubmit}>Save</button>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default DiabeticChartForm;
-
-
-
-
-
-
-
-
-
 import React, { useState, useRef, useEffect } from "react";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns"; 
-import './DiabeticChartForm.css';
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import "./DiabeticChartForm.css";
 import PopupTable from "../popup";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { API_BASE_URL } from "../../api/api";
 
 // FloatingInput component remains exactly the same
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
@@ -599,7 +21,11 @@ const FloatingInput = ({ label, type = "text", value, ...props }) => {
   };
 
   return (
-    <div className={`diabetic-chart-form-floating-field ${(isFocused || hasValue) ? 'active' : ''}`}>
+    <div
+      className={`diabetic-chart-form-floating-field ${
+        isFocused || hasValue ? "active" : ""
+      }`}
+    >
       <input
         type={type}
         className="diabetic-chart-form-floating-input"
@@ -627,24 +53,30 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
   }, [value]);
 
   return (
-    <div className={`diabetic-chart-form-floating-field ${(isFocused || hasValue) ? 'active' : ''}`}>
+    <div
+      className={`diabetic-chart-form-floating-field ${
+        isFocused || hasValue ? "active" : ""
+      }`}
+    >
       <select
         className="diabetic-chart-form-floating-select"
         value={value}
         onFocus={() => setIsFocused(true)}
         onBlur={(e) => {
           setIsFocused(false);
-          setHasValue(e.target.value !== '');
+          setHasValue(e.target.value !== "");
         }}
         onChange={(e) => {
-          setHasValue(e.target.value !== '');
+          setHasValue(e.target.value !== "");
           if (props.onChange) props.onChange(e);
         }}
         {...props}
       >
         <option value="">{}</option>
         {options.map((option, index) => (
-          <option key={index} value={option.value}>{option.label}</option>
+          <option key={index} value={option.value}>
+            {option.label}
+          </option>
         ))}
       </select>
       <label className="diabetic-chart-form-floating-label">{label}</label>
@@ -653,36 +85,48 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
 };
 
 const DiabeticChartForm = () => {
+  const [addItems, setaddItems] = useState([]);
+  const [selectedaddItems, setSelectedaddItems] = useState({});
+  const location = useLocation();
+  const { receipt } = location.state || {};
+
+  const [formData, setFormData] = useState({
+    uhid: receipt?.uhid || "",
+    ipNumber: receipt?.ipNumber || "",
+    erInitialAssessmentId: receipt?.erInitialAssessmentId || "",
+    patientName: `${receipt?.firstName || ""} ${
+      receipt?.lastName || ""
+    }`.trim(),
+    fatherHusbandName: receipt?.relativeName || "",
+    age: receipt?.age || "",
+    sex: receipt?.sex || "",
+    relativeName: receipt?.relativeName || "",
+    contactNumber: receipt?.contactNumber || "",
+    admissionDate: receipt?.date || "",
+    dateOfBirth: receipt?.dob || "",
+    department: receipt?.department || "",
+    ward: receipt?.ward || "",
+    roomBedNo: `${receipt?.roomNumber || ""} / ${receipt?.bedNo || ""}`.trim(),
+    arNumber: receipt?.arNumber || "",
+    mechanismOfInjury: receipt?.mechanismOfInjury || "",
+    incidentDate: receipt?.incidentDate || "",
+    time: receipt?.time || "",
+    location: receipt?.location || "",
+    finalDiagnosis: receipt?.finalDiagnosis || "",
+    natureOfInjury: receipt?.natureOfInjury || "",
+    consultant: receipt?.consultant || "",
+    regNumber: receipt?.regNumber || "",
+    bloodSugarValuesCBG: receipt?.bloodSugarValuesCBG || "",
+    urineAcetone: receipt?.urineAcetone || "",
+  });
+
   const [rows, setRows] = useState([
-    { sn: 1, drug: "", dose: "", route: "", remarks: "" }
+    { sn: 1, drug: "", dose: "", route: "", remarks: "" },
   ]);
   const tableRef = useRef(null);
   const [mrNoData, setMrNoData] = useState([]);
   const [activePopup, setActivePopup] = useState(null);
-  const [formData, setFormData] = useState({
-    uhid: "",
-    ipNo: "",
-    firstName: "",
-    lastName: "",
-    age: "",
-    sex: "",
-    admissionDate: "",
-    consultant: "",
-    roomNumber: "",
-    bedNo: "",
-    ward: "",
-    date: "",
-    time: "",
-    bloodSugarValuesCBG: "",
-    bloodSugarValuesVenous: "",
-    urineAcetone: "",
-    ipAdmissionDTO: {
-      ipAdmmissionId: null
-    },
-    addItemDTO: {
-      addItemId: null
-    }
-  });
+  const [selectedRowIndex, setSelectedRowIndex] = useState(null); // Track the selected row index
 
   useEffect(() => {
     if (activePopup === "MrNo") {
@@ -693,8 +137,55 @@ const DiabeticChartForm = () => {
   const handleAddRow = () => {
     setRows((prevRows) => [
       ...prevRows,
-      { sn: prevRows.length + 1, drug: "", dose: "", route: "", remarks: "" }
+      { sn: prevRows.length + 1, drugid:"", drug: "", dose: "", route: "", remarks: "" },
     ]);
+  };
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/add-item`)
+      .then((response) => response.json())
+      .then((data) => {
+        setaddItems(data);
+      })
+      .catch((error) =>
+        console.error("Error fetching Gate Pass In data:", error)
+      );
+  }, []);
+
+  const getPopupData = () => {
+    if (activePopup === "AddItem") {
+      return {
+        columns: ["addItemId", "itemName"],
+        data: addItems.map((item) => ({
+          addItemId: item.addItemId,
+          itemName: item.itemMaster?.itemName || "N/A",
+        })),
+      };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
+
+  const { columns, data } = getPopupData();
+
+  const handleSelect = async (data, index) => {
+    if (activePopup === "AddItem") {
+      setSelectedaddItems((prev) => ({
+        ...prev,
+        [index]: data,
+      }));
+      setRows((prevRows) => {
+        const newRows = [...prevRows];
+        newRows[selectedRowIndex] = {
+          ...newRows[selectedRowIndex],
+          drug: data.itemName, // Update the drug field with the selected itemName
+          drugid: data.addItemId, // Update the drug field with the selected itemName
+        };
+        return newRows;
+      });
+    }
+
+    setActivePopup(null);
   };
 
   const handleDeleteRow = (index) => {
@@ -702,175 +193,127 @@ const DiabeticChartForm = () => {
   };
 
   const handleRowChange = (index, field, value) => {
-    setRows(prevRows => {
+    setRows((prevRows) => {
       const newRows = [...prevRows];
       newRows[index] = {
         ...newRows[index],
-        [field]: value
+        [field]: value,
       };
       return newRows;
     });
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Prepare the submission data
+
     const submissionData = {
-      date: formData.date,
-      time: formData.time,
-      bloodSugarValuesCBG: parseFloat(formData.bloodSugarValuesCBG) || 0,
-      bloodSugarValuesVenous: parseFloat(formData.bloodSugarValuesVenous) || 0,
+      bloodSugarValues: parseFloat(formData.bloodSugarValuesCBG),
       urineAcetone: formData.urineAcetone,
-      drug: rows[0].drug,
-      dose: rows[0].dose,
-      route: rows[0].route,
-      remark: rows[0].remarks,
-      ipAdmissionDTO: {
-        ipAdmmissionId: 16 // You might want to get this from your form data
+      erInitialAssessmentDTO: {
+        erInitialAssessmentId: parseInt(formData.erInitialAssessmentId),
       },
-      addItemDTO: {
-        addItemId: 21 // You might want to get this from your form data
-      }
+      diabeticMedicationsDTOS: rows.map((row) => ({
+        addItemDTO: {
+          addItemId: parseInt(row.drugid),
+        },
+        dose: row.dose,
+        route: row.route,
+        remarks: row.remarks,
+      })),
     };
 
     try {
-      const response = await fetch("http://192.168.1.46:4096/api/diabeticChart", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(submissionData),
-      });
+      const response = await axios.post(
+        `${API_BASE_URL}/diabeticChart`,
+        submissionData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!response.ok) {
+      if (response.status === 200 || response.status === 201) {
+        console.log("Form submitted successfully:", response.data);
+        alert("Form submitted successfully!");
+      } else {
         throw new Error("Failed to submit form data");
       }
-
-      const result = await response.json();
-      console.log("Form submission success:", result);
-      alert("Form submitted successfully!");
     } catch (error) {
       console.error("Error submitting form data:", error);
       alert("Failed to submit form.");
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const fieldValue = type === "checkbox" ? checked : value;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: fieldValue,
-    }));
-  };
-
   const fetchMrno = async () => {
     try {
-      const response = await axios.get("http://192.168.1.46:4096/api/ip-admissions");
+      const response = await axios.get(
+        "http://192.168.1.46:4096/api/ip-admissions"
+      );
       setMrNoData(response.data);
-      console.log(response.data)
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  const handleSelect = (data) => {
-    if (activePopup === "MrNo") {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        uhid: data.uhid,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        age: data.age,
-        sex: data?.realobj?.sex,
-        ipNo: data?.realobj?.patient?.inPatientId,
-        consultant: data?.realobj?.admissionUnderDoctorDetail?.coConsultant?.doctorName,
-        roomNumber: data?.realobj?.roomDetails?.roomDTO?.roomNumber,
-        bedNo: data?.realobj?.roomDetails?.bedDTO?.bedNo,
-        ward: data?.realobj?.roomDetails?.roomTypeDTO.wardName,
-        // ipAdmissionDTO: {
-        //   ipAdmmissionId: data?.realobj?.ipAdmissionId || 16
-        // }
-      }));
-    }
-    setActivePopup(null);
-  };
-
-  const getPopupData = () => {
-    if (activePopup === "MrNo") {
-      return {
-        columns: ["uhid", "firstName", "lastName"],
-        data: Array.isArray(mrNoData)
-          ? mrNoData.map((user) => ({
-              uhid: user?.patient?.patient?.uhid,
-              ipNo: user?.patient?.patient?.ipNo,
-              firstName: user?.patient?.patient?.firstName,
-              lastName: user?.patient?.patient?.lastName,
-              age: user?.patient?.patient?.age,
-              sex: user?.patient?.patient?.sex,
-              roomNumber: user?.patient?.roomNumber,
-              realobj: user
-            }))
-          : [],
-      };
-    }
-    return { columns: [], data: [] };
-  };
-
-  const { columns, data } = getPopupData();
-
   return (
     <>
       <div className="diabetic-chart-form-container">
         <div className="diabetic-chart-form-section">
-          <div className="diabetic-chart-form-header">Diabetic Chart Details</div>
+          <div className="diabetic-chart-form-header">
+            Diabetic Chart Details
+          </div>
           <div className="diabetic-chart-form-grid">
-            <div className="diabetic-chart-form-search-field">
-              <FloatingInput
-                label="MRNO"
-                type="text"
-                name="uhid"
-                
-              />
-              <button className="diabetic-chart-form-search-icon" onClick={() => setActivePopup("MrNo")}>
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                  <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/>
-                </svg>
-              </button>
-            </div>
-            <FloatingInput label="IPNo" value={formData.ipNo} name="ipNo" onChange={handleChange} />
             <FloatingInput
-              label="Patient Name"
-              value={`${formData.firstName} ${formData.lastName}`}
-              readOnly
-            />
-            <FloatingInput label="Age" value={formData.age} name="age" onChange={handleChange} />
-            <FloatingInput label="Ward" value={formData.ward} name="ward" onChange={handleChange} />
-            <FloatingInput
-              label="Room NO/ Bed No"
-              value={`${formData.roomNumber} / ${formData.bedNo}`}
-              readOnly
-            />
-            <FloatingInput
-              label="Consultant"
-              value={formData.consultant}
-              name="consultant"
+              label="ER No"
+              value={formData.erInitialAssessmentId}
+              name="erInitialAssessmentId"
               onChange={handleChange}
             />
-            <FloatingInput 
-              label="Date" 
-              type="date" 
-              name="date" 
-              value={formData.date}
-              onChange={handleChange} 
+            <FloatingInput
+              label="Patient Name"
+              value={formData.patientName}
+              readOnly
             />
-            <FloatingInput 
-              label="Time" 
-              type="time" 
-              name="time" 
-              value={formData.time}
-              onChange={handleChange} 
+            <FloatingInput
+              label="Mobile Number"
+              name="contactNumber"
+              onChange={handleChange}
+              value={formData.contactNumber}
+            />
+            <FloatingInput
+              label="DOB"
+              value={formData.dateOfBirth}
+              name="dateOfBirth"
+              onChange={handleChange}
+            />
+            <FloatingInput
+              label="Sex"
+              value={formData.sex}
+              name="sex"
+              onChange={handleChange}
+            />
+            <FloatingInput
+              label="Date Of Admission"
+              type="date"
+              name="admissionDate"
+              value={formData.admissionDate}
+              onChange={handleChange}
+            />
+            <FloatingInput
+              label="Relative Name"
+              name="relativeName"
+              value={formData.relativeName}
+              onChange={handleChange}
             />
             <FloatingInput
               label="Blood Sugar Values"
@@ -919,31 +362,56 @@ const DiabeticChartForm = () => {
               </td>
               <td>{row.sn}</td>
               <td>
-                <input 
-                  type="text" 
-                  value={row.drug}
-                  onChange={(e) => handleRowChange(index, 'drug', e.target.value)}
-                />
+                <div className="diabetic-chart-form-search-field">
+                  <input
+                    className="diabetic-chart-form-tableinput"
+                    type="text"
+                    value={row.drug} // Display the selected drug name
+                    readOnly
+                  />
+                  <button
+                    className="diabetic-chart-form-search-icon"
+                    onClick={() => {
+                      setSelectedRowIndex(index); // Set the selected row index
+                      setActivePopup("AddItem"); // Open the popup
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                      <path
+                        fill="currentColor"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </td>
               <td>
-                <input 
-                  type="text" 
+                <input
+                  className="diabetic-chart-form-tableinput"
+                  type="text"
                   value={row.dose}
-                  onChange={(e) => handleRowChange(index, 'dose', e.target.value)}
+                  onChange={(e) =>
+                    handleRowChange(index, "dose", e.target.value)
+                  }
                 />
               </td>
               <td>
-                <input 
-                  type="text" 
+                <input
+                  className="diabetic-chart-form-tableinput"
+                  type="text"
                   value={row.route}
-                  onChange={(e) => handleRowChange(index, 'route', e.target.value)}
+                  onChange={(e) =>
+                    handleRowChange(index, "route", e.target.value)
+                  }
                 />
               </td>
               <td>
-                <input 
-                  type="text" 
+                <input className="diabetic-chart-form-tableinput"
+                  type="text"
                   value={row.remarks}
-                  onChange={(e) => handleRowChange(index, 'remarks', e.target.value)}
+                  onChange={(e) =>
+                    handleRowChange(index, "remarks", e.target.value)
+                  }
                 />
               </td>
             </tr>
@@ -954,12 +422,14 @@ const DiabeticChartForm = () => {
         <PopupTable
           columns={columns}
           data={data}
-          onSelect={handleSelect}
+          onSelect={(data) => handleSelect(data, selectedRowIndex)} // Pass the selected row index
           onClose={() => setActivePopup(null)}
         />
       )}
       <div className="diabetic-chart-form-buttons">
-        <button className="btn-blue" onClick={handleSubmit}>Save</button>
+        <button className="btn-blue" onClick={handleSubmit}>
+          Save
+        </button>
       </div>
     </>
   );

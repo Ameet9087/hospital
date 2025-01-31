@@ -13,11 +13,11 @@ const Utilitiesmain = () => {
       <Navbar />
       <div className="app-container">
         <Routes>
-          <Route path="/schemerefundlist" element={<SchemeRefundList />} />
-          <Route path="/changevisitscheme" element={<Change_Visitscheme />} />
-          <Route path="/changebillingcounter" element={<CounterInfo />} />
+          <Route path="schemerefundlist" element={<SchemeRefundList />} />
+          <Route path="changevisitscheme" element={<Change_Visitscheme />} />
+          <Route path="changebillingcounter" element={<CounterInfo />} />
           <Route
-            path="/organizationdeposit"
+            path="organizationdeposit"
             element={<OrganizationDeposit />}
           />
         </Routes>

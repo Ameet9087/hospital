@@ -1,11 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./GoodsReceiptForm.css";
-import AddSupplierForm from "./AddSupplierForm";
-import AddGRItemForm from "./AddGRItemForm";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
-import CustomModal from "../../CustomModel/CustomModal";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import PopupTable from "../Admission/PopupTable";
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -74,7 +70,7 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
     </div>
   );
 };
-const GoodsReceiptForm = ({ receivedPO }) => {
+const GoodsReceiptForm = ({ receivedPO, onClose }) => {
   console.log(receivedPO);
 
   const [columnWidths, setColumnWidths] = useState({});
@@ -102,6 +98,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
   const [availableGenerics, setAvailableGenerics] = useState([]);
   const [items, setItems] = useState([
     {
+
       genericName: "",
       itemName: "",
       batchNo: "",
@@ -119,22 +116,25 @@ const GoodsReceiptForm = ({ receivedPO }) => {
       discountAmount: "", // Added field for Discount Amt
       vatPercentage: "",
       vatAmount: "", // Added field for VAT Amt
-      totalAmount: ""
+      totalAmount: "",
     },
   ]);
 
   useEffect(() => {
     if (receivedPO) {
-      setSelectedSupplierId(receivedPO.supplierDTO.suppliersId)
+      setSelectedSupplierId(receivedPO.supplierDTO.suppliersId);
       setSupplierName(receivedPO.supplierDTO.supplierName || "");
       setInvoiceNumber(receivedPO.poId || "");
-      setPaymentMode("");  // Add logic to set paymentMode if necessary
+      setPaymentMode(""); // Add logic to set paymentMode if necessary
       setCreditPeriod(receivedPO.supplierDTO.creditPeriod || "");
       setRemarks(""); // Set remarks based on receivedPo if needed
 
       // You can set the items state as well based on the receivedPo's purchaseOrderItemDTOs
-      if (receivedPO.purchaseOrderItemDTOs && receivedPO.purchaseOrderItemDTOs.length > 0) {
-        const itemsData = receivedPO.purchaseOrderItemDTOs.map(item => ({
+      if (
+        receivedPO.purchaseOrderItemDTOs &&
+        receivedPO.purchaseOrderItemDTOs.length > 0
+      ) {
+        const itemsData = receivedPO.purchaseOrderItemDTOs.map((item) => ({
           addItemId: item.pharmacyItemMasterDTO.pharmacyItemMasterId,
           itemName: item.pharmacyItemMasterDTO.itemName,
           batchNo: "",
@@ -196,9 +196,13 @@ const GoodsReceiptForm = ({ receivedPO }) => {
     const freeQuantity = parseFloat(updatedItems[index].freeQuantity || 0);
     const rate = parseFloat(updatedItems[index].rate || 0);
     const margin = parseFloat(updatedItems[index].margin || 0);
-    const discountPercentage = parseFloat(updatedItems[index].discountPercentage || 0);
+    const discountPercentage = parseFloat(
+      updatedItems[index].discountPercentage || 0
+    );
     const vatPercentage = parseFloat(updatedItems[index].vatPercentage || 0);
-    const ccChargePercentage = parseFloat(updatedItems[index].ccChargePercentage || 0);
+    const ccChargePercentage = parseFloat(
+      updatedItems[index].ccChargePercentage || 0
+    );
 
     // Calculate totalQuantity
     updatedItems[index].totalQuantity = quantity + freeQuantity;
@@ -227,8 +231,6 @@ const GoodsReceiptForm = ({ receivedPO }) => {
     setItems(updatedItems);
   };
 
-
-
   const handleAddItem = () => {
     setItems([
       ...items,
@@ -250,17 +252,16 @@ const GoodsReceiptForm = ({ receivedPO }) => {
         discountAmount: "", // Added field for Discount Amt
         vatPercentage: "",
         vatAmount: "", // Added field for VAT Amt
-        totalAmount: ""
+        totalAmount: "",
       },
     ]);
   };
-
-
-  // Function to remove the last added row
   const handleCancelRow = () => {
-    setItems(items.slice(0, -1)); // Remove the last item in the array
+    if (items.length > 1) {
+      setItems(items.slice(0, -1));
+    }
   };
-  
+
   useEffect(() => {
     recalculateTotals(); // Recalculate totals whenever items change
   }, [items]);
@@ -273,7 +274,6 @@ const GoodsReceiptForm = ({ receivedPO }) => {
     let ccCharge = 0;
     let totalAmount = 0;
     console.log(items);
-
 
     items.forEach((item) => {
       const rate = parseFloat(item.rate || 0);
@@ -291,8 +291,6 @@ const GoodsReceiptForm = ({ receivedPO }) => {
 
       console.log(itemTotal);
       console.log(itemDiscount);
-
-
 
       subTotal += itemTotal;
       discountAmount += itemDiscount;
@@ -356,8 +354,8 @@ const GoodsReceiptForm = ({ receivedPO }) => {
     axios
       .post(`${API_BASE_URL}/good-receipts`, data)
       .then((response) => {
-        console.log("Good receipt added successfully:", response.data);
-        alert("Good receipt added successfully")
+        alert("Good receipt added successfully");
+        onClose();
       })
       .catch((error) => {
         console.error(
@@ -367,11 +365,10 @@ const GoodsReceiptForm = ({ receivedPO }) => {
       });
   };
 
-
   const handleSelect = (data) => {
     if (activePopup === "supplier") {
-      setSelectedSupplierId(data.suppliersId)
-      setSupplierName(data.supplierName)
+      setSelectedSupplierId(data.suppliersId);
+      setSupplierName(data.supplierName);
     }
   };
 
@@ -471,10 +468,11 @@ const GoodsReceiptForm = ({ receivedPO }) => {
           </div>
         </div>
 
-        <table ref={tableRef}>
+        <table ref={tableRef} className="goodReceipt-table">
           <thead>
             <tr>
               {[
+                "",
                 "Generic Name",
                 "Item Name",
                 "Batch No",
@@ -494,10 +492,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 "VAT Amt",
                 "Total Amount",
               ].map((header, index) => (
-                <th
-                  key={index}
-                  className="resizable-th"
-                >
+                <th key={index} className="resizable-th">
                   <div className="header-content">
                     <span>{header}</span>
                   </div>
@@ -508,6 +503,22 @@ const GoodsReceiptForm = ({ receivedPO }) => {
           <tbody>
             {items.map((item, index) => (
               <tr key={index} className="item-row">
+                <td><div className="GoodsReceiptForm-btn">
+                  <button
+                    type="button"
+                    onClick={handleAddItem}
+                    className="GoodsReceiptForm-add-item-button"
+                  >
+                    +
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleCancelRow}
+                    className="GoodsReceiptForm-del-item-button"
+                  >
+                    x
+                  </button>
+                </div></td>
                 <td>
                   <select
                     value={item.category}
@@ -613,21 +624,15 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-
                     value={item.margin}
                     onChange={(e) =>
-                      handleItemChange(
-                        index,
-                        "margin",
-                        e.target.value
-                      )
+                      handleItemChange(index, "margin", e.target.value)
                     }
                   />
                 </td>
                 <td>
                   <input
                     type="number"
-
                     value={item.ccChargePercentage}
                     onChange={(e) =>
                       handleItemChange(
@@ -641,7 +646,6 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-
                     value={item.ccAmount}
                     onChange={(e) =>
                       handleItemChange(index, "ccAmount", e.target.value)
@@ -651,7 +655,6 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-
                     value={item.subTotal}
                     onChange={(e) =>
                       handleItemChange(index, "subTotal", e.target.value)
@@ -661,7 +664,6 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-
                     value={item.discountPercentage}
                     onChange={(e) =>
                       handleItemChange(
@@ -675,21 +677,15 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-
                     value={item.discountAmount}
                     onChange={(e) =>
-                      handleItemChange(
-                        index,
-                        "discountAmount",
-                        e.target.value
-                      )
+                      handleItemChange(index, "discountAmount", e.target.value)
                     }
                   />
                 </td>
                 <td>
                   <input
                     type="number"
-
                     value={item.vatPercentage}
                     onChange={(e) =>
                       handleItemChange(index, "vatPercentage", e.target.value)
@@ -699,7 +695,6 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-
                     value={item.vatAmount}
                     onChange={(e) =>
                       handleItemChange(index, "vatAmount", e.target.value)
@@ -709,7 +704,6 @@ const GoodsReceiptForm = ({ receivedPO }) => {
                 <td>
                   <input
                     type="number"
-
                     value={item.totalAmount}
                     onChange={(e) =>
                       handleItemChange(index, "totalAmount", e.target.value)
@@ -720,22 +714,6 @@ const GoodsReceiptForm = ({ receivedPO }) => {
             ))}
           </tbody>
         </table>
-        <div className="GoodsReceiptForm-btn-grid">
-          <button
-            type="button"
-            onClick={handleAddItem}
-            className="GoodsReceiptSettings-add-item-button"
-          >
-            Add New Row
-          </button>
-          <button
-            type="button"
-            onClick={handleCancelRow}
-            className="GoodsReceiptSettings-add-item-button"
-          >
-            Cancel Row
-          </button>
-        </div>
         <div className="GoodsReceiptForm-section">
           <div className="GoodsReceiptForm-grid">
             <FloatingInput
@@ -809,7 +787,7 @@ const GoodsReceiptForm = ({ receivedPO }) => {
           </button>
         </div>
         {/* </div> */}
-      </form>
+      </form >
       {/* {isAddGRItemFormOpen && (
         <CustomModal
           title="Add GR Item"
@@ -831,15 +809,17 @@ const GoodsReceiptForm = ({ receivedPO }) => {
           <AddSupplierForm onClose={() => setIsAddSupplierModalOpen(false)} />
         </CustomModal>
       )} */}
-      {activePopup && (
-        <PopupTable
-          columns={columns}
-          data={data}
-          onSelect={handleSelect}
-          onClose={() => setActivePopup(null)}
-        />
-      )}
-    </div>
+      {
+        activePopup && (
+          <PopupTable
+            columns={columns}
+            data={data}
+            onSelect={handleSelect}
+            onClose={() => setActivePopup(null)}
+          />
+        )
+      }
+    </div >
   );
 };
 export default GoodsReceiptForm;

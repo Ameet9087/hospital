@@ -829,12 +829,12 @@ const MaternityRegisterPopUp = ({ patientData, onClose }) => {
         <button className="MaternityRegisterPopUp-add-btn" onClick={saveData}>
           Save
         </button>
-        <button className="MaternityRegisterPopUp-add-btn" onClick={""}>
+        {/* <button className="MaternityRegisterPopUp-add-btn" onClick={""}>
           Print
         </button>
         <button className="MaternityRegisterPopUp-close-btn" onClick={onClose}>
           Close
-        </button>
+        </button> */}
       </div>
     </div>
   );
