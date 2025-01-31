@@ -164,7 +164,7 @@ const EmployeeHeader = () => {
                   location.pathname === "/settings/dicountathority" ? "active" : ""
                 }
               >
-                Discount Athority
+                Discount Authority
               </NavLink>
             </li>
 
@@ -267,7 +267,7 @@ const EmployeeHeader = () => {
                     : ""
                 }
               >
-                Create Discount Athority
+                Create Discount Authority
               </NavLink>
             </li>
           </ul>

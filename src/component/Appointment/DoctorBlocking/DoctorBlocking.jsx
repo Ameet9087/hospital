@@ -66,6 +66,27 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
   };
 
   const handleSubmit = async () => {
+
+    const today = new Date().toISOString().split("T")[0];
+
+    // Validate required fields
+    if (!formData.formDate || !formData.toDate || !selectedDoctor?.doctorId) {
+      alert("Please fill all required fields.");
+      return;
+    }
+  
+    // Validate that 'From Date' is not in the past
+    if (formData.formDate < today) {
+      alert("From Date cannot be in the past.");
+      return;
+    }
+  
+    // Validate that 'To Date' is not before 'From Date'
+    if (formData.toDate < formData.formDate) {
+      alert("To Date cannot be earlier than From Date.");
+      return;
+    }
+
     // Prepare the payload
     const payload = {
       fromDate: formData.formDate,
@@ -119,7 +140,8 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
           name="formDate"
           value={formData.formDate}
           onChange={handleChange}
-        />
+          min={new Date().toISOString().split("T")[0]} // Disable past dates
+/>
       </div>
       <div className="doctor-blocking-field">
         <label>To Date:</label>
@@ -128,7 +150,8 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
           name="toDate"
           value={formData.toDate}
           onChange={handleChange}
-        />
+          min={formData.formDate || new Date().toISOString().split("T")[0]} // Ensure To Date is after From Date
+/>
       </div>
       <div className="doctor-blocking-field">
         <label>Doctor:</label>
@@ -139,6 +162,7 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
             placeholder="Search Doctor"
             value={formData.doctor || ""}
             onChange={handleChange}
+            
           />
           <i
             onClick={() => setActivePopup("doctor")}
