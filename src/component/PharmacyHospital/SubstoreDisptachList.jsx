@@ -28,8 +28,37 @@ const SubstoreDisptachList = () => {
 
   // Function to trigger print
   const handlePrint = () => {
-    window.print(); // Trigger the browser print dialog
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
+  
 
   // Function to open modal with requisition details
   const openModal = (requisition) => {
@@ -149,7 +178,7 @@ const SubstoreDisptachList = () => {
                   <td>{item.status}</td>
                   <td>{item.remarks || "N/A"}</td>
                   <td>
-                    <button onClick={() => handleViewClick(item)}>
+                    <button className="setting-terms-add-terms-btn" onClick={() => handleViewClick(item)}>
                       View item
                     </button>
                   </td>
@@ -270,14 +299,14 @@ const SubstoreDisptachList = () => {
             <div className="dispensarystockreq-modal-footer">
               <button
                 type="button"
-                className="dispensarystockreq-modal-btn"
+                className="setting-terms-add-terms-btn"
                 onClick={closeModal}
               >
                 Close
               </button>
               <button
                 type="button"
-                className="dispensarystockreq-modal-btn"
+                className="setting-terms-add-terms-btn"
                 onClick={handleSave}
               >
                 Save
