@@ -11,6 +11,14 @@ function IpDoctorMainPage() {
   const [selectedIpAdmission, setSelectedIpAdmission] = useState([]);
   const [isPatientOPEN, setIsPatientOPEN] = useState(false);
 
+  const [isSearchVisible, setIsSearchVisible] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const [filteredAdmittedPatient, setFilteredAdmittedpatient] = useState([]);
+  const [filteredConsultantPatient, setFilteredConsultantPatient] = useState(
+    []
+  );
+
   const fetchAllAdmittedPatient = async (id = 0) => {
     let response;
     if (id > 0) {
@@ -21,6 +29,7 @@ function IpDoctorMainPage() {
       response = await axios.get(`${API_BASE_URL}/ip-admissions/admitted`);
     }
     setAdmittedPatient(response.data);
+    setFilteredAdmittedpatient(response.data);
   };
 
   const fetchAllConsultantAdmittedPatient = async (id = 0) => {
@@ -33,6 +42,7 @@ function IpDoctorMainPage() {
       response = await axios.get(`${API_BASE_URL}/ip-admissions/admitted`);
     }
     setCoConsultant(response.data);
+    setFilteredConsultantPatient(response.data);
   };
 
   useEffect(() => {
@@ -45,6 +55,49 @@ function IpDoctorMainPage() {
     setSelectedPatient(patient);
     setSelectedIpAdmission(data);
     setIsPatientOPEN(true);
+  };
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+
+    if (!query) {
+      setFilteredAdmittedpatient(admittedPatient);
+      setFilteredConsultantPatient(coConsultantPatient);
+      return;
+    }
+
+    const lowerQuery = query.toLowerCase();
+    if (isSearchVisible === "admittedPatient") {
+      const admitPatient = admittedPatient.filter((item) => {
+        return (
+          item.patient.patient?.firstName.toLowerCase().includes(lowerQuery) ||
+          item.patient.patient?.lastName.toLowerCase().includes(lowerQuery) ||
+          item.admissionUnderDoctorDetails?.consultantDoctor
+            ?.toLowerCase()
+            .includes(lowerQuery) ||
+          item.patient.patient?.uhid.toLowerCase().includes(lowerQuery) ||
+          item.patient.patient?.age.toString().includes(lowerQuery) ||
+          item.patient.patient?.gender.toLowerCase().includes(lowerQuery) ||
+          item?.admissionDate?.toLowerCase().includes(lowerQuery)
+        );
+      });
+      setFilteredAdmittedpatient(admitPatient);
+    } else if (isSearchVisible === "consultant") {
+      const coConsultantPatient = coConsultantPatient.filter((item) => {
+        return (
+          item.patient?.firstName.toLowerCase().includes(lowerQuery) ||
+          item.patient?.lastName.toLowerCase().includes(lowerQuery) ||
+          item.admissionUnderDoctorDetail.consultantDoctor?.doctorName
+            .toLowerCase()
+            .includes(lowerQuery) ||
+          item.patient?.uhid.toLowerCase().includes(lowerQuery) ||
+          item.patient?.age.toString().includes(lowerQuery) ||
+          item.patient?.gender.toLowerCase().includes(lowerQuery) ||
+          item?.admissionDate?.toLowerCase().includes(lowerQuery)
+        );
+      });
+      setFilteredConsultantPatient(coConsultantPatient);
+    }
   };
 
   return (
@@ -61,10 +114,26 @@ function IpDoctorMainPage() {
           <div className="doctorMainPage-subcontainer">
             <div className="doctorMainPage-header">
               <h1>Admitted Patient Under Me</h1>
+              <div>
+                {isSearchVisible === "admittedPatient" && (
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    placeholder="search"
+                    onChange={(e) => handleSearch(e.target.value)}
+                    className="doctorMainPage-search-input"
+                  />
+                )}
+                <i
+                  onClick={() => setIsSearchVisible("admittedPatient")}
+                  style={{ cursor: "pointer", marginLeft: "10px" }}
+                  className="fa-solid fa-magnifying-glass"
+                ></i>
+              </div>
             </div>
             <div className="doctorMainPage-boxes">
-              {admittedPatient.length > 0 ? (
-                admittedPatient.map((item) => (
+              {filteredAdmittedPatient.length > 0 ? (
+                filteredAdmittedPatient.map((item) => (
                   <div
                     onClick={() => handleSelectPatient(item)}
                     className="doctorMainPage-box"
@@ -150,11 +219,27 @@ function IpDoctorMainPage() {
           </div>
           <div className="doctorMainPage-subcontainer">
             <div className="doctorMainPage-header">
-              <h1>Admitted Patient Under Co-Consultant</h1>
+              <h1>Patient Under Co-Consultant</h1>
+              <div>
+                {isSearchVisible === "consultant" && (
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    placeholder="search"
+                    onChange={(e) => handleSearch(e.target.value)}
+                    className="doctorMainPage-search-input"
+                  />
+                )}
+                <i
+                  onClick={() => setIsSearchVisible("consultant")}
+                  style={{ cursor: "pointer", marginLeft: "10px" }}
+                  className="fa-solid fa-magnifying-glass"
+                ></i>
+              </div>
             </div>
             <div className="doctorMainPage-boxes">
-              {coConsultantPatient.length > 0 ? (
-                coConsultantPatient.map((item) => (
+              {filteredConsultantPatient.length > 0 ? (
+                filteredConsultantPatient.map((item) => (
                   <div
                     onClick={() => handleSelectPatient(item)}
                     className="doctorMainPage-box"

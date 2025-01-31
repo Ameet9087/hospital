@@ -121,7 +121,7 @@ function wardNurseDashboard() {
           item.patient.patient?.uhid.toLowerCase().includes(lowerQuery) ||
           item.patient.patient?.age.toString().includes(lowerQuery) ||
           item.patient.patient?.gender.toLowerCase().includes(lowerQuery) ||
-          item.admissionDate.toLowerCase().includes(lowerQuery)
+          item?.admissionDate.toLowerCase().includes(lowerQuery)
         );
       });
       setFilteredAdmittedPatients(filteredPatients);

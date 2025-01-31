@@ -164,9 +164,9 @@ function AdmissionDeskHomePage() {
           item.outPatient.patient?.uhid.toLowerCase().includes(lowerQuery) ||
           item.outPatient.patient?.age.toString().includes(lowerQuery) ||
           item.outPatient.patient?.gender.toLowerCase().includes(lowerQuery) ||
-          item.requestStatus.toLowerCase().includes(lowerQuery) ||
-          item.admissionDate.toLowerCase().includes(lowerQuery) ||
-          item.admissionTime.toLowerCase().includes(lowerQuery)
+          item?.requestStatus.toLowerCase().includes(lowerQuery) ||
+          item?.admissionDate.toLowerCase().includes(lowerQuery) ||
+          item?.admissionTime.toLowerCase().includes(lowerQuery)
         );
       });
       setFilteredAdmissionRequests(filteredAdmissions);
