@@ -142,7 +142,7 @@ const Requisition = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
-                  <button className="requisition-inventory-search-bar-button" onClick={handleSearch}>🔍</button>
+                  {/* <button className="requisition-inventory-search-bar-button" onClick={handleSearch}>🔍</button> */}
                 </div>
                 <div className="requisition-inventory-results">
                   <span className="requisition-inventory-results-span">Showing {filteredData?.length} results</span>

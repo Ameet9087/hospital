@@ -24,14 +24,14 @@ const AmbulanceNavbar = () => {
             Ambulance List
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link 
             to="/transport/ambulance/dispatch" 
             className={`ambulance-header-button ${location.pathname === '/dispatch' ? 'active' : ''}`}
           >
             Dispatch Ambulance
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link 
             to="/transport/ambulance/gps-map" 

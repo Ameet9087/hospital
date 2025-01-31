@@ -7,6 +7,7 @@ import ReceptionClearance from "./ReceptionClearance/ReceptionClearance";
 import DischargeClearance from "./DischargeClearance/DischargeClearance";
 import CustomModal from "../CustomModel/CustomModal";
 import BlockIPEntries from "./IpBlock/BlockIpEntries";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 function AdmissionDeskHomePage() {
   const [admissionRequest, setAdmissionRequest] = useState([]);
@@ -18,47 +19,61 @@ function AdmissionDeskHomePage() {
   const [dischargeClearaceRequest, setDischargeClearanceRequest] = useState([]);
   const [activeState, setActiveState] = useState("");
   const [selectedPatient, setSelectedPatient] = useState();
+  const [isSearchVisible, setIsSearchVisible] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const [filteredAdmissionRequests, setFilteredAdmissionRequests] = useState(
+    []
+  );
+  const [filteredAdmittedPatients, setFilteredAdmittedPatients] = useState([]);
+  const [filteredTransferPatient, setFilteredTransferPatient] = useState([]);
+  const [filteredReceptionClearance, setFilteredReceptionClearance] = useState(
+    []
+  );
+  const [filteredDischargeClearance, setFilteredDischargeClearance] = useState(
+    []
+  );
+  const [filteredIpBlockClearance, setFilteredIpBlockClearance] = useState([]);
 
   const navigate = useNavigate();
 
   const fetchAdmissionRequest = async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/admissionsSlip`);
-      const pendingRequests = response.data.filter(request => request.requestStatus.toLowerCase() === "pending");
-      console.log(pendingRequests);
-      setAdmissionRequest(pendingRequests);
-    } catch (error) {
-      console.error("Error fetching admission requests:", error);
-    }
+    const response = await axios.get(`${API_BASE_URL}/admissionsSlip`);
+    setAdmissionRequest(response.data);
+    setFilteredAdmissionRequests(response.data);
   };
-
 
   const fetchAdmittedPatient = async () => {
     const response = await axios.get(`${API_BASE_URL}/ip-admissions/admitted`);
-    console.log(response.data);
+    setFilteredAdmittedPatients(response.data);
 
     setAdmittedpatient(response.data);
   };
 
   const fetchTransferRequest = async () => {
     const response = await axios.get(`${API_BASE_URL}/ward-request-change/all`);
-    console.log(response.data);
-
     setWardTransferRequest(response.data);
+    setFilteredTransferPatient(response.data);
   };
 
   const fetchIpBlockinRequest = async () => {
     const response = await axios.get(
       `${API_BASE_URL}/discharge-intimations/get-all-clearance`
     );
+    console.log(response.data);
+
     setIpBlockingRequest(response.data);
+    setFilteredIpBlockClearance(response.data);
   };
 
   const fetchDischargeClearance = async () => {
     const response = await axios.get(`${API_BASE_URL}/discharge-intimations`);
-    setDischargeClearanceRequest(response.data);
-  };
+    console.log(response.data);
 
+    setDischargeClearanceRequest(response.data);
+    setFilteredDischargeClearance(response.data);
+    setFilteredReceptionClearance(response.data);
+  };
   useEffect(() => {
     fetchAdmissionRequest();
     fetchAdmittedPatient();
@@ -122,16 +137,175 @@ function AdmissionDeskHomePage() {
     }
   };
 
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+
+    if (!query) {
+      setFilteredAdmissionRequests(admissionRequest);
+      setFilteredAdmittedPatients(admittedpatient);
+      setFilteredTransferPatient(wardTransferRequest);
+      setFilteredReceptionClearance(dischargeClearaceRequest);
+      setFilteredDischargeClearance(dischargeClearaceRequest);
+      setFilteredIpBlockClearance(ipBlockingRequest);
+      return;
+    }
+
+    const lowerQuery = query.toLowerCase();
+    if (isSearchVisible === "request") {
+      const filteredAdmissions = admissionRequest.filter((item) => {
+        return (
+          item.outPatient.patient?.firstName
+            .toLowerCase()
+            .includes(lowerQuery) ||
+          item.outPatient.patient?.lastName
+            .toLowerCase()
+            .includes(lowerQuery) ||
+          item.admittingDoctor?.doctorName.toLowerCase().includes(lowerQuery) ||
+          item.outPatient.patient?.uhid.toLowerCase().includes(lowerQuery) ||
+          item.outPatient.patient?.age.toString().includes(lowerQuery) ||
+          item.outPatient.patient?.gender.toLowerCase().includes(lowerQuery) ||
+          item.requestStatus.toLowerCase().includes(lowerQuery) ||
+          item.admissionDate.toLowerCase().includes(lowerQuery) ||
+          item.admissionTime.toLowerCase().includes(lowerQuery)
+        );
+      });
+      setFilteredAdmissionRequests(filteredAdmissions);
+    } else if (isSearchVisible === "admitted") {
+      const filteredPatients = admittedpatient.filter((item) => {
+        return (
+          item.patient.patient?.firstName.toLowerCase().includes(lowerQuery) ||
+          item.patient.patient?.lastName.toLowerCase().includes(lowerQuery) ||
+          item.admissionUnderDoctorDetail.consultantDoctor?.doctorName
+            .toLowerCase()
+            .includes(lowerQuery) ||
+          item.patient.patient?.uhid.toLowerCase().includes(lowerQuery) ||
+          item.patient.patient?.age.toString().includes(lowerQuery) ||
+          item.patient.patient?.gender.toLowerCase().includes(lowerQuery) ||
+          item.admissionDate.toLowerCase().includes(lowerQuery)
+        );
+      });
+      setFilteredAdmittedPatients(filteredPatients);
+    } else if (isSearchVisible === "transferRequest") {
+      const transferRequestPatient = wardTransferRequest.filter((item) => {
+        return (
+          item.ipAdmission.patient.patient?.firstName
+            .toLowerCase()
+            .includes(lowerQuery) ||
+          item.ipAdmission.patient.patient?.lastName
+            .toLowerCase()
+            .includes(lowerQuery) ||
+          item.ipAdmission.patient.patient?.uhid
+            .toLowerCase()
+            .includes(lowerQuery) ||
+          item.ipAdmission.patient.patient?.age
+            .toString()
+            .includes(lowerQuery) ||
+          item.ipAdmission.patient.patient?.gender
+            .toLowerCase()
+            .includes(lowerQuery) ||
+          item.ipAdmission.admissionDate.toLowerCase().includes(lowerQuery)
+        );
+      });
+      setFilteredTransferPatient(transferRequestPatient);
+    } else if (isSearchVisible === "receptionClearance") {
+      const receptionClerancePatient = dischargeClearaceRequest.filter(
+        (item) => {
+          return (
+            item.ipAdmissionDto.patient.patient?.firstName
+              .toLowerCase()
+              .includes(lowerQuery) ||
+            item.ipAdmissionDto.patient.patient?.lastName
+              .toLowerCase()
+              .includes(lowerQuery) ||
+            item.ipAdmissionDto.patient.patient?.uhid
+              .toLowerCase()
+              .includes(lowerQuery) ||
+            item.ipAdmissionDto.patient.patient?.age
+              .toString()
+              .includes(lowerQuery) ||
+            item.ipAdmissionDto.patient.patient?.gender
+              .toLowerCase()
+              .includes(lowerQuery) ||
+            item.ipAdmissionDto.admissionDate.toLowerCase().includes(lowerQuery)
+          );
+        }
+      );
+      setFilteredReceptionClearance(receptionClerancePatient);
+    } else if (isSearchVisible === "dischargeClearance") {
+      const dischargeClerancePatient = dischargeClearaceRequest.filter(
+        (item) => {
+          return (
+            item.ipAdmissionDto.patient.patient?.firstName
+              .toLowerCase()
+              .includes(lowerQuery) ||
+            item.ipAdmissionDto.patient.patient?.lastName
+              .toLowerCase()
+              .includes(lowerQuery) ||
+            item.ipAdmissionDto.patient.patient?.uhid
+              .toLowerCase()
+              .includes(lowerQuery) ||
+            item.ipAdmissionDto.patient.patient?.age
+              .toString()
+              .includes(lowerQuery) ||
+            item.ipAdmissionDto.patient.patient?.gender
+              .toLowerCase()
+              .includes(lowerQuery) ||
+            item.ipAdmissionDto.admissionDate.toLowerCase().includes(lowerQuery)
+          );
+        }
+      );
+      setFilteredDischargeClearance(dischargeClerancePatient);
+    } else if (isSearchVisible === "ipBlock") {
+      const ipBlockPatient = ipBlockingRequest.filter((item) => {
+        return (
+          item.ipAdmissionDto.patient.patient?.firstName
+            .toLowerCase()
+            .includes(lowerQuery) ||
+          item.ipAdmissionDto.patient.patient?.lastName
+            .toLowerCase()
+            .includes(lowerQuery) ||
+          item.ipAdmissionDto.patient.patient?.uhid
+            .toLowerCase()
+            .includes(lowerQuery) ||
+          item.ipAdmissionDto.patient.patient?.age
+            .toString()
+            .includes(lowerQuery) ||
+          item.ipAdmissionDto.patient.patient?.gender
+            .toLowerCase()
+            .includes(lowerQuery) ||
+          item.ipAdmissionDto.admissionDate.toLowerCase().includes(lowerQuery)
+        );
+      });
+      setFilteredIpBlockClearance(ipBlockPatient);
+    }
+  };
+
   return (
     <>
       <div className="admissionDeskHomePage-container">
         <div className="admissionDeskHomePage-subcontainer">
           <div className="admissionDeskHomePage-header">
             <h1>Admission Request</h1>
+            <div>
+              {isSearchVisible === "request" && (
+                <input
+                  type="text"
+                  value={searchQuery}
+                  placeholder="search"
+                  onChange={(e) => handleSearch(e.target.value)}
+                  className="admissionDeskHomePage-search-input"
+                />
+              )}
+              <i
+                onClick={() => setIsSearchVisible("request")}
+                style={{ cursor: "pointer", marginLeft: "10px" }}
+                className="fa-solid fa-magnifying-glass"
+              ></i>
+            </div>
           </div>
           <div className="admissionDeskHomePage-boxes">
-            {admissionRequest.length > 0 ? (
-              admissionRequest.map((item) => (
+            {filteredAdmissionRequests.length > 0 ? (
+              filteredAdmissionRequests.map((item) => (
                 <div
                   onClick={() => handleAdmitPatient(item)}
                   className="admissionDeskHomePage-box"
@@ -211,10 +385,26 @@ function AdmissionDeskHomePage() {
         <div className="admissionDeskHomePage-subcontainer">
           <div className="admissionDeskHomePage-header">
             <h1>Admitted Patients</h1>
+            <div>
+              {isSearchVisible === "admitted" && (
+                <input
+                  type="text"
+                  value={searchQuery}
+                  placeholder="search"
+                  onChange={(e) => handleSearch(e.target.value)}
+                  className="admissionDeskHomePage-search-input"
+                />
+              )}
+              <i
+                onClick={() => setIsSearchVisible("admitted")}
+                style={{ cursor: "pointer", marginLeft: "10px" }}
+                className="fa-solid fa-magnifying-glass"
+              ></i>
+            </div>
           </div>
           <div className="admissionDeskHomePage-boxes">
-            {admittedpatient.length > 0 ? (
-              admittedpatient.map((item) => (
+            {filteredAdmittedPatients.length > 0 ? (
+              filteredAdmittedPatients.map((item) => (
                 <div className="admissionDeskHomePage-box">
                   <div class="admissionDeskHomePage-patient-info">
                     <div class="admissionDeskHomePage-patient-data-img-con">
@@ -296,10 +486,26 @@ function AdmissionDeskHomePage() {
         <div className="admissionDeskHomePage-subcontainer">
           <div className="admissionDeskHomePage-header">
             <h1>Transfer Request</h1>
+            <div>
+              {isSearchVisible === "transferRequest" && (
+                <input
+                  type="text"
+                  value={searchQuery}
+                  placeholder="search"
+                  onChange={(e) => handleSearch(e.target.value)}
+                  className="admissionDeskHomePage-search-input"
+                />
+              )}
+              <i
+                onClick={() => setIsSearchVisible("transferRequest")}
+                style={{ cursor: "pointer", marginLeft: "10px" }}
+                className="fa-solid fa-magnifying-glass"
+              ></i>
+            </div>
           </div>
           <div className="admissionDeskHomePage-boxes">
-            {wardTransferRequest.length > 0 ? (
-              wardTransferRequest.map((item) => {
+            {filteredTransferPatient.length > 0 ? (
+              filteredTransferPatient.map((item) => {
                 const previousWard = item.previousWardRequestData
                   ? JSON.parse(item.previousWardRequestData)
                   : null;
@@ -408,10 +614,26 @@ function AdmissionDeskHomePage() {
         <div className="admissionDeskHomePage-subcontainer">
           <div className="admissionDeskHomePage-header">
             <h1>Reception Clearance</h1>
+            <div>
+              {isSearchVisible === "receptionClearance" && (
+                <input
+                  type="text"
+                  value={searchQuery}
+                  placeholder="search"
+                  onChange={(e) => handleSearch(e.target.value)}
+                  className="admissionDeskHomePage-search-input"
+                />
+              )}
+              <i
+                onClick={() => setIsSearchVisible("receptionClearance")}
+                style={{ cursor: "pointer", marginLeft: "10px" }}
+                className="fa-solid fa-magnifying-glass"
+              ></i>
+            </div>
           </div>
           <div className="admissionDeskHomePage-boxes">
-            {dischargeClearaceRequest.length > 0 ? (
-              dischargeClearaceRequest.map((item) => {
+            {filteredReceptionClearance.length > 0 ? (
+              filteredReceptionClearance.map((item) => {
                 const isToday =
                   new Date().toDateString() ===
                   new Date(item.disAdvisedDate).toDateString();
@@ -426,8 +648,9 @@ function AdmissionDeskHomePage() {
                         setActiveState("receptionClearance");
                       }
                     }}
-                    className={`admissionDeskHomePage-box ${isToday && isNotCleared ? "highlight-box" : ""
-                      } ${!isNotCleared ? "disabled-box" : ""}`}
+                    className={`admissionDeskHomePage-box ${
+                      isToday && isNotCleared ? "highlight-box" : ""
+                    } ${!isNotCleared ? "disabled-box" : ""}`}
                   >
                     <div className="admissionDeskHomePage-patient-info">
                       <div className="admissionDeskHomePage-patient-data-img-con">
@@ -515,10 +738,26 @@ function AdmissionDeskHomePage() {
         <div className="admissionDeskHomePage-subcontainer">
           <div className="admissionDeskHomePage-header">
             <h1>Discharge Clearance</h1>
+            <div>
+              {isSearchVisible === "dischargeClearance" && (
+                <input
+                  type="text"
+                  value={searchQuery}
+                  placeholder="search"
+                  onChange={(e) => handleSearch(e.target.value)}
+                  className="admissionDeskHomePage-search-input"
+                />
+              )}
+              <i
+                onClick={() => setIsSearchVisible("dischargeClearance")}
+                style={{ cursor: "pointer", marginLeft: "10px" }}
+                className="fa-solid fa-magnifying-glass"
+              ></i>
+            </div>
           </div>
           <div className="admissionDeskHomePage-boxes">
-            {dischargeClearaceRequest.length > 0 ? (
-              dischargeClearaceRequest.map((item) => {
+            {filteredDischargeClearance.length > 0 ? (
+              filteredDischargeClearance.map((item) => {
                 const isToday =
                   new Date().toDateString() ===
                   new Date(item.disAdvisedDate).toDateString();
@@ -533,8 +772,9 @@ function AdmissionDeskHomePage() {
                         setActiveState("dischargeClearance");
                       }
                     }}
-                    className={`admissionDeskHomePage-box ${isToday && isNotCleared ? "highlight-box" : ""
-                      } ${!isNotCleared ? "disabled-box" : ""}`}
+                    className={`admissionDeskHomePage-box ${
+                      isToday && isNotCleared ? "highlight-box" : ""
+                    } ${!isNotCleared ? "disabled-box" : ""}`}
                   >
                     <div className="admissionDeskHomePage-patient-info">
                       <div className="admissionDeskHomePage-patient-data-img-con">
@@ -622,10 +862,26 @@ function AdmissionDeskHomePage() {
         <div className="admissionDeskHomePage-subcontainer">
           <div className="admissionDeskHomePage-header">
             <h1>Ip Blocking Request</h1>
+            <div>
+              {isSearchVisible === "ipBlock" && (
+                <input
+                  type="text"
+                  value={searchQuery}
+                  placeholder="search"
+                  onChange={(e) => handleSearch(e.target.value)}
+                  className="admissionDeskHomePage-search-input"
+                />
+              )}
+              <i
+                onClick={() => setIsSearchVisible("ipBlock")}
+                style={{ cursor: "pointer", marginLeft: "10px" }}
+                className="fa-solid fa-magnifying-glass"
+              ></i>
+            </div>
           </div>
           <div className="admissionDeskHomePage-boxes">
-            {ipBlockingRequest.length > 0 ? (
-              ipBlockingRequest.map((item) => (
+            {filteredIpBlockClearance.length > 0 ? (
+              filteredIpBlockClearance.map((item) => (
                 <div
                   onClick={() => {
                     setSelectedPatient(item);
@@ -721,3 +977,4 @@ function AdmissionDeskHomePage() {
 }
 
 export default AdmissionDeskHomePage;
+

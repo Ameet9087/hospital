@@ -427,9 +427,9 @@ const PurchaseRequest = () => {
                   onChange={(e) => setDateTo(e.target.value)}
                 />
               </label>
-              <button className="purchase-request-star">☆</button>
+              {/* <button className="purchase-request-star">☆</button>
               <button className="purchase-request-minus">-</button>
-              <button className="purchase-request-ok">✓ OK</button>
+              <button className="purchase-request-ok">✓ OK</button> */}
             </div>
             <div className="purchase-request-search-bar">
               <input
@@ -438,12 +438,12 @@ const PurchaseRequest = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button
+              {/* <button
                 className="purchase-request-search-bar-button"
                 onClick={handleSearch}
               >
                 🔍
-              </button>
+              </button> */}
             </div>
           </div>
           <div className="purchase-request-purchase-results">

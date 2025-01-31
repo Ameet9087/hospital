@@ -5,8 +5,12 @@
 }
 .return-form-substore-date-range
 {
+    margin-top: 30px;
     width: 100%;
     display: flex;
+}
+.return-from-substore-container-left input{
+    padding: 5px;
 }
 .return-from-substore-container-left
 {
@@ -23,7 +27,8 @@
 }
 .return-from-substore-search-bar
 {
-    width: 100%;
+    /* width: 100%; */
+    margin: 10px;
     display: flex;
     justify-content: space-between;
 }

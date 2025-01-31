@@ -301,6 +301,7 @@ const LabReportResult = ({ reportData }) => {
                     <img
                       src={`data:image/jpeg;base64,${selectedSignatory?.signatureImage}`}
                       alt={`${selectedSignatory?.firstName} ${selectedSignatory?.lastName}`}
+                      style={{width:100,height:100}}
                     />
 
                     <p>

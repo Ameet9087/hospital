@@ -186,7 +186,7 @@ const VMAddNewVehicle = ({ onClose, editVehicle }) => {
             <div className="vMAddNewVehicle-form-group">
               <label>Driver Contact No.</label>
               <input
-                type="text"
+                type=""
                 name="driverContactNumber"
                 placeholder="Driver Contact No."
                 value={formData.driverContactNumber}

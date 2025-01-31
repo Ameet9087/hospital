@@ -25,9 +25,9 @@ const ReturnFromSubstore = () => {
         <div className='return-from-substore-container-left'>
         <label className='return-from-substore-label'>From: <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} /></label>
         <label className='return-from-substore-label'>To: <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} /></label>
-        <button className="requisition-inventory-star">☆</button> {/* Updated class name */}
-        <button className="requisition-inventory-minus">-</button> {/* Updated class name */}
-        <button className="requisition-inventory-ok">✓ OK</button> {/* Updated class name */}
+        {/* <button className="requisition-inventory-star">☆</button> 
+        <button className="requisition-inventory-minus">-</button> 
+        <button className="requisition-inventory-ok">✓ OK</button> */}
         </div>
         <div className="return-from-substore-container-right">
       <label >Substore:</label>
@@ -45,7 +45,7 @@ const ReturnFromSubstore = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button onClick={handleSearch}>🔍</button>
+        {/* <button onClick={handleSearch}>🔍</button> */}
         </div>
         <div className="return-from-substore-container-right"> {/* Updated class name */}
         <span className='requisition-inventory-results-span'>Showing 0 / 0 results</span>
