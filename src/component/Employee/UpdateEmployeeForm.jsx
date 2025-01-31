@@ -61,9 +61,6 @@ const UpdateEmployeeForm = ({ employee, onClose }) => {
         email: employee.emailId || "",
         signatureShort: employee.signatureShort || "",
         signatureLong: employee.signatureLong || "",
-        department: employee.departmentDTO?.departmentName || "",
-        role: employee.employeeRoleDTO?.role || "",
-        type: employee.employeeTypeDTO?.employeeType || "",
         dateOfJoining: employee.dateOfJoining || "",
         contactAddress: employee.contactAddress || "",
         kraPin: employee.kraPin || "",
@@ -98,7 +95,7 @@ const UpdateEmployeeForm = ({ employee, onClose }) => {
     }));
   };
 
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
