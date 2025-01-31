@@ -13,14 +13,14 @@ import EquipmentPart from "./Equipment Parts/EquipmentParts";
 
 const Masternav = () => {
   return (
-    <div className="masternav-container">
-      <nav className="masternav-navbar">
+    <div className="assettransactionnav-container">
+      <nav className="assettransactionnav-navbar">
         <ul>
           <li>
             <NavLink
               to="/fixedassests/assestmaster/assetCategoryMaster"
               className={({ isActive }) =>
-                isActive ? "masternav-button active" : "masternav-button"
+                isActive ? "assettransactionnav-button active" : "masternav-button"
               }
             >
               Asset Category Master
@@ -30,7 +30,7 @@ const Masternav = () => {
             <NavLink
               to="/fixedassests/assestmaster/assetLocationMaster"
               className={({ isActive }) =>
-                isActive ? "masternav-button active" : "masternav-button"
+                isActive ? "assettransactionnav-button active" : "masternav-button"
               }
             >
               Asset Location Master
@@ -40,7 +40,7 @@ const Masternav = () => {
             <NavLink
               to="/fixedassests/assestmaster/equipmentMaster"
               className={({ isActive }) =>
-                isActive ? "masternav-button active" : "masternav-button"
+                isActive ? "assettransactionnav-button active" : "masternav-button"
               }
             >
               Equipment Master
@@ -50,7 +50,7 @@ const Masternav = () => {
             <NavLink
               to="/fixedassests/assestmaster/insuranceEntryForm"
               className={({ isActive }) =>
-                isActive ? "masternav-button active" : "masternav-button"
+                isActive ? "assettransactionnav-button active" : "masternav-button"
               }
             >
               Insurance Entry Form
@@ -60,7 +60,7 @@ const Masternav = () => {
             <NavLink
               to="/fixedassests/assestmaster/condemnationReasonMaster"
               className={({ isActive }) =>
-                isActive ? "masternav-button active" : "masternav-button"
+                isActive ? "assettransactionnav-button active" : "masternav-button"
               }
             >
               Condemnation Reason Master
@@ -70,7 +70,7 @@ const Masternav = () => {
             <NavLink
               to="/fixedassests/assestmaster/maintenancechecklisttypemaster"
               className={({ isActive }) =>
-                isActive ? "masternav-button active" : "masternav-button"
+                isActive ? "assettransactionnav-button active" : "masternav-button"
               }
             >
               MaintenanceChecklist Type Master
@@ -80,7 +80,7 @@ const Masternav = () => {
             <NavLink
               to="/fixedassests/assestmaster/mainenancetypemaster"
               className={({ isActive }) =>
-                isActive ? "masternav-button active" : "masternav-button"
+                isActive ? "assettransactionnav-button active" : "masternav-button"
               }
             >
               MaintenanceType Master

@@ -16,8 +16,9 @@ const FloatingInput = ({ label, type = "text", ...props }) => {
   };
   return (
     <div
-      className={`er-initial-assessment-com-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
+      className={`er-initial-assessment-com-floating-field ${
+        isFocused || hasValue ? "active" : ""
+      }`}
     >
       <input
         type={type}
@@ -41,8 +42,9 @@ const FloatingSelect = ({ label, options = [], ...props }) => {
   const [hasValue, setHasValue] = useState(false);
   return (
     <div
-      className={`er-initial-assessment-com-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
+      className={`er-initial-assessment-com-floating-field ${
+        isFocused || hasValue ? "active" : ""
+      }`}
     >
       <select
         className="er-initial-assessment-com-floating-select"
@@ -54,7 +56,7 @@ const FloatingSelect = ({ label, options = [], ...props }) => {
         onChange={(e) => setHasValue(e.target.value !== "")}
         {...props}
       >
-        <option value="">{ }</option>
+        <option value="">{}</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -68,7 +70,6 @@ const FloatingSelect = ({ label, options = [], ...props }) => {
   );
 };
 const ErInitialAssessmentForm = () => {
-
   const navigate = useNavigate();
 
   const [patientType, setPatientType] = useState("old");
@@ -91,7 +92,14 @@ const ErInitialAssessmentForm = () => {
   const [activePopup, setActivePopup] = useState(null);
   const [selectedValue, setSelectedValue] = useState("");
   const [mrno, setmorno] = useState([]);
-  const mrHeading = ["uhid", "firstName", "lastName", "adharCardId"];
+  const mrHeading = [
+    "uhid",
+    "firstName",
+    "middleName",
+    "lastName",
+    "contactNumber",
+    "adharCardId",
+  ];
   const [doctor, setDoctor] = useState([]);
 
   const doctorHeading = ["doctorName"];
@@ -100,14 +108,16 @@ const ErInitialAssessmentForm = () => {
   const [selectedMrno, setSelectedMrno] = useState([]);
   const [totalScore, setTotalScore] = useState();
 
-  const handleBack = () => navigate('/emergency/finalizedpatients');
-
+  const handleBack = () => navigate("/emergency/finalizedpatients");
 
   const [formData, setFormData] = useState({
     erNumber: "",
     patientType: "",
     nameInitial: "",
-    patientName: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    contactNumber: "",
     dob: "",
     sex: "",
     relativeName: "",
@@ -123,21 +133,25 @@ const ErInitialAssessmentForm = () => {
     weight: "",
     attendingErphysician: "",
     patientComplaints: "",
-    vitalSigns: [{
-      hrScoreValue: hr || "",
-      rrvalue: rr || "",
-      bpSystolicScoreValue: bpSystolic || "",
-      bpDiastolic: "",
-      temperatureScoreValue: temp || "",
-      spo2ScoreValue: spo2 | "",
-      cbg: cbg || "",
-      gcs: "",
-      scoreTotalValue: totalScore || "",
-      triagePriority: "",
-    }],
-    addDoctor: [{
-      doctorId: "",
-    }],
+    vitalSigns: [
+      {
+        hrScoreValue: hr || "",
+        rrvalue: rr || "",
+        bpSystolicScoreValue: bpSystolic || "",
+        bpDiastolic: "",
+        temperatureScoreValue: temp || "",
+        spo2ScoreValue: spo2 | "",
+        cbg: cbg || "",
+        gcs: "",
+        scoreTotalValue: totalScore || "",
+        triagePriority: "",
+      },
+    ],
+    addDoctor: [
+      {
+        doctorId: "",
+      },
+    ],
   });
 
   React.useEffect(() => {
@@ -155,11 +169,10 @@ const ErInitialAssessmentForm = () => {
 
   const determineTriagePriority = (score) => {
     const updatedPriority = {
-      red: score >= 20,
-      orange: score >= 15 && score < 20,
+      red: score >= 18,
+      orange: score >= 15 && score < 18,
       yellow: score >= 10 && score < 15,
-      green: score >= 5 && score < 10,
-      black: score < 5,
+      green: score >= 0 && score < 10,
     };
     setTriagePriority(updatedPriority);
   };
@@ -199,9 +212,7 @@ const ErInitialAssessmentForm = () => {
 
   const fetchPatientDetails = async (mrNo) => {
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/patient-register/get-all`
-      );
+      const response = await fetch(`${API_BASE_URL}/patient-register/get-all`);
 
       if (!response.ok) {
         throw new Error(`Server error: ${response.statusText}`);
@@ -249,6 +260,7 @@ const ErInitialAssessmentForm = () => {
         columns: mrHeading,
         data: mrno.map((item) => ({
           firstName: item?.patient?.firstName || "",
+          middleName: item?.patient?.middleName || "",
           lastName: item?.patient?.lastName || "",
           uhid: item?.patient?.uhid || "",
           adharCardId: item?.patient?.adharCardId || "",
@@ -279,13 +291,16 @@ const ErInitialAssessmentForm = () => {
       setFormData((prevFormData) => ({
         ...prevFormData, // Spread previous formData to keep existing values
         mrNumber: patient.uhid,
-        patientName: patient.firstName + " " + patient.lastName,
-        dob: patient.age,
+        firstName: patient.firstName,
+        middleName: patient.middleName,
+        lastName: patient.lastName,
+        dob: patient.dob,
         sex: patient.gender,
+        nameInitial: patient.nameInitial,
         mobileNumber: patient.mobileNumber,
         salutation: patient.salutation,
         ipNumber: patient.inPatientId,
-        relativeName: patient.relationName,
+        relativeName: patient.relativeName,
         gender: patient.gender,
         contactNumber: patient.contactNumber,
         dateOfBirth: patient.dateOfBirth,
@@ -297,12 +312,9 @@ const ErInitialAssessmentForm = () => {
         addDoctor: [{ doctorId: patient.doctorId }],
         doctorName: patient.doctorName,
       }));
-
-
     }
     setActivePopup(null);
   };
-
 
   const prepareFormData = (formData) => {
     const updatedFormData = { ...formData };
@@ -324,7 +336,10 @@ const ErInitialAssessmentForm = () => {
       erNumber: formData.erNumber,
       patientType: formData.patientType,
       nameInitial: formData.nameInitial,
-      patientName: formData.patientName,
+      firstName: formData.firstName,
+      middleName: formData.middleName,
+      lastName: formData.lastName,
+      contactNumber: formData.contactNumber,
       dob: formData.dob,
       sex: formData.sex,
       relativeName: formData.relativeName,
@@ -340,11 +355,11 @@ const ErInitialAssessmentForm = () => {
       weight: formData.weight,
       attendingErphysician: formData.attendingErphysician,
       patientComplaints: formData.patientComplaints,
-      vitalSigns: formData.vitalSigns,  // Only include the fields you want to submit
-      addDoctor: formData.addDoctor,    // Only include the relevant doctor data
+      vitalSigns: formData.vitalSigns, // Only include the fields you want to submit
+      addDoctor: formData.addDoctor, // Only include the relevant doctor data
     };
 
-    console.log("Data to submit:", dataToSubmit);  // Log the data to ensure it's correct
+    console.log("Data to submit:", dataToSubmit); // Log the data to ensure it's correct
 
     try {
       const response = await fetch(
@@ -363,16 +378,17 @@ const ErInitialAssessmentForm = () => {
       if (response.ok) {
         let data;
         try {
-          data = JSON.parse(responseText);  // Try parsing the response as JSON
+          data = JSON.parse(responseText); // Try parsing the response as JSON
         } catch (e) {
-          data = { success: true, message: responseText };  // If not JSON, handle as plain text
+          data = { success: true, message: responseText }; // If not JSON, handle as plain text
         }
 
         if (data.success) {
           alert("Form submitted successfully!");
-          onClose();
         } else {
-          alert("Error submitting form: " + (data.message || "Please try again."));
+          alert(
+            "Error submitting form: " + (data.message || "Please try again.")
+          );
         }
       } else {
         throw new Error(`Server error: ${response.statusText}`);
@@ -382,8 +398,6 @@ const ErInitialAssessmentForm = () => {
       alert("Error submitting form. Please try again later.");
     }
   };
-
-
 
   // const handleSelect = (patient) => {
   //   console.log(patient);
@@ -404,7 +418,9 @@ const ErInitialAssessmentForm = () => {
   return (
     <>
       <div className="er-initial-assessment-com-container">
-        <div className="er-initial-assessment-com-section"><button onClick={handleBack}>Back</button></div>
+        <div className="er-initial-assessment-com-section">
+          <button onClick={handleBack}>Back</button>
+        </div>
 
         <div className="er-initial-assessment-com-section">
           <div className="er-initial-assessment-com-header">
@@ -417,13 +433,26 @@ const ErInitialAssessmentForm = () => {
               label="Patient Type"
               onChange={handlePatientTypeChange}
               options={[
-                { value: "old ", label: "OLD Patient" },
+                { value: "old", label: "OLD Patient" },
                 { value: "new", label: "New  Patient" },
               ]}
               value={formData.erNo}
             />
+            <FloatingInput
+              label=" Date"
+              type="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+            />
+            <FloatingInput
+              label="Mobile Number"
+              name="contactNumber"
+              onChange={handleChange}
+              value={formData.contactNumber}
+            />
           </div>
-          {formData.patientType === "new" && (
+          {formData.patientType != "new" && (
             <div className="er-initial-assessment-com-grid">
               <div className="er-initial-assessment-com-search-field">
                 <FloatingInput
@@ -446,25 +475,19 @@ const ErInitialAssessmentForm = () => {
               </div>
               <div className="er-initial-assessment-com-search-field">
                 <FloatingInput
-                  label="Mobile Number"
-                  name="contactNumber"
+                  label="IPNO"
+                  name="ipNo"
                   onChange={handleChange}
-                  value={formData.contactNumber}
+                  value={formData.ipNumber}
                 />
               </div>
-              <FloatingInput
-                label="IPNO"
-                name="ipNo"
-                onChange={handleChange}
-                value={formData.ipNumber}
-              />
             </div>
           )}
           <div className="er-initial-assessment-com-grid">
             <FloatingSelect
               label="Name Initial"
-              name="salutation"
-              value={formData.salutation}
+              name="nameInitial"
+              value={formData.nameInitial}
               onChange={handleChange}
               options={[
                 { value: "Mr", label: "Mr" },
@@ -472,21 +495,34 @@ const ErInitialAssessmentForm = () => {
               ]}
             />
             <FloatingInput
-              label="Patient Name"
-              name="patientName"
+              label="First Name"
+              name="firstName"
               onChange={handleChange}
-              value={formData.patientName}
+              value={formData.firstName}
+            />
+            <FloatingInput
+              label="Middle Name"
+              name="middleName"
+              onChange={handleChange}
+              value={formData.middleName}
+            />
+            <FloatingInput
+              label="Last Name"
+              name="lastName"
+              onChange={handleChange}
+              value={formData.lastName}
             />
             <FloatingInput
               label="DOB"
-              name="dateOfBirth"
-              value={formData.dateOfBirth}
+              name="dob"
+              type="date"
+              value={formData.dob}
               onChange={handleChange}
             />
             <FloatingSelect
               label="Gender"
-              name="Gender"
-              value={formData.gender}
+              name="sex"
+              value={formData.sex}
               onChange={handleChange}
               options={[
                 { value: "Male", label: "Male" },
@@ -496,17 +532,11 @@ const ErInitialAssessmentForm = () => {
             />
             <FloatingInput
               label="Relative Name"
-              name="contactName"
-              value={formData.contactName}
+              name="relativeName"
+              value={formData.relativeName}
               onChange={handleChange}
             />
-            <FloatingInput
-              label=" Date"
-              type="date"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
-            />
+
             <div className="er-initial-assessment-com-search-field">
               <FloatingInput
                 label="Attending ER Physician"
@@ -959,7 +989,7 @@ const ErInitialAssessmentForm = () => {
                     checked={triagePriority.red}
                     readOnly
                   />
-                  Red (≥ 20)
+                  Red (≥ 18)
                 </label>
                 <label>
                   <input
@@ -968,7 +998,7 @@ const ErInitialAssessmentForm = () => {
                     checked={triagePriority.orange}
                     readOnly
                   />
-                  Orange (15 - 19)
+                  Orange (15 - 17)
                 </label>
                 <label>
                   <input
@@ -987,15 +1017,6 @@ const ErInitialAssessmentForm = () => {
                     readOnly
                   />
                   Green (5 - 9)
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="levelOfConsciousness"
-                    checked={triagePriority.black}
-                    readOnly
-                  />
-                  Black ( 5)
                 </label>
               </div>
             </div>

@@ -52,7 +52,7 @@ function SSPRequisition() {
       // Map and prepare the updated data
       const updateData = item?.subPharmRequisitionItems?.map((subItem) => ({
         subPharmRequisitionItemId: subItem.subPharmRequisitionItemId,
-        dispatchQuantity: subItem.dispatchQty,
+        dispatchQuantity: subItem.dispatchQuantity,
       }));
 
       console.log('Update Data:', updateData); // Log the data for debugging
@@ -78,7 +78,7 @@ function SSPRequisition() {
       // Handle the API response
       if (response.ok) {
         const result = await response.json();
-        console.log('Item Received successful:', result);
+        alert('Item Received successful');
       } else {
         console.error('Error updating requisition:', response.statusText);
       }

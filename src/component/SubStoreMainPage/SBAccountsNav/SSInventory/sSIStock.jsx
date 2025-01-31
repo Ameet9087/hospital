@@ -82,14 +82,14 @@ function SSIStock() {
           <div className="sSIStock-content">
             {/* Stock content goes here */}
             <div className="sSIStock-filters">
-              <div className="sSIStock-filter">
+              {/* <div className="sSIStock-filter">
                 <label><i className="fa-solid fa-filter"></i> Filter by Store:</label>
                 <select>
                   <option value="">ALL</option>
                   <option value="GENERAL-INVENTORY">GENERAL-INVENTORY</option>
                 </select>
-              </div>
-              <div className="sSIStock-filter">
+              </div> */}
+              {/* <div className="sSIStock-filter">
                 <label><i className="fa-solid fa-filter"></i> Filter by SubCategory:</label>
                 <select>
                   <option value="">All</option>
@@ -100,11 +100,11 @@ function SSIStock() {
                   <option value="Labs">Labs</option>
                   <option value="Pharmacy">Pharmacy</option>
                 </select>
-              </div>
-              <div className="sSIStock-legend">
+              </div> */}
+              {/* <div className="sSIStock-legend">
                 <div><span className="sSIStock-dot sSIStock-red"></span> Zero Quantity</div>
                 <div><span className="sSIStock-dot sSIStock-gray"></span> Below MinStockQuantity</div>
-              </div>
+              </div> */}
             </div>
             <div className="sSIStock-search-N-result">
               <div className="sSIStock-search-bar">
@@ -112,7 +112,7 @@ function SSIStock() {
                 <input type="text" placeholder="Search" value={searchQuery} onChange={handleSearch} />
               </div>
               <div className="sSIStock-results-header">
-                <span>Showing {filteredRequisitions.length} / {filteredRequisitions.length} results</span>
+                <span>Showing {requisitions.length} / {requisitions.length} results</span>
                 <div>
                   <button className="sSIStock-btn-blue" onClick={exportTableToExcel}>
                     <i className="fa-solid fa-file-excel"></i> Export
@@ -120,9 +120,9 @@ function SSIStock() {
                   <button className="sSIStock-btn-blue" onClick={printTable}>
                     <i className="fa-solid fa-print"></i> Print
                   </button>
-                  <button className="sSIStock-btn-blue" onClick={toggleSortDirection}>
+                  {/* <button className="sSIStock-btn-blue" onClick={toggleSortDirection}>
                     Sort by Store ({sortDirection === 'asc' ? 'Asc' : 'Desc'})
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -145,7 +145,7 @@ function SSIStock() {
                       <td>{req?.item?.itemCode}</td>
                       <td>{req?.item?.subCategory?.subCategoryName}</td>
                       <td>{req?.item?.itemName}</td>
-                      <td>{req?.item?.unitOfMeasurement?.unitOfMeasurementName}</td>
+                      <td>{req?.item?.unitOfMeasurement?.name}</td>
                       <td>{req?.dispatchQuantity}</td>
                       <td>{req?.item?.subCategory?.subCategoryName}</td>
                       <td>{store}</td>

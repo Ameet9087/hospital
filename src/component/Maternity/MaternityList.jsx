@@ -33,10 +33,11 @@ const MaternityList = () => {
     fetch(`${API_BASE_URL}/patients/all`)
       .then((response) => response.json())
       .then((data) => {
+        console.log("Fetched Patient Data:prachi", data); // Log the fetched data
         setPatients(data);
         setFilteredPatients(data);
       })
-      .catch((error) => console.error('Error fetching patient data:', error));
+      .catch((error) => console.error("Error fetching patient data:", error));
   }, []);
 
   const handlePrint = () => {
@@ -191,18 +192,18 @@ const MaternityList = () => {
               {filteredPatients.length > 0 ? (
                 filteredPatients.map((patient) => (
                   <tr key={patient.id}>
-                    <td className="mater-name-col">
-                      {patient?.inPatientDTO?.firstName} {" "}
-                      {patient?.inPatientDTO?.lastName}
-                    </td>
+                 <td className="mater-name-col">
+                  {patient?.inPatientDTO?.patient?.firstName} {" "}
+                  {patient?.inPatientDTO?.patient?.lastName}
+                </td>
                     <td className="mater-age-col">
-                      {patient?.inPatientDTO?.age}/{patient?.inPatientDTO?.gender}
+                      {patient?.inPatientDTO?.patient?.age}/{patient?.inPatientDTO?.patient?.gender}
                     </td>
                     <td className="mater-address-col">
-                      {patient?.inPatientDTO?.addressDTO?.city}
+                      {patient?.inPatientDTO?.patient?.address}
                     </td>
                     <td className="mater-phone-col">
-                      {patient?.inPatientDTO?.phoneNumber}
+                      {patient?.inPatientDTO?.patient?.contactNumber}
                     </td>
                     <td className="mater-husband-col">{patient.husbandName}</td>
                     <td className="mater-h-col">{patient.patientHeight} cm</td>

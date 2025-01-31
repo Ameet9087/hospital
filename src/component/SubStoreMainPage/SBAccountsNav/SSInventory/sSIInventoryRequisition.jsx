@@ -12,7 +12,7 @@ import CustomModal from '../../../CustomModel/CustomModal';
 import SSIReceivedRequisition from './sSIReceivedRequisition';
 
 function SSIInventoryRequisition() {
-  const {store} = useParams();
+  const { store } = useParams();
   const printRef = useRef();
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [showViewRequisition, setShowViewRequisition] = useState(false);
@@ -20,10 +20,10 @@ function SSIInventoryRequisition() {
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
   const [statusFilter, setStatusFilter] = useState('Pending');
   const [storeFilter, setStoreFilter] = useState('');
-  const [selectedItem,setSelectedItem] = useState("");
-  const [showReceived,setShowReceived] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
+  const [showReceived, setShowReceived] = useState(false);
 
-  const [datas,setDatas]=useState([])
+  const [datas, setDatas] = useState([])
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/inventory-requisitions`)
@@ -38,7 +38,7 @@ function SSIInventoryRequisition() {
   useEffect(() => {
     const filtered = requisitions.filter(req => {
       return (statusFilter === 'all' || req.status === statusFilter) &&
-             (storeFilter === '' || req.storeName === storeFilter);
+        (storeFilter === '' || req.storeName === storeFilter);
     });
     setFilteredRequisitions(filtered);
   }, [statusFilter, storeFilter, requisitions]);
@@ -49,7 +49,7 @@ function SSIInventoryRequisition() {
 
   const handleViewClick = (req) => {
     console.log(req);
-    
+
     setDatas(req)
     setShowViewRequisition(true);
   };
@@ -58,7 +58,7 @@ function SSIInventoryRequisition() {
     setShowCreateRequisition(false);
     setShowViewRequisition(false);
   };
-  const handleReceived=(item)=>{
+  const handleReceived = (item) => {
     setSelectedItem(item);
     setShowReceived(true);
   }
@@ -75,18 +75,18 @@ function SSIInventoryRequisition() {
 
   return (
     <div className="sSIInventoryRequisition-active-imaging-request">
-      <CustomModal isOpen={showReceived} onClose={()=>setShowReceived(false)}>
-        <SSIReceivedRequisition selectedItem={selectedItem} onClose={()=>setShowReceived(false)}/>
+      <CustomModal isOpen={showReceived} onClose={() => setShowReceived(false)}>
+        <SSIReceivedRequisition selectedItem={selectedItem} onClose={() => setShowReceived(false)} />
       </CustomModal>
-    
-        <CustomModal isOpen={showCreateRequisition} onClose={closePopups}>
+
+      <CustomModal isOpen={showCreateRequisition} onClose={closePopups}>
         {/* <div className="sSIInventoryRequisition-popup-overlay">
           <div className="sSIInventoryRequisition-popup-content"> */}
-            <SSSIInvenReqCreateReq  />
-          {/* </div>
+        <SSSIInvenReqCreateReq />
+        {/* </div>
         </div> */}
-        </CustomModal>
-   
+      </CustomModal>
+
 
       {/* Popup for View Requisition */}
       {showViewRequisition && (
@@ -155,29 +155,29 @@ function SSIInventoryRequisition() {
           </label>
         </div>
 
-        <div className="sSIInventoryRequisition-filter">
+        {/* <div className="sSIInventoryRequisition-filter">
           <label><i className="fa-solid fa-filter"></i> Filter by Store:</label>
           <select onChange={(e) => setStoreFilter(e.target.value)}>
             <option value="">ALL</option>
             <option value="GENERAL-INVENTORY">GENERAL-INVENTORY</option>
           </select>
-        </div>
+        </div> */}
       </header>
       <div className="sSIInventoryRequisition-controls">
-      <div className="sSIInventoryRequisition-date-range">
-            <label>
-              From:
-              <input type="date" defaultValue="2024-08-09" />
-            </label>
-            <label>
-              To:
-              <input type="date" defaultValue="2024-08-16" />
-            </label>
-            <button className="sSIInventoryRequisition-star-button">☆</button>
+        {/* <div className="sSIInventoryRequisition-date-range">
+          <label>
+            From:
+            <input type="date" defaultValue="2024-08-09" />
+          </label>
+          <label>
+            To:
+            <input type="date" defaultValue="2024-08-16" />
+          </label>
+          <button className="sSIInventoryRequisition-star-button">☆</button>
           <button className="sSIInventoryRequisition-more-btn">-</button>
-            <button className="sSIInventoryRequisition-ok-button">OK</button>
-          </div>
-          </div>
+          <button className="sSIInventoryRequisition-ok-button">OK</button>
+        </div> */}
+      </div>
 
 
 
@@ -191,7 +191,7 @@ function SSIInventoryRequisition() {
           <button className='sSIInventoryRequisition-print-button' onClick={handlePrint}><i class="fa-solid fa-print"></i> Print</button>
         </div>
       </div>
-      
+
       <div className="sSIInventoryRequisition-table-N-paginat">
         <table>
           <thead>
@@ -208,14 +208,14 @@ function SSIInventoryRequisition() {
             {filteredRequisitions.map((req) => (
               <tr key={req.id}>
                 <td>{req.id}</td>
-                <td>{req.subStoreId}</td>
+                <td>GENERAL-INVENTORY</td>
                 <td>{req.requisitionDate}</td>
                 <td>{req.status}</td>
                 <td>{req.verifyOrNot}</td>
                 <td>
                   <div className='sSIInventoryRequisition-view-btn'>
-                    <button className='sSIInventoryRequisition-view' onClick={()=>handleViewClick(req)}>View</button>
-                    {req.status=="Dispatch" && (<button className='sSIInventoryRequisition-view' onClick={()=>handleReceived(req)}>Received</button>)}
+                    <button className='sSIInventoryRequisition-view' onClick={() => handleViewClick(req)}>View</button>
+                    {req.status == "Dispatch" && (<button className='sSIInventoryRequisition-view' onClick={() => handleReceived(req)}>Received</button>)}
                   </div>
                 </td>
               </tr>

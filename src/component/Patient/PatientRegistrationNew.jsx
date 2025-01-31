@@ -3,15 +3,79 @@ import "./PatientRegistrationNew.css";
 import { IoSearch } from "react-icons/io5";
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 import PopupTable from "../Nursing/NursingModule/Services/PopupTable";
-import { useLocation, useParams } from "react-router-dom";
-import { usePopup } from "../../FidgetSpinner/PopupContext";
+import Select from "react-select";
+
+
+
+
+
+
+
+const qualificationOptions = [
+  { value: "High School", label: "High School" },
+  { value: "Diploma", label: "Diploma" },
+  { value: "Bachelor's Degree", label: "Bachelor's Degree" },
+  { value: "Master's Degree", label: "Master's Degree" },
+  { value: "PhD", label: "PhD" },
+  { value: "MBBS", label: "MBBS" },
+  { value: "B.Tech", label: "B.Tech" },
+  { value: "M.Tech", label: "M.Tech" },
+  { value: "CA", label: "Chartered Accountant (CA)" },
+  { value: "Other", label: "Other" }
+];
+
+const occupations = [
+  { value: "Doctor", label: "Doctor" },
+  { value: "Engineer", label: "Engineer" },
+  { value: "Teacher", label: "Teacher" },
+  { value: "Gov Employee", label: "Gov Employee" },
+  { value: "Nurse", label: "Nurse" },
+  { value: "Police Officer", label: "Police Officer" },
+  { value: "Artist", label: "Artist" },
+  { value: "Entrepreneur", label: "Entrepreneur" },
+  { value: "Chef", label: "Chef" },
+];
+
+const cast = [
+  { value: "Brahmin", label: "Brahmin" },
+  { value: "Kshatriya", label: "Kshatriya" },
+  { value: "Vaishya", label: "Vaishya" },
+  { value: "Shudra", label: "Shudra" },
+  { value: "Scheduled Caste (SC)", label: "Scheduled Caste (SC)" },
+  { value: "Scheduled Tribe (ST)", label: "Scheduled Tribe (ST)" },
+  { value: "Other Backward Class (OBC)", label: "Other Backward Class (OBC)" },
+  { value: "General", label: "General" },
+  { value: "Muslim", label: "Muslim" },
+  { value: "Christian", label: "Christian" },
+  { value: "Sikh", label: "Sikh" },
+  { value: "Jain", label: "Jain" },
+  { value: "Buddhist", label: "Buddhist" },
+];
+
+const contactRelations = [
+  { value: "Father", label: "Father" },
+  { value: "Mother", label: "Mother" },
+  { value: "Brother", label: "Brother" },
+  { value: "Sister", label: "Sister" },
+  { value: "Spouse", label: "Spouse" },
+  { value: "Son", label: "Son" },
+  { value: "Daughter", label: "Daughter" },
+  { value: "Grandparent", label: "Grandparent" },
+  { value: "Uncle", label: "Uncle" },
+  { value: "Aunt", label: "Aunt" },
+  { value: "Guardian", label: "Guardian" },
+  { value: "Friend", label: "Friend" },
+  { value: "Other", label: "Other" },
+];
+
+
 
 const PatientRegistrationNew = ({ onClose }) => {
   const location = useLocation();
   const patient = location.state?.patient;
-  const { showPopup } = usePopup();
-
+  const erPatient = location.state?.receipt;
   const [formData, setFormData] = useState({
     salutation: patient?.salutation || "",
     firstName: patient?.firstName || "", // updated from fName
@@ -61,6 +125,8 @@ const PatientRegistrationNew = ({ onClose }) => {
     policyNumber: patient?.policyNumber || "",
     policyStartDate: patient?.policyStartDate || "",
     policyEndDate: patient?.policyEndDate || "",
+    isEmergency: patient?.isEmergency || "no",
+    erNo: patient?.erNo || "",
   });
   const [file, setFile] = useState();
   const [activePopup, setActivePopup] = useState(null);
@@ -80,6 +146,25 @@ const PatientRegistrationNew = ({ onClose }) => {
       emailId: "",
     },
   ]);
+
+  useEffect(() => {
+    if (erPatient) {
+      setFormData((prevData) => ({
+        ...prevData,
+        // erInitialAssessmentId: erPatient.erInitialAssessmentId || "",
+        salutation: erPatient.nameInitial || "",
+        firstName: erPatient.firstName || "",
+        middleName: erPatient.middleName || "",
+        lastName: erPatient.lastName || "",
+        contactNumber: erPatient.contactNumber || "",
+        dateOfBirth: erPatient.dob || "",
+        gender: erPatient.sex || "",
+        relationName: erPatient.relativeName || "",
+        isEmergency: "yes",
+        erNo: erPatient.erInitialAssessmentId || "",
+      }));
+    }
+  }, [erPatient]);
 
   const handleDoctorSelect = (selectedDoctorData) => {
     console.log(selectedDoctorData);
@@ -217,16 +302,11 @@ const PatientRegistrationNew = ({ onClose }) => {
         : `${API_BASE_URL}/patient-register/add`; // Save endpoint
       const method = patient?.patientRegistrationId ? "PUT" : "POST"; // Use PUT for updates, POST for save
 
-      // Send the request
       const response = await fetch(url, {
         method: method,
-        headers: patient?.patientRegistrationId
-          ? { "Content-Type": "application/json" } // Set for JSON
-          : {},
-        body: patient?.patientRegistrationId
-          ? formData // Send as JSON if patientRegistrationId is present
-          : dataToSend, // Send as FormData otherwise
+        body: dataToSend,
       });
+
 
       if (response.ok) {
         const result = await response.json();
@@ -236,10 +316,6 @@ const PatientRegistrationNew = ({ onClose }) => {
             : `Patient registered successfully with ID: ${result.uhid}`
         );
         setResult(result);
-        showPopup([
-          { url: "/adt/ipadmission", text: "Ip Admission" },
-          { url: "/appointment/doctorappointment", text: "Appointment" },
-        ]);
       } else {
         console.error(
           "Error submitting form:",
@@ -338,6 +414,23 @@ const PatientRegistrationNew = ({ onClose }) => {
     const newDoc = doctors.filter((_, i) => i !== index);
     setSelectedDoctors(newDoc);
   };
+
+
+
+  const handleQualificationChange = (selectedOption) => {
+    setFormData({ ...formData, qualification: selectedOption.value });
+  };
+  const handleOccupationChange = (selectedOptions) => {
+    setFormData({ ...formData, occupation: selectedOptions.value });
+  };
+  const handleCasteChange = (selectedOption) => {
+    setFormData({ ...formData, cast: selectedOption.value });
+  };
+
+  const handleContactRelationChange = (selectedOption) => {
+    setFormData({ ...formData, contactRelation: selectedOption.value });
+  };
+
   return (
     <div className="patient-registration-component-container">
       <div className="patient-registration-component-form">
@@ -349,7 +442,7 @@ const PatientRegistrationNew = ({ onClose }) => {
 
               <input
                 type="text"
-                name="erNo"
+                name="erNumber"
                 value={formData.erNo}
                 onChange={handleChange}
               />
@@ -561,30 +654,37 @@ const PatientRegistrationNew = ({ onClose }) => {
           <div className="patient-registration-component-form-group-1row">
             <div className="patient-registration-component-form-group">
               <label>Caste:</label>
-              <input
-                type="text"
-                name="cast"
-                value={formData.cast}
-                onChange={handleChange}
+              <Select
+                options={cast}
+                value={cast.find(c => c.value === formData.cast)}
+                onChange={handleCasteChange}
+                isSearchable
+                placeholder="Select caste..."
               />
+
             </div>
             <div className="patient-registration-component-form-group">
               <label>Occupation:</label>
-              <input
-                type="text"
-                name="occupation"
-                value={formData.occupation}
-                onChange={handleChange}
+              <Select
+                options={occupations}
+                value={occupations.find(o => o.value === formData.occupation)}
+                onChange={handleOccupationChange}
+                isSearchable
+                placeholder="Select "
               />
+
             </div>
             <div className="patient-registration-component-form-group">
               <label>Qualification:</label>
-              <input
-                type="text"
-                name="qualification"
-                value={formData.qualification}
-                onChange={handleChange}
+              <Select
+                className="selectQualification"
+                options={qualificationOptions}
+                value={qualificationOptions.find(q => q.value === formData.qualification)}
+                onChange={handleQualificationChange}
+                isSearchable
+                placeholder="Select"
               />
+
             </div>
           </div>
         </div>
@@ -711,7 +811,7 @@ const PatientRegistrationNew = ({ onClose }) => {
             <input
               type="tel"
               name="mobileNumber"
-              value={formData.mobileNumber}
+              value={formData.contactNumber}
               onChange={handleChange}
             />
           </div>
@@ -733,7 +833,7 @@ const PatientRegistrationNew = ({ onClose }) => {
               <span className="patient-registration-component-span">*</span>
             </label>
             <input
-              type="text"
+              type="email"
               name="emailId"
               value={formData.emailId}
               onChange={handleChange}
@@ -744,6 +844,7 @@ const PatientRegistrationNew = ({ onClose }) => {
             <input
               type="text"
               name="height"
+              placeholder="Feet"
               value={formData.height}
               onChange={handleChange}
             />
@@ -753,6 +854,7 @@ const PatientRegistrationNew = ({ onClose }) => {
             <input
               type="text"
               name="weight"
+              placeholder="Kg"
               value={formData.weight}
               onChange={handleChange}
             />
@@ -890,11 +992,12 @@ const PatientRegistrationNew = ({ onClose }) => {
           </div>
           <div className="patient-registration-component-form-group">
             <label>Contact Relation:</label>
-            <input
-              type="text"
-              name="contactRelation"
-              value={formData.contactRelation}
-              onChange={handleChange}
+            <Select
+              options={contactRelations}
+              value={contactRelations.find(c => c.value === formData.contactRelation)}
+              onChange={handleContactRelationChange}
+              isSearchable
+              placeholder="Select contact relation..."
             />
           </div>
         </div>
@@ -922,7 +1025,7 @@ const PatientRegistrationNew = ({ onClose }) => {
             <input
               type="text"
               name="contactNumber"
-              value={formData.contactNumber}
+              value={formData.mobileNumber}
               onChange={handleChange}
             />
           </div>
@@ -1104,11 +1207,11 @@ const PatientRegistrationNew = ({ onClose }) => {
                     />
                   </td>
                   <td>
-                    <textarea
+                    <input
                       type="text"
                       value={doctor.residenceAddress}
                       placeholder="Address"
-                      className="patient-registration-component-textarea"
+                      className="patient-registration-component"
                     />
                   </td>
                   <td>

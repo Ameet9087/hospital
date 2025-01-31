@@ -185,7 +185,7 @@ function SSPStoreTransfer() {
             genericName: item?.items?.itemMaster?.genericNames?.genericName || "N/A",
             batchNo: item?.items?.batchNo || "N/A",
             expiryDate: item?.items?.expiryDate || "N/A",
-            availableQuantity: item?.items?.itemQty || "N/A",
+            availableQuantity: item?.dispatchQuantity || "N/A",
             costprice: item?.items?.salePrice || "N/A",
           }))
           : [],
@@ -273,6 +273,7 @@ function SSPStoreTransfer() {
               <td>{row.availableQuantity}</td>
               <td>
                 <input
+                  className='NormalTransfer-returnQty'
                   type="number"
                   value={row.returnQuantity}
                   onChange={(e) => handleReturnQuantityChange(index, e.target.value)}

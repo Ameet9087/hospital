@@ -8,28 +8,26 @@ function Navbar() {
   return (
     <div className="patient-actions-container">
       <Link to="/patient/home">
-        <button
+        {/* <button
           className={`patient-action-button ${
             location.pathname === '/patient/home' ? 'active-btn' : ''
           }`}
         >
           <i className="fas fa-home"></i>
-        </button>
+        </button> */}
       </Link>
       <Link to="/patient/searchpatient">
         <button
-          className={`patient-action-button ${
-            location.pathname === '/patient/searchpatient' ? 'active-btn' : ''
-          }`}
+          className={`patient-action-button ${location.pathname === '/patient/searchpatient' ? 'active-btn' : ''
+            }`}
         >
           Search Patient
         </button>
       </Link>
       <Link to="/patient/registerpatient">
         <button
-          className={`patient-action-button ${
-            location.pathname === '/patient/registerpatient' ? 'active-btn' : ''
-          }`}
+          className={`patient-action-button ${location.pathname === '/patient/registerpatient' ? 'active-btn' : ''
+            }`}
         >
           Register Patient
         </button>

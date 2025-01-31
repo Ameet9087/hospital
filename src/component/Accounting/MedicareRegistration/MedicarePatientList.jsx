@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import "./medicarePatientList.css";
+import "./MedicarePatientList.css";
 import NewMemberPopup from "./NewMemberPopup";
 import NewDependentPopup from "./NewDependentPopup";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";

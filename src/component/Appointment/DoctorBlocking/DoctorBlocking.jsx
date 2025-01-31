@@ -7,7 +7,7 @@ import axios from "axios";
 
 const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
   console.log(selectedDoctorBlocking);
-  
+
   const [selectedDoctor, setSelectedDoctor] = useState(
     selectedDoctorBlocking?.addDoctorDTO || null
   );
@@ -75,18 +75,18 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
       return;
     }
   
+
     // Validate that 'From Date' is not in the past
     if (formData.formDate < today) {
       alert("From Date cannot be in the past.");
       return;
     }
-  
+
     // Validate that 'To Date' is not before 'From Date'
     if (formData.toDate < formData.formDate) {
       alert("To Date cannot be earlier than From Date.");
       return;
     }
-
     // Prepare the payload
     const payload = {
       fromDate: formData.formDate,
@@ -142,6 +142,7 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
           onChange={handleChange}
           min={new Date().toISOString().split("T")[0]} // Disable past dates
 />
+
       </div>
       <div className="doctor-blocking-field">
         <label>To Date:</label>
@@ -152,6 +153,7 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
           onChange={handleChange}
           min={formData.formDate || new Date().toISOString().split("T")[0]} // Ensure To Date is after From Date
 />
+
       </div>
       <div className="doctor-blocking-field">
         <label>Doctor:</label>

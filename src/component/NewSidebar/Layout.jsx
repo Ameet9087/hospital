@@ -54,6 +54,7 @@ import OtMain from "../OperationTheater/OtMain";
 
 import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
 import BillingRoute from "../Billings/Billing";
+import AccountComponent from "../Accounting/AccountingComponent";
 
 function Layout({ }) {
   return (
@@ -102,11 +103,12 @@ function Layout({ }) {
           <Route path="/queuemngmt/*" element={<PatientQueueRouting />} />
           <Route path="/substore/*" element={<SubstoreRouting />} />
           <Route path="/report/*" element={<ReportRoute />} />
-          <Route path="/hi/*" element={<MainVisitorFile />} />
+          <Route path="/visitormanagement/*" element={<MainVisitorFile />} />
           <Route path="/adt/*" element={<ADTRouting />} />
           <Route path="/maternity/*" element={<MaternityHeader />} />
           <Route path="/procurement/*" element={<Procurementmain />} />
           <Route path="/homehealthcare/*" element={<HomeHealthRoutes />} />
+          <Route path="/accounting/*" element={<AccountComponent />} />
           <Route
             path="/pediatric/inpatient/*"
             element={<PediatricInPatientNavbar />}
