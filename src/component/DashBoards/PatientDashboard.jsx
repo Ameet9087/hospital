@@ -1905,14 +1905,14 @@ const PatientDashboard = ({
             </div>
           </div> */}
 
-          <div className="Patient-Dashboard-boxOne">
+          {/* <div className="Patient-Dashboard-boxOne">
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">
                 pending Cross Consultation
               </span>
               <i className="fas fa-arrow-alt-circle-left"></i>
             </div>
-          </div>
+          </div> */}
         </div>
         {/* <div className="Patient-Dashboard-asideDivTwo">
           <div className="Patient-Dashboard-asideNav">

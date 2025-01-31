@@ -1104,11 +1104,11 @@ const PatientRegistrationNew = ({ onClose }) => {
                     />
                   </td>
                   <td>
-                    <textarea
+                    <input
                       type="text"
                       value={doctor.residenceAddress}
                       placeholder="Address"
-                      className="patient-registration-component-textarea"
+                      className="patient-registration-component"
                     />
                   </td>
                   <td>

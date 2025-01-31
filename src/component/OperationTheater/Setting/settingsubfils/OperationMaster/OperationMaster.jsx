@@ -104,8 +104,31 @@ const OperationMaster = () => {
   };
 
   // Submit the form data
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
   e.preventDefault();
+
+  // Define required fields
+  const requiredFields = [
+    "operationName", "operationType", "entryCode", "companyName",
+    "companyCode", "calculationMethodology", "category", "source",
+    "timeInMinutes", "department", "departmentSelection", "equipment",
+    "packageDtl", "docterFeeVisit", "emergencyFee", "increase",
+    "message", "classification", "sacCODE", "gstCategory"
+  ];
+
+  // Check if any required field is empty
+  const emptyFields = requiredFields.filter((field) => !formData[field]?.trim());
+
+  if (emptyFields.length > 0) {
+    alert(`Please fill in all required fields: ${emptyFields.join(", ")}`);
+    return; // Stop form submission
+  }
+
+  // Ensure at least one service is selected in the table
+  if (rows.length === 0 || rows.some(row => !row.serviceName.trim())) {
+    alert("Please add at least one valid service in the Service Details table.");
+    return; // Stop form submission
+  }
 
   try {
     const serviceDetailsIds = rows
@@ -127,6 +150,7 @@ const OperationMaster = () => {
     alert("Operation Master data saved successfully!");
     console.log("Response from API:", response.data);
 
+    // Reset form
     setFormData({
       operationName: '',
       operationType: '',
@@ -151,13 +175,13 @@ const OperationMaster = () => {
       serviceDetailsIds: [],
     });
     setRows([{ id: 1, serviceName: "", displayName: "", companyCode: "" }]);
+
   } catch (error) {
     console.error("Error saving Operation Master data:", error);
     alert("Failed to save Operation Master data. Please check your input or API configuration.");
   }
 };
 
-  
 
   return (
     <div className="operation-master">
@@ -182,6 +206,7 @@ const OperationMaster = () => {
                       type={key === 'timeInMinutes' ? 'number' : 'text'}
                       name={key}
                       value={formData[key]}
+                      required
                       onChange={(e) =>
                         setFormData({ ...formData, [key]: e.target.value })
                       }

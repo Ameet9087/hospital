@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import './SearchPatient.css';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-import { API_BASE_URL } from '../api/api';
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./SearchPatient.css";
+import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { API_BASE_URL } from "../api/api";
 
 function SearchPatient() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [patients, setPatients] = useState([]);
   const [filteredPatients, setFilteredPatients] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const patientsPerPage = 5;
   const navigate = useNavigate();
   const [columnWidths, setColumnWidths] = useState({});
@@ -19,24 +19,26 @@ function SearchPatient() {
 
   useEffect(() => {
     // Fetch patients from the API when the component mounts
-    axios.get(`${API_BASE_URL}/patient-register/all`)
-      .then(response => {
+    axios
+      .get(`${API_BASE_URL}/patient-register/all`)
+      .then((response) => {
         setPatients(response.data);
         console.log(response.data);
       })
-      .catch(error => {
-        console.error('There was an error fetching the patient data!', error);
+      .catch((error) => {
+        console.error("There was an error fetching the patient data!", error);
       });
   }, []);
 
   useEffect(() => {
     // Filter patients based on the search term and date range
-    const filtered = patients.filter(patient => {
-      const patientName = `${patient.firstName} ${patient.lastName}`.toLowerCase();
+    const filtered = patients.filter((patient) => {
+      const patientName =
+        `${patient.firstName} ${patient.lastName}`.toLowerCase();
       const matchesSearchTerm = patientName.includes(searchTerm.toLowerCase());
 
-      // Check if the patient matches the date range
-      const patientDate = new Date(patient.date); // Assuming "date" is the date field in patient data
+     
+      const patientDate = new Date(patient.date);
       const isWithinDateRange =
         (!fromDate || patientDate >= new Date(fromDate)) &&
         (!toDate || patientDate <= new Date(toDate));
@@ -58,7 +60,7 @@ function SearchPatient() {
     window.print();
   };
 
-  const handleEdit = (patient) => {    
+  const handleEdit = (patient) => {
     navigate(`/patient/registerpatient#basic-info`, { state: { patient } });
   };
 
@@ -76,7 +78,7 @@ function SearchPatient() {
             <i className="fas fa-search"></i>
           </div>
           <br></br>
-          <div className="date-filters">
+          {/* <div className="date-filters">
             <label>
               From:
               <input
@@ -93,11 +95,15 @@ function SearchPatient() {
                 onChange={(e) => setToDate(e.target.value)}
               />
             </label>
-          </div>
+          </div> */}
         </div>
         <div className="results-and-print">
-          <span className="results-text">Showing {displayedPatients.length} / {filteredPatients.length} results</span>
-          <button className="handle-print-button" onClick={handlePrint}>Print</button>
+          <span className="results-text">
+            Showing {filteredPatients.length} / {patients.length} results
+          </span>{" "}
+          <button className="handle-print-button" onClick={handlePrint}>
+            Print
+          </button>
         </div>
       </div>
 
@@ -111,7 +117,7 @@ function SearchPatient() {
               "Age/Sex",
               "Address",
               "Phone",
-              "Actions"
+              "Actions",
             ].map((header, index) => (
               <th
                 key={index}
@@ -122,7 +128,10 @@ function SearchPatient() {
                   <span>{header}</span>
                   <div
                     className="resizer"
-                    onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                    onMouseDown={startResizing(
+                      tableRef,
+                      setColumnWidths
+                    )(index)}
                   ></div>
                 </div>
               </th>
@@ -134,12 +143,21 @@ function SearchPatient() {
             <tr key={index}>
               <td>{startIndex + index + 1}</td>
               <td>{patient.uhid}</td>
-              <td>{patient.firstName} {patient.lastName}</td>
-              <td>{patient.age} / {patient.gender}</td>
+              <td>
+                {patient.firstName} {patient.lastName}
+              </td>
+              <td>
+                {patient.age} / {patient.gender}
+              </td>
               <td>{patient.address}</td>
               <td>{patient.mobileNumber}</td>
               <td>
-                <button onClick={() => handleEdit(patient)} className="action-btn edit">Edit</button>
+                <button
+                  onClick={() => handleEdit(patient)}
+                  className="action-btn edit"
+                >
+                  Edit
+                </button>
               </td>
             </tr>
           ))}
