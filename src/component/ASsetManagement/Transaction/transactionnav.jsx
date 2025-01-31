@@ -311,7 +311,7 @@ const Transactionnav = () => {
           </li>
           <li>
             <NavLink
-              to="/fixedassests/assettransaction/gate-pass-security-check"
+              to="/fixedassests/assesttransaction/gate-pass-security-check"
               className={({ isActive }) =>
                 isActive
                   ? "assettransactionnav-button active"

@@ -228,15 +228,15 @@ const ErRegister = () => {
                 <td>{receipt.relativeName || "N/A"}</td>
                 <td>{receipt.date || "N/A"}</td>
                 <td>
-                  <button
-                    className="ErRegister-print-button"
-                    onClick={() => handleAddPatient(receipt)}
-                    disabled={receipt.patientType === "old"}
-                  >
-                    {receipt.patientType === "new"
-                      ? "Generate MR NO"
-                      : "Alredy MR No"}
-                  </button>
+                  {receipt.patientType === "new" && (
+                    <button
+                      className="ErRegister-print-button"
+                      onClick={() => handleAddPatient(receipt)}
+                      disabled={receipt.patientType === "old"}
+                    >
+                      Generate MR NO
+                    </button>
+                  )}
                   <button
                     className="ErRegister-print-button"
                     onClick={() => handleERClinicalEntries(receipt)}

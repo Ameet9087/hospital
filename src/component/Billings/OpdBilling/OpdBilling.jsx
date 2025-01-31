@@ -448,11 +448,12 @@ const OpdBilling = () => {
           const doctorDetails = await fetchDoctorDetails(doctorId);
           console.log("Doctor Details Id +++++++++++", doctorDetails);
 
-          const generalOpdFee =
-            doctorDetails?.orgDoctorFees?.[0]?.generalOpdFee || 0;
+          const opdFees = doctorDetails?.orgDoctorFees?.find(
+            (fee) => fee.payType?.payTypeName === "OPD"
+          );
 
-          const followupfees =
-            doctorDetails?.orgDoctorFees?.[0]?.followupopdfees || 0;
+          const generalOpdFee = opdFees?.generalOpdFee || 0;
+          const followupfees = opdFees?.followupopdfees || 0
 
           console.log("fetched apppp=====", fetchedAppointments);
           // Check if fees are unpaid before creating the row
