@@ -147,12 +147,12 @@ const LookUps = () => {
                       >
                         Edit
                       </button>
-                      <button
+                      {/* <button
                         className="looksUps-delete-button"
                         onClick={() => handleDelete(test.labLookupId)}
                       >
                         Delete
-                      </button>
+                      </button> */}
                     </td>
                   </tr>
                 ))

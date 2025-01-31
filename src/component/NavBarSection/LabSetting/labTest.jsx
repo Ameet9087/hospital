@@ -94,7 +94,7 @@ const LabTestSetting = () => {
               {[
                 "Lab Test Name",
                 "Reporting Name",
-                "Category",
+                // "Category",
                 "Is Active",
                 "Display Sequence",
                 "Action",
@@ -124,7 +124,7 @@ const LabTestSetting = () => {
                 <tr key={index}>
                   <td>{test?.labTestName}</td>
                   <td>{test?.reportingName}</td>
-                  <td>{test?.category}</td>
+                  {/* <td>{test?.labTestCategory?.labTestCategoryName}</td> */}
                   <td>{test?.isActive ? "True" : "False"}</td>
                   <td>{test?.displaySequence}</td>
                   <td>

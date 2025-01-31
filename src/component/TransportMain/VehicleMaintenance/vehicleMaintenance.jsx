@@ -100,7 +100,7 @@ useEffect(() => {
 
       <div className="vehicleMaintenance-search-N-result">
         <div className="vehicleMaintenance-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
+          {/* <i className="fa-solid fa-magnifying-glass"></i> */}
           <input type="text" placeholder="Search..." />
         </div>
         <div className="vehicleMaintenance-results-info">

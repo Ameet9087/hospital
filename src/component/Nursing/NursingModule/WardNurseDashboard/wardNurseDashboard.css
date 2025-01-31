@@ -1,3 +1,7 @@
+
+
+
+
 .nurseMainPage-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -20,11 +24,15 @@
   background-color: #20b2aa;
   color: white;
   padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .nurseMainPage-header h1 {
   font-size: 16px;
   margin: 0;
+  white-space: nowrap;
   font-weight: 500;
 }
 
@@ -241,4 +249,29 @@ align-items: center;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   cursor: not-allowed;
+}
+
+
+.wardNurseDashboard-search-container {
+  display: flex;
+  align-items: center;
+}
+
+.wardNurseDashboard-search-input {
+  width: 120px;
+  color: white;
+  background-color: transparent;
+  height: 18px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid white;
+}
+.wardNurseDashboard-search-input::placeholder {
+  color: white;
+  opacity: 0.6;
+}
+.fa-magnifying-glass {
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
 }

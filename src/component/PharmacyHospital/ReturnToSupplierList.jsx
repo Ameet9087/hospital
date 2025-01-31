@@ -124,9 +124,9 @@ const ReturnToSupplierList = () => {
           value={searchTerm}
           onChange={handleSearchChange}
         />
-        <button className="return-to-supplier-search-icon-button">
+        {/* <button className="return-to-supplier-search-icon-button">
           <i className="fa fa-search"></i>
-        </button>
+        </button> */}
       </div>
 
       <div className="setting-supplier-span">
