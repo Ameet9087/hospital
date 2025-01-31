@@ -498,7 +498,7 @@ const AdmissionFormPrint = ({ patient }) => {
         </form>
       </div>
 
-      <button onClick={handlePrint}>Download PDF</button>
+      <button onClick={handlePrint} className="AdmissionPrint-btn">Download PDF</button>
     </div>
   );
 };

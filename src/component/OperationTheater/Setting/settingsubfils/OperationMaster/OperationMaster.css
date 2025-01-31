@@ -23,7 +23,19 @@
     font-weight: normal;
     margin-left: 4px;
   }
-  
+  .operationMaster-action-buttons button{
+    color: white;
+    background-color: var(--button-bg-color);
+    border: 1px solid var(--background-color);
+    border-radius: 5px;
+    padding: var(--input-box-padding);
+    margin-top: 10px;
+  }
+  .operationMaster-action-buttons button:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-color);
+    border-color: var(--button-color);
+  }
   .operationMaster-content-wrapper {
     display: flex;
     flex-direction: column;

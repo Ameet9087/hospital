@@ -147,6 +147,27 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
       alert("An error occurred while submitting the requisition.");
     }
   };
+  const handleDiscardChanges = () => {
+    setRequisitionDate("");
+    setIssueNo("");
+    setRemarks("");
+    setNeedVerification(true);
+    setCheckedBy("Mr. admin admin");
+    setItem({
+      itemId: "",
+      itemName: "",
+      unit: "",
+      availableQtyInStore: "",
+      requiredQuantity: "",
+      remark: "",
+      genericName: "",
+      batchNo: "",
+      expiryDate: "",
+      salePrice: "",
+    });
+    setItemsList([]); // Clear added items list
+  };
+  
 
   return (
     <div className="sSPharmacyReqCreateReq-form">
@@ -157,7 +178,7 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
           <div className="sSPharmacyReqCreateReq-form-group">
             <label htmlFor="issueNo">Issue No : *</label>
             <input
-              type="text"
+              type="number"
               id="issueNo"
               placeholder="Enter Issue Number"
               value={issueNo}
@@ -329,7 +350,7 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
           <button
             type="button"
             className="sSPharmacyReqCreateReq-cancel-button"
-            onClick={onClose}
+            onClick={handleDiscardChanges}
           >
             Discard Changes
           </button>

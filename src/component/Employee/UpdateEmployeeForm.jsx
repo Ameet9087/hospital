@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-
+import axios from "axios";
 import "./AddEmployeeForm.css";
+import { API_BASE_URL } from ".././api/api";
 
-const UpdateEmployeeForm = ({ onClose }) => {
+const UpdateEmployeeForm = ({ employee, onClose }) => {
+  const [employeeID, setEmployeeId] = useState("");
   const [employeeData, setEmployeeData] = useState({
     salutation: "",
     firstName: "",
@@ -37,7 +39,49 @@ const UpdateEmployeeForm = ({ onClose }) => {
     displaySequence: "",
     signatureImage: null,
   });
-  const [showTable, setShowTable] = useState(false); // State to manage table visibility
+  const [showTable, setShowTable] = useState(false);
+  useEffect(() => {
+    if (employee) {
+      console.log("API response:", employee);
+      setEmployeeId(employee.employeeId);
+      setEmployeeData({
+        department: employee.departmentDTO?.departmentName || "",
+        role: employee.employeeRoleDTO?.role || "",
+        type: employee.employeeTypeDTO?.employeeType || "",
+        salutation: employee.salutation || "",
+        firstName: employee.firstName || "",
+        middleName: employee.middleName || "",
+        lastName: employee.lastName || "",
+        dob: employee.dateOfBirth || "",
+        gender: employee.gender || "",
+        kmpdcNo: employee.kmpdcNo || "",
+        knncNo: employee.knncNo || "",
+        knhpcNo: employee.knhpcNo || "",
+        contactNumber: employee.contactNumber || "",
+        email: employee.emailId || "",
+        signatureShort: employee.signatureShort || "",
+        signatureLong: employee.signatureLong || "",
+        department: employee.departmentDTO?.departmentName || "",
+        role: employee.employeeRoleDTO?.role || "",
+        type: employee.employeeTypeDTO?.employeeType || "",
+        dateOfJoining: employee.dateOfJoining || "",
+        contactAddress: employee.contactAddress || "",
+        kraPin: employee.kraPin || "",
+        taxPercentage: employee.taxPercentage || "",
+        incentiveApplicable: employee.incentiveApplicable || false,
+        extension: employee.extension || "",
+        speedDial: employee.speedDial || "",
+        officeHour: employee.officeHour || "",
+        roomNo: employee.roomNo || "",
+        bloodGroup: employee.bloodGroup || "",
+        drivingLicenseNo: employee.drivingLicenseNo || "",
+        isActive: employee.isActive || false,
+        radiologySignature: employee.radiologySignature || "",
+        displaySequence: employee.displaySequence || "",
+        signatureImage: employee.signatureImage || null,
+      });
+    }
+  }, [employee]);
 
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
@@ -45,9 +89,6 @@ const UpdateEmployeeForm = ({ onClose }) => {
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
     }));
-    if (name === "appointmentApplicable") {
-      setShowTable(checked);
-    }
   };
 
   const handleFileChange = (e) => {
@@ -57,12 +98,34 @@ const UpdateEmployeeForm = ({ onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("New Employee Data:", employeeData);
-    onClose();
-  };
 
+    console.log("id is:", employeeID);
+
+    try {
+      const response = await axios.put(
+        `${API_BASE_URL}/employees/${employeeID}`,
+        employeeData,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Employee updated successfully");
+        onClose();
+      } else {
+        console.error("Failed to update employee");
+      }
+    } catch (error) {
+      console.error("Error updating employee:", error);
+    }
+  };
   return (
     <div className="add-employee-modal-overlay">
       <div className="add-employee-form">
@@ -230,7 +293,6 @@ const UpdateEmployeeForm = ({ onClose }) => {
                   name="department"
                   value={employeeData.department}
                   onChange={handleChange}
-                  required
                 >
                   <option value="">Select Department</option>
                   <option>Account</option>

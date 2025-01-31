@@ -22,7 +22,7 @@ function PatientRouting() {
         <Route path='/searchpatient' element={<SearchPatient/>}></Route>
         <Route path='/registerpatient' element={<PatientRegistrationNew/>}></Route>
         <Route path='/opd' element={<OpdList/>}></Route>
-        <Route path='/home' element={<Dashborad/>}></Route>
+        {/* <Route path='/home' element={<Dashborad/>}></Route> */}
         <Route path='checkIn' element={<CheckIn/>}/>
          </Routes>
       </div>

@@ -4,6 +4,8 @@ import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
 import { API_BASE_URL } from '../api/api';
 import axios from 'axios';
+import CustomModal from '../CustomModel/CustomModal';
+import { useFilter } from '../ShortCuts/useFilter';
 
 const SubstoreDispatchCom = () => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -11,6 +13,7 @@ const SubstoreDispatchCom = () => {
   const [requestdata, setRequestData] = useState([]);
   const [showModal, setShowModal] = useState(false); // Modal visibility state
   const [selectedRequisition, setSelectedRequisition] = useState(null); // Selected requisition data for modal
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     // Fetch requisition data
@@ -31,10 +34,44 @@ const SubstoreDispatchCom = () => {
     XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Download the file
   };
 
+    const requesteddata = useFilter(requestdata, searchTerm);
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   // Function to trigger print
   const handlePrint = () => {
-    window.print(); // Trigger the browser print dialog
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
+  
 
   // Function to open modal with requisition details
   const openModal = (requisition) => {
@@ -105,23 +142,28 @@ const SubstoreDispatchCom = () => {
 
   return (
     <div className="purchase-order-container">
-      <div className="purchase-order-header"></div>
+      
 
       {/* Date range filter */}
-      <div className="purchase-data-order">
+      {/* <div className="purchase-data-order">
         <div className="purchase-order-date-range">
           <label htmlFor="from-date">From:</label>
           <input type="date" id="from-date" />
           <label htmlFor="to-date">To:</label>
           <input type="date" id="to-date" />
         </div>
-      </div>
+      </div> */}
 
       {/* Search and action buttons */}
       <div className="purchase-order-search-container">
-        <input type="text" className="purchase-order-search-box" placeholder="Search" />
+        <input type="text" className="purchase-order-search-box" placeholder="Search"
+         value={searchTerm}
+         onChange={handleSearch}
+        />
         <div className="purchase-order-search-right">
-          <span className="purchase-results-count-span">Showing 0 / 0 results</span>
+        <span className="purchase-results-count-span">
+  Showing {requesteddata.length} / {requestdata.length} results
+</span>
           <button className="purchase-order-print-button" onClick={handleExport}>
             Export
           </button>
@@ -150,10 +192,10 @@ const SubstoreDispatchCom = () => {
             </tr>
           </thead>
           <tbody>
-            {requestdata.length > 0 ? (
-              requestdata.map((item, index) => (
+            {requesteddata.length > 0 ? (
+              requesteddata.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.pharmacyRequisitionId}</td>
+                  <td>{item.pharmacyRequisitionId || 'N/A'}</td>
                   <td>{item.requestedBy || 'N/A'}</td>
                   <td>{item.storeName}</td>
                   <td>{item.requestedDate || 'N/A'}</td>
@@ -161,7 +203,7 @@ const SubstoreDispatchCom = () => {
                   <td>{item.dispatchQty}</td>
                   <td>{item.remark || 'N/A'}</td>
                   <td>
-                    <button onClick={() => handleViewClick(item)}>View item</button>
+                    <button className='purchase-order-add-purchase-order-button' onClick={() => handleViewClick(item)}>View item</button>
                   </td>
                 </tr>
               ))
@@ -177,9 +219,10 @@ const SubstoreDispatchCom = () => {
       </div>
 
       {/* Modal for requisition details */}
-      {showModal && (
-        <div className="dispensarystockreq-modal-dialog">
-          <div className="dispensarystockreq-modal-content">
+      <CustomModal isOpen={showModal} onClose={closeModal}>
+      {/* {showModal && ( */}
+        <div >
+          <div >
             <div className="dispensarystockreqdetail-modal-header">
               <h5 className="dispensarystockreq-modal-title" id="viewModalLabel">
                 Requisition Details
@@ -188,10 +231,10 @@ const SubstoreDispatchCom = () => {
             <div className="dispensarystockreq-modal-body">
               <div className="dispensarystockreq-requisition-details">
                 <p>
-                  <strong>Requisition No:</strong> {selectedRequisition.pharmacyRequisitionId}
+                  <strong>Requisition No:</strong> {selectedRequisition?.pharmacyRequisitionId}
                 </p>
                 <p>
-                  <strong>Requested Store:</strong> {selectedRequisition.storeName}
+                  <strong>Requested Store:</strong> {selectedRequisition?.storeName}
                 </p>
               </div>
               <table className="dispensarystockreq-table">
@@ -210,8 +253,8 @@ const SubstoreDispatchCom = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {selectedRequisition.items && selectedRequisition.items.length > 0 ? (
-                    selectedRequisition.items.map((item, index) => (
+                  {selectedRequisition?.items && selectedRequisition.items.length > 0 ? (
+                    selectedRequisition?.items.map((item, index) => (
                       <tr key={index}>
                         <td>{item?.addItemDTO?.itemMaster?.itemName || 'N/A'}</td>
                         <td>{item.batchNo || 'N/A'}</td>
@@ -247,16 +290,17 @@ const SubstoreDispatchCom = () => {
               </table>
             </div>
             <div className="dispensarystockreq-modal-footer">
-              <button type="button" className="dispensarystockreq-modal-btn" onClick={closeModal}>
+              {/* <button type="button" className="purchase-order-add-purchase-order-button" onClick={closeModal}>
                 Close
-              </button>
-              <button type="button" className="dispensarystockreq-modal-btn" onClick={handleSave}>
+              </button> */}
+            
+              <button type="button" className="purchase-order-add-purchase-order-button" onClick={handleSave}>
                 Save
               </button>
             </div>
           </div>
         </div>
-      )}
+         </CustomModal>
     </div>
   );
 };

@@ -185,7 +185,7 @@
   }
   .patient-registration-component-textarea{
     width: 100%;
-    padding: 5px; 
+    padding: 10px; 
     font-size: var(--font-size); 
     border: 1px solid #ccc;
     border-radius: 4px; 

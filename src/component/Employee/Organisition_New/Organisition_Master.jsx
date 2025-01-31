@@ -1128,9 +1128,9 @@ const Organisition_Master = () => {
           <button className="btn-blue" onClick={handleSave}>
             Save
           </button>
-          <button className="btn-red">Delete</button>
+          {/* <button className="btn-red">Delete</button>
           <button className="btn-orange">Clear</button>
-          <button className="btn-gray">Close</button>
+          <button className="btn-gray">Close</button> */}
           {/* <button className="btn-blue">Search</button>
           <button className="btn-gray">Tracking</button>
           <button className="btn-green">Print</button>
