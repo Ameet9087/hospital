@@ -20,7 +20,7 @@
 }
 .IncidentReport-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
   padding: 10px;
 }
@@ -51,7 +51,7 @@
   border-radius: 4px;
   font-size: 14px;
   background: white;
-  width: 92%;
+  width: 100%;
   transition: all 0.2s ease;
 }
 
@@ -94,7 +94,7 @@
   background-color: var(--button-color);
   font-size: var(--font-size);
   border-radius: 5px;
-  padding: 8px 12px;
+  padding: 5px;
   border: 1px solid var(--button-hover-background-color);
   color: white;
   margin-top: 10px;

@@ -51,7 +51,7 @@ const ErRegister = () => {
   };
 
   const handleERClinicalEntries = (receipt) => {
-    navigate("/emergency/bedinformation", { state: { receipt } });
+    navigate("/emergency/erclinicalentries", { state: { receipt } });
   };
 
   const handleExport = () => {
@@ -228,19 +228,18 @@ const ErRegister = () => {
                 <td>{receipt.relativeName || "N/A"}</td>
                 <td>{receipt.date || "N/A"}</td>
                 <td>
-                  {receipt.patientType === "new" && (
-                    <button
-                      className="ErRegister-print-button"
-                      onClick={() => handleAddPatient(receipt)}
-                      disabled={receipt.patientType === "old"}
-                    >
-                      Generate MR NO
-                    </button>
-                  )}
+                  <button
+                    className="ErRegister-print-button"
+                    onClick={() => handleAddPatient(receipt)}
+                    disabled={receipt.patientType === "old"}
+                  >
+                    {receipt.patientType === "new"
+                      ? "Generate MR NO"
+                      : "Alredy MR No"}
+                  </button>
                   <button
                     className="ErRegister-print-button"
                     onClick={() => handleERClinicalEntries(receipt)}
-                    disabled={receipt.patientType === "new"}
                   >
                     Add
                   </button>

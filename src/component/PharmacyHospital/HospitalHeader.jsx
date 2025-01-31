@@ -13,7 +13,7 @@ const HospitalHeader = () => {
   const getActiveTab = () => {
     if (location.pathname.includes("/pharmacy/supplierledger")) return "supplierledger";
     if (location.pathname.includes("/pharmacy/order")) return "order";
-    if(location.pathname.includes("/pharmacy/supplier")) return "supplier";
+    if (location.pathname.includes("/pharmacy/supplier")) return "supplier";
     // if (location.pathname.includes("/pharmacy/report")) return "report";
     if (location.pathname.includes("/pharmacy/setting")) return "setting";
     if (location.pathname.includes("/pharmacy/store")) return "store";
@@ -23,7 +23,7 @@ const HospitalHeader = () => {
 
   useEffect(() => {
     console.log(activeNav);
-    
+
     // Update active navigation tab when location changes
     const currentTab = getActiveTab();
     setActiveNav(currentTab);
@@ -38,9 +38,8 @@ const HospitalHeader = () => {
         {items.map(({ path, label, icon }) => (
           <li
             key={path}
-            className={`pharmacy-sub-nav-item-module ${
-              activeSubNav === path ? "active" : ""
-            }`}
+            className={`pharmacy-sub-nav-item-module ${activeSubNav === path ? "active" : ""
+              }`}
             onClick={() => handleSubNavClick(path)}
           >
             <Link to={path}>
@@ -103,7 +102,7 @@ const HospitalHeader = () => {
             >
               Order
             </Link>
-            <Link to="/pharmacy/supplier" className={`hospital-nav-item-module ${activeNav === "supplier" ? "active":""}`}>
+            <Link to="/pharmacy/supplier" className={`hospital-nav-item-module ${activeNav === "supplier" ? "active" : ""}`}>
               Supplier
             </Link>
             {/* <Link
@@ -119,7 +118,7 @@ const HospitalHeader = () => {
               Setting
             </Link>
             <Link
-            to={"/pharmacy/store"}
+              to={"/pharmacy/store"}
               className={`hospital-nav-item-module ${activeNav === "store" ? "active" : ""}`}
             >
               Store

@@ -8,7 +8,7 @@
     margin-top: 50px;
     font-weight: bold;
 }
-.AdmissionFormPrint-Container input[type="text"],[type="date"]{
+.AdmissionFormPrint-Container input[type="text"],.AdmissionFormPrint-Container[type="date"]{
    border: none;
 }
 .AdmissionFormPrint-section
