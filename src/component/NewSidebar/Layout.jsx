@@ -55,6 +55,7 @@ import OtMain from "../OperationTheater/OtMain";
 import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
 import BillingRoute from "../Billings/Billing";
 import AccountComponent from "../Accounting/AccountingComponent";
+import IMSRoutes from "../LaundryManagementSystem/lMSRoutes"
 
 function Layout({ }) {
   return (
@@ -131,6 +132,7 @@ function Layout({ }) {
           <Route path="/billing/*" element={<BillingRoute />} />
           <Route path="/visit/*" element={<MainVisitorFile />} />
           <Route path="/oprationtheater/*" element={<OtMain />} />
+          <Route path="/laundry/*" element={<IMSRoutes />} />
 
         </Routes>
       </div>

@@ -1,0 +1,286 @@
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import "./LaundryStaffMapping.css";
+import { FaSearch, FaArrowCircleRight } from "react-icons/fa";
+import PopupTable from "../../Admission/PopupTable";
+import { API_BASE_URL } from "../../api/api";
+
+const LaundryStaffMapping = () => {
+  const [selectedDetail, setSelectedDetail] = useState("staffmapping");
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
+  const [activePopup, setActivePopup] = useState("");
+  const [linenTypes, setLinenTypes] = useState([]);
+  const [addEmployees, setAddEmployees] = useState([]);
+  const ipnoHeading = ["employeeTypeId", "employeeType"];
+  const [formData, setFormData] = useState([]);
+  const [packageTableRows, setPackageTableRows] = useState([
+    { sn: 1, type: "", nameofstaff: "", mapwithpayroll: "" },
+  ]);
+  const [employeeTypes, setEmployeeTypes] = useState([]);
+  const [staffDetails, setStaffDetails] = useState({
+    nameStaff: "",
+    payroll: "",
+    employeeType: {
+      employeeTypeId: "",
+    },
+  });
+  useEffect(() => {
+    const fetchEmployeeTypes = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/employeeTypes/getAll`
+          // "http://192.168.1.42:8080/api/employeeTypes/getAll"
+        );
+        const data = await response.json();
+        setEmployeeTypes(data);
+        setLinenTypes(data);
+      } catch (error) {
+        console.error("Error fetching employee types:", error);
+      }
+    };
+    fetchEmployeeTypes();
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setStaffDetails((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const handleSelect = (data) => {
+    console.log("Selected Data:", data); // Debugging
+    if (!data) return;
+
+    if (activePopup === "employeeType") {
+      setAddEmployees(data);
+      setFormData((prev) => ({
+        ...prev,
+        employeeType: data.employeeType,
+      }));
+    }
+
+    setActivePopup(null); // Close the popup after selection
+  };
+
+  const getPopupData = () => {
+    if (activePopup === "employeeType") {
+      return { columns: ipnoHeading, data: linenTypes };
+    }
+    return { columns: [], data: [] };
+  };
+  const { columns, data } = getPopupData();
+  const handleRowChange = (e, index, field) => {
+    const updatedRows = [...packageTableRows];
+    updatedRows[index][field] = e.target.value;
+    setPackageTableRows(updatedRows);
+  };
+  const handleAddRow = () => {
+    setPackageTableRows((prev) => [
+      ...prev,
+      { sn: prev.length + 1, type: "", nameofstaff: "", mapwithpayroll: "" },
+    ]);
+  };
+  const handleDeleteRow = (index) => {
+    setPackageTableRows((prev) => prev.filter((_, i) => i !== index));
+  };
+  const handleDetailClick = (detail) => {
+    setSelectedDetail(detail);
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (packageTableRows.length === 0) {
+        alert("No staff details to submit.");
+        return;
+      }
+
+      // Send each row individually
+      for (const row of packageTableRows) {
+        const staffData = {
+          nameStaff: row.payroll,
+          payroll: row.nameStaff,
+          employeeTypeDTO: {
+            employeeTypeId: addEmployees?.employeeTypeId || null,
+          },
+        };
+
+        console.log("Submitting Data:", JSON.stringify(staffData, null, 2)); // Debugging
+
+        const response = await axios.post(`${API_BASE_URL}/laundry-staff`
+          ,
+          staffData,
+          {
+            headers: { "Content-Type": "application/json" }, // Ensure JSON format
+          }
+        );
+
+        console.log("Response:", response.data);
+      }
+
+      alert("Staff details saved successfully!");
+    } catch (error) {
+      console.error("Error saving staff details:", error.response || error);
+      alert("Error saving staff details");
+    }
+  };
+
+
+
+  return (
+    <div className="StaffMap-container">
+      <div className="StaffMap-content">
+        <div className="StaffMap-header">
+          <span>Laundry Staff and Department Map</span>
+        </div>
+        <div className="StaffMap-Table-button">
+          <button
+            onClick={() => handleDetailClick("staffmapping")}
+            className={`detail-button ${selectedDetail === "staffmapping" ? "active" : ""
+              }`}
+          >
+            Staff Mapping
+          </button>
+        </div>
+        <div className="StaffMap-table">
+          {selectedDetail === "staffmapping" && (
+            <table ref={tableRef} className="StaffMap-table-content">
+              <thead>
+                <tr>
+                  {[
+                    "Actions",
+                    "SN",
+                    "Type",
+                    "Name of Staff",
+                    "Map with Payroll",
+                  ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] || "auto" }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {packageTableRows.map((row, index) => (
+                  <tr key={index}>
+                    <td>
+                      <div className="StaffMap-table-actions">
+                        <button
+                          className="StaffMap-add-btn"
+                          aria-label="Add row"
+                          onClick={handleAddRow}
+                        >
+                          Add
+                        </button>
+                        <button
+                          className="StaffMap-del-btn"
+                          aria-label="Delete row"
+                          onClick={() => handleDeleteRow(index)}
+                          disabled={packageTableRows.length <= 1}
+                        >
+                          Del
+                        </button>
+                      </div>
+                    </td>
+                    <td>{row.sn}</td>
+                    <td>
+                      {/* <select
+                        value={row.type}
+                        onChange={(e) => handleRowChange(e, index, 'type')}
+                      >
+                        <option value="">Select Type</option>
+                        {employeeTypes.map((type) => (
+                          <option key={type.employeeTypeId} value={type.employeeType?.employeeTypeId}>
+                            {type.employeeType}
+                          </option>
+                        ))}
+                      </select> */}
+                      <input
+                        value={formData.employeeType}
+                        className="line-requirement-in"
+                      ></input>
+                      <FaSearch
+                        className="RefLinenRequirement-search-icon-row"
+                        onClick={() => setActivePopup("employeeType")}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        value={row.nameStaff}
+                        onChange={(e) =>
+                          handleRowChange(e, index, "nameStaff")
+                        }
+                        placeholder="Enter name"
+                      />
+                    </td>
+                    <td className="serchIconInput">
+                      <input
+                        type="text"
+                        value={row.payroll}
+                        onChange={(e) =>
+                          handleRowChange(e, index, "payroll")
+                        }
+                        placeholder="Enter map with payroll"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+
+          {selectedDetail === "mapdepartment" && (
+            <div className="placeholder">
+              <span>No content available for Map Department.</span>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="StaffMap-navbar">
+        <aside className="StaffMap-navbar-btns">
+          <button onClick={handleSubmit}>Save</button>
+          <button onClick={() => handleButtonClick("Delete")}>Delete</button>
+          <button onClick={() => handleButtonClick("Clear")}>Clear</button>
+          <button onClick={() => handleButtonClick("Close")}>Close</button>
+          <button onClick={() => handleButtonClick("Search")}>Search</button>
+          <button onClick={() => handleButtonClick("Tracking")}>
+            Tracking
+          </button>
+          <button onClick={() => handleButtonClick("Print")}>Print</button>
+          <button onClick={() => handleButtonClick("Version Comparison")}>
+            Version Comparison
+          </button>
+          <button onClick={() => handleButtonClick("SDC")}>SDC</button>
+          <button onClick={() => handleButtonClick("Testing")}>Testing</button>
+          <button onClick={() => handleButtonClick("Info")}>Info</button>
+        </aside>
+      </div>
+      {activePopup && (
+        <PopupTable
+          columns={columns}
+          data={data}
+          onSelect={handleSelect}
+          onClose={() => setActivePopup(false)}
+        />
+      )}
+    </div>
+  );
+};
+
+export default LaundryStaffMapping;

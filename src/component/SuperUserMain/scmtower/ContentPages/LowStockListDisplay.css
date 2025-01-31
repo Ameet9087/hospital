@@ -1,0 +1,81 @@
+.lowstocklist-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  }
+  
+  .lowstocklist-title {
+    font-size: 32px;
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    letter-spacing: 1.2px;
+    font-weight: bold;
+  }
+  
+  
+  .lowstocklist-data.low {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .lowstocklist-data.critical {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .lowstocklist-row:last-child .lowstocklist-data {
+    border-bottom: none;
+  }
+  
+  .lowstocklist-table th, .lowstocklist-table td {
+    border-right: 1px solid #eaeaea;
+  }
+  
+  .lowstocklist-table th:last-child, .lowstocklist-table td:last-child {
+    border-right: none;
+  }
+
+  
+  .lowstock-back-button,.lowstockprintbtn {
+   
+    margin-top: 20px;
+    padding: 5px;
+    background-color: var(--button-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    font-size: 14px;
+  }
+  
+  .lowstock-back-button:hover,.lowstockprintbtn:hover {
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+  }
+  
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .lowstocklist-container {
+      padding: 20px;
+    }
+  
+    .lowstocklist-title {
+      font-size: 24px;
+    }
+  
+    .lowstocklist-header, .lowstocklist-data {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+  

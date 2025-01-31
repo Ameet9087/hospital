@@ -1,6 +1,6 @@
 .Sidebar-Container {
   background-color: var(--sideBar-bg-color);
-  width: 280px;
+  width: 240px;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -29,7 +29,7 @@
   width: 6px;
 }
 .Sidebar-Container::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color: #888 ;
   border-radius: 10px;
 }
 .Sidebar-Container::-webkit-scrollbar-thumb:hover {
@@ -37,7 +37,7 @@
 }
 
 .Sidebar-search {
-  padding: 8px;
+  padding: 6px;
   margin: 0;
   outline: none;
   border-radius: 5px;
@@ -47,7 +47,7 @@
 .Sidebar-Mainmodule {
   cursor: pointer;
   background-color: var(--button-bg-color);
-  padding: 8px;
+  padding: 6px;
   color: white;
   border-radius: 5px;
 }

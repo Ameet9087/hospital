@@ -1,0 +1,24 @@
+.squareLinenReceiveMain-page {
+    background-color: var(--background-color);
+    padding: 1px 1px  1px 10px;
+    font-family: Arial, sans-serif;
+    height: 80vh;
+
+  }
+
+  .squareLinenReceive-add-btn{
+        background-color: var(--button-bg-color);
+        color: var(--button-hover-background-color);
+        font-size: var(--font-size);
+        padding: 5px;
+        border: 1px solid var(--button-bg-color);
+        border-radius: 5px;
+      }
+      
+      .squareLinenReceive-add-btn:hover {
+        background-color: var(--button-hover-background-color);
+        color: var(--button-bg-color);
+      } 
+  
+
+ 
