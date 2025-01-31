@@ -10,19 +10,19 @@ const FloatingInput = ({ label, type = "text", value, ...props }) => {
 
   return (
     <div
-      className={`diabetic-chart-form-floating-field ${isFocused || hasValue ? "active" : ""
+      className={`NurseClearanceForm-floating-field ${isFocused || hasValue ? "active" : ""
         }`}
     >
       <input
         type={type}
-        className="diabetic-chart-form-floating-input"
+        className="NurseClearanceForm-floating-input"
         value={value}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onChange={props.onChange}
         {...props}
       />
-      <label className="diabetic-chart-form-floating-label">{label}</label>
+      <label className="NurseClearanceForm-floating-label">{label}</label>
     </div>
   );
 };
@@ -33,11 +33,11 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
 
   return (
     <div
-      className={`diabetic-chart-form-floating-field ${isFocused || hasValue ? "active" : ""
+      className={`NurseClearanceForm-floating-field ${isFocused || hasValue ? "active" : ""
         }`}
     >
       <select
-        className="diabetic-chart-form-floating-select"
+        className="NurseClearanceForm-floating-select"
         value={value}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
@@ -51,7 +51,7 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
           </option>
         ))}
       </select>
-      <label className="diabetic-chart-form-floating-label">{label}</label>
+      <label className="NurseClearanceForm-floating-label">{label}</label>
     </div>
   );
 };
@@ -152,16 +152,16 @@ const NurseClearanceForm = ({ patient, setDischargePopup }) => {
   };
   return (
     <>
-      <div className="diabetic-chart-form-container">
+      <div className="NurseClearanceForm-container">
         <div className="nurseClearanceForm-title-bar">
           <div className="nurseClearanceForm-header">
             <span>Nurse Clearance Form</span>
           </div>
         </div>
-        <div className="diabetic-chart-form-section">
-          <div className="diabetic-chart-form-header">Operation Details</div>
-          <div className="diabetic-chart-form-grid">
-            <div className="diabetic-chart-form-search-field">
+        <div className="NurseClearanceForm-section">
+          <div className="NurseClearanceForm-header">Operation Details</div>
+          <div className="NurseClearanceForm-grid">
+            <div className="NurseClearanceForm-search-field">
               <FloatingInput
                 label={"UHID"}
                 value={patient?.ipAdmissionDto?.patient?.patient?.uhid}
@@ -334,9 +334,9 @@ const NurseClearanceForm = ({ patient, setDischargePopup }) => {
             </div>
           </div>
         </div>
-        <div className="diabetic-chart-form-section">
-          <div className="diabetic-chart-form-header">Accompanied</div>
-          <div className="diabetic-chart-form-grid">
+        <div className="NurseClearanceForm-section">
+          <div className="NurseClearanceForm-header">Accompanied</div>
+          <div className="NurseClearanceForm-grid">
             <div className="billing-ipBilling-form-row-chechbox">
               <input
                 type="checkbox"
@@ -423,9 +423,9 @@ const NurseClearanceForm = ({ patient, setDischargePopup }) => {
             />
           </div>
         </div>
-        <div className="diabetic-chart-form-section">
-          <div className="diabetic-chart-form-header">Final Discharge</div>
-          <div className="diabetic-chart-form-grid">
+        <div className="NurseClearanceForm-section">
+          <div className="NurseClearanceForm-header">Final Discharge</div>
+          <div className="NurseClearanceForm-grid">
             <FloatingSelect
               label="Discharge Tracking Entered:"
               name="dischargeDetails.dischargeTrackingEntered"

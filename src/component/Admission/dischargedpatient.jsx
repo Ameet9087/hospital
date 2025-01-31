@@ -1,8 +1,5 @@
-/* // neha-ADT-discharge-19/09/24 */
-
 import React, { useState, useEffect, useRef } from "react";
 import "./dischargedpatient.css";
-
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import AdmissionDischargePrint from "./AdmissionDischargePrint";
@@ -29,7 +26,7 @@ function DischargedPatient() {
         setDischargeData(data);
         console.log(data + "discharged");
       } catch (err) {
-        console.error("Error fetching data:", err); // Debugging error
+        console.error("Error fetching data:", err);
         setError("Error fetching data");
         setLoading(false);
       }
@@ -37,6 +34,8 @@ function DischargedPatient() {
 
     fetchData();
   }, []);
+
+  
   const handlePrintClick = (data) => {
     setPatients(data);
     setModalShow(true);
@@ -53,13 +52,11 @@ function DischargedPatient() {
                 <input
                   className="date-range-input"
                   type="date"
-                  value="2024-08-05"
                 />
                 <label> To: </label>
                 <input
                   className="date-range-input"
                   type="date"
-                  value="2024-08-12"
                 />
               </div>
             </div>

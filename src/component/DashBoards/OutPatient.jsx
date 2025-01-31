@@ -210,7 +210,6 @@ const OutPatient = () => {
       )}
 
       {view === "opdRecord" && <OpdList />}
-
       {showFavorites && <TableComponent />}
       {showFollowUp && <NewPatientFollowUpList />}
     </div>

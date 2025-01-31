@@ -51,7 +51,7 @@ const ErRegister = () => {
   };
 
   const handleERClinicalEntries = (receipt) => {
-    navigate("/emergency/bedinformation", { state: { receipt } });
+    navigate("/emergency/erclinicalentries", { state: { receipt } });
   };
 
   const handleExport = () => {
@@ -240,7 +240,6 @@ const ErRegister = () => {
                   <button
                     className="ErRegister-print-button"
                     onClick={() => handleERClinicalEntries(receipt)}
-                    disabled={receipt.patientType === "new"}
                   >
                     Add
                   </button>

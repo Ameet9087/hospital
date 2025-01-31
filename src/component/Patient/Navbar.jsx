@@ -7,15 +7,7 @@ function Navbar() {
 
   return (
     <div className="patient-actions-container">
-      <Link to="/patient/home">
-        {/* <button
-          className={`patient-action-button ${
-            location.pathname === '/patient/home' ? 'active-btn' : ''
-          }`}
-        >
-          <i className="fas fa-home"></i>
-        </button> */}
-      </Link>
+
       <Link to="/patient/searchpatient">
         <button
           className={`patient-action-button ${location.pathname === '/patient/searchpatient' ? 'active-btn' : ''

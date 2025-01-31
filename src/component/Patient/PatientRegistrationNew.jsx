@@ -811,7 +811,7 @@ const PatientRegistrationNew = ({ onClose }) => {
             <input
               type="tel"
               name="mobileNumber"
-              value={formData.contactNumber}
+              value={formData.mobileNumber}
               onChange={handleChange}
             />
           </div>

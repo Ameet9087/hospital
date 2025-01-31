@@ -1,21 +1,23 @@
-
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import "../SSPharmacy/sSPRequisition.css";
 import { useParams } from 'react-router-dom';
 import SSPharmacyReqCreateReq from './sSPharmacyReqCreateReq';
 import { API_BASE_URL } from '../../../api/api';
 import CustomModal from '../../../../CustomModel/CustomModal';
+import * as XLSX from 'xlsx';
 import RequisitionDetails from './RequisitionDetails';
 
 function SSPRequisition() {
   const { store } = useParams();
   const [requisitions, setRequisitions] = useState([]);
+  const [filteredRequisitions, setFilteredRequisitions] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [showView, setShowView] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedRequest, setSelectedRequest] = useState();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const tableRef = useRef(null);
 
   const handleOpenPopup = () => {
     setIsPopupOpen(true);
@@ -34,9 +36,9 @@ function SSPRequisition() {
         }
         const data = await response.json();
         const filteredData = data.filter(item => item.subStore.subStoreId == store);
-        console.log(filteredData);
 
         setRequisitions(filteredData);
+        setFilteredRequisitions(filteredData);
       } catch (error) {
         setError(error.message);
         setLoading(false);
@@ -45,25 +47,32 @@ function SSPRequisition() {
 
     fetchRequisitions();
   }, [store]);
+  const handleSearch = (e) => {
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
 
+    const filteredData = requisitions.filter((req) => 
+      req.pharRequisitionId.toString().includes(query) || 
+      req.subStore?.subStoreName?.toLowerCase().includes(query) ||
+      req.requestedDate.includes(query) ||
+      req.status?.toLowerCase().includes(query) 
+    );
+
+    setFilteredRequisitions(filteredData);
+  };
 
   const handleReceive = async (item) => {
     try {
-      // Map and prepare the updated data
       const updateData = item?.subPharmRequisitionItems?.map((subItem) => ({
         subPharmRequisitionItemId: subItem.subPharmRequisitionItemId,
         dispatchQuantity: subItem.dispatchQuantity,
       }));
 
-      console.log('Update Data:', updateData); // Log the data for debugging
-
-      // Ensure selectedRequisition and its pharRequisitionId are valid
       if (!item || !item.pharRequisitionId) {
         console.error('Invalid selected requisition');
         return;
       }
 
-      // Make the API request
       const response = await fetch(
         `${API_BASE_URL}/subpharm-requisitions/${item.pharRequisitionId}/update?status=Received`,
         {
@@ -75,7 +84,6 @@ function SSPRequisition() {
         }
       );
 
-      // Handle the API response
       if (response.ok) {
         const result = await response.json();
         alert('Item Received successful');
@@ -87,11 +95,79 @@ function SSPRequisition() {
     }
   };
 
-
   const handleView = (item) => {
     setSelectedRequest(item);
     setShowView(true);
-  }
+  };
+  const handleExportToExcel = () => {
+    const tableData = [
+      [
+        "Req No",
+        "Requested By",
+        "Date",
+        "Status",
+        "Action",
+        
+      ],
+      ...filteredRequisitions.map((item) => [
+        item.pharRequisitionId,
+        item.subStore?.subStoreName,
+        item.requestedDate,
+        item.status,
+       
+      ]),
+    ];
+
+    const worksheet = XLSX.utils.aoa_to_sheet(tableData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
+    XLSX.writeFile(workbook, "requisition.xlsx");
+  };
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
+  };
 
   return (
     <div className="sSPRequisition-container">
@@ -113,22 +189,25 @@ function SSPRequisition() {
       <div className="sSPRequisition-search-N-results">
         <div className="sSPRequisition-search-bar">
           <i className="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Search" />
+          <input 
+            type="text" 
+            placeholder="Search" 
+            value={searchQuery}
+            onChange={handleSearch}
+          />
         </div>
         <div className="sSPRequisition-results-info">
-          <span>Showing {requisitions?.length} / {requisitions?.length} results</span>
-          {/* Showing 2 / 2 results */}
-          <button className='sSPRequisition-print-btn'
-          // onClick={handleExportToExcel}
-          >
+          <span>Showing {filteredRequisitions?.length} / {requisitions?.length} results</span>
+          <button className='sSPRequisition-print-btn'onClick={handleExportToExcel}>
             <i className="fa-regular fa-file-excel"></i> Export
           </button>
-          <button className='sSPRequisition-print-btn'
-          // onClick={handlePrint}
-          ><i class="fa-solid fa-print"></i> Print</button>
+          <button className='sSPRequisition-print-btn' onClick={printList}>
+            <i className="fa-solid fa-print" ></i> Print
+          </button>
         </div>
       </div>
-      <table className="sSPRequisition-table">
+
+      <table className="sSPRequisition-table" ref={tableRef}>
         <thead>
           <tr>
             <th>Req No.</th>
@@ -139,14 +218,14 @@ function SSPRequisition() {
           </tr>
         </thead>
         <tbody>
-          {requisitions.map((req) => (
+          {filteredRequisitions.map((req) => (
             <tr key={req?.id}>
               <td>{req?.pharRequisitionId}</td>
               <td>{req?.subStore?.subStoreName}</td>
               <td>{req?.requestedDate}</td>
               <td>{req?.status}</td>
               <td>
-                <button className="sSPRequisition-btn-view" onClick={() => handleView(req)} >View</button>
+                <button className="sSPRequisition-btn-view" onClick={() => handleView(req)}>View</button>
                 {req?.status === 'Dispatch' ? (
                   <button className="sSPRequisition-btn-receive" onClick={() => handleReceive(req)}>Receive Items</button>
                 ) : null}
@@ -155,11 +234,11 @@ function SSPRequisition() {
           ))}
         </tbody>
       </table>
+
       <CustomModal isOpen={showView} onClose={() => setShowView(false)}>
         <RequisitionDetails request={selectedRequest} />
       </CustomModal>
     </div>
-
   );
 }
 

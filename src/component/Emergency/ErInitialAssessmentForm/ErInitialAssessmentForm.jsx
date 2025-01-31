@@ -7,22 +7,28 @@ import AppoitmentPopupTable from "../../Admission/PopupTable";
 import { Prev } from "react-bootstrap/esm/PageItem";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../api/api";
-const FloatingInput = ({ label, type = "text", ...props }) => {
+const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
+  const [hasValue, setHasValue] = useState(!!value);
+
+  useEffect(() => {
+    setHasValue(!!value);
+  }, [value]);
+
   const handleChange = (e) => {
     setHasValue(e.target.value.length > 0);
     if (props.onChange) props.onChange(e);
   };
+
   return (
     <div
-      className={`er-initial-assessment-com-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`er-initial-assessment-com-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <input
         type={type}
         className="er-initial-assessment-com-floating-input"
+        value={value}
         onFocus={() => setIsFocused(true)}
         onBlur={(e) => {
           setIsFocused(false);
@@ -37,26 +43,36 @@ const FloatingInput = ({ label, type = "text", ...props }) => {
     </div>
   );
 };
-const FloatingSelect = ({ label, options = [], ...props }) => {
+
+// FloatingSelect component remains exactly the same
+const FloatingSelect = ({ label, options = [], value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
+  const [hasValue, setHasValue] = useState(!!value);
+
+  useEffect(() => {
+    setHasValue(!!value);
+  }, [value]);
+
   return (
     <div
-      className={`er-initial-assessment-com-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`er-initial-assessment-com-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <select
         className="er-initial-assessment-com-floating-select"
+        value={value}
         onFocus={() => setIsFocused(true)}
         onBlur={(e) => {
           setIsFocused(false);
           setHasValue(e.target.value !== "");
         }}
-        onChange={(e) => setHasValue(e.target.value !== "")}
+        onChange={(e) => {
+          setHasValue(e.target.value !== "");
+          if (props.onChange) props.onChange(e);
+        }}
         {...props}
       >
-        <option value="">{}</option>
+        <option value="">{ }</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -69,6 +85,7 @@ const FloatingSelect = ({ label, options = [], ...props }) => {
     </div>
   );
 };
+
 const ErInitialAssessmentForm = () => {
   const navigate = useNavigate();
 
@@ -698,231 +715,235 @@ const ErInitialAssessmentForm = () => {
         <div className="er-initial-assessment-com-section">
           <div className="er-initial-assessment-com-header">Vital Signs</div>
           <div className="er-initial-assessment-com-grid">
-            <div className="er-initial-assessment-com-vital-sign">
-              <div className="er-initial-assessment-com-vital">
-                <label>HR:</label>
-                60
-                <input
-                  type="range"
-                  min="0"
-                  max="3"
-                  value={hr}
-                  onChange={(e) => setHr(Number(e.target.value))}
-                />
-                120
-              </div>
-              <div className="er-initial-assessment-com-vital">
-                <label>HR Score Value:</label>
-                <input type="text" value={(hr / 3) * 3} readOnly />
-              </div>
-            </div>
-            <div className="er-initial-assessment-com-vital-sign">
-              <div className="er-initial-assessment-com-vital">
-                <label>RR:</label>
-                12
-                <input
-                  type="range"
-                  min="0"
-                  max="3"
-                  value={rr}
-                  onChange={(e) => setRr(Number(e.target.value))}
-                />
-                60
-              </div>
-              <div className="er-initial-assessment-com-vital">
-                <label>RR Score Value:</label>
-                <input type="text" value={(rr / 3) * 3} readOnly />
-              </div>
-            </div>
-            <div className="er-initial-assessment-com-vital-sign">
-              <div className="er-initial-assessment-com-vital">
-                <label>BP Systolic :</label>
-                0
-                <input
-                  type="range"
-                  min="0"
-                  max="3"
-                  value={bpSystolic}
-                  onChange={(e) => setBpSystolic(e.target.value)}
-                />
-                180
-              </div>
-              <div className="er-initial-assessment-com-vital">
-                <label>BP Systolic Score Value:</label>
-                <input type="text" value={(bpSystolic / 3) * 3} readOnly />
-              </div>
-            </div>
-            <div className="er-initial-assessment-com-vital-sign">
-              <div className="er-initial-assessment-com-vital">
-                <label>BP Diastolic:</label>
-                0
-                <input
-                  type="range"
-                  min="0"
-                  max="3"
-                  value={bpDiastolic}
-                  onChange={(e) => setBpDiastolic(e.target.value)}
-                />
-                160
-              </div>
-            </div>
-
-            <div className="er-initial-assessment-com-vital-sign">
-              <div className="er-initial-assessment-com-vital">
-                <label>Temp:</label>
-                92
-                <input
-                  type="range"
-                  min="0"
-                  max="3"
-                  value={temp}
-                  onChange={(e) => setTemp(e.target.value)}
-                />
-                108
-              </div>
-              <div className="er-initial-assessment-com-vital">
-                <label>Temperture Score :</label>
-                <input type="text" value={(temp / 3) * 3} readOnly />
-              </div>
-            </div>
-            <div className="er-initial-assessment-com-vital-sign">
-              <div className="er-initial-assessment-com-vital">
-                <label>Spo2:</label>
-                82
-                <input
-                  type="range"
-                  min="0"
-                  max="3"
-                  value={spo2}
-                  onChange={(e) => setSpo2(e.target.value)}
-                />
-                140
-              </div>
-              <div className="er-initial-assessment-com-vital">
-                <label>Spo2 Score Value:</label>
-                <input type="text" value={(spo2 / 3) * 3} readOnly />
-              </div>
-            </div>
-            <div className="er-initial-assessment-com-vital-sign">
-              <div className="er-initial-assessment-com-vital">
-                <label>CBG:</label>
-                60
-                <input
-                  type="range"
-                  min="0"
-                  max="3"
-                  value={cbg}
-                  onChange={(e) => setCbg(e.target.value)}
-                />
-                120
-              </div>
-            </div>
-
-            <div className="er-initial-assessment-com-vital-sign">
-              <div className="er-initial-assessment-com-vital">
-                <label>CGS :</label>
-                <FloatingSelect
-                  label="E"
-                  id="e"
-                  name="e"
-                  value={gcsValues.e}
-                  options={[
-                    { value: "E1", label: "E1" },
-                    { value: "E2", label: "E2" },
-                    { value: "E3", label: "E3" },
-                    { value: "E4", label: "E4" },
-                    { value: "E5(tv)", label: "E5(tv)" },
-                  ]}
-                />
-
+            <div>
+              <div className="er-initial-assessment-com-vital-sign">
                 <div className="er-initial-assessment-com-vital">
-                  <FloatingSelect
-                    label="V"
-                    id="v"
-                    name="v"
-                    value={gcsValues.e}
-                    options={[
-                      { value: "V1", label: "V1" },
-                      { value: "V2", label: "V2" },
-                      { value: "V3", label: "V3" },
-                      { value: "V4", label: "V4" },
-                      { value: "V5(G)", label: "V5(G)" },
-                    ]}
+                  <label>HR:</label>
+                  60
+                  <input
+                    type="range"
+                    min="0"
+                    max="3"
+                    value={hr}
+                    onChange={(e) => setHr(Number(e.target.value))}
                   />
+                  120
                 </div>
                 <div className="er-initial-assessment-com-vital">
+                  <label>HR Score Value:</label>
+                  <input type="text" value={(hr / 3) * 3} readOnly />
+                </div>
+              </div>
+              <div className="er-initial-assessment-com-vital-sign">
+                <div className="er-initial-assessment-com-vital">
+                  <label>RR:</label>
+                  12
+                  <input
+                    type="range"
+                    min="0"
+                    max="3"
+                    value={rr}
+                    onChange={(e) => setRr(Number(e.target.value))}
+                  />
+                  60
+                </div>
+                <div className="er-initial-assessment-com-vital">
+                  <label>RR Score Value:</label>
+                  <input type="text" value={(rr / 3) * 3} readOnly />
+                </div>
+              </div>
+              <div className="er-initial-assessment-com-vital-sign">
+                <div className="er-initial-assessment-com-vital">
+                  <label>BP Systolic :</label>
+                  0
+                  <input
+                    type="range"
+                    min="0"
+                    max="3"
+                    value={bpSystolic}
+                    onChange={(e) => setBpSystolic(e.target.value)}
+                  />
+                  180
+                </div>
+                <div className="er-initial-assessment-com-vital">
+                  <label>BP Systolic Score Value:</label>
+                  <input type="text" value={(bpSystolic / 3) * 3} readOnly />
+                </div>
+              </div>
+              <div className="er-initial-assessment-com-vital-sign">
+                <div className="er-initial-assessment-com-vital">
+                  <label>BP Diastolic:</label>
+                  0
+                  <input
+                    type="range"
+                    min="0"
+                    max="3"
+                    value={bpDiastolic}
+                    onChange={(e) => setBpDiastolic(e.target.value)}
+                  />
+                  160
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="er-initial-assessment-com-vital-sign">
+                <div className="er-initial-assessment-com-vital">
+                  <label>Temp:</label>
+                  92
+                  <input
+                    type="range"
+                    min="0"
+                    max="3"
+                    value={temp}
+                    onChange={(e) => setTemp(e.target.value)}
+                  />
+                  108
+                </div>
+                <div className="er-initial-assessment-com-vital">
+                  <label>Temperture Score :</label>
+                  <input type="text" value={(temp / 3) * 3} readOnly />
+                </div>
+              </div>
+              <div className="er-initial-assessment-com-vital-sign">
+                <div className="er-initial-assessment-com-vital">
+                  <label>Spo2:</label>
+                  82
+                  <input
+                    type="range"
+                    min="0"
+                    max="3"
+                    value={spo2}
+                    onChange={(e) => setSpo2(e.target.value)}
+                  />
+                  140
+                </div>
+                <div className="er-initial-assessment-com-vital">
+                  <label>Spo2 Score Value:</label>
+                  <input type="text" value={(spo2 / 3) * 3} readOnly />
+                </div>
+              </div>
+              <div className="er-initial-assessment-com-vital-sign">
+                <div className="er-initial-assessment-com-vital">
+                  <label>CBG:</label>
+                  60
+                  <input
+                    type="range"
+                    min="0"
+                    max="3"
+                    value={cbg}
+                    onChange={(e) => setCbg(e.target.value)}
+                  />
+                  120
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="er-initial-assessment-com-vital-sign">
+                <div className="er-initial-assessment-com-vital">
+                  <label>CGS :</label>
                   <FloatingSelect
-                    label="M"
-                    id="m"
-                    name="m"
+                    label="E"
+                    id="e"
+                    name="e"
                     value={gcsValues.e}
                     options={[
-                      { value: "M1", label: "M1" },
-                      { value: "M2", label: "M2" },
-                      { value: "M3", label: "M3" },
-                      { value: "M4", label: "M4" },
-                      { value: "M5(G)", label: "M5(G)" },
+                      { value: "E1", label: "E1" },
+                      { value: "E2", label: "E2" },
+                      { value: "E3", label: "E3" },
+                      { value: "E4", label: "E4" },
+                      { value: "E5(tv)", label: "E5(tv)" },
                     ]}
                   />
-                </div>
-              </div>
-            </div>
 
-            <div className="er-initial-assessment-com-form-group">
-              <label>Level Of Consciousness:</label>
-              <div className="er-initial-assessment-com-radio-button">
-                <label>
-                  <input
-                    type="radio"
-                    name="levelOfConsciousness"
-                    value="alert"
-                  />
-                  Alert
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="levelOfConsciousness"
-                    value="responseToVerbalCommands"
-                  />
-                  Response To Verbal Commands
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="levelOfConsciousness"
-                    value="responseToPainOnly"
-                  />
-                  Response To Pain Only
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="levelOfConsciousness"
-                    value="unresponsive"
-                  />
-                  Unresponsive
-                </label>
-              </div>
-            </div>
-            <div className="er-initial-assessment-com-section">
-              <div className="er-initial-assessment-com-grid">
-                <div className="er-initial-assessment">
-                  <FloatingInput
-                    label="Score Total "
-                    value={totalScore}
-                    readOnly
-                  />
+                  <div className="er-initial-assessment-com-vital">
+                    <FloatingSelect
+                      label="V"
+                      id="v"
+                      name="v"
+                      value={gcsValues.e}
+                      options={[
+                        { value: "V1", label: "V1" },
+                        { value: "V2", label: "V2" },
+                        { value: "V3", label: "V3" },
+                        { value: "V4", label: "V4" },
+                        { value: "V5(G)", label: "V5(G)" },
+                      ]}
+                    />
+                  </div>
+                  <div className="er-initial-assessment-com-vital">
+                    <FloatingSelect
+                      label="M"
+                      id="m"
+                      name="m"
+                      value={gcsValues.e}
+                      options={[
+                        { value: "M1", label: "M1" },
+                        { value: "M2", label: "M2" },
+                        { value: "M3", label: "M3" },
+                        { value: "M4", label: "M4" },
+                        { value: "M5(G)", label: "M5(G)" },
+                      ]}
+                    />
+                  </div>
                 </div>
-                <div className="er-initial-group">
+              </div>
+
+              <div className="er-initial-assessment-com-form-group">
+                <label>Level Of Consciousness:</label>
+                <div className="er-initial-assessment-com-radio-button">
                   <label>
-                    <input type="radio" name="action" value="reference" />
-                    Reference
+                    <input
+                      type="radio"
+                      name="levelOfConsciousness"
+                      value="alert"
+                    />
+                    Alert
                   </label>
                   <label>
-                    <input type="radio" name="action" value="close" />
-                    Close
+                    <input
+                      type="radio"
+                      name="levelOfConsciousness"
+                      value="responseToVerbalCommands"
+                    />
+                    Response To Verbal Commands
                   </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="levelOfConsciousness"
+                      value="responseToPainOnly"
+                    />
+                    Response To Pain Only
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="levelOfConsciousness"
+                      value="unresponsive"
+                    />
+                    Unresponsive
+                  </label>
+                </div>
+              </div>
+              <div className="er-initial-assessment-com-section">
+                <div className="er-initial-assessment-com-grid">
+                  <div className="er-initial-assessment">
+                    <FloatingInput
+                      label="Score Total "
+                      value={totalScore}
+                      readOnly
+                    />
+                  </div>
+                  <div className="er-initial-group">
+                    <label>
+                      <input type="radio" name="action" value="reference" />
+                      Reference
+                    </label>
+                    <label>
+                      <input type="radio" name="action" value="close" />
+                      Close
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>

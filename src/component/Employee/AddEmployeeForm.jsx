@@ -260,7 +260,7 @@ const AddEmployeeForm = ({ onClose }) => {
                 </select>
               </div>
               <div className="add-employee-group">
-                <label className="emp-input">KMPDC NO:</label>
+                <label className="emp-input">Aadhar Card NO:</label>
                 <input
                   className="emp-input"
                   type="text"
@@ -270,7 +270,7 @@ const AddEmployeeForm = ({ onClose }) => {
                 />
               </div>
               <div className="add-employee-group">
-                <label className="emp-input">KNNC NO:</label>
+                <label className="emp-input">Pan Card NO:</label>
                 <input
                   className="emp-input"
                   type="text"
@@ -280,7 +280,7 @@ const AddEmployeeForm = ({ onClose }) => {
                 />
               </div>
               <div className="add-employee-group">
-                <label className="emp-input">KNHPC NO:</label>
+                <label className="emp-input">Driving Licence NO:</label>
                 <input
                   className="emp-input"
                   type="text"
@@ -542,7 +542,7 @@ const AddEmployeeForm = ({ onClose }) => {
             </div>
           </div>
           <div className="emp-app">
-            <div className="add-employee-groups">
+            {/* <div className="add-employee-groups">
               <label className="emp-input">Appointment Applicable?</label>
               <input
                 className="emp-input"
@@ -551,7 +551,7 @@ const AddEmployeeForm = ({ onClose }) => {
                 checked={employeeData.appointmentApplicable}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
             {showTable && (
               <table className="service-table">
                 <thead>
