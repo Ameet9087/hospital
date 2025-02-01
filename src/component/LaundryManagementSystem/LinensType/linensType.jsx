@@ -7,7 +7,7 @@ import LinenMaster from "../LinenMaster/LinenMaster";
 import LinenRequirement from "../LinenRequirement/linenRequirement";
 import LaundryStaffMapping from "../LaundryStaffMapping/LaundryStaffMapping";
 import axios from "axios";
-import {API_BASE_URL} from '../../api/API'
+import { API_BASE_URL } from '../../api/api'
 
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -24,9 +24,8 @@ const FloatingInput = ({ label, type = "text", value, ...props }) => {
 
   return (
     <div
-      className={`linensType-form-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`linensType-form-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <input
         type={type}
@@ -56,9 +55,8 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
 
   return (
     <div
-      className={`linensType-form-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`linensType-form-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <select
         className="linensType-form-floating-select"
@@ -74,7 +72,7 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
         }}
         {...props}
       >
-        <option value="">{}</option>
+        <option value="">{ }</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -120,7 +118,7 @@ function NavNotification() {
   }, []);
 
   // Handler to update state when input changes
-  
+
 
   const handleClear = () => {
     setFormData({
@@ -137,25 +135,25 @@ function NavNotification() {
       setMessage("Please fill all required fields.");
       return;
     }
-  
+
     setIsSubmitting(true);
     setMessage("Submitting...");
-  
+
     const payload = {
       linenType: formData.linenType,
       laundryServices: formData.laundryServices, // Include multiple selected services as a comma-separated string
       description: formData.description,
     };
-  console.log("hhhhhhhhhh",payload);
+    console.log("hhhhhhhhhh", payload);
     try {
       const response = await axios.post(`${API_BASE_URL}/linenTypes`, payload, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-  
+
       if (response.status === 201 || response.status === 200) {
-        console.log("Data submitted successfully!",payload);
+        console.log("Data submitted successfully!", payload);
         handleClear(); // Clear the form after successful submission
       } else {
         setMessage(`Failed to submit data. Status code: ${response.status}`);
@@ -167,15 +165,14 @@ function NavNotification() {
       setIsSubmitting(false);
     }
   };
-  
+
   return (
     <div className="linensTypeMain-page">
       <div className="linensTypeMain-N-imu-btn">
         <div className="linensTypeMain-tabs">
           <button
-            className={`linensTypeMain-tab ${
-              selectedTab === "LinensType" ? "linensTypeMain-active" : ""
-            }`}
+            className={`linensTypeMain-tab ${selectedTab === "LinensType" ? "linensTypeMain-active" : ""
+              }`}
             onClick={() => setSelectedTab("LinensType")}
           >
             Linen Type
@@ -183,27 +180,24 @@ function NavNotification() {
           {/* </div> */}
           {/* <div className="linensTypeMain-tabs">  */}
           <button
-            className={`linensTypeMain-tab ${
-              selectedTab === "LinenMaster" ? "linensTypeMain-active" : ""
-            }`}
+            className={`linensTypeMain-tab ${selectedTab === "LinenMaster" ? "linensTypeMain-active" : ""
+              }`}
             onClick={() => setSelectedTab("LinenMaster")}
           >
             Linen Master
           </button>
           <button
-            className={`linensTypeMain-tab ${
-              selectedTab === "LinenRequirement" ? "linensTypeMain-active" : ""
-            }`}
+            className={`linensTypeMain-tab ${selectedTab === "LinenRequirement" ? "linensTypeMain-active" : ""
+              }`}
             onClick={() => setSelectedTab("LinenRequirement")}
           >
             Linen Requirement
           </button>
           <button
-            className={`linensTypeMain-tab ${
-              selectedTab === "LaundryStaffMapping"
-                ? "linensTypeMain-active"
-                : ""
-            }`}
+            className={`linensTypeMain-tab ${selectedTab === "LaundryStaffMapping"
+              ? "linensTypeMain-active"
+              : ""
+              }`}
             onClick={() => setSelectedTab("LaundryStaffMapping")}
           >
             LaundryStaffMapping
