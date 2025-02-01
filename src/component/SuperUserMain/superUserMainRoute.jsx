@@ -47,7 +47,7 @@ function SuperUserMain() {
           <Route path="/revenuemanagement" element={<Revenuemgnt />} />
           <Route path="/revenuemanagement/revenuedashoboard" element={<RevenueDashboard />} />
 
-          <Route path='/userma  nagement/*' element={<UserManagement />} />
+          <Route path='/usermanagement/*' element={<UserManagement />} />
           <Route path='/tower/*' element={<Scmtowermain />} />
 
 
