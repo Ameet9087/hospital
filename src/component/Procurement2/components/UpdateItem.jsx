@@ -1,7 +1,7 @@
 import React from "react";
 import "./UpdateItem.css";
 
-const UpdateItem = () => {
+const UpdateItem = (terms) => {
   return (
     <div className="UpdateItem-form-container-updates">
       <h2 className="UpdateItem-heading">Update Item</h2>

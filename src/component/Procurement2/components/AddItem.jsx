@@ -10,7 +10,8 @@ import AddUnitOfMeasurement from "./AddUnitOfMeasurement";
 import AddPackagingType from "./AddPackagingType";
 import { API_BASE_URL } from "../../api/api";
 
-const AddItem = ({ isOpen, onClose }) => {
+const AddItem = ({ isOpen, onClose, terms }) => {
+
   if (!isOpen) return null;
 
   const [formValues, setFormValues] = useState({
@@ -47,6 +48,44 @@ const AddItem = ({ isOpen, onClose }) => {
   const [isUnitModalOpen, setIsUnitModalOpen] = useState(false);
   const [isCompanyModalOpen, setIsCompanyModalOpen] = useState(false);
   const [isPackagingModalOpen, setIsPackagingModalOpen] = useState(false);
+  const [itemName, setItemName] = useState("");
+  const [minStockQuantity, setMinStockQuantity] = useState(0);
+  const [description, setDescription] = useState("");
+  const [standardRate, setStandardRate] = useState(0.0);
+  const [itemCode, setItemCode] = useState("");
+  const [inventory, setInventory] = useState("");
+  const [itemCompany, setItemCompany] = useState("");
+  const [reOrderQuantity, setReOrderQuantity] = useState(0);
+  const [unitQuantity, setUnitQuantity] = useState(0);
+  const [availableQty, setAvailableQty] = useState(0);
+  const [isVatApplicable, setIsVatApplicable] = useState(false);
+  const [isCssdApplicable, setIsCssdApplicable] = useState(false);
+  const [isColdStorageApplicable, setIsColdStorageApplicable] = useState(false);
+  const [isPatientConsumptionApplicable, setIsPatientConsumptionApplicable] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  
+ useEffect(() => {
+  if (terms) {
+    setItemName(terms.itemName || "");
+    setMinStockQuantity(Number(terms.minStockQuantity) || 0);
+    setDescription(terms.description || "");
+    setStandardRate(parseFloat(terms.standardRate) || 0.0);
+    setItemCode(terms.itemCode || "");
+    setInventory(terms.inventory || "");
+    setItemCompany(terms.itemCompany?.name || ""); // If `itemCompany` includes the name
+    setReOrderQuantity(Number(terms.reOrderQuantity) || 0);
+    setUnitQuantity(Number(terms.unitQuantity) || 0);
+    setAvailableQty(Number(terms.availableQty) || 0);
+    setIsVatApplicable(terms.isVatApplicable || false);
+    setIsCssdApplicable(terms.isCssdApplicable || false);
+    setIsColdStorageApplicable(terms.isColdStorageApplicable || false);
+    setIsPatientConsumptionApplicable(terms.isPatientConsumptionApplicable || false);
+    setIsActive(terms.isActive || false);
+
+    setIsEditing(true); // Set editing mode
+  }
+}, [terms]); // This effect runs whenever `terms` changes
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -164,12 +203,18 @@ const AddItem = ({ isOpen, onClose }) => {
             id: formValues.itemCompany?.id || 0
         }
     };
-    
+  
       console.log(requestData);
-      
+  
       try {
-        const response = await fetch(`${API_BASE_URL}/items/addItem`, {
-          method: "POST",
+        const url = isEditing
+          ? `${API_BASE_URL}/items/update/${terms.id}` // Update the existing item
+          : `${API_BASE_URL}/items/addItem`; // Add new item
+  
+        const method = isEditing ? "PUT" : "POST"; // Use PUT if editing, POST if adding
+  
+        const response = await fetch(url, {
+          method: method,
           headers: {
             "Content-Type": "application/json",
           },
@@ -177,7 +222,8 @@ const AddItem = ({ isOpen, onClose }) => {
         });
   
         if (response.ok) {
-          alert("Item added successfully!");
+          alert(isEditing ? "Item updated successfully!" : "Item added successfully!");
+          // Reset form values
           setFormValues({
             itemCategory: "",
             itemName: "",
@@ -203,15 +249,16 @@ const AddItem = ({ isOpen, onClose }) => {
           onClose();
         } else {
           const errorData = await response.json();
-          console.error("Error adding item:", errorData);
-          alert("Failed to add item. Please try again.");
+          console.error("Error adding/updating item:", errorData);
+          alert("Failed to process item. Please try again.");
         }
       } catch (error) {
         console.error("Error submitting form:", error);
-        alert("An error occurred while adding the item.");
+        alert("An error occurred while processing the item.");
       }
     }
   };
+  
   
 
   return (

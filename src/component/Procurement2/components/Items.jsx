@@ -13,7 +13,10 @@ const ItemList = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [items, setItems] = useState([]); // State to store fetched items
   const [loading, setLoading] = useState(true);
+  const [selectedTerm, setSelectedTerm] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState(null);
+  const [terms, setTerms] = useState([]);
 
 
   const [columnWidths,setColumnWidths] = useState({});
@@ -25,6 +28,7 @@ const ItemList = () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/items/getAllItem`);
         setItems(response.data); // Set fetched data to state
+        setTerms(response.data)
         console.log(response.data);
         
       } catch (err) {
@@ -46,16 +50,17 @@ const ItemList = () => {
     setIsAddModalOpen(false);
   };
 
-  const openEditModal = (item) => {
+  
+
+  const handleModalOpen = (item) => {
     setSelectedItem(item);
-    setIsEditModalOpen(true);
+    setIsModalOpen(true);
   };
 
-  const closeEditModal = () => {
-    setIsEditModalOpen(false);
+  const handleModalClose = () => {
+    setIsModalOpen(false);
     setSelectedItem(null);
   };
-
 
 
   
@@ -68,8 +73,50 @@ const ItemList = () => {
   };
 
   // Function to trigger print
-  const handlePrint = () => {
-    window.print(); // Triggers the browser's print window
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
   };
 
 
@@ -86,7 +133,7 @@ const ItemList = () => {
         <div className="ItemList-results-info">
         <span>Showing 0 / 0 results</span>
           <button className="ItemList-export-button"onClick={handleExport}>Export</button>
-          <button className="ItemList-Emergencyprint-button"onClick={handlePrint}>Print</button>
+          <button className="ItemList-Emergencyprint-button"onClick={printList}>Print</button>
         </div>
         </div>
       </div>
@@ -143,12 +190,12 @@ const ItemList = () => {
                 <td>{item.isActive ? "true" : "false"}</td>
                 <td>{item.inventory}</td>
                 <td>
-                  <button
-                    className="ItemList-Emergencyedit-button"
-                    onClick={() => openEditModal(item)}
-                  >
-                    Edit
-                  </button>
+                <button
+                  className="ItemList-Emergencyedit-button"
+                  onClick={() => handleModalOpen(item)}
+                >
+                  Edit
+                </button>
                 </td>
               </tr>
             ))}
@@ -161,8 +208,8 @@ const ItemList = () => {
       </CustomModal>
 
       {/* Edit Item Modal */}
-      <CustomModal isOpen={isEditModalOpen} onClose={closeEditModal}>
-        <UpdateItem item={selectedItem} onClose={closeEditModal} />
+      <CustomModal isOpen={isModalOpen} onClose={handleModalClose}>
+        <AddItem terms={selectedItem} isOpen={isModalOpen} onClose={handleModalClose}/>
       </CustomModal>
     </div>
   );

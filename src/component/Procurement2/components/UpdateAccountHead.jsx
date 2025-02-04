@@ -6,7 +6,7 @@ import { API_BASE_URL } from "../../api/api";
 const UpdateAccountHead = ({ accountHead, onClose, onUpdate }) => {
   const [name, setName] = useState(accountHead.accountHeadName || "");
   const [description, setDescription] = useState(accountHead.description || "");
-  const [isActive, setIsActive] = useState(accountHead.isActive || false);
+  const [active, setIsActive] = useState(accountHead.active || false);
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -16,7 +16,7 @@ const UpdateAccountHead = ({ accountHead, onClose, onUpdate }) => {
       const updatedAccountHead = {
         accountHeadName: name,
         description,
-        isActive,
+        active,
       };
 
       // Axios call to update the account head
@@ -69,7 +69,7 @@ const UpdateAccountHead = ({ accountHead, onClose, onUpdate }) => {
           <label>Is Active</label>
           <input
             type="checkbox"
-            checked={isActive}
+            checked={active}
             onChange={(e) => setIsActive(e.target.checked)}
           />
         </div>
