@@ -1,0 +1,64 @@
+  .lMSNav-activeLab-btn{
+    color: black;
+    /* height: 25px; */
+    font-size:var(--heading-font);
+    border: none;
+    padding: 5px;
+    
+  }
+  .lMSNav-bar {
+    /* font-family: Arial, sans-serif; */
+      background-color: white;
+      /* padding: 10px; */
+      /* border: 1px solid #007bff; */
+
+    }
+    
+    .lMSNav-bar ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 10px;
+      display: flex;
+      /* gap: 10px; */
+      /* justify-content: space-around; */
+
+    }
+    
+    .lMSNav-bar li {
+      margin: 0 0px;
+      
+    }
+    
+    .lMSNav-bar a {
+      /* color: black;
+      
+      text-decoration: none;
+      font-size: var(--font-size);
+      padding: 5px 10px;
+      border-radius: 5px; */
+      color: black;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      border:1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      margin-left: 10px;
+
+    }
+    
+    .lMSNav-bar a:hover {
+      border: 1px solid var( --button-hover-border-color);
+      color: var(--button-hover-text-color);
+      background-color: var(--button-hover-background-color);
+
+      
+    }
+    
+    .lMSNav-bar a.active {
+      border: 1px solid var(--button-bg-color);
+      color:white;
+      background-color: var(--button-bg-color);
+
+    }
+    

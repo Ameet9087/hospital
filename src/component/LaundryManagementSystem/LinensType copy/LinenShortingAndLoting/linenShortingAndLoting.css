@@ -1,0 +1,161 @@
+
+
+.LinenLoting-type {
+    background-color: var(--background-color);
+    margin-top: 30px;
+    
+  }
+  .LinenLoting-header {
+    /* position: fixed; */
+    
+    width: 100%;
+    height: 30px;
+    background-color: var(--upperBar-bg-color);
+    color: white;
+    font-size: var(--heading-font);
+    line-height: 30px;
+    
+  }
+  .LinenLoting-headingName{
+    margin-left: 45%;
+    font-size: var(--heading-font);
+    font-weight: bolder;
+  }
+  
+   
+  
+   
+  .LinenLoting-action-buttons {
+    display: flex;
+    gap: 5px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
+  .LinenLoting-action-buttons button {
+    background-color: var(--button-bg-color);
+    color: var(--button-hover-background-color);
+    font-size: var(--font-size);
+    padding: 5px;
+    border: 1px solid var(--button-bg-color);
+    border-radius: 5px;
+  }
+  
+  .LinenLoting-action-buttons button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-bg-color);
+}
+.LinenLoting-services-table{
+    margin-top: 10px;
+}
+.LinenLoting-services-table input{
+border: none;
+}
+.LinenLoting-add-btn,
+.LinenLoting-del-btn {
+  margin-right: 4px;
+  padding: 2px 8px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+.LinenLoting-add-btn {
+  color: green;
+}
+.LinenLoting-del-btn {
+  color: red;
+}
+.LinenLoting-services-table table{
+
+  border-collapse: collapse;
+  width: 100%;
+  background-color: white;
+}
+.LinenLoting-services-table table thead{
+  background-color: #cccccc46;
+  padding: var(--input-box-padding);
+}
+.LinenLoting-services-table table td{
+  text-align: center;
+}
+.LinenLoting-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 10px;
+  background-color: white;
+}
+.LinenLoting-floating-field {
+  position: relative;
+}
+.LinenLoting-floating-input,
+.LinenLoting-floating-select {
+  padding: 5px 12px;
+  border: 1px solid #00897b;
+  border-radius: 4px;
+  font-size: var(--font-size);
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.LinenLoting-form-floating-field {
+  position: relative;
+}
+.LinenLoting-search-field {
+  position: relative;
+}
+
+.LinenLoting-floating-input:focus,
+.LinenLoting-floating-select:focus {
+  outline: none;
+  border-color: #00897b;
+  box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+}
+/* .LinenLoting-services-section {
+  background: white;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+} */
+
+.LinenLoting-form-floating-input,
+.LinenLoting-form-floating-select {
+  padding: 5px 12px;
+  border: 1px solid #00897b;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+  transition: all 0.2s ease;
+  color: #00897b;
+}
+.LinenLoting-form-floating-input{
+  width: 92%;
+}
+.LinenLoting-form-floating-select {
+  width: 100%;
+}
+.LinenLoting-form-floating-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: var(--font-size);
+  
+}
+.LinenLoting-form-floating-field.active .LinenLoting-form-floating-label {
+  top: 0;
+  font-size: 12px;
+  color: #00897b;
+  border-color: #00897b ;
+}
+.LinenLoting-form-floating-field.active .LinenLoting-form-floating-input,
+.LinenLoting-form-floating-field.active .LinenLoting-form-floating-select {
+  border-color: #00897b;
+}

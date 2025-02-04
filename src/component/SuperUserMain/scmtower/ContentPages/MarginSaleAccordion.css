@@ -1,0 +1,87 @@
+.marginsale-dashboard-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.marginsale-dashboard-title {
+  font-size: 20px;
+  text-align: center;
+  color: #3498db;
+  margin-bottom: 20px;
+  font-weight: bold;
+
+}
+
+.marginsale-summary-widget {
+  background-color: #3498db;
+  padding: 2px;
+  border-radius: 8px;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 20px;
+
+}
+
+.marginsale-summary-title {
+  font-size: 20px;
+  margin: 0;
+}
+
+.marginsale-summary-value {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.marginsale-item-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.marginsale-item-widget {
+  background-color: #ecf0f1;
+  padding: 10px;
+  margin: 10px;
+  width: 210px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.marginsale-item-name {
+  margin: 0;
+  color: #2980b9;
+  font-size: 16px;
+
+}
+
+.marginsale-item-profit {
+  margin: 5px 0 0;
+  color: #34495e;
+  font-size: 14px;
+}
+.marginsaledashboard-back-button {
+   
+  margin-top: 20px;
+  padding: 5px;
+  background-color: var(--button-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+  font-size: 14px;
+}
+
+.marginsaledashboard-back-button:hover {
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+}

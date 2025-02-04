@@ -6,14 +6,20 @@ import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import PopupTable from "./PopupTable";
 import { usePopup } from "../../FidgetSpinner/PopupContext";
+import AdmissionFormPrint from "./AdmissionFormPrint";
+import PrintGenericSticker from "./PrintGenericSticker";
+import CustomModal from "../CustomModel/CustomModal";
 
 const IpAdmission = ({ patientData, onClose }) => {
-  const { showPopup } = usePopup()
+  const { showPopup } = usePopup();
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [country, setCountry] = useState([]);
   const [patient, setPatient] = useState();
   const [admissionSlipId, setAdmissionSlipId] = useState(0);
+  const [isAdmissionForm, setIsAdmissionForm] = useState(false);
+  const [isPrintGenericSticker, setIsGenericSticker] = useState(false);
+  const [submittedPatientData, setSubmittedPatientData] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -476,9 +482,10 @@ const IpAdmission = ({ patientData, onClose }) => {
           },
         }
       );
-      console.log(response.data);
-
-      showPopup([{ url: "/billing/ipdmoneyrecipt", text: "Ip Money Reciept" }])
+      setIsAdmissionForm(true);
+      setIsGenericSticker(true);
+      setSubmittedPatientData(response.data);
+      showPopup([{ url: "/billing/ipdmoneyrecipt", text: "Ip Money Reciept" }]);
       console.log("Submission successful");
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -1337,8 +1344,6 @@ const IpAdmission = ({ patientData, onClose }) => {
                   <option value={"aadhar"}>aadhar card</option>
                   <option value={"pan"}>Pan card</option>
                   <option value={"Driving Licence"}>Driving Licence</option>
-
-
                 </select>
               </td>
               <td>
@@ -1380,6 +1385,27 @@ const IpAdmission = ({ patientData, onClose }) => {
           onSelect={handleSelect}
           onClose={() => setActivePopup(null)}
         />
+      )}
+      {isAdmissionForm && (
+        <>
+          <CustomModal
+            isOpen={isAdmissionForm}
+            onClose={() => setIsAdmissionForm(false)}
+          >
+            <AdmissionFormPrint
+              setIsFormSubmitted={setIsAdmissionForm}
+              patient={submittedPatientData}
+            />
+          </CustomModal>
+        </>
+      )}
+      {isPrintGenericSticker && (
+        <CustomModal
+          isOpen={isPrintGenericSticker}
+          onClose={() => setIsGenericSticker(false)}
+        >
+          <PrintGenericSticker patient={submittedPatientData} />
+        </CustomModal>
       )}
     </>
   );

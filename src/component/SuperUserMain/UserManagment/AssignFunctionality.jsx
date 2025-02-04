@@ -434,6 +434,16 @@ const AssignFunctionality = () => {
         "Follow-Up Scheduling",
       ],
     },
+    {
+      id: 44,
+      name: "Laundry",
+      logo: "fa-solid fa-notes-medical",
+      subcomponents: [
+        "Transaction",
+        "Master",
+        "Report"
+      ],
+    },
   ];
   const [roles, setRoles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

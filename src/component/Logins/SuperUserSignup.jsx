@@ -50,6 +50,37 @@ const SuperUserSignup = () => {
             ],
           },
           {
+            name: "Laundry",
+            path: "/laundry",
+            logo: "fa-solid fa-money-check-dollar",
+            submodules: [
+              {
+                name: "Master",
+                path: "/laundry/master",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Reports",
+                path: "/laundry/reports",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+              {
+                name: "Transaction",
+                path: "/laundry/transaction",
+                canEdit: true,
+                canView: true,
+                canAdd: true,
+                canDelete: true,
+              },
+            ],
+          },
+          {
             name: "Visitor Management",
             path: "/hi",
             logo: "fa-solid fa-file-medical",

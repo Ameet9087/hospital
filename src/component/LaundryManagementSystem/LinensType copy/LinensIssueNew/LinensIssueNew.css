@@ -1,0 +1,187 @@
+.LinensIssueNew-container {
+    padding: 10px;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+.LinensIssueNew-add-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.LinensIssueNew-add-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.LinensIssueNew-search-bar{
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}  
+  .LinensIssueNew-search-bar input {
+    padding: 5px;
+    font-size: var(--font-size);
+    width: 200px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+  .LinensIssueNew-search-bar i{
+    color:gray;
+    position: absolute;
+    right: 5px;  
+}
+.LinensIssueNew-search-N-result{
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.LinensIssueNew-results-info {
+  display: flex;
+  align-items: center;
+  /* padding-top: 10px; */
+}
+.LinensIssueNew-results-info span {
+  /* display: flex;
+  align-items: center; */
+  /* padding-top: 10px; */
+  /* color: #008CBA; */
+  font-size: var(--font-size);
+  /* font-weight: bold; */
+  margin-right: 10px;
+}
+.LinensIssueNew-edit-button, .LinensIssueNew-deactivate-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 1px 5px;
+}
+
+.LinensIssueNew-edit-button:hover, .LinensIssueNew-deactivate-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+
+
+.LinensIssueNew-print-button {
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.LinensIssueNew-print-button:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.LinensIssueNew-floating-field {
+  position: relative;
+}
+.LinensIssueNew-floating-input,
+.LinensIssueNew-floating-select {
+  padding: 5px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: var(--font-size);
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.LinensIssueNew-form-floating-field {
+  position: relative;
+}
+.LinensIssueNew-search-field {
+  position: relative;
+}
+
+.LinensIssueNew-search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.LinensIssueNew-floating-input:focus,
+.LinensIssueNew-floating-select:focus {
+  outline: none;
+  border-color: #00897b;
+  box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+}
+.LinensIssueNew-services-section {
+  background: white;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+}
+
+.LinensIssueNew-form-floating-input,
+.LinensIssueNew-form-floating-select {
+  padding: 5px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+  transition: all 0.2s ease;
+}
+.LinensIssueNew-form-floating-input{
+  width: 92%;
+}
+.LinensIssueNew-form-floating-select {
+  width: 100%;
+}
+.LinensIssueNew-form-floating-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: var(--font-size);
+}
+.LinensIssueNew-form-floating-field.active .LinensIssueNew-form-floating-label {
+  top: 0;
+  font-size: 12px;
+  color: #00897b;
+}
+.LinensIssueNew-form-floating-field.active .LinensIssueNew-form-floating-input,
+.LinensIssueNew-form-floating-field.active .LinensIssueNew-form-floating-select {
+  border-color: #00897b;
+}

@@ -49,7 +49,6 @@ const VaccinationRegister = ({ onClose }) => {
     fatherName: "",
     phoneNumber: "",
     religion: "Hindu",
-    caste: "",
   });
 
   const handleChange = (e) => {

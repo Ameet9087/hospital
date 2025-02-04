@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./FinalBill.css";
 import { CiSearch } from "react-icons/ci";
 import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
@@ -48,7 +48,7 @@ const FloatingSelect = ({ label, options = [], ...props }) => {
         onChange={(e) => setHasValue(e.target.value !== '')}
         {...props}
       >
-        <option value="">{}</option>
+        <option value="">{ }</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>{option.label}</option>
         ))}
@@ -65,6 +65,7 @@ const FinalBill = () => {
   const [patientData, setpatientData] = useState([]);
   const [selectedPatientId, setselectedPatientId] = useState(null);
   const [selectedPatientDetails, setSelectedPatientDetails] = useState(null);
+  const [servicesTableRows, setServicesTableRows] = useState([]);
 
   const [selectedTab, setSelectedTab] = useState();
   const [columnWidths, setColumnWidths] = useState({});
@@ -74,14 +75,14 @@ const FinalBill = () => {
 
   const [currentDateTime, setCurrentDateTime] = useState("");
   const [wholeGrossAmount, setWholeGrossAmount] = useState(0);
-  const navigate=useNavigate();
-  
+  const navigate = useNavigate();
 
-const OpenPrintFile=()=>{
-  navigate('/OpdBillingPrint');
-  
-}
-  
+
+  const OpenPrintFile = () => {
+    navigate('/OpdBillingPrint');
+
+  }
+
   useEffect(() => {
     // Get current date and time
     const now = new Date();
@@ -116,8 +117,8 @@ const OpenPrintFile=()=>{
   };
   const calculateTotalSurgeryAmount = () => {
     return displaySuegeryTableRows
-    .reduce((total, row) => total + (parseFloat(row.totalAmt) || 0), 0)
-    .toFixed(2);
+      .reduce((total, row) => total + (parseFloat(row.totalAmt) || 0), 0)
+      .toFixed(2);
 
     // const totalSurgeryAmt = displaySuegeryTableRows.reduce((sum, row) => {
     //   const amt = parseFloat(row.totalHospitalAmt || 0);
@@ -131,7 +132,7 @@ const OpenPrintFile=()=>{
   const calculateWholeGrossAmount = () => {
     const totalAdvance = parseFloat(calculateTotalAdvance());
     const totalRoomRent = parseFloat(calculateTotalRoomRent());
-    const totalService=parseFloat(calculateTotalServiceAmount());
+    const totalService = parseFloat(calculateTotalServiceAmount());
     const totalHospitalAmt = displaySuegeryTableRows.reduce(
       (sum, row) => sum + parseFloat(row.totalHospitalAmt || 0),
       0
@@ -139,17 +140,17 @@ const OpenPrintFile=()=>{
 
     const total = (totalAdvance + totalRoomRent + totalService + totalHospitalAmt).toFixed(2);
 
- 
-  
+
+
     setWholeGrossAmount(total); // Update state
-    
+
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     calculateWholeGrossAmount();
-  },[selectedPatientDetails])
+  }, [selectedPatientDetails])
 
-// prachi summary
+  // prachi summary
 
   const populateSummaryTable = () => {
     const summaryData = [];
@@ -200,56 +201,41 @@ const OpenPrintFile=()=>{
 
   useEffect(() => {
     if (selectedPatientDetails) { // Check if patient details exist
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${API_BASE_URL}/ipbillings`);
-                const data = response.data;
+      const fetchData = async () => {
+        try {
 
-                // Flatten testGridIpdBill and map it into table rows
-                const formattedData = data.flatMap((item, index) =>
-                    item.testGridIpdBill.map((bill, billIndex) => ({
-                        sn: `${index + 1}.${billIndex + 1}`, // Unique SN for nested items
-                        billingDate: item.billingDate || "",
-                        billingTime: item.billingTime || "",
-                        testGridIpdBillId: bill.testGridIpdBillId || "",
-                        serviceName: bill.serviceName || "N/A",
-                        rate: bill.rate || "",
-                        quantity: bill.quantity || "",
-                        totalAmt: item.total || "",
-                        disc: item.disc || "",
-                        netAmt: item.netAmt || "",
-                        billingUser: item.billingUser || "",
-                    }))
-                );
 
-                setServicesTableRows(formattedData);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
+          const response = await axios.get(`${API_BASE_URL}/ipbillings/all_bill/${selectedPatientDetails.ipAdmmissionId}`);
+          const data = response.data;
 
-        fetchData();
+          console.log("------------", data);
+          setServicesTableRows(response.data.testGridIpdBill);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      fetchData();
     }
-}, [selectedPatientDetails]); // Depend on selectedPatientDetails
-
+  }, [selectedPatientDetails]);
 
   useEffect(() => {
     if (selectedPatientDetails) {
-    axios
-      .get(`${API_BASE_URL}/surgery-events`)
-      .then((response) => {
-        const surgeryData = response.data.map((event, index) => ({
-          sn: index + 1,
-          totalHospitalAmt: event.totalHospitalAmt,
-          operationName: event.operationMasterDTO.operationName,
-          remark: event.operationBookingDTO.remark,
-        }));
+      axios
+        .get(`${API_BASE_URL}/surgery-events`)
+        .then((response) => {
+          const surgeryData = response.data.map((event, index) => ({
+            sn: index + 1,
+            totalHospitalAmt: event.totalHospitalAmt,
+            operationName: event.operationMasterDTO.operationName,
+            remark: event.operationBookingDTO.remark,
+          }));
 
-        setdisplaySuegeryTableRows(surgeryData);
-      })
-      .catch((error) => {
-        console.error("Error fetching surgery data:", error);
-      });
+          setdisplaySuegeryTableRows(surgeryData);
+        })
+        .catch((error) => {
+          console.error("Error fetching surgery data:", error);
+        });
     }
   }, [selectedPatientDetails]);
 
@@ -281,33 +267,34 @@ const OpenPrintFile=()=>{
     }
   }, [selectedPatientDetails]);
 
-    const getPopupData = () => {
+  const getPopupData = () => {
     if (activePopup === "patients") {
-      return { columns: [ "uhid","firstName","lastName","doctorName"],
-        
-      
+      return {
+        columns: ["uhid", "firstName", "lastName", "doctorName"],
+
+
 
         data: patientData.map((item) => ({
           uhid: item.patient?.patient?.uhid,
           firstName: item.patient?.patient?.firstName,
           lastName: item.patient?.patient?.lastName,
           doctorName: item.admissionUnderDoctorDetail?.consultantDoctor?.doctorName,
-          ipAdmmissionId:item.ipAdmmissionId,
-          patientName:`${item.patient?.patient?.firstName} ${item.patient?.patient?.lastName}`,
-          age:item.patient?.patient?.age,
-          gender:item.patient?.patient?.gender,
-          address:item.patient?.patient?.address,
-          payType:item.roomDetails?.payTypeDTO?.payTypeName,
-          roomNo:item.roomDetails?.bedDTO?.roomNo,
-          bedNo:item.roomDetails?.bedDTO?.bedNo,
-          sourceOfRegistration:item.patient?.patient?.sourceOfRegistration,
-          DOA:item.admissionDate,
-          TOA:item.admissionTime,
-          DOD:currentDateTime
-          
+          ipAdmmissionId: item.ipAdmmissionId,
+          patientName: `${item.patient?.patient?.firstName} ${item.patient?.patient?.lastName}`,
+          age: item.patient?.patient?.age,
+          gender: item.patient?.patient?.gender,
+          address: item.patient?.patient?.address,
+          payType: item.roomDetails?.payTypeDTO?.payTypeName,
+          roomNo: item.roomDetails?.bedDTO?.roomNo,
+          bedNo: item.roomDetails?.bedDTO?.bedNo,
+          sourceOfRegistration: item.patient?.patient?.sourceOfRegistration,
+          DOA: item.admissionDate,
+          TOA: item.admissionTime,
+          DOD: currentDateTime
+
 
         })),
-      
+
       };
     } else {
       return { columns: [], data: [] };
@@ -319,11 +306,11 @@ const OpenPrintFile=()=>{
   const handleSelect = async (data) => {
     if (activePopup === "patients") {
       setSelectedPatientDetails(data);
-    
+
     }
     setActivePopup(null);
   };
-  console.log("patients selected",selectedPatientDetails);
+  console.log("patients selected", selectedPatientDetails);
 
   // Prachi
   useEffect(() => {
@@ -335,13 +322,13 @@ const OpenPrintFile=()=>{
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, [API_BASE_URL]);
-  
+
   const fetchRoomRentData = async (ipAdmissionId) => {
     try {
       // Fetch room rent data from the API
       const response = await axios.get(`${API_BASE_URL}/room-rents/by-ip-admission/${ipAdmissionId}`);
       const roomRentData = response.data;
-  
+
       // Map the data to create rows for the table
       const rows = roomRentData.map((item, index) => ({
         sn: index + 1,
@@ -363,26 +350,26 @@ const OpenPrintFile=()=>{
         gSTAmt: 0,
         roomEdit: "",
       }));
-  
+
       return rows; // Return the rows
     } catch (error) {
       console.error("Error fetching room rent data:", error);
       return []; // Return an empty array in case of an error
     }
   };
-  
+
   // Call the above function inside useEffect
   useEffect(() => {
     if (selectedPatientDetails) {
       const ipAdmissionId = selectedPatientDetails.ipAdmmissionId;
-  
+
       // Fetch data and update the state
       fetchRoomRentData(ipAdmissionId).then((rows) => {
         setroomRentTableRows(rows); // Update state with the fetched rows
       });
     }
   }, [selectedPatientDetails]);
-  
+
 
   const handleInputChange = (index, field, value) => {
     const updatedRows = [...roomRentTableRows];
@@ -405,50 +392,50 @@ const OpenPrintFile=()=>{
     setroomRentTableRows(updatedRows);
   };
 
-// prachi dr details
-const fetchDrVisitsByIpAdmission = async (patientId) => {
-  try {
-    const response = await axios.get(`${API_BASE_URL}/dr-visits/by-ip-admission/${patientId}`);
-    console.log("Response of Dr Visits:", response.data);
-    return response.data; // Process or return the fetched data
-  } catch (error) {
-    console.error("Error fetching Dr Visits:", error);
-    throw error; // Optionally re-throw the error for further handling
-  }
-};
+  // prachi dr details
+  const fetchDrVisitsByIpAdmission = async (patientId) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/dr-visits/by-ip-admission/${patientId}`);
+      console.log("Response of Dr Visits:", response.data);
+      return response.data; // Process or return the fetched data
+    } catch (error) {
+      console.error("Error fetching Dr Visits:", error);
+      throw error; // Optionally re-throw the error for further handling
+    }
+  };
 
-// Example usage:
-useEffect(() => {
-  if (selectedPatientDetails) {
-    const patientId = parseInt(selectedPatientDetails.ipAdmmissionId, 10);
-    fetchDrVisitsByIpAdmission(patientId).then((data) => {
-      const fetchedData = data.map((visit, index) => ({
-        sn: index + 1,
-        dCode: visit.drVisitId || "",
-        doctorName: visit.addDoctorDto.doctorName || "",
-        drFree: visit.doctorFee || "",
-        qty: "1",
-        totalAmt: visit.doctorFee || "",
-        disc: "0.00",
-        discAmt: "0.00",
-        netAmt: visit.doctorFee || "",
-        pkg: "",
-        patPayable: visit.doctorFee || "",
-        userNm: "",
-        doperid: "",
-        pkgCovAmt: "",
-        roperid: "",
-        gST: "0.00",
-        gSTAmt: "0.00",
-        drvisEdit: "",
-        doctor: visit.addDoctorDto?.doctorName || "",
-        doctorShareAmt: "0.00",
-        toHospital: visit.doctorFee || "",
-      }));
-      setdrVisitsTableRows(fetchedData);
-    });
-  }
-}, [selectedPatientDetails]);
+  // Example usage:
+  useEffect(() => {
+    if (selectedPatientDetails) {
+      const patientId = parseInt(selectedPatientDetails.ipAdmmissionId, 10);
+      fetchDrVisitsByIpAdmission(patientId).then((data) => {
+        const fetchedData = data.map((visit, index) => ({
+          sn: index + 1,
+          dCode: visit.drVisitId || "",
+          doctorName: visit.addDoctorDto.doctorName || "",
+          drFree: visit.doctorFee || "",
+          qty: "1",
+          totalAmt: visit.doctorFee || "",
+          disc: "0.00",
+          discAmt: "0.00",
+          netAmt: visit.doctorFee || "",
+          pkg: "",
+          patPayable: visit.doctorFee || "",
+          userNm: "",
+          doperid: "",
+          pkgCovAmt: "",
+          roperid: "",
+          gST: "0.00",
+          gSTAmt: "0.00",
+          drvisEdit: "",
+          doctor: visit.addDoctorDto?.doctorName || "",
+          doctorShareAmt: "0.00",
+          toHospital: visit.doctorFee || "",
+        }));
+        setdrVisitsTableRows(fetchedData);
+      });
+    }
+  }, [selectedPatientDetails]);
 
 
 
@@ -456,52 +443,52 @@ useEffect(() => {
 
   const [roomRentTableRows, setroomRentTableRows] = useState([
     {
-    sn: 1,
-    rCode: "",
-    roomType: "",
-    rate: "",
-    qty: "",
-    totalAmt: "",
-    disc: "",
-    netAmt: "",
-    discAmt: "",
-    pkg: "",
-    patPayable: "",
-    userNm: "",
-    pkgid: "",
-    pkgCovAmt: "",
-    roperid: "",
-    gST: "",
-    gSTAmt: "",
-    roomEdit: "",
-  }
-]);
+      sn: 1,
+      rCode: "",
+      roomType: "",
+      rate: "",
+      qty: "",
+      totalAmt: "",
+      disc: "",
+      netAmt: "",
+      discAmt: "",
+      pkg: "",
+      patPayable: "",
+      userNm: "",
+      pkgid: "",
+      pkgCovAmt: "",
+      roperid: "",
+      gST: "",
+      gSTAmt: "",
+      roomEdit: "",
+    }
+  ]);
 
   const [drVisitsTableRows, setdrVisitsTableRows] = useState([
     {
-      sn:1,
-    dCode: "",
-    doctorName: "",
-    drFree: "",
-    qty: "",
-    totalAmt: "",
-    disc: "",
-    discAmt: "",
-    netAmt: "",
-    pkg: "",
-    patPayable: "",
-    userNm: "",
-    doperid: "",
-    pkgCovAmt: "",
-    roperid: "",
-    gST: "",
-    gSTAmt: "",
-    drvisEdit: "",
-    doctor: "",
-    doctorShareAmt: "",
-    toHospital: "",
-  }
-]);
+      sn: 1,
+      dCode: "",
+      doctorName: "",
+      drFree: "",
+      qty: "",
+      totalAmt: "",
+      disc: "",
+      discAmt: "",
+      netAmt: "",
+      pkg: "",
+      patPayable: "",
+      userNm: "",
+      doperid: "",
+      pkgCovAmt: "",
+      roperid: "",
+      gST: "",
+      gSTAmt: "",
+      drvisEdit: "",
+      doctor: "",
+      doctorShareAmt: "",
+      toHospital: "",
+    }
+  ]);
   // State to manage table rows
   const [packageTableRows, setPackageTableRows] = useState([
     {
@@ -526,89 +513,6 @@ useEffect(() => {
     },
   ]);
 
-  const [servicesTableRows, setServicesTableRows] = useState([
-    {
-      sn: 1,
-      Date: "",
-      sCode: "",
-      doctorName: "",
-      drFree: "",
-      qty: "",
-      totalAmt: "",
-      discAmt: "",
-      netAmt: "",
-      pkg: "",
-      patPayable: "",
-      userNm: "",
-      dpkgid: "",
-      pkgCovAmt: "",
-      roperid: "",
-      gST: "",
-      gSTAmt: "",
-      drviseEdit: "",
-      doctor: "",
-      doctorShareAmt: "",
-      toHospital: "",
-    },
-  ]);
-
-  const [investigationTableRows, setinvestigationTableRows] = useState([
-    {
-      sn: 1,
-      Date: "",
-      dCode: "",
-      doctorName: "",
-      drFree: "",
-      qty: "",
-      totalAmt: "",
-      discAmt: "",
-      netAmt: "",
-      pkg: "",
-      patPayable: "",
-      userNm: "",
-      dpkgid: "",
-      pkgCovAmt: "",
-      roperid: "",
-      gST: "",
-      gSTAmt: "",
-      drviseEdit: "",
-      doctor: "",
-      doctorShareAmt: "",
-      toHospital: "",
-    },
-  ]);
-
-  const [serviceonTableRows, setserviceonTableRows] = useState([
-    {
-      sn: 1,
-      Date: "",
-      time: "",
-      sCode: "",
-      serviceName: "",
-      doctorName: "",
-      rate: "",
-      qty: "",
-      totalAmt: "",
-      disc:"",
-      discAmt: "",
-      netAmt: "",
-      pkg: "",
-      patPayable: "",
-      userNm: "",
-      spkgid: "",
-      billNo:"",
-      soperid: "",
-      pkgCovAmt: "",
-      amtB4PkgCov:"",	
-      sunitnm:"",
-      gST: "",
-      gSTAmt: "",
-      servedit:"",
-      doctor: "",
-      doctorShareAmt: "",
-      toHospital: "",
-    },
-  ]);
 
   const [otPackagesTableRows, setotPackagesTableRows] = useState([
     {
@@ -767,8 +671,8 @@ useEffect(() => {
     },
   ]);
 
-  
-  
+
+
   const handleAddRow = (tableType) => {
     if (tableType === "roomrent") {
       const newRow = {
@@ -821,14 +725,14 @@ useEffect(() => {
       const newRow = {
         sn: investigationTableRows.length + 1,
         Date: "",
-        time:"",
+        time: "",
         iCode: "",
-        billNo:"",
+        billNo: "",
         testName: "",
         rate: "",
         qty: "",
         totalAmt: "",
-        disc:"",
+        disc: "",
         discAmt: "",
         netAmt: "",
         pkg: "",
@@ -836,7 +740,7 @@ useEffect(() => {
         userNm: "",
         doperid: "",
         pkgCovAmt: "",
-        ipkgid:"",
+        ipkgid: "",
         loperid: "",
         gST: "",
         gSTAmt: "",
@@ -847,35 +751,35 @@ useEffect(() => {
       };
       setinvestigationTableRows([...investigationTableRows, newRow]);
     }
-     else if (tableType === "services") {
+    else if (tableType === "services") {
       const newRow = {
         sn: servicesTableRows.length + 1,
         Date: "",
-      time: "",
-      sCode: "",
-      serviceName: "",
-      doctorName: "",
-      rate: "",
-      qty: "",
-      totalAmt: "",
-      disc:"",
-      discAmt: "",
-      netAmt: "",
-      pkg: "",
-      patPayable: "",
-      userNm: "",
-      spkgid: "",
-      billNo:"",
-      soperid: "",
-      pkgCovAmt: "",
-      amtB4PkgCov:"",	
-      sunitnm:"",
-      gST: "",
-      gSTAmt: "",
-      servedit:"",
-      doctor: "",
-      doctorShareAmt: "",
-      toHospital: "",
+        time: "",
+        sCode: "",
+        serviceName: "",
+        doctorName: "",
+        rate: "",
+        qty: "",
+        totalAmt: "",
+        disc: "",
+        discAmt: "",
+        netAmt: "",
+        pkg: "",
+        patPayable: "",
+        userNm: "",
+        spkgid: "",
+        billNo: "",
+        soperid: "",
+        pkgCovAmt: "",
+        amtB4PkgCov: "",
+        sunitnm: "",
+        gST: "",
+        gSTAmt: "",
+        servedit: "",
+        doctor: "",
+        doctorShareAmt: "",
+        toHospital: "",
       };
       setServicesTableRows([...servicesTableRows, newRow]);
     } else if (tableType === "otPackages") {
@@ -904,7 +808,7 @@ useEffect(() => {
       };
       setotPackagesTableRows([...otPackagesTableRows, newRow]);
     } else if (tableType === "pharmacy") {
-        const newRow = {
+      const newRow = {
         sn: pharmacyTableRows.length + 1,
         Date: "",
         pCode: "",
@@ -978,9 +882,9 @@ useEffect(() => {
       const newRow = {
         sn: messageTableRows.length + 1,
         msgDate: "",
-      msgTime: "",
-      message: "",
-      created: "",
+        msgTime: "",
+        message: "",
+        created: "",
       };
       setmessageTableRows([...messageTableRows, newRow]);
     } else if (tableType === "patientBeds") {
@@ -1000,7 +904,7 @@ useEffect(() => {
     } else if (tableType === "roomLimit") {
       const newRow = {
         sn: roomLimitTableRows.length + 1,
-      
+
         roomTypeName: "",
         roomTypeId: "",
         limit: "",
@@ -1060,7 +964,7 @@ useEffect(() => {
         sn: index + 1,
       }));
       setinvestigationTableRows(renumberedRows);
-    }else if (tableType === "services") {
+    } else if (tableType === "services") {
       const updatedRows = servicesTableRows.filter(
         (_, index) => index !== indexToRemove
       );
@@ -1069,7 +973,7 @@ useEffect(() => {
         sn: index + 1,
       }));
       setServicesTableRows(renumberedRows);
-    }else if (tableType === "otPackages") {
+    } else if (tableType === "otPackages") {
       const updatedRows = otPackagesTableRows.filter(
         (_, index) => index !== indexToRemove
       );
@@ -1078,7 +982,7 @@ useEffect(() => {
         sn: index + 1,
       }));
       setotPackagesTableRows(renumberedRows);
-    }else if (tableType === "pharmacy") {
+    } else if (tableType === "pharmacy") {
       const updatedRows = pharmacyTableRows.filter(
         (_, index) => index !== indexToRemove
       );
@@ -1087,7 +991,7 @@ useEffect(() => {
         sn: index + 1,
       }));
       setpharmacyTableRows(renumberedRows);
-    }else if (tableType === "pharmacyRet") {
+    } else if (tableType === "pharmacyRet") {
       const updatedRows = pharmacyRetTableRows.filter(
         (_, index) => index !== indexToRemove
       );
@@ -1096,7 +1000,7 @@ useEffect(() => {
         sn: index + 1,
       }));
       setpharmacyRetTableRows(renumberedRows);
-    }else if (tableType === "summary") {
+    } else if (tableType === "summary") {
       const updatedRows = summaryTableRows.filter(
         (_, index) => index !== indexToRemove
       );
@@ -1105,7 +1009,7 @@ useEffect(() => {
         sn: index + 1,
       }));
       setsummaryTableRows(renumberedRows);
-    }else if (tableType === "advances") {
+    } else if (tableType === "advances") {
       const updatedRows = advancesTableRows.filter(
         (_, index) => index !== indexToRemove
       );
@@ -1114,7 +1018,7 @@ useEffect(() => {
         sn: index + 1,
       }));
       setAdvancesTableRows(renumberedRows);
-    }else if (tableType === "message") {
+    } else if (tableType === "message") {
       const updatedRows = messageTableRows.filter(
         (_, index) => index !== indexToRemove
       );
@@ -1123,7 +1027,7 @@ useEffect(() => {
         sn: index + 1,
       }));
       setmessageTableRows(renumberedRows);
-    }else if (tableType === "patientBeds") {
+    } else if (tableType === "patientBeds") {
       const updatedRows = patientBedsTableRows.filter(
         (_, index) => index !== indexToRemove
       );
@@ -1132,7 +1036,7 @@ useEffect(() => {
         sn: index + 1,
       }));
       setpatientBedsTableRows(renumberedRows);
-    }else if (tableType === "roomLimit") {
+    } else if (tableType === "roomLimit") {
       const updatedRows = roomLimitTableRows.filter(
         (_, index) => index !== indexToRemove
       );
@@ -1141,7 +1045,7 @@ useEffect(() => {
         sn: index + 1,
       }));
       setroomLimitTableRows(renumberedRows);
-    }else if (tableType === "doctorServicesLimit") {
+    } else if (tableType === "doctorServicesLimit") {
       const updatedRows = doctorServicesLimitTableRows.filter(
         (_, index) => index !== indexToRemove
       );
@@ -1150,7 +1054,7 @@ useEffect(() => {
         sn: index + 1,
       }));
       setdoctorServicesLimitTableRows(renumberedRows);
-    }else if (tableType === "displaySuegery") {
+    } else if (tableType === "displaySuegery") {
       const updatedRows = displaySuegeryTableRows.filter(
         (_, index) => index !== indexToRemove
       );
@@ -1159,7 +1063,7 @@ useEffect(() => {
         sn: index + 1,
       }));
       setdisplaySuegeryTableRows(renumberedRows);
-    }else if (tableType === "doctorServicesLimit") {
+    } else if (tableType === "doctorServicesLimit") {
       const updatedRows = doctorServicesLimitTableRows.filter(
         (_, index) => index !== indexToRemove
       );
@@ -1170,46 +1074,46 @@ useEffect(() => {
       setdoctorServicesLimitTableRows(renumberedRows);
     }
   };
-// prachi room rent
+  // prachi room rent
   const renderTable = () => {
     switch (selectedTab) {
       case "roomrent":
         return (
           <div className="services-table">
             <table border={1} ref={tableRef}>
-      <thead>
-        <tr>
-          {[
-            // "Actions",
-            "SN",
-            "RCode",
-            "Room Type",
-            "Rate",
-            "Qty",
-            "Total Amt",
-            "Disc%",
-            "Disc Amt",
-            "Net Amt",
-            "Pkg",
-            "Pat Payable",
-            "User Nm",
-            "Pkgid",
-            "Pkg Cov Amt",
-            "Roperid",
-            "GST",
-            "GST Amt",
-            "Room Edit",
-          ].map((header, index) => (
-            <th key={index} style={{ width: columnWidths[index] }}>
-              {header}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {roomRentTableRows.map((row, index) => (
-          <tr key={index}>
-            {/* <td>
+              <thead>
+                <tr>
+                  {[
+                    // "Actions",
+                    "SN",
+                    "RCode",
+                    "Room Type",
+                    "Rate",
+                    "Qty",
+                    "Total Amt",
+                    "Disc%",
+                    "Disc Amt",
+                    "Net Amt",
+                    "Pkg",
+                    "Pat Payable",
+                    "User Nm",
+                    "Pkgid",
+                    "Pkg Cov Amt",
+                    "Roperid",
+                    "GST",
+                    "GST Amt",
+                    "Room Edit",
+                  ].map((header, index) => (
+                    <th key={index} style={{ width: columnWidths[index] }}>
+                      {header}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {roomRentTableRows.map((row, index) => (
+                  <tr key={index}>
+                    {/* <td>
               <button onClick={handleAddRow}>Add</button>
               <button
                 onClick={() => handleDeleteRow(index)}
@@ -1218,52 +1122,52 @@ useEffect(() => {
                 Del
               </button>
             </td> */}
-            <td>{row.sn}</td>
-            <td>{row.rCode}</td>
-            <td>{row.roomType}</td>
-            <td>
-              <input
-                type="number"
-                value={row.rate}
-                onChange={(e) =>
-                  handleInputChange(index, "rate", parseFloat(e.target.value))
-                }
-              />
-            </td>
-            <td>
-              <input
-                type="number"
-                value={row.qty}
-                onChange={(e) =>
-                  handleInputChange(index, "qty", parseInt(e.target.value))
-                }
-              />
-            </td>
-            <td>{row.totalAmt}</td>
-            <td>
-              <input
-                type="number"
-                value={row.disc}
-                onChange={(e) =>
-                  handleInputChange(index, "disc", parseFloat(e.target.value))
-                }
-              />
-            </td>
-            <td>{row.discAmt}</td>
-            <td>{row.netAmt}</td>
-            <td>{row.pkg}</td>
-            <td>{row.patPayable}</td>
-            <td>{row.userNm}</td>
-            <td>{row.pkgid}</td>
-            <td>{row.pkgCovAmt}</td>
-            <td>{row.roperid}</td>
-            <td>{row.gST}</td>
-            <td>{row.gSTAmt}</td>
-            <td>{row.roomEdit}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+                    <td>{row.sn}</td>
+                    <td>{row.rCode}</td>
+                    <td>{row.roomType}</td>
+                    <td>
+                      <input
+                        type="number"
+                        value={row.rate}
+                        onChange={(e) =>
+                          handleInputChange(index, "rate", parseFloat(e.target.value))
+                        }
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="number"
+                        value={row.qty}
+                        onChange={(e) =>
+                          handleInputChange(index, "qty", parseInt(e.target.value))
+                        }
+                      />
+                    </td>
+                    <td>{row.totalAmt}</td>
+                    <td>
+                      <input
+                        type="number"
+                        value={row.disc}
+                        onChange={(e) =>
+                          handleInputChange(index, "disc", parseFloat(e.target.value))
+                        }
+                      />
+                    </td>
+                    <td>{row.discAmt}</td>
+                    <td>{row.netAmt}</td>
+                    <td>{row.pkg}</td>
+                    <td>{row.patPayable}</td>
+                    <td>{row.userNm}</td>
+                    <td>{row.pkgid}</td>
+                    <td>{row.pkgCovAmt}</td>
+                    <td>{row.roperid}</td>
+                    <td>{row.gST}</td>
+                    <td>{row.gSTAmt}</td>
+                    <td>{row.roomEdit}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
             <div className="final-bill-summary-section">
               <div className="final-bill-summary-row">
                 <div className="final-bill-summary-field">
@@ -1653,7 +1557,7 @@ useEffect(() => {
                 </tr>
               </thead>
               <tbody>
-                {servicesTableRows.map((row, index) => (
+                {servicesTableRows?.map((row, index) => (
                   <tr key={index}>
                     <td>
                       <div className="table-actions">
@@ -1672,30 +1576,11 @@ useEffect(() => {
                         </button>
                       </div>
                     </td>
-                    <td>{row.sn}</td>
-                    <td>{row.Date}</td>
-                    <td>{row.time}</td>
-                    <td>{row.sCode}</td>
-                    <td>{row.serviceName}</td>
-                    <td>{row.doctorName}</td>
-                    <td>{row.rate}</td>
-                    <td>{row.qty}</td>
-                    <td>{row.totalAmt}</td>
-                    <td>{row.disc}</td>
-                    <td>{row.discAmt}</td>
-                    <td>{row.netAmt}</td>
-                    <td>{row.pkg}</td>
-                    <td>{row.patPayable}</td>
-                    <td>{row.userNm}</td>
-                    <td>{row.dpkgid}</td>
-                    <td>{row.pkgCovAmt}</td>
-                    <td>{row.roperid}</td>
-                    <td>{row.gST}</td>
-                    <td>{row.gSTAmt}</td>
-                    <td>{row.drviseEdit}</td>
-                    <td>{row.doctor}</td>
-                    <td>{row.doctorShareAmt}</td>
-                    <td>{row.toHospital}</td>
+                    <td>{index + 1}</td> {/* Serial Number */}
+                    <td>{row?.date || "-"}</td>
+                    <td>{row?.serviceName || "N/A"}</td>
+                    <td>{row?.rate || "0"}</td>
+                    <td>{row?.quantity || "0"}</td>
                   </tr>
                 ))}
               </tbody>
@@ -1704,7 +1589,7 @@ useEffect(() => {
               <div className="final-bill-summary-row">
                 <div className="final-bill-summary-field">
                   <label>Total:</label>
-                  
+
                   <input type="text" value={calculateTotalServiceAmount()} readOnly />
                 </div>
                 <div className="final-bill-summary-field">
@@ -2217,7 +2102,7 @@ useEffect(() => {
               <div className="final-bill-summary-row">
                 <div className="final-bill-summary-field">
                   <label>Total Amt:</label>
-                  <input type="text" value={wholeGrossAmount}/>
+                  <input type="text" value={wholeGrossAmount} />
                 </div>
                 <div className="final-bill-summary-field">
                   <label>Disc Amt:</label>
@@ -2236,37 +2121,37 @@ useEffect(() => {
         return (
           <div className="services-table">
             <table border={1} ref={tableRef}>
-        <thead>
-          <tr>
-            {[
-              // "Actions",
-              "SN",
-              "Receipt Date",
-              "Receipt No",
-              "Amount",
-              "Pay Mode",
-              "Advance Type",
-            ].map((header, index) => (
-              <th
-                key={index}
-                style={{ width: columnWidths[index] }}
-                className="resizable-th"
-              >
-                <div className="header-content">
-                  <span>{header}</span>
-                  <div
-                    className="resizer"
-                    onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                  ></div>
-                </div>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {advancesTableRows.map((row, index) => (
-            <tr key={index}>
-              {/* <td>
+              <thead>
+                <tr>
+                  {[
+                    // "Actions",
+                    "SN",
+                    "Receipt Date",
+                    "Receipt No",
+                    "Amount",
+                    "Pay Mode",
+                    "Advance Type",
+                  ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {advancesTableRows.map((row, index) => (
+                  <tr key={index}>
+                    {/* <td>
                 <div className="table-actions">
                   <button
                     className="final-bill-add-btn"
@@ -2283,16 +2168,16 @@ useEffect(() => {
                   </button>
                 </div>
               </td> */}
-              <td>{row.sn}</td>
-              <td>{row.receiptDate}</td>
-              <td>{row.receiptNo}</td>
-              <td>{row.amount}</td>
-              <td>{row.payMode}</td>
-              <td>{row.advanceType}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                    <td>{row.sn}</td>
+                    <td>{row.receiptDate}</td>
+                    <td>{row.receiptNo}</td>
+                    <td>{row.amount}</td>
+                    <td>{row.payMode}</td>
+                    <td>{row.advanceType}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
             <div className="final-bill-summary-section">
               <div className="final-bill-summary-row">
                 <div className="final-bill-summary-field">
@@ -2649,34 +2534,34 @@ useEffect(() => {
 
   return (
     <>
-    <div className="final-bill-container">
-     
+      <div className="final-bill-container">
+
         <div className="final-bill-section">
-        <div className="final-bill-header">Patient Details</div>
-        <div className="final-bill-grid">
-        
-        <div className="final-bill-form-row-chechbox">
-                <input className="final-bill-chechbox" type="checkbox" id="allowMultiple" />
-                <label
-                  htmlFor="allowMultiple"
-                  className="iPBilling-checkbox-label"
-                >
-                  Admited
-                </label>
-              </div>
-        <div className="final-bill-search-field">
-          
-            <FloatingInput label="IP No" type="text"
-                    id="description"
-                    value={selectedPatientDetails?.ipAdmmissionId || ""}/>
-            <button className="final-bill-search-icon"   onClick={() => setActivePopup("patients")}
- >
-              <svg viewBox="0 0 24 24" width="16" height="16">
-                <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/>
-              </svg>
-            </button>
-          </div>
-          {/* <div className="final-bill-search-field">
+          <div className="final-bill-header">Patient Details</div>
+          <div className="final-bill-grid">
+
+            <div className="final-bill-form-row-chechbox">
+              <input className="final-bill-chechbox" type="checkbox" id="allowMultiple" />
+              <label
+                htmlFor="allowMultiple"
+                className="iPBilling-checkbox-label"
+              >
+                Admited
+              </label>
+            </div>
+            <div className="final-bill-search-field">
+
+              <FloatingInput label="IP No" type="text"
+                id="description"
+                value={selectedPatientDetails?.ipAdmmissionId || ""} />
+              <button className="final-bill-search-icon" onClick={() => setActivePopup("patients")}
+              >
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                  <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z" />
+                </svg>
+              </button>
+            </div>
+            {/* <div className="final-bill-search-field">
             <FloatingInput label="LOCIP No" type="text"
                     id="description"
                     value=""/>
@@ -2686,62 +2571,60 @@ useEffect(() => {
               </svg>
             </button>
           </div> */}
-        <FloatingInput label="MR No" type="text" value={selectedPatientDetails?.uhid}/>
-        <FloatingInput label="Patient Name" type="text" value={selectedPatientDetails?.patientName}/>
-        <FloatingInput label="Age" type="text" value={selectedPatientDetails?.age}/>
-        <FloatingInput label="Gender" type="text" value={selectedPatientDetails?.gender}/>
-        <FloatingInput label="Address" type="text" value={selectedPatientDetails?.address}/>
-        <FloatingInput label="Pay Type" type="text" value={selectedPatientDetails?.payType}/>
-        <FloatingInput label="Room No" type="text" value={selectedPatientDetails?.roomNo}/>
-        <FloatingInput label="Bed No" type="text" value={selectedPatientDetails?.bedNo}/>
+            <FloatingInput label="MR No" type="text" value={selectedPatientDetails?.uhid} />
+            <FloatingInput label="Patient Name" type="text" value={selectedPatientDetails?.patientName} />
+            <FloatingInput label="Age" type="text" value={selectedPatientDetails?.age} />
+            <FloatingInput label="Gender" type="text" value={selectedPatientDetails?.gender} />
+            <FloatingInput label="Address" type="text" value={selectedPatientDetails?.address} />
+            <FloatingInput label="Pay Type" type="text" value={selectedPatientDetails?.payType} />
+            <FloatingInput label="Room No" type="text" value={selectedPatientDetails?.roomNo} />
+            <FloatingInput label="Bed No" type="text" value={selectedPatientDetails?.bedNo} />
 
-        <FloatingSelect 
-            label="Source Type"
-            options={[
-              { value: 'other', label: 'Other' }
-            ]}
-          />
-        <FloatingInput label="SOC" type="text" value=""/>
-        <FloatingInput label="Consultant Doctor" type="text" value={selectedPatientDetails?.doctorName}/>
-        <FloatingInput label="Bill No" type="text" value=""/>
-        <FloatingInput label="DOA" type="text" value={selectedPatientDetails?.DOA}/>
-        <FloatingInput label="TOA" type="text" value={selectedPatientDetails?.TOA}/>
-        <FloatingInput label="DOD" type="text" value={selectedPatientDetails?.DOD}/>
-        <FloatingInput label="Grants Available" type="text" value=""/>
-        <FloatingInput label="Retention Amount" type="text" value=""/>
-        <FloatingInput label="Referred By" type="text" value=""/>
+            <FloatingSelect
+              label="Source Type"
+              options={[
+                { value: 'other', label: 'Other' }
+              ]}
+            />
+            <FloatingInput label="SOC" type="text" value="" />
+            <FloatingInput label="Consultant Doctor" type="text" value={selectedPatientDetails?.doctorName} />
+            <FloatingInput label="Bill No" type="text" value="" />
+            <FloatingInput label="DOA" type="text" value={selectedPatientDetails?.DOA} />
+            <FloatingInput label="TOA" type="text" value={selectedPatientDetails?.TOA} />
+            <FloatingInput label="DOD" type="text" value={selectedPatientDetails?.DOD} />
+            <FloatingInput label="Grants Available" type="text" value="" />
+            <FloatingInput label="Retention Amount" type="text" value="" />
+            <FloatingInput label="Referred By" type="text" value="" />
 
+          </div>
         </div>
-        </div>
-        </div>
+      </div>
 
-        <div className="final-bill-Events">
-    
-      <div className="final-bill-content-wrapper">
-        <div className="final-bill-main-section">
-         
-       
+      <div className="final-bill-Events">
 
-        </div>
-        <div className="final-bill-services-section">
-          <div className="final-bill-tab-bar">
-            <button
-              className={`final-bill-tab ${
-                selectedTab === "roomrent" ? "active" : ""
-              }`}
-              onClick={() => setSelectedTab("roomrent")}
-            >
-              RoomRent
-            </button>
-            <button
-              className={`final-bill-tab ${
-                selectedTab === "drVisits" ? "active" : ""
-              }`}
-              onClick={() => setSelectedTab("drVisits")}
-            >
-              Dr Visit
-            </button>
-            {/* <button
+        <div className="final-bill-content-wrapper">
+          <div className="final-bill-main-section">
+
+
+
+          </div>
+          <div className="final-bill-services-section">
+            <div className="final-bill-tab-bar">
+              <button
+                className={`final-bill-tab ${selectedTab === "roomrent" ? "active" : ""
+                  }`}
+                onClick={() => setSelectedTab("roomrent")}
+              >
+                RoomRent
+              </button>
+              <button
+                className={`final-bill-tab ${selectedTab === "drVisits" ? "active" : ""
+                  }`}
+                onClick={() => setSelectedTab("drVisits")}
+              >
+                Dr Visit
+              </button>
+              {/* <button
               className={`final-bill-tab ${
                 selectedTab === "investigation" ? "active" : ""
               }`}
@@ -2749,15 +2632,14 @@ useEffect(() => {
             >
               Investigations
             </button> */}
-            <button
-              className={`final-bill-tab ${
-                selectedTab === "services" ? "active" : ""
-              }`}
-              onClick={() => setSelectedTab("services")}
-            >
-              Services
-            </button>
-            {/* <button
+              <button
+                className={`final-bill-tab ${selectedTab === "services" ? "active" : ""
+                  }`}
+                onClick={() => setSelectedTab("services")}
+              >
+                Services
+              </button>
+              {/* <button
               className={`final-bill-tab ${
                 selectedTab === "otPackages" ? "active" : ""
               }`}
@@ -2765,15 +2647,14 @@ useEffect(() => {
             >
               OT Packages
             </button> */}
-            <button
-              className={`final-bill-tab ${
-                selectedTab === "pharmacy" ? "active" : ""
-              }`}
-              onClick={() => setSelectedTab("pharmacy")}
-            >
-              Pharmacy
-            </button>
-            {/* <button
+              <button
+                className={`final-bill-tab ${selectedTab === "pharmacy" ? "active" : ""
+                  }`}
+                onClick={() => setSelectedTab("pharmacy")}
+              >
+                Pharmacy
+              </button>
+              {/* <button
               className={`final-bill-tab ${
                 selectedTab === "pharmacyRet" ? "active" : ""
               }`}
@@ -2781,32 +2662,29 @@ useEffect(() => {
             >
               Pharmacy Ret
             </button> */}
-            <button
-              className={`final-bill-tab ${
-                selectedTab === "summary" ? "active" : ""
-              }`}
-              onClick={() => setSelectedTab("summary")}
-            >
-              Summary
-            </button>
-            <button
-              className={`final-bill-tab ${
-                selectedTab === "advances" ? "active" : ""
-              }`}
-              onClick={() => setSelectedTab("advances")}
-            >
-              Advances
-            </button>
-            <button
-              className={`final-bill-tab ${
-                selectedTab === "message" ? "active" : ""
-              }`}
-              onClick={() => setSelectedTab("message")}
-            >
-              Message
-            </button>
+              <button
+                className={`final-bill-tab ${selectedTab === "summary" ? "active" : ""
+                  }`}
+                onClick={() => setSelectedTab("summary")}
+              >
+                Summary
+              </button>
+              <button
+                className={`final-bill-tab ${selectedTab === "advances" ? "active" : ""
+                  }`}
+                onClick={() => setSelectedTab("advances")}
+              >
+                Advances
+              </button>
+              <button
+                className={`final-bill-tab ${selectedTab === "message" ? "active" : ""
+                  }`}
+                onClick={() => setSelectedTab("message")}
+              >
+                Message
+              </button>
 
-            {/* <button
+              {/* <button
               className={`final-bill-tab ${
                 selectedTab === "patientBeds" ? "active" : ""
               }`}
@@ -2814,7 +2692,7 @@ useEffect(() => {
             >
               Patient Beds
             </button> */}
-            {/* <button
+              {/* <button
               className={`final-bill-tab ${
                 selectedTab === "roomLimit" ? "active" : ""
               }`}
@@ -2830,113 +2708,112 @@ useEffect(() => {
             >
               DoctorServicesLimit
             </button> */}
-            <button
-              className={`final-bill-tab ${
-                selectedTab === "displaySuegery" ? "active" : ""
-              }`}
-              onClick={() => setSelectedTab("displaySuegery")}
-            >
-              DisplaySuegery
-            </button>
+              <button
+                className={`final-bill-tab ${selectedTab === "displaySuegery" ? "active" : ""
+                  }`}
+                onClick={() => setSelectedTab("displaySuegery")}
+              >
+                DisplaySuegery
+              </button>
+            </div>
+            {renderTable()}
           </div>
-          {renderTable()}
-        </div>
-        <div className="final-bill-main-section">
-          
-         
-        <div className="final-bill-container">
-     
-     <div className="final-bill-section">
-     <div className="final-bill-header">Financial Details</div>
-     <div className="final-bill-grid">
-     
-     <FloatingInput label="Total Amt" type="text" value={wholeGrossAmount}/>
-     <FloatingInput label="Disc Amt" type="text" value=""/>
-     <FloatingInput label="Total GST Amt" type="text" value=""/>
-     <FloatingInput label="Net Amt" type="text" value=""/>
-     <FloatingInput label="Paid Amt" type="text" value=""/>
-     <FloatingInput label="Balance Amt" type="text" value=""/>
-     <FloatingInput label="Refundable Amt:" type="text" value=""/>
-     <FloatingInput label="TDS Amt" type="text" value=""/>
-     <FloatingInput label="DisAllow Amt" type="text" value=""/>
-     <FloatingInput label="Short AuthAmt" type="text" value=""/>
-     <FloatingInput label="Copay Amount" type="text" value=""/>
+          <div className="final-bill-main-section">
 
 
-     <div className="final-bill-search-field">
-       
-         <FloatingInput label="Discount Auth By" type="text"
-                 id="description"
-                 value=""/>
-         <button className="final-bill-search-icon">
-           <svg viewBox="0 0 24 24" width="16" height="16">
-             <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/>
-           </svg>
-         </button>
-       </div>
+            <div className="final-bill-container">
 
-     <FloatingInput label="Remark" type="text" value=""/>
-     <FloatingInput label="Disc Reasons" type="text" value=""/>
-     <FloatingInput label="In Admissible Di" type="text" value=""/>
-     <FloatingInput label="In Admissible A" type="text" value=""/>
-     <FloatingInput label="Post Discount" type="text" value=""/>
-     <FloatingInput label="Payable By Pati" type="text" value=""/>
-     <FloatingInput label="Payable By TPA" type="text" value=""/>
-     <FloatingInput label="Refunded" type="text" value=""/>
-     <FloatingInput label="Total Approved" type="text" value=""/>
-     <FloatingInput label="TCS" type="text" value=""/>
-     <FloatingInput label="Service Tax" type="text" value=""/>
-     <FloatingInput label="Total Doctor Sh" type="text" value=""/>
-     <FloatingInput label="Total To Hospital" type="text" value=""/>
+              <div className="final-bill-section">
+                <div className="final-bill-header">Financial Details</div>
+                <div className="final-bill-grid">
+
+                  <FloatingInput label="Total Amt" type="text" value={wholeGrossAmount} />
+                  <FloatingInput label="Disc Amt" type="text" value="" />
+                  <FloatingInput label="Total GST Amt" type="text" value="" />
+                  <FloatingInput label="Net Amt" type="text" value="" />
+                  <FloatingInput label="Paid Amt" type="text" value="" />
+                  <FloatingInput label="Balance Amt" type="text" value="" />
+                  <FloatingInput label="Refundable Amt:" type="text" value="" />
+                  <FloatingInput label="TDS Amt" type="text" value="" />
+                  <FloatingInput label="DisAllow Amt" type="text" value="" />
+                  <FloatingInput label="Short AuthAmt" type="text" value="" />
+                  <FloatingInput label="Copay Amount" type="text" value="" />
+
+
+                  <div className="final-bill-search-field">
+
+                    <FloatingInput label="Discount Auth By" type="text"
+                      id="description"
+                      value="" />
+                    <button className="final-bill-search-icon">
+                      <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <FloatingInput label="Remark" type="text" value="" />
+                  <FloatingInput label="Disc Reasons" type="text" value="" />
+                  <FloatingInput label="In Admissible Di" type="text" value="" />
+                  <FloatingInput label="In Admissible A" type="text" value="" />
+                  <FloatingInput label="Post Discount" type="text" value="" />
+                  <FloatingInput label="Payable By Pati" type="text" value="" />
+                  <FloatingInput label="Payable By TPA" type="text" value="" />
+                  <FloatingInput label="Refunded" type="text" value="" />
+                  <FloatingInput label="Total Approved" type="text" value="" />
+                  <FloatingInput label="TCS" type="text" value="" />
+                  <FloatingInput label="Service Tax" type="text" value="" />
+                  <FloatingInput label="Total Doctor Sh" type="text" value="" />
+                  <FloatingInput label="Total To Hospital" type="text" value="" />
 
 
 
 
 
-     </div>
+                </div>
 
-     </div>
-     <div className="final-bill-section">
-     <div className="final-bill-header">Attach File</div>
-     <div className="final-bill-grid">
+              </div>
+              <div className="final-bill-section">
+                <div className="final-bill-header">Attach File</div>
+                <div className="final-bill-grid">
 
-     <div className="final-bill-shed-section">
-  <label className="finalized-label">File Name</label>
-  <input className="finalized-attach" type="text" />
-  <input className="finalized-file-input" type="file" />
-  <button className="finalized-bill-sh-save-btn">Upload</button>
-</div>
-
-
-
-     </div>
-     </div>
-     </div>
+                  <div className="final-bill-shed-section">
+                    <label className="finalized-label">File Name</label>
+                    <input className="finalized-attach" type="text" />
+                    <input className="finalized-file-input" type="file" />
+                    <button className="finalized-bill-sh-save-btn">Upload</button>
+                  </div>
 
 
-    
+
+                </div>
+              </div>
+            </div>
 
 
-        </div>
-        <div className="final-bill-action-buttons">
-          <button className="btn-blue">Save</button>
-          <button className="btn-red">Delete</button>
-          <button className="btn-orange">Clear</button>
-          <button className="btn-gray">Close</button>
-          <button className="btn-blue">Search</button>
-          <button className="btn-gray">Tracking</button>
-          <button className="btn-green" onClick={OpenPrintFile}>Print</button>
-          {/* <button className="btn-blue">Export</button>
+
+
+
+          </div>
+          <div className="final-bill-action-buttons">
+            <button className="btn-blue">Save</button>
+            <button className="btn-red">Delete</button>
+            <button className="btn-orange">Clear</button>
+            <button className="btn-gray">Close</button>
+            <button className="btn-blue">Search</button>
+            <button className="btn-gray">Tracking</button>
+            <button className="btn-green" onClick={OpenPrintFile}>Print</button>
+            {/* <button className="btn-blue">Export</button>
           <button className="btn-gray">Import</button>
           <button className="btn-green">Health</button>
           <button className="btn-gray">Version Comparison</button>
           <button className="btn-gray">SDC</button>
           <button className="btn-gray">Testing</button>
           <button className="btn-blue">Info</button> */}
+          </div>
         </div>
       </div>
-    </div>
-    {activePopup && (
+      {activePopup && (
         <PopupTable
           columns={columns}
           data={data}
