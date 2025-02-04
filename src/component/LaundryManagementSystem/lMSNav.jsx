@@ -10,12 +10,15 @@ const LMSNavBar = () => {
         <li>
           <NavLink to="/laundry/master">Master</NavLink>
         </li>
+
         <li>
           <NavLink to="/laundry/transaction">Transaction</NavLink>
         </li>
-        <li>
-          <NavLink to="/laundry/reports">Reports</NavLink>
-        </li>
+        {/* <li>
+          <NavLink to="/settings">Reports</NavLink>
+        </li> */}
+
+
       </ul>
     </nav>
   );
