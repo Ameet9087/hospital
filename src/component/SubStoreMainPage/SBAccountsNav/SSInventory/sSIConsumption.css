@@ -154,9 +154,8 @@ left: 205px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  color: var(--button-color);
-  font-size: 12px;
-  font-weight: bold;
+  color: black;
+  font-size: var(--font-size);
 }
 .sSIConsumption-print-btn{
     margin-left: 10px;

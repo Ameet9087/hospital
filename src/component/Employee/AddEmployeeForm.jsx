@@ -542,16 +542,7 @@ const AddEmployeeForm = ({ onClose }) => {
             </div>
           </div>
           <div className="emp-app">
-            {/* <div className="add-employee-groups">
-              <label className="emp-input">Appointment Applicable?</label>
-              <input
-                className="emp-input"
-                type="checkbox"
-                name="appointmentApplicable"
-                checked={employeeData.appointmentApplicable}
-                onChange={handleChange}
-              />
-            </div> */}
+           
             {showTable && (
               <table className="service-table">
                 <thead>

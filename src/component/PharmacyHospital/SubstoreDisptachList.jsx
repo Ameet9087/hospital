@@ -11,6 +11,7 @@ const SubstoreDisptachList = () => {
   const [requisitions, setRequisitions] = useState([]);
   const [showModal, setShowModal] = useState(false); // Modal visibility state
   const [selectedRequisition, setSelectedRequisition] = useState(null); // Selected requisition data for modal
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/subpharm-requisitions`)
@@ -18,6 +19,18 @@ const SubstoreDisptachList = () => {
       .then((data) => setRequisitions(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+
+  // Function to filter requisitions based on the search query
+  const filteredRequisitions = requisitions.filter((item) => {
+    return (
+      item.pharRequisitionId.toString().includes(searchQuery) ||
+      item.subStore.subStoreName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.requestedDate && item.requestedDate.includes(searchQuery)) ||
+      (item.status && item.status.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (item.remarks && item.remarks.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+  });
+
   // Function to export table to Excel
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current); // Convert table to worksheet
@@ -58,7 +71,6 @@ const SubstoreDisptachList = () => {
     newWindow.print();
     newWindow.close();
   };
-  
 
   // Function to open modal with requisition details
   const openModal = (requisition) => {
@@ -119,10 +131,12 @@ const SubstoreDisptachList = () => {
           type="text"
           className="purchase-order-search-box"
           placeholder="Search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)} // Update the search query
         />
         <div className="purchase-order-search-right">
           <span className="purchase-results-count-span">
-            Showing 0 / 0 results
+            Showing {filteredRequisitions.length} / {requisitions.length} results
           </span>
           <button
             className="purchase-order-print-button"
@@ -169,8 +183,8 @@ const SubstoreDisptachList = () => {
             </tr>
           </thead>
           <tbody>
-            {requisitions.length > 0 ? (
-              requisitions.map((item, index) => (
+            {filteredRequisitions.length > 0 ? (
+              filteredRequisitions.map((item, index) => (
                 <tr key={index}>
                   <td>{item.pharRequisitionId}</td>
                   <td>{item.subStore.subStoreName}</td>
@@ -277,7 +291,7 @@ const SubstoreDisptachList = () => {
                             </td>
                             <td>{item.items?.itemQty || "N/A"}</td>
                             <td>
-                              {(item?.requiredQuantity || 0) -
+                              {(item?.requiredQuantity || 0) - 
                                 (item.dispatchQty || 0)}
                             </td>
                             <td>{item?.receivedQty || 0}</td>

@@ -296,12 +296,21 @@ const StoreDetailsListCom = () => {
                 type="number"
                 name="salePrice"
                 value={salePrice}
-                onChange={(e) => setSalePrice(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value === "" || parseFloat(value) >= 0) {
+                    setSalePrice(value);
+                  }
+                }}
+                min="0" // Ensures only non-negative values can be entered
               />
             </div>
           </div>
           <div className="manage-modal-modal-body">
-              <Button type="submit" className="manage-modal-employee-btn" onClick={handleSalePriceSubmit}>
+              <Button type="submit" className="manage-modal-employee-btn" onClick={handleSalePriceSubmit}
+              
+              disabled={salePrice === "" || parseFloat(salePrice) < 0} // Disables button if invalid
+              >
                 Update
               </Button>
           </div>
@@ -313,11 +322,11 @@ const StoreDetailsListCom = () => {
         onClose={handleCloseModal}
         dialogClassName="manage-add-employee-role"
       >
-        <div className="manage-modal-dialog">
-          <div className="manage-modal-modal-header">
-            <div className="manage-modal-modal-title">
-              Edit Details for {selectedUser?.itemName}
-            </div>
+        <div className="store-details-edit-form">
+          <div className="store-details-form-edit">
+            {/* <div className="tore-form-details-edit"> */}
+              <h2>Edit Details for {selectedUser?.itemName}</h2>
+            {/* </div> */}
             <div>
               <label>Enter New Expiry Date:</label>
               <input

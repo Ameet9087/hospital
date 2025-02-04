@@ -189,7 +189,7 @@ const PurchaseView = ({item}) => {
   </div>
   <div className="PurchaseRequest-signatures">
 
-   <button onClick={handlePrint}>Print</button>
+   <button onClick={handlePrint} className="PurchaseRequest-signatures-print">Print</button>
   </div>
    </>
 );

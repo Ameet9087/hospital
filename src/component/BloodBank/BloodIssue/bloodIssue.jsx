@@ -42,7 +42,7 @@ function BloodIssue() {
         issueDate: item.issueDate,
         issuedBy: item.issuedBy,
         status: item.status,
-        requestId: item.bloodRequestDTO?.requestId || "N/A",
+        requestId: item.bloodRequestDTO?.requestId ,
         firstName: item.bloodRequestDTO?.patientDTO?.firstName || "N/A",
         inPatientId: item.bloodRequestDTO?.patientDTO?.inPatientId || "N/A",
         contactInfo: item.bloodRequestDTO?.contactInformation || "N/A",
@@ -271,7 +271,7 @@ function BloodIssue() {
                 {[
                   "Issue ID",
                   "Patient ID",
-                  "Patient Name",
+                  // "Patient Name",
                   "Contact Info",
                   "Request ID",
                   "Blood Group",
@@ -279,6 +279,7 @@ function BloodIssue() {
                   "Issue Date",
                   "Issued By",
                   "Status",
+                  
                 ].map((header, index) => (
                   <th
                     key={index}
@@ -303,7 +304,8 @@ function BloodIssue() {
             {filteredData.map((item, index) => (
               <tr key={index}>
                 <td>{item.issueId}</td>
-                <td>{item.firstName}</td>
+                <td>{item.inPatientId}</td>
+                {/* <td>{item.firstName}</td> */}
                 <td>{item.contactInfo}</td>
                 <td>{item.requestId}</td>
                 <td>{item.bloodGroup}</td>
@@ -311,6 +313,7 @@ function BloodIssue() {
                 <td>{item.issueDate}</td>
                 <td>{item.issuedBy}</td>
                 <td>{item.status}</td>
+                
               </tr>
             ))}
           </tbody>

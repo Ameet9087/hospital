@@ -8,7 +8,8 @@ import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from "../../api/api";
 import CustomModal from "../../../CustomModel/CustomModal";
 import DispatchRequisition from "./DispatchRequisition";
-
+import { useFilter } from "../../ShortCuts/useFilter";
+import * as XLSX from 'xlsx';
 const Requisition = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -24,6 +25,7 @@ const Requisition = () => {
   const [selectedDispatch, setSelectedDispatch] = useState(null);
   const [showRequisitionDetail, setShowRequisitionDetail] = useState(false);
   const [selectedRequisition, setSelectedRequisition] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,12 +43,40 @@ const Requisition = () => {
 
   
 
-  const handleSearch = () => {
-    console.log("Searching for:", searchQuery);
-  };
+  // const handleSearch = () => {
+  //   console.log("Searching for:", searchQuery);
+  // };
 
   const handlePrint = () => {
-    console.log("Printing...");
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
 
   const handleDispatchListClick = (dispatch) => {
@@ -69,28 +99,50 @@ const Requisition = () => {
     setSelectedDispatch(null);
   };
 
-  // Function to filter data based on date range
-  const filterDataByDate = (data) => {
-    if (!dateFrom && !dateTo) return data; // Return original data if no date filter is applied
+ // Function to filter data based on date range
+ const filterDataByDate = (data) => {
+  if (!dateFrom && !dateTo) return data; 
 
-    return data.filter((item) => {
-      const dispatchDate = new Date(item.dispatchDate);
-      const fromDate = new Date(dateFrom);
-      const toDate = new Date(dateTo);
+  return data.filter((item) => {
+    const dispatchDate = new Date(item.requisitionDate);
+    const fromDate = dateFrom ? new Date(dateFrom + "T00:00:00") : null;
+    const toDate = dateTo ? new Date(dateTo + "T23:59:59") : null;
 
-      // Check if dispatch date is within the specified range
-      return (
-        (!dateFrom || dispatchDate >= fromDate) &&
-        (!dateTo || dispatchDate <= toDate)
-      );
-    });
-  };
+    return (
+      (!fromDate || dispatchDate >= fromDate) &&
+      (!toDate || dispatchDate <= toDate)
+    );
+  });
+};
+
+// Function to filter data based on requisition status
+const filterDataByStatus = (data, status) => {
+  if (status === "All") return data; 
+  return data.filter((item) => item.status === status);
+};
+
+// Apply status filtering after date filtering
+const filteredDataByDate = filterDataByDate(data);
+const finalFilteredData = filterDataByStatus(filteredDataByDate, status);
+const filteredInData = useFilter(finalFilteredData, searchTerm);
+
 
   // Get filtered data based on date range
   const filteredData = filterDataByDate(data);
 
   console.log(filteredData);
-  
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  // const filteredInData = useFilter(filteredData, searchTerm);
+
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport');
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
+  };
 
   return (
     <div className="requisition-inventory-content">
@@ -103,7 +155,7 @@ const Requisition = () => {
                 </button>
                 <div className="requisition-inventory-direct-dispatch-filters">
                   <span>List by Requisition Status:</span>
-                  {["Pending", "Complete", "Cancelled", "All"].map((s) => (
+                  {["Pending", "Received", "Approved","	Dispatch", "All"].map((s) => (
                     <label key={s}>
                       <input
                         type="radio"
@@ -139,13 +191,15 @@ const Requisition = () => {
                   <input
                     type="text"
                     placeholder="Search"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
+                    value={searchTerm}
+            onChange={handleSearch}
+          />
+
                   {/* <button className="requisition-inventory-search-bar-button" onClick={handleSearch}>🔍</button> */}
                 </div>
                 <div className="requisition-inventory-results">
                   <span className="requisition-inventory-results-span">Showing {filteredData?.length} results</span>
+                  <button className="requisition-inventory-results-print" onClick={handleExport} >Export</button>
                   <button className="requisition-inventory-results-print" onClick={handlePrint}>Print</button>
                 </div>
               </div>
@@ -183,8 +237,8 @@ const Requisition = () => {
                       <tr>
                         <td colSpan="8">Loading...</td>
                       </tr>
-                    ) : filteredData?.length > 0 ? (
-                      filteredData?.map((item, index) => (
+                    ) : filteredInData?.length > 0 ? (
+                      filteredInData?.map((item, index) => (
                         <tr key={index}>
                           <td>{item?.id}</td>
                           <td>{item?.subStore?.subStoreName}</td>
@@ -217,11 +271,11 @@ const Requisition = () => {
                 </table>
               </div>
           
-        <CustomModal isOpen={selectedDispatch} onClose={closeDispatchTable} >
+        {/* <CustomModal isOpen={selectedDispatch} onClose={closeDispatchTable} >
           <DispatchTable dispatch={selectedDispatch} />
-        </CustomModal>     
-      <CustomModal isOpen={showDirect || showDispatchTable} onClose={()=>setShowDirect(false)|| setShowDispatchTable(false)}>
-        <DispatchRequisition request={selectedDispatch} onClose={()=>setShowDirect(false)|| setShowDispatchTable(false)} />
+        </CustomModal>      */}
+      <CustomModal isOpen={showDispatchTable} onClose={()=>setShowDispatchTable(false)}>
+        <DispatchRequisition request={selectedDispatch} onClose={()=>setShowDispatchTable(false)} />
       </CustomModal>
       <CustomModal isOpen={showDirectDispatch} onClose={()=>setShowDirectDispatch(false)}>
         <DirectDispatch onClose={()=>setShowDirectDispatch(false)}/>

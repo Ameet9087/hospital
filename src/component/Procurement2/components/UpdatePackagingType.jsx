@@ -1,45 +1,41 @@
-import React, { useState } from 'react';
-import axios from 'axios'; // Import axios for API requests
-import './AddPackagingType.css';
-import { API_BASE_URL } from '../../api/api';
+import React, { useState } from "react";
+import axios from "axios";
+import "./AddPackagingType.css";
+import { API_BASE_URL } from "../../api/api";
 
-const UpdatePackagingType = ({ packagingType, onClose }) => {
-  console.log(packagingType);
-    
-  const [name, setName] = useState(packagingType.packagingTypeName || '');
-  const [description, setDescription] = useState(packagingType.description || '');
-  const [isActive, setIsActive] = useState(packagingType.isActive || false);
+const UpdatePackagingType = ({ packagingType, onUpdate, onClose }) => {
+  const [name, setName] = useState(packagingType.packagingTypeName || "");
+  const [description, setDescription] = useState(packagingType.description || "");
+  const [isActive, setIsActive] = useState(packagingType.isActive ?? false); // Ensure it's always boolean
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Create an object with the updated packaging type data
       const updatedPackagingType = {
-        packagingTypeName:name,
+        packagingTypeName: name,
         description,
-        isActive,
+        isActive: !!isActive, // Ensure it's always boolean
       };
-      console.log(updatedPackagingType);
-      
+
       const response = await axios.put(
         `${API_BASE_URL}/packageType/updatePackageType/${packagingType.id}`,
         updatedPackagingType
       );
 
       if (response.status === 200) {
-        alert('Packaging type updated successfully!');
-        onClose(); // Close the modal after successful update
+        alert("Packaging type updated successfully!");
+        onUpdate(updatedPackagingType); // Update state in parent component
+        onClose(); // Close modal
       }
     } catch (error) {
-      console.error('Error updating packaging type:', error);
+      console.error("Error updating packaging type:", error);
     }
   };
 
   return (
     <div className="AddPackagingType-model">
       <h2>Update Packaging Type</h2>
-      <form onSubmit={handleSubmit} className='AddPackagingType-form'>
+      <form onSubmit={handleSubmit} className="AddPackagingType-form">
         <div className="AddPackagingType-formgroup">
           <label>
             Packaging Type Name<span className="MeasssRequired">*</span>
@@ -71,6 +67,7 @@ const UpdatePackagingType = ({ packagingType, onClose }) => {
             onChange={(e) => setIsActive(e.target.checked)}
           />
         </div>
+
         <button type="submit" className="MeasssBtnAdd">
           Update
         </button>
@@ -80,4 +77,3 @@ const UpdatePackagingType = ({ packagingType, onClose }) => {
 };
 
 export default UpdatePackagingType;
-

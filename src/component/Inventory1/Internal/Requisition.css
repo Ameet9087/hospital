@@ -50,8 +50,14 @@
 .requisition-inventory-search-bar {
   display: flex;
   flex-wrap: wrap;
-  width: 60%;
+  /* width: 60%; */
+  padding: 5px;
+  font-size: var(--font-size);
   margin: 10px 0 20px;
+}
+.requisition-inventory-search-bar input{
+  padding: 5px;
+  font-size: var(--font-size);
 }
 
 .requisition-inventory-requisition-table {
@@ -80,13 +86,14 @@
 }
 .requisition-inventory-results-span {
   margin-right: 10px;
-  font-size: var(--heading-font);
-  color: var(--button-color);
+  font-size: var(--font-size);
+  color: black;
 }
 .requisition-inventory-results-print {
   font-size: var(--heading-font);
   border-radius: 5px;
   padding: 5px 10px;
+  margin-left: 10px;
   border: none;
   background-color: var(--button-color);
   color: #fff;

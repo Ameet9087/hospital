@@ -64,13 +64,13 @@ const ReturnToSupplierReport = () => {
         
       </div>
 
-      <div className="purchase-order-pagination-controls">
+      {/* <div className="purchase-order-pagination-controls">
         <button className="purchase-order-first-page">First</button>
         <button className="purchase-order-previous-page">Previous</button>
         <span>Page 0 of 0</span>
         <button className="purchase-order-next-page">Next</button>
         <button className="purchase-order-last-page">Last</button>
-      </div>
+      </div> */}
       </div>
     </div>
   );

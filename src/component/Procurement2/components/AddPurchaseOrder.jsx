@@ -226,7 +226,6 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
       .then((response) => {
         alert("Purchase Order saved successfully!");
         console.log(response.data);
-        onClose();
       })
       .catch((error) => {
         console.error("Error saving purchase order:", error);

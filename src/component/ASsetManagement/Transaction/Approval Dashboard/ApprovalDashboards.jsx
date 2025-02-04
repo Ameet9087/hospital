@@ -569,7 +569,7 @@ const renderCondemnationDisposalTable = () => (
             <div className="ApprovalDashboards-panel-content">
               <div className="ApprovalDashboards-form-row">
                 <label>From Date:</label>
-                <input type="date" value="" />
+                <input type="date"  />
               </div>
             </div>
           </div>
@@ -578,7 +578,7 @@ const renderCondemnationDisposalTable = () => (
             <div className="ApprovalDashboards-panel-content">
               <div className="ApprovalDashboards-form-row">
                 <label>To Date:</label>
-                <input type="date" value="" />
+                <input type="date" />
               </div>
             </div>
           </div>

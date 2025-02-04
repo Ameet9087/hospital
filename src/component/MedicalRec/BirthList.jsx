@@ -617,7 +617,7 @@ function BirthList() {
                   </div>
                   <hr></hr>
                   <div className="footer-buttons">
-                    <button className="submit-button-popup">Submit</button>
+                    <button className="submit-button-popup" onClick={handleSubmitBirth}>Submit</button>
                     <button
                       className="cancel-button-popup"
                       onClick={closeModal}
