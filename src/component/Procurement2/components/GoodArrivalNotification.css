@@ -10,7 +10,18 @@
   justify-content: space-between;
   margin-bottom: 10px;
 }
-
+.DonationInterface-btn-action{
+  background-color: var(--button-color);
+  border: var(--button-color);
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+}
+.DonationInterface-btn-action:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
+}
 .DonationInterface-btn-primary {
   background-color: var(--button-color);
   color: white;

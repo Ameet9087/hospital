@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./clinicalAssesment.css";
 import ClinicalBookAdmission from "./ClinicalBookAdmission";
+import { API_BASE_URL } from "../../api/api";
 
 function ClinicalAssessment() {
   const [patients, setPatients] = useState([]);
@@ -12,7 +13,7 @@ function ClinicalAssessment() {
 
   useEffect(() => {
     // Fetch all patients on component mount
-    fetch("http://localhost:1415/api/patients/getAllPatients")
+    fetch(`${API_BASE_URL}/patients/getAllPatients`)
       .then((response) => response.json())
       .then((data) => setPatients(data))
       .catch((error) => console.error("Error fetching patients:", error));
@@ -89,11 +90,11 @@ function ClinicalAssessment() {
             {selectedPatient?.gender || ""}
           </p>
           <p>
-            Address: {selectedPatient?.addresses?.street1 || ""},
-            {selectedPatient?.addresses?.street2 || ""} ,
-            {selectedPatient?.addresses?.city || ""},
-            {selectedPatient?.addresses?.zipCode || ""} ,
-            {selectedPatient?.addresses?.county || ""}
+            Address: {selectedPatient?.addresses?.street1},
+            {selectedPatient?.addresses?.street2 } ,
+            {selectedPatient?.addresses?.city },
+            {selectedPatient?.addresses?.zipCode } ,
+            {selectedPatient?.addresses?.county }
           </p>
           <p>Hospital No: {selectedPatient?.hospitalNo || ""}</p>
           <p>Contact No: {selectedPatient?.phoneNumber || ""}</p>

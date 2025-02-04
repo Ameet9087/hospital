@@ -85,7 +85,7 @@ function UnCollectSample() {
   return (
     <div className="unCollectSample-container">
       <div className="unCollectSample-Header">
-        <h1 className="unCollectSample-Title">Samples Data</h1>
+        <h1 className="unCollectSample-Title">Uncollect Sample</h1>
       </div>
 
       <div className="unCollectSample-controls">

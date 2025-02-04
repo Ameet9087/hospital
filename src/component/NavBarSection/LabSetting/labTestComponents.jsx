@@ -46,14 +46,31 @@ const LabTestComponent = () => {
     setShowPopup(true); // Show the popup
   };
 
+
   const handleDelete = async (testId) => {
-    try {
-      await axios.delete(`${API_BASE_URL}/lab-components/remove/${testId}`);
-      fetchAllLabComponents();
-    } catch (error) {
-      console.log(error);
+  try {
+    console.log("Attempting to delete test with ID:", testId);
+
+    const response = await axios.delete(`${API_BASE_URL}/lab-components/remove/${testId}`);
+
+    console.log("Response Data:", response.data); // Log JSON response data
+
+    if (response.status === 200 || response.status === 204) {
+      console.log("Delete successful", response.data);
+      
+      // Update state to reflect the deleted item without re-fetching
+      setLabComponentData((prevData) => prevData.filter(test => test.componentId !== testId));
+    } else {
+      console.error("Failed to delete. Response:", response);
     }
-  };
+
+  } catch (error) {
+    console.error("Error deleting data:", error.response?.data || error.message);
+  }
+};
+
+  
+  
 
   const filteredLabComponents = labComponentData
     ? labComponentData.filter(

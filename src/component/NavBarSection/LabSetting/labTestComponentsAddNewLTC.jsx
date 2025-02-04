@@ -49,33 +49,30 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
   const [editIndex, setEditIndex] = useState(null);
 
   useEffect(() => {
-    console.log(initialData);
-
-    const fetchInitialData = () => {
-      if (initialData) {
-        // Set formData with initialData values (for editing)
-        setFormData({
-          componentName: initialData.componentName || "",
-          unit: initialData.unit || "",
-          valueType: initialData.valueType || "text",
-          controlType: initialData.controlType || "TextBox",
-          rangeDescription: initialData.rangeDescription || "",
-          method: initialData.method || "",
-          componentRange: initialData.componentRange || "",
-          lookupId: initialData.valueLookup?.labLookupId || null,
-          displayName: initialData.displayName || "",
-          valuePrecision: initialData.valuePrecision || "",
-          maleRange: initialData.maleRange || "",
-          femaleRange: initialData.femaleRange || "",
-          childRange: initialData.childRange || "",
-          minValue: initialData.minValue || "",
-          maxValue: initialData.maxValue || "",
-          createdOn: initialData.createdOn || new Date().toISOString(),
-        });
-      }
-    };
-    fetchInitialData();
-  }, [initialData]); // Runs only when initialData changes
+    if (initialData && isDataUpdate) {  // Ensure it only runs when updating
+      setFormData({
+        componentName: initialData.componentName || "",
+        unit: initialData.unit || "",
+        valueType: initialData.valueType || "text",
+        controlType: initialData.controlType || "TextBox",
+        rangeDescription: initialData.rangeDescription || "",
+        method: initialData.method || "",
+        componentRange: initialData.componentRange || "",
+        lookupId: initialData.valueLookup?.labLookupId || null,
+        displayName: initialData.displayName || "",
+        valuePrecision: initialData.valuePrecision || "",
+        maleRange: initialData.maleRange || "",
+        femaleRange: initialData.femaleRange || "",
+        childRange: initialData.childRange || "",
+        minValue: initialData.minValue || "",
+        maxValue: initialData.maxValue || "",
+        createdOn: initialData.createdOn || new Date().toISOString(),
+      });
+  
+      console.log("Form data set for editing:", initialData);
+    }
+  }, [initialData, isDataUpdate]);  // Ensure it runs when initialData updates
+  
 
   const [formData, setFormData] = useState({
     componentName: "",
@@ -192,18 +189,26 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
   };
 
   const handleEdit = async (id) => {
-    console.log(formData);
-
+    if (!id) {
+      console.error("No component ID found for updating.");
+      return;
+    }
+  
     try {
-      const response = await axios.put(
-        `${API_BASE_URL}/lab-components/${id}`,
-        formData
-      );
+      console.log("Updating component with ID:", id);
+      console.log("Updated Form Data:", formData);
+  
+      const response = await axios.put(`${API_BASE_URL}/lab-components/${id}`, formData);
+      
+      console.log("Update Response:", response);
+      alert("Component updated successfully!");
       onClose();
     } catch (error) {
-      console.log(error);
+      console.error("Error updating data:", error);
+      alert("Failed to update component.");
     }
   };
+  
   const handleEditClick = (index) => {
     const componentToEdit = componentsArray[index];
     setFormData({ ...componentToEdit });

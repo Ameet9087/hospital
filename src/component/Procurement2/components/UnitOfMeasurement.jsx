@@ -125,7 +125,7 @@ const UnitOfMeasurementComponent = () => {
               <tr key={index}>
                 <td>{unit.name}</td>
                 <td>{unit.description}</td>
-                <td>{unit.active ? "true" : "false"}</td>
+                <td>{unit.isActive }</td>
                 <td>
                   <button
                     className="uom-edit-button"
