@@ -59,4 +59,16 @@
   .PurchaseRequest-footer p {
     margin: 5px 0;
   }
-  
+  .PurchaseRequest-signatures-print{
+    background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+  padding: var(--input-box-padding);
+  border-radius: 4px;
+  cursor: pointer;
+  }
+  .PurchaseRequest-signatures-print:hover{
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+  }

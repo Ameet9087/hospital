@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import "./ReturnFromSubstore.css"; // Updated to match the provided file
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
-
+import * as XLSX from 'xlsx';
 const ReturnFromSubstore = () => {
   const [columnWidths,setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -15,10 +15,44 @@ const ReturnFromSubstore = () => {
   };
 
   const handlePrint = () => {
-    console.log('Printing...');
-    // Implement print logic here
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport');
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
   };
 
+  
   return (
     <div className="return-form-substore-content"> {/* Updated class name */}
       <div className="return-form-substore-date-range"> {/* Updated class name */}
@@ -49,6 +83,7 @@ const ReturnFromSubstore = () => {
         </div>
         <div className="return-from-substore-container-right"> {/* Updated class name */}
         <span className='requisition-inventory-results-span'>Showing 0 / 0 results</span>
+        <button className='requisition-inventory-results-print' onClick={handleExport}>Export</button>
         <button className='requisition-inventory-results-print' onClick={handlePrint}>Print</button>
       </div>
       </div>

@@ -19,10 +19,10 @@ function Transportsystem() {
          
             <Link to="/transport/patienttransport/tansferedpatientlist" className="transportsystem-header-button"><li className='transportsystem-header-button'>All request list</li></Link>  
             <Link to="/transport/patienttransport/patienttrasferstatus" className="transportsystem-header-button"><li className='transportsystem-header-button'>Transport list</li></Link>
-            <Link to="/transport/patienttransport/dispatchList" className="transportsystem-header-button">
+            {/* <Link to="/transport/patienttransport/dispatchList" className="transportsystem-header-button"> */}
             {/* <li className="transportsystem-header-button">Dispatch list</li> */}
-           <Link to="/transport/patienttransport/dispatchList" className="transportsystem-header-button"> Dispatch list</Link>
-          </Link>
+           {/* <Link to="/transport/patienttransport/dispatchList" className="transportsystem-header-button"> Dispatch list</Link>
+          </Link> */}
             {/* <Link to="/transport/patienttransport/TransportList" className="transportsystem-header-button"><li className='transportsystem-header-button'>All Transport list</li></Link>  */}
           </ul>
       </header>

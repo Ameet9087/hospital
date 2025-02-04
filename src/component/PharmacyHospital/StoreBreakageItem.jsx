@@ -46,6 +46,9 @@ const StoreBreakageItem = () => {
     XLSX.utils.book_append_sheet(wb, ws, "BreakageItemsReport");
     XLSX.writeFile(wb, "BreakageItemsReport.xlsx");
   };
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   // Function to handle printing
   const handlePrint = () => {

@@ -1,47 +1,53 @@
-import React, { useState } from 'react';
-import './AddVendor.css';
-import { API_BASE_URL } from '../../api/api';
-
+import React, { useState } from "react";
+import "./AddVendor.css";
+import { API_BASE_URL } from "../../api/api";
+import CustomModal from "../../CustomModel/CustomModal";
 const AddVendor = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const [formValues, setFormValues] = useState({
-    vendorName: '',
-    contactAddress: '',
-    contactNumber: '',
-    currencyCode: '',
-    vendorCode: '',
-    vendorCountry: '',
-    kraPin: '',
-    bankDetails: '',
-    contactPerson: '',
-    email: '',
-    creditPeriod: '',
-    govtRegDate: '',
+    vendorName: "",
+    contactAddress: "",
+    contactNumber: "",
+    currencyCode: "",
+    vendorCode: "",
+    vendorCountry: "",
+    kraPin: "",
+    bankDetails: "",
+    contactPerson: "",
+    email: "",
+    creditPeriod: "",
+    govtRegDate: "",
     isActive: true,
-    receiveDonation: false
+    receiveDonation: false,
   });
 
   const [errors, setErrors] = useState({});
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormValues({
       ...formValues,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     });
-    setErrors({ ...errors, [name]: '' }); // Clear the error when the user starts typing
+    setErrors({ ...errors, [name]: "" }); // Clear the error when the user starts typing
   };
 
   const handleSubmit = async () => {
-    const requiredFields = ['vendorName', 'contactAddress', 'contactNumber', 'currencyCode', 'vendorCode'];
+    const requiredFields = [
+      "vendorName",
+      "contactAddress",
+      "contactNumber",
+      "currencyCode",
+      "vendorCode",
+    ];
     const newErrors = {};
 
-    requiredFields.forEach(field => {
+    requiredFields.forEach((field) => {
       if (!formValues[field]) {
-        newErrors[field] = `${field.replace(/([A-Z])/g, ' $1')} is required`;
+        newErrors[field] = `${field.replace(/([A-Z])/g, " $1")} is required`;
       }
     });
 
@@ -50,53 +56,55 @@ const AddVendor = ({ isOpen, onClose }) => {
     } else {
       try {
         console.log(formValues);
-        
+
         const response = await fetch(`${API_BASE_URL}/vendors/createVendor`, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(formValues),
         });
 
         if (response.ok) {
-          setSuccessMessage('Vendor added successfully!');
+          setSuccessMessage("Vendor added successfully!");
           onClose(false);
-          setErrorMessage('');
+          setErrorMessage("");
           // Clear form values if needed
           setFormValues({
-            vendorName: '',
-            contactAddress: '',
-            contactNumber: '',
-            currencyCode: '',
-            vendorCode: '',
-            kraPin: '',
-            bankDetails: '',
-            contactPerson: '',
-            email: '',
-            creditPeriod: '',
-            govtRegDate: '',
+            vendorName: "",
+            contactAddress: "",
+            contactNumber: "",
+            currencyCode: "",
+            vendorCode: "",
+            kraPin: "",
+            bankDetails: "",
+            contactPerson: "",
+            email: "",
+            creditPeriod: "",
+            govtRegDate: "",
             isActive: true,
-            receiveDonation: false
+            receiveDonation: false,
           });
         } else {
           const errorData = await response.json();
-          setErrorMessage(errorData.message || 'Failed to add vendor');
-          setSuccessMessage('');
+          setErrorMessage(errorData.message || "Failed to add vendor");
+          setSuccessMessage("");
         }
       } catch (error) {
-        setErrorMessage('An error occurred while adding the vendor');
-        setSuccessMessage('');
+        setErrorMessage("An error occurred while adding the vendor");
+        setSuccessMessage("");
       }
     }
   };
 
   return (
-    <div className='inv-modal-overlay'>
-      <div className='inv-modal-content'>
-        <button className="vendddCloseButton" onClick={onClose}>
+    
+    <CustomModal isOpen={isOpen} onClose={onClose}>
+    <div>
+      <div>
+        {/* <button className="vendddCloseButton" onClick={onClose}>
           &times;
-        </button>
+        </button> */}
         <h2 className="vendddHeading">Add Vendor</h2>
         <div className="vendddFormContainer">
           <div className="vendddColumn">
@@ -331,7 +339,7 @@ const AddVendor = ({ isOpen, onClose }) => {
                 "Vietnam",
                 "Yemen",
                 "Zambia",
-               "Zimbabwe"
+                "Zimbabwe",
               ]}
               value={formValues.vendorCountry}
               onChange={handleInputChange}
@@ -383,7 +391,13 @@ const AddVendor = ({ isOpen, onClose }) => {
               name="creditPeriod"
               elementType="number"
               value={formValues.creditPeriod}
-              onChange={handleInputChange}
+              onChange={(e) => {
+                // Prevent negative values
+                const value = e.target.value;
+                if (value >= 0 || value === '') {
+                  handleInputChange(e);  // Call the original change handler
+                }
+              }}    
             />
             <VendddFormRow
               label="Govt Reg Date"
@@ -408,36 +422,70 @@ const AddVendor = ({ isOpen, onClose }) => {
             />
           </div>
         </div>
-        {successMessage && <div className="vendddSuccess">{successMessage}</div>}
+        {successMessage && (
+          <div className="vendddSuccess">{successMessage}</div>
+        )}
         {errorMessage && <div className="vendddError">{errorMessage}</div>}
-        <button className="vendddAddButton" onClick={handleSubmit}>Add Vendor</button>
+        <button className="vendddAddButton" onClick={handleSubmit}>
+          Add Vendor
+        </button>
       </div>
     </div>
-  );
+  </CustomModal>
+);
 };
 
-const VendddFormRow = ({ label, name, required, elementType = 'input', options = [], defaultChecked, value, onChange, placeholder, error }) => (
+const VendddFormRow = ({
+  label,
+  name,
+  required,
+  elementType = "input",
+  options = [],
+  defaultChecked,
+  value,
+  onChange,
+  placeholder,
+  error,
+}) => (
   <div className="vendddFormRow">
     <label className="vendddLabel">
       {label}
       {required && <span className="vendddRequired">*</span>}
     </label>
     <div className="vendddColon">:</div>
-    {elementType === 'input' && (
+    {elementType === "input" && (
       <>
-        <input className="vendddInput" type="text" name={name} value={value} onChange={onChange} placeholder={placeholder} />
+        <input
+          className="vendddInput"
+          type="text"
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'textarea' && (
+    {elementType === "textarea" && (
       <>
-        <textarea className="vendddTextarea" name={name} value={value} onChange={onChange} placeholder={placeholder} />
+        <textarea
+          className="vendddTextarea"
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'select' && (
+    {elementType === "select" && (
       <>
-        <select className="vendddInput" name={name} value={value} onChange={onChange}>
+        <select
+          className="vendddInput"
+          name={name}
+          value={value}
+          onChange={onChange}
+        >
           {options.map((option) => (
             <option key={option} value={option}>
               {option}
@@ -447,21 +495,40 @@ const VendddFormRow = ({ label, name, required, elementType = 'input', options =
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'checkbox' && (
+    {elementType === "checkbox" && (
       <>
-        <input className="vendddCheckbox" type="checkbox" name={name} checked={value} onChange={onChange} defaultChecked={defaultChecked} />
+        <input
+          className="vendddCheckbox"
+          type="checkbox"
+          name={name}
+          checked={value}
+          onChange={onChange}
+          defaultChecked={defaultChecked}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'date' && (
+    {elementType === "date" && (
       <>
-        <input className="vendddInput" type="date" name={name} value={value} onChange={onChange} />
+        <input
+          className="vendddInput"
+          type="date"
+          name={name}
+          value={value}
+          onChange={onChange}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'number' && (
+    {elementType === "number" && (
       <>
-        <input className="vendddInput" type="number" name={name} value={value} onChange={onChange} />
+        <input
+          className="vendddInput"
+          type="number"
+          name={name}
+          value={value}
+          onChange={onChange}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}

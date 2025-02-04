@@ -120,7 +120,7 @@ const CSSDItemMaster = () => {
               Inactive
             </div>
           </div>
-          <button onClick={handleSave} className='machine-save'>Save</button>
+          <button onClick={handleSave} className='CSSDItemMaster-edit-btn'>Save</button>
         </div>
         {/* <div className="CSSDItemMaster-buttonContainer">
           <button onClick={handleSave}>Save</button>

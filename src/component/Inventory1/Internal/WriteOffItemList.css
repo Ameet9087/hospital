@@ -27,31 +27,27 @@
     border-radius: 4px 0 0 4px;
 }
 
-.writeOffList-inventory-search-bar button {
-    margin-left: -30px;
-    border: none;
+.writeOffList-inventory-search-bar  {
+    /* margin-left: -30px; */
+    /* border: none; */
+    padding: 5px;
+    font-size: var(--font-size);
     background: none; /* Remove any background color */
     cursor: pointer;
-    padding: 0; /* Remove any padding */
 }
 
-.writeOffList-inventory-results-search
-{
-    padding: 1px;
-    background-color: var(--button-color);
-    color: white;
-}
 
 .writeOffList-inventory-span {
     margin-right: 5px;
-    font-size: var(--heading-font);
-    color: var(--button-bg-color);
+    font-size: var(--font-size);
+    color: black;
 }
 
 .writeOffList-inventory-button {
     padding: var(--input-box-padding);
     border: 1px solid var(--button-color);
     border-radius: 5px;
+    margin-left: 10px;
     background-color: var(--button-color);
     color: #fff;
     cursor: pointer;

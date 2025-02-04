@@ -5,12 +5,12 @@ import './Navbar.css';
 const Navbar = () => {
   return (
     <nav className="inventory-navbar">
-      <NavLink
+      {/* <NavLink
         to="/"
         className={({ isActive }) => `inventory-home-button ${isActive ? 'active' : ''}`}
       >
         ⌂
-      </NavLink>
+      </NavLink> */}
       <div className="inventory-nav-links">
         <NavLink
           to="/inventory/internal"

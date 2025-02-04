@@ -125,8 +125,37 @@ const SettingSupplierComponent = () => {
     XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
     XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
   };
+  // Function to trigger print
   const handlePrint = () => {
-    window.print(); // Triggers the browser's print window
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -340,9 +369,9 @@ const SettingSupplierComponent = () => {
             </div>
             </div>
             <div className="supplier-setting-form-actions">
-              <Button variant="secondary" onClick={handleCloseModal}>
+              {/* <Button variant="secondary" onClick={handleCloseModal}>
                 Cancel
-              </Button>
+              </Button> */}
               <Button variant="primary" type="submit" onClick={handleSubmit}>
                 {isEditMode ? 'Update Supplier' : 'Add Supplier'}
               </Button>

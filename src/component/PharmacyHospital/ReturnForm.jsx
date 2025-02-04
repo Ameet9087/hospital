@@ -331,12 +331,12 @@ const handleSubmit = () => {
 
 
       <div className="return-form-buttons">
-        <button className="btn-return" onClick={handleSubmit}>
+        <button className="return-form-details-btn-return" onClick={handleSubmit}>
           Return
         </button>
-        <button className="btn-cancel" onClick={() => console.log("Cancelled")}>
+        {/* <button className="return-form-details-btn-return"  onClick={() => console.log("Cancelled")}>
           Cancel
-        </button>
+        </button> */}
       </div>
     </div>
   );

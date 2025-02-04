@@ -2,13 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import "./WriteOffItemList.css";
 import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
-
+import { useFilter } from "../../ShortCuts/useFilter";
+import * as XLSX from 'xlsx';
 const WriteOffItemsList = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [writeOffGoods, setWriteOffGoods] = useState([]);
   const [filteredGoods, setFilteredGoods] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     // Fetch data from the API
@@ -29,15 +31,55 @@ const WriteOffItemsList = () => {
       } catch (error) {
         console.error("Error fetching Write-Off Goods:", error);
       }
+      
     };
 
     fetchWriteOffGoods();
   }, []);
 
   const handlePrint = () => {
-    console.log("Printing...");
-
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
+  const writeOffInGoods = useFilter(writeOffGoods, searchTerm);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport');
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
+  };
+
 
   return (
     <div className="writeOffList-inventory-content">
@@ -46,13 +88,20 @@ const WriteOffItemsList = () => {
           type="text"
           placeholder="Search"
           className="writeOffList-inventory-search-bar"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          value={searchTerm}
+          onChange={handleSearch}
         />
+
         <div>
           <span className="writeOffList-inventory-span">
             Showing {writeOffGoods.length} / {writeOffGoods.length} results
           </span>
+          <button
+            className="writeOffList-inventory-button"
+           onClick={handleExport}
+          >
+            Export
+          </button>
           <button
             className="writeOffList-inventory-button"
             onClick={handlePrint}
@@ -93,8 +142,8 @@ const WriteOffItemsList = () => {
             </tr>
           </thead>
           <tbody>
-            {writeOffGoods.length > 0 ? (
-              writeOffGoods.map((item, index) => (
+            {writeOffInGoods.length > 0 ? (
+              writeOffInGoods.map((item, index) => (
                 <tr key={index}>
                   <td>{item?.items.itemName}</td>
                   <td>{item?.writeOffQty}</td>
