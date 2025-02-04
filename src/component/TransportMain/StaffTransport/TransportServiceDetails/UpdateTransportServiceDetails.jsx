@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UpdateTransportServiceDetails.css'; // Importing the CSS for styling
+import { API_BASE_URL } from '../../../api/api';
 
 const UpdateStaffForm = ({ staffData, onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -34,7 +35,7 @@ const UpdateStaffForm = ({ staffData, onSubmit }) => {
     e.preventDefault();
     try {
       console.log(formData);
-      const response = await axios.put(`http://localhost:8085/api/vehicles/${formData.vehicleID}`, formData);
+      const response = await axios.put(`${API_BASE_URL}/vehicles/${formData.vehicleID}`, formData);
       console.log('Data updated successfully', response.data);
       onSubmit(response.data); // Pass the updated data to the parent component
     } catch (error) {

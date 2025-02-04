@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './UpdateRouteScheduleManagement.css'; // Import CSS for styling
 import axios from 'axios'; // Import axios for API requests
+import { API_BASE_URL } from '../../../api/api';
 
 const UpdateForm = ({ initialData, onSubmit }) => {
   console.log(initialData)
@@ -19,7 +20,7 @@ const UpdateForm = ({ initialData, onSubmit }) => {
     e.preventDefault();
     try {
       console.log(formData); // Log form data to check before sending
-      const response = await axios.put(`http://localhost:8085/api/routes/${formData.routeID}`, formData);
+      const response = await axios.put(`${API_BASE_URL}/routes/${formData.routeID}`, formData);
       onSubmit(response.data); // Pass the response data to the parent component
     } catch (error) {
       if (error.response) {
@@ -62,7 +63,7 @@ const UpdateForm = ({ initialData, onSubmit }) => {
             required
           />
         </div>
-        
+
         <div className="UUStaffTransportManagement-form-group">
           <label className="UUStaffTransportManagement-form-label">Pickup Time</label>
           <input
@@ -87,7 +88,7 @@ const UpdateForm = ({ initialData, onSubmit }) => {
           />
         </div>
 
-     
+
 
         <div className="UUStaffTransportManagement-form-group">
           <label className="UUStaffTransportManagement-form-label">Traffic Condition</label>

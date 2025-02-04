@@ -89,7 +89,7 @@ const CreateRequest = ({ onClose, onSubmit }) => {
     };
 
     try {
-      const response = await fetch("http://192.168.1.58:4095/api/vehicle-requests", {
+      const response = await fetch(`${API_BASE_URL}/vehicle-requests`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestData),
