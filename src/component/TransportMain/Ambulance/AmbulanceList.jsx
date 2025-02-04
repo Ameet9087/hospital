@@ -3,6 +3,7 @@ import './AmbulanceList.css';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import axios from 'axios';
 import { API_BASE_URL } from '../../api/api';
+
 const AmbulanceList = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -15,8 +16,27 @@ const AmbulanceList = () => {
       try {
         const availableResponse = await axios.get(`${API_BASE_URL}/ambulances/available`);
         const onDutyResponse = await axios.get(`${API_BASE_URL}/ambulances/on-duty`);
-        setAvailableAmbulances(availableResponse.data);
-        setOnDutyAmbulances(onDutyResponse.data);
+
+        // Extracting data from responses
+        const availableData = availableResponse.data.map(ambulance => ({
+          id: ambulance.ambulanceId,
+          licencePlate: ambulance.licencePlate,
+          status: ambulance.status,
+          driverName: ambulance.driver,
+          lastChecked: ambulance.lastChecked
+        }));
+
+        const onDutyData = onDutyResponse.data.map(ambulance => ({
+          id: ambulance.ambulanceId,
+          licencePlate: ambulance.licencePlate,
+          status: ambulance.status,
+          driverName: ambulance.driver,
+          lastChecked: ambulance.lastChecked
+        }));
+
+        // Update state with merged data
+        setAvailableAmbulances(availableData);
+        setOnDutyAmbulances(onDutyData);
       } catch (error) {
         console.error('Error fetching ambulance data:', error);
       }
@@ -51,6 +71,7 @@ const AmbulanceList = () => {
       </tbody>
     </table>
   );
+
   return (
     <div className="ambulance-list-module-com">
       <h1 className="ambulance-details-com-module__heading">Ambulance List</h1>

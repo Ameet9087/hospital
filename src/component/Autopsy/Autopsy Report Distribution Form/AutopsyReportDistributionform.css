@@ -1,0 +1,140 @@
+.autopsy-report-add-btn{
+    margin-bottom: 20px;
+    background-color: var(--button-color);
+    font-size: var( --heading-font);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid var(--button-hover-border-color); 
+}
+
+
+.autopsy-report-container {
+    margin: 0 auto;
+    padding: 10px;
+    background-color:var(--background-color);
+  }
+  .autopsy-report-section {
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+.autopsy-report-form-header{
+    background-color: #00897b;
+    color: white;
+    padding: 7px 20px;
+    font-size: var(--heading-font);
+    font-weight: 500;
+}
+.autopsy-report-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 10px;
+  }
+  .autopsy-report-grid.two-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+.autopsy-report-floating-field,.autopsy-report-data {
+    position: relative;
+  }
+  .autopsy-report-floating-input,.autopsy-report-floating-select,.autopsy-report-data textarea {
+    padding: 5px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background: white;
+    transition: all 0.2s ease;
+    width: 92%;
+  }
+  .autopsy-report-floating-select{
+    width: 105%;
+  }
+
+
+  .autopsy-report-floating-label,.autopsy-report-data label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    padding: 0 4px;
+    color: #666;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    font-size: var(--font-size);
+  }
+  .autopsy-report-floating-field.active .autopsy-report-floating-label,.autopsy-report-data label {
+    top: 0;
+    font-size: 12px;
+    color: #00897b;
+  }
+  .autopsy-report-floating-field.active .autopsy-report-floating-input,
+  .autopsy-report-floating-field.active .autopsy-report-floating-select {
+    border-color: #00897b;
+  }
+
+
+.autopsy-report-action{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.autopsy-report-button{
+    display: flex;
+    justify-content: end;
+}
+.autopsy-report-submit-btn,.autopsy-report-status-btn{
+    padding: 5px;
+    font-size: var(--heading-font);
+    background-color: var(--button-bg-color);
+    color: white;
+    border: 1px solid var(--button-hover-border-color);
+    border-radius: 5px;
+}
+
+.autopsy-report-submit-btn:hover,.autopsy-report-status-btn:hover{
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+.autopsy-report-search-field{
+    position: relative;
+    width: 100%;
+}
+.autopsy-report-search-icon{
+    position: absolute; 
+    right: 10px;        
+    top: 40%;          
+    transform: translateY(-50%); 
+    cursor: pointer;   
+    font-size: 15px;   
+    color: #000;  
+}
+/* .autopsy-report-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+} */
+.autopsy-report-distribution {
+    display: flex;
+    align-items: flex-start; 
+  }
+  
+  .autopsy-report-distribution label {
+    width: 200px; 
+    text-align: left; 
+    margin-right: 20px;
+  }
+  
+  .autopsy-report-data {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; 
+  }
+  
+

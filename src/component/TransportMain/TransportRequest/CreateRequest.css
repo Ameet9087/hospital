@@ -1,69 +1,31 @@
-/* Kshitija_Purvat_TransportRequest_24_09_starting_line_2 */
-
-.modal-overlay {
-  position: fixed;
-  /* Fixed positioning to cover the entire viewport */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  /* Overlay background */
+.transport-request-form-group{
   display: flex;
-  justify-content: center;
-  /* Center horizontally */
-  align-items: center;
-  /* Center vertically */
-  z-index: 1000;
-  /* Ensure it is on top */
+  width: 500px;
+  gap:10px;
+  padding:5px;
+}
+.transport-request-form-group label{
+  width:150px;
+  font-size:14px;
 }
 
-/* .modal-content {
-  position: relative;
-  width: 400px;
-  max-height: 90vh;
-  overflow-y: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-} */
-
-.modal-content-heading-text {
-  display: block;
-  text-align: center;
-  font-size: 16px;
-  margin-bottom: 20px;
+.transport-request-form-group input{
+  padding:1px;
+  width:300px;
+  border-radius:5px;
 }
 
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: transparent;
+.transport-request-model-action-button{
+  background-color: var(--button-bg-color);
+  color: white;
   border: none;
-  /* No border */
-  font-size: 24px;
-  /* Font size for the cross */
-  cursor: pointer;
-  /* Pointer cursor on hover */
-  color: #333;
-  /* Color for the cross */
+  padding: 5px;
+  font-size: var(--font-size);
+  border-radius: 5px;
+  margin:5px;
 }
-
-.close-button:hover {
-  color: red;
-  /* Change color on hover */
+.transport-request-model-action-button:hover{
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
 }
-
-.modal-actions {
-  text-align: center;
-
-}
-
-.form-group {
-  font-size: 14px;
-}
-
-
-/* Kshitija_Purvat_TransportRequest_24_09_starting_line_2 */

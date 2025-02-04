@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './UpdateEmergencyLateNightArrangement.css'; // Import CSS for styling
 import axios from 'axios'; // Import axios for API requests
+import { API_BASE_URL } from '../../../api/api';
 
 const UpdateSpecialTransportRequest = ({ initialData, onSubmit }) => {
   const [formData, setFormData] = useState(initialData);
@@ -17,7 +18,7 @@ const UpdateSpecialTransportRequest = ({ initialData, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:8085/api/emergency-arrangements/${formData.emergencyRequestId}`, formData); // Use the correct ID here
+      const response = await axios.put(`${API_BASE_URL}/emergency-arrangements/${formData.emergencyRequestId}`, formData); // Use the correct ID here
       onSubmit(response.data); // Call the onSubmit prop with the response data
     } catch (error) {
       console.error('Error updating special transport request:', error);

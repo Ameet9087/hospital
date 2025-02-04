@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import './AddRouteScheduleManagement.css'; // Import CSS for styling
 import axios from 'axios'; // Import axios for API requests
+import { API_BASE_URL } from '../../../api/api';
 
 const AddForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     routeID: '',
-        pickupTime: '',
-        dropOffTime: '',
-        
-        routeName: '',
-        trafficCondition: '',
+    pickupTime: '',
+    dropOffTime: '',
+
+    routeName: '',
+    trafficCondition: '',
   });
 
   const handleChange = (e) => {
@@ -21,7 +22,7 @@ const AddForm = ({ onSubmit }) => {
     e.preventDefault();
     try {
       // Making a POST request to the server with formData
-      const response = await axios.post('http://localhost:8085/api/routes', formData);
+      const response = await axios.post(`${API_BASE_URL}/routes`, formData);
 
       // After the route is successfully added, call the onSubmit function
       onSubmit(response.data);
@@ -31,7 +32,7 @@ const AddForm = ({ onSubmit }) => {
         routeID: '',
         pickupTime: '',
         dropOffTime: '',
-        
+
         routeName: '',
         trafficCondition: '',
       });
@@ -54,7 +55,7 @@ const AddForm = ({ onSubmit }) => {
             value={formData.routeID}
             onChange={handleChange}
             className="DDStaffTransportManagement-form-input"
-        
+
           />
         </div>
 
@@ -94,7 +95,7 @@ const AddForm = ({ onSubmit }) => {
           />
         </div>
 
-        
+
 
         <div className="DDStaffTransportManagement-form-group">
           <label className="DDStaffTransportManagement-form-label">Traffic Condition</label>

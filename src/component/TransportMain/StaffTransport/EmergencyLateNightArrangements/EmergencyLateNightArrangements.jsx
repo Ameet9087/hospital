@@ -4,6 +4,7 @@ import './EmergencyLateNightArrangements.css';
 import Modal from '../Modal'; // Assuming you have a reusable Modal component
 import AddSpecialTransportRequest from '../EmergencyLateNightArrangements/AddEmergencyLateNightArrangements'; // Import the form component for adding
 import UpdateSpecialTransportRequest from '../EmergencyLateNightArrangements/UpdateEmergencyLateNightArrangements'; // Import the form component for updating
+import { API_BASE_URL } from '../../../api/api';
 
 const EmergencyLateNightArrangements = () => {
   const [arrangementData, setArrangementData] = useState([]); // Initialize state for arrangement data
@@ -16,7 +17,7 @@ const EmergencyLateNightArrangements = () => {
   useEffect(() => {
     const fetchArrangementData = async () => {
       try {
-        const response = await axios.get('http://localhost:8085/api/emergency-arrangements'); 
+        const response = await axios.get(`${API_BASE_URL}/emergency-arrangements`); 
         console.log(response.data)// Replace with your actual API URL
         setArrangementData(response.data); // Set the arrangement data from response
       } catch (error) {

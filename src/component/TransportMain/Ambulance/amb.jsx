@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './EmergencyRequest.css';
+import { API_BASE_URL } from '../../api/api';
 
 const EmergencyRequest = () => {
     const [formData, setFormData] = useState({
@@ -66,7 +67,7 @@ const EmergencyRequest = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:8000/api/emergency/create', formattedData);
+            const response = await axios.post(`${API_BASE_URL}/emergency/create`, formattedData);
             console.log('Form submitted successfully:', response.data);
         } catch (error) {
             console.error('Error submitting form:', error);

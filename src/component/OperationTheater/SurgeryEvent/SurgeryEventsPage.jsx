@@ -566,7 +566,7 @@ const SurgeryEvents = () => {
                 <div className="surgeryEvents-input-with-search">
                   <input
                     type="text"
-                    value={booking.ipAdmissionDTO?.patient?.uhid}
+                    value={booking.ipAdmissionDTO?.patient?.patient?.uhid}
                   />
 
                   {isPopupOpen && (
@@ -589,8 +589,8 @@ const SurgeryEvents = () => {
                 <label>Patient Name:</label>
                 <input
                   type="text"
-                  value={`${booking.ipAdmissionDTO?.patient?.firstName || ""} ${
-                    booking.ipAdmissionDTO?.patient?.lastName || ""
+                  value={`${booking.ipAdmissionDTO?.patient?.patient?.firstName || ""} ${
+                    booking.ipAdmissionDTO?.patient?.patient?.lastName || ""
                   }`}
                 />
               </div>
@@ -598,14 +598,14 @@ const SurgeryEvents = () => {
                 <label>Age:</label>
                 <input
                   type="text"
-                  value={booking.ipAdmissionDTO?.patient?.age}
+                  value={booking.ipAdmissionDTO?.patient?.patient?.age}
                 />
               </div>
               <div className="surgeryEvents-form-row">
                 <label>Gender:</label>
                 <input
                   type="text"
-                  value={booking.ipAdmissionDTO?.patient?.gender}
+                  value={booking.ipAdmissionDTO?.patient?.patient?.gender}
                 />
               </div>
               <div className="surgeryEvents-form-row">
