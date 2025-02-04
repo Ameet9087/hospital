@@ -172,7 +172,7 @@
 
 .stock-button-list span {
     font-size: var(--font-size); /* Font size for the result count */
-    color: var(--button-color);
+    color: black;
 }
 .stock-legends {
     margin-left: auto;

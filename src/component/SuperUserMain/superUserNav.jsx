@@ -21,6 +21,9 @@ const SuperUserNavBar = () => {
           <li>
             <NavLink to="/superuser/usermanagement">User Management</NavLink>
           </li>
+          <li>
+            <NavLink to="/superuser/tower">Tower</NavLink>
+          </li>
           {/* <li>
             <NavLink to="/superuser/billingdiscountapproval">Billing Discount Approval </NavLink>
           </li>

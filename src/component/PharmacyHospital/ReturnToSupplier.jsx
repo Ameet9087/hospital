@@ -14,8 +14,10 @@ const ReturnToSupplier = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showReturnForm, setShowReturnForm] = useState(false); 
   const [selectedItem, setSelectedItem] = useState(null); 
-
-
+  // const [fromDate, setFromDate] = useState();
+  // const [toDate, setToDate] = useState();
+ const [fromDate, setFromDate] = useState("2025-01-15"); // From date
+  const [toDate, setToDate] = useState("2025-01-31"); // To date
   // Function to export table to Excel
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
@@ -26,8 +28,37 @@ const ReturnToSupplier = () => {
 
   // Function to trigger print
   const handlePrint = () => {
-    window.print(); // Triggers the browser's print window
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
+  
 
   // Fetch data from the API
   useEffect(() => {
@@ -43,13 +74,23 @@ const ReturnToSupplier = () => {
     fetchData();
   }, []);
 
-  // Filter data based on search term
-  const filteredData = Array.isArray(data)
-  ? data.filter((item) =>
-      item.supplier?.supplierName?.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  : [];
+  // Filter data based on search term and date range
+const filteredData = Array.isArray(data)
+? data.filter((item) => {
+    const supplierMatch = item.supplier?.supplierName
+      ?.toLowerCase()
+      .includes(searchTerm.toLowerCase());
 
+    const itemDate = new Date(item.goodsReceiptDate); // Convert item date to Date object
+    const from = new Date(fromDate);
+    const to = new Date(toDate);
+
+    // Check if the item's date falls within the selected range
+    const dateMatch = itemDate >= from && itemDate <= to;
+
+    return supplierMatch && dateMatch;
+  })
+: [];
   const handleReturnClick = (item) => {    
     setSelectedItem(item); 
     setShowReturnForm(true); 
@@ -70,13 +111,22 @@ const ReturnToSupplier = () => {
       <div className="return-to-supplier-date-filter-container">
         <div className="return-to-supplier-date-filter">
           <label>From:</label>
-          <input type="date" className="return-to-supplier-input-date" defaultValue="2024-08-15" />
-        </div>
+          <input
+            type="date"
+            className="return-to-supplier-input-date"
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
+          />       
+           </div>
 
         <div className="return-to-supplier-date-filter">
           <label>To:</label>
-          <input type="date" className="return-to-supplier-input-date" defaultValue="2024-08-22" />
-        </div>
+          <input
+            type="date"
+            className="return-to-supplier-input-date"
+            value={toDate}
+            onChange={(e) => setToDate(e.target.value)}
+          />        </div>
       </div>
 
       <div className="return-to-supplier-search-bar">
@@ -87,9 +137,9 @@ const ReturnToSupplier = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button className="return-to-supplier-search-icon-button">
+        {/* <button className="return-to-supplier-search-icon-button">
           <i className="fa fa-search"></i>
-        </button>
+        </button> */}
         <div className="return-to-supplier-print-container">
           <span>
             Showing {filteredData.length} / {data.length} results
@@ -161,7 +211,7 @@ const ReturnToSupplier = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="13" className="return-to-supplier-no-rows">
+                <td colSpan="14" className="return-to-supplier-no-rows">
                   No Rows To Show
                 </td>
               </tr>

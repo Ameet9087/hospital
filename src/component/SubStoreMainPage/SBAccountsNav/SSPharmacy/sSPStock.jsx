@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import "../SSPharmacy/sSPStock.css";
 import SSPRequisition from './sSPRequisition';
 import SSPConsumption from './sSPConsumption';
@@ -9,14 +9,15 @@ import SSPReports from './sSPReports'; // Import the Reports component
 import SSPharmacyNInven from './sSPharmacyNInven';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
-
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 function SSPStock() {
   const { store } = useParams();
   const [activeTab, setActiveTab] = useState('Stock');
   const [stockData, setStockData] = useState([]); // State to store fetched data
   const [loading, setLoading] = useState(true); // State for loading indicator
   const [error, setError] = useState(null); // State for error handling
-
+const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
   // Fetch data when Stock tab is active
   useEffect(() => {
     if (activeTab === 'Stock') {
@@ -42,6 +43,39 @@ function SSPStock() {
     }
   };
 
+   // Function to trigger print
+   const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
+
   const renderContent = () => {
     switch (activeTab) {
       case 'Stock':
@@ -62,19 +96,33 @@ function SSPStock() {
                   <i className="fa-regular fa-file-excel"></i> Export
                 </button>
                 <button className='sSPStock-stock-print-btn'
-                // onClick={handlePrint}
+                onClick={handlePrint}
                 ><i class="fa-solid fa-print"></i> Print</button>
               </div>
             </div>
-            <table className='sSPStock-stock'>
-              <thead>
-                <tr>
-                  <th>Generic Name</th>
-                  <th>Item Name</th>
-                  <th>Available Quantity</th>
-                  <th>Sale Price</th>
-                </tr>
-              </thead>
+           <table ref={tableRef}>
+                     <thead>
+                       <tr>
+                         {[
+                          "Generic Name", "Item Name", "Available Quantity", "Sale Price"
+                         ].map((header, index) => (
+                           <th
+                             key={index}
+                             style={{ width: columnWidths[index] }}
+                             className="resizable-th"
+                           >
+                             <div className="header-content">
+                               <span>{header}</span>
+                               <div
+                                 className="resizer"
+                                 onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                               ></div>
+                             </div>
+                           </th>
+                         ))}
+                       </tr>
+                     </thead>
+
               <tbody>
                 {stockData.map((item, index) => (
                   <tr key={index}>
@@ -97,7 +145,7 @@ function SSPStock() {
       // case 'Issues':
       //   return <SSPIssues />;
       case 'Reports':
-        return <SSPReports />; // Return the Reports component
+        return <SSPReports />;
       default:
         return null;
     }

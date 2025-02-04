@@ -3,7 +3,7 @@ import "./StockList.css";
 import StockManage from './StockManage'; // Import StockManage component
 import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../../../api/api';
-
+import * as XLSX from 'xlsx';
 
 const StockList = () => {
   const [columnWidths,setColumnWidths] = useState({});
@@ -36,6 +36,44 @@ const StockList = () => {
     setSelectedItem(null); // Clear selected item to go back to the list
   };
 
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport');
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
+  };
+
   return (
     <div className="stock-stock-list">
       {selectedItem ? (
@@ -53,18 +91,18 @@ const StockList = () => {
               }
               </select>
             </label>
-            <label>
+            {/* <label>
               <input type="checkbox" />
               Show Fixed Assets Applicable Item
-            </label>
-            <label>
+            </label> */}
+            {/* <label>
               <input type="checkbox" />
               Show only cold storage item
-            </label>
-            <label>
+            </label> */}
+            {/* <label>
               <input type="checkbox" />
               Show Zero Quantity
-            </label>
+            </label> */}
           </div>
           <div className="stock-search-export">
             <div className='Stock-search-input-container'>
@@ -78,8 +116,8 @@ const StockList = () => {
             </div>
             <div className='stock-button-list'>
               <span>{`Showing ${filteredItems.length} of ${items.length} results`}</span>
-              <button className="stock-export" aria-label="Export Data">Export</button>
-              <button className="stock-print" aria-label="Print Data">Print</button>
+              <button className="stock-export" aria-label="Export Data" onClick={handleExport}>Export</button>
+              <button className="stock-print" aria-label="Print Data" onClick={handlePrint}>Print</button>
             </div>
           </div>
           <div className='stock-ta'>

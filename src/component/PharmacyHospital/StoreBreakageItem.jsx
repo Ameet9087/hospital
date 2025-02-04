@@ -46,10 +46,43 @@ const StoreBreakageItem = () => {
     XLSX.utils.book_append_sheet(wb, ws, "BreakageItemsReport");
     XLSX.writeFile(wb, "BreakageItemsReport.xlsx");
   };
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   // Function to handle printing
-  const handlePrint = () => window.print();
-
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
+  
   // Function to filter breakage items based on selected date range
   const filterByDate = () => {
     const filtered = breakageItems.filter((item) => {
@@ -103,7 +136,7 @@ const StoreBreakageItem = () => {
         </div>
       </div>
       <div className="setting-terms-search-container">
-        <input type="text" placeholder="Search" className="search-input" />
+        <input type="text" placeholder="Search" className="setting-terms-search-container-search-input" />
       </div>
       <div className="setting-supplier-span">
         <span>Showing {filteredItems.length} results</span>

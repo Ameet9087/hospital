@@ -1,0 +1,82 @@
+/* Main container for Lead Time section */
+.leadtime-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  }
+  
+  .leadtime-title {
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .leadtime-description {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  /* Card layout for quick stats */
+  .leadtime-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .leadtime-section-title {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #2c3e50;
+  }
+  
+  .leadtime-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .leadtime-list li {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Table layout for detailed lead time */
+  .leadtime-table-container {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+ 
+  .leadtimedeliveris-back-button {
+   
+    margin-top: 20px;
+    padding: 5px;
+    background-color: var(--button-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    font-size: 14px;
+  }
+  
+  .leadtimedeliveris-back-button:hover {
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+  }
+  

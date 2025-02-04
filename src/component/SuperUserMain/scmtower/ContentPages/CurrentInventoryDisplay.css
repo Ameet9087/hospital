@@ -1,0 +1,50 @@
+.currentinventory-container {
+    padding: 20px;
+    background-color: #f0f4f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .currentinventorylevel-title {
+    font-size: 20px;
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+  
+  
+  
+  .sufficient {
+    background-color: #e0f7e0;
+  }
+  
+  .low {
+    background-color: #fff3cd;
+  }
+  
+  .critical {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+ 
+  
+  .currentinventorylevel-back-button,.currentinventory-printbtn {
+   
+    margin-top: 20px;
+    padding: 5px;
+    background-color: var(--button-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    font-size: 14px;
+  }
+  
+  .currentinventorylevel-back-button:hover, .currentinventory-printbtn:hover {
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+  }
+  

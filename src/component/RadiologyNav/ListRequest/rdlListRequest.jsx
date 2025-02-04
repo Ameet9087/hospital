@@ -138,7 +138,7 @@ function RDLListRequest() {
       const matchesFilter =
         selectedFilter === "--All--" ||
         request.imagingItemDTO?.imagingType?.imagingTypeName?.toUpperCase() ===
-          selectedFilter;
+        selectedFilter;
 
       const matchesSearch = [
         request.inPatientDTO?.firstName || "",
@@ -252,7 +252,7 @@ function RDLListRequest() {
             </tr>
           </thead>
           <tbody>
-            {filteredRequests.length > 0 ? (
+            {filteredRequests?.length > 0 ? (
               filteredRequests
                 .sort((a, b) => {
                   if (

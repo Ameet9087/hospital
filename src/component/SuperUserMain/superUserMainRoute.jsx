@@ -21,7 +21,7 @@ import FacilityService from './FacilityServices/FacilityService';
 
 import Administration from './Administration/Administration';
 // import VendorSupplyRouting from './VendorAndSupply/VendorSupplyRouting';
-import VendorNavba from './VendorAndSupply/VendorNavbar' 
+import VendorNavba from './VendorAndSupply/VendorNavbar'
 import PurchaseOrderAcknowledgmentFormCom from './VendorAndSupply/PurchaseOrderAcknowledgmentForm';
 import PurchaseOrderFormCom from './VendorAndSupply/PurchaseOrderForm';
 import SupplyDeliveryFormCom from './VendorAndSupply/QuotationForm';
@@ -35,18 +35,21 @@ import Inventory from './ControlAllDepartment/Inventory';
 import QueryPage from './ControlAllDepartment/QueryPage';
 import QueryPageInventory from './ControlAllDepartment/QueryPageInventory';
 import UserManagement from './UserManagment/UserManagement';
+import Scmtowermain from './scmtower/scmtowermain';
 function SuperUserMain() {
 
   return (
     <>
-        <SuperUserNavBar/>
-        <div className="transportNavBar-content">
+      <SuperUserNavBar />
+      <div className="transportNavBar-content">
         <Routes>
 
-          <Route path="/revenuemanagement" element={<Revenuemgnt />} />           
-          <Route path="/revenuemanagement/revenuedashoboard" element={<RevenueDashboard />} />           
+          <Route path="/revenuemanagement" element={<Revenuemgnt />} />
+          <Route path="/revenuemanagement/revenuedashoboard" element={<RevenueDashboard />} />
 
-          <Route path='/usermanagement/*' element={<UserManagement/>}/>
+          <Route path='/usermanagement/*' element={<UserManagement />} />
+          <Route path='/tower/*' element={<Scmtowermain />} />
+
 
           <Route path="/billingdiscountapproval/*" element={<BillingNavbar />} />
           <Route path="/billingdiscountapproval/discount-approval-request" element={<DiscountApprovalRequest />} />
@@ -55,29 +58,29 @@ function SuperUserMain() {
           <Route path="/billingdiscountapproval/patient-billing-summary" element={<PatientBillingSummary />} />
 
 
-          <Route path="/homePage" element={<HomePage />} />           
-          <Route path="/messagebroadcast" element={<BroadcastPage />} />           
-          <Route path="/messagebroadcast/add" element={<AddMessagePageHIMS />} />           
-          <Route path="/messagebroadcast/send" element={<SendMessageHistory />} />           
-          
-          <Route path="/facilityservices" element={<FacilityService />} />           
-           
-          <Route path="/administration" element={<Administration />} />           
- 
-          <Route path="/vendorandsupplymanagement/*" element={<VendorNavba />} />           
-          <Route path="/vendorandsupplymanagement/purchase-order-acknowlegement" element={<PurchaseOrderAcknowledgmentFormCom />} />           
-          <Route path="/vendorandsupplymanagement/purchase-order" element={<PurchaseOrderFormCom />} />           
-          <Route path="/vendorandsupplymanagement/QuotationForm" element={<SupplyDeliveryFormCom />} />           
-          <Route path="/vendorandsupplymanagement/invoice" element={<InvoiceFormCom />} />           
-          <Route path="/vendorandsupplymanagement/InvoiceListItems" element={<PrintReport />} />           
-          <Route path="/vendorandsupplymanagement/report" element={<ReportGenerationFormCom />} />           
+          <Route path="/homePage" element={<HomePage />} />
+          <Route path="/messagebroadcast" element={<BroadcastPage />} />
+          <Route path="/messagebroadcast/add" element={<AddMessagePageHIMS />} />
+          <Route path="/messagebroadcast/send" element={<SendMessageHistory />} />
 
-          <Route path="/controlalldepartment" element={<ControlAllDeptRoute />} />           
-          <Route path="/controlalldepartment/department" element={<Department />} />           
-          <Route path="/controlalldepartment/inventory" element={<Inventory />} />           
-          <Route path="/send-query" element={<QueryPage />} />           
+          <Route path="/facilityservices" element={<FacilityService />} />
 
-          <Route path="/send-inventory-query" element={<QueryPageInventory />} />        
+          <Route path="/administration" element={<Administration />} />
+
+          <Route path="/vendorandsupplymanagement/*" element={<VendorNavba />} />
+          <Route path="/vendorandsupplymanagement/purchase-order-acknowlegement" element={<PurchaseOrderAcknowledgmentFormCom />} />
+          <Route path="/vendorandsupplymanagement/purchase-order" element={<PurchaseOrderFormCom />} />
+          <Route path="/vendorandsupplymanagement/QuotationForm" element={<SupplyDeliveryFormCom />} />
+          <Route path="/vendorandsupplymanagement/invoice" element={<InvoiceFormCom />} />
+          <Route path="/vendorandsupplymanagement/InvoiceListItems" element={<PrintReport />} />
+          <Route path="/vendorandsupplymanagement/report" element={<ReportGenerationFormCom />} />
+
+          <Route path="/controlalldepartment" element={<ControlAllDeptRoute />} />
+          <Route path="/controlalldepartment/department" element={<Department />} />
+          <Route path="/controlalldepartment/inventory" element={<Inventory />} />
+          <Route path="/send-query" element={<QueryPage />} />
+
+          <Route path="/send-inventory-query" element={<QueryPageInventory />} />
         </Routes>
       </div>
     </>

@@ -1,0 +1,104 @@
+/* GM Page Styles */
+.gmpage-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .gmpage-header {
+    margin-bottom: 30px;
+  }
+  
+  .gmpage-title {
+    font-size:20px;
+    color: #3598dc;
+    margin-bottom: 10px;
+  }
+  
+  .gmpage-description {
+    font-size: 14px;
+    color: black;
+  }
+  
+  .gmpage-details-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  
+  .gmpage-subtitle {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .gmpage-gm-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .gmpage-label {
+    font-size: 14px;
+    color: black;
+     
+  }
+  
+  .gmpage-progress-bar-container {
+    width: 60%;
+    background-color: #e0e0e0;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    height: 10px;
+  }
+  
+  .gmpage-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #4caf50, #8bc34a);
+    border-radius: 20px;
+  }
+  
+  .gmpage-progress-bar.target {
+    background: linear-gradient(90deg, #ff9800, #ff5722);
+  }
+  
+  .gmpage-percentage {
+    font-size: 14px;
+    color: #555;
+  }
+  .backbtnclass{
+    width: 100%;
+    justify-content: flex-start;
+    margin-right: 500px;
+  }
+  
+  .gmpage-back-button {
+   
+    margin-top: 20px;
+    padding: 5px;
+    background-color: var(--button-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    font-size: 14px;
+  }
+  
+  .gmpage-back-button:hover {
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+  }
+  

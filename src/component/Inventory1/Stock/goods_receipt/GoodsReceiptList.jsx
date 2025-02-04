@@ -8,7 +8,8 @@ const GoodsReceiptList = () => {
   const [dateFrom, setDateFrom] = useState('2024-08-01');
   const [dateTo, setDateTo] = useState('2024-08-08');
   const [searchQuery, setSearchQuery] = useState('');
-
+  const [items, setItems] = useState([]); // Assuming items is the data to display in the table
+  const [filteredItems, setFilteredItems] = useState([]);
   const handleSearchChange = (e) => setSearchQuery(e.target.value);
   const handleDateFromChange = (e) => setDateFrom(e.target.value);
   const handleDateToChange = (e) => setDateTo(e.target.value);
@@ -34,7 +35,7 @@ const GoodsReceiptList = () => {
             className="goods-receipt-date-input"
           />
         </label>
-        <button className="goods-receipt-ok-button">OK</button>
+        {/* <button className="goods-receipt-ok-button">OK</button> */}
       </div>
       <div className="goods-receipt-search-export">
         <div>
@@ -49,7 +50,7 @@ const GoodsReceiptList = () => {
         </div>
        
         <div>
-          <button className="goods-receipt-export-btn" aria-label="Export Data">Export</button>
+        <span>{`Showing ${filteredItems.length} of ${items.length} results`}</span>          <button className="goods-receipt-export-btn" aria-label="Export Data">Export</button>
           <button className="goods-receipt-print" aria-label="Print Data">Print</button>
         </div>
       </div>

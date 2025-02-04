@@ -24,14 +24,17 @@
 
 .inventory-close-button {
     position: absolute;
-    top: 10px;
+    top: -10px;
     right: 10px;
+    color: red;
     background: transparent;
     border: none;
-    font-size: var(--heading-font);
+    font-size: 34px;
     cursor: pointer;
 }
-
+.inventory-close-button:hover{
+    color: red;
+}
 .inventory-requisition-details {
     font-family: Arial, sans-serif;
     margin: 20px;

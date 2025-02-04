@@ -5,11 +5,13 @@ import React, { useState, useRef } from 'react';
 import * as XLSX from 'xlsx'; // Import the xlsx library
 import "../SSInventory/sSIIReportsReqTC.css";
 import { useReactToPrint } from 'react-to-print';
-
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 function SSIIReportsReqTC() {
   const printRef = useRef();
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [showViewRequisition, setShowViewRequisition] = useState(false);
+ const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   const handleCreateRequisitionClick = () => {
     setShowCreateRequisition(true);
@@ -20,17 +22,48 @@ function SSIIReportsReqTC() {
     setShowViewRequisition(false);
   };
 
-  const handlePrint = useReactToPrint({
-    content: () => printRef.current,
-    documentTitle: 'Requisition_Report',
-    pageStyle: `
-      @page {
-        size: A4;
-        margin: 20mm;
-      }
-    `,
-  });
-
+  // const handlePrint = useReactToPrint({
+  //   content: () => printRef.current,
+  //   documentTitle: 'Requisition_Report',
+  //   pageStyle: `
+  //     @page {
+  //       size: A4;
+  //       margin: 20mm;
+  //     }
+  //   `,
+  // });
+ // Function to trigger print
+ const handlePrint = () => {
+  const printContent = tableRef.current;
+  const newWindow = window.open("", "_blank");
+  newWindow.document.write(`
+    <html>
+      <head>
+        <title>Print Table</title>
+        <style>
+          table {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+          }
+          th {
+            background-color: #f2f2f2;
+          }
+        </style>
+      </head>
+      <body>
+        ${printContent.outerHTML}
+      </body>
+    </html>
+  `);
+  newWindow.document.close();
+  newWindow.print();
+  newWindow.close();
+};
   const handleViewClick = () => {
     setShowViewRequisition(true);
   };
@@ -71,9 +104,9 @@ function SSIIReportsReqTC() {
               To:
               <input type="date" defaultValue="2024-08-16" />
             </label>
-            <button className="sSIIReportsReqTC-star-button">☆</button>
+            {/* <button className="sSIIReportsReqTC-star-button">☆</button>
           <button className="sSIIReportsReqTC-more-btn">-</button>
-            <button className="sSIIReportsReqTC-ok-button">OK</button>
+            <button className="sSIIReportsReqTC-ok-button">OK</button> */}
           </div>
 
           <div className="sSIIReportsReqTC-filter">
@@ -105,20 +138,37 @@ function SSIIReportsReqTC() {
           <div ref={printRef}>
             <h2>Requisition and Dispatch Report</h2>
             <p>Printed On: {new Date().toLocaleString()}</p>
-            <table>
-              <thead>
-                <tr>
-                  <th>Requisition Date</th>
-                  <th>Dispatch Date</th>
-                  <th>Item Name</th>
-                  <th>Sub CategoryName</th>
-                  <th>Request Qty</th>
-                  <th>Received Qty</th>
-                  <th>Pending Qty</th>
-                  <th>Dispatched Qty</th>
-                  <th>Remarks</th>
-                </tr>
-              </thead>
+            <table ref={tableRef}>
+                     <thead>
+                       <tr>
+                         {[
+                           "Requisition Date",
+                           "Dispatch Date",
+                           "Item Name",
+                           "Sub Category Name",
+                           "Request Qty",
+                           "Received Qty",
+                           "Pending Qty",
+                           "Dispatched Qty",
+                           "Remarks"
+                         ].map((header, index) => (
+                           <th
+                             key={index}
+                             style={{ width: columnWidths[index] }}
+                             className="resizable-th"
+                           >
+                             <div className="header-content">
+                               <span>{header}</span>
+                               <div
+                                 className="resizer"
+                                 onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                               ></div>
+                             </div>
+                           </th>
+                         ))}
+                       </tr>
+                     </thead>
+
               <tbody>
                 <tr>
                   <td>2024-06-04</td>

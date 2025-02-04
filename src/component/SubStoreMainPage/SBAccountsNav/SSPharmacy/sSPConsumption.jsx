@@ -28,6 +28,38 @@ function SSPConsumption() {
       .catch(error => console.error('Error fetching data:', error));
   }, [store]);
 
+   // Function to trigger print
+   const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
   return (
     <div className="sSPConsumption-container">
       <button className="sSPConsumption-create-requisition" onClick={handlePopupToggle}>
@@ -57,7 +89,7 @@ function SSPConsumption() {
               <i className="fa-regular fa-file-excel"></i> Export
             </button>
             <button className='sSPConsumption-print-btn' 
-            // onClick={handlePrint}
+            onClick={handlePrint}
             ><i class="fa-solid fa-print"></i> Print</button>
           </div>
         </div>

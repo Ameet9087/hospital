@@ -1,0 +1,45 @@
+.marginsale-total-display-container {
+
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  }
+  
+  .marginsale-title {
+    font-size: 20px;
+    text-align: center;
+    color: #34495e;
+    margin-bottom: 10px;
+  }
+  
+  .marginsale-total-amount {
+    font-size: 16px;
+    text-align: left;
+    color: #27ae60;
+    margin-bottom: 20px;
+  }
+
+  .totalsaleover-back-button,.totalsaleover-print-btn {
+   
+    margin-top: 20px;
+    padding: 5px;
+    background-color: var(--button-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    font-size: 14px;
+  }
+  
+  .totalsaleover-back-button:hover,.totalsaleover-print-btn:hover {
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+  }
+  
+  

@@ -646,6 +646,7 @@ const CreateReturnToVendor = ({ onCancel }) => {
                         className="CreateReturnToVendor-Inv-Return-Input"
                         type="number"
                         name="returnRate"
+                        min="0"
                         value={item.returnRate}
                         onChange={(e) => handleChange(e, index)}
                       />
@@ -655,6 +656,7 @@ const CreateReturnToVendor = ({ onCancel }) => {
                         className="CreateReturnToVendor-Inv-Return-Input"
                         type="number"
                         name="quantity"
+                        min="0"
                         value={item.quantity}
                         onChange={(e) => handleChange(e, index)}
                       />

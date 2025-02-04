@@ -1,0 +1,120 @@
+
+.linens-issue {
+    font-family: Arial, sans-serif;
+    margin: 10px;
+    padding: 5px;
+    background-color: var(--background-color);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    height: 90vh;
+  }
+  
+  .linens-head {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .form-section {
+    margin-bottom: 20px;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    flex: 0 0 150px; /* Fixed width for labels */
+    margin-right: 10px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="date"],
+  .form-group input[type="time"] {
+    flex: 1;
+    padding: var(--input-box-padding);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: var(--font-size);
+  }
+  
+  .form-group div {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  
+  .form-group input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+
+
+  .input-with-icon {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 10px; /* Adjust as needed */
+    color: #555; /* Change color as needed */
+    cursor: pointer;
+    font-size: 18px; /* Adjust size as needed */
+  }
+  
+
+
+  .table-section {
+    margin-bottom: 20px;
+    overflow-x: auto; /* Allow horizontal scrolling */
+    overflow-y: auto; /* Allow vertical scrolling */
+    max-height: 60vh;
+  }
+  
+
+
+  .linenissue-buttons-section {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .linenissue-buttons-section button {
+    padding: 10px 15px;
+    font-size: var(--font-size);
+    color: #fff;
+    background-color: var(--button-bg-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  .linenissue-save-button {
+    background-color: green;
+    color: white;
+  }
+  
+  .linenissue-delete-button {
+    background-color: red;
+    color: white;
+  }
+  .buttons-section button:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  

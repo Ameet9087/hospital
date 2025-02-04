@@ -33,7 +33,7 @@ const NarcoticsStockReport = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button>🔍</button>
+          {/* <button>🔍</button> */}
         </div>
         <div className="narcotics-stock-report-filters">
           <label>

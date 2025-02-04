@@ -45,11 +45,12 @@ const RequisitionDetail = ({ requisition, onClose }) => {
 
 
   return (
-    <div className="inventory-modal-overlay">
-      <div className="inventory-modal-content">
-        <button className="inventory-close-button" onClick={onClose}>
+    
+    <div>
+      <div >
+        {/* <button className="inventory-close-button" onClick={onClose}>
           &times;
-        </button>
+        </button> */}
         <div className="inventory-requisition-details">
           <h2 className="inventory-requi-h2">Inventory Unit</h2>
           <p>

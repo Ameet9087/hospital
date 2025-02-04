@@ -89,7 +89,38 @@ useEffect(() => {
       alert("Failed to delete vehicle");
     }
   };
-
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
+  
   return (
     <div className="vehicleMaintenance-container">
       <div className="vehicleMaintenance-firstRow">
@@ -106,7 +137,7 @@ useEffect(() => {
         <div className="vehicleMaintenance-results-info">
           <span>Showing {addVehicle.length} / {addVehicle.length} results</span>
           <button className="vehicleMaintenance-print-button"><i className="fa-solid fa-file-excel"></i> Export</button>
-          <button className="vehicleMaintenance-print-button"><i className="fa-solid fa-print"></i> Print</button>
+          <button className="vehicleMaintenance-print-button" onClick={handlePrint}><i className="fa-solid fa-print"></i> Print</button>
         </div>
       </div>
 
@@ -116,7 +147,7 @@ useEffect(() => {
             <tr>
               {[
                 "Serial No","Vehicle Type", "Vehicle Number", "Vehicle Company Name", "Year Of Manufacture",
-                "Fuel Type", "Driver Name","Driver Contact Number"
+                "Fuel Type", "Driver Name","Driver Contact Number","Action"
                 // "Maintenance Type", "Schedule Date", "Completed Date", "Service Provider", 
                 // "Repair Details", "Parts Replace", "Cost", "Actions"
               ].map((header, index) => (

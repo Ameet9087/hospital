@@ -37,8 +37,8 @@
 }
 
 .returnToVendor-searchBar .ret-input {
-    width: 40%; /* Adjust width for better layout */
-    padding: 8px;
+    /* width: 40%;  */
+    padding: 5px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
@@ -55,7 +55,7 @@
 }
 
 .returnToVendor-searchBar .ret-button {
-    padding: 10px 20px;
+    padding: 5px 10px;
     background-color:var(--button-color) ;
     color: #fff;
     border: none;
@@ -65,20 +65,20 @@
 }
 
 
-
+/* 
 .returnToVendor-table {
     margin-top: 10px;
     overflow-x: auto;
-}
+} */
 
 .returnToVendor-receipt-table {
     width: 100%;
     background-color: white;
     border-collapse: collapse;
 }
-.return-to-vendor-ta{
+/* .return-to-vendor-ta{
     background-color: white;
-}
+} */
 
 .returnToVendor-receipt-table th, .returnToVendor-receipt-table td {
     border: 1px solid #ddd;

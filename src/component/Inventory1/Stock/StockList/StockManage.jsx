@@ -186,6 +186,7 @@ const StockManage = ({ item, onBack }) => {
                     <input
                       type="number"
                       value={modifiedQty}
+                       min="0"
                       className="StockManage-input"
                       onChange={(e) => setModifiedQty(Number(e.target.value))}
                       onBlur={handleStockAdjustment}

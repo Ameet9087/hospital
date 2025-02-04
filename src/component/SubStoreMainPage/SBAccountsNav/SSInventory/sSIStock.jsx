@@ -1,7 +1,7 @@
 /* Ajhar Tamboli sSIStock.jsx 19-09-24 */
 
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useRef} from 'react';
 import * as XLSX from 'xlsx'; // Import the xlsx library
 import "../SSInventory/sSIStock.css";
 import SSIInventoryRequisition from './sSIInventoryRequisition';
@@ -12,6 +12,7 @@ import SSIReturn from './sSIReturn';
 import SSPharmacyNInven from '../SSPharmacy/sSPharmacyNInven';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 
 function SSIStock() {
   const { store } = useParams();
@@ -20,7 +21,8 @@ function SSIStock() {
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
   const [sortDirection, setSortDirection] = useState('asc'); // Added sort direction state
   const [searchQuery, setSearchQuery] = useState(''); // State for search query
-
+const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
   // Function to export the table to Excel
   const exportTableToExcel = () => {
     const table = document.querySelector('table'); // Get the table element
@@ -29,22 +31,37 @@ function SSIStock() {
   };
 
   // Function to print specific elements: table, FromDate, ToDate, and current date and time
-  const printTable = () => {
-    const table = document.querySelector('table').outerHTML; // Get the table HTML
-    const fromDate = '<p>From Date: <input type="date" /></p>'; // From Date field
-    const toDate = '<p>To Date: <input type="date" /></p>'; // To Date field
-    const currentDateTime = `<p>Current Date and Time: ${new Date().toLocaleString()}</p>`; // Current Date and Time
-
-    const printWindow = window.open('', '', 'height=600,width=800'); // Open a new window
-    printWindow.document.write('<html><head><title>Print Table</title>');
-    printWindow.document.write('</head><body>');
-    printWindow.document.write(fromDate); // Add From Date
-    printWindow.document.write(toDate); // Add To Date
-    printWindow.document.write(currentDateTime); // Add Current Date and Time
-    printWindow.document.write(table); // Add Table
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.print(); // Trigger print
+  // Function to trigger print
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
 
   useEffect(() => {
@@ -117,7 +134,7 @@ function SSIStock() {
                   <button className="sSIStock-btn-blue" onClick={exportTableToExcel}>
                     <i className="fa-solid fa-file-excel"></i> Export
                   </button>
-                  <button className="sSIStock-btn-blue" onClick={printTable}>
+                  <button className="sSIStock-btn-blue" onClick={handlePrint}>
                     <i className="fa-solid fa-print"></i> Print
                   </button>
                   {/* <button className="sSIStock-btn-blue" onClick={toggleSortDirection}>
@@ -126,18 +143,34 @@ function SSIStock() {
                 </div>
               </div>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Item Code</th>
-                  <th>SubCategory</th>
-                  <th>Item Name</th>
-                  <th>Unit</th>
-                  <th>Available Qty</th>
-                  <th>Item Type</th>
-                  <th>Store</th>
-                </tr>
-              </thead>
+            <table ref={tableRef}>
+                     <thead>
+                       <tr>
+                         {[
+                           'Item Code',
+                           'SubCategory',
+                           'Item Name',
+                           'Unit',
+                           'Available Qty',
+                           'Item Type',
+                           'Store',
+                         ].map((header, index) => (
+                           <th
+                             key={index}
+                             style={{ width: columnWidths[index] }}
+                             className="resizable-th"
+                           >
+                             <div className="header-content">
+                               <span>{header}</span>
+                               <div
+                                 className="resizer"
+                                 onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                               ></div>
+                             </div>
+                           </th>
+                         ))}
+                       </tr>
+                     </thead>
               <tbody>
                 {requisitions.length > 0 ? (
                   requisitions.map((req, index) => (

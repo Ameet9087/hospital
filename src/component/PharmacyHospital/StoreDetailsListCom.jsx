@@ -131,9 +131,37 @@ const StoreDetailsListCom = () => {
 
   // Function to trigger print
   const handlePrint = () => {
-    window.print(); // Triggers the browser's print window
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
-
+  
   return (
     <div className="setting-supplier-container">
       <span className="store-setting-incoming-stock-title">Incoming Stock List</span>
@@ -242,9 +270,9 @@ const StoreDetailsListCom = () => {
                     onClick={() => handleShowEditExpiry(user)}>
                     Update Exp&Batch
                   </button>
-                  <button className="setting-supplier-action-button">
+                  {/* <button className="setting-supplier-action-button">
                     Manage
-                  </button>
+                  </button> */}
                 </td>
               </tr>
             ))}
@@ -268,12 +296,21 @@ const StoreDetailsListCom = () => {
                 type="number"
                 name="salePrice"
                 value={salePrice}
-                onChange={(e) => setSalePrice(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value === "" || parseFloat(value) >= 0) {
+                    setSalePrice(value);
+                  }
+                }}
+                min="0" // Ensures only non-negative values can be entered
               />
             </div>
           </div>
           <div className="manage-modal-modal-body">
-              <Button type="submit" className="manage-modal-employee-btn" onClick={handleSalePriceSubmit}>
+              <Button type="submit" className="manage-modal-employee-btn" onClick={handleSalePriceSubmit}
+              
+              disabled={salePrice === "" || parseFloat(salePrice) < 0} // Disables button if invalid
+              >
                 Update
               </Button>
           </div>
@@ -285,11 +322,11 @@ const StoreDetailsListCom = () => {
         onClose={handleCloseModal}
         dialogClassName="manage-add-employee-role"
       >
-        <div className="manage-modal-dialog">
-          <div className="manage-modal-modal-header">
-            <div className="manage-modal-modal-title">
-              Edit Details for {selectedUser?.itemName}
-            </div>
+        <div className="store-details-edit-form">
+          <div className="store-details-form-edit">
+            {/* <div className="tore-form-details-edit"> */}
+              <h2>Edit Details for {selectedUser?.itemName}</h2>
+            {/* </div> */}
             <div>
               <label>Enter New Expiry Date:</label>
               <input

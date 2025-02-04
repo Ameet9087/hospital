@@ -288,11 +288,11 @@ const CSSDItemMaster = () => {
                 <td>{item.sterileType}</td>
                 <td>{item.status}</td>
                 <td>
-                  <button onClick={() => handleEdit(item)}>
+                  <button className="CSSDItemMaster-edit-btn" onClick={() => handleEdit(item)}>
                     <FontAwesomeIcon icon={faEdit} /> Edit
                   </button>{" "}
                   &nbsp;
-                  <button onClick={() => handleDelete(item.itemId)}>
+                  <button className="CSSDItemMaster-edit-btn" onClick={() => handleDelete(item.itemId)}>
                     <FontAwesomeIcon icon={faTrash} /> Delete
                   </button>
                 </td>
