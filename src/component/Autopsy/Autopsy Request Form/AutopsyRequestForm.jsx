@@ -10,7 +10,7 @@ import {
 import CustomModal from "../../CustomModel/CustomModal";
 import PopupTable from "../../Admission/PopupTable";
 import { API_BASE_URL } from "../../api/api";
-import "./AutopsyRequestForm.css";
+import "./Autopsyrequestform.css";
 
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
