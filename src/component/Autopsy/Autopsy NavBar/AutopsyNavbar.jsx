@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import './AutopsyNavbar.css';
+import './AutopsynavBar.css';
 
 import AutopsyRequestForm from '../Autopsy Request Form/AutopsyRequestForm';
 import AutopsySchedulingForm from '../Autopsy Scheduling Form/AutopsySchedulingForm';
