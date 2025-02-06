@@ -4,9 +4,11 @@ import React, { useState, useEffect, useRef } from "react";
 import "../ListRequest/rdlListRequest.css";
 import AddReportForm from "./rdlAddReport";
 import RDLAddScanDoneDetails from "./rdlScanDone";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
-import { API_BASE_URL } from "../../api/api";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { API_BASE_URL } from "../../api/api"; 
 import CustomModal from "../../../CustomModel/CustomModal";
+import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
@@ -80,7 +82,7 @@ function RDLListRequest() {
 
   const updateStatus = (id, filmTypeId, quantity, status, scannedOn) => {
     fetch(
-      `${API_BASE_URL}/imaging-requisitions/update-film-type-and-quantity?filmTypeId=${filmTypeId}&quantity=${quantity}&status=${status}&scannedOn=${scannedOn}&imagingId=${id}`,
+      `${API_BASE_URL}/imaging-requisitions/update-film-type-and-quantity?status=${status}&scannedOn=${scannedOn}&imagingId=${id}`,
       {
         method: "PUT",
         headers: {
@@ -92,10 +94,9 @@ function RDLListRequest() {
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
-        console.log("Scanned Done");
+        toast.success("Scanning Done Successfully");
       })
       .then((data) => {
-        // Update local state to reflect changes
         setImagingRequests((prevRequests) =>
           prevRequests.map((request) =>
             request.imagingId === id
@@ -138,7 +139,7 @@ function RDLListRequest() {
       const matchesFilter =
         selectedFilter === "--All--" ||
         request.imagingItemDTO?.imagingType?.imagingTypeName?.toUpperCase() ===
-        selectedFilter;
+          selectedFilter;
 
       const matchesSearch = [
         request.inPatientDTO?.firstName || "",
@@ -161,49 +162,47 @@ function RDLListRequest() {
       <header className="rDLListRequest-header">
         <h4>* ACTIVE IMAGING REQUEST</h4>
         <div className="rDLListRequest-filter">
-          <label>
-            Filter
-            <select value={selectedFilter} onChange={handleFilterChange}>
-              <option>--All--</option>
-              <option>CT-SCAN</option>
-              <option>USG</option>
-              <option>X-RAY</option>
-              <option>ECHO</option>
-            </select>
-          </label>
+          <FloatingSelect
+            label={"Filter"}
+            value={selectedFilter}
+            onChange={handleFilterChange}
+            options={[
+              { value: "", label: "-ALL-" },
+              { value: "CT-SCAN", label: "CT-SCAN" },
+              { value: "USG", label: "USG" },
+              { value: "X-RAY", label: "X-RAY" },
+              { value: "ECHO", label: "ECHO" },
+            ]}
+          />
         </div>
       </header>
       <div className="rDLListRequest-controls">
         <div className="rDLListRequest-date-range">
-          <label>
-            From:
-            <input
-              type="date"
-              id="dateFrom"
-              defaultValue={dateFrom}
-              onChange={handleDateFromChange}
-            />
-          </label>
-          <label>
-            To:
-            <input
-              type="date"
-              id="dateTo"
-              defaultValue={dateTo}
-              onChange={handleDateToChange}
-            />
-          </label>
+          <FloatingInput
+            label={"From"}
+            type="date"
+            id="dateFrom"
+            value={dateFrom}
+            onChange={handleDateFromChange}
+          />
+          <FloatingInput
+            label={"To"}
+            type="date"
+            id="dateTo"
+            value={dateTo}
+            onChange={handleDateToChange}
+          />
         </div>
       </div>
       <div className="rDLListRequest-search-N-results">
         <div className="rDLListRequest-search-bar">
-          <input
+          <FloatingInput
+            label={"Search"}
             type="text"
             placeholder="Search"
             value={searchQuery}
             onChange={handleSearchChange}
           />
-          <i className="fa-solid fa-magnifying-glass"></i>
         </div>
         <div className="rDLListRequest-results-info">
           {filteredRequests.length > 0

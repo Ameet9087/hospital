@@ -1,19 +1,19 @@
 /* Mohini_AppointmentReminder_WholePage_8/10/24 */
-import React, { useState,useRef } from 'react';
-import './AppointmentReminder.css'; 
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import React, { useState, useRef } from 'react';
+import './AppointmentReminder.css';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 
 
 const AppointmentReminder = () => {
   const [showTable, setShowTable] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
-    const tableRef = useRef(null);
+  const tableRef = useRef(null);
 
 
 
   const appointments = [
-    { name: 'John Doe', time: '10:00 AM', date: '2024-10-09' }, 
-    { name: 'Jane Smith', time: '2:00 PM', date: '2024-10-09' }, 
+    { name: 'John Doe', time: '10:00 AM', date: '2024-10-09' },
+    { name: 'Jane Smith', time: '2:00 PM', date: '2024-10-09' },
   ];
 
   const handleClick = () => {
@@ -55,38 +55,38 @@ const AppointmentReminder = () => {
       ))}
 
       {showTable && (
-      <div className='table-container'>
+        <div className='table-container'>
           <table ref={tableRef}>
-                        <thead>
-                            <tr>
-                                {["Patient Name",
-  "Appointment Time",
-  "Appointment Date"].map((header, index) => (
-                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                                        <div className="header-content">
-                                            <span>{header}</span>
-                                            <div
-                                                className="resizer"
-                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                                            ></div>
-                                        </div>
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-
-          <tbody>
-            {appointments.map((appointment, index) => (
-              <tr key={index}>
-                <td>{appointment.name}</td>
-                <td>{appointment.time}</td>
-                <td>{appointment.date}</td>
-               
+            <thead>
+              <tr>
+                {["Patient Name",
+                  "Appointment Time",
+                  "Appointment Date"].map((header, index) => (
+                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+
+            <tbody>
+              {appointments.map((appointment, index) => (
+                <tr key={index}>
+                  <td>{appointment.name}</td>
+                  <td>{appointment.time}</td>
+                  <td>{appointment.date}</td>
+
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

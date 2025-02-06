@@ -4,6 +4,8 @@ import "./CollectSample.css";
 import SampleCodePopup from "./sampleCodePopup";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
+import { toast } from "react-toastify";
+import { FloatingSelect } from "../../FloatingInputs";
 
 const CollectSample = ({ sample, setSelectedSample }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -103,10 +105,10 @@ const CollectSample = ({ sample, setSelectedSample }) => {
         labRequestObject
       );
 
-      console.log("Sample Collected Successfully");
+      toast.success("Sample Collected Successfully");
       setIsPopupOpen(true);
     } catch (err) {
-      console.log("Error collecting sample:", err);
+      toast.error("Error collecting sample:", err);
     }
   };
 
@@ -197,19 +199,19 @@ const CollectSample = ({ sample, setSelectedSample }) => {
                     </td>
                     <td>No</td>
                     <td>
-                      <select
-                        className="border rounded"
-                        onChange={(e) =>
-                          handleSpecimenChange(index, e.target.value)
-                        }
-                        value={selectedSpecimens[index] || "Blood"}
-                        disabled={testCollected} // Disable dropdown if test is collected
-                      >
-                        <option value="Blood">Blood</option>
-                        <option value="Urine">Urine</option>
-                        <option value="Saliva">Saliva</option>
-                        <option value="Stool">Stool</option>
-                      </select>
+                      <FloatingSelect
+                      label={"Specimen"}
+                      onChange={(e) =>
+                        handleSpecimenChange(index, e.target.value)
+                      }
+                      value={selectedSpecimens[index] || "Blood"}
+                      options={[{value:"",label:""},
+                        {value:"Blood",label:"Blood"},
+                        {value:"Urine",label:"Urine"},
+                        {value:"Saliva",label:"Saliva"},
+                        {value:"Stool",label:"Stool"}, 
+                      ]}
+                      />
                     </td>
                     <td>Normal</td>
                   </tr>
@@ -241,7 +243,7 @@ const CollectSample = ({ sample, setSelectedSample }) => {
         </div>
 
         <button
-          className="collectsample-button mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+          className="collectsample-button "
           onClick={handleCollectSample}
         >
           Collect Sample

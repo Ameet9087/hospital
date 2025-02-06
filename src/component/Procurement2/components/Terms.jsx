@@ -1,10 +1,10 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Terms.css";
 import CustomModal from "../../../CustomModel/CustomModal";
 import AddTermsAndConditions from "./AddTerms";
 import { API_BASE_URL } from "../../api/api";
 import * as XLSX from 'xlsx';
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 const Terms = () => {
   const [terms, setTerms] = useState([]);
   const [isAddingTerm, setIsAddingTerm] = useState(false);
@@ -13,8 +13,8 @@ const Terms = () => {
 
 
 
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
 
   // Fetch terms from API on component mount
@@ -50,7 +50,7 @@ const Terms = () => {
     setSelectedTerm(null); // Reset the selected term
   };
 
-  
+
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
     const wb = XLSX.utils.book_new(); // Creates a new workbook
@@ -73,23 +73,23 @@ const Terms = () => {
 
         <div className="ateg-search-bar">
           <input type="text" placeholder="Search" />
-           <div className="ateg-results-info">
-          Showing {terms.length} results
-          <button className="ateg-print-button"onClick={handleExport}>Export</button>
-          <button className="ateg-print-button"onClick={handlePrint}>Print</button>
-        </div>
+          <div className="ateg-results-info">
+            Showing {terms.length} results
+            <button className="ateg-print-button" onClick={handleExport}>Export</button>
+            <button className="ateg-print-button" onClick={handlePrint}>Print</button>
+          </div>
         </div>
 
-       
 
-        <table  ref={tableRef}>
+
+        <table ref={tableRef}>
           <thead>
             <tr>
               {[
                 "Short Name",
-  "Text",
-  "Is Active",
-  "Action"
+                "Text",
+                "Is Active",
+                "Action"
               ].map((header, index) => (
                 <th
                   key={index}
@@ -109,7 +109,7 @@ const Terms = () => {
                 </th>
               ))}
             </tr>
- </thead>
+          </thead>
 
 
           <tbody>
@@ -134,12 +134,12 @@ const Terms = () => {
 
       {/* Popup for Adding Term */}
       <CustomModal isOpen={isAddingTerm} onClose={handleCloseAddTerm}>
-        <AddTermsAndConditions/>
+        <AddTermsAndConditions />
       </CustomModal>
 
       {/* Popup for Updating Term */}
       <CustomModal isOpen={isUpdatingTerm} onClose={handleCloseUpdateTerm}>
-      <AddTermsAndConditions terms={selectedTerm}/>
+        <AddTermsAndConditions terms={selectedTerm} />
       </CustomModal>
     </div>
   );

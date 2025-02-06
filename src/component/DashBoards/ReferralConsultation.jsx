@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import './ReferralConsultation.css';
-import axios from 'axios';
-import { API_BASE_URL } from '../api/api';
-const ReferralConsultation = ({inPatientId, outPatientId}) => {
+import React, { useState, useEffect } from "react";
+import "./ReferralConsultation.css";
+import axios from "axios";
+import { API_BASE_URL } from "../api/api";
+import { toast } from "react-toastify";
+import { FloatingSelect, FloatingTextarea } from "../../FloatingInputs";
+const ReferralConsultation = ({ inPatientId, outPatientId }) => {
   const [doctors, setDoctors] = useState([]); // To store the fetched list of doctors
-  const [selectedDoctorId, setSelectedDoctorId] = useState(''); // Selected doctor ID
-  const [priority, setPriority] = useState('');
-  const [reasonFor, setReasonFor] = useState('');
+  const [selectedDoctorId, setSelectedDoctorId] = useState(""); // Selected doctor ID
+  const [priority, setPriority] = useState("");
+  const [reasonFor, setReasonFor] = useState("");
   const [referrals, setReferrals] = useState([]); // To store fetched referrals
 
   // Handle form cancel
   const handleCancel = () => {
-    setSelectedDoctorId('');
-    setPriority('');
-    setReasonFor('');
+    setSelectedDoctorId("");
+    setPriority("");
+    setReasonFor("");
   };
 
   // Fetch the list of doctors on component mount
@@ -23,8 +25,8 @@ const ReferralConsultation = ({inPatientId, outPatientId}) => {
         const response = await axios.get(`${API_BASE_URL}/doctors`);
         setDoctors(response.data); // Store fetched doctors in state
       } catch (error) {
-        console.error('Error fetching doctors:', error);
-        alert('Failed to fetch doctor names.');
+        console.error("Error fetching doctors:", error);
+        alert("Failed to fetch doctor names.");
       }
     };
 
@@ -36,7 +38,7 @@ const ReferralConsultation = ({inPatientId, outPatientId}) => {
     const fetchReferrals = async () => {
       try {
         let endpoint = "";
-  
+
         if (inPatientId) {
           endpoint = `${API_BASE_URL}/referrals/in-patient/${inPatientId}`;
         } else if (outPatientId) {
@@ -45,10 +47,9 @@ const ReferralConsultation = ({inPatientId, outPatientId}) => {
           console.error("No valid patient ID provided for Diet Orders.");
           return;
         }
-  
+
         const response = await axios.get(endpoint);
         setReferrals(response.data);
-        
       } catch (error) {
         console.error("Error fetching Referrals:", error);
       }
@@ -79,13 +80,12 @@ const ReferralConsultation = ({inPatientId, outPatientId}) => {
     try {
       // Send the form data to the API
       await axios.post(`${API_BASE_URL}/referrals`, formData);
-      console.log('Form submitted:', formData);
+      console.log("Form submitted:", formData);
       handleCancel(); // Reset the form fields
-      alert('Referral submitted successfully!');
-
+      toast.success("Referral submitted successfully!");
     } catch (error) {
-      console.error('Error submitting referral:', error);
-      alert('Failed to submit referral.');
+      console.error("Error submitting referral:", error);
+      toast.error("Failed to submit referral.");
     }
   };
 
@@ -99,56 +99,62 @@ const ReferralConsultation = ({inPatientId, outPatientId}) => {
           <div className="ReferralConsultation-content-left">
             {/* Doctor Name Field */}
             <div className="ReferralConsultation-form-group">
-              <label htmlFor="doctorName">Doctor Name:</label>
-              <select
-                id="doctorName"
+              <FloatingSelect
+                label={"Doctor Name"}
+                name="doctorName"
                 value={selectedDoctorId}
                 onChange={(e) => setSelectedDoctorId(e.target.value)}
                 required
-              >
-                <option value="">Select Doctor</option>
-                {doctors.map((doctor) => (
-                  <option key={doctor.doctorId} value={doctor.doctorId}>
-                    {doctor.doctorName}
-                  </option>
-                ))}
-              </select>
+                options={[
+                  { value: "", label: "" },
+                  ...(Array.isArray(doctors)
+                    ? doctors.map((doctor) => ({
+                        value: doctor.doctorId,
+                        label: doctor.doctorName,
+                      }))
+                    : []),
+                ]}
+              />
             </div>
 
             {/* Priority Field */}
             <div className="ReferralConsultation-form-group">
-              <label htmlFor="priority">Priority:</label>
-              <select
-                id="priority"
+              <FloatingSelect
+              label={"priority"}
+                name="priority"
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
                 required
-              >
-                <option value="">Select Priority</option>
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
-              </select>
+                options={[
+                  { value: "", label: "" },
+                  { value: "High", label: "High" },
+                  { value: "Medium", label: "Medium" },
+                  { value: "Low", label: "Low" },
+                ]}
+              />
             </div>
           </div>
 
           <div className="ReferralConsultation-content-right">
-            {/* Reason For Referral Field */}
             <div className="ReferralConsultation-form-group">
-              <label htmlFor="reasonFor">Reason For Referral:</label>
-              <textarea
-                id="reasonFor"
-                value={reasonFor}
-                onChange={(e) => setReasonFor(e.target.value)}
-                required
-              />
+            <FloatingTextarea
+            label={"Reason For Referral"}
+            name="reasonFor"
+            value={reasonFor}
+            onChange={(e) => setReasonFor(e.target.value)}
+            required
+            />
             </div>
           </div>
         </div>
 
         {/* Buttons */}
         <div className="ReferralConsultation-buttons">
-          <button type="button" onClick={handleCancel} className="ReferralConsultation-cancel-btn">
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="ReferralConsultation-cancel-btn"
+          >
             Cancel
           </button>
           <button type="submit" className="ReferralConsultation-submit-btn">
@@ -174,7 +180,7 @@ const ReferralConsultation = ({inPatientId, outPatientId}) => {
               {referrals.map((referral, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{referral.referredToDoctor?.doctorName || 'N/A'}</td>
+                  <td>{referral.referredToDoctor?.doctorName || "N/A"}</td>
                   <td>{referral.priority}</td>
                   <td>{referral.reasonFor}</td>
                 </tr>
@@ -185,7 +191,6 @@ const ReferralConsultation = ({inPatientId, outPatientId}) => {
           <p>No existing referrals found.</p>
         )}
       </div>
-
     </div>
   );
 };

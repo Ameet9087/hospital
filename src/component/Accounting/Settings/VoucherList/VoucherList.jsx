@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./VoucherList.css";
 import CreateVoucherPopup from "./AddVoucherPopup";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 
 const VoucherData = [
   {

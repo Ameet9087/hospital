@@ -2,9 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import "../NavBarSection/finalReports.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+
 import { API_BASE_URL } from "../api/api";
 import { useNavigate } from "react-router-dom";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { FloatingInput } from "../../FloatingInputs";
 
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
@@ -106,37 +108,32 @@ function FinalReports() {
         <div className="finalReports-controls">
           {/* Date range controls */}
           <div className="finalReports-date-range">
-            <label>
-              From:
-              <input
-                type="date"
-                id="dateFrom"
-                defaultValue={dateFrom}
-                onChange={handleDateFromChange}
-              />
-            </label>
-            <label>
-              To:
-              <input
-                type="date"
-                id="dateTo"
-                defaultValue={dateTo}
-                onChange={handleDateToChange}
-              />
-            </label>
+            <FloatingInput
+            label={"From"}
+             type="date"
+             name="dateFrom"
+             value={dateFrom}
+             onChange={handleDateFromChange}
+            />
+            <FloatingInput
+            label={"To"}
+            type="date"
+            name="dateTo"
+            value={dateTo}
+            onChange={handleDateToChange}
+            />
           </div>
         </div>
       </div>
 
       <div className="finalReports-searchbar-N-showing">
         <div className="finalReports-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search by name or test"
-            className="finalReports-search-input"
-            value={searchQuery} // Bind the input field to the search query state
-            onChange={handleSearchChange} // Handle changes to the input field
+
+          <FloatingInput
+          type="text"
+          label="Search"
+          value={searchQuery} // Bind the input field to the search query state
+          onChange={handleSearchChange}
           />
         </div>
         <div className="finalReports-results-info">

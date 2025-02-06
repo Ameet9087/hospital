@@ -3,6 +3,7 @@ import "./LabReportResult.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
+import { FloatingTextarea } from "../../FloatingInputs";
 
 const LabReportResult = ({ reportData }) => {
   const [selectedSignatory, setSelectedSignatory] = useState(null);
@@ -289,11 +290,10 @@ const LabReportResult = ({ reportData }) => {
             </div>
 
             <div className="lab-comments">
-              <p>Comments:</p>
-              <textarea
-                value={labResult?.comments}
-                rows={5}
-                placeholder="Enter comments here..."
+              <FloatingTextarea
+              label={"Comment"}
+              value={labResult?.comments}
+              rows={5}
               />
               {selectedSignatory && (
                 <div className="selected-doctor-info">

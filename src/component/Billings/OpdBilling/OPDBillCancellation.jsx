@@ -1,68 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import "./OPDBillCancellation.css";
-import PopupTable from "../../Admission/PopupTable";
+import {
+  PopupTable,
+  FloatingInput,
+  FloatingSelect,
+} from "../../../FloatingInputs/index";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
+import { toast } from "react-toastify";
 
-const FloatingInput = ({ label, type = "text", ...props }) => {
-  const [isFocused, setIsFocused] = useState(true);
-  const [hasValue, setHasValue] = useState(false);
-
-  const handleChange = (e) => {
-    setHasValue(e.target.value.length > 0);
-    if (props.onChange) props.onChange(e);
-  };
-
-  return (
-    <div
-      className={`OPDBillCancellation-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <input
-        type={type}
-        className="OPDBillCancellation-floating-input"
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value.length > 0);
-        }}
-        onChange={handleChange}
-        {...props}
-      />
-      <label className="OPDBillCancellation-floating-label">{label}</label>
-    </div>
-  );
-};
-const FloatingSelect = ({ label, options = [], ...props }) => {
-  const [isFocused, setIsFocused] = useState(true);
-  const [hasValue, setHasValue] = useState(false);
-  return (
-    <div
-      className={`OPDBillCancellation-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <select
-        className="OPDBillCancellation-floating-select"
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value !== "");
-        }}
-        onChange={(e) => setHasValue(e.target.value !== "")}
-        {...props}
-      >
-        <option value="">{ }</option>
-        {options.map((option, index) => (
-          <option key={index} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <label className="OPDBillCancellation-floating-label">{label}</label>
-    </div>
-  );
-};
 const OPDBillCancellation = () => {
   const [selectedTab, setSelectedTab] = useState("testDetails");
   const [columnWidths, setColumnWidths] = useState({});
@@ -89,9 +36,30 @@ const OPDBillCancellation = () => {
     uhid: "",
   });
 
+  const fetchOPdBillingData = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/opdBilling`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.text(); // Get error details from the response
+        throw new Error(`Error ${response.status}: ${errorData}`);
+      }
+
+      const data = await response.json();
+      console.log("Fetched OPD Billing Data:", data); // Log the data for verification
+      setOpdBillingData(data); // Store the fetched data in state
+      settestgriddata(data);
+    } catch (error) {
+      console.error("Error fetching OPD Billing details:", error);
+      alert(`Error: ${error.message}`);
+    }
+  };
+
   useEffect(() => {
     fetchOPdBillingData();
-    // handleSubmit();
   }, []);
 
   useEffect(() => {
@@ -185,28 +153,6 @@ const OPDBillCancellation = () => {
       });
     }
   };
-
-  const fetchOPdBillingData = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/opdBilling`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (!response.ok) {
-        const errorData = await response.text(); // Get error details from the response
-        throw new Error(`Error ${response.status}: ${errorData}`);
-      }
-
-      const data = await response.json();
-      console.log("Fetched OPD Billing Data:", data); // Log the data for verification
-      setOpdBillingData(data); // Store the fetched data in state
-      settestgriddata(data);
-    } catch (error) {
-      console.error("Error fetching OPD Billing details:", error);
-      alert(`Error: ${error.message}`);
-    }
-  };
   const handleCheckboxChange = (row, isChecked) => {
     setSelectedRows((prevSelected) => {
       // If the row is already in the selected list and the checkbox is unchecked, remove it
@@ -248,8 +194,6 @@ const OPDBillCancellation = () => {
       return updatedSelection;
     });
   };
-
-  console.log("selected rows id ", selectedRowIds);
 
   const handleRowChange = (index, field, value) => {
     settestgriddata((prevData) => {
@@ -324,7 +268,7 @@ const OPDBillCancellation = () => {
         },
       })
       .then((response) => {
-        alert("Successfully saved");
+        toast.success("Successfully saved");
         console.log("Response received:", response.data);
         // You can add additional logic after a successful submission here
       })
@@ -333,7 +277,7 @@ const OPDBillCancellation = () => {
         if (error.response) {
           // Server responded with a status other than 2xx
           console.error("Response error:", error.response.data);
-          alert(
+          toast.error(
             `Error posting data: ${error.response.status} - ${error.response.data}`
           );
         } else if (error.request) {
@@ -347,24 +291,47 @@ const OPDBillCancellation = () => {
         }
       });
   };
-  useEffect(() => {
-    if (testgriddata.length > 0) {
-      const updatedData = testgriddata.map((row) => ({
+  // Function to update testgriddata without triggering infinite loop
+  const processTestGridData = useCallback(() => {
+    settestgriddata((prevData) => {
+      if (prevData.length === 0) return prevData; // Prevent unnecessary updates
+
+      const updatedData = prevData.map((row) => ({
         ...row,
-        quantity: row.quantity ?? 1, // Default to 1 if quantity is null or undefined
+        quantity: row.quantity ?? 1, // Default to 1 if null/undefined
         totalAmt: (row.rate ?? 0) * (row.quantity ?? 1), // Calculate total amount
       }));
 
-      settestgriddata(updatedData);
+      return JSON.stringify(prevData) === JSON.stringify(updatedData)
+        ? prevData
+        : updatedData;
+    });
+  }, []);
 
-      // Update the total amount for all selected rows
-      const totalAmount = updatedData
-        .filter((row) => selectedRows.some((selectedRow) => selectedRow.id === row.id))
+  // Function to calculate total amount based on selected rows
+  const updateTotalAmount = useCallback(() => {
+    setTotalAmount((prevTotal) => {
+      if (testgriddata.length === 0) return 0; // Prevent unnecessary updates
+
+      const totalAmount = testgriddata
+        .filter((row) =>
+          selectedRows.some((selectedRow) => selectedRow.id === row.id)
+        )
         .reduce((acc, item) => acc + (item.totalAmt || 0), 0);
 
-      setTotalAmount(totalAmount);
-    }
+      return prevTotal === totalAmount ? prevTotal : totalAmount;
+    });
   }, [testgriddata, selectedRows]);
+
+  // Run these functions only when dependencies change
+  useEffect(() => {
+    processTestGridData();
+  }, [testgriddata]); // ✅ No direct modification inside useEffect
+
+  useEffect(() => {
+    updateTotalAmount();
+  }, [testgriddata, selectedRows]); // ✅ Handles total amount separately
+
   const renderTable = () => {
     switch (selectedTab) {
       case "testDetails":
@@ -380,28 +347,38 @@ const OPDBillCancellation = () => {
                       onChange={handleSelectAllChange}
                     />
                   </th>
-                  {["ID", "Test Code", "Test Name", "Test Rate", "quantity", "Total"].map(
-                    (header, index) => (
-                      <th
-                        key={index}
-                        style={{ width: columnWidths[index] }}
-                        className="resizable-th"
-                      >
-                        <div className="header-content">
-                          <span>{header}</span>
-                          <div
-                            className="resizer"
-                            onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                          ></div>
-                        </div>
-                      </th>
-                    )
-                  )}
+                  {[
+                    "ID",
+                    "Test Code",
+                    "Test Name",
+                    "Test Rate",
+                    "quantity",
+                    "Total",
+                  ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
                 {testgriddata
-                  .filter((row) => row.status !== "refund" && row.status !== "cancel") // Filter rows with status not "refund" or "cancel"
+                  .filter(
+                    (row) => row.status !== "refund" && row.status !== "cancel"
+                  ) // Filter rows with status not "refund" or "cancel"
                   .map((row, index) => (
                     <tr key={index}>
                       <td>
@@ -420,8 +397,10 @@ const OPDBillCancellation = () => {
                       <td>{row?.serviceDetailsDTO?.serviceName}</td>
                       <td>{row.rate}</td>
                       <td>
-                        <input
+                        <FloatingInput
+                          label={"QTY"}
                           type="number"
+                          min="0"
                           value={row.quantity ?? 1} // Default to 1 if null
                           onChange={(e) =>
                             handleRowChange(index, "quantity", e.target.value)
@@ -444,18 +423,11 @@ const OPDBillCancellation = () => {
       <div className="OPDBillCancellation-section">
         <div className="OPDBillCancellation-grid">
           <div className="OPDBillCancellation-search-field">
-            <FloatingInput label="Bill No" />
-            <button
-              className="OPDBillCancellation-search-icon"
-              onClick={() => setActivePopup("billNo")}
-            >
-              <svg viewBox="0 0 24 24" width="16" height="16">
-                <path
-                  fill="currentColor"
-                  d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                />
-              </svg>
-            </button>
+            <FloatingInput
+              label="Bill No"
+              type="search"
+              onIconClick={() => setActivePopup("billNo")}
+            />
           </div>
           <FloatingInput label="MR No" value={formData.uhid} />
           <FloatingInput
@@ -497,18 +469,18 @@ const OPDBillCancellation = () => {
             label="Gender"
             value={formData.gender}
             options={[
-              { value: "male", label: "Male" },
-              { value: "female", label: "Female" },
-              { value: "other", label: "Other" },
+              { value: "Male", label: "Male" },
+              { value: "Female", label: "Female" },
+              { value: "Other", label: "Other" },
             ]}
           />
           <FloatingSelect
             label="Marital Status"
             value={formData.maritalStatus}
             options={[
-              { value: "select", label: "select" },
-              { value: "married", label: "Married" },
-              { value: "unmarried", label: "Unmarried" },
+              { value: "Single", label: "Single" },
+              { value: "Married", label: "Married" },
+              { value: "Unmarried", label: "Unmarried" },
             ]}
           />
           <FloatingSelect
@@ -761,15 +733,7 @@ const OPDBillCancellation = () => {
             }
           />
           <div className="OPDBillCancellation-search-field">
-            <FloatingInput label="CC Machine Bank" />
-            <button className="OPDBillCancellation-search-icon">
-              <svg viewBox="0 0 24 24" width="16" height="16">
-                <path
-                  fill="currentColor"
-                  d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                />
-              </svg>
-            </button>
+            <FloatingInput label="CC Machine Bank" type="search" />
           </div>
           <FloatingInput
             label="Check Date"
@@ -780,7 +744,9 @@ const OPDBillCancellation = () => {
             }
           />
         </div>
-        <button onClick={handleSubmit}>Submit</button>
+        <button className="OPDBillCancellation-save-btn" onClick={handleSubmit}>
+          Submit
+        </button>
       </div>
       {activePopup && (
         <PopupTable

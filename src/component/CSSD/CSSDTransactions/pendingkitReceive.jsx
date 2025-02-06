@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import "./PendingKitReceive.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
@@ -10,8 +10,8 @@ const PendingKitReceive = () => {
   const [kitNames, setKitNames] = useState([]); // State for storing fetched kit names
   const [selectedKitName, setSelectedKitName] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   const { issueId } = useParams(); // Get the 'id' from the URL
 
@@ -81,7 +81,7 @@ const PendingKitReceive = () => {
     updatedRows[index][field] = value;
     setRows(updatedRows);
   };
- 
+
 
   const handleKitNameSearch = (e) => {
     setSelectedKitName(e.target.value);
@@ -116,16 +116,16 @@ const PendingKitReceive = () => {
         <thead>
           <tr>
             {[
-  "Add",
-  "SN",
-  "Kit Name",
-  "Batch No",
-  "Expiry",
-  "Receiving Qty",
-  "Quantity",
-  "Remarks"
-]
-          .map((header, index) => (
+              "Add",
+              "SN",
+              "Kit Name",
+              "Batch No",
+              "Expiry",
+              "Receiving Qty",
+              "Quantity",
+              "Remarks"
+            ]
+              .map((header, index) => (
                 <th
                   key={index}
                   style={{ width: columnWidths[index] }}
@@ -143,8 +143,8 @@ const PendingKitReceive = () => {
                   </div>
                 </th>
               ))}
-            </tr>
-          </thead>
+          </tr>
+        </thead>
 
         <tbody>
           {rows.map((row, index) => (

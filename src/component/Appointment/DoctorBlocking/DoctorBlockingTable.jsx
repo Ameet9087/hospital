@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./DoctorBlockingTable.css";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 import DoctorBlocking from "./DoctorBlocking";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
@@ -24,7 +24,7 @@ const DoctorBlockingTable = () => {
       }
     };
     fetchDoctorBlockingData();
-  }, []);
+  }, [showModal]);
 
   const filteredItems = useFilter(doctorBlockingData, searchTerm);
 

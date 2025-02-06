@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./familyhistory.css";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingTextarea } from "../../FloatingInputs";
 
 const FamilyHistory = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -95,7 +97,7 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
       );
 
       if (response.ok) {
-        alert("Family History added successfully!");
+        toast.success("Family History added successfully!");
         setFamilyhistory({
           searchProblem: "",
           relationship: "",
@@ -103,11 +105,11 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
         });
         handleCloseModal();
       } else {
-        alert("Failed to add Family History");
+        toast.error("Failed to add Family History");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Error submitting form");
+      toast.error("Error submitting form");
     }
   };
 
@@ -126,7 +128,7 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
       );
 
       if (response.ok) {
-        alert("Family History added successfully!");
+        toast.success("Family History Updated successfully!");
         setFamilyhistory({
           searchProblem: "",
           relationship: "",
@@ -134,11 +136,11 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
         });
         handleCloseModal();
       } else {
-        alert("Failed to add Family History");
+        toast.error("Failed to add Family History");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Error submitting form");
+      toast.error("Error submitting form");
     }
   };
 
@@ -171,13 +173,13 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
                 className="family-history-add-button"
                 onClick={handleOpenModal}
               >
-                ➕ Add
+                Add
               </button>
             </div>
             <table className="patientList-table" ref={tableRef}>
               <thead>
                 <tr>
-                  {["search problem", "Relationship", "Note", "Edit"].map(
+                  {["search problem", "Relationship", "Note", "Action"].map(
                     (header, index) => (
                       <th
                         key={index}
@@ -212,7 +214,7 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
                       {history.note}
                     </td>
                     <td className="family-history-table-data">
-                      <button onClick={() => handleUpdate(history)}>
+                      <button className="family-history-add-button" onClick={() => handleUpdate(history)}>
                         Edit
                       </button>
                     </td>
@@ -234,9 +236,8 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
                   ❌
                 </button>
                 <div className="family-history-form-group">
-                  <label>Search Problem*:</label>
-                  <input
-                    className="family-history-form-group-input"
+                  <FloatingInput
+                    label={"Search Problem"}
                     type="text"
                     name="searchProblem"
                     placeholder="ICD-11"
@@ -245,9 +246,8 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="family-history-form-group">
-                  <label>Relationship*:</label>
-                  <input
-                    className="family-history-form-group-input"
+                  <FloatingInput
+                    label={"Relationship"}
                     type="text"
                     name="relationship"
                     value={familyhistory.relationship}
@@ -255,13 +255,12 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="family-history-form-group">
-                  <label>Note:</label>
-                  <textarea
-                    className="family-history-form-group-input"
+                  <FloatingTextarea
+                    label={"Note"}
                     name="note"
                     value={familyhistory.note}
                     onChange={handleInputChange}
-                  ></textarea>
+                  />
                 </div>
                 <button
                   className="family-history-add-button"
@@ -284,9 +283,8 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
                   ❌
                 </button>
                 <div className="family-history-form-group">
-                  <label>Search Problem*:</label>
-                  <input
-                    className="family-history-form-group-input"
+                  <FloatingInput
+                    label={"Search Problem"}
                     type="text"
                     name="searchProblem"
                     placeholder="ICD-11"
@@ -295,9 +293,8 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="family-history-form-group">
-                  <label>Relationship*:</label>
-                  <input
-                    className="family-history-form-group-input"
+                  <FloatingInput
+                    label={"Relationship"}
                     type="text"
                     name="relationship"
                     value={updatefamilyhistory.relationship}
@@ -305,13 +302,12 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="family-history-form-group">
-                  <label>Note:</label>
-                  <textarea
-                    className="family-history-form-group-input"
+                  <FloatingTextarea
+                    label={"Note"}
                     name="note"
                     value={updatefamilyhistory.note}
                     onChange={handleUpdateInputChange}
-                  ></textarea>
+                  />
                 </div>
                 <button
                   className="family-history-add-button"

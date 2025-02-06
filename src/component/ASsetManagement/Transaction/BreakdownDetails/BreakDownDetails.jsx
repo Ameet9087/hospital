@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./BreakDownDetails.css";
 import BreakDownDetailsPopUp from "./BreakDownDetailsPopUp";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 import * as XLSX from "xlsx";
 
@@ -131,7 +131,7 @@ const BreakDownDetails = () => {
                 "Work Completion Date",
                 "Work Completion Time",
                 "Remark"
-              
+
               ].map((header, index) => (
                 <th
                   key={index}
@@ -163,9 +163,9 @@ const BreakDownDetails = () => {
                 <td>{breakdown.workCompletionDate}</td>
                 <td>{breakdown.workCompletionTime}</td>
                 <td>{breakdown.remark}</td>
-                
-                
-               
+
+
+
               </tr>
             ))}
           </tbody>

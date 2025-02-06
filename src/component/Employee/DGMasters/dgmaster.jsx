@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Dgmaster.css";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
 import { API_BASE_URL } from "../../api/api";

@@ -1,83 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./FinalBill.css";
 import { CiSearch } from "react-icons/ci";
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
-import PopupTable from "../../../OpdBilling/PopupTable";
+import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
+import {
+  PopupTable,
+  FloatingInput,
+  FloatingSelect,
+} from "../../../../../FloatingInputs/index";
 import { API_BASE_URL } from "../../../../api/api";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 // import OpdBillingPrint from "../../opdBillingPrint/OpdBillingPrint";
-
-const FloatingInput = ({ label, type = "text", value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  const handleChange = (e) => {
-    setHasValue(e.target.value.length > 0);
-    if (props.onChange) props.onChange(e);
-  };
-
-  return (
-    <div
-      className={`OpdBilling-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <input
-        type={type}
-        className="OpdBilling-floating-input"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value.length > 0);
-        }}
-        onChange={handleChange}
-        {...props}
-      />
-      <label className="OpdBilling-floating-label">{label}</label>
-    </div>
-  );
-};
-const FloatingSelect = ({ label, options = [], ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
-  return (
-    <div
-      className={`final-bill-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <select
-        className="final-bill-floating-select"
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value !== "");
-        }}
-        onChange={(e) => setHasValue(e.target.value !== "")}
-        {...props}
-      >
-        <option value="">{ }</option>
-        {options.map((option, index) => (
-          <option key={index} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <label className="final-bill-floating-label">{label}</label>
-    </div>
-  );
-};
 
 const FinalBill = () => {
   const [activePopup, setActivePopup] = useState(null);
   const [patientData, setpatientData] = useState([]);
   const [selectedPatientDetails, setSelectedPatientDetails] = useState(null);
 
-  const [selectedTab, setSelectedTab] = useState();
+  const [selectedTab, setSelectedTab] = useState("roomrent");
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
 
@@ -96,9 +37,6 @@ const FinalBill = () => {
   const OpenPrintFile = () => {
     navigate("/OpdBillingPrint");
   };
-
-
-
 
   const [roomRentTableRows, setroomRentTableRows] = useState([
     {
@@ -388,7 +326,6 @@ const FinalBill = () => {
   const [editableRow, setEditableRow] = React.useState(null);
   const [editingPayment, setEditingPayment] = React.useState({});
 
-
   const handleAddPayment = (
     paymentMode = "Cash",
     paymentAmount = 0,
@@ -436,7 +373,7 @@ const FinalBill = () => {
     calculateTotalPaidAmount(updatedPayments); // Update total paid amount
   };
 
-  console.log("-----", addedPayments)
+  console.log("-----", addedPayments);
   const calculateWholeGrossAmount = () => {
     const totalAdvance = parseFloat(calculateTotalAdvance());
     const totalRoomRent = parseFloat(calculateTotalRoomRent());
@@ -1169,7 +1106,6 @@ const FinalBill = () => {
   };
 
   const handleSave = async () => {
-
     // Construct the payload dynamically
     const finalBillData = {
       billDate: new Date().toISOString().split("T")[0], // Current date in YYYY-MM-DD format
@@ -1179,19 +1115,24 @@ const FinalBill = () => {
       totalAdvance: parseFloat(calculateTotalAdvance()),
       totalSurgeryAmt: parseFloat(calculateTotalSurgeryAmount()),
       totalDiscountAmt: parseFloat(discountAmount),
-      discountPercentage: selecteddiscAuthority ? selecteddiscAuthority.discountPercentage : 0,
-      refundableAmt: balanceAmount < 0 ? Math.abs(balanceAmount) : 0.00,
+      discountPercentage: selecteddiscAuthority
+        ? selecteddiscAuthority.discountPercentage
+        : 0,
+      refundableAmt: balanceAmount < 0 ? Math.abs(balanceAmount) : 0.0,
       totalWholeBillAmt: parseFloat(wholeGrossAmount),
-      paidAmt: addedPayments.reduce((sum, payment) => sum + parseFloat(payment.amount), 0),
-      balanceAmt: balanceAmount > 0 ? balanceAmount : 0.00,
+      paidAmt: addedPayments.reduce(
+        (sum, payment) => sum + parseFloat(payment.amount),
+        0
+      ),
+      balanceAmt: balanceAmount > 0 ? balanceAmount : 0.0,
       discountRemark: remark || "N/A",
       status: "Pending",
       admissionDTO: {
-        ipAdmmissionId: selectedPatientDetails?.ipAdmmissionId || null
+        ipAdmmissionId: selectedPatientDetails?.ipAdmmissionId || null,
       },
       authorityDTO: selecteddiscAuthority
         ? {
-          id: selecteddiscAuthority.id
+          id: selecteddiscAuthority.id,
         }
         : null,
       paymentModeDTO: addedPayments.map((payment, index) => ({
@@ -1202,23 +1143,27 @@ const FinalBill = () => {
         chequeDate: payment.details?.chequeDate || "",
         status: "Completed",
         panelName: payment.details?.panelName || "",
-        remarks: payment.details?.remarks || ""
-      }))
+        remarks: payment.details?.remarks || "",
+      })),
     };
 
     console.log("--------final paayload", finalBillData);
     try {
-      const response = await axios.post(`${API_BASE_URL}/final-bill`, finalBillData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post(
+        `${API_BASE_URL}/final-bill`,
+        finalBillData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      alert("Final bill saved successfully!");
+      toast.success("Final bill saved successfully!");
       console.log("Response:", response.data);
     } catch (error) {
       console.error("Error saving final bill:", error);
-      alert("Failed to save final bill.");
+      toast.error("Failed to save final bill.");
     } finally {
       setLoading(false);
     }
@@ -1237,8 +1182,8 @@ const FinalBill = () => {
                     "SN",
                     "RCode",
                     "Room Type",
-                    "Rate",
-                    "Qty",
+                    "Rate (rs)",
+                    "Quantity",
                     "Total Amt",
                     "Disc%",
                     "Disc Amt",
@@ -1275,8 +1220,9 @@ const FinalBill = () => {
                     <td>{row.rCode}</td>
                     <td>{row.roomType}</td>
                     <td>
-                      <input
-                        type="number"
+                      <FloatingInput
+                        type="text"
+                        label={"rate"}
                         value={row.rate}
                         onChange={(e) =>
                           handleInputChange(
@@ -1288,7 +1234,8 @@ const FinalBill = () => {
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"qty"}
                         type="number"
                         value={row.qty}
                         onChange={(e) =>
@@ -1302,8 +1249,10 @@ const FinalBill = () => {
                     </td>
                     <td>{row.totalAmt}</td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"dis"}
                         type="number"
+                        min="0"
                         value={row.disc}
                         onChange={(e) =>
                           handleInputChange(
@@ -2660,7 +2609,7 @@ const FinalBill = () => {
         <div className="final-bill-section">
           <div className="final-bill-header">Patient Details</div>
           <div className="final-bill-grid">
-            <div className="final-bill-form-row-chechbox">
+            {/* <div className="final-bill-form-row-chechbox">
               <input
                 className="final-bill-chechbox"
                 type="checkbox"
@@ -2672,25 +2621,14 @@ const FinalBill = () => {
               >
                 Admited
               </label>
-            </div>
+            </div> */}
             <div className="final-bill-search-field">
               <FloatingInput
                 label="IP No"
-                type="text"
-                id="description"
+                type="search"
+                onIconClick={() => setActivePopup("patients")}
                 value={selectedPatientDetails?.ipAdmmissionId || ""}
               />
-              <button
-                className="final-bill-search-icon"
-                onClick={() => setActivePopup("patients")}
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                  <path
-                    fill="currentColor"
-                    d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                  />
-                </svg>
-              </button>
             </div>
 
             <FloatingInput
@@ -2914,7 +2852,12 @@ const FinalBill = () => {
                     type="text"
                     value={selecteddiscAuthority?.discountPercentage}
                   />
-                  <FloatingInput label="Remark" type="text" value={remark} onChange={(e) => setRemark(e.target.value)} />
+                  <FloatingInput
+                    label="Remark"
+                    type="text"
+                    value={remark}
+                    onChange={(e) => setRemark(e.target.value)}
+                  />
                   <FloatingInput label="Disc Reasons" type="text" value="" />
                   <FloatingInput
                     label="In Admissible Di"
@@ -2941,10 +2884,7 @@ const FinalBill = () => {
                 </div>
               </div>
               <div className="final-payment-split">
-
                 <div className="final-bill-section">
-
-
                   <div className="final-bill-header">Payment detail </div>
                   <div className="final-bill-grid">
                     <FloatingSelect
@@ -3062,15 +3002,14 @@ const FinalBill = () => {
                       </button>
                     </div>
                   )}
-
                 </div>
 
                 {/* ------------------------------------------------------------- */}
 
                 <div className="final-bill-section">
-
-                  <div className="final-bill-header">Payment Added row detail</div>
-
+                  <div className="final-bill-header">
+                    Payment Added row detail
+                  </div>
 
                   <div className="payment-summary">
                     <h4>Added Payments</h4>
@@ -3206,17 +3145,15 @@ const FinalBill = () => {
                     </table>
                   </div>
                 </div>
-
-
-
-
-
-              </div> {/*--splite} */}
+              </div>{" "}
+              {/*--splite} */}
             </div>
           </div>
         </div>
         <div className="final-bill-action-buttons">
-          <button className="btn-blue" onClick={handleSave}>Save</button>
+          <button className="btn-blue" onClick={handleSave}>
+            Save
+          </button>
           <button className="btn-green" onClick={OpenPrintFile}>
             Print
           </button>

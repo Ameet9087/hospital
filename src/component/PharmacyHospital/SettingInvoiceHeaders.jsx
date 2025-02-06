@@ -7,7 +7,7 @@ import { API_BASE_URL } from '../api/api';
 import CustomModal from '../../CustomModel/CustomModal';
 import useCustomAlert from '../../alerts/useCustomAlert';
 import * as XLSX from 'xlsx';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 
 const apiEndpoint = `${API_BASE_URL}/v1/invoice-headers`;
 
@@ -120,8 +120,8 @@ const SettingInvoiceHeaders = () => {
   };
 
   // Function to trigger print
-   // Function to trigger print
-   const handlePrint = () => {
+  // Function to trigger print
+  const handlePrint = () => {
     const printContent = tableRef.current;
     const newWindow = window.open("", "_blank");
     newWindow.document.write(`

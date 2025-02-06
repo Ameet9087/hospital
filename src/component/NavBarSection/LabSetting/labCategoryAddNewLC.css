@@ -38,31 +38,13 @@
 .labCategoryAddNewLC-form-group {
   /* flex: 1; */
   display: flex;
+  margin-bottom: 10px;
+  width: 100%;
   /* text-align: center; */
   /* align-items: left; */
   font-size: var(--font-size);
-  margin-left: 10px;
   /* width: 220px; */
   /* border: 1px solid red; */
-}
-
-.labCategoryAddNewLC-form-group label {
-  display: block;
-  margin-bottom: 4px;
-  /* font-weight: bold; */
-  width: 400px;
-}
-
-.labCategoryAddNewLC-form-group input,
-.labCategoryAddNewLC-form-group select,
-.labCategoryAddNewLC-form-group textarea {
-  width: 60%;
-  padding: 8px;
-  margin-bottom: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: var(--font-size);
-  /* color: gray; */
 }
 
 

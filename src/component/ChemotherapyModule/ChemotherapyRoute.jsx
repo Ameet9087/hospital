@@ -12,14 +12,14 @@ import ChemotherapyNavbar from '../ChemotherapyModule/ChemotherapyNavbar';
 const ChemotherapyRoute = () => {
   return (
     <>
-<ChemotherapyNavbar/>
-    <Routes>
-      <Route path="/surgerymanagement" element={<SurgeryManagement />} />
-      <Route path="/chemotherapyscheduling" element={<ChemotherapyScheduling />} />
-      <Route path="/radiationtherapy" element={<RadiationTherapyIntegration />} />
-      <Route path="/cancerdiagnosis" element={<CancerDiagnosisAndStaging />} />
-      <Route path="/patientsurvivaltracking" element={<PatientSurvivalTracking />} />
-    </Routes>
+      <ChemotherapyNavbar />
+      <Routes>
+        <Route path="/surgerymanagement" element={<SurgeryManagement />} />
+        <Route path="/chemotherapyscheduling" element={<ChemotherapyScheduling />} />
+        <Route path="/radiationtherapy" element={<RadiationTherapyIntegration />} />
+        <Route path="/cancerdiagnosis" element={<CancerDiagnosisAndStaging />} />
+        <Route path="/patientsurvivaltracking" element={<PatientSurvivalTracking />} />
+      </Routes>
     </>
   );
 };

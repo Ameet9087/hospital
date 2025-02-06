@@ -1,30 +1,21 @@
 import React, { useState, useEffect } from "react";
 import "../ListRequest/rdlScanDone.css";
 import { API_BASE_URL } from "../../api/api";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 
 function RDLAddScanDoneDetails({ onClose, onUpdateStatus, patient }) {
   console.log(patient);
 
   const [scannedOn, setScannedOn] = useState("");
-  const [filmType, setFilmType] = useState("");
-  const [quantity, setQuantity] = useState("");
   const [remarks, setRemarks] = useState("");
-  const [filmTypes, setFilmTypes] = useState([]);
-
-  useEffect(() => {
-    // Fetch film types from the API
-    fetch(`${API_BASE_URL}/film-types`)
-      .then((response) => response.json())
-      .then((data) => setFilmTypes(data))
-      .catch((error) => {
-        console.error("Error fetching film types:", error);
-        // Optionally, add UI feedback to inform the user of the error
-      });
-  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onUpdateStatus(scannedOn, filmType, quantity, remarks);
+    onUpdateStatus(scannedOn, remarks);
   };
 
   return (
@@ -36,8 +27,8 @@ function RDLAddScanDoneDetails({ onClose, onUpdateStatus, patient }) {
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="rDLListRequest-ScanDone-form-group">
-            <label htmlFor="scannedOn">Scanned On</label>
-            <input
+            <FloatingInput
+              label={"Scanned On"}
               type="date"
               id="scannedOn"
               value={scannedOn}
@@ -45,7 +36,7 @@ function RDLAddScanDoneDetails({ onClose, onUpdateStatus, patient }) {
               required
             />
           </div>
-          <div className="rDLListRequest-ScanDone-form-group">
+          {/* <div className="rDLListRequest-ScanDone-form-group">
             <label htmlFor="filmType">Film Type *</label>
             <select
               id="filmType"
@@ -71,14 +62,13 @@ function RDLAddScanDoneDetails({ onClose, onUpdateStatus, patient }) {
               onChange={(e) => setQuantity(e.target.value)}
               required
             />
-          </div>
+          </div> */}
           <div className="rDLListRequest-ScanDone-form-group">
-            <label htmlFor="remarks">Remarks</label>
-            <textarea
-              id="remarks"
+            <FloatingTextarea
+              label="Remarks"
               value={remarks}
               onChange={(e) => setRemarks(e.target.value)}
-            ></textarea>
+            />
           </div>
           <div className="rDLListRequest-ScanDone-form-actions">
             <button type="submit" className="rDLListRequest-ScanDone-done-btn">

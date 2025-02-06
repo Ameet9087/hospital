@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ClinicalAllergy.css"; // Separate CSS file
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import OutPatient from "./OutPatient";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingTextarea } from "../../FloatingInputs";
 
 const Allergy = ({ patientId, outPatientId, setIsModalOpen }) => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -159,7 +161,7 @@ const Allergy = ({ patientId, outPatientId, setIsModalOpen }) => {
       });
 
       if (response.ok) {
-        alert("Allergy added successfully!");
+        toast.success("Allergy added successfully!");
         setShowForm(false);
         setFormData({
           typeOfAllergy: "",
@@ -170,11 +172,11 @@ const Allergy = ({ patientId, outPatientId, setIsModalOpen }) => {
         });
         setIsModalOpen(false);
       } else {
-        alert("Failed to add allergy");
+        toast.error("Failed to add allergy");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Error submitting form");
+      toast.error("Error submitting form");
     }
   };
 
@@ -193,7 +195,7 @@ const Allergy = ({ patientId, outPatientId, setIsModalOpen }) => {
       );
 
       if (response.ok) {
-        alert("Allergy added successfully!");
+        toast.success("Allergy added successfully!");
         setShowUpdateForm(false);
         setFormData({
           typeOfAllergy: "",
@@ -203,11 +205,11 @@ const Allergy = ({ patientId, outPatientId, setIsModalOpen }) => {
           comments: "",
         });
       } else {
-        alert("Failed to add allergy");
+        toast.error("Failed to add allergy");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Error submitting form");
+      toast.error("Error submitting form");
     }
   };
 
@@ -270,7 +272,7 @@ const Allergy = ({ patientId, outPatientId, setIsModalOpen }) => {
                   <td>{allergy.comments}</td>
                   <td>
                     {/* You can add an edit button here */}
-                    <button onClick={() => updateAllergies(allergy)}>
+                    <button className="allergy-add-new-button" onClick={() => updateAllergies(allergy)}>
                       Edit
                     </button>
                   </td>
@@ -388,24 +390,25 @@ const Allergy = ({ patientId, outPatientId, setIsModalOpen }) => {
               </div>
 
               <div className="allergy-form-row">
-                <label>Reaction*:</label>
-                <input
+                <FloatingInput
+                  label={"Reaction"}
                   type="text"
                   name="reaction"
                   placeholder="Reaction"
                   value={formData.reaction}
                   onChange={handleInputChange}
+
                 />
               </div>
 
               <div className="allergy-form-row">
-                <label>Comments:</label>
-                <textarea
+                <FloatingTextarea
+                  label={"Comments"}
                   name="comments"
                   placeholder="Comments"
                   value={formData.comments}
                   onChange={handleInputChange}
-                ></textarea>
+                />
               </div>
 
               <button type="submit" className="allergy-add-button">
@@ -517,8 +520,8 @@ const Allergy = ({ patientId, outPatientId, setIsModalOpen }) => {
               </div>
 
               <div className="allergy-form-row">
-                <label>Reaction*:</label>
-                <input
+                <FloatingInput
+                  label={"Reaction"}
                   type="text"
                   name="reaction"
                   placeholder="Reaction"
@@ -528,13 +531,13 @@ const Allergy = ({ patientId, outPatientId, setIsModalOpen }) => {
               </div>
 
               <div className="allergy-form-row">
-                <label>Comments:</label>
-                <textarea
+                <FloatingTextarea
+                  label={"Comments"}
                   name="comments"
-                  placeholder="Comments"
                   value={updateAllergy.comments}
                   onChange={handleUpdateInputChange}
-                ></textarea>
+
+                />
               </div>
 
               <button type="submit" className="allergy-add-button">

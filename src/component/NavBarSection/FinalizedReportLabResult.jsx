@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 import CustomModal from "../../CustomModel/CustomModal";
+import { toast } from "react-toastify";
+import { FloatingTextarea } from "../../FloatingInputs";
 
 const FinalizedReportLabResult = () => {
   const [selectedSignatory, setSelectedSignatory] = useState(null);
@@ -58,11 +60,11 @@ const FinalizedReportLabResult = () => {
       await axios.post(
         `${API_BASE_URL}/lab-result/${selectedRequestId}/reject?&comments=${reason}&rejectedById=0`
       );
-      console.log("Lab result updated successfully!");
+      toast.success("Lab result updated successfully!");
       setConfirmBox(false);
       navigate("/laboratory/finalreports");
     } catch (err) {
-      console.error("Error updating lab result:", err);
+      toast.error("Error updating lab result:", err);
     }
   };
 
@@ -308,11 +310,10 @@ const FinalizedReportLabResult = () => {
             </div>
 
             <div className="lab-comments">
-              <p>Comments:</p>
-              <textarea
-                value={labResult?.comments}
-                rows={5}
-                placeholder="Enter comments here..."
+              <FloatingTextarea
+              label={"Comments"}
+              value={labResult?.comments}
+              rows={5}
               />
               {selectedSignatory && (
                 <div className="selected-doctor-info">

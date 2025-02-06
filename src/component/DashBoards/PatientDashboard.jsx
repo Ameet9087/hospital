@@ -11,7 +11,7 @@ import PatientDischargeForm from "./DischargeSummary";
 import Allergy from "./ClinicalAllergy";
 import CinicalDocument from "./ClinicalDocuments";
 import axios from "axios";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import RadiologyReportDoc from "./RadiologyReportDoc";
 import VisitTable from "./EncounterHistory";
 import LabReportResult from "./LabReportResult";
@@ -24,7 +24,7 @@ import NurseOrder from "./NurseOrder";
 import PACRequest from "./PACRequest";
 import AdmissionSlip from "./AdmissionSlip";
 import OutPatient from "./OutPatient";
-import CustomModal from "../CustomModel/CustomModal";
+import CustomModal from "../../CustomModel/CustomModal";
 import MedicationOrder from "./MedicationOrder ";
 import SaveTemplate from "./SaveTemplate/SaveTemplate";
 import PatientDetailsPrint from "./PatientDetailsPrint";
@@ -56,6 +56,8 @@ const PatientDashboard = ({
   setIsPatientOPEN,
   ipAdmission,
 }) => {
+  console.log(patient);
+
   const [selectedRadiology, setSelectedRadiology] = useState(null);
   const [selectedLabrotary, setSelectedLabrotary] = useState(null);
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -2115,7 +2117,8 @@ const PatientDashboard = ({
         {modalContent === "medicationOrder" && (
           <MedicationOrder
             setIsModalOpen={setIsModalOpen}
-            inPatientId={patient?.patientId}
+            onClose={handleCloseModal}
+            inPatientId={patient?.inPatientId}
             outPatientId={patient?.outPatientId}
           />
         )}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AddActiveProblems.css';
+import { FloatingInput } from '../../FloatingInputs';
 
 const AddActiveProblem = () => {
   const [problem, setProblem] = useState('');
@@ -24,14 +25,14 @@ const AddActiveProblem = () => {
     <div className="AddActive-add-active-problem">
       <form onSubmit={handleSubmit}>
         <div className="AddActive-form-group">
-          <label htmlFor="problem">Search Problem *</label>
-          <input
-            type="text"
-            id="problem"
-            value={problem}
-            onChange={(e) => setProblem(e.target.value)}
-            required
-          />
+          <FloatingInput
+          label={"Search Problem"}
+           type="text"
+           id="problem"
+           value={problem}
+           onChange={(e) => setProblem(e.target.value)}
+           required
+           />
         </div>
 
         <div className="AddActive-form-group">

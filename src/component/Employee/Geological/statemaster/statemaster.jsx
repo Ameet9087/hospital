@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import CustomModal from "../../../../CustomModel/CustomModal";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import "./statemaster.css";
 import GeolocationPopupTable from "../GeolocationPopupTable";
 import axios from "axios";

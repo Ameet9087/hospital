@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./IpdReturnsWard.css";
 
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 
 const IpdReturnsWard = ({ ipAdmission }) => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -38,8 +38,8 @@ const IpdReturnsWard = ({ ipAdmission }) => {
       billNo: ipAdmission?.billNo || "",
       patientName:
         ipAdmission?.patient?.patient?.firstName +
-          " " +
-          ipAdmission?.patient?.patient?.lastName || "",
+        " " +
+        ipAdmission?.patient?.patient?.lastName || "",
       doctorName:
         ipAdmission?.admissionUnderDoctorDetails?.consultant?.doctorName || "",
       uhId: ipAdmission?.patient?.patient?.uhid || "",
@@ -190,7 +190,7 @@ const IpdReturnsWard = ({ ipAdmission }) => {
                     <button
                       className="final-bill-del-btn"
                       onClick={() => handleDeleteRow(index)}
-                      disabled={packageTableRows.length <= 1} 
+                      disabled={packageTableRows.length <= 1}
                     >
                       Del
                     </button>

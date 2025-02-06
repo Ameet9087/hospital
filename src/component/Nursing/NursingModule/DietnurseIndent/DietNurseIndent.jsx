@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./DietNurseIndent.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import axios from "axios";
 import { API_BASE_URL } from "../../../api/api";
 const nurseIndent = ({ ipAdmission }) => {
@@ -185,9 +185,8 @@ const nurseIndent = ({ ipAdmission }) => {
                 <td>{item.ipAdmissionDTO?.patient?.patient?.uhid || "N/A"}</td>
                 <td>{item.ipAdmissionDTO?.ipAdmmissionId || "N/A"}</td>
                 <td>
-                  {`${item.ipAdmissionDTO?.patient?.patient?.firstName || ""} ${
-                    item.ipAdmissionDTO?.patient?.patient?.middleName || ""
-                  } ${item.ipAdmissionDTO?.patient?.patient?.lastName || ""}`}
+                  {`${item.ipAdmissionDTO?.patient?.patient?.firstName || ""} ${item.ipAdmissionDTO?.patient?.patient?.middleName || ""
+                    } ${item.ipAdmissionDTO?.patient?.patient?.lastName || ""}`}
                 </td>
                 <td>{item.ipAdmissionDTO?.patient?.patient?.age || "N/A"}</td>
                 <td>

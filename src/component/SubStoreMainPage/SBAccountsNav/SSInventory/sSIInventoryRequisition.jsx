@@ -8,7 +8,7 @@ import SSSIInvenReqCreateReq from './sSSIInvenReqCreateReq';
 import SSSIInvenReqView from './sSSIInvenReqView';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
-import CustomModal from '../../../CustomModel/CustomModal';
+import CustomModal from '../../../../CustomModel/CustomModal';
 import SSIReceivedRequisition from './sSIReceivedRequisition';
 
 function SSIInventoryRequisition() {
@@ -72,11 +72,11 @@ function SSIInventoryRequisition() {
   //     }
   //   `,
   // });
- // Function to trigger print
- const handlePrint = () => {
-  const printContent = tableRef.current;
-  const newWindow = window.open("", "_blank");
-  newWindow.document.write(`
+  // Function to trigger print
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
     <html>
       <head>
         <title>Print Table</title>
@@ -100,10 +100,10 @@ function SSIInventoryRequisition() {
       </body>
     </html>
   `);
-  newWindow.document.close();
-  newWindow.print();
-  newWindow.close();
-};
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
   return (
     <div className="sSIInventoryRequisition-active-imaging-request">
       <CustomModal isOpen={showReceived} onClose={() => setShowReceived(false)}>

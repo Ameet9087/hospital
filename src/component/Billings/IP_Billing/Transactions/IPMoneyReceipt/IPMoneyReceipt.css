@@ -9,10 +9,12 @@
     background-color: var(--upperBar-bg-color);
     color: white;
     padding: 8px;
+    border-radius: 7px;
     margin-bottom: 4px;
+    text-align: center;
   }
   .IpMoneyReceiptAdvance-event-header span{
-    margin-left: 44%;
+    font-size: 18px;
   }
   .IpMoneyReceiptAdvance-header-contact{
     background-color: var(--button-bg-color);
@@ -20,12 +22,13 @@
     color: white;
     padding-left: 5px;
   }
-  .IpMoneyReceiptAdvance-header-contact h3{
-    padding: 2px;
+ .IpMoneyReceiptAdvance-header-contact h3{
+    padding: 5px;
+    font-size: 18px;
   }
-  .IpMoneyReceiptAdvance-event-header {
+  /* .IpMoneyReceiptAdvance-event-header {
     font-size: var(--heading-font);
-  }
+  }  */
 
   .IpMoneyReceiptAdvance-checkbox-label {
     font-weight: normal;
@@ -34,12 +37,13 @@
   
   .IpMoneyReceiptAdvance-content-wrapper {
     display: flex;
-    flex-direction: column;
     gap: 4px;
   }
   
   .IpMoneyReceiptAdvance-main-section {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(1fr);
+    width: 100%;
     gap: 4px;
   }
   
@@ -52,24 +56,25 @@
   .IpMoneyReceiptAdvance-panel-header {
     background-color: var(--upperBar-bg-color);
     color: white;
-    padding: 4px 8px;
+    padding: 3px 8px;
     font-size: var(--heading-font);
   }
-  
+  .IpMoneyReceiptAdvance-panel-header h3{
+    font-size: 20px;
+  }
   .IpMoneyReceiptAdvance-panel-content {
     padding: 8px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    margin-top: 10px;
+    gap: 10px;
   }
   
   .IpMoneyReceiptAdvance-form-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
-    gap: 4px;
-    font-size: var(--font-size);
+    
   }
   
-  .IpMoneyReceiptAdvance-form-row label {
+  /* .IpMoneyReceiptAdvance-form-row label {
     min-width: 140px;
   }
   .IpMoneyReceiptAdvance-form-row input ,textarea {
@@ -84,7 +89,7 @@
     border: 1px solid gray;
     border-radius: 5px;
     width: 48.5%;
-  }
+  } */
   .IpMoneyReceiptAdvance-input-with-search {
     display: flex;
     gap: 2px;
@@ -128,6 +133,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin: 5px;
   }
   
   .ipmoneyreceiptadvance-save-btn:hover {

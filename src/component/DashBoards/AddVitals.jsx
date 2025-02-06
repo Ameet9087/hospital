@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./AddVitals.css"; 
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
-import CustomModal from "../CustomModel/CustomModal";
+import CustomModal from "../../CustomModel/CustomModal";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../FloatingInputs";
 
 const Vitals = ({
   patientId,
@@ -63,7 +65,7 @@ const Vitals = ({
     const { name, value } = e.target;
   
     if (parseFloat(value) < 0) {
-      alert(`${name} should be greater than zero.`);
+      toast.error(`${name} should be greater than zero.`);
       return;
     }
   
@@ -110,7 +112,7 @@ const Vitals = ({
       });
 
       if (response.ok) {
-        console.log("Vitals saved successfully");
+        toast.success("Vitals saved successfully");
         setShowForm(false);
         setVitalData({
           addedOn: "",
@@ -127,10 +129,10 @@ const Vitals = ({
           painScale: "",
         });
       } else {
-        alert("Failed to save vitals");
+        toast.error("Failed to save vitals");
       }
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("Error:", error);
     }
   };
 
@@ -222,44 +224,42 @@ const Vitals = ({
                   </div>
                   <form>
                     <div className="vitals-form-form-row">
-                      <label>Added On:</label>
-                      <input
-                        className="vitals-form-form-row-input"
-                        type="date"
-                        name="addedOn"
-                        value={vitalData.addedOn}
-                        onChange={handleInputChange}
+                      <FloatingInput
+                      label={"Added On"}
+                       type="date"
+                       name="addedOn"
+                       value={vitalData.addedOn}
+                       onChange={handleInputChange}
+                      
+                      />
+
+                    </div>
+
+                    <div className="vitals-form-form-row">
+                      <FloatingInput
+                      label={"Height (cm)"}
+                      type="number"
+                      name="height"
+                      placeholder="cm"
+                      value={vitalData.height}
+                      onChange={handleInputChange}
                       />
                     </div>
 
                     <div className="vitals-form-form-row">
-                      <label>Height (cm):</label>
-                      <input
-                        className="vitals-form-form-row-input"
-                        type="number"
-                        name="height"
-                        placeholder="cm"
-                        value={vitalData.height}
-                        onChange={handleInputChange}
+                      <FloatingInput
+                      label={"Weight (kg)"}
+                       type="number"
+                       name="weight"
+                       placeholder="Kg"
+                       value={vitalData.weight}
+                       onChange={handleInputChange}
                       />
                     </div>
 
                     <div className="vitals-form-form-row">
-                      <label>Weight (kg):</label>
-                      <input
-                        className="vitals-form-form-row-input"
-                        type="number"
-                        name="weight"
-                        placeholder="Kg"
-                        value={vitalData.weight}
-                        onChange={handleInputChange}
-                      />
-                    </div>
-
-                    <div className="vitals-form-form-row">
-                      <label>BMI:</label>
-                      <input
-                        className="vitals-form-form-row-input"
+                      <FloatingInput
+                      label={"BMI"}
                         type="number"
                         name="bmi"
                         value={vitalData.bmi}
@@ -268,99 +268,93 @@ const Vitals = ({
                     </div>
 
                     <div className="vitals-form-form-row">
-                      <label>Temperature:</label>
-                      <input
-                        className="vitals-form-form-row-input"
-                        type="number"
-                        name="temperature"
-                        placeholder="	°F"
-                        value={vitalData.temperature}
-                        onChange={handleInputChange}
+                      <FloatingInput
+                      label={"Temperature"}
+                      type="number"
+                      name="temperature"
+                      placeholder="	°F"
+                      value={vitalData.temperature}
+                      onChange={handleInputChange}
                       />
                     </div>
 
                     <div className="vitals-form-form-row">
-                      <label>Pulse:</label>
-                      <input
-                        className="vitals-form-form-row-input"
-                        type="number"
-                        name="pulse"
-                        placeholder="bpm"
-                        value={vitalData.pulse}
-                        onChange={handleInputChange}
+                      <FloatingInput
+                      label={"Pulse"}
+                       type="number"
+                       name="pulse"
+                       placeholder="bpm"
+                       value={vitalData.pulse}
+                       onChange={handleInputChange}
                       />
                     </div>
 
                     <div className="vitals-form-form-row">
-                      <label>Blood Pressure:</label>
-                      <div className="vitals-form-form-row-input">
-                        <input
-                          className="vitals-form-form-row-input"
-                          type="number"
-                          name="bpSystolic"
-                          placeholder="mmHg"
-                          value={vitalData.bpSystolic}
-                          onChange={handleInputChange}
+                        <FloatingInput
+                        label={"BP Systolic"}
+                        type="number"
+                        name="bpSystolic"
+                        placeholder="mmHg"
+                        value={vitalData.bpSystolic}
+                        onChange={handleInputChange}
                         />
-                        <input
-                          className="vitals-form-form-row-input"
-                          type="number"
-                          name="bpDiastolic"
-                          placeholder="mmHg"
-                          value={vitalData.bpDiastolic}
-                          onChange={handleInputChange}
+                        <FloatingInput
+                        label={"BP Diastolic"}
+                        type="number"
+                        name="bpDiastolic"
+                        placeholder="mmHg"
+                        value={vitalData.bpDiastolic}
+                        onChange={handleInputChange}
                         />
-                      </div>
+                     
                     </div>
 
                     <div className="vitals-form-form-row">
-                      <label>Respiratory Rate:</label>
-                      <input
-                        className="vitals-form-form-row-input"
-                        type="number"
-                        name="respiratoryRate"
-                        placeholder="breaths/min"
-                        value={vitalData.respiratoryRate}
-                        onChange={handleInputChange}
+                      <FloatingInput
+                      label={"Respiratory Rate"}
+                      type="number"
+                      name="respiratoryRate"
+                      placeholder="breaths/min"
+                      value={vitalData.respiratoryRate}
+                      onChange={handleInputChange}
+                      
                       />
                     </div>
 
                     <div className="vitals-form-form-row">
-                      <label>SpO₂:</label>
-                      <input
-                        className="vitals-form-form-row-input"
-                        type="number"
-                        name="spO2"
-                        placeholder="%"
-                        value={vitalData.spO2}
-                        onChange={handleInputChange}
+                      <FloatingInput
+                      label={"SpO₂"}
+                       type="number"
+                       name="spO2"
+                       placeholder="%"
+                       value={vitalData.spO2}
+                       onChange={handleInputChange}
+                      
                       />
                     </div>
 
                     <div className="vitals-form-form-row">
-                      <label>O₂ Delivery Plan:</label>
-                      <input
-                        className="vitals-form-form-row-input"
-                        type="text"
-                        name="o2DeliveryPlan"
-                        placeholder="L/min"
-                        value={vitalData.o2DeliveryPlan}
-                        onChange={handleInputChange}
+                      <FloatingInput
+                      label={"O₂ Delivery Plan"}
+                      type="text"
+                      name="o2DeliveryPlan"
+                      placeholder="L/min"
+                      value={vitalData.o2DeliveryPlan}
+                      onChange={handleInputChange}
+                      
                       />
                     </div>
 
                     <div className="vitals-form-form-row">
-                      <label>Pain Scale (/10):</label>
-                      <input
-                        className="vitals-form-form-row-input"
-                        type="number"
-                        name="painScale"
-                        placeholder="Scale 0-10"
-                        value={vitalData.painScale}
-                        onChange={handleInputChange}
+                      <FloatingInput
+                      label={"Pain Scale (/10)"}
+                      type="number"
+                      name="painScale"
+                      placeholder="Scale 0-10"
+                      value={vitalData.painScale}
+                      onChange={handleInputChange}
                       />
                     </div>
-                    <div className="vitals-form-button">
                       <button
                         type="button"
                         className="vitals-form-save-button"
@@ -368,7 +362,7 @@ const Vitals = ({
                       >
                         Save
                       </button>
-                    </div>
+                    
                   </form>
                 </div>
               </div>

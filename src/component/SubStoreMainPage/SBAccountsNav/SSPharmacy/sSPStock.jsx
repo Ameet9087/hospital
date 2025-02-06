@@ -9,7 +9,7 @@ import SSPReports from './sSPReports'; // Import the Reports component
 import SSPharmacyNInven from './sSPharmacyNInven';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
-import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 function SSPStock() {
   const { store } = useParams();
   const [activeTab, setActiveTab] = useState('Stock');

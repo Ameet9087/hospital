@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Modal from 'react-modal';
 import AddCompany from '../components/AddCompany';
 import UpdateSomeCompany from '../components/UpdateSomeCompany';
@@ -6,7 +6,7 @@ import './Company.css';
 import CustomModal from '../../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../../api/api';
 import ReactToPrint from 'react-to-print';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import * as XLSX from 'xlsx';
 
 Modal.setAppElement('#root');
@@ -20,8 +20,8 @@ const CompanyTable = () => {
 
 
 
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const CompanyTable = () => {
       .then((response) => response.json())
       .then((data) => setCompanies(data))
       .catch((error) => console.error('Error fetching companies:', error));
-  }, [isAddModalOpen,isEditModalOpen]);
+  }, [isAddModalOpen, isEditModalOpen]);
 
   const openAddModal = () => {
     setIsAddModalOpen(true);
@@ -87,16 +87,16 @@ const CompanyTable = () => {
         </div>
         <div >
           <span>Showing {companies.length}/{companies.length} results </span>
-          <button className="CompanyTable-print-button"onClick={handleExport}>Export</button>
+          <button className="CompanyTable-print-button" onClick={handleExport}>Export</button>
 
           <ReactToPrint
-            trigger={() => <button className="CompanyTable-print-button"onClick={handlePrint}>Print</button>}
+            trigger={() => <button className="CompanyTable-print-button" onClick={handlePrint}>Print</button>}
             content={() => tableRef.current}
           />
         </div>
       </div>
-<div className='CompanyTable-table-container'>
-<table  ref={tableRef}>
+      <div className='CompanyTable-table-container'>
+        <table ref={tableRef}>
           <thead>
             <tr>
               {[
@@ -126,34 +126,34 @@ const CompanyTable = () => {
                 </th>
               ))}
             </tr>
-  </thead>
-        <tbody>
-          {companies.length > 0 ? (
-            companies.map((company) => (
-              <tr key={company.id}>
-                <td>{company.companyName}</td>
-                <td>{company.code}</td>
-                <td>{company.address}</td>
-                <td>{company.contactNo}</td>
-                <td>{company.email}</td>
-                <td>{company.description}</td>
-                <td>
-                  <button
-                    className="CompanyTable-action-button"
-                    onClick={() => openEditModal(company)}
-                  >
-                    Edit
-                  </button>
-                </td>
+          </thead>
+          <tbody>
+            {companies.length > 0 ? (
+              companies.map((company) => (
+                <tr key={company.id}>
+                  <td>{company.companyName}</td>
+                  <td>{company.code}</td>
+                  <td>{company.address}</td>
+                  <td>{company.contactNo}</td>
+                  <td>{company.email}</td>
+                  <td>{company.description}</td>
+                  <td>
+                    <button
+                      className="CompanyTable-action-button"
+                      onClick={() => openEditModal(company)}
+                    >
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7">No companies found.</td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="7">No companies found.</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
       </div>
       {/* Modal for Adding Company */}
       <CustomModal
@@ -161,7 +161,7 @@ const CompanyTable = () => {
         onClose={closeAddModal}
         contentLabel="Add Company Modal"
       >
-        <AddCompany closeModal={closeAddModal}/>
+        <AddCompany closeModal={closeAddModal} />
       </CustomModal>
 
       {/* Modal for Editing Company */}

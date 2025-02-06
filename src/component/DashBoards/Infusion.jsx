@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./Infusion.css";
 import { API_BASE_URL } from "../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../FloatingInputs";
 
 const Infusion = ({ inPatientId, outPatientId, setIsModalOpen }) => {
   const [formData, setFormData] = useState({
@@ -56,7 +58,7 @@ const Infusion = ({ inPatientId, outPatientId, setIsModalOpen }) => {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("Data successfully saved:", result);
+        toast.success("Data successfully saved:", result);
 
         // Optionally reset the form or show a success message
         setFormData({
@@ -76,10 +78,10 @@ const Infusion = ({ inPatientId, outPatientId, setIsModalOpen }) => {
         });
         setIsModalOpen(false);
       } else {
-        console.error("Failed to save data:", response);
+        toast.error("Failed to save data:", response);
       }
     } catch (error) {
-      console.error("Error submitting form data:", error);
+      toast.error("Error submitting form data:", error);
     }
   };
 
@@ -91,64 +93,64 @@ const Infusion = ({ inPatientId, outPatientId, setIsModalOpen }) => {
         <div className="Infusion-content">
           <div className="Infusion-form-group-left">
             <div className="Infusion-form-group">
-              <label>Infusion Name:</label>
-              <input
-                type="text"
-                name="infusionNm"
-                value={formData.infusionNm}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Infusion Name"}
+               type="text"
+               name="infusionNm"
+               value={formData.infusionNm}
+               onChange={handleChange}
+               required
               />
             </div>
 
             <div className="Infusion-form-group">
-              <label>Infusion Generic:</label>
-              <input
-                type="text"
-                name="infusionGeneric"
-                value={formData.infusionGeneric}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Infusion Generic"}
+              type="text"
+              name="infusionGeneric"
+              value={formData.infusionGeneric}
+              onChange={handleChange}
+              required
               />
             </div>
 
             <div className="Infusion-form-group">
-              <label>Infusion Frequency:</label>
-              <input
-                type="text"
-                name="infusionRoute"
-                value={formData.infusionRoute}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Infusion Frequency"}
+              type="text"
+              name="infusionRoute"
+              value={formData.infusionRoute}
+              onChange={handleChange}
+              required
               />
             </div>
 
             <div className="Infusion-form-group">
-              <label>Drug:</label>
-              <input
-                type="text"
-                name="drug"
-                value={formData.drug}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Drug"}
+              type="text"
+              name="drug"
+              value={formData.drug}
+              onChange={handleChange}
+              required
               />
             </div>
 
             <div className="Infusion-form-group">
-              <label>Flow Rate:</label>
-              <input
-                type="text"
-                name="flowRate"
-                value={formData.flowRate}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Flow Rate"}
+               type="text"
+               name="flowRate"
+               value={formData.flowRate}
+               onChange={handleChange}
+               required
               />
             </div>
           </div>
           <div className="Infusion-form-group-right">
             <div className="Infusion-form-group">
-              <label>Infusion Remarks:</label>
-              <textarea
+              <FloatingInput
+              label={"Infusion Remarks"}
                 name="infuRemarks"
                 value={formData.infuRemarks}
                 onChange={handleChange}
@@ -157,46 +159,46 @@ const Infusion = ({ inPatientId, outPatientId, setIsModalOpen }) => {
             </div>
 
             <div className="Infusion-form-group">
-              <label>Start Date:</label>
-              <input
-                type="date"
-                name="startDate"
-                value={formData.startDate}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Start Date"}
+              type="date"
+              name="startDate"
+              value={formData.startDate}
+              onChange={handleChange}
+              required
               />
             </div>
 
             <div className="Infusion-form-group">
-              <label>Start Time:</label>
-              <input
-                type="time"
-                name="startTime"
-                value={formData.startTime}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Start Time"}
+              type="time"
+              name="startTime"
+              value={formData.startTime}
+              onChange={handleChange}
+              required
               />
             </div>
 
             <div className="Infusion-form-group">
-              <label>End Date:</label>
-              <input
-                type="date"
-                name="endDate"
-                value={formData.endDate}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"End Date"}
+               type="date"
+               name="endDate"
+               value={formData.endDate}
+               onChange={handleChange}
+               required
               />
             </div>
 
             <div className="Infusion-form-group">
-              <label>End Time:</label>
-              <input
-                type="time"
-                name="endTime"
-                value={formData.endTime}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"End Time"}
+              type="time"
+              name="endTime"
+              value={formData.endTime}
+              onChange={handleChange}
+              required
               />
             </div>
           </div>

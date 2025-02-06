@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "./LinensIssueNew.css";
 import LinensIssueNewPopUp from "./LinensIssueNewPopUp";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from '../../../api/api'
 
 

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./CondemnationAndDisposal.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import CondemnationAndDisposalPopUp from "./CondemnationAndDisposalPopUp";
 import { API_BASE_URL } from "../../../api/api";
@@ -48,7 +48,7 @@ const CondemnationAndDisposal = () => {
       (disposal.approvalBy?.doctorName || "").toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
-  
+
 
   // Handle Export to Excel
   const handleExport = () => {

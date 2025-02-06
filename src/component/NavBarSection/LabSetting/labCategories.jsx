@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../LabSetting/labCategories.css";
 import LabCategoryAddNewLC from "./labCategoryAddNewLC";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+
 import LabCategoryUpdateNewLC from "./LabCategoryUpdateNewLC";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { FloatingInput } from "../../../FloatingInputs";
 
 const LabCategories = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -74,12 +76,12 @@ const LabCategories = () => {
 
       <div className="labCategories-search-N-result">
         <div className="labCategories-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchTerm} // bind the input to searchTerm
-            onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm on change
+          <FloatingInput
+          type="text"
+          label={"Search"}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          
           />
         </div>
         <div className="labCategories-results-info">

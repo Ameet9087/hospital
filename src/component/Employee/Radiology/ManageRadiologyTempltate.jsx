@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./ManageImagingType.css";
 import UpdateTemplate from "./UpdateTemplate";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";

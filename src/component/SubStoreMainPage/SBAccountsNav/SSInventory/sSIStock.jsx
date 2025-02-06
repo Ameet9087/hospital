@@ -12,8 +12,7 @@ import SSIReturn from './sSIReturn';
 import SSPharmacyNInven from '../SSPharmacy/sSPharmacyNInven';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
-import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
-
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 function SSIStock() {
   const { store } = useParams();
   const [activeTab, setActiveTab] = useState('Stock');

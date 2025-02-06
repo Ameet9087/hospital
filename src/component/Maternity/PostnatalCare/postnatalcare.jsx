@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './PostnatalCare.css'; 
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import axios from 'axios';
 
 const PostnatalCareManagement = () => {

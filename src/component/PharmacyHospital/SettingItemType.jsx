@@ -7,7 +7,7 @@ import { API_BASE_URL } from "../api/api";
 import CustomModal from "../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import useCustomAlert from "../../alerts/useCustomAlert";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 const SettingItemType = () => {
   const [itemTypes, setItemTypes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,10 +33,10 @@ const SettingItemType = () => {
   }, [showModal]);
 
   // Filtered item types based on search term
-// Filtered item types based on search term
-const filteredItemTypes = itemTypes.filter((item) =>
-  item.itemType.toLowerCase().includes(searchTerm.toLowerCase())
-);
+  // Filtered item types based on search term
+  const filteredItemTypes = itemTypes.filter((item) =>
+    item.itemType.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleShowModal = (mode, item = null) => {
     setFormMode(mode);

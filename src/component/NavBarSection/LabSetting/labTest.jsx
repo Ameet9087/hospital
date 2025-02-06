@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../LabSetting/labTest.css";
 import LSLabTestAddNLTest from "./lSLabTestAddNLTest";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { FloatingInput } from "../../../FloatingInputs";
 
 const LabTestSetting = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -73,13 +75,14 @@ const LabTestSetting = () => {
       </div>
       <div className="labTestLS-search-N-result">
         <div className="labTestLS-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)} // Update search query as the user types
+
+          <FloatingInput
+          type="text"
+          label={"Search"}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           />
+          
         </div>
         <div className="labTestLS-results-info">
           <span>

@@ -71,7 +71,7 @@
 // export default OperationOrProcedureRate;
 import React, { useState, useRef } from "react";
 import "./ServiceRate.css";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 
 function OperationOrProcedureRate({ rates, onRateChange }) {
   const [rows, setRows] = useState([
@@ -95,7 +95,7 @@ function OperationOrProcedureRate({ rates, onRateChange }) {
       const updatedRows = rows.filter((_, i) => i !== index);
       const reindexedRows = updatedRows.map((row, i) => ({
         ...row,
-        sn: i + 1, 
+        sn: i + 1,
       }));
       setRows(reindexedRows);
     }

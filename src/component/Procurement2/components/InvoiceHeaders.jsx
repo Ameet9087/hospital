@@ -1,11 +1,11 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./InvoiceHeaders.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import InvoiceHeaderForm from "../components/AddInvoiceHeader";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import * as XLSX from 'xlsx';
 
 const InvoiceHeaders = () => {
@@ -13,8 +13,8 @@ const InvoiceHeaders = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
 
   const fetchInvoiceHeaders = async () => {
@@ -59,59 +59,59 @@ const InvoiceHeaders = () => {
       </button>
 
       {/* Search Section */}
-      
+
 
       {/* Header Section */}
       <div className="InvoiceHeaders__table-header">
-      <div className="InvoiceHeaders__search-container">
-        <input
-          type="text"
-          placeholder="Search"
-          className="InvoiceHeaders__search-input"
-        />
-      </div>
-      <div>
-        <span>Showing 0 / 0 results</span>
-        <button className="InvoiceHeaders__print-button" onClick={handleExport}>Export</button>
-        <button className="InvoiceHeaders__print-button"onClick={handlePrint}>Print</button>
+        <div className="InvoiceHeaders__search-container">
+          <input
+            type="text"
+            placeholder="Search"
+            className="InvoiceHeaders__search-input"
+          />
+        </div>
+        <div>
+          <span>Showing 0 / 0 results</span>
+          <button className="InvoiceHeaders__print-button" onClick={handleExport}>Export</button>
+          <button className="InvoiceHeaders__print-button" onClick={handlePrint}>Print</button>
         </div>
       </div>
 
       {/* Table Section */}
-      <table  ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-                 "Hospital Name",
-                 "Address",
-                 "Telephone",
-                 "Email",
-                 "Pin",
-                 "DDA",
-                 "Header Description",
-                 "Created Date",
-                 "Is Active",
-                 "Action"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-  </thead>
+      <table ref={tableRef}>
+        <thead>
+          <tr>
+            {[
+              "Hospital Name",
+              "Address",
+              "Telephone",
+              "Email",
+              "Pin",
+              "DDA",
+              "Header Description",
+              "Created Date",
+              "Is Active",
+              "Action"
+            ].map((header, index) => (
+              <th
+                key={index}
+                style={{ width: columnWidths[index] }}
+                className="resizable-th"
+              >
+                <div className="header-content">
+                  <span>{header}</span>
+                  <div
+                    className="resizer"
+                    onMouseDown={startResizing(
+                      tableRef,
+                      setColumnWidths
+                    )(index)}
+                  ></div>
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
 
 
         <tbody>
@@ -145,7 +145,7 @@ const InvoiceHeaders = () => {
 
       {/* Add Invoice Header Modal */}
       <CustomModal isOpen={isModalOpen} onClose={closeModal}>
-        <InvoiceHeaderForm closeModal={closeModal}/>
+        <InvoiceHeaderForm closeModal={closeModal} />
       </CustomModal>
     </div>
   );

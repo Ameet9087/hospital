@@ -22,6 +22,7 @@ import PrintGenericSticker from "./PrintGenericSticker";
 import ChangeDoctor from "./ChangeDoctor";
 import CancelAdmission from "./CancelAdmission";
 import AdmissionSlip from "./AdmissionFormPrint";
+import { FloatingInput } from "../../FloatingInputs";
 const AdmittedPatient = () => {
   const [showPrint, setShowPrint] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -149,13 +150,14 @@ const AdmittedPatient = () => {
   return (
     <div className="adt-app-container">
       <div className="adt-search-container">
-        <input
-          type="text"
-          placeholder="Search by PatientName/PatientId"
-          className="admitted-search-input"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
+        <div className="admitted-search-input">
+          <FloatingInput
+            label={"Search"}
+            type="text"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
         <button
           onClick={printList}
           className="admitpatient-export-container-button"

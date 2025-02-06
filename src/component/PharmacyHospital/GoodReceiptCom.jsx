@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './PurchaseOrder.css';
 import GoodsReceiptForm from './GoodsReceiptForm';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 import { API_BASE_URL } from '../api/api';
 import * as XLSX from 'xlsx';
 import CustomModal from '../../CustomModel/CustomModal';

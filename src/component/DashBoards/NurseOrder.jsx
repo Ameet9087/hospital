@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./NurseOrder.css";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingTextarea } from "../../FloatingInputs";
 
 const NurseOrder = ({ inPatientId, outPatientId }) => {
   // Form state
@@ -48,7 +50,7 @@ const NurseOrder = ({ inPatientId, outPatientId }) => {
       });
 
       console.log("Form submitted:", formData);
-      alert("Nursing order submitted successfully!");
+      toast.success("Nursing order submitted successfully!");
 
       // Reset the form after submission
       handleCancel();
@@ -57,7 +59,7 @@ const NurseOrder = ({ inPatientId, outPatientId }) => {
       fetchNursingOrders();
     } catch (error) {
       console.error("Error submitting nursing order:", error);
-      alert("Failed to submit nursing order.");
+      toast.error("Failed to submit nursing order.");
     }
   };
 
@@ -96,62 +98,67 @@ const NurseOrder = ({ inPatientId, outPatientId }) => {
         <div className="Nurse-Order-group-content">
           <div className="Nurse-Order-group-left">
             <div className="Nurse-Order-group">
-              <label htmlFor="orderName">Order Name</label>
-              <input
-                type="text"
-                id="orderName"
-                value={orderName}
-                onChange={(e) => setOrderName(e.target.value)}
-                required
+              <FloatingInput
+              label={"Order Name"}
+               type="text"
+               id="orderName"
+               value={orderName}
+               onChange={(e) => setOrderName(e.target.value)}
+               required
+              
               />
             </div>
 
             <div className="Nurse-Order-group">
-              <label htmlFor="nurseTime">Nurse Time</label>
-              <input
-                type="time"
-                id="nurseTime"
-                value={nurseTime}
-                onChange={(e) => setNurseTime(e.target.value)}
-                required
+              <FloatingInput
+              label={"Nurse Time"}
+              type="time"
+              id="nurseTime"
+              value={nurseTime}
+              onChange={(e) => setNurseTime(e.target.value)}
+              required
+              
               />
             </div>
 
             <div className="Nurse-Order-group">
-              <label htmlFor="nursingFrequency">Nursing Frequency</label>
-              <select
-                id="nursingFrequency"
-                value={nursingFrequency}
-                onChange={(e) => setNursingFrequency(e.target.value)}
-                required
-              >
-                <option value="">Select Frequency</option>
-                <option value="daily">Daily</option>
-                <option value="twice-daily">Twice Daily</option>
-                <option value="once-weekly">Once Weekly</option>
-              </select>
+              <FloatingInput
+              label={"Nursing Frequency"}
+              id="nursingFrequency"
+              value={nursingFrequency}
+              onChange={(e) => setNursingFrequency(e.target.value)}
+              options={[{value:"",label:""},
+                {value:"daily",label:"Daily"},
+                {value:"twice-daily",label:"Twice Daily"},
+                {value:"once-weekly",label:"Once Weekly"}
+              ]}
+              required
+              
+              />
             </div>
           </div>
 
           <div className="Nurse-Order-group-right">
             <div className="Nurse-Order-group">
-              <label htmlFor="orderGivenTime">Order Given Time</label>
-              <input
+              <FloatingInput
+              label={"Order Given Time"}
                 type="time"
                 id="orderGivenTime"
                 value={orderGivenTime}
                 onChange={(e) => setOrderGivenTime(e.target.value)}
                 required
+              
               />
             </div>
 
             <div className="Nurse-Order-group">
-              <label htmlFor="remarks">Remarks</label>
-              <textarea
-                id="remarks"
-                value={remarks}
-                onChange={(e) => setRemarks(e.target.value)}
-                required
+              <FloatingTextarea
+              label={"Remarks"}
+               id="remarks"
+               value={remarks}
+               onChange={(e) => setRemarks(e.target.value)}
+               required
+              
               />
             </div>
           </div>

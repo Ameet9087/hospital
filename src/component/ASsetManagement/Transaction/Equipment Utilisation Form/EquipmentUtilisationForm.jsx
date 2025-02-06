@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Equipmentutilisationform.css";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import EquipmentUtilisationFormPopUp from "./EquipmentUtilisationFormPopUp";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";

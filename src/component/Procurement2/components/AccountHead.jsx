@@ -7,7 +7,7 @@ import { useReactToPrint } from 'react-to-print'; // Import for print functional
 import './AccountHead.css';
 import CustomModal from '../../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../../api/api';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import * as XLSX from 'xlsx';
 
 Modal.setAppElement('#root'); // Set the app element for accessibility
@@ -18,8 +18,8 @@ const AccountHead = () => {
   const [selectedAccountHead, setSelectedAccountHead] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
 
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const AccountHead = () => {
     fetchAccountHeads();
   }, []); // Empty dependency array means this effect runs once on mount
 
- 
+
 
   const openAddModal = () => setShowAddModal(true);
   const closeAddModal = () => setShowAddModal(false);
@@ -87,24 +87,24 @@ const AccountHead = () => {
         <div className="account-head-search-bar">
           <input type="text" placeholder="Search" />
         </div>
-          <div>
+        <div>
           Showing {accountHeads.length} / {accountHeads.length} results
-          <button className="account-head-print-button"onClick={handleExport}>Export</button>
+          <button className="account-head-print-button" onClick={handleExport}>Export</button>
           <button className="account-head-print-button" onClick={handlePrint}>
             Print
           </button>
-          </div>
         </div>
+      </div>
 
       <div ref={tableRef} className='table-container'>
-      <table  ref={tableRef}>
+        <table ref={tableRef}>
           <thead>
             <tr>
               {[
-               "Account Head Name",
-  "Description",
-  "Is Active",
-  "Action"
+                "Account Head Name",
+                "Description",
+                "Is Active",
+                "Action"
               ].map((header, index) => (
                 <th
                   key={index}
@@ -124,7 +124,7 @@ const AccountHead = () => {
                 </th>
               ))}
             </tr>
-  </thead>
+          </thead>
 
           <tbody>
             {accountHeads.length > 0 ? (
@@ -157,7 +157,7 @@ const AccountHead = () => {
         isOpen={showAddModal}
         onClose={closeAddModal}
         contentLabel="Add Account Head Modal"
-      
+
       >
         <AddHeadCount onClose={closeAddModal} />
       </CustomModal>
@@ -167,7 +167,7 @@ const AccountHead = () => {
         isOpen={showEditModal}
         onClose={closeEditModal}
         contentLabel="Edit Account Head Modal"
-       
+
       >
         {/* Render UpdateAccountHead with selectedAccountHead and the update handler */}
         {selectedAccountHead && (
@@ -177,7 +177,7 @@ const AccountHead = () => {
             onUpdate={handleUpdateAccountHead}
           />
         )}
-       
+
       </CustomModal>
     </div>
   );

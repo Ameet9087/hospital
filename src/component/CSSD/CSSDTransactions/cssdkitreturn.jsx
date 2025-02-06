@@ -8,7 +8,7 @@ import { API_BASE_URL } from "../../api/api";
 
 const KitReturnsDetails = () => {
   const { receivingId } = useParams(); // Get the 'receivingId' from the URL
-console.log(receivingId);
+  console.log(receivingId);
 
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);

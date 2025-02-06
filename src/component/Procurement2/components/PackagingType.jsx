@@ -6,7 +6,7 @@ import UpdatePackagingType from "../components/UpdatePackagingType";
 import "./PackagingType.css";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import * as XLSX from "xlsx";
 
 Modal.setAppElement("#root");
@@ -67,7 +67,7 @@ const PackagingType = () => {
     );
     closeEditModal();
   };
-  
+
 
   // Function to export table to Excel
   const handleExport = () => {
@@ -147,7 +147,7 @@ const PackagingType = () => {
               <tr key={type.id}>
                 <td>{type.packagingTypeName}</td>
                 <td>{type.description}</td>
-                <td>{type.isActive }</td>
+                <td>{type.isActive}</td>
                 <td>
                   <button
                     className="PackagingType-edit-button"

@@ -1,7 +1,6 @@
 import React, { useState,useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 import './UserCollectionReport.css';
 
 const DialysisPatientDetails = () => {

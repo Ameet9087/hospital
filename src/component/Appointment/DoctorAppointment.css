@@ -16,6 +16,7 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  margin-bottom: 10px;
 }
 
 .DoctorAppointments-field {
@@ -82,72 +83,4 @@
 .DoctorAppointments-table tr:hover {
   background-color: #f1f1f1;
   cursor: pointer;
-}
-
-.Cus-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.Cus-modal-container {
-  background: #fff;
-  border-radius: 8px;
-  width: 800px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.Cus-close-btn {
-  float: right;
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.Cus-close-btn:hover {
-  color: red;
-}
-
-.Cus-modal-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.form-row {
-  display: flex;
-  justify-content: space-between;
-}
-
-.form-col {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-}
-
-.form-col label {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.form-col input {
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
 }

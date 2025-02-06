@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./EquipmentGatePassInPopUp.css";
 import { FaSearch } from "react-icons/fa"; // Using react-icons
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../../api/api";
 
 const EquipmentGatePassInPopUp = ({ onClose }) => {

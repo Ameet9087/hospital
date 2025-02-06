@@ -3,7 +3,7 @@ import axios from "axios";
 import "./NewVisitedList.css";
 import AddNewPateint from "./AddNewPateint";
 import { useNavigate } from "react-router-dom";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 
 const NewVisitedList = () => {
@@ -151,9 +151,8 @@ const NewVisitedList = () => {
               <th
                 key={index}
                 style={{ width: columnWidths[index] }}
-                className={`resizable-th ${
-                  header === "Actions" ? "no-print" : ""
-                }`}
+                className={`resizable-th ${header === "Actions" ? "no-print" : ""
+                  }`}
               >
                 <div className="header-content">
                   <span>{header}</span>

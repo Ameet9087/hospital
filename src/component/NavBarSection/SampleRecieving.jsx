@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import "./SampleRecieving.css";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import CustomModel from "../../CustomModel/CustomModal";
+import { FloatingInput } from "../../FloatingInputs";
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
 };
@@ -92,36 +93,31 @@ function SampleRecieving() {
 
         <div className="SampleRecieving-controls">
           <div className="SampleRecieving-date-range">
-            <label>
-              From:
-              <input
-                type="date"
-                id="dateFrom"
-                defaultValue={dateFrom}
-                onChange={handleDateFromChange}
-              />
-            </label>
-            <label>
-              To:
-              <input
-                type="date"
-                id="dateTo"
-                defaultValue={dateTo}
-                onChange={handleDateToChange}
-              />
-            </label>
+            <FloatingInput
+              label={"From"}
+              type="date"
+              id="dateFrom"
+              value={dateFrom}
+              onChange={handleDateFromChange}
+            />
+
+            <FloatingInput
+              label={"To"}
+              type="date"
+              id="dateTo"
+              value={dateTo}
+              onChange={handleDateToChange}
+            />
           </div>
         </div>
 
         <div className="SampleRecieving-search-N-print">
           <div className="SampleRecieving-search-bar">
-            <i className="fa-solid fa-magnifying-glass"></i>
-            <input
-              type="text"
-              placeholder="Search"
-              className="SampleRecieving-search-input"
-              value={searchQuery}
-              onChange={handleSearchChange} // Handle search
+            <FloatingInput
+            label={"Search"}
+            type="text"
+            value={searchQuery}
+            onChange={handleSearchChange}
             />
           </div>
           <div className="SampleRecieving-results-info">

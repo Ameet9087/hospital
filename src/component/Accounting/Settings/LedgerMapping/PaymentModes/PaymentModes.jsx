@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./PaymentModes.css";
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
 
 const PaymentModes = () => {
   const paymentModes = [

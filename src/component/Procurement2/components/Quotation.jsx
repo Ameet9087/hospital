@@ -6,7 +6,7 @@ import "./Quotation.css";
 import RequestForQuotation from "../components/RequestForQuotation";
 import RFQDetails from "../components/RFQDetails";
 import CustomModal from "../../../CustomModel/CustomModal";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import * as XLSX from 'xlsx';
 import { API_BASE_URL } from "../../api/api";
 
@@ -69,7 +69,7 @@ function QuotationRequest() {
     XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
   };
 
- 
+
   const printList = () => {
     if (tableRef.current) {
       const printContents = tableRef.current.innerHTML;

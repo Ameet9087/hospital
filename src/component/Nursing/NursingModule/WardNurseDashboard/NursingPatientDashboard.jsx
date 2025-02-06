@@ -15,7 +15,7 @@ import LabReportResult from "../../../DashBoards/LabReportResult";
 import Infusion from "../../../DashBoards/Infusion";
 import ProcedureService from "../../../DashBoards/ProcedureService";
 import TreatmentGiven from "../../../DashBoards/TreatmentGiven";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import MedicationOrder from "../../../DashBoards/MedicationOrder ";
 import SaveTemplate from "../../../DashBoards/SaveTemplate/SaveTemplate";
 import PatientDetailsPrint from "../../../DashBoards/PatientDetailsPrint";

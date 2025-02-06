@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./HospitalSpecialityGroup.css";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 import SpecialityMaster from "./SpecialityGroup";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";

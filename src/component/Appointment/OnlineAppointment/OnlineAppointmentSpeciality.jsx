@@ -37,7 +37,7 @@ const Speciality = ({ searchQuery = "", location }) => {
   const handleSelectDoctor = (data) => {
     const currentDate = new Date(); // Get the current date
     const formattedDate = currentDate.toISOString().split("T")[0];
-    navigate("/appointment/onlinedoctorappts/online-doctor-schedule", {
+    navigate("/appointment/onlinedoctorappts/onlinedoctorschedule", {
       state: {
         doctor: data,
         locations: location,

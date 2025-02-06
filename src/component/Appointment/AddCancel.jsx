@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './AddCancel.css';
 import { API_BASE_URL } from '../api/api';
+import { toast } from 'react-toastify';
+import { FloatingTextarea } from '../../FloatingInputs';
 
 const AddCancel = ({ formData, onClose, handleUpdate,updatedAppointments }) => {
   console.log(formData);
@@ -43,14 +45,14 @@ const AddCancel = ({ formData, onClose, handleUpdate,updatedAppointments }) => {
       console.log("Response body:", result);
   
       if (response.ok) {
-        alert(result);
+        toast.success(result);
         onClose();
       } else {
         console.error("Error response:", result); // Log server error response
-        alert(result || "Failed to update the appointment.");
+        toast.error(result || "Failed to update the appointment.");
       }
     } catch (error) {
-      console.error("Network or runtime error:", error);
+      toast.error("Network or runtime error:", error);
     }
   };
   
@@ -59,14 +61,23 @@ const AddCancel = ({ formData, onClose, handleUpdate,updatedAppointments }) => {
   return (
     <div className="add-cancel">
       <label htmlFor="reason">Reason</label>
-      <textarea
+
+      <FloatingTextarea
+      label={"Reason"}
+      name="reason"
+      rows="5"
+      cols="150"
+      value={localFormData.reason} // Controlled input
+      onChange={handleInputChange}
+      />
+      {/* <textarea
         id="reason"
         name="reason"
         rows="5"
         cols="150"
         value={localFormData.reason} // Controlled input
         onChange={handleInputChange} // Update state on input change
-      />
+      /> */}
       <button className='add-cancel-btn' onClick={handleCancelClick}>Save</button>
     </div>
   );

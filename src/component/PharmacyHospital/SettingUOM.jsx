@@ -1,13 +1,13 @@
 /* Mohini_SettingUOM_WholePage_14/sep/2024 */
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
-import './SettingSupplier.css'; 
+import './SettingSupplier.css';
 import { API_BASE_URL } from '../api/api';
 import CustomModal from '../../CustomModel/CustomModal';
 import * as XLSX from 'xlsx';
 import useCustomAlert from '../../alerts/useCustomAlert';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 
 const SettingUOM = () => {
   const [suppliers, setSuppliers] = useState([]);
@@ -18,7 +18,7 @@ const SettingUOM = () => {
   const [openStickerPopup, setOpenStickerPopup] = useState(false);
   const { success, error, CustomAlerts } = useCustomAlert();
   const [columnWidths, setColumnWidths] = useState({});
-    const tableRef = useRef(null);
+  const tableRef = useRef(null);
 
 
   const apiUrl = `${API_BASE_URL}/unitofmeasurement`;
@@ -76,7 +76,7 @@ const SettingUOM = () => {
       console.error('Error saving data:', error);
     }
   };
-  
+
 
   // Function to export table to Excel
   const handleExport = () => {
@@ -125,7 +125,7 @@ const SettingUOM = () => {
 
   return (
     <div className="setting-supplier-container">
-      <CustomAlerts/>
+      <CustomAlerts />
       <div className="setting-supplier-header">
         <button className="setting-supplier-add-user-button" onClick={() => handleShowModal()}>+ Add Unit Of Measurement</button>
       </div>
@@ -137,30 +137,30 @@ const SettingUOM = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <div className='setting-supplier-span'>
-  <span>Showing {suppliers.length} results</span>
-  <button className='item-wise-export-button'onClick={handleExport}>Export</button>
-  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
-</div>
+        <span>Showing {suppliers.length} results</span>
+        <button className='item-wise-export-button' onClick={handleExport}>Export</button>
+        <button className='item-wise-print-button' onClick={handlePrint}>Print</button>
+      </div>
       <div className='table-container'>
-      <table ref={tableRef}>
-                        <thead>
-                            <tr>
-                                {["Unit Name",
-  "Description",
-  "Is Active",
-  "Action"].map((header, index) => (
-                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                                        <div className="header-content">
-                                            <span>{header}</span>
-                                            <div
-                                                className="resizer"
-                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                                            ></div>
-                                        </div>
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
+        <table ref={tableRef}>
+          <thead>
+            <tr>
+              {["Unit Name",
+                "Description",
+                "Is Active",
+                "Action"].map((header, index) => (
+                  <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                      ></div>
+                    </div>
+                  </th>
+                ))}
+            </tr>
+          </thead>
 
           <tbody>
             {filteredUsers.map((user, index) => (
@@ -189,57 +189,57 @@ const SettingUOM = () => {
       </div>
 
       <CustomModal
-  isOpen={showModal}
-  onClose={handleCloseModal}
-  className="supplier-setting-supplier-update-modal"
->
-  <div className="supplier-setting-supplier-update-modal-header">
-    <h5>{isEditMode ? 'Update Unit of Measurement' : 'Add Unit of Measurement'}</h5>
-    {/* <button onClick={handleCloseModal} className="close-button">
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        className="supplier-setting-supplier-update-modal"
+      >
+        <div className="supplier-setting-supplier-update-modal-header">
+          <h5>{isEditMode ? 'Update Unit of Measurement' : 'Add Unit of Measurement'}</h5>
+          {/* <button onClick={handleCloseModal} className="close-button">
       &times;
     </button> */}
-  </div>
-  <div className="supplier-setting-supplier-update-modal-body">
-    <Form onSubmit={handleSubmit}>
-      <div className="supplier-setting-form-row">
-        <Form.Group controlId="categoryName" className="supplier-setting-form-group col-md-6">
-          <Form.Label>
-            Unit of Measurement<span className="supplier-setting-text-danger">*</span>:
-          </Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Unit of Measurement"
-            required
-            value={selectedUser?.name || ''}
-            onChange={(e) => setSelectedUser({ ...selectedUser, name: e.target.value })}
-          />
-        </Form.Group>
-        <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
-          <Form.Label>Description:</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter Description"
-            value={selectedUser?.description || ''}
-            onChange={(e) => setSelectedUser({ ...selectedUser, description: e.target.value })}
-          />
-        </Form.Group>
-      </div>
-      <Form.Group controlId="isActive" className="supplier-setting-form-group col-md-6">
-        <Form.Check
-          type="checkbox"
-          label="Is Active"
-          checked={selectedUser?.isActive || false}
-          onChange={(e) => setSelectedUser({ ...selectedUser, isActive: e.target.checked })}
-        />
-      </Form.Group>
-      <div className="supplier-setting-text-right">
-        <Button variant="primary" type="submit">
-          {isEditMode ? 'Update' : 'Add'}
-        </Button>
-      </div>
-    </Form>
-  </div>
-</CustomModal>
+        </div>
+        <div className="supplier-setting-supplier-update-modal-body">
+          <Form onSubmit={handleSubmit}>
+            <div className="supplier-setting-form-row">
+              <Form.Group controlId="categoryName" className="supplier-setting-form-group col-md-6">
+                <Form.Label>
+                  Unit of Measurement<span className="supplier-setting-text-danger">*</span>:
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Unit of Measurement"
+                  required
+                  value={selectedUser?.name || ''}
+                  onChange={(e) => setSelectedUser({ ...selectedUser, name: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+                <Form.Label>Description:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter Description"
+                  value={selectedUser?.description || ''}
+                  onChange={(e) => setSelectedUser({ ...selectedUser, description: e.target.value })}
+                />
+              </Form.Group>
+            </div>
+            <Form.Group controlId="isActive" className="supplier-setting-form-group col-md-6">
+              <Form.Check
+                type="checkbox"
+                label="Is Active"
+                checked={selectedUser?.isActive || false}
+                onChange={(e) => setSelectedUser({ ...selectedUser, isActive: e.target.checked })}
+              />
+            </Form.Group>
+            <div className="supplier-setting-text-right">
+              <Button variant="primary" type="submit">
+                {isEditMode ? 'Update' : 'Add'}
+              </Button>
+            </div>
+          </Form>
+        </div>
+      </CustomModal>
 
     </div>
   );

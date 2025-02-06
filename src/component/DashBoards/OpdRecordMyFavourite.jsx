@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 import './OpdRecordMyFavourite.css';
-import PatientDashboard from './PatientDashboard'; 
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import PatientDashboard from './PatientDashboard';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 
 const OpdRecordMyFavourites = () => {
-  const [columnWidths,setColumnWidths] = useState({});
+  const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [selectedPatient, setSelectedPatient] = useState(null);
 
@@ -58,36 +58,36 @@ const OpdRecordMyFavourites = () => {
       </div>
 
       <table className="patientList-table" ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-               "Hospital No.",
-  "Name",
-  "Age/Sex",
-  "VisitType",
-  "Admitted On",
-  "Performer Name",
-  "Actions"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
+        <thead>
+          <tr>
+            {[
+              "Hospital No.",
+              "Name",
+              "Age/Sex",
+              "VisitType",
+              "Admitted On",
+              "Performer Name",
+              "Actions"
+            ].map((header, index) => (
+              <th
+                key={index}
+                style={{ width: columnWidths[index] }}
+                className="resizable-th"
+              >
+                <div className="header-content">
+                  <span>{header}</span>
+                  <div
+                    className="resizer"
+                    onMouseDown={startResizing(
+                      tableRef,
+                      setColumnWidths
+                    )(index)}
+                  ></div>
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
         <tbody>
           {patients.map((patient, index) => (
             <tr key={index}>

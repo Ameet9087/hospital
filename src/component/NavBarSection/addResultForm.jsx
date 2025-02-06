@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 import LabPopupTable from "./LabPopupTable";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../FloatingInputs";
 
 const Lab1 = () => {
   const [components, setComponents] = useState([]);
@@ -91,8 +93,7 @@ const Lab1 = () => {
           [response.data.labTestId]: fetchedComponents,
         }));
       } catch (error) {
-        console.error("Error fetching components:", error);
-        setError("Failed to fetch components. Please try again.");
+        toast.error("Error fetching components:", error);
       }
     } else {
       // Remove components if the test is deselected
@@ -111,7 +112,7 @@ const Lab1 = () => {
     );
 
     if (hasEmptyRow) {
-      setError("Please fill the existing empty row before adding another.");
+      toast.error("Please fill the existing empty row before adding another.");
       return;
     }
 
@@ -139,7 +140,7 @@ const Lab1 = () => {
       );
 
       if (updatedComponents.length === 0) {
-        setError(
+        toast.error(
           "At least one component must be present for each selected test."
         );
         return prev;
@@ -172,7 +173,7 @@ const Lab1 = () => {
     });
 
     if (hasEmptyTests) {
-      setError(
+      toast.error(
         "Please add components for all selected tests before submitting."
       );
       return;
@@ -206,12 +207,12 @@ const Lab1 = () => {
         `${API_BASE_URL}/lab-result/${test.labRequestId}`,
         labResultData
       );
-
+      toast.success("Saving Lab Result Successfully");
       navigate("/laboratory/addresults", {
         state: { labRequestId: test.labRequestId },
       });
     } catch (error) {
-      console.error("Error saving lab result:", error);
+      toast.error("Error saving lab result:", error);
       setError("Failed to save lab result. Please try again.");
     }
   };
@@ -288,7 +289,7 @@ const Lab1 = () => {
             <React.Fragment key={index}>
               <div className="lab-addResult-row2">
                 <div className="lab-addResult-testing">
-                  <input
+                  <FloatingInput
                     type="checkbox"
                     checked={selectedTests[index]}
                     onChange={() => handleTestSelectChange(index)}
@@ -310,50 +311,45 @@ const Lab1 = () => {
                     {displayedComponents[item.labTestSettingId].map(
                       (component, idx) => (
                         <div className="lab-addResult-row" key={idx}>
-                          <div>
-                            <input
-                              type="text"
+                          
+                            <FloatingInput
+                              type="search"
                               name="componentName"
-                              placeholder="Component Name"
+                              label={"Component Name"}
                               value={component.componentName}
-                              readOnly
+                              onIconClick={
+                                !component.componentName
+                                  ? () => setActivePopup(true)
+                                  : undefined
+                              }
                             />
-                            {/* Show search icon only if componentName is empty */}
-                            {!component.componentName && (
-                              <i
-                                onClick={() => setActivePopup(true)}
-                                className="fa-solid fa-magnifying-glass"
-                              ></i>
-                            )}
-                          </div>
-
-                          <input
-                            type="text"
-                            name="value"
-                            placeholder="Enter Value"
-                            value={component.value}
-                            onChange={(event) =>
-                              handleInputChange(
-                                item.labTestSettingId,
-                                idx,
-                                event
-                              )
-                            }
+                          <FloatingInput
+                          type="text"
+                          name="value"
+                          label={"Enter Value"}
+                          value={component.value}
+                          onChange={(event) =>
+                            handleInputChange(
+                              item.labTestSettingId,
+                              idx,
+                              event
+                            )
+                          }
                           />
-                          <input
-                            type="text"
-                            name="unit"
-                            placeholder="Unit"
-                            value={component.unit}
-                            readOnly
-                          />
-                          <input
-                            type="text"
-                            name="range"
-                            placeholder="Range"
-                            value={component.range}
-                            readOnly
-                          />
+                         <FloatingInput
+                         type="text"
+                         name="unit"
+                         label={"Unit"}
+                         value={component.unit}
+                         readOnly
+                         />
+                         <FloatingInput
+                         type="text"
+                         name="range"
+                         label={"Range"}
+                         value={component.range}
+                         readOnly
+                         />
                           <button
                             type="button"
                             className="lab-addResult-remove-btn"

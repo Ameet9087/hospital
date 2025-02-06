@@ -5,6 +5,8 @@ import "../EditDoctors/rdlEditDrEditBtn.css";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
 import RadiologyPopupTable from "../RadiologyPopupTable";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../../FloatingInputs";
 
 function rdlEditDrEditBtn({ onClose, selectedRequest }) {
   const [reportingDoctor, setReportingDoctor] = useState();
@@ -49,9 +51,10 @@ function rdlEditDrEditBtn({ onClose, selectedRequest }) {
       await axios.put(
         `${API_BASE_URL}/imaging-requisitions/approve-by?performerId=${prescriberId}&imagingId=${imagingId}`
       );
+      toast.success("Doctor Changed Successfully");
       onClose();
     } catch (err) {
-      console.log(err);
+      toast.error(err);
     }
   };
 
@@ -107,14 +110,12 @@ function rdlEditDrEditBtn({ onClose, selectedRequest }) {
             </table>
 
             <div className="rdlEditDrEditBtn-reporting-doctor">
-              <span>Reporting Doctor:</span>
-              <input type="text" value={reportingDoctor?.employeeId} />
-              <button className="rdlEditDrEditBtn-search-button">
-                <i
-                  onClick={() => setActivePopup(true)}
-                  className="fa-solid fa-magnifying-glass"
-                ></i>
-              </button>
+              <FloatingInput
+                label={"Reporting Doctor"}
+                type="search"
+                value={reportingDoctor?.employeeId}
+                onIconClick={() => setActivePopup(true)}
+              />
             </div>
             <button
               className="rdlEditDrEditBtn-update-button"

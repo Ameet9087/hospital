@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './EquipmentutilisationformPopUp.css';
-import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 import PopupTable from '../../../Admission/PopupTable';
 import { SearchIcon } from 'lucide-react';
 import { API_BASE_URL } from '../../../api/api';

@@ -3,7 +3,8 @@
     background-color: var(--background-color);
     padding: 4px;
     font-size: var(--font-size);
-    height:650px;
+    height:600px;
+    width: 800px;
     
 
 }
@@ -25,7 +26,7 @@
     padding: 8px;
     border: 1px solid #ccc;
     background-color: white;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
 }
 .BlockIPEntries-section-header{
     background-color: var(--upperBar-bg-color);
@@ -37,21 +38,10 @@
 }
 .BlockIPEntries-data{
     display: flex;
-    margin-bottom: 5px;
-    gap: 10px;
+    margin-bottom: 10px;
+    /* gap: 10px; */
 }
-.BlockIPEntries-data label{
-    width: 300px;
-   font-size: var(--font-size);
-}
-.BlockIPEntries-data input,.BlockIPEntries-data select,.BlockIPEntries-data textarea{
-    width: 100%;
-    padding: var(--input-box-padding);
-    font-size: var(--font-size);
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 5px;
-}
+
 .BlockIPEntries-upload {
     display: flex;
     align-items: center;
@@ -59,30 +49,14 @@
     margin-top: 15px; /* Add spacing from other sections */
   }
   
-  .BlockIPEntries-upload input[type="text"] {
-    flex: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  
-  .BlockIPEntries-upload label {
-    padding: 8px 12px;
-    background-color: var(--button-bg-color); /* Blue color */
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s ease;
-  }
+
 /*   
   .BlockIPEntries-upload label:hover {
    
   } */
   
   .BlockIPEntries-upload button {
-    padding: 8px 12px;
+    padding: 5px 12px;
     background-color: #28a745; /* Green color */
     color: #fff;
     border: none;

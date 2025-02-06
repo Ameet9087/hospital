@@ -7,7 +7,7 @@ import { useReactToPrint } from "react-to-print";
 import "./UnitOfMeasurement.css";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import * as XLSX from 'xlsx';
 
 Modal.setAppElement("#root");
@@ -20,8 +20,8 @@ const UnitOfMeasurementComponent = () => {
   const [loading, setLoading] = useState(true);
 
 
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +48,7 @@ const UnitOfMeasurementComponent = () => {
   };
   const closeEditModal = () => setShowEditModal(false);
 
- 
+
 
   if (loading) {
     return <div>Loading...</div>;
@@ -83,15 +83,15 @@ const UnitOfMeasurementComponent = () => {
         <div className="uom-results-info">
           Showing {unitOfMeasurements.length} / {unitOfMeasurements.length}{" "}
           results
-          <button className="uom-print-button"onClick={handleExport}>Export</button>
+          <button className="uom-print-button" onClick={handleExport}>Export</button>
           <button className="uom-print-button" onClick={handlePrint}>
             Print
           </button>
         </div>
-        </div>
+      </div>
 
       <div ref={tableRef} className="table-container">
-      <table  ref={tableRef}>
+        <table ref={tableRef}>
           <thead>
             <tr>
               {[
@@ -118,14 +118,14 @@ const UnitOfMeasurementComponent = () => {
                 </th>
               ))}
             </tr>
-  </thead>
+          </thead>
 
           <tbody>
             {unitOfMeasurements.map((unit, index) => (
               <tr key={index}>
                 <td>{unit.name}</td>
                 <td>{unit.description}</td>
-                <td>{unit.isActive }</td>
+                <td>{unit.isActive}</td>
                 <td>
                   <button
                     className="uom-edit-button"
@@ -145,17 +145,17 @@ const UnitOfMeasurementComponent = () => {
         isOpen={showAddModal}
         onClose={closeAddModal}
         contentLabel="Add Unit of Measurement Modal"
-      
+
       >
-        <AddUnitOfMeasurement onClose={closeAddModal}/>
-        
+        <AddUnitOfMeasurement onClose={closeAddModal} />
+
       </CustomModal>
 
       <CustomModal
         isOpen={showEditModal}
         onClose={closeEditModal}
         contentLabel="Edit Unit of Measurement Modal"
-       
+
       >
         {selectedUnit && (
           <UpdateUnitOfMeasurement
@@ -163,7 +163,7 @@ const UnitOfMeasurementComponent = () => {
             closeModal={closeEditModal}
           />
         )}
-       
+
       </CustomModal>
     </div>
   );

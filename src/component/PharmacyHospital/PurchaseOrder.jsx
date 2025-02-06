@@ -5,7 +5,7 @@ import { API_BASE_URL } from '../api/api';
 import PurchaseOrderForm from './PurchaseOrderForm';
 import CustomModel from "../../CustomModel/CustomModal";
 import './PurchaseOrder.css';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 import GoodsReceiptForm from './GoodsReceiptForm';
 import PurchaseOrderBillPrint from './PurchaseOrderBillPrint';
 const PurchaseOrder = () => {
@@ -86,11 +86,11 @@ const PurchaseOrder = () => {
     XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport');
     XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
   };
- // Function to trigger print
- const handlePrint = () => {
-  const printContent = tableRef.current;
-  const newWindow = window.open("", "_blank");
-  newWindow.document.write(`
+  // Function to trigger print
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
     <html>
       <head>
         <title>Print Table</title>
@@ -114,10 +114,10 @@ const PurchaseOrder = () => {
       </body>
     </html>
   `);
-  newWindow.document.close();
-  newWindow.print();
-  newWindow.close();
-};
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
   return (
     <div className="purchase-order-container">
       <button className="purchaseOrders-add-btn" onClick={handleOpenModal}>

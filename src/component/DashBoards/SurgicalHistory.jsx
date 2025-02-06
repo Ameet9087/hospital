@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./SurgicalHistory.css";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingTextarea } from "../../FloatingInputs";
 
 const SurgicalHistory = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -74,7 +76,7 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
   const handleAddSurgicalHistory = async () => {
     const Surgical =
       patientId > 0
-        ? { ...formData, inPatientDTO: { inPatientId:patientId } }
+        ? { ...formData, inPatientDTO: { inPatientId: patientId } }
         : { ...formData, outPatientDTO: { outPatientId } };
     console.log(Surgical);
     try {
@@ -90,7 +92,7 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
       );
 
       if (response.ok) {
-        alert("Surgical History added successfully!");
+        toast.success("Surgical History added successfully!");
         setFormData({
           surgeryType: "",
           searchProblem: "",
@@ -99,11 +101,11 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
         });
         handleCloseModal();
       } else {
-        alert("Failed to add Surgical History");
+        toast.error("Failed to add Surgical History");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Error submitting form");
+      toast.error("Error submitting form");
     }
   };
 
@@ -122,7 +124,7 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
       );
 
       if (response.ok) {
-        alert("Surgical History added successfully!");
+        toast.success("Surgical History added successfully!");
         setFormData({
           surgeryType: "",
           searchProblem: "",
@@ -131,11 +133,11 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
         });
         handleCloseModal();
       } else {
-        alert("Failed to add Surgical History");
+        toast.error("Failed to add Surgical History");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Error submitting form");
+      toast.error("Error submitting form");
     }
   };
 
@@ -161,7 +163,7 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
                 className="surgical-history-add-button"
                 onClick={handleOpenModal}
               >
-                ➕ Add
+                Add
               </button>
             </div>
             <table className="patientList-table" ref={tableRef}>
@@ -203,7 +205,7 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
                     <td>{history.surgeryDate}</td>
                     <td>{history.note}</td>
                     <td>
-                      <button onClick={() => handleUpdate(history)}>
+                      <button className="surgical-history-add-button" onClick={() => handleUpdate(history)}>
                         Edit
                       </button>
                     </td>
@@ -225,8 +227,8 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
                   ❌
                 </button>
                 <div className="surgical-history-form-group">
-                  <label>Surgery Type*:</label>
-                  <input
+                  <FloatingInput
+                    label={"Surgery Type"}
                     type="text"
                     name="surgeryType"
                     placeholder="Surgery Type"
@@ -235,8 +237,8 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="surgical-history-form-group">
-                  <label>ICD-11 Description*:</label>
-                  <input
+                  <FloatingInput
+                    label={"ICD-11 Description"}
                     type="text"
                     name="searchProblem"
                     placeholder="ICD-11 Description"
@@ -245,8 +247,8 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="surgical-history-form-group">
-                  <label>Surgery Date*:</label>
-                  <input
+                  <FloatingInput
+                    label={"Surgery Date"}
                     type="date"
                     name="surgeryDate"
                     value={formData.surgeryDate}
@@ -254,12 +256,12 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="surgical-history-form-group">
-                  <label>Note:</label>
-                  <textarea
+                  <FloatingTextarea
+                    label={"Note"}
                     name="note"
                     value={formData.note}
                     onChange={handleInputChange}
-                  ></textarea>
+                  />
                 </div>
                 <button
                   className="surgical-history-add-button"
@@ -282,28 +284,31 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
                   ❌
                 </button>
                 <div className="surgical-history-form-group">
-                  <label>Surgery Type*:</label>
-                  <input
+                  <FloatingInput
+                    label={"Surgery Type"}
                     type="text"
                     name="surgeryType"
                     placeholder="Surgery Type"
                     value={updateSurgicalHistory.surgeryType}
                     onChange={handleUpdateInputChange}
+
                   />
                 </div>
                 <div className="surgical-history-form-group">
-                  <label>ICD-11 Description*:</label>
-                  <input
+                  <FloatingInput
+                    label={"ICD-11 Description"}
                     type="text"
                     name="searchProblem"
                     placeholder="ICD-11 Description"
                     value={updateSurgicalHistory.searchProblem}
                     onChange={handleUpdateInputChange}
+
                   />
+
                 </div>
                 <div className="surgical-history-form-group">
-                  <label>Surgery Date*:</label>
-                  <input
+                  <FloatingInput
+                    label={"Surgery Date"}
                     type="date"
                     name="surgeryDate"
                     value={updateSurgicalHistory.surgeryDate}
@@ -311,12 +316,12 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="surgical-history-form-group">
-                  <label>Note:</label>
-                  <textarea
+                  <FloatingTextarea
+                    label={"Note"}
                     name="note"
                     value={updateSurgicalHistory.note}
                     onChange={handleUpdateInputChange}
-                  ></textarea>
+                  />
                 </div>
                 <button
                   className="surgical-history-add-button"

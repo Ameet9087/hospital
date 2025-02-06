@@ -199,8 +199,9 @@ th {
   
 }
 .lab-signatories {
-  margin-bottom: 20px;
+width: 400px;
 }
+
 
 .lab-signatories p {
   color: black;

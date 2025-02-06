@@ -9,6 +9,8 @@ import SuperUserSignup from "./component/Logins/SuperUserSignup";
 import Cookies from "js-cookie";
 import { PopupProvider } from "./FidgetSpinner/PopupContext";
 import FidgetSpinnerNav from "./FidgetSpinner/FidgetSpinnerNav";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const navigate = useNavigate();
@@ -60,6 +62,18 @@ function App() {
         </div>
       </div>
       <FidgetSpinnerNav />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        toastClassName="toastify-text"
+      />
     </PopupProvider>
   );
 }

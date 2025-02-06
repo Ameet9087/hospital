@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./PatientRegistrationNew.css";
-import { IoSearch } from "react-icons/io5";
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import PopupTable from "../Nursing/NursingModule/Services/PopupTable";
-import Select from "react-select";
-
-
-
-
-
-
+import {
+  PopupTable,
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../FloatingInputs/index";
+import { toast } from "react-toastify";
+import { usePopup } from "../../FidgetSpinner/PopupContext";
 
 const qualificationOptions = [
   { value: "High School", label: "High School" },
@@ -23,7 +22,7 @@ const qualificationOptions = [
   { value: "B.Tech", label: "B.Tech" },
   { value: "M.Tech", label: "M.Tech" },
   { value: "CA", label: "Chartered Accountant (CA)" },
-  { value: "Other", label: "Other" }
+  { value: "Other", label: "Other" },
 ];
 
 const occupations = [
@@ -70,9 +69,8 @@ const contactRelations = [
   { value: "Other", label: "Other" },
 ];
 
-
-
 const PatientRegistrationNew = ({ onClose }) => {
+  const { showPopup } = usePopup();
   const location = useLocation();
   const patient = location.state?.patient;
   const erPatient = location.state?.receipt;
@@ -307,17 +305,20 @@ const PatientRegistrationNew = ({ onClose }) => {
         body: dataToSend,
       });
 
-
       if (response.ok) {
+        showPopup([
+          { url: "/appointment/doctorappointment", text: "Appointment" },
+          { url: "/adt/ipadmission", text: "Ip Admission" },
+        ]);
         const result = await response.json();
-        alert(
+        toast.success(
           patient?.patientRegistrationId
             ? `Patient updated successfully with ID: ${result.uhid}`
             : `Patient registered successfully with ID: ${result.uhid}`
         );
         setResult(result);
       } else {
-        console.error(
+        toast.error(
           "Error submitting form:",
           response.status,
           response.statusText
@@ -415,8 +416,6 @@ const PatientRegistrationNew = ({ onClose }) => {
     setSelectedDoctors(newDoc);
   };
 
-
-
   const handleQualificationChange = (selectedOption) => {
     setFormData({ ...formData, qualification: selectedOption.value });
   };
@@ -438,9 +437,8 @@ const PatientRegistrationNew = ({ onClose }) => {
         <div className="patient-registration-component-form-row">
           <div className="patient-registration-component-form-group-1row">
             <div className="patient-registration-component-form-group">
-              <label>ER NO:</label>
-
-              <input
+              <FloatingInput
+                label={"ER No"}
                 type="text"
                 name="erNumber"
                 value={formData.erNo}
@@ -448,8 +446,8 @@ const PatientRegistrationNew = ({ onClose }) => {
               />
             </div>
             <div className="patient-registration-component-form-group">
-              <label>MR NO:</label>
-              <input
+              <FloatingInput
+                label={"MR NO"}
                 type="text"
                 name="mrNo"
                 value={result?.uhid || patient?.uhid}
@@ -457,35 +455,23 @@ const PatientRegistrationNew = ({ onClose }) => {
               />
             </div>
             <div className="patient-registration-component-form-group">
-              <label>
-                Name Initial:
-                <span className="patient-registration-component-span">*</span>
-              </label>
-              <select
+              <FloatingSelect
+                label="Name Initial"
                 name="salutation"
-                className="patient-registration-component-form-group"
-                defaultValue=""
                 value={formData.salutation}
                 onChange={handleChange}
-              >
-                <option value="" disabled>
-                  Select Initial
-                </option>
-                <option value="Mr.">Mr.</option>
-                <option value="Ms.">Ms.</option>
-                <option value="Dr.">Dr.</option>
-                <option value="Prof.">Prof.</option>
-              </select>
+                options={[
+                  { value: "", label: "" },
+                  { value: "Mr.", label: "Mr." },
+                  { value: "Ms.", label: "Ms." },
+                  { value: "Dr.", label: "Dr." },
+                  { value: "Prof.", label: "Prof." },
+                ]}
+              />
             </div>
-          </div>
-
-          <div className="patient-registration-component-form-group-1row">
             <div className="patient-registration-component-form-group">
-              <label>
-                F Name:
-                <span className="patient-registration-component-span">*</span>
-              </label>
-              <input
+              <FloatingInput
+                label={"F Name"}
                 type="text"
                 name="firstName"
                 value={formData.firstName}
@@ -493,20 +479,11 @@ const PatientRegistrationNew = ({ onClose }) => {
               />
             </div>
             <div className="patient-registration-component-form-group">
-              <label>M Name:</label>
-              <input
+              <FloatingInput
+                label={"M Name"}
                 type="text"
                 name="middleName"
                 value={formData.middleName}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="patient-registration-component-form-group">
-              <label>L Name:</label>
-              <input
-                type="text"
-                name="lastName"
-                value={formData.lastName}
                 onChange={handleChange}
               />
             </div>
@@ -514,11 +491,17 @@ const PatientRegistrationNew = ({ onClose }) => {
 
           <div className="patient-registration-component-form-group-1row">
             <div className="patient-registration-component-form-group">
-              <label>
-                Birth Date:
-                <span className="patient-registration-component-span">*</span>
-              </label>
-              <input
+              <FloatingInput
+                label={"L Name"}
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="patient-registration-component-form-group">
+              <FloatingInput
+                label={"Birth Date"}
                 type="date"
                 name="dateOfBirth"
                 value={formData.dateOfBirth}
@@ -526,165 +509,150 @@ const PatientRegistrationNew = ({ onClose }) => {
               />
             </div>
             <div className="patient-registration-component-form-group">
-              <label>
-                Age:
-                <span className="patient-registration-component-span">*</span>
-              </label>
-              <input
+              <FloatingInput
+                label={"Age"}
                 type="text"
+                restrictions={{ number: true, max: 3 }}
                 name="age"
                 value={formData.age}
-                onChange={handleChange}
+                onChange={(e) => {
+                  let value = e.target.value.replace(/\D/g, ""); // Allow only numbers
+                  value = Math.min(110, value); // Ensure max value is 110
+                  handleChange({ target: { name: "age", value } });
+                }}
               />
             </div>
             <div className="patient-registration-component-form-group">
-              <label>
-                Age Unit:
-                <span className="patient-registration-component-span">*</span>
-              </label>
-              <select
+              <FloatingSelect
+                label="Age Unit"
                 name="ageUnit"
                 value={formData.ageUnit}
                 onChange={handleChange}
-              >
-                <option value="Years">Years</option>
-              </select>
+                options={[{ value: "Years", label: "Years" }]}
+              />
             </div>
-          </div>
-          <div className="patient-registration-component-form-group-1row">
             <div className="patient-registration-component-form-group">
-              <label>
-                Gender:
-                <span className="patient-registration-component-span">*</span>
-              </label>
-              <select
+              <FloatingSelect
+                label="Gender"
                 name="gender"
-                className="patient-registration-component-form-group"
-                defaultValue=""
                 value={formData.gender}
                 onChange={handleChange}
-              >
-                <option value="" disabled>
-                  Select Gender
-                </option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
+                options={[
+                  { value: "Male", label: "Male" },
+                  { value: "Female", label: "Female" },
+                  { value: "Other", label: "Other" },
+                ]}
+              />
             </div>
-
-            <div className="patient-registration-component-form-group">
-              <label>
-                Marital Status:
-                <span className="patient-registration-component-span">*</span>
-              </label>
-              <select
-                name="maritalStatus"
-                className="patient-registration-component-select"
-                defaultValue=""
-                value={formData.maritalStatus}
-                onChange={handleChange}
-              >
-                <option value="" disabled>
-                  Select Marital Status
-                </option>
-                <option value="Single">Single</option>
-                <option value="Married">Married</option>
-                <option value="Divorced">Divorced</option>
-              </select>
-            </div>
-            <div className="patient-registration-component-form-group"></div>
           </div>
 
           <div className="patient-registration-component-form-group-1row">
             <div className="patient-registration-component-form-group">
-              <label>
-                Relation:
-                <span className="patient-registration-component-span">*</span>
-              </label>
-              <select
-                name="relation"
-                className="patient-registration-component-form-group"
-                defaultValue=""
-                value={formData.relation}
+              <FloatingSelect
+                label="Marital Status"
+                name="maritalStatus"
+                value={formData.maritalStatus}
                 onChange={handleChange}
-              >
-                <option value="" disabled>
-                  Select Relation
-                </option>
-                <option value="Father">Father</option>
-                <option value="Mother">Mother</option>
-                <option value="Spouse">Spouse</option>
-                <option value="Sibling">Sibling</option>
-              </select>
+                options={[
+                  { value: "Single", label: "Single" },
+                  { value: "Married", label: "Married" },
+                  { value: "Divorced", label: "Divorced" },
+                ]}
+              />
             </div>
             <div className="patient-registration-component-form-group">
-              <label>
-                Relative Name:
-                <span className="patient-registration-component-span">*</span>
-              </label>
-              <input
+              <FloatingSelect
+                label="Relation"
+                name="relation"
+                value={formData.relation}
+                onChange={handleChange}
+                options={[
+                  { value: "Father", label: "Father" },
+                  { value: "Mother", label: "Mother" },
+                  { value: "Spouse", label: "Spouse" },
+                  { value: "Sibling", label: "Sibling" },
+                ]}
+              />
+            </div>
+            <div className="patient-registration-component-form-group">
+              <FloatingInput
+                label="Relation Name"
                 type="text"
                 name="relationName"
                 value={formData.relationName}
                 onChange={handleChange}
+                restrictions={{ varchar: true }}
               />
             </div>
             <div className="patient-registration-component-form-group">
-              <label>Religion:</label>
-              <select
+              <FloatingSelect
+                label="Religion"
                 name="religion"
-                className="patient-registration-component-form-group"
-                defaultValue=""
                 value={formData.religion}
                 onChange={handleChange}
-              >
-                <option value="" disabled>
-                  Select Religion
-                </option>
-                <option value="Christianity">Christianity</option>
-                <option value="Islam">Islam</option>
-                <option value="Hinduism">Hinduism</option>
-                <option value="Buddhism">Buddhism</option>
-                <option value="Judaism">Judaism</option>
-                <option value="Other">Other</option>
-              </select>
+                options={[
+                  { value: "Christianity", label: "Christianity" },
+                  { value: "Islam", label: "Islam" },
+                  { value: "Hinduism", label: "Hinduism" },
+                  { value: "Buddhism", label: "Buddhism" },
+                  { value: "Judaism", label: "Judaism" },
+                  { value: "Other", label: "Other" },
+                ]}
+              />
+            </div>
+            <div className="patient-registration-component-form-group">
+              <FloatingSelect
+                label="Caste"
+                value={cast.find((c) => c.value === formData.cast)}
+                onChange={handleCasteChange}
+                options={cast}
+              />
             </div>
           </div>
+
           <div className="patient-registration-component-form-group-1row">
             <div className="patient-registration-component-form-group">
-              <label>Caste:</label>
-              <Select
-                options={cast}
-                value={cast.find(c => c.value === formData.cast)}
-                onChange={handleCasteChange}
-                isSearchable
-                placeholder="Select caste..."
-              />
-
-            </div>
-            <div className="patient-registration-component-form-group">
-              <label>Occupation:</label>
-              <Select
+              <FloatingSelect
+                label={"Occupation"}
                 options={occupations}
-                value={occupations.find(o => o.value === formData.occupation)}
+                value={occupations.find((o) => o.value === formData.occupation)}
                 onChange={handleOccupationChange}
-                isSearchable
-                placeholder="Select "
               />
-
             </div>
             <div className="patient-registration-component-form-group">
-              <label>Qualification:</label>
-              <Select
-                className="selectQualification"
+              <FloatingSelect
+                label={"Qualification"}
                 options={qualificationOptions}
-                value={qualificationOptions.find(q => q.value === formData.qualification)}
+                value={qualificationOptions.find(
+                  (q) => q.value === formData.qualification
+                )}
                 onChange={handleQualificationChange}
-                isSearchable
-                placeholder="Select"
               />
-
+            </div>
+            <div className="patient-registration-component-form-group">
+              <FloatingInput
+                label={"Mother Name"}
+                type="text"
+                name="motherName"
+                value={formData.motherName}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="patient-registration-component-form-group">
+              <FloatingInput
+                label={"Address"}
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="patient-registration-component-form-group">
+              <FloatingInput
+                label={"Area/Village"}
+                name="areaVillage"
+                value={formData.areaVillage}
+                onChange={handleChange}
+              />
             </div>
           </div>
         </div>
@@ -693,200 +661,121 @@ const PatientRegistrationNew = ({ onClose }) => {
       <div className="patient-registration-component-form-row">
         <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
-            <label>Mother Name:</label>
-            <input
-              type="text"
-              name="motherName"
-              value={formData.motherName}
+            <FloatingInput
+              label={"District"}
+              type="search"
+              name="cityDistrict"
+              value={formData.cityDistrict}
               onChange={handleChange}
-            ></input>
+              onIconClick={() => setActivePopup("cityDistrict")}
+            />
           </div>
           <div className="patient-registration-component-form-group">
-            <label>
-              Address:
-              <span className="patient-registration-component-span">*</span>
-            </label>
-            <input
-              type="text"
-              name="address"
-              value={formData.address}
+            <FloatingInput
+              label={"State"}
+              type="search"
+              name="state"
+              value={formData.state}
               onChange={handleChange}
-            ></input>
+              onIconClick={() => setActivePopup("state")}
+            />
+          </div>
+
+          <div className="patient-registration-component-form-group">
+            <FloatingInput
+              label={"Country"}
+              type="search"
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              onIconClick={() => setActivePopup("country")}
+            />
           </div>
           <div className="patient-registration-component-form-group">
-            <label>
-              Area
-              <span className="patient-registration-component-span">*</span>
-            </label>
-            <input
+            <FloatingInput
+              label={"Pincode"}
               type="text"
-              name="areaVillage"
-              value={formData.areaVillage}
+              name="pinCode"
+              value={formData.pinCode}
               onChange={handleChange}
             />
           </div>
-        </div>
-
-        <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
-            <label>
-              District:
-              <span className="patient-registration-component-span">*</span>
-            </label>
-            <div className="patient-registration-sub-input">
-              <input
-                type="text"
-                name="cityDistrict"
-                value={formData.cityDistrict}
-                onChange={handleChange}
-              />
-              <IoSearch
-                style={{ fontSize: "18px", cursor: "pointer" }}
-                onClick={() => setActivePopup("cityDistrict")}
-              />
-            </div>
-          </div>
-          <div className="patient-registration-component-form-group">
-            <label>
-              State:
-              <span className="patient-registration-component-span">*</span>
-            </label>
-            <div className="patient-registration-sub-input">
-              <input
-                type="text"
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-              />
-              <IoSearch
-                style={{ fontSize: "18px", cursor: "pointer" }}
-                onClick={() => setActivePopup("state")}
-              />
-            </div>
-          </div>
-
-          <div className="patient-registration-component-form-group">
-            <label>
-              Country:
-              <span className="patient-registration-component-span">*</span>
-            </label>
-            <div className="patient-registration-sub-input">
-              <input
-                type="text"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-              />
-              <IoSearch
-                style={{ fontSize: "18px", cursor: "pointer" }}
-                onClick={() => setActivePopup("country")}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="patient-registration-component-form-row">
-        <div className="patient-registration-component-form-group-1row">
-          <div className="patient-registration-component-form-group">
-            <label>
-              Pin Code:
-              <span className="patient-registration-component-span">*</span>
-            </label>
-            <div className="patient-registration-sub-input">
-              <input
-                type="text"
-                name="pinCode"
-                value={formData.pinCode}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="patient-registration-component-form-group">
-            <label>
-              Mobile No:
-              <span className="patient-registration-component-span">*</span>
-            </label>
-            <input
-              type="tel"
+            <FloatingInput
+              label={"Mobile No"}
+              type="text"
               name="mobileNumber"
               value={formData.mobileNumber}
               onChange={handleChange}
-            />
-          </div>
-          <div className="patient-registration-component-form-group">
-            <label>Tel No(Off):</label>
-            <input
-              type="tel"
-              name="telNumberOff"
-              value={formData.telNumberOff}
-              onChange={handleChange}
+              restrictions={{ number: true, max: 10 }}
+              required
             />
           </div>
         </div>
+      </div>
 
+      <div className="patient-registration-component-form-row">
         <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
-            <label>
-              Email Id:
-              <span className="patient-registration-component-span">*</span>
-            </label>
-            <input
+            <FloatingInput
+              label={"Tel No(Off)"}
+              type="text"
+              name="telNumberOff"
+              value={formData.telNumberOff}
+              onChange={handleChange}
+              restrictions={{ number: true, max: 10 }}
+              required
+            />
+          </div>
+          <div className="patient-registration-component-form-group">
+            <FloatingInput
+              label={"Email Id"}
               type="email"
               name="emailId"
               value={formData.emailId}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="patient-registration-component-form-group">
-            <label>Height:</label>
-            <input
+            <FloatingInput
+              label={"Height(in KG)"}
               type="text"
               name="height"
-              placeholder="Feet"
               value={formData.height}
               onChange={handleChange}
             />
           </div>
           <div className="patient-registration-component-form-group">
-            <label>Weight:</label>
-            <input
+            <FloatingInput
+              label={"Weight(in KG)"}
               type="text"
               name="weight"
-              placeholder="Kg"
               value={formData.weight}
               onChange={handleChange}
+            />
+          </div>
+          <div className="patient-registration-component-form-group">
+            <FloatingSelect
+              label="Source Of Registration"
+              name="sourceOfRegistration"
+              value={formData.sourceOfRegistration}
+              onChange={handleChange}
+              options={[
+                { value: "Walk-in", label: "Walk-in" },
+                { value: "Online", label: "Online" },
+                { value: "Referral", label: "Referral" },
+                { value: "Campaign", label: "Campaign" },
+                { value: "Other", label: "Other" },
+              ]}
             />
           </div>
         </div>
 
         <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
-            <label>
-              Source Of Registration:
-              <span className="patient-registration-component-span">*</span>
-            </label>
-            <select
-              name="sourceOfRegistration"
-              className="patient-registration-component-form-group"
-              defaultValue=""
-              value={formData.sourceOfRegistration}
-              onChange={handleChange}
-            >
-              <option value="" disabled>
-                Select Source
-              </option>
-              <option value="Walk-in">Walk-in</option>
-              <option value="Online">Online</option>
-              <option value="Referral">Referral</option>
-              <option value="Campaign">Campaign</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div className="patient-registration-component-form-group">
-            <label>Remarks:</label>
-            <input
+            <FloatingInput
+              label={"Remarks"}
               type="text"
               name="remarks"
               value={formData.remarks}
@@ -894,96 +783,73 @@ const PatientRegistrationNew = ({ onClose }) => {
             />
           </div>
           <div className="patient-registration-component-form-group">
-            <label>Previous Hospital:</label>
-            <input
+            <FloatingInput
+              label={"Previous Hospital"}
               type="text"
               name="previousHospital"
               value={formData.previousHospital}
               onChange={handleChange}
             />
           </div>
-        </div>
-
-        <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
-            <label>Referred Contact No:</label>
-            <input
+            <FloatingInput
+              label={"Referred Contact No"}
               type="text"
               name="referredContactNumber"
               value={formData.referredContactNumber}
               onChange={handleChange}
-            ></input>
+            />
           </div>
           <div className="patient-registration-component-form-group">
-            <label>Nationality:</label>
-            <div className="patient-registration-sub-input">
-              <input
-                type="text"
-                name="nationality"
-                value={formData.nationality}
-                onChange={handleChange}
-              ></input>
-              <IoSearch
-                style={{
-                  fontSize: "18px",
-                  display: "flex",
-                  alignItems: "center",
-                  cursor: "pointer",
-                }}
-                onClick={() => setActivePopup("nationality")}
-              />
-            </div>
+            <FloatingInput
+              label={"Nationality"}
+              type="search"
+              name="nationality"
+              value={formData.nationality}
+              onChange={handleChange}
+              onIconClick={() => setActivePopup("nationality")}
+            />
           </div>
-
           <div className="patient-registration-component-form-group">
-            <label>Income Range:</label>
-            <select
+            <FloatingSelect
+              label="Income Range"
               name="incomeRange"
-              className="patient-registration-component-form-group"
-              defaultValue=""
               value={formData.incomeRange}
               onChange={handleChange}
-            >
-              <option value="" disabled>
-                Select Income Range
-              </option>
-              <option value="Below 10,000">Below 10,000</option>
-              <option value="10,000 - 50,000">10,000 - 50,000</option>
-              <option value="50,001 - 1,00,000">50,001 - 1,00,000</option>
-              <option value="Above 1,00,000">Above 1,00,000</option>
-            </select>
+              options={[
+                { value: "Below 10,000", label: "Below 10,000" },
+                { value: "10,000 - 50,000", label: "10,000 - 50,000" },
+                { value: "50,001 - 1,00,000", label: "50,001 - 1,00,000" },
+                { value: "Above 1,00,000", label: "Above 1,00,000" },
+              ]}
+            />
           </div>
         </div>
+
         <h4 className="patient-registration-h4">
           Local Contact Person In Emergency
         </h4>
         <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
-            <label>Contact Name Initial:</label>
-            <select
+            <FloatingSelect
+              label="Contact Name Initial"
               name="contactNameInitial"
-              className="patient-registration-component-form-group"
-              defaultValue=""
               value={formData.contactNameInitial}
               onChange={handleChange}
-            >
-              <option value="" disabled>
-                Select Initial
-              </option>
-              <option value="Mrs">Mrs</option>
-              <option value="Mr">Mr</option>
-              <option value="Ms">Ms</option>
-              <option value="Baby of">Baby of</option>
-              <option value="Miss">Miss</option>
-              <option value="Master">Master</option>
-              <option value="Dr.">Dr.</option>
-              <option value="Baby">Baby</option>
-              <option value="Empty">Empty</option>
-            </select>
+              options={[
+                { value: "Mrs", label: "Mrs" },
+                { value: "Mr", label: "Mr" },
+                { value: "Ms", label: "Ms" },
+                { value: "Miss", label: "Miss" },
+                { value: "Master", label: "Master" },
+                { value: "Dr.", label: "Dr." },
+                { value: "Baby", label: "Baby" },
+              ]}
+            />
           </div>
           <div className="patient-registration-component-form-group">
-            <label>Contact Name:</label>
-            <input
+            <FloatingInput
+              label={"Contact Name"}
               type="text"
               name="contactName"
               value={formData.contactName}
@@ -991,20 +857,18 @@ const PatientRegistrationNew = ({ onClose }) => {
             />
           </div>
           <div className="patient-registration-component-form-group">
-            <label>Contact Relation:</label>
-            <Select
-              options={contactRelations}
-              value={contactRelations.find(c => c.value === formData.contactRelation)}
+            <FloatingSelect
+              label="Contact Relation"
+              value={contactRelations.find(
+                (c) => c.value === formData.contactRelation
+              )}
               onChange={handleContactRelationChange}
-              isSearchable
-              placeholder="Select contact relation..."
+              options={contactRelations}
             />
           </div>
-        </div>
-        <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
-            <label>Tel No(Res):</label>
-            <input
+            <FloatingInput
+              label={"Tel No(Res)"}
               type="text"
               name="telNumberRes1"
               value={formData.telNumberRes1}
@@ -1012,29 +876,35 @@ const PatientRegistrationNew = ({ onClose }) => {
             />
           </div>
           <div className="patient-registration-component-form-group">
-            <label>Tel No(Off):</label>
-            <input
+            <FloatingInput
+              label={"Tel No(Off)"}
               type="text"
               name="telNumberOff1"
               value={formData.telNumberOff1}
               onChange={handleChange}
             />
           </div>
+        </div>
+        <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
-            <label>Contact Mobile No:</label>
-            <input
+            <FloatingInput
+              label={"Contact Mobile No"}
               type="text"
               name="contactNumber"
               value={formData.mobileNumber}
               onChange={handleChange}
             />
           </div>
+          <div className="patient-registration-component-form-group"></div>
+          <div className="patient-registration-component-form-group"></div>
+          <div className="patient-registration-component-form-group"></div>
+          <div className="patient-registration-component-form-group"></div>
         </div>
         <h4 className="patient-registration-h4">Payment Details</h4>
         <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
-            <label>GSTIN:</label>
-            <input
+            <FloatingInput
+              label={"GSTIN"}
               type="text"
               name="gstin"
               value={formData.gstin}
@@ -1042,87 +912,77 @@ const PatientRegistrationNew = ({ onClose }) => {
             />
           </div>
           <div className="patient-registration-component-form-group">
-            <label>PAN:</label>
-            <input
+            <FloatingInput
+              label={"PAN"}
               type="text"
               name="pan"
               value={formData.pan}
               onChange={handleChange}
+              restrictions={{ varchar: true, max: 10 }}
             />
           </div>
           <div className="patient-registration-component-form-group">
-            <label>
-              Adhar Card Number:
-              <span className="patient-registration-component-span">*</span>
-            </label>
-            <input
+            <FloatingInput
+              label={"Aadhar Card Number"}
               type="text"
               name="adharCardId"
               value={formData.adharCardId}
               onChange={handleChange}
+              restrictions={{ number: true, max: 12 }}
+            />
+          </div>
+          <div className="patient-registration-component-form-group">
+            <FloatingSelect
+              label={"Sponsor Type"}
+              name="sponserType"
+              value={formData.sponserType}
+              onChange={handleChange}
+              options={[
+                { value: "Company", label: "Company" },
+                { value: "Individual", label: "Individual" },
+                { value: "Government", label: "Government" },
+                { value: "NGO", label: "NGO" },
+                { value: "Other", label: "Other" },
+              ]}
+            />
+          </div>
+          <div className="patient-registration-component-form-group">
+            <FloatingSelect
+              label={"Eligibility"}
+              name="eligibility"
+              value={formData.eligibility}
+              onChange={handleChange}
+              options={[
+                { value: "Eligible", label: "Eligible" },
+                { value: "Not Eligible", label: "Not Eligible" },
+                { value: "Pending", label: "Pending" },
+                { value: "Exempted", label: "Exempted" },
+              ]}
             />
           </div>
         </div>
 
         <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
-            <label>
-              Sponsor Type:
-              <span className="patient-registration-component-span">*</span>
-            </label>
-            <select
-              name="sponserType"
-              className="patient-registration-component-form-group"
-              value={formData.sponserType}
-              onChange={handleChange}
-            >
-              <option value="" disabled>
-                Select Sponsor Type
-              </option>
-              <option value="Company">Company</option>
-              <option value="Individual">Individual</option>
-              <option value="Government">Government</option>
-              <option value="NGO">NGO</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div className="patient-registration-component-form-group">
-            <label>Eligibility:</label>
-            <select
-              name="eligibility"
-              className="patient-registration-component-form-group"
-              value={formData.eligibility}
-              onChange={handleChange}
-            >
-              <option value="" disabled>
-                Select Eligibility
-              </option>
-              <option value="Eligible">Eligible</option>
-              <option value="Not Eligible">Not Eligible</option>
-              <option value="Pending">Pending</option>
-              <option value="Exempted">Exempted</option>
-            </select>
-          </div>
-          <div className="patient-registration-component-form-group">
-            <label>Organisation Name:</label>
-            <select
+            <FloatingSelect
+              label="Organisation Name"
               name="organisationMaster"
-              className="patient-registration-component-form-group"
               value={organisationId}
               onChange={(e) => setOrganisationId(e.target.value)}
-            >
-              <option value="">Select Organisation Name</option>
-              {organisation.length &&
-                organisation.map((item, index) => (
-                  <option value={item.masterId}>{item.name}</option>
-                ))}
-            </select>
+              options={[
+                { value: "", label: "Select Organisation" },
+                ...(Array.isArray(organisation)
+                  ? organisation.map((org) => ({
+                      value: org.masterId,
+                      label: org.name,
+                    }))
+                  : []),
+              ]}
+            />
           </div>
-        </div>
-        <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
-            <label>Policy Number:</label>
-            <input
+            <FloatingInput
+              label={"Policy Number"}
               type="text"
               name="policyNumber"
               value={formData.policyNumber}
@@ -1130,8 +990,8 @@ const PatientRegistrationNew = ({ onClose }) => {
             />
           </div>
           <div className="patient-registration-component-form-group">
-            <label>Policy Start Date:</label>
-            <input
+            <FloatingInput
+              label={"Policy Start Date"}
               type="date"
               name="policyStartDate"
               value={formData.policyStartDate}
@@ -1139,28 +999,23 @@ const PatientRegistrationNew = ({ onClose }) => {
             />
           </div>
           <div className="patient-registration-component-form-group">
-            <label>Policy End Date:</label>
-            <input
+            <FloatingInput
+              label={"Policy End Date"}
               type="date"
               name="policyEndDate"
               value={formData.policyEndDate}
               onChange={handleChange}
             />
           </div>
-        </div>
-        <div className="patient-registration-component-form-group-1row">
           <div className="patient-registration-component-form-group">
-            <label htmlFor="fileUpload">File Attachment</label>
-            <input
+            <FloatingInput
               type="file"
-              id="fileUpload"
+              name="policyEndDate"
               onChange={handleFileChange}
-              className="patient-registration-component-file-input"
             />
           </div>
-          <div className="patient-registration-component-form-group"></div>
-          <div className="patient-registration-component-form-group"></div>
         </div>
+
         <h4 className="patient-registration-h4">Referred Doctors</h4>
         <table>
           <thead>
@@ -1190,42 +1045,33 @@ const PatientRegistrationNew = ({ onClose }) => {
                   </td>
                   <td>{index + 1}</td>
                   <td>
-                    <input
-                      type="text"
+                    <FloatingInput
+                      label={"Doctor Name"}
+                      type="search"
                       value={doctor.doctorName}
                       name="doctorName"
-                      placeholder="Doctor Name"
-                      className="patient-registration-component"
-                    />
-                    <IoSearch
-                      style={{
-                        fontSize: "18px",
-                        alignItems: "center",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => setActivePopup("doctor")}
+                      onIconClick={() => setActivePopup("doctor")}
                     />
                   </td>
                   <td>
-                    <input
+                    <FloatingInput
+                      label={"Residence Address"}
                       type="text"
                       value={doctor.residenceAddress}
-                      placeholder="Address"
-                      className="patient-registration-component"
                     />
                   </td>
                   <td>
-                    <input
+                    <FloatingInput
+                      label={"Mobile No"}
                       type="text"
                       value={doctor.mobileNumber}
-                      className="patient-registration-component"
                     />
                   </td>
                   <td>
-                    <input
+                    <FloatingInput
+                      label={"Email Id"}
                       type="text"
                       value={doctor.emailId}
-                      className="patient-registration-component"
                     />
                   </td>
                 </tr>

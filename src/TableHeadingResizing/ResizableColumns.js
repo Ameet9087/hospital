@@ -1,4 +1,3 @@
-// Akash Pawar Table Resizing Logic 14/24
 export const startResizing = (tableRef, setColumnWidths) => (index) => (e) => {
   e.preventDefault();
 

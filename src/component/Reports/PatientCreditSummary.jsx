@@ -3,8 +3,7 @@ import { Button } from 'react-bootstrap';
 
 import './UserCollectionReport.css';
 
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 const PatientCreditSummary = () => {
   const [showReport, setShowReport] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);

@@ -3,11 +3,13 @@ import "./OnlineDoctorAppointmentPopUp.css";
 
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 import OnlineAddCancel from "./OnlineAddCancel";
 import AddCancel from "../AddCancel";
 import AppointmentReschedule from "../AppointmentReschedule";
 import AppoitmentPopupTable from "../AppoitmentPopupTable";
+import { FloatingInput, FloatingSelect, FloatingTextarea } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 export default function DoctorAppointmentPopUp({
   date,
@@ -55,7 +57,6 @@ export default function DoctorAppointmentPopUp({
     },
   });
 
-  console.log(formData);
   
   const [errors, setErrors] = useState({});
   const [outPatient, setOutPatient] = useState();
@@ -157,15 +158,15 @@ export default function DoctorAppointmentPopUp({
       });
       const result = await response.json();
       if (response.ok) {
-        alert(`Appointment saved successfully ${result?.patient?.uhid}`);
+        toast.success(`Appointment saved successfully ${result?.patient?.uhid}`);
         handleSave(result);
         closeModal();
       } else {
-        alert(result.message || "Failed to save the appointment.");
+        toast.error(result.message || "Failed to save the appointment.");
       }
     } catch (error) {
       console.error("Error saving appointment:", error);
-      alert("Error saving the appointment.");
+      toast.error("Error saving the appointment.");
     }
   };
   const fetchDataByPinCode = async () => {
@@ -194,14 +195,14 @@ export default function DoctorAppointmentPopUp({
         });
         const result = await response.json();
         if (response.ok) {
-          alert("Appointment updated successfully!");
+          toast.success("Appointment updated successfully!");
           handleUpdate(result);
         } else {
-          alert(result.message || "Failed to update the appointment.");
+          toast.error(result.message || "Failed to update the appointment.");
         }
       } catch (error) {
         console.error("Error updating appointment:", error);
-        alert("Error updating the appointment.");
+        toast.error("Error updating the appointment.");
       }
     }
   };
@@ -220,15 +221,13 @@ export default function DoctorAppointmentPopUp({
         const patientData = await response.json();
         console.log("Hello World ", patientData);
         setOutPatientId(patientData[0]?.outPatientId);
-        
-        console.log(patientData);
       } else {
         const errorResult = await response.json();
-        alert(errorResult.message || "Unable to fetch patient details.");
+        toast.error(errorResult.message || "Unable to fetch patient details.");
       }
     } catch (error) {
       console.error("Error fetching patient details:", error);
-      alert("Error fetching patient details.");
+      toast.error("Error fetching patient details.");
     }
   };
 
@@ -237,7 +236,7 @@ export default function DoctorAppointmentPopUp({
       const response = await axios.get(`${API_BASE_URL}/patient-register/all`);
       setOutPatient(response.data);
     } catch (error) {
-      console.error("Error fetching patient details:", error);
+      toast.error("Error fetching patient details:", error);
     }
   };
 
@@ -317,50 +316,45 @@ export default function DoctorAppointmentPopUp({
           Schedule Appointment for {selectedTimeSlot}
         </h2>
         <form className="operationschedule-modal-form">
-          {/* Row 1 */}
           <div className="operationschedule-form-row">
             <div className="operationschedule-form-col">
-              <label>Type of Appointment</label>
-              <select
+              <FloatingSelect
+                label={"Type of Appointment"}
                 name="typeOfAppointment"
                 value={formData.typeOfAppointment}
                 onChange={handleInputChange}
-              >
-                <option value="">Select visit</option>
-                <option value="newPatient">New Patient</option>
-                <option value="oldPatient">Old Patient</option>
-              </select>
+                options={[
+                  { value: "", label: "" },
+                  { value: "newPatient", label: "New Patient" },
+                  { value: "oldPatient", label: "Old Patient" },
+                ]}
+              />
             </div>
             {formData.typeOfAppointment === "oldPatient" && (
               <div className="operationschedule-form-col">
                 <div>
-                  <label>MR No</label>
-                  <div className="operationschedule-form-col-sub-div">
-                  <input
-                    type="text"
-                    name="mrNo"
+                  <FloatingInput
+                    label={"Mr No"}
+                    type="search"
                     value={selectedOutPatient?.uhid}
+                    onIconClick={() => setActivePopup("uhid")}
                   />
-                  <i
-                    onClick={() => setActivePopup("uhid")}
-                    className="fa-solid fa-magnifying-glass"
-                  ></i>
-                  </div>
                 </div>
                 {errors.mrNo && (
                   <span className="error-text">{errors.mrNo}</span>
                 )}
               </div>
-          )}
+            )}
           </div>
 
           <div className="operationschedule-form-row">
             <div className="operationschedule-form-col">
-              <label>Mobile No</label>
-              <input
+              <FloatingInput
+                label={"Mobile No"}
                 type="text"
                 name="contactNumber"
-                value={formData.contactNumber || ""}
+                value={formData.contactNumber}
+                restrictions={{ number: true, max: 10 }}
                 onChange={handleInputChange}
               />
             </div>
@@ -374,10 +368,11 @@ export default function DoctorAppointmentPopUp({
               />
             </div> */}
             <div className="operationschedule-form-col">
-              <label>Aadhar Card Number:</label>
-              <input
+              <FloatingInput
+                label={"Aadhar Card Number"}
                 type="text"
                 name="adharCardId"
+                restrictions={{ number: true, max: 14 }}
                 value={formData.adharCardId || ""}
                 onChange={handleInputChange}
               />
@@ -387,24 +382,27 @@ export default function DoctorAppointmentPopUp({
           {/* Row 4 */}
           <div className="operationschedule-form-row">
             <div className="operationschedule-form-col">
-              <label>Initial</label>
-              <select name="initial"
-                value={formData.initial || ""}
-                onChange={handleInputChange}>
-                  <option value="Mrs">Mrs</option>
-                  <option value="Mr">Mr</option>
-                  <option value="Ms">Ms</option>
-                  <option value="Baby of">Baby of</option>
-                  <option value="Miss">Miss</option>
-                  <option value="Master">Master</option>
-                  <option value="Dr.">Dr.</option>
-                  <option value="Baby">Baby</option>
-                  <option value="Empty">Empty</option>
-              </select>
+              <FloatingSelect
+                label={"Initial"}
+                name="salutation"
+                value={formData.salutation || ""}
+                onChange={handleInputChange}
+                options={[
+                  { value: "", label: "" },
+                  { value: "Mrs", label: "Mrs" },
+                  { value: "Mr", label: "Mr" },
+                  { value: "Ms", label: "Ms" },
+                  { value: "Baby of", label: "Baby of" },
+                  { value: "Miss", label: "Miss" },
+                  { value: "Master", label: "Master" },
+                  { value: "Dr.", label: "Dr." },
+                  { value: "Baby", label: "Baby" },
+                ]}
+              />
             </div>
             <div className="operationschedule-form-col">
-              <label>First Name</label>
-              <input
+              <FloatingInput
+                label={"First Name"}
                 type="text"
                 name="firstName"
                 value={formData.firstName || ""}
@@ -414,8 +412,8 @@ export default function DoctorAppointmentPopUp({
           </div>
           <div className="operationschedule-form-row">
             <div className="operationschedule-form-col">
-              <label>Middle Name</label>
-              <input
+              <FloatingInput
+                label={"Middle Name"}
                 type="text"
                 name="middleName"
                 value={formData.middleName || ""}
@@ -423,8 +421,8 @@ export default function DoctorAppointmentPopUp({
               />
             </div>
             <div className="operationschedule-form-col">
-              <label>Last Name</label>
-              <input
+              <FloatingInput
+                label={"Last Name"}
                 type="text"
                 name="lastName"
                 value={formData.lastName || ""}
@@ -436,8 +434,8 @@ export default function DoctorAppointmentPopUp({
           {/* Row 5 */}
           <div className="operationschedule-form-row">
             <div className="operationschedule-form-col">
-              <label>DOB</label>
-              <input
+              <FloatingInput
+                label={"DOB"}
                 type="date"
                 name="birthOfDate"
                 value={formData.birthOfDate || ""}
@@ -446,8 +444,8 @@ export default function DoctorAppointmentPopUp({
               {errors.dob && <span className="error-text">{errors.dob}</span>}
             </div>
             <div className="operationschedule-form-col">
-              <label>Age</label>
-              <input
+              <FloatingInput
+                label={"Age"}
                 type="number"
                 name="age"
                 value={formData.age || ""}
@@ -459,101 +457,118 @@ export default function DoctorAppointmentPopUp({
           {/* Row 6 */}
           <div className="operationschedule-form-row">
             <div className="operationschedule-form-col">
-              <label>Gender</label>
-              <select
+              <FloatingSelect
+                label={"Gender"}
                 name="gender"
                 value={formData.gender || ""}
                 onChange={handleInputChange}
-              >
-                <option value="">Select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
+                options={[
+                  { value: "", label: "" },
+                  { value: "Male", label: "Male" },
+                  { value: "Female", label: "Female" },
+                  { value: "Other", label: "Other" },
+                ]}
+              />
             </div>
             <div className="operationschedule-form-col">
-              <label>Email</label>
-              <input
+              <FloatingInput
+                label={"Email"}
                 type="email"
                 name="emailId"
                 value={formData.emailId || ""}
                 onChange={handleInputChange}
               />
             </div>
-            
           </div>
 
           {/* Row 7 */}
           <div className="operationschedule-form-row">
             <div className="operationschedule-form-col">
-              <label>Address</label>
-              <textarea
+              <FloatingTextarea
+                label={"Address"}
+                type="text"
                 name="address"
                 value={formData.address || ""}
                 onChange={handleInputChange}
               />
             </div>
             <div className="operationschedule-form-col">
-              <label>Remarks</label>
-              <textarea
+              <FloatingTextarea
+                label={"Remarks"}
+                type="text"
                 name="remarks"
                 value={formData.remarks || ""}
+                restrictions={{ varchar: true }}
                 onChange={handleInputChange}
               />
             </div>
           </div>
 
           <div className="operationschedule-form-row">
-<div className="operationschedule-form-col">
-              <label>Relation</label>
-              <input
-                type="text"
+            <div className="operationschedule-form-col">
+              <FloatingSelect
+                label={"Relation"}
                 name="relation"
-                value={formData.relation || ""}
+                value={formData.relation}
                 onChange={handleInputChange}
+                options={[
+                  { value: "", label: "-- Select Relation --" },
+                  { value: "Father", label: "Father" },
+                  { value: "Mother", label: "Mother" },
+                  { value: "Son", label: "Son" },
+                  { value: "Daughter", label: "Daughter" },
+                  { value: "Guardian", label: "Guardian" },
+                  { value: "Sibling", label: "Sibling" },
+                  { value: "Spouse", label: "Spouse" },
+                  { value: "Grandparent", label: "Grandparent" },
+                  { value: "Grandchild", label: "Grandchild" },
+                  { value: "Uncle", label: "Uncle" },
+                  { value: "Aunt", label: "Aunt" },
+                  { value: "Nephew", label: "Nephew" },
+                  { value: "Niece", label: "Niece" },
+                  { value: "Cousin", label: "Cousin" },
+                  { value: "Friend", label: "Friend" },
+                  { value: "Other", label: "Other" },
+                ]}
               />
             </div>
             <div className="operationschedule-form-col">
-              <label>Relative Name</label>
-              <input
+              <FloatingInput
+                label={"Relative Name"}
                 type="text"
                 name="relativeName"
                 value={formData.relativeName || ""}
                 onChange={handleInputChange}
               />
             </div>
-</div>
-
+          </div>
 
           {/* Row 8 */}
           <div className="operationschedule-form-row">
             <div className="operationschedule-form-col">
-              <label>Pin Code</label>
-              <input
-                className="checkIn__input"
+              <FloatingInput
+                label={"Pin Code"}
                 type="text"
                 placeholder="PinCode"
                 name="pinCode"
                 value={formData.pinCode}
                 onChange={handleInputChange}
-                required
               />
             </div>
             <div className="operationschedule-form-col">
-              <label>City</label>
-              <input
+              <FloatingInput
+                label={"City"}
                 type="text"
-                name="city"
-                value={formData.city || ""}
+                name="cityDistrict"
+                value={formData.cityDistrict || ""}
                 onChange={handleInputChange}
               />
             </div>
-            
           </div>
           <div className="operationschedule-form-row">
-          <div className="operationschedule-form-col">
-              <label>State</label>
-              <input
+            <div className="operationschedule-form-col">
+              <FloatingInput
+                label={"State"}
                 type="text"
                 name="state"
                 value={formData.state || ""}
@@ -561,44 +576,44 @@ export default function DoctorAppointmentPopUp({
               />
             </div>
             <div className="operationschedule-form-col">
-              <label>Country</label>
-              <input
+              <FloatingInput
+                label={"Country"}
                 type="text"
                 name="country"
                 value={formData.country || ""}
                 onChange={handleInputChange}
               />
             </div>
-
           </div>
           <div className="operationschedule-form-row">
-            
             <div className="operationschedule-form-col">
-              <label>Appointment Source</label>
-              <select
+              <FloatingSelect
+                label="Appointment Source"
                 name="appointmentSourceType"
                 value={formData.appointmentSourceType}
                 onChange={handleInputChange}
-              >
-                <option value="">Select option</option>
-                <option value="web">Web</option>
-                <option value="app">App</option>
-                <option value="call">Call</option>
-                <option value="visit">Visit</option>
-                <option value="others">others</option>
-              </select>
+                options={[
+                  { value: "", label: "Select option" },
+                  { value: "web", label: "Web" },
+                  { value: "app", label: "App" },
+                  { value: "call", label: "Call" },
+                  { value: "visit", label: "Visit" },
+                  { value: "others", label: "Others" },
+                ]}
+              />
             </div>
             <div className="operationschedule-form-col">
-              <label>Consultation Type</label>
-              <select
+            <FloatingSelect
+                label="Consultation Type"
                 name="consultationType"
                 value={formData.consultationType}
                 onChange={handleInputChange}
-              >
-                <option value="">Select option</option>
-                <option value="in-hospital">In-Hospital</option>
-                <option value="Online-Tele-Consult">Online-Tele-Consult</option>
-              </select>
+                options={[
+                  { value: "", label: "Select option" },
+                  { value: "in-hospital", label: "In-Hospital" },
+                  { value: "Online-Tele-Consult", label: "Online-Tele-Consult" }
+                ]}
+              />
             </div>
           </div>
         </form>

@@ -1,9 +1,9 @@
 
 
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from 'react-bootstrap';
 import './UserCollectionReport.css';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 
 const DayAndMonthWiseVisitReport = () => {
   const [showReport, setShowReport] = useState(false);
@@ -46,8 +46,8 @@ const DayAndMonthWiseVisitReport = () => {
   return (
     <div className="user-collection-report">
       <div className="user-collection-report-header">
-      <h3 className="user-collection-report-title">⚛  Day and Monthwise Visit Report</h3>
-      <div className="user-collection-report-filters">
+        <h3 className="user-collection-report-title">⚛  Day and Monthwise Visit Report</h3>
+        <div className="user-collection-report-filters">
           <div className="user-collection-report-date-filter">
             <label>From:</label>
             <input type="date" />
@@ -66,31 +66,31 @@ const DayAndMonthWiseVisitReport = () => {
                 </ul>
               </div>
             )}
-            
+
           </div>
           <div className="user-collection-report-doctor-filter">
-          <label>Department   :</label>
-          <select >
-            <option value="">Select Department </option>
-            
-          </select>
+            <label>Department   :</label>
+            <select >
+              <option value="">Select Department </option>
+
+            </select>
 
 
-          <label>
-          Report Type  : </label>
-          <select >
-            <option value=""> Day </option>
-            <option value=""> Month </option>
+            <label>
+              Report Type  : </label>
+            <select >
+              <option value=""> Day </option>
+              <option value=""> Month </option>
 
-            
-          </select>
-          <button className="user-collection-report-show-btn" onClick={handleShowReport}>Show Report</button>
+
+            </select>
+            <button className="user-collection-report-show-btn" onClick={handleShowReport}>Show Report</button>
+
+          </div>
 
         </div>
-     
-        </div>
-       
-        
+
+
       </div>
       {showReport && (
         <>
@@ -108,37 +108,37 @@ const DayAndMonthWiseVisitReport = () => {
             <button className="user-collection-report-print-btn" onClick={handleExport}>Export</button>
           </div>
           <div className='user-collection-report-tab'>
-  
-<table className="patientList-table" ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-                "Department Name",
-                "Visit Date",
-                "Month",
-                "Days",
-                "New Total",
-                "Follow-up Total"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
+
+            <table className="patientList-table" ref={tableRef}>
+              <thead>
+                <tr>
+                  {[
+                    "Department Name",
+                    "Visit Date",
+                    "Month",
+                    "Days",
+                    "New Total",
+                    "Follow-up Total"
+                  ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
               <tbody>
                 {reportsData && reportsData.length > 0 ? (
                   reportsData.map((row, index) => (

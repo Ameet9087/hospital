@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AddSocMaster from "./AddSocMaster";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 import "./SocMaster.css";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";

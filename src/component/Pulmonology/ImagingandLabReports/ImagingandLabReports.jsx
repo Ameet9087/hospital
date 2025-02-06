@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './PulmonologyImagingAndLabReport.css'; 
 import axios from 'axios';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 
 const ImagingandLabReports = () => {
   const [columnWidths, setColumnWidths] = useState({});

@@ -4,7 +4,7 @@ import AddVendor from "../components/AddVendor";
 import UpdateVendor from "../components/UpdateVendor";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import * as XLSX from 'xlsx';
 
 const Vendors = () => {
@@ -12,11 +12,11 @@ const Vendors = () => {
   const [isUpdateVendorOpen, setIsUpdateVendorOpen] = useState(false);
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [vendors, setVendors] = useState([]);
- 
 
 
-const [columnWidths,setColumnWidths] = useState({});
-const tableRef=useRef(null);
+
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const tableRef=useRef(null);
         const data = await response.json();
         setVendors(data);
         console.log(data);
-        
+
       } catch (error) {
         console.error("Error fetching vendor data:", error);
       }
@@ -67,7 +67,7 @@ const tableRef=useRef(null);
       <button className="Vendors-add-btn" onClick={openAddVendorModal}>
         Add Vendor
       </button>
-      
+
       <div className="Vendors-table-header">
         <div className="Vendors-search-container">
           <input type="text" placeholder="Search" className="Vendors-search-input" />
@@ -79,39 +79,39 @@ const tableRef=useRef(null);
         </div>
       </div>
 
-      <table  ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-                "Vendor Name",
-                "Vendor Code",
-                "Contact Person",
-                "Contact Address",
-                "Contact Number",
-                "KRA PIN",
-                "Email Address",
-                "Is Active",
-                "Action"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
- </thead>
+      <table ref={tableRef}>
+        <thead>
+          <tr>
+            {[
+              "Vendor Name",
+              "Vendor Code",
+              "Contact Person",
+              "Contact Address",
+              "Contact Number",
+              "KRA PIN",
+              "Email Address",
+              "Is Active",
+              "Action"
+            ].map((header, index) => (
+              <th
+                key={index}
+                style={{ width: columnWidths[index] }}
+                className="resizable-th"
+              >
+                <div className="header-content">
+                  <span>{header}</span>
+                  <div
+                    className="resizer"
+                    onMouseDown={startResizing(
+                      tableRef,
+                      setColumnWidths
+                    )(index)}
+                  ></div>
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
 
 
 
@@ -125,7 +125,7 @@ const tableRef=useRef(null);
               <td>{vendor.contactNumber}</td>
               <td>{vendor.kraPin || ""}</td>
               <td>{vendor.email || ""}</td>
-              <td>{(vendor.isActive)?"Active":"Inactive"}</td>
+              <td>{(vendor.isActive) ? "Active" : "Inactive"}</td>
               <td>
                 <button
                   className="Vendors-edit-btn"
@@ -141,7 +141,7 @@ const tableRef=useRef(null);
 
       {/* AddVendor Modal */}
       <CustomModal isOpen={isAddVendorOpen} onClose={() => setIsAddVendorOpen(false)}>
-        <AddVendor onClose={() => setIsAddVendorOpen(false)}/>
+        <AddVendor onClose={() => setIsAddVendorOpen(false)} />
       </CustomModal>
 
       {/* UpdateVendor Modal */}

@@ -3,7 +3,7 @@ import { Modal, Button } from "react-bootstrap";
 import UpdateDepartmentForm from "./UpdateDepartmentForm";
 import AddDepartment from "./AddDepartment";
 import "./ManageDepartment.css";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import CustomModal from "../../CustomModel/CustomModal";
 import { useFilter } from "../ShortCuts/useFilter";

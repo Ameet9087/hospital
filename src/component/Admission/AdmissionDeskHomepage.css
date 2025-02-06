@@ -270,8 +270,51 @@
     color: white;
     opacity: 0.6;
   }
-  .fa-magnifying-glass {
+  .admissionDeskHomePage-header i {
     color: white;
     font-size: 14px;
     cursor: pointer;
+  }
+
+
+  .admissionDeskHomePage-confirmBox{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.453);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4000;
+    display: flex;
+    align-items: center;
+    justify-content: center
+  }
+  .admissionDeskHomePage-con{
+    width: 350px;
+    height: 250px;
+    border-radius: 7px;
+    background-color: rgba(255, 255, 255, 0.89);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .admissionDeskHomePage-con-btns{
+    display: flex;
+    gap: 20px;
+  }
+  .admissionDeskHomePage-con-btns button{
+    border: none;
+    border-radius: 7px;
+    padding:5px 15px;
+    font-size: 18px;
+  }
+  .admissionDeskHomePage-con-btns button:nth-child(1){
+    background-color: #20b2aa;
+  }
+  .admissionDeskHomePage-con-btns button:nth-child(2){
+    background-color: red;
+  }
+  .admissionDeskHomePage-con-btns button:hover{
+   background-color: white;
   }

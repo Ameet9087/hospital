@@ -51,33 +51,15 @@ background-color: #F5F7F9;
 .labLookUpAddNewLUp-form-group {
   /* flex: 1; */
   display: flex;
+  margin-bottom: 10px;
+  width: 100%;
   /* text-align: center; */
   /* align-items: left; */
   font-size: var(--font-size);
-  margin-left: 10px;
   /* width: 220px; */
   /* border: 1px solid red; */
 }
 
-.labLookUpAddNewLUp-form-group label {
-  display: block;
-  margin-bottom: 4px;
-  /* font-weight: bold; */
-  font-size: var(--font-size);
-  width: 400px;
-}
-
-.labLookUpAddNewLUp-form-group input,
-.labLookUpAddNewLUp-form-group select,
-.labLookUpAddNewLUp-form-group textarea {
-  width: 60%;
-  padding: 8px;
-  margin-bottom: 8px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: var(--font-size);
-  /* color: gray; */
-}
 
 
 .labLookUpAddNewLUp-select-components-section {
@@ -188,6 +170,7 @@ background-color: #F5F7F9;
   background-color: var(--button-hover-background-color);
 }
 .labLookUpAddNewLUp-form-group-1row{
+  width: 100%;
   display: flex;
   justify-content: space-between;
   gap:30px;

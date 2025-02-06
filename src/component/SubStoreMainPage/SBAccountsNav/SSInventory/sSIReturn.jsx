@@ -8,7 +8,7 @@ import { useReactToPrint } from 'react-to-print';
 import SSIRetunReturnItemBtn from './sSIRetunReturnItemBtn';
 import SSIPatientConsumNewPCbtn from './sSIPatientConsumNewPCbtn';
 import { API_BASE_URL } from '../../../api/api';
-import CustomModal from '../../../CustomModel/CustomModal';
+import CustomModal from '../../../../CustomModel/CustomModal';
 
 function SSIReturn() {
   const printRef = useRef();
@@ -71,10 +71,10 @@ function SSIReturn() {
   const handleExportToExcel = () => {
     // Get the table data
     const tableData = [
-      ['  Store Name',  ' Date', 'Returned By', 'Remarks', ]
-      
+      ['  Store Name', ' Date', 'Returned By', 'Remarks',]
+
     ];
-    
+
 
     // Create a new workbook and a new worksheet
     const worksheet = XLSX.utils.aoa_to_sheet(tableData);
@@ -87,39 +87,39 @@ function SSIReturn() {
 
   return (
     <div className="sSIReturn-active-imaging-request">
-           
+
       <>
         <header className='sSIReturn-header'>
           <div className="sSIReturn-status-filters">
-          <button className="sSIReturn-new-patient-button"
-                          onClick={handleNewPatientConsumptionClick} // Handle button click
->Returns Item</button>
+            <button className="sSIReturn-new-patient-button"
+              onClick={handleNewPatientConsumptionClick} // Handle button click
+            >Returns Item</button>
           </div>
           <div className="sSIReturn-filterBySubCategory">
 
-<label>Select Inventory:</label>
-    <select>
-      <option value="">GENERAL-INVENTORY</option>
-    
-    </select>
-</div>
+            <label>Select Inventory:</label>
+            <select>
+              <option value="">GENERAL-INVENTORY</option>
+
+            </select>
+          </div>
         </header>
         <div className="sSIReturn-controls">
 
-<div className="sSIReturn-date-range">
-      <label>
-        From:
-        <input type="date" defaultValue="2024-08-09" />
-      </label>
-      <label>
-        To:
-        <input type="date" defaultValue="2024-08-16" />
-      </label>
-      <button className="sSIReturn-star-button">☆</button>
-    <button className="sSIReturn-more-btn">-</button>
-      <button className="sSIReturn-ok-button">OK</button>
-    </div>
-    </div>
+          <div className="sSIReturn-date-range">
+            <label>
+              From:
+              <input type="date" defaultValue="2024-08-09" />
+            </label>
+            <label>
+              To:
+              <input type="date" defaultValue="2024-08-16" />
+            </label>
+            <button className="sSIReturn-star-button">☆</button>
+            <button className="sSIReturn-more-btn">-</button>
+            <button className="sSIReturn-ok-button">OK</button>
+          </div>
+        </div>
         <div className="sSIReturn-search-N-results">
           <div className="sSIReturn-search-bar">
             <i className="fa-solid fa-magnifying-glass"></i>
@@ -140,31 +140,31 @@ function SSIReturn() {
             <table>
               <thead>
                 <tr>
-                <th> Store Name</th>
+                  <th> Store Name</th>
                   <th>Date</th>
                   <th>Returned By</th>
-                <th>Remarks</th>
+                  <th>Remarks</th>
                 </tr>
               </thead>
               <tbody>
-            {returns.length > 0 ? (
-              returns.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.storeName}</td>
-                  <td>{item.returnDate}</td>
-                  <td>{item.returnedBy}</td>
-                  <td>{item.remarks}</td>
-                  <td><button className="action-button">Action</button></td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5" className="no-rows-message">
-                  No Rows To Show
-                </td>
-              </tr>
-            )}
-          </tbody>
+                {returns.length > 0 ? (
+                  returns.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.storeName}</td>
+                      <td>{item.returnDate}</td>
+                      <td>{item.returnedBy}</td>
+                      <td>{item.remarks}</td>
+                      <td><button className="action-button">Action</button></td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5" className="no-rows-message">
+                      No Rows To Show
+                    </td>
+                  </tr>
+                )}
+              </tbody>
             </table>
           </div>
         </div>
@@ -172,40 +172,40 @@ function SSIReturn() {
           <table>
             <thead>
               <tr>
-              <th> Store Name</th>
-                  <th>Date</th>
-                  <th>Returned By</th>
+                <th> Store Name</th>
+                <th>Date</th>
+                <th>Returned By</th>
                 <th>Remarks</th>
-                  <th>Action</th>
-                
+                <th>Action</th>
+
               </tr>
             </thead>
             <tbody>
-            {returns.length > 0 ? (
-              returns.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.storeName}</td>
-                  <td>{item.returnDate}</td>
-                  <td>{item.returnBy}</td>
-                  <td>{item.remarks}</td>
-                  <td><button className="action-button">Action</button></td>
+              {returns.length > 0 ? (
+                returns.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.storeName}</td>
+                    <td>{item.returnDate}</td>
+                    <td>{item.returnBy}</td>
+                    <td>{item.remarks}</td>
+                    <td><button className="action-button">Action</button></td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="no-rows-message">
+                    No Rows To Show
+                  </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5" className="no-rows-message">
-                  No Rows To Show
-                </td>
-              </tr>
-            )}
-          </tbody>
+              )}
+            </tbody>
           </table>
         </div>
       </>
-     <CustomModal isOpen={showNewPatientConsumption} onClose={handleBack}>
+      <CustomModal isOpen={showNewPatientConsumption} onClose={handleBack}>
 
-<SSIRetunReturnItemBtn /> 
-</CustomModal>
+        <SSIRetunReturnItemBtn />
+      </CustomModal>
     </div>
   );
 }

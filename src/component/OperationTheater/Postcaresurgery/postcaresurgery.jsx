@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "./postsurgerycare.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 import useCustomAlert from "../../../alerts/useCustomAlert";
 
 import { API_BASE_URL } from "../../api/api";

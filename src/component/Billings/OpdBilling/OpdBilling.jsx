@@ -1,89 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./OpdBilling.css";
-import PopupTable from "./PopupTable";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import {
+  PopupTable,
+  FloatingInput,
+  FloatingSelect,
+} from "../../../FloatingInputs/index";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
-
-const FloatingInput = ({ label, type = "text", value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  const handleChange = (e) => {
-    setHasValue(e.target.value.length > 0);
-    if (props.onChange) props.onChange(e);
-  };
-
-
-  return (
-    <div
-      className={`OpdBilling-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <input
-        type={type}
-        className="OpdBilling-floating-input"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value.length > 0);
-        }}
-        onChange={handleChange}
-        {...props}
-      />
-      <label className="OpdBilling-floating-label">{label}</label>
-    </div>
-  );
-};
-
-const FloatingSelect = ({ label, options = [], value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-
-
-  return (
-    <div
-      className={`OpdBilling-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <select
-        className="OpdBilling-floating-select"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value !== "");
-        }}
-        onChange={(e) => {
-          setHasValue(e.target.value !== "");
-          if (props.onChange) props.onChange(e);
-        }}
-        {...props}
-      >
-        <option value="">{ }</option>
-        {options.map((option, index) => (
-          <option key={index} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <label className="OpdBilling-floating-label">{label}</label>
-    </div>
-  );
-};
+import { toast } from "react-toastify";
+import { usePopup } from "../../../FidgetSpinner/PopupContext";
 
 const OpdBilling = () => {
+  const { showPopup } = usePopup();
   const [opdPatients, setOpdPatients] = useState([]);
   const [selectedTab, setSelectedTab] = useState("testGrid");
   const [columnWidths, setColumnWidths] = useState({});
@@ -113,10 +42,25 @@ const OpdBilling = () => {
 
   const [isEmergency, setemergency] = useState(false);
 
-
   const handlePrintBilling = () => {
-    console.log("Navigating with state:", { selectedPatient, selectedDoctor, testGridTableRowsableRows, netAmount, selectedPaymentMode, billFromResponse });
-    navigate("/billing/OpdBillingPrint", { state: { selectedPatient, selectedDoctor, testGridTableRowsableRows, netAmount, selectedPaymentMode, billFromResponse } });
+    console.log("Navigating with state:", {
+      selectedPatient,
+      selectedDoctor,
+      testGridTableRowsableRows,
+      netAmount,
+      selectedPaymentMode,
+      billFromResponse,
+    });
+    navigate("/billing/OpdBillingPrint", {
+      state: {
+        selectedPatient,
+        selectedDoctor,
+        testGridTableRowsableRows,
+        netAmount,
+        selectedPaymentMode,
+        billFromResponse,
+      },
+    });
   };
 
   const fetchDoctorService = async (outPatientId) => {
@@ -170,7 +114,6 @@ const OpdBilling = () => {
   });
 
   const [newpatientformData, newpatientsetFormData] = useState({
-
     salutation: "",
     firstName: "",
     middleName: "",
@@ -431,7 +374,7 @@ const OpdBilling = () => {
     if (activePopup === "patient" || activePopup === "mobilenumber") {
       setSelectedPatient(data.originalObject);
 
-      console.log("data+++++++++", data)
+      console.log("data+++++++++", data);
 
       console.log("Registration Id", data.patientRegistrationId);
 
@@ -453,7 +396,7 @@ const OpdBilling = () => {
           );
 
           const generalOpdFee = opdFees?.generalOpdFee || 0;
-          const followupfees = opdFees?.followupopdfees || 0
+          const followupfees = opdFees?.followupopdfees || 0;
 
           console.log("fetched apppp=====", fetchedAppointments);
           // Check if fees are unpaid before creating the row
@@ -563,7 +506,6 @@ const OpdBilling = () => {
         const isEmergency = data.originalObject.isEmergency === "yes";
 
         if (isEmergency) {
-
           setemergency(true);
           doctorServices = await fetchEmergencyDoctorService(
             data.originalObject.erNo
@@ -571,13 +513,15 @@ const OpdBilling = () => {
 
           if (doctorServices.length > 0) {
             const firstService = doctorServices[0];
-            console.log("-----p", firstService)
+            console.log("-----p", firstService);
 
             const rateToUse = isEmergency
               ? firstService.morningEmergencyToDoctor
               : firstService.morningEmergencyToDoctor;
 
-            const EmergencydocName = await fetchDoctorDetails(firstService.doctorId);
+            const EmergencydocName = await fetchDoctorDetails(
+              firstService.doctorId
+            );
 
             console.log("emergency doctor", EmergencydocName);
 
@@ -807,7 +751,9 @@ const OpdBilling = () => {
             selectedPatient?.financialDetails?.totalHospitalAmount || 0
           ),
         },
-        patient: { patientRegistrationId: selectedPatient.patientRegistrationId }
+        patient: {
+          patientRegistrationId: selectedPatient.patientRegistrationId,
+        },
       },
 
       paymentModeDTO: addedPayments.map((payment) => ({
@@ -836,7 +782,6 @@ const OpdBilling = () => {
           serviceNames: row.serviceName,
         })),
       isEmergency: isEmergency,
-
     };
     console.log("Payload------:", payload);
 
@@ -848,20 +793,20 @@ const OpdBilling = () => {
       });
 
       if (response.status === 200) {
-        alert("Data submitted successfully!");
+        toast.success("Data submitted successfully!");
+        showPopup([
+          { url: "/patient/registerpatient", text: "Patient Registration" },
+          { url: "/appointment/doctorappointment", text: "Appointment" },
+        ]);
         setIsPrintEnabled(true);
         setBillFromResponse(response.data);
-        console.log("Response:", response.data);
       } else {
-        alert("Failed to submit data. Please try again.");
+        toast.error("Failed to submit data. Please try again.");
         console.error("Response status:", response.status);
       }
     } catch (error) {
-      console.error("Error submitting data:", error);
-      setIsPrintEnabled(false)
-      alert(
-        "An error occurred while submitting data. Please check the console."
-      );
+      toast.error("Error submitting data:", error);
+      setIsPrintEnabled(false);
     }
   };
 
@@ -995,7 +940,7 @@ const OpdBilling = () => {
                     "Service Name",
                     "Doctor Name ",
                     "Rate",
-                    "Qty",
+                    "Quantity",
                     "Total Amt",
                     "Less Disc(%)",
                     "Disc Amt",
@@ -1045,10 +990,14 @@ const OpdBilling = () => {
                     <td>{row.sn}</td>
                     <td>
                       <div className="OpdBilling-test-search-field">
-                        <FloatingInput label="MR No * " type="text" />
-                        <button
+                        <FloatingInput
+                          label="Services"
+                          type="search"
+                          onIconClick={() => setActivePopup("services")}
+                        />
+                        {/* <button
                           className="OpdBilling-search-icon"
-                          onClick={() => setActivePopup("services")}
+                          onClick={}
                         >
                           <svg viewBox="0 0 24 24" width="16" height="16">
                             <path
@@ -1056,7 +1005,7 @@ const OpdBilling = () => {
                               d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
                             />
                           </svg>
-                        </button>
+                        </button> */}
                       </div>
                     </td>
                     <td>{row.code}</td>
@@ -1064,9 +1013,11 @@ const OpdBilling = () => {
                     <td>{row.doctorName}</td>
                     <td>{row.rate}</td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"QTY"}
                         type="number"
-                        value={row.qty}
+                        min="0"
+                        value={row.qty || 0}
                         onChange={(e) => {
                           const qty = parseInt(e.target.value, 10) || 0;
                           setTestGridTableRowsableRows((prevRows) => {
@@ -1084,6 +1035,7 @@ const OpdBilling = () => {
                     <td>{row.totalAmt}</td>
                     <td>
                       <FloatingInput
+                        label={"disc%"}
                         type="number"
                         value={row.lessDisc || 0}
                         onChange={(e) => {
@@ -1102,7 +1054,12 @@ const OpdBilling = () => {
                       />
                     </td>
                     <td>
-                      <input type="number" value={row.discAmt || 0} readOnly />
+                      <FloatingInput
+                        label={"Amt"}
+                        type="number"
+                        value={row.discAmt || 0}
+                        readOnly
+                      />
                     </td>
                     <td>{row.netAmt}</td>
                     <td>{row.emerg}</td>
@@ -1203,34 +1160,21 @@ const OpdBilling = () => {
       <div className="OpdBilling-section">
         <div className="OpdBilling-grid">
           <div className="billing-opd-com-form-row">
-            <label>Mobile No:</label>
-            <div className="billing-opd-com-input-with-search">
-              <input
-                type="text"
-                value={selectedPatient?.originalObject?.patient?.mobileNumber}
-              />
-              <button
-                className="billing-opd-com-magnifier-btn"
-                onClick={() => setActivePopup("mobilenumber")}
-              >
-                🔍
-              </button>
-            </div>
+            <FloatingInput
+              label={"Mobile No"}
+              type="search"
+              value={selectedPatient?.mobileNumber}
+              onIconClick={() => setActivePopup("mobilenumber")}
+            />
           </div>
 
           <div className="billing-opd-com-form-row">
-            <label>
-              MR No:<span className="billing-opd-required">*</span>
-            </label>
-            <div className="billing-opd-com-input-with-search">
-              <input type="text" value={selectedPatient?.uhid} />
-              <button
-                className="billing-opd-com-magnifier-btn"
-                onClick={() => setActivePopup("patient")}
-              >
-                🔍
-              </button>
-            </div>
+            <FloatingInput
+              label={"UHID"}
+              type="search"
+              value={selectedPatient?.uhid}
+              onIconClick={() => setActivePopup("patient")}
+            />
           </div>
         </div>
       </div>
@@ -1264,7 +1208,7 @@ const OpdBilling = () => {
           <FloatingSelect
             label="Name Initial"
             name="salutation"
-            value={patientType}
+            value={patientType || selectedPatient?.salutation}
             onChange={(e) => setPatientType(e.target.value)}
             options={[
               { value: "", label: "Select Patient Type" },
@@ -1644,28 +1588,28 @@ const OpdBilling = () => {
                 {selectedPaymentMode && (
                   <div className="OpdBilling-grid-sec">
                     <FloatingInput
-  label="Amount"
-  htmlFor="amount"
-  type="number"
-  id="amount"
-  value={paymentDetails.amount || ""}
-  onChange={(e) => {
-    const amount = e.target.value;
+                      label="Amount"
+                      htmlFor="amount"
+                      type="number"
+                      id="amount"
+                      value={paymentDetails.amount || ""}
+                      onChange={(e) => {
+                        const amount = e.target.value;
 
-    // Ensure that the amount is a number and does not exceed the current balance
-    if (amount <= currentBalance) {
-      setPaymentDetails({
-        ...paymentDetails,
-        amount: amount,
-      });
-    } else {
-      alert("please Enter valid amount ")
+                        // Ensure that the amount is a number and does not exceed the current balance
+                        if (amount <= currentBalance) {
+                          setPaymentDetails({
+                            ...paymentDetails,
+                            amount: amount,
+                          });
+                        } else {
+                          alert("please Enter valid amount ");
 
-      // Optionally, you can add an error message or do nothing if the condition fails
-      // For example, show an alert or set a state to display an error message
-    }
-  }}
-/>
+                          // Optionally, you can add an error message or do nothing if the condition fails
+                          // For example, show an alert or set a state to display an error message
+                        }
+                      }}
+                    />
 
                     {/* <div className="payment-details-row">
             <label htmlFor="amount">Amount:</label>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import './collectionlist.css';
 import "./collectionList.css"
 import { API_BASE_URL } from '../../../api/api';
-import CustomModal from '../../../CustomModel/CustomModal';
+import CustomModal from '../../../../CustomModel/CustomModal';
 import BloodTestingPopup from './BloodTestingPage';
 function Colletionlist() {
     const [patients, setPatients] = useState([]);
@@ -29,7 +29,7 @@ function Colletionlist() {
     }, []);
     const handleClosePopup = () => {
         setShowTest(false);
-      };
+    };
     return (
         <div className="collection-list-container">
             <h2>Blood Collection List</h2>
@@ -74,8 +74,8 @@ function Colletionlist() {
                             onClose={() => setShowTest(false)}
                             isOpen={showTest}
                         >
-        <BloodTestingPopup collectionId={selectedCollectionId} onClose={handleClosePopup} />
-        </CustomModal>
+                            <BloodTestingPopup collectionId={selectedCollectionId} onClose={handleClosePopup} />
+                        </CustomModal>
                     )}
                 </tbody>
             </table>

@@ -3,6 +3,8 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import "../LabSetting/labTestComponentsAddNewLTC.css";
 import { API_BASE_URL } from "../../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingSelect, FloatingTextarea } from "../../../FloatingInputs";
 
 const FormInput = ({
   name,
@@ -49,30 +51,33 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
   const [editIndex, setEditIndex] = useState(null);
 
   useEffect(() => {
-    if (initialData && isDataUpdate) {  // Ensure it only runs when updating
-      setFormData({
-        componentName: initialData.componentName || "",
-        unit: initialData.unit || "",
-        valueType: initialData.valueType || "text",
-        controlType: initialData.controlType || "TextBox",
-        rangeDescription: initialData.rangeDescription || "",
-        method: initialData.method || "",
-        componentRange: initialData.componentRange || "",
-        lookupId: initialData.valueLookup?.labLookupId || null,
-        displayName: initialData.displayName || "",
-        valuePrecision: initialData.valuePrecision || "",
-        maleRange: initialData.maleRange || "",
-        femaleRange: initialData.femaleRange || "",
-        childRange: initialData.childRange || "",
-        minValue: initialData.minValue || "",
-        maxValue: initialData.maxValue || "",
-        createdOn: initialData.createdOn || new Date().toISOString(),
-      });
-  
-      console.log("Form data set for editing:", initialData);
-    }
-  }, [initialData, isDataUpdate]);  // Ensure it runs when initialData updates
-  
+    console.log(initialData);
+
+    const fetchInitialData = () => {
+      if (initialData) {
+        // Set formData with initialData values (for editing)
+        setFormData({
+          componentName: initialData.componentName || "",
+          unit: initialData.unit || "",
+          valueType: initialData.valueType || "text",
+          controlType: initialData.controlType || "TextBox",
+          rangeDescription: initialData.rangeDescription || "",
+          method: initialData.method || "",
+          componentRange: initialData.componentRange || "",
+          lookupId: initialData.valueLookup?.labLookupId || null,
+          displayName: initialData.displayName || "",
+          valuePrecision: initialData.valuePrecision || "",
+          maleRange: initialData.maleRange || "",
+          femaleRange: initialData.femaleRange || "",
+          childRange: initialData.childRange || "",
+          minValue: initialData.minValue || "",
+          maxValue: initialData.maxValue || "",
+          createdOn: initialData.createdOn || new Date().toISOString(),
+        });
+      }
+    };
+    fetchInitialData();
+  }, [initialData]); // Runs only when initialData changes
 
   const [formData, setFormData] = useState({
     componentName: "",
@@ -173,7 +178,7 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (componentsArray.length === 0) {
-      alert("Add Component First");
+      toast.error("Add Component First");
       return;
     }
 
@@ -182,40 +187,33 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
         `${API_BASE_URL}/lab-components/save-components`,
         componentsArray
       );
+      toast.success("Lab Components Added Successfully");
       onClose();
     } catch (error) {
-      console.error("Error posting data:", error);
+      toast.error("Error posting data:", error);
     }
   };
 
   const handleEdit = async (id) => {
-    if (!id) {
-      console.error("No component ID found for updating.");
-      return;
-    }
-  
+    console.log(formData);
+
     try {
-      console.log("Updating component with ID:", id);
-      console.log("Updated Form Data:", formData);
-  
-      const response = await axios.put(`${API_BASE_URL}/lab-components/${id}`, formData);
-      
-      console.log("Update Response:", response);
-      alert("Component updated successfully!");
+      const response = await axios.put(
+        `${API_BASE_URL}/lab-components/${id}`,
+        formData
+      );
+      toast.success("Lab Components Updated Successfully");
       onClose();
     } catch (error) {
-      console.error("Error updating data:", error);
-      alert("Failed to update component.");
+      toast.log(error);
     }
   };
-  
   const handleEditClick = (index) => {
     const componentToEdit = componentsArray[index];
     setFormData({ ...componentToEdit });
     setIsEditing(true);
     setEditIndex(index);
   };
-  
 
   return (
     <div className="labTestComponentsAddNewLTC-container">
@@ -230,146 +228,138 @@ const LabTestComponentsAddNewLTC = ({ onClose, initialData, isDataUpdate }) => {
       </div>
 
       <form className="labTestComponentsAddNewLTC-form">
-        <FormInput
+        <FloatingInput
           name="componentName"
           value={formData.componentName}
           placeholder="Component Name"
           onChange={handleChange}
-          label="Component Name"
+          label={"Component Name"}
         />
-        <FormInput
+        <FloatingInput
           name="unit"
           value={formData.unit}
           placeholder="Unit"
           onChange={handleChange}
-          label="Unit"
+          label={"Unit"}
         />
         <div className="lab-test-form-group">
-          <label htmlFor="valueType">Value Type</label>
-          <select
+          <FloatingSelect
+            label={"Value Type"}
             name="valueType"
-            id="valueType"
             value={formData.valueType}
             onChange={handleChange}
-            className="labTestSelect"
-          >
-            <option value="text">Text</option>
-            <option value="number">Number</option>
-          </select>
+            options={[{value:"text",label:"Text"},
+              {value:"number",label:"Number"}
+            ]}
+          />
         </div>
         <div className="lab-test-form-group">
-          <label htmlFor="controlType">Control Type</label>
-          <select
-            name="controlType"
-            id="controlType"
-            value={formData.controlType}
-            onChange={handleChange}
-            className="labTestSelect"
-          >
-            <option value="TextBox">TextBox</option>
-            <option value="Dropdown">Dropdown</option>
-            <option value="Checkbox">Checkbox</option>
-          </select>
+        <FloatingSelect
+         name="controlType"
+         id="controlType"
+         value={formData.controlType}
+         onChange={handleChange}
+         className="labTestSelect"
+            options={[{value:"TextBox",label:"TextBox"},
+              {value:"Dropdown",label:"Dropdown"},
+              {value:"Checkbox",label:"Checkbox"}
+            ]}
+          />
         </div>
-        <FormTextarea
+        <FloatingTextarea
           name="componentRange"
           value={formData.componentRange}
-          placeholder="Component Range"
           onChange={handleChange}
-          label="Component Range"
+          label={"Component Range"}
         />
-        <FormTextarea
+        <FloatingTextarea
           name="rangeDescription"
           value={formData.rangeDescription}
-          placeholder="Range Description"
           onChange={handleChange}
-          label="Range Description"
+          label={"Range Description"}
         />
-        <FormInput
+        <FloatingInput
           name="method"
           value={formData.method}
           placeholder="Method"
           onChange={handleChange}
-          label="Method"
+          label={"Method"}
         />
         <div className="lab-test-form-group">
-          <label htmlFor="lookupId">Select Lookup</label>
-          <select
-            name="lookupId"
-            id="lookupId"
-            value={formData.lookupId}
-            onChange={handleChange}
-            className="labTestSelect"
-          >
-            <option value="">Select Lookup</option>
-            {lookupData.map((lookup) => (
-              <option key={lookup.labLookupId} value={lookup.labLookupId}>
-                {lookup.lookupName}
-              </option>
-            ))}
-          </select>
+        <FloatingSelect
+        label={"Look Up"}
+         name="lookupId"
+         id="lookupId"
+         value={formData.lookupId}
+         onChange={handleChange}
+            options={[{value:"",label:""},
+              ...(Array.isArray(lookupData)?lookupData.map((lookup)=>({
+                value:lookup.labLookupId,
+                label:lookup.lookupName
+              })):[])
+             
+            ]}
+          />
         </div>
-        <FormInput
+        <FloatingInput
           name="displayName"
           value={formData.displayName}
           placeholder="Display Name"
           onChange={handleChange}
-          label="Display Name"
+          label={"Display Name"}
         />
-        <FormInput
+        <FloatingInput
           name="valuePrecision"
           value={formData.valuePrecision}
           placeholder="Value Precision"
           onChange={handleChange}
-          label="Value Precision"
+          label={"Value Precision"}
         />
 
         {formData.valueType === "number" && (
           <>
-            <FormInput
+            <FloatingInput
               name="maleRange"
               value={formData.maleRange}
               placeholder="Male Range"
               onChange={handleChange}
-              label="Male Range"
-               type="number"
-      min="0"
+              label={"Male Range"}
+              type="number"
+              min="0"
             />
-            <FormInput
+            <FloatingInput
               name="femaleRange"
               value={formData.femaleRange}
               placeholder="Female Range"
               onChange={handleChange}
-              label="Female Range"
-               type="number"
-      min="0"
+              label={"Female Range"}
+              type="number"
+              min="0"
             />
-            <FormInput
+            <FloatingInput
               name="childRange"
               value={formData.childRange}
               placeholder="Child Range"
               onChange={handleChange}
-              label="Child Range"
-               type="number"
-      min="0"
+              label={"Child Range"}
+              type="number"
+              min="0"
             />
-            <FormInput
+            <FloatingInput
               name="minValue"
               value={formData.minValue}
               placeholder="Min Value"
               onChange={handleChange}
-              label="Min Value"
-               type="number"
-      
+              label={"Min Value"}
+              type="number"
             />
-            <FormInput
+            <FloatingInput
               name="maxValue"
               value={formData.maxValue}
               placeholder="Max Value"
               onChange={handleChange}
-              label="Max Value"
-               type="number"
-     
+              label={"Max Value"}
+              type="number"
             />
           </>
         )}
