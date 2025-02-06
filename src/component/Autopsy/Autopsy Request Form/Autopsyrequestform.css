@@ -1,0 +1,200 @@
+.autopsy-request-add-btn,.autopsy-request-results-info button{
+    margin-bottom: 10px;
+    background-color: var(--button-color);
+    font-size: var(--heading-font);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid var(--button-hover-border-color); 
+}
+.autopsy-request-search-bar{
+    display: flex;
+    gap: 10px;
+}
+.autopsy-request-search-bar input  {
+    padding: 5px;
+    transition: border-color 0.3s;
+    font-size: var(--font-size);
+    margin-left: 0;
+
+}
+.autopsy-request-search-bar .fa-search {
+    margin-left: 10px;
+    color: black;
+    cursor: pointer;
+    align-self: center;
+  }
+
+
+.autopsy-request-search-bar input :focus {
+    border-color: skyblue;
+    outline: none;
+}
+
+.autopsy-request-container {
+    margin: 0 auto;
+    padding: 5px;
+    background-color:var(--background-color);
+  }
+  .autopsy-request-section {
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+.autopsy-request-form-header{
+    background-color: #00897b;
+    color: white;
+    padding: 5px 10px;
+    font-size: var(--heading-font);
+}
+.autopsy-request-results-info{
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+}
+.autopsy-request-search-field {
+    position: relative; 
+    width: 100%;
+  }
+
+  .autopsy-request-search-icon {
+    position: absolute; 
+    right: 10px;        
+    top: 40%;          
+    transform: translateY(-50%); 
+    cursor: pointer;   
+    font-size: var(--heading-font);   
+    color: black;      
+  }
+
+  .autopsy-request-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 5px;
+  }
+  .autopsy-request-grid.two-columns {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .autopsy-request-floating-field {
+    position: relative;
+  }
+  .autopsy-request-floating-input {
+    padding: 5px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: var(--font-size);
+    background: white;
+    transition: all 0.2s ease;
+  }
+  .autopsy-request-floating-input{
+    width: 100%;
+  }
+
+  .autopsy-request-floating-label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    padding: 0 5px;
+    color: gray;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    font-size: var(--font-size);
+  }
+  .autopsy-request-floating-field.active .autopsy-request-floating-label {
+    top: 0;
+    font-size: var(--font-size);
+    color: #00897b;
+  }
+  .autopsy-request-floating-field.active .autopsy-request-floating-input,
+  .autopsy-request-floating-field.active .autopsy-request-floating-select {
+    border-color: #00897b;
+  }
+.autopsy-request-action{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.autopsy-request-button{
+    display: flex;
+    justify-content: end;
+}
+.autopsy-request-submit-btn,.autopsy-request-status-btn{
+    padding: 5px;
+    font-size: var(--heading-font);
+    background-color: var(--button-bg-color);
+    color: white;
+    border: 1px solid var(--button-hover-border-color);
+    border-radius: 5px;
+}
+.autopsy-request-submit-btn:hover,
+.autopsy-request-status-btn:hover,
+.autopsy-request-add-btn:hover,
+.autopsy-request-results-info button:hover{
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+
+
+
+
+.AccidentReportForm-form-group {
+    color: gray;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    font-size: var(--font-size);
+    /* width: 400px; */
+    /* border: 1px solid red; */
+  }
+
+
+
+  .AccidentReportForm-radio-button {
+    display: flex;
+    align-items: center;
+    color: gray;
+  }
+  
+  .AccidentReportForm-radio-button label {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    font-size: var(--font-size);
+  }
+
+
+
+
+@media print {
+    body * {
+      visibility: hidden;
+    }
+  
+    .autopsy-request-container, .autopsy-request-container * {
+      visibility: visible;
+    }
+  
+    .autopsy-request-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+  }
+  
+
+
+
+
+
+
+ 
+  

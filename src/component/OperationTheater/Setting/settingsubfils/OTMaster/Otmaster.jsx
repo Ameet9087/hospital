@@ -24,9 +24,9 @@ const OTMaster = () => {
       const response = await axios.get(`${API_BASE_URL}/add-item`);
       const items = response.data.map((item) => ({
         id: item.addItemId,
-        name: item.itemName,
+        name: item.itemMaster?.itemName,
         purchaseRate: item.purchaseRate,
-        salesRate: item.salesRate,
+        salesRate: item.salePrice,
       }));
       setMedicineOptions(items);
     } catch (error) {
@@ -192,7 +192,8 @@ const OTMaster = () => {
               <td>{index + 1}</td>
               <td>
                 <select
-                  className="otmaster-medicine-input"
+                  className="
+                  "
                   value={row.medicineId}
                   onChange={(e) =>
                     handleInputChange(row.id, "medicineId", e.target.value)

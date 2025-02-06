@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios
 import "./emergencyTransportTable.css";
 import EmrTranEdit from "./emrTranEdit";
+import { API_BASE_URL } from "../../api/api";
 
 function EmergencyTransportTable() {
   const [data, setData] = useState([]); // Initialize data state
@@ -15,7 +16,7 @@ function EmergencyTransportTable() {
 
   // Fetch data when the component mounts
   useEffect(() => {
-    axios.get("http://localhost:8085/EmergencyTransport") // Replace with your actual API URL
+    axios.get(`${API_BASE_URL}/EmergencyTransport`) // Replace with your actual API URL
       .then((response) => {
         console.log(response.data);
         setData(response.data); // Set the data state with the response
@@ -27,7 +28,7 @@ function EmergencyTransportTable() {
 
   const handleAddEmergencyClick = () => {
     // navigate("/add-emergency");
-    navigate("/emergencytransport/addEmergencyPageTransport"); 
+    navigate("/emergencytransport/addEmergencyPageTransport");
   };
 
   const handleEditClick = (row) => {
@@ -39,7 +40,7 @@ function EmergencyTransportTable() {
     setShowModal(false);
     setSelectedRow(null);
   };
-  
+
   return (
     <div className="emergencyTransportTable">
       <button className="emergencyTransportTable-add-btn" onClick={handleAddEmergencyClick}>
@@ -75,9 +76,9 @@ function EmergencyTransportTable() {
               <td>{row.status}</td>
               <td>{row.emergencyCost}</td>
               <td>
-              <button className="emergencyTransportTable-edit-btn" onClick={() => handleEditClick(row)}>
-  Edit
-</button>
+                <button className="emergencyTransportTable-edit-btn" onClick={() => handleEditClick(row)}>
+                  Edit
+                </button>
               </td>
             </tr>
           ))}

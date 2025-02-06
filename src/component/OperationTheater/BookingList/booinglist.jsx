@@ -134,16 +134,16 @@ function BookingList() {
         if (response.status === 200 && Array.isArray(response.data)) {
           const formattedPatients = response.data.map((patient) => ({
             ipAdmmissionId: patient.ipAdmmissionId || "",
-            firstName: patient?.patient?.firstName || "",
-            lastName: patient?.patient?.lastName || "",
+            firstName: patient?.patient?.patient?.firstName || "",
+            lastName: patient?.patient?.patient?.lastName || "",
+            uhid: patient?.patient?.patient?.uhid || "",
             address: patient?.patient?.addressDTO?.city || "N/A",
             consultant:
               patient.admissionUnderDoctorDetail?.consultantDoctor
                 ?.doctorName || "N/A",
-            roomNoBedNo: `${patient?.roomDetails?.roomId || "N/A"} - ${
-              patient?.roomDetails?.bedDTO?.id || "N/A"
-            }`,
-            mrNo: patient?.patient?.uhid || "N/A",
+            roomNoBedNo: `${patient?.roomDetails?.roomId || "N/A"} - ${patient?.roomDetails?.bedDTO?.id || "N/A"
+              }`,
+            mrNo: patient?.patient?.patient?.uhid || "N/A",
           }));
           setInPatients(formattedPatients);
         } else {
@@ -235,7 +235,7 @@ function BookingList() {
       },
     };
     console.log(formattedData);
-    
+
 
     try {
       const response = await axios.post(
@@ -412,9 +412,8 @@ function BookingList() {
                     {booking?.ipAdmissionDTO?.patient?.patient?.firstName}{" "}
                     {booking?.ipAdmissionDTO?.patient?.patient?.lastName}
                   </td>
-                  <td>{`${booking?.ipAdmissionDTO?.patient?.patient?.age || "N/A"}/${
-                    booking?.ipAdmissionDTO?.patient?.patient?.gender || "N/A"
-                  }`}</td>
+                  <td>{`${booking?.ipAdmissionDTO?.patient?.patient?.age || "N/A"}/${booking?.ipAdmissionDTO?.patient?.patient?.gender || "N/A"
+                    }`}</td>
                   <td>
                     {booking.otDate
                       ? moment(booking.otDate.otTime).format("YYYY-MM-DD HH:mm")
@@ -428,15 +427,15 @@ function BookingList() {
                   {/* <td>{booking.department || "N/A"}</td> */}
                   <td>{booking.status || "N/A"}</td>
                   <td>
-                    <button
+                    {/* <button
                       className="booking-list-btn-submit"
                       onClick={() => handleEditAction(booking)}
                     >
                       Edit
-                    </button>
+                    </button> */}
                     <button
                       className="booking-list-btn-submit"
-                      onClick={() => handleSurgeryEventClick(booking)} 
+                      onClick={() => handleSurgeryEventClick(booking)}
                     >
                       Surgery Events
                     </button>

@@ -1,119 +1,123 @@
-/* neha-patient-transport-main-24-9-24 */
-
-/* Container for the form */
 .patient-transport-container {
-    font-family: Arial, sans-serif;
-    background-color:var(--background-color);
-    padding: 4px;
-    font-size: 12px;
-    width: 100%; 
-    max-width: 1050px;
-    margin-bottom: 10px;
+    width: 100%;
+   display: flex;
+    margin: 20px auto;
+    padding: 20px;
+    background-color:#e3fffe;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    justify-content: center;
 }
-
+.patient-transport-header-h2{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
 .patient-transport-header {
-    font-size: var(--heading-font);
+    font-size: 16px;
     text-align: center;
-}
+    color: #333;
+    margin-bottom: 20px;
 
-/* Form styles */
+}
 .patient-transport-form {
     display: flex;
     flex-direction: column;
+    width:100%;
+    flex-wrap:wrap;
   
 }
-.patient-transport-form-maindiv{
+.patient-transport-form-maindiv {
     display: flex;
-    gap: 4px;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    gap: 10px; 
+    padding: 5px;
 
 }
-.patient-transport-form-group-subdiv{
-    flex: 1;
-    padding: 3px;
-    background: var(--background-color);
-    border: 1px solid #ccc;
-    margin-bottom: 40px;
+.patient-transport-search{
+    margin-top: 15px;
+    margin-right: 20px;
 }
-.patient-transport-form-group{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
-    font-size: var(--font-size);
-    padding: 2px;
+
+.patient-transport-form-group
+{display:flex;
+    flex-direction:row;
+    margin-right: 20px;
 }
+
+
 
 .patient-transport-form-group label {
- max-width: 180px;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #555;
+    width: 200px;
 }
 
-
-.patient-transport-form-group input, 
-.patient-transport-form-group select{
-    padding: 5px;
-    border: none;
-    background: none;
-    border-bottom: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: var(--font-size);
-    width: 43%;
-}
-
-.patient-transport-form-group textarea{
-    width: 43%; 
-    height: 5%; 
-    resize: none;
-    background: none;
-    border: none;
-    border-radius: 3px;
-    border-bottom: 1px solid #ccc;
-    
-    
-}
-.patient-transport-form-group textarea:focus{
+.patient-transport-input, 
+.patient-transport-textarea, 
+.patient-transport-select {
+    padding: 1px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #fff;
     outline: none;
-    border: none;  
-    border-bottom: 1px solid #ccc;
+    transition: border-color 0.3s ease;
+    width: 250px;
 }
-.patient-transport-form-group textarea:hover{
-    border:     1px solid lightblue; 
-    box-shadow: 0 0px 4px rgba(0, 0,0, 0.2); /* Optional: Blue glow */
-  
+
+
+.patient-transport-input:focus, 
+.patient-transport-textarea:focus, 
+.patient-transport-select:focus {
+    border-color: #007bff;
 }
-/* Select dropdown styles */
+
+.patient-transport-textarea {
+    min-height: 25px;
+    resize:horizontal;
+}
+
 .patient-transport-select {
     appearance: none;
-    background-color: #ccc;
+    background-color: #fff;
     cursor: pointer;
-}
-
-/* Submit button styles */
-.patient-transport-submit-div{
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: var(--font-size);
-    transition: background-color 0.3s, transform 0.1s;
-    display: flex;
-    justify-content: flex-end; 
 }
 
 .patient-transport-submit-btn {
-    width: 13%;
-      background-color: var(--button-color);
-      padding: 5px;
-      border-radius: 5px;
-      border: none;
-      color: white;
-    }
-    
-    .patient-transport-submit-btn:hover {
-      background-color: var(--button-hover-background-color);
-      color: var(--button-color);
-      border: 1px solid var(--button-color);
-    }
+    padding: 4px;
+    background-color: #00c9c0;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
-/* Media query for smaller screens */
+.patient-transport-submit-btn:hover {
+    background-color: white;
+    border: 1px solid #00c9c0;
+    color: #00c9c0;
+}
+.pat-details-search-icon{
+    /* position: absolute; */
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
 @media (max-width: 768px) {
     .patient-transport-container {
         padding: 15px;
@@ -124,6 +128,6 @@
     }
 
     .patient-transport-form {
-        gap:10px;
+        gap: 10px;
     }
 }

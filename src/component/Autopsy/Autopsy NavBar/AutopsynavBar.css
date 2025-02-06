@@ -1,0 +1,53 @@
+.AtopsyNavbar-autopsy-navbar {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .AtopsyNavbar-nav {
+    background-color: white;
+    padding: 5px;
+  }
+  
+  .AtopsyNavbar-ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+  }
+  
+  .AtopsyNavbar-nav-item .AtopsyNavbar-link {
+    color: Black;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .AtopsyNavbar-nav-item .AtopsyNavbar-link:hover {
+    background-color: var(--upperBar-bg-color);
+  }
+  
+  .AtopsyNavbar-content {
+    padding: 5px;
+    background-color: var(--background-color);
+    height: auto;
+  }
+
+  .AtopsyNavbar-link {
+    color: Black;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .AtopsyNavbar-link.active {
+    background-color: var(--upperBar-bg-color);
+    color: white;
+  }
+  
+  .AtopsyNavbar-link:hover {
+    background-color: var(--upperBar-bg-color);
+  }
+  

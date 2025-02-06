@@ -1,0 +1,300 @@
+.AutopsyExecution-container {
+    margin: 0 auto;
+    padding: 10px;
+    background-color:var(--background-color);
+  
+  }
+  .AutopsyExecution-section {
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    margin-bottom: 10px;
+    overflow: hidden;
+    
+  }
+  .AutopsyExecution-header {
+    background-color: #00897b;
+    color: white;
+    padding: 7px 20px;
+    font-size: var(--heading-font);
+    font-weight: 500;
+  }
+    .AutopsyExecution-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 5px;
+    }
+  .AutopsyExecution-grid.two-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .AutopsyExecution-floating-field {
+    position: relative;
+  }
+  .AutopsyExecution-floating-input,
+  .AutopsyExecution-floating-select {
+    padding: 5px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    background: white;
+    transition: all 0.2s ease;
+  }
+  .AutopsyExecution-floating-input{
+    width: 87%;
+  }
+  .AutopsyExecution-floating-select {
+    width: 100%;
+  
+  }
+  .AutopsyExecution-floating-label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    padding: 0 4px;
+    color: #666;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    font-size: var(--font-size);
+  }
+  .AutopsyExecution-floating-field.active .AutopsyExecution-floating-label {
+    top: 0;
+    font-size: 12px;
+    color: #00897b;
+  }
+  .AutopsyExecution-floating-field.active .AutopsyExecution-floating-input,
+  .AutopsyExecution-floating-field.active .AutopsyExecution-floating-select {
+    border-color: #00897b;
+  }
+  .AutopsyExecution-full-width {
+    grid-column: span 4;
+  }
+  .AutopsyExecution-search-field {
+    position: relative;
+  }
+  .AutopsyExecution-search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  .AutopsyExecution-checkbox-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding-top: 24px;
+  }
+  .AutopsyExecution-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .AutopsyExecution-checkbox input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+  }
+  .AutopsyExecution-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .AutopsyExecution-tab {
+    background-color: #00897b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+  }
+  .AutopsyExecution-tab:hover {
+    background-color: #00796b;
+  }
+  .AutopsyExecution-bottom-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 5px;
+  }
+  .AutopsyExecution-section.half-width {
+    margin-bottom: 0;
+  }
+  .AutopsyExecution-floating-input:focus,
+  .AutopsyExecution-floating-select:focus {
+    outline: none;
+    border-color: #00897b;
+    box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+  }
+  .AutopsyExecution-services-section {
+    background: white;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+  }
+  .AutopsyExecution-tab-bar {
+    display: flex;
+    gap: 5px;
+    padding: 4px;
+    background: var(--upperBar-bg-color);
+    overflow-x: auto; 
+    scrollbar-width: none;
+    white-space: nowrap; 
+  }
+  .AutopsyExecution-tab-bar::-webkit-scrollbar {
+    display: none; 
+  }
+  .AutopsyExecution-tab {
+    padding: 4px 12px;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    color: var(--button-color);
+    font-size: var(--font-size);
+    background: var(--button-hover-background-color);
+    cursor: pointer;
+    white-space: nowrap; 
+  }
+  .AutopsyExecution-tab:hover {
+    background-color:var(--button-color);
+    color: var(--button-hover-background-color);
+  }
+  .AutopsyExecution-tab.active {
+    background: var(--button-color);
+    color: var(--button-hover-background-color);
+  }
+  .AutopsyExecution-summary-row {
+    display: flex;
+    flex-wrap: nowrap; 
+    gap: 10px;
+    }
+    .AutopsyExecution-summary-field {
+      display: flex;
+      align-items: center;
+      gap: 10px; 
+      flex-shrink: 0; 
+      }
+      .AutopsyExecution-summary-field label {
+      font-size: var(--font-size); 
+      white-space: nowrap; 
+      }
+      .AutopsyExecution-summary-field input {
+      font-size: var(--font-size); 
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      }
+      .AutopsyExecution-services-table{
+        padding: 8px;
+        overflow-x: scroll;
+      }
+      .AutopsyExecution-services-table table{
+        table-layout: auto;
+      }
+      .AutopsyExecution-summary-section {
+        display: flex;
+        margin-top: 10px;
+        flex-wrap: nowrap; 
+        gap: 10px; 
+        overflow-x: auto; 
+        white-space: nowrap;
+        scrollbar-width: none; 
+        -ms-overflow-style: none; 
+        }
+        .AutopsyExecution-summary-section::-webkit-scrollbar {
+        display: none; 
+        }
+        .AutopsyExecution-form-for-file{
+          display: flex;
+          gap: 15px;
+          justify-content: end;
+        }
+        .AutopsyExecution-buttons {
+          position: fixed;
+          right: 16px;
+          bottom: 16px;
+          display: flex;
+          gap: 5px;
+          font-size: var(--font-size);
+        }
+        .AutopsyExecution-buttons button, .AutopsyExecution-Upload {
+          background-color: var(--button-color);
+          font-size: var(--font-size);
+          border-radius: 5px;
+          padding: 8px 12px;
+          border: 1px solid var(--button-hover-background-color);
+          color: white;
+          cursor: pointer;
+        }
+        .AutopsyExecution-buttons button:hover, .AutopsyExecution-Upload:hover {
+          background-color: var(--button-hover-background-color);
+          border: 1px solid var(--button-hover-border-color);
+          color: var(--button-hover-text-color);
+        }
+  
+        .AutopsyExecution-btn {
+          background-color: var(--button-color);
+          font-size: var(--font-size);
+          border-radius: 5px;
+          padding: 5px 10px;
+          border: 1px solid var(--button-hover-background-color);
+          color: white;
+          cursor: pointer;
+          float: right;
+    
+        }
+  
+        .AutopsyExecution-btn:hover {
+          background-color: var(--button-hover-background-color);
+          border: 1px solid var(--button-hover-border-color);
+          color: var(--button-hover-text-color);
+        }
+  
+        .billing-ipBilling-form-row-chechbox {
+          color: #666;
+        }
+          .billing-ipBilling-form-row-chechbox label{
+            margin-left: 5px;
+        font-size: var(--font-size);
+        }
+        
+        
+  
+  @media (max-width: 1024px) {
+    .AutopsyExecution-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .AutopsyExecution-full-width {
+      grid-column: span 2;
+    }
+  }
+  @media (max-width: 768px) {
+    .AutopsyExecution-bottom-container {
+      grid-template-columns: 1fr;
+    }
+    .AutopsyExecution-tabs {
+      flex-direction: column;
+    }
+  }
+  @media (max-width: 480px) {
+    .AutopsyExecution-grid {
+      grid-template-columns: 1fr;
+    }
+    .AutopsyExecution-grid.two-columns {
+      grid-template-columns: 1fr;
+    }
+    .AutopsyExecution-full-width {
+      grid-column: span 1;
+    }
+  }

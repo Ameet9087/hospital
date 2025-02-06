@@ -1,6 +1,7 @@
 import React from "react";
 import "./OTMaster.css";
-import{ useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { API_BASE_URL } from "../../../api/api";
 
 const OTMaster = () => {
   const [locations, setLocations] = useState([]);
@@ -15,7 +16,7 @@ const OTMaster = () => {
     // Fetch location data from the API
     const fetchLocations = async () => {
       try {
-        const response = await fetch("http://192.168.43.4:8080/api/location-masters");
+        const response = await fetch(`${API_BASE_URL}/location-masters`);
         const data = await response.json();
         setLocations(data);
       } catch (error) {
@@ -28,7 +29,7 @@ const OTMaster = () => {
   useEffect(() => {
     const fetchMedicines = async () => {
       try {
-        const response = await fetch("http://192.168.43.4:8080/api/add-items");
+        const response = await fetch(`${API_BASE_URL}/add-item`);
         const data = await response.json();
         setMedicines(data);
       } catch (error) {
@@ -48,7 +49,7 @@ const OTMaster = () => {
     };
 
     try {
-      const response = await fetch("http://192.168.43.4:8080/api/otmasters", {
+      const response = await fetch(`${API_BASE_URL}/otmasters`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -83,14 +84,14 @@ const OTMaster = () => {
       </div>
       <div className="otmaster-form">
         <label>
-          OT Name: <input type="text" className="otmaster-input" 
-           value={otName}
-           onChange={(e) => setOtName(e.target.value)}/>
+          OT Name: <input type="text" className="otmaster-input"
+            value={otName}
+            onChange={(e) => setOtName(e.target.value)} />
         </label>
         <label>
-          Rent Per: <input type="text" className="otmaster-input" 
-          value={rentPerTake}
-          onChange={(e) => setRentPerTake(e.target.value)}/>
+          Rent Per: <input type="text" className="otmaster-input"
+            value={rentPerTake}
+            onChange={(e) => setRentPerTake(e.target.value)} />
         </label>
         <label>
           Select Location:
@@ -121,7 +122,7 @@ const OTMaster = () => {
           </tr>
         </thead>
         <tbody>
-        {medicines.map((medicine, index) => (
+          {medicines.map((medicine, index) => (
             <tr key={medicine.addItemId}>
               <td>{index + 1}</td>
               <td>{medicine.itemName || "N/A"}</td>
@@ -138,7 +139,7 @@ const OTMaster = () => {
         </tbody>
       </table>
       <div className="otmaster-sidebar">
-      <button onClick={handleSave}>Save</button>
+        <button onClick={handleSave}>Save</button>
       </div>
     </div>
   );

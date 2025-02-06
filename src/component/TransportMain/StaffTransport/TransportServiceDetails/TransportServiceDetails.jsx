@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios
 import './TransportServiceDetails.css';
 import Modal from '../Modal';
-import StaffTransportForm from '../TransportServiceDetails/AddTransportServiceDetails'; 
-import UpdateStaffForm from '../TransportServiceDetails/UpdateTransportServiceDetails'; 
+import StaffTransportForm from '../TransportServiceDetails/AddTransportServiceDetails';
+import UpdateStaffForm from '../TransportServiceDetails/UpdateTransportServiceDetails';
+import { API_BASE_URL } from '../../../api/api';
 
 const VehicleTable = () => {
   const [vehicleData, setVehicleData] = useState([]); // Initialize state for vehicle data
@@ -16,7 +17,7 @@ const VehicleTable = () => {
   useEffect(() => {
     const fetchVehicleData = async () => {
       try {
-        const response = await axios.get('http://localhost:8085/api/vehicles'); // Replace with your actual API URL
+        const response = await axios.get(`${API_BASE_URL}/vehicles`); // Replace with your actual API URL
         setVehicleData(response.data);
         console.log(response.data) // Set the vehicle data from response
       } catch (error) {
@@ -78,7 +79,7 @@ const VehicleTable = () => {
             <th>Driver Contact</th>
             <th>License Plate Number</th>
             <th>Vehicle Type</th>
-           
+
             <th>Availability Status</th>
             <th>Edit</th>
           </tr>

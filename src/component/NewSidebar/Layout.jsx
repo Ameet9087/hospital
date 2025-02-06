@@ -56,6 +56,7 @@ import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
 import BillingRoute from "../Billings/Billing";
 import AccountComponent from "../Accounting/AccountingComponent";
 import IMSRoutes from "../LaundryManagementSystem/lMSRoutes"
+import AutopsyNavbar from "../Autopsy/Autopsy NavBar/AutopsyNavbar";
 
 function Layout({ }) {
   return (
@@ -110,6 +111,7 @@ function Layout({ }) {
           <Route path="/procurement/*" element={<Procurementmain />} />
           <Route path="/homehealthcare/*" element={<HomeHealthRoutes />} />
           <Route path="/accounting/*" element={<AccountComponent />} />
+          <Route path="/autopsy/*" element={<AutopsyNavbar />} />
           <Route
             path="/pediatric/inpatient/*"
             element={<PediatricInPatientNavbar />}

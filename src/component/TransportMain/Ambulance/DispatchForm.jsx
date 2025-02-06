@@ -1,175 +1,221 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './DispatchForm.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import { API_BASE_URL } from '../../api/api';
-const DispatchForm = ({ patientData }) => {
 
-    const navigate = useNavigate();
+const DispatchForm = () => {
+    const [showForm, setShowForm] = useState(false); // Add showForm state
+    const [columnWidths, setColumnWidths] = useState({});
+    const tableRef = useRef(null);
+    const [emergencyData, setEmergencyData] = useState([]);
     const [formData, setFormData] = useState({
-        id: '',
-        patientName: '',
-        patientAge: '',
-        gender: '',
-        transportMode: '',
-        contactPersonName: '',
-        contactPhoneNumber: '',
+        requestId: '',
         emergencyType: '',
-        requestingFacility: '',
-        facilityAddress: '',
-        pickUpLocation: '',
-        destinationLocation: '',
-        patientCondition: '',
-        specialEquipmentNeeded: '',
-        medicationAdministered: '',
+        patientName: '',
+        patientLocation: '',
+        destination: '',
+        ambulanceType: '',
+        ambulanceId: '',
+        driverName: '',
+        driverContactNumber: '',
+        dispatchTime: '',
+        estimatedArrivalTime: '',
         priorityLevel: '',
-        additionalNotes: '',
-        dispatchDate: '',
-        dispatchDateTime: '',
-        status: '',
-        transportInfoDTO: {
-            id: null,
-        },
+        notes: '',
+        confirmDispatch: false,
     });
 
     useEffect(() => {
-        if (patientData) {
-            setFormData({
-                id: patientData?.id || '',
-                patientName: patientData?.emergencyRequest?.patientName || '',
-                patientAge: patientData?.emergencyRequest?.patientAge || '',
-                gender: patientData?.emergencyRequest?.gender || '',
-                transportMode: patientData?.modeOfTransport || '',
-                contactPersonName: patientData?.emergencyRequest?.contactPersonName || '',
-                contactPhoneNumber: patientData?.emergencyRequest?.contactPhoneNumber || '',
-                emergencyType: patientData?.emergencyRequest?.emergencyType || '',
-                requestingFacility: patientData.requestingFacility || '',
-                pickUpLocation: patientData?.fromLocation || '',
-                destinationLocation: patientData?.toLocation || '',
-                patientCondition: patientData?.emergencyRequest?.patientCondition || '',
-                specialEquipmentNeeded: patientData?.emergencyRequest?.specialEquipmentNeeded || '',
-                medicationAdministered: patientData?.emergencyRequest?.medicationAdministered || '',
-                priorityLevel: patientData.priorityLevel || '',
-                additionalNotes: patientData.additionalNotes || '',
-                dispatchDate: patientData.dispatchDate || '',
-                dispatchDateTime: patientData.dispatchDateTime || '',
-                transportStaffAssigned:patientData.transportStaffAssigned || '',
-
-                status: patientData.status || '',
-                transportInfoDTO: {
-                    id: patientData?.transportInfoDTO?.id || null,
-                },
-            });
-        }
-    }, [patientData]);
+        // Fetch emergency data to populate the table and select options
+        fetch(`${API_BASE_URL}/emergency-requests`)
+            .then((response) => response.json())
+            .then((data) => setEmergencyData(data))
+            .catch((error) => console.error("Error fetching emergency data:", error));
+    }, []);
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, type, checked } = e.target;
         setFormData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: type === "checkbox" ? checked : value,
         }));
+    };
+
+    const handleEmergencySelect = (e) => {
+        const emergencyId = e.target.value;
+        const selectedEmergency = emergencyData.find((emergency) => emergency.medicalRecordNumber === emergencyId);
+
+        // Populate the form with selected emergency data
+        if (selectedEmergency) {
+            setFormData({
+                ...formData,
+                requestId: selectedEmergency.medicalRecordNumber,
+                emergencyType: selectedEmergency.emergencyType,
+                patientName: selectedEmergency.outSidePatientDTO
+                    ? `${selectedEmergency.outSidePatientDTO.firstName} ${selectedEmergency.outSidePatientDTO.lastName}`
+                    : 'Unknown Patient',
+                patientLocation: selectedEmergency.pickUpLocation,
+                destination: selectedEmergency.destinationLocation,
+                priorityLevel: selectedEmergency.priorityLevel,
+                ambulanceType: selectedEmergency.ambulanceType || '',
+                driverName: selectedEmergency.driverName || '',
+                driverContactNumber: selectedEmergency.driverContactNumber || '',
+                dispatchTime: selectedEmergency.dispatchTime || '',
+                estimatedArrivalTime: selectedEmergency.estimatedArrivalTime || '',
+            });
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const formattedData = {
+            requestId: formData.requestId,
             emergencyType: formData.emergencyType,
-            patientName: formData.patientName,
-            patientLocation: formData.pickUpLocation,
-            destination: formData.destinationLocation,
-            ambulanceType: formData.transportMode,
-            driverName: formData.contactPersonName, // Adjust if the actual field is different
-            driverContactNumber: formData.contactPhoneNumber,
-            dispatchTime: formData.dispatchDateTime
-                ? new Date(formData.dispatchDateTime).toISOString()
-                : null,
-            estimatedArrivalTime: null, // Update with actual data if available
+            patientLocation: formData.patientLocation,
+            destination: formData.destination,
+            ambulanceType: formData.ambulanceType,
+            driverName: formData.driverName,
+            driverContactNumber: formData.driverContactNumber,
+            dispatchTime: new Date(`2025-01-25T${formData.dispatchTime}:00`).toISOString(),
+            estimatedArrivalTime: new Date(`2025-01-25T${formData.estimatedArrivalTime}:00`).toISOString(),
             priorityLevel: formData.priorityLevel,
-            notes: formData.additionalNotes,
-            confirmDispatch: "Yes",
-            transportInfoDTO: {
-                id: formData.id,
-            },
+            notes: formData.notes,
+            confirmDispatch: formData.confirmDispatch.toString(),
         };
 
-        console.log("Formatted Data:", formattedData);
-
         try {
-            const response = await axios.post(`${API_BASE_URL}/dispatch`, formattedData);
+            const response = await axios.post(`${API_BASE_URL}/dispatches`, formattedData);
             console.log("API Response: ", response.data);
             alert("Dispatch submitted successfully.");
-            navigate(-1);
         } catch (error) {
             console.error("Error submitting form: ", error);
-            alert("Failed to submit dispatch form. Please try again.");
+            alert("Error submitting dispatch.");
         }
     };
 
     return (
         <div className='dispatch-form-module-container'>
-            <h5>Dispatch Form</h5>
-            <form className="dispatch-form-module-com" onSubmit={handleSubmit}>
-                <div className="dispatch-form-module-com-left">
-                    <div className='first-div-dispatch-form'>
-                        <div className="dispatch-form-module-com-group">
-                            <label>Transport ID</label>
-                            <input type="text" name="id" value={formData.id} onChange={handleInputChange} placeholder=" ID" readOnly />
-                        </div>
-                        <div className="dispatch-form-module-com-group">
-                            <label>Patient Name</label>
-                            <input type="text" name="patientName" value={formData.patientName} onChange={handleInputChange} placeholder="Patient Name" readOnly />
-                        </div>
-                        <div className="dispatch-form-module-com-group">
-                            <label>Patient Age</label>
-                            <input type="text" name="patientAge" value={formData.patientAge} onChange={handleInputChange} placeholder="Patient Age" readOnly />
-                        </div>
-                        <div className="dispatch-form-module-com-group">
-                            <label>Gender</label>
-                            <input type="text" name="gender" value={formData.gender} onChange={handleInputChange} placeholder="Gender" readOnly />
-                        </div>
-                        <div className="dispatch-form-module-com-group">
-                            <label>Emergency Type</label>
-                            <input type="text" name="emergencyType" value={formData.emergencyType} onChange={handleInputChange} placeholder="Emergency Type" readOnly />
-                        </div>
-                        <div className="dispatch-form-module-com-group">
-                            <label>Transport Mode</label>
-                            <input type="text" name="transportMode" value={formData.transportMode} onChange={handleInputChange} placeholder="Transport Mode" readOnly />
-                        </div>
-                        <div className="dispatch-form-module-com-group">
-                            <label>Transport Staff Assigned</label>
-                            <input type="text" name="medicalRecordNumber" value={formData.transportStaffAssigned} onChange={handleInputChange} placeholder="Transport Staff Assigned" readOnly />
-                        </div>
-                    </div>
-                </div>
+            {/* Add Dispatch Button */}
+            <button className="dispatch-form-module-com-submit-button" onClick={() => setShowForm(true)}>
+                Add Dispatch
+            </button>
 
-                <div className="dispatch-form-module-com-right">
-                    <div className='second-div-dispatch-form'>
+            {/* Table Displaying Emergency Requests */}
+            <div className='table-container'>
+                <table ref={tableRef}>
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Emergency Type</th>
+                            <th>Patient Name</th>
+                            <th>Location</th>
+                            <th>Destination</th>
+                            <th>Priority Level</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {emergencyData.map((emergency, index) => (
+                            <tr key={index} onClick={() => handleEmergencySelect({ target: { value: emergency.medicalRecordNumber } })}>
+                                <td>{emergency.medicalRecordNumber}</td>
+                                <td>{emergency.emergencyType}</td>
+                                <td>{emergency.outSidePatientDTO ? `${emergency.outSidePatientDTO.firstName} ${emergency.outSidePatientDTO.lastName}` : "Unknown Patient"}</td>
+                                <td>{emergency.pickUpLocation}</td>
+                                <td>{emergency.destinationLocation}</td>
+                                <td>{emergency.priorityLevel}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Conditionally render the Dispatch Form */}
+            {showForm && (
+                <form className="dispatch-form-module-com" onSubmit={handleSubmit}>
+                    <div className="dispatch-form-module-com-left">
+                        {/* Emergency ID Select Dropdown */}
                         <div className="dispatch-form-module-com-group">
-                            <label>Contact Person Name</label>
-                            <input type="text" name="contactPersonName" value={formData.contactPersonName} onChange={handleInputChange} placeholder="Contact Person Name" readOnly />
+                            <label>Emergency ID <span className="mandatory">*</span></label>
+                            <select name="emergencyId" onChange={handleEmergencySelect} required>
+                                <option value="">Select Emergency Request</option>
+                                {emergencyData.map((emergency) => (
+                                    <option key={emergency.medicalRecordNumber} value={emergency.medicalRecordNumber}>
+                                        {emergency.medicalRecordNumber}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {/* Left Form Elements */}
+                        <div className="dispatch-form-module-com-group">
+                            <label>Request ID <span className="mandatory">*</span></label>
+                            <input type="text" name="requestId" value={formData.requestId} onChange={handleInputChange} placeholder="Request ID" required />
                         </div>
                         <div className="dispatch-form-module-com-group">
-                            <label>Contact Phone Number</label>
-                            <input type="text" name="contactPhoneNumber" value={formData.contactPhoneNumber} onChange={handleInputChange} placeholder="Contact Phone Number" readOnly />
+                            <label>Emergency Type <span className="mandatory">*</span></label>
+                            <input type="text" name="emergencyType" value={formData.emergencyType} onChange={handleInputChange} placeholder="Emergency Type" required />
                         </div>
                         <div className="dispatch-form-module-com-group">
-                            <label>Pick Up Location</label>
-                            <input type="text" name="pickUpLocation" value={formData.pickUpLocation} onChange={handleInputChange} placeholder="Pick Up Location" readOnly />
+                            <label>Patient Name <span className="mandatory">*</span></label>
+                            <input type="text" name="patientName" value={formData.patientName} onChange={handleInputChange} placeholder="Patient Name" required />
                         </div>
                         <div className="dispatch-form-module-com-group">
-                            <label>Destination Location</label>
-                            <input type="text" name="destinationLocation" value={formData.destinationLocation} onChange={handleInputChange} placeholder="Destination Location" readOnly />
+                            <label>Patient Location <span className="mandatory">*</span></label>
+                            <input type="text" name="patientLocation" value={formData.patientLocation} onChange={handleInputChange} placeholder="Patient Location" required />
                         </div>
                         <div className="dispatch-form-module-com-group">
-                            <label>Medication Administered</label>
-                            <input type="text" name="medicationAdministered" value={formData.medicationAdministered} onChange={handleInputChange} placeholder="Medication Administered" readOnly />
+                            <label>Destination <span className="mandatory">*</span></label>
+                            <input type="text" name="destination" value={formData.destination} onChange={handleInputChange} placeholder="Destination" required />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Ambulance Type <span className="mandatory">*</span></label>
+                            <input type="text" name="ambulanceType" value={formData.ambulanceType} onChange={handleInputChange} placeholder="Ambulance Type" required />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Driver Name <span className="mandatory">*</span></label>
+                            <input type="text" name="driverName" value={formData.driverName} onChange={handleInputChange} placeholder="Driver Name" required />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Driver Contact Number <span className="mandatory">*</span></label>
+                            <input type="text" name="driverContactNumber" value={formData.driverContactNumber} onChange={handleInputChange} placeholder="Driver Contact Number" required />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Dispatch Time <span className="mandatory">*</span></label>
+                            <input type="time" name="dispatchTime" value={formData.dispatchTime} onChange={handleInputChange} required />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Estimated Arrival Time <span className="mandatory">*</span></label>
+                            <input type="time" name="estimatedArrivalTime" value={formData.estimatedArrivalTime} onChange={handleInputChange} required />
                         </div>
                     </div>
-                    <button type="submit" className="dispatch-form-module-com-submit-button">Submit</button>
-                </div>
-            </form>
+
+                    <div className="dispatch-form-module-com-right">
+                        {/* Right Form Elements */}
+                        <div className="dispatch-form-module-com-group">
+                            <label>Priority Level <span className="mandatory">*</span></label>
+                            <select name="priorityLevel" value={formData.priorityLevel} onChange={handleInputChange} required>
+                                <option value="">Select Priority</option>
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Notes</label>
+                            <textarea name="notes" value={formData.notes} onChange={handleInputChange} placeholder="Additional Notes" />
+                        </div>
+                        <div className="dispatch-form-module-com-group">
+                            <label>Confirm Dispatch <span className="mandatory">*</span></label>
+                            <input type="checkbox" name="confirmDispatch" checked={formData.confirmDispatch} onChange={handleInputChange} required />
+                        </div>
+                        <div className="dispatch-form-submit-container">
+                            <button type="submit" className="dispatch-form-module-com-submit-button">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            )}
         </div>
     );
 };
