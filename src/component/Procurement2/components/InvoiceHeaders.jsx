@@ -13,6 +13,7 @@ const InvoiceHeaders = () => {
   const [filteredInvoiceHeaders, setFilteredInvoiceHeaders] = useState([]); // State for filtered data
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
+  const [selectedInvoiceHeader, setSelectedInvoiceHeader] = useState(null);
   const [searchQuery, setSearchQuery] = useState(""); // State to store search query
   const tableRef = useRef(null);
 
@@ -49,7 +50,17 @@ const InvoiceHeaders = () => {
     }
   };
 
-  const openModal = () => setIsModalOpen(true);
+  const openAddModal = () => {
+    setSelectedInvoiceHeader(null); // Reset selection for a new invoice
+    setIsModalOpen(true);
+  };
+
+  // Open modal for editing an existing invoice header
+  const openEditModal = (header) => {
+    setSelectedInvoiceHeader(header); // Set the selected invoice header
+    setIsModalOpen(true);
+  };
+
   const closeModal = () => setIsModalOpen(false);
 
   // Function to export table to Excel
@@ -110,7 +121,7 @@ const InvoiceHeaders = () => {
   return (
     <div className="InvoiceHeaders">
       {/* Add Header Button */}
-      <button className="InvoiceHeaders__add-button" onClick={openModal}>
+      <button className="InvoiceHeaders__add-button" onClick={openAddModal}>
         Add New Invoice Header
       </button>
 
@@ -191,7 +202,7 @@ const InvoiceHeaders = () => {
                 <td>{header.createdDate}</td>
                 <td>{header.isActive ? "Yes" : "No"}</td>
                 <td>
-                  <button className="invoiceHeader-edit">Edit</button>
+                <button className="invoiceHeader-edit" onClick={() => openEditModal(header)}>Edit</button>
                   <button className="invoiceHeader-delete">Delete</button>
                 </td>
               </tr>
@@ -209,6 +220,10 @@ const InvoiceHeaders = () => {
       {/* Add Invoice Header Modal */}
       <CustomModal isOpen={isModalOpen} onClose={closeModal}>
         <InvoiceHeaderForm closeModal={closeModal} />
+      </CustomModal>
+
+      <CustomModal isOpen={isModalOpen} onClose={closeModal}>
+        <InvoiceHeaderForm invoiceHeader={selectedInvoiceHeader} closeModal={closeModal} />
       </CustomModal>
     </div>
   );

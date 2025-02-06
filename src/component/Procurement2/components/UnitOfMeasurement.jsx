@@ -109,8 +109,9 @@ const UnitOfMeasurementComponent = () => {
   };
 
   const filteredUnits = unitOfMeasurements.filter((unit) =>
-    unit.name.toLowerCase().includes(searchQuery.toLowerCase())
+    unit?.name?.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  
 
   return (
     <div className="unit-of-measurement-container">

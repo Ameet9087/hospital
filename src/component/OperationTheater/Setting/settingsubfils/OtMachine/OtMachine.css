@@ -27,7 +27,32 @@
   .ot_machine_tablehead {
     background-color: #f2f2f2;
   }
-  
+  .ot_machine_container_button{
+    background-color: var(--button-color);
+    border:1px solid var(--button-color);
+    color: white;
+    padding: var(--input-box-padding);
+    margin-left: 7px;
+    border-radius: 5px;
+  }
+  .ot_machine_container_button:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border-color:var(--button-hover-border-color);
+  }
+  .ot_machine_table_button{
+    background-color: var(--button-color);
+    border:1px solid var(--button-color);
+    color: white;
+    padding: var(--input-box-padding);
+    border-radius: 5px;
+  }
+  .ot_machine_table_button:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border-color:var(--button-hover-border-color);
+    
+  }
   .ot_machine_search_bar input[type="text"] {
     width: 300px;
     padding: 2px;
@@ -69,14 +94,7 @@
     background-color: #ccc;
   }
   
-  .ot_machine_edit_button {
-    background-color: #007bff;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+ 
   
   .ot_machine_container {
     display: flex;

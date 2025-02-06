@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AddInvoiceHeader.css";
 import { API_BASE_URL } from "../../api/api";
 
-const InvoiceHeaderForm = ({closeModal}) => {
+const InvoiceHeaderForm = ({closeModal,invoiceHeader}) => {
   const [formData, setFormData] = useState({
     hospitalName: "",
     address: "",
@@ -13,7 +13,23 @@ const InvoiceHeaderForm = ({closeModal}) => {
     isActive: true,
   });
   const [image,setImage]=useState(null);
-
+  useEffect(() => {
+    console.log("hhhhh", invoiceHeader);
+    if (invoiceHeader) {
+      setFormData({
+        id: invoiceHeader.id || "",
+        hospitalName: invoiceHeader.hospitalName || "",
+        address: invoiceHeader.address || "",
+        telephone: invoiceHeader.telephone || "",
+        email: invoiceHeader.email || "",
+        headerDescription: invoiceHeader.headerDescription || "",
+        isActive: invoiceHeader.isActive === "Y", // Convert "Y"/"N" to boolean
+        pinCode: invoiceHeader.pinCode || "",
+        logoImage: invoiceHeader.logoImage || "" // Assuming it's a URL or file path
+      });
+    }
+  }, [invoiceHeader]);
+  
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -30,10 +46,9 @@ const handleFileChange = (e) => {
 
 
 
- const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault();
 
-  // Log formData before creating FormData object
   console.log("FormData state before submission:", formData);
 
   const form = new FormData();
@@ -45,10 +60,8 @@ const handleFileChange = (e) => {
     })
   );
 
-  if (image!=null) {
+  if (image != null) {
     form.append("logoImage", image);
-  } else {
-    console.error("Logo image is null");
   }
 
   console.log("FormData contents:");
@@ -57,20 +70,32 @@ const handleFileChange = (e) => {
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}/invoice-headers/add`, {
-      method: "POST",
+    const url = formData.id
+      ? `${API_BASE_URL}/invoice-headers/update/${formData.id}` // PUT request if ID exists
+      : `${API_BASE_URL}/invoice-headers/add`; // POST request if no ID
+
+    const method = formData.id ? "PUT" : "POST"; // Determine HTTP method
+
+    const response = await fetch(url, {
+      method,
       body: form,
     });
+
     if (response.ok) {
       closeModal();
-      alert("Invoice Header added successfully!");
+      alert(
+        formData.id
+          ? "Invoice Header updated successfully!"
+          : "Invoice Header added successfully!"
+      );
     } else {
-      alert("Failed to add Invoice Header. Please try again.");
+      alert("Failed to submit Invoice Header. Please try again.");
     }
   } catch (error) {
-    console.error("Error adding invoice header:", error);
+    console.error("Error submitting invoice header:", error);
   }
 };
+
 
   return (
     <div className="AddInvoiceHeader-invoice-header-form">

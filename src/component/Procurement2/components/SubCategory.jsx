@@ -42,10 +42,11 @@ const SubCategoryList = () => {
     setIsUpdatingSubCategory(false);
   };
 
-  // Filter subcategories based on the search term
+  
   const filteredSubCategories = subCategories.filter((subCategory) =>
-    subCategory.subCategoryName.toLowerCase().includes(searchTerm.toLowerCase())
+    subCategory?.subCategoryName?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
 
 
   

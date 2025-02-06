@@ -59,7 +59,14 @@
 .operationnotes-form-row label {
     width: 40%;
 }
-  
+.submit-button{
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid var(--button-hover-border-color);
+}
+.submit-button:hover{
+   background-color: white;
+}
 .operationnotes-detail{
     background-color:aliceblue;
     padding:8px;

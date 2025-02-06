@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./SurgeryEventsPage.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { useLocation } from "react-router-dom";
@@ -26,20 +27,28 @@ const SurgeryEvents = () => {
   const [Doctors, setDoctors] = useState([]);
   const [selectedDoctors, setselectedDoctors] = useState(null);
   const [selectedOperationId, setSelectedOperationId] = useState("");
-  const [selectedOperationDetails, setSelectedOperationDetails] =
-    useState(null);
+  const [selectedOperationDetails, setSelectedOperationDetails] = useState(null);
+  const navigate = useNavigate();
 
-  const handleOperationChange = (event) => {
-    const operationId = event.target.value;
-    setSelectedOperationId(operationId);
-
-    // Find the operation details
-    const operation = operations.find(
-      (op) => op.operationMasteId === parseInt(operationId)
-    );
-    setSelectedOperationDetails(operation || null);
+    const handleOperationChange = (event) => {
+      const operationId = event.target.value;
+      console.log("Selected Operation ID:", operationId); // Debugging log
+  
+      setSelectedOperationId(operationId);
+  
+      // Find the operation details
+      const operation = operations.find(
+        (op) => op.operationMasteId === parseInt(operationId)
+      );
+      
+      // console.log("Selected Operation Details:", operation);
+      
+      setSelectedOperationDetails(operation || null);
   };
-
+  
+  const handleClose = () => {
+    navigate(-1); 
+  };
   const handleButtonClick = () => {
     setIsPopupOpen(true);
   };
@@ -986,9 +995,9 @@ const SurgeryEvents = () => {
         <div className="surgery-Events-action-buttons">
           <button onClick={postSurgeryDetails}>Submit Surgery Details</button>
 
-          <button className="btn-red">Delete</button>
-          <button className="btn-orange">Clear</button>
-          <button className="btn-gray">Close</button>
+          {/* <button className="btn-red">Delete</button>
+          <button className="btn-orange">Clear</button> */}
+          <button className="btn-gray" onClick={handleClose}>Close</button>
         </div>
       </div>
 

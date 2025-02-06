@@ -265,7 +265,7 @@ const OT_Nurse_Notes = () => {
               <label>Patient First Name</label>
               <input
                 type="text"
-                name="patientName"
+                name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
               />
@@ -275,7 +275,7 @@ const OT_Nurse_Notes = () => {
               <label>Patient Last Name</label>
               <input
                 type="text"
-                name="patientName"
+                name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
               />
@@ -293,7 +293,7 @@ const OT_Nurse_Notes = () => {
             <div className="ot_nurse_notes-field">
               <label>Sex</label>
               <select
-                name="sex"
+                name="gender"
                 value={formData.gender}
                 onChange={handleChange}
               >
@@ -308,7 +308,7 @@ const OT_Nurse_Notes = () => {
               <label>Blood Group</label>
               <input
                 type="text"
-                name="weight"
+                name="bloodGroup"
                 value={formData.bloodGroup}
                 onChange={handleChange}
               />
@@ -329,7 +329,7 @@ const OT_Nurse_Notes = () => {
               <label>Anaesthesia Type</label>
               <input
                 type="text"
-                name="preAnaesthesiaCheckUpDoneOn"
+                name="anesthesiaType"
                 value={formData.anesthesiaType}
                 onChange={handleChange}
               />
@@ -339,8 +339,8 @@ const OT_Nurse_Notes = () => {
             <div className="ot_nurse_notes-field">
               <label>Time</label>
               <input
-                type="text"
-                name="time"
+                type="time"
+                name="otTime"
                 value={formData.otTime}
                 onChange={handleChange}
               />
@@ -370,7 +370,7 @@ const OT_Nurse_Notes = () => {
             <div className="ot_nurse_notes-field">
               <label>Type Of Surgery</label>
               <input
-                name="surgeryType"
+                name="operationType"
                 value={formData.operationType}
                 onChange={handleChange}
               />
@@ -382,7 +382,7 @@ const OT_Nurse_Notes = () => {
               <label>Date Of Surgery</label>
               <input
                 type="date"
-                name="surgeryDate"
+                name="otDate"
                 value={formData.otDate}
                 onChange={handleChange}
               />
@@ -567,7 +567,7 @@ const OT_Nurse_Notes = () => {
           Save
         </button>
 
-        <button className="btn-red">Delete</button>
+        {/* <button className="btn-red">Delete</button> */}
       </div>
     </div>
   );
