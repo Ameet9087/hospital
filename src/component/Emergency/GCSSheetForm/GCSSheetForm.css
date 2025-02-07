@@ -93,7 +93,9 @@
   border-color: #00897b;
   box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
 }
-
+.gcs-sheet-form{
+  margin-bottom: 10px;
+}
 
       .GCSSheetForm-buttons {
         position: fixed;

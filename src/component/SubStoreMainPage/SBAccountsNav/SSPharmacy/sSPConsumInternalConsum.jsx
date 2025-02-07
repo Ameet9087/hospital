@@ -233,7 +233,7 @@ function SSPConsumInternalConsum({ onClose }) {
               ))}
             </tbody>
           </table>
-          <button type="button" onClick={addRow}>Add Row</button>
+          <button className='sSPConsumInternalConsum-save-button' type="button" onClick={addRow}>Add Row</button>
 
           <div className="sSPConsumInternalConsum-details">
             <div className="sSPConsumInternalConsum-total-amount">

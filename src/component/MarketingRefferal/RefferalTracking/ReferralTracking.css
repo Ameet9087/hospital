@@ -83,7 +83,8 @@
 
 }
 
-.mkt-reffaringtracking-form input,textarea{
+.mkt-reffaringtracking-form input,
+.mkt-reffaringtracking-form textarea{
     width: 50%;
     line-height: 2;
     margin-left: 10px;

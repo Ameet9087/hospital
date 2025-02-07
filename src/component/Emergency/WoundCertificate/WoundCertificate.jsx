@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import PopupTable from "../popup";
 import { API_BASE_URL } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -201,7 +202,7 @@ const WoundCertificate = () => {
   const fetchMrno = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.1.46:4096/api/ip-admissions"
+        `${API_BASE_URL}/ip-admissions`
       );
       setMrNoData(response.data);
       console.log(response.data);
@@ -263,10 +264,16 @@ const WoundCertificate = () => {
   };
 
   const { columns, data } = getPopupData();
+  const navigate = useNavigate();
+  const handleBack = () => navigate("/emergency/erinitial");
 
   return (
     <div className="WoundCertificate-container">
       <div className="WoundCertificate-section">
+      <div className="er-initial-assessment-com-section">
+      <button className="er-initial-assessment-com-section-back" onClick={handleBack}>Back</button>
+
+        </div>
         <div className="WoundCertificate-header">Wound Certificate</div>
         <div className="WoundCertificate-grid">
           <FloatingInput

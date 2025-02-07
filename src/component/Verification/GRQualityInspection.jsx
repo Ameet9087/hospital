@@ -14,17 +14,18 @@ function GRQualityInspection() {
       </div>
 
       <div className="requisitionFilterSection">
-        <label className="requisitionCheckboxLabel">
-          <input type="checkbox" />
-          Check and Verify GR Quality Inspection
-        </label>
+       
         <div className="requisitionDatePickerContainer">
           <label>From:</label>
           <input type="date" className="requisitionDateInput"/>
           <label>To:</label>
           <input type="date" className="requisitionDateInput" />
-          <button className="requisitionOkButton">OK</button>
+          {/* <button className="requisitionOkButton">OK</button> */}
         </div>
+        <label className="requisitionCheckboxLabel">
+          <input type="checkbox" />
+          Check and Verify GR Quality Inspection
+        </label>
       </div>
 
       <div className="requisitionStatusSection">

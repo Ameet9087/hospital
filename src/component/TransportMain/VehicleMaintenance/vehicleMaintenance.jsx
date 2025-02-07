@@ -5,6 +5,7 @@ import VMAddNewVehicle from './vMAddNewVehicle';
 import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import CustomModal from '../../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../../api/api';
+import { useFilter } from '../../ShortCuts/useFilter';
 
 const VehicleMaintenance = () => {
   const [addVehicle, setAddVehicle] = useState([]); // State to hold vehicle data
@@ -120,7 +121,14 @@ useEffect(() => {
     newWindow.print();
     newWindow.close();
   };
-  
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  const addVehicles = useFilter(addVehicle, searchTerm);
+
+
   return (
     <div className="vehicleMaintenance-container">
       <div className="vehicleMaintenance-firstRow">
@@ -132,7 +140,12 @@ useEffect(() => {
       <div className="vehicleMaintenance-search-N-result">
         <div className="vehicleMaintenance-search-bar">
           {/* <i className="fa-solid fa-magnifying-glass"></i> */}
-          <input type="text" placeholder="Search..." />
+          <input type="text" placeholder="Search..."
+           value={searchTerm}
+           onChange={handleSearch}
+         />
+
+    
         </div>
         <div className="vehicleMaintenance-results-info">
           <span>Showing {addVehicle.length} / {addVehicle.length} results</span>
@@ -161,7 +174,7 @@ useEffect(() => {
             </tr>
           </thead>
           <tbody>
-            {addVehicle.map((test, index) => (
+            {addVehicles.map((test, index) => (
               <tr key={index}>
                 <td>{index+1}</td>
                 <td>{test.vehicleType}</td>

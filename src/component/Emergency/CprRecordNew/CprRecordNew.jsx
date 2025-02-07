@@ -5,6 +5,8 @@ import axios from "axios";
 import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -307,10 +309,16 @@ const CprRecordNew = () => {
 
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
+  const navigate = useNavigate();
 
+  const handleBack = () => navigate("/emergency/erinitial");
   return (
     <div className="CprRecordNew-container">
       <div className="CprRecordNew-section">
+      <div className="er-initial-assessment-com-section">
+      <button className="er-initial-assessment-com-section-back" onClick={handleBack}>Back</button>
+        </div>
+
         <div className="CprRecordNew-header">CPR Records New</div>
         <div className="CprRecordNew-grid">
           <FloatingInput

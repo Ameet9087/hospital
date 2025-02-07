@@ -32,6 +32,8 @@ const SSIPatientConsumConsumEntry = ({ onClose }) => {
       })
       .catch(error => console.error('Error fetching data:', error));
   }, [store]);
+
+  
   const handleItemChange = (index, event) => {
     const selectedItemId = event.target.value;
 
@@ -184,16 +186,19 @@ const SSIPatientConsumConsumEntry = ({ onClose }) => {
                     type="number"
                     value={row.consumedQty}
                     onChange={(e) => {
+                      const newValue = Number(e.target.value);
+      if (newValue < 0) return; // Prevent negative values
                       const updatedRows = rows.map((r, i) =>
                         i === index ? { ...r, consumedQty: e.target.value } : r
                       );
                       setRows(updatedRows);
                     }}
+                    min="0" 
                   />
                 </td>
                 <td>
-                  <button className="delete-btn" onClick={() => deleteRow(index)}>❌</button>
-                  <button className="add-btn" onClick={addNewRow}>➕</button>
+                  <button className="sSIPatientConsumConsumEntry-delete-btn" onClick={() => deleteRow(index)}>❌</button>
+                  <button className="sSIPatientConsumConsumEntry-add-btn" onClick={addNewRow}>➕</button>
                 </td>
               </tr>
             ))}

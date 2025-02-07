@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import './FacilityService.css';
+import { API_BASE_URL } from '../../api/api';
 
 Modal.setAppElement('#root');
 
@@ -12,10 +13,10 @@ const FacilityService = () => {
     const [selectedRequestId, setSelectedRequestId] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost:8088/api/facilityrequests/all')
+        fetch(`${API_BASE_URL}/facilityrequests/all `)
             .then(response => response.json())
             .then(data => {
-                console.log('Fetched data:', data); // Log fetched data
+                console.log('Fetched data:', data); 
                 setRequests(data);
             })
             .catch(error => {
@@ -24,8 +25,8 @@ const FacilityService = () => {
     }, []);
 
     const openModal = (request) => {
-        console.log('Opening modal for request ID:', request.request_id); // Log correct request ID
-        setSelectedRequestId(request.request_id); // Ensure correct ID field
+        console.log('Opening modal for request ID:', request.request_id); 
+        setSelectedRequestId(request.request_id); 
         setIsModalOpen(true);
     };
 
@@ -36,7 +37,7 @@ const FacilityService = () => {
 
     const handleApprove = () => {
         if (selectedRequestId) {
-            fetch(`http://localhost:8088/api/facilityrequests/setapproved/${selectedRequestId}`, {
+            fetch(`${API_BASE_URL}/facilityrequests/setapproved/${selectedRequestId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -65,7 +66,7 @@ const FacilityService = () => {
 
     const handleReject = () => {
         if (selectedRequestId) {
-            fetch(`http://localhost:8088/api/facilityrequests/setrejected/${selectedRequestId}`, {
+            fetch(`${API_BASE_URL}/facilityrequests/setrejected/${selectedRequestId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

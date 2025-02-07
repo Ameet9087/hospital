@@ -4,6 +4,7 @@ import axios from "axios";
 import PopupTable from "../popup";
 import { useLocation } from "react-router-dom";
 import { API_BASE_URL } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -184,7 +185,7 @@ const AccidentReportForm = ({ onClose }) => {
   const fetchMrno = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.46:4096/api/ip-admissions`
+        `${API_BASE_URL}/ip-admissions`
       );
       setMrNoData(response.data);
       console.log(data);
@@ -251,10 +252,18 @@ const AccidentReportForm = ({ onClose }) => {
     return { columns: [], data: [] };
   };
   const { columns, data } = getPopupData();
+  const navigate = useNavigate();
+
+  const handleBack = () => navigate("/emergency/erinitial");
+
   return (
     <>
       <div className="AccidentReportForm-container">
         <div className="AccidentReportForm-section">
+        <div className="er-initial-assessment-com-section">
+        <button className="er-initial-assessment-com-section-back" onClick={handleBack}>Back</button>
+        </div>
+
           <div className="AccidentReportForm-header">
             Accident Report Details
           </div>
@@ -546,7 +555,6 @@ const AccidentReportForm = ({ onClose }) => {
         <button className="btn-blue" onClick={handleSubmit}>
           Save
         </button>
-        <button className="btn-red">Close</button>
       </div>
     </>
   );

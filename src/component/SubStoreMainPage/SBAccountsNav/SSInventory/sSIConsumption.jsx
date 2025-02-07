@@ -7,6 +7,7 @@ import SSIPatientConsumConsumEntry from './sSIPatientConsumConsumEntry';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
 import CustomModal from '../../../CustomModel/CustomModal';
+import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
 function SSIPatientConsumption() {
   const { store } = useParams();
   const [consumptions, setConsumptions] = useState([]);
@@ -14,6 +15,8 @@ function SSIPatientConsumption() {
   const [error, setError] = useState(null);
   const [showNewPatientConsumption, setShowNewPatientConsumption] = useState(false);
   const printRef = useRef();
+const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   useEffect(() => {
     const fetchConsumptions = async () => {
@@ -59,17 +62,41 @@ function SSIPatientConsumption() {
   const handleBack = () => {
     setShowNewPatientConsumption(false);
   };
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
-  const handlePrint = useReactToPrint({
-    content: () => printRef.current,
-    documentTitle: 'Patient Consumption Report',
-    pageStyle: `
-      @page {
-        size: A4;
-        margin: 20mm;
-      }
-    `,
-  });
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
 
   const handleExportToExcel = () => {
     const tableData = [
@@ -136,7 +163,9 @@ function SSIPatientConsumption() {
             <i className="fa-solid fa-magnifying-glass"></i>
             <input type="text" placeholder="Search" />
           </div>
-          <div className="sSIConsumption-results-info">
+         
+        </div>
+        <div className="sSIConsumption-results-btn">
             <p> Showing {consumptions.length} /  {consumptions.length} results</p>
 
             <button className='sSIConsumption-print-btn' onClick={handleExportToExcel}>
@@ -144,24 +173,43 @@ function SSIPatientConsumption() {
             </button>
             <button className='sSIConsumption-print-btn' onClick={handlePrint}>Print</button>
           </div>
-        </div>
         <div style={{ display: 'none' }}>
           <div ref={printRef}>
             <h2>Patient Consumption Report</h2>
             <p>Printed On: {new Date().toLocaleString()}</p>
             <div className="sSIConsumption-table-N-paginat">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Consumed Date</th>
-                    <th>Requisition Item ID</th>
-                    <th>Consumed Qty</th>
-                    <th>Unit</th>
-                    <th>Consumption Type Name</th>
-                    <th>Entered By</th>
-                    <th>Remarks</th>
-                  </tr>
-                </thead>
+               <table  ref={tableRef}>
+                         <thead>
+                           <tr>
+                             {[ "Consumed Date",
+  "Requisition Item ID",
+  "Consumed Qty",
+  "Unit",
+  "Consumption Type Name",
+  "Entered By",
+  "Remarks"].map(
+                               (header, index) => (
+                                 <th
+                                   key={index}
+                                   style={{ width: columnWidths[index] }}
+                                   className="resizable-th"
+                                 >
+                                   <div className="header-content">
+                                     <span>{header}</span>
+                                     <div
+                                       className="resizer"
+                                       onMouseDown={startResizing(
+                                         tableRef,
+                                         setColumnWidths
+                                       )(index)}
+                                     ></div>
+                                   </div>
+                                 </th>
+                               )
+                             )}
+                           </tr>
+                         </thead>
+
                 <tbody>
                   {consumptions.map((consumption, index) => (
                     <React.Fragment key={index}>

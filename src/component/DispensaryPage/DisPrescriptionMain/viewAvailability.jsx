@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import html2pdf from 'html2pdf.js';
 import "../DisPrescriptionMain/viewAvailability.css";
 import axios from 'axios';
@@ -22,15 +22,46 @@ const PrescriptionDetails = ({ prescription, onClose }) => {
     fetchStockData();
   }, []);
 
-  const printDocument = () => {
-    const element = document.getElementById('prescription-details');
-    const options = {
-      filename: 'Prescription_Details.pdf',
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    };
+  // const printDocument = () => {
+  //   const element = document.getElementById('prescription-details');
+  //   const options = {
+  //     filename: 'Prescription_Details.pdf',
+  //     html2canvas: { scale: 2 },
+  //     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+  //   };
 
-    html2pdf().set(options).from(element).save();
+  //   html2pdf().set(options).from(element).save();
+  // };
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
 
   const updatePrescriptionStatus = async () => {
@@ -111,7 +142,7 @@ const PrescriptionDetails = ({ prescription, onClose }) => {
       </div>
 
       <div className="viewAvailability-buttons">
-        <button className="viewAvailability-print-button" onClick={printDocument}>
+        <button className="viewAvailability-print-button" onClick={handlePrint}>
           Print <i className="fa-solid fa-print"></i>
         </button>
         <button

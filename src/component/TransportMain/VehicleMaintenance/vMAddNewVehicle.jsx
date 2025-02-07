@@ -158,6 +158,7 @@ const VMAddNewVehicle = ({ onClose, editVehicle }) => {
                 placeholder="Year of Manufacture"
                 value={formData.yearOfManufacture}
                 onChange={handleChange}
+                min="1"
               />
             </div>
             <div className="vMAddNewVehicle-form-group">

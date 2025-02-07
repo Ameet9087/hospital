@@ -5,6 +5,8 @@ import PopupTable from "../popup";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { API_BASE_URL } from "../../api/api";
+import { useNavigate } from "react-router-dom";
+
 
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -189,7 +191,7 @@ const GCSSheetForm = () => {
   const fetchMrno = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.46:4096/api/ip-admissions`
+        `${API_BASE_URL}/ip-admissions`
       );
       setMrNoData(response.data);
     } catch (error) {
@@ -240,12 +242,20 @@ const GCSSheetForm = () => {
   };
 
   const { columns, data } = getPopupData();
+  const navigate = useNavigate();
+  const handleBack = () => navigate("/emergency/erinitial");
 
   return (
     <>
       <div className="CprRecordNew-container">
         <div className="CprRecordNew-section">
+        <div className="er-initial-assessment-com-section">
+        <button className="er-initial-assessment-com-section-back" onClick={handleBack}>Back</button>
+
+        </div>
+
           <div className="CprRecordNew-header">GCS Sheet Form</div>
+          <div className="gcs-sheet-form"></div>
         </div>
         <div className="CprRecordNew-section">
           <div className="CprRecordNew-header">GCS Sheet </div>
@@ -478,9 +488,7 @@ const GCSSheetForm = () => {
         <button className="btn-blue" onClick={handleSubmit}>
           Save
         </button>
-        <button className="btn-red" onClick={() => window.close()}>
-          Close
-        </button>
+       
       </div>
     </>
   );

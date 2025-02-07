@@ -63,12 +63,12 @@ const ReturnFromSubstore = () => {
         <button className="requisition-inventory-minus">-</button> 
         <button className="requisition-inventory-ok">✓ OK</button> */}
         </div>
-        <div className="return-from-substore-container-right">
+        {/* <div className="return-from-substore-container-right">
       <label >Substore:</label>
       <select>
         <option value="">Select Substore</option>
       </select>
-    </div>
+    </div> */}
       </div>
       
       <div className="return-from-substore-search-bar"> {/* Updated class name */}

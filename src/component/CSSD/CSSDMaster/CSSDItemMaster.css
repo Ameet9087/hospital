@@ -40,7 +40,8 @@
   }
   
   /* Input styling */
-  .CSSDItemMaster-formGroup input[type="text"],select {
+  .CSSDItemMaster-formGroup input[type="text"],
+  .CSSDItemMaster-formGroup select {
     width: 65%;
     padding: var(--input-box-padding);
     font-size: var(--font-size);

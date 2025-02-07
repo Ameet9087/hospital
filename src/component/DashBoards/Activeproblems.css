@@ -86,7 +86,8 @@
 .actproblemtabledata{
   padding: 0px;
 }
-.activeproblems-modal-content input,textarea{
+.activeproblems-modal-content input,
+.activeproblems-modal-content  textarea{
   width: 300px;
   margin-top: 2px;
 

@@ -246,7 +246,7 @@ function SSPStoreTransfer() {
                 />
               </td>
               <td className='NormalTransfer-actions'>
-                <button className="NormalTransfer-add-btn" onClick={handleAddRow}>Add</button>
+                <button className="NormalTransfer-button" onClick={handleAddRow}>Add</button>
                 <button
                   onClick={() => handleDeleteRow(index)}
                   disabled={packageTableRows.length <= 1}
@@ -277,6 +277,7 @@ function SSPStoreTransfer() {
                   type="number"
                   value={row.returnQuantity}
                   onChange={(e) => handleReturnQuantityChange(index, e.target.value)}
+                  min={0}
                 />
               </td>
               <td>{row.quantity}</td>

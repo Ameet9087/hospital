@@ -37,15 +37,15 @@ function NavigationBar() {
         >
           Pharmacy
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/verification/document&employmentverification"
           className={({ isActive }) =>
             `navigationBarTabButton ${isActive ? 'navigationBarActive' : ''}`
           }
         >
           Document & Employment Verification
-        </NavLink>
-        <NavLink
+        </NavLink> */}
+        {/* <NavLink
           to="/verification/identityverification"
           className={({ isActive }) =>
             `navigationBarTabButton ${isActive ? 'navigationBarActive' : ''}`
@@ -60,7 +60,7 @@ function NavigationBar() {
           }
         >
           Insurance Verification
-        </NavLink>
+        </NavLink> */}
       </div>
 
       {/* Action Buttons */}
@@ -73,12 +73,12 @@ function NavigationBar() {
             <Link to="/verification/inventory/purchase-request">
               <button className="navigationBarActionButton">Purchase Request</button>
             </Link>
-            <Link to="/verification/inventory/verify-purchase-order">
+            {/* <Link to="/verification/inventory/verify-purchase-order">
               <button className="navigationBarActionButton">Purchase Order</button>
-            </Link>
-            <Link to="/verification/inventory/gr-quality-inspection">
+            </Link> */}
+            {/* <Link to="/verification/inventory/gr-quality-inspection">
               <button className="navigationBarActionButton">GR Quality Inspection</button>
-            </Link>
+            </Link> */}
           </>
         )}
         {activeTab === 'Pharmacy' && (

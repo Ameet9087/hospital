@@ -25,12 +25,11 @@ function RequisitionPage() {
                 `${API_BASE_URL}/substores/${requisition.subStoreId}`
               );
               const substoreData = await substoreResponse.json();
-              console.log(substoreData);
               
               // Add the substore name to the requisition
               return {
                 ...requisition,
-                substoreName: substoreData.subStoreName, // Assuming 'name' is the field holding the substore name
+                substoreName: substoreData.subStoreName, // Assuming 'subStoreName' is the correct field
               };
             } catch (error) {
               console.error("Error fetching substore data:", error);
@@ -59,6 +58,14 @@ function RequisitionPage() {
     setFilterStatus(event.target.value);
   };
 
+  const handleExport = () => {
+    console.log("Exporting data...");
+  };
+
+  const handlePrint = () => {
+    console.log("Printing data...");
+  };
+
   const filteredRequisitions = requisitions.filter((requisition) => {
     if (filterStatus === "all") return true;
     return requisition.status.toLowerCase() === filterStatus;
@@ -76,7 +83,6 @@ function RequisitionPage() {
           <input type="date" className="requisitionDateInput" />
           <label>To:</label>
           <input type="date" className="requisitionDateInput" />
-          <button className="requisitionOkButton">OK</button>
         </div>
       </div>
 
@@ -88,7 +94,7 @@ function RequisitionPage() {
               name="verificationStatus"
               value="pending"
               onChange={handleFilterChange}
-              defaultChecked={filterStatus === "pending"}
+              checked={filterStatus === "pending"}
             />
             Pending
           </label>
@@ -98,6 +104,7 @@ function RequisitionPage() {
               name="verificationStatus"
               value="approved"
               onChange={handleFilterChange}
+              checked={filterStatus === "approved"}
             />
             Approved
           </label>
@@ -107,6 +114,7 @@ function RequisitionPage() {
               name="verificationStatus"
               value="rejected"
               onChange={handleFilterChange}
+              checked={filterStatus === "rejected"}
             />
             Rejected
           </label>
@@ -116,6 +124,7 @@ function RequisitionPage() {
               name="verificationStatus"
               value="all"
               onChange={handleFilterChange}
+              checked={filterStatus === "all"}
             />
             All
           </label>
@@ -124,23 +133,23 @@ function RequisitionPage() {
           <label>Requisition Status:</label>
           <select className="requisitionDropdown">
             <option value="all">--ALL--</option>
-            {/* Add more options as needed */}
           </select>
         </div>
+      </div>
+
+      <div className="verify-purchase-actions-span">
+        <span>
+          Showing {filteredRequisitions.length} / {requisitions.length} results
+        </span>
+        <button className="verify-purchase-export-button" onClick={handleExport}>Export</button>
+        <button className="print-button" onClick={handlePrint}>Print</button>
       </div>
 
       <div className="table-container">
         <table className="patientList-table" ref={tableRef}>
           <thead>
             <tr>
-              {[
-                "Req.No",
-                "StoreName",
-                "Requested On",
-                "Req. Status",
-                "Verification Status",
-                "Action",
-              ].map((header, index) => (
+              {["Req.No", "Store Name", "Requested On", "Req. Status", "Verification Status", "Action"].map((header, index) => (
                 <th
                   key={index}
                   style={{ width: columnWidths[index] }}
@@ -150,10 +159,7 @@ function RequisitionPage() {
                     <span>{header}</span>
                     <div
                       className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
+                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
                     ></div>
                   </div>
                 </th>
@@ -168,12 +174,12 @@ function RequisitionPage() {
                 <td>{requisition.requisitionDate}</td>
                 <td>{requisition.status}</td>
                 <td>
-                  {requisition.status === "Pending"
+                  {requisition.status.toLowerCase() === "pending"
                     ? "0 verified out of 1"
                     : "1 verified out of 1"}
                 </td>
                 <td>
-                  <button className="verify-btn" onClick={() => handleVerifyClick(requisition)}>
+                  <button className="requisition-verify-btn" onClick={() => handleVerifyClick(requisition)}>
                     Verify
                   </button>
                 </td>

@@ -1,6 +1,3 @@
-
-
-// export default DisPrescription;
 import React, { useState, useEffect, useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -11,12 +8,13 @@ import html2canvas from 'html2canvas';
 import axios from 'axios';
 import { API_BASE_URL } from '../../api/api';
 import * as XLSX from 'xlsx';
-import { startResizing } from "../../TableHeadingResizing/resizableColumns"
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { useFilter } from '../../ShortCuts/useFilter';
 
 const DisPrescription = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedPrescription, setSelectedPrescription] = useState(null);
   const [prescriptions, setPrescriptions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,6 +22,9 @@ const DisPrescription = () => {
   const [showModal, setShowModal] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
+
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
 
   useEffect(() => {
     if (!showModal) {
@@ -44,16 +45,27 @@ const DisPrescription = () => {
     }
   };
 
-  const filteredPrescriptions = prescriptions.filter(prescription => {
-    const searchStr = searchTerm.toLowerCase();
-    const patient = prescription.newPatientVisitDTO || {};
-    return (
-      prescription.medicationName?.toLowerCase().includes(searchStr) ||
-      patient.firstName?.toLowerCase().includes(searchStr) ||
-      patient.lastName?.toLowerCase().includes(searchStr)
-    );
-  });
+  const filterByDate = (data) => {
+    if (!dateFrom || !dateTo) return data; // If no dates, return all data
+    return data.filter((item) => {
+      const consumptionDate = new Date(item.medicationDate);
+      const startDate = new Date(dateFrom);
+      const endDate = new Date(dateTo);
+      return consumptionDate >= startDate && consumptionDate <= endDate;
+    });
+  };
 
+  // const filteredPrescriptions = filterByDate(
+  //   prescriptions.filter(prescription => {
+  //     const searchStr = searchTerm.toLowerCase();
+  //     const patient = prescription.newPatientVisitDTO || {};
+  //     return (
+  //       prescription.medicationName?.toLowerCase().includes(searchStr) ||
+  //       patient.firstName?.toLowerCase().includes(searchStr) ||
+  //       patient.lastName?.toLowerCase().includes(searchStr)
+  //     );
+  //   })
+  // );
 
   const handleViewAvailabilityClick = (prescription) => {
     const patientMedications = prescriptions.filter(
@@ -72,25 +84,42 @@ const DisPrescription = () => {
     setSelectedPrescription(null);
   };
 
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+
+
   const handlePrint = () => {
-    const tableElement = document.getElementById('prescription-table');
-    const actionColumn = tableElement.querySelectorAll('.disPrescription-action-column');
-
-    actionColumn.forEach(column => {
-      column.style.display = 'none';
-    });
-
-    html2canvas(tableElement).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, 'PNG', 10, 10, 190, 0);
-
-      pdf.output('dataurlnewwindow');
-
-      actionColumn.forEach(column => {
-        column.style.display = '';
-      });
-    });
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
 
   const handleExportToExcel = () => {
@@ -106,25 +135,11 @@ const DisPrescription = () => {
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Prescriptions');
     XLSX.writeFile(workbook, 'Prescriptions.xlsx');
   };
+  // const filteredPrescription = useFilter(filteredPrescriptions, searchTerm);
+  const filteredItems = useFilter(filterByDate(prescriptions), searchTerm);
 
-  const groupedPrescriptions = prescriptions.reduce((acc, prescription) => {
-    const patientId = prescription.newPatientVisitDTO?.outPatientId;
-    if (!acc[patientId]) {
-      acc[patientId] = [];
-    }
-    acc[patientId].push(prescription);
-    return acc;
-  }, {});
 
-  const filteredGroups = Object.keys(groupedPrescriptions).filter(patientId => {
-    const group = groupedPrescriptions[patientId];
-    const searchStr = searchTerm.toLowerCase();
-    return group.some(prescription =>
-      (prescription.status !== 'completed') &&  // Filter out completed prescriptions
-      (prescription.newPatientVisitDTO?.firstName?.toLowerCase().includes(searchStr) ||
-        prescription.medicationId.toString().includes(searchStr))
-    );
-  });
+  
 
   return (
     <div className="disPrescription-list-requisition">
@@ -132,11 +147,21 @@ const DisPrescription = () => {
         <div className="disPrescription-date-range">
           <label>
             From:
-            <input type="date" defaultValue="2024-08-09" />
+            <input
+              type="date"
+              value={dateFrom}
+                    onChange={(e) => setDateFrom(e.target.value)}
+
+            />
           </label>
           <label>
             To:
-            <input type="date" defaultValue="2024-08-16" />
+            <input
+              type="date"
+              value={dateTo}
+              onChange={(e) => setDateTo(e.target.value)}
+
+            />
           </label>
         </div>
       </div>
@@ -147,11 +172,13 @@ const DisPrescription = () => {
             type="text"
             placeholder="Search..."
             value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
+            onChange={handleSearch}
+         
+
           />
         </div>
         <div className="disPrescription-results-info">
-          <span>Showing {filteredGroups.length} / {Object.keys(groupedPrescriptions).length} results</span>
+        <span>Showing {filteredItems.length} / {prescriptions.length} results</span>
           <button className="disPrescription-print-button" onClick={handleExportToExcel}>
             <i className="fa-solid fa-file-excel"></i> Export
           </button>
@@ -165,15 +192,7 @@ const DisPrescription = () => {
         <table ref={tableRef}>
           <thead>
             <tr>
-              {[
-                "Patient ID",
-                "Patient Name",
-                "Medicine Name",
-
-                "Date",
-                "Status",
-                "Actions",
-              ].map((header, index) => (
+              {["Patient ID", "Patient Name", "Medicine Name", "Date", "Status", "Actions"].map((header, index) => (
                 <th
                   key={index}
                   style={{ width: columnWidths[index] }}
@@ -191,9 +210,9 @@ const DisPrescription = () => {
             </tr>
           </thead>
           <tbody className="disPrescription-requisition-tableBody">
-            {filteredPrescriptions.map((prescription, index) => {
+            {filteredItems.map((prescription, index) => {
               const patient = prescription.newPatientVisitDTO || {};
-              const patientName = `${patient.firstName || ''} ${patient.lastName || ''}`.trim();
+              // const patientName = `${patient.firstName || ''} ${patient.lastName || ''}`.trim();
               return (
                 <tr key={index}>
                   <td>{patient.outPatientId || 'Unknown'}</td>
@@ -201,8 +220,6 @@ const DisPrescription = () => {
                   <td>{prescription.medicationName || 'Unknown'}</td>
                   <td>{prescription.medicationDate || 'Unknown'}</td>
                   <td>{prescription.status}</td>
-                  {/* <td>{prescription.dose || 'Unknown'}</td> */}
-                  {/* <td>{prescription.frequency || 'Unknown'}</td> */}
                   <td className="disPrescription-action-column">
                     <button className="doctor-blocking-table-btn" onClick={() => handleViewAvailabilityClick(prescription)}>
                       View Availability
@@ -214,8 +231,6 @@ const DisPrescription = () => {
           </tbody>
         </table>
       </div>
-
-
 
       {showModal && selectedPrescription && (
         <div className="disPrescription-modal-overlay">

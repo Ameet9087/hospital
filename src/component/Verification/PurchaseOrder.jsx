@@ -17,17 +17,18 @@ function PurchaseOrder() {
       </div>
 
       <div className="requisitionFilterSection">
-        <label className="requisitionCheckboxLabel">
-          <input type="checkbox" />
-          Check and Verify Purchase Order
-        </label>
+      
         <div className="requisitionDatePickerContainer">
           <label>From:</label>
           <input type="date" className="requisitionDateInput"/>
           <label>To:</label>
           <input type="date" className="requisitionDateInput" />
-          <button className="requisitionOkButton">OK</button>
+          {/* <button className="requisitionOkButton">OK</button> */}
         </div>
+        <label className="requisitionCheckboxLabel">
+          <input type="checkbox" />
+          Check and Verify Purchase Order
+        </label>
       </div>
 
       <div className="requisitionStatusSection">

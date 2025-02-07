@@ -13,6 +13,7 @@ import SSPharmacyNInven from '../SSPharmacy/sSPharmacyNInven';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
 import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+import { useFilter } from '../../../ShortCuts/useFilter';
 
 function SSIStock() {
   const { store } = useParams();
@@ -21,6 +22,8 @@ function SSIStock() {
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
   const [sortDirection, setSortDirection] = useState('asc'); // Added sort direction state
   const [searchQuery, setSearchQuery] = useState(''); // State for search query
+  const [searchTerm, setSearchTerm] = useState("");
+
 const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   // Function to export the table to Excel
@@ -83,14 +86,20 @@ const [columnWidths, setColumnWidths] = useState({});
   };
 
   // Function to handle search
+  // const handleSearch = (event) => {
+  //   const query = event.target.value;
+  //   setSearchQuery(query);
+  //   const filtered = requisitions.filter(req =>
+  //     req.itemName.toLowerCase().includes(query.toLowerCase())
+  //   );
+  //   setFilteredRequisitions(filtered);
+  // };
   const handleSearch = (event) => {
-    const query = event.target.value;
-    setSearchQuery(query);
-    const filtered = requisitions.filter(req =>
-      req.itemName.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredRequisitions(filtered);
+    setSearchTerm(event.target.value);
   };
+  const requisitionsData = useFilter(requisitions, searchTerm);
+
+
 
   const renderContent = () => {
     switch (activeTab) {
@@ -126,7 +135,10 @@ const [columnWidths, setColumnWidths] = useState({});
             <div className="sSIStock-search-N-result">
               <div className="sSIStock-search-bar">
                 <i className="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Search" value={searchQuery} onChange={handleSearch} />
+                <input type="text" placeholder="Search" value={searchTerm}
+            onChange={handleSearch}
+          />
+
               </div>
               <div className="sSIStock-results-header">
                 <span>Showing {requisitions.length} / {requisitions.length} results</span>
@@ -172,8 +184,8 @@ const [columnWidths, setColumnWidths] = useState({});
                        </tr>
                      </thead>
               <tbody>
-                {requisitions.length > 0 ? (
-                  requisitions.map((req, index) => (
+                {requisitionsData.length > 0 ? (
+                  requisitionsData.map((req, index) => (
                     <tr key={index}>
                       <td>{req?.item?.itemCode}</td>
                       <td>{req?.item?.subCategory?.subCategoryName}</td>

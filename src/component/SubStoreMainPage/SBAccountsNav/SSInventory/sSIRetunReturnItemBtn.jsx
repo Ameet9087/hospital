@@ -288,7 +288,7 @@ const SSIRetunReturnItemBtn = ({ onBack }) => {
               {/* Actions */}
               <td>
                 <button
-                  className="sSIReturnItem-delete-btn"
+                  className="sSIRetunReturnItemBtn-discard-button"
                   onClick={handleDiscard}
                 >
                   x

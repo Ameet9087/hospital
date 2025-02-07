@@ -3,6 +3,7 @@ import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import './DiabeticChartForm.css';
 import PopupTable from "../popup";
 import axios from "axios";
+import { API_BASE_URL } from "../../api/api";
 const FloatingInput = ({ label, type = "text", ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);
@@ -104,7 +105,7 @@ useEffect(() => {
     e.preventDefault();
     console.log("Form Submitted:", formData);
     try {
-      const response = await fetch("http://192.168.1.36:4068/api/diabeticChart", { 
+      const response = await fetch(`${API_BASE_URL}/diabeticChart`, { 
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -132,7 +133,7 @@ setFormData((prevData) => ({
 }
 const fetchMrno = async () => {
 try {
-    const response = await axios.get(`http://192.168.1.36:4068/api/ip-admissions`);
+    const response = await axios.get(`${API_BASE_URL}/ip-admissions`);
     setMrNoData(response.data);
     console.log(mrNoData);
     console.log(data)

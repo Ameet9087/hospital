@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./AccidentReportForm.css";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 import PopupTable from "../Services/PopupTable";
+import { API_BASE_URL } from "../api/api";
 const FloatingInput = ({ label, type = "text", ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hasValue, setHasValue] = useState(false);
@@ -117,7 +118,7 @@ const AccidentReportForm = ({ onClose }) => {
         console.log("Form Submitted:", formData);
     
         try {
-          const response = await fetch("http://192.168.1.34:4069/api/accident-report-details", { 
+          const response = await fetch(`${API_BASE_URL}/accident-report-details`, { 
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -150,7 +151,7 @@ const AccidentReportForm = ({ onClose }) => {
 
   const fetchMrno = async () => {
     try {
-        const response = await axios.get(`http://192.168.1.34:4069/api/ip-admissions`);
+        const response = await axios.get(`${API_BASE_URL}/ip-admissions`);
         setMrNoData(response.data);
         console.log(mrNoData);
         
@@ -201,11 +202,18 @@ const getPopupData = () => {
   };
 
   const { columns, data } = getPopupData();
+  const navigate = useNavigate();
+  const handleBack = () => navigate("/emergency/erinitial");
 
   return (
     <>
       <div className="AccidentReportForm-container">
         <div className="AccidentReportForm-section">
+        <div className="er-initial-assessment-com-section">
+        <button className="er-initial-assessment-com-section-back" onClick={handleBack}>Back</button>
+
+        </div>
+
           <div className="AccidentReportForm-header">
             Accident Report Details
           </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./VerifyModal.css";
 import { API_BASE_URL } from "../api/api";
-
+import CustomModal from "../../CustomModel/CustomModal";
 function VerifyModal({ isOpen, onClose, requisitionDetails }) {
   const [verifyRemark, setVerifyRemark] = useState("");
   const [verifiedBy, setVerifiedBy] = useState(""); // Dynamic value for verifier
@@ -50,13 +50,14 @@ function VerifyModal({ isOpen, onClose, requisitionDetails }) {
   };
 
   return (
-    <div className="verifyModalOverlay">
-      <div className="verifyModalContainer">
-        <div className="verifyModalHeader">
+    <CustomModal isOpen={isOpen} onClose={onClose}>
+    <div >
+      <div >
+        <div >
           <h2>Check and Verify Requisition</h2>
-          <button onClick={onClose} className="verifyCloseButton">
+          {/* <button onClick={onClose} className="verifyCloseButton">
             ×
-          </button>
+          </button> */}
         </div>
         <div className="verifyModalContent">
           <div className="verifyRequisitionDetails">
@@ -160,6 +161,7 @@ function VerifyModal({ isOpen, onClose, requisitionDetails }) {
         </div>
       </div>
     </div>
+    </CustomModal>
   );
 }
 

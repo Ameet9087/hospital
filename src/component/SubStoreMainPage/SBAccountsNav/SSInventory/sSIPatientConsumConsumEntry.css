@@ -19,6 +19,7 @@
   .sSIPatientConsumConsumEntry-form-section {
     margin-bottom: 15px;
     display: flex;
+    width: 20px;
     align-items: center;
     gap: 10px;
   }
@@ -26,7 +27,7 @@
   .sSIPatientConsumConsumEntry-form-section label {
     font-size: 14px;
     margin-right: 10px;
-    font-weight: bold;
+    /* font-weight: bold; */
   }
   
   /* input[type="date"],
@@ -72,14 +73,31 @@
     background-color: white;
   }
   
-  .sSIPatientConsumConsumEntry-delete-btn, .sSIPatientConsumConsumEntry-add-btn {
-    background-color: var(--button-color);
+  .sSIPatientConsumConsumEntry-delete-btn {
+    background-color: #ff4d4d; /* Red color for delete */
     color: white;
     border: none;
-    padding: 5px;
-    border-radius: 4px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    font-size: var(--font-size);
     cursor: pointer;
+    transition: background-color 0.3s ease;
   }
+  
+ 
+  
+  .sSIPatientConsumConsumEntry-add-btn {
+    background-color: var(--button-color); /* Green color for add */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: var(--font-size);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
   
   /* input[type="number"] {
     padding: 5px;
@@ -91,6 +109,7 @@
     display: flex;
     justify-content: right;
     float: right;
+    padding: 5PX;
   }
   .sSIPatientConsumConsumEntry-remark-section {
     margin-top: 15px;
@@ -138,4 +157,7 @@
     border-radius: 5px;
     cursor: pointer;
   }
-  
+  .sSIPatientConsumConsumEntry-textarea{
+    width: 300px;
+    font-size: var(--font-size);
+  }

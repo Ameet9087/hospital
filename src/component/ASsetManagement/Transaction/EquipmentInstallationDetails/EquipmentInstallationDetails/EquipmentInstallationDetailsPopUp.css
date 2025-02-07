@@ -72,9 +72,7 @@
   width: 100%; /* Allow inputs to take available width */
 }
 
-textarea {
-  resize: none;
-}
+
 
 /* Button Styling */
 .EquipmentInstallationDetailsPopUp-form-actions {

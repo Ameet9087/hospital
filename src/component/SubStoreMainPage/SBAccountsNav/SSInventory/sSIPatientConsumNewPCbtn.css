@@ -168,3 +168,16 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+
+
+.sSIPatientConsumNewPCbtn-form-section select {
+
+  padding: 5px;
+  font-size: var(--font-size);
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
