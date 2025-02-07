@@ -4,17 +4,19 @@
 }
 
 .surgerySchedulings-add-row-button {
-  margin-bottom: 15px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  background-color: var(--button-color);
+    border:1px solid var(--button-color);
+    color: white;
+    padding: var(--input-box-padding);
+    margin-left: 7px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .surgerySchedulings-add-row-button:hover {
-  background-color: #0056b3;
+  background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border-color:var(--button-hover-border-color);
 }
 
 .surgerySchedulings-table {
@@ -43,16 +45,19 @@
 }
 
 .surgerySchedulings-edit-button {
-  padding: 5px 10px;
-  background-color: #28a745;
+  background-color: var(--button-color);
+  border:1px solid var(--button-color);
   color: white;
-  border: none;
-  border-radius: 3px;
+  padding: var(--input-box-padding);
+  margin-left: 7px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .surgerySchedulings-edit-button:hover {
-  background-color: #218838;
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border-color:var(--button-hover-border-color);
 }
 
 

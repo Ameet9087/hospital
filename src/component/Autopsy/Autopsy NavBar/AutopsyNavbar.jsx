@@ -21,7 +21,7 @@ const AutopsyNavbar = () => {
         <ul className="AtopsyNavbar-ul">
           <li className="AtopsyNavbar-nav-item">
             <Link
-              to="/autopsy/autopsyrequestform"
+              to="/autopsy/autopsyexecutionform"
               className={`AtopsyNavbar-link ${activeLink === '/autopsyrequestform' ? 'active' : ''}`}
               onClick={() => handleLinkClick('/autopsyrequestform')}
             >

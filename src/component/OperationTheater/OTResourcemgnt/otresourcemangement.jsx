@@ -68,17 +68,58 @@ const OTResourceManagement = () => {
   const filteredOTs = OTs.filter((ot) => {
     const searchTermLower = searchTerm.toLowerCase();
     return (
-      (ot.otResourceManagementId &&
-        ot.otResourceManagementId
-          .toString()
-          .toLowerCase()
-          .includes(searchTermLower)) ||
-      (ot.otName && ot.otName.toLowerCase().includes(searchTermLower))
+      (ot.otResourceManagementId && ot.otResourceManagementId.toString().toLowerCase().includes(searchTermLower)) ||
+      (ot.otMasterDTO?.otName && ot.otMasterDTO.otName.toLowerCase().includes(searchTermLower)) ||
+      (ot.availableStatus && ot.availableStatus.toLowerCase().includes(searchTermLower)) ||
+      (ot.otMachineDTO?.machineName && ot.otMachineDTO.machineName.toLowerCase().includes(searchTermLower)) ||
+      (ot.capacity && ot.capacity.toString().toLowerCase().includes(searchTermLower))
     );
   });
 
   const printList = () => {
-    window.print();
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
   };
 
   const handleAddOT = () => {
@@ -187,7 +228,7 @@ const OTResourceManagement = () => {
         <div className="ot-resource-patient-search">
           <input
             type="text"
-            placeholder="Search by OT ID or OT Name"
+            placeholder="Search"
             className="otsearch-otresource-search-input"
             value={searchTerm}
             onChange={handleSearch}

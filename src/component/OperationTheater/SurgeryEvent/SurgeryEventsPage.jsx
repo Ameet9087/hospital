@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./SurgeryEventsPage.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { useLocation } from "react-router-dom";
@@ -26,20 +27,28 @@ const SurgeryEvents = () => {
   const [Doctors, setDoctors] = useState([]);
   const [selectedDoctors, setselectedDoctors] = useState(null);
   const [selectedOperationId, setSelectedOperationId] = useState("");
-  const [selectedOperationDetails, setSelectedOperationDetails] =
-    useState(null);
+  const [selectedOperationDetails, setSelectedOperationDetails] = useState(null);
+  const navigate = useNavigate();
 
   const handleOperationChange = (event) => {
     const operationId = event.target.value;
+    console.log("Selected Operation ID:", operationId); // Debugging log
+
     setSelectedOperationId(operationId);
 
     // Find the operation details
     const operation = operations.find(
       (op) => op.operationMasteId === parseInt(operationId)
     );
+
+    // console.log("Selected Operation Details:", operation);
+
     setSelectedOperationDetails(operation || null);
   };
 
+  const handleClose = () => {
+    navigate(-1);
+  };
   const handleButtonClick = () => {
     setIsPopupOpen(true);
   };
@@ -233,7 +242,7 @@ const SurgeryEvents = () => {
   const fetchAllNurses = async () => {
     try {
       const response = await axios.get(
-        `${API_BASE_URL}/employees/get-all-nurses`
+        `${API_BASE_URL}/employees/get-all-employee`
       );
 
       // Transform the API response into the desired format
@@ -589,9 +598,8 @@ const SurgeryEvents = () => {
                 <label>Patient Name:</label>
                 <input
                   type="text"
-                  value={`${booking.ipAdmissionDTO?.patient?.patient?.firstName || ""} ${
-                    booking.ipAdmissionDTO?.patient?.patient?.lastName || ""
-                  }`}
+                  value={`${booking.ipAdmissionDTO?.patient?.patient?.firstName || ""} ${booking.ipAdmissionDTO?.patient?.patient?.lastName || ""
+                    }`}
                 />
               </div>
               <div className="surgeryEvents-form-row">
@@ -665,8 +673,8 @@ const SurgeryEvents = () => {
                   value={
                     booking?.ipAdmissionDTO?.admissionTime
                       ? booking.ipAdmissionDTO.admissionTime
-                          .split(".")[0]
-                          .substr(0, 5)
+                        .split(".")[0]
+                        .substr(0, 5)
                       : ""
                   }
                   readOnly
@@ -845,17 +853,15 @@ const SurgeryEvents = () => {
         <div className="surgeryEvents-services-section">
           <div className="surgeryEvents-tab-bar">
             <button
-              className={`surgeryEvents-tab ${
-                selectedTab === "package" ? "active" : ""
-              }`}
+              className={`surgeryEvents-tab ${selectedTab === "package" ? "active" : ""
+                }`}
               onClick={() => setSelectedTab("package")}
             >
               Services
             </button>
             <button
-              className={`surgeryEvents-tab ${
-                selectedTab === "services" ? "active" : ""
-              }`}
+              className={`surgeryEvents-tab ${selectedTab === "services" ? "active" : ""
+                }`}
               onClick={() => setSelectedTab("services")}
             >
               Previous Operation Details
@@ -986,9 +992,9 @@ const SurgeryEvents = () => {
         <div className="surgery-Events-action-buttons">
           <button onClick={postSurgeryDetails}>Submit Surgery Details</button>
 
-          <button className="btn-red">Delete</button>
-          <button className="btn-orange">Clear</button>
-          <button className="btn-gray">Close</button>
+          {/* <button className="btn-red">Delete</button>
+          <button className="btn-orange">Clear</button> */}
+          <button className="btn-gray" onClick={handleClose}>Close</button>
         </div>
       </div>
 

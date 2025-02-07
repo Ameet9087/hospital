@@ -2,26 +2,33 @@
   padding: 20px;
 }
 
-.add-record-btnathensia {
+.add-record-btn{
   color: white;
   background-color: var(--button-color);
   text-align: center;
-  padding: 5px;
-  text-decoration: none;
-  font-size: 16px;
-  border: none;
+  padding: var(--input-box-padding);
+  font-size: var(--font-size);
   border-radius: 5px;
-  margin-bottom: 10px;
-  margin-left: 20px;
-}
-
-.add-record-btnathensia:hover{
-  background-color:var(--button-hover-background-color);
-  color: var(--button-hover-text-color);
   border: 1px solid var(--button-hover-border-color);
 }
 
-
+.add-record-btn:hover{
+  background-color:var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+}
+.edit-btn{
+  color: white;
+  background-color: var(--button-color);
+  text-align: center;
+  padding: var(--input-box-padding);
+  font-size: var(--font-size);
+  border-radius: 5px;
+  border: 1px solid var(--button-hover-border-color);
+}
+.edit-btn:hover{
+  background-color:var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+}
 .anestesiaredmgnt-modal-overlay {
   position: fixed;
   top: 0;
@@ -41,6 +48,11 @@
   border-radius: 5px;
   width: 900px;
   
+}
+.modal-content{
+  max-height: 550px;
+  width: 500px;
+  overflow-y: auto;
 }
 .athensiarecordmodalform{
   display: flex;
@@ -65,17 +77,17 @@
 }
 
 .athensiarecordmodalform-save-btn {
-  background-color: #4CAF50; /* Green background color */
+  background-color: var(--button-color); 
   color: white;
-  padding: 10px 20px;
-  border: none;
+  padding: var(--input-box-padding);
+  border: 1px solid var(--button-hover-border-color);
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
 }
 
 .athensiarecordmodalform-save-btn:hover {
-  background-color: #45a049; /* Darker green on hover */
+  background-color: var(--button-hover-background-color); /* Darker green on hover */
 }
 
 
@@ -85,14 +97,17 @@
   text-align: center;
   padding: 5px;
   text-decoration: none;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;}
+  font-size: var(--font-size);
+  border: 1px solid var(--button-hover-border-color);
+  border-radius: 5px;
+  padding: var(--input-box-padding);
+}
+  
 
   .athensiarecordmodalform-cancel-btn:hover,.athensiarecordmodalform-save-btn:hover{
     background-color:var(--button-hover-background-color);
     color: var(--button-hover-text-color);
-    border: 1px solid var(--button-hover-border-color);
+    
   }
 
   

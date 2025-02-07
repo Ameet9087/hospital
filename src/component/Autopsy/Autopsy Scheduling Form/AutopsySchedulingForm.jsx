@@ -6,9 +6,8 @@ import {
   faDownload,
   faPrint,
 } from "@fortawesome/free-solid-svg-icons";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 import PopupTable from "../../Admission/PopupTable";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import "./AutopsySchedulingform.css";
 import { API_BASE_URL } from "../../api/api";
 

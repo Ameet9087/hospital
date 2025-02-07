@@ -18,10 +18,9 @@
 } /* Optionally add border-radius for rounded corners */
   
   .oppostinstruction_panel_title {
-    font-size: 14px;
+    font-size: var(--font-size);
     font-weight: bold;
     margin-bottom: 10px;
-    color: var(--button-color);
     text-align: center;
   }
   
@@ -57,4 +56,15 @@
     border-radius: 5px;
     margin-bottom: 20px;
   }
-  
+  .oppostinstruction-submit-button{
+    background-color: var(--button-color);
+    border: 1px solid var(--button-hover-border-color);
+    color: white;
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    border-radius: 5px;
+  }
+  .oppostinstruction-submit-button:hover{
+    background-color: white;
+    color: var(--button-color);
+  }

@@ -3,75 +3,71 @@ import "./AddTerms.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { API_BASE_URL } from "../../api/api";
+import axios from 'axios';
 
 const AddTermsAndConditions = ({ terms }) => {
   // State for handling form inputs
   const [shortName, setShortName] = useState("");
   const [value, setValue] = useState(""); // For ReactQuill content
   const [type, setType] = useState("");
+  const [termsId, setTermsId] = useState("");
   const [isActive, setIsActive] = useState(true); // Checkbox for isActive
   const [error, setError] = useState(""); // For handling errors
   const [isEditing, setIsEditing] = useState(false); // To check if we are updating
 
   useEffect(() => {
     if (terms) {
-      // If terms are passed (for update scenario)
+      setTermsId(terms.termsId);
       setShortName(terms.shortName);
       setValue(terms.text);
       setType(terms.type);
       setIsActive(terms.isActive);
-      setIsEditing(true); // Set editing flag to true for update
+      setIsEditing(true);
     }
   }, [terms]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!shortName || !value || !type) {
       setError("Please fill in all required fields.");
       return;
     }
-
+  
     const termData = {
       shortName,
       text: value,
       type,
       isActive,
     };
-
+  
     try {
       let response;
       if (isEditing) {
-        // PUT request for updating existing terms
-        response = await fetch(`${API_BASE_URL}/terms/update/${terms.id}`, {
-          method: "PUT",
+        response = await axios.put(`${API_BASE_URL}/terms/${termsId}`, termData, {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(termData),
         });
       } else {
         // POST request for creating new terms
-        response = await fetch(`${API_BASE_URL}/terms/create`, {
-          method: "POST",
+        response = await axios.post(`${API_BASE_URL}/terms/create`, termData, {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(termData),
         });
       }
-
-      if (response.ok) {
+  
+      if (response.status === 200 || response.status === 201) {
         alert(isEditing ? "Terms and Conditions updated successfully!" : "Terms and Conditions added successfully!");
         // Reset form fields after successful operation
         setShortName("");
         setValue("");
         setType("");
-        setIsActive(true);
+        setIsActive("");
         setIsEditing(false); // Reset the editing flag
       } else {
-        const data = await response.json();
-        setError(data.message || "Error saving terms.");
+        setError(response.data.message || "Error saving terms.");
       }
     } catch (error) {
       console.error("Error submitting form:", error);

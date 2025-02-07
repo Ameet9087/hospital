@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./AutopsyexecutionForm.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import AutopsyExecutionFormPopUp from "./AutopsyExecutionFormPopUp";
 import { API_BASE_URL } from "../../api/api";

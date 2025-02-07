@@ -56,8 +56,9 @@ import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
 import BillingRoute from "../Billings/Billing";
 import AccountComponent from "../Accounting/AccountingComponent";
 import IMSRoutes from "../LaundryManagementSystem/lMSRoutes";
+import AutopsyNavbar from "../Autopsy/Autopsy NavBar/AutopsyNavbar";
 
-function Layout({}) {
+function Layout({ }) {
   return (
     <>
       {/* <div className='layout-container'> */}
@@ -134,6 +135,7 @@ function Layout({}) {
           <Route path="/visit/*" element={<MainVisitorFile />} />
           <Route path="/oprationtheater/*" element={<OtMain />} />
           <Route path="/laundry/*" element={<IMSRoutes />} />
+          <Route path="/autopsy/*" element={<AutopsyNavbar />} />
         </Routes>
       </div>
       {/* </div> */}

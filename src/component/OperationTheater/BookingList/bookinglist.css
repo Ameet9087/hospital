@@ -89,8 +89,10 @@
   flex-direction: column;
   padding: 20px;
   border-radius: 8px;
-  
+  max-height: 700px; 
+  overflow-y: auto; 
 }
+
 
 /* Form Panels */
 .booking-list-form-panels {

@@ -42,10 +42,11 @@ const SubCategoryList = () => {
     setIsUpdatingSubCategory(false);
   };
 
-  // Filter subcategories based on the search term
+
   const filteredSubCategories = subCategories.filter((subCategory) =>
-    subCategory.subCategoryName.toLowerCase().includes(searchTerm.toLowerCase())
+    subCategory?.subCategoryName?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
 
 
 
@@ -58,8 +59,50 @@ const SubCategoryList = () => {
   };
 
   // Function to trigger print
-  const handlePrint = () => {
-    window.print(); // Triggers the browser's print window
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
   };
 
 
@@ -81,8 +124,9 @@ const SubCategoryList = () => {
         </div>
         <div className="SubCategoryList-results-info">
           Showing {filteredSubCategories.length} results
+
           <button className="SubCategoryList-print-button" onClick={handleExport}>Export</button>
-          <button className="SubCategoryList-print-button" onClick={handlePrint}>Print</button>
+          <button className="SubCategoryList-print-button" onClick={printList}>Print</button>
         </div>
 
         <div className="table-container">
@@ -127,7 +171,7 @@ const SubCategoryList = () => {
                   <td>{subCategory.category}</td>
                   <td>{subCategory.description}</td>
                   <td>{subCategory.accountingLedger}</td>
-                  <td>{subCategory.isActive ? 'Yes' : 'No'}</td>
+                  <td>{subCategory?.active ? "True" : "False"}</td>
                   <td>
                     <button
                       className="SubCategoryList-edit-button"
