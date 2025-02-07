@@ -10,7 +10,7 @@ import { API_BASE_URL } from '../../api/api';
 import * as XLSX from 'xlsx';
 import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { useFilter } from '../../ShortCuts/useFilter';
-
+import CustomModal from '../../CustomModel/CustomModal';
 const DisPrescription = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -97,6 +97,7 @@ const DisPrescription = () => {
       <html>
         <head>
           <title>Print Table</title>
+          <h4>Lit Of Precription</h4>
           <style>
             table {
               width: 100%;
@@ -232,13 +233,12 @@ const DisPrescription = () => {
         </table>
       </div>
 
-      {showModal && selectedPrescription && (
-        <div className="disPrescription-modal-overlay">
-          <div className="disPrescription-modal-content">
-            <PrescriptionDetails prescription={selectedPrescription} onClose={handleCloseDetails} />
-          </div>
-        </div>
-      )}
+     
+  <CustomModal isOpen={showModal} onClose={handleCloseDetails}>
+    <PrescriptionDetails prescription={selectedPrescription} onClose={handleCloseDetails} />
+  </CustomModal>
+
+
     </div>
   );
 };

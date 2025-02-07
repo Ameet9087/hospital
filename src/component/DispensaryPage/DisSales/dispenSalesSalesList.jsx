@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import SalesInvoice from './SalesInvoice'; // Import SalesInvoice component
 import "../DisSales/dispenSalesSalesList.css";
 import { API_BASE_URL } from '../../api/api';
-
+import CustomModal from '../../../CustomModel/CustomModal';
 function DispenSalesSalesList() {
   const [salesList, setSalesList] = useState([]); // State to store fetched sales data
   const [selectedInvoice, setSelectedInvoice] = useState(null); // State to store selected invoice data
   const [showInvoice, setShowInvoice] = useState(false); // State to show/hide the invoice
+ 
 
   // Fetch sales data from the API
   useEffect(() => {
@@ -83,14 +84,16 @@ function DispenSalesSalesList() {
           </tbody>
         </table>
       </div>
-      {showInvoice && selectedInvoice && (
-        <SalesInvoice
-          showInvoice={showInvoice}
-          handleClose={handleCloseInvoice}
-          invoiceData={selectedInvoice}
-          handlePrint={handlePrintInvoice}
-        />
-      )}
+  <CustomModal isOpen={showInvoice} onClose={handleCloseInvoice}>
+    <SalesInvoice
+      showInvoice={showInvoice}
+      handleClose={handleCloseInvoice}
+      invoiceData={selectedInvoice}
+      handlePrint={handlePrintInvoice}
+    />
+  </CustomModal>
+
+
     </div>
   );
 }

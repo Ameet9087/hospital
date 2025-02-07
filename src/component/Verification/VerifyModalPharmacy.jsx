@@ -38,11 +38,10 @@ function VerifyModalPharmacy({ isOpen, onClose, requisitionDetails }) {
   };
 
   return (
-    <div className="verifyModalOverlay">
-      <div className="verifyModalContainer">
+   
+      <div>
         <div className="verifyModalHeader">
           <h2>Check and Verify Requisition</h2>
-          <button onClick={onClose} className="verifyCloseButton">×</button>
         </div>
         <div className="verifyModalContent">
           <div className="verifyRequisitionDetails">
@@ -89,7 +88,7 @@ function VerifyModalPharmacy({ isOpen, onClose, requisitionDetails }) {
           <button onClick={onClose} className="verifyRejectButton">Reject All</button>
         </div>
       </div>
-    </div>
+   
   );
 }
 

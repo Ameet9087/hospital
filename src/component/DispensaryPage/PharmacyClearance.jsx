@@ -13,7 +13,8 @@ export default function PharmacyClearance() {
   const [showModal, setShowModal] = useState(false);
   const [selectedRequisition, setSelectedRequisition] = useState(null);
   const [patient, setPatient] = useState([]);
-
+  const [filteredData, setFilteredData] = useState([]);
+  
   useEffect(() => {
     // Fetch requisition data
     fetch(`${API_BASE_URL}/discharge-intimations`)
@@ -35,8 +36,38 @@ export default function PharmacyClearance() {
 
   // Function to trigger print
   const handlePrint = () => {
-    window.print(); // Trigger the browser print dialog
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <h4>Pharmacy Clearance</h4>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
+
 
   // Function to open modal with requisition details
   const openModal = (requisition) => {
@@ -68,7 +99,7 @@ export default function PharmacyClearance() {
       <div className="pharmacy-clearance-search-container">
         <input type="text" className="pharmacy-clearance-search-box" placeholder="Search" />
         <div className="pharmacy-clearance-search-right">
-          <span className="purchase-results-count-span">Showing 0 / 0 results</span>
+          <span className="purchase-results-count-span"> Showing {requestdata.length} / {requestdata.length} results</span>
           <button className="pharmacy-clearance-print-button" onClick={handleExport}>
             Export
           </button>

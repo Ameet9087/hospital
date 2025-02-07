@@ -610,6 +610,7 @@ const SalesSales = () => {
                     name="qty"
                     value={formData.qty}
                     onChange={handleInputChange1}
+                    min="0"
                   />
                 </div>
                 <div className="dispenSalesSales-QSalePricety">

@@ -3,7 +3,7 @@ import VerifyModal from "./VerifyModal";
 import "./RequisitionPage.css";
 import VerifyModalPharmacy from "./VerifyModalPharmacy";
 import { API_BASE_URL } from "../api/api";
-
+import CustomModal from "../../CustomModel/CustomModal";
 function RequisitionPagePharmacy() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [requisitions, setRequisitions] = useState([]);
@@ -141,13 +141,16 @@ function RequisitionPagePharmacy() {
         </table>
       </div>
 
-      {isModalOpen && (
-        <VerifyModalPharmacy
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          requisitionDetails={selectedRequisition} 
-        />
-      )}
+     
+  <CustomModal isOpen={isModalOpen} onClose={closeModal}>
+    <VerifyModalPharmacy
+      isOpen={isModalOpen}
+      onClose={closeModal}
+      requisitionDetails={selectedRequisition}
+    />
+  </CustomModal>
+
+
     </div>
   );
 }

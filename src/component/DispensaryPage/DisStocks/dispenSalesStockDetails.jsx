@@ -140,7 +140,7 @@ const SalesStockDetails = () => {
                             />
                         </div>
                         <div className="dispenSalesStockDetails-results-info">
-                            <span>Showing {salesData.length} results</span>
+                            <span>Showing {salesData.length}/{salesData.length} results</span>
                             <button className="dispenSalesStockDetails-print-button" onClick={handleExport}>
                                 <i className="fa-solid fa-file-excel"></i> Export
                             </button>

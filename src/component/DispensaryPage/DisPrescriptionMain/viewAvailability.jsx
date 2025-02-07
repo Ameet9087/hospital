@@ -104,9 +104,7 @@ const PrescriptionDetails = ({ prescription, onClose }) => {
     <div className="viewAvailability-prescription-container">
       <div className="viewAvailability-header">
         <img src="your-logo-url" alt="Logo" className="viewAvailability-logo" />
-        <div className="viewAvailability-close-button" onClick={onClose}>
-          x
-        </div>
+      
       </div>
 
       <div className="viewAvailability-info">
@@ -125,7 +123,7 @@ const PrescriptionDetails = ({ prescription, onClose }) => {
 
       <div id="prescription-details" className="viewAvailability-prescription-details">
         <h6>PRESCRIPTION DETAILS</h6>
-        <table>
+        <table className='view-availability-table'>
           <thead>
             <tr>
               <th>S.N</th>

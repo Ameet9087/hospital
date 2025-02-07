@@ -22,11 +22,11 @@ const SalesInvoice = ({
   }
 
   return (
-    <div className="dispensaryprint-invoice-form">
+    <div >
       {/* Close Button */}
-      <div className="dispensaryprint-invoice-close-button">
+      {/* <div className="dispensaryprint-invoice-close-button">
         <button onClick={handleClose}>×</button>
-      </div>
+      </div> */}
 
       <h3>PHARMACY UNITS</h3>
   <h4>{invoiceType || "INVOICE"}</h4>

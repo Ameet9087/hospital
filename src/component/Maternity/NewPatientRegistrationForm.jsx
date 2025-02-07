@@ -1,73 +1,79 @@
-import React, { useState, useEffect } from 'react';
-import './NewPatientRegistrationForm.css';
-import { API_BASE_URL } from '../api/api';
+import React, { useState, useEffect } from "react";
+import "./NewPatientRegistrationForm.css";
+import { API_BASE_URL } from "../api/api";
+import { FloatingInput, FloatingSelect } from "../../FloatingInputs";
 
 const NewPatientRegistrationForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    contactNumber: '',
-    country: 'Kenya',
-    state: '',
-    address: '',
-    gender: '',
-    age: '',
-    ageUnit: 'Years',
-    husbandName: '',
-    lastMenstruationDate: '',
-    expectedDeliveryDate: '',
-    patientHeight: '',
-    patientWeight: '',
-    obsHistory: '',
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    contactNumber: "",
+    country: "Kenya",
+    state: "",
+    address: "",
+    gender: "",
+    age: "",
+    ageUnit: "Years",
+    husbandName: "",
+    lastMenstruationDate: "",
+    expectedDeliveryDate: "",
+    patientHeight: "",
+    patientWeight: "",
+    obsHistory: "",
   });
 
   const [patients, setPatients] = useState([]);
-  const [selectedPatient, setSelectedPatient] = useState('');
+  const [selectedPatient, setSelectedPatient] = useState("");
 
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/inpatients/getAllPatients`);
+        const response = await fetch(
+          `${API_BASE_URL}/inpatients/getAllPatients`
+        );
         if (!response.ok) {
-          throw new Error('Failed to fetch patients');
+          throw new Error("Failed to fetch patients");
         }
         const data = await response.json();
-        
+
         console.log("Fetched Patient Data:prachi1", data); // Debugging log
         setPatients(data);
       } catch (error) {
-        console.error('Error fetching patients:', error);
+        console.error("Error fetching patients:", error);
       }
     };
-  
+
     fetchPatients();
   }, []);
 
-  
   const handlePatientSelect = (e) => {
     const patientId = e.target.value;
     setSelectedPatient(patientId);
-  
-    const selectedPatientData = patients.find((patient) => String(patient.inPatientId) === String(patientId));
-  
-  
+
+    const selectedPatientData = patients.find(
+      (patient) => String(patient.inPatientId) === String(patientId)
+    );
+
     if (selectedPatientData) {
       setFormData((prevFormData) => ({
         ...prevFormData,
-        firstName: selectedPatientData.patient?.firstName || '',
-        middleName: selectedPatientData.patient?.middleName || '',
-        lastName: selectedPatientData.patient?.lastName || '',
-        contactNumber: selectedPatientData.patient?.contactNumber || '',
-        address: selectedPatientData.patient?.address || '',
-        gender: selectedPatientData.patient?.gender || '',
-        age: selectedPatientData.patient?.age || '',
-        country: selectedPatientData.patient?.country || 'India',
-        state: selectedPatientData.patient?.state || '',
-        husbandName: selectedPatientData.patient?.maritalStatus === 'Married' ? selectedPatientData.previousLastName || '' : '',
-        bloodGroup: selectedPatientData.patient?.bloodGroup || '',
-        email: selectedPatientData.patient?.email || '',
-        obsHistory: selectedPatientData.patient?.occupation || '',
+        firstName: selectedPatientData.patient?.firstName || "",
+        middleName: selectedPatientData.patient?.middleName || "",
+        lastName: selectedPatientData.patient?.lastName || "",
+        contactNumber: selectedPatientData.patient?.contactNumber || "",
+        address: selectedPatientData.patient?.address || "",
+        gender: selectedPatientData.patient?.gender || "",
+        age: selectedPatientData.patient?.age || "",
+        country: selectedPatientData.patient?.country || "India",
+        state: selectedPatientData.patient?.state || "",
+        husbandName:
+          selectedPatientData.patient?.maritalStatus === "Married"
+            ? selectedPatientData.previousLastName || ""
+            : "",
+        bloodGroup: selectedPatientData.patient?.bloodGroup || "",
+        email: selectedPatientData.patient?.email || "",
+        obsHistory: selectedPatientData.patient?.occupation || "",
       }));
     } else {
     }
@@ -83,7 +89,7 @@ const NewPatientRegistrationForm = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const dataToSend = {
       firstDayOfMenstruation: formData.lastMenstruationDate,
       expectedDateOfDelivery: formData.expectedDeliveryDate,
@@ -95,9 +101,9 @@ const NewPatientRegistrationForm = ({ onClose }) => {
         inPatientId: selectedPatient,
       },
     };
-  
+
     console.log("Data to Send:", JSON.stringify(dataToSend, null, 2)); // Logs formatted JSON data
-  
+
     try {
       const response = await fetch(`${API_BASE_URL}/patients/save`, {
         method: "POST",
@@ -106,11 +112,11 @@ const NewPatientRegistrationForm = ({ onClose }) => {
         },
         body: JSON.stringify(dataToSend),
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to register patient");
       }
-  
+
       alert("Patient registered successfully");
       onClose();
     } catch (error) {
@@ -118,10 +124,9 @@ const NewPatientRegistrationForm = ({ onClose }) => {
       alert("Error registering patient");
     }
   };
-  
 
   return (
-    <div 
+    <div
     // className="new-patient-regidter-modal new-patient-registration-modal"
     >
       <div className="new-patient-regidter-modal-modal-header">
@@ -131,76 +136,95 @@ const NewPatientRegistrationForm = ({ onClose }) => {
         ✖
       </button> */}
 
-      <form className="new-patient-registration-form-container" onSubmit={handleSubmit}>
+      <form
+        className="new-patient-registration-form-container"
+        onSubmit={handleSubmit}
+      >
         <div className="new-patient-regidter-modal-section select-patient-section">
           <h4>Select Existing Patient</h4>
           <div className="new-patient-regidter-modal-form-row">
-            <label>Patient:</label>
-            <select value={selectedPatient} onChange={handlePatientSelect}>
-              <option value="">--Select Patient--</option>
-              {patients.map((patient) => (
-                <option key={patient.inPatientId} value={patient.inPatientId}>
-                  {patient.patient?.firstName} {patient.patient?.lastName}
-                </option>
-              ))}
-            </select>
+            <FloatingSelect
+             label={"Patient Name"}
+              value={selectedPatient}
+              onChange={handlePatientSelect}
+              options={[
+                { value: "", label: "" },
+                ...(Array.isArray(patients)
+                  ? patients.map((patient) => ({
+                      value: patient.inPatientId,
+                      label: `${patient.patient?.firstName} ${patient.patient?.lastName}`,
+                    }))
+                  : []),
+              ]}
+            />
           </div>
         </div>
 
         <div className="new-patient-regidter-modal-section patient-information">
           <h4>Patient Information</h4>
           <div className="new-patient-regidter-modal-form-row">
-            <label>First Name:</label>
-            <input
-              type="text"
-              name="firstName"
-              placeholder="First Name"
-              value={formData.firstName}
-              onChange={handleChange}
+            <FloatingInput
+            label={"First Name"}
+             type="text"
+             name="firstName"
+             placeholder="First Name"
+             value={formData.firstName}
+             onChange={handleChange}
+            
             />
-            <label>Contact Number:</label>
-            <input
-              type="text"
-              name="contactNumber"
-              placeholder="Contact Number"
-              value={formData.contactNumber}
-              onChange={handleChange}
+            <FloatingInput
+            label={"Contact Number"}
+             type="text"
+             name="contactNumber"
+             placeholder="Contact Number"
+             value={formData.contactNumber}
+             onChange={handleChange}
+            
             />
           </div>
           <div className="new-patient-regidter-modal-form-row">
-            <label>Middle Name:</label>
-            <input
-              type="text"
-              name="middleName"
-              placeholder="Middle Name"
-              value={formData.middleName}
-              onChange={handleChange}
+            <FloatingInput
+            label={"Middle Name"}
+             type="text"
+             name="middleName"
+             placeholder="Middle Name"
+             value={formData.middleName}
+             onChange={handleChange}
             />
-            <label>Country:</label>
-            <select name="country" value={formData.country} onChange={handleChange}>
-              <option value="Kenya">Kenya</option>
-              <option value="United States">United States</option>
-              <option value="China">China</option>
-              <option value="India">India</option>
-              <option value="Germany">Germany</option>
-              <option value="United Kingdom">United Kingdom</option>
-              <option value="France">France</option>
-              <option value="Japan">Japan</option>
-              <option value="Canada">Canada</option>
-              <option value="Australia">Australia</option>
-              <option value="Brazil">Brazil</option>
-            </select>
+            
+            <FloatingSelect
+  name="country"
+  value={formData.country}
+  onChange={handleChange}
+  options={[
+    { value: "", label: "Select a country" },
+    { value: "Kenya", label: "Kenya" },
+    { value: "United States", label: "United States" },
+    { value: "China", label: "China" },
+    { value: "India", label: "India" },
+    { value: "Germany", label: "Germany" },
+    { value: "United Kingdom", label: "United Kingdom" },
+    { value: "France", label: "France" },
+    { value: "Japan", label: "Japan" },
+    { value: "Canada", label: "Canada" },
+    { value: "Australia", label: "Australia" },
+    { value: "Brazil", label: "Brazil" }
+  ]}
+/>
           </div>
 
+
+       
           <div className="new-patient-regidter-modal-form-row">
-            <label>Last Name:</label>
-            <input
-              type="text"
-              name="lastName"
-              placeholder="Last Name"
-              value={formData.lastName}
-              onChange={handleChange}
-            />
+          <FloatingInput
+       label={"Last Name"}
+        type="text"
+        name="lastName"
+        placeholder="Last Name"
+        value={formData.lastName}
+        onChange={handleChange}
+       
+       />
             <label>State:</label>
             <select name="state" value={formData.state} onChange={handleChange}>
               <option value="Maharashtra">Maharashtra</option>
@@ -218,7 +242,11 @@ const NewPatientRegistrationForm = ({ onClose }) => {
 
           <div className="new-patient-regidter-modal-form-row">
             <label>Gender:</label>
-            <select name="gender" value={formData.gender} onChange={handleChange}>
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+            >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
@@ -242,7 +270,11 @@ const NewPatientRegistrationForm = ({ onClose }) => {
               value={formData.age}
               onChange={handleChange}
             />
-            <select name="ageUnit" value={formData.ageUnit} onChange={handleChange}>
+            <select
+              name="ageUnit"
+              value={formData.ageUnit}
+              onChange={handleChange}
+            >
               <option value="Years">Years</option>
               <option value="Months">Months</option>
             </select>
@@ -261,7 +293,9 @@ const NewPatientRegistrationForm = ({ onClose }) => {
               onChange={handleChange}
               required
             />
-            <label>1<sup>st</sup> Day of Last Menstruation:</label>
+            <label>
+              1<sup>st</sup> Day of Last Menstruation:
+            </label>
             <input
               type="date"
               name="lastMenstruationDate"
@@ -310,8 +344,11 @@ const NewPatientRegistrationForm = ({ onClose }) => {
           </div>
         </div>
 
-        <button type="submit" className="new-patient-regidter-modal-register-btn">
-        Register
+        <button
+          type="submit"
+          className="new-patient-regidter-modal-register-btn"
+        >
+          Register
         </button>
       </form>
     </div>

@@ -1,10 +1,10 @@
 .viewAvailability-prescription-container {
-    max-width: 600px;
+    max-width: 900px;
     /* margin: 0 auto; */
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     padding: 10px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
     background-color: #fff;
   }
   
@@ -136,8 +136,38 @@
 
 .viewAvailability-prescription-details .availability-no {
   color: red;
-  font-weight: bold;
 }
 
+.view-availability-table-container {
+    max-height: 600px; /* Adjust as needed */
+    overflow-y: auto;
+    display: block;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE & Edge */
+}
+
+/* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+.view-availability-table-container::-webkit-scrollbar {
+    display: none;
+}
+
+.view-availability-table thead,
+.view-availability-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.view-availability-table tbody {
+    display: block;
+    max-height: 300px; 
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+.view-availability-table tbody::-webkit-scrollbar {
+    display: none;
+}
 
   

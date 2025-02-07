@@ -99,6 +99,9 @@ const SettingCategory = () => {
     newWindow.close();
   };
 
+
+
+  
   // 🔹 **Filtering categories based on search term**
   const filteredSuppliers = suppliers.filter(supplier =>
     supplier.categoryName.toLowerCase().includes(searchTerm.toLowerCase()) ||
