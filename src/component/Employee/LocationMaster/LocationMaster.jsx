@@ -8,6 +8,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { API_BASE_URL } from "../../api/api";
 import DisplaySOC from "../SOCMaster/DisplaySOC";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 function LocationMaster({ update, onClose, onSuccess }) {
   const location = useLocation();
@@ -96,14 +102,14 @@ function LocationMaster({ update, onClose, onSuccess }) {
         onSuccess();
       }
 
-      alert(
+      toast.success(
         update
           ? "Location updated successfully."
           : "Location data saved successfully."
       );
     } catch (error) {
       console.error("Error saving location:", error);
-      alert(update ? "Unable to save updated data" : "Unable to save");
+      toast.error(update ? "Unable to save updated data" : "Unable to save");
     }
   };
   const navigate = useNavigate();
@@ -132,8 +138,8 @@ function LocationMaster({ update, onClose, onSuccess }) {
         >
           <div className="location-master__left-column">
             <div className="location-master__form-group">
-              <label>Location Name: *</label>
-              <input
+              <FloatingInput
+                label={"Location Name"}
                 type="text"
                 name="locationName"
                 value={locationData.locationName}
@@ -142,24 +148,18 @@ function LocationMaster({ update, onClose, onSuccess }) {
               />
             </div>
             <div className="location-master__form-group">
-              <label>SOC Name:*</label>
-              <input
-                type="text"
+              <FloatingInput
+                label={"SOC Name"}
+                type="search"
                 name="socName"
                 value={selectedSoc?.socName}
                 required
+                onIconClick={handleSearchClick}
               />
-              <button
-                type="button"
-                className="search-icon-button"
-                onClick={handleSearchClick}
-              >
-                <FontAwesomeIcon icon={faSearch} />
-              </button>
             </div>
             <div className="location-master__form-group">
-              <label style={{ width: "100px" }}>Current Discount Policy:</label>
-              <input
+              <FloatingInput
+                label={"Current Discount Policy"}
                 type="text"
                 name="currentDiscountPolicy"
                 value={locationData.currentDiscountPolicy}
@@ -167,8 +167,8 @@ function LocationMaster({ update, onClose, onSuccess }) {
               />
             </div>
             <div className="location-master__form-group">
-              <label>Location Code:</label>
-              <input
+              <FloatingInput
+                label={"Location Code"}
                 type="text"
                 name="locationCode"
                 value={locationData.locationCode}
@@ -176,8 +176,8 @@ function LocationMaster({ update, onClose, onSuccess }) {
               />
             </div>
             <div className="location-master__form-group">
-              <label>Hospital Name:</label>
-              <input
+              <FloatingInput
+                label={"Hospital Name"}
                 type="text"
                 name="hospitalName"
                 value={locationData.hospitalName}
@@ -185,16 +185,16 @@ function LocationMaster({ update, onClose, onSuccess }) {
               />
             </div>
             <div className="location-master__form-group">
-              <label>Location Address:</label>
-              <textarea
+              <FloatingTextarea
+                label={"Location Address"}
                 name="locationAddress"
                 value={locationData.locationAddress}
                 onChange={handleChange}
-              ></textarea>
+              />
             </div>
             <div className="location-master__form-group">
-              <label>Phone:</label>
-              <input
+              <FloatingInput
+                label={"Phone"}
                 type="text"
                 name="phone"
                 value={locationData.phone}
@@ -202,8 +202,8 @@ function LocationMaster({ update, onClose, onSuccess }) {
               />
             </div>
             <div className="location-master__form-group">
-              <label>Drug License No:</label>
-              <input
+              <FloatingInput
+                label={"Drug License No"}
                 type="text"
                 name="drugLicenseNo"
                 value={locationData.drugLicenseNo}
@@ -211,8 +211,8 @@ function LocationMaster({ update, onClose, onSuccess }) {
               />
             </div>
             <div className="location-master__form-group">
-              <label>Square Feet No:</label>
-              <input
+              <FloatingInput
+                label={"Square Feet No"}
                 type="text"
                 name="squareFeetNo"
                 value={locationData.squareFeetNo}
@@ -220,18 +220,17 @@ function LocationMaster({ update, onClose, onSuccess }) {
               />
             </div>
             <div className="location-master__form-group">
-              <label>DHCP Sequence:</label>
-              <input
+              <FloatingInput
+                label={"DHCP Sequence"}
                 type="text"
                 name="dhcpSequence"
                 value={locationData.dhcpSequence}
                 onChange={handleChange}
-                placeholder="Enter First 9 Integers of IP Address"
               />
             </div>
             <div className="location-master__form-group">
-              <label>To Address:</label>
-              <input
+              <FloatingInput
+                label={"To Address"}
                 type="text"
                 name="toAddress"
                 value={locationData.toAddress}
@@ -271,17 +270,17 @@ function LocationMaster({ update, onClose, onSuccess }) {
             </div>
 
             <div className="location-master__form-group">
-              <label>Parameters Count:</label>
-              <input
+              <FloatingInput
+                label={"Parameters Count"}
                 type="text"
                 name="parametersCount"
                 value={locationData.parametersCount}
-                readOnly
+                onChange={handleChange}
               />
             </div>
             <div className="location-master__form-group">
-              <label style={{ width: "100px" }}>Provident Fund Code:</label>
-              <input
+              <FloatingInput
+                label={"Provident Fund Code"}
                 type="text"
                 name="providentFundCode"
                 value={locationData.providentFundCode}
@@ -298,10 +297,8 @@ function LocationMaster({ update, onClose, onSuccess }) {
           {/* Right Column */}
           <div className="location-master__right-column">
             <div className="location-master__form-group">
-              <label style={{ width: "100px" }}>
-                Employee No. Starts With:
-              </label>
-              <input
+              <FloatingInput
+                label={"Employee No. Starts With"}
                 type="text"
                 name="employeeNoStartsWith"
                 value={locationData.employeeNoStartsWith}
@@ -309,8 +306,8 @@ function LocationMaster({ update, onClose, onSuccess }) {
               />
             </div>
             <div className="location-master__form-group">
-              <label>Description:</label>
-              <input
+              <FloatingTextarea
+                label={"Description"}
                 type="text"
                 name="description"
                 value={locationData.description}
@@ -318,8 +315,8 @@ function LocationMaster({ update, onClose, onSuccess }) {
               />
             </div>
             <div className="location-master__form-group">
-              <label>Email Id:</label>
-              <input
+              <FloatingInput
+                label={"Email Id"}
                 type="email"
                 name="emailId"
                 value={locationData.emailId}
@@ -333,8 +330,8 @@ function LocationMaster({ update, onClose, onSuccess }) {
                 Online Appointment Desk
               </div>
               <div className="location-master__form-group">
-                <label>Help Message:</label>
-                <input
+                <FloatingInput
+                  label={"Help Message"}
                   type="text"
                   name="helpMessage"
                   value={locationData.helpMessage}
@@ -342,8 +339,8 @@ function LocationMaster({ update, onClose, onSuccess }) {
                 />
               </div>
               <div className="location-master__form-group">
-                <label>Non Emer Start Tm:</label>
-                <input
+                <FloatingInput
+                  label={"Non Emer Start Tm"}
                   type="text"
                   name="nonEmerStartTmeg"
                   value={locationData.nonEmerStartTmeg}
@@ -352,8 +349,8 @@ function LocationMaster({ update, onClose, onSuccess }) {
                 />
               </div>
               <div className="location-master__form-group">
-                <label>Non Emer End Tm:</label>
-                <input
+                <FloatingInput
+                  label="Non Emer End Tm"
                   type="text"
                   name="nonEmerEndTmeg"
                   value={locationData.nonEmerEndTmeg}

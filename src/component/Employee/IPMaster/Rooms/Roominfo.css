@@ -46,7 +46,12 @@
 }
 
 .room-info-panel-content {
+    width: 500px;
     padding: 8px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+    margin: 10px 0;
 }
 
 .room-info-form-row {
@@ -57,23 +62,6 @@
     gap: 4px;
     font-size: var(--font-size);
 }
-
-.room-info-form-row label {
-    min-width: 100px;
-}
-
-.room-info-input-with-search {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-}
-
-.room-info-input-with-search input {
-    padding: var(--input-box-padding);
-    border: 1px solid gray;
-    border-radius: 5px;
-}
-
 .room-info-magnifier-btn {
     background: #f0f0f0;
     border: 1px solid #ccc;
@@ -90,6 +78,16 @@
   cursor: pointer;
   margin-bottom: 10px;
 }
+
+.room-del-btn{
+    padding: 4px 12px;
+    border: 1px solid red;
+    border-radius: 5px;
+    color: white;
+    background-color: red;
+    cursor: pointer;
+    margin-left: 5px;
+  }
 .room-info-status-controls {
     padding: 8px;
     display: flex;

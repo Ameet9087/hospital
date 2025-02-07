@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "react-bootstrap";
 import "./EmployeeRoleTable.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import AddEmployeeRoleForm from "./AddEmployeeRole";
 import { API_BASE_URL } from "../api/api";
 import { useFilter } from "../ShortCuts/useFilter";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../FloatingInputs";
 const EmployeeRoleComponent = () => {
   const [showAddRoleModal, setShowAddRoleModal] = useState(false);
   const [roleData, setRoleData] = useState({ role: "", description: "" });
@@ -36,21 +38,18 @@ const EmployeeRoleComponent = () => {
 
   const handleImportDepartment = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:4096/api/employeeRoles/insert"
-      );
+      const response = await axios.post(`${API_BASE_URL}/employeeRoles/insert`);
 
       if (response) {
-        alert("Predefined employee roles inserted successfully!");
+        toast.success("Predefined employee roles inserted successfully!");
       } else {
-        alert("Failed to insert employee roles.");
+        toast.error("Failed to insert employee roles.");
       }
     } catch (error) {
       console.error("Error inserting employee roles:", error);
-      alert("An error occurred while inserting employee roles.");
+      toast.error("An error occurred while inserting employee roles.");
     }
-  }
-
+  };
 
   const handleOpenAddRoleModal = (role = "", description = "") => {
     setRoleData({ role, description });
@@ -84,13 +83,15 @@ const EmployeeRoleComponent = () => {
             </h1>
           </div>
         </div>
-        <input
-          type="text"
-          placeholder="Search"
-          className="emp-search-input"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
+        <div className="emp-search-input">
+          <FloatingInput
+            label={"Search"}
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
 
         <div className="table-container">
           <table ref={tableRef}>

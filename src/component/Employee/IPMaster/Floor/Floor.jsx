@@ -4,6 +4,12 @@ import CustomModal from "../../../../CustomModel/CustomModal";
 import axios from "axios";
 import { API_BASE_URL } from "../../../api/api";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 export default function Floor() {
   const [columnWidths, setColumnWidths] = useState({});
@@ -80,11 +86,11 @@ export default function Floor() {
         // Update functionality
         const id = data[editIndex]?.id; // Get the id from the selected item
         await axios.put(`${API_BASE_URL}/floors/${id}`, payload);
-        alert("Floor updated successfully!");
+        toast.success("Floor updated successfully!");
       } else {
         // Add functionality
         await axios.post(`${API_BASE_URL}/floors`, payload);
-        alert("Floor added successfully!");
+        toast.success("Floor added successfully!");
       }
 
       setOpenModel(false);
@@ -105,7 +111,7 @@ export default function Floor() {
       setData(response.data);
     } catch (error) {
       console.error("Error occurred:", error);
-      alert("An error occurred while saving/updating the floor.");
+      toast.error("An error occurred while saving/updating the floor.");
     }
   };
 
@@ -127,20 +133,18 @@ export default function Floor() {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/floors/${id}`, {
-        method: "DELETE",
-      });
+      const response = await axios.delete(`${API_BASE_URL}/floors/${id}`);
       if (response.ok) {
         const updatedData = data.filter((item) => item.id !== id);
         setData(updatedData);
-        alert("Floor deleted successfully!");
+        toast.success("Floor deleted successfully!");
       } else {
         console.error("Failed to delete the floor");
-        alert("Error occurred while deleting the floor");
+        toast.error("Error occurred while deleting the floor");
       }
     } catch (error) {
       console.error("Error occurred:", error);
-      alert("An error occurred while deleting the floor");
+      toast.error("An error occurred while deleting the floor");
     }
   };
 
@@ -235,108 +239,104 @@ export default function Floor() {
         </table>
       </div>
       <CustomModal isOpen={openModel} onClose={() => setOpenModel(false)}>
-        <form className="floor-form" onSubmit={handleSubmit}>
-          <span className="floors-Detail">Floor Details</span>
-          <div className="floor-form-group">
-            <label htmlFor="name">Floor Name*</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="e.g.,First Floor"
-              required
-            />
-          </div>
-          <div className="floor-form-group">
-            <label htmlFor="floorNumber">Floor Number*</label>
-            <input
-              type="text"
-              id="floorNumber"
-              name="floorNumber"
-              value={form.floorNumber}
-              onChange={handleChange}
-              placeholder="e.g., Floor no 1"
-              required
-            />
-          </div>
-          <div className="floor-form-group">
-            <label htmlFor="orderNo">Order No*</label>
-            <input
-              type="number"
-              id="orderNo"
-              name="orderNo"
-              value={form.orderNo}
-              onChange={handleChange}
-              placeholder="Define display order"
-              required
-            />
-          </div>
-          <div className="floor-form-group">
-            <label htmlFor="location">Location*</label>
-            <select
-              id="location"
-              name="location"
-              value={form.location}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select</option>
-              <option value="North">North</option>
-              <option value="South">South</option>
-              <option value="East">East</option>
-              <option value="West">West</option>
-            </select>
-          </div>
-          <div className="floor-form-group">
-            <label htmlFor="remarks">Remarks</label>
-            <textarea
-              id="remarks"
-              name="remarks"
-              value={form.remarks}
-              onChange={handleChange}
-              placeholder="Additional notes"
-            ></textarea>
-          </div>
-          <div className="floor-form-group">
-            <label htmlFor="createByName">Floor Incharge</label>
-            <input
-              type="text"
-              id="createByName"
-              name="createByName"
-              value={form.createByName}
-              onChange={handleChange}
-              placeholder="Enter Floor Incharge"
-            />
-          </div>
-          <div className="floor-form-group">
-            <label>Status:</label>
-            <label>
-              <input
-                type="radio"
-                name="status"
-                value="Active"
-                checked={form.status === "Active"}
+        <div className="floor-modal">
+          <form className="floor-form" onSubmit={handleSubmit}>
+            <span className="floors-Detail">Floor Details</span>
+            <div className="floor-form-group">
+              <FloatingInput
+                label={"Floor Name"}
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="floor-form-group">
+              <FloatingInput
+                label={"Floor Number"}
+                type="text"
+                id="floorNumber"
+                name="floorNumber"
+                value={form.floorNumber}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="floor-form-group">
+              <FloatingInput
+                label={"Order No"}
+                type="number"
+                min="0"
+                name="orderNo"
+                value={form.orderNo}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="floor-form-group">
+              <FloatingSelect
+                label={"Location"}
+                id="location"
+                name="location"
+                value={form.location}
+                onChange={handleChange}
+                options={[
+                  { value: "North", label: "North" },
+                  { value: "South", label: "South" },
+                  { value: "East", label: "East" },
+                  { value: "West", label: "West" },
+                ]}
+                required
+              />
+            </div>
+            <div className="floor-form-group">
+              <FloatingTextarea
+                label={"Remarks"}
+                id="remarks"
+                name="remarks"
+                value={form.remarks}
                 onChange={handleChange}
               />
-              Active
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="status"
-                value="Inactive"
-                checked={form.status === "Inactive"}
+            </div>
+            <div className="floor-form-group">
+              <FloatingInput
+                label={"Floor Incharge"}
+                type="text"
+                id="createByName"
+                name="createByName"
+                value={form.createByName}
                 onChange={handleChange}
               />
-              Inactive
-            </label>
-          </div>
-          <button type="submit" className="floor-btn">
-            {isEditing ? "Update" : "Save"}
-          </button>
-        </form>
+            </div>
+            <div className="floor-form-group">
+              <label>Status:</label>
+              <label>
+                <input
+                  type="radio"
+                  name="status"
+                  value="Active"
+                  checked={form.status === "Active"}
+                  onChange={handleChange}
+                />
+                Active
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="status"
+                  value="Inactive"
+                  checked={form.status === "Inactive"}
+                  onChange={handleChange}
+                />
+                Inactive
+              </label>
+            </div>
+            <button type="submit" className="floor-btn">
+              {isEditing ? "Update" : "Save"}
+            </button>
+          </form>
+        </div>
       </CustomModal>
     </>
   );

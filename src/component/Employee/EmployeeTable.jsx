@@ -3,10 +3,11 @@ import { Modal, Button } from "react-bootstrap";
 import "./EmployeeTable.css";
 import UpdateEmployeeForm from "./UpdateEmployeeForm"; // Ensure this path is correct
 import AddEmployeeForm from "./AddEmployeeForm";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import CustomModal from "../../CustomModel/CustomModal";
 import { useFilter } from "../ShortCuts/useFilter";
+import { FloatingInput } from "../../FloatingInputs";
 
 const Employeecomponent = () => {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -64,13 +65,14 @@ const Employeecomponent = () => {
             + Add Employee
           </Button>
         </div>
-        <input
-          type="text"
-          placeholder="Search"
-          className="employee-search-input"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
+        <div className="employee-search-input">
+          <FloatingInput
+            label={"Search"}
+            type="text"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
 
         <div className="table-container">
           <table ref={tableRef}>

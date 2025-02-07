@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import "./ManageImagingType.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { useFilter } from "../../ShortCuts/useFilter";
 import axios from "axios";
-import RadiologyPopupTable from "./RadiologyPopupTable";
+import { FloatingInput, PopupTable } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 const ManageImagingItem = () => {
   const [showEditModal, setShowEditModal] = useState(false);
@@ -166,20 +167,18 @@ const ManageImagingItem = () => {
             body: JSON.stringify(newItem),
           }
         );
-        console.log("Updated item:", newItem);
+        toast.success("Item Updated Successfully");
       } else {
-        console.log(newItem);
-
         await fetch(`${API_BASE_URL}/imaging-items/create-imaging-items`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newItem),
         });
-        console.log("New item added");
+        toast.success("New item added");
       }
       fetchImagingItems();
     } catch (error) {
-      console.error("Error submitting form:", error);
+      toast.error("Error submitting form:", error);
     }
     setShowEditModal(false);
   };
@@ -195,13 +194,14 @@ const ManageImagingItem = () => {
             + Add Item
           </button>
         </div>
-        <input
-          type="text"
-          className="manage-imaging-item-search-bar"
-          placeholder="Search"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
+        <div className="manage-imaging-item-search-bar">
+          <FloatingInput
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
 
         <div className="manage-item">
           <table ref={tableRef}>
@@ -270,70 +270,44 @@ const ManageImagingItem = () => {
                   </h3>
 
                   <div className="manage-modal-form-group">
-                    <label className="manage-modal-form-label">
-                      Imaging Type{" "}
-                      <span className="manage-modal-text-danger">*</span>:
-                    </label>
-                    <input
-                      type="text"
+                    <FloatingInput
+                      label={"Imaging Type"}
+                      type="search"
                       value={selectedImagingType?.imagingTypeName}
-                      placeholder="Imaging Type Name"
                       required
-                      className="manage-modal-form-control"
+                      onIconClick={() => setActivePopup("imagingType")}
                     />
-                    <i
-                      onClick={() => setActivePopup("imagingType")}
-                      className="fa-solid fa-magnifying-glass"
-                    ></i>
                   </div>
 
                   <div className="manage-modal-form-group">
-                    <label className="manage-modal-form-label">
-                      Imaging Item Name{" "}
-                      <span className="manage-modal-text-danger">*</span>:
-                    </label>
-                    <input
-                      type="text"
+                    <FloatingInput
+                      label={"Imaging Item Name"}
+                      type="search"
                       value={selectedServiceDetails?.serviceName || role}
                       placeholder="Imaging Item Name"
+                      onIconClick={() => setActivePopup("serviceDetails")}
                       required
-                      className="manage-modal-form-control"
                     />
-                    <i
-                      onClick={() => setActivePopup("serviceDetails")}
-                      className="fa-solid fa-magnifying-glass"
-                    ></i>
                   </div>
                   <div className="manage-modal-form-group">
-                    <label className="manage-modal-form-label">
-                      Template{" "}
-                      <span className="manage-modal-text-danger">*</span>:
-                    </label>
-                    <input
-                      type="text"
+                    <FloatingInput
+                      label={"Template"}
+                      type="search"
                       value={selectedRadiologyTemplate?.templateName}
                       placeholder="Template Name"
                       required
-                      className="manage-modal-form-control"
+                      onIconClick={() => setActivePopup("radiologyTemplate")}
                     />
-                    <i
-                      onClick={() => setActivePopup("radiologyTemplate")}
-                      className="fa-solid fa-magnifying-glass"
-                    ></i>
                   </div>
 
                   <div className="manage-modal-form-group">
-                    <label className="manage-modal-form-label">
-                      Procedure Code{" "}
-                      <span className="manage-modal-text-danger">*</span>:
-                    </label>
-                    <input
+                    <FloatingInput
+                      label={"Procedure Code"}
                       type="text"
                       value={procedureCode}
                       onChange={(e) => setProcedureCode(e.target.value)}
                       placeholder="Procedure Code"
                       required
-                      className="manage-modal-form-control"
                     />
                   </div>
                 </div>
@@ -367,7 +341,7 @@ const ManageImagingItem = () => {
         </CustomModal>
       </div>
       {activePopup && (
-        <RadiologyPopupTable
+        <PopupTable
           columns={columns}
           data={data}
           onSelect={handleSelect}

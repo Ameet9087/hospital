@@ -4,17 +4,18 @@ import "./PaytypeMaster.css";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../../../FloatingInputs";
 
 export default function PaytypeMaster() {
-
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
-  // const [rows, setRows] = useState([
-  //   { id: 1, roomtype: "", minimumAdvance: 0.0, roomrent: 0.0 },
-  // ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState("");
   const [allData, setAllData] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editId, setEditId] = useState(null);
+
   const [formdata, setFormdata] = useState({
     payTypeName: "",
     payOrder: "",
@@ -23,88 +24,81 @@ export default function PaytypeMaster() {
     categoryCode: "",
   });
 
+  useEffect(() => {
+    handleLoadData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
     setFormdata((prevData) => ({
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
     }));
   };
 
-  useEffect(() => {
-    handleLoadData();
-  }, []);
-
-
-  // const [roomTypes, setRoomTypes] = useState([]);
-  // const [isTableVisible, setIsTableVisible] = useState(false);
-
-  // Fetch Room Types from API
-  // useEffect(() => {
-  //   const fetchRoomTypes = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `${API_BASE_URL}/room-types`
-  //       );
-  //         setRoomTypes(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching room types:", error);
-  //       alert("Failed to fetch room types.");
-  //     }
-  //   };
-  //   fetchRoomTypes();
-  // }, []);
-
-  // const handleAddRow = () => {
-  //   const newRow = {
-  //     id: rows.length + 1,
-  //     roomtype: "",
-  //     minimumAdvance: 0.0,
-  //     roomrent: 0.0,
-  //   };
-  //   setRows([...rows, newRow]);
-  // };
-
-  // const handleDeleteRow = (id) => {
-  //   if (rows.length === 1) {
-  //     alert("Only one row is present. Cannot delete.");
-  //     return;
-  //   }
-  //   const updatedRows = rows.filter((row) => row.id !== id);
-  //   setRows(updatedRows);
-  // };
-
-  // Clear Fields
-
   const handleSubmit = async () => {
     setError("");
-
     try {
-      const response = await axios.post(`${API_BASE_URL}/pay-type`, formdata);
-      alert("Data saved successfully!");
-      console.log(response.data);
+      if (isEditing) {
+        await axios.put(`${API_BASE_URL}/pay-type/${editId}`, formdata);
+        toast.success("Data updated successfully!");
+      } else {
+        await axios.post(`${API_BASE_URL}/pay-type`, formdata);
+        toast.success("Data saved successfully!");
+      }
       setIsModalOpen(false);
-
+      setIsEditing(false);
+      setEditId(null);
       handleLoadData();
     } catch (error) {
       console.error("Error saving data:", error);
-      alert("Failed to save data. Please try again.");
+      toast.error("Failed to save data. Please try again.");
     }
   };
 
-  // Load Data Handler
   const handleLoadData = async () => {
     const response = await axios.get(`${API_BASE_URL}/pay-type`);
     setAllData(response.data);
+  };
 
+  const handleEdit = (item) => {
+    setFormdata(item);
+    setIsEditing(true);
+    setEditId(item.id);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this record?")) {
+      try {
+        await axios.delete(`${API_BASE_URL}/pay-type/${id}`);
+        toast.success("Record deleted successfully!");
+        handleLoadData();
+      } catch (error) {
+        console.error("Error deleting record:", error);
+        toast.error("Failed to delete record. Please try again.");
+      }
+    }
   };
 
   return (
     <>
       <div className="paytypemaster-button-container">
-        <button onClick={() => setIsModalOpen(true)}>Create Paytype</button>
+        <button
+          onClick={() => {
+            setIsEditing(false);
+            setFormdata({
+              payTypeName: "",
+              payOrder: "",
+              activeStatus: "",
+              opdCategory: "",
+              categoryCode: "",
+            });
+            setIsModalOpen(true);
+          }}
+        >
+          Create Paytype
+        </button>
       </div>
       <div className="paytypemaster-container">
         <table ref={tableRef}>
@@ -114,8 +108,8 @@ export default function PaytypeMaster() {
                 "Pay Type Name",
                 "Pay Type Order",
                 "Active Status",
-                "categoryCode",
-
+                "Category Code",
+                "Actions",
               ].map((header, index) => (
                 <th
                   key={index}
@@ -138,17 +132,31 @@ export default function PaytypeMaster() {
           </thead>
           <tbody>
             {allData.length > 0 ? (
-              allData.map((item, index) => (
+              allData.map((item) => (
                 <tr key={item.id}>
                   <td>{item.payTypeName}</td>
                   <td>{item.payOrder}</td>
                   <td>{item.activeStatus}</td>
                   <td>{item.categoryCode}</td>
+                  <td>
+                    <button
+                      className="paytypemaster-table-button"
+                      onClick={() => handleEdit(item)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="paytypemaster-table-button-del"
+                      onClick={() => handleDelete(item.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="no-data">
+                <td colSpan="5" className="no-data">
                   No Records Found
                 </td>
               </tr>
@@ -159,88 +167,72 @@ export default function PaytypeMaster() {
       <CustomModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="paytypemaster-modal-container">
           <div className="paytypemaster-row">
-            <label className="paytypemaster-label">
-              Paytype Name :<span className="mand">*</span>
-            </label>
-            <input
+            <FloatingInput
+              label={"Paytype Name"}
               type="text"
-              className={`paytypemaster-input ${error ? "error-border" : ""}`}
               value={formdata.payTypeName}
               name="payTypeName"
               onChange={handleChange}
             />
-            {error && <span className="error-message">{error}</span>}
           </div>
-
-          {/* Order */}
           <div className="paytypemaster-row">
-            <label className="paytypemaster-label">Order :</label>
-
-            <input
+            <FloatingInput
+              label={"Order"}
               type="text"
-              className="paytypemaster-input"
               value={formdata.payOrder}
               name="payOrder"
+              restrictions={{ number: true }}
               onChange={handleChange}
             />
           </div>
           <div className="paytypemaster-row">
-            <label className="paytypemaster-label">Category Code:</label>
-            <input
+            <FloatingInput
+              label={"Category Code"}
               type="text"
-              className="paytypemaster-input"
               value={formdata.categoryCode}
               name="categoryCode"
               onChange={handleChange}
             />
           </div>
-
-          {/* Active/Inactive */}
           <div className="paytypemaster-row">
-            <label className="paytypemaster-label">Active Status</label>
+            <label className="paytypemaster-label">Active Status:</label>
             <div className="paytypemaster-radio-group">
-              <label className="doctorFee">
+              <label>
                 <input
                   type="radio"
                   value="active"
                   checked={formdata.activeStatus === "active"}
-                  name={"activeStatus"}
+                  name="activeStatus"
                   onChange={handleChange}
-                />
+                />{" "}
                 Active
-              </label>
-              <label className="doctorFee">
+              </label>{" "}
+              <label>
                 <input
                   type="radio"
                   name="activeStatus"
                   value="inactive"
                   checked={formdata.activeStatus === "inactive"}
                   onChange={handleChange}
-                />
+                />{" "}
                 Inactive
               </label>
             </div>
           </div>
-
-          {/* OPD Category */}
           <div className="paytypemaster-row-doctorfee">
-            <label className="doctorFee">
-
-              For OPD Category wise Doctor Fee :
-            </label>
+            <label>For OPD Category wise Doctor Fee:</label>
             <input
               type="checkbox"
               name="opdCategory"
-              value={"OPD"}
-
+              value="OPD"
               className="paytypemaster-checkbox"
               checked={formdata.opdCategory}
               onChange={handleChange}
-            />
+            />{" "}
             OPD Category
           </div>
           <button className="paytypemaster-button" onClick={handleSubmit}>
-            Submit
+            {isEditing ? "Update" : "Submit"}
           </button>
         </div>
       </CustomModal>

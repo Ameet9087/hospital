@@ -1,18 +1,85 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./OpdBilling.css";
-import {
-  PopupTable,
-  FloatingInput,
-  FloatingSelect,
-} from "../../../FloatingInputs/index";
+import PopupTable from "../../Admission/PopupTable";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { usePopup } from "../../../FidgetSpinner/PopupContext";
+
+const FloatingInput = ({ label, type = "text", value, ...props }) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [hasValue, setHasValue] = useState(!!value);
+
+  useEffect(() => {
+    setHasValue(!!value);
+  }, [value]);
+
+  const handleChange = (e) => {
+    setHasValue(e.target.value.length > 0);
+    if (props.onChange) props.onChange(e);
+  };
+
+  return (
+    <div
+      className={`OpdBilling-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
+    >
+      <input
+        type={type}
+        className="OpdBilling-floating-input"
+        value={value}
+        onFocus={() => setIsFocused(true)}
+        onBlur={(e) => {
+          setIsFocused(false);
+          setHasValue(e.target.value.length > 0);
+        }}
+        onChange={handleChange}
+        {...props}
+      />
+      <label className="OpdBilling-floating-label">{label}</label>
+    </div>
+  );
+};
+
+const FloatingSelect = ({ label, options = [], value, ...props }) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [hasValue, setHasValue] = useState(!!value);
+
+  useEffect(() => {
+    setHasValue(!!value);
+  }, [value]);
+
+  return (
+    <div
+      className={`OpdBilling-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
+    >
+      <select
+        className="OpdBilling-floating-select"
+        value={value}
+        onFocus={() => setIsFocused(true)}
+        onBlur={(e) => {
+          setIsFocused(false);
+          setHasValue(e.target.value !== "");
+        }}
+        onChange={(e) => {
+          setHasValue(e.target.value !== "");
+          if (props.onChange) props.onChange(e);
+        }}
+        {...props}
+      >
+        <option value="">{ }</option>
+        {options.map((option, index) => (
+          <option key={index} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <label className="OpdBilling-floating-label">{label}</label>
+    </div>
+  );
+};
 
 const OpdBilling = () => {
-  const { showPopup } = usePopup();
   const [opdPatients, setOpdPatients] = useState([]);
   const [selectedTab, setSelectedTab] = useState("testGrid");
   const [columnWidths, setColumnWidths] = useState({});
@@ -37,31 +104,8 @@ const OpdBilling = () => {
   const [outPatientId, setOutPatientId] = useState();
   const [doctorservice, setdoctorservice] = useState([]);
   const [patientType, setPatientType] = useState("");
-  const [isPrintEnabled, setIsPrintEnabled] = useState(false);
-  const [billFromResponse, setBillFromResponse] = useState("");
 
   const [isEmergency, setemergency] = useState(false);
-
-  const handlePrintBilling = () => {
-    console.log("Navigating with state:", {
-      selectedPatient,
-      selectedDoctor,
-      testGridTableRowsableRows,
-      netAmount,
-      selectedPaymentMode,
-      billFromResponse,
-    });
-    navigate("/billing/OpdBillingPrint", {
-      state: {
-        selectedPatient,
-        selectedDoctor,
-        testGridTableRowsableRows,
-        netAmount,
-        selectedPaymentMode,
-        billFromResponse,
-      },
-    });
-  };
 
   const fetchDoctorService = async (outPatientId) => {
     try {
@@ -80,6 +124,7 @@ const OpdBilling = () => {
   };
 
   const fetchEmergencyDoctorService = async (erNo) => {
+    console.log("erno", erNo);
     try {
       const response = await fetch(
         `${API_BASE_URL}/emergency/er-initial-assessment/${erNo}/emergency-doctor-fees`
@@ -114,6 +159,7 @@ const OpdBilling = () => {
   });
 
   const [newpatientformData, newpatientsetFormData] = useState({
+
     salutation: "",
     firstName: "",
     middleName: "",
@@ -374,7 +420,7 @@ const OpdBilling = () => {
     if (activePopup === "patient" || activePopup === "mobilenumber") {
       setSelectedPatient(data.originalObject);
 
-      console.log("data+++++++++", data);
+      console.log("data+++++++++", data)
 
       console.log("Registration Id", data.patientRegistrationId);
 
@@ -402,7 +448,7 @@ const OpdBilling = () => {
           // Check if fees are unpaid before creating the row
           if (
             fetchedAppointments.feespaid !== "yes" &&
-            fetchedAppointments.typeOfAppointment == "New Patient"
+            fetchedAppointments.typeOfAppointment == "New Patient" || fetchedAppointments.typeOfAppointment == "Old patient"
           ) {
             // New Patient Logic
             const doctorRow = {
@@ -504,24 +550,27 @@ const OpdBilling = () => {
         let doctorServices;
         console.log("Fetched doctor services:", doctorServices);
         const isEmergency = data.originalObject.isEmergency === "yes";
+        console.log("is emergency print", isEmergency);
 
         if (isEmergency) {
+
           setemergency(true);
           doctorServices = await fetchEmergencyDoctorService(
             data.originalObject.erNo
           );
 
+          console.log("Fetched doctor services:", doctorServices)
+
           if (doctorServices.length > 0) {
             const firstService = doctorServices[0];
-            console.log("-----p", firstService);
+            console.log("-----p", firstService)
 
             const rateToUse = isEmergency
               ? firstService.morningEmergencyToDoctor
               : firstService.morningEmergencyToDoctor;
 
-            const EmergencydocName = await fetchDoctorDetails(
-              firstService.doctorId
-            );
+
+            const EmergencydocName = await fetchDoctorDetails(firstService.doctorId);
 
             console.log("emergency doctor", EmergencydocName);
 
@@ -751,9 +800,7 @@ const OpdBilling = () => {
             selectedPatient?.financialDetails?.totalHospitalAmount || 0
           ),
         },
-        patient: {
-          patientRegistrationId: selectedPatient.patientRegistrationId,
-        },
+        patient: { patientRegistrationId: selectedPatient.patientRegistrationId }
       },
 
       paymentModeDTO: addedPayments.map((payment) => ({
@@ -782,6 +829,7 @@ const OpdBilling = () => {
           serviceNames: row.serviceName,
         })),
       isEmergency: isEmergency,
+
     };
     console.log("Payload------:", payload);
 
@@ -793,20 +841,17 @@ const OpdBilling = () => {
       });
 
       if (response.status === 200) {
-        toast.success("Data submitted successfully!");
-        showPopup([
-          { url: "/patient/registerpatient", text: "Patient Registration" },
-          { url: "/appointment/doctorappointment", text: "Appointment" },
-        ]);
-        setIsPrintEnabled(true);
-        setBillFromResponse(response.data);
+        alert("Data submitted successfully!");
+        console.log("Response:", response.data);
       } else {
-        toast.error("Failed to submit data. Please try again.");
+        alert("Failed to submit data. Please try again.");
         console.error("Response status:", response.status);
       }
     } catch (error) {
-      toast.error("Error submitting data:", error);
-      setIsPrintEnabled(false);
+      console.error("Error submitting data:", error);
+      alert(
+        "An error occurred while submitting data. Please check the console."
+      );
     }
   };
 
@@ -940,7 +985,7 @@ const OpdBilling = () => {
                     "Service Name",
                     "Doctor Name ",
                     "Rate",
-                    "Quantity",
+                    "Qty",
                     "Total Amt",
                     "Less Disc(%)",
                     "Disc Amt",
@@ -990,14 +1035,10 @@ const OpdBilling = () => {
                     <td>{row.sn}</td>
                     <td>
                       <div className="OpdBilling-test-search-field">
-                        <FloatingInput
-                          label="Services"
-                          type="search"
-                          onIconClick={() => setActivePopup("services")}
-                        />
-                        {/* <button
+                        <FloatingInput label="MR No * " type="text" />
+                        <button
                           className="OpdBilling-search-icon"
-                          onClick={}
+                          onClick={() => setActivePopup("services")}
                         >
                           <svg viewBox="0 0 24 24" width="16" height="16">
                             <path
@@ -1005,7 +1046,7 @@ const OpdBilling = () => {
                               d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
                             />
                           </svg>
-                        </button> */}
+                        </button>
                       </div>
                     </td>
                     <td>{row.code}</td>
@@ -1013,11 +1054,9 @@ const OpdBilling = () => {
                     <td>{row.doctorName}</td>
                     <td>{row.rate}</td>
                     <td>
-                      <FloatingInput
-                        label={"QTY"}
+                      <input
                         type="number"
-                        min="0"
-                        value={row.qty || 0}
+                        value={row.qty}
                         onChange={(e) => {
                           const qty = parseInt(e.target.value, 10) || 0;
                           setTestGridTableRowsableRows((prevRows) => {
@@ -1035,7 +1074,6 @@ const OpdBilling = () => {
                     <td>{row.totalAmt}</td>
                     <td>
                       <FloatingInput
-                        label={"disc%"}
                         type="number"
                         value={row.lessDisc || 0}
                         onChange={(e) => {
@@ -1054,12 +1092,7 @@ const OpdBilling = () => {
                       />
                     </td>
                     <td>
-                      <FloatingInput
-                        label={"Amt"}
-                        type="number"
-                        value={row.discAmt || 0}
-                        readOnly
-                      />
+                      <input type="number" value={row.discAmt || 0} readOnly />
                     </td>
                     <td>{row.netAmt}</td>
                     <td>{row.emerg}</td>
@@ -1160,21 +1193,34 @@ const OpdBilling = () => {
       <div className="OpdBilling-section">
         <div className="OpdBilling-grid">
           <div className="billing-opd-com-form-row">
-            <FloatingInput
-              label={"Mobile No"}
-              type="search"
-              value={selectedPatient?.mobileNumber}
-              onIconClick={() => setActivePopup("mobilenumber")}
-            />
+            <label>Mobile No:</label>
+            <div className="billing-opd-com-input-with-search">
+              <input
+                type="text"
+                value={selectedPatient?.originalObject?.patient?.mobileNumber}
+              />
+              <button
+                className="billing-opd-com-magnifier-btn"
+                onClick={() => setActivePopup("mobilenumber")}
+              >
+                🔍
+              </button>
+            </div>
           </div>
 
           <div className="billing-opd-com-form-row">
-            <FloatingInput
-              label={"UHID"}
-              type="search"
-              value={selectedPatient?.uhid}
-              onIconClick={() => setActivePopup("patient")}
-            />
+            <label>
+              MR No:<span className="billing-opd-required">*</span>
+            </label>
+            <div className="billing-opd-com-input-with-search">
+              <input type="text" value={selectedPatient?.uhid} />
+              <button
+                className="billing-opd-com-magnifier-btn"
+                onClick={() => setActivePopup("patient")}
+              >
+                🔍
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -1208,7 +1254,7 @@ const OpdBilling = () => {
           <FloatingSelect
             label="Name Initial"
             name="salutation"
-            value={patientType || selectedPatient?.salutation}
+            value={patientType}
             onChange={(e) => setPatientType(e.target.value)}
             options={[
               { value: "", label: "Select Patient Type" },
@@ -1592,40 +1638,17 @@ const OpdBilling = () => {
                       htmlFor="amount"
                       type="number"
                       id="amount"
+                      // placeholder="Enter Amount"
                       value={paymentDetails.amount || ""}
-                      onChange={(e) => {
-                        const amount = e.target.value;
-
-                        // Ensure that the amount is a number and does not exceed the current balance
-                        if (amount <= currentBalance) {
-                          setPaymentDetails({
-                            ...paymentDetails,
-                            amount: amount,
-                          });
-                        } else {
-                          alert("please Enter valid amount ");
-
-                          // Optionally, you can add an error message or do nothing if the condition fails
-                          // For example, show an alert or set a state to display an error message
-                        }
-                      }}
+                      onChange={(e) =>
+                        setPaymentDetails({
+                          ...paymentDetails,
+                          amount: e.target.value,
+                        })
+                      }
                     />
 
-                    {/* <div className="payment-details-row">
-            <label htmlFor="amount">Amount:</label>
-            <input
-              type="number"
-              id="amount"
-              placeholder="Enter Amount"
-              value={paymentDetails.amount || ""}
-              onChange={(e) =>
-                setPaymentDetails({
-                  ...paymentDetails,
-                  amount: e.target.value,
-                })
-              }
-            />
-          </div> */}
+
                     {selectedPaymentMode === "card" && (
                       <FloatingInput
                         label="Card Number"
@@ -1641,21 +1664,7 @@ const OpdBilling = () => {
                         }
                       />
 
-                      // <div className="payment-details-row">
-                      //   <label htmlFor="cardNumber">Card Number:</label>
-                      //   <input
-                      //     type="text"
-                      //     placeholder="Enter Card Number"
-                      //     id="cardNumber"
-                      //     value={paymentDetails.cardNumber || ""}
-                      //     onChange={(e) =>
-                      //       setPaymentDetails({
-                      //         ...paymentDetails,
-                      //         cardNumber: e.target.value,
-                      //       })
-                      //     }
-                      //   />
-                      // </div>
+
                     )}
                     {selectedPaymentMode === "upi" && (
                       <FloatingInput
@@ -1672,21 +1681,7 @@ const OpdBilling = () => {
                         }
                       />
 
-                      // <div className="payment-details-row">
-                      //   <label htmlFor="upiId">UPI ID:</label>
-                      //   <input
-                      //     type="text"
-                      //     placeholder="Enter UPI ID"
-                      //     id="upiId"
-                      //     value={paymentDetails.upiId || ""}
-                      //     onChange={(e) =>
-                      //       setPaymentDetails({
-                      //         ...paymentDetails,
-                      //         upiId: e.target.value,
-                      //       })
-                      //     }
-                      //   />
-                      // </div>
+
                     )}
                     {selectedPaymentMode === "check" && (
                       <>
@@ -1707,21 +1702,6 @@ const OpdBilling = () => {
                           }
                         />
 
-                        {/* <div className="payment-details-row">
-                <label htmlFor="checkNumber">Check Number:</label>
-                <input
-                  type="text"
-                  placeholder="Enter Check Number"
-                  id="checkNumber"
-                  value={paymentDetails.checkNumber || ""}
-                  onChange={(e) =>
-                    setPaymentDetails({
-                      ...paymentDetails,
-                      checkNumber: e.target.value,
-                    })
-                  }
-                />
-              </div> */}
                         <FloatingInput
                           label="Check Date"
                           type="date"
@@ -1735,20 +1715,6 @@ const OpdBilling = () => {
                           }
                         />
 
-                        {/* <div className="payment-details-row">
-                <label htmlFor="checkDate">Check Date:</label>
-                <input
-                  type="date"
-                  id="checkDate"
-                  value={paymentDetails.checkDate || ""}
-                  onChange={(e) =>
-                    setPaymentDetails({
-                      ...paymentDetails,
-                      checkDate: e.target.value,
-                    })
-                  }
-                />
-              </div> */}
                       </>
                     )}
                   </div>
@@ -1912,13 +1878,6 @@ const OpdBilling = () => {
         <div className="billing-opd-com-action-buttons">
           <button className="btn-blue" onClick={handleSubmit}>
             Save
-          </button>
-          <button
-            className="billing-opd-com-action-buttons"
-            onClick={() => handlePrintBilling()}
-            disabled={!isPrintEnabled}
-          >
-            Print
           </button>
         </div>
       </div>

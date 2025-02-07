@@ -6,7 +6,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
 
 const HospitalSpecialityGroup = () => {
-    const [show,setShow] = useState(false);
+  const [show, setShow] = useState(false);
   const [specialisations, setSpecialisations] = useState([]);
 
   useEffect(() => {
@@ -53,8 +53,8 @@ const HospitalSpecialityGroup = () => {
           ))}
         </tbody>
       </table>
-      <CustomModal isOpen={show} onClose={()=>setShow(false)}>
-        <SpecialityMaster onClose={()=>setShow(false)}/>
+      <CustomModal isOpen={show} onClose={() => setShow(false)}>
+        <SpecialityMaster onClose={() => setShow(false)} />
       </CustomModal>
     </div>
   );

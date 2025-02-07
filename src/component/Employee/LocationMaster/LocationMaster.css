@@ -34,10 +34,10 @@
   margin-bottom: 10px;
 }
 
-.location-master__form-group label {
+/* .location-master__form-group label {
   font-weight: 500;
   margin-right: 10px;
-  min-width: 150px; /* Ensures consistent label width */
+  min-width: 150px;
 }
 
 .location-master__form-group input,
@@ -45,7 +45,7 @@
   padding: 2px;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
+} */
 
 .location-master__appointment-desk {
   margin-top: 10px;

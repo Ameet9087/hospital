@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Dgmaster.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
 import { API_BASE_URL } from "../../api/api";
@@ -270,13 +270,9 @@ function Dgmaster() {
         throw new Error(
           `Failed to fetch organization. Status: ${response.status}`
         );
-
-        
-
       }
       const data = await response.json();
       setOrganisation(data);
-      
     } catch (error) {
       console.error("Error fetching organization data:", error.message);
     }
