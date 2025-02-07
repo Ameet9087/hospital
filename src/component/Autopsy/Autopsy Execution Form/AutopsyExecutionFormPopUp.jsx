@@ -102,7 +102,7 @@ const AutopsyExecutionFormPopUp = () => {
   const getPopupData = () => {
     if (activePopup === "AutopsyRequest") {
       return {
-        columns: ["autopsyRequestId", "patientName", "scheduledDate", "scheduledTime", "authorizedBy"],
+        columns: ["autopsyRequestId",  "scheduledDate", "scheduledTime", "authorizedBy"],
         data: requestData
       };
     }
@@ -145,8 +145,9 @@ const AutopsyExecutionFormPopUp = () => {
 
     try {
       const response = await axios.post(`${API_BASE_URL}/autopsy-execution-forms`, payload);
-      console.log('Data saved successfully:', response.data);
       alert('Autopsy Execution Form saved successfully!');
+      console.log('Data saved successfully:', response.data);
+      
       setFormData({
         autopsyRequestId: '',
         patientName: '',

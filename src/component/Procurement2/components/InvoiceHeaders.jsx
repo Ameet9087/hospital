@@ -203,7 +203,7 @@ const InvoiceHeaders = () => {
                 <td>{header.isActive ? "Yes" : "No"}</td>
                 <td>
                 <button className="invoiceHeader-edit" onClick={() => openEditModal(header)}>Edit</button>
-                  <button className="invoiceHeader-delete">Delete</button>
+                  {/* <button className="invoiceHeader-delete">Delete</button> */}
                 </td>
               </tr>
             ))

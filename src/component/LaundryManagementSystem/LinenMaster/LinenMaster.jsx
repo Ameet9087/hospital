@@ -231,18 +231,10 @@ const LinenMaster = () => {
           <button className="btn-blue" onClick={handleUpdate}>
             Save
           </button>
-          <button className="btn-red">Delete</button>
-          <button className="btn-orange" onClick={handleClear} type="button">
+          {/* <button className="btn-orange" onClick={handleClear} type="button">
             Clear
-          </button>
-          <button className="btn-gray">Close</button>
-          <button className="btn-blue">Search</button>
-          <button className="btn-gray">Tracking</button>
-          <button className="btn-green">Print</button>
-          <button className="btn-gray">Version Comparison</button>
-          <button className="btn-gray">SDC</button>
-          <button className="btn-gray">Testing</button>
-          <button className="btn-blue">Info</button>
+          </button> */}
+          
         </div>
         {message && <p className="message">{message}</p>}
         {activePopup && (

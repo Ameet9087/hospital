@@ -252,7 +252,9 @@ function NavNotification() {
                 })
               }
             />
-            <div className="LinenType-action-buttons">
+            
+          </div>
+          <div className="LinenType-action-buttons">
               <button
                 type="button"
                 className="btn-blue"
@@ -261,15 +263,14 @@ function NavNotification() {
               >
                 {isSubmitting ? "Submitting..." : "Submit"}
               </button>
-              <button
+              {/* <button
                 type="button"
                 className="btn-orange"
                 onClick={handleClear}
               >
                 Clear
-              </button>
+              </button> */}
             </div>
-          </div>
         </div>
       )}
       {selectedTab === "LinenMaster" && <LinenMaster />}

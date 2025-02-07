@@ -56,6 +56,7 @@ const AutopsySchedulingForm = () => {
   const [autopsyRequests, setAutopsyRequests] = useState([]);
   const [selectedautopsyRequests, setselectedautopsyRequests] = useState([]);
   const [doctors, setDoctors] = useState([]);
+  
   const [selecteddoctor, setselecteddoctor] = useState([]);
   const [selectedtechnitian, setselectedtechnitian] = useState([]);
 
@@ -91,7 +92,7 @@ const AutopsySchedulingForm = () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/autopsy-requests`);
       setAutopsyRequests(response.data);
-
+      console.log(response.data);
       setLoading((prev) => ({ ...prev, autopsyRequests: false }));
     } catch (error) {
       console.error("Error fetching autopsy requests:", error);
@@ -175,28 +176,39 @@ const AutopsySchedulingForm = () => {
       switch (activePopup) {
         case "Uhid":
           response = await axios.get(`${API_BASE_URL}/autopsy-requests`);
+          
+          // Extract relevant patient details
+          const formattedData = response.data.map((item) => ({
+            autopsyreqId: item.autopsyreqId,
+            firstName: item.outPatientDTO?.patient?.firstName || "N/A",
+            lastName: item.outPatientDTO?.patient?.lastName || "N/A",
+          }));
+
+          setPopupData(formattedData);
           break;
 
         case "Doctor":
-          response = await axios.get(
-            `${API_BASE_URL}/doctors/specialization/1`
-          );
+          response = await axios.get(`${API_BASE_URL}/doctors/specialization/1`);
+          setPopupData(response.data);
           break;
+
         case "Technician":
-          response = await axios.get(
-            `${API_BASE_URL}/doctors/specialization/1`
-          );
+          response = await axios.get(`${API_BASE_URL}/doctors/specialization/1`);
+          setPopupData(response.data);
           break;
+
         default:
           return;
       }
-      setPopupData(response.data);
+
+      // console.log("Popup Data:", response.data);
     } catch (error) {
       console.error(`Error fetching ${activePopup} data:`, error);
     } finally {
       setLoadingPopup(false);
     }
-  };
+};
+
   const handleFormSubmit = async (e) => {
     const payload = {
       scheduledDate: formData.scheduledDate,
@@ -286,6 +298,51 @@ const AutopsySchedulingForm = () => {
     });
   };
 
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
+  };
   const handleSelect = (selectedData) => {
     switch (activePopup) {
       case "Uhid":
@@ -331,9 +388,28 @@ const AutopsySchedulingForm = () => {
   };
 
   const handleExport = () => {
-    alert("Export functionality not implemented.");
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, "autopsySchedulingForm"); // Appends worksheet to workbook
+    XLSX.writeFile(wb, "autopsySchedulingForm.xlsx"); // Downloads the Excel file
+  };
+  const safeToLowerCase = (value) => {
+    return value && typeof value === "string" ? value.toLowerCase() : "";
   };
 
+  // Filter the autopsyschedules based on search query
+  const filteredSchedules = autopsyschedules.filter((item) => {
+    const lowerSearchQuery = searchQuery.toLowerCase();
+    return (
+      safeToLowerCase(item.patientName).includes(lowerSearchQuery) ||
+      safeToLowerCase(item.autopsyRequestId).includes(lowerSearchQuery) ||
+      safeToLowerCase(item.scheduledTime).includes(lowerSearchQuery) ||
+      safeToLowerCase(item.scheduledDate).includes(lowerSearchQuery) ||
+      safeToLowerCase(item.pathologist).includes(lowerSearchQuery) ||
+      safeToLowerCase(item.technician).includes(lowerSearchQuery) ||
+      safeToLowerCase(item.confirmNotificationSent).includes(lowerSearchQuery)
+    );
+  });
   return (
     <div className="autopsy-scheduling-container">
       <button onClick={handleAdd} className="autopsy-scheduling-add-btn">
@@ -359,14 +435,14 @@ const AutopsySchedulingForm = () => {
           </button>
           <button
             className="autopsy-scheduling-print-button"
-            onClick={() => window.print()}
+            onClick={printList}
           >
             <FontAwesomeIcon icon={faPrint} /> Print
           </button>
         </div>
       </div>
 
-      <table className="autopsy-scheduling-table">
+      <table className="autopsy-scheduling-table" ref={tableRef}>
         <thead>
           <tr>
             {[
@@ -399,14 +475,14 @@ const AutopsySchedulingForm = () => {
                 Loading...
               </td>
             </tr>
-          ) : autopsyschedules.length === 0 ? (
+          ) : filteredSchedules.length === 0 ? (
             <tr>
               <td colSpan={9} className="text-center">
                 No scheduled autopsies found.
               </td>
             </tr>
           ) : (
-            autopsyschedules.map((item, index) => (
+            filteredSchedules.map((item, index) => (
               <tr key={item.id}>
                 <td>{index + 1}</td>
                 <td>{item.autopsyRequestId}</td>
@@ -486,7 +562,7 @@ const AutopsySchedulingForm = () => {
               <FloatingInput
                 label="Patient Name"
                 name="patientName"
-                value={`${selectedautopsyRequests?.firstName || ""} ${selectedautopsyRequests?.lastName || ""
+                value={`${selectedautopsyRequests.firstName || ""} ${selectedautopsyRequests.lastName || ""
                   }`}
                 onChange={handleChange}
                 required
@@ -593,7 +669,7 @@ const AutopsySchedulingForm = () => {
                   value={formData.confirmNotificationSent}
                   onChange={handleChange}
                 >
-                  Confirm Notification Send:
+                  Confirm Notification Send :
                 </label>
                 <div className="AccidentReportForm-radio-button">
                   <label>
