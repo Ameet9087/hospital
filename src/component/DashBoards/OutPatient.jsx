@@ -7,7 +7,7 @@ import TableComponent from "../DashBoards/NewPatientsMyFavourite";
 import NewPatientFollowUpList from "../DashBoards/NewPatientFollowUpList";
 import PatientDashboard from "../DashBoards/PatientDashboard"; // Import the PatientDashboard component
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import axios from "axios";
 import { useFilter } from "../ShortCuts/useFilter";
 

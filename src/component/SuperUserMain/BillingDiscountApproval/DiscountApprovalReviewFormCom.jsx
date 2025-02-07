@@ -1,6 +1,6 @@
 /* Mohini_DiscountApprovalReviewForm_WholePage_27/sep/24 */
 import React, { useState, useRef } from 'react';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import './DiscountApprovalReviewForm.css';
 
 const DiscountApprovalReviewFormCom = () => {

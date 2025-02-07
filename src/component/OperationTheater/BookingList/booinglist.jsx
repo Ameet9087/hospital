@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import moment from "moment";
 import { Button } from "react-bootstrap";
 import axios from "axios";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 import { useNavigate } from "react-router-dom";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import SurgeryEvents from "../SurgeryEvent/SurgeryEventsPage";

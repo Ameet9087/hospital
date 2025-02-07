@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Replacementinstruments.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import ReplacementInstrumentsPopUp from "./ReplacementInstrumentsPopUp";
 import { API_BASE_URL } from '../../../api/api';
@@ -104,7 +104,7 @@ const ReplacementInstruments = () => {
             <tr>
               {[
                 "Replacement ID",
-              
+
                 "Type",
                 "Manufacturer",
                 "Quantity",
@@ -127,23 +127,23 @@ const ReplacementInstruments = () => {
             </tr>
           </thead>
           <tbody>
-  {filteredReplacementInstruments.length > 0 ? (
-    filteredReplacementInstruments.map((instrument, index) => (
-      <tr key={index}>
-        <td>{instrument.replacementId}</td>
-        
-        <td>{instrument.repType || "N/A"}</td>
-        <td>{instrument.equipmentReplacementDTO?.equipmentDTO?.type || "N/A"}</td>
-        <td>{instrument.equipmentReplacementDTO?.equipmentDTO?.equipmentName || "N/A"}</td>
-        <td>{instrument.equipmentReplacementDTO?.dmsRemark || "N/A"}</td>
-      </tr>
-    ))
-  ) : (
-    <tr>
-      <td colSpan="6">No data available</td>
-    </tr>
-  )}
-</tbody>
+            {filteredReplacementInstruments.length > 0 ? (
+              filteredReplacementInstruments.map((instrument, index) => (
+                <tr key={index}>
+                  <td>{instrument.replacementId}</td>
+
+                  <td>{instrument.repType || "N/A"}</td>
+                  <td>{instrument.equipmentReplacementDTO?.equipmentDTO?.type || "N/A"}</td>
+                  <td>{instrument.equipmentReplacementDTO?.equipmentDTO?.equipmentName || "N/A"}</td>
+                  <td>{instrument.equipmentReplacementDTO?.dmsRemark || "N/A"}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6">No data available</td>
+              </tr>
+            )}
+          </tbody>
         </table>
       </div>
 

@@ -5,8 +5,9 @@ import AddItem from "../components/AddItem";
 import UpdateItem from "../components/UpdateItem";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
-import * as XLSX from "xlsx";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import * as XLSX from 'xlsx';
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+
 const ItemList = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -16,6 +17,7 @@ const ItemList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState(null);
   const [terms, setTerms] = useState("");
+
 
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -29,6 +31,7 @@ const ItemList = () => {
         setItems(response.data); // Set fetched data to state
         setTerms(response.data);
         console.log(response.data);
+
       } catch (err) {
         console.error("Error fetching items:", err);
         setError("Failed to load items.");
@@ -57,6 +60,7 @@ const ItemList = () => {
     setIsModalOpen(false);
     setSelectedItem(null);
   };
+
 
   // Function to export table to Excel
   const handleExport = () => {
@@ -125,6 +129,7 @@ const ItemList = () => {
           </div>
           <div className="ItemList-results-info">
             <span>Showing 0 / 0 results</span>
+
             <button className="ItemList-export-button" onClick={handleExport}>
               Export
             </button>
@@ -173,6 +178,7 @@ const ItemList = () => {
             ))}
           </tr>
         </thead>
+
 
         <tbody>
           {items.map((item) => (

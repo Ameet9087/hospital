@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './PulmonaryRehabilitation.css'; 
-import axios from 'axios';  
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import './PulmonaryRehabilitation.css';
+import axios from 'axios';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 
 const PulmonaryRehabilitation = () => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -13,9 +13,9 @@ const PulmonaryRehabilitation = () => {
   });
 
   const [showAddSessionModal, setShowAddSessionModal] = useState(false);
-  const [patients, setPatients] = useState([]);  
-  const [searchQuery, setSearchQuery] = useState('');  
-  const [filteredPatients, setFilteredPatients] = useState([]);  
+  const [patients, setPatients] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredPatients, setFilteredPatients] = useState([]);
 
   // Fetch patients from backend when component mounts
   useEffect(() => {
@@ -23,7 +23,7 @@ const PulmonaryRehabilitation = () => {
       try {
         const response = await axios.get('http://localhost:8052/api/patients');
         console.log(response.data);
-        setPatients(response.data);  
+        setPatients(response.data);
       } catch (error) {
         console.error('Error fetching patients:', error);
       }
@@ -36,9 +36,9 @@ const PulmonaryRehabilitation = () => {
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const response = await axios.get('http://localhost:8052/api/pulmonary-rehabilitations'); 
+        const response = await axios.get('http://localhost:8052/api/pulmonary-rehabilitations');
         console.log(response.data);
-        setSessions(response.data);  
+        setSessions(response.data);
       } catch (error) {
         console.error('Error fetching sessions:', error);
       }
@@ -55,25 +55,25 @@ const PulmonaryRehabilitation = () => {
       );
       setFilteredPatients(filtered);
     } else {
-      setFilteredPatients([]);  
+      setFilteredPatients([]);
     }
   }, [searchQuery, patients]);
 
   const handleAddSession = async () => {
     console.log(newSession.sessionId);
     try {
-      if (newSession.sessionId) { 
+      if (newSession.sessionId) {
         // If sessionId exists, update the existing session
-        const response = await axios.put(`http://localhost:8052/api/pulmonary-rehabilitations/${newSession.sessionId}`, newSession);  
-        setSessions(sessions.map(session => 
+        const response = await axios.put(`http://localhost:8052/api/pulmonary-rehabilitations/${newSession.sessionId}`, newSession);
+        setSessions(sessions.map(session =>
           (session.sessionId === newSession.sessionId ? response.data : session) // Ensure to use the updated data
         ));
-      } else { 
+      } else {
         // If no sessionId, create a new session
-        const response = await axios.post('http://localhost:8052/api/pulmonary-rehabilitations', newSession);  
-        setSessions([...sessions, response.data]);  
+        const response = await axios.post('http://localhost:8052/api/pulmonary-rehabilitations', newSession);
+        setSessions([...sessions, response.data]);
       }
-  
+
       // Reset newSession state
       setNewSession({
         sessionId: '', patientId: '', patientName: '', startDate: '', endDate: '', therapistId: ''
@@ -85,7 +85,7 @@ const PulmonaryRehabilitation = () => {
   };
 
   const handleEditSession = (session) => {
-    console.log("session",session)
+    console.log("session", session)
     // Ensure the session being edited is correctly set
     setNewSession(session);
     setShowAddSessionModal(true);

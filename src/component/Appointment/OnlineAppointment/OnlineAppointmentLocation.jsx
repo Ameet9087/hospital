@@ -4,6 +4,7 @@ import "./OnlineAppointmentLocation.css";
 import { FaLocationDot } from "react-icons/fa6";
 import Speciality from "./OnlineAppointmentSpeciality";
 import { API_BASE_URL } from "../../api/api";
+import { FloatingInput } from "../../../FloatingInputs";
 
 function Location({ searchQuery = "" }) {
   const [locations, setLocations] = useState([]);

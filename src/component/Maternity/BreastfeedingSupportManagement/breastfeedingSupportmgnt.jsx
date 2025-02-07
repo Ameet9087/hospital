@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './BreastfeedingSupport.css'; 
 import axios from 'axios'; // Import axios
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
-
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 
 const BreastfeedingSupportManagement = () => {
     const [columnWidths, setColumnWidths] = useState({});

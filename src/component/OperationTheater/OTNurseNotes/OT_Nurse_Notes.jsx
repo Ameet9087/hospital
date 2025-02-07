@@ -1,7 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./OT_Nurse_Notes.css"; // Add custom styles if needed
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
-import CustomModal from "../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
 
 const OT_Nurse_Notes = () => {

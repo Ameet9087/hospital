@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import "./GoodsReceiptList.css"
-import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 
 const GoodsReceiptList = () => {
-  const [columnWidths,setColumnWidths] = useState({});
+  const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [dateFrom, setDateFrom] = useState('2024-08-01');
   const [dateTo, setDateTo] = useState('2024-08-08');
@@ -46,16 +46,16 @@ const GoodsReceiptList = () => {
             onChange={handleSearchChange}
             aria-label="Search"
           />
-         
+
         </div>
-       
+
         <div>
-        <span>{`Showing ${filteredItems.length} of ${items.length} results`}</span>          <button className="goods-receipt-export-btn" aria-label="Export Data">Export</button>
+          <span>{`Showing ${filteredItems.length} of ${items.length} results`}</span>          <button className="goods-receipt-export-btn" aria-label="Export Data">Export</button>
           <button className="goods-receipt-print" aria-label="Print Data">Print</button>
         </div>
       </div>
       <div className='good-receipt-ta'>
-      <table className="patientList-table" ref={tableRef}>
+        <table className="patientList-table" ref={tableRef}>
           <thead>
             <tr>
               {[
@@ -90,13 +90,13 @@ const GoodsReceiptList = () => {
               ))}
             </tr>
           </thead>
-        <tbody>
-          <tr>
-            <td colSpan="11" className="goods-receipt-no-rows">No Rows To Show</td>
-          </tr>
-        </tbody>
-      </table>
-      {/* <div className="goods-receipt-pagination">
+          <tbody>
+            <tr>
+              <td colSpan="11" className="goods-receipt-no-rows">No Rows To Show</td>
+            </tr>
+          </tbody>
+        </table>
+        {/* <div className="goods-receipt-pagination">
         <span>0 to 0 of 0</span>
         <button disabled>First</button>
         <button disabled>Previous</button>

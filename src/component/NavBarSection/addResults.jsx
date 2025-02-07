@@ -3,8 +3,9 @@ import Barcode from "react-barcode"; // Import the barcode generator
 import "../NavBarSection/addResults.css";
 import LabAddResultWorkList from "./labAddresultWorkList";
 import { useNavigate } from "react-router-dom";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
+import { FloatingInput } from "../../FloatingInputs";
 
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
@@ -134,36 +135,30 @@ function AddResults() {
         <div className="addResults-controls">
           {/* Your date range and button controls */}
           <div className="addResults-date-range">
-            <label>
-              From:
-              <input
-                type="date"
-                id="dateFrom"
-                defaultValue={dateFrom}
-                onChange={handleDateFromChange}
-              />
-            </label>
-            <label>
-              To:
-              <input
-                type="date"
-                id="dateTo"
-                defaultValue={dateTo}
-                onChange={handleDateToChange}
-              />
-            </label>
+            <FloatingInput
+            label={"From"}
+            type="date"
+            id="dateFrom"
+            value={dateFrom}
+            onChange={handleDateFromChange}
+            />
+            <FloatingInput
+            label={"To"}
+            type="date"
+            id="dateTo"
+            value={dateTo}
+            onChange={handleDateToChange}
+            />
           </div>
         </div>
       </div>
       <div className="addResults-searchbar-N-showing">
         <div className="addResults-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search"
-            value={searchQuery}
-            className="addResults-search-input"
+          <FloatingInput
+          type="text"
+          onChange={(e) => setSearchQuery(e.target.value)}
+          label={"Search"}
+          value={searchQuery}
           />
         </div>
         <div className="addResults-results-info">

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./InventorySubstore.css";
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
 
 const InventorySubstore = () => {
   const [data, setData] = useState([

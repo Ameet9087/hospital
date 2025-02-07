@@ -3,6 +3,7 @@ import "./dischargedpatient.css";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import AdmissionDischargePrint from "./AdmissionDischargePrint";
+import { FloatingInput } from "../../FloatingInputs";
 
 function DischargedPatient() {
   const [modalShow, setModalShow] = useState(false);
@@ -35,7 +36,6 @@ function DischargedPatient() {
     fetchData();
   }, []);
 
-  
   const handlePrintClick = (data) => {
     setPatients(data);
     setModalShow(true);
@@ -48,16 +48,8 @@ function DischargedPatient() {
           <div className="date-utlt">
             <div className="dischage-patient">
               <div className="date-range">
-                <label>From: </label>
-                <input
-                  className="date-range-input"
-                  type="date"
-                />
-                <label> To: </label>
-                <input
-                  className="date-range-input"
-                  type="date"
-                />
+                <FloatingInput label={"From"} type="date" />
+                <FloatingInput label={"To"} type="date" />
               </div>
             </div>
           </div>

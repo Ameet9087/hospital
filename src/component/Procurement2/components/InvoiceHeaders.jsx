@@ -5,13 +5,15 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import InvoiceHeaderForm from "../components/AddInvoiceHeader";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
-import * as XLSX from "xlsx";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import * as XLSX from 'xlsx';
+
 
 const InvoiceHeaders = () => {
   const [invoiceHeaders, setInvoiceHeaders] = useState([]);
   const [filteredInvoiceHeaders, setFilteredInvoiceHeaders] = useState([]); // State for filtered data
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [columnWidths, setColumnWidths] = useState({});
   const [selectedInvoiceHeader, setSelectedInvoiceHeader] = useState(null);
   const [searchQuery, setSearchQuery] = useState(""); // State to store search query
@@ -39,7 +41,7 @@ const InvoiceHeaders = () => {
 
     // Filter invoice headers based on the search query
     if (query) {
-      const filtered = invoiceHeaders.filter((header) => 
+      const filtered = invoiceHeaders.filter((header) =>
         Object.values(header).some(value =>
           value && value.toString().toLowerCase().includes(query.toLowerCase())
         )
@@ -126,12 +128,17 @@ const InvoiceHeaders = () => {
       </button>
 
       {/* Search Section */}
+
+
+      {/* Header Section */}
+
       <div className="InvoiceHeaders__table-header">
         <div className="InvoiceHeaders__search-container">
           <input
             type="text"
             placeholder="Search"
             className="InvoiceHeaders__search-input"
+
             value={searchQuery}
             onChange={handleSearch} // Trigger search on input change
           />
@@ -204,6 +211,7 @@ const InvoiceHeaders = () => {
                 <td>
                 <button className="invoiceHeader-edit" onClick={() => openEditModal(header)}>Edit</button>
                   {/* <button className="invoiceHeader-delete">Delete</button> */}
+
                 </td>
               </tr>
             ))
@@ -215,17 +223,18 @@ const InvoiceHeaders = () => {
             </tr>
           )}
         </tbody>
-      </table>
+      </table >
 
       {/* Add Invoice Header Modal */}
-      <CustomModal isOpen={isModalOpen} onClose={closeModal}>
+      < CustomModal isOpen={isModalOpen} onClose={closeModal} >
         <InvoiceHeaderForm closeModal={closeModal} />
+
       </CustomModal>
 
       <CustomModal isOpen={isModalOpen} onClose={closeModal}>
         <InvoiceHeaderForm invoiceHeader={selectedInvoiceHeader} closeModal={closeModal} />
-      </CustomModal>
-    </div>
+      </CustomModal >
+    </div >
   );
 };
 

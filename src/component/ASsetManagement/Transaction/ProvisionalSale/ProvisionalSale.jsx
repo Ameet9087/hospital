@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./ProvisionalSale.css";
 import ProvisionalSaleForm from "./ProvisionalSaleForm";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 
 const ProvisionalSale = () => {

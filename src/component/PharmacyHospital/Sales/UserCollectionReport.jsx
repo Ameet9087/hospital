@@ -3,11 +3,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import './UserCollectionReport.css';
 import './ItemWiseSalesReport.css';
 import * as XLSX from 'xlsx';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 const UserCollectionReport = () => {
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
-  
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
+
 
   // Function to export table to Excel
   const handleExport = () => {
@@ -18,8 +18,8 @@ const UserCollectionReport = () => {
   };
 
   // Function to trigger print
-   // Function to trigger print
-   const handlePrint = () => {
+  // Function to trigger print
+  const handlePrint = () => {
     const printContent = tableRef.current;
     const newWindow = window.open("", "_blank");
     newWindow.document.write(`
@@ -63,59 +63,59 @@ const UserCollectionReport = () => {
           <input type="date" className="user-collection-date-input" />
           {/* <button className="user-collection-filter-btn">★</button> */}
         </div>
-       
+
       </div>
-                    <div className="item-wise-sales-filter-groups">
-                    <label>Select Dispensary:</label>
-                    <input type="text" placeholder="Enter Dispensary Name" />
-
-                    
-                    <label>Counter: </label>
-                  <select>
-                 <option>All</option>
-                 </select>
-                 <label>User: </label>
-               <select>
-             <option>All</option>
-              </select>
-              <button className="item-wise-sales-btn">Show Report</button>
-
-                </div>
+      <div className="item-wise-sales-filter-groups">
+        <label>Select Dispensary:</label>
+        <input type="text" placeholder="Enter Dispensary Name" />
 
 
-                <div className="item-wise-sale-button">
-    <div className="item-wise-sales-report-table">
-        <div className="search-bar-wrapper">
+        <label>Counter: </label>
+        <select>
+          <option>All</option>
+        </select>
+        <label>User: </label>
+        <select>
+          <option>All</option>
+        </select>
+        <button className="item-wise-sales-btn">Show Report</button>
+
+      </div>
+
+
+      <div className="item-wise-sale-button">
+        <div className="item-wise-sales-report-table">
+          <div className="search-bar-wrapper">
             <input type="text" placeholder="Search" className="item-wise-sales-search-bar" />
             {/* <button className="invoice-billing-search-button"><i className="fa fa-search"></i></button> */}
+          </div>
         </div>
-    </div>
 
-    <div className="item-wise-export-print-buttons">
-        <div className="item-wise-pagination-info">Showing 0 / 0 results</div>
-        <button className="item-wise-export-button" onClick={handleExport}>Export</button>
-        <button className="item-wise-print-button" onClick={handlePrint}>Print</button>
-    </div>
-</div>
+        <div className="item-wise-export-print-buttons">
+          <div className="item-wise-pagination-info">Showing 0 / 0 results</div>
+          <button className="item-wise-export-button" onClick={handleExport}>Export</button>
+          <button className="item-wise-print-button" onClick={handlePrint}>Print</button>
+        </div>
+      </div>
 
       <div className='table-container'>
-      <table  ref={tableRef}>
+        <table ref={tableRef}>
           <thead>
             <tr>
               {[
-                 "Date",
-                 "Type",
-                 "Receipt No",
-                 "Hospital",
-                 "Patient Name",
-                 "SubTotal",
-                 "Discount",
-                 "Net Total",
-                 "Cash Collected",
-                 "User",
-                 "Remarks",
-                 "Counter",
-                 "Store"
+                "Date",
+                "Type",
+                "Receipt No",
+                "Hospital",
+                "Patient Name",
+                "SubTotal",
+                "Discount",
+                "Net Total",
+                "Cash Collected",
+                "User",
+                "Remarks",
+                "Counter",
+                "Store"
               ].map((header, index) => (
                 <th
                   key={index}
@@ -136,13 +136,13 @@ const UserCollectionReport = () => {
               ))}
             </tr>
           </thead>
-        <tbody>
-          <tr>
-            <td colSpan="13" className="user-collectionno-rows">No Rows To Show</td>
-          </tr>
-        </tbody>
-      </table>
-      {/* <div className="user-collection-pagination">
+          <tbody>
+            <tr>
+              <td colSpan="13" className="user-collectionno-rows">No Rows To Show</td>
+            </tr>
+          </tbody>
+        </table>
+        {/* <div className="user-collection-pagination">
         <span>0 to 0 of 0</span>
         <button>First</button>
         <button>Previous</button>

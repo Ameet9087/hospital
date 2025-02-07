@@ -97,7 +97,11 @@ justify-content: space-between;
     display: flex;
     flex-direction: row;
   }
-  
+  .hist-form-group-input
+  {
+    width: 80%;
+    margin-bottom: 5px;
+  }
   .hist-form-group label {
     margin-bottom: 5px;
     font-weight: bold;

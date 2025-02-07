@@ -4,9 +4,10 @@ import "./OnlineDoctorScheduleStd.css";
 import doctorIcon from "../../../assets/doctor-icon.png";
 import { useLocation } from "react-router-dom";
 import { API_BASE_URL } from "../../api/api";
-import CustomModal from "../../CustomModel/CustomModal.jsx";
+import CustomModal from "../../../CustomModel/CustomModal.jsx";
 // import DoctorAppointmentPopUp from "../DoctorAppointmentPopUp.jsx";
 import DoctorAppointmentPopUp from "./OnlineDoctorAppointmentPopUp.jsx";
+import { toast } from "react-toastify";
 const OnlineDoctorScheduleStd = () => {
   const { state } = useLocation();
   const doctor = state?.doctor || {};
@@ -46,7 +47,7 @@ const OnlineDoctorScheduleStd = () => {
   const handleLoadSlots = async ({ locationId, doctorId, appointmentDate }) => {
     console.log(locationId, doctorId, appointmentDate);
     if (!locationId || !doctorId || !appointmentDate) {
-      alert("Please select location, doctor, and date before loading slots.");
+      toast.error("Please select location, doctor, and date before loading slots.");
       return;
     }
 
@@ -63,12 +64,12 @@ const OnlineDoctorScheduleStd = () => {
           parseInt(scheduleData.reviewTime)
         );
       } else {
-        alert("No schedule found for the selected doctor and location.");
+        toast.error("No schedule found for the selected doctor and location.");
         setTimeSlots([]);
       }
     } catch (error) {
       console.error("Error fetching schedule:", error);
-      alert("Failed to load appointment slots. Please try again.");
+      toast.error("Failed to load appointment slots. Please try again.");
     }
   };
 
@@ -140,7 +141,7 @@ const OnlineDoctorScheduleStd = () => {
 
   const openModal = (appointmentObjOrTimeSlot) => {
     if (!formData.appointmentDate) {
-      alert("Please select an appointment date first.");
+      toast.error("Please select an appointment date first.");
       return;
     }
 
@@ -155,7 +156,7 @@ const OnlineDoctorScheduleStd = () => {
         appointmentObjOrTimeSlot.timeSlot || appointmentObjOrTimeSlot
       )
     ) {
-      alert("You cannot book an appointment for a past time slot today.");
+      toast.error("You cannot book an appointment for a past time slot today.");
       return;
     }
 

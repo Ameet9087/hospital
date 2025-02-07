@@ -36,11 +36,6 @@
     cursor: pointer;
     margin: 10px;
   }
-  .services-table input{
-    outline: none;
-    height: 20px;
-    border: none;
-  }
   .doctormaster-service-button.active{
   background-color: transparent;
     color: black;
@@ -67,17 +62,22 @@
     color: var(--button-bg-color); 
   }
 
-  .doctormasterspanheader{
+  .doctormasterspanheader {
+    grid-column: 1 / -1; /* Makes it span all columns */
+    width: 100%; /* Ensures full width */
     background-color: var(--upperBar-bg-color);
     color: white;
-    padding:  3px;
-    font-size:18px;
-  }
+    padding: 0px;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+  
   
   .doctormaster-main {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-
+    grid-template-columns: repeat(3,1fr);
     gap: 15px;
     background: white;
     border: 1px solid #ccc;
@@ -85,6 +85,7 @@
   
   .doctormaster-popup-con{
     height: 600px;
+    /* width: 800px; */
     width:1200px;
     overflow-y: scroll;
   }
@@ -93,63 +94,43 @@
   .doctormaster-doctor-details,
   .doctormaster-residence-details,
   .doctormaster-clinic-details {
+    width: 100%;
     background: var(--background-color);
-    padding: 20px;
+    padding: 0px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction:column;
-    width: 100%;
-
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr) minmax(100px, 1fr);
+    align-items: center;
+    overflow: hidden;
   }
-
   .docmasterformdata{
-    display: flex;
-    padding: 3px;
+    /* height: 35px; */
+    padding: 0 4px;
   }
-  
-  .doctormaster-label {
+  .doctormaster-residence-details{
+    gap: 12px;
+    padding: 4px 0;
+  }
+  .doctor-hidden-form-fields{
+    opacity: 0;
+    cursor: none;
+  }
+  /* .doctormaster-label {
     width: 150px;
     margin-bottom: 5px;
     display: block;
   }
+   */
   
-  
-  .doctormaster-select {
+  /* .doctormaster-select {
     width: 60%;
     padding: 5px;
     margin-bottom: 15px;  
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
-  }
-  .doctormaster-input{
-  padding: 5px;
-  border: none;
-  background: none;
-  /* border: 1px solid #ccc; */
-  border-bottom: 1px solid #ccc;
-  border-radius: 3px;
-  font-size: var(--font-size);
-
-width: 60%;
-  }
-  .doctormaster-input:focus{
-    border-bottom: 1px solid #ccc;
-    background: none;
-    outline: none;
-  }
-  
-  .doctormaster-input[type="date"] {
-    padding: 5px;
-  border: none;
-  background: none;
-  /* border: 1px solid #ccc; */
-  border-bottom: 1px solid #ccc;
-  border-radius: 3px;
-  font-size: var(--font-size);
-  width: 50%;
-  }
+  }*/
   
   .doctormaster-upload {
     margin-top: 20px;
@@ -185,13 +166,13 @@ width: 60%;
     color: white;
   }
   
-  .doctormaster-table td input {
+  /* .doctormaster-table td input {
     width: 80%;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
-  }
+  } */
   
   .doctormaster-table tr:hover {
     background-color: #f1f1f1;
@@ -203,3 +184,31 @@ width: 60%;
   table-layout: auto;  
 }
 
+
+.doctormaster-edit-btn, .doctormaster-delete-btn {
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.doctormaster-edit-btn {
+  background-color: var(--button-bg-color);
+  color: white;
+}
+
+.doctormaster-delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.doctormaster-edit-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-color);
+}
+
+.doctormaster-delete-btn:hover {
+  background-color: var(--button-hover-background-color);
+  color: #da190b;
+}

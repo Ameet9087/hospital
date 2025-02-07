@@ -3,8 +3,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 
 import './UserCollectionReport.css';
 
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 const DepartmentWiseDiscountScheme = () => {
   const [showReport, setShowReport] = useState(false);
 

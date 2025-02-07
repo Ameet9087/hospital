@@ -2,9 +2,13 @@ import React, { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import "./MedicationOrder.css";
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { FloatingInput, FloatingSelect } from "../../FloatingInputs";
+import { toast } from "react-toastify";
 
-const MedicationOrder = ({ inPatientId, outPatientId, setActiveSection }) => {
+const MedicationOrder = ({ inPatientId, outPatientId, setActiveSection, onClose }) => {
+  console.log(inPatientId);
+
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [medicationList, setMedicationList] = useState([
@@ -74,17 +78,25 @@ const MedicationOrder = ({ inPatientId, outPatientId, setActiveSection }) => {
   };
 
   const handleSubmit = async () => {
+    console.log(medicationList);
+
     try {
       const response = await axios.post(
         `${API_BASE_URL}/medications/save-medication-details`,
         medicationList
       );
-      setActiveSection("dashboard");
-      console.log("Success:", response.data);
+
+      // Check if response status is OK (200) or Created (201)
+      if (response.status) {
+        toast.success("Prescription Added Successfully");
+        onClose()
+      }
     } catch (error) {
-      console.error("Error submitting medication list:", error);
+      toast.error("Error submitting medication list");
     }
   };
+
+
 
   return (
     <div className="MedicationOrder-form">
@@ -132,70 +144,78 @@ const MedicationOrder = ({ inPatientId, outPatientId, setActiveSection }) => {
                 </button>
               </td>
               <td>
-                <select
-                  className="action_record_dropdown"
+                <FloatingSelect
+                  label={"Medication Name"}
                   name="medicationName"
                   value={medication.medicationName}
                   onChange={(e) => handleInputChange(index, e)}
-                >
-                  <option value="">Select an order item</option>
-                  {orderData.map((order) => (
-                    <option
-                      key={order.addItemId}
-                      value={order.itemMaster?.itemName || ""}
-                    >
-                      {order.itemMaster?.itemName || "Unknown Item"}
-                    </option>
-                  ))}
-                </select>
-              </td>
-              <td>
-                <input
-                  type="text"
-                  value={medication.genericName || ""}
-                  placeholder="Generic Name"
-                  readOnly
+                  options={[
+                    { value: "", label: "" },
+                    ...(Array.isArray(orderData)
+                      ? orderData.map((order) => ({
+                        value: order.itemMaster?.itemName,
+                        label: order.itemMaster?.itemName,
+                      }))
+                      : []),
+                  ]}
                 />
               </td>
               <td>
-                <input
+                <FloatingInput
+                  label={"Generic Name"}
+                  type="text"
+                  value={medication.genericName || ""}
+                  readOnly
+
+                />
+              </td>
+              <td>
+                <FloatingInput
+                  label={"Brand Name"}
                   type="text"
                   value={medication.medicationName || ""}
                   placeholder="Brand Name"
                   readOnly
+
                 />
               </td>
               <td>
-                <input
+                <FloatingInput
+                  label={"Dose"}
                   type="number"
                   name="dose"
                   value={medication.dose || ""}
                   placeholder="Dose"
                   onChange={(e) => handleInputChange(index, e)}
+
                 />
               </td>
               <td>
-                <select
+                <FloatingSelect
                   name="route"
                   value={medication.route}
                   onChange={(e) => handleInputChange(index, e)}
-                >
-                  <option value="mouth">Mouth</option>
-                  <option value="iv">IV</option>
-                  <option value="injection">Injection</option>
-                </select>
+                  options={[{ value: "", label: "" },
+                  { value: "mouth", label: "Mouth" },
+                  { value: "IV", label: "Iv" },
+                  { value: "injection", label: "Injection" },
+
+                  ]}
+                />
+
               </td>
               <td>
-                <input
+                <FloatingInput
+                  label={"Frequency"}
                   type="text"
                   name="frequency"
                   value={medication.frequency || ""}
-                  placeholder="Frequency"
                   onChange={(e) => handleInputChange(index, e)}
                 />
               </td>
               <td>
-                <input
+                <FloatingInput
+                  label={"Last Taken"}
                   type="text"
                   name="lastTaken"
                   value={medication.lastTaken || ""}
@@ -203,7 +223,8 @@ const MedicationOrder = ({ inPatientId, outPatientId, setActiveSection }) => {
                 />
               </td>
               <td>
-                <input
+                <FloatingInput
+                  label={"Remarks"}
                   type="text"
                   name="comments"
                   value={medication.comments || ""}

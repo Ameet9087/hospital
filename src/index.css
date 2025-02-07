@@ -131,7 +131,7 @@ table th .resizer:hover {
   background-color: var(--upperBar-bg-color);
   color: white;
   height: 60px;
-  display: flex;
+  display: flex;  
   align-items: center;
   padding: 0 1rem;
   position: fixed;
@@ -141,3 +141,137 @@ table th .resizer:hover {
   z-index: 100;
   border-bottom: 1px solid #e5e7eb;
 }
+
+
+/* Custom input styling*/
+/* Container */
+.custom-floating-field {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.custom-floating-input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.custom-floating-label {
+  position: absolute;
+  left: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  width: calc(100% - 3px);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Active label */
+.custom-floating-field.active .custom-floating-label {
+  top: 0px;
+  padding:0 5px;
+  left: 5px;
+  font-size: 12px;
+  width: fit-content;
+
+  color: #00897b;
+}
+
+/* Search Icon */
+.custom-search-icon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.custom-search-icon:hover {
+  color: #00897b;
+}
+
+
+/* Container */
+.custom-floating-select-field {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Select Field */
+.custom-floating-select {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  appearance: none;
+  background: white;
+  cursor: pointer;
+}
+
+/* Floating Label */
+.custom-floating-select-label {
+  position: absolute;
+  left: 1px;
+  top: 50%;
+  padding: 0 60px 0 0;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  width: calc(100% - 3px);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* When select has a value or is focused */
+.custom-floating-select-field.active .custom-floating-select-label {
+  top: 0px;
+  left: 5px;
+  padding: 0 5px;
+  font-size: 12px;
+  width: fit-content;
+  color: #00897b;
+}
+
+/* Focus effect */
+.custom-floating-select:focus {
+  outline: none;
+  border-color: #00897b;
+  box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+}
+
+/* Error state */
+.custom-floating-select-field.error .custom-floating-select {
+  border: 2px solid red;
+}
+
+.custom-floating-select-field.error .custom-floating-select-label {
+  color: red;
+}
+
+
+.toastify-text {
+  font-size: 13px; /* Adjust font size */
+ }

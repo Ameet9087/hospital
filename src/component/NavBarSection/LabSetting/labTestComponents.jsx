@@ -3,9 +3,10 @@ import "../LabSetting/labTestComponents.css";
 import LSLabTestAddNLTest from "./lSLabTestAddNLTest";
 import LabTestComponentsAddNewLTC from "./labTestComponentsAddNewLTC";
 
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
+import { FloatingInput } from "../../../FloatingInputs";
 
 const LabTestComponent = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -46,31 +47,14 @@ const LabTestComponent = () => {
     setShowPopup(true); // Show the popup
   };
 
-
   const handleDelete = async (testId) => {
-  try {
-    console.log("Attempting to delete test with ID:", testId);
-
-    const response = await axios.delete(`${API_BASE_URL}/lab-components/remove/${testId}`);
-
-    console.log("Response Data:", response.data); // Log JSON response data
-
-    if (response.status === 200 || response.status === 204) {
-      console.log("Delete successful", response.data);
-      
-      // Update state to reflect the deleted item without re-fetching
-      setLabComponentData((prevData) => prevData.filter(test => test.componentId !== testId));
-    } else {
-      console.error("Failed to delete. Response:", response);
+    try {
+      await axios.delete(`${API_BASE_URL}/lab-components/remove/${testId}`);
+      fetchAllLabComponents();
+    } catch (error) {
+      console.log(error);
     }
-
-  } catch (error) {
-    console.error("Error deleting data:", error.response?.data || error.message);
-  }
-};
-
-  
-  
+  };
 
   const filteredLabComponents = labComponentData
     ? labComponentData.filter(
@@ -107,12 +91,11 @@ const LabTestComponent = () => {
       </div> */}
       <div className="labTestComponents-search-N-result">
         <div className="labTestComponents-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={handleSearchChange}
+          <FloatingInput
+           type="text"
+           label={"Search"}
+           value={searchTerm}
+           onChange={handleSearchChange}
           />
         </div>
         <div className="labTestComponents-results-info">

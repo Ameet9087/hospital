@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./EquipmentTagging.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import EquipmentTaggingForm from "./EquipmentTaggingForm";
 import * as XLSX from "xlsx";
 import { API_BASE_URL } from "../../../api/api";
@@ -65,7 +65,7 @@ const EquipmentTagging = () => {
 
   // Handle print functionality
   // Handle print functionality
-const handlePrint = () => {
+  const handlePrint = () => {
     const printContent = tableRef.current.outerHTML;
     const newWindow = window.open("", "_blank");
     newWindow.document.write(`
@@ -95,7 +95,7 @@ const handlePrint = () => {
     newWindow.document.close();
     newWindow.print();
   };
-  
+
 
   return (
     <div className="Equipment-Tagging-container">

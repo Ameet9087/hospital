@@ -1,7 +1,7 @@
 // InventoryVendor.jsx
 import React, { useState, useRef } from "react";
 import "./InventoryVendor.css";
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
 
 const InventoryVendor = () => {
   const vendors = [

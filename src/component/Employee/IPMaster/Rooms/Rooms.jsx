@@ -2,14 +2,20 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Rooms.css";
 import axios from "axios";
 import CustomModel from "../../../../CustomModel/CustomModal";
-import IpMasterPopupTable from "../IpMasterPopupTable";
+import {
+  FloatingInput,
+  FloatingSelect,
+  PopupTable,
+} from "../../../../FloatingInputs";
 import { API_BASE_URL } from "../../../api/api";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { toast } from "react-toastify";
 
 const Rooms = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingRoom, setEditingRoom] = useState(null);
   // const userList = ['Nursing Charges Pirangut', 'RMO Charges', 'RMO Charges Pirangut', 'nurse charge'];
 
   // const [services, setServices] = useState([
@@ -19,17 +25,17 @@ const Rooms = () => {
 
   const [formdata, setFormdata] = useState({
     roomtype: "",
-    minimumAdvance: 0,
-    roomrent: 0,
+    minimumAdvance: "",
+    roomrent: "",
     status: "Available",
     advRes: "",
     wardName: "",
     displayRoom: "",
     transitBed: "",
     nursery: "",
-    frequencyOfDailyAssessment: 0,
+    frequencyOfDailyAssessment: "",
     type: "Private",
-    sacCode: 0,
+    sacCode: "",
   });
   const [activePopup, setActivePopup] = useState("");
   const [floor, setFloor] = useState([]);
@@ -37,6 +43,12 @@ const Rooms = () => {
   const [selectedFloor, setSelectedFloor] = useState(null);
   const [selectedPayType, setSelectedPayType] = useState(null);
   const [roomType, setRoomType] = useState([]);
+
+  const handleEdit = (room) => {
+    setFormdata(room); // Populate form with selected room data
+    setEditingRoom(room.id); // Track the room being edited
+    setIsModalOpen(true);
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -72,16 +84,25 @@ const Rooms = () => {
   };
 
   const handleSaveServices = async () => {
-    formdata.floor = {
-      id: selectedFloor?.id,
-    };
-    formdata.payType = {
-      id: selectedPayType?.id,
-    };
-    const response = await axios.post(`${API_BASE_URL}/room-types`, formdata);
-    setIsModalOpen(false);
-    alert("RoomType Added Successfully");
-    fetchAllRoomTypeData();
+    formdata.floor = { id: selectedFloor?.id };
+    formdata.payType = { id: selectedPayType?.id };
+
+    try {
+      if (editingRoom) {
+        await axios.put(`${API_BASE_URL}/room-types/${editingRoom}`, formdata);
+        toast.success("Room Type Updated Successfully");
+      } else {
+        await axios.post(`${API_BASE_URL}/room-types`, formdata);
+        toast.success("Room Type Added Successfully");
+      }
+
+      setIsModalOpen(false);
+      setEditingRoom(null);
+      fetchAllRoomTypeData();
+    } catch (error) {
+      console.error("Error saving room type:", error);
+      toast.error("Failed to save room type");
+    }
   };
 
   const fetchFloor = async () => {
@@ -168,6 +189,22 @@ const Rooms = () => {
   //   user.toLowerCase().includes(searchQuery.toLowerCase())
   // );
 
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this room type?"
+    );
+    if (confirmDelete) {
+      try {
+        await axios.delete(`${API_BASE_URL}/room-types/${id}`);
+        toast.success("Room Type Deleted Successfully");
+        fetchAllRoomTypeData();
+      } catch (error) {
+        console.error("Error deleting room type:", error);
+        toast.error("Failed to delete room type");
+      }
+    }
+  };
+
   return (
     <>
       <div className="rooms">
@@ -193,6 +230,7 @@ const Rooms = () => {
                 "Dialysis Room",
                 "Transit Bed",
                 "Nursery Room Type",
+                "Action",
               ].map((header, index) => (
                 <th
                   key={index}
@@ -226,11 +264,25 @@ const Rooms = () => {
                   <td>{item.displayRoom}</td>
                   <td>{item.transitBed}</td>
                   <td>{item.nursery}</td>
+                  <td>
+                    <button
+                      className="rooms-add-btn"
+                      onClick={() => handleEdit(item)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="rooms-del-btn"
+                      onClick={() => handleDelete(item.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="9" className="no-data">
+                <td colSpan="10" className="no-data">
                   No Records Found
                 </td>
               </tr>
@@ -247,83 +299,59 @@ const Rooms = () => {
                 <div className="rooms-panel-header">Add Room Type Details</div>
                 <div className="rooms-panel-content">
                   <div className="rooms-form-row">
-                    <label>Room Type: *</label>
-                    <div className="rooms-input-with-search">
-                      <input
-                        type="text"
-                        value={formdata.roomtype}
-                        name="roomtype"
-                        onChange={handleChange}
-                        placeholder="Enter Room Type"
-                      />
-                    </div>
+                    <FloatingInput
+                      label={"Room Type"}
+                      type="text"
+                      value={formdata.roomtype}
+                      name="roomtype"
+                      onChange={handleChange}
+                    />
                   </div>
                   <div className="rooms-form-row">
-                    <label>Minimum Advance: *</label>
-                    <div className="rooms-input-with-search">
-                      <input
-                        type="number"
-                        value={formdata.minimumAdvance}
-                        name="minimumAdvance"
-                        min={1}
-                        onChange={handleChange}
-                        placeholder="Minimum Advance"
-                      />
-                    </div>
+                    <FloatingInput
+                      label={"Minimum Advance"}
+                      type="text"
+                      value={formdata.minimumAdvance}
+                      name="minimumAdvance"
+                      onChange={handleChange}
+                      restrictions={{ number: true }}
+                    />
                   </div>
                   <div className="rooms-form-row">
-                    <label>Room Rent</label>
-                    <div className="rooms-input-with-search">
-                      <input
-                        type="text"
-                        onChange={handleChange}
-                        value={formdata.roomrent}
-                        name="roomrent"
-                        placeholder="Enter Room Rent"
-                      />
-                    </div>
+                    <FloatingInput
+                      label={"Room Rent"}
+                      type="text"
+                      onChange={handleChange}
+                      value={formdata.roomrent}
+                      name="roomrent"
+                    />
                   </div>
                   <div className="rooms-form-row">
-                    <label>Adv Res</label>
-                    <div className="rooms-input-with-search">
-                      <input
-                        type="text"
-                        value={formdata.advRes}
-                        name="advRes"
-                        onChange={handleChange}
-                        placeholder="Adv Res"
-                      />
-                    </div>
+                    <FloatingInput
+                      label={"Adv Res"}
+                      type="text"
+                      value={formdata.advRes}
+                      name="advRes"
+                      onChange={handleChange}
+                    />
                   </div>
                   <div className="rooms-form-row">
-                    <label>Floor</label>
-                    <div className="rooms-input-with-search">
-                      <input
-                        type="text"
-                        value={selectedFloor?.floorNumber}
-                        onChange={handleChange}
-                        placeholder="Search Floor"
-                      />
-                      <i
-                        onClick={() => setActivePopup("floor")}
-                        className="fa-solid fa-magnifying-glass"
-                      ></i>
-                    </div>
+                    <FloatingInput
+                      label={"Floor"}
+                      type="search"
+                      value={selectedFloor?.floorNumber}
+                      onChange={handleChange}
+                      onIconClick={() => setActivePopup("floor")}
+                    />
                   </div>
                   <div className="rooms-form-row">
-                    <label>Paytype</label>
-                    <div className="rooms-input-with-search">
-                      <input
-                        type="text"
-                        value={selectedPayType?.payTypeName}
-                        onChange={handleChange}
-                        placeholder="Search Paytype"
-                      />
-                      <i
-                        onClick={() => setActivePopup("paytype")}
-                        className="fa-solid fa-magnifying-glass"
-                      ></i>
-                    </div>
+                    <FloatingInput
+                      label={"Paytype"}
+                      type="search"
+                      value={selectedPayType?.payTypeName}
+                      onChange={handleChange}
+                      onIconClick={() => setActivePopup("paytype")}
+                    />
                   </div>
                 </div>
               </div>
@@ -363,39 +391,36 @@ const Rooms = () => {
                   </div>
 
                   <div className="rooms-form-row">
-                    <label>Type:</label>
-                    <select
+                    <FloatingSelect
+                      label={"Type"}
                       onChange={handleChange}
                       value={formdata.type}
                       name="type"
-                    >
-                      <option>Select Type</option>
-                      <option value={"Private"}>Private</option>
-                      <option value={"Semi Private"}>Semi Private</option>
-                      <option value={"General"}>General</option>
-                    </select>
+                      options={[
+                        { value: "Private", label: "Private" },
+                        { value: "Semi Private", label: "Semi Private" },
+                        { value: "General", label: "General" },
+                      ]}
+                    />
                   </div>
 
                   <div className="rooms-form-row">
-                    <label>Frequency of Daily Assesment :</label>
-                    <div className="rooms-input-with-search">
-                      <input
-                        type="text"
-                        value={formdata.frequencyOfDailyAssessment}
-                        name="frequencyOfDailyAssessment"
-                        onChange={handleChange}
-                      />
-                    </div>
+                    <FloatingInput
+                      label={"Frequency of Daily Assesment"}
+                      type="text"
+                      value={formdata.frequencyOfDailyAssessment}
+                      name="frequencyOfDailyAssessment"
+                      onChange={handleChange}
+                    />
                   </div>
 
                   <div className="rooms-form-row">
-                    <label>SAC Code:</label>
-                    <input
+                    <FloatingInput
+                      label={"SAC Code"}
                       type="text"
                       value={formdata.sacCode}
                       name="sacCode"
                       onChange={handleChange}
-                      placeholder="SAC Code"
                     />
                   </div>
 
@@ -404,7 +429,7 @@ const Rooms = () => {
                 <input type="text" placeholder='GST Category' />
               </div> */}
                   <div className="rooms-form-row">
-                    <label>Status: *</label>
+                    <label>Status:</label>
                     <div className="rooms-radio-buttons">
                       <input
                         type="radio"
@@ -415,7 +440,7 @@ const Rooms = () => {
                       />
                       <label htmlFor="active" className="rooms-radio-label">
                         Active
-                      </label>
+                      </label>{" "}
                       <input
                         type="radio"
                         id="inactive"
@@ -486,7 +511,7 @@ const Rooms = () => {
       )}
 
       {activePopup && (
-        <IpMasterPopupTable
+        <PopupTable
           columns={columns}
           data={data}
           onSelect={handleSelect}

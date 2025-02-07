@@ -22,16 +22,14 @@
   
   /* .rDLListReport-filter  {
   } */
-  .rDLListReport-filter select {
+  /* .rDLListReport-filter select {
     padding: 3px 5px 3px 5px;
-    /* background-color: #f0f0f0; */
     margin-left: 10px;
     width: 100px;
   }
   .rDLListReport-filter label {
 font-size: var(--font-size);
-/* font-weight: bold; */
-}
+} */
   
   .rDLListReport-controls {
     padding: 10px;
@@ -41,22 +39,22 @@ font-size: var(--font-size);
   .rDLListReport-date-range {
     display: flex;
     align-items: center;
-    width: 37%;
+    width: 30%;
     gap: 10px;
     background-color: #f0f0f0;
     padding: 1px 10px;
   }
-  .rDLListReport-date-range label{
+  /* .rDLListReport-date-range label{
     display: flex;
     align-items: center;
     margin-left: 20px;
     font-size: var(--font-size);
-  }
+  } */
   
-  .rDLListReport-date-range input[type="date"] {
+  /* .rDLListReport-date-range input[type="date"] {
     padding: 3px;
     margin-left: 10px;
-  }
+  } */
 
     .rDLListReport-search-N-results{
     display: flex;
@@ -68,11 +66,11 @@ font-size: var(--font-size);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid gray;
-  background-color: white;
+  /* border: 1px solid gray; */
+  /* background-color: white; */
   padding: 3px;
 }
-.rDLListReport-search-bar i{
+/* .rDLListReport-search-bar i{
   color: gray;
 }
   
@@ -80,7 +78,7 @@ font-size: var(--font-size);
     background-color: transparent;
     border: none;
     outline: none;
-  }
+  } */
   
   .rDLListReport-search-button {
     padding: 5px 10px;

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ProcedureService.css";
 import { API_BASE_URL } from "../api/api";
+import { toast } from "react-toastify";
+import { FloatingSelect } from "../../FloatingInputs";
 
 const ProcedureService = ({ setIsModalOpen, inPatientId, outPatientId }) => {
   const [selectedProcedures, setSelectedProcedures] = useState([]);
@@ -10,7 +12,7 @@ const ProcedureService = ({ setIsModalOpen, inPatientId, outPatientId }) => {
   const [procedureType, setProcedureType] = useState(""); // Type of procedure
   const [serviceTypes] = useState(["Radiology", "Lab"]); // Procedure types
 
-  console.log("check in ", inPatientId)
+  console.log("check in ", inPatientId);
   // Fetch procedures based on selected type
   useEffect(() => {
     if (procedureType) {
@@ -47,7 +49,7 @@ const ProcedureService = ({ setIsModalOpen, inPatientId, outPatientId }) => {
 
   const submitSelection = async () => {
     if (selectedProcedures.length === 0) {
-      alert("Please select at least one procedure before submitting.");
+      toast.error("Please select at least one procedure before submitting.");
       return;
     }
 
@@ -66,77 +68,85 @@ const ProcedureService = ({ setIsModalOpen, inPatientId, outPatientId }) => {
           "Content-Type": "application/json",
         },
       });
-      setIsModalOpen(false)
+      setIsModalOpen(false);
+      toast.success("Procedures Saved Successfully");
       cancelSelection();
     } catch (error) {
       console.error("Error saving procedures:", error.message);
-      alert("Failed to save procedures. Please try again later.");
+      toast.error("Failed to save procedures. Please try again later.");
     }
-  }
+  };
 
   return (
     <div className="procedures-service-container">
       <h3>Procedures/Services</h3>
+      <div className="procedures-service-content-container">
+        <div className="procedures-service-content">
+          <FloatingSelect
+            label={"Procedure Type"}
+            id="procedure-type"
+            value={procedureType}
+            onChange={(e) => setProcedureType(e.target.value)}
+            options={[
+              { value: "", label: "" },
+              ...(Array.isArray(serviceTypes)
+                ? serviceTypes.map((type) => ({
+                    value: type,
+                    label: type,
+                  }))
+                : []),
+            ]}
+          />
+        </div>
 
-      <div className="procedures-service-content">
-        <label htmlFor="procedure-type">Procedure Type:</label>
-        <select
-          id="procedure-type"
-          value={procedureType}
-          onChange={(e) => setProcedureType(e.target.value)}
-        >
-          <option value="">--Select Type--</option>
-          {serviceTypes.map((type, index) => (
-            <option key={index} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
+        <div className="procedures-service-content">
+          <FloatingSelect
+            label={"Procedures"}
+            id="procedures"
+            value={selectedProcedure}
+            onChange={(e) => setSelectedProcedure(e.target.value)}
+            disabled={!procedureType}
+            options={[
+              { value: "", label: "" },
+              ...(Array.isArray(availableProcedures)
+                ? availableProcedures.map((procedure) => ({
+                    value: procedure.serviceName,
+                    label: procedure.serviceName,
+                  }))
+                : []),
+            ]}
+          />
+          <button
+            type="button"
+            onClick={addProcedure}
+            className="procedures-service-add"
+          >
+            +
+          </button>
+        </div>
+
+        <div id="selected-procedures" className="procedures-service-showcase">
+          {selectedProcedures.length > 0 && (
+            <ul className="procedures-service-showcase-ul">
+              {selectedProcedures
+                .slice()
+                .reverse()
+                .map((procedure, index) => (
+                  <li key={selectedProcedures.length - 1 - index}>
+                    {selectedProcedures.length - index}. {procedure}
+                    <button
+                      type="button"
+                      className="procedures-service-cut"
+                      onClick={() => removeProcedure(procedure)}
+                    >
+                      X
+                    </button>
+                  </li>
+                ))}
+            </ul>
+          )}
+        </div>
       </div>
-
-      <div className="procedures-service-content">
-        <label htmlFor="procedures">Procedures/Services:</label>
-        <select
-          id="procedures"
-          value={selectedProcedure}
-          onChange={(e) => setSelectedProcedure(e.target.value)}
-          disabled={!procedureType}
-        >
-          <option value="">--Select--</option>
-          {availableProcedures.map((procedure, index) => (
-            <option key={index} value={procedure.serviceName}>
-              {procedure.serviceName}
-            </option>
-          ))}
-        </select>
-        <button
-          type="button"
-          onClick={addProcedure}
-          className="procedures-service-add"
-        >
-          +
-        </button>
-      </div>
-
-      <div id="selected-procedures" className="procedures-service-showcase">
-        {selectedProcedures.length > 0 && (
-          <ul>
-            {selectedProcedures.map((procedure, index) => (
-              <li key={index}>
-                {index + 1}.{procedure}
-                <button
-                  type="button"
-                  className="procedures-service-cut"
-                  onClick={() => removeProcedure(procedure)}
-                >
-                  X
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-
       <div className="procedures-service-action-buttons">
         <button
           type="button"

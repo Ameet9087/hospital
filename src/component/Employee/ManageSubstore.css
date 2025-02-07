@@ -34,10 +34,8 @@
 }
 
 .manage-substore-search-input {
-  padding: 6px; /* Reduced padding */
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 180px; /* Reduced width */
+  width: 180px;
+  margin-bottom: 10px;
 }
 
 .manage-substore-table {
@@ -137,16 +135,18 @@
 }
 .update-substore-form-group {
   width: 100%;
+  gap: 10px;
+  margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.update-substore-form-group input {
+/* .update-substore-form-group input {
   width: 60%;
 }
 .update-substore-form-group textarea {
   width: 70%;
-}
+} */
 .manage-add-substore-btn {
   background-color: var(--button-color); /* Use button color variable */
   color: white; /* Text color */

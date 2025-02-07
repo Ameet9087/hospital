@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './EquipmentGatePassOutViewpopUp.css';
-import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 import { SearchIcon } from 'lucide-react';
 import PopupTable from '../../../Admission/PopupTable';
 import { API_BASE_URL } from '../../../api/api';

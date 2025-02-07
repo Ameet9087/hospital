@@ -2,8 +2,7 @@ import React, { useState,useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
 import './UserCollectionReport.css';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 const UserCollectionReport = () => {
   const [showReport, setShowReport] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});

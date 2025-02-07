@@ -3,6 +3,8 @@ import "./labResult.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
+import { toast } from "react-toastify";
+import { FloatingSelect, FloatingTextarea } from "../../FloatingInputs";
 
 const Lab2 = () => {
   const [selectedSignatory, setSelectedSignatory] = useState(null);
@@ -64,10 +66,10 @@ const Lab2 = () => {
           selectedSignatory?.lastName
         }&approverId=${selectedSignatory?.employeeId}&comment=${comment}`
       );
-      console.log("Lab result updated successfully!");
+      toast.success("Lab result updated successfully!");
       handlePrint();
     } catch (err) {
-      console.error("Error updating lab result:", err);
+      toast.error("Error updating lab result:", err);
     }
   };
 
@@ -299,12 +301,11 @@ const Lab2 = () => {
           </div>
 
           <div className="lab-comments">
-            <p>Comments:</p>
-            <textarea
+            <FloatingTextarea
+              label={"Comments"}
               value={comment}
               onChange={handleCommentChange}
               rows={5}
-              placeholder="Enter comments here..."
             />
             {selectedSignatory && (
               <div className="selected-doctor-info">
@@ -312,7 +313,7 @@ const Lab2 = () => {
                   <img
                     src={`data:image/jpeg;base64,${selectedSignatory?.signatureImage}`}
                     alt={`${selectedSignatory?.firstName} ${selectedSignatory?.lastName}`}
-                    style={{width:100,height:100}}
+                    style={{ width: 100, height: 100 }}
                   />
 
                   <p>
@@ -330,19 +331,20 @@ const Lab2 = () => {
         </div>
       </div>
       <div className="lab-signatories">
-        <p>Select Signatories:</p>
-        <select
+        <FloatingSelect
+          label={"Select Signatories"}
           value={selectedSignatory?.employeeId}
           onChange={handleSignatoryChange}
-        >
-          <option value="">Select a signatory</option>
-          {labDoctors.length > 0 &&
-            labDoctors.map((doctor) => (
-              <option key={doctor.employeeId} value={doctor.employeeId}>
-                {doctor.salutation} {doctor.firstName} {doctor.lastName}
-              </option>
-            ))}
-        </select>
+          options={[
+            { value: "", label: "" },
+            ...(Array.isArray(labDoctors)
+              ? labDoctors.map((doctor) => ({
+                  value: doctor.employeeId,
+                  label: `${doctor.salutation} ${doctor.firstName} ${doctor.lastName}`,
+                }))
+              : []),
+          ]}
+        />
       </div>
       <div className="lab-update">
         <button onClick={handleSubmit} className="lab-print-button">

@@ -1,8 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./ClinicalBloodSugarMonitoring.css";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../FloatingInputs";
 
 const ClinicalBloodSugarMonitoring = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -101,12 +103,12 @@ const ClinicalBloodSugarMonitoring = ({ patientId, outPatientId }) => {
 
       // Check response status and handle success
       if (response.status === 200) {
-        alert("Data saved successfully");
+        toast.success("Data saved successfully");
         handleCloseForm();
         fetchBloodSugarData();
       }
     } catch (error) {
-      console.error("Error saving data:", error);
+      toast.error("Error saving data:", error);
     }
   };
 
@@ -193,7 +195,7 @@ const ClinicalBloodSugarMonitoring = ({ patientId, outPatientId }) => {
                     <td>{record.insulin}</td>
                     <td>{record.remarks}</td>
                     <td>
-                      <button onClick={() => handleEdit(record)}>Edit</button>
+                      <button className="clinical-blood-sugar-monitoring-add-new" onClick={() => handleEdit(record)}>Edit</button>
                     </td>
                   </tr>
                 ))
@@ -230,8 +232,8 @@ const ClinicalBloodSugarMonitoring = ({ patientId, outPatientId }) => {
             <form onSubmit={handleSubmit}>
               <div className="clinical-blood-sugar-monitoring-entry-fields">
                 <div className="clinical-blood-sugar-monitoring-sub-div">
-                  <label>Date:</label>
-                  <input
+                  <FloatingInput
+                    label={"Date"}
                     type="date"
                     name="addedDate"
                     value={newFormData.addedDate}
@@ -240,8 +242,8 @@ const ClinicalBloodSugarMonitoring = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="clinical-blood-sugar-monitoring-sub-div">
-                  <label>Time:</label>
-                  <input
+                  <FloatingInput
+                    label={"Time"}
                     type="time"
                     name="addedTime"
                     value={newFormData.addedTime}
@@ -250,8 +252,8 @@ const ClinicalBloodSugarMonitoring = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="clinical-blood-sugar-monitoring-sub-div">
-                  <label>RBS:</label>
-                  <input
+                  <FloatingInput
+                    label={"RBS"}
                     type="text"
                     name="rbs"
                     placeholder="RBS"
@@ -261,8 +263,8 @@ const ClinicalBloodSugarMonitoring = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="clinical-blood-sugar-monitoring-sub-div">
-                  <label>Insulin:</label>
-                  <input
+                  <FloatingInput
+                    label={"Insulin"}
                     type="text"
                     name="insulin"
                     placeholder="Insulin"
@@ -271,8 +273,8 @@ const ClinicalBloodSugarMonitoring = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="clinical-blood-sugar-monitoring-sub-div">
-                  <label>Remarks:</label>
-                  <input
+                  <FloatingInput
+                    label={"Remarks"}
                     type="text"
                     name="remarks"
                     placeholder="Remarks"
@@ -283,16 +285,16 @@ const ClinicalBloodSugarMonitoring = ({ patientId, outPatientId }) => {
               </div>
 
               <div className="clinical-blood-sugar-monitoring-form-buttons">
-                <button
+                {/* <button
                   type="button"
                   className="clinical-blood-sugar-monitoring-discard"
                   onClick={handleCloseForm}
                 >
                   Discard
-                </button>
+                </button> */}
                 <button
                   type="submit"
-                  className="clinical-blood-sugar-monitoring-submit"
+                  className="clinical-blood-sugar-monitoring-discard"
                 >
                   {formData.id ? "Update" : "Save"}
                 </button>

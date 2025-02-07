@@ -64,6 +64,7 @@
   }
   
   .add-break-time__button:hover {
+    background-color: white;
     color: var(--button-color);
   }
   
@@ -96,6 +97,7 @@
   }
   
   .add-break-time-btn:hover {
+    background-color: white;
     color: var(--button-color);
   }
   

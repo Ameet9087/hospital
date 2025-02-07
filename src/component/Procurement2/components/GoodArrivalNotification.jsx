@@ -4,7 +4,7 @@ import "./GoodArrivalNotification.css";
 import AddGoodsReceipt from "../components/GoodsReceipt";
 import CustomModal from "../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import GoodsReceiptView from "./GoodsReceiptView";
 function DonationInterface() {

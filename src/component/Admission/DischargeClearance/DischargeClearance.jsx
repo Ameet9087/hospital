@@ -2,42 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import "./DischargeClearance.css";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
+import { FloatingInput } from "../../../FloatingInputs/index";
 
-const FloatingInput = ({ label, type = "text", value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  const handleChange = (e) => {
-    setHasValue(e.target.value.length > 0);
-    if (props.onChange) props.onChange(e);
-  };
-
-  return (
-    <div
-      className={`DischargeClearance-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
-    >
-      <input
-        type={type}
-        className="DischargeClearance-floating-input"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value.length > 0);
-        }}
-        onChange={handleChange}
-        {...props}
-      />
-      <label className="DischargeClearance-floating-label">{label}</label>
-    </div>
-  );
-};
 const DischargeClearance = ({ patient, setActiveState }) => {
   const [formData, setFormData] = useState({
     dischargeSummaryPrepared: "",

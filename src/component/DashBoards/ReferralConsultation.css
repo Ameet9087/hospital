@@ -7,6 +7,14 @@
   border-radius: 10px;
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
+.ReferralConsultation-content-left
+{
+  width: 50%;
+}
+.ReferralConsultation-content-right
+{
+  width: 50%;
+}
 .ReferralConsultation-form-container h3 {
   font-size: 16px;
   text-align: center;
@@ -24,24 +32,10 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .ReferralConsultation-form-group {
+  width: 100%;
   display: flex;
   margin-bottom: 20px;
   gap: 30px;
-}
-.ReferralConsultation-form-group label {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  width: 350px;
-}
-.ReferralConsultation-form-group input,
-.ReferralConsultation-form-group select,
-.ReferralConsultation-form-group textarea {
-  width: 100%;
-  padding: 5px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 14px;
 }
 .ReferralConsultation-buttons {
   padding: 10px 20px;

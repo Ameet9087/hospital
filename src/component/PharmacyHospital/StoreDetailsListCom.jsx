@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'; // For API calls
 import { Modal, Button, Form } from 'react-bootstrap';
 import './SettingSupplier.css';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 import * as XLSX from 'xlsx';
 import CustomModal from '../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../api/api';
@@ -18,7 +18,7 @@ const StoreDetailsListCom = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const [salePrice, setSalePrice] = useState();
   const [expiryDate, setExpiryDate] = useState();
-  const [batchNumber,setBatchNumber]=useState();
+  const [batchNumber, setBatchNumber] = useState();
   const tableRef = useRef(null);
 
   // Fetch data from API
@@ -28,7 +28,7 @@ const StoreDetailsListCom = () => {
       .then((response) => {
         const data = response.data.map((item) => ({
           goodReceiptItemId: item.goodReceiptItemId || 0,
-          itemId:item.addItemId,
+          itemId: item.addItemId,
           itemName: item.itemMaster.itemName || 'N/A',
           genericName: item.itemMaster.genericNames.genericName || 'N/A',
           medicineName: item.addItem || 'N/A',
@@ -40,13 +40,13 @@ const StoreDetailsListCom = () => {
           store: 'Store Unknown', // Default value if store data is unavailable
         }));
         console.log(response.data);
-        
+
         setSuppliers(data);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, [showEditExpiry,showEditModal]);
+  }, [showEditExpiry, showEditModal]);
 
   const handleStoreFilterChange = (e) => {
     setSelectedStore(e.target.value);
@@ -71,9 +71,9 @@ const StoreDetailsListCom = () => {
 
   const handleShowEditModal = (user) => {
     console.log(user);
-    
+
     setSelectedUser(user);
-    
+
     setShowEditModal(true);
   };
   const handleShowEditExpiry = (user) => {
@@ -81,7 +81,7 @@ const StoreDetailsListCom = () => {
     setShowEditExpiry(true);
   };
 
- 
+
 
 
   const handleCloseModal = () => {
@@ -103,14 +103,14 @@ const StoreDetailsListCom = () => {
       console.error("Error updating sale price:", error);
     }
   };
-  
+
   const handleExpirySubmit = async (e) => {
     e.preventDefault();
-    console.log(batchNumber +"" +expiryDate);
-    
+    console.log(batchNumber + "" + expiryDate);
+
     try {
       await axios.patch(`${API_BASE_URL}/add-item/${selectedUser.itemId}/batch`, null, {
-        params: { batchNo:batchNumber, expiryDate },
+        params: { batchNo: batchNumber, expiryDate },
       })
       setShowEditExpiry(false); // Close the modal
       setBatchNumber();
@@ -119,7 +119,7 @@ const StoreDetailsListCom = () => {
       console.error("Error updating expiry date:", error);
     }
   };
-  
+
 
   // Function to export table to Excel
   const handleExport = () => {
@@ -161,7 +161,7 @@ const StoreDetailsListCom = () => {
     newWindow.print();
     newWindow.close();
   };
-  
+
   return (
     <div className="setting-supplier-container">
       <span className="store-setting-incoming-stock-title">Incoming Stock List</span>
@@ -307,12 +307,12 @@ const StoreDetailsListCom = () => {
             </div>
           </div>
           <div className="manage-modal-modal-body">
-              <Button type="submit" className="manage-modal-employee-btn" onClick={handleSalePriceSubmit}
-              
+            <Button type="submit" className="manage-modal-employee-btn" onClick={handleSalePriceSubmit}
+
               disabled={salePrice === "" || parseFloat(salePrice) < 0} // Disables button if invalid
-              >
-                Update
-              </Button>
+            >
+              Update
+            </Button>
           </div>
         </div>
       </CustomModal>
@@ -325,7 +325,7 @@ const StoreDetailsListCom = () => {
         <div className="store-details-edit-form">
           <div className="store-details-form-edit">
             {/* <div className="tore-form-details-edit"> */}
-              <h2>Edit Details for {selectedUser?.itemName}</h2>
+            <h2>Edit Details for {selectedUser?.itemName}</h2>
             {/* </div> */}
             <div>
               <label>Enter New Expiry Date:</label>
@@ -347,9 +347,9 @@ const StoreDetailsListCom = () => {
             </div>
           </div>
           <div className="manage-modal-modal-body">
-              <Button type="submit" className="manage-modal-employee-btn" onClick={handleExpirySubmit}>
-                Update
-              </Button>
+            <Button type="submit" className="manage-modal-employee-btn" onClick={handleExpirySubmit}>
+              Update
+            </Button>
           </div>
         </div>
       </CustomModal>

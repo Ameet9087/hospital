@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./anesthesiarecordmgnt.css";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 import useCustomAlert from "../../../alerts/useCustomAlert";
 import { API_BASE_URL } from "../../api/api";
 

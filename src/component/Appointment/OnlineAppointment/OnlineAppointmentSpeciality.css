@@ -89,10 +89,6 @@
   border-radius: 50%;
   flex-shrink: 0; /* Prevent shrinking */
 }
-.Speciality-doctor-card-image img{
-  
-}
-
 /* Content inside the doctor card */
 .Speciality-doctor-card-content {
   display: flex;

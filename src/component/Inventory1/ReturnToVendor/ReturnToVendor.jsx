@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./ReturnToVendor.css";
 import CreateReturnToVendor from "./CreateReturnToVendor";
-import CustomModal from "../../CustomModel/CustomModal";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import CustomModal from "../../../CustomModel/CustomModal";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import * as XLSX from 'xlsx';
 import { useFilter } from "../../ShortCuts/useFilter";
@@ -112,8 +112,8 @@ const ReturnToVendor = () => {
           className="ret-input"
           placeholder="Search by vendor "
           value={searchTerm}
-            onChange={handleSearch}
-          />
+          onChange={handleSearch}
+        />
 
         <div className="ret-inner-div">
           <p>
@@ -124,10 +124,10 @@ const ReturnToVendor = () => {
         </div>
       </div>
 
-      
+
       <div className="return-to-vendor-ta">
         <div className="returnToVendor-table">
-          <table  ref={tableRef}>
+          <table ref={tableRef}>
             <thead>
               <tr>
                 {["Vendor Name", "Total Amount", "Vat Amount"].map(

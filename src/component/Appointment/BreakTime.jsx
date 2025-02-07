@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BreakTimeForm from './BreakTimeForm';  // Assuming it's the form for adding break times
 import './BreakTime.css';  // External CSS file for styling
-import CustomModal from '../CustomModel/CustomModal';
+import CustomModal from '../../CustomModel/CustomModal';
 import { useFilter } from "../ShortCuts/useFilter";
 import { API_BASE_URL } from '../api/api';
 

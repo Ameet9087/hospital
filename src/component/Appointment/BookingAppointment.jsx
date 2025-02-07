@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import "./BookingAppointment.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; // Import axios if you are using it
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns.js";
 import AddNewAppointmentForm from "./AddNewappointment";
-import {API_BASE_URL} from "../api/api.js"
+import { API_BASE_URL } from "../api/api.js"
+import { toast } from "react-toastify";
 
 const BookingAppointment = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,7 +24,7 @@ const BookingAppointment = () => {
         );
         setPatients(response.data);
       } catch (error) {
-        setError("Failed to fetch patient data.");
+        toast.error("Failed to fetch patient data.");
         console.error("Error fetching patient data:", error);
       } finally {
         setLoading(false);

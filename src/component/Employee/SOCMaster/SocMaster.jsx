@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AddSocMaster from "./AddSocMaster";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 import "./SocMaster.css";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
@@ -10,8 +10,8 @@ const SocMaster = () => {
   const [show, setShow] = useState(false);
   const [socs, setSocs] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [update,setUpdate]= useState({});
-  const [showUpdate,setShowUpdate] = useState(false);
+  const [update, setUpdate] = useState({});
+  const [showUpdate, setShowUpdate] = useState(false);
 
   const fetchSoc = async () => {
     try {
@@ -24,7 +24,7 @@ const SocMaster = () => {
 
   useEffect(() => {
     fetchSoc();
-  }, [show,showUpdate]);
+  }, [show, showUpdate]);
 
   const handleClose = () => {
     setShow(false);
@@ -35,11 +35,10 @@ const SocMaster = () => {
   };
   const filteredItems = useFilter(socs, searchTerm);
 
-
-  const handleUpdate=(item)=>{
+  const handleUpdate = (item) => {
     setUpdate(item);
     setShowUpdate(true);
-  }
+  };
   return (
     <div className="soc-master-page">
       <div className="soc-master-header">
@@ -80,7 +79,12 @@ const SocMaster = () => {
                 <td>{item.opRegFees}</td>
                 <td>{item.status}</td>
                 <td>
-                  <button className="soc-master-action-btn" onClick={()=>handleUpdate(item)}>Edit</button>
+                  <button
+                    className="soc-master-action-btn"
+                    onClick={() => handleUpdate(item)}
+                  >
+                    Edit
+                  </button>
                 </td>
               </tr>
             ))
@@ -93,10 +97,10 @@ const SocMaster = () => {
       </table>
 
       <CustomModal isOpen={show} onClose={handleClose}>
-        <AddSocMaster onClose={handleClose}/>
+        <AddSocMaster onClose={handleClose} />
       </CustomModal>
       <CustomModal isOpen={showUpdate} onClose={handleClose}>
-        <AddSocMaster initialData={update} onClose={handleClose}/>
+        <AddSocMaster initialData={update} onClose={handleClose} />
       </CustomModal>
     </div>
   );

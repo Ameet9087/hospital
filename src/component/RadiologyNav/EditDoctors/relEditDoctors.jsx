@@ -4,8 +4,10 @@ import React, { useState, useEffect, useRef } from "react";
 import "../EditDoctors/relEditDoctors.css";
 import TransactionDetails from "./rdlEditDrEditBtn";
 import * as XLSX from "xlsx";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
+import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
+const getCurrentDate = () => new Date().toISOString().split("T")[0];
 
 function RDLEditDoctors() {
   const [columnWidths, setColumnWidths] = useState({});
@@ -13,7 +15,10 @@ function RDLEditDoctors() {
   const [imagingData, setImagingData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
-  const [selectedFilter, setSelectedFilter] = useState("--All--"); // State for filter
+  const [selectedFilter, setSelectedFilter] = useState("--All--");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [dateFrom, setDateFrom] = useState(getCurrentDate());
+  const [dateTo, setDateTo] = useState(getCurrentDate());
   const tableRef = useRef(null);
 
   // Function to fetch data from API
@@ -28,20 +33,43 @@ function RDLEditDoctors() {
   }, [showPopup]);
 
   // Function to handle filter change
-  const handleFilterChange = (e) => {
-    const filterValue = e.target.value;
-    setSelectedFilter(filterValue);
-    if (filterValue === "--All--") {
-      setFilteredData(imagingData);
-    } else {
-      const filtered = imagingData.filter(
-        (item) =>
-          item.imagingTypeDTO?.imagingTypeName.toUpperCase() === filterValue
-      );
-      setFilteredData(filtered);
-    }
-  };
+  useEffect(() => {
+    filterData();
+  }, [selectedFilter, searchTerm, dateFrom, dateTo, imagingData]);
 
+  const filterData = () => {
+    let filtered = imagingData;
+
+    // Filter by date range
+    filtered = filtered.filter(
+      (item) => item.imagingDate >= dateFrom && item.imagingDate <= dateTo
+    );
+
+    // Filter by imaging type
+    if (selectedFilter !== "--All--") {
+      filtered = filtered.filter(
+        (item) =>
+          item.imagingTypeDTO?.imagingTypeName.toUpperCase() === selectedFilter
+      );
+    }
+
+    // Apply search filter
+    if (searchTerm) {
+      filtered = filtered.filter((item) => {
+        const patient =
+          item.inPatientDTO?.patient || item.outPatientDTO?.patient; // Get patient from either type
+        return (
+          patient?.firstName.toLowerCase().includes(searchTerm) ||
+          patient?.lastName.toLowerCase().includes(searchTerm) ||
+          item.imagingItemDTO?.imagingItemName
+            .toLowerCase()
+            .includes(searchTerm)
+        );
+      });
+    }
+
+    setFilteredData(filtered);
+  };
   const handleEditDoctorClick = (item) => {
     setShowPopup(true);
     setSelectedRequest(item);
@@ -74,51 +102,44 @@ function RDLEditDoctors() {
       <header>
         <h4>* Edit Doctors</h4>
         <div className="relEditDoctors-filter">
-          <label>
-            Filter
-            <select value={selectedFilter} onChange={handleFilterChange}>
-              <option>--All--</option>
-              <option>CT-SCAN</option>
-              <option>USG</option>
-              <option>X-RAYS</option>
-              <option>ECHO</option>
-            </select>
-          </label>
+          <FloatingSelect
+            label={"Filter"}
+            value={selectedFilter}
+            onChange={(e) => setSelectedFilter(e.target.value)}
+            options={[
+              { value: "", label: "-ALL-" },
+              { value: "CT-SCAN", label: "CT-SCAN" },
+              { value: "USG", label: "USG" },
+              { value: "X-RAY", label: "X-RAY" },
+              { value: "ECHO", label: "ECHO" },
+            ]}
+          />
         </div>
       </header>
       <div className="relEditDoctors-controls">
         <div className="relEditDoctors-date-range">
-          <label>
-            From:
-            <input type="date" defaultValue="2024-08-09" />
-          </label>
-          <label>
-            To:
-            <input type="date" defaultValue="2024-08-16" />
-          </label>
+          <FloatingInput
+            label={"From"}
+            type="date"
+            value={dateFrom}
+            onChange={(e) => setDateFrom(e.target.value)}
+          />
+          <FloatingInput
+            label={"To"}
+            type="date"
+            value={dateTo}
+            onChange={(e) => setDateTo(e.target.value)}
+          />
         </div>
       </div>
       <div className="relEditDoctors-search-N-results">
         <div className="relEditDoctors-search-bar">
-          <input
+          <FloatingInput
+            label={"Search"}
             type="text"
-            placeholder="Search"
-            onChange={(e) => {
-              const searchTerm = e.target.value.toLowerCase();
-              setFilteredData(
-                imagingData.filter(
-                  (item) =>
-                    item.patientDTO.firstName
-                      .toLowerCase()
-                      .includes(searchTerm) ||
-                    item.imagingItemDTO.imagingItemName
-                      .toLowerCase()
-                      .includes(searchTerm)
-                )
-              );
-            }}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
           />
-          <i className="fa-solid fa-magnifying-glass"></i>
         </div>
         <div className="relEditDoctors-results-info">
           Showing {filteredData.length} / {imagingData.length} results

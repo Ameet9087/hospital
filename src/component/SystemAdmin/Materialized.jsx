@@ -3,16 +3,16 @@
 import React, { useState, useRef } from 'react';
 import ReactToPrint from 'react-to-print';
 import './Materialized.css';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 
 const MaterializedSalesView = () => {
   // State to control the visibility of the table
   const [showTable, setShowTable] = useState(false);
 
 
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
-  
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
+
   // Reference to the table for printing
   const componentRef = useRef();
 
@@ -71,7 +71,7 @@ const MaterializedSalesView = () => {
   return (
     <div className="MaterializedSalesView-materialized-sales-view">
       <h2 className="MaterializedSalesView-header">MATERIALIZED SALES VIEW</h2>
-      
+
       <div className="MaterializedSalesView-date-range">
         <div className="MaterializedSalesView-date-input">
           <label>From:</label>
@@ -85,68 +85,68 @@ const MaterializedSalesView = () => {
         <button className="MaterializedSalesView-minus-button">-</button>
         <button className="MaterializedSalesView-show-report-button" onClick={handleShowReport}>Show Report</button> */}
       </div>
-      
+
       <div className="MaterializedSalesView-search-bar">
         <input type="text" placeholder="Search" />
         <button className="MaterializedSalesView-search-button">🔍</button>
       </div>
-      
+
       <div className="MaterializedSalesView-results-info">
         <span>Showing {showTable ? dummyData.length : 0} / {showTable ? dummyData.length : 0} results</span>
         <button className="MaterializedSalesView-export-btn">Export</button>
         <ReactToPrint
-  trigger={() => <button className="MaterializedSalesView-print-btn" style={{ backgroundColor: ' #00c9c0', color: 'white' }} disabled={!showTable}>Print</button>}
-  content={() => componentRef.current}
-/>
+          trigger={() => <button className="MaterializedSalesView-print-btn" style={{ backgroundColor: ' #00c9c0', color: 'white' }} disabled={!showTable}>Print</button>}
+          content={() => componentRef.current}
+        />
 
       </div>
-      
+
       {showTable && (
         <div className="MaterializedSalesView-sales-table-container">
-          <table  ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-                "Fiscal Year",
-  "Bill_No",
-  "Customer_Name",
-  "Customer_Pan",
-  "Bill_Date",
-  "Amount",
-  "Discount",
-  "Taxable_Amount",
-  "Tax_Amount",
-  "Total_Amount",
-  "Sync With IRD",
-  "IS_Bill_Printed",
-  "IS_Bill_Active",
-  "Printed_Time",
-  "Entered_By",
-  "Printed_By",
-  "Is_realtime",
-  "Payment_Method",
-  "VAT_Refund_Amount",
-  "Transaction_Id"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
+          <table ref={tableRef}>
+            <thead>
+              <tr>
+                {[
+                  "Fiscal Year",
+                  "Bill_No",
+                  "Customer_Name",
+                  "Customer_Pan",
+                  "Bill_Date",
+                  "Amount",
+                  "Discount",
+                  "Taxable_Amount",
+                  "Tax_Amount",
+                  "Total_Amount",
+                  "Sync With IRD",
+                  "IS_Bill_Printed",
+                  "IS_Bill_Active",
+                  "Printed_Time",
+                  "Entered_By",
+                  "Printed_By",
+                  "Is_realtime",
+                  "Payment_Method",
+                  "VAT_Refund_Amount",
+                  "Transaction_Id"
+                ].map((header, index) => (
+                  <th
+                    key={index}
+                    style={{ width: columnWidths[index] }}
+                    className="resizable-th"
+                  >
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
+                      ></div>
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            </thead>
 
             <tbody>
               {dummyData.map((data, index) => (
@@ -177,7 +177,7 @@ const MaterializedSalesView = () => {
           </table>
         </div>
       )}
-      
+
       {/* <div className="MaterializedSalesView-pagination">
         <span>0 to {showTable ? dummyData.length : 0} of {showTable ? dummyData.length : 0}</span>
         <button className="MaterializedSalesView-page-btn" disabled={!showTable}>First</button>

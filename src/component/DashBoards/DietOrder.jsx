@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./DietOrder.css";
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingSelect, FloatingTextarea } from "../../FloatingInputs";
 
 const DietOrder = ({ inPatientId, outPatientId }) => {
   const [formData, setFormData] = useState({
@@ -69,7 +71,7 @@ const DietOrder = ({ inPatientId, outPatientId }) => {
       if (!response.ok) {
         throw new Error("Failed to submit diet order");
       }
-      alert("Successfully Submitted");
+      toast.success("Successfully Submitted");
       const responseData = await response.json();
       fetchDietOrders();
       setFormData({
@@ -83,7 +85,7 @@ const DietOrder = ({ inPatientId, outPatientId }) => {
       });
       console.log("Successfully submitted:", responseData);
     } catch (error) {
-      console.error("Error submitting diet order:", error);
+      toast.error("Error submitting diet order:", error);
     }
   };
 
@@ -94,79 +96,80 @@ const DietOrder = ({ inPatientId, outPatientId }) => {
         <div className="Diet-order-content">
           <div className="Diet-order-content-left">
             <div className="Diet-order-group">
-              <label>Diet Group:</label>
-              <input
-                type="text"
-                name="dietGroup"
-                placeholder="Diet Group"
-                value={formData.dietGroup}
-                onChange={handleInputChange}
+              <FloatingInput
+              label={"Diet Group"}
+               type="text"
+               name="dietGroup"
+               placeholder="Diet Group"
+               value={formData.dietGroup}
+               onChange={handleInputChange}
               />
             </div>
             <div className="Diet-order-group">
-              <label>Diet Order:</label>
-              <input
-                type="text"
-                name="dietOrder"
-                placeholder="Diet Order"
-                value={formData.dietOrder}
-                onChange={handleInputChange}
+              <FloatingInput
+              label={"Diet Order"}
+                 type="text"
+                 name="dietOrder"
+                 placeholder="Diet Order"
+                 value={formData.dietOrder}
+                 onChange={handleInputChange}
               />
             </div>
             <div className="Diet-order-group">
-              <label>Diet Frequency:</label>
-              <select
-                name="dietFrequency"
-                value={formData.dietFrequency}
-                onChange={handleInputChange}
-              >
-                <option value="">Select Frequency</option>
-                <option value="daily">Daily</option>
-                <option value="twice-daily">Twice Daily</option>
-                <option value="once-weekly">Once Weekly</option>
-              </select>
+              <FloatingSelect
+              label={"Diet Frequency"}
+              name="dietFrequency"
+              value={formData.dietFrequency}
+              onChange={handleInputChange}
+              options={[{value:"",label:""},
+                {value:"daily",label:"Daily"},
+                {value:"twice-daily",label:"Twice Daily"},
+                {value:"once-weekly",label:"Once Weekly"}
+              ]}
+              />
             </div>
             <div className="Diet-order-group">
-              <label>Diet Type:</label>
-              <select
-                name="dietType"
+            <FloatingSelect
+              label={"Diet Type"}
+              name="dietType"
                 value={formData.dietType}
                 onChange={handleInputChange}
-              >
-                <option value="">Select Diet Type</option>
-                <option value="regular">Regular</option>
-                <option value="low-sodium">Low Sodium</option>
-                <option value="high-protein">High Protein</option>
-              </select>
+              options={[{value:"",label:""},
+                {value:"regular",label:"Regular"},
+                {value:"low-sodium",label:"Low Sodium"},
+                {value:"high-protein",label:"High Protein"}
+              ]}
+              />
             </div>
           </div>
 
           <div className="Diet-order-content-right">
             <div className="Diet-order-group">
-              <label>Diet Time:</label>
-              <input
+              <FloatingInput
+              label={"Diet Time"}
                 type="time"
                 name="dietTime"
                 value={formData.dietTime}
                 onChange={handleInputChange}
+              
               />
             </div>
             <div className="Diet-order-group">
-              <label>Diet Given Time:</label>
-              <input
-                type="datetime-local"
-                name="dietGivenTime"
-                value={formData.dietGivenTime}
-                onChange={handleInputChange}
+              <FloatingInput
+              label={"Diet Given Time"}
+               type="datetime-local"
+               name="dietGivenTime"
+               value={formData.dietGivenTime}
+               onChange={handleInputChange}
+              
               />
             </div>
             <div className="Diet-order-group">
-              <label>Diet Remarks:</label>
-              <textarea
-                name="dietRemarks"
-                placeholder="Add remarks about the Diet"
-                value={formData.dietRemarks}
-                onChange={handleInputChange}
+              <FloatingTextarea
+              label={"Diet Remarks"}
+              name="dietRemarks"
+              value={formData.dietRemarks}
+              onChange={handleInputChange}
               />
             </div>
           </div>

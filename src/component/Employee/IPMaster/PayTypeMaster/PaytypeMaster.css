@@ -4,19 +4,32 @@
   line-height: 30px;
   color: white;
 }
-.paytypemaster-button-container button{
+.paytypemaster-button-container button,.paytypemaster-table-button{
   background-color: var(--button-bg-color);
   color: white;
   border: none;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: pointer;
 padding: var(--input-box-padding);
 margin-bottom: 10px;
+border: 1px solid var(--button-hover-border-color);
+
+
 }
-.paytypemaster-button-container button:hover{
+.paytypemaster-button-container button:hover,.paytypemaster-table-button:hover,.paytypemaster-table-button-del:hover{
   background-color: var(--button-hover-background-color);
   color: var(--button-hover-text-color);
-  border: 1px solid var(--button-hover-border-color);
+}
+.paytypemaster-table-button-del{
+  background-color: red;
+  margin-left: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: var(--input-box-padding);
+  margin-bottom: 10px;
+  border: 1px solid red;
 }
 .mand{
   color: red;

@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Activeproblems.css"; // Import the CSS file for styling
 import { Label } from "recharts";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
+import { FloatingInput, FloatingTextarea } from "../../FloatingInputs";
+import { toast } from "react-toastify";
 
 const ActiveProblems = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -154,7 +156,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
       );
 
       if (response.ok) {
-        alert(`${isEditMode ? "Updated" : "Added"} Problem successfully!`);
+        toast.success(`${isEditMode ? "Updated" : "Added"} Problem successfully!`);
         setActiveProblem({
           searchProblem: "",
           icdCode: "",
@@ -166,11 +168,11 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
         handleCloseModal();
         setIsEditMode(false); // Reset edit mode
       } else {
-        alert(`Failed to ${isEditMode ? "update" : "add"} Problem`);
+        toast.error(`Failed to ${isEditMode ? "update" : "add"} Problem`);
       }
     } catch (error) {
       console.error("Error:", error);
-      alert(`Error ${isEditMode ? "updating" : "submitting"} form`);
+      toast.error(`Error ${isEditMode ? "updating" : "submitting"} form`);
     }
   };
 
@@ -194,11 +196,11 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
       if (!response.ok) {
         throw new Error("Failed to add past problem");
       }
-
+      toast.success("Past Problem Added Successfully")
       handleClosePastModal(); // Close the modal
       setNewPastProblem({}); // Reset the form
     } catch (error) {
-      setError(error.message); // Set error message
+      toast.error(error.message); // Set error message
     } finally {
       setIsLoading(false); // Reset loading state
     }
@@ -233,7 +235,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                 className="activeproblems-add-button"
                 onClick={handleOpenModal}
               >
-                ➕ Add
+                Add
               </button>
             </div>
             <div className="table-container">
@@ -284,7 +286,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                         />
                       </td>
                       <td className="actproblem-tabledata">
-                        <button onClick={() => handleEdit(problem)}>
+                        <button className="activeproblems-add-button" onClick={() => handleEdit(problem)}>
                           Edit
                         </button>
                       </td>
@@ -305,7 +307,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                 className="activeproblems-add-button"
                 onClick={handleOpenPastModal}
               >
-                ➕ Add
+                Add
               </button>
             </div>
             <div className="table-container">
@@ -377,8 +379,8 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
               </button>
 
               <div className="activeproblems-form-group">
-                <label>Search Problem:</label>
-                <input
+                <FloatingInput
+                  label={"Search Problem"}
                   type="text"
                   name="searchProblem"
                   value={activeProblem.searchProblem}
@@ -386,16 +388,16 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                 />
               </div>
               <div className="activeproblems-form-group">
-                <label>ICD-11 Code:</label>
-                <input
+                <FloatingInput
+                  label={"ICD-11 Code"}
                   type="text"
                   name="icdCode"
                   value={activeProblem.icdCode}
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="activeproblems-form-group">
-                <label>Principal Problem:</label>
+              <div className="activeproblems-form-group-checkBox">
+                <label htmlFor="">Principal Problem</label>
                 <input
                   type="checkbox"
                   name="isPrincipalProblem"
@@ -404,8 +406,8 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                 />
               </div>
               <div className="activeproblems-form-group">
-                <label>Current Status:</label>
-                <input
+                <FloatingInput
+                  label={"Current Status"}
                   type="text"
                   name="currentStatus"
                   value={activeProblem.currentStatus}
@@ -413,8 +415,8 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                 />
               </div>
               <div className="activeproblems-form-group">
-                <label>Onset Date:</label>
-                <input
+                <FloatingInput
+                  label={"Onset Date"}
                   type="date"
                   name="onsetDate"
                   value={activeProblem.onsetDate}
@@ -422,12 +424,12 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                 />
               </div>
               <div className="activeproblems-form-group">
-                <label>Note:</label>
-                <textarea
+                <FloatingTextarea
+                  label={"Note"}
                   name="note"
                   value={activeProblem.note}
                   onChange={handleInputChange}
-                ></textarea>
+                />
               </div>
 
               <button
@@ -451,52 +453,59 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                 ❌
               </button>
               <div className="activeproblems-form-group">
-                <label>Search Problem*:</label>
-                <input
+                <FloatingInput
+                  label={"Search Problem"}
                   type="text"
                   name="searchProblem" // Updated name attribute
                   placeholder="ICD-11"
+                  value={newPastProblem.searchProblem}
                   onChange={handlePastInputChange}
                 />
               </div>
-              <div className="activeproblems-form-group">
+              <div className="activeproblems-form-group-checkBox">
                 <label>Mark if Principal Problem:</label>
                 <input
                   type="checkbox"
                   name="isPrincipalProblem" // Updated name attribute
+                  value={newPastProblem.isPrincipalProblem}
                   onChange={handlePastInputChange}
                 />
               </div>
               <div className="activeproblems-form-group">
-                <label>Current Status:</label>
-                <input
+                <FloatingInput
+                  label={"Current Status"}
                   type="text"
                   name="currentStatus" // Updated name attribute
+                  value={newPastProblem.currentStatus}
                   onChange={handlePastInputChange}
+
                 />
               </div>
               <div className="activeproblems-form-group">
-                <label>OnSet Date*:</label>
-                <input
+                <FloatingInput
+                  label={"OnSet Date"}
                   type="date"
                   name="onSetDate" // Updated name attribute
+                  value={newPastProblem.onSetDate}
                   onChange={handlePastInputChange}
                 />
               </div>
               <div className="activeproblems-form-group">
-                <label>Resolved Date:</label>
-                <input
+                <FloatingInput
+                  label={"Resolved Date"}
                   type="date"
                   name="resolvedDate" // Updated name attribute
+                  value={newPastProblem.resolvedDate}
                   onChange={handlePastInputChange}
                 />
               </div>
               <div className="activeproblems-form-group">
-                <label>Note:</label>
-                <textarea
+                <FloatingTextarea
+                  label={"Note"}
                   name="note" // Updated name attribute
+                  value={newPastProblem.note}
                   onChange={handlePastInputChange}
-                ></textarea>
+                />
               </div>
               <button
                 className="activeproblems-add-problem-button"

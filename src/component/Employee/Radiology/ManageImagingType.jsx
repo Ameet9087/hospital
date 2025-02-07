@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import "./ManageImagingType.css";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { useFilter } from "../../ShortCuts/useFilter";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../../FloatingInputs";
 
 const ManageImagingType = () => {
   const [showModal, setShowModal] = useState(false);
@@ -79,15 +81,13 @@ const ManageImagingType = () => {
           `${API_BASE_URL}/imaging-type/create-imaging-items/${selectedImagingType.imagingTypeId}`,
           imagingTypeData
         );
-        console.log("Updated:", imagingTypeData);
+        toast.success("Updated:", imagingTypeData);
       } else {
-        console.log("Added:", imagingTypeData);
-        // Add new imaging type
         await axios.post(
           `${API_BASE_URL}/imaging-type/imaging-types`,
           imagingTypeData
         );
-        console.log("Added:", imagingTypeData);
+        toast.success("Added:", imagingTypeData);
       }
       // Refresh imaging types after update/add
       const response = await axios.get(
@@ -96,7 +96,7 @@ const ManageImagingType = () => {
       setImagingTypes(response.data);
       handleCloseModal();
     } catch (error) {
-      console.error("Error submitting imaging type:", error);
+      toast.error("Error submitting imaging type:", error);
     }
   };
 
@@ -107,13 +107,15 @@ const ManageImagingType = () => {
           + Add Imaging Type
         </button>
       </div>
-      <input
-        type="text"
-        className="manage-imaging-type-search-bar"
-        placeholder="Search"
-        value={searchTerm}
-        onChange={handleSearch}
-      />
+      <div className="manage-imaging-type-search-bar">
+        <FloatingInput
+          label={"Search"}
+          type="text"
+          placeholder="Search"
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </div>
       <div className="table-container">
         <table ref={tableRef}>
           <thead>
@@ -169,17 +171,12 @@ const ManageImagingType = () => {
           <div className="manage-modal-modal-body">
             <form onSubmit={handleSubmit}>
               <div className="manage-modal-form-group">
-                <label className="manage-modal-form-label">
-                  Imaging Item Name{" "}
-                  <span className="manage-modal-text-danger">*</span>:
-                </label>
-                <input
+                <FloatingInput
+                  label={"Imaging Item Name"}
                   type="text"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  placeholder="Imaging Type"
                   required
-                  className="manage-modal-form-control"
                 />
               </div>
 
@@ -194,22 +191,20 @@ const ManageImagingType = () => {
               </div>
 
               <div className="manage-modal-form-group">
-                <label className="manage-modal-form-label">Created Date:</label>
-                <input
+                <FloatingInput
+                  label={"Created Date"}
                   type="date"
                   value={createdDate}
                   onChange={(e) => setCreatedDate(e.target.value)}
-                  className="manage-modal-form-control"
                 />
               </div>
 
               <div className="manage-modal-form-group">
-                <label className="manage-modal-form-label">Created Time:</label>
-                <input
+                <FloatingInput
+                  label={"Created Time"}
                   type="time"
                   value={createdTime}
                   onChange={(e) => setCreatedTime(e.target.value)}
-                  className="manage-modal-form-control"
                 />
               </div>
 

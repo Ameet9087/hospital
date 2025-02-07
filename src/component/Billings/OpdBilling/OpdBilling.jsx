@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./OpdBilling.css";
-import PopupTable from "./PopupTable";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import PopupTable from "../../Admission/PopupTable";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
 
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hasValue, setHasValue] = useState(!!value);
-
 
   useEffect(() => {
     setHasValue(!!value);
@@ -18,7 +17,6 @@ const FloatingInput = ({ label, type = "text", value, ...props }) => {
     setHasValue(e.target.value.length > 0);
     if (props.onChange) props.onChange(e);
   };
-
 
   return (
     <div
@@ -49,8 +47,6 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
   useEffect(() => {
     setHasValue(!!value);
   }, [value]);
-
-
 
   return (
     <div
@@ -108,16 +104,8 @@ const OpdBilling = () => {
   const [outPatientId, setOutPatientId] = useState();
   const [doctorservice, setdoctorservice] = useState([]);
   const [patientType, setPatientType] = useState("");
-  const [isPrintEnabled, setIsPrintEnabled] = useState(false);
-  const [billFromResponse, setBillFromResponse] = useState("");
 
   const [isEmergency, setemergency] = useState(false);
-
-
-  const handlePrintBilling = () => {
-    console.log("Navigating with state:", { selectedPatient, selectedDoctor, testGridTableRowsableRows, netAmount, selectedPaymentMode, billFromResponse });
-    navigate("/billing/OpdBillingPrint", { state: { selectedPatient, selectedDoctor, testGridTableRowsableRows, netAmount, selectedPaymentMode, billFromResponse } });
-  };
 
   const fetchDoctorService = async (outPatientId) => {
     try {
@@ -136,6 +124,7 @@ const OpdBilling = () => {
   };
 
   const fetchEmergencyDoctorService = async (erNo) => {
+    console.log("erno", erNo);
     try {
       const response = await fetch(
         `${API_BASE_URL}/emergency/er-initial-assessment/${erNo}/emergency-doctor-fees`
@@ -453,13 +442,13 @@ const OpdBilling = () => {
           );
 
           const generalOpdFee = opdFees?.generalOpdFee || 0;
-          const followupfees = opdFees?.followupopdfees || 0
+          const followupfees = opdFees?.followupopdfees || 0;
 
           console.log("fetched apppp=====", fetchedAppointments);
           // Check if fees are unpaid before creating the row
           if (
             fetchedAppointments.feespaid !== "yes" &&
-            fetchedAppointments.typeOfAppointment == "New Patient"
+            fetchedAppointments.typeOfAppointment == "New Patient" || fetchedAppointments.typeOfAppointment == "Old patient"
           ) {
             // New Patient Logic
             const doctorRow = {
@@ -561,6 +550,7 @@ const OpdBilling = () => {
         let doctorServices;
         console.log("Fetched doctor services:", doctorServices);
         const isEmergency = data.originalObject.isEmergency === "yes";
+        console.log("is emergency print", isEmergency);
 
         if (isEmergency) {
 
@@ -569,6 +559,8 @@ const OpdBilling = () => {
             data.originalObject.erNo
           );
 
+          console.log("Fetched doctor services:", doctorServices)
+
           if (doctorServices.length > 0) {
             const firstService = doctorServices[0];
             console.log("-----p", firstService)
@@ -576,6 +568,7 @@ const OpdBilling = () => {
             const rateToUse = isEmergency
               ? firstService.morningEmergencyToDoctor
               : firstService.morningEmergencyToDoctor;
+
 
             const EmergencydocName = await fetchDoctorDetails(firstService.doctorId);
 
@@ -849,8 +842,6 @@ const OpdBilling = () => {
 
       if (response.status === 200) {
         alert("Data submitted successfully!");
-        setIsPrintEnabled(true);
-        setBillFromResponse(response.data);
         console.log("Response:", response.data);
       } else {
         alert("Failed to submit data. Please try again.");
@@ -858,7 +849,6 @@ const OpdBilling = () => {
       }
     } catch (error) {
       console.error("Error submitting data:", error);
-      setIsPrintEnabled(false)
       alert(
         "An error occurred while submitting data. Please check the console."
       );
@@ -1644,44 +1634,21 @@ const OpdBilling = () => {
                 {selectedPaymentMode && (
                   <div className="OpdBilling-grid-sec">
                     <FloatingInput
-  label="Amount"
-  htmlFor="amount"
-  type="number"
-  id="amount"
-  value={paymentDetails.amount || ""}
-  onChange={(e) => {
-    const amount = e.target.value;
+                      label="Amount"
+                      htmlFor="amount"
+                      type="number"
+                      id="amount"
+                      // placeholder="Enter Amount"
+                      value={paymentDetails.amount || ""}
+                      onChange={(e) =>
+                        setPaymentDetails({
+                          ...paymentDetails,
+                          amount: e.target.value,
+                        })
+                      }
+                    />
 
-    // Ensure that the amount is a number and does not exceed the current balance
-    if (amount <= currentBalance) {
-      setPaymentDetails({
-        ...paymentDetails,
-        amount: amount,
-      });
-    } else {
-      alert("please Enter valid amount ")
 
-      // Optionally, you can add an error message or do nothing if the condition fails
-      // For example, show an alert or set a state to display an error message
-    }
-  }}
-/>
-
-                    {/* <div className="payment-details-row">
-            <label htmlFor="amount">Amount:</label>
-            <input
-              type="number"
-              id="amount"
-              placeholder="Enter Amount"
-              value={paymentDetails.amount || ""}
-              onChange={(e) =>
-                setPaymentDetails({
-                  ...paymentDetails,
-                  amount: e.target.value,
-                })
-              }
-            />
-          </div> */}
                     {selectedPaymentMode === "card" && (
                       <FloatingInput
                         label="Card Number"
@@ -1697,21 +1664,7 @@ const OpdBilling = () => {
                         }
                       />
 
-                      // <div className="payment-details-row">
-                      //   <label htmlFor="cardNumber">Card Number:</label>
-                      //   <input
-                      //     type="text"
-                      //     placeholder="Enter Card Number"
-                      //     id="cardNumber"
-                      //     value={paymentDetails.cardNumber || ""}
-                      //     onChange={(e) =>
-                      //       setPaymentDetails({
-                      //         ...paymentDetails,
-                      //         cardNumber: e.target.value,
-                      //       })
-                      //     }
-                      //   />
-                      // </div>
+
                     )}
                     {selectedPaymentMode === "upi" && (
                       <FloatingInput
@@ -1728,21 +1681,7 @@ const OpdBilling = () => {
                         }
                       />
 
-                      // <div className="payment-details-row">
-                      //   <label htmlFor="upiId">UPI ID:</label>
-                      //   <input
-                      //     type="text"
-                      //     placeholder="Enter UPI ID"
-                      //     id="upiId"
-                      //     value={paymentDetails.upiId || ""}
-                      //     onChange={(e) =>
-                      //       setPaymentDetails({
-                      //         ...paymentDetails,
-                      //         upiId: e.target.value,
-                      //       })
-                      //     }
-                      //   />
-                      // </div>
+
                     )}
                     {selectedPaymentMode === "check" && (
                       <>
@@ -1763,21 +1702,6 @@ const OpdBilling = () => {
                           }
                         />
 
-                        {/* <div className="payment-details-row">
-                <label htmlFor="checkNumber">Check Number:</label>
-                <input
-                  type="text"
-                  placeholder="Enter Check Number"
-                  id="checkNumber"
-                  value={paymentDetails.checkNumber || ""}
-                  onChange={(e) =>
-                    setPaymentDetails({
-                      ...paymentDetails,
-                      checkNumber: e.target.value,
-                    })
-                  }
-                />
-              </div> */}
                         <FloatingInput
                           label="Check Date"
                           type="date"
@@ -1791,20 +1715,6 @@ const OpdBilling = () => {
                           }
                         />
 
-                        {/* <div className="payment-details-row">
-                <label htmlFor="checkDate">Check Date:</label>
-                <input
-                  type="date"
-                  id="checkDate"
-                  value={paymentDetails.checkDate || ""}
-                  onChange={(e) =>
-                    setPaymentDetails({
-                      ...paymentDetails,
-                      checkDate: e.target.value,
-                    })
-                  }
-                />
-              </div> */}
                       </>
                     )}
                   </div>
@@ -1968,13 +1878,6 @@ const OpdBilling = () => {
         <div className="billing-opd-com-action-buttons">
           <button className="btn-blue" onClick={handleSubmit}>
             Save
-          </button>
-          <button
-            className="billing-opd-com-action-buttons"
-            onClick={() => handlePrintBilling()}
-            disabled={!isPrintEnabled}
-          >
-            Print
           </button>
         </div>
       </div>

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./DoctorAppointment.css";
 import DoctorAppointmentPopUp from "./DoctorAppointmentPopUp.jsx";
-import CustomModal from "../CustomModel/CustomModal.jsx";
+import CustomModal from "../../CustomModel/CustomModal.jsx";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api.js";
+import FloatingInput from "../../FloatingInputs/FloatingInput.jsx";
+import FloatingSelect from "../../FloatingInputs/FloatingSelect.jsx";
+import { toast } from "react-toastify";
 export default function DoctorAppointment() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
@@ -28,17 +31,16 @@ export default function DoctorAppointment() {
       const doctorblockresponse = await axios.get(
         `${API_BASE_URL}/doctor-blocking/doctor-blocking/latest/${doctorId}`
       );
-      console.log(doctorblockresponse.data); // Log the response or handle the data as needed
       return doctorblockresponse.data; // Return the data if needed
     } catch (error) {
-      console.error("Error fetching doctor blocking data:", error);
+      console.log("Error fetching doctor blocking data:", error);
       return null; // Return null or an appropriate fallback if there's an error
     }
   };
 
   const handleLoadSlots = async ({ locationId, doctorId, appointmentDate }) => {
     if (!locationId || !doctorId || !appointmentDate) {
-      alert("Please select location, doctor, and date before loading slots.");
+      toast.error("Please select location, doctor, and date before loading slots.");
       return;
     }
 
@@ -74,9 +76,7 @@ export default function DoctorAppointment() {
           appointmentDateObj <= blockingToDate
         ) {
           loadSlots = false;
-          alert(
-            `${doctorBlockingData.message}`
-          );
+          toast.error(`${doctorBlockingData.message}`);
         }
 
         // Scenario 2: If blocking dates and times are present, show all time slots
@@ -102,16 +102,14 @@ export default function DoctorAppointment() {
           parseInt(scheduleData.reviewTime)
         );
       } else if (!scheduleData) {
-        alert("No schedule found for the selected doctor and location.");
+        toast.error("No schedule found for the selected doctor and location.");
         setTimeSlots([]);
       }
     } catch (error) {
       console.error("Error fetching schedule:", error);
-      alert("Failed to load appointment slots. Please try again.");
+      toast.error("Failed to load appointment slots. Please try again.");
     }
   };
-
-
 
   const isToday = (date) => {
     const today = new Date().toISOString().split("T")[0];
@@ -138,7 +136,7 @@ export default function DoctorAppointment() {
         setAppointment(appointmentsData);
         console.log(appointmentsData);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        toast.error("Error fetching data:", error);
       }
     };
 
@@ -189,7 +187,7 @@ export default function DoctorAppointment() {
   };
   const openModal = (appointmentObjOrTimeSlot) => {
     if (!formData.appointmentDate) {
-      alert("Please select an appointment date first.");
+      toast.error("Please select an appointment date first.");
       return;
     }
 
@@ -204,13 +202,15 @@ export default function DoctorAppointment() {
         appointmentObjOrTimeSlot.timeSlot || appointmentObjOrTimeSlot
       )
     ) {
-      alert("You cannot book an appointment for a past time slot today.");
+      toast.error("You cannot book an appointment for a past time slot today.");
       return;
     }
 
-    const blockingFromTime = doctorBlocking?.fromTime
-    const blockingToTime = doctorBlocking?.toTime
-    const appointmentTime = convertTo24HourFormat(appointmentObjOrTimeSlot.timeSlot);
+    const blockingFromTime = doctorBlocking?.fromTime;
+    const blockingToTime = doctorBlocking?.toTime;
+    const appointmentTime = convertTo24HourFormat(
+      appointmentObjOrTimeSlot.timeSlot
+    );
     console.log(doctorBlocking?.fromTime);
     console.log(doctorBlocking?.toTime);
     console.log(appointmentObjOrTimeSlot?.timeSlot);
@@ -220,9 +220,7 @@ export default function DoctorAppointment() {
     ) {
       console.log("yess executed");
 
-      alert(
-        `${doctorBlocking.message}`
-      );
+      toast.error(`${doctorBlocking.message}`);
       return;
     }
     const timeSlot =
@@ -259,7 +257,6 @@ export default function DoctorAppointment() {
       .toString()
       .padStart(2, "0")}`;
   };
-
 
   const updateModel = (object) => {
     console.log(object);
@@ -340,60 +337,59 @@ export default function DoctorAppointment() {
       <h1 className="DoctorAppointments-heading">Doctor Appointments</h1>
       <div className="DoctorAppointments-row">
         <div className="DoctorAppointments-field">
-          <label className="DoctorAppointments-label">Date</label>
-          <input
-            type="date"
-            className="DoctorAppointments-input"
-            name="appointmentDate"
+          <FloatingInput
+            label={"Date"}
+            type="Date"
             value={formData.appointmentDate}
             onChange={handleInputChange}
           />
         </div>
         <div className="DoctorAppointments-field">
-          <label className="DoctorAppointments-label">Location</label>
-          <select
-            className="DoctorAppointments-input"
+          <FloatingSelect
+            label="Location"
             name="location"
             value={formData.location}
             onChange={handleInputChange}
-          >
-            <option value="">Select Location</option>
-            {locations.length > 0 &&
-              locations?.map((location, index) => (
-                <option key={index} value={location?.id}>
-                  {location?.locationName}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div className="DoctorAppointments-field">
-          <label className="DoctorAppointments-label">Specialization</label>
-          <input
-            type="text"
-            className="DoctorAppointments-input"
-            name="specialization"
-            value={formData.specialization}
-            readOnly
+            options={[
+              { value: "", label: "" },
+              ...(Array.isArray(locations)
+                ? locations.map((loc) => ({
+                    value: loc?.id,
+                    label: loc?.locationName,
+                  }))
+                : []),
+            ]}
           />
         </div>
+        
         <div className="DoctorAppointments-field">
-          <label className="DoctorAppointments-label">Doctor</label>
-          <select
-            className="DoctorAppointments-input"
+          <FloatingSelect
+            label="Doctor"
             name="doctor"
             value={formData.doctor}
             onChange={(e) => {
               handleInputChange(e); // Update the doctor value in formData
               handleLoadSlots(); // Automatically load slots after doctor selection
             }}
-          >
-            <option value="">Select Doctor</option>
-            {doctors?.map((doctor, index) => (
-              <option key={index} value={doctor.doctorId}>
-                {doctor.doctorName}
-              </option>
-            ))}
-          </select>
+            options={[
+              { value: "", label: "" },
+              ...(Array.isArray(doctors)
+                ? doctors.map((doctor) => ({
+                    value: doctor.doctorId,
+                    label: doctor.doctorName,
+                  }))
+                : []),
+            ]}
+          />
+        </div>
+        <div className="DoctorAppointments-field">
+          <FloatingInput
+            label={"Specialization"}
+            type="text"
+            name="specialization"
+            value={formData.specialization}
+            readOnly
+          />
         </div>
       </div>
 

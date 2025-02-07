@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./GatePassecuritycheck.css";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import GatePassSecurityCheckPopUp from "./GatePassSecurityCheckPopUp";
 import { API_BASE_URL } from "../../../api/api";
 const GatePassSecurityCheck = () => {
@@ -136,7 +136,7 @@ const GatePassSecurityCheck = () => {
         </table>
       </div>
 
-  
+
 
       {showPopup && (
         <CustomModal isOpen={showPopup} onClose={closePopup}>

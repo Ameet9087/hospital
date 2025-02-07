@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import CustomModal from "../../CustomModel/CustomModal";
+
+import CustomModal from "../../../CustomModel/CustomModal";
 import './Sugeryscheduling.css';
 import { API_BASE_URL } from "../../api/api";
 

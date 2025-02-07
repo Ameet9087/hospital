@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../LabSetting/looksUps.css";
 import LabLookUpAddNewLUp from "./labLookUpAddNewLUp";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import LabLookUpUpdateNewLUp from "./LabLookUpUpdateNewLUp";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { FloatingInput } from "../../../FloatingInputs";
 
 const LookUps = () => {
   const [labTests, setLabTests] = useState([]); // State to store fetched lab lookups
@@ -82,14 +83,14 @@ const LookUps = () => {
       </div>
 
       <div className="looksUps-search-N-result">
+       
         <div className="looksUps-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchTerm} // Bind to searchTerm state
-            onChange={(e) => setSearchTerm(e.target.value)} // Update searchTerm on input change
-          />
+        <FloatingInput
+          type="text"
+          label={"Search"}
+          value={searchTerm} 
+          onChange={(e) => setSearchTerm(e.target.value)} 
+        />
         </div>
         <div className="looksUps-results-info">
           <span>

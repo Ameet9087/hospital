@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import "./WriteOff.css";
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import { API_BASE_URL } from '../../api/api';
-
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 const WriteOff = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);

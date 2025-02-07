@@ -3,8 +3,8 @@ import "./Terms.css";
 import CustomModal from "../../../CustomModel/CustomModal";
 import AddTermsAndConditions from "./AddTerms";
 import { API_BASE_URL } from "../../api/api";
-import * as XLSX from "xlsx";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import * as XLSX from 'xlsx';
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 
 const Terms = () => {
   const [terms, setTerms] = useState([]);
@@ -12,6 +12,7 @@ const Terms = () => {
   const [isAddingTerm, setIsAddingTerm] = useState(false);
   const [isUpdatingTerm, setIsUpdatingTerm] = useState(false);
   const [selectedTerm, setSelectedTerm] = useState(null); // To hold the term being edited
+
 
   const [columnWidths, setColumnWidths] = useState({});
   const [searchQuery, setSearchQuery] = useState(""); // To track the search query
@@ -64,6 +65,7 @@ const Terms = () => {
     setIsUpdatingTerm(false);
     setSelectedTerm(null); // Reset the selected term
   };
+
 
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
@@ -127,6 +129,7 @@ const Terms = () => {
         </button>
 
         <div className="ateg-search-bar">
+
           <input
             type="text"
             placeholder="Search"

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios'; // Import axios
 import './RadiationTherapyIntegration.css';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 
 const RadiationTherapyIntegration = () => {
     const [columnWidths, setColumnWidths] = useState({});
@@ -52,7 +52,7 @@ const RadiationTherapyIntegration = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         try {
             const response = await axios.post('http://localhost:8000/api/therapy-plans', formData);
             console.log("Form Data Submitted: ", response.data);
@@ -302,7 +302,7 @@ const RadiationTherapyIntegration = () => {
                         <button type="submit" className='radiation-therapy-integration-submit-btn'>Submit</button>
                         <button type="button" className='radiation-therapy-integration-submit-btn' onClick={toggleFormVisibility}>Cancel</button>
                     </div>
-                  
+
                 </form>
             )}
         </div>

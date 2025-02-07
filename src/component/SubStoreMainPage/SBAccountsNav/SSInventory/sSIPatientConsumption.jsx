@@ -7,11 +7,11 @@ import { useReactToPrint } from 'react-to-print';
 import SSIPatientConsumNewPCbtn from './sSIPatientConsumNewPCbtn';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
-import CustomModal from '../../../CustomModel/CustomModal';
+import CustomModal from '../../../../CustomModel/CustomModal';
 
 function SSIPatientConsumption() {
   const printRef = useRef();
-  const {store} = useParams();
+  const { store } = useParams();
   const [fromDate, setFromDate] = useState('2024-08-14');
   const [toDate, setToDate] = useState('2024-08-21');
   const [patientConsumptions, setPatientConsumptions] = useState([]);
@@ -87,10 +87,10 @@ function SSIPatientConsumption() {
   const handleExportToExcel = () => {
     // Get the table data
     const tableData = [
-      [ 'Patient Name', 'Consumption Date', 'Entered By', 'Remarks'],
-      
+      ['Patient Name', 'Consumption Date', 'Entered By', 'Remarks'],
+
     ];
-   
+
 
     // Create a new workbook and a new worksheet
     const worksheet = XLSX.utils.aoa_to_sheet(tableData);
@@ -103,32 +103,32 @@ function SSIPatientConsumption() {
 
   return (
     <div className="sSIPatientConsumption-active-imaging-request">
-            
+
       <>
         <header className='sSIPatientConsumption-header'>
           <div className="sSIPatientConsumption-status-filters">
-          <button className="sSIPatientConsumption-new-patient-button"
-                          onClick={handleNewPatientConsumptionClick} // Handle button click
->+ New Patient Consumption</button>
+            <button className="sSIPatientConsumption-new-patient-button"
+              onClick={handleNewPatientConsumptionClick} // Handle button click
+            >+ New Patient Consumption</button>
           </div>
         </header>
-          
-          <div className="sSIPatientConsumption-controls">
 
-<div className="sSIPatientConsumption-date-range">
-      <label>
-        From:
-        <input type="date" defaultValue="2024-08-09" />
-      </label>
-      <label>
-        To:
-        <input type="date" defaultValue="2024-08-16" />
-      </label>
-      {/* <button className="sSIPatientConsumption-star-button">☆</button>
+        <div className="sSIPatientConsumption-controls">
+
+          <div className="sSIPatientConsumption-date-range">
+            <label>
+              From:
+              <input type="date" defaultValue="2024-08-09" />
+            </label>
+            <label>
+              To:
+              <input type="date" defaultValue="2024-08-16" />
+            </label>
+            {/* <button className="sSIPatientConsumption-star-button">☆</button>
     <button className="sSIPatientConsumption-more-btn">-</button>
       <button className="sSIPatientConsumption-ok-button">OK</button> */}
-    </div>
-    </div>
+          </div>
+        </div>
         <div className="sSIPatientConsumption-search-N-results">
           <div className="sSIPatientConsumption-search-bar">
             <i className="fa-solid fa-magnifying-glass"></i>
@@ -152,26 +152,26 @@ function SSIPatientConsumption() {
                   <th>Patient Name</th>
                   <th>Consumption Date</th>
                   <th>Entered By</th>
-                <th>Remarks</th>
+                  <th>Remarks</th>
                 </tr>
               </thead>
               <tbody>
-            {patientConsumptions.length > 0 ? (
-              patientConsumptions.map((consumption, index) => (
-                <tr key={index}>
-                  <td>{consumption.patientName}</td>
-                  <td>{consumption.consumptionDate}</td>
-                  <td>{consumption.enteredBy}</td>
-                  <td>{consumption.remark}</td>
-                  <td><button className="action-button">Action</button></td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6">No Rows To Show</td>
-              </tr>
-            )}
-          </tbody>
+                {patientConsumptions.length > 0 ? (
+                  patientConsumptions.map((consumption, index) => (
+                    <tr key={index}>
+                      <td>{consumption.patientName}</td>
+                      <td>{consumption.consumptionDate}</td>
+                      <td>{consumption.enteredBy}</td>
+                      <td>{consumption.remark}</td>
+                      <td><button className="action-button">Action</button></td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6">No Rows To Show</td>
+                  </tr>
+                )}
+              </tbody>
             </table>
           </div>
         </div>
@@ -179,31 +179,31 @@ function SSIPatientConsumption() {
           <table>
             <thead>
               <tr>
-                  <th>Patient Name</th>
-                  <th>Consumption Date</th>
-                  <th>Entered By</th>
+                <th>Patient Name</th>
+                <th>Consumption Date</th>
+                <th>Entered By</th>
                 <th>Remarks</th>
-                  <th>Action</th>
-                
+                <th>Action</th>
+
               </tr>
             </thead>
             <tbody>
-            {patientConsumptions.length > 0 ? (
-              patientConsumptions.map((consumption, index) => (
-                <tr key={index}>
-                  <td>{consumption.patientName}</td>
-                  <td>{consumption.consumptionDate}</td>
-                  <td>{consumption.enteredBy}</td>
-                  <td>{consumption.remark}</td>
-                  <td><button className="action-button">Action</button></td>
+              {patientConsumptions.length > 0 ? (
+                patientConsumptions.map((consumption, index) => (
+                  <tr key={index}>
+                    <td>{consumption.patientName}</td>
+                    <td>{consumption.consumptionDate}</td>
+                    <td>{consumption.enteredBy}</td>
+                    <td>{consumption.remark}</td>
+                    <td><button className="action-button">Action</button></td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="6">No Rows To Show</td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6">No Rows To Show</td>
-              </tr>
-            )}
-          </tbody>
+              )}
+            </tbody>
           </table>
           {/* <div className="sSIPatientConsumption-pagination">
             <span>0 to 0 of 0</span>
@@ -215,10 +215,10 @@ function SSIPatientConsumption() {
           </div> */}
         </div>
       </>
-    
-<CustomModal isOpen={showNewPatientConsumption} onClose={handleBack}>
-<SSIPatientConsumNewPCbtn  /> /
-</CustomModal>
+
+      <CustomModal isOpen={showNewPatientConsumption} onClose={handleBack}>
+        <SSIPatientConsumNewPCbtn /> /
+      </CustomModal>
     </div>
   );
 }

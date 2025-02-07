@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./AMCProposal.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import AMCProposalForm from "./AMCProposalForm";
 import { API_BASE_URL } from '../../../api/api';
 import * as XLSX from 'xlsx';
@@ -35,7 +35,7 @@ const AMCProposal = () => {
 
     // Search functionality
     useEffect(() => {
-        const filtered = proposals.filter(proposal => 
+        const filtered = proposals.filter(proposal =>
             proposal.equipmentMasterDTO?.equipmentName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
             proposal.proposalTo?.toLowerCase().includes(searchQuery.toLowerCase()) ||
             proposal.equipmentMasterDTO?.vendor?.vendorName?.toLowerCase().includes(searchQuery.toLowerCase())
@@ -91,9 +91,9 @@ const AMCProposal = () => {
             <div className="AMCProposal-search-N-result">
                 <div className="AMCProposal-search-bar">
                     <i className="fa-solid fa-magnifying-glass"></i>
-                    <input 
-                        type="text" 
-                        placeholder="Search..." 
+                    <input
+                        type="text"
+                        placeholder="Search..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />

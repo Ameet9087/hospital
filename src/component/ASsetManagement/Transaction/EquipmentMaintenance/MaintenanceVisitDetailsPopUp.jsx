@@ -3,7 +3,7 @@ import "./MaintenanceVisitDetailsPopUp.css";
 import { CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa"; // Using react-icons
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
 
 
@@ -135,7 +135,7 @@ const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
       prevParts.map((row) => (row.id === id ? { ...row, [field]: value } : row))
     );
   };
-  
+
 
   const handleBreakDownChange = (event) => {
     const selectedBreakdownId = event.target.value;
@@ -182,7 +182,7 @@ const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
 
   const handleSave = async () => {
 
-    
+
     try {
       const response = await fetch(`${API_BASE_URL}/maintenance-visits`, {
         method: "POST",
@@ -191,7 +191,7 @@ const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.ok) {
         const result = await response.json();
         alert("Maintenance Visit Details saved successfully!");
@@ -204,7 +204,7 @@ const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
       console.error("Error:", error);
     }
   };
-  
+
 
   // Handle file upload
   const handleUpload = () => {
@@ -252,8 +252,8 @@ const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
                     {breakdown.breakdownDetails}
                   </option>
                 ))}
-              </select>            
-              </div>
+              </select>
+            </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
               <label htmlFor="equipment-name">Equipment Name:</label>
               <input id="equipment-name" type="text" value={equipmentData.equipmentName} placeholder="Enter Equipment Name" />
@@ -355,8 +355,8 @@ const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
                 name="nextSchedule"
                 value={formData.nextSchedule}
                 onChange={handleFormChange}
-              />          
-              </div>
+              />
+            </div>
 
           </div>
 
@@ -388,8 +388,8 @@ const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
                     {maintainaceTypeMaster.typeName}
                   </option>
                 ))}
-              </select>                
-              </div>
+              </select>
+            </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
               <label htmlFor="repair-details">Repair Details:</label>
               <textarea

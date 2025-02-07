@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './LeadTimeSCM.css';
-import { startResizing } from './ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 import { Link } from 'react-router-dom';
 
 const LeadTimeSCM = () => {

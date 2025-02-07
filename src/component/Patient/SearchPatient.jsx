@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./SearchPatient.css";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
+import { FloatingInput } from "../../FloatingInputs";
 
 function SearchPatient() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -37,7 +38,6 @@ function SearchPatient() {
         `${patient.firstName} ${patient.lastName}`.toLowerCase();
       const matchesSearchTerm = patientName.includes(searchTerm.toLowerCase());
 
-
       const patientDate = new Date(patient.date);
       const isWithinDateRange =
         (!fromDate || patientDate >= new Date(fromDate)) &&
@@ -69,13 +69,12 @@ function SearchPatient() {
       <div className="search-print-container">
         <div className="search-inputs">
           <div className="input-wrapper">
-            <input
+            <FloatingInput
+              label={"Search"}
               type="text"
-              placeholder="Search"
               value={searchTerm}
               onChange={handleSearch}
             />
-            <i className="fas fa-search"></i>
           </div>
           <br></br>
           {/* <div className="date-filters">

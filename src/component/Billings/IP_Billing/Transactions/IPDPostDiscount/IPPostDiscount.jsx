@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from '../../../../../TableHeadingResizing/ResizableColumns';
 import './IpPostDiscount.css';
 import PopupTable from '../../PopUpTableBedTransfer/PopupTable';
 import { API_BASE_URL } from '../../../../api/api';

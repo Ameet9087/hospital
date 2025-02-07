@@ -1,10 +1,25 @@
 
 .procedures-service-container{
   width: 100%;
-  max-width: 1250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 20px auto;
   padding: 8px;
   border-radius: 10px;
+}
+
+.procedures-service-content-container
+{
+  width: 300px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  border: 1px solid rgb(200, 200, 200);
 }
 
 .procedures-service-container h3{
@@ -13,6 +28,7 @@
   margin-bottom: 10px;
 }
 .procedures-service-content {
+  width: 300px;
   display: flex;
   gap: 30px;
   justify-content: center;
@@ -21,23 +37,9 @@
   padding-top: 10px;
   margin: 20px;
 }
-.procedures-service-content label{
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px; 
-  width: 350px;
-}
-.procedures-service-content select{
-  width: 100%;
-  padding: 5px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  
-}
+
 
 .procedures-service-add{
-  width: 5%;
   background-color: var(--button-color);
   color: white;
   padding: 5px 10px;
@@ -49,10 +51,10 @@
   align-items: center;
 }
 .procedures-service-cut{
-  width: 3%;
-  background-color: #dc3545;
+  
+  background-color: #ff0019;
   color: white;
-  padding: 5px 10px;
+  padding: 2px 8px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -76,7 +78,7 @@
 
 } */
 .procedures-service-action-cancel{
-width: 13%;
+
 background-color: #dc3545;
 color: white;
 padding: 5px 10px;
@@ -90,8 +92,22 @@ color: #dc3545;
 border: 1px solid #dc3545 ;
 
 }
+.procedures-service-showcase-ul li
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.procedures-service-showcase
+{
+  width: 300px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 100px;
+  padding: 5px;
+  border-radius: 5px;
+}
 .procedures-service-action-submit{
-  width: 13%;
   background-color: var(--button-color);
   padding: 5px;
   border-radius: 5px;

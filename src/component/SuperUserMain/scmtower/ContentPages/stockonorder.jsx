@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import './StockOnOrderTable.css';
 import { Link } from 'react-router-dom';
-import { startResizing } from './ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 
 const StockOnOrderTable = () => {
   const tableRef = useRef(null);

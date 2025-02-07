@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ClinicalMedication.css"; // Separate CSS file for uniqueness
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingSelect, FloatingTextarea } from "../../FloatingInputs";
 
 const ClinicalMedication = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -104,9 +106,9 @@ const ClinicalMedication = ({ patientId, outPatientId }) => {
         `${API_BASE_URL}/medications/save-medication-details`,
         medicationList // Sending the entire formData array as the payload
       );
-      console.log("Success:", response.data);
+      toast.success("Success:", response.data);
     } catch (error) {
-      console.error("Error submitting medication list:", error);
+      toast.error("Error submitting medication list:", error);
     }
   };
 
@@ -201,23 +203,25 @@ const ClinicalMedication = ({ patientId, outPatientId }) => {
                 </div>
               </div>
               <div className="clinical-medication-form-row">
-                <label>Name*:</label>
-                <select
+                <FloatingSelect
+                  label={"Name"}
                   name="medicationName"
                   onChange={(e) => handleInputChange(e, "medicationName")}
                   required
-                >
-                  <option value="">Select Medication</option>
-                  {medicationType.map((medication, index) => (
-                    <option key={index} value={medication.itemName}>
-                      {medication.itemName}
-                    </option>
-                  ))}
-                </select>
+                  options={[
+                    { value: "", label: "" },
+                    ...(Array.isArray(medicationType)
+                      ? medicationType.map((medication) => ({
+                        value: medication.itemName,
+                        label: medication.itemName,
+                      }))
+                      : []),
+                  ]}
+                />
               </div>
               <div className="clinical-medication-form-row">
-                <label>Dose*:</label>
-                <input
+                <FloatingInput
+                  label={"Dose"}
                   type="text"
                   placeholder="Dose"
                   name="dose"
@@ -226,43 +230,45 @@ const ClinicalMedication = ({ patientId, outPatientId }) => {
                 />
               </div>
               <div className="clinical-medication-form-row">
-                <label>Route*:</label>
-                <select
+                <FloatingSelect
+                  label={"Route"}
                   required
                   name="route"
                   onChange={(e) => handleInputChange(e, "route")}
-                >
-                  <option value="">Select Route</option>
-                  <option value="oral">Oral</option>
-                  <option value="iv">IV</option>
-                </select>
+                  options={[{ value: "", label: "" },
+                  { value: "Oral", label: "Oral" },
+                  { value: "Iv", label: "Iv" },
+                  { value: "Injection", label: "Injection" }
+                  ]}
+                />
               </div>
               <div className="clinical-medication-form-row">
-                <label>Frequency*:</label>
-                <input
+                <FloatingInput
+                  label={"Frequency"}
                   type="text"
                   placeholder="Frequency"
                   name="frequency"
                   required
                   onChange={(e) => handleInputChange(e, "frequency")}
+
                 />
               </div>
               <div className="clinical-medication-form-row">
-                <label>Last Taken*:</label>
-                <input
+                <FloatingInput
+                  label={"Last Taken"}
                   type="date"
                   name="lastTaken"
                   required
                   onChange={(e) => handleInputChange(e, "lastTaken")}
+
                 />
               </div>
               <div className="clinical-medication-form-row">
-                <label>Comments:</label>
-                <textarea
-                  placeholder="Comments"
+                <FloatingTextarea
+                  label={"Comments"}
                   name="comments"
                   onChange={(e) => handleInputChange(e, "comments")}
-                ></textarea>
+                />
               </div>
               <button type="submit" className="clinical-medication-add-button">
                 Add

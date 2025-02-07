@@ -81,11 +81,8 @@
 
 /* Search Bar Styling */
 .manage-imaging-type-search-bar {
-  margin-bottom: 15px;
-  padding: 6px;
+  margin: 15px 0;
   width: 180px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
 
 /* Table Styling */
@@ -151,6 +148,7 @@
   justify-content: flex-start;
   overflow-y: scroll;
   scrollbar-width: none;
+  width: 300px;
 }
 
 .manage-modal-modal-header {
@@ -202,12 +200,7 @@
   display: flex;
   align-items: center;
   gap:10px;
-  margin-bottom: 5px;
-}
-
-.manage-modal-form-check-input {
-  margin-left: 10px;
-  width: 30px;
+  margin-bottom: 15px;
 }
 
 .manage-modal-section {
@@ -246,4 +239,5 @@
 }
 .manage-imaging-item-search-bar{
   margin-bottom: 10px;
+  width: 180px;
 }

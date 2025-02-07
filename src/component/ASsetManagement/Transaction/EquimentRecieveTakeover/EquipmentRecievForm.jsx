@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "./EquipmentRecievForm.css";
 import EquipmentRecievFormPopUp from "./EquipmentRecievFormPopUp";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { API_BASE_URL } from "../../../api/api";

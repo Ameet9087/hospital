@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import './bloodDonationForm.css';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import { API_BASE_URL } from '../../api/api';
 const BloodDonationForm = () => {
     const [columnWidths, setColumnWidths] = useState({});
@@ -60,14 +60,14 @@ const BloodDonationForm = () => {
             lastDonationDate: formatDate(formData.lastDonationDate),
             donationDate: formatDate(formData.donationDate),
         };
-        
+
         axios.post(`${API_BASE_URL}/donors/register`, formattedData)
             .then(response => {
                 setDonors([...donors, response.data]); // Add new donor to the list
                 setSubmissionStatus('Success! Form submitted.');
                 setShowForm(false); // Hide the form after submission
                 alert("Form Data Submitted Successfully: ", response.data);
-                
+
             })
             .catch(error => {
                 setSubmissionStatus('Failed to submit the form.');
@@ -87,13 +87,13 @@ const BloodDonationForm = () => {
 
     return (
         <div className='blood-donation-patient-form-container'>
-           
+
             {!showForm && (
                 <button className="blood-donation-submit-btn" onClick={() => setShowForm(true)}>
                     Add New Donor
                 </button>
             )}
-            
+
 
             {!showForm ? (
                 <div className='table-container'>

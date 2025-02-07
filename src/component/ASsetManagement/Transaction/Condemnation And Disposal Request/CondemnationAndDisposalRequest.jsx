@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./CondemnationanddisposalRequest.css";
 import * as XLSX from "xlsx";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import CondemnationAndDisposalRequestPopUp from "./CondemnationAndDisposalRequestPopUp";
 import { API_BASE_URL } from "../../../api/api";
 

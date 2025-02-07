@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "./DefectRaisingBreackageRequest.css";
 import DefectRaisingBreackageRequestPopUp from "./DefectRaisingBreackageRequestPopUp";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 
 const DefectRaisingBreackageRequest = () => {

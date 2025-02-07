@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import "./ErInitialAssessmentForm.css";
 import axios from "axios";
 

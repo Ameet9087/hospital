@@ -5,7 +5,7 @@ import { API_BASE_URL } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import ReceptionClearance from "./ReceptionClearance/ReceptionClearance";
 import DischargeClearance from "./DischargeClearance/DischargeClearance";
-import CustomModal from "../CustomModel/CustomModal";
+import CustomModal from "../../CustomModel/CustomModal";
 import BlockIPEntries from "./IpBlock/BlockIpEntries";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 
@@ -21,6 +21,10 @@ function AdmissionDeskHomePage() {
   const [selectedPatient, setSelectedPatient] = useState();
   const [isSearchVisible, setIsSearchVisible] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    console.log(confirmBox);
+  }, []);
 
   const [filteredAdmissionRequests, setFilteredAdmissionRequests] = useState(
     []
@@ -584,8 +588,8 @@ function AdmissionDeskHomePage() {
                       <div className="admissionDeskHomePage-ward-receiving-btns">
                         <button
                           onClick={() => {
-                            setRequestId(item?.wardRequestChangeId);
                             setConfirmBox(true);
+                            setRequestId(item?.wardRequestChangeId);
                           }}
                         >
                           Approve <i className="fas fa-check"></i>
@@ -960,10 +964,10 @@ function AdmissionDeskHomePage() {
           </div>
         </div>
         {confirmBox && (
-          <div className="nurse-ward-receiving-confirmBox">
-            <div className="nurse-ward-receiving-con">
+          <div className="admissionDeskHomePage-confirmBox">
+            <div className="admissionDeskHomePage-con">
               <h1>Confirm Request</h1>
-              <div className="nurse-ward-receiving-con-btns">
+              <div className="admissionDeskHomePage-con-btns">
                 <button onClick={() => handleConfirmBtn(requestId)}>Yes</button>
                 <button onClick={() => setConfirmBox(false)}>No</button>
               </div>
@@ -977,4 +981,3 @@ function AdmissionDeskHomePage() {
 }
 
 export default AdmissionDeskHomePage;
-

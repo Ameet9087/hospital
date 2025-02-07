@@ -7,7 +7,7 @@ import ReactToPrint from 'react-to-print'; // Import ReactToPrint
 import './Currency.css';
 import CustomModal from '../../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../../api/api';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import * as XLSX from 'xlsx';
 
 const CurrencyTable = () => {
@@ -17,8 +17,8 @@ const CurrencyTable = () => {
   const [selectedCurrency, setSelectedCurrency] = useState(null);
 
 
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
 
   // Fetch currencies from the API on component mount
@@ -33,7 +33,7 @@ const CurrencyTable = () => {
     };
 
     fetchCurrencies();
-  }, [isAddModalOpen,isEditModalOpen]);
+  }, [isAddModalOpen, isEditModalOpen]);
 
   const openAddModal = () => {
     setIsAddModalOpen(true);
@@ -75,47 +75,47 @@ const CurrencyTable = () => {
     <div className="procurment-add-container">
       <button className="procurment-add-currency" onClick={openAddModal}>Add Currency</button>
       <div className="procurment-add-results-info">
-      <div className="procurment-add-search-bar">
-        <input type="text" placeholder="Search" className='procurment-add-search-bar-input' />
-      </div>
-      <div className='procurment-add-print-section'>
-        <span>Showing {currencies.length} / {currencies.length} results</span>
-        <button className="procurment-add-button" onClick={handleExport}>Export</button>
-        <ReactToPrint
-          trigger={() => <button className="procurment-add-button" aria-label="Print" onClick={handlePrint}>Print</button>}
-          content={() => tableRef.current}
-        />
+        <div className="procurment-add-search-bar">
+          <input type="text" placeholder="Search" className='procurment-add-search-bar-input' />
+        </div>
+        <div className='procurment-add-print-section'>
+          <span>Showing {currencies.length} / {currencies.length} results</span>
+          <button className="procurment-add-button" onClick={handleExport}>Export</button>
+          <ReactToPrint
+            trigger={() => <button className="procurment-add-button" aria-label="Print" onClick={handlePrint}>Print</button>}
+            content={() => tableRef.current}
+          />
         </div>
       </div>
 
-      <table  ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-               "Currency Code",
-  "Description",
-  "Is Active",
-  "Action"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-  </thead>
+      <table ref={tableRef}>
+        <thead>
+          <tr>
+            {[
+              "Currency Code",
+              "Description",
+              "Is Active",
+              "Action"
+            ].map((header, index) => (
+              <th
+                key={index}
+                style={{ width: columnWidths[index] }}
+                className="resizable-th"
+              >
+                <div className="header-content">
+                  <span>{header}</span>
+                  <div
+                    className="resizer"
+                    onMouseDown={startResizing(
+                      tableRef,
+                      setColumnWidths
+                    )(index)}
+                  ></div>
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
 
 
         <tbody>
@@ -143,9 +143,9 @@ const CurrencyTable = () => {
         isOpen={isAddModalOpen}
         onClose={closeAddModal}
         contentLabel="Add Currency Modal"
-        
+
       >
-        <AddCurrency  onClose={closeAddModal}/>
+        <AddCurrency onClose={closeAddModal} />
       </CustomModal>
 
       {/* Modal for Updating Currency */}
@@ -154,7 +154,7 @@ const CurrencyTable = () => {
           isOpen={isEditModalOpen}
           onClose={closeEditModal}
           contentLabel="Edit Currency Modal"
-       
+
         >
           <UpdateCurrency currency={selectedCurrency} onClose={closeEditModal} />
         </CustomModal>

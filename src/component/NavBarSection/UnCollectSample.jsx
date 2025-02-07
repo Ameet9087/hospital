@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import "./UnCollectSample.css";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { FloatingInput } from "../../FloatingInputs";
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
 };
@@ -85,41 +86,36 @@ function UnCollectSample() {
   return (
     <div className="unCollectSample-container">
       <div className="unCollectSample-Header">
-        <h1 className="unCollectSample-Title">Uncollect Sample</h1>
+        <h1 className="unCollectSample-Title">Samples Data</h1>
       </div>
 
       <div className="unCollectSample-controls">
         <div className="unCollectSample-date-range">
-          <label>
-            From:
-            <input
-              type="date"
-              id="dateFrom"
-              defaultValue={dateFrom}
-              onChange={handleDateFromChange}
-            />
-          </label>
-          <label>
-            To:
-            <input
-              type="date"
-              id="dateTo"
-              defaultValue={dateTo}
-              onChange={handleDateToChange}
-            />
-          </label>
+          <FloatingInput
+          label={"From"}
+          type="date"
+          id="dateFrom"
+          value={dateFrom}
+          onChange={handleDateFromChange}
+          />
+
+<FloatingInput
+          label={"To"}
+          type="date"
+          id="dateTo"
+          value={dateTo}
+          onChange={handleDateToChange}
+          />
         </div>
       </div>
 
       <div className="unCollectSample-search-N-print">
         <div className="unCollectSample-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search"
-            className="unCollectSample-search-input"
-            value={searchQuery}
-            onChange={handleSearchChange} // Handle search
+          <FloatingInput
+          type="text"
+          label={"Search"}
+          value={searchQuery}
+          onChange={handleSearchChange}
           />
         </div>
         <div className="unCollectSample-results-info">

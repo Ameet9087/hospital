@@ -219,10 +219,8 @@
           justify-content: end;
         }
         .OPDPostDiscount-buttons {
-          position: fixed;
-          right: 16px;
-          bottom: 16px;
           display: flex;
+          justify-content: end;
           gap: 5px;
           font-size: var(--font-size);
         }

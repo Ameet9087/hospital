@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import './SettingSupplier.css'; 
+import './SettingSupplier.css';
 import { API_BASE_URL } from '../api/api';
 import CustomModal from '../../CustomModel/CustomModal';
 import useCustomAlert from '../../alerts/useCustomAlert';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 import * as XLSX from 'xlsx';
 import axios from 'axios';
 
@@ -120,9 +120,9 @@ const SettingDispensary = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = {
-    ...formData,
-    isActive: formData.isActive, // Ensure this is being correctly set and passed
-  };
+      ...formData,
+      isActive: formData.isActive, // Ensure this is being correctly set and passed
+    };
 
     if (isEditMode) {
       // Update existing user via API
@@ -133,12 +133,12 @@ const SettingDispensary = () => {
         },
         body: JSON.stringify(data)
       })
-      .then(response => response.json())
-      .then(data => {
-        setSuppliers(suppliers.map(user => (user.id === data.id ? data : user)));
-        handleCloseModal();
-      })
-      .catch(error => console.error('Error updating dispensary:', error));
+        .then(response => response.json())
+        .then(data => {
+          setSuppliers(suppliers.map(user => (user.id === data.id ? data : user)));
+          handleCloseModal();
+        })
+        .catch(error => console.error('Error updating dispensary:', error));
     } else {
       // Add new user via API
       fetch(`${API_BASE_URL}/dispensaries`, {
@@ -148,12 +148,12 @@ const SettingDispensary = () => {
         },
         body: JSON.stringify(data)
       })
-      .then(response => response.json())
-      .then(data => {
-        setSuppliers([...suppliers, data]);
-        handleCloseModal();
-      })
-      .catch(error => console.error('Error adding dispensary:', error));
+        .then(response => response.json())
+        .then(data => {
+          setSuppliers([...suppliers, data]);
+          handleCloseModal();
+        })
+        .catch(error => console.error('Error adding dispensary:', error));
     }
   };
 
@@ -264,93 +264,93 @@ const SettingDispensary = () => {
         <div className="supplier-setting-modal-body">
           <Form onSubmit={handleSubmit} className='supplier-setting-despensaryForm'>
             <div>
-            <Form.Group className="mb-3" controlId="dispensaryName">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="dispensaryType">
-              <Form.Label>Type</Form.Label>
-              <Form.Control
-                type="text"
-                name="type"
-                value={formData.type}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="dispensaryDescription">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                as="textarea"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="isActive">
-              <Form.Check
-                type="checkbox"
-                label="Active"
-                name="isActive"
-                checked={formData.isActive}
-                onChange={handleChange}
-              />
-            </Form.Group>
+              <Form.Group className="mb-3" controlId="dispensaryName">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="dispensaryType">
+                <Form.Label>Type</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="type"
+                  value={formData.type}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="dispensaryDescription">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="isActive">
+                <Form.Check
+                  type="checkbox"
+                  label="Active"
+                  name="isActive"
+                  checked={formData.isActive}
+                  onChange={handleChange}
+                />
+              </Form.Group>
             </div>
             <div>
-            <Form.Group className="mb-3" controlId="dispensaryContactNo">
-              <Form.Label>Contact No</Form.Label>
-              <Form.Control
-                type="text"
-                name="contactNo"
-                value={formData.contactNo}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="dispensaryAddress">
-              <Form.Label>Address</Form.Label>
-              <Form.Control
-                type="text"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="dispensaryEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </Form.Group>
+              <Form.Group className="mb-3" controlId="dispensaryContactNo">
+                <Form.Label>Contact No</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="contactNo"
+                  value={formData.contactNo}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="dispensaryAddress">
+                <Form.Label>Address</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="dispensaryEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+              </Form.Group>
             </div>
             <div>
-            <Form.Group className="mb-3" controlId="dispensaryKraPin">
-              <Form.Label>KRA PIN</Form.Label>
-              <Form.Control
-                type="text"
-                name="kraPin"
-                value={formData.kraPin}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="dispensaryDefaultPaymentMode">
-              <Form.Label>Default Payment Mode</Form.Label>
-              <Form.Control
-                type="text"
-                name="defaultPaymentMode"
-                value={formData.defaultPaymentMode}
-                onChange={handleChange}
-              />
-            </Form.Group>
+              <Form.Group className="mb-3" controlId="dispensaryKraPin">
+                <Form.Label>KRA PIN</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="kraPin"
+                  value={formData.kraPin}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="dispensaryDefaultPaymentMode">
+                <Form.Label>Default Payment Mode</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="defaultPaymentMode"
+                  value={formData.defaultPaymentMode}
+                  onChange={handleChange}
+                />
+              </Form.Group>
             </div>
             <Button variant="primary" type="submit">
               {isEditMode ? 'Save Changes' : 'Add Dispensary'}

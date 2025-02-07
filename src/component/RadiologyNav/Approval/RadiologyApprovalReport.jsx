@@ -6,6 +6,7 @@ import "../ListReports/RadiologyReport.css";
 import CustomModel from "../../../CustomModel/CustomModal";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
+import { toast } from "react-toastify";
 
 const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
   const [reportData, setReportData] = useState(null);
@@ -154,10 +155,15 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
   };
 
   const handleFormSubmit = async () => {
-    await axios.put(
-      `${API_BASE_URL}/imaging-requisitions/approve-by?performerId=${signatories?.employeeDTO?.employeeId}&imagingId=${reportData?.imagingId}`
-    );
-    onClose();
+    try {
+      await axios.put(
+        `${API_BASE_URL}/imaging-requisitions/approve-by?performerId=${signatories?.employeeDTO?.employeeId}&imagingId=${reportData?.imagingId}`
+      );
+      toast.success("Report Approved Successfully");
+      onClose();
+    } catch (error) {
+      toast.error(error);
+    }
   };
 
   if (!reportData) {

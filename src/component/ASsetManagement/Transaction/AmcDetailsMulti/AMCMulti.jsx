@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./AMCMulti.css";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import AMCDetailsMulti from "./AMCDetailsmulti";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";

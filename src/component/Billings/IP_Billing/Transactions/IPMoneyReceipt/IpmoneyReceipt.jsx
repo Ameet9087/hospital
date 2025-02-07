@@ -2,8 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import "./IPMoneyReceipt.css";
 import axios from "axios";
 import { CiSearch } from "react-icons/ci";
-import PopupTable from "../../../../Admission/PopupTable";
+import {
+  PopupTable,
+  FloatingInput,
+  FloatingSelect,
+} from "../../../../../FloatingInputs";
 import { API_BASE_URL } from "../../../../api/api";
+import { text } from "@fortawesome/fontawesome-svg-core";
+import { toast } from "react-toastify";
 
 const IpMoneyReceiptAdvance = () => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -18,36 +24,40 @@ const IpMoneyReceiptAdvance = () => {
   const [formData, setFormData] = useState({});
   const [isPrintEnabled, setIsPrintEnabled] = useState(false);
   const handlePrintBilling = () => {
-    console.log("Navigating with state:", { selectedIPNo, formData, moneyReceiptData });
-    navigate("/billing/IPMoneyReceiptPrint", { state: { selectedIPNo, formData, moneyReceiptData } });
-
+    console.log("Navigating with state:", {
+      selectedIPNo,
+      formData,
+      moneyReceiptData,
+    });
+    navigate("/billing/IPMoneyReceiptPrint", {
+      state: { selectedIPNo, formData, moneyReceiptData },
+    });
   };
 
   const handlePopupClose = () => {
     setActivePopup(null);
   };
-  const handleChange = (e) => { };
+  const handleChange = (e) => {};
 
   const fetchIpNos = async () => {
     try {
-      const response = await axios
-        .get
-        (`${API_BASE_URL}/ip-admissions`);
+      const response = await axios.get(`${API_BASE_URL}/ip-admissions`);
       console.log("API Response:", response.data);
 
       // Map through the response data to extract inPatientId and patientName
       const inPatient = response.data.map((item) => ({
         IpNo: item.patient?.inPatientId || "N/A",
         patientName:
-          `${item.patient?.patient?.firstName || ""} ${item.patient?.patient?.middleName || ""
-            } ${item.patient?.patient?.lastName || ""}`.trim() || "N/A",
+          `${item.patient?.patient?.firstName || ""} ${
+            item.patient?.patient?.middleName || ""
+          } ${item.patient?.patient?.lastName || ""}`.trim() || "N/A",
         uhid: item.patient?.patient?.uhid || "N/A",
         bedNo: item.roomDetails?.bedDTO?.bedNo,
         address: item.patient?.patient?.address,
         mobileNumber: item.patient?.patient?.mobileNumber,
         contactNumber: item.patient?.patient?.contactNumber,
         organisation: item.organisationDetail?.type,
-        ipAdmmissionId: item.ipAdmmissionId
+        ipAdmmissionId: item.ipAdmmissionId,
       }));
 
       // Filter out entries where Ip is "N/A"
@@ -129,8 +139,8 @@ const IpMoneyReceiptAdvance = () => {
         },
       })
       .then((response) => {
-        alert("Successfully saved");
-        setIsPrintEnabled(true)
+        toast.success("Successfully saved");
+        setIsPrintEnabled(true);
         console.log("Response received:", response.data);
       })
       .catch((error) => {
@@ -138,16 +148,16 @@ const IpMoneyReceiptAdvance = () => {
 
         if (error.response) {
           console.error("Response error:", error.response.data);
-          alert(
+          toast.error(
             `Error posting data: ${error.response.status} - ${error.response.data}`
           );
-          setIsPrintEnabled(false)
+          setIsPrintEnabled(false);
         } else if (error.request) {
           console.error("Request error:", error.request);
-          alert("No response received from the server.");
+          toast.error("No response received from the server.");
         } else {
           console.error("Error:", error.message);
-          alert(`Error posting data: ${error.message}`);
+          toast.error(`Error posting data: ${error.message}`);
         }
       });
   };
@@ -165,7 +175,6 @@ const IpMoneyReceiptAdvance = () => {
         mobileNumber: data.mobileNumber,
         contactNumber: data.contactNumber,
         organisation: data.organisation,
-
       }));
     }
     setActivePopup(null);
@@ -189,28 +198,30 @@ const IpMoneyReceiptAdvance = () => {
         <div className="IpMoneyReceiptAdvance-content-wrapper">
           <div className="IpMoneyReceiptAdvance-main-section">
             <div className="IpMoneyReceiptAdvance-panel dis-templates">
-              <div className="IpMoneyReceiptAdvance-panel-header"></div>
+              <div className="IpMoneyReceiptAdvance-panel-header">
+                <h3>Patient Details</h3>
+              </div>
               <div className="IpMoneyReceiptAdvance-panel-content">
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Receipt No: </label>
-                  <input type="text" value="" />
+                  <FloatingInput label={"Receipt No"} />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Payment Type:</label>
-                  <select
+                  <FloatingSelect
+                    label={"Payment Type"}
                     value={formData.modeOfAmount}
                     onChange={(e) =>
                       setFormData({ ...formData, modeOfAmount: e.target.value })
                     }
-                  >
-                    <option value="Patient Pay">select</option>
-                    <option value="Patient Pay">Patient Pay</option>
-                    <option value="Insurance Pay">Insurance Pay</option>
-                  </select>
+                    options={[
+                      { value: "", label: "" },
+                      { value: "Patient Pay", label: "Patient Pay" },
+                      { value: "Insurance Pay", label: "Insurance Pay" },
+                    ]}
+                  />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Transaction Type:</label>
-                  <select
+                  <FloatingSelect
+                    label={"Transaction Type"}
                     value={formData.transactionType}
                     onChange={(e) =>
                       setFormData({
@@ -218,66 +229,57 @@ const IpMoneyReceiptAdvance = () => {
                         transactionType: e.target.value,
                       })
                     }
-                  >
-                    <option value="Patient Pay">select</option>
-                    <option value="Non Settlement">Non Settlement</option>
-                    <option value="Settlement">Settlement</option>
-                  </select>
+                    options={[
+                      { value: "", label: "" },
+                      { value: "Non Settlement", label: "Non Settlement" },
+                      { value: "Settlement", label: "Settlement" },
+                    ]}
+                  />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Type:</label>
-                  <select
+                  <FloatingSelect
+                    label={"Type"}
                     name="type"
                     value={formData.type}
                     onChange={(e) =>
                       setFormData({ ...formData, type: e.target.value })
                     }
-                  >
-                    <option value="Patient Pay">select</option>
-                    <option value="Advance">Advance</option>
-                    <option value="Refund">Refund</option>
-                  </select>
-                </div>
-                <div className="IpMoneyReceiptAdvance-header-contact">
-                  <h3>Patient Details</h3>
+                    options={[
+                      { value: "", label: "" },
+                      { value: "Advance", label: "Advance" },
+                      { value: "Refund", label: "Refund" },
+                    ]}
+                  />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>IP No : </label>
-                  <div className="IpMoneyReceiptAdvance-input-with-search">
-                    <input
-                      type="text"
-                      name="ipNo"
-                      value={formData.id}
-                      onChange={handleChange}
-                    />
-                    <CiSearch
-                      className="IpMoneyReceiptAdvance-magnifier-btn"
-                      onClick={() => setActivePopup("IpNo")}
-                    />
-                  </div>
+                  <FloatingInput
+                    label={"Ip No"}
+                    type="search"
+                    value={formData.id}
+                    onChange={handleChange}
+                    onIconClick={() => setActivePopup("IpNo")}
+                  />
                 </div>
 
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>MR No:</label>
-                  <input
+                  <FloatingInput
+                    label={"UHID"}
                     type="text"
-                    name="mrNo"
                     value={formData.uhid}
                     onChange={handleChange}
                   />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Patient Name:</label>
-                  <input
+                  <FloatingInput
+                    label={"Patient Name"}
                     type="text"
-                    name="patientName"
                     value={formData.patientName}
                     onChange={handleChange}
                   />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Bed No:</label>
-                  <input
+                  <FloatingInput
+                    label={"Bed No"}
                     type="text"
                     name="bedNo"
                     value={formData.bedNo}
@@ -285,43 +287,26 @@ const IpMoneyReceiptAdvance = () => {
                   />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Address:</label>
-                  <input
+                  <FloatingInput
+                    label={"Address"}
                     type="text"
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
                   />
                 </div>
-              </div>
-            </div>
-
-            <div className="IpMoneyReceiptAdvance-panel operation-details">
-              <div className="IpMoneyReceiptAdvance-panel-header"></div>
-              <div className="IpMoneyReceiptAdvance-panel-content">
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Phone No:</label>
-                  <input
-                    type="text"
-                    name="phoneNo"
-                    value={formData.contactNumber}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Mobile No:</label>
-                  <input
+                  <FloatingInput
+                    label={"Mobile No"}
                     type="text"
                     name="mobileNo"
                     value={formData.mobileNumber}
                     onChange={handleChange}
                   />
                 </div>
-
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Organisation:</label>
-                  <input
+                  <FloatingInput
+                    label={"Organisation"}
                     type="text"
                     name="organization"
                     value={formData.organisation}
@@ -329,32 +314,57 @@ const IpMoneyReceiptAdvance = () => {
                   />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Disallowed Amount:</label>
-                  <input type="text" name="disallowedAmount" />
+                  <FloatingInput
+                    label={"Disallowed Amount"}
+                    type="text"
+                    name="disallowedAmount"
+                  />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Bill Amount:</label>
-                  <input type="text" name="billAmount" />
+                  <FloatingInput
+                    label={"Bill Amount"}
+                    type="text"
+                    name="billAmount"
+                  />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Organisation Discount Amount:</label>
-                  <input type="text" name="organisationDiscountAmount" />
+                  <FloatingInput
+                    label={"Organisation Discount Amount"}
+                    type="text"
+                    name="organisationDiscountAmount"
+                  />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Post Discount:</label>
-                  <input type="text" name="postDiscount" />
+                  <FloatingInput
+                    label={"Post Discount"}
+                    type="text"
+                    name="postDiscount"
+                  />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Retain Amount:</label>
-                  <input type="text" name="retainAmount" />
+                  <FloatingInput
+                    label={"Retain Amount"}
+                    type="text"
+                    name="retainAmount"
+                  />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Total Amount:</label>
-                  <input type="text" name="tcs" value={formData.tcs} readOnly />
+                  <FloatingInput
+                    label={"Total Amount"}
+                    type="text"
+                    name="tcs"
+                    value={formData.tcs}
+                    readOnly
+                  />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Total Paid:</label>
-                  <input type="text" name="tcs" value={formData.tcs} readOnly />
+                  <FloatingInput
+                    label={"Total Amount"}
+                    type="text"
+                    name="tcs"
+                    value={formData.tcs}
+                    readOnly
+                  />
                 </div>
               </div>
             </div>
@@ -369,8 +379,8 @@ const IpMoneyReceiptAdvance = () => {
                   <input type="text" name="tcs" />
                 </div> */}
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Receipt Date:</label>
-                  <input
+                  <FloatingInput
+                    label={"Receipt Date"}
                     type="date"
                     name="receiptDate"
                     value={formData.receiptDate}
@@ -380,8 +390,8 @@ const IpMoneyReceiptAdvance = () => {
                   />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Created By:</label>
-                  <input
+                  <FloatingInput
+                    label={"Created By"}
                     type="text"
                     name="createdBy"
                     value={formData.createdBy}
@@ -391,8 +401,8 @@ const IpMoneyReceiptAdvance = () => {
                   />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Amount:</label>
-                  <input
+                  <FloatingInput
+                    label={"Amount"}
                     type="text"
                     name="amount"
                     value={formData.amount}
@@ -402,30 +412,42 @@ const IpMoneyReceiptAdvance = () => {
                   />
                 </div>
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Mode Of Payment:</label>
-                  <select
-                    id="paymentMode"
+                  <FloatingSelect
+                    label={"Mode Of Payment"}
                     name="paymentMode"
                     value={formData.paymentModes}
                     onChange={(e) => {
                       setSelectedPaymentMode(e.target.value);
                       setPaymentDetails({});
                     }}
-                  >
-                    <option value="">Select Payment Mode --</option>
-                    <option value="cash">Cash</option>
-                    <option value="card">Card</option>
-                    <option value="upi">UPI</option>
-                    <option value="check">Check</option>
-                  </select>
+                    options={[
+                      { value: "", label: "" },
+                      {
+                        value: "cash",
+                        label: "cash",
+                      },
+                      {
+                        value: "card",
+                        label: "card",
+                      },
+                      {
+                        value: "upi",
+                        label: "upi",
+                      },
+                      {
+                        value: "check",
+                        label: "check",
+                      },
+                    ]}
+                  />
                 </div>
                 {selectedPaymentMode === "cash" && (
                   <div className="IpMoneyReceiptAdvance-form-row">
-                    <label htmlFor="cardNumber">Amount</label>
-                    <input
+                    <FloatingInput
+                      label={"Amount"}
                       type="text"
-                      id="cardNumber"
-                      name="cardNumber"
+                      name="amount"
+                      restrictions={{ number: true }}
                       value={paymentDetails.amount || ""}
                       onChange={(e) => {
                         setPaymentDetails({
@@ -439,10 +461,9 @@ const IpMoneyReceiptAdvance = () => {
                 {selectedPaymentMode === "card" && (
                   <>
                     <div className="IpMoneyReceiptAdvance-form-row">
-                      <label htmlFor="cardNumber">Card Number</label>
-                      <input
+                      <FloatingInput
+                        label={"Card Number"}
                         type="text"
-                        id="cardNumber"
                         name="cardNumber"
                         value={paymentDetails.cardNumber || ""}
                         onChange={(e) => {
@@ -452,14 +473,13 @@ const IpMoneyReceiptAdvance = () => {
                           });
                         }}
                       />
-
                     </div>
                     <div className="IpMoneyReceiptAdvance-form-row">
-                      <label htmlFor="cardNumber">Amount</label>
-                      <input
+                      <FloatingInput
+                        label={"Amount"}
                         type="text"
-                        id="cardNumber"
                         name="cardNumber"
+                        restrictions={{ number: true }}
                         value={paymentDetails.amount || ""}
                         onChange={(e) => {
                           setPaymentDetails({
@@ -470,17 +490,14 @@ const IpMoneyReceiptAdvance = () => {
                       />
                     </div>
                   </>
-
-
                 )}
 
                 {selectedPaymentMode === "upi" && (
                   <>
                     <div className="IpMoneyReceiptAdvance-form-row">
-                      <label htmlFor="upiId">UPI ID</label>
-                      <input
+                      <FloatingInput
+                        label={"UPI ID"}
                         type="text"
-                        id="upiId"
                         name="upiId"
                         value={paymentDetails.transactionId || ""}
                         onChange={(e) =>
@@ -492,11 +509,11 @@ const IpMoneyReceiptAdvance = () => {
                       />
                     </div>
                     <div className="IpMoneyReceiptAdvance-form-row">
-                      <label htmlFor="cardNumber">Amount</label>
-                      <input
+                      <FloatingInput
+                        label={"Amount"}
                         type="text"
-                        id="cardNumber"
-                        name="cardNumber"
+                        name="amount"
+                        restrictions={{ number: true }}
                         value={paymentDetails.amount || ""}
                         onChange={(e) => {
                           setPaymentDetails({
@@ -512,10 +529,9 @@ const IpMoneyReceiptAdvance = () => {
                 {selectedPaymentMode === "check" && (
                   <>
                     <div className="IpMoneyReceiptAdvance-form-row">
-                      <label htmlFor="checkDate">Check Date</label>
-                      <input
+                      <FloatingInput
+                        label={"Check Date"}
                         type="date"
-                        id="checkDate"
                         name="checkDate"
                         value={paymentDetails.chequeDate || ""}
                         onChange={(e) =>
@@ -527,11 +543,11 @@ const IpMoneyReceiptAdvance = () => {
                       />
                     </div>
                     <div className="IpMoneyReceiptAdvance-form-row">
-                      <label htmlFor="cardNumber">Amount</label>
-                      <input
+                      <FloatingInput
+                        label={"Amount"}
                         type="text"
-                        id="cardNumber"
-                        name="cardNumber"
+                        name="amount"
+                        restrictions={{ number: true }}
                         value={paymentDetails.amount || ""}
                         onChange={(e) => {
                           setPaymentDetails({
@@ -544,8 +560,8 @@ const IpMoneyReceiptAdvance = () => {
                   </>
                 )}
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Amount In Words:</label>
-                  <input
+                  <FloatingInput
+                    label={"Amount In Words"}
                     type="text"
                     name="amountInWords"
                     value={formData.amountInWords}
@@ -559,8 +575,8 @@ const IpMoneyReceiptAdvance = () => {
                 </div>
 
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Status:</label>
-                  <input
+                  <FloatingInput
+                    label={"Status"}
                     type="text"
                     name="serviceTax"
                     value={formData.status}
@@ -574,8 +590,8 @@ const IpMoneyReceiptAdvance = () => {
                   <input type="text" name="panelPayable" />
                 </div> */}
                 <div className="IpMoneyReceiptAdvance-form-row">
-                  <label>Remark:</label>
-                  <input
+                  <FloatingInput
+                    label={"Remarks"}
                     type="text"
                     name="remark"
                     value={formData.ipRemarks}
@@ -600,7 +616,6 @@ const IpMoneyReceiptAdvance = () => {
       >
         Print
       </button>
-
 
       {/* Table Section */}
       {/* <h3>Previous Receipt Details</h3>

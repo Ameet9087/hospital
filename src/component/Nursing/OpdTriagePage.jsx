@@ -6,8 +6,8 @@ import { Modal } from "react-bootstrap";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 import NursingCustomModal from "./NursingCustomModal";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
-import CustomModal from "../CustomModel/CustomModal";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../CustomModel/CustomModal";
 
 function OPDTriagePage({ onClose, data }) {
   console.log(data);
@@ -179,9 +179,9 @@ function OPDTriagePage({ onClose, data }) {
       data.inPatientId > 0
         ? { ...formData, patientDTO: { inPatientId: data.inPatientId } }
         : {
-            ...formData,
-            outPatientDTO: { outPatientId: data.outPatient?.outPatientId },
-          };
+          ...formData,
+          outPatientDTO: { outPatientId: data.outPatient?.outPatientId },
+        };
     try {
       const response = await fetch(`${API_BASE_URL}/allergies/add`, {
         method: "POST",
@@ -323,9 +323,9 @@ function OPDTriagePage({ onClose, data }) {
       data.patientId > 0
         ? { ...vitalData, patientDTO: { patientId: data.inpatientId } }
         : {
-            ...vitalData,
-            outPatientDTO: { outPatientId: data.outPatient?.outPatientId },
-          };
+          ...vitalData,
+          outPatientDTO: { outPatientId: data.outPatient?.outPatientId },
+        };
     try {
       console.log(formData);
 
@@ -378,18 +378,18 @@ function OPDTriagePage({ onClose, data }) {
       o2DeliveryPlan: "",
       painScale: "",
     }
-   
+
   ];
 
   return (
     <>
-    
-    <CustomModal
+
+      <CustomModal
         isOpen={isTriageModalOpen}
         onClose={closeTriAgeModal}
         title="OPD Triage"
       >
-       <div className="triage-container">
+        <div className="triage-container">
           <header>
             <h2>
               OPD Triage of {data?.firstName} {data?.lastName}
@@ -502,7 +502,7 @@ function OPDTriagePage({ onClose, data }) {
                 )}
               </div>
               <div className="triage-vital-Form">
-              <CustomModal isOpen={showForm} onClose={() => setShowForm(false)}>
+                <CustomModal isOpen={showForm} onClose={() => setShowForm(false)}>
                   <div className="triage-vitals-form">
                     <div className="triage-vitals-form-header">
                       <h3>Add New Vitals</h3>
@@ -521,9 +521,9 @@ function OPDTriagePage({ onClose, data }) {
                           type="date"
                           name="addedOn"
                           value={vitalData.addedOn}
-                          min={new Date().toISOString().split("T")[0]} 
+                          min={new Date().toISOString().split("T")[0]}
                           onChange={handleInputChange}
-                          
+
                         />
                       </div>
 
@@ -659,61 +659,61 @@ function OPDTriagePage({ onClose, data }) {
                       </button>
                     </form>
                   </div>
-                  </CustomModal>
+                </CustomModal>
               </div>
             </section>
-         <div className="opd-triage-page-table">
-          <table>
-              <thead>
-                <tr>
-                  {[
-                    "Added On",
-                    "Height (cm)",
-                    "Weight (kg)",
-                    "BMI",
-                    "Temperature",
-                    "Blood Pressure",
-                    "Respiratory",
-                    "SpO₂",
-                    "O₂ Delivery Plan",
-                    "Pain Scale (/10)",
-                  ].map((header, index) => (
-                    <th key={index} className="resizable-th">
-                      <div className="header-content">
-                        <span>{header}</span>
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {vitalsData && vitalsData.length > 0 ? (
-                  vitalsData.map((vital, index) => (
-                    <tr key={index}>
-                      <td>{vital.addedOn}</td>
-                      <td>{vital.height} cm</td>
-                      <td>{vital.weight} kg</td>
-                      <td>{vital.bmi}</td>
-                      <td>{vital.temperature}°C</td>
-                      <td>
-                        {vital.bpSystolic}/{vital.bpDiastolic} mmHg
-                      </td>
-                      <td>{vital.respiratoryRate} bpm</td>
-                      <td>{vital.spO2}%</td>
-                      <td>{vital.o2DeliveryPlan}</td>
-                      <td>{vital.painScale}/10</td>
-                    </tr>
-                  ))
-                ) : (
+            <div className="opd-triage-page-table">
+              <table>
+                <thead>
                   <tr>
-                    <td colSpan="10" style={{ textAlign: "center" }}>
-                      No data available
-                    </td>
+                    {[
+                      "Added On",
+                      "Height (cm)",
+                      "Weight (kg)",
+                      "BMI",
+                      "Temperature",
+                      "Blood Pressure",
+                      "Respiratory",
+                      "SpO₂",
+                      "O₂ Delivery Plan",
+                      "Pain Scale (/10)",
+                    ].map((header, index) => (
+                      <th key={index} className="resizable-th">
+                        <div className="header-content">
+                          <span>{header}</span>
+                        </div>
+                      </th>
+                    ))}
                   </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {vitalsData && vitalsData.length > 0 ? (
+                    vitalsData.map((vital, index) => (
+                      <tr key={index}>
+                        <td>{vital.addedOn}</td>
+                        <td>{vital.height} cm</td>
+                        <td>{vital.weight} kg</td>
+                        <td>{vital.bmi}</td>
+                        <td>{vital.temperature}°C</td>
+                        <td>
+                          {vital.bpSystolic}/{vital.bpDiastolic} mmHg
+                        </td>
+                        <td>{vital.respiratoryRate} bpm</td>
+                        <td>{vital.spO2}%</td>
+                        <td>{vital.o2DeliveryPlan}</td>
+                        <td>{vital.painScale}/10</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="10" style={{ textAlign: "center" }}>
+                        No data available
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
             <section className="triage-allergy-container">
               <div className="allergy-list">
                 <div className="triage-allergy-list-subdiv">
@@ -725,200 +725,200 @@ function OPDTriagePage({ onClose, data }) {
                     + Add New
                   </button>
                 </div>
-               <div className="opd-triage-page-table">
-               <table ref={tableRef}>
-                  <thead>
-                    <tr>
-                      {[
-                        "Recorded On",
-                        "Allergen",
-                        "Severity",
-                        "Reaction",
-                        "Verified",
-                        "Comments",
-                        "Edit",
-                      ].map((header, index) => (
-                        <th
-                          key={index}
-                          style={{ width: columnWidths[index] }}
-                          className="resizable-th"
-                        >
-                          <div className="header-content">
-                            <span>{header}</span>
-                            <div
-                              className="resizer"
-                              onMouseDown={startResizing(
-                                tableRef,
-                                setColumnWidths
-                              )(index)}
-                            ></div>
-                          </div>
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {allergies && allergies.length > 0 ? (
-                      allergies.map((allergy) => (
-                        <tr key={allergy.allergiesId}>
-                          <td>{allergy.recordedDate}</td>
-                          <td>{allergy.typeOfAllergy}</td>
-                          <td>{allergy.severity}</td>
-                          <td>{allergy.reaction}</td>
-                          <td>{allergy.verified === "true" ? "Yes" : "No"}</td>
-                          <td>{allergy.comments}</td>
-                          <td>
-                            {/* You can add an edit button here */}
-                            <button
-                              className="triage-allergy-add-new-button"
-                              onClick={() => updateAllergies(allergy)}
-                            >
-                              Edit
-                            </button>
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
+                <div className="opd-triage-page-table">
+                  <table ref={tableRef}>
+                    <thead>
                       <tr>
-                        <td colSpan="7">No allergies found</td>
+                        {[
+                          "Recorded On",
+                          "Allergen",
+                          "Severity",
+                          "Reaction",
+                          "Verified",
+                          "Comments",
+                          "Edit",
+                        ].map((header, index) => (
+                          <th
+                            key={index}
+                            style={{ width: columnWidths[index] }}
+                            className="resizable-th"
+                          >
+                            <div className="header-content">
+                              <span>{header}</span>
+                              <div
+                                className="resizer"
+                                onMouseDown={startResizing(
+                                  tableRef,
+                                  setColumnWidths
+                                )(index)}
+                              ></div>
+                            </div>
+                          </th>
+                        ))}
                       </tr>
-                    )}
-                  </tbody>
-                </table>
-               </div>
+                    </thead>
+                    <tbody>
+                      {allergies && allergies.length > 0 ? (
+                        allergies.map((allergy) => (
+                          <tr key={allergy.allergiesId}>
+                            <td>{allergy.recordedDate}</td>
+                            <td>{allergy.typeOfAllergy}</td>
+                            <td>{allergy.severity}</td>
+                            <td>{allergy.reaction}</td>
+                            <td>{allergy.verified === "true" ? "Yes" : "No"}</td>
+                            <td>{allergy.comments}</td>
+                            <td>
+                              {/* You can add an edit button here */}
+                              <button
+                                className="triage-allergy-add-new-button"
+                                onClick={() => updateAllergies(allergy)}
+                              >
+                                Edit
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan="7">No allergies found</td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
               <div className="triage-allergy-add-new-section">
-              <CustomModal isOpen={showAllergyForm} onClose={handleCloseForm}>    <div className="triage-add-allergy-form">
-                    <div className="triage-allergy-form-header">
-                      <h3>Add Allergy</h3>
-                      {/* <button
+                <CustomModal isOpen={showAllergyForm} onClose={handleCloseForm}>    <div className="triage-add-allergy-form">
+                  <div className="triage-allergy-form-header">
+                    <h3>Add Allergy</h3>
+                    {/* <button
                         className="allergy-close-button"
                         onClick={handleCloseForm}
                       >
                         ✖
                       </button> */}
-                    </div>
-                    <form onSubmit={handleSubmit}>
-                      <div className="allergy-form-row">
-                        <label>Type Of Allergy*:</label>
-                        <div className="allergy-form-row-subdiv">
-                          <input
-                            type="radio"
-                            value="Medication"
-                            name="typeOfAllergy"
-                            onChange={handleTypeOfAllergyChange}
-                          />{" "}
-                          Medication
-                          <input
-                            type="radio"
-                            value="Non Medication"
-                            name="typeOfAllergy"
-                            onChange={handleTypeOfAllergyChange}
-                          />{" "}
-                          Non Medication
-                          <input
-                            type="radio"
-                            value="Food"
-                            name="typeOfAllergy"
-                            onChange={handleTypeOfAllergyChange}
-                          />{" "}
-                          Food
-                          <input
-                            type="radio"
-                            value="AdvRec"
-                            name="typeOfAllergy"
-                            onChange={handleTypeOfAllergyChange}
-                          />{" "}
-                          AdvRec
-                        </div>
-                      </div>
-
-                      <div className="allergy-form-row">
-                        <label>Severity:</label>
-                        <div className="allergy-form-row-subdiv">
-                          <input
-                            type="radio"
-                            value="Mild"
-                            name="severity"
-                            onChange={handleSeverityChange}
-                          />{" "}
-                          Mild
-                          <input
-                            type="radio"
-                            value="Moderate"
-                            name="severity"
-                            onChange={handleSeverityChange}
-                          />{" "}
-                          Moderate
-                          <input
-                            type="radio"
-                            value="Severe"
-                            name="severity"
-                            onChange={handleSeverityChange}
-                          />{" "}
-                          Severe
-                        </div>
-                      </div>
-
-                      <div className="allergy-form-row">
-                        <label>Verified:</label>
-                        <div className="allergy-form-row-subdiv">
-                          <input
-                            type="radio"
-                            name="verified"
-                            value="unknown"
-                            onChange={handleVerifiedChange}
-                          />{" "}
-                          Unknown
-                          <input
-                            type="radio"
-                            name="verified"
-                            value="true"
-                            onChange={handleVerifiedChange}
-                          />{" "}
-                          Yes
-                          <input
-                            type="radio"
-                            name="verified"
-                            value="false"
-                            onChange={handleVerifiedChange}
-                            defaultChecked
-                          />{" "}
-                          No
-                        </div>
-                      </div>
-
-                      <div className="allergy-form-row">
-                        <label>Reaction*:</label>
-                        <input
-                          type="text"
-                          name="reaction"
-                          placeholder="Reaction"
-                          value={formData.reaction}
-                          onChange={handleInputAllergyChange}
-                        />
-                      </div>
-
-                      <div className="allergy-form-row">
-                        <label>Comments:</label>
-                        <textarea
-                          name="comments"
-                          placeholder="Comments"
-                          value={formData.comments}
-                          onChange={handleInputAllergyChange}
-                        ></textarea>
-                      </div>
-
-                      <button type="submit" className="allergy-add-button">
-                        Add
-                      </button>
-                    </form>
                   </div>
-                  </CustomModal>
+                  <form onSubmit={handleSubmit}>
+                    <div className="allergy-form-row">
+                      <label>Type Of Allergy*:</label>
+                      <div className="allergy-form-row-subdiv">
+                        <input
+                          type="radio"
+                          value="Medication"
+                          name="typeOfAllergy"
+                          onChange={handleTypeOfAllergyChange}
+                        />{" "}
+                        Medication
+                        <input
+                          type="radio"
+                          value="Non Medication"
+                          name="typeOfAllergy"
+                          onChange={handleTypeOfAllergyChange}
+                        />{" "}
+                        Non Medication
+                        <input
+                          type="radio"
+                          value="Food"
+                          name="typeOfAllergy"
+                          onChange={handleTypeOfAllergyChange}
+                        />{" "}
+                        Food
+                        <input
+                          type="radio"
+                          value="AdvRec"
+                          name="typeOfAllergy"
+                          onChange={handleTypeOfAllergyChange}
+                        />{" "}
+                        AdvRec
+                      </div>
+                    </div>
+
+                    <div className="allergy-form-row">
+                      <label>Severity:</label>
+                      <div className="allergy-form-row-subdiv">
+                        <input
+                          type="radio"
+                          value="Mild"
+                          name="severity"
+                          onChange={handleSeverityChange}
+                        />{" "}
+                        Mild
+                        <input
+                          type="radio"
+                          value="Moderate"
+                          name="severity"
+                          onChange={handleSeverityChange}
+                        />{" "}
+                        Moderate
+                        <input
+                          type="radio"
+                          value="Severe"
+                          name="severity"
+                          onChange={handleSeverityChange}
+                        />{" "}
+                        Severe
+                      </div>
+                    </div>
+
+                    <div className="allergy-form-row">
+                      <label>Verified:</label>
+                      <div className="allergy-form-row-subdiv">
+                        <input
+                          type="radio"
+                          name="verified"
+                          value="unknown"
+                          onChange={handleVerifiedChange}
+                        />{" "}
+                        Unknown
+                        <input
+                          type="radio"
+                          name="verified"
+                          value="true"
+                          onChange={handleVerifiedChange}
+                        />{" "}
+                        Yes
+                        <input
+                          type="radio"
+                          name="verified"
+                          value="false"
+                          onChange={handleVerifiedChange}
+                          defaultChecked
+                        />{" "}
+                        No
+                      </div>
+                    </div>
+
+                    <div className="allergy-form-row">
+                      <label>Reaction*:</label>
+                      <input
+                        type="text"
+                        name="reaction"
+                        placeholder="Reaction"
+                        value={formData.reaction}
+                        onChange={handleInputAllergyChange}
+                      />
+                    </div>
+
+                    <div className="allergy-form-row">
+                      <label>Comments:</label>
+                      <textarea
+                        name="comments"
+                        placeholder="Comments"
+                        value={formData.comments}
+                        onChange={handleInputAllergyChange}
+                      ></textarea>
+                    </div>
+
+                    <button type="submit" className="allergy-add-button">
+                      Add
+                    </button>
+                  </form>
+                </div>
+                </CustomModal>
 
                 {showUpdateForm && (
-                  
+
                   <div className="triage-add-allergy-form">
                     <div className="allergy-form-header">
                       <h3>Update Allergy</h3>
@@ -1049,9 +1049,9 @@ function OPDTriagePage({ onClose, data }) {
               </div>
             </section>
           </main>
-          </div>
+        </div>
       </CustomModal>
-   
+
     </>
   );
 }

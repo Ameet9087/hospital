@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, Plus, Trash2 } from 'lucide-react';
 import './PreventiveMaintenanceForm.css';
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import PopupTable from '../../../Admission/PopupTable';
 import { API_BASE_URL } from '../../../api/api';
 

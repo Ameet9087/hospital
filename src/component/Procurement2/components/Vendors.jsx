@@ -4,7 +4,7 @@ import AddVendor from "../components/AddVendor";
 import UpdateVendor from "../components/UpdateVendor";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import * as XLSX from 'xlsx';
 
 const Vendors = () => {
@@ -12,10 +12,11 @@ const Vendors = () => {
   const [isUpdateVendorOpen, setIsUpdateVendorOpen] = useState(false);
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [vendors, setVendors] = useState([]);
-const [columnWidths,setColumnWidths] = useState({});
-const tableRef=useRef(null);
-const [searchQuery, setSearchQuery] = useState("");
-const [filteredVendors, setFilteredVendors] = useState([]);
+
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredVendors, setFilteredVendors] = useState([]);
 
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const [filteredVendors, setFilteredVendors] = useState([]);
         const data = await response.json();
         setVendors(data);
         console.log(data);
-        
+
       } catch (error) {
         console.error("Error fetching vendor data:", error);
       }
@@ -114,17 +115,17 @@ const [filteredVendors, setFilteredVendors] = useState([]);
       <button className="Vendors-add-btn" onClick={openAddVendorModal}>
         Add Vendor
       </button>
-      
+
       <div className="Vendors-table-header">
         <div className="Vendors-search-container">
           {/* <input type="text" placeholder="Search" className="Vendors-search-input" /> */}
           <input
-          type="text"
-          placeholder="Search"
-          className="Vendors-search-input"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+            type="text"
+            placeholder="Search"
+            className="Vendors-search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
         <div className="Vendors-search-filter">
           <span>Showing {vendors.length} / {vendors.length}results</span>
@@ -133,39 +134,39 @@ const [filteredVendors, setFilteredVendors] = useState([]);
         </div>
       </div>
 
-      <table  ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-                "Vendor Name",
-                "Vendor Code",
-                "Contact Person",
-                "Contact Address",
-                "Contact Number",
-                "KRA PIN",
-                "Email Address",
-                "Is Active",
-                "Action"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
- </thead>
+      <table ref={tableRef}>
+        <thead>
+          <tr>
+            {[
+              "Vendor Name",
+              "Vendor Code",
+              "Contact Person",
+              "Contact Address",
+              "Contact Number",
+              "KRA PIN",
+              "Email Address",
+              "Is Active",
+              "Action"
+            ].map((header, index) => (
+              <th
+                key={index}
+                style={{ width: columnWidths[index] }}
+                className="resizable-th"
+              >
+                <div className="header-content">
+                  <span>{header}</span>
+                  <div
+                    className="resizer"
+                    onMouseDown={startResizing(
+                      tableRef,
+                      setColumnWidths
+                    )(index)}
+                  ></div>
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
 
         <tbody>
           {filteredVendors.map((vendor, index) => (
@@ -177,7 +178,7 @@ const [filteredVendors, setFilteredVendors] = useState([]);
               <td>{vendor.contactNumber}</td>
               <td>{vendor.kraPin || ""}</td>
               <td>{vendor.email || ""}</td>
-              <td>{(vendor.isActive)?"Active":"Inactive"}</td>
+              <td>{(vendor.isActive) ? "Active" : "Inactive"}</td>
               <td>
                 <button
                   className="Vendors-edit-btn"
@@ -193,7 +194,7 @@ const [filteredVendors, setFilteredVendors] = useState([]);
 
       {/* AddVendor Modal */}
       <CustomModal isOpen={isAddVendorOpen} onClose={() => setIsAddVendorOpen(false)}>
-        <AddVendor onClose={() => setIsAddVendorOpen(false)}/>
+        <AddVendor onClose={() => setIsAddVendorOpen(false)} />
       </CustomModal>
 
       {/* UpdateVendor Modal */}

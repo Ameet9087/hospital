@@ -15,11 +15,16 @@ import {
   FaInfoCircle,
 } from "react-icons/fa";
 import axios from "axios";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
-
+import { FloatingInput, FloatingSelect } from "../../FloatingInputs";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { usePopup } from "../../FidgetSpinner/PopupContext";
+import { text } from "@fortawesome/fontawesome-svg-core";
 const DoctorScheduleSTD = () => {
-  const [showPopup, setShowPopup] = useState(false);
+  const { showPopup } = usePopup();
+  const [showsPopup, setShowsPopup] = useState(false);
   const [scheduleStartDate, setScheduleStartDate] = useState();
   const [scheduleEndDate, setScheduleEndDate] = useState();
   const [doctorDutyStartTime, setDoctorDutyStartTime] = useState("10:03:00 AM");
@@ -35,11 +40,11 @@ const DoctorScheduleSTD = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [newBreakTimeIds, setNewBreakTimeIds] = useState([]);
   const handleSearchClick = () => {
-    setShowPopup(true);
+    setShowsPopup(true);
   };
 
   const handleClosePopup = () => {
-    setShowPopup(false);
+    setShowsPopup(false);
   };
 
   const [formValues, setFormValues] = useState({
@@ -220,10 +225,10 @@ const DoctorScheduleSTD = () => {
 
     try {
       const response = await axios.post(`${API_BASE_URL}/schedules`, formData);
-      console.log("Schedule Added Successfully:", response.data);
-      alert("Schedule Added Successfully");
+      toast.success("Schedule Added Successfully");
+      showPopup([{ url: "/appointment/doctorappointment", text: "Do You Want Check Doctor Appointment" }])
     } catch (error) {
-      console.error("Error adding schedule:", error);
+      toast.error("Error adding schedule:", error);
     }
   };
 
@@ -238,7 +243,36 @@ const DoctorScheduleSTD = () => {
           <div className="DoctorScheduleSTD-section-content">
             {/* Doctor Selection */}
             <div className="DoctorScheduleSTD-field-row">
-              <label className="DoctorScheduleSTD-field-label">
+              <FloatingSelect
+                label={"Location"}
+                value={selectedLocation}
+                onChange={handleLocationChange}
+                options={[
+                  { value: "", label: "" },
+                  ...(Array.isArray(locations)
+                    ? locations.map((location) => ({
+                      value: location.id,
+                      label: location.locationName,
+                    }))
+                    : []),
+                ]}
+              />
+              <FloatingSelect
+                label="Doctor"
+                name="doctor"
+                value={selectedDoctor}
+                onChange={handleDoctorChange}
+                options={[
+                  { value: "", label: "" },
+                  ...(Array.isArray(doctors)
+                    ? doctors.map((doctor) => ({
+                      value: doctor.doctorId,
+                      label: doctor.doctorName,
+                    }))
+                    : []),
+                ]}
+              />
+              {/* <label className="DoctorScheduleSTD-field-label">
                 Location Name <span className="required">*</span>
               </label>
               <select
@@ -253,139 +287,109 @@ const DoctorScheduleSTD = () => {
                       {data.locationName}
                     </option>
                   ))}
-              </select>
-            </div>
-            <div className="DoctorScheduleSTD-field-row">
-              <label className="DoctorScheduleSTD-field-label">
-                Doctor Name <span className="required">*</span>
-              </label>
-              <select
-                value={selectedDoctor}
-                onChange={handleDoctorChange}
-                className="DoctorScheduleSTD-field-input"
-              >
-                <option value="">Select option</option>
-                {doctors?.map((data, index) => (
-                  <option key={index} value={data.doctorId}>
-                    {data.doctorName}
-                  </option>
-                ))}
-              </select>
+              </select> */}
             </div>
             {/* Schedule Information */}
             <div className="DoctorScheduleSTD-field-row">
-              <label className="DoctorScheduleSTD-field-label">
-                Schedule Start Date <span className="required">*</span>
-              </label>
-              <input
+              <FloatingInput
+                label={"Schedule Start Date"}
                 type="date"
-                placeholder="DD/MM/YYYY"
-                className="DoctorScheduleSTD-field-input"
                 value={scheduleStartDate}
                 onChange={(e) => setScheduleStartDate(e.target.value)}
               />
-            </div>
-            <div className="DoctorScheduleSTD-field-row">
-              <label className="DoctorScheduleSTD-field-label">
-                Schedule End Date <span className="required">*</span>
-              </label>
-              <input
+              <FloatingInput
+                label={"Schedule End Date"}
                 type="date"
-                placeholder="DD/MM/YYYY"
-                className="DoctorScheduleSTD-field-input"
                 value={scheduleEndDate}
                 onChange={(e) => setScheduleEndDate(e.target.value)}
               />
             </div>
             <div className="DoctorScheduleSTD-field-row">
-              <label className="DoctorScheduleSTD-field-label">
-                Doctor Duty Start Time <span className="required">*</span>
-              </label>
-              <input
+              <FloatingInput
+                label={"Schedule End Date"}
                 type="time"
-                placeholder="HH:mm AM/PM"
-                className="DoctorScheduleSTD-field-input"
                 value={doctorDutyStartTime}
                 onChange={(e) => setDoctorDutyStartTime(e.target.value)}
               />
-            </div>
-            <div className="DoctorScheduleSTD-field-row">
-              <label className="DoctorScheduleSTD-field-label">
-                Doctor Duty End Time <span className="required">*</span>
-              </label>
-              <input
+              <FloatingInput
+                label={"Doctor Duty End Time"}
                 type="time"
-                placeholder="HH:mm AM/PM"
-                className="DoctorScheduleSTD-field-input"
                 value={doctorDutyEndTime}
                 onChange={(e) => setDoctorDutyEndTime(e.target.value)}
               />
             </div>
             <div className="DoctorScheduleSTD-field-row">
-              <label className="DoctorScheduleSTD-field-label ">
-                Cubical <span className="required">*</span>
-              </label>
-              <input
+              <FloatingInput
+                label={"Cubical"}
                 type="number"
                 name="cubical"
                 value={formValues.cubical}
                 onChange={handleInputChange}
-                className="DoctorScheduleSTD-field-input"
               />
-            </div>
-            <div className="DoctorScheduleSTD-field-row">
-              <label className="DoctorScheduleSTD-field-label">
-                Review Time: <span className="required">*</span>
-              </label>
-              <input
+
+              <FloatingInput
+                label={"Review Time"}
                 type="number"
                 name="reviewTime"
                 value={formValues.reviewTime}
                 onChange={handleInputChange}
-                className="DoctorScheduleSTD-field-input"
               />
+            </div>
+            <div className="DoctorScheduleSTD-field-row">
+              <FloatingInput
+                label={"New Patient Time"}
+                type="number"
+                name="newPatientTime"
+                value={formValues.newPatientTime}
+                onChange={handleInputChange}
+              />
+              <FloatingInput
+                label={"No Of New Patients"}
+                type="number"
+                name="noOfNewPatients"
+                value={formValues.noOfNewPatients}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="DoctorScheduleSTD-field-row">
+              <FloatingInput
+                label={"Rooms No"}
+                type="number"
+                name="roomsNo"
+                value={formValues.roomsNo}
+                onChange={handleInputChange}
+              />
+              <div className="DoctorScheduleSTD-radio-group">
+                <div className="DoctorScheduleSTD-header">Action :</div>
+                <div className="DoctorScheduleSTD-radio-item">
+                  <input
+                    type="radio"
+                    id="active"
+                    name="status"
+                    value="active"
+                    checked={formValues.status === "active"}
+                    onChange={handleInputChange}
+                  />
+                  <label htmlFor="active">Active</label>
+                </div>
+                <div className="DoctorScheduleSTD-radio-item">
+                  <input
+                    type="radio"
+                    id="inactive"
+                    name="status"
+                    value="inactive"
+                    checked={formValues.status === "inactive"}
+                    onChange={handleInputChange}
+                  />
+                  <label htmlFor="inactive">Inactive</label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Section 2 */}
         <div className="DoctorScheduleSTD-section">
-          <div className="DoctorScheduleSTD-field-row">
-            <label className="DoctorScheduleSTD-field-label">
-              New Patient Time: <span className="required">*</span>
-            </label>
-            <input
-              type="number"
-              name="newPatientTime"
-              value={formValues.newPatientTime}
-              onChange={handleInputChange}
-              className="DoctorScheduleSTD-field-input"
-            />
-          </div>
-          <div className="DoctorScheduleSTD-field-row">
-            <label className="DoctorScheduleSTD-field-label">
-              No Of New Patients: <span className="required">*</span>
-            </label>
-            <input
-              type="number"
-              name="noOfNewPatients"
-              value={formValues.noOfNewPatients}
-              onChange={handleInputChange}
-              className="DoctorScheduleSTD-field-input"
-            />
-          </div>
-          <div className="DoctorScheduleSTD-field-row">
-            <label className="DoctorScheduleSTD-field-label ">
-              Rooms No: <span className="required">*</span>
-            </label>
-            <input
-              type="number"
-              name="roomsNo"
-              value={formValues.roomsNo}
-              onChange={handleInputChange}
-              className="DoctorScheduleSTD-field-input"
-            />
-          </div>
           <div className="DoctorScheduleSTD-section-header">
             Doctor Availability
           </div>
@@ -425,31 +429,7 @@ const DoctorScheduleSTD = () => {
               Generate Schedule
             </button>
             {/* Status */}
-            <div className="DoctorScheduleSTD-radio-group">
-              <div className="DoctorScheduleSTD-header">Action</div>
-              <div className="DoctorScheduleSTD-radio-item">
-                <input
-                  type="radio"
-                  id="active"
-                  name="status"
-                  value="active"
-                  checked={formValues.status === "active"}
-                  onChange={handleInputChange}
-                />
-                <label htmlFor="active">Active</label>
-              </div>
-              <div className="DoctorScheduleSTD-radio-item">
-                <input
-                  type="radio"
-                  id="inactive"
-                  name="status"
-                  value="inactive"
-                  checked={formValues.status === "inactive"}
-                  onChange={handleInputChange}
-                />
-                <label htmlFor="inactive">Inactive</label>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
@@ -517,6 +497,8 @@ const DoctorScheduleSTD = () => {
               <tr key={timing.sn}>
                 <td>{timing.sn}</td>
                 <td>
+
+
                   {timing.breakTimeIds
                     .map((id) =>
                       breakTimeOptions.find(
@@ -607,7 +589,7 @@ const DoctorScheduleSTD = () => {
         <button className="btn-blue">Info</button> */}
       </div>
 
-      {showPopup && (
+      {showsPopup && (
         <div className="popup">
           <div className="popup-content">
             <div className="popup-header">

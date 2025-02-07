@@ -1,17 +1,17 @@
-import React, { useState, useEffect ,useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import "./bloodStorageDashboard.css"
 import CustomModal from '../../../CustomModel/CustomModal';
 import BSDAddNewBloodNew from './bSDAddNewBloodNew';
 import { API_BASE_URL } from '../../api/api';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 const BloodStorageDashboard = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [storageData, setStorageData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [showModal, setShowModal] = useState(false);
-    const [columnWidths,setColumnWidths] = useState({});
-    const tableRef=useRef(null);
+    const [columnWidths, setColumnWidths] = useState({});
+    const tableRef = useRef(null);
     // Fetch the data from the API
     const fetchData = async () => {
         try {
@@ -68,7 +68,7 @@ const BloodStorageDashboard = () => {
 
     const refreshData = async () => {
         await fetchData();
-        handleCloseModal(); 
+        handleCloseModal();
     };
 
     return (
@@ -77,51 +77,51 @@ const BloodStorageDashboard = () => {
             <div className="bloodStorage-dashboard-actions">
                 <button onClick={handleOpenModal}>Add New Blood Unit</button>
             </div>
-         
-               
-                    <div className='bloodStorage-search-bar-input-btn'>
-                        <input
-                            type="text"
-                            placeholder="Search by Storage ID or Test ID"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)} 
-                        />
-                    </div>
-              
 
-          
-            <table  ref={tableRef}>
-              <thead>
-                <tr >
-                    {[
-                  "Storage ID",
-                  "Test ID",
-                  "Blood Group",
-                  "Volume",
-                  "Storage Date",
-                  "Expiry Date",
-                  "Storage Location",
-                  "Status"
-                ].map((header, index) => (
-                    <th
-                      key={index}
-                      style={{ width: columnWidths[index] }}
-                      className="resizable-th"
-                    >
-                      <div className="header-content">
-                        <span>{header}</span>
-                        <div
-                          className="resizer"
-                          onMouseDown={startResizing(
-                            tableRef,
-                            setColumnWidths
-                          )(index)}
-                        ></div>
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
+
+            <div className='bloodStorage-search-bar-input-btn'>
+                <input
+                    type="text"
+                    placeholder="Search by Storage ID or Test ID"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
+
+
+
+            <table ref={tableRef}>
+                <thead>
+                    <tr >
+                        {[
+                            "Storage ID",
+                            "Test ID",
+                            "Blood Group",
+                            "Volume",
+                            "Storage Date",
+                            "Expiry Date",
+                            "Storage Location",
+                            "Status"
+                        ].map((header, index) => (
+                            <th
+                                key={index}
+                                style={{ width: columnWidths[index] }}
+                                className="resizable-th"
+                            >
+                                <div className="header-content">
+                                    <span>{header}</span>
+                                    <div
+                                        className="resizer"
+                                        onMouseDown={startResizing(
+                                            tableRef,
+                                            setColumnWidths
+                                        )(index)}
+                                    ></div>
+                                </div>
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
 
                 <tbody>
                     {filteredData.map((item) => (
@@ -143,9 +143,9 @@ const BloodStorageDashboard = () => {
             </table>
 
             <CustomModal isOpen={showModal} onClose={handleCloseModal}>
-        <BSDAddNewBloodNew onClose={handleCloseModal} refreshData={refreshData} />
-      </CustomModal>
-              </div>
+                <BSDAddNewBloodNew onClose={handleCloseModal} refreshData={refreshData} />
+            </CustomModal>
+        </div>
     );
 };
 

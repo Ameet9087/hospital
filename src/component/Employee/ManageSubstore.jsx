@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
-
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import "./ManageSubstore.css";
 
 import { API_BASE_URL } from "../api/api";
 import AddSubStore from "./AddSubstore";
 import CustomModal from "../../CustomModel/CustomModal";
 import { useFilter } from "../ShortCuts/useFilter";
+import { FloatingInput } from "../../FloatingInputs";
 
 const ManageSubstore = () => {
   const [showModal, setShowModal] = useState(false);
@@ -92,14 +92,14 @@ const ManageSubstore = () => {
             Showing {filteredItems.length} results
           </div>
         </div>
-        <input
-          type="text"
-          placeholder="Search by substore name"
-          className="manage-substore-search-input"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-
+        <div className="manage-substore-search-input">
+          <FloatingInput
+            label={"search"}
+            type="text"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
         <table ref={tableRef}>
           <thead>
             <tr>

@@ -1,7 +1,5 @@
 .Treatment-Given-container{
     width: 100%;
-    max-width: 1250px;
-    margin: 20px auto;
     padding: 8px;
     background-color: var(--background-color);
     border-radius: 10px;
@@ -13,8 +11,8 @@
   gap: 30px;
   justify-content: center;
   align-items: center;
-  padding: 0px 10px;
-  padding-top: 10px;
+  border-radius: 5px;
+  padding: 10px 10px;
   margin: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -28,20 +26,21 @@
     margin-bottom: 20px;
     gap: 30px;
 }
-.Treatment-Given-content label{
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px; 
-    width: 350px;
+.Treatment-Given-showcase
+{
+  overflow-y: scroll;
+  scrollbar-width: none;
+  height: 100px;
 }
-.Treatment-Given-content textarea{
-    width: 100%;
-    padding: 5px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-}
+.Treatment-Given-showcase-ul li
+{
+  padding: 0px 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
+}
 .Treatment-Given-add{
     background-color: var(--button-color);
     color: white;
@@ -52,8 +51,7 @@
     margin-bottom: 15px; 
 }
 .Treatment-Given-cut{
-    width: 3%;
-    background-color: #dc3545;
+    background-color: #ff0019;
     color: white;
     padding: 5px 10px;
     border: none;
@@ -78,8 +76,7 @@
   
   }
 .Treatment-Given-action-cancel{
-    width: 13%;
-    background-color: #dc3545;
+    background-color: #ff041d;
     color: white;
     padding: 5px 10px;
     border: none;
@@ -93,7 +90,6 @@
   
   }
 .Treatment-Given-action-submit{
-    width: 13%;
     background-color: var(--button-color);
     padding: 5px;
     border-radius: 5px;

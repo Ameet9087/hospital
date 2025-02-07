@@ -296,12 +296,12 @@ const AutopsyReportDistributionForm = () => {
             <tr>
               <td colSpan={5} className="text-center">Loading...</td>
             </tr>
-          ) : data.length === 0 ? (
+          ) : data?.length === 0 ? (
             <tr>
               <td colSpan={5} className="text-center">No autopsy reports found.</td>
             </tr>
           ) : (
-            data.map((item) => (
+            data?.map((item) => (
               <tr key={item.distributionFormId}>
                 <td>{item.distributionFormId}</td>
                 <td>{item.distributedTo}</td>

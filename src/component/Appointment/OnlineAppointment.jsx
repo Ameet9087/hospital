@@ -1,7 +1,7 @@
 // AppointmentList.js
 import React, { useState, useRef } from "react";
 import "./OnlineAppointment.css";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 
 const OnlineAppointment = () => {
   const [activeTab, setActiveTab] = useState("Initiated");
@@ -21,17 +21,15 @@ const OnlineAppointment = () => {
     <div className="onlineAppointment-list">
       <div className="onlineAppointment-tab-header">
         <div
-          className={`onlineAppointment-tab ${
-            activeTab === "Initiated" ? "active" : ""
-          }`}
+          className={`onlineAppointment-tab ${activeTab === "Initiated" ? "active" : ""
+            }`}
           onClick={() => setActiveTab("Initiated")}
         >
           Initiated Appointment
         </div>
         <div
-          className={`onlineAppointment-tab ${
-            activeTab === "Completed" ? "active" : ""
-          }`}
+          className={`onlineAppointment-tab ${activeTab === "Completed" ? "active" : ""
+            }`}
           onClick={() => setActiveTab("Completed")}
         >
           Completed Appointment

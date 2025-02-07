@@ -1,13 +1,17 @@
-
 // AjharTamboli 22-11-24 iPBilling.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 // import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import axios from "axios";
 import "./ipbilling.css";
 import { API_BASE_URL } from "../../api/api";
-import IpBillingPopupTable from "./IpBillingPopupTable";
+import {
+  PopupTable,
+  FloatingInput,
+  FloatingSelect,
+} from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 const IpBilling = () => {
   const [selectedTab, setSelectedTab] = useState("testGrid");
   const [currentTime, setCurrentTime] = useState("");
@@ -34,9 +38,6 @@ const IpBilling = () => {
   const [loading, setLoading] = useState(true); // State to handle loading status
   const [error, setError] = useState(null); // State to handle errors
   const [doctorVisit, setDoctorVisit] = useState(null);
-
-
-
 
   // Handle change event when a service is selected
   const handleServiceChange = (event, index) => {
@@ -72,10 +73,8 @@ const IpBilling = () => {
   // };
   const fetchPreviousBills = async (id) => {
     try {
-      const response = await axios.get(
-        `${API_BASE_URL}/ipbillings/${id}`
-      );
-      console.log("fetch previous test grid", response.data)
+      const response = await axios.get(`${API_BASE_URL}/ipbillings/${id}`);
+      console.log("fetch previous test grid", response.data);
       setPreviousBills(response.data.testGridIpdBill); // Update state with fetched data
     } catch (error) {
       console.error("Error fetching previous bills:", error);
@@ -102,7 +101,10 @@ const IpBilling = () => {
         // Find an empty row to update
         const emptyRowIndex = prevRows.findIndex(
           (row) =>
-            !row.serviceDetailsId || row.serviceDetailsId === "" || !row.code || !row.serviceName
+            !row.serviceDetailsId ||
+            row.serviceDetailsId === "" ||
+            !row.code ||
+            !row.serviceName
         );
         if (emptyRowIndex !== -1) {
           // Update the existing empty row
@@ -153,14 +155,15 @@ const IpBilling = () => {
       );
 
       setPatientData(ipData);
-      console.log("selectedPatient prachi1", ipData)
+      console.log("selectedPatient prachi1", ipData);
       fetchPreviousBills(ipData.ipAdmmissionId);
     }
     if (activePopup === "doctor") {
       const mappedDoctors = doctors.map((doctor) => ({
         doctorId: doctor.doctorId,
         doctorName: doctor.doctorName,
-        specialization: doctor.specialisationId?.specialisationName || doctor.specialization,
+        specialization:
+          doctor.specialisationId?.specialisationName || doctor.specialization,
         email: doctor.emailId,
         mobileNumber: doctor.mobileNumber,
         morningFirstVisitFee: doctor.orgDoctorFees?.[0]?.morningFirstVisit || 0,
@@ -170,13 +173,13 @@ const IpBilling = () => {
         payTypeName: doctor.orgDoctorFees?.[0]?.payType?.payTypeName || "N/A",
       }));
 
-
       console.log("Mapped Doctors:", mappedDoctors);
 
       setDoctorVisitRows((prevRows) => {
         // Check if the selected doctor already exists in the table
         const isDuplicate = prevRows.some(
-          (row) => row.doctorId === data.doctorId && row.doctorName === data.doctorName
+          (row) =>
+            row.doctorId === data.doctorId && row.doctorName === data.doctorName
         );
 
         if (isDuplicate) {
@@ -188,7 +191,6 @@ const IpBilling = () => {
         const emptyRowIndex = prevRows.findIndex(
           (row) => !row.doctorId || row.doctorId === "" || !row.doctorName
         );
-
 
         if (emptyRowIndex !== -1) {
           console.log(data);
@@ -266,12 +268,9 @@ const IpBilling = () => {
           data: [], // Return empty data if ipAdmissionPatient is invalid
         };
       }
-    }
-    else if (activePopup === "doctor") {
+    } else if (activePopup === "doctor") {
       return { columns: ["doctorName", "specialization"], data: doctors };
-    }
-
-    else {
+    } else {
       return { columns: [], data: [] };
     }
   };
@@ -304,7 +303,7 @@ const IpBilling = () => {
   }, []);
   const handleSaveData = () => {
     //const totalAmount = serviceData.reduce((sum, service) => sum + service.totalAmt, 0);
-    console.log(testGridTableRowsableRows)
+    console.log(testGridTableRowsableRows);
     console.log(finaltotalamt);
     const dataToPost = {
       ipAdmission: {
@@ -326,7 +325,7 @@ const IpBilling = () => {
       //   serviceCode: service.serviceCode,
       //   rate: service.rate,
       //   qnt: service.qty,
-      //   total: service.totalAmt, 
+      //   total: service.totalAmt,
       testGridIpdBill: testGridTableRowsableRows.map((service) => ({
         serviceId: service.serviceId,
         serviceName: service.serviceName,
@@ -345,11 +344,10 @@ const IpBilling = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Data successfully saved:", data);
+        toast.success("Data successfully saved:", data);
       })
-      .catch((error) => console.error("Error saving data:", error));
+      .catch((error) => toast.error("Error saving data:", error));
   };
-
 
   // prachi dr visit
   useEffect(() => {
@@ -371,30 +369,28 @@ const IpBilling = () => {
 
   // prachi post Dr
 
-
   const [formData, setFormData] = useState({
-    doctorVisitId: '',
+    doctorVisitId: "",
     ipAdmissionId: patientData.ipAdmmissionId,
-    doctorId: '',
+    doctorId: "",
     visitDate: currentDate,
     visitTime: currentTime,
-    doctorName: '',
-    visitReason: '',
-    remarks: ''
+    doctorName: "",
+    visitReason: "",
+    remarks: "",
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
-
   const postDrVisitData = async (e) => {
     e.preventDefault();
-    console.log("patient id", patientData.ipAdmmissionId)
+    console.log("patient id", patientData.ipAdmmissionId);
     // Prepare the visit data to be sent from the table and form data
     const visitData = doctorVisitRows.map((row) => ({
       drVisitId: row.sn,
@@ -408,19 +404,15 @@ const IpBilling = () => {
     }));
 
     // Log the visitData to see its structure and contents
-    console.log("visited data", visitData)
+    console.log("visited data", visitData);
     try {
       const response = await axios.post(`${API_BASE_URL}/dr-visits`, visitData);
-      console.log('Data posted successfully:', response.data);
+      console.log("Data posted successfully:", response.data);
       alert("Data posted successfully");
     } catch (error) {
-      console.error('Error posting data:', error);
+      console.error("Error posting data:", error);
     }
   };
-
-
-
-
 
   const handleRowUpdate = (id, field, value) => {
     setServicesData((prevRows) =>
@@ -456,7 +448,6 @@ const IpBilling = () => {
     },
   ]);
 
-
   const [doctorVisitRows, setDoctorVisitRows] = useState([
     {
       sn: 1,
@@ -468,8 +459,6 @@ const IpBilling = () => {
       visitReasons: "",
     },
   ]);
-
-
 
   const fetchServiceDetails = async () => {
     try {
@@ -515,8 +504,7 @@ const IpBilling = () => {
           dCode: "",
         },
       ]);
-    }
-    else if (type === "drvisit") {
+    } else if (type === "drvisit") {
       setDoctorVisitRows((prevRows) => {
         // Create a new row to add
         const newRow = {
@@ -543,7 +531,6 @@ const IpBilling = () => {
         }
       });
       console.log(doctorVisitRows + "ppppppppp");
-
     }
   };
   const handleDeleteRow = (type, index) => {
@@ -555,20 +542,16 @@ const IpBilling = () => {
       setIdentificationTableRows((prevRows) =>
         prevRows.filter((_, rowIndex) => rowIndex !== index)
       );
-    }
-    else if (type === "drvisit") {
+    } else if (type === "drvisit") {
       setDoctorVisitRows((prevRows) =>
         prevRows.filter((_, rowIndex) => rowIndex !== index)
       );
     }
-
   };
 
   const handleRowChange = (index, field, value) => {
     setDoctorVisitRows((prevRows) =>
-      prevRows.map((row, i) =>
-        i === index ? { ...row, [field]: value } : row
-      )
+      prevRows.map((row, i) => (i === index ? { ...row, [field]: value } : row))
     );
   };
   useEffect(() => {
@@ -601,7 +584,7 @@ const IpBilling = () => {
                 "Service Name",
                 "Doctor Name ",
                 "Rate",
-                "Qty",
+                "Quantity",
                 "Total Amt",
                 "Less Disc(%)",
                 "Disc Amt",
@@ -618,9 +601,10 @@ const IpBilling = () => {
                     <span>{header}</span>
                     <div
                       className="resizer"
-                      onMouseDown={startResizing(tableRef, setColumnWidths)(
-                        index
-                      )}
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
                     ></div>
                   </div>
                 </th>
@@ -649,21 +633,21 @@ const IpBilling = () => {
                 </td>
                 <td>{row.sn}</td>
                 <td>
-                  <input type="text" />
-                  <button
-                    className="billing-opd-com-magnifier-btn"
-                    onClick={() => setActivePopup("services")}
-                  >
-                    🔍
-                  </button>
+                  <FloatingInput
+                    label={"Services"}
+                    type="search"
+                    onIconClick={() => setActivePopup("services")}
+                  />
                 </td>
                 <td>{row.code}</td>
                 <td>{row.serviceName}</td>
                 <td>{row.doctorName}</td>
                 <td>{row.rate}</td>
                 <td>
-                  <input
+                  <FloatingInput
+                    label={"QTY"}
                     type="number"
+                    min="0"
                     value={row.qty}
                     onChange={(e) => {
                       const qty = parseInt(e.target.value, 10) || 0;
@@ -681,8 +665,10 @@ const IpBilling = () => {
                 </td>
                 <td>{row.totalAmt}</td>
                 <td>
-                  <input
+                  <FloatingInput
+                    label={"Less Disc"}
                     type="number"
+                    min="0"
                     value={row.lessDisc || 0}
                     onChange={(e) => {
                       const lessDisc = parseFloat(e.target.value) || 0;
@@ -700,7 +686,12 @@ const IpBilling = () => {
                   />
                 </td>
                 <td>
-                  <input type="number" value={row.discAmt || 0} readOnly />
+                  <FloatingInput
+                    label={"disAmt"}
+                    type="number"
+                    value={row.discAmt || 0}
+                    readOnly
+                  />
                 </td>
                 <td>{row.netAmt}</td>
                 <td>{row.emerg}</td>
@@ -728,7 +719,11 @@ const IpBilling = () => {
             <div className="billing-opd-com-summary-row">
               <div className="billing-opd-com-summary-field">
                 <label>Total Amount:</label>
-                <input type="number" value={finaltotalamt.toFixed(2)} readOnly />
+                <input
+                  type="number"
+                  value={finaltotalamt.toFixed(2)}
+                  readOnly
+                />
               </div>
             </div>
           </div>
@@ -736,7 +731,6 @@ const IpBilling = () => {
       </div>
     );
   };
-
 
   // -------------------------------------------------------------------PRevioustest detail-----------------------------------------------
   const renderTable = () => {
@@ -786,16 +780,27 @@ const IpBilling = () => {
                   <tr key={bill.testGridIpdBillId}>
                     <td>{index + 1}</td>
                     <td>{bill.date || "N/A"}</td>
-                    <td>{"N/A"}</td> {/* No explicit billingTime in the response */}
+                    <td>{"N/A"}</td>{" "}
+                    {/* No explicit billingTime in the response */}
                     <td>{"N/A"}</td> {/* No explicit code in the response */}
                     <td>{bill.serviceName || "N/A"}</td>
-                    <td>{"N/A"}</td> {/* No explicit doctorName in the response */}
+                    <td>{"N/A"}</td>{" "}
+                    {/* No explicit doctorName in the response */}
                     <td>{bill.rate || "0.00"}</td>
                     <td>{bill.quantity || "0"}</td>
-                    <td>{(bill.rate && bill.quantity) ? (bill.rate * bill.quantity).toFixed(2) : "0.00"}</td>
+                    <td>
+                      {bill.rate && bill.quantity
+                        ? (bill.rate * bill.quantity).toFixed(2)
+                        : "0.00"}
+                    </td>
                     <td>{"0.00"}</td> {/* No explicit disc in the response */}
-                    <td>{"0.00"}</td> {/* No explicit discAmount in the response */}
-                    <td>{(bill.rate && bill.quantity) ? (bill.rate * bill.quantity).toFixed(2) : "0.00"}</td>
+                    <td>{"0.00"}</td>{" "}
+                    {/* No explicit discAmount in the response */}
+                    <td>
+                      {bill.rate && bill.quantity
+                        ? (bill.rate * bill.quantity).toFixed(2)
+                        : "0.00"}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -830,9 +835,11 @@ const IpBilling = () => {
                         <span>{header}</span>
                         <div
                           className="resizer"
-                          onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
                         ></div>
-
                       </div>
                     </th>
                   ))}
@@ -865,7 +872,8 @@ const IpBilling = () => {
 
                     {/* Date */}
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"Date"}
                         type="date"
                         value={row.date || ""}
                         onChange={(e) =>
@@ -883,28 +891,25 @@ const IpBilling = () => {
 
                     {/* Doctor Name */}
                     <td>
-                      <input
-                        type="text"
+                      <FloatingInput
+                        label={"Doctor Name"}
+                        type="search"
                         value={row.doctorName || ""}
                         onChange={(e) =>
                           setDoctorVisitRows((prevRows) =>
                             prevRows.map((r, i) =>
-                              i === index ? { ...r, doctorName: e.target.value } : r
+                              i === index
+                                ? { ...r, doctorName: e.target.value }
+                                : r
                             )
                           )
                         }
+                        onIconClick={() => setActivePopup("doctor")}
                       />
-                      <button
-                        className="billing-opd-com-magnifier-btn"
-                        onClick={() => setActivePopup("doctor")}
-                      >
-                        🔍
-                      </button>
                     </td>
-
-                    {/* Doctor Fee */}
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"General Opd Fee"}
                         type="number"
                         value={row.generalOpdFee || ""}
                         onChange={(e) =>
@@ -913,11 +918,14 @@ const IpBilling = () => {
                               i === index
                                 ? {
                                   ...r,
-                                  generalOpdFee: parseFloat(e.target.value) || 0,
+                                  generalOpdFee:
+                                    parseFloat(e.target.value) || 0,
                                   totalAmt:
-                                    (parseFloat(e.target.value) || 0) * (r.qty || 1),
+                                    (parseFloat(e.target.value) || 0) *
+                                    (r.qty || 1),
                                   netAmt:
-                                    (parseFloat(e.target.value) || 0) * (r.qty || 1),
+                                    (parseFloat(e.target.value) || 0) *
+                                    (r.qty || 1),
                                 }
                                 : r
                             )
@@ -931,13 +939,16 @@ const IpBilling = () => {
 
                     {/* User Name */}
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"Visit Reason"}
                         type="text"
                         value={row.visitReasons || ""}
                         onChange={(e) =>
                           setDoctorVisitRows((prevRows) =>
                             prevRows.map((r, i) =>
-                              i === index ? { ...r, visitReasons: e.target.value } : r
+                              i === index
+                                ? { ...r, visitReasons: e.target.value }
+                                : r
                             )
                           )
                         }
@@ -967,11 +978,16 @@ const IpBilling = () => {
                 <div className="billing-opd-com-summary-row">
                   <div className="billing-opd-com-summary-field">
                     <label>Total Amount:</label>
-                    <input type="number" value={finalTotalDrVisit.toFixed(2)} readOnly />
+                    <input
+                      type="number"
+                      value={finalTotalDrVisit.toFixed(2)}
+                      readOnly
+                    />
                   </div>
-
                 </div>
-                <button className="btn-blue" onClick={postDrVisitData}>Save Doctor Visit</button>
+                <button className="btn-blue" onClick={postDrVisitData}>
+                  Save Doctor Visit
+                </button>
               </div>
             </div>
           </div>
@@ -1007,54 +1023,7 @@ const IpBilling = () => {
         return null;
     }
   };
-  const FloatingInput = ({ label, type = "text", ...props }) => {
-    const [isFocused, setIsFocused] = useState(true);
-    const [hasValue, setHasValue] = useState(false);
-    const handleChange = (e) => {
-      setHasValue(e.target.value.length > 0);
-      if (props.onChange) props.onChange(e);
-    };
-    return (
-      <div className={`billing-ipBilling-floating-field ${(isFocused || hasValue) ? 'active' : ''}`}>
-        <input
-          type={type}
-          className="billing-ipBilling-floating-input"
-          onFocus={() => setIsFocused(true)}
-          onBlur={(e) => {
-            setIsFocused(false);
-            setHasValue(e.target.value.length > 0);
-          }}
-          onChange={handleChange}
-          {...props}
-        />
-        <label className="billing-ipBilling-floating-label">{label}</label>
-      </div>
-    );
-  };
-  const FloatingSelect = ({ label, options = [], ...props }) => {
-    const [isFocused, setIsFocused] = useState(false);
-    const [hasValue, setHasValue] = useState(false);
-    return (
-      <div className={`billing-ipBilling-floating-field ${(isFocused || hasValue) ? 'active' : ''}`}>
-        <select
-          className="billing-ipBilling-floating-select"
-          onFocus={() => setIsFocused(true)}
-          onBlur={(e) => {
-            setIsFocused(false);
-            setHasValue(e.target.value !== '');
-          }}
-          onChange={(e) => setHasValue(e.target.value !== '')}
-          {...props}
-        >
-          <option value="">{ }</option>
-          {options.map((option, index) => (
-            <option key={index} value={option.value}>{option.label}</option>
-          ))}
-        </select>
-        <label className="billing-ipBilling-floating-label">{label}</label>
-      </div>
-    );
-  };
+
   return (
     <div className="billing-ipBilling-master">
       <div className="billing-ipBilling-title-bar">
@@ -1068,15 +1037,12 @@ const IpBilling = () => {
       <div className="billing-ipBilling-section">
         <div className="billing-ipBilling-grid">
           <div className="billing-ipBilling-search-field">
-            <FloatingInput label="Mobile No" type="tel"
+            <FloatingInput
+              label="Mobile No"
+              type="search"
               value={patientData?.patient?.phoneNumber}
+              onIconClick={() => setActivePopup("phoneNumber")}
             />
-            <button className="billing-ipBilling-search-icon"
-              onClick={() => setActivePopup("phoneNumber")}>
-              <svg viewBox="0 0 24 24" width="16" height="16">
-                <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z" />
-              </svg>
-            </button>
           </div>
         </div>
       </div>
@@ -1084,69 +1050,133 @@ const IpBilling = () => {
         <div className="billing-ipBilling-header">Patient Details</div>
         <div className="billing-ipBilling-grid">
           <div className="billing-ipBilling-search-field">
-            <FloatingInput label="IP No: *" type="text" value={patientData?.ipAdmmissionId} />
-            <button className="billing-ipBilling-search-icon" onClick={() => setActivePopup("ipAdmission")}>
-              <svg viewBox="0 0 24 24" width="16" height="16">
-                <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z" />
-              </svg>
-            </button>
+            <FloatingInput
+              label="IP No: *"
+              type="search"
+              value={patientData?.ipAdmmissionId}
+              onIconClick={() => setActivePopup("ipAdmission")}
+            />
           </div>
-          <FloatingInput label="Uhid *" type="text" value={patientData?.patient?.patient?.uhid} />
-          <FloatingInput label="Initial Name" type="text" value={patientData?.patient?.patient?.salutation} />
-          <FloatingInput label="Patient Name" type="text" value={`${patientData?.patient?.patient?.firstName} ${patientData?.patient?.lastName}`} />
-          <FloatingInput label="Age" type="text" value={patientData?.patient?.patient?.age} />
+          <FloatingInput
+            label="Uhid *"
+            type="text"
+            value={patientData?.patient?.patient?.uhid}
+          />
+          <FloatingInput
+            label="Initial Name"
+            type="text"
+            value={patientData?.patient?.patient?.salutation}
+          />
+          <FloatingInput
+            label="Patient Name"
+            type="text"
+            value={`${patientData?.patient?.patient?.firstName} ${patientData?.patient?.patient.lastName}`}
+          />
+          <FloatingInput
+            label="Age"
+            type="text"
+            value={patientData?.patient?.patient?.age}
+          />
           <FloatingSelect
-            label="Gender" value={patientData?.patient?.patient?.gender}
+            label="Gender"
+            value={patientData?.patient?.patient?.gender}
             options={[
-              { value: 'male', label: 'Male' },
-              { value: 'female', label: 'Female' },
-              { value: 'other', label: 'Other' }
+              { value: "male", label: "Male" },
+              { value: "female", label: "Female" },
+              { value: "other", label: "Other" },
             ]}
           />
-          <FloatingSelect label="Marital Status"
+          <FloatingSelect
+            label="Marital Status"
             options={[
-              { value: 'married', label: 'Married' },
-              { value: 'unMarried', label: 'UnMarried' },
-            ]} />
-          <FloatingInput label="Relation" type="text"
-            value={patientData?.patient?.patient?.relation} />
-          <FloatingInput label="Relative Name" type="text"
+              { value: "married", label: "Married" },
+              { value: "unMarried", label: "UnMarried" },
+            ]}
+          />
+          <FloatingInput
+            label="Relation"
+            type="text"
+            value={patientData?.patient?.patient?.relation}
+          />
+          <FloatingInput
+            label="Relative Name"
+            type="text"
             value={patientData?.patient?.patient?.relationName}
           />
-          <FloatingInput label="Address" type="text" value={patientData?.patient?.patient?.address} />
-          <FloatingInput label="Area/Village *" type="text"
+          <FloatingInput
+            label="Address"
+            type="text"
+            value={patientData?.patient?.patient?.address}
+          />
+          <FloatingInput
+            label="Area/Village *"
+            type="text"
             value={`${patientData?.patient?.patient?.areaVillage}`}
           />
-          <FloatingInput label="City/District" type="text" value={patientData?.patient?.patient?.cityDistrict} />
-          <FloatingInput label="State *" type="text" value={patientData?.patient?.patient?.state} />
-          <FloatingInput label="Mobile No *" type="text" value={patientData?.patient?.phoneNumber} />
-          <FloatingSelect label="Type"
-            options={[
-              { value: 'hospital', label: 'Hospital' },
-            ]} />
+          <FloatingInput
+            label="City/District"
+            type="text"
+            value={patientData?.patient?.patient?.cityDistrict}
+          />
+          <FloatingInput
+            label="State *"
+            type="text"
+            value={patientData?.patient?.patient?.state}
+          />
+          <FloatingInput
+            label="Mobile No *"
+            type="text"
+            value={patientData?.patient?.phoneNumber}
+          />
+          <FloatingSelect
+            label="Type"
+            options={[{ value: "hospital", label: "Hospital" }]}
+          />
           <FloatingInput label="Insurance *" type="text" />
-          <FloatingInput label="Bed No *" type="text" value={patientData?.roomDetails?.bedDTO.bedNo} />
-          <FloatingInput label="Referred By *" type="text" value={patientData?.organisationDetail?.referredBy} />
-          <FloatingInput label="Consultant Dr" type="text" value={
-            patientData?.admissionUnderDoctorDetail?.consultantDoctor
-              .doctorName
-          } />
-          <FloatingInput label="Admission Date" type='date' value={patientData?.admissionDate} />
-          <FloatingInput label="Admission Time" type='time' value={patientData?.admissionTime} />
-          <FloatingInput label="Pay Type" type="text" value={patientData?.roomDetails?.payTypeDTO?.payTypeName} />
+          <FloatingInput
+            label="Bed No *"
+            type="text"
+            value={patientData?.roomDetails?.bedDTO.bedNo}
+          />
+          <FloatingInput
+            label="Referred By *"
+            type="text"
+            value={patientData?.organisationDetail?.referredBy}
+          />
+          <FloatingInput
+            label="Consultant Dr"
+            type="text"
+            value={
+              patientData?.admissionUnderDoctorDetail?.consultantDoctor
+                .doctorName
+            }
+          />
+          <FloatingInput
+            label="Admission Date"
+            type="date"
+            value={patientData?.admissionDate}
+          />
+          <FloatingInput
+            label="Admission Time"
+            type="time"
+            value={patientData?.admissionTime}
+          />
+          <FloatingInput
+            label="Pay Type"
+            type="text"
+            value={patientData?.roomDetails?.payTypeDTO?.payTypeName}
+          />
           <FloatingInput label="Bill Date" type="date" />
           <FloatingInput label="Bill No" type="text" />
           <FloatingInput label="Loc Bill No" type="text" />
           <FloatingInput label="Billing User" type="text" />
-          <FloatingSelect label="Timing"
-            options={[
-              { value: 'mornig', label: 'Mornig' },
-            ]} />
+          <FloatingSelect
+            label="Timing"
+            options={[{ value: "mornig", label: "Mornig" }]}
+          />
           <div className="billing-ipBilling-form-row-chechbox">
             <input type="checkbox" id="allowMultiple" />
-            <label
-              htmlFor="allowMultiple"
-              className="iPBilling-checkbox-label">
+            <label htmlFor="allowMultiple" className="iPBilling-checkbox-label">
               Inv Package
             </label>
           </div>
@@ -1238,7 +1268,6 @@ const IpBilling = () => {
           <button className="btn-orange">Clear</button>
           <button className="btn-gray">Close</button> */}
 
-
           {/* <button className="btn-blue">Search</button>
           <button className="btn-gray">Tracking</button>
           {/* <button className="btn-blue">Export</button>
@@ -1251,7 +1280,7 @@ const IpBilling = () => {
         </div>
       </div>
       {activePopup && (
-        <IpBillingPopupTable
+        <PopupTable
           columns={columns}
           data={data}
           onSelect={handleSelect}

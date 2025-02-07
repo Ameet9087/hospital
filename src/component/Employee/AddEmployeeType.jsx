@@ -3,15 +3,13 @@ import { Modal, Button, Form } from "react-bootstrap";
 import "./AddEmployeeRole.css";
 import { API_BASE_URL } from "../api/api";
 import CustomModal from "../../CustomModel/CustomModal";
+import { FloatingInput } from "../../FloatingInputs";
+import { toast } from "react-toastify";
 
 const AddEmployeeType = ({ show, handleClose, typeData }) => {
-  console.log(typeData);
-
   const [role, setRole] = useState("");
   const [description, setDescription] = useState("");
   const [isActive, setIsActive] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
 
   // Pre-fill the form when editing an employee type
   useEffect(() => {
@@ -54,22 +52,18 @@ const AddEmployeeType = ({ show, handleClose, typeData }) => {
       });
 
       if (response.ok) {
-        setSuccessMessage(
+        toast.success(
           typeData && typeData.employeeTypeId
             ? "Employee type updated successfully!"
             : "Employee type added successfully!"
         );
-        setErrorMessage("");
         handleClose(); // Close the modal after success
       } else {
         const errorData = await response.json();
-        setErrorMessage(errorData.message || "Failed to process the request.");
-        setSuccessMessage("");
+        toast.error(errorData.message || "Failed to process the request.");
       }
     } catch (error) {
-      console.error("Error:", error);
-      setErrorMessage("An error occurred while processing the request.");
-      setSuccessMessage("");
+      toast.error("An error occurred while processing the request.");
     }
   };
 
@@ -83,29 +77,23 @@ const AddEmployeeType = ({ show, handleClose, typeData }) => {
               : "Add Employee Type"}
           </div>
         </div>
-        <div className="emp-modal-body">
-          <Form onSubmit={handleSubmit}>
+        <div>
+          <Form className="emp-modal-body" onSubmit={handleSubmit}>
             <Form.Group controlId="role">
-              <Form.Label className="emp-form-label">
-                Employee Type <span className="emp-text-danger">*</span> :
-              </Form.Label>
-              <Form.Control
+              <FloatingInput
+                label={"Employee Type"}
                 type="text"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                placeholder="enter type"
                 required
-                className="emp-form-control"
               />
             </Form.Group>
             <Form.Group controlId="description">
-              <Form.Label className="emp-form-labels">Description :</Form.Label>
-              <Form.Control
+              <FloatingInput
+                label={"Description"}
                 type="text"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="Description"
-                className="emp-form-control"
               />
             </Form.Group>
             <Form.Group controlId="isActive" className="emp-form-group">
@@ -120,12 +108,6 @@ const AddEmployeeType = ({ show, handleClose, typeData }) => {
             <Button type="submit" className="add-employee-btn">
               {typeData && typeData.employeeTypeId ? "Update" : "Add"}
             </Button>
-            {errorMessage && (
-              <div className="emp-text-danger">{errorMessage}</div>
-            )}
-            {successMessage && (
-              <div className="emp-text-success">{successMessage}</div>
-            )}
           </Form>
         </div>
       </div>

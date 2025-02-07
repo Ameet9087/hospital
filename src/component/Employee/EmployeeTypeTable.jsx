@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button } from "react-bootstrap";
 import "./EmployeeTypeTable.css"; // Assuming your CSS is included here
 import AddEmployeeType from "./AddEmployeeType"; // Import the AddEmployeeType component
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api"; // Ensure the correct API_BASE_URL is imported
 import { useFilter } from "../ShortCuts/useFilter";
 import axios from "axios";
+import { FloatingInput } from "../../FloatingInputs";
 
 const EmployeeTypeComponent = () => {
   const [showAddTypeModal, setShowAddTypeModal] = useState(false);
@@ -56,12 +57,9 @@ const EmployeeTypeComponent = () => {
     document.body.classList.remove("emp-modal-open");
   }
 
-
   const handleImportDepartment = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:4096/api/employeeTypes/insert"
-      );
+      const response = await axios.post(`${API_BASE_URL}/employeeTypes/insert`);
 
       if (response) {
         alert("Predefined employee Type inserted successfully!");
@@ -72,7 +70,7 @@ const EmployeeTypeComponent = () => {
       console.error("Error inserting employee roles:", error);
       alert("An error occurred while inserting employee roles.");
     }
-  }
+  };
 
   return (
     <div className="employee-Type-page">
@@ -85,21 +83,24 @@ const EmployeeTypeComponent = () => {
           >
             +Add Type
           </Button>
-          <div><h1
-            className="manage-add-department-btn"
-            onClick={handleImportDepartment}
-          >
-            Import
-          </h1></div>
+          <div>
+            <h1
+              className="manage-add-department-btn"
+              onClick={handleImportDepartment}
+            >
+              Import
+            </h1>
+          </div>
         </div>
-        <input
-          type="text"
-          placeholder="Search"
-          className="emp-search-input"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-
+        <div className="emp-search-input">
+          <FloatingInput
+            label={"Search"}
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+        </div>
         <div className="table-container">
           <table ref={tableRef}>
             <thead>

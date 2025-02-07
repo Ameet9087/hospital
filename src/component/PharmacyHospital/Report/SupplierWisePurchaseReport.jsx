@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './SupplierWisePurchaseReport.css';
 import * as XLSX from 'xlsx';
 
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 const SupplierWisePurchaseReport = () => {
   const [fromDate, setFromDate] = useState('23-08-2024');
   const [toDate, setToDate] = useState('23-08-2024');

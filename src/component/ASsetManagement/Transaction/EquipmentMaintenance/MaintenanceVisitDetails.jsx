@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./MaintenanceVisitDetails.css";
 import MaintenanceVisitDetailsPopUp from "./MaintenanceVisitDetailsPopUp";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 
 const MaintenanceVisitDetails = () => {

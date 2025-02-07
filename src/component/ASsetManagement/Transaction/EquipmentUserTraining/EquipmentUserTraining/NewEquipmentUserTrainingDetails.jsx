@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./NewEquipmentUserTrainingDetails.css";
 import EquipmentInstallationDetailsPopUp from "./EquipmentUserTrainingDetailsPopUp";
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../../api/api";
 
 const NewEquipmentUserTrainingDetails = () => {
@@ -114,26 +114,26 @@ const NewEquipmentUserTrainingDetails = () => {
             <thead>
               <tr>
                 ${[
-                  "SN",
-                  "Employee Type",
-                  "Manual Trainer",
-                  "Contract Type",
-                  "Contract From",
-                  "Contract To",
-                  "Trainer Name",
-                  "Employee Name",
-                  "Doctor Name",
-                  "Equipment Name",
-                  "Remarks",
-                ]
-                  .map((header) => `<th>${header}</th>`)
-                  .join("")}
+        "SN",
+        "Employee Type",
+        "Manual Trainer",
+        "Contract Type",
+        "Contract From",
+        "Contract To",
+        "Trainer Name",
+        "Employee Name",
+        "Doctor Name",
+        "Equipment Name",
+        "Remarks",
+      ]
+        .map((header) => `<th>${header}</th>`)
+        .join("")}
               </tr>
             </thead>
             <tbody>
               ${filteredTrainingDetails
-                .map(
-                  (detail, index) => `
+        .map(
+          (detail, index) => `
                     <tr>
                       <td>${index + 1}</td>
                       <td>${detail.employeeType}</td>
@@ -148,8 +148,8 @@ const NewEquipmentUserTrainingDetails = () => {
                       <td>${detail.remark}</td>
                     </tr>
                   `
-                )
-                .join("")}
+        )
+        .join("")}
             </tbody>
           </table>
         </body>

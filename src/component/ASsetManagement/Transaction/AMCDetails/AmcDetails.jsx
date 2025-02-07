@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./AmcDetails.css";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import AmcDetailsForm from "./AmcDetailsForm";
 import { API_BASE_URL } from "../../../api/api";

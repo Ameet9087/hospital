@@ -492,7 +492,7 @@
 
 import React, { useRef, useState } from "react";
 import "./MaternityRegisterPopUp.css";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 
 const MaternityRegisterPopUp = ({ patientData, onClose }) => {
@@ -618,8 +618,7 @@ const MaternityRegisterPopUp = ({ patientData, onClose }) => {
                 onChange={(e) =>
                   handleInputChange(
                     "deliveryDateAndTime",
-                    `${e.target.value}T${
-                      formData.deliveryDateAndTime.split("T")[1] || "00:00"
+                    `${e.target.value}T${formData.deliveryDateAndTime.split("T")[1] || "00:00"
                     }`
                   )
                 }
@@ -633,8 +632,7 @@ const MaternityRegisterPopUp = ({ patientData, onClose }) => {
                 onChange={(e) =>
                   handleInputChange(
                     "deliveryDateAndTime",
-                    `${formData.deliveryDateAndTime.split("T")[0] || ""}T${
-                      e.target.value
+                    `${formData.deliveryDateAndTime.split("T")[0] || ""}T${e.target.value
                     }`
                   )
                 }

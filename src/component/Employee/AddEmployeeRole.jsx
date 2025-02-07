@@ -3,6 +3,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import "./AddEmployeeRole.css";
 import { API_BASE_URL } from "../api/api";
 import CustomModal from "../../CustomModel/CustomModal";
+import { FloatingInput } from "../../FloatingInputs";
 
 const AddEmployeeRoleForm = ({ show, handleClose, roleData }) => {
   const [role, setRole] = useState("");
@@ -92,27 +93,23 @@ const AddEmployeeRoleForm = ({ show, handleClose, roleData }) => {
         <div className="emp-modal-body">
           <form onSubmit={handleSubmit}>
             <div className="emp-form-group">
-              <label className="emp-form-label">
-                Role <span className="emp-text-danger">*</span>:
-              </label>
-              <input
+              <FloatingInput
+                label={"Role"}
                 type="text"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
                 placeholder="Role"
                 required
-                className="emp-form-control"
               />
             </div>
 
             <div className="emp-form-group">
-              <label className="emp-form-label">Description:</label>
-              <input
+              <FloatingInput
+                label={"Description"}
                 type="text"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Description"
-                className="emp-form-control"
               />
             </div>
 

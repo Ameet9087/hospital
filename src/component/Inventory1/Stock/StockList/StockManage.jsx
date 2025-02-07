@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./StockManage.css";
 import { API_BASE_URL } from "../../../api/api";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 
 const StockManage = ({ item, onBack }) => {
   const [minStockQuantity, setMinStockQuantity] = useState(item.minStockQuantity || 0);
@@ -62,14 +62,14 @@ const StockManage = ({ item, onBack }) => {
         receipt.items.some((receiptItem) => receiptItem.item.invItemId === item.invItemId)
       )
       .map((receipt) => receipt.id);
-  
+
     // Construct the request body
     const requestBody = {
       newQuantity: modifiedTotalAvailable, // Use the modified quantity value
       goodReceiptIds: selectedGoodReceiptIds,
     };
     console.log(requestBody);
-    
+
     try {
       const response = await fetch(
         `${API_BASE_URL}/items/${item.invItemId}/update-quantity`,
@@ -81,7 +81,7 @@ const StockManage = ({ item, onBack }) => {
           body: JSON.stringify(requestBody), // Pass the request body as a JSON string
         }
       );
-  
+
       if (response.ok) {
         alert("Item updated successfully!");
         onBack();
@@ -95,7 +95,7 @@ const StockManage = ({ item, onBack }) => {
       alert("An error occurred while updating the item.");
     }
   };
-  
+
   const handleStockAdjustment = () => {
     if (isInChecked) {
       setMinStockQuantity((prevQty) => prevQty + Number(modifiedQty));
@@ -186,7 +186,7 @@ const StockManage = ({ item, onBack }) => {
                     <input
                       type="number"
                       value={modifiedQty}
-                       min="0"
+                      min="0"
                       className="StockManage-input"
                       onChange={(e) => setModifiedQty(Number(e.target.value))}
                       onBlur={handleStockAdjustment}

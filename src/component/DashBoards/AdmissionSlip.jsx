@@ -3,6 +3,8 @@ import "./AdmissionSlip.css";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
 import DoctorPopupTable from "./DoctorPopUpTable";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingSelect, FloatingTextarea } from "../../FloatingInputs";
 
 const AdmissionSlip = ({
   patient,
@@ -86,10 +88,11 @@ const AdmissionSlip = ({
       .post(`${API_BASE_URL}/admissionsSlip`, formData)
       .then((response) => {
         console.log("Admission Slip submitted successfully:", response.data);
-        alert("Admission Slip submitted successfully");
+        toast.success("Admission Slip submitted successfully");
+        fetchAddmissionSlip();
       })
       .catch((error) => {
-        console.error("Error submitting Admission Slip:", error);
+        toast.error("Error submitting Admission Slip:", error);
         console.log(formData);
       });
   };
@@ -174,160 +177,157 @@ const AdmissionSlip = ({
             </div> */}
 
               <div className="AdmissionSlip-group">
-                <label htmlFor="patientName">Patient Name :</label>
-                <input
-                  type="text"
-                  id="patientName"
-                  value={
-                    patient?.patient?.firstName +
-                    " " +
-                    patient?.patient?.lastName
-                  }
-                  onChange={(e) => setPatientName(e.target.value)}
+                <FloatingInput
+                label={"Patient Name"}
+                 type="text"
+                 id="patientName"
+                 value={
+                   patient?.patient?.firstName +
+                   " " +
+                   patient?.patient?.lastName
+                 }
+                 onChange={(e) => setPatientName(e.target.value)}
                 />
               </div>
               <div className="AdmissionSlip-group">
-                <label htmlFor="age">Age :</label>
-                <input
-                  type="number"
-                  id="age"
-                  value={patient?.patient?.age}
-                  onChange={(e) => setAge(e.target.value)}
-                />
-              </div>
-
-              <div className="AdmissionSlip-group">
-                <label htmlFor="department">Department :</label>
-                <input
-                  type="text"
-                  id="department"
-                  value={department}
-                  onChange={(e) => setDepartment(e.target.value)}
-                  required
+                <FloatingInput
+                label={"Age"}
+                 type="number"
+                 id="age"
+                 value={patient?.patient?.age}
+                 onChange={(e) => setAge(e.target.value)}
+                
                 />
               </div>
 
               <div className="AdmissionSlip-group">
-                <label htmlFor="admissionDate">Admission Request Date :</label>
-                <input
-                  type="date"
-                  id="admissionDate"
-                  value={admissionDate}
-                  onChange={(e) => setAdmissionDate(e.target.value)}
-                  required
-                  min={today} // Ensure the date is today or in the future
-                  />
+                <FloatingInput
+                label={"Department"}
+                type="text"
+                id="department"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
+                required
+                />
               </div>
 
               <div className="AdmissionSlip-group">
-                <label htmlFor="admissionTime">Admission Request Time :</label>
-                <input
-                  type="time"
-                  id="admissionTime"
-                  value={admissionTime}
-                  onChange={(e) => setAdmissionTime(e.target.value)}
-                  required
+                <FloatingInput
+                label={"Admission Request Date"}
+                type="date"
+                id="admissionDate"
+                value={admissionDate}
+                onChange={(e) => setAdmissionDate(e.target.value)}
+                required
+                min={today}
+                />
+              </div>
+
+              <div className="AdmissionSlip-group">
+                <FloatingInput
+                label={"Admission Request Time"}
+                type="time"
+                id="admissionTime"
+                value={admissionTime}
+                onChange={(e) => setAdmissionTime(e.target.value)}
+                required
                 />
               </div>
               <div className="AdmissionSlip-group">
-                <label htmlFor="admittingDoctor">Admitting Doctor :</label>
-                <input
-                  type="text"
-                  id="admittingDoctor"
-                  value={admittingDoctor?.doctorName || ""}
-                  onChange={(e) =>
-                    setAdmittingDoctor({
-                      ...admittingDoctor,
-                      doctorName: e.target.value,
-                    })
-                  }
-                  required
+                <FloatingInput
+                label={"Admitting Doctor"}
+                type="text"
+                id="admittingDoctor"
+                value={admittingDoctor?.doctorName || ""}
+                onChange={(e) =>
+                  setAdmittingDoctor({
+                    ...admittingDoctor,
+                    doctorName: e.target.value,
+                  })
+                }
+                required
+                
                 />
+              </div>
+              <div className="AdmissionSlip-group">
+              <FloatingInput
+              label={"Consultant"}
+               type="search"
+               id="consultant"
+               value={selectedConsultantDoctor?.doctorName}
+               onIconClick={() => setActivePopup("consultantDoctor")}
+               required
+              />
               </div>
             </div>
 
             <div className="AdmissionSlip-group-right">
               <div className="AdmissionSlip-group">
-                <label htmlFor="consultant">Consultant :</label>
-                <input
-                  type="text"
-                  id="consultant"
-                  value={selectedConsultantDoctor?.doctorName}
-                  required
+                <FloatingSelect
+                label={"Case Type"}
+                 id="caseType"
+                 value={caseType}
+                 onChange={(e) => setCaseType(e.target.value)}
+                 required
+                 options={[{value:"",label:""},
+                  {value:"Surgical",label:"Surgical"},
+                  {value:"Medical",label:"Medical"}
+                 ]}
+                
                 />
-                <i
-                  onClick={() => setActivePopup("consultantDoctor")}
-                  className="fa-solid fa-magnifying-glass"
-                ></i>
-              </div>
-              <div className="AdmissionSlip-group">
-                <label htmlFor="caseType">Case Type :</label>
-                <select
-                  id="caseType"
-                  value={caseType}
-                  onChange={(e) => setCaseType(e.target.value)}
-                  required
-                >
-                  <option value="">Select Case Type</option>
-                  <option value="Surgical">Surgical</option>
-                  <option value="Medical">Medical</option>
-                </select>
               </div>
 
               {caseType === "Surgical" && (
                 <>
                   <div className="AdmissionSlip-group">
-                    <label htmlFor="surgeryDate">Surgery Date :</label>
-                    <input
-                      type="date"
-                      id="surgeryDate"
-                      value={surgeryDate}
-                      onChange={(e) => setSurgeryDate(e.target.value)}
-                      required
+                    <FloatingInput
+                    label={"Surgery Date"}
+                    type="date"
+                    id="surgeryDate"
+                    value={surgeryDate}
+                    onChange={(e) => setSurgeryDate(e.target.value)}
+                    required
+                    
                     />
                   </div>
 
                   <div className="AdmissionSlip-group">
-                    <label htmlFor="surgeon">Surgeon :</label>
-                    <input
-                      type="text"
-                      id="surgeon"
-                      value={surgeon}
-                      onChange={(e) => setSurgeon(e.target.value)}
-                      required
-                    />
+                  <FloatingInput
+                  label={"Surgeon"}
+                   type="text"
+                   id="surgeon"
+                   value={surgeon}
+                   onChange={(e) => setSurgeon(e.target.value)}
+                   required
+                  />
                   </div>
 
                   <div className="AdmissionSlip-group">
-                    <label htmlFor="surgericalProcedure">
-                      Surgical Procedure :
-                    </label>
-                    <input
-                      type="text"
-                      id="surgericalProcedure"
-                      value={surgericalProcedure}
-                      onChange={(e) => setSurgicalProcedure(e.target.value)}
-                      required
+                    <FloatingInput
+                    label={"Surgical Procedure"}
+                     type="text"
+                     id="surgericalProcedure"
+                     value={surgericalProcedure}
+                     onChange={(e) => setSurgicalProcedure(e.target.value)}
+                     required
                     />
                   </div>
                 </>
               )}
 
               <div className="AdmissionSlip-group">
-                <label htmlFor="phoneNo">Phone No. :</label>
-                <input
-                  type="tel"
-                  id="phoneNo"
-                  value={patient?.patient?.mobileNumber}
-                  onChange={(e) => setPhoneNo(e.target.value)}
+                <FloatingInput
+                label={"Phone No"}
+                type="number"
+                name="phoneNo"
+                value={patient?.patient?.mobileNumber}
+                onChange={(e) => setPhoneNo(e.target.value)}
                 />
               </div>
 
               <div className="AdmissionSlip-group">
-                <label htmlFor="reasonForAdmission">
-                  Reason for Admission :
-                </label>
-                <textarea
+                <FloatingTextarea
+                label={"Reason for Admission"}
                   id="reasonForAdmission"
                   value={reasonForAdmission}
                   onChange={(e) => setReasonForAdmission(e.target.value)}

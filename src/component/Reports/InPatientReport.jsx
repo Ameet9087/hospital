@@ -2,7 +2,7 @@ import React,{useState,useRef} from 'react';
 import './InPatientReport.css';
 // import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 // D:\157 Career\HIMSFrontEndFiles\hospitalsystem\src\component\TableHeadingResizing\resizableColumns.js
 const InpatientCensus = () => {
 

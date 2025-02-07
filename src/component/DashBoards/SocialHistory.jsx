@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./SocialHistory.css";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../FloatingInputs";
 
 const SocialHistory = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -73,7 +75,7 @@ const SocialHistory = ({ patientId, outPatientId }) => {
   const handleAddSocialHistory = async () => {
     const formData =
       patientId > 0
-        ? { ...newSocialHistory, inPatientDTO: { inPatientId:patientId } }
+        ? { ...newSocialHistory, inPatientDTO: { inPatientId: patientId } }
         : { ...newSocialHistory, outPatientDTO: { outPatientId } };
     console.log(formData);
 
@@ -90,7 +92,7 @@ const SocialHistory = ({ patientId, outPatientId }) => {
       );
 
       if (response.ok) {
-        alert("Social History added successfully!");
+        toast.success("Social History added successfully!");
         // Reset the form and close the modal
         setNewSocialHistory({
           smokingHistory: "",
@@ -102,11 +104,11 @@ const SocialHistory = ({ patientId, outPatientId }) => {
         });
         handleCloseModal();
       } else {
-        alert("Failed to add Social History");
+        toast.error("Failed to add Social History");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Error submitting form");
+      toast.error("Error submitting form");
     }
   };
 
@@ -132,7 +134,7 @@ const SocialHistory = ({ patientId, outPatientId }) => {
       );
 
       if (response.ok) {
-        alert("Social History added successfully!");
+        toast.success("Social History updated successfully!");
         setNewSocialHistory({
           smokingHistory: "",
           alcoholHistory: "",
@@ -143,11 +145,11 @@ const SocialHistory = ({ patientId, outPatientId }) => {
         });
         handleCloseModal();
       } else {
-        alert("Failed to add Social History");
+        toast.error("Failed to add Social History");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Error submitting form");
+      toast.error("Error submitting form");
     }
   };
 
@@ -172,7 +174,7 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                 className="social-history-add-button"
                 onClick={handleOpenModal}
               >
-                ➕ Add
+                Add
               </button>
             </div>
             <table className="patientList-table" ref={tableRef}>
@@ -216,7 +218,7 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                     <td>{history.familySupport}</td>
                     <td>{history.hobby}</td>
                     <td>
-                      <button onClick={() => handleUpdate(history)}>
+                      <button className="social-history-add-button" onClick={() => handleUpdate(history)}>
                         Edit
                       </button>
                     </td>
@@ -239,8 +241,8 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                 </button>
 
                 <div className="social-history-form-group">
-                  <label>Smoking History:</label>
-                  <input
+                  <FloatingInput
+                    label={"Smoking History"}
                     type="text"
                     name="smokingHistory"
                     value={newSocialHistory.smokingHistory}
@@ -248,8 +250,8 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="social-history-form-group">
-                  <label>Alcohol History:</label>
-                  <input
+                  <FloatingInput
+                    label={"Alcohol History"}
                     type="text"
                     name="alcoholHistory"
                     value={newSocialHistory.alcoholHistory}
@@ -257,8 +259,8 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="social-history-form-group">
-                  <label>Drug History:</label>
-                  <input
+                  <FloatingInput
+                    label={"Drug History"}
                     type="text"
                     name="drugHistory"
                     value={newSocialHistory.drugHistory}
@@ -266,8 +268,8 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="social-history-form-group">
-                  <label>Occupation:</label>
-                  <input
+                  <FloatingInput
+                    label={"Occupation"}
                     type="text"
                     name="occupation"
                     value={newSocialHistory.occupation}
@@ -275,21 +277,23 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="social-history-form-group">
-                  <label>Family Support:</label>
-                  <input
+                  <FloatingInput
+                    label={"Family Support"}
                     type="text"
                     name="familySupport"
                     value={newSocialHistory.familySupport}
                     onChange={handleInputChange}
+
                   />
                 </div>
                 <div className="social-history-form-group">
-                  <label>Hobby:</label>
-                  <input
+                  <FloatingInput
+                    label={"Hobby"}
                     type="text"
                     name="hobby"
                     value={newSocialHistory.hobby}
                     onChange={handleInputChange}
+
                   />
                 </div>
 
@@ -315,8 +319,8 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                 </button>
 
                 <div className="social-history-form-group">
-                  <label>Smoking History:</label>
-                  <input
+                  <FloatingInput
+                    label={"Smoking History"}
                     type="text"
                     name="smokingHistory"
                     value={updateSocialHistory.smokingHistory}
@@ -324,8 +328,8 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="social-history-form-group">
-                  <label>Alcohol History:</label>
-                  <input
+                  <FloatingInput
+                    label={"Alcohol History"}
                     type="text"
                     name="alcoholHistory"
                     value={updateSocialHistory.alcoholHistory}
@@ -333,8 +337,8 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="social-history-form-group">
-                  <label>Drug History:</label>
-                  <input
+                  <FloatingInput
+                    label={"Drug History"}
                     type="text"
                     name="drugHistory"
                     value={updateSocialHistory.drugHistory}
@@ -342,17 +346,18 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="social-history-form-group">
-                  <label>Occupation:</label>
-                  <input
+                  <FloatingInput
+                    label={"Occupation"}
                     type="text"
                     name="occupation"
                     value={updateSocialHistory.occupation}
                     onChange={handleUpdateInputChange}
                   />
+
                 </div>
                 <div className="social-history-form-group">
-                  <label>Family Support:</label>
-                  <input
+                  <FloatingInput
+                    label={"Family Support"}
                     type="text"
                     name="familySupport"
                     value={updateSocialHistory.familySupport}
@@ -360,8 +365,8 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                   />
                 </div>
                 <div className="social-history-form-group">
-                  <label>Hobby:</label>
-                  <input
+                  <FloatingInput
+                    label={"Hobby"}
                     type="text"
                     name="hobby"
                     value={updateSocialHistory.hobby}
