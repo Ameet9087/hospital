@@ -7,7 +7,9 @@
     color: white;
     border: 1px solid var(--button-hover-border-color); 
 }
-
+.AccidentReportForm-radio-button{
+  margin-left: 10px;
+}
 .autopsy-scheduling-search-bar{
   display: flex;
   gap: 10px;

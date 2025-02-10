@@ -87,6 +87,8 @@ const AutopsyRequestForm = () => {
   const [activePopup, setActivePopup] = useState(null);
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const tableRef = useRef(null);
+  const [fileName, setFileName] = useState("");
   const [formData, setFormData] = useState({
     type: "",
     uhid: "",
@@ -110,7 +112,17 @@ const AutopsyRequestForm = () => {
     findings: "",
     conclusion: "",
   });
-
+ const filteredRequests = autopsyrequests.filter((item) => {
+    const searchLower = searchQuery.toLowerCase();
+    
+    return (
+      item.uhid?.toLowerCase().includes(searchLower) ||
+      item.fullName?.toLowerCase().includes(searchLower) ||
+      item.contactNumber?.toLowerCase().includes(searchLower) ||
+      item.dateOfDeath?.toLowerCase().includes(searchLower) ||
+      item.timeOfDeath?.toLowerCase().includes(searchLower)
+    );
+  });
   useEffect(() => {
     const fetchUhidData = async () => {
       try {
@@ -139,10 +151,9 @@ const AutopsyRequestForm = () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/autopsy-requests`);
       const mappedData = response.data.map((item) => ({
-        uhid: item.ipAdmissionDTO?.patient?.patient?.uhid || "N/A", // Add default values if any field is missing
-        firstName: item.firstName || "",
-        lastName: item.lastName || "",
-        contactNum: item.contactNum || "N/A",
+        uhid: item.outPatientDTO?.patient?.uhid || "N/A", // Add default values if any field is missing
+        fullName: `${item.outPatientDTO?.patient?.firstName || ""} ${item.outPatientDTO?.patient?.lastName || ""}`.trim(),...item,
+        contactNumber: item.patient?.contactNumber || "N/A",
         dateOfDeath: item.dateOfDeath || "N/A",
         timeOfDeath: item.timeOfDeath || "N/A",
         causeOfDeath: item.causeOfDeath || "N/A",
@@ -353,12 +364,63 @@ const AutopsyRequestForm = () => {
   };
 
   const handleExport = () => {
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Autopsy Requests");
-    XLSX.writeFile(workbook, "Autopsy_Requests.xlsx");
-  };
+      const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+      const wb = XLSX.utils.book_new(); // Creates a new workbook
+      XLSX.utils.book_append_sheet(wb, ws, "autopsyRequistForm"); // Appends worksheet to workbook
+      XLSX.writeFile(wb, "autopsyRequistForm.xlsx"); // Downloads the Excel file
+    };
 
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
+  };
+  const handleFileChange = (event) => {
+    const file = event.target.files[0]; // Get the selected file
+    if (file) {
+      setFileName(file.name); // Update state with the file name
+    }
+  };
   const { columns, data: popupData } = getPopupData();
 
   return (
@@ -385,13 +447,13 @@ const AutopsyRequestForm = () => {
           </button>
           <button
             className="autopsy-request-print-button"
-            onClick={() => window.print()}
+            onClick={printList}
           >
             <FontAwesomeIcon icon={faPrint} /> Print
           </button>
         </div>
       </div>
-      <table className="autopsy-request-table">
+      <table className="autopsy-request-table" ref={tableRef}>
         <thead>
           <tr>
             {[
@@ -412,18 +474,18 @@ const AutopsyRequestForm = () => {
           </tr>
         </thead>
         <tbody>
-          {autopsyrequests.length === 0 ? (
+          {filteredRequests.length === 0 ? (
             <tr>
               <td colSpan={8} style={{ textAlign: "center" }}>
                 No patients found.
               </td>
             </tr>
           ) : (
-            autopsyrequests.map((item) => (
+            filteredRequests.map((item) => (
               <tr key={item.id}>
                 <td>{item.uhid}</td>
-                <td>{`${item.firstName} ${item.lastName}`}</td>
-                <td>{item.contactNum}</td>
+                <td>{item.fullName}</td>
+                <td>{item.contactNumber}</td>
                 <td>{item.dateOfDeath}</td>
                 <td>{item.timeOfDeath}</td>
                 <td>{item.causeOfDeath}</td>
@@ -624,7 +686,7 @@ const AutopsyRequestForm = () => {
               </div>
 
               <div className="AccidentReportForm-form-group">
-                <label>Suspicious Death:</label>
+                <label>Suspicious Death :</label>
                 <div className="AccidentReportForm-radio-button">
                   <label>
                     <input type="radio" name="suspiciousDeath" value="yes" />
@@ -670,16 +732,25 @@ const AutopsyRequestForm = () => {
             </div>
 
             <div className="final-bill-section">
-              <div className="final-bill-header">Attach File</div>
-              <div className="final-bill-grid">
-                <div className="final-bill-shed-section">
-                  <label className="finalized-label">File Name</label>
-                  <input className="finalized-attach" type="text" />
-                  <input className="finalized-file-input" type="file" />
-                  <button className="finalized-bill-sh-save-btn">Upload</button>
-                </div>
-              </div>
-            </div>
+      <div className="final-bill-header">Attach File</div>
+      <div className="final-bill-grid">
+        <div className="final-bill-shed-section">
+          <label className="finalized-label">File Name</label>
+          <input
+            className="finalized-attach"
+            type="text"
+            value={fileName} // Display the file name in the input field
+            readOnly // Prevent the user from editing the text manually
+          />
+          <input
+            className="finalized-file-input"
+            type="file"
+            onChange={handleFileChange} // Update state on file selection
+          />
+          <button className="finalized-bill-sh-save-btn">Upload</button>
+        </div>
+      </div>
+    </div>
 
             <div className="autopsy-request-button">
               <button

@@ -29,7 +29,8 @@ const LaundryStaffMapping = () => {
   useEffect(() => {
     const fetchEmployeeTypes = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/employeeTypes/getAll`
+        const response = await fetch(
+          `${API_BASE_URL}/employeeTypes/getAll`
           // "http://192.168.1.42:8080/api/employeeTypes/getAll"
         );
         const data = await response.json();
@@ -86,6 +87,7 @@ const LaundryStaffMapping = () => {
     setPackageTableRows((prev) => prev.filter((_, i) => i !== index));
   };
   const handleDetailClick = (detail) => {
+    console.log("Clicked Detail:", detail); // Debugging
     setSelectedDetail(detail);
   };
   const handleSubmit = async (e) => {
@@ -109,8 +111,8 @@ const LaundryStaffMapping = () => {
 
         console.log("Submitting Data:", JSON.stringify(staffData, null, 2)); // Debugging
 
-        const response = await axios.post(`${API_BASE_URL}/laundry-staff`
-          ,
+        const response = await axios.post(
+          `${API_BASE_URL}/laundry-staff`,
           staffData,
           {
             headers: { "Content-Type": "application/json" }, // Ensure JSON format
@@ -127,22 +129,23 @@ const LaundryStaffMapping = () => {
     }
   };
 
-
-
   return (
     <div className="StaffMap-container">
       <div className="StaffMap-content">
-        <div className="StaffMap-header">
+        {/* <div className="StaffMap-header">
           <span>Laundry Staff and Department Map</span>
-        </div>
+        </div> */}
         <div className="StaffMap-Table-button">
-          <button
-            onClick={() => handleDetailClick("staffmapping")}
-            className={`detail-button ${selectedDetail === "staffmapping" ? "active" : ""
-              }`}
-          >
-            Staff Mapping
-          </button>
+        <button
+  onClick={() => {
+    console.log("Button Clicked: Staff Mapping");
+    handleDetailClick("staffmapping");
+  }}
+  className={`detail-button ${selectedDetail === "staffmapping" ? "active" : ""}`}
+>
+  Staff Mapping
+</button>
+
         </div>
         <div className="StaffMap-table">
           {selectedDetail === "staffmapping" && (
@@ -223,9 +226,7 @@ const LaundryStaffMapping = () => {
                       <input
                         type="text"
                         value={row.nameStaff}
-                        onChange={(e) =>
-                          handleRowChange(e, index, "nameStaff")
-                        }
+                        onChange={(e) => handleRowChange(e, index, "nameStaff")}
                         placeholder="Enter name"
                       />
                     </td>
@@ -233,9 +234,7 @@ const LaundryStaffMapping = () => {
                       <input
                         type="text"
                         value={row.payroll}
-                        onChange={(e) =>
-                          handleRowChange(e, index, "payroll")
-                        }
+                        onChange={(e) => handleRowChange(e, index, "payroll")}
                         placeholder="Enter map with payroll"
                       />
                     </td>
@@ -255,20 +254,6 @@ const LaundryStaffMapping = () => {
       <div className="StaffMap-navbar">
         <aside className="StaffMap-navbar-btns">
           <button onClick={handleSubmit}>Save</button>
-          <button onClick={() => handleButtonClick("Delete")}>Delete</button>
-          <button onClick={() => handleButtonClick("Clear")}>Clear</button>
-          <button onClick={() => handleButtonClick("Close")}>Close</button>
-          <button onClick={() => handleButtonClick("Search")}>Search</button>
-          <button onClick={() => handleButtonClick("Tracking")}>
-            Tracking
-          </button>
-          <button onClick={() => handleButtonClick("Print")}>Print</button>
-          <button onClick={() => handleButtonClick("Version Comparison")}>
-            Version Comparison
-          </button>
-          <button onClick={() => handleButtonClick("SDC")}>SDC</button>
-          <button onClick={() => handleButtonClick("Testing")}>Testing</button>
-          <button onClick={() => handleButtonClick("Info")}>Info</button>
         </aside>
       </div>
       {activePopup && (

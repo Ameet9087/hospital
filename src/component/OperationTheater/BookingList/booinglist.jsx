@@ -286,6 +286,7 @@ function BookingList() {
 
     fetchOTBookings();
   }, []);
+  
   const printList = () => {
     if (tableRef.current) {
       const printContents = tableRef.current.innerHTML;

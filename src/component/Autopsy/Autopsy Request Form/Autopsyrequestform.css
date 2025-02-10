@@ -161,6 +161,8 @@
     display: flex;
     align-items: center;
     color: gray;
+    margin-left: 7px;
+    margin-top: 5px;
   }
   
   .AccidentReportForm-radio-button label {

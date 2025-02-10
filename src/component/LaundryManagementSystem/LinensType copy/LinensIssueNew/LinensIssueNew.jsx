@@ -5,7 +5,7 @@ import LinensIssueNewPopUp from "./LinensIssueNewPopUp";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from '../../../api/api'
-
+import * as XLSX from 'xlsx';
 
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -79,7 +79,8 @@ const LinensIssueNew = () => {
   const tableRef = useRef(null);
   const [linensData, setLinensData] = useState([]);
   const [selectedIssue, setSelectedIssue] = useState(null);
-
+  const [searchTerm, setSearchTerm] = useState(""); 
+  const [filteredData, setFilteredData] = useState([]);
   const [packageTableRows, setPackageTableRows] = useState([
     {
       employeeType: "",
@@ -93,7 +94,10 @@ const LinensIssueNew = () => {
   useEffect(() => {
     fetch(`${API_BASE_URL}/linens-issues`)
       .then((res) => res.json())
-      .then((data) => setLinensData(data))
+      .then((data) => {
+        setLinensData(data);
+        setFilteredData(data); // Ensure all data is shown initially
+      })
       .catch((err) => {
         console.error("Error fetching linens data:", err);
       });
@@ -140,6 +144,85 @@ const LinensIssueNew = () => {
         console.error("Error saving or updating issue:", err);
       });
   };
+  const handleSearchChange = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchTerm(value);
+  
+    if (!value) {
+      setFilteredData(linensData); // Show all data if search is empty
+      return;
+    }
+  
+    const filtered = linensData.filter((issue) =>
+      [
+        issue.issueNumber?.toString(),
+        issue.issueDate, 
+        issue.issueTime,
+        issue.issueType,
+        issue.nursingStation,
+        issue.currentOccupancy?.toString()
+      ].some((val) => val && val.toLowerCase().includes(value)) 
+    );
+  
+    setFilteredData(filtered);
+  };
+  const handleExport = () => {
+    if (tableRef.current) {
+      // Converts table to worksheet
+      const ws = XLSX.utils.table_to_sheet(tableRef.current);
+      const wb = XLSX.utils.book_new(); // Creates a new workbook
+      XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Adds the worksheet to the workbook
+      XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+    } else {
+      console.error('Table reference is missing.');
+    }
+  };
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
+  };
+  
 
   return (
     <div className="LinensIssueNew-container">
@@ -153,8 +236,10 @@ const LinensIssueNew = () => {
       </div>
       <div className="LinensIssueNew-search-N-result">
         <div className="LinensIssueNew-search-field">
-          <FloatingInput label="Linen Type" />
-          <button
+          <FloatingInput label="Search" 
+            value={searchTerm}
+            onChange={handleSearchChange}/>
+          {/* <button
             className="LinensIssueNew-search-icon"
             onClick={() => fetchLinenTypes("billNo")}
           >
@@ -164,16 +249,16 @@ const LinensIssueNew = () => {
                 d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
               />
             </svg>
-          </button>
+          </button> */}
         </div>
         <div className="LinensIssueNew-results-info">
           <span>
             Showing {linensData?.length} / {linensData?.length} results
           </span>
-          <button className="LinensIssueNew-print-button">
+          <button className="LinensIssueNew-print-button" onClick={handleExport}>
             <i className="fa-solid fa-file-excel"></i> Export
           </button>
-          <button className="LinensIssueNew-print-button">
+          <button className="LinensIssueNew-print-button" onClick={printList}>
             <i className="fa-solid fa-print"></i> Print
           </button>
         </div>
@@ -211,7 +296,7 @@ const LinensIssueNew = () => {
             </tr>
           </thead>
           <tbody>
-            {linensData.map((issue, index) => (
+            {filteredData.map((issue, index) => (
               <tr key={index}>
                 <td>{issue.currentOccupancy}</td>
                 <td>{issue.issueDate}</td>

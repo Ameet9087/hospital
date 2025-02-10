@@ -117,12 +117,10 @@
   .LinenMaster-action-buttons {
     display: flex;
     gap: 5px;
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
+    justify-content: center;
   }
   .LinenMaster-action-buttons button {
-    background-color: var(--button-bg-color);
+    background-color: var(--button-color);
     color: var(--button-hover-background-color);
     font-size: var(--font-size);
     padding: 5px;

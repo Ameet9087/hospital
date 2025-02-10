@@ -166,70 +166,56 @@
     const handleSubmit = async (e) => {
       e.preventDefault();
     
-      // Prepare the item data with the correct structure
+      // Validate required fields
+      if (!formValues.itemName || !formValues.itemCompany?.id || !formValues.itemSubCategory?.id) {
+        setError("Please fill all required fields.");
+        return;
+      }
+    
+      // Ensure correct object structure before submitting
       const itemData = {
-        invItemId: itemId, // Add the itemId if editing
-        itemName: formValues.itemName ,
-        minStockQuantity: formValues.minStockQuantity,
-        description: formValues.description ,
-        standardRate: formValues.standardRate ,
-        itemCode: formValues.itemCode ,
-        availableQty: formValues.availableQty,
+        invItemId: isEditing ? itemId : undefined, // Include `invItemId` only for updates
+        itemName: formValues.itemName,
+        minStockQuantity: Number(formValues.minStockQuantity) || 0,
+        description: formValues.description,
+        standardRate: parseFloat(formValues.standardRate) || 0.0,
+        itemCode: formValues.itemCode,
+        availableQty: Number(formValues.availableQty) || 0,
         inventory: formValues.inventory || "GENERAL-INVENTORY",
-        itemCompany: formValues.itemCompany ,
-        reOrderQuantity: formValues.reOrderQuantity ,
-        unitQuantity: formValues.unitQuantity ,
-        isVatApplicable: formValues.isVatApplicable ,
-        isCssdApplicable: formValues.isCssdApplicable ,
-        isColdStorageApplicable: formValues.isColdStorageApplicable ,
-        isPatientConsumptionApplicable: formValues.isPatientConsumptionApplicable ,
-        isActive: formValues.isActive ,
-        packagingType: {
-          id: formValues.packagingType?.id ,
-          packagingTypeName: formValues.packagingType?.packagingTypeName ,
-          description: formValues.packagingType?.description ,
-          isActive: formValues.packagingType?.isActive ,
-        },
-        unitOfMeasurement: {
-          unitOfMeasurementId: formValues.unitOfMeasurement?.unitOfMeasurementId ,
-          name: formValues.unitOfMeasurement?.name ,
-          description: formValues.unitOfMeasurement?.description ,
-          isActive: formValues.unitOfMeasurement?.isActive ,
-        },
-        subCategory: {
-          id: formValues.itemSubCategory?.id ,
-          subCategoryName: formValues.itemSubCategory?.subCategoryName ,
-          itemSubCategoryName: formValues.itemSubCategory?.itemSubCategoryName ,
-          subCategoryCode: formValues.itemSubCategory?.subCategoryCode ,
-          accountingLedger: formValues.itemSubCategory?.accountingLedger ,
-          description: formValues.itemSubCategory?.description ,
-          category: formValues.itemSubCategory?.category ,
-          active: formValues.itemSubCategory?.active ,
-        },
-        invCompany: {
-          id: formValues.itemCompany?.id,
-          companyName: formValues.itemCompany?.companyName ,
-          code: formValues.itemCompany?.code ,
-          address: formValues.itemCompany?.address ,
-          email: formValues.itemCompany?.email ,
-          contactNo: formValues.itemCompany?.contactNo ,
-          description: formValues.itemCompany?.description ,
-        }
+        reOrderQuantity: Number(formValues.reOrderQuantity) || 0,
+        unitQuantity: Number(formValues.unitQuantity) || 0,
+        isVatApplicable: formValues.isVatApplicable,
+        isCssdApplicable: formValues.isCssdApplicable,
+        isColdStorageApplicable: formValues.isColdStorageApplicable,
+        isPatientConsumptionApplicable: formValues.isPatientConsumptionApplicable,
+        isActive: formValues.isActive,
+    
+        // Ensure `id` is passed correctly in required fields
+        packagingType: formValues.packagingType?.id ? { id: formValues.packagingType.id } : null,
+        unitOfMeasurement: formValues.unitOfMeasurement?.unitOfMeasurementId
+          ? { unitOfMeasurementId: formValues.unitOfMeasurement.unitOfMeasurementId }
+          : null,
+        subCategory: formValues.itemSubCategory?.id
+          ? { id: formValues.itemSubCategory.id, active: formValues.itemSubCategory.active || false }
+          : null,
+        invCompany: formValues.itemCompany?.id ? { id: formValues.itemCompany.id } : null,
       };
     
       try {
         let response;
-        if (isEditing) {
-          // Update existing item (PUT request)
+        if (isEditing && itemId) {
+          // PUT request for updating existing item
           response = await axios.put(`${API_BASE_URL}/items/update/${itemId}`, itemData, {
             headers: { "Content-Type": "application/json" },
           });
         } else {
-          // Add new item (POST request)
+          // POST request for adding a new item
           response = await axios.post(`${API_BASE_URL}/items/addItem`, itemData, {
             headers: { "Content-Type": "application/json" },
           });
         }
+    
+        console.log("API Response:", response.data);
     
         if (response.status === 200 || response.status === 201) {
           alert(isEditing ? "Item updated successfully!" : "Item added successfully!");
@@ -238,10 +224,11 @@
           setError(response.data.message || "Error saving item.");
         }
       } catch (error) {
-        console.error("Error submitting form:", error);
-        setError("Failed to save item.");
+        console.error("Error submitting form:", error.response?.data || error.message);
+        setError(error.response?.data?.message || "Failed to save item.");
       }
     };
+    
     
     
     
