@@ -175,7 +175,7 @@ export default function Floor() {
           <thead>
             <tr>
               {[
-                "Floor Number",
+                "Floor name",
                 "Order No",
                 "Location",
                 "Remarks",
@@ -206,7 +206,7 @@ export default function Floor() {
             {data.length > 0 ? (
               data.map((item, index) => (
                 <tr key={item.id}>
-                  <td>{item.floorNumber}</td>
+                  <td>{item.name}</td>
                   <td>{item.orderNo}</td>
                   <td>{item.location}</td>
                   <td>{item.remarks}</td>
