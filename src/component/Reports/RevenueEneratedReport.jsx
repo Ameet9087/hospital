@@ -1,58 +1,130 @@
-import React, { useState,useRef } from 'react';
-import { Button } from 'react-bootstrap';
+import React, { useState, useRef, useEffect } from 'react';
 import './UserCollectionReport.css';
 import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
-const RevenueEneragedReport = () => {
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import * as XLSX from 'xlsx';
+import { API_BASE_URL } from '../api/api';
+
+const RevenueGeneratedReport = () => {
   const [showReport, setShowReport] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
+  const [reportsData, setReportsData] = useState([]);
+  const [summaryTotals, setSummaryTotals] = useState(null);
+  const [selectedRange, setSelectedRange] = useState(null);
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isDataFetched, setIsDataFetched] = useState(false);
+  const [selectedReport, setSelectedReport] = useState("summary");
   const tableRef = useRef(null);
 
   const handlePrint = () => {
-    window.print(); // Simple print functionality using the browser's print dialog
+    const printWindow = window.open('', '', 'height=600,width=800');
+    const tableClone = document.querySelector('.patientList-table').cloneNode(true);
+    const thElements = tableClone.querySelectorAll('th');
+    const tdElements = tableClone.querySelectorAll('td');
+
+    printWindow.document.write('<html><head><title>Revenue Generated Report</title>');
+    printWindow.document.write('<style>body { font-family: Arial, sans-serif; margin: 20px; font-size: 14px; }');
+    printWindow.document.write('.patientList-table { width: 100%; border-collapse: collapse; margin-top: 20px; }');
+    printWindow.document.write('.patientList-table th, .patientList-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }');
+    printWindow.document.write('.summary-row { background-color: #f5f5f5; font-weight: bold; }');
+    printWindow.document.write('</style></head><body>');
+    printWindow.document.write('<h1 style="text-align: center;">Revenue Generated Report</h1>');
+    printWindow.document.write(tableClone.outerHTML);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.print();
   };
 
   const handleExport = () => {
-    console.log('Export function not yet implemented');
-    // Implement your export logic here
+    let data = reportsData.map(row => ({
+      'Service Name': row.serviceName,
+      'Billing Date': row.billingDate,
+      'Service Count': row.serviceCount,
+      'Total Paid Amount': row.totalPaidAmount,
+      'Rate': row.rate,
+      'Total Service Amount': row.totalServiceAmount,
+      'Original Total Amount': row.originalTotalAmount,
+      'Total Discount': row.totalDiscount
+    }));
+
+    if (summaryTotals) {
+      data.push({
+        'Service Name': 'TOTAL',
+        'Service Count': summaryTotals.totalServiceCount,
+        'Total Paid Amount': summaryTotals.totalPaidAmountSum,
+        'Rate': summaryTotals.totalRateSum,
+        'Total Service Amount': summaryTotals.totalServiceAmountSum,
+        'Original Total Amount': summaryTotals.totalOriginalAmountSum,
+        'Total Discount': summaryTotals.totalDiscountSum
+      });
+    }
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Revenue Generated Report');
+    XLSX.writeFile(workbook, 'Revenue_Generated_Report.xlsx');
   };
 
-  const handlePopupToggle = () => {
-    setIsPopupOpen(!isPopupOpen);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!fromDate || !toDate) {
+        return;
+      }
 
-  const handleDateRangeSelection = (range) => {
-    console.log('Selected Range:', range);
-    setIsPopupOpen(false); // Close the popup after selection
-  };
+      setIsLoading(true);
+      setError(null);
+      setShowReport(true);
 
-  const handleShowReport = () => {
-    setShowReport(true); // Show the report when button is clicked
-  };
+      let apiUrl = '';
+      if (selectedReport === "summary") {
+        apiUrl = `${API_BASE_URL}/opdBilling/radiology-summary?startDate=${fromDate}&endDate=${toDate}`;
+      } else if (selectedReport === "opd") {
+        apiUrl = `${API_BASE_URL}/opdBilling/billing-data/radiology?startDate=${fromDate}&endDate=${toDate}`;
+      } else if (selectedReport === "detailed") {
+        apiUrl = `${API_BASE_URL}/ipbillings/billing-data/radiology?startDate=${fromDate}&endDate=${toDate}`;
+      }
 
-  const handleSearch = (searchTerm) => {
-    console.log('Search term:', searchTerm);
-    // Implement your search logic here
-  };
+      try {
+        const response = await fetch(apiUrl);
 
-  // Function to calculate VAT at 13%
-  const calculateVAT = (amount) => (amount * 0.13).toFixed(2);
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
 
-  // Placeholder reports data
-  const reportsData = [
-    { date: "12-May-2024", totalPrice: 1000, paidAmount: 1000 },
-    { date: "10-Jun-2024", totalPrice: 46000, paidAmount: 46000 },
-    { date: "1-Jun-2024", totalPrice: 14000, paidAmount: 14000 }, // Assumed date correction
-    { date: "19-Jun-2024", totalPrice: 58000, paidAmount: 58000 },
-    { date: "27-Jun-2024", totalPrice: 2000, paidAmount: 2000 },
-    { date: "10-Jan-2024", totalPrice: 23000, paidAmount: 23000 }, // Assumed correction
-    { date: "12-Jul-2024", totalPrice: 25000, paidAmount: 25000 },
-    { date: "13-Jul-2024", totalPrice: 10000, paidAmount: 30000 }, // Assumed correction
-    { date: "22-Jul-2024", totalPrice: 11000, paidAmount: 11000 }, // Assumed correction
-    { date: "26-Jul-2024", totalPrice: 13000, paidAmount: 13000 },
-    { date: "27-Jul-2024", totalPrice: 13000, paidAmount: 13000 },
-    { date: "31-Jan-2024", totalPrice: 11000, paidAmount: 11000 }, // Assumed correction
-  ];
+        const data = await response.json();
+
+        if (data && Array.isArray(data.serviceSummary)) {
+          setReportsData(data.serviceSummary);
+          if (selectedReport === "summary") {
+            setSummaryTotals({
+              totalOriginalAmountSum: data.totalOriginalAmountSum,
+              totalRateSum: data.totalRateSum,
+              totalDiscountSum: data.totalDiscountSum,
+              totalServiceCount: data.totalServiceCount,
+              totalServiceAmountSum: data.totalServiceAmountSum,
+              totalPaidAmountSum: data.totalPaidAmountSum
+            });
+          } else {
+            setSummaryTotals(null);
+          }
+        } else {
+          setError('Data format is incorrect');
+        }
+      } catch (err) {
+        setError('Error fetching data: ' + err.message);
+        console.error('Error fetching data:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [selectedReport, fromDate, toDate]);
 
   return (
     <div className="user-collection-report">
@@ -61,98 +133,98 @@ const RevenueEneragedReport = () => {
         <div className="user-collection-report-filters">
           <div className="user-collection-report-date-filter">
             <label>From:</label>
-            <input type="date" />
+            <input type="date" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
             <label>To:</label>
-            <input type="date" />
-            <button className="user-collection-report-fav-btn">☆</button>
-            <button className="user-collection-report-fav-btn" onClick={handlePopupToggle}>-</button>
-
-            {isPopupOpen && (
-              <div className="user-collection-popup">
-                <ul className="user-collection-popup-list">
-                  <li onClick={() => handleDateRangeSelection('Today')}>Today</li>
-                  <li onClick={() => handleDateRangeSelection('Last 1 Week')}>Last 1 Week</li>
-                  <li onClick={() => handleDateRangeSelection('Last 1 Month')}>Last 1 Month</li>
-                  <li onClick={() => handleDateRangeSelection('Last 3 Months')}>Last 3 Months</li>
-                </ul>
-              </div>
-            )}
+            <input type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} />
           </div>
-          <div className="user-collection-report-counter-filter">
-            <label>Counter:</label>
-            <select>
-              <option value="All">All</option>
-              {/* Add more options as needed */}
-            </select>
+          <div className="report-selection">
+            <label>
+              <input
+                type="radio"
+                name="reportType"
+                value="summary"
+                checked={selectedReport === "summary"}
+                onChange={() => setSelectedReport("summary")}
+              />
+              All
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="reportType"
+                value="opd"
+                checked={selectedReport === "opd"}
+                onChange={() => setSelectedReport("opd")}
+              />
+              opd
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="reportType"
+                value="detailed"
+                checked={selectedReport === "detailed"}
+                onChange={() => setSelectedReport("detailed")}
+              />
+              ipd
+            </label>
           </div>
-          <button className="user-collection-report-show-btn" onClick={handleShowReport}>Show Report</button>
         </div>
       </div>
 
       {showReport && (
         <>
           <div className="user-collection-report-controls">
-            <input
-              type="text"
-              className="user-collection-report-search"
-              placeholder="Search..."
-              onChange={(e) => handleSearch(e.target.value)}
-            />
-            <div className="user-collection-page-results-info">
-              Showing 334/334 results
-            </div>
             <button className="user-collection-report-print-btn" onClick={handlePrint}>Print</button>
             <button className="user-collection-report-print-btn" onClick={handleExport}>Export</button>
           </div>
           <div className='user-collection-report-tab'>
-          <table className="patientList-table" ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-            "Date",
-            "Total Price",
-            "Total Paid Amount",
-            "Total VAT (13%)"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-		  
+            <table className="patientList-table" id='tableSection' ref={tableRef}>
+              <thead>
+                <tr>
+                  {['Service Name', 'Billing Date', 'Service Count', 'Total Paid Amount', 'Rate', 'Total Service Amount', 'Original Total Amount', 'Total Discount'].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
               <tbody>
                 {reportsData.map((row, index) => (
                   <tr key={index}>
-                    <td>{row.date}</td>
-                    <td>{row.totalPrice.toLocaleString()}</td>
-                    <td>{row.paidAmount.toLocaleString()}</td>
-                    {/* Displaying the VAT for each row */}
-                    <td>{calculateVAT(row.totalPrice)}</td>
+                    <td>{row.serviceName}</td>
+                    <td>{row.billingDate}</td>
+                    <td>{row.serviceCount}</td>
+                    <td>{row.totalPaidAmount}</td>
+                    <td>{row.rate}</td>
+                    <td>{row.totalServiceAmount}</td>
+                    <td>{row.originalTotalAmount}</td>
+                    <td>{row.totalDiscount}</td>
                   </tr>
                 ))}
+                {summaryTotals && (
+                  <tr className="summary-row" style={{ fontWeight: 'bold', backgroundColor: '#f8f8f8' }}>
+                    <td colSpan={2}>TOTAL</td>
+                    <td>{summaryTotals.totalServiceCount}</td>
+                    <td>{summaryTotals.totalPaidAmountSum}</td>
+                    <td>{summaryTotals.totalRateSum}</td>
+                    <td>{summaryTotals.totalServiceAmountSum}</td>
+                    <td>{summaryTotals.totalOriginalAmountSum}</td>
+                    <td>{summaryTotals.totalDiscountSum}</td>
+                  </tr>
+                )}
               </tbody>
             </table>
-            <div className="user-collection-report-page-no">
-              <Button className="user-collection-report-pagination-btn">First</Button>
-              <Button className="user-collection-report-pagination-btn">Previous</Button>
-              {/* Add pagination functionality */}
-              <Button className="user-collection-report-pagination-btn">Next</Button>
-              <Button className="user-collection-report-pagination-btn">Last</Button>
-            </div>
           </div>
         </>
       )}
@@ -160,4 +232,4 @@ const RevenueEneragedReport = () => {
   );
 };
 
-export default RevenueEneragedReport;
+export default RevenueGeneratedReport;

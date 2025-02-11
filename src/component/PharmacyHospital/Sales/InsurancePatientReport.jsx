@@ -25,37 +25,8 @@ function InsurancePatientReport() {
   };
 
   // Function to trigger print
-   // Function to trigger print
-   const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
-        <head>
-          <title>Print Table</title>
-          <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
-            }
-          </style>
-        </head>
-        <body>
-          ${printContent.outerHTML}
-        </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
   };
 
 

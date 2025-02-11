@@ -104,6 +104,7 @@ const PatientRegistrationNew = ({ onClose }) => {
     height: patient?.height || "",
     weight: patient?.weight || "",
     sourceOfRegistration: patient?.sourceOfRegistration || "", // updated from sourceOfregistration
+    // registrationDate: new Date().toISOString().split("T")[0],
     remarks: patient?.remarks || "",
     previousHospital: patient?.previousHospital || "",
     referredContactNumber: patient?.referredContactNumber || "", // updated from referredContactNo
@@ -440,7 +441,7 @@ const PatientRegistrationNew = ({ onClose }) => {
               <FloatingInput
                 label={"ER No"}
                 type="text"
-                name="erNumber"
+                name="erNo"
                 value={formData.erNo}
                 onChange={handleChange}
               />
@@ -449,7 +450,7 @@ const PatientRegistrationNew = ({ onClose }) => {
               <FloatingInput
                 label={"MR NO"}
                 type="text"
-                name="mrNo"
+                name="uhid"
                 value={result?.uhid || patient?.uhid}
                 onChange={handleChange}
               />
@@ -973,9 +974,9 @@ const PatientRegistrationNew = ({ onClose }) => {
                 { value: "", label: "Select Organisation" },
                 ...(Array.isArray(organisation)
                   ? organisation.map((org) => ({
-                      value: org.masterId,
-                      label: org.name,
-                    }))
+                    value: org.masterId,
+                    label: org.name,
+                  }))
                   : []),
               ]}
             />

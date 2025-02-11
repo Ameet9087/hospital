@@ -1,297 +1,125 @@
-import React, { useState,useRef } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import './UserCollectionReport.css';
 import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { API_BASE_URL } from '../api/api';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+
 const TestStatusDetailsReport = () => {
   const [showReport, setShowReport] = useState(false);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  
-const [columnWidths, setColumnWidths] = useState({});
-const tableRef = useRef(null);
-
-  // Manage checkbox states
-  const [checkboxStates, setCheckboxStates] = useState({
-    all: true,
-    samplePending: false,
-    resultPending: false,
-    resultAdded: true,
-    reportFinalized: true,
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [dateFilter, setDateFilter] = useState({ from: '', to: '' });
+  const [labRequests, setLabRequests] = useState([]);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   const handlePrint = () => {
-    window.print(); // Simple print functionality using the browser's print dialog
+    const doc = new jsPDF('l', 'mm', 'a4');
+
+    doc.setFontSize(16);
+    doc.text('Lab Revenue Report', doc.internal.pageSize.width / 2, 15, { align: 'center' });
+
+    if (!filteredData.length) {
+      doc.setFontSize(10);
+      doc.text('No records available.', 14, 25);
+    } else {
+      const headers = [
+        "Doctor Name",
+        "Patient Name",
+        "Received By",
+        "Age",
+        "Sex",
+        "Created On",
+        "Lab Test Name",
+        "Run Number Type",
+        "Billing Status",
+        "Sample Status"
+      ];
+
+      const tableData = filteredData.map(row => [
+        row.doctorName || 'N/A',
+        row.patientName || 'N/A',
+        row.receivedBy || 'N/A',
+        row.age || 'N/A',
+        row.sex || 'N/A',
+        row.createdOn || 'N/A',
+        row.labTestName || 'N/A',
+        row.runNumberType || 'N/A',
+        row.billingStatus || 'N/A',
+        row.sampleStatus || 'N/A'
+      ]);
+
+      doc.autoTable({
+        head: [headers],
+        body: tableData,
+        startY: 25,
+        styles: { fontSize: 8, cellPadding: 2 },
+        headStyles: { fillColor: [51, 122, 183], textColor: 255, fontSize: 9, fontStyle: 'bold' },
+        alternateRowStyles: { fillColor: [245, 245, 245] },
+      });
+    }
+
+    window.open(doc.output('bloburl'), '_blank');
   };
+
+
+
+
+  useEffect(() => {
+    if (showReport) {
+      fetchLabRequests();
+    }
+  }, [showReport]);
+
+  const fetchLabRequests = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await axios.get(`${API_BASE_URL}/lab-requests/fetch/patient-wise-lab`);
+      setLabRequests(response.data); // Assuming response.data is an array
+    } catch (err) {
+      setError('Failed to fetch lab requests. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSearch = (query) => {
+    setSearchQuery(query.toLowerCase());
+  };
+
+  const handleDateChange = (e) => {
+    setDateFilter({ ...dateFilter, [e.target.name]: e.target.value });
+  };
+
+  const filteredData = labRequests.filter((row) => {
+    const requestedDate = row.createdOn; // Date from API response
+    const fromDate = dateFilter.from || '1900-01-01';
+    const toDate = dateFilter.to || '2100-12-31';
+    const isWithinDateRange = requestedDate >= fromDate && requestedDate <= toDate;
+
+    const isMatchingSearch =
+      searchQuery === '' ||
+      Object.values(row).some((value) => String(value).toLowerCase().includes(searchQuery));
+
+    return isWithinDateRange && isMatchingSearch;
+  });
 
   const handleExport = () => {
-    console.log('Export function not yet implemented');
-    // Implement your export logic here
+    const ws = XLSX.utils.json_to_sheet(filteredPatients);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Discharged Patients");
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(data, 'Discharged_Patients_Report.xlsx');
   };
 
-  const handlePopupToggle = () => {
-    setIsPopupOpen(!isPopupOpen);
-  };
-
-  const handleDateRangeSelection = (range) => {
-    console.log('Selected Range:', range);
-    // Implement the logic to filter data based on the selected range
-    setIsPopupOpen(false); // Close the popup after selection
-  };
-
-  const reportsData = [
-    {
-        hospitalNo: '2407003796',
-        membership: '27WFema1e',
-        rank: '1',
-        patientName: 'Sample Sdf Gh',
-        ageSex: '34Y/Female',
-        requestedOn: '2024-07-26T15:01:34.883',
-        testName: 'Sugar Fasting',
-        runNo: '1/4',
-        wardName: 'OPD',
-        billStatus: 'Paid',
-        sampleCollectedBy: 'Mr. admin admin',
-        prescriber: 'Dr. pooja W',
-        testStatus: 'Sample Collected',
-        billCancelledBy: '',
-        billCancelledOn: ''
-      },
-      {
-        hospitalNo: '2407003796',
-        membership: '27WFema1e',
-        rank: '2',
-        patientName: 'Sample Sdf Gh',
-        ageSex: '34Y/Female',
-        requestedOn: '2024-07-23T17:07:07.993',
-        testName: 'BRUCELLA',
-        runNo: '2/4',
-        wardName: 'OPD',
-        billStatus: 'Paid',
-        sampleCollectedBy: 'Mr. CHRISTINE MUTOKA',
-        prescriber: 'Dr. pooja',
-        testStatus: 'Sample Not Collected',
-        billCancelledBy: '',
-        billCancelledOn: ''
-      },
-      {
-        hospitalNo: '2406003702',
-        membership: '34Y/Male',
-        rank: '3',
-        patientName: 'Philip Juma',
-        ageSex: '34Y/Male',
-        requestedOn: '2024-07-01T10:34:11.111',
-        testName: 'KIDNEY FUNCTION TESTS',
-        runNo: '17/3',
-        wardName: 'MALE WARD',
-        billStatus: 'Paid',
-        sampleCollectedBy: 'Mr. admin admin',
-        prescriber: 'Mr. COLLIN...',
-        testStatus: 'Result Added',
-        billCancelledBy: '',
-        billCancelledOn: ''
-      },
-      {
-        hospitalNo: '2406003783',
-        membership: '34Y/Female',
-        rank: '4',
-        patientName: 'Monicah Juma',
-        ageSex: '34Y/Female',
-        requestedOn: '2024-06-26T10:11:34.11',
-        testName: 'MP SMEAR',
-        runNo: '17/3',
-        wardName: 'MATERNITY WARD',
-        billStatus: 'Paid',
-        sampleCollectedBy: 'Mr. admin admin',
-        prescriber: 'Dr. Emman...',
-        testStatus: 'Sample Not Collected',
-        billCancelledBy: '',
-        billCancelledOn: ''
-      },
-      {
-        hospitalNo: '2406003783',
-        membership: '25Y/Female',
-        rank: '5',
-        patientName: 'Test Patient',
-        ageSex: '25Y/Female',
-        requestedOn: '2024-06-19T17:12:40.283',
-        testName: 'COVID 19 AG',
-        runNo: '15/3',
-        wardName: 'MATERNITY WARD',
-        billStatus: 'Paid',
-        sampleCollectedBy: 'Mr. admin admin',
-        prescriber: 'Dr. Emman..',
-        testStatus: 'Sample Not Collected',
-        billCancelledBy: '',
-        billCancelledOn: ''
-      },
-      {
-        hospitalNo: '2406003789',
-        membership: '25Y/Male',
-        rank: '6',
-        patientName: 'Test Patient',
-        ageSex: '25Y/Male',
-        requestedOn: '2024-06-19T17:12:40.283',
-        testName: 'FASTING BLOOD SUGAR',
-        runNo: '14/3',
-        wardName: 'OPD',
-        billStatus: 'Paid',
-        sampleCollectedBy: 'Mr. admin admin',
-        prescriber: 'Mr. KEPHA',
-        testStatus: 'Result Added',
-        billCancelledBy: '',
-        billCancelledOn: ''
-      },
-      {
-        hospitalNo: '2406003789',
-        membership: '25Y/Male',
-        rank: '7',
-        patientName: 'Test Patient',
-        ageSex: '25Y/Male',
-        requestedOn: '2024-06-19T17:12:40.283',
-        testName: 'HIGH VAGINAL SWAB',
-        runNo: '13/3',
-        wardName: 'ICU',
-        billStatus: 'Paid',
-        sampleCollectedBy: 'Mr. admin admin',
-        prescriber: 'Mr. KEPHA',
-        testStatus: 'Sample Collected',
-        billCancelledBy: '',
-        billCancelledOn: ''
-      },
-      {
-        hospitalNo: '2406003789',
-        membership: '25Y/Female',
-        rank: '8',
-        patientName: 'Monicah Juma',
-        ageSex: '25Y/Female',
-        requestedOn: '2024-06-19T17:12:40.283',
-        testName: 'MP SMEAR',
-        runNo: '12/3',
-        wardName: 'ICU',
-        billStatus: 'Paid',
-        sampleCollectedBy: 'Mr. admin admin',
-        prescriber: 'SELF',
-        testStatus: 'Sample Collected',
-        billCancelledBy: '',
-        billCancelledOn: ''
-      },
-      {
-        hospitalNo: '2406003783',
-        membership: '34Y/Female',
-        rank: '9',
-        patientName: 'Monicah Juma',
-        ageSex: '34Y/Female',
-        requestedOn: '2024-06-19T17:12:40.283',
-        testName: 'RBS (SUPPORT GROUP)',
-        runNo: '10/3',
-        wardName: 'MATERNITY WARD',
-        billStatus: 'Paid',
-        sampleCollectedBy: 'Mr. admin admin',
-        prescriber: 'Dr. VICTOR',
-        testStatus: 'Report Generated',
-        billCancelledBy: '',
-        billCancelledOn: ''
-      },
-      {
-        hospitalNo: '2406003788',
-        membership: '3M/Male',
-        rank: '10',
-        patientName: 'Cdsfssdfsdf Dsfsdffdsfs Dsfc...',
-        ageSex: '3M/Male',
-        requestedOn: '2024-06-19T17:12:40.283',
-        testName: 'COVID 19 AG',
-        runNo: '10/3',
-        wardName: 'OPD',
-        billStatus: 'Provisional',
-        sampleCollectedBy: 'Mr. admin admin',
-        prescriber: 'Mr. KEPHA',
-        testStatus: 'Report Generated',
-        billCancelledBy: '',
-        billCancelledOn: ''
-      },
-      {
-        hospitalNo: '2406003788',
-        membership: '30Y/Female',
-        rank: '11',
-        patientName: 'Cdsfssdfsdf Dsfsdffdsfs Dsfc...',
-        ageSex: '30Y/Female',
-        requestedOn: '2024-06-19T17:12:40.283',
-        testName: 'URIC ACID',
-        runNo: '10/3',
-        wardName: 'OPD',
-        billStatus: 'Paid',
-        sampleCollectedBy: 'Mr. admin admin',
-        prescriber: 'Mrs. BEATRICE',
-        testStatus: 'Report Generated',
-        billCancelledBy: '',
-        billCancelledOn: ''
-      },
-      {
-        hospitalNo: '2406003782',
-        membership: '20Y/Male',
-        rank: '12',
-        patientName: 'John Kibet',
-        ageSex: '20Y/Male',
-        requestedOn: '2024-06-19T17:12:40.283',
-        testName: 'Sugar Fasting',
-        runNo: '1/4',
-        wardName: 'OPD',
-        billStatus: 'Paid',
-        sampleCollectedBy: 'Mr. admin admin',
-        prescriber: 'SELF',
-        testStatus: 'Result Added',
-        billCancelledBy: '',
-        billCancelledOn: ''
-      },
-      {
-        hospitalNo: '2406003780',
-        membership: '20Y/Female',
-        rank: '13',
-        patientName: 'Mercy Kosgei',
-        ageSex: '20Y/Female',
-        requestedOn: '2024-06-19T17:12:40.283',
-        testName: 'RBS (SUPPORT GROUP)',
-        runNo: '1/4',
-        wardName: 'OPD',
-        billStatus: 'Paid',
-        sampleCollectedBy: 'Mr. admin admin',
-        prescriber: 'Mrs. BERTH...',
-        testStatus: 'Result Added',
-        billCancelledBy: '',
-        billCancelledOn: ''
-      }
-  ];
-
-  const handleShowReport = () => {
-    setShowReport(true);
-  };
-
-  const handleCheckboxChange = (e) => {
-    const { name, checked } = e.target;
-    setCheckboxStates((prevStates) => {
-      if (name === 'all') {
-        // Set all checkboxes based on 'All' checkbox
-        return {
-          all: checked,
-          samplePending: checked,
-          resultPending: checked,
-          resultAdded: checked,
-          reportFinalized: checked,
-        };
-      } else {
-        // Set individual checkboxes
-        const newState = {
-          ...prevStates,
-          [name]: checked,
-        };
-        // If any checkbox is unchecked, uncheck 'All'
-        const allChecked = Object.values(newState).every((value) => value);
-        return {
-          ...newState,
-          all: allChecked,
-        };
-      }
-    });
-  };
 
   return (
     <div className="user-collection-report">
@@ -300,68 +128,13 @@ const tableRef = useRef(null);
         <div className="user-collection-report-filters">
           <div className="user-collection-report-date-filter">
             <label>From:</label>
-            <input type="date" />
+            <input type="date" name="from" onChange={handleDateChange} />
             <label>To:</label>
-            <input type="date" />
-            <button className="user-collection-report-fav-btn">☆</button>
-            <button className="user-collection-report-fav-btn" onClick={handlePopupToggle}>-</button>
-
-            {isPopupOpen && (
-              <div className="user-collection-popup">
-                <ul className="user-collection-popup-list">
-                  <li onClick={() => handleDateRangeSelection('Today')}>Today</li>
-                  <li onClick={() => handleDateRangeSelection('Last 1 Week')}>Last 1 Week</li>
-                  <li onClick={() => handleDateRangeSelection('Last 1 Month')}>Last 1 Month</li>
-                  <li onClick={() => handleDateRangeSelection('Last 3 Months')}>Last 3 Months</li>
-                </ul>
-              </div>
-            )}
+            <input type="date" name="to" onChange={handleDateChange} />
           </div>
-          <div className='order-status-filter'>
-            <div className="order-status-checkboxes">
-              <label>
-                <input
-                  type="checkbox"
-                  name="all"
-                  checked={checkboxStates.all}
-                  onChange={handleCheckboxChange}
-                /> All
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  name="samplePending"
-                  checked={checkboxStates.samplePending}
-                  onChange={handleCheckboxChange}
-                /> Sample Pending
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  name="resultPending"
-                  checked={checkboxStates.resultPending}
-                  onChange={handleCheckboxChange}
-                /> Result Pending
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  name="resultAdded"
-                  checked={checkboxStates.resultAdded}
-                  onChange={handleCheckboxChange}
-                /> Result Added
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  name="reportFinalized"
-                  checked={checkboxStates.reportFinalized}
-                  onChange={handleCheckboxChange}
-                /> Report-Finalized
-              </label>
-            </div>
-          </div>
-          <button className="user-collection-report-show-btn" onClick={handleShowReport}>Show Report</button>
+          <button className="user-collection-report-show-btn" onClick={() => setShowReport(true)}>
+            Show Report
+          </button>
         </div>
       </div>
 
@@ -372,85 +145,75 @@ const tableRef = useRef(null);
               type="text"
               className="user-collection-report-search"
               placeholder="Search..."
-              onChange={(e) => handleSearch(e.target.value)} // Ensure the handleSearch function is defined
+              onChange={(e) => handleSearch(e.target.value)}
             />
             <div className="user-collection-page-results-info">
-              Showing {reportsData.length}/{reportsData.length} results
+              Showing {filteredData.length}/{labRequests.length} results
             </div>
             <button className="user-collection-report-print-btn" onClick={handlePrint}>Print</button>
             <button className="user-collection-report-print-btn" onClick={handleExport}>Export</button>
           </div>
-          <div className='user-collection-report-tab'>
-          <table className="patientList-table" ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-               "Hospital No",
-                "Membership",
-                "Rank",
-                "Patient Name",
-                "Age/Sex",
-                "Requested On",
-                "Test Name",
-                "Run No",
-                "Ward Name",
-                "Bill Status",
-                "Sample Collected By",
-                "Prescriber",
-                "Test Status",
-                "Bill Cancelled By",
-                "Bill Cancelled On"
 
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-              <tbody>
-                {reportsData.map((row, index) => (
-                  <tr key={index}>
-                     <td>{row.hospitalNo}</td>
-              <td>{row.membership}</td>
-              <td>{row.rank}</td>
-              <td>{row.patientName}</td>
-              <td>{row.ageSex}</td>
-              <td>{row.requestedOn}</td>
-              <td>{row.testName}</td>
-              <td>{row.runNo}</td>
-              <td>{row.wardName}</td>
-              <td>{row.billStatus}</td>
-              <td>{row.sampleCollectedBy}</td>
-              <td>{row.prescriber}</td>
-              <td>{row.testStatus}</td>
-              <td>{row.billCancelledBy}</td>
-              <td>{row.billCancelledOn}</td>
+          {isLoading ? (
+            <p>Loading data...</p>
+          ) : error ? (
+            <p style={{ color: 'red' }}>{error}</p>
+          ) : (
+            <div className="user-collection-report-tab">
+              <table className="patientList-table" ref={tableRef}>
+                <thead>
+                  <tr>
+                    {[
+                      'Doctor Name',
+                      'Patient Name',
+                      'Received By',
+                      'Age',
+                      'Sex',
+                      'Created On',
+                      'Lab Test Name',
+                      'Run No Type',
+                      'Billing Status',
+                      'Sample Status',
+                    ].map((header, index) => (
+                      <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                        <div className="header-content">
+                          <span>{header}</span>
+                          <div
+                            className="resizer"
+                            onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                          ></div>
+                        </div>
+                      </th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-            <div className="user-collection-report-page-no">
-              <Button className="user-collection-report-pagination-btn">First</Button>
-              <Button className="user-collection-report-pagination-btn">Previous</Button>
-              <span>Page 1 of 4</span>
-              <Button className="user-collection-report-pagination-btn">Next</Button>
-              <Button className="user-collection-report-pagination-btn">Last</Button>
+                </thead>
+                <tbody>
+                  {filteredData.length > 0 ? (
+                    filteredData.map((row, index) => (
+                      <tr key={index}>
+                        <td>{row.doctorName}</td>
+                        <td>{row.patientName}</td>
+                        <td>{row.receivedBy}</td>
+                        <td>{row.age}</td>
+                        <td>{row.sex}</td>
+                        <td>{row.createdOn}</td>
+                        <td>{row.labTestName}</td>
+                        <td>{row.runNumberType}</td>
+                        <td>{row.billingStatus}</td>
+                        <td>{row.sampleStatus}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="10" style={{ textAlign: 'center', padding: '10px' }}>
+                        No matching records found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
-          </div>
+          )}
         </>
       )}
     </div>

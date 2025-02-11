@@ -162,7 +162,7 @@ const PurchaseOrder = () => {
         <table ref={tableRef}>
           <thead>
             <tr>
-              {["PO ID", "Date", "Supplier", "Delivery Date", "Total Amount", "Action"].map(
+              {["PO ID", "Date", "Supplier", "Delivery Date", "Total Amount", "Status", "Action"].map(
                 (header, index) => (
                   <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
                     <div className="header-content">
@@ -186,6 +186,7 @@ const PurchaseOrder = () => {
                   <td>{order.supplierDTO?.supplierName || 'N/A'}</td>
                   <td>{order.deliveryDate}</td>
                   <td>{order.totalAmount}</td>
+                  <td>{order.status}</td>
                   <td>
                     <div className="pharmacy-btn">
                       <button className="pobtn-view" onClick={() => handleViewBill(order)}>View</button>
@@ -213,3 +214,4 @@ const PurchaseOrder = () => {
 };
 
 export default PurchaseOrder;
+

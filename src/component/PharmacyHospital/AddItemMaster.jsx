@@ -1,64 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./AddItemMaster.css";
-import PopupTable from "../Admission/PopupTable";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
-const FloatingInput = ({ label, type = "text", ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
-  const handleChange = (e) => {
-    setHasValue(e.target.value.length > 0);
-    if (props.onChange) props.onChange(e);
-  };
-  return (
-    <div
-      className={`GCSSheetForm-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <input
-        type={type}
-        className="GCSSheetForm-floating-input"
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value.length > 0);
-        }}
-        onChange={handleChange}
-        {...props}
-      />
-      <label className="GCSSheetForm-floating-label">{label}</label>
-    </div>
-  );
-};
-const FloatingSelect = ({ label, options = [], ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
-  return (
-    <div
-      className={`GCSSheetForm-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <select
-        className="GCSSheetForm-floating-select"
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value !== "");
-        }}
-        onChange={(e) => setHasValue(e.target.value !== "")}
-        {...props}
-      >
-        <option value="">{ }</option>
-        {options.map((option, index) => (
-          <option key={index} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <label className="GCSSheetForm-floating-label">{label}</label>
-    </div>
-  );
-};
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingSelect, PopupTable } from "../../FloatingInputs";
 const AddItemMaster = ({ selectedItem, onClose }) => {
   console.log(selectedItem);
 
@@ -264,10 +209,10 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
       }
       const result = await response.json();
       console.log("Form submission success:", result);
-      alert("Form submitted successfully!");
+      toast.success("Form submitted successfully!");
       onClose();
     } catch (error) {
-      console.error("Error submitting form data:", error);
+      toast.error("Error submitting form data:", error);
     }
   };
 
@@ -421,14 +366,14 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
 
             {/* <FloatingInput label="UH ID *"  type="text"name="uhId"  /> */}
             <FloatingInput
-              label="Item Name "
+              label={"Item Name"}
               type="text"
               name="itemName"
               value={formData.itemName}
               onChange={handleChange}
             />
             <FloatingInput
-              label="Item Group"
+              label={"Item Group"}
               type="text"
               name="itemGroup"
               value={formData.itemGroup}
@@ -437,127 +382,67 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
 
             <div className="GCSSheetForm-search-field">
               <FloatingInput
-                label="Generic Name"
-                type="text"
+                label={"Generic Name"}
+                type="search"
                 name="genericname"
                 value={formData.genericNames?.genericName || ""}
+                onIconClick={() => setActivePopup("genericName")}
               />
-              <button
-                className="GCSSheetForm-search-icon"
-                onClick={() => setActivePopup("genericName")}
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                  <path
-                    fill="currentColor"
-                    d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                  />
-                </svg>
-              </button>
             </div>
             <div className="GCSSheetForm-search-field">
               <FloatingInput
-                label="Type"
-                type="text"
+                label={"Type"}
+                type="search"
                 name="itemType"
                 value={formData?.itemType?.itemType}
+                onIconClick={() => setActivePopup("type")}
               />
-              <button
-                className="GCSSheetForm-search-icon"
-                onClick={() => setActivePopup("type")}
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                  <path
-                    fill="currentColor"
-                    d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                  />
-                </svg>
-              </button>
             </div>
             <div className="GCSSheetForm-search-field">
               <FloatingInput
                 label="Tax Category"
-                type="text"
+                type="search"
                 name="taxCategory"
                 value={formData?.taxes?.taxName}
+                onIconClick={() => setActivePopup("tax")}
               />
-              <button
-                className="GCSSheetForm-search-icon"
-                onClick={() => setActivePopup("tax")}
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                  <path
-                    fill="currentColor"
-                    d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                  />
-                </svg>
-              </button>
             </div>
             <div className="GCSSheetForm-search-field">
               <FloatingInput
-                label=" Category"
-                type="text"
+                label={" Category"}
+                type="search"
                 name="itemCategories"
                 value={formData?.itemCategories?.categoryName}
+                onIconClick={() => setActivePopup("category")}
               />
-              <button
-                className="GCSSheetForm-search-icon"
-                onClick={() => setActivePopup("category")}
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                  <path
-                    fill="currentColor"
-                    d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                  />
-                </svg>
-              </button>
             </div>
             <div className="GCSSheetForm-search-field">
               <FloatingInput
-                label="Manufacturer"
+                label={"Manufacturer"}
                 type="text"
                 name="manufacturer"
                 value={formData?.manufactures?.companyName}
+                onIconClick={() => setActivePopup("manufacturer")}
               />
-              <button
-                className="GCSSheetForm-search-icon"
-                onClick={() => setActivePopup("manufacturer")}
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                  <path
-                    fill="currentColor"
-                    d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                  />
-                </svg>
-              </button>
             </div>
             <div className="GCSSheetForm-search-field">
               <FloatingInput
-                label="Unit"
+                label={"Unit"}
                 type="text"
                 name="unit"
                 value={formData?.unitsOfMeasurement?.name}
+                onIconClick={() => setActivePopup("unit")}
               />
-              <button
-                className="GCSSheetForm-search-icon"
-                onClick={() => setActivePopup("unit")}
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                  <path
-                    fill="currentColor"
-                    d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                  />
-                </svg>
-              </button>
             </div>
             <FloatingInput
-              label="HSN CODE"
+              label={"HSN CODE"}
               type="text"
               name="hsnCode"
               value={formData.hsnCode}
               onChange={handleChange}
             />
             <FloatingInput
-              label="Med Code"
+              label={"Med Code"}
               type="text"
               name="medCode"
               value={formData.medCode}
@@ -581,14 +466,14 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
               ]}
             /> */}
             <FloatingInput
-              label="Margin"
+              label={"Margin"}
               type="text"
               name="margin"
               value={formData.margin}
               onChange={handleChange}
             />
             <FloatingInput
-              label="Pack Size"
+              label={"Pack Size"}
               type="text"
               name="packSize"
               value={formData.packSize}
@@ -601,14 +486,14 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
           <div className="GCSSheetForm-grid">
             <div className="GCSSheetForm-header">Scheme Details</div>
             <FloatingInput
-              label="Start Dt"
+              label={"Start Dt"}
               type="date "
               name="startDate"
               value={formData.startDate}
               onChange={handleChange}
             />
             <FloatingInput
-              label="EndDt"
+              label={"EndDt"}
               type="date "
               name="endDate"
               value={formData.endDate}
@@ -616,14 +501,14 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingInput
-              label="Qty"
+              label={"Qty"}
               type="text"
               name="quantity"
               value={formData.quantity}
               onChange={handleChange}
             />
             <FloatingInput
-              label="Free Qty"
+              label={"Free Qty"}
               type="text"
               name="freeQuantity"
               value={formData.freeQuantity}
@@ -660,7 +545,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             <div className="GCSSheetForm-header">Other Details</div>
 
             <FloatingSelect
-              label="Item Classification"
+              label={"Item Classification"}
               name="itemClassification"
               options={[
                 { value: "", label: "Select" },
@@ -686,7 +571,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingInput
-              label="Free Qty"
+              label={"Free Qty"}
               type="text"
               name="othrFreeQty"
               value={formData.othrFreeQty}
@@ -694,7 +579,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingSelect
-              label="Potency"
+              label={"Potency"}
               name="potency"
               options={[
                 { value: "", label: "Select" },
@@ -712,7 +597,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingSelect
-              label="Schedule"
+              label={"Schedule"}
               name="schedule"
               options={[
                 { value: "", label: "Select" },
@@ -750,7 +635,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingSelect
-              label="Drug Type"
+              label={"Drug Type"}
               name="drugType"
               options={[
                 { value: "", label: "Select" },
@@ -791,7 +676,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingSelect
-              label="Drug Risk"
+              label={"Drug Risk"}
               name="drugRisk"
               options={[
                 { value: "", label: "Select" },
@@ -824,21 +709,21 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingInput
-              label="Dosage"
+              label={"Dosage"}
               type="text"
               name="dosage"
               value={formData.dosage}
               onChange={handleChange}
             />
             <FloatingInput
-              label="Formula"
+              label={"Formula"}
               type="text"
               name="formula"
               value={formData.formula}
               onChange={handleChange}
             />
             <FloatingSelect
-              label="NABH Category"
+              label={"NABH Category"}
               name="nabhCategory"
               options={[
                 { value: "", label: "Select" },
@@ -867,7 +752,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingSelect
-              label="Dosage Type"
+              label={"Dosage Type"}
               name="dosageType"
               options={[
                 { value: "", label: "Select" },
@@ -895,7 +780,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingInput
-              label="Strengh/Mg"
+              label={"Strengh/Mg"}
               type="text"
               name="strengthMg"
               value={formData.strengthMg}
@@ -903,14 +788,14 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingInput
-              label="ML"
+              label={"ML"}
               type="number"
               name="ml"
               value={formData.ml}
               onChange={handleChange}
             />
             <FloatingInput
-              label="Fixed Dose"
+              label={"Fixed Dose"}
               type="text"
               name="fixedDoes"
               value={formData.fixedDoes}
@@ -919,25 +804,15 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
 
             <div className="GCSSheetForm-search-field">
               <FloatingInput
-                label="Frequency"
-                type="text"
+                label={"Frequency"}
+                type="search"
                 name="pharmacyFrequencies"
                 value={formData.pharmacyFrequencies.name}
+                onIconClick={() => setActivePopup("frequency")}
               />
-              <button
-                className="GCSSheetForm-search-icon"
-                onClick={() => setActivePopup("frequency")}
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                  <path
-                    fill="currentColor"
-                    d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                  />
-                </svg>
-              </button>
             </div>
             <FloatingInput
-              label="No Of Times"
+              label={"No Of Times"}
               type="number"
               name="numberOfTimes"
               value={formData.numberOfTimes}
@@ -945,28 +820,28 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingInput
-              label="Dose in Mg/Kg"
+              label={"Dose in Mg/Kg"}
               type="text"
               name="doesInMgKg"
               value={formData.doesInMgKg}
               onChange={handleChange}
             />
             <FloatingInput
-              label="No Of Days"
+              label={"No Of Days"}
               type="text"
               name="numberOfDays"
               value={formData.numberOfDays}
               onChange={handleChange}
             />
             <FloatingInput
-              label="Qty in one bott"
+              label={"Qty in one bottle"}
               type="text"
               name="quantityInOneBottle"
               value={formData.quantityInOneBottle}
               onChange={handleChange}
             />
             <FloatingInput
-              label="Unit2"
+              label={"Unit2"}
               type="text"
               name="unit2"
               value={formData.unit2}
@@ -974,7 +849,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingSelect
-              label="Inv Method"
+              label={"Inv Method"}
               name="invMethod"
               options={[
                 { value: "", label: "Select" },
@@ -1002,7 +877,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingInput
-              label="Purchase Expir"
+              label={"Purchase Expiry"}
               type="text"
               name="purchaseExpiry"
               value={formData.purchaseExpiry}
@@ -1010,7 +885,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingInput
-              label="sale Expiry Days"
+              label={"sale Expiry Days"}
               type="text"
               name="salesExpiryDays"
               value={formData.salesExpiryDays}
@@ -1075,7 +950,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             </label>
 
             <FloatingSelect
-              label="Item Types"
+              label={"Item Types"}
               name="itemTypes"
               options={[
                 { value: "", label: "Select" },
@@ -1101,7 +976,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
               onChange={handleChange}
             />
 
-            <FloatingInput label="MRP Discount" type="text" name="" />
+            <FloatingInput label={"MRP Discount"} type="text" name="" />
             <label>
               Higher / Lower:
               <input
@@ -1122,7 +997,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
               Lower
             </label>
             <FloatingSelect
-              label="Formulation"
+              label={"Formulation"}
               name="formulation"
               options={[
                 { value: "", label: "Select" },
@@ -1146,7 +1021,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingSelect
-              label="Route"
+              label={"Route"}
               name="route"
               value={formData.route}
               onChange={handleChange}
@@ -1169,7 +1044,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingInput
-              label="Re Order Quantity"
+              label={"Re Order Quantity"}
               type="text"
               name="reOrderQuantity"
               value={formData.reOrderQuantity}
@@ -1182,7 +1057,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
           <div className="GCSSheetForm-grid">
             <div className="GCSSheetForm-header">Auto PO Pack Calculation</div>
             <FloatingInput
-              label="Pack Calculation"
+              label={"Pack Calculation"}
               type="text"
               name="packCalculation"
               value={formData.packCalculation}
@@ -1190,7 +1065,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingSelect
-              label="Supply Type"
+              label={"Supply Type"}
               name="supplyType"
               value={formData.supplyType}
               onChange={handleChange}
@@ -1218,42 +1093,42 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingInput
-              label="Number Of Days Permitted"
+              label={"Number Of Days Permitted"}
               type="text"
               name="numberOfDaysPermitted"
               value={formData.numberOfDaysPermitted}
               onChange={handleChange}
             />
             <FloatingInput
-              label="Mrp Discount Op"
+              label={"Mrp Discount Op"}
               type="text"
               name="mrpDiscountOP"
               value={formData.mrpDiscountOP}
               onChange={handleChange}
             />
             <FloatingInput
-              label="Mrp Discount Ip"
+              label={"Mrp Discount Ip"}
               type="text"
               name="mrpDiscountIP"
               value={formData.mrpDiscountIP}
               onChange={handleChange}
             />
             <FloatingInput
-              label="TCODE"
+              label={"TCODE"}
               type="text"
               name="tcode"
               value={formData.tcode}
               onChange={handleChange}
             />
             <FloatingInput
-              label="lAST PO Rate"
+              label={"lAST PO Rate"}
               type="text"
               name="lastPoRate"
               value={formData.lastPoRate}
               onChange={handleChange}
             />
             <FloatingInput
-              label="DISFIELD"
+              label={"DISFIELD"}
               type="text"
               name="disField"
               value={formData.disField}
@@ -1262,7 +1137,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
 
             <div className="GCSSheetForm-search-field">
               <FloatingInput
-                label="Drug req taggi"
+                label={"Drug req taggi"}
                 type="text"
                 name="drugRequiredTagging"
                 value={formData.drugRequiredTagging}
@@ -1301,7 +1176,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             </label>
 
             <FloatingSelect
-              label="Storage Type"
+              label={"Storage Type"}
               name="storageType"
               value={formData.storageType}
               onChange={handleChange}
@@ -1321,7 +1196,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             />
 
             <FloatingSelect
-              label="Grading Expiry"
+              label={"Grading Expiry"}
               name="gradingExpiry"
               value={formData.gradingExpiry}
               onChange={handleChange}
@@ -1360,7 +1235,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             </label>
 
             <FloatingInput
-              label="MPR For Non"
+              label={"MPR For Non"}
               type="text"
               name="mrpForNonMrpItems"
               value={formData.mrpForNonMrpItems}

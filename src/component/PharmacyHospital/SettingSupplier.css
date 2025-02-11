@@ -7,6 +7,11 @@
   font-family: Arial, sans-serif;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.supplier-setting-header h2
+{
+font-size: 20px;
+text-align: center;
+}
 .supplier-setting-despensaryForm{
 display: flex;
 align-items: center;
@@ -40,12 +45,6 @@ justify-content: center;
   background-color: var(--button-hover-background-color);
 }
 
-.manage-users-search-input {
-  padding: 6px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 180px;
-}
 
 .setting-supplier-span {
   text-align: right;
@@ -168,9 +167,9 @@ justify-content: center;
   }
 
 
-  .manage-users-search-input {
+  /* .manage-users-search-input {
     width: 100%;
-  }
+  } */
 
   .setting-suppliers-users-table th,
   .setting-suppliers-users-table td {
@@ -230,6 +229,7 @@ margin-left: 20px;
 
 /* Style for form group */
 .supplier-setting-form-group {
+  width: 350px;
 margin-bottom: 10px;
 }
 
@@ -288,11 +288,6 @@ align-items: center;
 margin-right: 0;
 }
 
-.supplier-setting-form-group label {
-flex: 0 0 150px;
-font-weight: 400;
-margin-right: 5px;
-}
 
 .supplier-setting-form-group .form-control {
 /* flex: 1; */
@@ -369,26 +364,12 @@ margin-left: 20px;
 margin-right: 5px;
 }
 
-.store-setting-show-zero-quantity label {
-margin-left: 5px;
-}
+
 
 .store-setting-filter-by-store {
 margin-left: 20px;
 }
 
-.store-setting-filter-by-store label {
-margin-right: 10px;
-}
-
-.store-setting-filter-by-store select {
-padding: 5px;
-border: 1px solid #ced4da;
-border-radius: 4px;
-}
-.setting-supplier-manage-users-search-input{
-width: 20%;
-}
 
 /* SettingSupplier.css */
 
@@ -756,48 +737,3 @@ gap: 10px;
   grid-column: span 1;
 }
 }
-.store-details-edit-form {
-  display: flex;
-  flex-direction: column;
-  /* gap: 20px; */
-  padding: 10px;
-}
-.store-details-form-edit h2{
-  font-size: var(--heading-font);
-  font-weight: bold;
-}
-.store-details-form-edit {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.tore-form-details-edit {
-  font-size: var(--font-size);
-  margin-bottom: 10px;
-}
-
-.store-details-form-edit > div {
-  display: flex;
-  align-items: center;
-  /* gap: 10px; */
-}
-
-.store-details-form-edit label {
-  width: 180px; 
-  font-size: var(--font-size);
-}
-
-.store-details-form-edit input {
-  flex: 1;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: var(--font-size);
-}
-
-.manage-modal-modal-body {
-  display: flex;
-  justify-content: flex-end;
-}
-

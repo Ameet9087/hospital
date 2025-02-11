@@ -8,6 +8,8 @@ import CustomModal from "../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import useCustomAlert from "../../alerts/useCustomAlert";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../FloatingInputs";
 const SettingItemType = () => {
   const [itemTypes, setItemTypes] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -33,10 +35,7 @@ const SettingItemType = () => {
   }, [showModal]);
 
   // Filtered item types based on search term
-  // Filtered item types based on search term
-  const filteredItemTypes = itemTypes.filter((item) =>
-    item.itemType.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredItemTypes = itemTypes;
 
   const handleShowModal = (mode, item = null) => {
     setFormMode(mode);
@@ -69,9 +68,10 @@ const SettingItemType = () => {
         .post(`${API_BASE_URL}/itemtypes`, itemTypeData)
         .then((response) => {
           handleCloseModal();
+          toast.success("Item Type Added Successfully")
         })
         .catch((error) => {
-          console.error("There was an error adding the item type!", error);
+          toast.error("There was an error adding the item type!", error);
         });
     } else if (formMode == "Edit") {
       axios
@@ -81,10 +81,11 @@ const SettingItemType = () => {
             item.id === selectedItem.id ? response.data : item
           );
           setItemTypes(updatedItemTypes);
+          toast.success("Item Type Updated Successfully")
           handleCloseModal();
         })
         .catch((error) => {
-          console.error("There was an error updating the item type!", error);
+          toast.error("There was an error updating the item type!", error);
         });
     }
   };
@@ -98,37 +99,8 @@ const SettingItemType = () => {
   };
 
   // Function to trigger print
-  // Function to trigger print
   const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
-        <head>
-          <title>Print Table</title>
-          <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
-            }
-          </style>
-        </head>
-        <body>
-          ${printContent.outerHTML}
-        </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+    window.print(); // Triggers the browser's print window
   };
 
   return (
@@ -207,9 +179,9 @@ const SettingItemType = () => {
                   >
                     Edit
                   </button>
-                  <button className="setting-supplier-action-button">
+                  {/* <button className="setting-supplier-action-button">
                     Deactivate
-                  </button>
+                  </button> */}
                 </td>
               </tr>
             ))}
@@ -243,16 +215,13 @@ const SettingItemType = () => {
                 controlId="itemType"
                 className="supplier-setting-form-group col-md-6"
               >
-                <Form.Label>
-                  Type of Item
-                  <span className="supplier-setting-text-danger">*</span>:
-                </Form.Label>
-                <Form.Control
+                <FloatingInput
+                label={"Type of Item"}
                   type="text"
                   placeholder="Enter Item Type"
                   name="itemType"
                   required
-                  defaultValue={
+                  value={
                     formMode === "Edit" ? selectedItem?.itemType : ""
                   }
                 />
@@ -261,16 +230,13 @@ const SettingItemType = () => {
                 controlId="selectCategory"
                 className="supplier-setting-form-group col-md-6"
               >
-                <Form.Label>
-                  Under Item Type
-                  <span className="supplier-setting-text-danger">*</span>:
-                </Form.Label>
-                <Form.Control
+                <FloatingInput
+                label={"Under Item Type"}
                   type="text"
                   placeholder="Enter Category"
                   name="underItemType"
                   required
-                  defaultValue={
+                  value={
                     formMode === "Edit" ? selectedItem?.underItemType : ""
                   }
                 />
@@ -281,20 +247,22 @@ const SettingItemType = () => {
                 controlId="description"
                 className="supplier-setting-form-group"
               >
-                <Form.Label>Type:</Form.Label>
-                <Form.Control
+    
+                <FloatingInput
+                label={"Type"}
+              
                   type="text"
                   name="type"
                   placeholder="Enter Description"
-                  defaultValue={formMode === "Edit" ? selectedItem?.type : ""}
+                  value={formMode === "Edit" ? selectedItem?.type : ""}
                 />
               </Form.Group>
               <Form.Group
                 controlId="description"
                 className="supplier-setting-form-group"
               >
-                <Form.Label>Bill Types:</Form.Label>
-                <Form.Control
+                <FloatingInput
+                label={"Bill Types"}
                   type="text"
                   name="billType"
                   placeholder="Enter Bill Type"
@@ -309,12 +277,12 @@ const SettingItemType = () => {
                 controlId="description"
                 className="supplier-setting-form-group"
               >
-                <Form.Label>Mis Heads:</Form.Label>
-                <Form.Control
+                <FloatingInput
+                label={"Mis Heads"}
                   type="text"
                   name="misHeads"
                   placeholder="Enter Mis Head"
-                  defaultValue={
+                  value={
                     formMode === "Edit" ? selectedItem?.misHeads : ""
                   }
                 />
@@ -323,12 +291,12 @@ const SettingItemType = () => {
                 controlId="description"
                 className="supplier-setting-form-group"
               >
-                <Form.Label>Pre Fix For Item Code:</Form.Label>
-                <Form.Control
+                <FloatingInput
+                label={"Pre Fix For Item Code"}
                   type="text"
                   name="preFixForItemCode"
                   placeholder="Enter pre Fix For Item Code"
-                  defaultValue={
+                  value={
                     formMode === "Edit" ? selectedItem?.preFixForItemCode : ""
                   }
                 />
@@ -339,12 +307,13 @@ const SettingItemType = () => {
                 controlId="description"
                 className="supplier-setting-form-group"
               >
-                <Form.Label>Description:</Form.Label>
-                <Form.Control
+                <FloatingInput
+                label={"Description"}
+
                   type="text"
                   name="description"
                   placeholder="Enter pre Fix For Item Code"
-                  defaultValue={
+                  value={
                     formMode === "Edit" ? selectedItem?.description : ""
                   }
                 />

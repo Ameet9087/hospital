@@ -1,79 +1,107 @@
-
-  .dgpkg-container {
-    max-width: 100%;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: var(--background-color);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .dgpkg-title {
-    text-align: center;
-    font-size: 24px;
-    color: var(--sideBar-bg-color);
-    margin-bottom: 20px;
-  }
-  
-  .dgpkg-form {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three columns */
-    gap: 5px;
-  }
-  .table-input-dg{
-    width: 80%;
-    border-radius: 5px;
-  }
-  .dgpkg-total{
-    width: 30%;
-    padding: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .dgpkg-field dgpkg-full-width
-  {
-    width: 100%;
-    padding: 5px;
-  }
-  .dgpkg-form input{
-    padding: 5px;
-    border-radius: 5px;
-  }
-  .dgpkg-form label{
-    width: 200px;
-  }
-  .dgpkg-button {
-    background-color: var(--button-bg-color);
-    color: white;
-    padding:5px;
-    border: none;
-    border-radius: 5px;
-    font-size: var(--font-size);
-    margin: 0 10px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .dgpkg-button:hover {
-    background-color: var(--button-hover-background-color);
-    color: var(--button-hover-text-color);
-    border: 1px solid var(--button-hover-border-color);
-  }
-  .dgpkg-field {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .dgpkg-field label{
-    width: 30%;
-  }
-  .dgpkg-field input{
-    width: 60%;
-  }
-.dg-search-icon{
-    margin-left: 5px;
-    font-size: 14px;
-    color: black;
+.dgmaster-container {
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 auto;
 }
+.dgmaster-add-button {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.dgmaster-add-button:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+.dgmaster-search-bar {
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.dgmaster-search-bar input {
+  padding: 5px;
+  font-size: var(--font-size);
+  width: 200px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+.dgmaster-search-bar i {
+  color: gray;
+  position: absolute;
+  right: 5px;
+}
+.dgmaster-search-N-result {
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dgmaster-results-info {
+  display: flex;
+  align-items: center;
+  /* padding-top: 10px; */
+}
+.dgmaster-results-info span {
+  /* display: flex;
+align-items: center; */
+  /* padding-top: 10px; */
+  /* color: #008CBA; */
+  font-size: var(--font-size);
+  /* font-weight: bold; */
+  margin-right: 10px;
+}
+.dgmaster-edit-button,
+.dgmaster-deactivate-button {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 1px 5px;
+}
+
+.dgmaster-edit-button:hover,
+.dgmaster-deactivate-button:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.dgmaster-print-button {
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.dgmaster-print-button:hover {
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+
+

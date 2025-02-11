@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from 'react-bootstrap';
 import './UserCollectionReport.css';
 import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
@@ -93,36 +93,36 @@ const DischargedPatient = () => {
           </div>
 
           <div className="user-collection-report-tab">
-          <table className="patientList-table" ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-                "IP Number",
-                "Patient Name",
-                "Hospital No",
-                "Admitted On",
-                "Discharged On",
-                "Admitting Doctor"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
+            <table className="patientList-table" ref={tableRef}>
+              <thead>
+                <tr>
+                  {[
+                    "IP Number",
+                    "Patient Name",
+                    "Hospital No",
+                    "Admitted On",
+                    "Discharged On",
+                    "Admitting Doctor"
+                  ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
               <tbody>
                 {reportsData.map((row, index) => (
                   <tr key={index}>

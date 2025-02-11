@@ -208,9 +208,42 @@ const EmployeeHeader = () => {
                 Speciality Group
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/settings/paymodemaster"
+                className={
+                  location.pathname === "/settings/paymodemaster"
+                    ? "active"
+                    : ""
+                }
+              >
+                Paymode Master
+              </NavLink>
+            </li>
+
           </ul>
         </nav>
       </header>
+
+
+      {location.pathname.includes("/settings/paymodemaster") && (
+        <div className="sub-nav-container">
+          <ul>
+            <li>
+              <NavLink
+                to="/settings/paymodemaster/createpaymode"
+                className={
+                  location.pathname === "/settings/paymodemaster/createpaymode"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create Paymode
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      )}
 
       {location.pathname.includes("/settings/substore") && (
         <div className="sub-nav-container">
@@ -239,7 +272,27 @@ const EmployeeHeader = () => {
                 to="/settings/organaization/createorganaization"
                 className={
                   location.pathname ===
-                  "/settings/organaization/createorganaization"
+                    "/settings/organaization/createorganaization"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create organization
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      )}
+
+      {location.pathname.includes("/settings/organaization") && (
+        <div className="sub-nav-container">
+          <ul>
+            <li>
+              <NavLink
+                to="/settings/organaization/createorganaization"
+                className={
+                  location.pathname ===
+                    "/settings/organaization/createorganaization"
                     ? "active"
                     : ""
                 }
@@ -259,7 +312,7 @@ const EmployeeHeader = () => {
                 to="/settings/dicountathority/creatediscountathority"
                 className={
                   location.pathname ===
-                  "/settings/dicountathority/creatediscountathority"
+                    "/settings/dicountathority/creatediscountathority"
                     ? "active"
                     : ""
                 }
@@ -314,7 +367,7 @@ const EmployeeHeader = () => {
                 to="/settings/radiology/manage-imaging-type"
                 className={
                   location.pathname ===
-                  "/settings/radiology/manage-imaging-type"
+                    "/settings/radiology/manage-imaging-type"
                     ? "active"
                     : ""
                 }
@@ -327,7 +380,7 @@ const EmployeeHeader = () => {
                 to="/settings/radiology/manage-imaging-item"
                 className={
                   location.pathname ===
-                  "/settings/radiology/manage-imaging-item"
+                    "/settings/radiology/manage-imaging-item"
                     ? "active"
                     : ""
                 }
@@ -340,7 +393,7 @@ const EmployeeHeader = () => {
                 to="/settings/radiology/manage-radiology-template"
                 className={
                   location.pathname ===
-                  "/settings/radiology/manage-radiology-template"
+                    "/settings/radiology/manage-radiology-template"
                     ? "active"
                     : ""
                 }
@@ -353,7 +406,7 @@ const EmployeeHeader = () => {
                 to="/settings/radiology/default-signatories"
                 className={
                   location.pathname ===
-                  "/settings/radiology/default-signatories"
+                    "/settings/radiology/default-signatories"
                     ? "active"
                     : ""
                 }
@@ -447,7 +500,7 @@ const EmployeeHeader = () => {
                 to="/settings/employee/manage-department"
                 className={
                   location.pathname ===
-                  "/settings/departments/manage-department"
+                    "/settings/departments/manage-department"
                     ? "active"
                     : ""
                 }
@@ -461,7 +514,7 @@ const EmployeeHeader = () => {
                 to="/settings/employee/manage-employee-role"
                 className={
                   location.pathname ===
-                  "/settings/employee/manage-employee-role"
+                    "/settings/employee/manage-employee-role"
                     ? "active"
                     : ""
                 }
@@ -474,7 +527,7 @@ const EmployeeHeader = () => {
                 to="/settings/employee/manage-employee-type"
                 className={
                   location.pathname ===
-                  "/settings/employee/manage-employee-type"
+                    "/settings/employee/manage-employee-type"
                     ? "active"
                     : ""
                 }
@@ -518,7 +571,7 @@ const EmployeeHeader = () => {
                 to="/settings/ipmaster/IP-master-Pay-type-master"
                 className={
                   location.pathname ===
-                  "/settings/ipmaster/IP-master-Pay-type-master"
+                    "/settings/ipmaster/IP-master-Pay-type-master"
                     ? "active"
                     : ""
                 }
@@ -810,7 +863,7 @@ const EmployeeHeader = () => {
                 to="/settings/specialisations/create-specialisations"
                 className={
                   location.pathname ===
-                  "/settings/specialisations/create-specialisations"
+                    "/settings/specialisations/create-specialisations"
                     ? "active"
                     : ""
                 }
@@ -829,7 +882,7 @@ const EmployeeHeader = () => {
                 to="/settings/specialitygroup/create-hospitalSpecialityGroup"
                 className={
                   location.pathname ===
-                  "/settings/specialitygroup/create-hospitalSpecialityGroup"
+                    "/settings/specialitygroup/create-hospitalSpecialityGroup"
                     ? "active"
                     : ""
                 }

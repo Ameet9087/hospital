@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./PurchaseOrderForm.css";
 import { API_BASE_URL } from "../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingSelect } from "../../FloatingInputs";
 
-const PurchaseOrderForm = () => {
+const PurchaseOrderForm = ({onClose}) => {
   const [formVisible, setFormVisible] = useState(true);
   const [selectedSupplierId, setSelectedSupplierId] = useState();
   const [genericName, setGenericName] = useState("");
@@ -93,10 +95,7 @@ const PurchaseOrderForm = () => {
       .then((response) => {
         setAvailableItems(response.data);
         console.log(response.data);
-        console.log(
-          "777777",
-          availableItems?.dependentStocks?.pharmacyDependentStockId
-        );
+        console.log(availableItems?.dependentStocks?.pharmacyDependentStockId);
       })
       .catch((error) => {
         console.error("There was an error fetching the items!", error);
@@ -138,7 +137,9 @@ const PurchaseOrderForm = () => {
           const updatedItem = { ...item, [name]: value };
 
           if (name === "itemName") {
-            const selectedItem = availableItems.find((i) => i.itemName === value);
+            const selectedItem = availableItems.find(
+              (i) => i.itemName === value
+            );
             if (selectedItem) {
               updatedItem.standardRate = parseFloat(selectedItem.mrpItem || 0);
               updatedItem.pharmacyItemMasterDTO = {
@@ -151,8 +152,12 @@ const PurchaseOrderForm = () => {
           const itemQuantity = parseInt(updatedItem.itemQuantity || 0, 10);
           const freeQuantity = parseInt(updatedItem.freeQuantity || 0, 10);
           const standardRate = parseFloat(updatedItem.standardRate || 0);
-          const ccChargePercentage = parseFloat(updatedItem.ccChargePercentage || 0);
-          const discountPercentage = parseFloat(updatedItem.discountPercentage || 0);
+          const ccChargePercentage = parseFloat(
+            updatedItem.ccChargePercentage || 0
+          );
+          const discountPercentage = parseFloat(
+            updatedItem.discountPercentage || 0
+          );
           const vatPercentage = parseFloat(updatedItem.vatPercentage || 0);
 
           // Calculate totals
@@ -187,8 +192,8 @@ const PurchaseOrderForm = () => {
   };
 
   useEffect(() => {
-    calculateFormDataTotals()
-  }, [items])
+    calculateFormDataTotals();
+  }, [items]);
 
   const calculateFormDataTotals = () => {
     let overallVatAmount = 0;
@@ -202,7 +207,7 @@ const PurchaseOrderForm = () => {
     setItems((prevItems) => {
       // Check if prevItems is an array
       if (!Array.isArray(prevItems)) {
-        console.error("prevItems is not an array:", prevItems);
+        toast.error("prevItems is not an array:", prevItems);
         return prevItems; // Return the original data without modification
       }
 
@@ -248,7 +253,6 @@ const PurchaseOrderForm = () => {
     }));
   };
 
-
   const addItem = () => {
     setItems([
       ...items,
@@ -284,45 +288,45 @@ const PurchaseOrderForm = () => {
     e.preventDefault();
 
     if (!selectedSupplierId) {
-      alert("Please select a supplier.");
+      toast.error("Please select a supplier.");
       return;
     }
     console.log("selected ", selectedSupplierId);
     const data = {
       poDate: formData.poDate,
-      deliveryDays: parseInt(formData.deliveryDays) || 0,  // Make sure it's an integer
+      deliveryDays: parseInt(formData.deliveryDays) || 0, // Make sure it's an integer
       deliveryAddress: formData.deliveryAddress,
       deliveryDate: formData.deliveryDate,
       referenceNumber: formData.referenceNo,
       contact: formData.contact,
       invoicingAddress: formData.invoicingAddress,
 
-      subTotal: parseInt(formData.subtotal) || 0,  // Convert to int
-      taxableAmount: parseInt(formData.taxableAmount) || 0,  // Convert to int
-      vatAmount: parseInt(formData.vatAmount) || 0,  // Convert to int
-      discountAmount: parseInt(formData.discountAmount) || 0,  // Convert to int
+      subTotal: parseInt(formData.subtotal) || 0, // Convert to int
+      taxableAmount: parseInt(formData.taxableAmount) || 0, // Convert to int
+      vatAmount: parseInt(formData.vatAmount) || 0, // Convert to int
+      discountAmount: parseInt(formData.discountAmount) || 0, // Convert to int
       inWords: formData.inWords,
-      discountPercent: parseInt(formData.discountPercentage) || 0,  // Convert to int
-      nonTaxableAmount: parseInt(formData.nonTaxableAmount) || 0,  // Convert to int
-      ccCharge: parseInt(formData.ccCharge) || 0,  // Convert to int
-      totalAmount: parseInt(formData.totalAmount) || 0,  // Convert to int
+      discountPercent: parseInt(formData.discountPercentage) || 0, // Convert to int
+      nonTaxableAmount: parseInt(formData.nonTaxableAmount) || 0, // Convert to int
+      ccCharge: parseInt(formData.ccCharge) || 0, // Convert to int
+      totalAmount: parseInt(formData.totalAmount) || 0, // Convert to int
       supplierDTO: {
         suppliersId: selectedSupplierId,
       },
       purchaseOrderItemDTOs: items.map((item) => ({
-        quantity: parseInt(item.itemQuantity) || 0,  // Convert to int
-        freeQuantity: parseInt(item.freeQuantity) || 0,  // Convert to int
-        totalQuantity: parseInt(item.totalQuantity) || 0,  // Convert to int
-        vatPercentage: parseInt(item.vatPercentage) || 0,  // Convert to int
+        quantity: parseInt(item.itemQuantity) || 0, // Convert to int
+        freeQuantity: parseInt(item.freeQuantity) || 0, // Convert to int
+        totalQuantity: parseInt(item.totalQuantity) || 0, // Convert to int
+        vatPercentage: parseInt(item.vatPercentage) || 0, // Convert to int
         standardRate: parseInt(item.standardRate) || 0,
-        subTotal: parseInt(item.subtotal) || 0,  // Convert to int
-        ccCharge: parseInt(item.ccCharge) || 0,  // Convert to int
-        discountPercent: parseInt(item.discountPercentage) || 0,  // Convert to int
-        totalAmount: parseInt(item.totalAmount) || 0,  // Convert to int
+        subTotal: parseInt(item.subtotal) || 0, // Convert to int
+        ccCharge: parseInt(item.ccCharge) || 0, // Convert to int
+        discountPercent: parseInt(item.discountPercentage) || 0, // Convert to int
+        totalAmount: parseInt(item.totalAmount) || 0, // Convert to int
         remarks: item.remarks,
         pharmacyItemMasterDTO: {
           pharmacyItemMasterId:
-            item.pharmacyItemMasterDTO?.pharmacyItemMasterId || 0,  // Ensure it's an int or 0 if undefined
+            item.pharmacyItemMasterDTO?.pharmacyItemMasterId || 0, // Ensure it's an int or 0 if undefined
         },
       })),
     };
@@ -332,11 +336,13 @@ const PurchaseOrderForm = () => {
     axios
       .post(`${API_BASE_URL}/purchaseorders/add`, data)
       .then((response) => {
-        alert("Purchase order saved successfully!");
+        toast.success("Purchase order saved successfully!");
+        onClose();
       })
       .catch((error) => {
         console.error("There was an error saving the purchase order!", error);
-        alert("Failed to save purchase order.");
+        toast.error("Failed to save purchase order.");
+        onClose();
       });
   };
 
@@ -351,27 +357,25 @@ const PurchaseOrderForm = () => {
       </div>
       <div className="purchase-order-form-summary">
         <div className="purchase-order-form-item">
-          <label>
-            Supplier:<span className="purchase-span">*</span>
-          </label>
-          <select
+          <FloatingSelect
+            label={"Supplier"}
             name="supplier"
             value={formData.supplier}
             onChange={handleSupplierChange}
-          >
-            <option value="">Select Supplier</option>
-            {suppliers.map((supplier) => (
-              <option key={supplier.suppliersId} value={supplier.suppliersId}>
-                {supplier.supplierName}
-              </option>
-            ))}
-          </select>
+            options={[
+              { value: "", label: "" },
+              ...(Array.isArray(suppliers)
+                ? suppliers.map((supplier) => ({
+                    value: supplier.suppliersId,
+                    label: supplier.supplierName,
+                  }))
+                : []),
+            ]}
+          />
         </div>
         <div className="purchase-order-form-item">
-          <label>
-            PO Date:<span className="purchase-span">*</span>
-          </label>
-          <input
+          <FloatingInput
+            label={"PO Date"}
             type="date"
             name="poDate"
             value={formData.poDate}
@@ -379,8 +383,8 @@ const PurchaseOrderForm = () => {
           />
         </div>
         <div className="purchase-order-form-item">
-          <label>Delivery Days:</label>
-          <input
+          <FloatingInput
+            label={"Delivery Days"}
             type="number"
             name="deliveryDays"
             value={formData.deliveryDays}
@@ -388,17 +392,18 @@ const PurchaseOrderForm = () => {
           />
         </div>
         <div className="purchase-order-form-item">
-          <label>Delivery Address:</label>
-          <input
+          <FloatingInput
+            label={"Delivery Address"}
+            type="text"
             name="deliveryAddress"
             value={formData.deliveryAddress}
             onChange={handleChangeInput}
-          ></input>
+          />
         </div>
 
         <div className="purchase-order-form-item">
-          <label>Delivery Date:</label>
-          <input
+          <FloatingInput
+            label={"Delivery Date"}
             type="date"
             name="deliveryDate"
             value={formData.deliveryDate}
@@ -406,8 +411,8 @@ const PurchaseOrderForm = () => {
           />
         </div>
         <div className="purchase-order-form-item">
-          <label>Reference No.:</label>
-          <input
+          <FloatingInput
+            label={"Reference No"}
             type="text"
             name="referenceNo"
             value={formData.referenceNo}
@@ -416,8 +421,8 @@ const PurchaseOrderForm = () => {
         </div>
 
         <div className="purchase-order-form-item">
-          <label>Contact:</label>
-          <input
+          <FloatingInput
+            label={"Contact"}
             type="text"
             name="contact"
             value={formData.contact}
@@ -425,12 +430,12 @@ const PurchaseOrderForm = () => {
           />
         </div>
         <div className="purchase-order-form-item">
-          <label>Invoicing Address:</label>
-          <input
+          <FloatingInput
+            label={"Invoicing Address"}
             name="invoicingAddress"
             value={formData.invoicingAddress}
             onChange={handleChangeInput}
-          ></input>
+          />
         </div>
         <div className="purchase-order-form-item"></div>
       </div>
@@ -611,8 +616,8 @@ const PurchaseOrderForm = () => {
       <div className="goods-receipt-totals-section">
         <div className="purchase-order-form-summary">
           <div className="purchase-order-form-item">
-            <label>Sub Total:</label>
-            <input
+            <FloatingInput
+              label={"Sub Total"}
               type="text"
               name="subtotal"
               value={formData.subtotal}
@@ -620,16 +625,16 @@ const PurchaseOrderForm = () => {
             />
           </div>
           <div className="purchase-order-form-item">
-            <label>Discount %:</label>
-            <input
+            <FloatingInput
+              label={"Discount %"}
               type="number"
               name="discountPercentage"
               onChange={handleInputChange}
             />
           </div>
           <div className="purchase-order-form-item">
-            <label>Taxable Amount:</label>
-            <input
+            <FloatingInput
+              label={"Taxable Amount"}
               type="number"
               name="taxableAmount"
               value={formData.taxableAmount}
@@ -637,8 +642,8 @@ const PurchaseOrderForm = () => {
             />
           </div>
           <div className="purchase-order-form-item">
-            <label>Non-Taxable Amount:</label>
-            <input
+            <FloatingInput
+              label={"Non-Taxable Amount"}
               type="number"
               name="nonTaxableAmount"
               value={formData.nonTaxableAmount}
@@ -646,8 +651,8 @@ const PurchaseOrderForm = () => {
             />
           </div>
           <div className="purchase-order-form-item">
-            <label>VAT Amount:</label>
-            <input
+            <FloatingInput
+              label={"VAT Amount"}
               type="number"
               name="vatAmount"
               value={formData.vatAmount}
@@ -655,8 +660,8 @@ const PurchaseOrderForm = () => {
             />
           </div>
           <div className="purchase-order-form-item">
-            <label>CC Charge:</label>
-            <input
+            <FloatingInput
+              label={"CC Charge"}
               type="number"
               name="ccCharge"
               value={formData.ccCharge}
@@ -664,8 +669,8 @@ const PurchaseOrderForm = () => {
             />
           </div>
           <div className="purchase-order-form-item">
-            <label>Discount Amount:</label>
-            <input
+            <FloatingInput
+              label={"Discount Amount"}
               type="number"
               name="discount"
               value={items.discountAmount}
@@ -673,17 +678,18 @@ const PurchaseOrderForm = () => {
             />
           </div>
           <div className="purchase-order-form-item">
-            <label>Total Amount:</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Total Amount"}
+              type="number" // Changed to "number" for better validation
               name="totalAmount"
               value={formData.totalAmount}
               onChange={handleInputChange}
+              restrictions={{ number: true }} // Keeping this if FloatingInput uses it internally
             />
           </div>
           <div className="purchase-order-form-item">
-            <label>In Words:</label>
-            <input
+            <FloatingInput
+              label={"In Words"}
               type="text"
               name="inWords"
               value={formData.inWords}

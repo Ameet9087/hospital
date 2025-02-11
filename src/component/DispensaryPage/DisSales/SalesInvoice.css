@@ -111,6 +111,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 15%;
 }
 
 .select-printer select {
@@ -173,5 +174,6 @@
 }
 
 .dispensaryprint-invoice-close-button button:hover {
-  color: #cc0000;
+  color:#cc0000;
 }
+

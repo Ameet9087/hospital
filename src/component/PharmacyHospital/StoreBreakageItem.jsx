@@ -46,9 +46,6 @@ const StoreBreakageItem = () => {
     XLSX.utils.book_append_sheet(wb, ws, "BreakageItemsReport");
     XLSX.writeFile(wb, "BreakageItemsReport.xlsx");
   };
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
 
   // Function to handle printing
   const handlePrint = () => {
@@ -82,7 +79,7 @@ const StoreBreakageItem = () => {
     newWindow.print();
     newWindow.close();
   };
-
+  
   // Function to filter breakage items based on selected date range
   const filterByDate = () => {
     const filtered = breakageItems.filter((item) => {

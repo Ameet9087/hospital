@@ -123,6 +123,8 @@ const SettingRouting = () => {
         <Route path="/servicemaster" element={<ServiceList />} />
         <Route path="/locationmaster/locationform" element={<Location />} />
         <Route path="/socmaster/socform" element={<SOCMaster />} />
+        <Route path="/paymodemaster/paymodemaster" element={<SOCMaster />} />
+
         {/* <Route
           path="/ipmaster/IP-master-OTPackageMaster"
           element={<OTPackageMaster />}

@@ -1,0 +1,39 @@
+.medication-page {
+  padding: 20px;
+  background-color: #dfe6f3; /* Light blue-purple background */
+  text-align: center;
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.medication-button {
+  width: 250px;
+  padding: 15px;
+  border: none;
+  background-color: #6a5acd; /* Medium Purple */
+  color: white;
+  font-size: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: 0.3s;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.medication-button:hover {
+  background-color: #483d8b; /* Darker Purple */
+}
+
+.medication-button div {
+  line-height: 1.5;
+}
+
+.medication-button p {
+  margin: 5px 0;
+  color: wh; /* Light Blue */
+}

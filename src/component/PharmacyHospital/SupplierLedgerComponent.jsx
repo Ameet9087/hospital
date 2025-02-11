@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./PurchaseOrder.css";
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import * as XLSX from 'xlsx';
 
@@ -137,8 +137,8 @@ const SupplierLedgerComponent = () => {
         newWindow.document.close();
         newWindow.print();
         newWindow.close();
-    };
-
+      };
+      
     return (
         <div className="purchase-order-container">
             <div className="purchase-order-header">

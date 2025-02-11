@@ -6,9 +6,9 @@ import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import * as XLSX from 'xlsx';
 
 const ItemWisePurchaseReportCom = () => {
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
-
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef=useRef(null);
+  
 
   // Function to export table to Excel
   const handleExport = () => {
@@ -19,37 +19,8 @@ const ItemWisePurchaseReportCom = () => {
   };
 
   // Function to trigger print
-  // Function to trigger print
   const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
-        <head>
-          <title>Print Table</title>
-          <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
-            }
-          </style>
-        </head>
-        <body>
-          ${printContent.outerHTML}
-        </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+    window.print(); // Triggers the browser's print window
   };
 
   return (
@@ -94,31 +65,31 @@ const ItemWisePurchaseReportCom = () => {
       </div>
       <div className="iten-purchase-searchRow">
         <input type="text" placeholder="Search" className="iten-purchase-searchInput" />
-
+       
       </div>
       <div className='item-purchase-btn'>
-        <span>Showing 0 / 0 results</span>
+      <span>Showing 0 / 0 results</span>
         <button className="iten-purchase-button" onClick={handleExport}>Export</button>
         <button className="iten-purchase-button" onClick={handlePrint}>Print</button>
       </div>
       <div className='item-purchase-ta'>
-        <table ref={tableRef}>
+      <table  ref={tableRef}>
           <thead>
             <tr>
               {[
                 "GR Date",
-                "GR NO.",
-                "Supplier",
-                "Bill ...",
-                "Generic Name",
-                "Item",
-                "Batch",
-                "Expiry",
-                "Qua...",
-                "Purchase Rate",
-                "SubTotal",
-                "VAT Amt.",
-                "TotalAmount"
+  "GR NO.",
+  "Supplier",
+  "Bill ...",
+  "Generic Name",
+  "Item",
+  "Batch",
+  "Expiry",
+  "Qua...",
+  "Purchase Rate",
+  "SubTotal",
+  "VAT Amt.",
+  "TotalAmount"      
               ].map((header, index) => (
                 <th
                   key={index}
@@ -139,13 +110,13 @@ const ItemWisePurchaseReportCom = () => {
               ))}
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td colSpan="13" className="iten-purchase-noRows">No Rows To Show</td>
-            </tr>
-          </tbody>
-        </table>
-        {/* <div className="iten-purchase-pagination">
+        <tbody>
+          <tr>
+            <td colSpan="13" className="iten-purchase-noRows">No Rows To Show</td>
+          </tr>
+        </tbody>
+      </table>
+      {/* <div className="iten-purchase-pagination">
         <button className="iten-purchase-paginationButton">First</button>
         <button className="iten-purchase-paginationButton">Previous</button>
         <span>Page 0 of 0</span>
