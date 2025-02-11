@@ -95,8 +95,6 @@ const BreakTime = () => {
           )}
         </tbody>
       </table>
-
-      {/* Modal for the form */}
       <CustomModal isOpen={showPopup} onClose={handleClose}>
         <BreakTimeForm onClose={handleClose} />
       </CustomModal>

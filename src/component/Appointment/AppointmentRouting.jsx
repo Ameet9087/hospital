@@ -15,12 +15,13 @@ import AppointmentBookingList from "../Appointment/AppointmentBookingList";
 import CheckIn from "../Appointment/CheckIn";
 import AddNewAppointmentForm from "./AddNewappointment";
 import DoctorAppointment from "./DoctorAppointment";
-import DoctorScheduleSTD from "./DoctorScheduleSTD";
 import BreakTime from "./BreakTime";
 import BookAppointment from "./OnlineAppointment/BookAppointment";
 import OnlineDoctorScheduleStd from "./OnlineAppointment/OnlineDoctorScheduleStd";
 import DoctorBlocking from "./DoctorBlocking/DoctorBlocking";
 import DoctorBlockingTable from "./DoctorBlocking/DoctorBlockingTable";
+import DoctorScheduleTable from "./DoctorScheduleTable";
+import FollowUp from "./FollowUp";
 
 const AppointmentRouting = () => {
   return (
@@ -102,15 +103,14 @@ const AppointmentRouting = () => {
         >
           Doctor Blocking
         </NavLink>
-
-        {/* <NavLink 
-          to="/appointment/doctor-blocking" 
-          className={({ isActive }) => 
-            isActive ? "appointment-booking-list-nav-link active" : "appointment-booking-list-nav-link"
+        <NavLink
+          to="/appointment/followupmaster"
+          className={({ isActive }) =>
+            isActive ? "appointment-booking-list-navigation-link active" : "appointment-booking-list-navigation-link"
           }
         >
-          Doctor Blocking
-        </NavLink> */}
+          Follow Up Master
+        </NavLink>
       </nav>
 
       <div className="appointment-booking-list-content">
@@ -121,12 +121,13 @@ const AppointmentRouting = () => {
           />
           {/* <Route path="bookappointment" element={<BookingAppointment />} /> */}
           <Route path="doctorappointment" element={<DoctorAppointment />} />
-          <Route path="doctorschedulestd" element={<DoctorScheduleSTD />} />
+          <Route path="doctorschedulestd" element={<DoctorScheduleTable />} />
           <Route path="breaktime" element={<BreakTime />} />
           {/* <Route path="listvisits" element={<ListVisited />} />
           <Route path="newvisit" element={<NewVisitedList />} /> */}
           <Route path="onlineappointment" element={<OnlineAppointment />} />
           <Route path="doctorblocking" element={<DoctorBlockingTable />} />
+          <Route path="followupmaster" element={<FollowUp/>}/>
           <Route path="*" element={<AppointmentBookingList />} />
           <Route
             path="add-new-appointment"

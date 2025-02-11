@@ -40,7 +40,9 @@ export default function DoctorAppointment() {
 
   const handleLoadSlots = async ({ locationId, doctorId, appointmentDate }) => {
     if (!locationId || !doctorId || !appointmentDate) {
-      toast.error("Please select location, doctor, and date before loading slots.");
+      toast.error(
+        "Please select location, doctor, and date before loading slots."
+      );
       return;
     }
 
@@ -109,11 +111,6 @@ export default function DoctorAppointment() {
       console.error("Error fetching schedule:", error);
       toast.error("Failed to load appointment slots. Please try again.");
     }
-  };
-
-  const isToday = (date) => {
-    const today = new Date().toISOString().split("T")[0];
-    return today === date;
   };
 
   useEffect(() => {
@@ -339,7 +336,8 @@ export default function DoctorAppointment() {
         <div className="DoctorAppointments-field">
           <FloatingInput
             label={"Date"}
-            type="Date"
+            type="date"
+            name="appointmentDate"
             value={formData.appointmentDate}
             onChange={handleInputChange}
           />
@@ -361,7 +359,7 @@ export default function DoctorAppointment() {
             ]}
           />
         </div>
-        
+
         <div className="DoctorAppointments-field">
           <FloatingSelect
             label="Doctor"
