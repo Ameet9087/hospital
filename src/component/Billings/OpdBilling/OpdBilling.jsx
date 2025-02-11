@@ -4,6 +4,7 @@ import PopupTable from "../../Admission/PopupTable";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -80,6 +81,26 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
 };
 
 const OpdBilling = () => {
+  const location = useLocation();
+  const appointment = location.state?.outPatientId;
+  console.log(appointment);
+  const newData = {
+    outPatientId: appointment?.outPatientId,
+    uhid: appointment?.patient?.uhid,
+    firstName: appointment?.patient?.firstName,
+    lastName: appointment?.patient?.lastName,
+    originalObject: appointment
+};
+console.log("Hello---",newData);
+
+
+  useEffect(() => {
+    if (appointment) {
+      console.log("Executing handleSelect with appointment:", appointment);
+      handleSelect(newData);
+    }
+  }, [appointment]);
+  
   const [opdPatients, setOpdPatients] = useState([]);
   const [selectedTab, setSelectedTab] = useState("testGrid");
   const [columnWidths, setColumnWidths] = useState({});
@@ -106,6 +127,7 @@ const OpdBilling = () => {
   const [patientType, setPatientType] = useState("");
 
   const [isEmergency, setemergency] = useState(false);
+
 
   const fetchDoctorService = async (outPatientId) => {
     try {
@@ -228,7 +250,7 @@ const OpdBilling = () => {
     setTotalPaidAmount(total.toFixed(2));
   };
 
-  console.log("Total paid amoun", totalPaidAmount);
+  console.log("Total paid amount", totalPaidAmount);
   const handleAddPayment = (
     paymentMode = "Cash",
     paymentAmount = 0,
@@ -416,7 +438,7 @@ const OpdBilling = () => {
   };
 
   const { columns, data } = getPopupData();
-  const handleSelect = async (data) => {
+  const handleSelect = async (data) => { 
     if (activePopup === "patient" || activePopup === "mobilenumber") {
       setSelectedPatient(data.originalObject);
 

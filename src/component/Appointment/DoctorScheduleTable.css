@@ -1,0 +1,63 @@
+.doctor-schedule-table {
+    background-color: #eaffff;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .doctor-schedule-table__add-button {
+    background-color: #00bfa6;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .doctor-schedule-table-heading
+  {
+    margin: 10px 0px;
+    width: 250px;
+  }
+  .doctor-schedule-delete-button
+  {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    margin-left: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .doctor-schedule-table__search-box {
+    padding: 8px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  .doctor-schedule-table__table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+  }
+  
+  .doctor-schedule-table__table th, 
+  .doctor-schedule-table__table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+  
+  .doctor-schedule-table__table th {
+    background-color: #f0f0f0;
+  }
+  
+  .doctor-schedule-table__no-data {
+    text-align: center;
+    color: red;
+  }
+  

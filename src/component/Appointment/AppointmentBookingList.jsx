@@ -151,16 +151,10 @@ const AppointmentBookingList = () => {
     setShowPopup(true);
     setFormData(id);
   };
-
-  const handleCheckIn = (patient) => {
-    navigate("/appointment/checkIn", {
-      state: { patient: patient },
-    });
-  };
-  const handleEditAppointment = (appointmentPatient) => {
-    navigate("/appointment/add-new-appointment", {
-      state: { patientData: appointmentPatient },
-    });
+  const handleConfirm = async (data) => {
+    navigate("/billing/opdbilling",{
+      state:{outPatientId:data}
+    })
   };
 
   const renderAppointments = () => {
@@ -194,6 +188,12 @@ const AppointmentBookingList = () => {
             className="appointments__action-btn"
           >
             Cancel
+          </button>
+          <button
+            onClick={() => handleConfirm(appointment)}
+            className="appointments__action-btn"
+          >
+            Confirm
           </button>
         </td>
       </tr>
@@ -351,6 +351,7 @@ const AppointmentBookingList = () => {
       <CustomModal isOpen={showPopup} onClose={() => setShowPopup(false)}>
         <AddCancel formData={formData} updatedAppointments={formData} onClose={() => setShowPopup(false)} />
       </CustomModal>
+
       {activePopup && (
         <AppoitmentPopupTable
           columns={columns}
