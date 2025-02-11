@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./anesthesiarecordmgnt.css";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 import useCustomAlert from "../../../alerts/useCustomAlert";
 import { API_BASE_URL } from "../../api/api";
 
@@ -193,11 +193,29 @@ const AnesthesiaRecordManagement = () => {
     setSearchTerm(event.target.value);
   };
 
-  const filteredRecords = records.filter(
-    (record) =>
+  const filteredRecords = records.filter((record) => {
+    const searchValue = searchTerm.toLowerCase();
+    return (
       record.surgeryEventDTO?.surgeryEventId?.toString().includes(searchTerm) ||
-      record.notes.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+      record.notes.toLowerCase().includes(searchValue) ||
+      record.surgeryEventDTO?.operationMasterDTO?.operationName
+        ?.toLowerCase()
+        .includes(searchValue) ||
+      record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.patient?.firstName
+        ?.toLowerCase()
+        .includes(searchValue) ||
+      record.surgeryEventDTO?.operationBookingDTO?.ipAdmissionDTO?.patient?.patient?.lastName
+        ?.toLowerCase()
+        .includes(searchValue) ||
+      record.surgeryEventDTO?.docterDTO?.doctorName
+        ?.toLowerCase()
+        .includes(searchValue) ||
+      record.surgeryEventDTO?.anesthesiaType?.toLowerCase().includes(searchValue)
+    );
+  });
+  
+
+
   return (
     <div className="anesthesia-record-container">
       <button
@@ -361,7 +379,7 @@ const AnesthesiaRecordManagement = () => {
             <div className="form-group">
               <label>Start Time</label>
               <input
-                type="text"
+                type="time"
                 name="startTime"
                 value={newRecord.startTime}
                 onChange={handleInputChange}
@@ -372,7 +390,7 @@ const AnesthesiaRecordManagement = () => {
             <div className="form-group">
               <label>End Time</label>
               <input
-                type="text"
+                type="time"
                 name="endTime"
                 value={newRecord.endTime}
                 onChange={handleInputChange}
@@ -398,7 +416,7 @@ const AnesthesiaRecordManagement = () => {
                 {isEditing ? "Update Record" : "Save Record"}
               </button>
 
-              <button onClick={resetForm} className="cancel-btn">
+              <button onClick={resetForm} className="athensiarecordmodalform-cancel-btn">
                 Cancel
               </button>
             </div>
@@ -406,7 +424,7 @@ const AnesthesiaRecordManagement = () => {
         </CustomModal>
       )}
 
-      <CustomAlerts />
+      {/* <CustomAlerts /> */}
     </div>
   );
 };

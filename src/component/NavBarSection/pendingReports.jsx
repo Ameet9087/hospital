@@ -2,9 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import "../NavBarSection/pendingReports.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../api/api";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { FloatingInput } from "../../FloatingInputs";
 
 function PendingReports() {
   const [dateFrom, setDateFrom] = useState("");
@@ -116,24 +118,21 @@ function PendingReports() {
       <div className="pendingReports-header">
         <div className="pendingReports-controls">
           <div className="pendingReports-date-range">
-            <label>
-              From:
-              <input
-                type="date"
-                id="dateFrom"
-                defaultValue={dateFrom}
-                onChange={handleDateFromChange}
-              />
-            </label>
-            <label>
-              To:
-              <input
-                type="date"
-                id="dateTo"
-                defaultValue={dateTo}
-                onChange={handleDateToChange}
-              />
-            </label>
+            <FloatingInput
+            label={"From"}
+             type="date"
+             id="dateFrom"
+             value={dateFrom}
+             onChange={handleDateFromChange}
+            />
+
+            <FloatingInput
+            label={"To"}
+            type="date"
+            id="dateTo"
+            value={dateTo}
+            onChange={handleDateToChange}
+            />
           </div>
         </div>
         {/* <div className="pendingReports-category-select">
@@ -148,13 +147,13 @@ function PendingReports() {
       </div>
       <div className="pendingReports-searchbar-N-showing">
         <div className="pendingReports-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search"
-            className="pendingReports-search-input"
-            value={searchQuery} // Bind search query value
-            onChange={handleSearchChange} // Handle search input change
+
+          <FloatingInput
+           type="text"
+           label={"Search"}
+           value={searchQuery} // Bind search query value
+           onChange={handleSearchChange}
+          
           />
         </div>
         <div className="pendingReports-results-info">

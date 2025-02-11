@@ -4,9 +4,6 @@
     font-family: Arial, sans-serif;
     background-color:var(--background-color);
   }
-  
-  
-  
   .OPDBillCancellation-section {
     background-color: #ffffff;
     border-radius: 5px;
@@ -14,14 +11,12 @@
     margin-bottom: 10px;
     overflow: hidden;
   }
-  
   .OPDBillCancellation-header {
     background-color: #00897b;
     color: white;
     padding: 7px 20px;
     font-size: var(--heading-font);
   }
-  
   .OPDBillCancellation-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -212,7 +207,7 @@
       flex-shrink: 0;
       }
       
-      .OPDBillCancellation-summary-field label {
+      /* .OPDBillCancellation-summary-field label {
       font-size: var(--font-size); 
       white-space: nowrap; 
       }
@@ -222,7 +217,7 @@
       padding: 5px;
       border: 1px solid #ccc;
       border-radius: 4px;
-      }
+      } */
       .OPDBillCancellation-services-table{
         padding: 8px;
         overflow-x: scroll;
@@ -242,6 +237,19 @@
         }
         .OPDBillCancellation-summary-section::-webkit-scrollbar {
         display: none; 
+        }
+        .OPDBillCancellation-save-btn{
+          background-color: var(--button-color);
+          border: none;
+          border-radius: 5px;
+          margin: 10px;
+          color: white;
+          padding: 5px;
+          border: 1px solid var(--button-color);
+        }
+        .OPDBillCancellation-save-btn:hover{
+          background-color: white;
+         color: var(--button-color);
         }
   @media (max-width: 1024px) {
     .OPDBillCancellation-grid {

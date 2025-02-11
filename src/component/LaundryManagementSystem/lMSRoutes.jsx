@@ -18,12 +18,12 @@ const LMSRoutes = () => {
       <div className="lMSRoutes-content">
         <LMSNavBar />
         <Routes>
-          <Route path="/navNotification" element={<NavNotification />} />
+          <Route path="/master" element={<NavNotification />} />
           <Route path="/linenMaster" element={<LinenMaster />} />
           <Route path="/linenRequirement" element={<LinenRequirement />} />
           <Route path="/laundryStaffMapping" element={<LaundryStaffMapping />} />
-          <Route path="/squareLinensIssue" element={<SquareLinensIssue />} />
-          
+          <Route path="/transaction" element={<SquareLinensIssue />} />
+
         </Routes>
       </div>
     </>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Role.css";
 import CreateRole from "./CreateRole";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 
 import AssignFunctionalityTable from "./AssignFunctionalityTable";
 import useCustomAlert from "../../../alerts/useCustomAlert";

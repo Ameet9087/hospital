@@ -76,7 +76,8 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 500,
+
+    zIndex: 5000,
   },
   header: {
     display: "flex",

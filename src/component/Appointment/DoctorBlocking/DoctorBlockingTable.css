@@ -23,8 +23,13 @@
     width: 100px;
     padding: 5px 10px;
     color: white;
-    
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
     background-color: var(--button-color);
+}
+.DoctorBlockingTable-btn :hover{
+    color: var(--button-color);
+    background-color: white;
 }
 .DoctorBlockingTable-addButton input[type="text"]
 {

@@ -444,6 +444,18 @@ const AssignFunctionality = () => {
         "Report"
       ],
     },
+    {
+      id: 45,
+      name: "Autopsy",
+      logo: "fa-solid fa-notes-medical",
+      subcomponents: [
+        "Autopsy Request Form",
+        "Autopsy Scheduling Form",
+        "Autopsy Execution Form",
+        "Autopsy Report Form",
+        "Autopsy Report Distribution Form",
+      ],
+    },
   ];
   const [roles, setRoles] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

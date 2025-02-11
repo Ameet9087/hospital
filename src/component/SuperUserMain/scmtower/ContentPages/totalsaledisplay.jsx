@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import './TotalSaleDisplay.css'; // Import CSS file
 import { Link } from 'react-router-dom';
-import { startResizing } from './ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 
 
 const TotalSaleDisplay = () => {

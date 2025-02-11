@@ -3,7 +3,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Table, Button, FormControl, InputGroup } from "react-bootstrap";
 import "./ListVisited.css";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { useNavigate } from "react-router-dom";
 import BarCode from "react-barcode";
 
@@ -170,9 +170,8 @@ const ListVisited = () => {
               <th
                 key={index}
                 style={{ width: columnWidths[index] }}
-                className={`resizable-th ${
-                  header === "Actions" ? "no-print" : ""
-                }`}
+                className={`resizable-th ${header === "Actions" ? "no-print" : ""
+                  }`}
               >
                 <div className="header-content">
                   <span>{header}</span>
@@ -219,7 +218,7 @@ const ListVisited = () => {
                 <td>
                   {Math.floor(
                     (new Date() - new Date(visit?.visitDate)) /
-                      (1000 * 60 * 60 * 24)
+                    (1000 * 60 * 60 * 24)
                   )}{" "}
                   Days
                 </td>

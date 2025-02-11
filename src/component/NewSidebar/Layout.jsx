@@ -23,7 +23,7 @@ import BloodBank from "../../component/BloodBank/bloodBankRoute";
 import TransportMainRouting from "../../component/TransportMain/transportMainRoute";
 import SettingRouting from "../../component/Employee/SettingRouting";
 import IncentiveApp from "../../component/IncentiveMain/incentiveApp";
-import Header from "./Header";
+// import Header from "./Header";
 import NursingRouting from "../../component/Nursing/NursingMainRouting";
 import SuperUserMainRoute from "../../component/SuperUserMain/superUserMainRoute";
 import SocialServicesMainRoute from "../../component/SocialServicesMain/SocialServicesMainRoute";
@@ -48,14 +48,15 @@ import Chemotherapy from "../../component/ChemotherapyModule/ChemotherapyRoute";
 import DynamicReport from "../../component/DynamicReport/DynamicReport";
 import Procurementmain from "../../component/Procurement2/procurmentmain";
 import HelpDeskRouting from "../../component/HelpD/HelpDeskRouting";
-import Dashboard from "../../component/LoginDashboard/Dashboard/";
+import Dashboard from "../../component/LoginDashboard/Dashboard";
 import MainVisitorFile from "../VisitorMgt/MainVisitorFile";
 import OtMain from "../OperationTheater/OtMain";
 
 import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
 import BillingRoute from "../Billings/Billing";
 import AccountComponent from "../Accounting/AccountingComponent";
-import IMSRoutes from "../LaundryManagementSystem/lMSRoutes"
+import IMSRoutes from "../LaundryManagementSystem/lMSRoutes";
+import AutopsyNavbar from "../Autopsy/Autopsy NavBar/AutopsyNavbar";
 
 function Layout({ }) {
   return (
@@ -97,6 +98,7 @@ function Layout({ }) {
           <Route path="/transport/*" element={<TransportMainRouting />} />
           <Route path="/radioloagy/*" element={<RadiologyRouting />} />
           <Route path="/clinical/*" element={<Clinical />} />
+
           <Route path="/patient/*" element={<PatientRouting />} />
           <Route path="/doctor/*" element={<DoctorDashBoard />} />
           <Route path="/systemadmin/*" element={<SystemAdmin />} />
@@ -133,7 +135,7 @@ function Layout({ }) {
           <Route path="/visit/*" element={<MainVisitorFile />} />
           <Route path="/oprationtheater/*" element={<OtMain />} />
           <Route path="/laundry/*" element={<IMSRoutes />} />
-
+          <Route path="/autopsy/*" element={<AutopsyNavbar />} />
         </Routes>
       </div>
       {/* </div> */}

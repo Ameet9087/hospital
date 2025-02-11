@@ -7,9 +7,9 @@ const UpdateUnitOfMeasurement = ({ unit, closeModal }) => {
   console.log(unit);
   
   const [formData, setFormData] = useState({
-    unitOfMeasurementName: unit.unitOfMeasurementName || '',
+    name: unit.name || '',
     description: unit.description || '',
-    active: unit.active || false,
+    isActive: unit.isActive || false,
   });
 
   const handleInputChange = (e) => {
@@ -20,18 +20,42 @@ const UpdateUnitOfMeasurement = ({ unit, closeModal }) => {
     });
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.put(`${API_BASE_URL}/unitofmeasurement/update/${unit.id}`, formData);
+  //     alert('Unit of Measurement updated successfully!');
+  //     closeModal(); // Close the modal after successful update
+  //   } catch (error) {
+  //     console.error('Error updating unit of measurement:', error);
+  //     alert('Failed to update Unit of Measurement. Please try again.');
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    const unitId = unit?.unitOfMeasurementId || unit?.id; // Ensure correct ID property
+    if (!unitId) {
+      alert("Error: Unit ID is undefined!");
+      return;
+    }
+  
     try {
-      const response = await axios.put(`${API_BASE_URL}/unitofmeasurement/update/${unit.id}`, formData);
-      alert('Unit of Measurement updated successfully!');
-      closeModal(); // Close the modal after successful update
+      const response = await axios.put(
+        `${API_BASE_URL}/unitofmeasurement/update/${unitId}`, 
+        formData
+      );
+      if (response.status === 200) {
+        alert("Unit of Measurement updated successfully!");
+        closeModal(); // Close modal on success
+      }
     } catch (error) {
-      console.error('Error updating unit of measurement:', error);
-      alert('Failed to update Unit of Measurement. Please try again.');
+      console.error("Error updating unit of measurement:", error);
+      alert("Failed to update Unit of Measurement. Please try again.");
     }
   };
-
+  
   return (
     <div className="AddUnitOfMeasurement-model">
       <h2>Update Unit of Measurement</h2>
@@ -42,9 +66,9 @@ const UpdateUnitOfMeasurement = ({ unit, closeModal }) => {
           </label>
           <input
             type="text"
-            name="unitOfMeasurementName"
+            name="name"
             placeholder="Unit of Measurement Name"
-            value={formData.unitOfMeasurementName}
+            value={formData.name}
             onChange={handleInputChange}
             required
           />
@@ -65,8 +89,8 @@ const UpdateUnitOfMeasurement = ({ unit, closeModal }) => {
           <label>Is Active</label>
           <input
             type="checkbox"
-            name="active"
-            checked={formData.active}
+            name="isActive"
+            checked={formData.isActive}
             onChange={handleInputChange}
           />
         </div>

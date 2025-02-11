@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import "./BloodBankIssueForm.css";
 import { API_BASE_URL } from "../../api/api";
-
+import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 const BloodBankIssueForm = ({ requestId }) => {
   const [formData, setFormData] = useState({
     bloodGroup: "",
     unitsIssued: "",
     issueDate: "",
     issuedBy: "",
-    status: ""
+    status: "",
   });
 
   const handleChange = (e) => {
@@ -17,12 +18,10 @@ const BloodBankIssueForm = ({ requestId }) => {
       ...prevData,
       [name]: value,
     }));
-    
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     // Prepare data in the desired format
     const bloodIssuePayload = {
@@ -32,7 +31,7 @@ const BloodBankIssueForm = ({ requestId }) => {
       issuedBy: formData.issuedBy,
       status: formData.status,
       bloodRequestDTO: {
-        requestId: requestId
+        requestId: requestId,
       },
     };
 
@@ -48,14 +47,14 @@ const BloodBankIssueForm = ({ requestId }) => {
       if (response.ok) {
         const responseData = await response.json();
         console.log("Blood issued successfully:", responseData);
-        alert("Blood issued successfully!");
+        toast.success("Proposal saved successfully!");
       } else {
         console.error("Failed to issue blood:", response.statusText);
-        alert("Failed to issue blood. Please try again.");
+        toast.error("Failed to save proposal. Please try again.");
       }
     } catch (error) {
       console.error("Error issuing blood:", error);
-      alert("Error issuing blood. Please try again.");
+      toast.error("Failed to save proposal. Please try again.");
     }
   };
 
@@ -63,44 +62,36 @@ const BloodBankIssueForm = ({ requestId }) => {
     <div className="bloodbankissue-container">
       <h2 className="bloodbankissue-title">Issue Blood</h2>
       <form className="bloodbankissue-form" onSubmit={handleSubmit}>
-
-      <div className="bloodbankissue-form-group">
-          <label htmlFor="requestId">Request ID:</label>
-          <input
+        <div className="bloodbankissue-form-group">
+          <FloatingInput
+            label={"Request ID"}
             type="number"
-            id="requestId"
             name="requestId"
+            placeholder="Request ID"
             value={requestId}
             onChange={handleChange}
-            placeholder="Enter request ID"
             required
+            min="0"
           />
-        </div>
-
-        <div className="bloodbankissue-form-group">
-          <label htmlFor="bloodGroup">Blood Group:</label>
-          <select
+          <FloatingSelect
+            label={"Blood Group"}
             id="bloodGroup"
             name="bloodGroup"
             value={formData.bloodGroup}
             onChange={handleChange}
             required
-          >
-            <option value="">Select Blood Group</option>
-            <option value="A+">A+</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B-">B-</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB-</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-          </select>
+            options={[
+              { value: "", label: "Select a state" },
+              { value: "A+", label: "A+" },
+              { value: "A-", label: "A-" },
+              { value: "B+", label: "B+" },
+            ]}
+          />
         </div>
 
         <div className="bloodbankissue-form-group">
-          <label htmlFor="unitsIssued">Units Issued:</label>
-          <input
+          <FloatingInput
+            label={"Units Issued"}
             type="number"
             id="unitsIssued"
             name="unitsIssued"
@@ -108,12 +99,10 @@ const BloodBankIssueForm = ({ requestId }) => {
             onChange={handleChange}
             placeholder="Enter units issued"
             required
+            min="0"
           />
-        </div>
-
-        <div className="bloodbankissue-form-group">
-          <label htmlFor="issueDate">Issue Date:</label>
-          <input
+          <FloatingInput
+            label={"Issue Date"}
             type="date"
             id="issueDate"
             name="issueDate"
@@ -124,8 +113,8 @@ const BloodBankIssueForm = ({ requestId }) => {
         </div>
 
         <div className="bloodbankissue-form-group">
-          <label htmlFor="issuedBy">Issued By:</label>
-          <input
+          <FloatingInput
+            label={"Issued By"}
             type="text"
             id="issuedBy"
             name="issuedBy"
@@ -134,25 +123,22 @@ const BloodBankIssueForm = ({ requestId }) => {
             placeholder="Enter issuer's name"
             required
           />
-        </div>
-
-        <div className="bloodbankissue-form-group">
-          <label htmlFor="status">Status:</label>
-          <select
+          <FloatingSelect
+            label={"Status"}
             id="status"
             name="status"
             value={formData.status}
             onChange={handleChange}
             required
-          >
-            <option value="">Select Status</option>
-            <option value="Issued">Issued</option>
-            <option value="Pending">Pending</option>
-            <option value="Cancelled">Cancelled</option>
-          </select>
+            options={[
+              { value: "", label: "Select a state" },
+              { value: "Issued", label: "Issued" },
+              { value: "Pending", label: "Pending" },
+              { value: "Cancelled", label: "Cancelled" },
+            ]}
+          />
         </div>
 
-       
         <div className="bloodbankissue-form-actions">
           <button type="submit" className="bloodbankissue-submit-btn">
             Submit

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./BlockIpEntries.css";
-import PopupTable from "../PopupTable";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { API_BASE_URL } from "../../api/api";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+  PopupTable,
+} from "../../../FloatingInputs/index";
 
 const BlockIPEntries = ({ patient }) => {
   const [activePopup, setActivePopup] = useState(null);
@@ -136,16 +141,16 @@ const BlockIPEntries = ({ patient }) => {
           <div className="BlockIPEntries-section-header">Patient Details</div>
 
           <div className="BlockIPEntries-data">
-            <label>IPNO :</label>
-            <input
+            <FloatingInput
+              label={"Ip No"}
               type="text"
-              name="ipAdmmissionId"
+              name={"ipAdmmissionId"}
               value={patient?.ipAdmissionDto?.patient?.patient?.uhid}
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Patient Name :</label>
-            <input
+            <FloatingInput
+              label={"Patient Name"}
               type="text"
               name="firstName"
               value={`${patient?.ipAdmissionDto?.patient?.patient?.firstName} ${patient?.ipAdmissionDto?.patient?.patient?.lastName}`}
@@ -153,8 +158,8 @@ const BlockIPEntries = ({ patient }) => {
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Discharge Date :</label>
-            <input
+            <FloatingInput
+              label={"Discharge Date"}
               type="date"
               name="disAdvisedDate"
               value={patient?.disAdvisedDate}
@@ -162,8 +167,8 @@ const BlockIPEntries = ({ patient }) => {
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Discharge Time :</label>
-            <input
+            <FloatingInput
+              label={"Discharge Time"}
               type="text"
               name="disAdvisedTime"
               value={patient?.disAdvisedTime}
@@ -171,34 +176,36 @@ const BlockIPEntries = ({ patient }) => {
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Address :</label>
-            <textarea
+            <FloatingTextarea
+              label={"Address"}
               name="address"
               value={patient?.ipAdmissionDto?.patient?.patient?.address}
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>DOB :</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"DOB"}
+              type="date"
               name="dateOfBirth"
               value={patient?.ipAdmissionDto?.patient?.patient?.dateOfBirth}
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Gender :</label>
-            <select
-              name="gender"
+            <FloatingSelect
+              label="Gender"
+              name={"gender"}
               value={patient?.ipAdmissionDto?.patient?.patient?.gender}
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Not Specify">Not Specify</option>
-            </select>
+              options={[
+                { value: "", label: "" },
+                { value: "Male", label: "Male" },
+                { value: "Female", label: "Female" },
+                { value: "Other", label: "Other" },
+              ]}
+            />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Admission Date :</label>
-            <input
+            <FloatingInput
+              label={"Admission Date"}
               type="date"
               name="admissionDate"
               value={patient?.ipAdmissionDto?.admissionDate}
@@ -206,43 +213,46 @@ const BlockIPEntries = ({ patient }) => {
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Admission Time :</label>
-            <input
+            <FloatingInput
+              label={"Admission Time"}
               type="text"
-              name="admissionTime"
+              name="admissionDate"
               value={patient?.ipAdmissionDto?.admissionTime}
               onChange={handleInputChange}
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Phone No :</label>
-            <input
-              type="number"
+            <FloatingInput
+              label={"Phone No"}
+              type="text"
               name="mobileNumber"
               value={patient?.ipAdmissionDto?.patient?.patient?.mobileNumber}
+              restrictions={{ number: true, max: 10 }}
               onChange={handleInputChange}
             />
           </div>
         </div>
         <div className="BlockIPEntries-section">
           <div className="BlockIPEntries-data">
-            <label>Discharge Type:</label>
-            <select
+            <FloatingSelect
+              label="Discharge Type"
               name="dischargeType"
               value={formData.dischargeType}
               onChange={handleInputChange}
-            >
-              <option value="Recovered">Recovered</option>
-              <option value="Transferred">Transferred</option>
-              <option value="Deceased">Deceased</option>
-              <option value="DAMA">
-                Discharged Against Medical Advice (DAMA)
-              </option>
-            </select>
+              options={[
+                { value: "Recovered", label: "Recovered" },
+                { value: "Transferred", label: "Transferred" },
+                { value: "Deceased", label: "Deceased" },
+                {
+                  value: "DAMA",
+                  label: "Discharged Against Medical Advice (DAMA)",
+                },
+              ]}
+            />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Type :</label>
-            <input
+            <FloatingInput
+              label={"Type"}
               type="text"
               name="type"
               value={formData.type}
@@ -250,8 +260,8 @@ const BlockIPEntries = ({ patient }) => {
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Date :</label>
-            <input
+            <FloatingInput
+              label={"Date"}
               type="date"
               name="date"
               value={formData.date}
@@ -259,26 +269,28 @@ const BlockIPEntries = ({ patient }) => {
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Consultant Doctor :</label>
-            <input
+            <FloatingInput
+              label={"Consultant Doctor"}
               type="text"
               name="doctorName"
+              restrictions={{ char: true }}
               value={formData.doctorName}
               onChange={handleInputChange}
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Consultant Doctor 2 :</label>
-            <input
+            <FloatingInput
+              label={"Consultant Doctor 2"}
               type="text"
               name="consultantDoctor2"
+              restrictions={{ char: true }}
               value={formData.consultantDoctor2}
               onChange={handleInputChange}
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>MLC No :</label>
-            <input
+            <FloatingInput
+              label={"MLC No"}
               type="text"
               name="mlcNo"
               value={formData.mlcNo}
@@ -286,8 +298,8 @@ const BlockIPEntries = ({ patient }) => {
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Bed No :</label>
-            <input
+            <FloatingInput
+              label={"Bed No"}
               type="text"
               name="bedNo"
               value={formData.bedNo}
@@ -295,8 +307,8 @@ const BlockIPEntries = ({ patient }) => {
             />
           </div>
           <div className="BlockIPEntries-data">
-            <label>Remarks :</label>
-            <textarea
+            <FloatingTextarea
+              label={"Remarks"}
               name="remark"
               value={formData.remark}
               onChange={handleInputChange}
@@ -304,9 +316,9 @@ const BlockIPEntries = ({ patient }) => {
           </div>
           <div className="BlockIPEntries-section-header">Add Attachments</div>
           <div className="BlockIPEntries-upload">
-            <input
+            <FloatingInput
+              label={"File Name"}
               type="text"
-              placeholder="File Name"
               value={formData.fileName}
               readOnly
             />

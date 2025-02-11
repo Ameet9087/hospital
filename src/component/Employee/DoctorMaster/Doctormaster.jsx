@@ -4,20 +4,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faL, faSearch } from "@fortawesome/free-solid-svg-icons";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
-import IpMasterPopupTable from "../IPMaster/IpMasterPopupTable";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
-
+import {
+  PopupTable,
+  FloatingInput,
+  FloatingSelect,
+} from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 const DoctorMaster = () => {
   const [columnWidths, setColumnWidths] = useState({});
-  const [selectedTab, setSelectedTab] = useState([]);
+  const [selectedTab, setSelectedTab] = useState("doctorFee");
   const tableRef = useRef(null);
   const [modelOpen, setModelOpen] = useState(false);
   const [doctorData, setDoctorData] = useState([]);
   const [allPaytype, setAllPaytype] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
+  const [doctorId, setDoctorId] = useState();
+
   const [formdata, setFormdata] = useState({
     salutation: "Dr",
-
     doctorName: "",
     gender: "",
     dob: "",
@@ -56,21 +62,22 @@ const DoctorMaster = () => {
       payTypeName: paytype.payTypeName,
       opdCategory: paytype.opdCategory,
       paytypeId: paytype.id,
-      morningFirstVisit: 0.0,
-      morningFirstVisitToDoctor: 0.0,
-      morningSubVisit: 0.0,
-      morningSubVisitToDoctor: 0.0,
-      morningEmergency: 0.0,
-      morningEmergencyToDoctor: 0.0,
-      eveningFirstVisit: 0.0,
-      eveningFirstVisitToDoctor: 0.0,
-      eveningSubVisit: 0.0,
-      eveningSubVisitToDoctor: 0.0,
-      eveningEmergency: 0.0,
-      eveningEmergencyToDoctor: 0.0,
-      referralVisit: 0.0,
-      referralVisitToDoctor: 0.0,
-      generalOpdFee: 0.0,
+      morningFirstVisit: "",
+      morningFirstVisitToDoctor: "",
+      morningSubVisit: "",
+      morningSubVisitToDoctor: "",
+      morningEmergency: "",
+      morningEmergencyToDoctor: "",
+      eveningFirstVisit: "",
+      eveningFirstVisitToDoctor: "",
+      eveningSubVisit: "",
+      eveningSubVisitToDoctor: "",
+      eveningEmergency: "",
+      eveningEmergencyToDoctor: "",
+      referralVisit: "",
+      referralVisitToDoctor: "",
+      generalOpdFee: "",
+      followupopdfees: "",
     }))
   );
 
@@ -94,21 +101,22 @@ const DoctorMaster = () => {
           payTypeName: paytype.payTypeName,
           opdCategory: paytype.opdCategory,
           paytypeId: paytype.id,
-          morningFirstVisit: 0.0,
-          morningFirstVisitToDoctor: 0.0,
-          morningSubVisit: 0.0,
-          morningSubVisitToDoctor: 0.0,
-          morningEmergency: 0.0,
-          morningEmergencyToDoctor: 0.0,
-          eveningFirstVisit: 0.0,
-          eveningFirstVisitToDoctor: 0.0,
-          eveningSubVisit: 0.0,
-          eveningSubVisitToDoctor: 0.0,
-          eveningEmergency: 0.0,
-          eveningEmergencyToDoctor: 0.0,
-          referralVisit: 0.0,
-          referralVisitToDoctor: 0.0,
-          generalOpdFee: 0.0,
+          morningFirstVisit: "",
+          morningFirstVisitToDoctor: "",
+          morningSubVisit: "",
+          morningSubVisitToDoctor: "",
+          morningEmergency: "",
+          morningEmergencyToDoctor: "",
+          eveningFirstVisit: "",
+          eveningFirstVisitToDoctor: "",
+          eveningSubVisit: "",
+          eveningSubVisitToDoctor: "",
+          eveningEmergency: "",
+          eveningEmergencyToDoctor: "",
+          referralVisit: "",
+          referralVisitToDoctor: "",
+          generalOpdFee: "",
+          followupopdfees: "",
         }))
       );
     }
@@ -186,20 +194,27 @@ const DoctorMaster = () => {
       prevState.map((row, i) =>
         i === index
           ? {
-            ...row,
-            [name]: value,
-          }
+              ...row,
+              [name]: value,
+            }
           : row
       )
     );
   };
 
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+    const files = e.target.files;
+
+    if (files && files.length > 0) {
+      setSelectedFile(files[0]);
+      console.log("Selected file:", files[0]);
+    } else {
+      console.log("No file selected or input was cleared");
+      setSelectedFile(null);
+    }
   };
 
   const clear = () => {
-    // Reset formdata to its initial state
     setFormdata({
       salutation: "Dr",
       doctorName: "",
@@ -241,23 +256,108 @@ const DoctorMaster = () => {
         payTypeName: paytype.payTypeName,
         opdCategory: paytype.opdCategory,
         paytypeId: paytype.id,
-        morningFirstVisit: 0.0,
-        morningFirstVisitToDoctor: 0.0,
-        morningSubVisit: 0.0,
-        morningSubVisitToDoctor: 0.0,
-        morningEmergency: 0.0,
-        morningEmergencyToDoctor: 0.0,
-        eveningFirstVisit: 0.0,
-        eveningFirstVisitToDoctor: 0.0,
-        eveningSubVisit: 0.0,
-        eveningSubVisitToDoctor: 0.0,
-        eveningEmergency: 0.0,
-        eveningEmergencyToDoctor: 0.0,
-        referralVisit: 0.0,
-        referralVisitToDoctor: 0.0,
-        generalOpdFee: 0.0,
+        morningFirstVisit: "",
+        morningFirstVisitToDoctor: "",
+        morningSubVisit: "",
+        morningSubVisitToDoctor: "",
+        morningEmergency: "",
+        morningEmergencyToDoctor: "",
+        eveningFirstVisit: "",
+        eveningFirstVisitToDoctor: "",
+        eveningSubVisit: "",
+        eveningSubVisitToDoctor: "",
+        eveningEmergency: "",
+        eveningEmergencyToDoctor: "",
+        referralVisit: "",
+        referralVisitToDoctor: "",
+        generalOpdFee: "",
+        followupopdfees: "",
       }))
     );
+  };
+
+  const handleEdit = (doctor) => {
+    setIsEdit(true);
+    setDoctorId(doctor.doctorId);
+    setFormdata({
+      salutation: doctor.salutation || "Dr",
+      doctorName: doctor.doctorName,
+      gender: doctor.gender,
+      dob: doctor.dob,
+      anniversaryDate: doctor.anniversaryDate,
+      specialization: doctor.specialization,
+      pancardNo: doctor.pancardNo,
+      emailId: doctor.emailId,
+      degree: doctor.degree,
+      title: doctor.title,
+      registrationNo: doctor.registrationNo,
+      employeeType: doctor.employeeType,
+      doctorType: doctor.doctorType,
+      typeOfConsultant: doctor.typeOfConsultant,
+      complemetType: doctor.complemetType,
+      residenceAddress: doctor.residenceAddress,
+      residenceCity: doctor.residenceCity,
+      residenceDistrict: doctor.residenceDistrict,
+      residenceState: doctor.residenceState,
+      residencePinCode: doctor.residencePinCode,
+      residencePhoneNo: doctor.residencePhoneNo,
+      mobileNumber: doctor.mobileNumber,
+      clinicAddress: doctor.clinicAddress,
+      clinicCity: doctor.clinicCity,
+      clinicDistrict: doctor.clinicDistrict,
+      clinicState: doctor.clinicState,
+      clinicPhoneNo: doctor.clinicPhoneNo,
+      validSvNos: doctor.validSvNos,
+      svValidDays: doctor.svValidDays,
+      doctorAssistantNo: doctor.doctorAssistantNo,
+      doctorAssistantDis: doctor.doctorAssistantDis,
+      unitMaster: doctor.unitMaster,
+    });
+
+    // Populate fees data
+    setDoctorFeeTableRowsableRows(
+      doctor.orgDoctorFees?.map((fee) => ({
+        payTypeName: fee.payType.payTypeName,
+        opdCategory: fee.payType.opdCategory,
+        paytypeId: fee.payType.id,
+        morningFirstVisit: fee.morningFirstVisit,
+        morningFirstVisitToDoctor: fee.morningFirstVisitToDoctor,
+        morningSubVisit: fee.morningSubVisit,
+        morningSubVisitToDoctor: fee.morningSubVisitToDoctor,
+        morningEmergency: fee.morningEmergency,
+        morningEmergencyToDoctor: fee.morningEmergencyToDoctor,
+        eveningFirstVisit: fee.eveningFirstVisit,
+        eveningFirstVisitToDoctor: fee.eveningFirstVisitToDoctor,
+        eveningSubVisit: fee.eveningSubVisit,
+        eveningSubVisitToDoctor: fee.eveningSubVisitToDoctor,
+        eveningEmergency: fee.eveningEmergency,
+        eveningEmergencyToDoctor: fee.eveningEmergencyToDoctor,
+        referralVisit: fee.referralVisit,
+        referralVisitToDoctor: fee.referralVisitToDoctor,
+        generalOpdFee: fee.generalOpdFee,
+        followupopdfees: fee.followupopdfees,
+      })) || []
+    );
+
+    setSelectedFile(doctor.doctorSignature);
+    setModelOpen(true);
+  };
+
+  const handleDelete = async (doctorId) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/doctors/${doctorId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        toast.success("Doctor Deleted Successfully");
+        fetchAllDoctorData();
+      } else {
+        toast.error("Failed to delete doctor:", response.statusText);
+      }
+    } catch (error) {
+      toast.error("Error deleting doctor:", error);
+    }
   };
 
   const handleSubmit = async () => {
@@ -268,15 +368,13 @@ const DoctorMaster = () => {
           specialisationId: selectedSpecialisation?.specialisationId || 1,
         },
         orgDoctorFees: doctorFeeTableRowsableRows.map((row) => ({
-          payType: {
-            id: row.paytypeId,
-          },
+          payType: { id: row.paytypeId },
           morningFirstVisit: row.morningFirstVisit,
           morningFirstVisitToDoctor: row.morningFirstVisitToDoctor,
           morningSubVisit: row.morningSubVisit,
           morningSubVisitToDoctor: row.morningSubVisitToDoctor,
           morningEmergency: row.morningEmergency,
-          morningEmergencyToDoctor: row.eveningEmergencyToDoctor,
+          morningEmergencyToDoctor: row.morningEmergencyToDoctor,
           eveningFirstVisit: row.eveningFirstVisit,
           eveningFirstVisitToDoctor: row.eveningFirstVisitToDoctor,
           eveningSubVisit: row.eveningSubVisit,
@@ -286,8 +384,10 @@ const DoctorMaster = () => {
           referralVisit: row.referralVisit,
           referralVisitToDoctor: row.referralVisitToDoctor,
           generalOpdFee: row.generalOpdFee,
+          followupopdfees: row.followupopdfees,
         })),
       };
+
       const formDataObj = new FormData();
 
       if (selectedFile) {
@@ -297,24 +397,29 @@ const DoctorMaster = () => {
       const jsonData = JSON.stringify(doctordata);
       formDataObj.append("addDoctorDTO", jsonData);
 
-      const response = await fetch(`${API_BASE_URL}/doctors`, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-        },
-        body: formDataObj,
-      });
-      if (response.ok) {
-        console.log("Success");
+      let response;
+      if (isEdit) {
+        response = await axios.put(
+          `${API_BASE_URL}/doctors/${doctorId}`,
+          formDataObj
+        );
+      } else {
+        response = await axios.post(`${API_BASE_URL}/doctors`, formDataObj);
+      }
+
+      if (response) {
         setModelOpen(false);
         clear();
         fetchAllDoctorData();
-        alert("Doctor Added Successfully");
+        toast.success(
+          isEdit ? "Doctor Updated Successfully" : "Doctor Added Successfully"
+        );
+        setIsEdit(false);
       } else {
-        console.error("Failed:", response.statusText);
+        toast.error("Failed:", response.statusText);
       }
     } catch (error) {
-      console.error("Error during submission:", error);
+      toast.error("Error during submission:", error);
     }
   };
 
@@ -345,6 +450,7 @@ const DoctorMaster = () => {
                     "ReferralVisit",
                     "ReferralVisit(ToDoctor)",
                     "GeneralOpdFee",
+                    "Followup Opd Fee",
                   ].map((header, index) => (
                     <th
                       key={index}
@@ -372,123 +478,181 @@ const DoctorMaster = () => {
                     <td>{row.payTypeName}</td>
                     <td>{row.opdCategory}</td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"morningFirstVisit"}
                         type="text"
                         name="morningFirstVisit"
                         value={row.morningFirstVisit}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"morningFirstVisitToDoctor"}
                         type="text"
                         name="morningFirstVisitToDoctor"
                         value={row.morningFirstVisitToDoctor}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"morningSubVisit"}
                         type="text"
                         name="morningSubVisit"
                         value={row.morningSubVisit}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"morningSubVisitToDoctor"}
                         type="text"
                         name="morningSubVisitToDoctor"
                         value={row.morningSubVisitToDoctor}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"morningEmergency"}
                         type="text"
                         name="morningEmergency"
                         value={row.morningEmergency}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"morningEmergencyToDoctor"}
                         type="text"
                         name="morningEmergencyToDoctor"
                         value={row.morningEmergencyToDoctor}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"eveningFirstVisit"}
                         type="text"
                         name="eveningFirstVisit"
                         value={row.eveningFirstVisit}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"eveningFirstVisitToDoctor"}
                         type="text"
                         name="eveningFirstVisitToDoctor"
                         value={row.eveningFirstVisitToDoctor}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"eveningSubVisit"}
                         type="text"
                         name="eveningSubVisit"
                         value={row.eveningSubVisit}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"eveningSubVisitToDoctor"}
                         type="text"
                         name="eveningSubVisitToDoctor"
                         value={row.eveningSubVisitToDoctor}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"eveningEmergency"}
                         type="text"
                         name="eveningEmergency"
                         value={row.eveningEmergency}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"eveningEmergencyToDoctor"}
                         type="text"
                         name="eveningEmergencyToDoctor"
                         value={row.eveningEmergencyToDoctor}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"referralVisit"}
                         type="text"
                         name="referralVisit"
                         value={row.referralVisit}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"referralVisitToDoctor"}
                         type="text"
                         name="referralVisitToDoctor"
                         value={row.referralVisitToDoctor}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
                       />
                     </td>
                     <td>
-                      <input
+                      <FloatingInput
+                        label={"generalOpdFee"}
                         type="text"
                         name="generalOpdFee"
                         value={row.generalOpdFee}
                         onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
+                        required
+                      />
+                    </td>
+                    <td>
+                      <FloatingInput
+                        label={"FollowUpOpdFees"}
+                        type="text"
+                        name="followupopdfees"
+                        value={row.followupopdfees}
+                        onChange={(e) => handleDoctorFessChange(e, index)}
+                        restrictions={{ number: true }}
+                        min="0"
+                        required
                       />
                     </td>
                   </tr>
@@ -504,7 +668,13 @@ const DoctorMaster = () => {
   return (
     <>
       <div className="doctormaster-container">
-        <button onClick={() => setModelOpen(true)} className="add-doctor-btn">
+        <button
+          onClick={() => {
+            clear();
+            setModelOpen(true);
+          }}
+          className="add-doctor-btn"
+        >
           Add Doctor
         </button>
 
@@ -523,6 +693,7 @@ const DoctorMaster = () => {
                 "Registration No",
                 "Employee Type",
                 "Residence Address",
+                "Actions",
               ].map((header, index) => (
                 <th
                   key={index}
@@ -558,6 +729,20 @@ const DoctorMaster = () => {
                   <td>{item.registrationNo}</td>
                   <td>{item.employeeType}</td>
                   <td>{item.residenceAddress}</td>
+                  <td>
+                    <button
+                      className="doctormaster-edit-btn"
+                      onClick={() => handleEdit(item)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="doctormaster-delete-btn"
+                      onClick={() => handleDelete(item.doctorId)}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -576,34 +761,29 @@ const DoctorMaster = () => {
             <div className="doctormaster-doctor-details">
               <span className="doctormasterspanheader">Doctor Detail</span>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Dr. Name:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Dr. Name"}
                   value={formdata.doctorName}
                   name={"doctorName"}
                   onChange={handleInputChange}
                   type="text"
                 />
               </div>
-
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Gender:</label>
-                <select
+                <FloatingSelect
+                  label={"Gender"}
                   name="gender"
                   value={formdata.gender}
                   onChange={handleInputChange}
-                  className="doctormaster-select"
-                >
-                  <option>Select Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
+                  options={[
+                    { value: "Male", label: "Male" },
+                    { value: "Female", label: "Female" },
+                  ]}
+                />
               </div>
-
               <div className="docmasterformdata">
-                <label className="doctormaster-label">DOB:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"DOB"}
                   value={formdata.dob}
                   onChange={handleInputChange}
                   name="dob"
@@ -612,9 +792,8 @@ const DoctorMaster = () => {
               </div>
 
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Anniversary:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Anniversary"}
                   value={formdata.anniversaryDate}
                   onChange={handleInputChange}
                   name="anniversaryDate"
@@ -623,52 +802,50 @@ const DoctorMaster = () => {
               </div>
 
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Specialisation:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Specialisation"}
                   value={selectedSpecialisation?.specialisationName}
-                  type="text"
+                  type="search"
+                  onIconClick={() => setShowModal(true)}
                 />
-                <i
-                  className="fa-solid fa-magnifying-glass"
-                  onClick={() => setShowModal(true)}
-                ></i>
               </div>
-              <div className='docmasterformdata'>
-                <label className="doctormaster-label">Doctor Type:</label>
-                <select value={formdata.doctorType} onChange={handleInputChange} name="doctorType" className="doctormaster-select">
-                  <option value="">Select Doctor Type</option>
-                  <option value="Employee">Employee</option>
-                  <option value="Referral">Referral</option>
-                  <option value="Consultant">Consultant</option>
-                  <option value="Both">Both</option>
-                </select>
-              </div>
-
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Pancard No.:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingSelect
+                  label={"Doctor Type"}
+                  value={formdata.doctorType}
+                  onChange={handleInputChange}
+                  name="doctorType"
+                  options={[
+                    { value: "Employee", label: "Employee" },
+                    { value: "Referral", label: "Referral" },
+                    { value: "Consultant", label: "Consultant" },
+                    { value: "Both", label: "Both" },
+                  ]}
+                />
+              </div>
+              <div className="docmasterformdata">
+                <FloatingInput
+                  label={"Pancard No"}
                   type="text"
                   value={formdata.pancardNo}
                   onChange={handleInputChange}
                   name="pancardNo"
+                  restrictions={{ varchar: true, max: 10 }}
                 />
               </div>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Mobile No:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Mobile No"}
                   type="email"
                   value={formdata.mobileNumber}
                   onChange={handleInputChange}
                   name="mobileNumber"
+                  restrictions={{ number: true, max: 10 }}
                 />
               </div>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Email ID:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Email ID"}
                   type="email"
                   value={formdata.emailId}
                   onChange={handleInputChange}
@@ -677,9 +854,8 @@ const DoctorMaster = () => {
               </div>
 
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Dr. Degree:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Dr. Degree"}
                   type="text"
                   value={formdata.degree}
                   onChange={handleInputChange}
@@ -687,9 +863,8 @@ const DoctorMaster = () => {
                 />
               </div>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Dr. Title:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Dr. Title"}
                   type="text"
                   value={formdata.title}
                   onChange={handleInputChange}
@@ -697,111 +872,105 @@ const DoctorMaster = () => {
                 />
               </div>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Dr. Reg No:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Dr. Reg No"}
                   type="text"
                   value={formdata.registrationNo}
                   onChange={handleInputChange}
                   name="registrationNo"
                 />
               </div>
-            </div>
-
-            <div className="doctormaster-residence-details">
-              <div className='docmasterformdata'>
-                <label className="doctormaster-label">Employee Type:</label>
-                <select value={formdata.employeeType} onChange={handleInputChange} name="employeeType" className="doctormaster-select">
-                  <option value="">select employee type</option>
-                  <option value="employee">employee</option>
-                  <option value="non employee">non employee</option>
-                </select>
+              <div className="docmasterformdata">
+                <FloatingSelect
+                  label={"Employee Type"}
+                  value={formdata.employeeType}
+                  onChange={handleInputChange}
+                  name="employeeType"
+                  options={[
+                    { value: "employee", label: "employee" },
+                    { value: "non employee", label: "non employee" },
+                  ]}
+                />
               </div>
 
               <div className="docmasterformdata">
-                <label className="doctormaster-label">
-                  Type of Consultent:
-                </label>
-                <select
+                <FloatingSelect
+                  label={"Type of Consultent"}
                   value={formdata.typeOfConsultant}
                   onChange={handleInputChange}
                   name="typeOfConsultant"
-                  className="doctormaster-select"
-                >
-                  <option>Select Type of Consultant</option>
-                  <option value="full-time">full-time</option>
-                  <option value="half-time">Half-time</option>
-                </select>
+                  options={[
+                    { value: "full-time", label: "full-time" },
+                    { value: "half-time", label: "half-time" },
+                  ]}
+                />
               </div>
+            </div>
 
+            <div className="doctormaster-residence-details">
               <span className="doctormasterspanheader">Residence Address</span>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Address:</label>
-                <input
+                <FloatingInput
+                  label={"Address"}
                   value={formdata.residenceAddress}
                   onChange={handleInputChange}
                   name="residenceAddress"
-                  className="doctormaster-input"
                   type="text"
                 />
               </div>
 
               <div className="docmasterformdata">
-                <label className="doctormaster-label">District:</label>
-                <input
+                <FloatingInput
+                  label={"District"}
                   value={formdata.residenceDistrict}
                   onChange={handleInputChange}
                   name="residenceDistrict"
-                  className="doctormaster-input"
                   type="text"
                 />
               </div>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">State:</label>
-                <input
+                <FloatingInput
+                  label={"State"}
                   value={formdata.residenceState}
                   onChange={handleInputChange}
                   name="residenceState"
-                  className="doctormaster-input"
                   type="text"
                 />
               </div>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">City:</label>
-                <input
+                <FloatingInput
+                  label={"City"}
                   value={formdata.residenceCity}
                   onChange={handleInputChange}
                   name="residenceCity"
-                  className="doctormaster-input"
                   type="text"
                 />
               </div>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Phone No:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Phone No"}
                   value={formdata.residencePhoneNo}
                   onChange={handleInputChange}
                   name="residencePhoneNo"
                   type="text"
+                  restrictions={{ number: true, max: 10 }}
                 />
               </div>
 
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Pin Code:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Pin Code"}
                   value={formdata.residencePinCode}
                   onChange={handleInputChange}
                   name="residencePinCode"
                   type="text"
+                  restrictions={{ number: true }}
                 />
               </div>
               <span className="doctormasterspanheader">Clinical Address</span>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Clinic Address:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Clinic Address"}
                   type="text"
                   value={formdata.clinicAddress}
                   onChange={handleInputChange}
@@ -809,9 +978,8 @@ const DoctorMaster = () => {
                 />
               </div>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">District :</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"District"}
                   type="text"
                   value={formdata.clinicDistrict}
                   onChange={handleInputChange}
@@ -819,9 +987,8 @@ const DoctorMaster = () => {
                 />
               </div>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">State :</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"State"}
                   type="text"
                   value={formdata.clinicState}
                   onChange={handleInputChange}
@@ -829,9 +996,8 @@ const DoctorMaster = () => {
                 />
               </div>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">City:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"City"}
                   type="text"
                   value={formdata.clinicCity}
                   onChange={handleInputChange}
@@ -839,9 +1005,8 @@ const DoctorMaster = () => {
                 />
               </div>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Mobile No :</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Mobile No"}
                   type="text"
                   value={formdata.clinicPhoneNo}
                   onChange={handleInputChange}
@@ -856,9 +1021,8 @@ const DoctorMaster = () => {
               </span>
 
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Vlid SV Nos:</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Valid Sv Nos"}
                   type="text"
                   value={formdata.validSvNos}
                   onChange={handleInputChange}
@@ -866,9 +1030,8 @@ const DoctorMaster = () => {
                 />
               </div>
               <div className="docmasterformdata">
-                <label className="doctormaster-label">Valid SV Days :</label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Valid Sv Days"}
                   type="text"
                   value={formdata.svValidDays}
                   onChange={handleInputChange}
@@ -877,21 +1040,13 @@ const DoctorMaster = () => {
               </div>
 
               <div className="docmasterformdata">
-                <label className="doctormaster-label">
-                  Upload Dr sign here:
-                </label>
-                <input type="file" />
-              </div>
-              <div className="docmasterformdata">
-                <label className="doctormaster-label">
-                  Doctorn Assistent No:
-                </label>
-                <input
-                  className="doctormaster-input"
+                <FloatingInput
+                  label={"Doctor Assistent No"}
                   type="text"
                   value={formdata.doctorAssistantNo}
                   onChange={handleInputChange}
                   name="doctorAssistantNo"
+                  restrictions={{ number: true, max: 10 }}
                 />
               </div>
               <div className="docmasterformdata">
@@ -902,12 +1057,36 @@ const DoctorMaster = () => {
                   checked={formdata.unitMaster}
                 />
               </div>
+              <div className="docmasterformdata">
+                <input type="file" onChange={(e) => handleFileChange(e)} />
+              </div>
+              <div className="docmasterformdata"></div>
+
+              <span className="doctormasterspanheader doctor-hidden-form-fields">
+                Hello World
+              </span>
+              <div className="docmasterformdata doctor-hidden-form-fields">
+                <FloatingInput />
+              </div>
+              <div className="docmasterformdata doctor-hidden-form-fields">
+                <FloatingInput />
+              </div>
+              <div className="docmasterformdata doctor-hidden-form-fields">
+                <FloatingInput />
+              </div>
+              <div className="docmasterformdata doctor-hidden-form-fields">
+                <FloatingInput />
+              </div>
+              <div className="docmasterformdata doctor-hidden-form-fields">
+                <FloatingInput />
+              </div>
             </div>
           </div>
           <div>
             <button
-              className={`doctormaster-service-button ${selectedTab === "doctorFee" ? "active" : ""
-                }`}
+              className={`doctormaster-service-button ${
+                selectedTab === "doctorFee" ? "active" : ""
+              }`}
               onClick={() => setSelectedTab("doctorFee")}
             >
               Doctor Fee
@@ -916,13 +1095,13 @@ const DoctorMaster = () => {
           <div>{renderTable()}</div>
           <div className="doctormaster-header-right">
             <button className="doctormaster-button" onClick={handleSubmit}>
-              Save
+              {isEdit ? "Update" : "Save"}
             </button>
           </div>
         </div>
       </CustomModal>
       {showModal && (
-        <IpMasterPopupTable
+        <PopupTable
           columns={columns}
           data={data}
           onSelect={handleSelect}

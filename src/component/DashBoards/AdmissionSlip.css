@@ -7,7 +7,16 @@
   border-radius: 10px;
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
+.AdmissionSlip-left
+{
+  width:50%
+}
+.AdmissionSlip-group-right
+{
+  width:50%
+}
 .AdmissionSlip-content {
+  width: 100%;
   background-color: white;
   display: flex;
   gap: 30px;
@@ -28,21 +37,6 @@
   display: flex;
   margin-bottom: 20px;
   gap: 30px;
-}
-.AdmissionSlip-content label {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  width: 350px;
-}
-.AdmissionSlip-content select,
-.AdmissionSlip-content input,
-.AdmissionSlip-content textarea {
-  width: 100%;
-  padding: 5px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  font-size: 14px;
 }
 
 .AdmissionSlip-group-checkbox {

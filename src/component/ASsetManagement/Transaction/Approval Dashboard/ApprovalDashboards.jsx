@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './Approvaldashboards.css';
-import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
-import CustomModal from '../../../CustomModel/CustomModal';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import CustomModal from '../../../../CustomModel/CustomModal';
 import CondemnationandDisposalViewPopUp from '../Condemnation and Disposal View/CondemnationandDisposalViewPopUp';
 import EquipmentGatePassInViewPopUp from '../Equipment Gate Pass In View/EquipmentGatePassInViewPopUp';
 import EquipmentGatePassOutPopUp from '../EqipmentGatepassout/EquipmentGatePassOutPopUp';
@@ -14,7 +14,7 @@ const ApprovalDashboards = ({ bookingId }) => {
   const tableRef = useRef(null);
   const [condemnationDisposalRows, setCondemnationDisposalRows] = useState([]);
   const [gatePassOutData, setGatePassOutData] = useState([]);
-                                        
+
 
 
   useEffect(() => {
@@ -41,10 +41,10 @@ const ApprovalDashboards = ({ bookingId }) => {
         console.error('Failed to fetch condemnation disposals data:', error);
       }
     };
-  
+
     fetchCondemnationDisposalsData(); // Call the function here
   }, []); // Close the useEffect dependency array properly
-  
+
   useEffect(() => {
     const fetchGatePassINData = async () => {
       try {
@@ -54,7 +54,7 @@ const ApprovalDashboards = ({ bookingId }) => {
         }
         const data = await response.json();
         setGatePassINRows(data);
-        
+
       } catch (error) {
         console.error('Failed to fetch Gate Pass IN data:', error);
       }
@@ -84,7 +84,7 @@ const ApprovalDashboards = ({ bookingId }) => {
 
 
   const [packageTableRows, setPackageTableRows] = useState([
-  
+
   ]);
 
 
@@ -112,7 +112,7 @@ const ApprovalDashboards = ({ bookingId }) => {
   //Dhanashree
   const [showPopUp, setShowPopUp] = useState(false); // Popup state
   const [showPopUpRequest, setShowPopUpRequest] = useState(false); // Popup state
-  const [showDisposalPopUp, setShowsetDisposalPopUp ]= useState(false);
+  const [showDisposalPopUp, setShowsetDisposalPopUp] = useState(false);
 
   const [showReplacementPopup, setShowReplacementPopup] = useState(false);
   const [showGatePassInPopup, setShowGatePassInPopup] = useState(false);
@@ -120,14 +120,14 @@ const ApprovalDashboards = ({ bookingId }) => {
 
 
   const [showDisposalPopup, setShowDisposalPopup] = useState(false);
-  
+
 
 
 
   const openReplacementPopup = () => {
     setShowReplacementPopup(true);
   };
-    const closeReplacementPopup = () => setShowReplacementPopup(false);
+  const closeReplacementPopup = () => setShowReplacementPopup(false);
 
   const openDisposalPopup = () => setShowDisposalPopup(true);
   const closeDisposalPopup = () => setShowDisposalPopup(false);
@@ -138,7 +138,7 @@ const ApprovalDashboards = ({ bookingId }) => {
   const openGatePassOutPopup = () => setShowGatePassOutPopup(true);
   const closeGatePassOutPopup = () => setShowGatePassOutPopup(false);
 
- 
+
 
 
   const sectionTitles = {
@@ -150,7 +150,7 @@ const ApprovalDashboards = ({ bookingId }) => {
   };
 
 
-  
+
 
   const handleAddRow = (tableType) => {
     if (tableType === 'proposalAMC') {
@@ -197,7 +197,7 @@ const ApprovalDashboards = ({ bookingId }) => {
       setGatePassINRows([...gatePassINRows, newRow]);
     }
   };
-  
+
 
   const handleDeleteRow = (indexToRemove, tableType) => {
     if (tableType === 'proposalAMC') {
@@ -306,7 +306,7 @@ const ApprovalDashboards = ({ bookingId }) => {
   );
 
 
- 
+
   const renderGatePassINApprovalTable = () => (
     <table ref={tableRef}>
       <thead>
@@ -331,7 +331,7 @@ const ApprovalDashboards = ({ bookingId }) => {
       <tbody>
         {gatePassINRows.map((row, index) => (
           <tr key={index}>
-            
+
             <td>{index + 1}</td>
             <td>{row.gatePassInId}</td>
             <td>{row.dcNo}</td>
@@ -347,16 +347,16 @@ const ApprovalDashboards = ({ bookingId }) => {
   );
 
 
-  
 
-  {/* Disposal Approval Popup */}
-  
 
-  {/* Gate Pass IN Popup */}
- 
+  {/* Disposal Approval Popup */ }
 
-  {/* Gate Pass OUT Popup */}
-  
+
+  {/* Gate Pass IN Popup */ }
+
+
+  {/* Gate Pass OUT Popup */ }
+
 
 
   const renderReplacementEquipmentApprovalTable = () => (
@@ -403,7 +403,7 @@ const ApprovalDashboards = ({ bookingId }) => {
             <td>{row.sn}</td>
             <td>{row.name}</td>
             <td>{row.approval}
-            <button onClick={openReplacementPopup}>Approve the Replacement</button>
+              <button onClick={openReplacementPopup}>Approve the Replacement</button>
 
             </td>
           </tr>
@@ -412,86 +412,86 @@ const ApprovalDashboards = ({ bookingId }) => {
     </table>
   );
 
- 
- // Fetch data from API
- useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/condemnation-view`);
-      if (!response.ok) {
-        throw new Error(`Error fetching data: ${response.statusText}`);
+
+  // Fetch data from API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/condemnation-view`);
+        if (!response.ok) {
+          throw new Error(`Error fetching data: ${response.statusText}`);
+        }
+        const data = await response.json();
+
+        // Map API data to the required fields
+        const mappedData = data.map((item, index) => ({
+          sn: index + 1,
+          condemnNo: item.condemnNo || '',
+          nameOfEquipment: item.nameOfEquipment || '',
+          approvalDate: item.approvalDate || '',
+          approvalTime: item.approvalTime || '',
+          remarks: item.remarks || '',
+          approvalStatus: item.approvalStatus || '',
+          approvedBy: item.approvedBy || '',
+        }));
+
+        setGatePassINRows(mappedData);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
       }
-      const data = await response.json();
+    };
 
-      // Map API data to the required fields
-      const mappedData = data.map((item, index) => ({
-        sn: index + 1,
-        condemnNo: item.condemnNo || '',
-        nameOfEquipment: item.nameOfEquipment || '',
-        approvalDate: item.approvalDate || '',
-        approvalTime: item.approvalTime || '',
-        remarks: item.remarks || '',
-        approvalStatus: item.approvalStatus || '',
-        approvedBy: item.approvedBy || '',
-      }));
-
-      setGatePassINRows(mappedData);
-    } catch (error) {
-      console.error('Failed to fetch data:', error);
-    }
-  };
-
-  fetchData();
-}, []);
+    fetchData();
+  }, []);
 
 
 
-const renderCondemnationDisposalTable = () => (
-  <table ref={tableRef}>
-    <thead>
-      <tr>
-        {[
-          'SN',
-          'Condem No',
-          
-          'Remarks',
-          'Approval Status',
-        ].map((header, index) => (
-          <th
-            key={index}
-            style={{ width: columnWidths[index] }}
-            className="ApprovalDashboards-resizable-th"
-          >
-            <div className="ApprovalDashboards-header-content">
-              <span>{header}</span>
-              <div
-                className="ApprovalDashboards-resizer"
-                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-              ></div>
-            </div>
-          </th>
-        ))}
-      </tr>
-    </thead>
-    <tbody>
-      {condemnationDisposalRows.map((row, index) => (
-        <tr key={index}>
-         
-          <td>{row.sn}</td>
-          <td>{row.condemnNo}</td>
-        
-          <td>{row.remarks}</td>
-          <td>{row.approvalStatus}</td>
-          <td>
-            <button onClick={openDisposalPopup}>Approve Disposal</button>
-          </td>
+  const renderCondemnationDisposalTable = () => (
+    <table ref={tableRef}>
+      <thead>
+        <tr>
+          {[
+            'SN',
+            'Condem No',
+
+            'Remarks',
+            'Approval Status',
+          ].map((header, index) => (
+            <th
+              key={index}
+              style={{ width: columnWidths[index] }}
+              className="ApprovalDashboards-resizable-th"
+            >
+              <div className="ApprovalDashboards-header-content">
+                <span>{header}</span>
+                <div
+                  className="ApprovalDashboards-resizer"
+                  onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                ></div>
+              </div>
+            </th>
+          ))}
         </tr>
-      ))}
-    </tbody>
-  </table>
-);
+      </thead>
+      <tbody>
+        {condemnationDisposalRows.map((row, index) => (
+          <tr key={index}>
 
-   const renderGatePassOUTTable = () => (
+            <td>{row.sn}</td>
+            <td>{row.condemnNo}</td>
+
+            <td>{row.remarks}</td>
+            <td>{row.approvalStatus}</td>
+            <td>
+              <button onClick={openDisposalPopup}>Approve Disposal</button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+
+  const renderGatePassOUTTable = () => (
     <table className="ApprovalDashboards-table">
       <thead>
         <tr>
@@ -502,11 +502,11 @@ const renderCondemnationDisposalTable = () => (
             'Reason',
             'Type',
             'Gate Pass Out Date',
-           
+
             'Authorised By',
             'Type of Equipment',
             'Remark',
-           
+
             'Actions',
           ].map((header, index) => (
             <th key={index}>{header}</th>
@@ -525,8 +525,8 @@ const renderCondemnationDisposalTable = () => (
             <td>{row.authorisedBy}</td>
             <td>{row.typeOfEquipment}</td>
             <td>{row.remark}</td>
-          
-          
+
+
             <td>
               <button onClick={() => openGatePassOutPopup(row)}>Approval</button>
             </td>
@@ -540,7 +540,7 @@ const renderCondemnationDisposalTable = () => (
     switch (section) {
       case 'proposalAMC':
         return renderProposalForAMCApprovalTable();
-    
+
       case 'gatePassIN':
         return renderGatePassINApprovalTable();
       case 'replacementEquipment':
@@ -553,7 +553,7 @@ const renderCondemnationDisposalTable = () => (
         return null;
     }
   };
-  
+
 
   return (
     <div className="ApprovalDashboards-Events">
@@ -569,7 +569,7 @@ const renderCondemnationDisposalTable = () => (
             <div className="ApprovalDashboards-panel-content">
               <div className="ApprovalDashboards-form-row">
                 <label>From Date:</label>
-                <input type="date" value="" />
+                <input type="date" />
               </div>
             </div>
           </div>
@@ -578,7 +578,7 @@ const renderCondemnationDisposalTable = () => (
             <div className="ApprovalDashboards-panel-content">
               <div className="ApprovalDashboards-form-row">
                 <label>To Date:</label>
-                <input type="date" value="" />
+                <input type="date" />
               </div>
             </div>
           </div>
@@ -598,17 +598,17 @@ const renderCondemnationDisposalTable = () => (
         <div className="ApprovalDashboards-services-section">
           <div className="ApprovalDashboards-services-table">
             <div className="ApprovalDashboards-title-bar">
-            <div className="ApprovalDashboards-header">
-  {Object.keys(sectionTitles).map((section) => (
-    <button
-      key={section}
-      className={`ApprovalDashboards-ApprovalDashboardsBtns ${selectedSection === section ? 'active' : ''}`}
-      onClick={() => setSelectedSection(section)}
-    >
-      {sectionTitles[section]}
-    </button>
-  ))}
-</div>
+              <div className="ApprovalDashboards-header">
+                {Object.keys(sectionTitles).map((section) => (
+                  <button
+                    key={section}
+                    className={`ApprovalDashboards-ApprovalDashboardsBtns ${selectedSection === section ? 'active' : ''}`}
+                    onClick={() => setSelectedSection(section)}
+                  >
+                    {sectionTitles[section]}
+                  </button>
+                ))}
+              </div>
 
 
 
@@ -616,39 +616,39 @@ const renderCondemnationDisposalTable = () => (
 
             {renderTable(selectedSection)}
             {showReplacementPopup && (
-    <CustomModal isOpen={showReplacementPopup} onClose={closeReplacementPopup}>
-      <ReplacementOfRequestApproval />
-    </CustomModal>
-  )}
-  
- 
+              <CustomModal isOpen={showReplacementPopup} onClose={closeReplacementPopup}>
+                <ReplacementOfRequestApproval />
+              </CustomModal>
+            )}
+
+
 
             {showPopUp && (
 
               <CustomModal isOpen={showPopUp} onClose={closePopup}>
-                  <AMCProposalForm/>
-                  </CustomModal>  
+                <AMCProposalForm />
+              </CustomModal>
             )}
 
-            
-  
-  
-  {showDisposalPopup && (
-    <CustomModal isOpen={showDisposalPopup} onClose={closeDisposalPopup}>
-      <CondemnationandDisposalViewPopUp/>
-    </CustomModal>
-  )}
 
-{showGatePassInPopup && (
-    <CustomModal isOpen={showGatePassInPopup} onClose={closeGatePassInPopup}>
-      <EquipmentGatePassInViewPopUp/>
-    </CustomModal>
-  )}
-  {showGatePassOutPopup && (
-    <CustomModal isOpen={showGatePassOutPopup} onClose={closeGatePassOutPopup}>
-      <EquipmentGatePassOUTView/>
-    </CustomModal>
-  )}
+
+
+            {showDisposalPopup && (
+              <CustomModal isOpen={showDisposalPopup} onClose={closeDisposalPopup}>
+                <CondemnationandDisposalViewPopUp />
+              </CustomModal>
+            )}
+
+            {showGatePassInPopup && (
+              <CustomModal isOpen={showGatePassInPopup} onClose={closeGatePassInPopup}>
+                <EquipmentGatePassInViewPopUp />
+              </CustomModal>
+            )}
+            {showGatePassOutPopup && (
+              <CustomModal isOpen={showGatePassOutPopup} onClose={closeGatePassOutPopup}>
+                <EquipmentGatePassOUTView />
+              </CustomModal>
+            )}
           </div>
         </div>
 

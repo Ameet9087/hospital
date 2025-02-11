@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { API_BASE_URL } from '../api/api';
+import { toast } from 'react-toastify';
+import { FloatingInput, FloatingTextarea } from '../../FloatingInputs';
 
 const BreakTimeForm = ({ onClose }) => {
   const [breakTimeStart, setBreakTimeStart] = useState('');
@@ -53,16 +55,14 @@ const BreakTimeForm = ({ onClose }) => {
       }
 
       const data = await response.json();
-      setSuccessMessage('Break time saved successfully!');
+      toast.success('Break time saved successfully!');
       setBreakTimeStart('');
       setBreakTimeEnd('');
       setBreakTimeRemark('');
       onClose();
     } catch (err) {
-      setError(err.message || 'Something went wrong!');
-    } finally {
-      setIsSubmitting(false);
-    }
+      toast.error(err.message || 'Something went wrong!');
+    } 
   };
 
   return (
@@ -74,50 +74,38 @@ const BreakTimeForm = ({ onClose }) => {
 
       <form onSubmit={handleSubmit}>
         <div className="add-break-time__group">
-          <label htmlFor="breakTimeStart" className="add-break-time__label">
-            Break Time Start
-          </label>
-          <input
-            type="time"
-            id="breakTimeStart"
-            name="breakTimeStart"
-            className="add-break-time__input"
-            placeholder="Enter break time start"
-            value={breakTimeStart}
-            onChange={handleInputChange}
-            required
+          <FloatingInput
+           type="time"
+           label={"Break Time Start"}
+          name="breakTimeStart"
+          className="add-break-time__input"
+          placeholder="Enter break time start"
+          value={breakTimeStart}
+          onChange={handleInputChange}
           />
         </div>
 
         <div className="add-break-time__group">
-          <label htmlFor="breakTimeEnd" className="add-break-time__label">
-            Break Time End
-          </label>
-          <input
-            type="time"
-            id="breakTimeEnd"
-            name="breakTimeEnd"
-            className="add-break-time__input"
-            placeholder="Enter break time end"
-            value={breakTimeEnd}
-            onChange={handleInputChange}
-            required
+          <FloatingInput
+          type="time"
+          label={"Break Time End"}
+          id="breakTimeEnd"
+          name="breakTimeEnd"
+          className="add-break-time__input"
+          placeholder="Enter break time end"
+          value={breakTimeEnd}
+          onChange={handleInputChange}
           />
         </div>
 
         <div className="add-break-time__group">
-          <label htmlFor="breakTimeReason" className="add-break-time__label">
-            Reason for Break
-          </label>
-          <textarea
-            id="breakTimeReason"
-            name="breakTimeReason"
-            className="add-break-time__textarea"
-            rows="4"
-            placeholder="Enter reason for break (optional)"
-            value={breakTimeRemark}
-            onChange={handleInputChange}
-          ></textarea>
+          <FloatingTextarea
+          label={"Reason for Break"}
+          id="breakTimeReason"
+          name="breakTimeReason"
+          value={breakTimeRemark}
+          onChange={handleInputChange}
+          />
         </div>
 
         <button

@@ -16,9 +16,7 @@
   /* background-color: #FAFAFA; */
   /* justify-content:space-between; */
 }
-.linensTypeMain-tabs {
-  /* margin-bottom: 20px; */
-}
+
 .linensTypeMain-tab {
   /* border: 1px solid red; */
   padding: 10px 20px;
@@ -108,12 +106,11 @@
 .LinenType-action-buttons {
   display: flex;
   gap: 5px;
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
+  justify-content: center;
+  margin-top: 10px;
 }
 .LinenType-action-buttons button {
-  background-color: var(--button-bg-color);
+  background-color: var(--button-color);
   color: var(--button-hover-background-color);
   font-size: var(--font-size);
   padding: 5px;

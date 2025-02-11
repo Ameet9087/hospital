@@ -1,19 +1,18 @@
 // Dhanashree_DatabaseBackup_19/09
-import React, { useState, useRef } from 'react';
-import './DataBaseBackup.css';
-import { CSVLink } from 'react-csv';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import ReactToPrint from 'react-to-print';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-
+import React, { useState, useRef } from "react";
+import "./DataBaseBackup.css";
+import { CSVLink } from "react-csv";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import ReactToPrint from "react-to-print";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 const DatabaseBackup = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   // Reference to the table for printing
   const componentRef = useRef();
@@ -23,21 +22,109 @@ const DatabaseBackup = () => {
   };
 
   const exportToCSV = () => {
-    const headers = ["Date", "File Name", "Database Name", "Database Version", "Action", "Status", "Action Detail"];
+    const headers = [
+      "Date",
+      "File Name",
+      "Database Name",
+      "Database Version",
+      "Action",
+      "Status",
+      "Action Detail",
+    ];
     const data = [
-      ["2024-08-13", "backup_20240813.sql", "employee_db", "v2.1", "Backup", "Success", "Backup completed successfully"],
-      ["2024-08-14", "backup_20240814.sql", "sales_db", "v1.8", "Backup", "Success", "Backup completed successfully"],
-      ["2024-08-15", "backup_20240815.sql", "customer_db", "v2.0", "Backup", "Success", "Backup completed successfully"],
-      ["2024-08-16", "backup_20240816.sql", "inventory_db", "v1.9", "Backup", "Success", "Backup completed successfully"],
-      ["2024-08-17", "backup_20240817.sql", "orders_db", "v2.2", "Backup", "Success", "Backup completed successfully"],
-      ["2024-08-18", "backup_20240818.sql", "product_db", "v1.7", "Backup", "Success", "Backup completed successfully"],
-      ["2024-08-19", "backup_20240819.sql", "hr_db", "v2.3", "Backup", "Success", "Backup completed successfully"],
-      ["2024-08-20", "backup_20240820.sql", "finance_db", "v1.6", "Backup", "Success", "Backup completed successfully"],
-      ["2024-08-21", "backup_20240821.sql", "support_db", "v2.4", "Backup", "Success", "Backup completed successfully"],
-      ["2024-08-22", "backup_20240822.sql", "marketing_db", "v1.5", "Backup", "Success", "Backup completed successfully"]
+      [
+        "2024-08-13",
+        "backup_20240813.sql",
+        "employee_db",
+        "v2.1",
+        "Backup",
+        "Success",
+        "Backup completed successfully",
+      ],
+      [
+        "2024-08-14",
+        "backup_20240814.sql",
+        "sales_db",
+        "v1.8",
+        "Backup",
+        "Success",
+        "Backup completed successfully",
+      ],
+      [
+        "2024-08-15",
+        "backup_20240815.sql",
+        "customer_db",
+        "v2.0",
+        "Backup",
+        "Success",
+        "Backup completed successfully",
+      ],
+      [
+        "2024-08-16",
+        "backup_20240816.sql",
+        "inventory_db",
+        "v1.9",
+        "Backup",
+        "Success",
+        "Backup completed successfully",
+      ],
+      [
+        "2024-08-17",
+        "backup_20240817.sql",
+        "orders_db",
+        "v2.2",
+        "Backup",
+        "Success",
+        "Backup completed successfully",
+      ],
+      [
+        "2024-08-18",
+        "backup_20240818.sql",
+        "product_db",
+        "v1.7",
+        "Backup",
+        "Success",
+        "Backup completed successfully",
+      ],
+      [
+        "2024-08-19",
+        "backup_20240819.sql",
+        "hr_db",
+        "v2.3",
+        "Backup",
+        "Success",
+        "Backup completed successfully",
+      ],
+      [
+        "2024-08-20",
+        "backup_20240820.sql",
+        "finance_db",
+        "v1.6",
+        "Backup",
+        "Success",
+        "Backup completed successfully",
+      ],
+      [
+        "2024-08-21",
+        "backup_20240821.sql",
+        "support_db",
+        "v2.4",
+        "Backup",
+        "Success",
+        "Backup completed successfully",
+      ],
+      [
+        "2024-08-22",
+        "backup_20240822.sql",
+        "marketing_db",
+        "v1.5",
+        "Backup",
+        "Success",
+        "Backup completed successfully",
+      ],
     ];
 
-    setSuccessMessage('CSV export done successfully');
+    setSuccessMessage("CSV export done successfully");
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 3000);
 
@@ -48,23 +135,113 @@ const DatabaseBackup = () => {
     const doc = new jsPDF();
     doc.text("Database Backup Report", 10, 10);
     doc.autoTable({
-      head: [["Date", "File Name", "Database Name", "Database Version", "Action", "Status", "Action Detail"]],
+      head: [
+        [
+          "Date",
+          "File Name",
+          "Database Name",
+          "Database Version",
+          "Action",
+          "Status",
+          "Action Detail",
+        ],
+      ],
       body: [
-        ["2024-08-13", "backup_20240813.sql", "employee_db", "v2.1", "Backup", "Success", "Backup completed successfully"],
-        ["2024-08-14", "backup_20240814.sql", "sales_db", "v1.8", "Backup", "Success", "Backup completed successfully"],
-        ["2024-08-15", "backup_20240815.sql", "customer_db", "v2.0", "Backup", "Success", "Backup completed successfully"],
-        ["2024-08-16", "backup_20240816.sql", "inventory_db", "v1.9", "Backup", "Success", "Backup completed successfully"],
-        ["2024-08-17", "backup_20240817.sql", "orders_db", "v2.2", "Backup", "Success", "Backup completed successfully"],
-        ["2024-08-18", "backup_20240818.sql", "product_db", "v1.7", "Backup", "Success", "Backup completed successfully"],
-        ["2024-08-19", "backup_20240819.sql", "hr_db", "v2.3", "Backup", "Success", "Backup completed successfully"],
-        ["2024-08-20", "backup_20240820.sql", "finance_db", "v1.6", "Backup", "Success", "Backup completed successfully"],
-        ["2024-08-21", "backup_20240821.sql", "support_db", "v2.4", "Backup", "Success", "Backup completed successfully"],
-        ["2024-08-22", "backup_20240822.sql", "marketing_db", "v1.5", "Backup", "Success", "Backup completed successfully"]
-      ]
+        [
+          "2024-08-13",
+          "backup_20240813.sql",
+          "employee_db",
+          "v2.1",
+          "Backup",
+          "Success",
+          "Backup completed successfully",
+        ],
+        [
+          "2024-08-14",
+          "backup_20240814.sql",
+          "sales_db",
+          "v1.8",
+          "Backup",
+          "Success",
+          "Backup completed successfully",
+        ],
+        [
+          "2024-08-15",
+          "backup_20240815.sql",
+          "customer_db",
+          "v2.0",
+          "Backup",
+          "Success",
+          "Backup completed successfully",
+        ],
+        [
+          "2024-08-16",
+          "backup_20240816.sql",
+          "inventory_db",
+          "v1.9",
+          "Backup",
+          "Success",
+          "Backup completed successfully",
+        ],
+        [
+          "2024-08-17",
+          "backup_20240817.sql",
+          "orders_db",
+          "v2.2",
+          "Backup",
+          "Success",
+          "Backup completed successfully",
+        ],
+        [
+          "2024-08-18",
+          "backup_20240818.sql",
+          "product_db",
+          "v1.7",
+          "Backup",
+          "Success",
+          "Backup completed successfully",
+        ],
+        [
+          "2024-08-19",
+          "backup_20240819.sql",
+          "hr_db",
+          "v2.3",
+          "Backup",
+          "Success",
+          "Backup completed successfully",
+        ],
+        [
+          "2024-08-20",
+          "backup_20240820.sql",
+          "finance_db",
+          "v1.6",
+          "Backup",
+          "Success",
+          "Backup completed successfully",
+        ],
+        [
+          "2024-08-21",
+          "backup_20240821.sql",
+          "support_db",
+          "v2.4",
+          "Backup",
+          "Success",
+          "Backup completed successfully",
+        ],
+        [
+          "2024-08-22",
+          "backup_20240822.sql",
+          "marketing_db",
+          "v1.5",
+          "Backup",
+          "Success",
+          "Backup completed successfully",
+        ],
+      ],
     });
-    doc.save('database-backup-report.pdf');
+    doc.save("database-backup-report.pdf");
 
-    setSuccessMessage('PDF export done successfully');
+    setSuccessMessage("PDF export done successfully");
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 3000);
   };
@@ -163,15 +340,15 @@ const DatabaseBackup = () => {
   </record>
 </backup>`;
 
-    const blob = new Blob([data], { type: 'application/xml' });
+    const blob = new Blob([data], { type: "application/xml" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'database-backup-report.xml';
+    a.download = "database-backup-report.xml";
     a.click();
     URL.revokeObjectURL(url);
 
-    setSuccessMessage('XML export done successfully');
+    setSuccessMessage("XML export done successfully");
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 3000);
   };
@@ -179,13 +356,14 @@ const DatabaseBackup = () => {
   return (
     <div className="database-backup-container">
       <div className="info-section">
-        <h2><u>Database Information for Backup</u></h2>
+        <h2>
+          <u>Database Information for Backup</u>
+        </h2>
         <div className="info-field">Database Name:</div>
         <div className="info-field">Database Version:</div>
         <div className="info-field">Backup File Name:</div>
         <div className="info-field">Last Backup Date:</div>
       </div>
-      
 
       <div className="button-section">
         <div className="export-container">
@@ -201,62 +379,62 @@ const DatabaseBackup = () => {
               </div>
             )}
           </div>
-          
+
           <button className="backup-button">
             <span className="icon">☰</span> Take Database Backup
           </button>
         </div>
       </div>
-      
+
       <h3 className="details-header">DATABASE BACKUP/RESTORE DETAILS</h3>
-      
+
       <div className="search-bar">
         <input type="text" placeholder="Search" />
         <button className="search-button">🔍</button>
       </div>
-      
+
       <div className="results-info">
         <span>Showing 10 / 10 results</span>
         <button className="DatabaseBackupexport-btn">Export</button>
         <ReactToPrint
-          trigger={() => <button className="DatabaseBackup-print-btn">Print</button>}
+          trigger={() => (
+            <button className="DatabaseBackup-print-btn">Print</button>
+          )}
           content={() => componentRef.current}
         />
       </div>
-      
-      <table  ref={tableRef}>
-          <thead>
-            <tr>
-              { [
-  "Date",
-  "File Name",
-  "Database Name",
-  "Database Version",
-  "Action",
-  "Status",
-  "Action Detail"
-].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-  </thead>
 
-
+      <table ref={tableRef}>
+        <thead>
+          <tr>
+            {[
+              "Date",
+              "File Name",
+              "Database Name",
+              "Database Version",
+              "Action",
+              "Status",
+              "Action Detail",
+            ].map((header, index) => (
+              <th
+                key={index}
+                style={{ width: columnWidths[index] }}
+                className="resizable-th"
+              >
+                <div className="header-content">
+                  <span>{header}</span>
+                  <div
+                    className="resizer"
+                    onMouseDown={startResizing(
+                      tableRef,
+                      setColumnWidths
+                    )(index)}
+                  ></div>
+                </div>
+              </th>
+            ))}
+          </tr>
+        </thead>
 
         <tbody>
           <tr>
@@ -351,7 +529,7 @@ const DatabaseBackup = () => {
           </tr>
         </tbody>
       </table>
-      
+
       {/* <div className="pagination">
         <button className="disabled">First</button>
         <button className="disabled">Previous</button>

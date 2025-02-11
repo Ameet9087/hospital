@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import "./sampleCollection.css"; // Import CSS module
 import { useNavigate } from "react-router-dom";
 import CollectSample from "./CollectSample";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
+import { FloatingInput } from "../../FloatingInputs";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
@@ -108,37 +109,34 @@ const SampleCollection = () => {
 
       <div className="sampleCollection-controls">
         <div className="sampleCollection-date-range">
-          <label>
-            From:
-            <input
-              type="date"
-              id="dateFrom"
-              defaultValue={dateFrom}
-              onChange={handleDateFromChange}
-            />
-          </label>
-          <label>
-            To:
-            <input
-              type="date"
-              id="dateTo"
-              defaultValue={dateTo}
-              onChange={handleDateToChange}
-            />
-          </label>
+          <FloatingInput
+          label={"From"}
+           type="date"
+           name="dateFrom"
+           value={dateFrom}
+           onChange={handleDateFromChange}
+          />
+          
+
+          <FloatingInput
+          label={"To"}
+          type="date"
+          id="dateTo"
+          value={dateTo}
+          onChange={handleDateToChange}
+          />
         </div>
       </div>
 
       <div className="sampleCollection-search-N-print">
         <div className="sampleCollection-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search"
-            className="sampleCollection-search-input"
-            value={searchQuery}
-            onChange={handleSearchChange} // Handle search
+          <FloatingInput
+          label={"Search"}
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange}
           />
+         
         </div>
         <div className="sampleCollection-results-info">
           <span>

@@ -2,8 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 import './RequisitionPage.css';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 function PurchaseOrder() {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Maintenancechecklist.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import MaintenanceChecklistPopUp from "./MaintenanceChecklistPopUp";
 import { API_BASE_URL } from "../../../api/api";

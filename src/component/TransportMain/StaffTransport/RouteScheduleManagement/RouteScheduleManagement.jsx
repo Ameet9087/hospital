@@ -4,6 +4,7 @@ import './RouteScheduleManagement.css';
 import Modal from '../Modal'; // Import the modal component
 import AddForm from '../RouteScheduleManagement/AddRouteScheduleManagement'; // Import the AddForm component
 import UpdateForm from '../RouteScheduleManagement/UpdateRouteScheduleManagement'; // Import the UpdateForm component
+import { API_BASE_URL } from '../../../api/api';
 
 const RouteScheduleManagement = () => {
   const [scheduleData, setScheduleData] = useState([]); // Initialize state for schedule data
@@ -16,7 +17,7 @@ const RouteScheduleManagement = () => {
   useEffect(() => {
     const fetchScheduleData = async () => {
       try {
-        const response = await axios.get('http://localhost:8085/api/routes'); 
+        const response = await axios.get(`${API_BASE_URL}/routes`);
         console.log(response.data)// Replace with your actual API URL
         setScheduleData(response.data); // Set the schedule data from response
       } catch (error) {
@@ -67,7 +68,7 @@ const RouteScheduleManagement = () => {
   return (
     <div className="RRStaffTransportManagement-table-container">
       <h2 className="RRStaffTransportManagement-table-title">Route and Schedule Management</h2>
-      
+
       {/* Error Message */}
       {error && <div className="error-message">{error}</div>}
 

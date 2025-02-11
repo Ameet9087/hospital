@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import "./CprRecordNew.css";
 import PopupTable from "../popup";
 import axios from "axios";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -23,9 +23,8 @@ const FloatingInput = ({ label, type = "text", value, ...props }) => {
 
   return (
     <div
-      className={`CprRecordNew-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`CprRecordNew-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <input
         type={type}
@@ -54,9 +53,8 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
 
   return (
     <div
-      className={`CprRecordNew-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`CprRecordNew-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <select
         className="CprRecordNew-floating-select"
@@ -72,7 +70,7 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
         }}
         {...props}
       >
-        <option value="">{}</option>
+        <option value="">{ }</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -131,9 +129,8 @@ const CprRecordNew = () => {
     if (erPatient) {
       setFormData((prevData) => ({
         ...prevData,
-        patientName: `${erPatient.firstName || ""} ${
-          erPatient.middleName || ""
-        } ${erPatient.lastName || ""}`.trim(),
+        patientName: `${erPatient.firstName || ""} ${erPatient.middleName || ""
+          } ${erPatient.lastName || ""}`.trim(),
         contactNumber: erPatient.contactNumber || "",
         dateOfBirth: erPatient.dob || "",
         gender: erPatient.sex || "",

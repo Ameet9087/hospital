@@ -1,8 +1,7 @@
 import React, { useState, useEffect,useRef } from 'react';
 import './UserCollectionReport.css';
 
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 const LabTypeWiseTestCountReport = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState('');

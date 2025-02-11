@@ -1,3 +1,7 @@
+.rDLListRequest-ScanDone-modal{
+  width: 250px;
+}
+
 .rDLListRequest-ScanDone-modal h2 {
   display: flex;
   justify-content: center;
@@ -15,7 +19,7 @@
   justify-content: center;
   /* width: 270px; */
 }
-
+/* 
 .rDLListRequest-ScanDone-form-group label {
   display: block;
   margin-bottom: 5px;
@@ -31,11 +35,10 @@
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
-  /* height: 0px; */
 }
-.rDLListRequest-ScanDone-form-group input {
+/* .rDLListRequest-ScanDone-form-group input {
   width: 170px !important;
-}
+}  */
 
 .rDLListRequest-ScanDone-form-actions {
   display: flex;

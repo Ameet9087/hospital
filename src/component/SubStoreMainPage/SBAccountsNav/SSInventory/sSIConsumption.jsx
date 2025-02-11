@@ -6,8 +6,8 @@ import { useReactToPrint } from 'react-to-print';
 import SSIPatientConsumConsumEntry from './sSIPatientConsumConsumEntry';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
-import CustomModal from '../../../CustomModel/CustomModal';
-import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+import CustomModal from '../../../../CustomModel/CustomModal';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 function SSIPatientConsumption() {
   const { store } = useParams();
   const [consumptions, setConsumptions] = useState([]);

@@ -4,7 +4,7 @@ import './VerifyPurchaseRequests.css';
 import VerifyPurchaseDetails from './VerifyPurchaseDetails';
 import { API_BASE_URL } from '../api/api';
 import CustomModal from '../../CustomModel/CustomModal';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 import * as XLSX from 'xlsx';
 
 const VerifyPurchaseRequests = () => {

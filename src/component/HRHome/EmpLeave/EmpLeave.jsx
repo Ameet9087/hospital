@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './EmpLeave.css';
 import AddLeavePopup from './AddLeavePopup';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import { API_BASE_URL } from '../../api/api';
 

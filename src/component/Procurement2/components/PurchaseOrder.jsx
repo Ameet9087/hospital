@@ -8,7 +8,7 @@ import PurchaseOrderDraftList from "../components/PurchaseOrderDraftList";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
 import * as XLSX from 'xlsx';
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import GoodsReceipt from "./GoodsReceipt";
 import PurchaseOrderView from "./PurchaseOrderView";
 const customStyles = {
@@ -29,14 +29,14 @@ function PurchaseOrder() {
   const [showCreatePO, setShowCreatePO] = useState(false);
   const [show, setShow] = useState(false);
   const [showDraftListModal, setShowDraftListModal] = useState(false);
-  const [selectedItem,setSelectedItem] =useState();
+  const [selectedItem, setSelectedItem] = useState();
   const [data, setData] = useState([]);
-  const [goodReceipt,setGoodsReceipt]=useState({});
+  const [goodReceipt, setGoodsReceipt] = useState({});
   const componentRef = useRef();
- 
 
-const [columnWidths,setColumnWidths] = useState({});
-const tableRef=useRef(null);
+
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
 
   const handleCreatePOClick = () => {
@@ -73,27 +73,27 @@ const tableRef=useRef(null);
     fetchData();
   }, []);
 
-   const handleExport = () => {
-      if (tableRef.current) {
-        // Converts table to worksheet
-        const ws = XLSX.utils.table_to_sheet(tableRef.current);
-        const wb = XLSX.utils.book_new(); // Creates a new workbook
-        XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Adds the worksheet to the workbook
-        XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
-      } else {
-        console.error('Table reference is missing.');
-      }
-    };
-  
-    const handlePrint = () => {
-      window.print(); 
-    };
-
-    const handleGoodsReceipt=(item)=>{
-      setGoodsReceipt(item);
-      setShow(true);
+  const handleExport = () => {
+    if (tableRef.current) {
+      // Converts table to worksheet
+      const ws = XLSX.utils.table_to_sheet(tableRef.current);
+      const wb = XLSX.utils.book_new(); // Creates a new workbook
+      XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Adds the worksheet to the workbook
+      XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+    } else {
+      console.error('Table reference is missing.');
     }
-    
+  };
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleGoodsReceipt = (item) => {
+    setGoodsReceipt(item);
+    setShow(true);
+  }
+
 
   return (
     <>
@@ -119,7 +119,7 @@ const tableRef=useRef(null);
             <span className="PurchaseOrder-results">
               Showing {data.length} results
             </span>
-            <button className="PurchaseOrder-export-button"onClick={handleExport}>Export</button>
+            <button className="PurchaseOrder-export-button" onClick={handleExport}>Export</button>
             <ReactToPrint
               trigger={() => (
                 <button className="PurchaseOrder-print-button" onClick={handlePrint}> Print</button>
@@ -130,39 +130,39 @@ const tableRef=useRef(null);
         </div>
 
         <div ref={componentRef}>
-        <table  ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-                 "PO No",
-                 "PO Date",
-                 "PR No",
-                 "Vendor Name",
-                 "Vendor Contact",
-                 "Total Amount",
-                 "PO Status",
-                 "Verification Status",
-                 "Actions"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-  </thead>
+          <table ref={tableRef}>
+            <thead>
+              <tr>
+                {[
+                  "PO No",
+                  "PO Date",
+                  "PR No",
+                  "Vendor Name",
+                  "Vendor Contact",
+                  "Total Amount",
+                  "PO Status",
+                  "Verification Status",
+                  "Actions"
+                ].map((header, index) => (
+                  <th
+                    key={index}
+                    style={{ width: columnWidths[index] }}
+                    className="resizable-th"
+                  >
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
+                      ></div>
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            </thead>
 
             <tbody>
               {data.length > 0 ? (
@@ -178,18 +178,18 @@ const tableRef=useRef(null);
                     <td>{row.status}</td>
                     <td>
                       <div className="PurchaseOrder-buttons">
-                      <button
-                        className="PurchaseOrder-view-button"
-                        onClick={() => handleGoodsReceipt(row)}
-                      >
-                        Add To Goods Receipt
-                      </button>
-                      <button
-                        className="PurchaseOrder-view-button"
-                        onClick={() =>{handleViewDraftListClick(row)} }
-                      >
-                        View
-                      </button>
+                        <button
+                          className="PurchaseOrder-view-button"
+                          onClick={() => handleGoodsReceipt(row)}
+                        >
+                          Add To Goods Receipt
+                        </button>
+                        <button
+                          className="PurchaseOrder-view-button"
+                          onClick={() => { handleViewDraftListClick(row) }}
+                        >
+                          View
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -213,16 +213,16 @@ const tableRef=useRef(null);
         style={customStyles}
         contentLabel="Add Purchase Order Draft Modal"
       >
-        <AddPurchaseOrderDraft  onClose={() => setShowCreatePO(false)} />
+        <AddPurchaseOrderDraft onClose={() => setShowCreatePO(false)} />
       </CustomModal>
 
 
-      <CustomModal isOpen={show} onClose={()=>setShow(false)}>
-        <GoodsReceipt goodReceipt={goodReceipt}/>
+      <CustomModal isOpen={show} onClose={() => setShow(false)}>
+        <GoodsReceipt goodReceipt={goodReceipt} />
       </CustomModal>
 
       <CustomModal isOpen={showDraftListModal} onClose={closeDraftListModal}>
-        <PurchaseOrderView item={selectedItem}/>
+        <PurchaseOrderView item={selectedItem} />
       </CustomModal>
     </>
   );

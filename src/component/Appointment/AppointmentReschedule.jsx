@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './AppointmentReschedule.css';
 import { API_BASE_URL } from '../api/api';
+import { toast } from 'react-toastify';
+import { FloatingInput, FloatingSelect } from '../../FloatingInputs';
 
 const AppointmentReschedule = ({ slots,update,onClose }) => {
   console.log(slots);
@@ -29,14 +31,14 @@ const AppointmentReschedule = ({ slots,update,onClose }) => {
         const availableSlots = slots.filter((slot) => !unavailableSlots.includes(slot));
         setFilteredSlots(availableSlots);
       } catch (error) {
-        console.error('Error fetching appointments:', error);
+        toast.error('Error fetching appointments:', error);
       }
     };
     fetchAppointments();
   }, [slots, selectedDate]);
   const handleUpdate = async () => {
     if (!selectedSlot) {
-      alert('Please select a time slot.');
+      toast.error('Please select a time slot.');
       return;
     }
 
@@ -52,45 +54,43 @@ const AppointmentReschedule = ({ slots,update,onClose }) => {
           },
         }
       );
-      alert('Appointment rescheduled successfully');
+      toast.success('Appointment rescheduled successfully');
       onClose();
 
     } catch (error) {
-      console.error('Error rescheduling appointment:', error);
-      alert('Failed to reschedule the appointment. Please try again.');
+      toast.error('Failed to reschedule the appointment. Please try again.');
     }
   };
 
   return (
     <div className="AppointmentRescheduleContainer">
       <div className="Appointment-Reschedule-Sub">
-        <label htmlFor="appointment-date">Date:</label>
-        <input
-          type="date"
-          id="appointment-date"
-          name="appointment-date"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
+        <FloatingInput
+        label={"Date"}
+         type="date"
+         id="appointment-date"
+         name="appointment-date"
+         value={selectedDate}
+         onChange={(e) => setSelectedDate(e.target.value)}
         />
       </div>
       <div className="Appointment-Reschedule-Sub">
-        <label htmlFor="time-slot">Time:</label>
-        <select
-          id="time-slot"
-          name="time-slot"
-          className="Appointment-Reschedule-dropdown"
-          value={selectedSlot}
-          onChange={(e) => setSelectedSlot(e.target.value)}
-        >
-          <option value="" disabled>
-            Select a time slot
-          </option>
-          {filteredSlots.map((slot, index) => (
-            <option key={index} value={slot}>
-              {slot}
-            </option>
-          ))}
-        </select>
+        <FloatingSelect
+        label={"Time"}
+         name="time-slot"
+         className="Appointment-Reschedule-dropdown"
+         value={selectedSlot}
+         onChange={(e) => setSelectedSlot(e.target.value)}
+         options={[
+          { value: "", label: "" },
+          ...(Array.isArray(filteredSlots)
+            ? filteredSlots.map((slot) => ({
+                value: slot,
+                label: slot,
+              }))
+            : []),
+        ]}
+        />
       </div>
       <div className="Appointment-Reschedule-btn">
         <button className="Appointment-Reschedule-button" onClick={handleUpdate}>

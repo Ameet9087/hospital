@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './DrugExpiryAlert.css'; // Import your CSS file
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 
 const DrugExpiryAlert = () => {
     const [items, setItems] = useState([]);
@@ -18,11 +18,11 @@ const DrugExpiryAlert = () => {
                 // Map the data to your desired structure
                 const formattedData = data.map(drug => ({
                     id: drug.drugsId,
-                    code:drug.drugCode,
+                    code: drug.drugCode,
                     name: drug.drugName,
                     quantity: drug.quantity || 0, // Add logic for quantity if needed
                     expiry_date: drug.expiryDate,
-                    purchaseDate:drug.purchaseDate,
+                    purchaseDate: drug.purchaseDate,
 
                     alert_threshold: drug.alertThreshold || 30 // Add logic for alert threshold if needed
                 }));
@@ -52,7 +52,7 @@ const DrugExpiryAlert = () => {
         setAlerts(nearExpiryItems);
 
 
-       
+
         setAlerts(expiredItems);
 
         // Show custom notification popup
@@ -113,27 +113,27 @@ const DrugExpiryAlert = () => {
                             {items.map((item, index) => {
                                 const isExpired = new Date(item.expiry_date) < new Date();
                                 return (
-                                <tr key={item.id}>
-                                    {/* Auto-incrementing number */}
-                                    <td className="drug-expiry-alert-td">{index + 1}</td>
-                                    
-                                    <td className="drug-expiry-alert-td">{item.code}</td>
-                                    <td className="drug-expiry-alert-td">{item.name}</td>
-                                    <td className="drug-expiry-alert-td">{item.quantity}</td>
-                                    <td className="drug-expiry-alert-td">{item.purchaseDate}</td>
-                                    <td className="drug-expiry-alert-td">{item.expiry_date}</td>
-                                    <td className="drug-expiry-alert-td">{item.alert_threshold}</td>
-                                    <td className="drug-expiry-alert-td">
-                                    {isExpired ? (
-                                        <button className="expired-button">Expired</button>
-                                    ) : (
-                                        <span>Valid</span>
-                                    )}
-                                    </td>
-                                </tr>
+                                    <tr key={item.id}>
+                                        {/* Auto-incrementing number */}
+                                        <td className="drug-expiry-alert-td">{index + 1}</td>
+
+                                        <td className="drug-expiry-alert-td">{item.code}</td>
+                                        <td className="drug-expiry-alert-td">{item.name}</td>
+                                        <td className="drug-expiry-alert-td">{item.quantity}</td>
+                                        <td className="drug-expiry-alert-td">{item.purchaseDate}</td>
+                                        <td className="drug-expiry-alert-td">{item.expiry_date}</td>
+                                        <td className="drug-expiry-alert-td">{item.alert_threshold}</td>
+                                        <td className="drug-expiry-alert-td">
+                                            {isExpired ? (
+                                                <button className="expired-button">Expired</button>
+                                            ) : (
+                                                <span>Valid</span>
+                                            )}
+                                        </td>
+                                    </tr>
                                 );
                             })}
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
             )}

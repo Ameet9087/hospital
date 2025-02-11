@@ -12,12 +12,13 @@
     border: none;
     border-radius: 5px;
     margin-bottom: 20px;
+    border: 1px solid var(--button-hover-border-color);
   }
   
   .postsurgerycare-add-btn:hover {
     background-color:var(--button-hover-background-color);
     color: var(--button-hover-text-color);
-    border: 1px solid var(--button-hover-border-color);
+    
   }
   
   
@@ -26,16 +27,15 @@
     background-color: var(--button-color);
     text-align: center;
     padding: 5px;
-    text-decoration: none;
     font-size: 16px;
-    border: none;
     border-radius: 5px;
+    border: 1px solid var(--button-hover-border-color);
   }
 
   .postsurgerycare-edit-btn:hover{
     background-color:var(--button-hover-background-color);
     color: var(--button-hover-text-color);
-    border: 1px solid var(--button-hover-border-color);
+    
 }
   
   .postsurgerycare-modal {
@@ -55,8 +55,9 @@
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    width: 900px;
-    max-width: 90%;
+    width: 800px;
+    max-height: 600px;
+    overflow-y: auto;
   }
   
   .postsurgerycare-form-group {
@@ -91,18 +92,17 @@
     color: white;
     background-color: var(--button-color);
     text-align: center;
-    padding: 5px;
+    padding: var(--input-box-padding);
     text-decoration: none;
-    font-size: 16px;
-    border: none;
+    font-size: var(--font-size);
+    border: 1px solid var(--button-hover-border-color);
     border-radius: 5px;
+    margin-left: 7px;
 
   }
   .postsurgerymodalbtn:hover{
     background-color:var(--button-hover-background-color);
     color: var(--button-hover-text-color);
-    border: 1px solid var(--button-hover-border-color);
-
   }
   
 
@@ -155,9 +155,7 @@
     cursor: pointer;
   }
   
-  .postsurgery-filter button:hover {
-    background-color: #257ab8;
-  }
+  
   
   .postsurgery-filter input[type="text"]::placeholder {
     color: #aaa;
@@ -219,12 +217,16 @@
   font-size: 16px;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
+  display: flexbox;
+  margin-left: 75%;
+  border: 1px solid var(--button-hover-border-color);
 }
 
 .postsurgerycare-filter-button:hover {
   background-color:var(--button-hover-background-color);
     color: var(--button-hover-text-color);
-    border: 1px solid var(--button-hover-border-color);
+    
 }
 
   

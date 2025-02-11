@@ -4,6 +4,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
+import { FloatingInput, FloatingTextarea } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 const UpdateTemplate = ({ template, onClose }) => {
   const [moduleName, setModuleName] = useState("Radiology");
@@ -12,6 +14,7 @@ const UpdateTemplate = ({ template, onClose }) => {
   const [isActive, setIsActive] = useState(false);
   const [templateContent, setTemplateContent] = useState("");
   const [footerNote, setFooterNote] = useState("");
+  const [isCodeEdited, setIsCodeEdited] = useState(false);
 
   useEffect(() => {
     if (template) {
@@ -24,6 +27,16 @@ const UpdateTemplate = ({ template, onClose }) => {
     }
   }, [template]);
 
+  useEffect(() => {
+    if (!isCodeEdited) {
+      // Auto-generate templateCode from templateName
+      const generatedCode = templateName
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g, "_"); // Replace spaces with underscores and convert to uppercase
+      setTemplateCode(generatedCode);
+    }
+  }, [templateName, isCodeEdited]);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -43,13 +56,15 @@ const UpdateTemplate = ({ template, onClose }) => {
           `${API_BASE_URL}/radiology-templates/${template.radiologyTemplateId}`,
           payload
         );
+        toast.success("Data Updated Successfully");
       } else {
         // Create new template
         await axios.post(`${API_BASE_URL}/radiology-templates`, payload);
       }
+      toast.success("Data Added Successfully");
       onClose();
     } catch (error) {
-      console.error("Error saving template:", error);
+      toast.error("Error saving template:", error);
     }
   };
 
@@ -60,12 +75,16 @@ const UpdateTemplate = ({ template, onClose }) => {
       </div>
       <form className="update-template-template-form" onSubmit={handleSubmit}>
         <div className="update-template-form-group">
-          <label>Module Name*</label>
-          <input type="text" value={moduleName} readOnly />
+          <FloatingInput
+            label={"Module Name"}
+            type="text"
+            value={moduleName}
+            readOnly
+          />
         </div>
         <div className="update-template-form-group">
-          <label>Template Name*</label>
-          <input
+          <FloatingInput
+            label={"Template Name"}
             type="text"
             value={templateName}
             onChange={(e) => setTemplateName(e.target.value)}
@@ -73,11 +92,14 @@ const UpdateTemplate = ({ template, onClose }) => {
           />
         </div>
         <div className="update-template-form-group">
-          <label>Template Code*</label>
-          <input
+          <FloatingInput
+            label={"Template Code"}
             type="text"
             value={templateCode}
-            onChange={(e) => setTemplateCode(e.target.value)}
+            onChange={(e) => {
+              setTemplateCode(e.target.value);
+              setIsCodeEdited(true); // User manually edited the code
+            }}
             required
           />
         </div>
@@ -98,9 +120,8 @@ const UpdateTemplate = ({ template, onClose }) => {
           />
         </div>
         <div className="update-template-form-group footer-note">
-          <label>Footer Note:</label>
-          <textarea
-            placeholder="Footer"
+          <FloatingTextarea
+            label={"Footer Note"}
             value={footerNote}
             onChange={(e) => setFooterNote(e.target.value)}
           />

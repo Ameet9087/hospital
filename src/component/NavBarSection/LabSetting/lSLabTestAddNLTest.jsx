@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../../api/api";
 import RadiologyPopupTable from "../../Employee/Radiology/RadiologyPopupTable";
 import axios from "axios";
+import { FloatingInput, FloatingSelect, FloatingTextarea } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
   const [labCategories, setLabCategories] = useState([]);
   const [labComponents, setLabComponents] = useState([]);
   const [serviceDetails, setServiceDetails] = useState([]);
   const [activePopup, setActivePopup] = useState("");
-    const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [selectedServiceDetails, setSelectedServiceDetails] = useState();
   const [labTestData, setLabTestData] = useState({
     labTestName: "",
@@ -68,10 +70,10 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
           setLabCategories(data);
         } else {
           console.error("Failed to fetch lab categories:", response.statusText);
-          alert("Error fetching lab categories");
+          toast.error("Error fetching lab categories");
         }
       } catch (error) {
-        console.error("Error:", error);
+        toast.error("Error:", error);
       }
     };
 
@@ -85,10 +87,10 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
           setLabComponents(data);
         } else {
           console.error("Failed to fetch lab components:", response.statusText);
-          alert("Error occurred while fetching lab components.");
+          toast.error("Error occurred while fetching lab components.");
         }
       } catch (error) {
-        console.error("Error:", error);
+        toast.error("Error:", error);
       }
     };
 
@@ -106,9 +108,7 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
 
   const handleAddNewLabTestClick = () => {
     setShowPopup(true);
-    
   };
-
 
   const handleClosePopup = () => {
     setShowPopup(false);
@@ -214,13 +214,13 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("Lab test data saved successfully:", result);
+        toast.success("Lab test data saved successfully:", result);
         onClose(); // Close the form after saving
       } else {
-        console.error("Failed to save lab test data:", response.statusText);
+        toast.error("Failed to save lab test data:", response.statusText);
       }
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("Error:", error);
     }
   };
 
@@ -252,6 +252,7 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
         `${API_BASE_URL}/labTestSetting/update/${id}`,
         dataToSend
       );
+      toast.success("Lab Test Updated Successfully")
       onClose();
     } catch (error) {
       console.log(error);
@@ -271,26 +272,19 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
         <div className="lSLabTestAddNLTest-form-row">
           <div className="lSLabTestAddNLTest-form-group-1row">
             <div className="lSLabTestAddNLTest-form-group">
-              <label>
-                Lab Test Name<span>*</span>
-              </label>
-              <input
-                type="text"
+              <FloatingInput
+                label={"Lab Test Name"}
+                type="search"
                 name="labTestName"
                 placeholder="Lab Test Name"
                 value={labTestData.labTestName}
                 onChange={handleInputChange}
+                onIconClick={() => setActivePopup("labTestName")}
               />
-              <i
-                onClick={() => setActivePopup("labTestName")}
-                className="fa-solid fa-magnifying-glass"
-              ></i>
             </div>
             <div className="lSLabTestAddNLTest-form-group">
-              <label>
-                Lab Test Code<span>*</span>
-              </label>
-              <input
+              <FloatingInput
+                label={"Lab Test Code"}
                 type="text"
                 name="labTestCode"
                 placeholder="Lab Test Code"
@@ -298,12 +292,9 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
                 onChange={handleInputChange}
               />
             </div>
-          </div>
-
-          <div className="lSLabTestAddNLTest-form-group-1row">
             <div className="lSLabTestAddNLTest-form-group">
-              <label>Reporting Name</label>
-              <input
+              <FloatingInput
+                label={"Reporting Name"}
                 type="text"
                 name="reportingName"
                 placeholder="Lab Test Reporting Name"
@@ -312,45 +303,27 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
               />
             </div>
             <div className="lSLabTestAddNLTest-form-group">
-              <label>
-                Report Template Name<span>*</span>
-              </label>
-              <input
-                type="text"
-                name="reportTemplateName"
-                placeholder="Select Report Template Short Name"
-                // value={labTestData.reportTemplateName}
-                // onChange={handleInputChange}
+              <FloatingSelect
+                label={"Lab Category"}
+                name="labCategory"
+                value={labTestData.labCategory}
+                onChange={handleInputChange}
+                options={[
+                  { value: "", label: "" },
+                  ...(Array.isArray(labCategories)
+                    ? labCategories.map((category) => ({
+                        value: category.labTestCategoryId,
+                        label: category.labTestCategoryName,
+                      }))
+                    : []),
+                ]}
               />
             </div>
           </div>
           <div className="lSLabTestAddNLTest-form-group-1row">
             <div className="lSLabTestAddNLTest-form-group">
-              <label>
-                Lab Category<span>*</span>
-              </label>
-              <select
-                name="labCategory"
-                value={labTestData.labCategory}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Select Lab Category</option>
-                {labCategories.map((category) => (
-                  <option
-                    key={category.labTestCategoryId}
-                    value={category.labTestCategoryId}
-                  >
-                    {category.labTestCategoryName}
-                  </option> // Adjust based on your API response structure
-                ))}
-              </select>
-            </div>
-            <div className="lSLabTestAddNLTest-form-group">
-              <label>
-                Service Department<span>*</span>
-              </label>
-              <input
+              <FloatingInput
+                label={"Service Department"}
                 type="text"
                 name="serviceDepartment"
                 placeholder="Select Service Department Name"
@@ -358,63 +331,57 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
                 onChange={handleInputChange}
               />
             </div>
-          </div>
-          <div className="lSLabTestAddNLTest-form-group-1row">
             <div className="lSLabTestAddNLTest-form-group">
-              <label>
-                Select Specimen(s)<span>*</span>
-              </label>
-              <select
+              <FloatingSelect
+              label={"Select Specimen"}
                 name="selectedSpecimen"
                 value={labTestData.selectedSpecimen}
                 onChange={handleInputChange}
-              >
-                <option value="">--Select Specimens--</option>
-                <option value="Blood">Blood</option>
-                <option value="Urine">Urine</option>
-                <option value="Saliva">Saliva</option>
-                <option value="Tissue">Tissue</option>
-                <option value="Sputum">Sputum</option>
-                <option value="CSF">CSF (Cerebrospinal Fluid)</option>
-                <option value="Serum">Serum</option>
-                <option value="Plasma">Plasma</option>
-                <option value="Bone Marrow">Bone Marrow</option>
-                <option value="Nasal Swab">Nasal Swab</option>
-                <option value="Throat Swab">Throat Swab</option>
-                <option value="Stool">Stool</option>
-              </select>
+                options={[
+                  { value: "", label: "--Select Specimens--" },
+                  { value: "Blood", label: "Blood" },
+                  { value: "Urine", label: "Urine" },
+                  { value: "Saliva", label: "Saliva" },
+                  { value: "Tissue", label: "Tissue" },
+                  { value: "Sputum", label: "Sputum" },
+                  { value: "CSF", label: "CSF (Cerebrospinal Fluid)" },
+                  { value: "Serum", label: "Serum" },
+                  { value: "Plasma", label: "Plasma" },
+                  { value: "Bone Marrow", label: "Bone Marrow" },
+                  { value: "Nasal Swab", label: "Nasal Swab" },
+                  { value: "Throat Swab", label: "Throat Swab" },
+                  { value: "Stool", label: "Stool" },
+                ]}
+              />
             </div>
-
-            <div className="lSLabTestAddNLTest-form-group-sub">
-              <div className="lSLabTestAddNLTest-form-group">
-                <label>Run No. Type</label>
-                <select
-                  name="runNoType"
-                  value={labTestData.runNoType}
-                  onChange={handleInputChange}
-                >
-                  <option value="normal">Normal</option>
-                  {/* Add other options here */}
-                </select>
-              </div>
-
-              <div className="lSLabTestAddNLTest-form-group">
-                <label>Display Sequence</label>
-                <input
-                  type="number"
-                  name="displaySequence"
-                  value={labTestData.displaySequence}
-                  onChange={handleInputChange}
-                />
-              </div>
+            <div className="lSLabTestAddNLTest-form-group">
+              <FloatingSelect
+              label={"Run No.Type"}
+               name="runNoType"
+               value={labTestData.runNoType}
+               onChange={handleInputChange}
+               options={[
+                {value:"",label:""},
+                {value:"normal",label:"Normal"}
+               ]}
+              />
+            </div>
+            <div className="lSLabTestAddNLTest-form-group">
+              <FloatingInput
+              label={"Display Sequence"}
+              type="number"
+              name="displaySequence"
+              value={labTestData.displaySequence}
+              onChange={handleInputChange}
+              />
             </div>
           </div>
         </div>
-        <div className="lSLabTestAddNLTest-AddNew">
+        {/* <div className="lSLabTestAddNLTest-AddNew">
           <a href="#" className="add-new-specimen">
             Add New Specimen
           </a>
-        </div>
+        </div> */}
 
         <div className="lSLabTestAddNLTest-checkbox-N-form-group">
           <div className="lSLabTestAddNLTest-checkbox-row">
@@ -472,15 +439,14 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
               />{" "}
               Has Negative Results
             </label>
+            <div className="lSLabTestAddNLTest-form-group lSLabTestAddNLTest-full-width">
+              <FloatingTextarea
+              label={"Interpretation"}
+               name="interpretation"
+               value={labTestData.interpretation}
+               onChange={handleInputChange}
+              />
           </div>
-
-          <div className="lSLabTestAddNLTest-form-group lSLabTestAddNLTest-full-width">
-            <label>Interpretation</label>
-            <textarea
-              name="interpretation"
-              value={labTestData.interpretation}
-              onChange={handleInputChange}
-            ></textarea>
           </div>
         </div>
       </div>
@@ -501,37 +467,44 @@ const LSLabTestAddNLTest = ({ onClose, intialData, isDataUpdate }) => {
             {labTestData.components.map((component, index) => (
               <tr key={index}>
                 <td>
-                  <select
-                    name="componentName"
-                    value={component.componentName}
-                    onChange={(e) => handleComponentChange(index, e)}
-                    className="lSLabTestAddNLTest-component-input"
-                  >
-                    <option value="">Select Component</option>
-                    {labComponents.map((labComponent) => (
-                      <option
-                        key={labComponent.componentId}
-                        value={labComponent.componentName}
-                      >
-                        {labComponent.componentName}
-                      </option>
-                    ))}
-                  </select>
+                  <FloatingSelect
+                  label={"Component Name"}
+                  name="componentName"
+                  value={component.componentName}
+                  onChange={(e) => handleComponentChange(index, e)}
+                  options={[
+                    {value:"",label:""},
+                    ...(Array.isArray(labComponents)?labComponents.map((labComponent)=>({
+                      value:labComponent.componentName,
+                      label:labComponent.componentName
+                    })):[])
+                  ]}
+                  />
+
                 </td>
                 <td>
-                  <input type="text" value={component.unit} readOnly />
+                  <FloatingInput
+                  label={"Unit"}
+                  type="text" value={component.unit} readOnly
+                  />
                 </td>
                 <td>
-                  <input type="text" value={component.valueType} readOnly />
+                  <FloatingInput
+                  label={"Value Type"}
+                  type="text" value={component.valueType} readOnly
+                  />
                 </td>
                 <td>
-                  <input type="text" value={component.range} readOnly />
+                  <FloatingInput
+                  label={"Range"}
+                   type="text" value={component.range} readOnly/>
                 </td>
                 <td>
-                  <input
-                    type="text"
-                    value={component.displaySequence}
-                    onChange={(e) => handleInputChange(e, index)}
+                  <FloatingInput
+                  label={"Display Sequence"}
+                  type="text"
+                  value={component.displaySequence}
+                  onChange={(e) => handleInputChange(e, index)}
                   />
                 </td>
               </tr>

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ReturnToSupplier.css';
 import * as XLSX from 'xlsx';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 import ReturnForm from './ReturnForm';
 import CustomModal from '../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../api/api';
@@ -12,11 +12,11 @@ const ReturnToSupplier = () => {
   const tableRef = useRef(null);
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [showReturnForm, setShowReturnForm] = useState(false); 
-  const [selectedItem, setSelectedItem] = useState(null); 
+  const [showReturnForm, setShowReturnForm] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
   // const [fromDate, setFromDate] = useState();
   // const [toDate, setToDate] = useState();
- const [fromDate, setFromDate] = useState("2025-01-15"); // From date
+  const [fromDate, setFromDate] = useState("2025-01-15"); // From date
   const [toDate, setToDate] = useState("2025-01-31"); // To date
   // Function to export table to Excel
   const handleExport = () => {
@@ -58,7 +58,7 @@ const ReturnToSupplier = () => {
     newWindow.print();
     newWindow.close();
   };
-  
+
 
   // Fetch data from the API
   useEffect(() => {
@@ -75,33 +75,33 @@ const ReturnToSupplier = () => {
   }, []);
 
   // Filter data based on search term and date range
-const filteredData = Array.isArray(data)
-? data.filter((item) => {
-    const supplierMatch = item.supplier?.supplierName
-      ?.toLowerCase()
-      .includes(searchTerm.toLowerCase());
+  const filteredData = Array.isArray(data)
+    ? data.filter((item) => {
+      const supplierMatch = item.supplier?.supplierName
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase());
 
-    const itemDate = new Date(item.goodsReceiptDate); // Convert item date to Date object
-    const from = new Date(fromDate);
-    const to = new Date(toDate);
+      const itemDate = new Date(item.goodsReceiptDate); // Convert item date to Date object
+      const from = new Date(fromDate);
+      const to = new Date(toDate);
 
-    // Check if the item's date falls within the selected range
-    const dateMatch = itemDate >= from && itemDate <= to;
+      // Check if the item's date falls within the selected range
+      const dateMatch = itemDate >= from && itemDate <= to;
 
-    return supplierMatch && dateMatch;
-  })
-: [];
-  const handleReturnClick = (item) => {    
-    setSelectedItem(item); 
-    setShowReturnForm(true); 
+      return supplierMatch && dateMatch;
+    })
+    : [];
+  const handleReturnClick = (item) => {
+    setSelectedItem(item);
+    setShowReturnForm(true);
   };
 
   const closeModal = () => {
-    setShowReturnForm(false); 
-    setSelectedItem(null); 
+    setShowReturnForm(false);
+    setSelectedItem(null);
   };
 
-  
+
 
 
   return (
@@ -116,8 +116,8 @@ const filteredData = Array.isArray(data)
             className="return-to-supplier-input-date"
             value={fromDate}
             onChange={(e) => setFromDate(e.target.value)}
-          />       
-           </div>
+          />
+        </div>
 
         <div className="return-to-supplier-date-filter">
           <label>To:</label>
@@ -220,8 +220,8 @@ const filteredData = Array.isArray(data)
         </table>
       </div>
 
-      <CustomModal isOpen={showReturnForm } onClose={closeModal}>
-         <ReturnForm selectedItem={selectedItem} onClose={closeModal} /> {/* Pass the selected item */}
+      <CustomModal isOpen={showReturnForm} onClose={closeModal}>
+        <ReturnForm selectedItem={selectedItem} onClose={closeModal} /> {/* Pass the selected item */}
       </CustomModal>
     </div>
   );

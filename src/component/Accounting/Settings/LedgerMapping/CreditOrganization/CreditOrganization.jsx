@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./CreditOrganization.css";
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
 
 const CreditOrganization = () => {
   // Sample data (replace this with your actual data)

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Equipmentparts.css";
 import EquipmentPartsPopUp from "./EquipmentPartsPopUp";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 import * as XLSX from "xlsx";
 

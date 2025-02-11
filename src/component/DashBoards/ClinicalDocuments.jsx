@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import "./ClinicalDocument.css";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 
 const ClinicalDocument = ({ patientId, outPatientId }) => {

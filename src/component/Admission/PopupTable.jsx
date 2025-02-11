@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-const PopupTable = ({ columns, data, onSelect, onClose }) => {
+const AppoitmentPopupTable = ({ columns, data, onSelect, onClose }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Filtered data based on the search term
-  const filteredData = data.filter((row) =>
+  const filteredData = data?.filter((row) =>
     columns.some((col) =>
       String(row[col]).toLowerCase().includes(searchTerm.toLowerCase())
     )
@@ -41,8 +41,8 @@ const PopupTable = ({ columns, data, onSelect, onClose }) => {
               </tr>
             </thead>
             <tbody>
-              {filteredData.length > 0 ? (
-                filteredData.map((row, index) => (
+              {filteredData?.length > 0 ? (
+                filteredData?.map((row, index) => (
                   <tr key={index} onClick={() => handleRowClick(row)}>
                     {columns.map((col) => (
                       <td key={col}>{row[col]}</td>
@@ -76,7 +76,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 500,
+    zIndex: 5000,
   },
   header: {
     display: "flex",
@@ -111,7 +111,6 @@ const styles = {
     width: "100%",
     borderCollapse: "collapse",
     marginBottom: "20px",
-    tableLayout: "auto",
   },
   row: {
     cursor: "pointer",
@@ -137,4 +136,4 @@ const styles = {
   },
 };
 
-export default PopupTable;
+export default AppoitmentPopupTable;

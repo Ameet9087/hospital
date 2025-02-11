@@ -7,13 +7,14 @@ import { useReactToPrint } from "react-to-print";
 import SSIPatientConsumNewPCbtn from "./sSIPatientConsumNewPCbtn";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../../api/api";
-import CustomModal from "../../../CustomModel/CustomModal";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import CustomModal from "../../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { useFilter } from "../../../ShortCuts/useFilter";
 function SSIPatientConsumption() {
   const printRef = useRef();
   const { store } = useParams();
  
+
   const [patientConsumptions, setPatientConsumptions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -114,8 +115,11 @@ function SSIPatientConsumption() {
   const handleExportToExcel = () => {
     // Get the table data
     const tableData = [
-      ["Patient Name", "Consumption Date", "Entered By", "Remarks"],
+
+      ['Patient Name', 'Consumption Date', 'Entered By', 'Remarks'],
+
     ];
+
 
     // Create a new workbook and a new worksheet
     const worksheet = XLSX.utils.aoa_to_sheet(tableData);
@@ -150,15 +154,14 @@ function SSIPatientConsumption() {
 
   return (
     <div className="sSIPatientConsumption-active-imaging-request">
+
       <>
         <header className="sSIPatientConsumption-header">
           <div className="sSIPatientConsumption-status-filters">
-            <button
-              className="sSIPatientConsumption-new-patient-button"
+
+            <button className="sSIPatientConsumption-new-patient-button"
               onClick={handleNewPatientConsumptionClick} // Handle button click
-            >
-              + New Patient Consumption
-            </button>
+            >+ New Patient Consumption</button>
           </div>
         </header>
 
@@ -176,6 +179,7 @@ function SSIPatientConsumption() {
               <input type="date" defaultValue="2024-08-16"value={dateTo}
                     onChange={(e) => setDateTo(e.target.value)}
                   />
+
 
             </label>
             {/* <button className="sSIPatientConsumption-star-button">☆</button>
@@ -230,9 +234,11 @@ function SSIPatientConsumption() {
                       <td>{consumption.consumptionDate}</td>
                       <td>{consumption.enteredBy}</td>
                       <td>{consumption.remark}</td>
+
                       <td>
                         <button className="action-button">Action</button>
                       </td>
+
                     </tr>
                   ))
                 ) : (
@@ -272,20 +278,21 @@ function SSIPatientConsumption() {
                     </div>
                   </th>
                 ))}
+
               </tr>
             </thead>
 
             <tbody>
               {filteredConsumptions.length > 0 ? (
                 filteredConsumptions.map((consumption, index) => (
+
                   <tr key={index}>
                     <td>{consumption.patientName}</td>
                     <td>{consumption.consumptionDate}</td>
                     <td>{consumption.enteredBy}</td>
                     <td>{consumption.remark}</td>
-                    <td>
-                      <button className="action-button">Action</button>
-                    </td>
+
+                    <td><button className="action-button">Action</button></td>
                   </tr>
                 ))
               ) : (

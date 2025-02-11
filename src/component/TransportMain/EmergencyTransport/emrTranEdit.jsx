@@ -1,15 +1,16 @@
- /* Dhanashree_EmrTranEdit_24/09_Starts */
+/* Dhanashree_EmrTranEdit_24/09_Starts */
 
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import axios from 'axios'; // Import axios
-import './emrTranEdit.css'; 
+import './emrTranEdit.css';
+import { API_BASE_URL } from '../../api/api';
 
 const EmrTranEdit = ({ row, closeModal }) => {
   const [formData, setFormData] = useState({
     name: row.patientName || '',
-    age: row.age || '', 
+    age: row.age || '',
     gender: row.gender || '',
-    contactNumber: row.contactNumber || '', 
+    contactNumber: row.contactNumber || '',
     emergencyType: row.emergencyType || '',
     pickupLocation: row.pickupLocation || '',
     status: row.status || '',
@@ -24,7 +25,7 @@ const EmrTranEdit = ({ row, closeModal }) => {
   };
 
   const handleUpdate = () => {
-    const updateUrl = `http://localhost:8085/EmergencyTransport/updateTransport/${row.emergencyId}`; // Replace with actual update API URL
+    const updateUrl = `${API_BASE_URL}/EmergencyTransport/updateTransport/${row.emergencyId}`; // Replace with actual update API URL
     axios.put(updateUrl, formData)
       .then((response) => {
         console.log('Updated Data:', response.data);
@@ -86,4 +87,4 @@ const EmrTranEdit = ({ row, closeModal }) => {
 
 export default EmrTranEdit;
 
- /* Dhanashree_EmrTranEdit_24/09_Ends */
+/* Dhanashree_EmrTranEdit_24/09_Ends */

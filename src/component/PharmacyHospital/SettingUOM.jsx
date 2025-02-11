@@ -1,13 +1,14 @@
 /* Mohini_SettingUOM_WholePage_14/sep/2024 */
-import React, { useState, useEffect, useRef } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
-import axios from "axios";
-import "./SettingSupplier.css";
-import { API_BASE_URL } from "../api/api";
-import CustomModal from "../../CustomModel/CustomModal";
-import * as XLSX from "xlsx";
-import useCustomAlert from "../../alerts/useCustomAlert";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+
+import React, { useState, useEffect, useRef } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
+import axios from 'axios';
+import './SettingSupplier.css';
+import { API_BASE_URL } from '../api/api';
+import CustomModal from '../../CustomModel/CustomModal';
+import * as XLSX from 'xlsx';
+import useCustomAlert from '../../alerts/useCustomAlert';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 
 const SettingUOM = () => {
   const [suppliers, setSuppliers] = useState([]);
@@ -22,6 +23,7 @@ const SettingUOM = () => {
   const { success, error, CustomAlerts } = useCustomAlert();
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
+
 
   const apiUrl = `${API_BASE_URL}/unitofmeasurement`;
 
@@ -132,32 +134,33 @@ const SettingUOM = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <div className="setting-supplier-span">
-        <span>Showing {filteredUsers.length}/{filteredUsers.length} results</span>
-        <button className="item-wise-export-button" onClick={handleExport}>
-          Export
-        </button>
-        <button className="item-wise-print-button" onClick={handlePrint}>
-          Print
-        </button>
+
+      <div className='setting-supplier-span'>
+        <span>Showing {suppliers.length} results</span>
+        <button className='item-wise-export-button' onClick={handleExport}>Export</button>
+        <button className='item-wise-print-button' onClick={handlePrint}>Print</button>
       </div>
-      <div className="table-container">
+      <div className='table-container'>
         <table ref={tableRef}>
           <thead>
             <tr>
-              {["Unit Name", "Description", "Is Active", "Action"].map((header, index) => (
-                <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
+              {["Unit Name",
+                "Description",
+                "Is Active",
+                "Action"].map((header, index) => (
+                  <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                      ></div>
+                    </div>
+                  </th>
+                ))}
             </tr>
           </thead>
+
           <tbody>
             {filteredUsers.map((user, index) => (
               <tr key={index}>
@@ -176,9 +179,17 @@ const SettingUOM = () => {
         </table>
       </div>
 
-      <CustomModal isOpen={showModal} onClose={handleCloseModal} className="supplier-setting-supplier-update-modal">
+
+      <CustomModal
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        className="supplier-setting-supplier-update-modal"
+      >
         <div className="supplier-setting-supplier-update-modal-header">
-          <h5>{isEditMode ? "Update Unit of Measurement" : "Add Unit of Measurement"}</h5>
+          <h5>{isEditMode ? 'Update Unit of Measurement' : 'Add Unit of Measurement'}</h5>
+          {/* <button onClick={handleCloseModal} className="close-button">
+      &times;
+    </button> */}
         </div>
         <div className="supplier-setting-supplier-update-modal-body">
           <Form onSubmit={handleSubmit}>
@@ -191,7 +202,9 @@ const SettingUOM = () => {
                   type="text"
                   placeholder="Enter Unit of Measurement"
                   required
+
                   value={selectedUser?.name || ""}
+
                   onChange={(e) => setSelectedUser({ ...selectedUser, name: e.target.value })}
                 />
               </Form.Group>
@@ -200,7 +213,8 @@ const SettingUOM = () => {
                 <Form.Control
                   type="text"
                   placeholder="Enter Description"
-                  value={selectedUser?.description || ""}
+
+                  value={selectedUser?.description || ''}
                   onChange={(e) => setSelectedUser({ ...selectedUser, description: e.target.value })}
                 />
               </Form.Group>
@@ -215,12 +229,14 @@ const SettingUOM = () => {
             </Form.Group>
             <div className="supplier-setting-text-right">
               <Button variant="primary" type="submit">
-                {isEditMode ? "Update" : "Add"}
+
+                {isEditMode ? 'Update' : 'Add'}
               </Button>
             </div>
           </Form>
         </div>
       </CustomModal>
+
     </div>
   );
 };

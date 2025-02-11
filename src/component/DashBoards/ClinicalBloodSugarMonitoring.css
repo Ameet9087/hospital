@@ -9,6 +9,9 @@
   justify-content: space-between;
   align-items: center;
 }
+.clinical-blood-sugar-monitoring-header h3{
+  font-size: 18px;
+}
 .clinical-blood-sugar-monitoring-sub-div
 {
   width: 100%;
@@ -39,11 +42,8 @@
 }
 
 .clinical-blood-sugar-monitoring-right-panel {
-  flex: 1;
-  background-color: #f9f9f9;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
-  height: 50vh;
   overflow-y: scroll;
   scrollbar-width: none;
   margin-left: 20px;
@@ -70,8 +70,8 @@
 }
 
 .clinical-blood-sugar-monitoring-close {
-  background-color: #ff5c5c;
-  color: white;
+  color:red;
+  background: none;
   border: none;
   cursor: pointer;
   font-size: 18px;

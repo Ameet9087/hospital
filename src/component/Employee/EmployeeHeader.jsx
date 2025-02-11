@@ -12,9 +12,9 @@ const EmployeeHeader = () => {
           <ul className="employee-header-form">
             <li>
               <NavLink
-                to="/settings/departments"
+                to="/settings/substore"
                 className={
-                  location.pathname === "/settings/departments" ? "active" : ""
+                  location.pathname === "/settings/substore" ? "active" : ""
                 }
               >
                 SubStore
@@ -118,30 +118,21 @@ const EmployeeHeader = () => {
             </li>
             <li>
               <NavLink
-                to="/settings/doctor/add-doctor"
+                to="/settings/doctor"
                 className={
-                  location.pathname === "/settings/doctor/add-doctor" ? "active" : ""
+                  location.pathname === "/settings/doctor" ? "active" : ""
                 }
               >
                 Doctor Master
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/settings/serviceMaster/serviceMaster"
-                className={
-                  location.pathname === "/settings/serviceMaster/serviceMaster" ? "active" : ""
-                }
-              >
-                Service Master
               </NavLink>
             </li>
             <li>
               <NavLink
                 to="/settings/locationmaster"
                 className={
-                  location.pathname === "/settings/locationmaster" ? "active" : ""
+                  location.pathname === "/settings/locationmaster"
+                    ? "active"
+                    : ""
                 }
               >
                 Location Master
@@ -161,7 +152,9 @@ const EmployeeHeader = () => {
               <NavLink
                 to="/settings/dicountathority"
                 className={
-                  location.pathname === "/settings/dicountathority" ? "active" : ""
+                  location.pathname === "/settings/dicountathority"
+                    ? "active"
+                    : ""
                 }
               >
                 Discount Authority
@@ -172,7 +165,9 @@ const EmployeeHeader = () => {
               <NavLink
                 to="/settings/organaization"
                 className={
-                  location.pathname === "/settings/organaization" ? "active" : ""
+                  location.pathname === "/settings/organaization"
+                    ? "active"
+                    : ""
                 }
               >
                 Organization Master
@@ -193,7 +188,9 @@ const EmployeeHeader = () => {
               <NavLink
                 to="/settings/specialisations"
                 className={
-                  location.pathname === "/settings/specialisations" ? "active" : ""
+                  location.pathname === "/settings/specialisations"
+                    ? "active"
+                    : ""
                 }
               >
                 Specialisations
@@ -201,29 +198,28 @@ const EmployeeHeader = () => {
             </li>
             <li>
               <NavLink
-                to="/settings/hospitalSpecialityGroup"
+                to="/settings/specialitygroup"
                 className={
-                  location.pathname === "/settings/hospitalSpecialityGroup" ? "active" : ""
+                  location.pathname === "/settings/specialitygroup"
+                    ? "active"
+                    : ""
                 }
               >
                 Speciality Group
               </NavLink>
             </li>
-
           </ul>
         </nav>
       </header>
 
-
-
-      {location.pathname.includes("/settings/departments") && (
+      {location.pathname.includes("/settings/substore") && (
         <div className="sub-nav-container">
           <ul>
             <li>
               <NavLink
-                to="/settings/departments/manage-substore"
+                to="/settings/substore/manage-substore"
                 className={
-                  location.pathname === "/settings/departments/manage-substore"
+                  location.pathname === "/settings/substore/manage-substore"
                     ? "active"
                     : ""
                 }
@@ -242,7 +238,8 @@ const EmployeeHeader = () => {
               <NavLink
                 to="/settings/organaization/createorganaization"
                 className={
-                  location.pathname === "/settings/organaization/createorganaization"
+                  location.pathname ===
+                  "/settings/organaization/createorganaization"
                     ? "active"
                     : ""
                 }
@@ -254,7 +251,6 @@ const EmployeeHeader = () => {
         </div>
       )}
 
-
       {location.pathname.includes("/settings/dicountathority") && (
         <div className="sub-nav-container">
           <ul>
@@ -262,7 +258,8 @@ const EmployeeHeader = () => {
               <NavLink
                 to="/settings/dicountathority/creatediscountathority"
                 className={
-                  location.pathname === "/settings/dicountathority/creatediscountathority"
+                  location.pathname ===
+                  "/settings/dicountathority/creatediscountathority"
                     ? "active"
                     : ""
                 }
@@ -277,9 +274,14 @@ const EmployeeHeader = () => {
         <div className="sub-nav-container">
           <ul>
             <li>
-              <NavLink to="/settings/locationmaster/locationform" className={
-                location.pathname === "/settings/locationmaster/locationform" ? "active" : ""
-              }>
+              <NavLink
+                to="/settings/locationmaster/locationform"
+                className={
+                  location.pathname === "/settings/locationmaster/locationform"
+                    ? "active"
+                    : ""
+                }
+              >
                 Location Form
               </NavLink>
             </li>
@@ -290,9 +292,14 @@ const EmployeeHeader = () => {
         <div className="sub-nav-container">
           <ul>
             <li>
-              <NavLink to="/settings/socmaster/socform" className={
-                location.pathname === "/settings/socmaster/socform" ? "active" : ""
-              }>
+              <NavLink
+                to="/settings/socmaster/socform"
+                className={
+                  location.pathname === "/settings/socmaster/socform"
+                    ? "active"
+                    : ""
+                }
+              >
                 Soc Form
               </NavLink>
             </li>
@@ -307,7 +314,7 @@ const EmployeeHeader = () => {
                 to="/settings/radiology/manage-imaging-type"
                 className={
                   location.pathname ===
-                    "/settings/radiology/manage-imaging-type"
+                  "/settings/radiology/manage-imaging-type"
                     ? "active"
                     : ""
                 }
@@ -320,7 +327,7 @@ const EmployeeHeader = () => {
                 to="/settings/radiology/manage-imaging-item"
                 className={
                   location.pathname ===
-                    "/settings/radiology/manage-imaging-item"
+                  "/settings/radiology/manage-imaging-item"
                     ? "active"
                     : ""
                 }
@@ -333,7 +340,7 @@ const EmployeeHeader = () => {
                 to="/settings/radiology/manage-radiology-template"
                 className={
                   location.pathname ===
-                    "/settings/radiology/manage-radiology-template"
+                  "/settings/radiology/manage-radiology-template"
                     ? "active"
                     : ""
                 }
@@ -346,7 +353,7 @@ const EmployeeHeader = () => {
                 to="/settings/radiology/default-signatories"
                 className={
                   location.pathname ===
-                    "/settings/radiology/default-signatories"
+                  "/settings/radiology/default-signatories"
                     ? "active"
                     : ""
                 }
@@ -440,7 +447,7 @@ const EmployeeHeader = () => {
                 to="/settings/employee/manage-department"
                 className={
                   location.pathname ===
-                    "/settings/departments/manage-department"
+                  "/settings/departments/manage-department"
                     ? "active"
                     : ""
                 }
@@ -454,7 +461,7 @@ const EmployeeHeader = () => {
                 to="/settings/employee/manage-employee-role"
                 className={
                   location.pathname ===
-                    "/settings/employee/manage-employee-role"
+                  "/settings/employee/manage-employee-role"
                     ? "active"
                     : ""
                 }
@@ -467,7 +474,7 @@ const EmployeeHeader = () => {
                 to="/settings/employee/manage-employee-type"
                 className={
                   location.pathname ===
-                    "/settings/employee/manage-employee-type"
+                  "/settings/employee/manage-employee-type"
                     ? "active"
                     : ""
                 }
@@ -511,7 +518,7 @@ const EmployeeHeader = () => {
                 to="/settings/ipmaster/IP-master-Pay-type-master"
                 className={
                   location.pathname ===
-                    "/settings/ipmaster/IP-master-Pay-type-master"
+                  "/settings/ipmaster/IP-master-Pay-type-master"
                     ? "active"
                     : ""
                 }
@@ -742,7 +749,7 @@ const EmployeeHeader = () => {
               <NavLink
                 to="/settings/geolocation/manage-country"
                 className={
-                  location.pathname === "/settings/employee/manage-country"
+                  location.pathname === "/settings/geolocation/manage-country"
                     ? "active"
                     : ""
                 }
@@ -792,8 +799,9 @@ const EmployeeHeader = () => {
                 Create Dg Master
               </NavLink>
             </li>
-
-          </ul></div>)}
+          </ul>
+        </div>
+      )}
       {location.pathname.includes("/settings/specialisations") && (
         <div className="sub-nav-container">
           <ul>
@@ -801,7 +809,8 @@ const EmployeeHeader = () => {
               <NavLink
                 to="/settings/specialisations/create-specialisations"
                 className={
-                  location.pathname === "/settings/specialisations/create-specialisations"
+                  location.pathname ===
+                  "/settings/specialisations/create-specialisations"
                     ? "active"
                     : ""
                 }
@@ -809,16 +818,18 @@ const EmployeeHeader = () => {
                 Create Specialisations
               </NavLink>
             </li>
-
-          </ul></div>)}
-      {location.pathname.includes("/settings/hospitalSpecialityGroup") && (
+          </ul>
+        </div>
+      )}
+      {location.pathname.includes("/settings/specialitygroup") && (
         <div className="sub-nav-container">
           <ul>
             <li>
               <NavLink
-                to="/settings/hospitalSpecialityGroup/create-hospitalSpecialityGroup"
+                to="/settings/specialitygroup/create-hospitalSpecialityGroup"
                 className={
-                  location.pathname === "/settings/hospitalSpecialityGroup/create-hospitalSpecialityGroup"
+                  location.pathname ===
+                  "/settings/specialitygroup/create-hospitalSpecialityGroup"
                     ? "active"
                     : ""
                 }
@@ -826,8 +837,9 @@ const EmployeeHeader = () => {
                 Create Speciality Group
               </NavLink>
             </li>
-
-          </ul></div>)}
+          </ul>
+        </div>
+      )}
     </>
   );
 };

@@ -21,8 +21,9 @@ const FloatingInput = ({ label, type = "text", value, ...props }) => {
 
   return (
     <div
-      className={`RefLinenRequirement-form-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
+      className={`RefLinenRequirement-form-floating-field ${
+        isFocused || hasValue ? "active" : ""
+      }`}
     >
       <input
         type={type}
@@ -52,8 +53,9 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
 
   return (
     <div
-      className={`RefLinenRequirement-form-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
+      className={`RefLinenRequirement-form-floating-field ${
+        isFocused || hasValue ? "active" : ""
+      }`}
     >
       <select
         className="RefLinenRequirement-form-floating-select"
@@ -69,7 +71,7 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
         }}
         {...props}
       >
-        <option value="">{ }</option>
+        <option value="">{}</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -169,7 +171,7 @@ function LinenRequirement() {
         linenType: data.linenType,
       }));
     } else if (activePopup === "department") {
-      setAddDepartments(data)
+      setAddDepartments(data);
       setFormData((prev) => ({
         ...prev,
         departmentName: data.departmentName,
@@ -203,7 +205,7 @@ function LinenRequirement() {
           readyForUse: rows[0]?.readyForUse || null,
           beingProcessed: rows[0]?.beingProcessed || null,
           inTransit: rows[0]?.inTransit || null,
-        }
+        },
       };
       console.log("Request Payload:", requestData);
       const response = await axios.post(
@@ -219,9 +221,9 @@ function LinenRequirement() {
   };
   return (
     <div className="RefLinenRequirement-container">
-      <div className="LinenRLinenType-header">
+      {/* <div className="LinenRLinenType-header">
         <span className="LinenRLinenType-headingName">Linen Requirement</span>
-      </div>
+      </div> */}
       <div className="RefLinenRequirement-section">
         <div className="RefLinenRequirement-grid">
           <div className="RefLinenRequirement-search-field">
@@ -328,13 +330,18 @@ function LinenRequirement() {
                 </td>
                 <td>
                   <input
-                    type="text"
+                    type="number"
                     name="quantity"
                     value={row.quantity}
                     onChange={(e) => {
-                      const newRows = [...rows];
-                      newRows[index].quantity = e.target.value;
-                      setRows(newRows);
+                      const value = e.target.value;
+
+                      // Prevent negative values
+                      if (value >= 0 || value === "") {
+                        const newRows = [...rows];
+                        newRows[index].quantity = value;
+                        setRows(newRows);
+                      }
                     }}
                     className="line-requirement-in"
                   />

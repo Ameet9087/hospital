@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios
 import './AddTransportServiceDetails.css'; // Import CSS for styling
+import { API_BASE_URL } from '../../../api/api';
 
 const StaffTransportForm = ({ onSubmit, initialData }) => {
   const [formData, setFormData] = useState({
@@ -62,7 +63,7 @@ const StaffTransportForm = ({ onSubmit, initialData }) => {
     try {
       // Send POST request to your API
       console.log(payload);
-      const response = await axios.post('http://localhost:8085/api/vehicles', payload);
+      const response = await axios.post(`${API_BASE_URL}/vehicles`, payload);
       console.log('Server response:', response.data);
       onSubmit(response.data); // Optionally pass the response back for further processing
       // Display success message or redirect after successful submission
@@ -80,14 +81,14 @@ const StaffTransportForm = ({ onSubmit, initialData }) => {
         <div className="MADStaffTransportManagement-form-group MADStaffTransportManagement-form-group-columns">
           <div className="MADStaffTransportManagement-form-field">
             <label htmlFor="staffId" className="MADStaffTransportManagement-label">Staff Vehicle ID</label>
-            <input 
-              type="text" 
-              id="staffId" 
-              name="staffId" 
-              value={formData.staffId} 
-              onChange={handleChange} 
-              className="MADStaffTransportManagement-input" 
-              required 
+            <input
+              type="text"
+              id="staffId"
+              name="staffId"
+              value={formData.staffId}
+              onChange={handleChange}
+              className="MADStaffTransportManagement-input"
+              required
             />
           </div>
         </div>
@@ -95,14 +96,14 @@ const StaffTransportForm = ({ onSubmit, initialData }) => {
         <div className="MADStaffTransportManagement-form-group MADStaffTransportManagement-form-group-columns">
           <div className="MADStaffTransportManagement-form-field">
             <label htmlFor="vehicleCapacity" className="MADStaffTransportManagement-label">Vehicle Capacity</label>
-            <input 
-              type="number" 
-              id="vehicleCapacity" 
-              name="vehicleCapacity" 
-              value={formData.vehicleCapacity} 
-              onChange={handleChange} 
-              className="MADStaffTransportManagement-input" 
-              required 
+            <input
+              type="number"
+              id="vehicleCapacity"
+              name="vehicleCapacity"
+              value={formData.vehicleCapacity}
+              onChange={handleChange}
+              className="MADStaffTransportManagement-input"
+              required
             />
           </div>
         </div>
@@ -110,27 +111,27 @@ const StaffTransportForm = ({ onSubmit, initialData }) => {
         <div className="MADStaffTransportManagement-form-group MADStaffTransportManagement-form-group-columns">
           <div className="MADStaffTransportManagement-form-field">
             <label htmlFor="driverName" className="MADStaffTransportManagement-label">Driver Name</label>
-            <input 
-              type="text" 
-              id="driverName" 
-              name="driverName" 
-              value={formData.driverName} 
-              onChange={handleChange} 
-              className="MADStaffTransportManagement-input" 
-              required 
+            <input
+              type="text"
+              id="driverName"
+              name="driverName"
+              value={formData.driverName}
+              onChange={handleChange}
+              className="MADStaffTransportManagement-input"
+              required
             />
           </div>
 
           <div className="MADStaffTransportManagement-form-field">
             <label htmlFor="driverContact" className="MADStaffTransportManagement-label">Driver Contact</label>
-            <input 
-              type="text" 
-              id="driverContact" 
-              name="driverContact" 
-              value={formData.driverContact} 
-              onChange={handleChange} 
-              className="MADStaffTransportManagement-input" 
-              required 
+            <input
+              type="text"
+              id="driverContact"
+              name="driverContact"
+              value={formData.driverContact}
+              onChange={handleChange}
+              className="MADStaffTransportManagement-input"
+              required
             />
           </div>
         </div>
@@ -138,27 +139,27 @@ const StaffTransportForm = ({ onSubmit, initialData }) => {
         <div className="MADStaffTransportManagement-form-group MADStaffTransportManagement-form-group-columns">
           <div className="MADStaffTransportManagement-form-field">
             <label htmlFor="licensePlateNumber" className="MADStaffTransportManagement-label">License Plate Number</label>
-            <input 
-              type="text" 
-              id="licensePlateNumber" 
-              name="licensePlateNumber" 
-              value={formData.licensePlateNumber} 
-              onChange={handleChange} 
-              className="MADStaffTransportManagement-input" 
-              required 
+            <input
+              type="text"
+              id="licensePlateNumber"
+              name="licensePlateNumber"
+              value={formData.licensePlateNumber}
+              onChange={handleChange}
+              className="MADStaffTransportManagement-input"
+              required
             />
           </div>
 
           <div className="MADStaffTransportManagement-form-field">
             <label htmlFor="vehicleType" className="MADStaffTransportManagement-label">Vehicle Type</label>
-            <input 
-              type="text" 
-              id="vehicleType" 
-              name="vehicleType" 
-              value={formData.vehicleType} 
-              onChange={handleChange} 
-              className="MADStaffTransportManagement-input" 
-              required 
+            <input
+              type="text"
+              id="vehicleType"
+              name="vehicleType"
+              value={formData.vehicleType}
+              onChange={handleChange}
+              className="MADStaffTransportManagement-input"
+              required
             />
           </div>
         </div>
@@ -166,25 +167,25 @@ const StaffTransportForm = ({ onSubmit, initialData }) => {
         <div className="MADStaffTransportManagement-form-group MADStaffTransportManagement-form-group-columns">
           <div className="MADStaffTransportManagement-form-field">
             <label htmlFor="fuelStatus" className="MADStaffTransportManagement-label">Fuel Status</label>
-            <input 
-              type="text" 
-              id="fuelStatus" 
-              name="fuelStatus" 
-              value={formData.fuelStatus} 
-              onChange={handleChange} 
-              className="MADStaffTransportManagement-input" 
-              required 
+            <input
+              type="text"
+              id="fuelStatus"
+              name="fuelStatus"
+              value={formData.fuelStatus}
+              onChange={handleChange}
+              className="MADStaffTransportManagement-input"
+              required
             />
           </div>
 
           <div className="MADStaffTransportManagement-form-field">
             <label htmlFor="availabilityStatus" className="MADStaffTransportManagement-label">Availability Status</label>
-            <select 
-              id="availabilityStatus" 
-              name="availabilityStatus" 
-              value={formData.availabilityStatus} 
-              onChange={handleChange} 
-              className="MADStaffTransportManagement-select" 
+            <select
+              id="availabilityStatus"
+              name="availabilityStatus"
+              value={formData.availabilityStatus}
+              onChange={handleChange}
+              className="MADStaffTransportManagement-select"
               required
             >
               <option value="">Select</option>

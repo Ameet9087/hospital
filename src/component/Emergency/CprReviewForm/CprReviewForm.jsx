@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import "./CprReviewForm.css";
 import { useLocation } from "react-router-dom";
 import PopupTable from "../popup";
@@ -22,9 +21,8 @@ const FloatingInput = ({ label, type = "text", value, ...props }) => {
 
   return (
     <div
-      className={`CprReviewForm-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`CprReviewForm-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <input
         type={type}
@@ -53,9 +51,8 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
 
   return (
     <div
-      className={`CprReviewForm-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`CprReviewForm-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <select
         className="CprReviewForm-floating-select"
@@ -71,7 +68,7 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
         }}
         {...props}
       >
-        <option value="">{}</option>
+        <option value="">{ }</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -91,9 +88,8 @@ const CprReviewForm = () => {
     uhid: receipt?.uhid || "",
     ipNumber: receipt?.ipNumber || "",
     erInitialAssessmentId: receipt?.erInitialAssessmentId || "",
-    patientName: `${receipt?.firstName || ""} ${
-      receipt?.lastName || ""
-    }`.trim(),
+    patientName: `${receipt?.firstName || ""} ${receipt?.lastName || ""
+      }`.trim(),
     fatherHusbandName: receipt?.relativeName || "",
     age: receipt?.age || "",
     sex: receipt?.sex || "",
@@ -207,22 +203,19 @@ const CprReviewForm = () => {
         ...prevFormData,
         ipNumber: data.ipAdmmissionId || "",
         uhid: data.patient?.patient?.uhid || "",
-        patientName: `${data.patient?.patient?.firstName || ""} ${
-          data.patient?.patient?.lastName || ""
-        }`.trim(),
+        patientName: `${data.patient?.patient?.firstName || ""} ${data.patient?.patient?.lastName || ""
+          }`.trim(),
         fatherHusbandName: data.patient?.patient?.motherName || "",
-        age: `${data.patient?.patient?.age || ""} ${
-          data.patient?.patient?.ageUnit || ""
-        }`.trim(),
+        age: `${data.patient?.patient?.age || ""} ${data.patient?.patient?.ageUnit || ""
+          }`.trim(),
         sex: data.patient?.patient?.gender || "",
         admissionDate: data.date || "",
         department:
           data.admissionUnderDoctorDetail?.consultantDoctor?.specialisationId
             ?.specialisationName || "",
         ward: data.roomDetails?.roomTypeDTO?.wardName || "",
-        roomBedNo: `${data.roomDetails?.roomDTO?.roomNumber || ""} / ${
-          data.roomDetails?.bedDTO?.bedNo || ""
-        }`.trim(),
+        roomBedNo: `${data.roomDetails?.roomDTO?.roomNumber || ""} / ${data.roomDetails?.bedDTO?.bedNo || ""
+          }`.trim(),
         location: data.roomDetails?.floorDTO?.location || "",
         finalDiagnosis: data.admissionUnderDoctorDetail?.diagnosis || "",
         consultant:
@@ -267,15 +260,15 @@ const CprReviewForm = () => {
         columns: ["uhid", "firstName", "lastName"],
         data: Array.isArray(mrNoData)
           ? mrNoData.map((user) => ({
-              uhid: user?.patient?.patient?.uhid,
-              ipNo: user?.patient?.patient?.ipNo,
-              firstName: user?.patient?.patient?.firstName,
-              lastName: user?.patient?.patient?.lastName,
-              age: user?.patient?.patient?.age,
-              sex: user?.patient?.patient?.sex,
-              roomNumber: user?.patient?.roomNumber,
-              realobj: user,
-            }))
+            uhid: user?.patient?.patient?.uhid,
+            ipNo: user?.patient?.patient?.ipNo,
+            firstName: user?.patient?.patient?.firstName,
+            lastName: user?.patient?.patient?.lastName,
+            age: user?.patient?.patient?.age,
+            sex: user?.patient?.patient?.sex,
+            roomNumber: user?.patient?.roomNumber,
+            realobj: user,
+          }))
           : [],
       };
     } else if (activePopup === "doctor") {
@@ -283,10 +276,10 @@ const CprReviewForm = () => {
         columns: ["doctorId", "doctorName", "specialization"],
         data: Array.isArray(doctorData)
           ? doctorData.map((doctor) => ({
-              doctorId: doctor.doctorId,
-              doctorName: doctor.doctorName,
-              specialization: doctor.specialization,
-            }))
+            doctorId: doctor.doctorId,
+            doctorName: doctor.doctorName,
+            specialization: doctor.specialization,
+          }))
           : [],
       };
     }

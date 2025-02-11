@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./ProposalForAMCMultiple.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import ProposalforAMCMultiplePopUp from "./ProposalforAMCMultiplePopUp";
 import { API_BASE_URL } from "../../../api/api";

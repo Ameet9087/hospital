@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./EquipmentGatePassIn.css";
 import EquipmentGatePassInPopUp from "./EquipmentGatePassInPopUp";
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../../api/api";
 
 const EquipmentGatePassIn = () => {
@@ -199,7 +199,7 @@ const EquipmentGatePassIn = () => {
                 <td>{data.equipmentMasterDTO?.vendor?.contactPerson}</td>
                 <td>{data.equipmentMasterDTO?.vendor?.contactAddress}</td>
                 <td>{data.approvalByDTO?.doctorName}</td>
-              
+
               </tr>
             ))}
           </tbody>

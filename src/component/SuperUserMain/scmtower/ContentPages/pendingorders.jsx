@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { startResizing } from './ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 import './PendingOrdersSCM.css';
 import { Link } from 'react-router-dom';
 

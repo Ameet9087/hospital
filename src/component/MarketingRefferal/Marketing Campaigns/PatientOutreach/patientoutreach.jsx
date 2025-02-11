@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './PatientOutreach.css';
 import axios from 'axios';
-import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
-
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 function PatientOutreach() {
 
     const tableRef = useRef(null);

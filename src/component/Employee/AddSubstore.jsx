@@ -2,6 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./ManageSubstore.css";
 import { API_BASE_URL } from "../api/api";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../FloatingInputs";
+import { toast } from "react-toastify";
+
 const AddSubStore = ({ substore, onClose }) => {
   const [formData, setFormData] = useState({
     subStoreName: substore?.subStoreName || "",
@@ -62,10 +69,10 @@ const AddSubStore = ({ substore, onClose }) => {
           `${API_BASE_URL}/substores/update/${substore.subStoreId}`,
           formData
         );
-        alert("SubStore updated successfully!");
+        toast.success("SubStore updated successfully!");
       } else {
         await axios.post(`${API_BASE_URL}/substores/create-substore`, formData);
-        alert("SubStore added successfully!");
+        toast.success("SubStore added successfully!");
       }
       onClose();
     } catch (error) {
@@ -73,7 +80,7 @@ const AddSubStore = ({ substore, onClose }) => {
         "Error saving substore:",
         error.response?.data || error.message
       );
-      alert("Failed to save substore. Please try again.");
+      toast.error("Failed to save substore. Please try again.");
     }
   };
 
@@ -113,91 +120,86 @@ const AddSubStore = ({ substore, onClose }) => {
       <form className="update-substore-form-container" onSubmit={handleSubmit}>
         <div className="update-substore-form-grid">
           <div className="update-substore-form-group">
-            <label>
-              SubStore Name<span className="required">*</span>:
-            </label>
-            <input
+            <FloatingInput
+              label={"SubStore Name"}
               type="text"
               name="subStoreName"
               value={formData.subStoreName}
               onChange={handleInputChange}
-              className="update-substore-input-field"
               required
             />
           </div>
           <div className="update-substore-form-group">
-            <label>Code :</label>
-            <input
+            <FloatingInput
+              label={"Code"}
               type="text"
               name="code"
               value={formData.code}
               onChange={handleInputChange}
-              className="update-substore-input-field"
               readOnly={!!substore}
             />
           </div>
           <div className="update-substore-form-group">
-            <label>Email :</label>
-            <input
+            <FloatingInput
+              label={"Email"}
               type="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className="update-substore-input-field"
             />
           </div>
         </div>
         <div className="update-substore-form-grid">
           <div className="update-substore-form-group">
-            <label>Contact No :</label>
-            <input
+            <FloatingInput
+              label={"Contact No"}
               type="text"
               name="contactNo"
+              restrictions={{ number: true, max: 10 }}
               value={formData.contactNo}
               onChange={handleInputChange}
-              className="update-substore-input-field"
             />
           </div>
           <div className="update-substore-form-group">
-            <label>Location :</label>
-            <input
+            <FloatingInput
+              label={"Location"}
               type="text"
               name="location"
               value={formData.location}
               onChange={handleInputChange}
-              className="update-substore-input-field"
             />
           </div>
           <div className="update-substore-form-group">
-            <label>Label :</label>
-            <input
+            <FloatingInput
+              label={"Label"}
               type="text"
               name="label"
               value={formData.label}
               onChange={handleInputChange}
-              className="update-substore-input-field"
             />
           </div>
         </div>
         <div className="update-substore-form-grid">
           <div className="update-substore-form-group">
-            <label>Max Verification Lavel :</label>
-            <input
+            <FloatingInput
+              label={"Max Verification Lavel"}
               type="number"
               name="maxVerificationLevel"
               value={formData.maxVerificationLevel}
               onChange={handleInputChange}
-              className="update-substore-input-field"
             />
           </div>
+          <div className="update-substore-form-group"></div>
+          <div className="update-substore-form-group"></div>
+        </div>
+        <div className="update-substore-form-grid">
           <div className="update-substore-form-group">
-            <label>SubStore Description :</label>
-            <textarea
+            <FloatingTextarea
+              label={"SubStore Description"}
               name="subStoreDescription"
               value={formData.subStoreDescription}
               onChange={handleInputChange}
-              className="update-substore-textarea-field"
-            ></textarea>
+            />
           </div>
         </div>
         <div className="update-substore-form-button-group">

@@ -3,7 +3,7 @@ import "./DailyNursingAssessment.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { API_BASE_URL } from "../../../api/api";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 
 const DailyNursingAssessment = ({ ipAdmission }) => {
   const patientData = useSelector((state) => state?.patient?.patientData);

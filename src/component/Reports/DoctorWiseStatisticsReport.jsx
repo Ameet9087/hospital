@@ -1,15 +1,15 @@
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from 'react-bootstrap';
 import './UserCollectionReport.css';
 
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 
 const DoctorWiseStatisticsReport = () => {
   const [showReport, setShowReport] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  
-const [columnWidths, setColumnWidths] = useState({});
-const tableRef = useRef(null);
+
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   // Example of how you might fetch or have data
   const reportsData = []; // Replace this with your actual data source or API call
@@ -46,8 +46,8 @@ const tableRef = useRef(null);
   return (
     <div className="user-collection-report">
       <div className="user-collection-report-header">
-      <h3 className="user-collection-report-title">⚛  Doctor Wise Statistic Report</h3>
-      <div className="user-collection-report-filters">
+        <h3 className="user-collection-report-title">⚛  Doctor Wise Statistic Report</h3>
+        <div className="user-collection-report-filters">
           <div className="user-collection-report-date-filter">
             <label>From:</label>
             <input type="date" />
@@ -66,29 +66,29 @@ const tableRef = useRef(null);
                 </ul>
               </div>
             )}
-            
+
           </div>
           <div className="user-collection-report-doctor-filter">
-          <label>Doctor   :</label>
-          <select >
-            <option value="">Select Doctor </option>
-            
-          </select>
+            <label>Doctor   :</label>
+            <select >
+              <option value="">Select Doctor </option>
+
+            </select>
 
 
-          <label>
-          Gender  : </label>
-          <select >
-            <option value="">Select Gender </option>
-            
-          </select>
-          <button className="user-collection-report-show-btn" onClick={handleShowReport}>Show Report</button>
+            <label>
+              Gender  : </label>
+            <select >
+              <option value="">Select Gender </option>
+
+            </select>
+            <button className="user-collection-report-show-btn" onClick={handleShowReport}>Show Report</button>
+
+          </div>
 
         </div>
-     
-        </div>
-       
-        
+
+
       </div>
       {showReport && (
         <>
@@ -106,40 +106,40 @@ const tableRef = useRef(null);
             <button className="user-collection-report-print-btn" onClick={handleExport}>Export</button>
           </div>
           <div className='user-collection-report-tab'>
-          <table className="patientList-table" ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-               "Doctor Name",
-              "New Male Adult",
-              "New Female Adult",
-              "New Male Child",
-              "New Female Child",
-              "Old Male Adult",
-              "Old Female Adult",
-              "Old Male Child",
-              "Old Female Child",
-              "Total"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
+            <table className="patientList-table" ref={tableRef}>
+              <thead>
+                <tr>
+                  {[
+                    "Doctor Name",
+                    "New Male Adult",
+                    "New Female Adult",
+                    "New Male Child",
+                    "New Female Child",
+                    "Old Male Adult",
+                    "Old Female Adult",
+                    "Old Male Child",
+                    "Old Female Child",
+                    "Total"
+                  ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
               <tbody>
                 {reportsData && reportsData.length > 0 ? (
                   reportsData.map((row, index) => (

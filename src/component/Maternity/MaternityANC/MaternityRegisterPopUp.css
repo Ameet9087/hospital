@@ -26,7 +26,9 @@
     cursor: pointer;
     padding: 4px 8px;
   }
-  
+  .MaternityRegisterPopUp-form-group-1row{
+    margin-top: 20px;
+  }
   .MaternityRegisterPopUp-form .MaternityRegisterPopUp-MaternityRegisterPopUp-form-row {
     display: flex;
     flex-wrap: wrap;
@@ -59,16 +61,11 @@
     text-align: center;
     align-items: center;
     font-size: var(--font-size);
-    width: 400px;
+    width: 380px;
     /* border: 1px solid red; */
   }
   
-  .MaternityRegisterPopUp-form-group label {
-    display: block;
-    margin-bottom: 4px;
-    /* font-weight: bold; */
-    width: 75%;
-  }
+ 
   .MaternityRegisterPopUp-form-group-checkbox{
     display: flex;
     text-align: center;
@@ -76,7 +73,7 @@
     white-space: nowrap;
   }
   
-  .MaternityRegisterPopUp-form-group input,
+  /* .MaternityRegisterPopUp-form-group input,
   .MaternityRegisterPopUp-form-group select,
   .MaternityRegisterPopUp-form-group textarea {
     width: 100%;
@@ -84,22 +81,17 @@
     margin-bottom: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
-}
+} */
 .MaternityRegisterPopUp-form-group-options {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
-.MaternityRegisterPopUp-form-group-options label {
-  margin-right: 20px;
-  font-size: var(--font-size);
-  display: flex;
-  align-items: center;
-}
 
-.MaternityRegisterPopUp-form-group-options input {
+
+/* .MaternityRegisterPopUp-form-group-options input {
   margin-right: 5px;
-}
+} */
 
   .MaternityRegisterPopUp-form-actions {
     display: flex;
@@ -149,7 +141,7 @@
     justify-content: space-between;
   }
   
-  .MaternityRegisterPopUp-input[type="text"],
+  /* .MaternityRegisterPopUp-input[type="text"],
   .MaternityRegisterPopUp-input[type="number"],
   .MaternityRegisterPopUp-select {
     width: 100%;
@@ -157,4 +149,4 @@
     border: 1px solid #ccc;
     border-radius: 3px;
     font-size: var(--font-size);
-  }
+  } */

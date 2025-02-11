@@ -3,7 +3,7 @@ import "./FinalSaleByAccountsPopUp.css";
 import { CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa"; // Using react-icons
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../../api/api";
 const FinalSaleByAccountsPopUp = ({ onClose }) => {
 
@@ -85,7 +85,7 @@ const FinalSaleByAccountsPopUp = ({ onClose }) => {
           const data = await response.json();
           const { condemnationDisposalDTO, saleDate, writeDownValue, manualSaleBillNo } = data;
 
-          
+
 
           const { equipmentMasterDTO } = condemnationDisposalDTO.condemnationDisposalRequestDTO;
 
@@ -109,7 +109,7 @@ const FinalSaleByAccountsPopUp = ({ onClose }) => {
             writeDownValue: data.writeDownValue
           });
 
-        
+
         } catch (error) {
           console.error("Error fetching equipment details:", error);
         }
@@ -140,7 +140,7 @@ const FinalSaleByAccountsPopUp = ({ onClose }) => {
       },
     };
 
-    
+
 
     try {
       const response = await fetch(`${API_BASE_URL}/final-sales`, {
@@ -179,7 +179,7 @@ const FinalSaleByAccountsPopUp = ({ onClose }) => {
         <div className="FinalSaleByAccountsPopUp-form-row">
           <div className="FinalSaleByAccountsPopUp-form-group-1row">
 
-           
+
             <div className="FinalSaleByAccountsPopUp-form-group">
               <label htmlFor="provisional-sale-no">Provisional Sale No:</label>
               <select

@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import PopupTable from "../popup";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
@@ -22,9 +21,8 @@ const FloatingInput = ({ label, type = "text", value, ...props }) => {
 
   return (
     <div
-      className={`nacotic-drug-dispensed-form-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`nacotic-drug-dispensed-form-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <input
         type={type}
@@ -55,9 +53,8 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
 
   return (
     <div
-      className={`nacotic-drug-dispensed-form-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`nacotic-drug-dispensed-form-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <select
         className="nacotic-drug-dispensed-form-floating-select"
@@ -73,7 +70,7 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
         }}
         {...props}
       >
-        <option value="">{}</option>
+        <option value="">{ }</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -98,9 +95,8 @@ const NarcoticDrugDispensedForm = () => {
     uhid: receipt?.uhid || "",
     ipNumber: receipt?.ipNumber || "",
     erInitialAssessmentId: receipt?.erInitialAssessmentId || "",
-    patientName: `${receipt?.firstName || ""} ${
-      receipt?.lastName || ""
-    }`.trim(),
+    patientName: `${receipt?.firstName || ""} ${receipt?.lastName || ""
+      }`.trim(),
     fatherHusbandName: receipt?.relativeName || "",
     age: receipt?.age || "",
     sex: receipt?.sex || "",

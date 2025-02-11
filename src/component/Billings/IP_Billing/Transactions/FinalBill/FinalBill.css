@@ -528,10 +528,11 @@ border: 1px solid var(--button-hover-border-color);
       }
 
 
-
-
-
-
+      .final-payment-split {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 5px; /* Adjust this value as needed */
+      }
 
       .final-bill-shed-section {
         display: flex;
@@ -577,7 +578,31 @@ border: 1px solid var(--button-hover-border-color);
     font-weight: bold;
   }
 
-
+  .final-billpayment-mode-selection {
+    margin-bottom: 20px;
+  }
+  
+  .final-billpayment-details-row {
+    margin-bottom: 10px;
+  }
+  
+  .final-billpayment-actions button {
+    margin-top: 10px;
+  }
+  
+  .final-billpayment-summary {
+    margin-top: 20px;
+  }
+  
+  .final-billpayment-main-section-payment {
+    display: flex;
+    gap: 4px;
+  }
+  
+  .final-billpayment-panel-payment {
+    width: 50%;
+  }
+  
 
 @media (max-width: 1024px) {
   .final-bill-grid {

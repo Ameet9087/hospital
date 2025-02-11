@@ -4,11 +4,17 @@ import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
-import PopupTable from "./PopupTable";
+import {
+  PopupTable,
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../FloatingInputs/index";
 import { usePopup } from "../../FidgetSpinner/PopupContext";
 import AdmissionFormPrint from "./AdmissionFormPrint";
 import PrintGenericSticker from "./PrintGenericSticker";
-import CustomModal from "../CustomModel/CustomModal";
+import CustomModal from "../../CustomModel/CustomModal";
+import { toast } from "react-toastify";
 
 const IpAdmission = ({ patientData, onClose }) => {
   const { showPopup } = usePopup();
@@ -60,9 +66,12 @@ const IpAdmission = ({ patientData, onClose }) => {
 
   const [tableData, setTableData] = useState([]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value, // Update form state properly
+    }));
   };
 
   const handleFileChange = (e) => {
@@ -149,7 +158,7 @@ const IpAdmission = ({ patientData, onClose }) => {
     sourceOfAdmission: "",
     typeDiagnostics: "",
     typeAdmission: "",
-    visitorPasses: 0,
+    visitorPasses: "",
     issued: "",
     referredBy: "",
     type: "Hospital",
@@ -158,6 +167,7 @@ const IpAdmission = ({ patientData, onClose }) => {
     cardHolderName: "",
     ccnNo: "",
     hospitalPanel: "",
+    expectedDayOfStay: "",
   });
 
   const getPopupData = () => {
@@ -395,7 +405,6 @@ const IpAdmission = ({ patientData, onClose }) => {
         type: formData.type,
       };
     }
-
     const payload = {
       ...(admissionSlipId > 0 && {
         admissionSlipId: admissionSlipId,
@@ -441,7 +450,6 @@ const IpAdmission = ({ patientData, onClose }) => {
         visitorPasses: formData.visitorPasses,
         issued: formData.issued,
       },
-
       govtIds: {
         nationality: formData.nationality,
         passportNumber: formData.passportNo,
@@ -463,15 +471,12 @@ const IpAdmission = ({ patientData, onClose }) => {
         idNumber: item.idno,
       })),
     };
-
     try {
       formdata.append("ipAdmissionDTO", JSON.stringify(payload));
       if (files.length > 0) {
         formdata.append("documents", files);
       }
-
       console.log(payload);
-
       const response = await axios.post(
         `
         ${API_BASE_URL}/ip-admissions`,
@@ -486,11 +491,10 @@ const IpAdmission = ({ patientData, onClose }) => {
       setIsGenericSticker(true);
       setSubmittedPatientData(response.data);
       showPopup([{ url: "/billing/ipdmoneyrecipt", text: "Ip Money Reciept" }]);
-      alert("Patient admitted successfully!"); 
-      console.log("Submission successful");
+
+      toast.success("Admission Successfully");
     } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("Error submitting admission form. Please try again."); 
+      toast.error("Error submitting form:", error);
     }
   };
 
@@ -556,54 +560,50 @@ const IpAdmission = ({ patientData, onClose }) => {
             </select>
           </div> */}
           <div className="ip-addmission-sh-section">
-            <label>MR No</label>
-            <input
+            <FloatingInput
+              label={"UHID"}
               type="search"
               value={patient?.uhid || patient?.outPatient?.patient?.uhid}
-              id="description"
-              placeholder="UHID"
+              onIconClick={() => setActivePopup("patient")}
             />
-            <i
-              onClick={() => setActivePopup("patient")}
-              className="fa-solid fa-magnifying-glass"
-            ></i>
           </div>
           {/* More fields as per your requirement */}
           {/* Attachments */}
           <div className="ip-addmission-sh-section">
-            <label>IP No</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"IP No"}
+              type="search"
               value={patient?.inPatientId}
-              placeholder="Ip No"
               disabled
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Name Initial</label>
-            <input
+            <FloatingInput
+              label={"Name Initial"}
               type="text"
               value={
                 patient?.salutation || patient?.outPatient?.patient?.salutation
               }
-              placeholder="Name intial"
               disabled
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Patient Name</label>
-            <input
+            <FloatingInput
+              label={"Patient Name"}
               type="text"
-              value={`${patient?.firstName || patient?.outPatient?.patient?.firstName
-                } ${patient?.middleName || patient?.outPatient?.patient?.middleName
-                } ${patient?.lastName || patient?.outPatient?.patient?.lastName}`}
-              placeholder="Patient Name"
+              value={
+                `${patient?.firstName || patient?.outPatient?.patient?.firstName
+                } ${patient?.middleName ||
+                patient?.outPatient?.patient?.middleName
+                } ${patient?.lastName || patient?.outPatient?.patient?.lastName
+                } ` || ""
+              }
               disabled
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>DOB</label>
-            <input
+            <FloatingInput
+              label={"DOB"}
               type="date"
               value={
                 patient?.dateOfBirth ||
@@ -613,126 +613,132 @@ const IpAdmission = ({ patientData, onClose }) => {
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Sex</label>
-            <select
-              disabled
+            <FloatingSelect
+              label="Gender"
               value={patient?.gender || patient?.outPatient?.patient?.gender}
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
+              options={[
+                { value: "", label: "" },
+                { value: "Male", label: "Male" },
+                { value: "Female", label: "Female" },
+                { value: "Other", label: "Other" },
+              ]}
+              disabled
+            />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Marital Status</label>
-            <select
-              disabled
+            <FloatingSelect
+              label="Marital Status"
               value={
                 patient?.maritalStatus ||
                 patient?.outPatient?.patient?.maritalStatus
               }
-            >
-              <option value="Married">Married</option>
-              <option value="Unmarried">Unmarried</option>
-            </select>
+              options={[
+                { value: "", label: "" },
+                { value: "Single", label: "Single" },
+                { value: "Married", label: "Married" },
+                { value: "Unmarried", label: "Unmarried" },
+              ]}
+              disabled
+            />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Relation Suffix</label>
-            <select
-              disabled
+            <FloatingSelect
+              label="Relation Suffix"
               value={
                 patient?.relation || patient?.outPatient?.patient?.relation
               }
-            >
-              <option value="">Select Relation Suffix</option>
-              <option value="CO">C/O (Care Of)</option>
-              <option value="SO">S/O (Son Of)</option>
-              <option value="DO">D/O (Daughter Of)</option>
-              <option value="WO">W/O (Wife Of)</option>
-            </select>
+              options={[
+                { value: "", label: "" },
+                { value: "Father", label: "Father" },
+                { value: "Mother", label: "Mother" },
+                { value: "Brother", label: "Brother" },
+                { value: "Sister", label: "Sister" },
+                { value: "Spouse", label: "Spouse" },
+                { value: "Son", label: "Son" },
+                { value: "Daughter", label: "Daughter" },
+                { value: "Grandparent", label: "Grandparent" },
+                { value: "Uncle", label: "Uncle" },
+                { value: "Aunt", label: "Aunt" },
+                { value: "Guardian", label: "Guardian" },
+                { value: "Friend", label: "Friend" },
+                { value: "Other", label: "Other" },
+              ]}
+              disabled
+            />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Relative Name</label>
-            <input
+            <FloatingInput
+              label={"Relative Name"}
               type="text"
               value={
                 patient?.relationName ||
                 patient?.outPatient?.patient?.relationName
               }
-              placeholder="Relative Name"
               disabled
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Address</label>
-            <input
+            <FloatingInput
+              label={"Address"}
               type="text"
-              id="description"
               value={patient?.address || patient?.outPatient?.patient?.address}
-              placeholder="Address"
               disabled
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Area/Village</label>
-            <input
+            <FloatingInput
+              label={"Area/Village"}
               type="text"
-              id="description"
               value={
                 patient?.areaVillage ||
                 patient?.outPatient?.patient?.areaVillage
               }
-              placeholder="Area/Village"
               disabled
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>City/District</label>
-            <input
+            <FloatingInput
+              label={"City/District"}
               type="text"
               value={
                 patient?.cityDistrict ||
                 patient?.outPatient?.patient?.cityDistrict
               }
-              placeholder="District Name"
               disabled
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Country</label>
-            <input
+            <FloatingInput
+              label={"Country"}
               type="text"
               value={patient?.country || patient?.outPatient?.patient?.country}
-              placeholder="Country"
               disabled
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>State</label>
-            <input
+            <FloatingInput
+              label={"City/District"}
               type="text"
               value={patient?.state || patient?.outPatient?.patient?.state}
-              placeholder="State Name"
               disabled
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Pincode</label>
-            <input
+            <FloatingInput
+              label={"Pincode"}
               type="text"
               value={patient?.pinCode || patient?.outPatient?.patient?.pinCode}
-              placeholder="Pincode"
               disabled
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Mobile No</label>
-            <input
+            <FloatingInput
+              label={"Mobile No"}
               type="text"
               value={
                 patient?.mobileNumber ||
                 patient?.outPatient?.patient?.mobileNumber
               }
-              placeholder="Phone No"
               disabled
             />
           </div>
@@ -764,183 +770,144 @@ const IpAdmission = ({ patientData, onClose }) => {
         <h3>Room Details</h3>
         <div className="ip-addmission-sh-form">
           <div className="ip-addmission-sh-section">
-            <label>Pay Type</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Pay Type"}
+              type="search"
               value={selectedPaytype?.payTypeName}
-              id="description"
-              placeholder="Search Paytype"
+              onIconClick={() => setActivePopup("paytype")}
             />
-            <i
-              onClick={() => setActivePopup("paytype")}
-              className="fas fa-search"
-            ></i>
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Bed No</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Bed No"}
+              type="search"
               value={selectedBed?.bedNo}
-              id="description"
-              placeholder="Search Bed "
+              onIconClick={() => setActivePopup("bed")}
             />
-            <i
-              onClick={() => setActivePopup("bed")}
-              className="fas fa-search"
-            ></i>
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Room No</label>
-            <input
-              type="text"
-              id="description"
+            <FloatingInput
+              label={"Room No"}
+              type="search"
               value={selectedRoom?.roomNumber}
-              placeholder="Search Room "
+              onIconClick={() => setActivePopup("room")}
             />
-            <i
-              onClick={() => setActivePopup("room")}
-              className="fas fa-search"
-            ></i>
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Floor No</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Floor No"}
+              type="search"
               value={selectedFloor?.floorNo}
-              placeholder="Enter Entitlement"
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Room Type</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Room Type"}
+              type="search"
               value={selectedRoomType?.roomType}
-              placeholder="Enter Entitlement"
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Expected Days of Stay</label>
-            <input type="number" />
+            <FloatingInput
+              label={"Expected Days of Stay"}
+              name={"expectedDayOfStay"}
+              value={formData.expectedDayOfStay}
+              onChange={handleChange}
+              restrictions={{ number: true }}
+              type="text"
+            />
           </div>
         </div>
         <h3>Admission Under Dr Details</h3>
         <div className="ip-addmission-sh-form">
           <div className="ip-addmission-sh-section">
-            {/* <h3>Admission Under Dr Details</h3> */}
-            <label>Consultant Dr</label>
-            <input
-              type="text"
-              id="description"
+            <FloatingInput
+              label={"Consultant Dr"}
+              type="search"
               value={
                 selectedDoctor?.doctorName ||
                 patient?.admittingDoctor?.doctorName
               }
-              placeholder="Search Consultant Doctor"
+              onIconClick={() => setActivePopup("consultantDoctor")}
             />
-            <i
-              onClick={() => setActivePopup("consultantDoctor")}
-              className="fas fa-search"
-            ></i>
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Specially</label>
-            <input
-              type="text"
-              id="description"
-              placeholder="Search Speciality"
+            <FloatingInput
+              label={"Speciality"}
+              type="search"
               value={
                 selectedSpeciality?.specialisationName ||
                 selectedDoctor?.specialization ||
                 patient?.admittingDoctor?.specialisationId?.specialisationName
               }
+              onIconClick={() => setActivePopup("speciality")}
             />
-            <i
-              onClick={() => setActivePopup("speciality")}
-              className="fas fa-search"
-            ></i>
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Co Consultant</label>
-            <input
-              type="text"
-              id="description"
+            <FloatingInput
+              label={"Co Consultant"}
+              type="search"
               value={
                 selectedCoConsultant?.doctorName ||
                 patient?.consultant?.doctorName
               }
-              placeholder="Search Co Consultant "
+              onIconClick={() => setActivePopup("coConsultant")}
             />
-            <i
-              onClick={() => setActivePopup("coConsultant")}
-              className="fas fa-search"
-            ></i>
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Second Co Consultant</label>
-            <input
-              type="text"
-              id="description"
+            <FloatingInput
+              label={"Second Co Consultant"}
+              type="search"
               value={selectedSecondCoConsultant?.doctorName}
-              placeholder="Search Second Co Consultant "
+              onIconClick={() => setActivePopup("secondCoConsultant")}
             />
-            <i
-              onClick={() => setActivePopup("secondCoConsultant")}
-              className="fas fa-search"
-            ></i>
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Referred Doctors</label>
-            <input
-              type="text"
-              id="description"
+            <FloatingInput
+              label={"Referred Doctor"}
+              type="search"
               value={selectedReferredDoctor?.doctorName}
-              placeholder="Search Referred Doctors"
+              onIconClick={() => setActivePopup("referredDoctors")}
             />
-            <i
-              onClick={() => setActivePopup("referredDoctors")}
-              className="fas fa-search"
-            ></i>
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Diagnosis</label>
-            <input
-              type="text"
-              id="diagnosis"
+            <FloatingInput
+              label={"Diagnosis"}
+              name={"diagnosis"}
               value={formData.diagnosis}
-              name="diagnosis"
               onChange={handleChange}
-              placeholder="Enter Diagnosis"
+              restrictions={{ varchar: true }}
+              type="text"
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Remarks</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Remarks"}
+              name={"remarks"}
               value={formData.remarks}
-              name="remarks"
               onChange={handleChange}
-              placeholder="Enter Remark"
-            />
-          </div>
-          <div className="ip-addmission-sh-section">
-            <label>Pharmacy Credit</label>
-            <input
+              restrictions={{ varchar: true }}
               type="text"
-              value={formData.pharmacyCredit}
-              name="pharmacyCredit"
-              onChange={handleChange}
-              placeholder="Enter Pharmacy Credit"
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Patient Status</label>
-            <textarea
-              rows={3}
+            <FloatingInput
+              label={"Pharmacy Credit"}
+              name={"pharmacyCredit"}
+              value={formData.pharmacyCredit}
+              onChange={handleChange}
+              restrictions={{ varchar: true }}
+              type="text"
+            />
+          </div>
+          <div className="ip-addmission-sh-section">
+            <FloatingTextarea
+              label={"Patient Status"}
+              name={"patientStatus"}
               value={formData.patientStatus}
               onChange={handleChange}
-              name="patientStatus"
-              id="patientStatus"
-              placeholder="Enter Patient Status"
+              restrictions={{ varchar: true }}
+              type="text"
             />
           </div>
           <div></div>
@@ -949,94 +916,86 @@ const IpAdmission = ({ patientData, onClose }) => {
         <h3>Organisation Details</h3>
         <div className="ip-addmission-sh-form">
           <div className="ip-addmission-sh-section">
-            <label>Type</label>
-            <select
-              id="type"
-              onChange={handleChange}
-              name="type"
+            <FloatingSelect
+              label="Type"
               value={formData.type}
-            >
-              <option value={"Hospital"}>Hospital</option>
-              <option value={"Organisation"}>Organisation</option>
-            </select>
+              name="type"
+              onChange={handleChange}
+              options={[
+                { value: "", label: "" },
+                { value: "Hospital", label: "Hospital" },
+                { value: "Organisation", label: "Organisation" },
+              ]}
+            />
           </div>
           {formData.type == "Organisation" ? (
             <>
               <div className="ip-addmission-sh-section">
-                <label>Hospital Panel</label>
-                <input
-                  type="text"
-                  id="description"
-                  placeholder="Search Hospital Panel"
+                <FloatingInput
+                  label={"Hospital Panel"}
                   value={selectedHospitalPanel?.name}
+                  onIconClick={() => setActivePopup("hospitalPanel")}
+                  type="search"
                 />
-                <i
-                  onClick={() => setActivePopup("hospitalPanel")}
-                  className="fas fa-search"
-                ></i>
               </div>
               <div className="ip-addmission-sh-section">
-                <label>Reffered By</label>
-                <input
-                  type="text"
-                  id="referredBy"
+                <FloatingInput
+                  label={"Reffered By"}
+                  name={"referredBy"}
                   value={formData.referredBy}
-                  name="referredBy"
                   onChange={handleChange}
-                  placeholder="Enter Reffered By"
-                />
-              </div>
-              <div className="ip-addmission-sh-section">
-                <label>Id Card No</label>
-                <input
                   type="text"
-                  id="idCardNo"
-                  value={formData.idCardNo}
-                  name="idCardNo"
-                  onChange={handleChange}
-                  placeholder="Enter Id Card No"
                 />
               </div>
               <div className="ip-addmission-sh-section">
-                <label>Card Holder</label>
-                <select
+                <FloatingInput
+                  label={"Id Card No"}
+                  name={"idCardNo"}
+                  value={formData.idCardNo}
+                  onChange={handleChange}
+                  restrictions={{ number: true }}
+                  type="text"
+                />
+              </div>
+              <div className="ip-addmission-sh-section">
+                <FloatingSelect
+                  label="Card Holder"
                   value={formData.cardHolder}
                   name="cardHolder"
                   onChange={handleChange}
-                >
-                  <option value={""}>Select Card Holder</option>
-                  <option value={"Self"}>Self</option>
-                  <option value={"W/O"}>W/O</option>
-                  <option value={"H/O"}>H/O</option>
-                  <option value={"D/O"}>D/O</option>
-                  <option value={"S/O"}>S/O</option>
-                  <option value={"F/O"}>F/O</option>
-                  <option value={"M/O"}>M/O</option>
-                  <option value={"B/O"}>B/O</option>
-                </select>
+                  options={[
+                    { value: "", label: "" },
+                    { value: "Self", label: "Self" },
+                    { value: "W/O", label: "W/O" },
+                    { value: "H/O", label: "H/O" },
+                    { value: "D/O", label: "D/O" },
+                    { value: "S/O", label: "S/O" },
+                    { value: "F/O", label: "F/O" },
+                    { value: "M/O", label: "M/O" },
+                    { value: "B/O", label: "B/O" },
+                  ]}
+                />
               </div>
               <div className="ip-addmission-sh-section">
-                <label>Card Holder Name</label>
-                <input
-                  type="text"
+                <FloatingInput
+                  label={"Card Holder Name"}
+                  name={"referredBy"}
                   value={
                     formData.cardHolder == "Self"
                       ? "Self"
                       : formData.cardHolderName
                   }
-                  name="cardHolderName"
                   onChange={handleChange}
-                  placeholder="Enter Card Holder Name"
+                  type="text"
                 />
               </div>
               <div className="ip-addmission-sh-section">
-                <label>CCN No</label>
-                <input
+                <FloatingInput
+                  label={"CCN No"}
+                  name={"ccnNo"}
                   value={formData.ccnNo}
-                  name="ccnNo"
-                  id="ccnNo"
                   onChange={handleChange}
-                  placeholder="Enter CCN"
+                  type="text"
                 />
               </div>
             </>
@@ -1047,70 +1006,47 @@ const IpAdmission = ({ patientData, onClose }) => {
         <h3>Current Bed Details</h3>
         <div className="ip-addmission-sh-form">
           <div className="ip-addmission-sh-section">
-            {/* <h3>Current Bed Details</h3> */}
-            <label>Current Bed No</label>
-            <input
-              type="search"
-              id="description"
-              placeholder="Current Bed"
-              disabled
-            />
+            <FloatingInput label={"Current Bed No"} type="text" disabled />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Current Pay Type</label>
-            <input
-              type="search"
-              id="description"
-              placeholder="Current Paytype"
-              disabled
-            />
+            <FloatingInput label={"Current Pay Type"} type="text" disabled />
           </div>
           <div className="ip-addmission-sh-section">
-            <label htmlFor="passportNo">PassPort No:</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Passport No"}
               value={formData.passportNo}
               onChange={handleChange}
+              restrictions={{ number: true }}
               name="passportNo"
-              id="passportNo"
-              placeholder="Enter Passport No"
+              type="text"
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label htmlFor="passportIssueDate">Passport Issue Date:</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Passport Issue Date"}
               value={formData.passportIssueDate}
               onChange={handleChange}
               name="passportIssueDate"
-              id="passportIssueDate"
-              placeholder="Enter Passport Issue Date"
+              type="date"
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label htmlFor="passportAddress">PassPort Address:</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Passport Address"}
               value={formData.passportAddress}
               onChange={handleChange}
               name="passportAddress"
-              id="passportAddress"
-              placeholder="Enter Passport Address"
+              type="text"
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label htmlFor="nationality">Nationality:</label>
-            <input
-              id="nationality"
-              placeholder="Enter Nationality"
+            <FloatingInput
+              label={"Nationality"}
               value={formData.nationality}
               name="nationality"
-              onChange={handleChange}
+              onIconClick={() => setActivePopup("nationality")}
+              type="search"
             />
-            <i
-              onClick={() => setActivePopup("nationality")}
-              className="fa-solid fa-magnifying-glass"
-            ></i>
             {/* <input
               type="text"
               value={formData.nationality}
@@ -1121,115 +1057,99 @@ const IpAdmission = ({ patientData, onClose }) => {
             /> */}
           </div>
           <div className="ip-addmission-sh-section">
-            <label htmlFor="pancardNo">PanCard No:</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Pancard No"}
               value={formData.pancardNo}
               onChange={handleChange}
+              restrictions={{ varchar: true, max: 10 }}
               name="pancardNo"
-              id="pancardNo"
-              placeholder="Enter Pancard No"
+              type="text"
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label htmlFor="visaNo">Visa No:</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Visa No"}
               value={formData.visaNo}
               onChange={handleChange}
               name="visaNo"
-              id="visaNo"
-              placeholder="Enter Visa No"
+              restrictions={{ varchar: true, max: 8 }}
+              type="text"
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Visa Expiry Date:</label>
-            <input
-              type="date"
+            <FloatingInput
+              label={"Visa Expiry Date"}
               value={formData.visaExpiryDate}
               onChange={handleChange}
               name="visaExpiryDate"
-              id="visaExpiryDate"
+              type="date"
             />
           </div>
         </div>
         <h3>Financials</h3>
         <div className="ip-addmission-sh-form">
           <div className="ip-addmission-sh-section">
-            {/* <h3>Financials</h3> */}
-            <label>Current SOC</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Current SOC"}
               value={formData.currentSOC}
               onChange={handleChange}
               name="currentSOC"
-              id="currentSOC"
-              placeholder="Enter Current Soc"
+              type="text"
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Current Discount Policy</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Current Discount Policy"}
               value={formData.currentDiscountPolicy}
               onChange={handleChange}
               name="currentDiscountPolicy"
-              id="currentDiscountPolicy"
-              placeholder="Current Discount Policy"
+              type="text"
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Source of Admission</label>
-            <input
-              type="text"
+            <FloatingInput
+              label={"Source of Admission"}
               value={formData.sourceOfAdmission}
               onChange={handleChange}
               name="sourceOfAdmission"
-              id="sourceOfAdmission"
-              placeholder="Source of Admission"
-            />
-          </div>
-          <div className="ip-addmission-sh-section">
-            <label>Type of Diagnosis</label>
-            <div>
-              <input
-                value={formData.typeDiagnostics}
-                type="text"
-                onChange={handleChange}
-                id="typeDiagnostics"
-                name="typeDiagnostics"
-              />
-            </div>
-          </div>
-          <div className="ip-addmission-sh-section">
-            <label htmlFor="admissionType">Type of Admission</label>
-            <input
-              value={formData.typeAdmission}
               type="text"
-              onChange={handleChange}
-              id="typeAdmission"
-              name="typeAdmission"
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>No Of Visitor Passes</label>
-            <input
-              type="number"
+            <FloatingInput
+              label={"Type of Diagnosis"}
+              value={formData.typeDiagnostics}
+              onChange={handleChange}
+              name="typeDiagnostics"
+              type="text"
+            />
+          </div>
+          <div className="ip-addmission-sh-section">
+            <FloatingInput
+              label={"Type of Admission"}
+              value={formData.typeAdmission}
+              onChange={handleChange}
+              name="typeAdmission"
+              type="text"
+            />
+          </div>
+          <div className="ip-addmission-sh-section">
+            <FloatingInput
+              label={"No Of Visitor Passes"}
               value={formData.visitorPasses}
               onChange={handleChange}
-              id="visitorPasses"
               name="visitorPasses"
-              placeholder="Enter No Of Visitor Passes"
+              restrictions={{ number: true }}
+              type="text"
             />
           </div>
           <div className="ip-addmission-sh-section">
-            <label>Issue Date</label>
-            <input
-              type="date"
+            <FloatingInput
+              label={"Issue Date"}
               value={formData.issued}
               onChange={handleChange}
-              id="issued"
               name="issued"
+              type="date"
             />
           </div>
           <div></div>
@@ -1240,6 +1160,7 @@ const IpAdmission = ({ patientData, onClose }) => {
           <div className="ip-addmission-sh-section">
             <input type="file" onChange={handleFileChange} />
           </div>
+          <div></div>
           <div></div>
           <div></div>
           <div className="ip-addmission-sh-section">
@@ -1331,7 +1252,8 @@ const IpAdmission = ({ patientData, onClose }) => {
               </td>
               <td>{row.sn}</td>
               <td>
-                <select
+                <FloatingSelect
+                  label="Id Name"
                   value={row.idname}
                   name="idname"
                   onChange={(e) =>
@@ -1341,17 +1263,17 @@ const IpAdmission = ({ patientData, onClose }) => {
                       )
                     )
                   }
-                >
-                  <option value={""}>select</option>
-                  <option value={"aadhar"}>aadhar card</option>
-                  <option value={"pan"}>Pan card</option>
-                  <option value={"Driving Licence"}>Driving Licence</option>
-                </select>
+                  options={[
+                    { value: "", label: "" },
+                    { value: "aadhar", label: "Aadhar Card" },
+                    { value: "pan", label: "Pancard" },
+                    { value: "Driving Licence", label: "Driving Licence" },
+                  ]}
+                />
               </td>
               <td>
-                { }
-                <input
-                  type="text"
+                <FloatingInput
+                  label={"Card Number"}
                   value={row.idno}
                   name="idno"
                   onChange={(e) =>
@@ -1361,6 +1283,8 @@ const IpAdmission = ({ patientData, onClose }) => {
                       )
                     )
                   }
+                  restrictions={{ varchar: true }}
+                  type="text"
                 />
               </td>
             </tr>

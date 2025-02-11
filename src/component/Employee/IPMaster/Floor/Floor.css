@@ -3,7 +3,8 @@
   font-family: Arial, sans-serif;
 }
 .floor-form {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 15px;
   justify-content: center;
 }
@@ -18,7 +19,7 @@
   align-items: center; /* Align label and input vertically */
   gap: 10px; /* Add space between label and input */
 }
-
+/* 
 .floor-form-group label {
   font-weight: bold;
   color: var(--font-color);
@@ -38,7 +39,7 @@
 
 .floor-form-group textarea {
   resize: none;
-}
+} */
 .floor-btn {
   background-color: var(--button-bg-color);
   color: white;
@@ -97,12 +98,8 @@
 }
 
 .floor-modal {
-  background-color: var(--background-color);
+  width: 500px;
   padding: 20px;
-  width: 50%;
-  max-width: 770px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
 }
 

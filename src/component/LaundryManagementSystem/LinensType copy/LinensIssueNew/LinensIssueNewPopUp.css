@@ -53,6 +53,15 @@
   align-items: center;
   text-align: center;
   white-space: nowrap;
+  
+}
+.LinensIssueNewPopUp-form-group-radio input{
+  margin-top: 6px;
+  margin-left: 10px;
+}
+.LinensIssueNewPopUp-form-group-radio-label{
+  font-size: 16px;
+  
 }
 .LinensIssueNewPopUp-form-group label {
   display: block;

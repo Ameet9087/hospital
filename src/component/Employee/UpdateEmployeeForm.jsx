@@ -1,88 +1,46 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
-import axios from "axios";
 import "./AddEmployeeForm.css";
-import { API_BASE_URL } from ".././api/api";
+
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../FloatingInputs/index";
+import { API_BASE_URL } from "../api/api";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const UpdateEmployeeForm = ({ employee, onClose }) => {
-  const [employeeID, setEmployeeId] = useState("");
+  const [departments, setDepartments] = useState([]);
+  const [employeeTypes, setEmployeeTypes] = useState([]);
+  const [employeeRoles, setEmployeeRoles] = useState([]);
+  const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [selectedEmployeeRole, setSelectedEmployeeRole] = useState("");
+  const [selectedEmployeeType, setSelectedEmployeeType] = useState("");
   const [employeeData, setEmployeeData] = useState({
     salutation: "",
     firstName: "",
     middleName: "",
     lastName: "",
-    dob: "",
+    dateOfBirth: "",
     gender: "",
-    kmpdcNo: "",
-    knncNo: "",
-    knhpcNo: "",
     contactNumber: "",
-    email: "",
+    emailId: "",
     signatureShort: "",
     signatureLong: "",
-    department: "",
-    role: "",
-    type: "",
     dateOfJoining: "",
     contactAddress: "",
     kraPin: "",
-    taxPercentage: "",
-    incentiveApplicable: false,
+    isIncentiveApplicable: false,
     extension: "",
     speedDial: "",
     officeHour: "",
-    roomNo: "",
     bloodGroup: "",
     drivingLicenseNo: "",
     isActive: false,
-    radiologySignature: "",
     displaySequence: "",
-    signatureImage: null,
+    employeeSignature: "",
   });
-  const [showTable, setShowTable] = useState(false);
-  useEffect(() => {
-    if (employee) {
-      console.log("API response:", employee);
-      setEmployeeId(employee.employeeId);
-      setEmployeeData({
-        department: employee.departmentDTO?.departmentName || "",
-        role: employee.employeeRoleDTO?.role || "",
-        type: employee.employeeTypeDTO?.employeeType || "",
-        salutation: employee.salutation || "",
-        firstName: employee.firstName || "",
-        middleName: employee.middleName || "",
-        lastName: employee.lastName || "",
-        dob: employee.dateOfBirth || "",
-        gender: employee.gender || "",
-        kmpdcNo: employee.kmpdcNo || "",
-        knncNo: employee.knncNo || "",
-        knhpcNo: employee.knhpcNo || "",
-        contactNumber: employee.contactNumber || "",
-        email: employee.emailId || "",
-        signatureShort: employee.signatureShort || "",
-        signatureLong: employee.signatureLong || "",
-        // department: employee.departmentDTO?.departmentName || "",
-        // role: employee.employeeRoleDTO?.role || "",
-        // type: employee.employeeTypeDTO?.employeeType || "",
-
-        dateOfJoining: employee.dateOfJoining || "",
-        contactAddress: employee.contactAddress || "",
-        kraPin: employee.kraPin || "",
-        taxPercentage: employee.taxPercentage || "",
-        incentiveApplicable: employee.incentiveApplicable || false,
-        extension: employee.extension || "",
-        speedDial: employee.speedDial || "",
-        officeHour: employee.officeHour || "",
-        roomNo: employee.roomNo || "",
-        bloodGroup: employee.bloodGroup || "",
-        drivingLicenseNo: employee.drivingLicenseNo || "",
-        isActive: employee.isActive || false,
-        radiologySignature: employee.radiologySignature || "",
-        displaySequence: employee.displaySequence || "",
-        signatureImage: employee.signatureImage || null,
-      });
-    }
-  }, [employee]);
 
   const handleChange = (e) => {
     const { name, type, checked, value } = e.target;
@@ -90,43 +48,177 @@ const UpdateEmployeeForm = ({ employee, onClose }) => {
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
     }));
+    if (name === "appointmentApplicable") {
+      setShowTable(checked);
+    }
   };
 
+  const handleDepartmentChange = (e) => {
+    setSelectedDepartment(e.target.value);
+  };
+
+  const handleRoleChange = (e) => {
+    setSelectedEmployeeRole(e.target.value);
+  };
+
+  const handleTypeChange = (e) => {
+    setSelectedEmployeeType(e.target.value);
+  };
+
+  const fetchDepartments = async () => {
+    try {
+      const response = await axios.get(
+        `${API_BASE_URL}/departments/getAllDepartments`
+      );
+      setDepartments(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+    }
+  };
+
+  const fetchEmployeeTypes = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/employeeTypes/getAll`);
+      setEmployeeTypes(response.data);
+    } catch (error) {
+      console.error("Error fetching employee types:", error);
+    }
+  };
+
+  const fetchEmployeeRoles = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/employeeRoles/getAll`);
+      setEmployeeRoles(response.data);
+    } catch (error) {
+      console.error("Error fetching employee roles:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDepartments();
+    fetchEmployeeTypes();
+    fetchEmployeeRoles();
+  }, []);
   const handleFileChange = (e) => {
-    setEmployeeData((prevData) => ({
-      ...prevData,
-      signatureImage: e.target.files[0],
-    }));
+    const file = e.target.files?.[0]; // Check if a file exists
+    if (!file) return; // Exit if no file is selected
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setEmployeeData((prevData) => ({
+        ...prevData,
+        employeeSignature: reader.result.split(",")[1], // Base64 content without the prefix
+      }));
+    };
+    reader.readAsDataURL(file);
   };
 
+  useEffect(() => {
+    if (employee) {
+      setEmployeeData((prevData) => ({
+        ...prevData,
+        ...employee, // Spread the main employee data
+        isActive: employee.isActive === "true", // Ensure boolean conversion
+      }));
+
+      // Set nested fields for the dropdowns
+      setSelectedDepartment(employee.departmentDTO?.departmentId || "");
+      setSelectedEmployeeRole(employee.employeeRoleDTO?.employeeRoleId || "");
+      setSelectedEmployeeType(employee.employeeTypeDTO?.employeeTypeId || "");
+    }
+  }, [employee]);
+
+  // console.log("propes employee",JSON.stringify(employee,1));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("id is:", employeeID);
+    const updatedEmployeeData = {
+      salutation: employeeData.salutation,
+      firstName: employeeData.firstName,
+      middleName: employeeData.middleName,
+      lastName: employeeData.lastName,
+      dateOfBirth: employeeData.dateOfBirth,
+      gender: employeeData.gender,
+      contactNumber: employeeData.contactNumber,
+      emailId: employeeData.emailId,
+      signatureShort: employeeData.signatureShort,
+      signatureLong: employeeData.signatureLong,
+      dateOfJoining: employeeData.dateOfJoining,
+      contactAddress: employeeData.contactAddress,
+      kraPin: employeeData.kraPin,
+      isIncentiveApplicable: employeeData.isIncentiveApplicable,
+      extension: employeeData.extension,
+      speedDial: employeeData.speedDial,
+      officeHour: employeeData.officeHour,
+      bloodGroup: employeeData.bloodGroup,
+      drivingLicenseNo: employeeData.drivingLicenseNo,
+      isActive: employeeData.isActive,
+      displaySequence: employeeData.displaySequence,
+      department: { departmentId: selectedDepartment },
+      employeeRole: { employeeRoleId: selectedEmployeeRole },
+      employeeType: { employeeTypeId: selectedEmployeeType },
+    };
+
+    console.log("Updated employee data:", updatedEmployeeData);
 
     try {
       const response = await axios.put(
-        `${API_BASE_URL}/employees/${employeeID}`,
-        employeeData,
-
+        `${API_BASE_URL}/employees/${employee.employeeId}`,
+        updatedEmployeeData, // Sending JSON directly in the request body
         {
           headers: {
             "Content-Type": "application/json",
+          },
+          params: {
+            employeeSignatureFile: employeeData.employeeSignature || null, // File as a separate query parameter or form data
           },
         }
       );
 
       if (response.status === 200) {
-        console.log("Employee updated successfully");
+        toast.success("Employee updated successfully");
+        resetForm();
         onClose();
-      } else {
-        console.error("Failed to update employee");
       }
     } catch (error) {
       console.error("Error updating employee:", error);
+      toast.error("Failed to update employee");
     }
   };
+
+  // Helper to reset the form state
+  const resetForm = () => {
+    setEmployeeData({
+      salutation: "",
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      dateOfBirth: "",
+      gender: "",
+      contactNumber: "",
+      emailId: "",
+      signatureShort: "",
+      signatureLong: "",
+      department: "",
+      role: "",
+      type: "",
+      dateOfJoining: "",
+      contactAddress: "",
+      kraPin: "",
+      isIncentiveApplicable: false,
+      extension: "",
+      speedDial: "",
+      officeHour: "",
+      bloodGroup: "",
+      drivingLicenseNo: "",
+      isActive: false,
+      displaySequence: "",
+      employeeSignature: null,
+    });
+  };
+
   return (
     <div className="add-employee-modal-overlay">
       <div className="add-employee-form">
@@ -136,414 +228,254 @@ const UpdateEmployeeForm = ({ employee, onClose }) => {
           </div>
 
           <div className="add-employee-grid">
-            <div className="emp-form-add">
-              <div className="add-employee-group">
-                <label className="emp-input">Salutation:</label>
-                <select
-                  className="emp-input"
-                  name="salutation"
-                  value={employeeData.salutation}
-                  onChange={handleChange}
-                >
-                  <option value="">--select--</option>
-                  <option>Mr</option>
-                  <option>Ms</option>
-                  <option>Mrs</option>
-                  <option>Dr</option>
-                </select>
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">First Name*:</label>
-                <input
-                  className="emp-input"
-                  type="text"
-                  name="firstName"
-                  value={employeeData.firstName}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Middle Name:</label>
-                <input
-                  className="emp-input"
-                  type="text"
-                  name="middleName"
-                  value={employeeData.middleName}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Last Name*:</label>
-                <input
-                  className="emp-input"
-                  type="text"
-                  name="lastName"
-                  value={employeeData.lastName}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Date Of Birth*:</label>
-                <input
-                  className="emp-input"
-                  type="date"
-                  name="dob"
-                  value={employeeData.dob}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Gender*:</label>
-                <select
-                  className="emp-input"
-                  name="gender"
-                  value={employeeData.gender}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">--select--</option>
-                  <option>Male</option>
-                  <option>Female</option>
-                </select>
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">KMPDC NO:</label>
-                <input
-                  className="emp-input"
-                  type="text"
-                  name="kmpdcNo"
-                  value={employeeData.kmpdcNo}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">KNNC NO:</label>
-                <input
-                  className="emp-input"
-                  type="text"
-                  name="knncNo"
-                  value={employeeData.knncNo}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">KNHPC NO:</label>
-                <input
-                  className="emp-input"
-                  type="text"
-                  name="knhpcNo"
-                  value={employeeData.knhpcNo}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Contact Number:</label>
-                <input
-                  className="emp-input"
-                  type="text"
-                  name="contactNumber"
-                  value={employeeData.contactNumber}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Email Id:</label>
-                <input
-                  className="emp-input"
-                  type="email"
-                  name="email"
-                  value={employeeData.email}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Signature(Short):</label>
-                <textarea
-                  name="signatureShort"
-                  value={employeeData.signatureShort}
-                  onChange={handleChange}
-                ></textarea>
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Signature(Long):</label>
-                <textarea
-                  name="signatureLong"
-                  value={employeeData.signatureLong}
-                  onChange={handleChange}
-                ></textarea>
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Is Active:</label>
-                <input
-                  className="emp-input"
-                  type="checkbox"
-                  name="isActive"
-                  checked={employeeData.isActive}
-                  onChange={handleChange}
-                />
-              </div>
+            <div className="add-employee-group">
+              <FloatingSelect
+                label={"Salutation"}
+                name="salutation"
+                value={employeeData.salutation}
+                onChange={handleChange}
+                options={[
+                  { value: "Mr", label: "Mr" },
+                  { value: "Ms", label: "Ms" },
+                  { value: "Mrs", label: "Mrs" },
+                  { value: "Dr", label: "Dr" },
+                ]}
+              />
             </div>
-            <div className="emp-depart">
-              <div className="add-employee-group">
-                <label className="emp-input">Employee Department*:</label>
-                <select
-                  className="emp-input"
-                  name="department"
-                  value={employeeData.department}
-                  onChange={handleChange}
-                >
-                  <option value="">Select Department</option>
-                  <option>Account</option>
-                  {/* Add other department options */}
-                </select>
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Employee Role:</label>
-                <select
-                  className="emp-input"
-                  name="role"
-                  value={employeeData.role}
-                  onChange={handleChange}
-                >
-                  <option value="">Select Role</option>
-                  {/* Add role options */}
-                </select>
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Employee Type:</label>
-                <select
-                  className="emp-input"
-                  name="type"
-                  value={employeeData.type}
-                  onChange={handleChange}
-                >
-                  <option value="">Select Type</option>
-                  <option>Full Time</option>
-                  {/* Add other type options */}
-                </select>
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Date Of Joining:</label>
-                <input
-                  className="emp-input"
-                  type="date"
-                  name="dateOfJoining"
-                  value={employeeData.dateOfJoining}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Contact Address:</label>
-                <textarea
-                  name="contactAddress"
-                  value={employeeData.contactAddress}
-                  onChange={handleChange}
-                ></textarea>
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">KRA PIN:</label>
-                <input
-                  className="emp-input"
-                  type="text"
-                  name="kraPin"
-                  value={employeeData.kraPin}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Tax percentage:</label>
-                <input
-                  className="emp-input"
-                  type="number"
-                  name="taxPercentage"
-                  value={employeeData.taxPercentage}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Is Incentive Applicable:</label>
-                <input
-                  className="emp-input"
-                  type="checkbox"
-                  name="incentiveApplicable"
-                  checked={employeeData.incentiveApplicable}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Extension:</label>
-                <input
-                  className="emp-input"
-                  type="text"
-                  name="extension"
-                  value={employeeData.extension}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">SpeedDial:</label>
-                <input
-                  className="emp-input"
-                  type="text"
-                  name="speedDial"
-                  value={employeeData.speedDial}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Office Hour:</label>
-                <textarea
-                  name="officeHour"
-                  value={employeeData.officeHour}
-                  onChange={handleChange}
-                ></textarea>
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Room No.:</label>
-                <input
-                  className="emp-input"
-                  type="text"
-                  name="roomNo"
-                  value={employeeData.roomNo}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Blood Group:</label>
-                <select
-                  className="emp-input"
-                  name="bloodGroup"
-                  value={employeeData.bloodGroup}
-                  onChange={handleChange}
-                >
-                  <option value="">Select Blood Group</option>
-                  <option>A+</option>
-                  <option>O+</option>
-                  <option>B+</option>
-                  <option>AB+</option>
-                  <option>A-</option>
-                  <option>O-</option>
-                  <option>B-</option>
-                  <option>AB-</option>
-                </select>
-              </div>
-              <div className="add-employee-group">
-                <label className="emp-input">Driving License No:</label>
-                <input
-                  className="emp-input"
-                  type="text"
-                  name="drivingLicenseNo"
-                  value={employeeData.drivingLicenseNo}
-                  onChange={handleChange}
-                />
-              </div>
+            <div className="add-employee-group">
+              <FloatingInput
+                label={"First Name"}
+                type="text"
+                name="firstName"
+                value={employeeData.firstName}
+                onChange={handleChange}
+                required
+              />
             </div>
-
-            <div className="emp-radio-sign">
-              <div className="emp-radio-sign">
-                <div className="add-employee-group">
-                  <label className="emp-input">Radiology Signature:</label>
-                  <textarea
-                    name="radiologySignature"
-                    value={employeeData.radiologySignature}
-                    onChange={handleChange}
-                  ></textarea>
-                </div>
-                <div className="add-employee-group">
-                  <label className="emp-input">Display Sequence:</label>
-                  <input
-                    className="emp-input"
-                    type="text"
-                    name="displaySequence"
-                    value={employeeData.displaySequence}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="add-employee-group">
-                  <label className="emp-input">Signature Image:</label>
-                  <input
-                    type="file"
-                    name="signatureImage"
-                    onChange={handleFileChange}
-                    className="emp-choose-file"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="emp-app">
-            <div className="add-employee-groups">
-              <label className="emp-input">Appointment Applicable?</label>
-              <input
-                className="emp-input"
-                type="checkbox"
-                name="appointmentApplicable"
-                checked={employeeData.appointmentApplicable}
+            <div className="add-employee-group">
+              <FloatingInput
+                label={"Middle Name"}
+                type="text"
+                name="middleName"
+                value={employeeData.middleName}
                 onChange={handleChange}
               />
             </div>
-            {showTable && (
-              <table className="service-table">
-                <thead>
-                  <tr>
-                    <th>Service Name </th>
-                    <th>Service Item Name</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <label>
-                        <input type="checkbox" name="serviceName1" />
-                        OPD (New Patient)
-                      </label>
-                    </td>
-                    <td>
-                      <input type="text" name="serviceItem1" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label>
-                        <input type="checkbox" name="serviceName2" />
-                        OPD (Followup Patient)
-                      </label>
-                    </td>
-                    <td>
-                      <input type="text" name="serviceItem2" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label>
-                        <input type="checkbox" name="serviceName3" />
-                        OPD (Old Patient)
-                      </label>
-                    </td>
-                    <td>
-                      <input type="text" name="serviceItem3" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label>
-                        <input type="checkbox" name="serviceName4" />
-                        OPD (Referral Patient)
-                      </label>
-                    </td>
-                    <td>
-                      <input type="text" name="serviceItem4" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            )}
+            <div className="add-employee-group">
+              <FloatingInput
+                label={"Last Name"}
+                type="text"
+                name="lastName"
+                value={employeeData.lastName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingInput
+                label={"DOB"}
+                type="date"
+                name="dateOfBirth"
+                value={employeeData.dateOfBirth}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingSelect
+                label={"Gender"}
+                name="gender"
+                value={employeeData.gender}
+                onChange={handleChange}
+                options={[
+                  { value: "Male", label: "Male" },
+                  { value: "Female", label: "Female" },
+                ]}
+                required
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingInput
+                label={"Contact Number"}
+                type="text"
+                name="contactNumber"
+                value={employeeData.contactNumber}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingInput
+                label={"Email Id"}
+                type="email"
+                name="emailId"
+                value={employeeData.emailId}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingTextarea
+                label={"Signature(Short)"}
+                name="signatureShort"
+                value={employeeData.signatureShort}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingTextarea
+                label={"Signature(Long)"}
+                name="signatureLong"
+                value={employeeData.signatureLong}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingTextarea
+                label={"Office Hour"}
+                name="officeHour"
+                value={employeeData.officeHour}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingTextarea
+                label={"Contact Address"}
+                name="contactAddress"
+                value={employeeData.contactAddress}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingInput
+                label={"PIN Code"}
+                type="text"
+                name="kraPin"
+                value={employeeData.kraPin}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingSelect
+                label={"Employee Role"}
+                id="employeeRole"
+                name="employeeRole"
+                value={selectedEmployeeRole}
+                onChange={handleRoleChange}
+                options={[
+                  ...employeeRoles.map((role) => ({
+                    value: role.employeeRoleId,
+                    label: role.role,
+                  })),
+                ]}
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingSelect
+                label={"Employee Type"}
+                id="employeeType"
+                name="employeeType"
+                value={selectedEmployeeType}
+                onChange={handleTypeChange}
+                options={[
+                  ...employeeTypes.map((type) => ({
+                    value: type.employeeTypeId,
+                    label: type.employeeType,
+                  })),
+                ]}
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingSelect
+                label={"Department"}
+                id="department"
+                name="department"
+                value={selectedDepartment}
+                onChange={handleDepartmentChange}
+                options={[
+                  ...departments.map((dept) => ({
+                    value: dept.departmentId,
+                    label: dept.departmentName,
+                  })),
+                  { value: "other", label: "Other (Specify)" }, // Adding "Other" option
+                ]}
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingInput
+                label={"Date Of Joining"}
+                type="date"
+                name="dateOfJoining"
+                value={employeeData.dateOfJoining}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingInput
+                label={"SpeedDial"}
+                type="text"
+                name="speedDial"
+                value={employeeData.speedDial}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="add-employee-group">
+              <FloatingSelect
+                label={"Blood Group"}
+                name="bloodGroup"
+                value={employeeData.bloodGroup}
+                onChange={handleChange}
+                options={[
+                  { value: "A+", label: "A+" },
+                  { value: "O+", label: "O+" },
+                  { value: "B+", label: "B+" },
+                  { value: "AB+", label: "AB+" },
+                  { value: "A-", label: "A-" },
+                  { value: "O-", label: "O-" },
+                  { value: "B-", label: "B-" },
+                  { value: "AB-", label: "AB-" },
+                ]}
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingInput
+                label={"Driving License No"}
+                type="text"
+                name="drivingLicenseNo"
+                value={employeeData.drivingLicenseNo}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="add-employee-group">
+              <label className="emp-input">Is Active:</label>
+              <input
+                className="emp-input"
+                type="checkbox"
+                name="isActive"
+                checked={employeeData.isActive}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="add-employee-group">
+              <FloatingInput
+                label={"Display Sequence"}
+                type="text"
+                name="displaySequence"
+                value={employeeData.displaySequence}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="add-employee-group">
+              <input
+                type="file"
+                name="employeeSignature"
+                onChange={handleFileChange}
+              />
+            </div>
+          </div>
+          <div className="emp-app">
             <div className="add-employee-buttons">
               <button type="submit" className="add-employee-button">
-                Add
+                update
               </button>
             </div>
           </div>

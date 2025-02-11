@@ -4,7 +4,7 @@ import "./SettingTerm.css";
 import * as XLSX from "xlsx";
 // import ReturnForm from './ReturnForm';
 import AddBreakageItem from "./AddBreakeageItem";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 
 const StoreBreakageItem = () => {
@@ -82,7 +82,7 @@ const StoreBreakageItem = () => {
     newWindow.print();
     newWindow.close();
   };
-  
+
   // Function to filter breakage items based on selected date range
   const filterByDate = () => {
     const filtered = breakageItems.filter((item) => {

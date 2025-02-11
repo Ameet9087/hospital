@@ -9,7 +9,7 @@ const UpdateSubCategory = ({ subCategory,onClose }) => {
     accountingLedger: '',
     description: '',
     category: '',
-    isActive: false,
+    active: false,
   });
 
   // Pre-fill form with existing subcategory data
@@ -21,7 +21,7 @@ const UpdateSubCategory = ({ subCategory,onClose }) => {
         accountingLedger: subCategory.accountingLedger || '',
         description: subCategory.description || '',
         category: subCategory.category || '',
-        isActive: subCategory.isActive || false,
+        active: subCategory.isActive || false,
       });
     }
   }, [subCategory]);
@@ -58,8 +58,8 @@ const UpdateSubCategory = ({ subCategory,onClose }) => {
 
       if (response.ok) {
         alert('SubCategory updated successfully!');
-        onClose();
-        onUpdateSuccess(); // Notify parent to refresh data or close the modal
+        // onClose();
+        // onUpdateSuccess(); 
       } else {
         alert('Failed to update SubCategory');
       }
@@ -144,8 +144,8 @@ const UpdateSubCategory = ({ subCategory,onClose }) => {
           <label>Is Active</label>
           <input
             type="checkbox"
-            name="isActive"
-            checked={formData.isActive}
+            name="active"
+            checked={formData.active}
             onChange={handleInputChange}
           />
         </div>

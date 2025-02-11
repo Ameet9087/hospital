@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import "./RejectSample.css";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import CustomModel from "../../CustomModel/CustomModal";
+import { FloatingInput } from "../../FloatingInputs";
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
 };
@@ -103,36 +104,32 @@ function RejectSample() {
 
         <div className="RejectSample-controls">
           <div className="RejectSample-date-range">
-            <label>
-              From:
-              <input
-                type="date"
-                id="dateFrom"
-                defaultValue={dateFrom}
-                onChange={handleDateFromChange}
-              />
-            </label>
-            <label>
-              To:
-              <input
-                type="date"
+            <FloatingInput
+            label={"From"}
+            type="date"
+            id="dateFrom"
+            value={dateFrom}
+            onChange={handleDateFromChange}
+            />
+            
+            <FloatingInput
+            label={"To"}
+            type="date"
                 id="dateTo"
-                defaultValue={dateTo}
+                value={dateTo}
                 onChange={handleDateToChange}
-              />
-            </label>
+            />
           </div>
         </div>
 
         <div className="RejectSample-search-N-print">
           <div className="RejectSample-search-bar">
-            <i className="fa-solid fa-magnifying-glass"></i>
-            <input
-              type="text"
-              placeholder="Search"
-              className="RejectSample-search-input"
-              value={searchQuery}
-              onChange={handleSearchChange} // Handle search
+            <FloatingInput
+             type="text"
+             placeholder="Search"
+             label={"Search"}
+             value={searchQuery}
+             onChange={handleSearchChange} 
             />
           </div>
           <div className="RejectSample-results-info">

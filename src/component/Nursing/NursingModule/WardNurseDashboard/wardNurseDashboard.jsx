@@ -4,8 +4,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../../../api/api";
 import NursingPatientDashboard from "./NursingPatientDashboard";
 import NurseClearanceForm from "../NurseClearance/NurseClearanceForm";
-import CustomModal from "../../../CustomModel/CustomModal";
-
+import CustomModal from "../../../../CustomModel/CustomModal";
 function wardNurseDashboard() {
   const [selectedPatient, setSelectedPatient] = useState();
   const [selectedIpAdmission, setSelectedIpAdmission] = useState([]);

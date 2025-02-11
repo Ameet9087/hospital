@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ServiceList.css";
 import axios from "axios";
-import CustomModel from "../../CustomModel/CustomModal";
+import CustomModel from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import ServiceMaster from "./ServiceMaster";

@@ -1,35 +1,16 @@
-
-:root {
-    --side-bar-bg-color: #007973; /* Sidebar Background Color */
-    --upper-bar-bg-color: #00968f; /* Upper Bar Background Color */
-    --button-bg-color: #00968f; /* Button Background Color */
-    --button-color: #00c9c0; /* Button Text Color */
-    --background-color: #e3fffe; /* General Background Color */
-    --heading-font-size: 16px; /* Heading Font Size */
-    --font-size: 14px; /* Default Font Size */
-    --button-hover-border-color: #00c9c0; /* Hover Border Color */
-    --button-hover-text-color: #00c9c0; /* Hover Text Color */
-    --button-hover-bg-color: white; /* Button Hover Background Color */
-    --input-box-padding: 5px; /* Padding for Input Fields */
-}
-body{
-    background-color: var(--background-color);
-}
-
-.beds-details{
-    width: 1000px;
-    height: 300px;
-    
+.beds-panel{
+    width: 500px;
+    overflow: hidden;
+    /* height: 400px; */
 }
 .beds {
-    font-family: Arial, sans-serif;
     background-color: var(--background-color);
     padding: 4px;
     font-size: 12px;
 }
 
 .beds-title-bar {
-    background-color: var(--upper-bar-bg-color);
+    background-color: var(--background-color);
     color: white;
     padding: 8px;
     margin-bottom: 4px;
@@ -55,6 +36,7 @@ body{
     display: flex;
     align-items: end;
     gap: 2px;
+    /* margin: 10px 0; */
 }
 
 .beds-content-wrapper {
@@ -75,7 +57,7 @@ body{
 }
 
 .beds-panel-header {
-    background-color: var(--upper-bar-bg-color);
+    background-color: var(--upperBar-bg-color);
     color: white;
     padding: 4px 8px;
     font-size: var(--heading-font-size);
@@ -83,6 +65,10 @@ body{
 
 .beds-panel-content {
     padding: 8px;
+    display: grid;
+    gap: 10px;
+    margin: 10px 0;
+    grid-template-columns: repeat(2,1fr);
 }
 
 .beds-form-row {
@@ -92,18 +78,6 @@ body{
     margin-bottom: 6px;
     gap: 4px;
     font-size: var(--font-size);
-}
-
-.beds-form-row label {
-    min-width: 140px;
-}
-
-.beds-form-row input,
-.beds-form-row select {
-    padding: var(--input-box-padding);
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 47%;
 }
 
 .beds-input-with-search {
@@ -304,7 +278,7 @@ body{
     font-size: 16px;
   }
   .beds-table-container {
-    height: 300px;  /* Set a fixed height */
+    height: 450px;
     overflow-y: auto;  /* Enable vertical scrolling if content exceeds height */
     margin-top: 20px;
     width: 100%;
@@ -343,7 +317,7 @@ body{
     background-color: #f2f2f2;
   }
   
-  .edit-btn, .delete-btn {
+  .beds-edit-btn, .beds-delete-btn {
     padding: 5px 10px;
     margin: 0 5px;
     border: none;
@@ -351,22 +325,24 @@ body{
     cursor: pointer;
   }
   
-  .edit-btn {
-    background-color: #4CAF50;
+  .beds-edit-btn {
+    background-color: var(--button-bg-color);
     color: white;
   }
   
-  .delete-btn {
+  .beds-delete-btn {
     background-color: #f44336;
     color: white;
   }
   
-  .edit-btn:hover {
-    background-color: #45a049;
+  .beds-edit-btn:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-color);
   }
   
-  .delete-btn:hover {
-    background-color: #da190b;
+  .beds-delete-btn:hover {
+    background-color: var(--button-hover-background-color);
+    color: #da190b;
   }
   
   .beds-btn-blue {

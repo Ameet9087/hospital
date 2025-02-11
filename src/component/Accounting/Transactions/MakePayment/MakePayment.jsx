@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import "./MakePayment.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 
 function MakePayment() {
   const [module, setModule] = useState("Pharmacy");
@@ -27,9 +27,8 @@ function MakePayment() {
             <label>{module === "Pharmacy" ? "Supplier" : "Vendor"}</label>
             <input
               type="text"
-              placeholder={`Enter ${
-                module === "Pharmacy" ? "Supplier" : "Vendor"
-              } Name`}
+              placeholder={`Enter ${module === "Pharmacy" ? "Supplier" : "Vendor"
+                } Name`}
             />
           </div>
           <div className="mp-form-group">
@@ -37,9 +36,8 @@ function MakePayment() {
             <input
               type="text"
               className="mp-invoice-input"
-              placeholder={`Enter ${
-                module === "Pharmacy" ? "Invoice" : "GR"
-              } Number`}
+              placeholder={`Enter ${module === "Pharmacy" ? "Invoice" : "GR"
+                } Number`}
             />
           </div>
           <div className="mp-form-group">

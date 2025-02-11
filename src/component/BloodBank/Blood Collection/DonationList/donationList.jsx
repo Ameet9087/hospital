@@ -1,18 +1,19 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // import "../DonationList/donationList.css"
 import "./donationList.css";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import axios from "axios";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
-
+import { FloatingInput, FloatingSelect } from "../../../../FloatingInputs";
+import { toast } from 'react-toastify';
 function Donarlist() {
   const [donors, setDonors] = useState([]); // Store submitted donors
 
   const [showModal, setShowModal] = useState(false);
   const [selectedDonor, setSelectedDonor] = useState(null);
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
   const [formData, setFormData] = useState({
     hemoglobinLevel: "",
     pulse: "",
@@ -117,11 +118,15 @@ function Donarlist() {
 
       if (response.ok) {
         console.log("Data submitted successfully");
-        alert("Collection details submitted successfully!");
+        toast.success('Proposal saved successfully!');
+
+        // alert("Collection details submitted successfully!");
         handleCloseModal();
       } else {
         const errorData = await response.json();
-        console.error("Failed to submit data:", errorData);
+        // console.error("Failed to submit data:", errorData);
+        toast.error('Failed to save proposal. Please try again.');
+
         alert(`Error: ${errorData.message || "Submission failed."}`);
       }
     } catch (error) {
@@ -132,38 +137,40 @@ function Donarlist() {
 
   return (
     <div className="bloodcollection">
-      <h2><i className="fa-solid fa-star-of-life"></i>Donor List</h2>
+      <h2>
+        <i className="fa-solid fa-star-of-life"></i>Donor List
+      </h2>
       <div className="donor-list-container">
-      <table  ref={tableRef}>
-              <thead>
-                <tr >
-                    {[
-                  "Name",
-                  "Blood Group",
-                  "Phone",
-                  "Email",
-                  "Donation Date",
-                  "Actions"
-                ].map((header, index) => (
-                    <th
-                      key={index}
-                      style={{ width: columnWidths[index] }}
-                      className="resizable-th"
-                    >
-                      <div className="header-content">
-                        <span>{header}</span>
-                        <div
-                          className="resizer"
-                          onMouseDown={startResizing(
-                            tableRef,
-                            setColumnWidths
-                          )(index)}
-                        ></div>
-                      </div>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
+        <table ref={tableRef}>
+          <thead>
+            <tr>
+              {[
+                "Name",
+                "Blood Group",
+                "Phone",
+                "Email",
+                "Donation Date",
+                "Actions",
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
+            </tr>
+          </thead>
           <tbody>
             {donors.map((donor) => (
               <tr key={donor.id}>
@@ -187,160 +194,166 @@ function Donarlist() {
       </div>
 
       <CustomModal isOpen={showModal} onClose={handleCloseModal}>
-      
-          <div className="bloodcollection-modal-content">
-            <h6>Add Advanced Information for {selectedDonor?.fullName}</h6>
-            <form className="bloodcollectionform" onSubmit={handleFormSubmit}>
-              <div className="bloodcollectionform-container">
+        <div className="bloodcollection-modal-content">
+          <h6>Add Advanced Information for {selectedDonor?.fullName}</h6>
+          <form className="bloodcollectionform" onSubmit={handleFormSubmit}>
+            <div className="bloodcollectionform-container">
               <div className="bloodcollectionform-form-group">
-                  <label>Hemoglobin Level:</label>
-                  <input
-                      type="text"
-                      name="hemoglobinLevel"
-                      value={formData.hemoglobinLevel}
-                      onChange={handleFormChange}
-                      required
-          
-                  />
-                </div>
-                <div className="bloodcollectionform-form-group">
-                  <label>Pulse:</label>
-                  <input
-                       type="text"
-                       name="pulse"
-                       value={formData.pulse}
-                       onChange={handleFormChange}
-                       required
-           
-          
-                  />
-                </div>
-                <div className="bloodcollectionform-form-group">
-                  <label>Temperature:</label>
-                  <input
-                    type="text"
-                    name="temperature"
-                    value={formData.temperature}
-                    onChange={handleFormChange}
-                    required
-                  />
-                </div>
-                <div className="bloodcollectionform-form-group">
-                  <label>Vaccination Status:</label>
-                  <input
-                    type="text"
-                    name="vaccinationStatus"
-                    value={formData.vaccinationStatus}
-                    onChange={handleFormChange}
-                  />
-                </div>
+                <FloatingInput
+                  label={"Hemoglobin Level"}
+                  type="text"
+                  name="hemoglobinLevel"
+                  value={formData.hemoglobinLevel}
+                  onChange={handleFormChange}
+                  required
+                />
 
-                <div className="bloodcollectionform-form-group">
-                  <label>Tattoos or Piercings:</label>
-                  <input
-                    type="text"
-                    name="tattoosOrPiercings"
-                    value={formData.tattoosOrPiercings}
-                    onChange={handleFormChange}
-                  />
-                </div>
-                <div className="bloodcollectionform-form-group">
-                  <label>Allergies or Reactions:</label>
-                  <input
-                    type="text"
-                    name="allergiesOrReactions"
-                    value={formData.allergiesOrReactions}
-                    onChange={handleFormChange}
-                  />
-                </div>
-              </div>
-
-              <div className="bloodcollectionform-container">
                
-                <div className="bloodcollectionform-form-group">
-                  <label>Blood Group:</label>
-                  <input
-                    type="text"
-                    name="bloodGroup"
-                    value={formData.bloodGroup}
-                    onChange={handleFormChange}
-                    required
-                  />
-                </div>
-                <div className="bloodcollectionform-form-group">
-                  <label>RH Factor:</label>
-                  <input
-                    type="text"
-                    name="rhFactor"
-                    value={formData.rhFactor}
-                    onChange={handleFormChange}
-                    required
-                  />
-                </div>
-                <div className="bloodcollectionform-form-group">
-                  <label>Collection Date and Time:</label>
-                  <input
-                    type="datetime-local"
-                    name="collectionDateTime"
-                    value={formData.collectionDateTime}
-                    onChange={handleFormChange}
-                    required
-                  />
-                </div>
-                <div className="bloodcollectionform-form-group">
-                  <label>Collection Site:</label>
-                  <input
-                    type="text"
-                    name="collectionSite"
-                    value={formData.collectionSite}
-                    onChange={handleFormChange}
-                    required
-                  />
-                </div>
               </div>
-
-            
-
-              <div className="bloodcollectionform-container">
               <div className="bloodcollectionform-form-group">
-                  <label>Collection Method:</label>
-                  <input
-                    type="text"
-                    name="collectionMethod"
-                    value={formData.collectionMethod}
-                    onChange={handleFormChange}
-                    required
-                  />
-                </div>
-                <div className="bloodcollectionform-form-group">
-                  <label>Volume Collected (ml):</label>
-                  <input
-                    type="number"
-                    name="volumeCollected"
-                    value={formData.volumeCollected}
-                    onChange={handleFormChange}
-                    required
-                  />
-                </div>
-                <div className="bloodcollectionform-form-group">
-                  <label>Collection Bag Number:</label>
-                  <input
-                    type="text"
-                    name="collectionBagNumber"
-                    value={formData.collectionBagNumber}
-                    onChange={handleFormChange}
-                    required
-                  />
-                </div>
+              <FloatingInput
+                  label={"Pulse"}
+                  type="text"
+                  name="pulse"
+                  value={formData.pulse}
+                  onChange={handleFormChange}
+                  required
+                />
+              
               </div>
-              <div>
-                <button className="bloodcollection-btn" type="submit">
-                  Submit
-                </button>
+              <div className="bloodcollectionform-form-group">
+              <FloatingInput
+                  label={"Temperature"}
+                  type="text"
+                  name="temperature"
+                  value={formData.temperature}
+                  onChange={handleFormChange}
+                  required
+                />
+            
               </div>
-            </form>
-          </div>
-    
+              <div className="bloodcollectionform-form-group">
+              <FloatingInput
+                  label={"Vaccination Status"}
+                  type="text"
+                  name="vaccinationStatus"
+                  value={formData.vaccinationStatus}
+                  onChange={handleFormChange}
+                />
+               
+              </div>
+
+              <div className="bloodcollectionform-form-group">
+              <FloatingInput
+                  label={"Tattoos or Piercings"}
+                  type="text"
+                  name="tattoosOrPiercings"
+                  value={formData.tattoosOrPiercings}
+                  onChange={handleFormChange}
+                />
+              
+              </div>
+              <div className="bloodcollectionform-form-group">
+              <FloatingInput
+                  label={"Allergies or Reactions"}
+                  type="text"
+                  name="allergiesOrReactions"
+                  value={formData.allergiesOrReactions}
+                  onChange={handleFormChange}
+                />
+               
+              </div>
+            </div>
+
+            <div className="bloodcollectionform-container">
+              <div className="bloodcollectionform-form-group">
+              <FloatingInput
+                  label={"Blood Group"}
+                  type="text"
+                  name="bloodGroup"
+                  value={formData.bloodGroup}
+                  onChange={handleFormChange}
+                  required
+                />
+              
+              </div>
+              <div className="bloodcollectionform-form-group">
+              <FloatingInput
+                  label={"RH Factor"}
+                  type="text"
+                  name="rhFactor"
+                  value={formData.rhFactor}
+                  onChange={handleFormChange}
+                  required
+                />
+              
+              </div>
+              <div className="bloodcollectionform-form-group">
+              <FloatingInput
+                  label={"Collection Date and Time"}
+                  type="datetime-local"
+                  name="collectionDateTime"
+                  value={formData.collectionDateTime}
+                  onChange={handleFormChange}
+                  required
+                />
+              
+              </div>
+              <div className="bloodcollectionform-form-group">
+              <FloatingInput
+                  label={"Collection Site"}
+                  type="text"
+                  name="collectionSite"
+                  value={formData.collectionSite}
+                  onChange={handleFormChange}
+                  required
+                />
+              
+              </div>
+            </div>
+
+            <div className="bloodcollectionform-container">
+              <div className="bloodcollectionform-form-group">
+              <FloatingInput
+                  label={"Collection Method"}
+                  type="text"
+                  name="collectionMethod"
+                  value={formData.collectionMethod}
+                  onChange={handleFormChange}
+                  required
+                />
+              
+              </div>
+              <div className="bloodcollectionform-form-group">
+              <FloatingInput
+                  label={"Volume Collected (ml)"}
+                  type="number"
+                  name="volumeCollected"
+                  value={formData.volumeCollected}
+                  onChange={handleFormChange}
+                  required
+                />
+               
+              </div>
+              <div className="bloodcollectionform-form-group">
+              <FloatingInput
+                  label={"Collection Bag Number"}
+                  type="text"
+                  name="collectionBagNumber"
+                  value={formData.collectionBagNumber}
+                  onChange={handleFormChange}
+                  required
+                />
+             
+              </div>
+            </div>
+            <div>
+              <button className="bloodcollection-btn" type="submit">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
       </CustomModal>
     </div>
   );

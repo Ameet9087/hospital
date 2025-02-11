@@ -124,7 +124,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
       {
         id: prev.length + 1,
         linensName: "",
-        inStock: "",
+        stock: "",
         prevBalance: "",
         issuedQty: "",
         lnm: "",
@@ -156,14 +156,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
       currentOccupancy: "",
     });
     setRows([
-      // {
-      //   id: 1,
-      //   linensName: "",
-      //   inStock: "",
-      //   prevBalance: "",
-      //   issuedQty: "",
-      //   lnm: "",
-      // },
+      
     ]);
   };
 
@@ -184,39 +177,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
     return `${formattedHour}:${minutes}${ampm}`;
   };
 
-  // const validateForm = () => {
-  //   if (!issueDetails.issueDate) {
-  //     alert("Please select an issue date");
-  //     return false;
-  //   }
-  //   if (!issueDetails.issueTime) {
-  //     alert("Please select an issue time");
-  //     return false;
-  //   }
-  //   if (!issueDetails.issueType) {
-  //     alert("Please select an issue type");
-  //     return false;
-  //   }
-  //   if (!issueDetails.nursingStation) {
-  //     alert("Please enter a nursing station");
-  //     return false;
-  //   }
-  //   if (!issueDetails.currentOccupancy) {
-  //     alert("Please enter current occupancy");
-  //     return false;
-  //   }
-
-  //   // Validate linens details
-  //   const hasEmptyRow = rows.some(
-  //     (row) => !row.linensName || !row.issuedQty
-  //   );
-  //   if (hasEmptyRow) {
-  //     alert("Please fill in all required fields in the linens details table");
-  //     return false;
-  //   }
-
-  //   return true;
-  // };
+  
 
   const fetchItemDetails = async () => {
     try {
@@ -240,20 +201,78 @@ const LinensIssueNewPopUp = ({ onClose }) => {
     setActivePopup(null);
   };
 
-  const handleSave = async () => {
-    try {
-      // Validate form before proceeding
-      // if (!validateForm()) {
-      //   return;
-      // }
+  // const handleSave = async () => {
+  //   try {
+  //     // Validate form before proceeding
+  //     // if (!validateForm()) {
+  //     //   return;
+  //     // }
 
-      // Map rows to the required linenDetailsListDTOs format
+  //     // Map rows to the required linenDetailsListDTOs format
+  //     const linenDetailsListDTOs = rows.map((row) => ({
+  //       linenDetailsListId: details?.linenDetailsListId,
+  //       issueQuantity: parseInt(row.issuedQty) || 0,
+  //     }));
+
+  //     // Construct the payload
+  //     const payload = {
+  //       issueDate: formatDate(issueDetails.issueDate),
+  //       issueTime: formatTime(issueDetails.issueTime),
+  //       issueType: issueDetails.issueType,
+  //       nursingType: issueDetails.nursingStation,
+  //       currentOccupancy: parseInt(issueDetails.currentOccupancy) || 0,
+  //       status: "Pending",
+  //       linenDetailsListDTOs: linenDetailsListDTOs,
+  //     };
+
+  //     console.log("Sending payload:", handleSave);
+
+  //     const response = await axios.post(
+  //       `${API_BASE_URL}/linens-issues`,
+  //       payload,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+
+  //     if (response.status === 200 || response.status === 201) {
+  //       alert("Linens issue saved successfully!");
+  //       handleClear();
+  //     }
+  //   } catch (error) {
+  //     console.error("Error saving linens issue:", error);
+  //     let errorMessage = "Failed to save linens issue. ";
+  //     if (error.response?.data) {
+  //       errorMessage += error.response.data;
+  //     } else if (error.message) {
+  //       errorMessage += error.message;
+  //     }
+  //     alert(errorMessage);
+  //   }
+  // };
+
+  const handleSave = async () => {
+    // Check if required fields are filled
+    if (
+      !issueDetails.issueNumber.trim() ||
+      !issueDetails.issueDate ||
+      !issueDetails.issueTime ||
+      !issueDetails.issueType ||
+      !issueDetails.nursingStation.trim() ||
+      !issueDetails.currentOccupancy
+    ) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+  
+    try {
       const linenDetailsListDTOs = rows.map((row) => ({
         linenDetailsListId: details?.linenDetailsListId,
         issueQuantity: parseInt(row.issuedQty) || 0,
       }));
-
-      // Construct the payload
+  
       const payload = {
         issueDate: formatDate(issueDetails.issueDate),
         issueTime: formatTime(issueDetails.issueTime),
@@ -263,19 +282,15 @@ const LinensIssueNewPopUp = ({ onClose }) => {
         status: "Pending",
         linenDetailsListDTOs: linenDetailsListDTOs,
       };
-
-      console.log("Sending payload:", handleSave);
-
-      const response = await axios.post(
-        `${API_BASE_URL}/linens-issues`,
-        payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
+  
+      console.log("Sending payload:", payload);
+  
+      const response = await axios.post(`${API_BASE_URL}/linens-issues`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
       if (response.status === 200 || response.status === 201) {
         alert("Linens issue saved successfully!");
         handleClear();
@@ -291,8 +306,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
       alert(errorMessage);
     }
   };
-
-
+  
 
   const fetchIssues = async () => {
     try {
@@ -317,7 +331,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
     if (activePopup === "itemDetails") {
       setFormData((prev) => ({
         linenType: data.linenType,
-        stock: data.stock,
+        // stock: data.stock,
       }));
     }
     setActivePopup(null);
@@ -345,6 +359,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
               name="issueNumber"
               value={issueDetails.issueNumber}
               onChange={handleInputChange}
+              
               required
             />
             <FloatingInput
@@ -394,7 +409,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
             />
           </div>
           <div className="LinensIssueNewPopUp-form-group">
-            <label>Linens Issue Type:</label>
+            <label className="LinensIssueNewPopUp-form-group-radio-label">Linens Issue Type:</label>
             <div className="LinensIssueNewPopUp-form-group-radio">
               <input
                 type="radio"
@@ -403,7 +418,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
                 checked={issueDetails.issueType === "Nursing Station"}
                 onChange={handleInputChange}
               />
-              Nursing Station
+              <span>Nursing Station</span>
               <input
                 type="radio"
                 name="issueType"
@@ -411,7 +426,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
                 checked={issueDetails.issueType === "Department"}
                 onChange={handleInputChange}
               />
-              Department
+              <span>Department</span>
               <input
                 type="radio"
                 name="issueType"
@@ -419,12 +434,11 @@ const LinensIssueNewPopUp = ({ onClose }) => {
                 checked={issueDetails.issueType === "Staff"}
                 onChange={handleInputChange}
               />
-              Staff
+              <span>Staff</span>
             </div>
           </div>
         </div>
       </div>
-
       <div className="table-container">
         <h4>Linens Details</h4>
         <table ref={tableRef}>
@@ -480,8 +494,9 @@ const LinensIssueNewPopUp = ({ onClose }) => {
                   <input
                     type="number"
                     value={formData.stock}
+                    min="0"
                     onChange={(e) =>
-                      handleUpdateRow(index, "inStock", e.target.value)
+                      handleUpdateRow(index, "stock", e.target.value)
                     }
                   />
                 </td>
@@ -489,6 +504,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
                   <input
                     type="number"
                     value={row.prevBalance}
+                    min="0"
                     onChange={(e) =>
                       handleUpdateRow(index, "prevBalance", e.target.value)
                     }
@@ -498,6 +514,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
                   <input
                     type="number"
                     value={row.issuedQty}
+                    min="0"
                     onChange={(e) =>
                       handleUpdateRow(index, "issuedQty", e.target.value)
                     }
@@ -508,6 +525,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
                   <input
                     type="number"
                     value={row.lnm}
+                    min="0"
                     onChange={(e) => handleUpdateRow(index, "lnm", e.target.value)}
                   />
                 </td>
@@ -534,17 +552,6 @@ const LinensIssueNewPopUp = ({ onClose }) => {
       <div className="LinensIssueNewPopUp-form-actions">
         <button className="LinensIssueNewPopUp-add-btn" onClick={handleSave}>
           Save
-        </button>
-        <button className="LinensIssueNewPopUp-add-btn" onClick={fetchIssues}>
-          Fetch Issues
-        </button>
-        <button className="LinensIssueNewPopUp-close-btn">Delete</button>
-        <button className="LinensIssueNewPopUp-add-btn" onClick={handleClear}>
-          Clear
-        </button>
-        <button className="LinensIssueNewPopUp-add-btn">Search</button>
-        <button className="LinensIssueNewPopUp-close-btn" onClick={onClose}>
-          Close
         </button>
       </div>
       {activePopup && (

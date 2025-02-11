@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import "./DiabeticChartForm.css";
 import PopupTable from "../popup";
 import axios from "axios";
@@ -23,9 +22,8 @@ const FloatingInput = ({ label, type = "text", value, ...props }) => {
 
   return (
     <div
-      className={`diabetic-chart-form-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`diabetic-chart-form-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <input
         type={type}
@@ -55,9 +53,8 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
 
   return (
     <div
-      className={`diabetic-chart-form-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`diabetic-chart-form-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <select
         className="diabetic-chart-form-floating-select"
@@ -73,7 +70,7 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
         }}
         {...props}
       >
-        <option value="">{}</option>
+        <option value="">{ }</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -95,9 +92,8 @@ const DiabeticChartForm = () => {
     uhid: receipt?.uhid || "",
     ipNumber: receipt?.ipNumber || "",
     erInitialAssessmentId: receipt?.erInitialAssessmentId || "",
-    patientName: `${receipt?.firstName || ""} ${
-      receipt?.lastName || ""
-    }`.trim(),
+    patientName: `${receipt?.firstName || ""} ${receipt?.lastName || ""
+      }`.trim(),
     fatherHusbandName: receipt?.relativeName || "",
     age: receipt?.age || "",
     sex: receipt?.sex || "",
@@ -139,7 +135,7 @@ const DiabeticChartForm = () => {
   const handleAddRow = () => {
     setRows((prevRows) => [
       ...prevRows,
-      { sn: prevRows.length + 1, drugid:"", drug: "", dose: "", route: "", remarks: "" },
+      { sn: prevRows.length + 1, drugid: "", drug: "", dose: "", route: "", remarks: "" },
     ]);
   };
 

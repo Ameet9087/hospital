@@ -7,8 +7,8 @@ import { useReactToPrint } from "react-to-print";
 import SSIRetunReturnItemBtn from "./sSIRetunReturnItemBtn";
 import SSIPatientConsumNewPCbtn from "./sSIPatientConsumNewPCbtn";
 import { API_BASE_URL } from "../../../api/api";
-import CustomModal from "../../../CustomModel/CustomModal";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import CustomModal from "../../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 
 function SSIReturn() {
   const printRef = useRef();
@@ -83,6 +83,7 @@ function SSIReturn() {
     // Get the table data
     const tableData = [["Store Name", "Date", "Returned By", "Remarks"]];
 
+
     // Create a new workbook and a new worksheet
     const worksheet = XLSX.utils.aoa_to_sheet(tableData);
     const workbook = XLSX.utils.book_new();
@@ -125,9 +126,11 @@ function SSIReturn() {
 
   return (
     <div className="sSIReturn-active-imaging-request">
+
       <>
         <header className="sSIReturn-header">
           <div className="sSIReturn-status-filters">
+
             <button className="sSIReturn-new-patient-button" onClick={() => setShowNewPatientConsumption(true)}>
               Returns Item
             </button>
@@ -136,9 +139,11 @@ function SSIReturn() {
             <label>Select Inventory:</label>
             <select>
               <option value="">GENERAL-INVENTORY</option>
+
             </select>
           </div>
         </header>
+
 
         <div className="sSIReturn-controls">
           <div className="sSIReturn-date-range">
@@ -152,6 +157,7 @@ function SSIReturn() {
             </label>
           </div>
         </div>
+
 
         <div className="sSIReturn-search-N-results">
           <div className="sSIReturn-search-bar">
@@ -194,6 +200,7 @@ function SSIReturn() {
                     {/* <td>
                       <button className="action-button">Action</button>
                     </td> */}
+
                   </tr>
                 ))
               ) : (
@@ -209,6 +216,7 @@ function SSIReturn() {
       </>
 
       <CustomModal isOpen={showNewPatientConsumption} onClose={() => setShowNewPatientConsumption(false)}>
+
         <SSIRetunReturnItemBtn />
       </CustomModal>
     </div>

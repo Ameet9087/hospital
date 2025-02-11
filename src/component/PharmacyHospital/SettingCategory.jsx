@@ -6,7 +6,7 @@ import './SettingSupplier.css';
 import { API_BASE_URL } from '../api/api';
 import * as XLSX from 'xlsx';
 import CustomModal from '../../CustomModel/CustomModal';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 import useCustomAlert from '../../alerts/useCustomAlert';
 
 const SettingCategory = () => {
@@ -45,7 +45,7 @@ const SettingCategory = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+
     const formData = {
       subCategoryName: selectedUser.subCategoryName,
       categoryName: selectedUser.categoryName,
@@ -116,7 +116,7 @@ const SettingCategory = () => {
           + Add Category
         </button>
       </div>
-      
+
       <input
         type="text"
         placeholder="Search"

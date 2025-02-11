@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './pharmacyClearance.css'; // Ensure you have this CSS file
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 import * as XLSX from 'xlsx';
 import { API_BASE_URL } from '../api/api';
 import axios from 'axios';
-import CustomModal from '../CustomModel/CustomModal';
+import CustomModal from '../../CustomModel/CustomModal';
 import PharmacyClearancePopup from "./PharmacyClearancePopup/PharmacyClearancePopup"
 export default function PharmacyClearance() {
   const [columnWidths, setColumnWidths] = useState({});

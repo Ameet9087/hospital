@@ -1,26 +1,30 @@
 import React, { useEffect, useState } from "react";
 import "./changeDoctor.css";
 import { API_BASE_URL } from "../api/api";
+import { FloatingSelect } from "../../FloatingInputs/index";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 function ChangeDoctor({ patient, setShowOptionWindow }) {
   const [formData, setFormData] = useState({
     requestingDepartment: "-ALL-",
     admittedDoctor: 0,
   });
-  const [departments, setDepartments] = useState(null);
+  const [departments, setDepartments] = useState({});
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [doctors, setDoctors] = useState([]);
   const [doctorList, setDoctorList] = useState([]);
+
   const fetchDepartments = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/specialisations`);
       const data = await response.json();
       setDepartments(data);
-      console.log(data);
     } catch (error) {
       console.error("Error fetching departments:", error);
     }
   };
+
   useEffect(() => {
     fetchDepartments();
     fetchAllDoctorList();
@@ -29,11 +33,13 @@ function ChangeDoctor({ patient, setShowOptionWindow }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    if (value == "-ALL-") {
+
+    if (value === "-ALL-") {
       setDoctors([]);
       fetchAllDoctorList();
     }
-    if (name == "requestingDepartment" && value != "-ALL-") {
+
+    if (name === "requestingDepartment" && value !== "-ALL-") {
       setSelectedDepartment(value);
     }
   };
@@ -61,23 +67,21 @@ function ChangeDoctor({ patient, setShowOptionWindow }) {
   }, [selectedDepartment]);
 
   const handleSubmit = async () => {
-    if (formData.admittedDoctor == 0) {
+    if (formData.admittedDoctor === 0) {
       return;
     }
     let admissionId = parseInt(patient.ipAdmmissionId);
     let doctorId = parseInt(formData.admittedDoctor);
 
-    console.log(admissionId + " " + doctorId);
-
     try {
       let baseUrl = `${API_BASE_URL}/ip-admissions/${admissionId}/change-doctor/${doctorId}`;
       const response = await axios.put(baseUrl);
       if (response.status === 200) {
-        console.log("Doctor Changed Successfully");
+        toast.success("Doctor Changed Successfully");
         setShowOptionWindow(false);
       }
     } catch (err) {
-      console.log(err);
+      toast.error("Form Not Submitting");
     }
   };
 
@@ -87,8 +91,10 @@ function ChangeDoctor({ patient, setShowOptionWindow }) {
       <hr />
       <div className="changeDoctorPatientData">
         <p>
-          {patient.patient?.firstName} {patient.patient?.middleName}{" "}
-          {patient.patient?.lastName} ({patient.patient?.uhid})
+          {patient?.patient?.patient?.firstName}{" "}
+          {patient?.patient?.patient?.middleName}{" "}
+          {patient?.patient?.patient?.lastName} (
+          {patient?.patient?.patient?.uhid})
         </p>
       </div>
       <div className="changeDoctorPreviousDoctorData">
@@ -105,32 +111,35 @@ function ChangeDoctor({ patient, setShowOptionWindow }) {
         </p>
       </div>
       <div className="changeDoctorNewDataUpdate">
-        <label>
-          Department
-          <select name="requestingDepartment" onChange={handleChange}>
-            <option value="-ALL-">--ALL--</option>
-            {departments != null &&
-              departments.map((department) => (
-                <option
-                  key={department.specialisationId}
-                  value={department.specialisationId}
-                >
-                  {department.specialisationName}
-                </option>
-              ))}
-          </select>
-        </label>
-        <label>
-          Doctor
-          <select name="admittedDoctor" onChange={handleChange}>
-            <option value="">Select Doctor</option>
-            {(doctors.length > 0 ? doctors : doctorList).map((doctor) => (
-              <option key={doctor.doctorId} value={doctor.doctorId}>
-                {doctor.salutation} {doctor.doctorName}
-              </option>
-            ))}
-          </select>
-        </label>
+        <FloatingSelect
+          label={"Department"}
+          name="requestingDepartment"
+          value={formData.requestingDepartment}
+          options={[
+            { value: "", label: "" },
+            ...(Array.isArray(departments)
+              ? departments.map((department) => ({
+                  value: department.specialisationId,
+                  label: department.specialisationName,
+                }))
+              : []),
+          ]}
+          onChange={handleChange}
+        />
+
+        <FloatingSelect
+          label={"Doctor"}
+          name="admittedDoctor"
+          value={formData.admittedDoctor}
+          options={[
+            { value: "", label: "" },
+            ...(doctors.length > 0 ? doctors : doctorList).map((doctor) => ({
+              value: doctor.doctorId,
+              label: `${doctor.salutation} ${doctor.doctorName}`,
+            })),
+          ]}
+          onChange={handleChange}
+        />
       </div>
       <button onClick={handleSubmit} className="changeDoctorBTN">
         Change

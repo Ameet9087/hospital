@@ -167,6 +167,7 @@
 .results-and-print {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 15px;
 }
 
@@ -182,7 +183,7 @@
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
 }
 
 .handle-print-button:hover {

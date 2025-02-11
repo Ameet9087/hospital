@@ -41,7 +41,8 @@
   }
   
   .lSLabTestAddNLTest-form-group {
-    /* flex: 1; */
+    width: 100%;
+    margin-bottom: 10px;
     display: flex;
     text-align: center;
     align-items: center;
@@ -49,27 +50,13 @@
     /* width: 220px; */
     /* border: 1px solid red; */
   }
-  
-  .lSLabTestAddNLTest-form-group label {
-    display: block;
-    margin-bottom: 4px;
-    /* font-weight: bold; */
-    width: 400px;
-  }
-  
-  .lSLabTestAddNLTest-form-group input,
-  .lSLabTestAddNLTest-form-group select,
-  .lSLabTestAddNLTest-form-group textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
 
 .lSLabTestAddNLTest-checkbox-row {
       /* border: 1px solid #d40707; */
+      width: 100%;
+      justify-content: space-between;
     display: flex;
+    
     flex-wrap: wrap;
     font-size: var(--font-size);
     gap: 16px;
@@ -162,6 +149,7 @@
   }
   .lSLabTestAddNLTest-form-group-1row{
     display: flex;
+    gap: 5px;
     justify-content: space-between;
   }
   .lSLabTestAddNLTest-form-group-sub{

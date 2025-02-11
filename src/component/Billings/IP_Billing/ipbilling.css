@@ -53,6 +53,7 @@
   padding: 2px;
 }
 
+
 .billing-ipBilling-form-row label {
   min-width: 100px;
 }
@@ -66,7 +67,6 @@
   border: 1px solid #ccc;
   border-radius: 3px;
   font-size: var(--font-size);
-
   width: 43%;
 }
 
@@ -353,6 +353,9 @@ td .date-input {
   padding: 7px 20px;
   font-size: var(--heading-font);
   font-weight: 500;
+}
+.services-table table{
+  table-layout: auto;
 }
 @media (max-width: 1024px) {
   .billing-ipBilling-grid {

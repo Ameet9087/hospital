@@ -19,19 +19,19 @@ const TransportNavBar = () => {
         <div className="disPrescription-Navbttn-N-act">
           {/* NavLink with active class */}
           <li>
-            <NavLink 
-              to="/transport/patienttransport" 
-              className={({ isActive }) => 
+            <NavLink
+              to="/transport/patienttransport"
+              className={({ isActive }) =>
                 isActive ? "transportNavBar-active-tab" : ""}
             >
               Patient Transport
             </NavLink>
           </li>
-          
+
           <li>
-            <NavLink 
-              to="/transport/ambulance" 
-              className={({ isActive }) => 
+            <NavLink
+              to="/transport/ambulance"
+              className={({ isActive }) =>
                 isActive ? "transportNavBar-active-tab" : ""}
             >
               Ambulance
@@ -46,22 +46,22 @@ const TransportNavBar = () => {
               Staff Transport
             </NavLink>
           </li> */}
-          {/* <li>
-            <NavLink 
-              to="/transport/transportrequest" 
-              className={({ isActive }) => 
+          <li>
+            <NavLink
+              to="/transport/transportrequest"
+              className={({ isActive }) =>
                 isActive ? "transportNavBar-active-tab" : ""}
             >
               Transport Request
             </NavLink>
-          </li> */}
+          </li>
           <li>
-            <NavLink 
-              to="/transport/vehiclemaintenance" 
-              className={({ isActive }) => 
+            <NavLink
+              to="/transport/vehiclemaintenance"
+              className={({ isActive }) =>
                 isActive ? "transportNavBar-active-tab" : ""}
             >
-            Add Vehicle and Maintenance
+              Add Vehicle and Maintenance
             </NavLink>
           </li>
           {/* <li>

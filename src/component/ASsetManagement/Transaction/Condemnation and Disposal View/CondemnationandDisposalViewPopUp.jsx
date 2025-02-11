@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Calendar } from 'lucide-react';
 import './CondemnationAnddisposalViewPopUp.css';
-import { startResizing } from '../../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 import { FaSearch } from 'react-icons/fa';
 import { API_BASE_URL } from '../../../api/api';
 import PopupTable from '../../../Admission/PopupTable';

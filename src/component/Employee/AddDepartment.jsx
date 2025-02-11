@@ -1,7 +1,87 @@
 import React, { useState } from "react";
 import "./UpdateDepartmentForm.css"; // Ensure this CSS file styles your form appropriately
 import { API_BASE_URL } from "../api/api";
-// Replace with your actual API base URL
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../FloatingInputs";
+
+const departments = [
+  { value: "general_medicine", label: "General Medicine" },
+  { value: "cardiology", label: "Cardiology" },
+  { value: "neurology", label: "Neurology" },
+  { value: "neurosurgery", label: "Neurosurgery" },
+  { value: "orthopedics", label: "Orthopedics" },
+  { value: "gastroenterology", label: "Gastroenterology" },
+  { value: "hepatology", label: "Hepatology" },
+  { value: "nephrology", label: "Nephrology" },
+  { value: "urology", label: "Urology" },
+  { value: "pulmonology", label: "Pulmonology" },
+  { value: "endocrinology", label: "Endocrinology" },
+  { value: "rheumatology", label: "Rheumatology" },
+  { value: "dermatology", label: "Dermatology" },
+  { value: "hematology", label: "Hematology" },
+  { value: "oncology", label: "Oncology" },
+  { value: "radiology", label: "Radiology & Imaging" },
+  { value: "ophthalmology", label: "Ophthalmology" },
+  { value: "ent", label: "Otorhinolaryngology (ENT)" },
+  { value: "dentistry", label: "Dentistry & Oral Surgery" },
+  {
+    value: "obstetrics_gynecology",
+    label: "Obstetrics & Gynecology (OB/GYN)",
+  },
+  { value: "pediatrics", label: "Pediatrics" },
+  { value: "neonatology", label: "Neonatology" },
+  { value: "psychiatry", label: "Psychiatry" },
+  {
+    value: "psychology",
+    label: "Psychology & Behavioral Sciences",
+  },
+  { value: "geriatrics", label: "Geriatrics" },
+  {
+    value: "pain_management",
+    label: "Pain Management & Palliative Care",
+  },
+  {
+    value: "rehabilitation",
+    label: "Rehabilitation & Physiotherapy",
+  },
+  { value: "emergency_medicine", label: "Emergency Medicine" },
+  { value: "general_surgery", label: "General Surgery" },
+  {
+    value: "cardiothoracic_surgery",
+    label: "Cardiothoracic Surgery",
+  },
+  { value: "vascular_surgery", label: "Vascular Surgery" },
+  {
+    value: "gastrointestinal_surgery",
+    label: "Gastrointestinal Surgery",
+  },
+  { value: "bariatric_surgery", label: "Bariatric Surgery" },
+  { value: "urological_surgery", label: "Urological Surgery" },
+  { value: "ophthalmic_surgery", label: "Ophthalmic Surgery" },
+  { value: "ent_surgery", label: "ENT Surgery" },
+  { value: "oncosurgery", label: "Oncosurgery (Cancer Surgery)" },
+  { value: "pathology", label: "Pathology & Laboratory Medicine" },
+  {
+    value: "microbiology",
+    label: "Microbiology & Infection Control",
+  },
+  {
+    value: "blood_bank",
+    label: "Blood Bank & Transfusion Services",
+  },
+  { value: "nutrition", label: "Nutrition & Dietetics" },
+  {
+    value: "anesthesiology",
+    label: "Anesthesiology & Pain Management",
+  },
+  { value: "nuclear_medicine", label: "Nuclear Medicine" },
+  { value: "critical_care", label: "Critical Care (ICU & CCU)" },
+  { value: "other", label: "other" },
+];
 
 const AddDepartment = ({ onClose }) => {
   const [departmentCode, setDepartmentCode] = useState(""); //Assuming 'ACC' is a default or auto-generated code
@@ -13,21 +93,35 @@ const AddDepartment = ({ onClose }) => {
   const [roomNumber, setRoomNumber] = useState("");
   const [isActive, setIsActive] = useState("Yes");
   const [isAppointmentApplicable, setIsAppointmentApplicable] = useState("No");
+  const [customParentDepartment, setCustomParentDepartment] = useState(""); // For "Other"
 
   const [loading, setLoading] = useState(false); // To manage loading state
-  const [error, setError] = useState(null); // To manage error messages
-  const [success, setSuccess] = useState(null); // To manage success messages
+
+  const generateDepartmentCode = (name) => {
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase())
+      .join("")
+      .substring(0, 4); // Max 4 letters
+  };
+
+  const handleDepartmentNameChange = (e) => {
+    const name = e.target.value;
+    setDepartmentName(name);
+    setDepartmentCode(generateDepartmentCode(name));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
-    setSuccess(null);
 
     const payload = {
       departmentCode,
       departmentName,
-      parentDepartmentName: parentDepartment || null,
+      parentDepartmentName:
+        parentDepartment === "other"
+          ? customParentDepartment
+          : parentDepartment,
       description: departmentDescription || null,
       noticeText: departmentNoticeText || null,
       departmentHead: departmentHead || null,
@@ -37,19 +131,19 @@ const AddDepartment = ({ onClose }) => {
     };
 
     try {
-      console.log(payload);
-      console.log("Sending request to:", `${API_BASE_URL}/departments/add-department`);
-
-      const response = await fetch(`${API_BASE_URL}/departments/add-department`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/departments/add-department`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
 
       if (response.ok) {
-        setSuccess("Department added successfully!");
+        toast.success("Department added successfully!");
 
         // Reset form fields
         setDepartmentCode("");
@@ -62,8 +156,7 @@ const AddDepartment = ({ onClose }) => {
         setIsActive(true);
         setIsAppointmentApplicable(false);
 
-        const timeout = setTimeout(() => onClose(), 2000);
-        return () => clearTimeout(timeout);
+        onClose();
       } else {
         let errorMessage = "Failed to add department.";
         try {
@@ -72,139 +165,58 @@ const AddDepartment = ({ onClose }) => {
         } catch {
           // Keep default message
         }
-        setError(errorMessage);
+        toast.error(errorMessage);
       }
     } catch (err) {
-      setError("An error occurred while adding the department. Please try again.");
+      toast.error(
+        "An error occurred while adding the department. Please try again."
+      );
       console.error("Error adding department:", err);
     } finally {
       setLoading(false);
     }
   };
 
-
   return (
     <div className="update-setting-department-form-container">
       <form className="update-setting-department-form" onSubmit={handleSubmit}>
         <h2>Add Department</h2>
-        {error && <div className="error-message">{error}</div>}
-        {success && <div className="success-message">{success}</div>}
-
         <div className="update-setting-form-group">
-          <label>
-            Department Code :</label>
-          <input
-            type="text"
-            value={departmentCode}
-            onChange={(e) => setDepartmentCode(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="update-setting-form-group">
-          <label>
-            Department Name :
-          </label>
-
-          <input
+          <FloatingInput
+            label={"Department Name"}
             type="text"
             value={departmentName}
-            onChange={(e) => setDepartmentName(e.target.value)}
+            onChange={handleDepartmentNameChange}
             required
           />
+          <FloatingInput
+            label={"Department Code"}
+            type="text"
+            value={departmentCode}
+            readOnly
+          />
         </div>
-
         <div className="update-setting-form-group">
-          <label>Parent Department Name :</label>
-          <select
-            name="parentDepartment"
-            value={parentDepartment}
-            onChange={(e) => setParentDepartment(e.target.value)}
-          >
-            <option value="">--select--</option>
-            <option value="Administration">Administration</option>
-            <option value="Account">Account</option>
-            <option value="Anesthesia">Anesthesia</option>
-            <option value="Billing">Billing</option>
-            <option value="BrainOperations">Brain operations</option>
-            <option value="CSSD">CSSD</option>
-            <option value="CTMRI">CT/MRI</option>
-            <option value="CTVS">CTVS</option>
-            <option value="CabinSuite">Cabin/Deluxe/Suite</option>
-            <option value="Cardiology">Cardiology</option>
-            <option value="CathLab">Cath lab</option>
-            <option value="CleaningDepartment">Cleaning Department</option>
-            <option value="Dental">Dental</option>
-            <option value="Dermatology">Dermatology & Cosmatology</option>
-            <option value="Dialysis">Dialysis</option>
-            <option value="Dietary">Dietary</option>
-            <option value="Dispensary">Dispensary</option>
-            <option value="EmergencyCasualty">Emergency/Casualty</option>
-            <option value="ENT">Ear-Nose-Throat</option>
-            <option value="Gynecology">Gynecology</option>
-            <option value="MaternityWard">Maternity Ward</option>
-            <option value="MedicalRecords">Medical Record Department</option>
-            <option value="Medicine">Medicine</option>
-            <option value="Neurosurgery">Neurosurgery</option>
-            <option value="NST">NST</option>
-            <option value="NursingStation">Nursing Station</option>
-            <option value="NICU">Neonatal Intensive Care Unit</option>
-            <option value="Nephrology">Nephrology</option>
-            <option value="Nursing">Nursing</option>
-            <option value="ObstetricGynaecology">
-              Obstetric & Gynaecology
-            </option>
-            <option value="Oncologist">Oncologist</option>
-            <option value="OperationTheatre">Operation Theatre</option>
-            <option value="OperationsDepartment">Operations Department</option>
-            <option value="Ophthalmology">Ophthalmology</option>
-            <option value="Orthopedic">Orthopedic</option>
-            <option value="OrthopedicSpine">Orthopedic/Spine</option>
-            <option value="OutPatientDepartment">Out Patient Department</option>
-            <option value="PediatricNeonatology">Pediatric Neonatology</option>
-            <option value="PlasticSurgeon">Plastic Surgeon</option>
-            <option value="PostOp">Post-Op</option>
-            <option value="Pathology">Pathology</option>
-            <option value="Pediatric">Pediatric</option>
-            <option value="PediatricSurgeon">Pediatric Surgeon</option>
-            <option value="Pharmacy">Pharmacy</option>
-            <option value="Physiotherapy">Physiotherapy</option>
-            <option value="Psychiatry">Psychiatry</option>
-            <option value="Pulmonary">Pulmonary</option>
-            <option value="Radiology">Radiology</option>
-            <option value="Reception">Reception</option>
-            <option value="RheumatoidArthritis">Rheumatoid Arthritis</option>
-            <option value="Security">Security</option>
-            <option value="SSF">Social Security Fund</option>
-            <option value="Surgery">Surgery</option>
-            <option value="TravelMedicine">Travel Medicine</option>
-            <option value="Urology">Urology</option>
-            <option value="XRayDepartment">X-Ray Department</option>
-          </select>
-        </div>
+          {parentDepartment != "other" ? (
+            <FloatingSelect
+              label={"Parent Department Name"}
+              name="parentDepartment"
+              value={parentDepartment}
+              onChange={(e) => setParentDepartment(e.target.value)}
+              options={departments}
+            />
+          ) : (
+            <FloatingInput
+              label={"Specify Parent Department"}
+              type="text"
+              value={customParentDepartment}
+              onChange={(e) => setCustomParentDepartment(e.target.value)}
+              required
+            />
+          )}
 
-        <div className="update-setting-form-group">
-          <label>Department Description :</label>
-
-          <textarea
-            value={departmentDescription}
-            onChange={(e) => setDepartmentDescription(e.target.value)}
-          ></textarea>
-        </div>
-
-        <div className="update-setting-form-group">
-          <label>Department Notice Text :</label>
-
-          <textarea
-            value={departmentNoticeText}
-            onChange={(e) => setDepartmentNoticeText(e.target.value)}
-          ></textarea>
-        </div>
-
-        <div className="update-setting-form-group">
-          <label>Department Head :</label>
-
-          <input
+          <FloatingInput
+            label={"Department Head"}
             type="text"
             value={departmentHead}
             onChange={(e) => setDepartmentHead(e.target.value)}
@@ -212,38 +224,45 @@ const AddDepartment = ({ onClose }) => {
         </div>
 
         <div className="update-setting-form-group">
-          <label>Room Number :</label>
-          <input
+          <FloatingTextarea
+            label={"Department Description"}
+            value={departmentDescription}
+            onChange={(e) => setDepartmentDescription(e.target.value)}
+          />
+          <FloatingTextarea
+            label={"Department Notice Text"}
+            value={departmentNoticeText}
+            onChange={(e) => setDepartmentNoticeText(e.target.value)}
+          />
+        </div>
+        <div className="update-setting-form-group">
+          <FloatingSelect
+            label={"Is Active"}
+            value={isActive}
+            onChange={(e) => setIsActive(e.target.value)}
+            options={[
+              { value: "Yes", label: "Yes" },
+              { value: "No", label: "No" },
+            ]}
+          />
+          <FloatingSelect
+            label={"Is Appointment Applicable"}
+            value={isAppointmentApplicable}
+            onChange={(e) => setIsAppointmentApplicable(e.target.value)}
+            options={[
+              { value: "Yes", label: "Yes" },
+              { value: "No", label: "No" },
+            ]}
+          />
+        </div>
+        <div className="update-setting-form-group">
+          <FloatingInput
+            label={"Room Number"}
             type="text"
             value={roomNumber}
             onChange={(e) => setRoomNumber(e.target.value)}
           />
         </div>
-
-        <div className="update-setting-form-group">
-          <label>Is Active :</label>
-
-          <select
-            value={isActive}
-            onChange={(e) => setIsActive(e.target.value)}
-          >
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
-        </div>
-
-        <div className="update-setting-form-group">
-          <label>Is Appointment Applicable :</label>
-
-          <select
-            value={isAppointmentApplicable}
-            onChange={(e) => setIsAppointmentApplicable(e.target.value)}
-          >
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
-        </div>
-
         <div className="update-setting-form-group submit-btn">
           <button type="submit" disabled={loading}>
             {loading ? "Adding..." : "Add"}

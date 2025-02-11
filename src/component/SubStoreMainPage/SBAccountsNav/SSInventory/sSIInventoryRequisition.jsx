@@ -7,11 +7,12 @@ import SSSIInvenReqCreateReq from "./sSSIInvenReqCreateReq";
 import SSSIInvenReqView from "./sSSIInvenReqView";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../../api/api";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import SSIReceivedRequisition from "./sSIReceivedRequisition";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { useFilter } from "../../../ShortCuts/useFilter";
 import * as XLSX from 'xlsx';
+
 
 function SSIInventoryRequisition() {
   const { store } = useParams();
@@ -122,6 +123,7 @@ function SSIInventoryRequisition() {
     XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport');
     XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
   };
+
 
 
 

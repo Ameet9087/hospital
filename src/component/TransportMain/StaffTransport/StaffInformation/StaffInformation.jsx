@@ -1,46 +1,47 @@
-import React, { useState, useEffect } from 'react'; 
-import './StaffInformation.css'; 
-import Modal from '../Modal'; 
-import axios from 'axios'; 
+import React, { useState, useEffect } from 'react';
+import './StaffInformation.css';
+import Modal from '../Modal';
+import axios from 'axios';
 import UpdateStaff from './UpdateStaff';
+import { API_BASE_URL } from '../../../api/api';
 
 
 const StaffTransportTable = () => {
-  const [staffData, setStaffData] = useState([]); 
+  const [staffData, setStaffData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState([]); // Store the selected staff for editing
- 
+
 
   useEffect(() => {
     const fetchStaffData = async () => {
       try {
-        const response = await axios.get('http://localhost:8085/api/staff'); 
-        setStaffData(response.data); 
+        const response = await axios.get(`${API_BASE_URL}/staff`);
+        setStaffData(response.data);
       } catch (error) {
         console.error('Error fetching staff data:', error);
-        setError('Failed to fetch staff data'); 
+        setError('Failed to fetch staff data');
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
-    };  
+    };
 
-    fetchStaffData(); 
-  }, []); 
+    fetchStaffData();
+  }, []);
 
   const handleAdd = () => {
     setSelectedStaff(null); // Clear any existing selection for new staff
-    setIsModalOpen(true); 
+    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); 
+    setIsModalOpen(false);
     setSelectedStaff(null); // Reset selected staff when closing the modal
   };
 
   const handleEdit = (staff) => {
     setSelectedStaff(staff);
     console.log(staff) // Set the selected staff for editing
-    setIsModalOpen(true); 
+    setIsModalOpen(true);
   };
 
 
@@ -88,12 +89,12 @@ const StaffTransportTable = () => {
       </table>
 
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-       
-        <UpdateStaff   initialData={selectedStaff}></UpdateStaff>
+
+        <UpdateStaff initialData={selectedStaff}></UpdateStaff>
          // Pass selected staff data for editing
-      
+
       </Modal>
-      
+
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./FinalSaleByAccounts.css";
 import FinalSaleByAccountsPopUp from "./FinalSaleByAccountsPopUp";
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../../api/api";
 import * as XLSX from "xlsx"; // Importing the xlsx library
 
@@ -20,7 +20,7 @@ const FinalSaleByAccounts = () => {
       .then((data) => {
         setFinalSales(data);
         setFilteredSales(data); // Initialize filtered data
-        
+
       })
       .catch((err) => {
         console.error("Error fetching final sales:", err);

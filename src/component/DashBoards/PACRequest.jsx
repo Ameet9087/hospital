@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./PACRequest.css";
 import { API_BASE_URL } from "../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingSelect, FloatingTextarea } from "../../FloatingInputs";
 
 const PACRequest = ({ inPatientId, outPatientId }) => {
   const [mrNo, setMrNo] = useState("");
@@ -55,12 +57,12 @@ const PACRequest = ({ inPatientId, outPatientId }) => {
         },
       });
       console.log("PAC request submitted:", formData);
-      alert("PAC request submitted successfully!");
+      toast.success("PAC request submitted successfully!");
       handleCancel();
       fetchPACRequests();
     } catch (error) {
       console.error("Error submitting PAC request:", error);
-      alert("Failed to submit PAC request.");
+      toast.error("Failed to submit PAC request.");
     }
   };
 
@@ -96,135 +98,144 @@ const PACRequest = ({ inPatientId, outPatientId }) => {
         <div className="PACRequest-form-group-content">
           <div className="PACRequest-form-group-left">
             <div className="PACRequest-form-group">
-              <label htmlFor="mrNo">MR Number</label>
-              <input
-                type="text"
-                id="mrNo"
-                value={mrNo}
-                onChange={(e) => setMrNo(e.target.value)}
-                required
+              <FloatingInput
+              label={"MR Number"}
+              type="text"
+              id="mrNo"
+              value={mrNo}
+              onChange={(e) => setMrNo(e.target.value)}
+              required
               />
             </div>
 
             <div className="PACRequest-form-group">
-              <label htmlFor="patientName">Patient Name</label>
-              <input
-                type="text"
-                id="patientName"
-                value={patientName}
-                onChange={(e) => setPatientName(e.target.value)}
-                required
+              <FloatingInput
+              label={"Patient Name"}
+               type="text"
+               id="patientName"
+               value={patientName}
+               onChange={(e) => setPatientName(e.target.value)}
+               required
+              
+              
               />
             </div>
 
             <div className="PACRequest-form-group">
-              <label htmlFor="age">Age</label>
-              <input
-                type="number"
-                id="age"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-                required
+              <FloatingInput
+              label={"Age"}
+              type="number"
+              id="age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              required
+              
+              />
+
+            </div>
+
+            <div className="PACRequest-form-group">
+              <FloatingSelect
+              label={"Gender"}
+              id="gender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              options={[{value:"",label:""},
+                {value:"Male" ,label:"Male"},
+                {value:"Female",label:"Female"},
+                {value:"Other",label:"Other"}
+              ]}
+              required
               />
             </div>
 
             <div className="PACRequest-form-group">
-              <label htmlFor="gender">Gender</label>
-              <select
-                id="gender"
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-                required
-              >
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            <div className="PACRequest-form-group">
-              <label htmlFor="address">Address</label>
-              <textarea
-                id="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                required
+              <FloatingInput
+              label={"Address"}
+              id="address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              required
+              
               />
             </div>
 
             <div className="PACRequest-form-group">
-              <label htmlFor="roomNo">Room No./Bed No.</label>
-              <input
-                type="text"
-                id="roomNo"
-                value={roomNo}
-                onChange={(e) => setRoomNo(e.target.value)}
-                required
+              <FloatingInput
+              label={"Room No./Bed No"}
+              type="text"
+              id="roomNo"
+              value={roomNo}
+              onChange={(e) => setRoomNo(e.target.value)}
+              required
+              
               />
             </div>
           </div>
 
           <div className="PACRequest-form-group-right">
             <div className="PACRequest-form-group">
-              <label htmlFor="consultant">Consultant</label>
-              <input
-                type="text"
-                id="consultant"
-                value={consultant}
-                onChange={(e) => setConsultant(e.target.value)}
-                required
+              <FloatingInput
+              label={"Consultant"}
+               type="text"
+               id="consultant"
+               value={consultant}
+               onChange={(e) => setConsultant(e.target.value)}
+               required
+              
               />
             </div>
 
             <div className="PACRequest-form-group">
-              <label htmlFor="diagnosis">Diagnosis</label>
-              <textarea
-                id="diagnosis"
-                value={diagnosis}
-                onChange={(e) => setDiagnosis(e.target.value)}
-                required
+              <FloatingTextarea
+              label={"Diagnosis"}
+               id="diagnosis"
+               value={diagnosis}
+               onChange={(e) => setDiagnosis(e.target.value)}
+               required
+              
               />
             </div>
 
             <div className="PACRequest-form-group">
-              <label htmlFor="anaesthesiaPlan">Anaesthesia Plan</label>
-              <select
-                id="anaesthesiaPlan"
-                value={anaesthesiaPlan}
-                onChange={(e) => setAnaesthesiaPlan(e.target.value)}
-                required
-              >
-                <option value="">Select Anaesthesia Plan</option>
-                <option value="General">General Anaesthesia</option>
-                <option value="Local">Local Anaesthesia</option>
-                <option value="Regional">Regional Anaesthesia</option>
-              </select>
+              <FloatingSelect
+              label={"Anaesthesia Plan"}
+              id="anaesthesiaPlan"
+              value={anaesthesiaPlan}
+              onChange={(e) => setAnaesthesiaPlan(e.target.value)}
+              required
+              options={[{value:"",label:""},
+                {value:"General",label:"General"},
+                {value:"Local",label:"Local"},
+                {value:"Regional",label:"Regional"}
+              ]}
+              />
             </div>
 
             <div className="PACRequest-form-group">
-              <label htmlFor="surgeryName">Surgery Name</label>
-              <select
+              <FloatingInput
+              label={"Surgery Name"}
                 id="surgeryName"
                 value={surgeryName}
                 onChange={(e) => setSurgeryName(e.target.value)}
                 required
-              >
-                <option value="">Select Surgery</option>
-                <option value="Appendectomy">Appendectomy</option>
-                <option value="Cholecystectomy">Cholecystectomy</option>
-                <option value="Knee Replacement">Knee Replacement</option>
-                <option value="Other">Other</option>
-              </select>
+                options={[{value:"",label:""},
+                  {value:"Appendectomy",label:"Appendectomy"},
+                  {value:"Cholecystectomy",label:"Cholecystectomy"},
+                  {value:"Knee Replacement",label:"Knee Replacement"},
+                  {value:"other",label:"Other"}
+                ]}
+              />
             </div>
 
             <div className="PACRequest-form-group">
-              <label htmlFor="pacAdviceNotes">PAC Advice Notes</label>
-              <textarea
-                id="pacAdviceNotes"
-                value={pacAdviceNotes}
-                onChange={(e) => setPacAdviceNotes(e.target.value)}
-                required
+              <FloatingTextarea
+              label={"PAC Advice Notes"}
+              id="pacAdviceNotes"
+              value={pacAdviceNotes}
+              onChange={(e) => setPacAdviceNotes(e.target.value)}
+              required
+              
               />
             </div>
           </div>

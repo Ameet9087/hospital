@@ -33,6 +33,43 @@ function Ot_machine() {
   };
 
   // Add or update machine
+  // const handleAddOrUpdate = async () => {
+  //   try {
+  //     const payload = {
+        
+        
+  //       machineName,
+  //       isActive: isActive ? 'Yes' : 'No',
+  //     };
+      
+  //     if (editingMachine) {
+  //       // Update existing machine
+  //       const machineId = Number(editingMachine.id); // Ensure ID is a number
+  //       await axios.put(`${API_BASE_URL}/${machineId}`, payload);
+
+  //       setMachines((prevMachines) =>
+  //         prevMachines.map((m) =>
+  //           m.id === machineId ? { ...payload, id: machineId, active: isActive } : m
+  //         )
+  //       );
+  //     } else {
+  //       // Add new machine
+  //       const response = await axios.post(`${API_BASE_URL}/ot-machines`, payload);
+  //       setMachines((prevMachines) => [
+  //         ...prevMachines,
+  //         {
+  //           ...response.data,
+  //           id: Number(response.data.otMachineId), // Ensure ID is a number
+  //           active: response.data.isActive === 'Yes',
+  //         },
+  //       ]);
+  //     }
+
+  //     clearForm();
+  //   } catch (err) {
+  //     console.error('Error saving machine:', err.message);
+  //   }
+  // };
   const handleAddOrUpdate = async () => {
     try {
       const payload = {
@@ -43,7 +80,9 @@ function Ot_machine() {
       if (editingMachine) {
         // Update existing machine
         const machineId = Number(editingMachine.id); // Ensure ID is a number
-        await axios.put(`${API_BASE_URL}/${machineId}`, payload);
+        console.log("Updating Machine ID:", machineId);
+
+        await axios.put(`${API_BASE_URL}/ot-machines/${machineId}`, payload);
 
         setMachines((prevMachines) =>
           prevMachines.map((m) =>
@@ -53,11 +92,13 @@ function Ot_machine() {
       } else {
         // Add new machine
         const response = await axios.post(`${API_BASE_URL}/ot-machines`, payload);
+        console.log("New Machine ID:", response.data.otMachineId);
+
         setMachines((prevMachines) => [
           ...prevMachines,
           {
-            ...response.data,
             id: Number(response.data.otMachineId), // Ensure ID is a number
+            machineName: response.data.machineName,
             active: response.data.isActive === 'Yes',
           },
         ]);
@@ -115,10 +156,10 @@ function Ot_machine() {
           <label>Is Active</label>
         </div>
         <div>
-          <button onClick={handleAddOrUpdate}>
+          <button onClick={handleAddOrUpdate} className='ot_machine_container_button'>
             {editingMachine ? 'Update' : 'Add'}
           </button>
-          <button onClick={clearForm}>Clear</button>
+          <button onClick={clearForm} className='ot_machine_container_button'>Clear</button>
         </div>
       </div>
 
@@ -137,7 +178,7 @@ function Ot_machine() {
               <td>{machine.machineName}</td>
               <td>{machine.active ? 'Yes' : 'No'}</td>
               <td>
-                <button onClick={() => handleEdit(machine)}>Edit</button>
+                <button onClick={() => handleEdit(machine)} className='ot_machine_table_button'>Edit</button>
               </td>
             </tr>
           ))}

@@ -1,6 +1,6 @@
 // Dhanashree_AuditTrial_19/09
 import React, { useRef, useState } from 'react';
-import { startResizing } from '../TableHeadingResizing/resizableColumns'; 
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 import '../SystemAdmin/AuditTrial.css';
 
 const AuditTrails = () => {

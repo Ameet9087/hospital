@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./EquipmentGatePassOutPopUp.css";
 import { Link } from "react-router-dom";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
 
 
@@ -283,7 +283,7 @@ const EquipmentGatePassOutPopUp = ({ onClose }) => {
   //     partsDTO: newPartsDTO,
   //   });
   // };
- 
+
 
 
   const [selectedTab, setSelectedTab] = useState("itemDetails");

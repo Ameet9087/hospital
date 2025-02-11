@@ -4,18 +4,21 @@ import AppoitmentPopupTable from "../AppoitmentPopupTable";
 import { API_BASE_URL } from "../../api/api";
 import IpMasterPopupTable from "../../Employee/IPMaster/IpMasterPopupTable";
 import axios from "axios";
+import { FloatingInput, FloatingTextarea } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
   console.log(selectedDoctorBlocking);
 
   const [selectedDoctor, setSelectedDoctor] = useState(
-    selectedDoctorBlocking?.addDoctorDTO || null
+    selectedDoctorBlocking?.addDoctorDTO?.doctorId || null
   );
   const [activePopup, setActivePopup] = useState(false);
   const [doctorList, setDoctorList] = useState(null);
   const [formData, setFormData] = useState({
     formDate: selectedDoctorBlocking?.fromDate || "",
     toDate: selectedDoctorBlocking?.toDate || "",
+    doctor:selectedDoctorBlocking?.addDoctorDTO?.doctorName||"",
     message: selectedDoctorBlocking?.message || "",
     timeWise: selectedDoctorBlocking?.timeWise || false,
     formTime: selectedDoctorBlocking?.fromTime || "",
@@ -66,25 +69,23 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
   };
 
   const handleSubmit = async () => {
-
     const today = new Date().toISOString().split("T")[0];
 
     // Validate required fields
     if (!formData.formDate || !formData.toDate || !selectedDoctor?.doctorId) {
-      alert("Please fill all required fields.");
+      toast.error("Please fill all required fields.");
       return;
     }
-  
 
     // Validate that 'From Date' is not in the past
     if (formData.formDate < today) {
-      alert("From Date cannot be in the past.");
+      toast.error("From Date cannot be in the past.");
       return;
     }
 
     // Validate that 'To Date' is not before 'From Date'
     if (formData.toDate < formData.formDate) {
-      alert("To Date cannot be earlier than From Date.");
+      toast.error("To Date cannot be earlier than From Date.");
       return;
     }
     // Prepare the payload
@@ -103,8 +104,12 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
     };
 
     // Validate required fields
-    if (!payload.fromDate || !payload.toDate || !payload.addDoctorDTO.doctorId) {
-      alert("Please fill all required fields.");
+    if (
+      !payload.fromDate ||
+      !payload.toDate ||
+      !payload.addDoctorDTO.doctorId
+    ) {
+      toast.error("Please fill all required fields.");
       return;
     }
 
@@ -116,68 +121,59 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
           `${API_BASE_URL}/doctor-blocking/${selectedDoctorBlocking.doctorBlockingId}`,
           payload
         );
-        alert("Doctor blocking details updated successfully!");
+        toast.success("Doctor blocking details updated successfully!");
       } else {
         // Create new entry
         response = await axios.post(`${API_BASE_URL}/doctor-blocking`, payload);
-        alert("Doctor blocking details submitted successfully!");
+        toast.error("Doctor blocking details submitted successfully!");
       }
 
       console.log("Form submitted successfully:", response.data);
       onClose(); // Close the modal
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("An error occurred while submitting the form.");
+      toast.error("An error occurred while submitting the form.");
     }
   };
 
   return (
     <div className="doctor-blocking-container">
       <div className="doctor-blocking-field">
-        <label>From Date:</label>
-        <input
+        <FloatingInput
+          label={"From Date"}
           type="date"
           name="formDate"
           value={formData.formDate}
           onChange={handleChange}
-          min={new Date().toISOString().split("T")[0]} // Disable past dates
-/>
-
+          min={new Date().toISOString().split("T")[0]}
+        />
       </div>
       <div className="doctor-blocking-field">
-        <label>To Date:</label>
-        <input
+        <FloatingInput
+          label={"To Date"}
           type="date"
           name="toDate"
           value={formData.toDate}
           onChange={handleChange}
-          min={formData.formDate || new Date().toISOString().split("T")[0]} // Ensure To Date is after From Date
-/>
-
+          min={formData.formDate || new Date().toISOString().split("T")[0]}
+        />
       </div>
       <div className="doctor-blocking-field">
-        <label>Doctor:</label>
-        <div className="doctor-blocking-doctor-input">
-          <input
-            type="text"
-            name="doctor"
-            placeholder="Search Doctor"
-            value={formData.doctor || ""}
-            onChange={handleChange}
-            
-          />
-          <i
-            onClick={() => setActivePopup("doctor")}
-            className="fa-solid fa-magnifying-glass"
-          ></i>
-        </div>
+        <FloatingInput
+          type="search"
+          label={"Doctor"}
+          name="doctor"
+          placeholder="Search Doctor"
+          value={formData.doctor || ""}
+          onIconClick={() => setActivePopup("doctor")}
+        />
       </div>
       <div className="doctor-blocking-field">
-        <label>Message:</label>
-        <textarea
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
+        <FloatingTextarea
+        label={"Message"}
+        name="message"
+        value={formData.message}
+        onChange={handleChange}
         />
       </div>
       <div className="doctor-blocking-field">
@@ -192,30 +188,27 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
       {formData.timeWise && (
         <>
           <div className="doctor-blocking-field">
-            <label>From Time:</label>
-            <input
-              type="time"
-              name="formTime"
-              value={formData.formTime}
-              onChange={handleChange}
+            <FloatingInput
+            label={"From Time"}
+            type="time"
+            name="formTime"
+            value={formData.formTime}
+            onChange={handleChange}
             />
           </div>
           <div className="doctor-blocking-field">
-            <label>To Time:</label>
-            <input
-              type="time"
-              name="toTime"
-              value={formData.toTime}
-              onChange={handleChange}
+            <FloatingInput
+            label={"To Time"}
+            type="time"
+            name="toTime"
+            value={formData.toTime}
+            onChange={handleChange}
             />
           </div>
         </>
       )}
       <div className="doctor-blocking-submit">
-        <button
-          className="doctor-blocking-submit-btn"
-          onClick={handleSubmit}
-        >
+        <button className="doctor-blocking-submit-btn" onClick={handleSubmit}>
           {isEditMode ? "Update" : "Submit"}
         </button>
       </div>

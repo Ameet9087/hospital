@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 import LocationMaster from "./LocationMaster";
 import "./LocationMaster.css"; // Ensure this file contains the CSS for Location component
 import axios from "axios";

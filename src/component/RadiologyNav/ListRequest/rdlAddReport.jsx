@@ -4,6 +4,8 @@ import "react-quill/dist/quill.snow.css";
 import "../ListRequest/rdlAddReport.css";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
+import { FloatingInput } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 function AddReportForm({ onClose, selectedRequest }) {
   const [formData, setFormData] = useState({
@@ -99,13 +101,13 @@ function AddReportForm({ onClose, selectedRequest }) {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        console.log("Updated Successfully");
+        toast.success("Data Added Successfully");
       })
       .then((data) => {
-        console.log("Update successful:", data);
+        toast.success("Data Added Successfully");
         onClose();
       })
-      .catch((error) => console.error("Error updating report:", error));
+      .catch((error) => toast.error("Error updating report:", error));
   };
 
   const handlePrint = () => {
@@ -266,26 +268,21 @@ function AddReportForm({ onClose, selectedRequest }) {
 
       <div className="rDLListRequest-add-report-report-details">
         <div className="rDLListRequest-add-report-info-row">
-          <span>
-            <strong>Indication:</strong>
-            <input
-              type="text"
-              name="indication"
-              placeholder="Indication"
-              value={formData.indication}
-              onChange={handleChange}
-            />
-          </span>
-          <span>
-            <strong>MRI/CT/X-ray No:</strong>
-            <input
-              type="text"
-              name="mriXRayCTNo"
-              placeholder="MRI/CT/X-ray Number"
-              value={formData.mriXRayCTNo}
-              onChange={handleChange}
-            />
-          </span>
+          <FloatingInput
+            label={"Indication"}
+            type="text"
+            name="indication"
+            value={formData.indication}
+            onChange={handleChange}
+          />
+
+          <FloatingInput
+            label={"MRI/CT/X-ray No"}
+            type="text"
+            name="mriXRayCTNo"
+            value={formData.mriXRayCTNo}
+            onChange={handleChange}
+          />
         </div>
       </div>
 

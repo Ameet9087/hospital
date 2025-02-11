@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../LabSetting/labLookUpAddNewLUp.css";
 import { API_BASE_URL } from "../../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../../FloatingInputs";
 
 const LabLookUpAddNewLUp = ({ onClose }) => {
   const [moduleName, setModuleName] = useState("Lab");
@@ -30,7 +32,7 @@ const LabLookUpAddNewLUp = ({ onClose }) => {
       lookupData.length === 0 ||
       lookupData.some((item) => item === "")
     ) {
-      setError("Please fill in all required fields");
+      toast.error("Please fill in all required fields");
       return;
     }
 
@@ -51,9 +53,10 @@ const LabLookUpAddNewLUp = ({ onClose }) => {
 
         payload
       );
+      toast.success("Lab Look Up Added Successfully")
       onClose(); // Close modal on successful submission
     } catch (err) {
-      setError("Failed to submit lookup. Please try again later.");
+      toast.error("Failed to submit lookup. Please try again later.");
       console.error(err);
     } finally {
       setLoading(false);
@@ -73,40 +76,33 @@ const LabLookUpAddNewLUp = ({ onClose }) => {
         <div className="labLookUpAddNewLUp-form-row">
           <div className="labLookUpAddNewLUp-form-group-1row">
             <div className="labLookUpAddNewLUp-form-group">
-              <label>
-                Module Name :<span>*</span>
-              </label>
-              <input
-                type="text"
-                value={moduleName}
-                onChange={(e) => setModuleName(e.target.value)}
-                placeholder="Lab"
+              <FloatingInput
+              label={"Module Name"}
+               type="text"
+               value={moduleName}
+               onChange={(e) => setModuleName(e.target.value)}
               />
             </div>
           </div>
 
           <div className="labLookUpAddNewLUp-form-group-1row">
             <div className="labLookUpAddNewLUp-form-group">
-              <label>
-                Look Up Name :<span>*</span>
-              </label>
-              <input
-                type="text"
-                value={lookupName}
-                onChange={(e) => setLookupName(e.target.value)}
-                placeholder="Look Up Name"
+              <FloatingInput
+              label={"Look Up Name"}
+              type="text"
+              value={lookupName}
+              onChange={(e) => setLookupName(e.target.value)}
               />
             </div>
           </div>
 
           <div className="labLookUpAddNewLUp-form-group-1row">
             <div className="labLookUpAddNewLUp-form-group">
-              <label>Description:</label>
-              <input
-                type="text"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Description"
+              <FloatingInput
+              label={"Description"}
+               type="text"
+               value={description}
+               onChange={(e) => setDescription(e.target.value)}
               />
             </div>
           </div>
@@ -122,11 +118,12 @@ const LabLookUpAddNewLUp = ({ onClose }) => {
               key={index}
               className="labLookUpAddNewLUp-form-group labLookUpAddNewLUp-full-width"
             >
-              <input
-                type="text"
-                placeholder="Add Data"
-                value={data}
-                onChange={(e) => handleLookupDataChange(index, e.target.value)}
+              <FloatingInput
+              label={"Add Data"}
+               type="text"
+               placeholder="Add Data"
+               value={data}
+               onChange={(e) => handleLookupDataChange(index, e.target.value)}
               />
             </div>
           ))}

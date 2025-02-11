@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ReferralSource.css";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import OutPatient from "./OutPatient";
+import { FloatingInput } from "../../FloatingInputs";
 
 const ReferralSource = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -267,9 +268,9 @@ const ReferralSource = ({ patientId, outPatientId }) => {
                     onChange={handleInputChange}
                   />
                 </div>
-                <div className="hist-form-group">
-                  <label>Others:</label>
-                  <input
+                <div className="hist-form-group-input">
+                  <FloatingInput
+                    label={"Others"}
                     type="text"
                     name="note"
                     value={formData.note}

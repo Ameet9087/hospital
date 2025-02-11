@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./CreateReturnToVendor.css";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import PopupTable from "../../Admission/PopupTable";
 import axios from "axios";
@@ -20,9 +20,8 @@ const FloatingInput = ({ label, type = "text", value, ...props }) => {
 
   return (
     <div
-      className={`CreateReturnToVendor-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`CreateReturnToVendor-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <input
         type={type}
@@ -51,9 +50,8 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
 
   return (
     <div
-      className={`CreateReturnToVendor-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
+      className={`CreateReturnToVendor-floating-field ${isFocused || hasValue ? "active" : ""
+        }`}
     >
       <select
         className="CreateReturnToVendor-floating-select"
@@ -69,7 +67,7 @@ const FloatingSelect = ({ label, options = [], value, ...props }) => {
         }}
         {...props}
       >
-        <option value="">{}</option>
+        <option value="">{ }</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -92,7 +90,7 @@ const CreateReturnToVendor = ({ onCancel }) => {
   const [totalCC, setTotalCC] = useState(0);
 
   const [selectedItem, setSelectedItem] = useState({
-    invItemId:"",
+    invItemId: "",
     itemId: "",
     itemName: "",
     batchNo: "",
@@ -174,12 +172,12 @@ const CreateReturnToVendor = ({ onCancel }) => {
       console.log("Response Data:", response.data);
       if (response.status >= 200 && response.status < 300) {
         console.log(response.data);
-        
+
         const mappedItems = response.data.items.map((items) => ({
-          invItemId:items.item?.invItemId,
-          rate:items?.rate,
+          invItemId: items.item?.invItemId,
+          rate: items?.rate,
           id: items.id,
-          itemName: items.item?.itemName || "N/A", 
+          itemName: items.item?.itemName || "N/A",
           itemQuantity: items.quantity || 0,
         }));
         console.log(mappedItems);
@@ -249,7 +247,7 @@ const CreateReturnToVendor = ({ onCancel }) => {
       }));
     } else if (activePopup === "item") {
       const updatedItem = {
-        invItemId:data.invItemId,
+        invItemId: data.invItemId,
         itemId: data.id,
         itemName: data.itemName,
         batchNo: "",
@@ -285,14 +283,14 @@ const CreateReturnToVendor = ({ onCancel }) => {
         columns: ["id", "goodsReceiptDate", "vendorBillDate", "totalAmount"],
         data: Array.isArray(grData)
           ? grData.map((gr) => ({
-              id: gr.id,
-              goodsReceiptDate: new Date(
-                gr.goodsReceiptDate
-              ).toLocaleDateString(),
-              vendorBillDate: new Date(gr.vendorBillDate).toLocaleDateString(),
-              totalAmount: gr.totalAmount,
-              ...gr,
-            }))
+            id: gr.id,
+            goodsReceiptDate: new Date(
+              gr.goodsReceiptDate
+            ).toLocaleDateString(),
+            vendorBillDate: new Date(gr.vendorBillDate).toLocaleDateString(),
+            totalAmount: gr.totalAmount,
+            ...gr,
+          }))
           : [],
       };
     } else if (activePopup === "Vendor") {
@@ -307,14 +305,14 @@ const CreateReturnToVendor = ({ onCancel }) => {
         ],
         data: Array.isArray(vendorData)
           ? vendorData.map((vendor) => ({
-              id: vendor.id,
-              vendorName: vendor.vendorName,
-              contactNumber: vendor.contactNumber,
-              contactAddress: vendor.contactAddress,
-              email: vendor.email,
-              creditPeriod: vendor.creditPeriod,
-              ...vendor,
-            }))
+            id: vendor.id,
+            vendorName: vendor.vendorName,
+            contactNumber: vendor.contactNumber,
+            contactAddress: vendor.contactAddress,
+            email: vendor.email,
+            creditPeriod: vendor.creditPeriod,
+            ...vendor,
+          }))
           : [],
       };
     } else if (activePopup === "item") {
@@ -376,11 +374,11 @@ const CreateReturnToVendor = ({ onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const payload = {
-      subtotal:parseFloat( totalSubTotal),
+      subtotal: parseFloat(totalSubTotal),
       discountAmount: 0, // You can calculate this if needed
-      vatAmount:parseFloat( totalVat),
+      vatAmount: parseFloat(totalVat),
       ccAmount: 0, // You can calculate this if needed
       vendor: {
         id: formData.id,
@@ -403,8 +401,8 @@ const CreateReturnToVendor = ({ onCancel }) => {
         },
       })),
     };
-  console.log(payload);
-  
+    console.log(payload);
+
     try {
       const response = await fetch(`${API_BASE_URL}/return-to-vendor-procurment`, {
         method: "POST",
@@ -413,7 +411,7 @@ const CreateReturnToVendor = ({ onCancel }) => {
         },
         body: JSON.stringify(payload),
       });
-  
+
       if (response.ok) {
         alert("Data submitted successfully");
         onCancel();
@@ -423,7 +421,7 @@ const CreateReturnToVendor = ({ onCancel }) => {
       alert("Error submitting data");
     }
   };
-  
+
   const { columns, data } = getPopupData();
 
   return (

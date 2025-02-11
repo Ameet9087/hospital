@@ -1,8 +1,7 @@
 import React, { useState,useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import './UserCollectionReport.css';
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
-
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 const TotalRevenueCom = () => {
   const [showReport, setShowReport] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);

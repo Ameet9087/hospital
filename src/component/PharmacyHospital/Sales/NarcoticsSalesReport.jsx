@@ -2,11 +2,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './InvoiceBilling.css';
 import * as XLSX from 'xlsx';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 const NarcoticsSalesReport = () => {
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
-  
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
+
 
   // Function to export table to Excel
   const handleExport = () => {
@@ -17,8 +17,8 @@ const NarcoticsSalesReport = () => {
   };
 
   // Function to trigger print
-   // Function to trigger print
-   const handlePrint = () => {
+  // Function to trigger print
+  const handlePrint = () => {
     const printContent = tableRef.current;
     const newWindow = window.open("", "_blank");
     newWindow.document.write(`
@@ -56,58 +56,58 @@ const NarcoticsSalesReport = () => {
       <div className="invoice-billing-note">*Note: Return Sales are not included in this report.</div>
 
       <div className="invoice-billing-filters-container">
-       
-          <label>From:</label>
-          <input type="date" value="2024-08-23" />
-      
-        
-      
-          <label>To:</label>
-          <input type="date" value="2024-08-23" />
-       
-          {/* <button className="invoice-billing-favorite-btn">★</button>
+
+        <label>From:</label>
+        <input type="date" value="2024-08-23" />
+
+
+
+        <label>To:</label>
+        <input type="date" value="2024-08-23" />
+
+        {/* <button className="invoice-billing-favorite-btn">★</button>
           <button className="invoice-billing-reset-btn">-</button> */}
-     
+
       </div>
       <div className='sales-invoice-number'>
-      <label>Select Item :</label>
-          <input type="text" placeholder="Enter Invoice Number" />
-          <button className="invoice-billing-show-report-button">Show Report</button>
+        <label>Select Item :</label>
+        <input type="text" placeholder="Enter Invoice Number" />
+        <button className="invoice-billing-show-report-button">Show Report</button>
       </div>
-          
-        
-       
-      
-      
+
+
+
+
+
       <div className="invoice-billing-search-export-container">
         <div className="invoice-billing-search-bar">
           <input type="text" placeholder="Search" />
           {/* <button className="invoice-billing-search-button"><i className="fa fa-search"></i></button> */}
         </div>
-        
+
         <div className="invoice-billing-export-print-buttons">
-        <div className="invoice-billing-pagination-info">Showing 0 / 0 results</div>
+          <div className="invoice-billing-pagination-info">Showing 0 / 0 results</div>
 
           <button className="invoice-billing-export-button" onClick={handleExport}>Export</button>
-          <button className="invoice-billing-print-button"onClick={handlePrint}>Print</button>
+          <button className="invoice-billing-print-button" onClick={handlePrint}>Print</button>
         </div>
       </div>
       <div className='table-container'>
-      <table  ref={tableRef}>
+        <table ref={tableRef}>
           <thead>
             <tr>
               {[
                 "InvoiceNo",
-  "Date",
-  "Generic Name",
-  "MedicineName",
-  "Patient",
-  "Doctor",
-  "NMC No",
-  "Batch No",
-  "Quantity",
-  "SalePrice",
-  "TotalAmount"
+                "Date",
+                "Generic Name",
+                "MedicineName",
+                "Patient",
+                "Doctor",
+                "NMC No",
+                "Batch No",
+                "Quantity",
+                "SalePrice",
+                "TotalAmount"
               ].map((header, index) => (
                 <th
                   key={index}
@@ -128,23 +128,23 @@ const NarcoticsSalesReport = () => {
               ))}
             </tr>
           </thead>
-        <tbody>
-          <tr>
-            <td colSpan="11" className="invoice-billing-no-rows">No Rows To Show</td>
-          </tr>
-        </tbody>
-      </table>
-      
-      <div className="invoice-billing-pagination-container">
-        
-        {/* <div className="invoice-billing-pagination-buttons">
+          <tbody>
+            <tr>
+              <td colSpan="11" className="invoice-billing-no-rows">No Rows To Show</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div className="invoice-billing-pagination-container">
+
+          {/* <div className="invoice-billing-pagination-buttons">
           <button className="invoice-billing-pagination-button">First</button>
           <button className="invoice-billing-pagination-button">Previous</button>
           <span>Page 0 of 0</span>
           <button className="invoice-billing-pagination-button">Next</button>
           <button className="invoice-billing-pagination-button">Last</button>
         </div> */}
-      </div>
+        </div>
       </div>
 
     </div>

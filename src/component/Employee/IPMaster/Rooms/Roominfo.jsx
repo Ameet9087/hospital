@@ -2,14 +2,21 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Roominfo.css";
 import { API_BASE_URL } from "../../../api/api";
 import CustomModal from "../../../../CustomModel/CustomModal";
-import IpMasterPopupTable from "../IpMasterPopupTable";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import axios from "axios";
+import {
+  PopupTable,
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 const Roominfo = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
+  const [editingRoom, setEditingRoom] = useState(null);
   const [formdata, setFormdata] = useState({
     roomNumber: "",
     floorNumber: "",
@@ -69,11 +76,11 @@ const Roominfo = () => {
     setActivePopup(null); // Close the popup after selection
   };
 
+  const fetchAllRooms = async () => {
+    const response = await axios.get(`${API_BASE_URL}/rooms`);
+    setRoomData(response.data);
+  };
   useEffect(() => {
-    const fetchAllRooms = async () => {
-      const response = await axios.get(`${API_BASE_URL}/rooms`);
-      setRoomData(response.data);
-    };
     fetchAllRooms();
   }, []);
 
@@ -110,37 +117,48 @@ const Roominfo = () => {
   }, []);
 
   const handleSave = async () => {
-    // Update the formdata object with nested properties
-    formdata.roomType = {
-      id: selectedRoomType?.id,
+    const updateFormData = {
+      ...formdata,
+      name: roomName,
+      roomType: { id: selectedRoomType?.id },
+      floor: { id: selectedFloor?.id },
     };
-
-    formdata.floor = {
-      id: selectedFloor?.id,
-    };
-
-    // Create the updated form data object
-    const updateFormData = { ...formdata, name: roomName };
-
-    console.log("Request Payload:", updateFormData);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/rooms`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // Convert the object to a JSON string
-        body: JSON.stringify(updateFormData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+      if (editingRoom) {
+        await axios.put(
+          `${API_BASE_URL}/rooms/${editingRoom.id}`,
+          updateFormData
+        );
+        toast.success("Room Updated Successfully");
+      } else {
+        await axios.post(`${API_BASE_URL}/rooms`, updateFormData);
+        toast.success("Room Created Successfully");
       }
+      fetchAllRooms();
       setShowModal(false);
-      alert("Room Created Successfully");
     } catch (error) {
-      console.error("Error saving room:", error);
+      toast.error("Error saving room");
+    }
+  };
+
+  const handleEdit = (room) => {
+    setEditingRoom(room);
+    setFormdata(room);
+    setSelectedFloor(room.floor);
+    setSelectedRoomType(room.roomType);
+    setRoomName(room.name);
+    setShowModal(true);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/rooms/${id}`);
+      setRoomData(roomData.filter((room) => room.id !== id));
+      toast.success("Room Deleted Successfully");
+      fetchAllRooms();
+    } catch (error) {
+      toast.error("Error deleting room");
     }
   };
 
@@ -168,6 +186,7 @@ const Roominfo = () => {
                 "Facilities",
                 "Inventory Department",
                 "Room Status",
+                "Action",
               ].map((header, index) => (
                 <th
                   key={index}
@@ -200,6 +219,20 @@ const Roominfo = () => {
                   <td>{item.facilities}</td>
                   <td>{item.inventoryDepartment}</td>
                   <td>{item.roomStatus}</td>
+                  <td>
+                    <button
+                      className="room-add-btn"
+                      onClick={() => handleEdit(item)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="room-del-btn"
+                      onClick={() => handleDelete(item.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -215,129 +248,92 @@ const Roominfo = () => {
       <CustomModal isOpen={showModal} onClose={() => setShowModal(false)}>
         <div className="room-info-content-wrapper">
           <div className="room-info-main-section">
-            {/* Room Details Panel */}
             <div className="room-info-panel room-info-details">
               <div className="room-info-panel-header">Room Details</div>
               <div className="room-info-panel-content">
                 <div className="room-info-form-row">
-                  <label>Room Number: *</label>
-                  <div className="room-info-input-with-search">
-                    <input
-                      type="text"
-                      value={formdata.roomNumber}
-                      name="roomNumber"
-                      onChange={handleChange}
-                      placeholder="Enter Room Number"
-                    />
-                  </div>
-                </div>
-                <div className="room-info-form-row">
-                  <label>DEFAULT ID:</label>
-                  <div className="room-info-input-with-search">
-                    <input
-                      type="text"
-                      value={formdata.defaultID}
-                      name="defaultID"
-                      placeholder="Enter Default ID"
-                      readOnly
-                    />
-                  </div>
-                </div>
-                <div className="room-info-form-row">
-                  <label>Name:</label>
-                  <div className="room-info-input-with-search">
-                    <input
-                      type="text"
-                      onChange={(e) => setRoomName(e.target.value)}
-                      name="name"
-                      placeholder="Enter Name"
-                    />
-                  </div>
-                </div>
-                <div className="room-info-form-row">
-                  <label>Room Type : *</label>
-                  <div className="room-info-input-with-search">
-                    <input
-                      type="text"
-                      value={selectedRoomType?.roomtype}
-                      placeholder="Search Room Type"
-                      readOnly
-                    />
-                    <i
-                      onClick={() => setActivePopup("roomType")}
-                      className="fa-solid fa-magnifying-glass"
-                    ></i>
-                  </div>
-                </div>
-
-                <div className="room-info-form-row">
-                  <label>Floor Number:*</label>
-                  <div className="room-info-input-with-search">
-                    <input
-                      type="number"
-                      value={selectedFloor?.floorNumber}
-                      placeholder="Search Floor"
-                      readOnly
-                    />
-                    <i
-                      onClick={() => setActivePopup("floor")}
-                      className="fa-solid fa-magnifying-glass"
-                    ></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Additional Room Options Panel */}
-            <div className="room-info-panel room-info-details">
-              <div className="room-info-panel-content">
-                <div className="room-info-form-row">
-                  <label>Order Number</label>
-                  <div className="room-info-input-with-search">
-                    <input
-                      type="text"
-                      name="orderNumber"
-                      value={formdata.orderNumber}
-                      onChange={handleChange}
-                      placeholder="Enter Order Number"
-                    />
-                  </div>
-                </div>
-
-                <div className="room-info-form-row">
-                  <label>Facilities:</label>
-                  <textarea
-                    value={formdata.facilities}
-                    name="facilities"
+                  <FloatingInput
+                    label={"Room Number"}
+                    type="text"
+                    value={formdata.roomNumber}
+                    name="roomNumber"
                     onChange={handleChange}
-                    placeholder="Enter Facilities"
+                  />
+                </div>
+                <div className="room-info-form-row">
+                  <FloatingInput
+                    label={"DEFAULT ID"}
+                    type="text"
+                    value={formdata.defaultID}
+                    name="defaultID"
+                    readOnly
+                  />
+                </div>
+                <div className="room-info-form-row">
+                  <FloatingInput
+                    label={"Name"}
+                    type="text"
+                    onChange={(e) => setRoomName(e.target.value)}
+                    name="name"
+                  />
+                </div>
+                <div className="room-info-form-row">
+                  <FloatingInput
+                    label={"Order Number"}
+                    type="text"
+                    name="orderNumber"
+                    value={formdata.orderNumber}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="room-info-form-row">
+                  <FloatingInput
+                    label={"Room Type"}
+                    type="search"
+                    value={selectedRoomType?.roomtype}
+                    onIconClick={() => setActivePopup("roomType")}
                   />
                 </div>
 
                 <div className="room-info-form-row">
-                  <label>Inventory Department : </label>
-                  <div className="room-info-input-with-search">
-                    <input
-                      type="text"
-                      name="inventoryDepartment"
-                      value={formdata.inventoryDepartment}
-                      onChange={handleChange}
-                      placeholder="Enter Department"
-                    />
-                  </div>
+                  <FloatingInput
+                    label={"Floor Number"}
+                    type="search"
+                    value={selectedFloor?.floorNumber}
+                    onIconClick={() => setActivePopup("floor")}
+                  />
+                </div>
+
+                <div className="room-info-form-row">
+                  <FloatingTextarea
+                    label={"Facilities"}
+                    value={formdata.facilities}
+                    name="facilities"
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className="room-info-form-row">
+                  <FloatingInput
+                    label="Inventory Department"
+                    type="text"
+                    name="inventoryDepartment"
+                    value={formdata.inventoryDepartment}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
             </div>
           </div>
           <div className="roomtypeaddbtn">
             <button className="rooms-add-btn" onClick={handleSave}>
-              Save
+              {editingRoom ? "Update" : "Save"}
             </button>
           </div>
         </div>
       </CustomModal>
       {activePopup && (
-        <IpMasterPopupTable
+        <PopupTable
           onClose={() => setActivePopup(null)}
           onSelect={handleSelect}
           columns={columns}

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import './ExpiredContractsSCM.css';
 import { Link } from 'react-router-dom';
-import { startResizing } from './ResizableColumns';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 
 const ExpiredContractsSCM = () => {
   const tableRef = useRef(null);

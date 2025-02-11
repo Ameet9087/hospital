@@ -212,7 +212,7 @@ const PostOpInstructions = () => {
           </div>
         ))}
 
-        <button type="submit">Submit</button>
+        <button type="submit" className='oppostinstruction-submit-button'>Submit</button>
       </form>
     </div>
   );

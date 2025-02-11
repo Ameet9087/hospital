@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./IpInformation.css";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
+import { FloatingSelect } from "../../../FloatingInputs";
 
 const IpInformation = () => {
   const [roomType, setRoomType] = useState("");
@@ -29,7 +30,7 @@ const IpInformation = () => {
       try {
         let response;
         if (bedStatus === "Available") {
-          response = await axios.get(`${API_BASE_URL}/beds/available-beds`);     
+          response = await axios.get(`${API_BASE_URL}/beds/available-beds`);
         } else if (bedStatus === "All") {
           response = await axios.get(`${API_BASE_URL}/beds`);
         } else if (bedStatus === "Occupied") {
@@ -37,25 +38,28 @@ const IpInformation = () => {
             bedStatus: "Occupied", // Explicitly set to "Occupied"
             roomTypeId: roomType || undefined,
           };
-          response = await axios.get(`${API_BASE_URL}/ip-admissions/available`, { params });
+          response = await axios.get(
+            `${API_BASE_URL}/ip-admissions/available`,
+            { params }
+          );
         } else {
           console.warn("Invalid bed status");
           return;
         }
-  
+
         setBeds(response.data); // Assuming the API returns filtered beds
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching beds:", error);
       }
     };
-  
+
     // Fetch filtered beds when roomType or bedStatus changes
     if (roomType || bedStatus) {
       fetchFilteredBeds();
     }
   }, [roomType, bedStatus]);
-   // Refetch beds whenever filters change
+  // Refetch beds whenever filters change
 
   return (
     <div className="bed-booking">
@@ -63,29 +67,30 @@ const IpInformation = () => {
 
       {/* Filters */}
       <div className="bed-booking__filters">
-        <select
-          className="bed-booking__filter-select"
+        <FloatingSelect
+          label={"Room Types"}
           value={roomType}
           onChange={(e) => setRoomType(e.target.value)}
-        >
-          <option value="">All Room Types</option>
-          {roomTypes.map((type) => (
-            <option key={type.id} value={type.id}>
-              {type.roomtype}
-            </option>
-          ))}
-        </select>
+          options={
+            Array.isArray(roomTypes)
+              ? roomTypes.map((type) => ({
+                  value: type.id,
+                  label: type.roomtype,
+                }))
+              : []
+          }
+        />
 
-        <select
-          className="bed-booking__filter-select"
+        <FloatingSelect
+          label={"Bed Status"}
           value={bedStatus}
           onChange={(e) => setBedStatus(e.target.value)}
-        >
-          <option value="All">All Status</option>
-          <option value="Available">Available</option>
-          <option value="Occupied">Occupied</option>
-          <option value="All">All</option>
-        </select>
+          options={[
+            { value: "All", label: "All" },
+            { value: "Available", label: "Available" },
+            { value: "Occupied", label: "Occupied" },
+          ]}
+        />
       </div>
 
       {/* Table */}
@@ -105,11 +110,21 @@ const IpInformation = () => {
             beds.map((bed) => (
               <tr key={bed.id}>
                 <td>{bed?.roomDetails?.bedDTO?.bedNo || bed?.bedNo}</td>
-                <td>{(bed?.patient?.patient?.firstName ?? "NA") + " " + (bed?.patient?.patient?.lastName ?? "NA")}
+                <td>
+                  {(bed?.patient?.patient?.firstName ?? "NA") +
+                    " " +
+                    (bed?.patient?.patient?.lastName ?? "NA")}
                 </td>
-                <td>{bed?.admissionUnderDoctorDetail?.consultantDoctor?.doctorName}</td>
+                <td>
+                  {
+                    bed?.admissionUnderDoctorDetail?.consultantDoctor
+                      ?.doctorName
+                  }
+                </td>
                 <td
-                  className={`bed-booking__status bed-booking__status--${bed?.roomDetails?.bedDTO?.bedStatus || bed?.bedStatus}`}
+                  className={`bed-booking__status bed-booking__status--${
+                    bed?.roomDetails?.bedDTO?.bedStatus || bed?.bedStatus
+                  }`}
                 >
                   {bed?.roomDetails?.bedDTO?.bedStatus || bed?.bedStatus}
                 </td>
@@ -117,7 +132,11 @@ const IpInformation = () => {
                 <td>{bed?.roomDetails?.roomDTO?.roomNumber}</td>
               </tr>
             ))
-          ):(<tr><td colSpan={6}>Beds Not Available</td></tr>)}
+          ) : (
+            <tr>
+              <td colSpan={6}>Beds Not Available</td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

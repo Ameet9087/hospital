@@ -160,7 +160,9 @@ const LinenCondemnationDisposal = () => {
     }
   };
 
-
+  const handlePopupClose = () => {
+    setActivePopup(null);
+  };
   const handleDeleteRow = (index) => {
     setPackageTableRows((prev) =>
       prev.filter((_, i) => i !== index).map((row, i) => ({ ...row, sn: i + 1 }))
@@ -173,6 +175,54 @@ const LinenCondemnationDisposal = () => {
     );
   };
 
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+              .serchIconInput svg{
+              display: none;
+              }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
+  };
   const handleSelect = (data) => {
     if (activeRowIndex === null) return;
 
@@ -204,7 +254,7 @@ const LinenCondemnationDisposal = () => {
         data: linensTypeData.flatMap((item, index) =>
           item.linensType.map((linenType) => ({
             sn: index + 1,
-            linensType: linenType,
+            linensType: item.linenType,
             instock: item.stock,
           }))
         ),
@@ -228,9 +278,9 @@ const LinenCondemnationDisposal = () => {
     <div className="LinenCondemnationDisposal-container">
 
       <div className="LinenCondemnationDisposal-content">
-        <div className="LinenCondemnationDisposal-header">
+        {/* <div className="LinenCondemnationDisposal-header">
           <span>Laundry Staff and Department Map</span>
-        </div>
+        </div> */}
         <div className="LinenCondemnationDisposal-middle-content">
           <label>Disposal Number: </label>
           <input
@@ -243,6 +293,9 @@ const LinenCondemnationDisposal = () => {
         <div className="LinenCondemnationDisposal-table">
           <div className="LinenCondemnationDisposal-table-header">
             <span>Condemnation And Disposal Details</span>
+          </div>
+          <div className="LinenCondemnationDisposal-table-header-print">
+            <button onClick={printList}>Print</button>
           </div>
           <table ref={tableRef} className="LinenCondemnationDisposal-table-content" border={1}>
             <thead>
@@ -305,9 +358,10 @@ const LinenCondemnationDisposal = () => {
                   </td>
                   <td>{row.instock}</td>
                   <td> <input
-                    type="text"
+                    type="number"
                     value={row.disposalQuantity || ''}
                     name="disposalQuantity"
+                    min="0"
                     onChange={(e) => handleInputChange(index, 'disposalQuantity', e.target.value)}
                   /></td>
                   <td className="serchIconInput">
@@ -333,16 +387,6 @@ const LinenCondemnationDisposal = () => {
         <aside className="LinenCondemnationDisposal-navbar-btns">
           {[
             'Save',
-            'Delete',
-            'Clear',
-            'Close',
-            'Search',
-            'Tracking',
-            'Print',
-            'Version Comparison',
-            'SDC',
-            'Testing',
-            'Info',
           ].map((btn, idx) => (
             <button
               key={idx}
@@ -367,7 +411,9 @@ const LinenCondemnationDisposal = () => {
           onClick={() => {
             setActivePopup(null);
             setActiveRowIndex(null);
+            
           }}
+          onClose={handlePopupClose}
         />
       )}
     </div>

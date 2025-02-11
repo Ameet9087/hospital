@@ -3,11 +3,16 @@ import { Modal, Button } from "react-bootstrap";
 import UpdateDepartmentForm from "./UpdateDepartmentForm";
 import AddDepartment from "./AddDepartment";
 import "./ManageDepartment.css";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import CustomModal from "../../CustomModel/CustomModal";
 import { useFilter } from "../ShortCuts/useFilter";
 import axios from "axios";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../FloatingInputs";
 
 const ManageDepartment = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -18,7 +23,6 @@ const ManageDepartment = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const tableRef = useRef(null);
   const [message, setMessage] = useState("");
-
 
   // Fetch department data from the API
   useEffect(() => {
@@ -59,9 +63,7 @@ const ManageDepartment = () => {
 
   const handleImportDepartment = async () => {
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/departments/insert`
-      );
+      const response = await axios.post(`${API_BASE_URL}/departments/insert`);
 
       if (response) {
         alert("Predefined department inserted successfully!");
@@ -72,7 +74,7 @@ const ManageDepartment = () => {
       console.error("Error inserting employee roles:", error);
       alert("An error occurred while inserting employee roles.");
     }
-  }
+  };
 
   return (
     <div className="manage-department-page">
@@ -95,10 +97,9 @@ const ManageDepartment = () => {
           </div>
         </div>
         <div className="sett-search-bar">
-          <input
+          <FloatingInput
+            label={"Search"}
             type="text"
-            placeholder="Search by department name"
-            className="manage-department-search-input"
             value={searchTerm}
             onChange={handleSearch}
           />

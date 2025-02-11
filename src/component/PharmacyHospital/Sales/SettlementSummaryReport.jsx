@@ -1,9 +1,8 @@
 /* Mohini_SettlementSummaryReport_WholePage_14/sep/2024 */
 import React, { useState, useEffect, useRef } from 'react';
 import './InvoiceBilling.css';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
 import * as XLSX from 'xlsx';
-
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 const SettlementSummaryReport = () => {
   const [columnWidths,setColumnWidths] = useState({});
   const tableRef=useRef(null);

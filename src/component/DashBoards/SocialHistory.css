@@ -27,10 +27,6 @@
     margin-bottom: 20px;
   }
   
-  .social-history-section label {
-    font-size: 14px;
-    font-weight: bold;
-  }
   
   /* .add-button {
     background-color: #4c5baf;
@@ -95,20 +91,7 @@
     display: flex;
     flex-direction: row;
   }
-  
-  .social-history-form-group label {
-    margin-bottom: 5px;
-    font-weight: bold;
-    display: block;
-    width: 50%;
-  }
-  
-  .social-history-form-group input,
-  .social-history-form-group textarea {
-    padding: 5px;
-    margin-top: 4px;
-    width: 50%;
-  }
+
   
   .social-history-add-button {
     background-color: var(--button-color);

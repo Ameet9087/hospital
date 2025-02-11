@@ -47,17 +47,16 @@
 
 /* Date range picker styling */
 .date-range {
-  width: 100%;
   display: flex;
   justify-content: flex-start; /* Aligns button to the right */
   align-items: center;
+  gap: 10px;
 }
 .date-utlt{
   width: 100%;
   display: flex;
   justify-content: flex-start; /* Aligns button to the right */
   margin-bottom: 20px;
-  background-color: #dfebe8;
   align-items: center;
 
 }
@@ -68,21 +67,15 @@
   margin-right: 10px;
 }
 
-.dischage-patient{
+/* .dischage-patient{
   width: 50%;
   display: flex;
-  justify-content: center; /* Aligns button to the right */
+  justify-content: center;
   margin: 2px;
   background-color: #dfebe8;
   align-items: center;
 
-}
-
-.date-range-input {
-  padding: 5px;
-  border: 1px solid #ccc;
-}
-
+} */
 
 
 .dischage-insurance{

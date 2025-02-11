@@ -3,7 +3,7 @@ import "./FluidIntakeOutput.css";
 import { useSelector } from "react-redux";
 import { API_BASE_URL } from "../../../api/api";
 import axios from "axios";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 
 const FluidIntakeOutput = ({ ipAdmission }) => {
   const [loading, setLoading] = useState(false);

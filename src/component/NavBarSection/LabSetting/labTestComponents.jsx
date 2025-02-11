@@ -3,9 +3,10 @@ import "../LabSetting/labTestComponents.css";
 import LSLabTestAddNLTest from "./lSLabTestAddNLTest";
 import LabTestComponentsAddNewLTC from "./labTestComponentsAddNewLTC";
 
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
+import { FloatingInput } from "../../../FloatingInputs";
 
 const LabTestComponent = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -90,12 +91,11 @@ const LabTestComponent = () => {
       </div> */}
       <div className="labTestComponents-search-N-result">
         <div className="labTestComponents-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchTerm}
-            onChange={handleSearchChange}
+          <FloatingInput
+           type="text"
+           label={"Search"}
+           value={searchTerm}
+           onChange={handleSearchChange}
           />
         </div>
         <div className="labTestComponents-results-info">

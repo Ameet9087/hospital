@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import "../LabSetting/labCategoryAddNewLC.css";
 import { API_BASE_URL } from "../../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../../FloatingInputs";
 
 const LabCategoryAddNewLC = ({ onClose }) => {
   const [labTestCategoryName, setLabTestCategoryName] = useState("");
@@ -13,7 +15,7 @@ const LabCategoryAddNewLC = ({ onClose }) => {
   // handle form submission
   const handleAddCategory = async () => {
     if (!labTestCategoryName) {
-      setErrorMessage("Category Name is required");
+      toast.error("Category Name is required");
       return;
     }
 
@@ -33,11 +35,11 @@ const LabCategoryAddNewLC = ({ onClose }) => {
         payload
       );
       if (response.status === 200 || response.status === 201) {
-        alert("Category added successfully!");
+        toast.success("Category added successfully!");
         onClose(); // Close the modal after success
       }
     } catch (error) {
-      setErrorMessage("Failed to add category. Please try again.");
+      toast.error("Failed to add category. Please try again.");
       console.error(error);
     }
   };
@@ -53,14 +55,13 @@ const LabCategoryAddNewLC = ({ onClose }) => {
 
       <div className="labCategoryAddNewLC-form">
         <div className="labCategoryAddNewLC-form-group">
-          <label>
-            Category Name: <span>*</span>
-          </label>
-          <input
+          <FloatingInput
+          label={"Category Name"}
             type="text"
             placeholder="Category Name"
             value={labTestCategoryName}
             onChange={(e) => setLabTestCategoryName(e.target.value)}
+          
           />
         </div>
 

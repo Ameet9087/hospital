@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./EquipmentGatePassOut.css";
 import EquipmentGatePassOutPopUp from "./EquipmentGatePassOutPopUp";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 import * as XLSX from "xlsx";
 
@@ -17,7 +17,7 @@ const EquipmentGatePassOut = () => {
     // Fetch data from the server
 
 
-    
+
     fetch(`${API_BASE_URL}/gatePassOut`)
       .then((res) => res.json())
       .then((data) => setLabTest(data))
@@ -57,16 +57,16 @@ const EquipmentGatePassOut = () => {
       "Authorised By": row.authorisedBy,
       "Type Of Equipment": row.typeOfEquipment,
     }));
-  
+
     const worksheet = XLSX.utils.json_to_sheet(tableData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "EquipmentGatePassOut");
-  
+
     // Save as Excel file
     XLSX.writeFile(workbook, "EquipmentGatePassOutData.xlsx");
   };
-  
-  
+
+
 
   // Function to handle the print functionality
   const handlePrint = () => {
@@ -79,29 +79,29 @@ const EquipmentGatePassOut = () => {
             <thead>
               <tr>
                 ${[
-                  "Gate Pass Out No",
-                  "Supplier Name",
-                  "Asset No",
-                  "Recommended By",
-                  "Reason",
-                  "Mode Of Transport",
-                  "Type",
-                  "Gate Pass out Date",
-                  "Gate pass out Time",
-                  "Time Period",
-                  "Prepared By",
-                  "Received By",
-                  "Authorised By",
-                  "Type Of Equipment",
-                ]
-                  .map((header) => `<th>${header}</th>`)
-                  .join("")}
+        "Gate Pass Out No",
+        "Supplier Name",
+        "Asset No",
+        "Recommended By",
+        "Reason",
+        "Mode Of Transport",
+        "Type",
+        "Gate Pass out Date",
+        "Gate pass out Time",
+        "Time Period",
+        "Prepared By",
+        "Received By",
+        "Authorised By",
+        "Type Of Equipment",
+      ]
+        .map((header) => `<th>${header}</th>`)
+        .join("")}
               </tr>
             </thead>
             <tbody>
               ${filteredData
-                .map(
-                  (test) => `
+        .map(
+          (test) => `
                     <tr>
                       <td>${test.gatePassOutId}</td>
                       <td>${test.vendorDTO?.vendorName}</td>
@@ -120,8 +120,8 @@ const EquipmentGatePassOut = () => {
                      
                     </tr>
                   `
-                )
-                .join("")}
+        )
+        .join("")}
             </tbody>
           </table>
         </body>
@@ -224,7 +224,7 @@ const EquipmentGatePassOut = () => {
                 <td>{test.receivedBy}</td>
                 <td>{test.authorisedBy}</td>
                 <td>{test.typeOfEquipment}</td>
-               
+
               </tr>
             ))}
           </tbody>

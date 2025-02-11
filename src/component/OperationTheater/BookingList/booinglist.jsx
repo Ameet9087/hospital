@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import moment from "moment";
 import { Button } from "react-bootstrap";
 import axios from "axios";
-import CustomModal from "../../CustomModel/CustomModal";
+import CustomModal from "../../../CustomModel/CustomModal";
 import { useNavigate } from "react-router-dom";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import SurgeryEvents from "../SurgeryEvent/SurgeryEventsPage";
@@ -134,16 +134,16 @@ function BookingList() {
         if (response.status === 200 && Array.isArray(response.data)) {
           const formattedPatients = response.data.map((patient) => ({
             ipAdmmissionId: patient.ipAdmmissionId || "",
-            firstName: patient?.patient?.firstName || "",
-            lastName: patient?.patient?.lastName || "",
+            firstName: patient?.patient?.patient?.firstName || "",
+            lastName: patient?.patient?.patient?.lastName || "",
+            uhid: patient?.patient?.patient?.uhid || "",
             address: patient?.patient?.addressDTO?.city || "N/A",
             consultant:
               patient.admissionUnderDoctorDetail?.consultantDoctor
                 ?.doctorName || "N/A",
-            roomNoBedNo: `${patient?.roomDetails?.roomId || "N/A"} - ${
-              patient?.roomDetails?.bedDTO?.id || "N/A"
-            }`,
-            mrNo: patient?.patient?.uhid || "N/A",
+            roomNoBedNo: `${patient?.roomDetails?.roomId || "N/A"} - ${patient?.roomDetails?.bedDTO?.id || "N/A"
+              }`,
+            mrNo: patient?.patient?.patient?.uhid || "N/A",
           }));
           setInPatients(formattedPatients);
         } else {
@@ -235,7 +235,7 @@ function BookingList() {
       },
     };
     console.log(formattedData);
-    
+
 
     try {
       const response = await axios.post(
@@ -286,6 +286,52 @@ function BookingList() {
 
     fetchOTBookings();
   }, []);
+  
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
+  };
 
   return (
     <div className="booking-list-container">
@@ -317,7 +363,7 @@ function BookingList() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button className="ot-bookinglist-print-button">Print</button>
+        <button className="ot-bookinglist-print-button" onClick={printList}>Print</button>
       </div>
 
       <div className="table-container">
@@ -367,9 +413,8 @@ function BookingList() {
                     {booking?.ipAdmissionDTO?.patient?.patient?.firstName}{" "}
                     {booking?.ipAdmissionDTO?.patient?.patient?.lastName}
                   </td>
-                  <td>{`${booking?.ipAdmissionDTO?.patient?.patient?.age || "N/A"}/${
-                    booking?.ipAdmissionDTO?.patient?.patient?.gender || "N/A"
-                  }`}</td>
+                  <td>{`${booking?.ipAdmissionDTO?.patient?.patient?.age || "N/A"}/${booking?.ipAdmissionDTO?.patient?.patient?.gender || "N/A"
+                    }`}</td>
                   <td>
                     {booking.otDate
                       ? moment(booking.otDate.otTime).format("YYYY-MM-DD HH:mm")
@@ -383,15 +428,15 @@ function BookingList() {
                   {/* <td>{booking.department || "N/A"}</td> */}
                   <td>{booking.status || "N/A"}</td>
                   <td>
-                    <button
+                    {/* <button
                       className="booking-list-btn-submit"
                       onClick={() => handleEditAction(booking)}
                     >
                       Edit
-                    </button>
+                    </button> */}
                     <button
                       className="booking-list-btn-submit"
-                      onClick={() => handleSurgeryEventClick(booking)} 
+                      onClick={() => handleSurgeryEventClick(booking)}
                     >
                       Surgery Events
                     </button>
@@ -420,7 +465,7 @@ function BookingList() {
                 <label>IP No:</label>
                 <select
                   name="ipAdmissionDTO.ipAdmmissionId"
-                  value={formData.ipAdmissionDTO.ipAdmmissionId}
+                  value={formData.ipAdmissionDTO?.ipAdmmissionId}
                   onChange={(e) => handlePatientSelection(e.target.value)}
                 >
                   <option value="">Select Patient</option>

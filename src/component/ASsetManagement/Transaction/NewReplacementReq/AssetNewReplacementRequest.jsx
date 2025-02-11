@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios"; // Import axios for API requests
 import "./AssetNewReplacementRequest.css";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
-import CustomModal from "../../../CustomModel/CustomModal";
+import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 import AssetNewReplacementRequestPopUp from "./AssetNewReplacementRequestPopUp";
 

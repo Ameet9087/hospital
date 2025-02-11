@@ -6,7 +6,6 @@ import "./GoodsReceipt.css";
 import { API_BASE_URL } from "../../api/api";
 
 const GoodsReceipt = ({ goodReceipt, onClose }) => {
-
   const [vendorBillDate, setVendorBillDate] = useState("");
   const [goodsReceiptDate, setGoodsReceiptDate] = useState("");
   const [vendorName, setVendorName] = useState("");
@@ -24,7 +23,7 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
   const [status, setStatus] = useState("Pending");
   const [itemlist, setLists] = useState([]);
   const [vendor, setVendor] = useState([]);
-  const [isItemAdding, setItemAdding] = useState(false)
+  const [isItemAdding, setItemAdding] = useState(false);
   const [items, setItems] = useState([
     {
       itemId: "",
@@ -69,30 +68,66 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
   useEffect(() => {
     if (items.length > 0) {
       const updatedItems = items.map((item) => {
-        const { rate, quantity, discountPercentage, vatPercentage, ccChargePercentage, otherCharge } = item;
+        const {
+          rate,
+          quantity,
+          discountPercentage,
+          vatPercentage,
+          ccChargePercentage,
+          otherCharge,
+        } = item;
+
+        // Ensure the values are numbers
+        const validRate = parseFloat(rate) || 0;
+        const validQuantity = parseFloat(quantity) || 0;
+        const validDiscountPercentage = parseFloat(discountPercentage) || 0;
+        const validVatPercentage = parseFloat(vatPercentage) || 0;
+        const validCcChargePercentage = parseFloat(ccChargePercentage) || 0;
+        const validOtherCharge = parseFloat(otherCharge) || 0;
 
         // Calculate the total amount for each item
-        const discount = (rate * quantity * discountPercentage) / 100;
-        const vat = (rate * quantity * vatPercentage) / 100;
-        const ccCharge = (rate * quantity * ccChargePercentage) / 100;
-        const itemTotal = rate * quantity - discount + vat + ccCharge + otherCharge;
+        const discount =
+          (validRate * validQuantity * validDiscountPercentage) / 100;
+        const vat = (validRate * validQuantity * validVatPercentage) / 100;
+        const ccCharge =
+          (validRate * validQuantity * validCcChargePercentage) / 100;
+        const itemTotal =
+          validRate * validQuantity -
+          discount +
+          vat +
+          ccCharge +
+          validOtherCharge;
 
         return { ...item, totalAmount: parseFloat(itemTotal.toFixed(2)) }; // Ensure float precision
       });
 
       setItems(updatedItems); // Update items with calculated totalAmount
 
-      const calcSubTotal = updatedItems.reduce((acc, item) => acc + item.totalAmount, 0);
+      const calcSubTotal = updatedItems.reduce(
+        (acc, item) => acc + item.totalAmount,
+        0
+      );
       setSubTotal(parseFloat(calcSubTotal.toFixed(2))); // Calculate subtotal and update state
     }
-    setItemAdding(false)
+    setItemAdding(false);
   }, [isItemAdding]);
 
   useEffect(() => {
-    const total = parseFloat(subTotal) + parseFloat(ccCharge) + parseFloat(vat) + parseFloat(otherCharges) - parseFloat(discountAmount);
+    // Ensure all values are numbers
+    const validSubTotal = parseFloat(subTotal) || 0;
+    const validCcCharge = parseFloat(ccCharge) || 0;
+    const validDiscountAmount = parseFloat(discountAmount) || 0;
+    const validVat = parseFloat(vat) || 0;
+    const validOtherCharges = parseFloat(otherCharges) || 0;
+
+    const total =
+      validSubTotal +
+      validCcCharge +
+      validVat +
+      validOtherCharges -
+      validDiscountAmount;
     setTotalAmount(total);
   }, [subTotal, ccCharge, discountAmount, vat, otherCharges]);
-
 
   const handleAddItem = () => {
     setItems([
@@ -100,7 +135,6 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
       {
         itemId: "",
         category: "",
-        itemName: "",
         batchNo: "",
         expiryDate: "",
         quantity: 0,
@@ -128,25 +162,57 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
       .catch((error) => console.error("Error fetching items:", error));
   }, []);
 
-
   const handleItemChange = (index, field, value) => {
     setItemAdding(true);
     const newItems = [...items];
+
+    // Prevent negative values
+    if (
+      ["quantity", "freeQuantity", "rate", "otherCharge"].includes(field) &&
+      value < 0
+    ) {
+      return;
+    }
+
+    if (
+      ["discountPercentage", "vatPercentage", "ccChargePercentage"].includes(
+        field
+      ) &&
+      (value < 0 || value > 100)
+    ) {
+      return;
+    }
+
     newItems[index][field] = value;
 
-    const subTotal = newItems[index].quantity * newItems[index].rate;
-    const discount = (subTotal * newItems[index].discountPercentage) / 100;
-    const vat = (subTotal * newItems[index].vatPercentage) / 100;
-    const ccCharge = (subTotal * newItems[index].ccChargePercentage) / 100;
+    // Ensure values are numbers
+    const validRate = parseFloat(newItems[index].rate) || 0;
+    const validQuantity = parseFloat(newItems[index].quantity) || 0;
+    const validDiscountPercentage =
+      parseFloat(newItems[index].discountPercentage) || 0;
+    const validVatPercentage = parseFloat(newItems[index].vatPercentage) || 0;
+    const validCcChargePercentage =
+      parseFloat(newItems[index].ccChargePercentage) || 0;
+    const validOtherCharge = parseFloat(newItems[index].otherCharge) || 0;
 
-    newItems[index].totalAmount =
-      subTotal + vat + ccCharge + newItems[index].otherCharge - discount;
+    // Calculate subtotal
+    const subTotal = validRate * validQuantity;
+    const discount = (subTotal * validDiscountPercentage) / 100;
+    const vat = (subTotal * validVatPercentage) / 100;
+    const ccCharge = (subTotal * validCcChargePercentage) / 100;
 
+    let totalAmount = subTotal + vat + ccCharge + validOtherCharge - discount;
 
+    // Prevent negative total amount
+    if (totalAmount < 0) {
+      alert("Total Amount cannot be negative.");
+      totalAmount = 0;
+    }
+
+    newItems[index].totalAmount = totalAmount.toFixed(2); // Ensure two decimal places
     setItems(newItems);
-    // setItemAdding(false);
-
   };
+
   const handleVendorChange = (e) => {
     setVendorName(e.target.value);
   };
@@ -159,7 +225,11 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
     if (selectedItem) {
       handleItemChange(index, "itemId", selectedItem.invItemId);
       handleItemChange(index, "rate", selectedItem.standardRate);
-      handleItemChange(index, "vatPercentage", selectedItem.isVatApplicable ? 12 : 0); // Example VAT logic
+      handleItemChange(
+        index,
+        "vatPercentage",
+        selectedItem.isVatApplicable ? 12 : 0
+      ); // Example VAT logic
       handleItemChange(index, "remarks", selectedItem.remarks || "");
       // handleItemChange(index, "itemName", selectedItem.itemName);
     }
@@ -192,7 +262,6 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
       items,
     };
     console.log(data);
-
 
     try {
       await axios.post(`${API_BASE_URL}/goods-receipts/create`, data);
@@ -288,17 +357,25 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
                 <td>
                   <select
                     value={item.category}
-                    onChange={(e) => handleItemChange(index, "category", e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(index, "category", e.target.value)
+                    }
                   >
                     <option value="Consumables">Consumables</option>
                     <option value="Non-Consumables">Non-Consumables</option>
                   </select>
                 </td>
                 <td>
-                  <select value={item.itemName} onChange={(e) => handleItemSelect(e, index)}>
+                  <select
+                    value={item.itemName}
+                    onChange={(e) => handleItemSelect(e, index)}
+                  >
                     <option value="">Select Item</option>
                     {itemlist.map((availableItem) => (
-                      <option key={availableItem.itemName} value={availableItem.itemName}>
+                      <option
+                        key={availableItem.itemName}
+                        value={availableItem.itemName}
+                      >
                         {availableItem.itemName}
                       </option>
                     ))}
@@ -309,14 +386,18 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
                     type="text"
                     placeholder="Batch No"
                     value={item.batchNo}
-                    onChange={(e) => handleItemChange(index, "batchNo", e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(index, "batchNo", e.target.value)
+                    }
                   />
                 </td>
                 <td>
                   <input
                     type="date"
                     value={item.expiryDate}
-                    onChange={(e) => handleItemChange(index, "expiryDate", e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(index, "expiryDate", e.target.value)
+                    }
                   />
                 </td>
                 <td>
@@ -324,7 +405,9 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
                     type="number"
                     placeholder="Quantity"
                     value={item.quantity}
-                    onChange={(e) => handleItemChange(index, "quantity", e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(index, "quantity", e.target.value)
+                    }
                   />
                 </td>
                 <td>
@@ -332,7 +415,9 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
                     type="number"
                     placeholder="Free Quantity"
                     value={item.freeQuantity}
-                    onChange={(e) => handleItemChange(index, "freeQuantity", e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(index, "freeQuantity", e.target.value)
+                    }
                   />
                 </td>
                 <td>
@@ -340,7 +425,9 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
                     type="number"
                     placeholder="Rate"
                     value={item.rate}
-                    onChange={(e) => handleItemChange(index, "rate", e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(index, "rate", e.target.value)
+                    }
                   />
                 </td>
                 <td>
@@ -348,7 +435,13 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
                     type="number"
                     placeholder="Discount (%)"
                     value={item.discountPercentage}
-                    onChange={(e) => handleItemChange(index, "discountPercentage", e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(
+                        index,
+                        "discountPercentage",
+                        e.target.value
+                      )
+                    }
                   />
                 </td>
                 <td>
@@ -356,7 +449,9 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
                     type="number"
                     placeholder="VAT (%)"
                     value={item.vatPercentage}
-                    onChange={(e) => handleItemChange(index, "vatPercentage", e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(index, "vatPercentage", e.target.value)
+                    }
                   />
                 </td>
                 <td>
@@ -364,7 +459,13 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
                     type="number"
                     placeholder="CC Charge (%)"
                     value={item.ccChargePercentage}
-                    onChange={(e) => handleItemChange(index, "ccChargePercentage", e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(
+                        index,
+                        "ccChargePercentage",
+                        e.target.value
+                      )
+                    }
                   />
                 </td>
                 <td>
@@ -372,7 +473,9 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
                     type="number"
                     placeholder="Other Charge"
                     value={item.otherCharge}
-                    onChange={(e) => handleItemChange(index, "otherCharge", e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(index, "otherCharge", e.target.value)
+                    }
                   />
                 </td>
                 <td>
@@ -380,7 +483,9 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
                     type="number"
                     placeholder="Total Amount"
                     value={item.totalAmount}
-                    onChange={(e) => handleItemChange(index, "totalAmount", e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(index, "totalAmount", e.target.value)
+                    }
                   />
                 </td>
                 <td>
@@ -388,7 +493,9 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
                     type="text"
                     placeholder="Remarks"
                     value={item.remarks}
-                    onChange={(e) => handleItemChange(index, "remarks", e.target.value)}
+                    onChange={(e) =>
+                      handleItemChange(index, "remarks", e.target.value)
+                    }
                   />
                 </td>
               </tr>
@@ -423,25 +530,64 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
             setValue={setSubTotal}
             readOnly
           />
+
           <FormInput
             label="CC Charge:"
             type="number"
             value={ccCharge}
-            setValue={setCcCharge}
+            setValue={(val) => {
+              if (val < 0) {
+                return;
+              }
+              if (val > subTotal) {
+                return;
+              }
+              setCcCharge(val);
+            }}
           />
+
           <FormInput
             label="Discount Amount:"
             type="number"
             value={discountAmount}
-            setValue={setDiscountAmount}
+            setValue={(val) => {
+              if (val < 0) {
+                return;
+              }
+              if (val > subTotal) {
+                return;
+              }
+              setDiscountAmount(val);
+            }}
           />
-          <FormInput label="VAT:" type="number" value={vat} setValue={setVat} />
+
+          <FormInput
+            label="VAT:"
+            type="number"
+            value={vat}
+            setValue={(val) => {
+              if (val < 0) {
+                return;
+              }
+              if (val > subTotal) {
+                return;
+              }
+              setVat(val);
+            }}
+          />
+
           <FormInput
             label="Other Charges:"
             type="number"
             value={otherCharges}
-            setValue={setOtherCharges}
+            setValue={(val) => {
+              if (val < 0) {
+                return;
+              }
+              setOtherCharges(val);
+            }}
           />
+
           <FormInput
             label="Total Amount:"
             type="number"
@@ -449,6 +595,7 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
             setValue={setTotalAmount}
             readOnly
           />
+
           <FormInput
             label="Remarks:"
             type="text"

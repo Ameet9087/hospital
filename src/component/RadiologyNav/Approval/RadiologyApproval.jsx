@@ -6,6 +6,7 @@ import * as XLSX from "xlsx"; // Import xlsx library
 import RadiologyApprovalReport from "./RadiologyApprovalReport";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
+import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
 
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
@@ -20,6 +21,7 @@ function RadiologyApproval() {
   const [reportsData, setReportsData] = useState([]);
   const [filteredReportsData, setFilteredReportsData] = useState([]);
   const [filter, setFilter] = useState("--All--");
+  const [searchQuery, setSearchQuery] = useState("");
   const tableRef = useRef(null);
 
   const handleDateFromChange = (event) => {
@@ -81,6 +83,10 @@ function RadiologyApproval() {
       setFilteredReportsData(filteredData);
     }
   }, [filter, reportsData]);
+
+  useEffect(() => {
+    applySearchFilter();
+  }, [searchQuery, reportsData, filter]);
 
   const handleViewClick = (report) => {
     setSelectedRequest(report);
@@ -155,49 +161,76 @@ function RadiologyApproval() {
     setFilter(e.target.value);
   };
 
+  const applySearchFilter = () => {
+    const lowerQuery = searchQuery.toLowerCase();
+    const filteredData = reportsData.filter((report) => {
+      const fullName = `${report.patientDTO?.firstName || ""} ${
+        report.patientDTO?.lastName || ""
+      }`;
+      return (
+        fullName.toLowerCase().includes(lowerQuery) ||
+        (report.patientDTO?.phoneNumber || "").includes(lowerQuery) ||
+        (report.imagingTypeDTO?.imagingTypeName || "")
+          .toLowerCase()
+          .includes(lowerQuery) ||
+        (report.imagingItemDTO?.imagingItemName || "")
+          .toLowerCase()
+          .includes(lowerQuery) ||
+        (
+          report.inPatientDTO?.patient?.uhid ||
+          report.outPatientDTO?.patient?.uhid ||
+          ""
+        ).includes(lowerQuery)
+      );
+    });
+    setFilteredReportsData(filteredData);
+  };
+
   return (
     <div className="rDLListReport-active-imaging-request">
       <header className="rDLListReport-header">
         <h4>* Imaging Reports of All Patients</h4>
         <div className="rDLListReport-filter">
-          <label>
-            Filter
-            <select defaultValue={filter} onChange={handleFilterChange}>
-              <option>--All--</option>
-              <option value={"CT-SCAN"}>CT-SCAN</option>
-              <option value={"USG"}>USG</option>
-              <option value={"X-RAYS"}>X-RAY</option>
-              <option value={"ECHO"}>ECHO</option>
-            </select>
-          </label>
+          <FloatingSelect
+            label={"Filter"}
+            value={filter}
+            onChange={handleFilterChange}
+            options={[
+              { value: "", label: "-ALL-" },
+              { value: "CT-SCAN", label: "CT-SCAN" },
+              { value: "USG", label: "USG" },
+              { value: "X-RAY", label: "X-RAY" },
+              { value: "ECHO", label: "ECHO" },
+            ]}
+          />
         </div>
       </header>
       <div className="rDLListReport-controls">
         <div className="rDLListReport-date-range">
-          <label>
-            From:
-            <input
-              type="date"
-              id="dateFrom"
-              defaultValue={dateFrom}
-              onChange={handleDateFromChange}
-            />
-          </label>
-          <label>
-            To:
-            <input
-              type="date"
-              id="dateTo"
-              defaultValue={dateTo}
-              onChange={handleDateToChange}
-            />
-          </label>
+          <FloatingInput
+            label={"From"}
+            type="date"
+            value={dateFrom}
+            onChange={handleDateFromChange}
+          />
+
+          <FloatingInput
+            label={"To"}
+            type="date"
+            id="dateTo"
+            value={dateTo}
+            onChange={handleDateToChange}
+          />
         </div>
       </div>
       <div className="rDLListReport-search-N-results">
         <div className="rDLListReport-search-bar">
-          <input type="text" placeholder="Search" />
-          <i className="fa-solid fa-magnifying-glass"></i>
+          <FloatingInput
+            label={"Search"}
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
         <div className="rDLListReport-results-info">
           Showing {filteredReportsData.length} / {reportsData.length} results
