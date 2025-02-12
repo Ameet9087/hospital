@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import CustomModal from "../CustomModel/CustomModal";
-import { FloatingInput, FloatingSelect, PopupTable } from "../FloatingInputs";
-import { startResizing } from "../TableHeadingResizing/resizableColumns";
+import CustomModal from "../../CustomModel/CustomModal";
+import { FloatingInput, FloatingSelect, PopupTable } from "../../FloatingInputs"
+// import { startResizing } from "../TableHeadingResizing/resizableColumns";
 import "./PaymentMode.css";
 import { faDownload, faPrint } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,34 +20,34 @@ const PaymentMode = () => {
     date: "",
     description: "",
     type: "",
-    employeeDTO:[ {
-        employeeId:"",
+    employeeDTO: [{
+      employeeId: "",
     }
-  ]
+    ]
   });
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const payload = {
       date: formData.date,
       description: formData.description,
       type: formData.type,
-      employeeDTO:[{
-          employeeId:formData.employeeId|| null,
+      employeeDTO: [{
+        employeeId: formData.employeeId || null,
       }],
     };
-  
+
     console.log("Payload being sent:", payload); // Debugging
-  
+
     try {
       const response = await axios.post("http://192.168.1.68:4096/api/paymode-master", payload);
       console.log("Response from API:", response.data);
       alert("Data saved successfully!");
-      
-      setData([...data, response.data]); 
+
+      setData([...data, response.data]);
       setShowModal(false);
-      
+
       // Reset form
       setFormData({
         date: "",
@@ -59,7 +59,7 @@ const PaymentMode = () => {
       console.error("Error submitting payment:", error.response ? error.response.data : error.message);
     }
   };
-  
+
   const handleAdd = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
   const handleChange = (e) => {
@@ -79,11 +79,11 @@ const PaymentMode = () => {
 
     fetchPaymentData();
   }, []);
-  
+
   const handleExport = () => {
     const exportData = data.map((item, index) => {
       const employee = item.employeeDTO?.[0] || {}; // Get first employee safely
-  
+
       return {
         SrNo: index + 1,
         ID: employee.employeeId || "N/A", // Fix Employee ID
@@ -92,13 +92,13 @@ const PaymentMode = () => {
         Type: item.type,
       };
     });
-  
+
     const worksheet = XLSX.utils.json_to_sheet(exportData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Payment Mode List");
     XLSX.writeFile(workbook, "Payment_Mode_List.xlsx");
   };
-  
+
 
   const handleSearch = (e) => setSearchTerm(e.target.value);
   const handleEdit = (id) => alert(`Edit entry with ID: ${id}`);
@@ -114,7 +114,7 @@ const PaymentMode = () => {
   const handlePrint = () => {
     const printWindow = window.open("", "_blank");
     const printableContent = document.getElementById("printable-table").outerHTML;
-  
+
     printWindow.document.write(`
       <html>
         <head>
@@ -135,12 +135,12 @@ const PaymentMode = () => {
         </body>
       </html>
     `);
-  
+
     printWindow.document.close();
     printWindow.print();
   };
-  
-  
+
+
   const filteredData = data.filter(
     (item) =>
       item.employeeName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -227,30 +227,30 @@ const PaymentMode = () => {
             </tr>
           </thead>
           <tbody>
-  {filteredData.length === 0 ? (
-    <tr>
-      <td colSpan={6} style={{ textAlign: "center" }}>No records found.</td>
-    </tr>
-  ) : (
-    filteredData.map((item, index) => {
-      const employee = item.employeeDTO?.[0]; 
-      return (
-        <tr key={item.id}>
-          <td>{index + 1}</td>
-          <td>{employee?.employeeId || "N/A"}</td> 
-          <td>{`${employee?.firstName || ""} ${employee?.middleName || ""} ${employee?.lastName || ""}`.trim() || "N/A"}</td> {/* Fix Employee Name */}
-          <td>{item.date}</td>
-          <td>{item.type}</td>
-          <td className="PaymentMode-action-btn no-print">
+            {filteredData.length === 0 ? (
+              <tr>
+                <td colSpan={6} style={{ textAlign: "center" }}>No records found.</td>
+              </tr>
+            ) : (
+              filteredData.map((item, index) => {
+                const employee = item.employeeDTO?.[0];
+                return (
+                  <tr key={item.id}>
+                    <td>{index + 1}</td>
+                    <td>{employee?.employeeId || "N/A"}</td>
+                    <td>{`${employee?.firstName || ""} ${employee?.middleName || ""} ${employee?.lastName || ""}`.trim() || "N/A"}</td> {/* Fix Employee Name */}
+                    <td>{item.date}</td>
+                    <td>{item.type}</td>
+                    <td className="PaymentMode-action-btn no-print">
 
-            <button className="PaymentMode-status-btn" onClick={() => handleEdit(item.id)}>Edit</button>
-            <button className="PaymentMode-status-btn" onClick={() => handleDelete(item.id)}>Delete</button>
-          </td>
-        </tr>
-      );
-    })
-  )}
-</tbody>
+                      <button className="PaymentMode-status-btn" onClick={() => handleEdit(item.id)}>Edit</button>
+                      <button className="PaymentMode-status-btn" onClick={() => handleDelete(item.id)}>Delete</button>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
 
         </table>
       </div>
@@ -258,7 +258,7 @@ const PaymentMode = () => {
         <div className="PaymentMode-form">
           <div className="PaymentMode-section">
             <div className="PaymentMode-grid">
-              <FloatingInput label="Employee Name" type="search" name="employeeName" value={formData.employeeName} onChange={handleChange} onIconClick={() => setActivePopup("Employee")}/>
+              <FloatingInput label="Employee Name" type="search" name="employeeName" value={formData.employeeName} onChange={handleChange} onIconClick={() => setActivePopup("Employee")} />
               <FloatingInput label="Employee Id" name="employeeId" value={formData.employeeId} onChange={handleChange} />
               <FloatingInput label="Current Date" type="date" name="date" value={formData.date} onChange={handleChange} />
               <FloatingInput label="Description" name="description" value={formData.description} onChange={handleChange} />
@@ -281,13 +281,13 @@ const PaymentMode = () => {
           <button onClick={handleSubmit}>Submit</button>
         </div>
         {activePopup && (
-  <PopupTable
-    columns={columns}
-    data={popupData}
-    onSelect={handleSelect}
-    onClose={() => setActivePopup(null)}
-  />
-)}
+          <PopupTable
+            columns={columns}
+            data={popupData}
+            onSelect={handleSelect}
+            onClose={() => setActivePopup(null)}
+          />
+        )}
       </CustomModal>
     </div>
   );

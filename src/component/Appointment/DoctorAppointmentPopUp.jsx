@@ -500,7 +500,7 @@ export default function DoctorAppointmentPopUp({
             </div>
             <div className="operationschedule-form-col">
               <FloatingTextarea
-                label={"Remarks"}
+                label={"Problem"}
                 type="text"
                 name="remarks"
                 value={formData.remarks || ""}
@@ -521,6 +521,7 @@ export default function DoctorAppointmentPopUp({
                   { value: "", label: "-- Select Relation --" },
                   { value: "Father", label: "Father" },
                   { value: "Mother", label: "Mother" },
+                  { value: "Husband", label: "Husband" },
                   { value: "Son", label: "Son" },
                   { value: "Daughter", label: "Daughter" },
                   { value: "Guardian", label: "Guardian" },
