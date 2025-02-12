@@ -142,6 +142,7 @@ function ReportRoute() {
           <Route path='/appointment/RankwiseDailyAppointmentReport' element={<RankWiseDailyAppointmentReport />} />
           <Route path='/appointment/DoctorWiseStatisticsReport' element={<DoctorWiseStatisticsReport />} />
           <Route path='/appointment/DayAndMonthwiseVisitReport' element={<DayAndMonthWiseVisitReport />} />
+          {/* <Route path="/doctors/" */}
 
         </Routes>
       </LayoutCom>

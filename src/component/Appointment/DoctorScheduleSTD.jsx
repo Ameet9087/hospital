@@ -22,7 +22,9 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "../../FidgetSpinner/PopupContext";
 import { text } from "@fortawesome/fontawesome-svg-core";
-const DoctorScheduleSTD = () => {
+const DoctorScheduleSTD = ({ schedule,onClose }) => {
+  console.log(schedule);
+  
   const { showPopup } = usePopup();
   const [showsPopup, setShowsPopup] = useState(false);
   const [scheduleStartDate, setScheduleStartDate] = useState();
@@ -46,6 +48,37 @@ const DoctorScheduleSTD = () => {
   const handleClosePopup = () => {
     setShowsPopup(false);
   };
+
+  useEffect(() => {
+    if (schedule) {
+        setSelectedDoctor(schedule?.doctor?.doctorId || "");
+        setSelectedLocation(schedule?.location?.id || "");
+        setScheduleStartDate(schedule?.scheduleStartDate || "");
+        setScheduleEndDate(schedule?.scheduleEndDate || "");
+        setDoctorDutyStartTime(schedule?.dutyStartTime || "10:03:00 AM");
+        setDoctorDutyEndTime(schedule?.dutyEndTime || "08:03:00 PM");
+
+    
+        const weekdaysArray = schedule?.weekdays
+            ? schedule.weekdays.split(", ").reduce((acc, day) => {
+                  acc[day] = true; // Convert each day into a key-value pair
+                  return acc;
+              }, {})
+            : {};
+
+        setSelectedWeekdays(weekdaysArray);
+
+  
+        setBreakTimings(Array.isArray(schedule?.breakTimeList) ? schedule.breakTimeList : []);
+
+        
+        setFormValues((prevValues) => ({
+            ...prevValues,
+            reviewTime: schedule?.reviewTime || "",
+        }));
+    }
+}, [schedule]);
+
 
   const [formValues, setFormValues] = useState({
     newPatientTime: "",
@@ -150,7 +183,6 @@ const DoctorScheduleSTD = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
 
-  // Handle filling the schedule grid
   const generateScheduleObject = () => {
     const weekdays = Object.keys(selectedWeekdays).filter(
       (day) => selectedWeekdays[day]
@@ -191,16 +223,16 @@ const DoctorScheduleSTD = () => {
     const scheduleObject = generateScheduleObject();
     setGeneratedSchedule(scheduleObject);
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Prepare the breakTimes array
-    const breakTimes = breakTimings
-      .map((timing) =>
-        timing.breakTimeIds.map((breakTimeId) => ({ breakTimeId }))
-      )
-      .flat();
+    const breakTimes = (breakTimings || []) // Ensure it's always an array
+  .flatMap((timing) =>
+    (timing?.breakTimeIds || []).map((breakTimeId) => ({ breakTimeId }))
+  );
 
     // Prepare weekdays as an array of selected days
     const weekdays = Object.entries(selectedWeekdays)
@@ -221,16 +253,41 @@ const DoctorScheduleSTD = () => {
       weekdays: weekdays,
       active: true,
     };
-    console.log(formData);
+
+    console.log("Submitting schedule data:", formData);
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/schedules`, formData);
-      toast.success("Schedule Added Successfully");
-      showPopup([{ url: "/appointment/doctorappointment", text: "Do You Want Check Doctor Appointment" }])
+      let response;
+      if (schedule?.scheduleId) {
+        // If schedule ID exists, update using PUT
+        response = await axios.put(
+          `${API_BASE_URL}/schedules/update-new/${schedule.scheduleId}`,
+          formData
+        );
+        toast.success("Schedule Updated Successfully");
+        onClose();
+      } else {
+        // If no schedule ID, create a new schedule using POST
+        response = await axios.post(
+          `${API_BASE_URL}/schedules`,
+          formData
+        );
+        toast.success("Schedule Added Successfully");
+        onClose();
+      }
+
+      showPopup([
+        {
+          url: "/appointment/doctorappointment",
+          text: "Do You Want to Check Doctor Appointment?",
+        },
+      ]);
     } catch (error) {
-      toast.error("Error adding schedule:", error);
+      toast.error("Error processing schedule");
+      console.error("API error:", error);
     }
   };
+
 
   return (
     <div className="DoctorScheduleSTD-medical-interface">
@@ -251,9 +308,9 @@ const DoctorScheduleSTD = () => {
                   { value: "", label: "" },
                   ...(Array.isArray(locations)
                     ? locations.map((location) => ({
-                      value: location.id,
-                      label: location.locationName,
-                    }))
+                        value: location.id,
+                        label: location.locationName,
+                      }))
                     : []),
                 ]}
               />
@@ -266,9 +323,9 @@ const DoctorScheduleSTD = () => {
                   { value: "", label: "" },
                   ...(Array.isArray(doctors)
                     ? doctors.map((doctor) => ({
-                      value: doctor.doctorId,
-                      label: doctor.doctorName,
-                    }))
+                        value: doctor.doctorId,
+                        label: doctor.doctorName,
+                      }))
                     : []),
                 ]}
               />
@@ -319,13 +376,13 @@ const DoctorScheduleSTD = () => {
               />
             </div>
             <div className="DoctorScheduleSTD-field-row">
-              <FloatingInput
+              {/* <FloatingInput
                 label={"Cubical"}
                 type="number"
                 name="cubical"
                 value={formValues.cubical}
                 onChange={handleInputChange}
-              />
+              /> */}
 
               <FloatingInput
                 label={"Review Time"}
@@ -334,33 +391,8 @@ const DoctorScheduleSTD = () => {
                 value={formValues.reviewTime}
                 onChange={handleInputChange}
               />
-            </div>
-            <div className="DoctorScheduleSTD-field-row">
-              <FloatingInput
-                label={"New Patient Time"}
-                type="number"
-                name="newPatientTime"
-                value={formValues.newPatientTime}
-                onChange={handleInputChange}
-              />
-              <FloatingInput
-                label={"No Of New Patients"}
-                type="number"
-                name="noOfNewPatients"
-                value={formValues.noOfNewPatients}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="DoctorScheduleSTD-field-row">
-              <FloatingInput
-                label={"Rooms No"}
-                type="number"
-                name="roomsNo"
-                value={formValues.roomsNo}
-                onChange={handleInputChange}
-              />
-              <div className="DoctorScheduleSTD-radio-group">
-                <div className="DoctorScheduleSTD-header">Action :</div>
+              <div className="DoctorScheduleSTD-sub-div">
+              <div className="DoctorScheduleSTD-header">Action :</div>
                 <div className="DoctorScheduleSTD-radio-item">
                   <input
                     type="radio"
@@ -383,6 +415,34 @@ const DoctorScheduleSTD = () => {
                   />
                   <label htmlFor="inactive">Inactive</label>
                 </div>
+                </div>
+            </div>
+            {/* <div className="DoctorScheduleSTD-field-row">
+              <FloatingInput
+                label={"New Patient Time"}
+                type="number"
+                name="newPatientTime"
+                value={formValues.newPatientTime}
+                onChange={handleInputChange}
+              />
+              <FloatingInput
+                label={"No Of New Patients"}
+                type="number"
+                name="noOfNewPatients"
+                value={formValues.noOfNewPatients}
+                onChange={handleInputChange}
+              />
+            </div> */}
+            <div className="DoctorScheduleSTD-field-row">
+              {/* <FloatingInput
+                label={"Rooms No"}
+                type="number"
+                name="roomsNo"
+                value={formValues.roomsNo}
+                onChange={handleInputChange}
+              /> */}
+              <div className="DoctorScheduleSTD-radio-group">
+                
               </div>
             </div>
           </div>
@@ -398,8 +458,8 @@ const DoctorScheduleSTD = () => {
 
             {/* Availability */}
             <div className="DoctorScheduleSTD-checkbox-group">
-              <div className="DoctorScheduleSTD-header">
-                Doctor Available Weekdays
+              <div className="DoctorScheduleSTD-header-new">
+                Doctor Available Weekdays :-
               </div>
               {[
                 "monday",
@@ -429,7 +489,6 @@ const DoctorScheduleSTD = () => {
               Generate Schedule
             </button>
             {/* Status */}
-
           </div>
         </div>
       </div>
@@ -493,33 +552,41 @@ const DoctorScheduleSTD = () => {
           </thead>
           <tbody>
             {/* Display existing rows */}
-            {breakTimings.map((timing) => (
-              <tr key={timing.sn}>
-                <td>{timing.sn}</td>
-                <td>
-
-
-                  {timing.breakTimeIds
-                    .map((id) =>
-                      breakTimeOptions.find(
-                        (option) => option.breakTimeId === id
-                      )
-                    )
-                    .map((bt) =>
-                      bt ? `${bt.breakTimeStart} - ${bt.breakTimeEnd}` : "N/A"
-                    )
-                    .join(", ")}
-                </td>
-                <td>
-                  <button
-                    className="DoctorScheduleSTD-del-button"
-                    onClick={() => handleDelete(timing.sn)}
-                  >
-                    Delete
-                  </button>
-                </td>
+            {breakTimings.length > 0 ? (
+              breakTimings.map((timing) => (
+                <tr key={timing.sn}>
+                  <td>{timing.sn}</td>
+                  <td>
+                    {Array.isArray(timing?.breakTimeIds)
+                      ? timing.breakTimeIds
+                          .map((id) =>
+                            breakTimeOptions.find(
+                              (option) => option.breakTimeId === id
+                            )
+                          )
+                          .map((bt) =>
+                            bt
+                              ? `${bt.breakTimeStart} - ${bt.breakTimeEnd}`
+                              : "N/A"
+                          )
+                          .join(", ")
+                      : "N/A"}
+                  </td>
+                  <td>
+                    <button
+                      className="DoctorScheduleSTD-del-button"
+                      onClick={() => handleDelete(timing.sn)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="3">No break times available</td>
               </tr>
-            ))}
+            )}
 
             {/* Row for adding new break times */}
             {isEditing && (

@@ -2,6 +2,7 @@
   import React, { useState, useEffect, useRef } from 'react';
   import './NarcoticsStockReport.css';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+
 const NarcoticsStockReport = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showZeroQuantity, setShowZeroQuantity] = useState(false);
@@ -32,7 +33,7 @@ const NarcoticsStockReport = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          {/* <button>🔍</button> */}
+          <button>🔍</button>
         </div>
         <div className="narcotics-stock-report-filters">
           <label>

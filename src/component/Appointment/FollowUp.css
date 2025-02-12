@@ -1,0 +1,70 @@
+.FollowUp-add-btn,.FollowUp-print-button{
+    margin-bottom: 20px;
+    background-color: var(--button-bg-color);
+    font-size: var( --heading-font);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid var(--button-hover-border-color);
+}
+.FollowUp-info{
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+    margin: 2px;
+}
+.FollowUp-form{
+    margin: 0 auto;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    background-color:var(--background-color);
+}
+.FollowUp-section{
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.FollowUp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 10px;
+  }
+  .FollowUp-grid.two-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .FollowUp-action-btn{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .FollowUp-submit-button{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+  }
+  .FollowUp-print-button,.FollowUp-submit-button button,.FollowUp-status-btn{
+    background-color: var(--button-color);
+    font-size: var(--font-size);
+    border-radius: 5px;
+    padding: 5px ;
+    border: 1px solid var(--button-hover-background-color);
+    color: white;
+    cursor: pointer;
+    
+}
+.FollowUp-print-button:hover,.FollowUp-submit-button button:hover,.FollowUp-status-btn:hover,.FollowUp-add-btn:hover{
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+.FollowUp-search-N-result
+{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}

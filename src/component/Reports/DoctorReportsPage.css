@@ -1,0 +1,155 @@
+.DoctorWisePatientReport-container {
+  padding: 5px;
+}
+
+.DoctorWisePatientReport-header h1 {
+  color: black;
+  font-size: var(--heading-font);
+  margin-bottom: 10px;
+}
+
+.DoctorWisePatientReport-title {
+  margin-bottom: 60px;
+  font-size: var(--heading-font);
+  margin-bottom: 10px;
+}
+
+.DoctorWisePatientReport-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 20px;
+}
+
+.DoctorWisePatientReport-date-range {
+  display: flex;
+  gap: 15px;
+}
+
+.DoctorWisePatientReport-date-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.DoctorWisePatientReport-input,
+.DoctorWisePatientReport-date-field input {
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.DoctorWisePatientReport-doctor-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.DoctorWisePatientReport-doctor-select {
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 200px;
+  height: 30px;
+}
+
+.DoctorWisePatientReport-show-report {
+  
+
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.DoctorWisePatientReport-show-report:hover {
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+}
+
+.DoctorWisePatientReport-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.DoctorWisePatientReport-search input {
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 200px;
+}
+
+.DoctorWisePatientReport-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+
+.DoctorWisePatientReport-print {
+ 
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.DoctorWisePatientReport-export{
+  
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+
+.DoctorWisePatientReport-print:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+
+}
+
+
+.DoctorWisePatientReport-export:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+
+}
+/* 
+
+.DoctorWisePatientReport-table-container {
+  overflow-x: auto;
+} */
+
+.DoctorWisePatientReport-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1200px;
+}
+
+.DoctorWisePatientReport-table th,
+.DoctorWisePatientReport-table td {
+  border: 1px solid #ddd;
+  padding: 5px;
+  text-align: left;
+}
+
+.DoctorWisePatientReport-table th {
+  background-color: #f8f9fa;
+  font-weight: normal;
+}
+
+.DoctorWisePatientReport-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}

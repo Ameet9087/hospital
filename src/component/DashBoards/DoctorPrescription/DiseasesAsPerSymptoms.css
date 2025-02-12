@@ -1,0 +1,19 @@
+.Diseases-container {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fefefe;
+  }
+  
+  .Diseases-container ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .Diseases-container li {
+    padding: 8px;
+    background-color: #e3f2fd;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  

@@ -12,6 +12,7 @@ import InPatient from "./InPatient";
 import Records from "./PatientsRecord";
 import DoctorMainPage from "./OpDoctorMainPage";
 import IpDoctorMainPage from "./IpDoctorMainPage";
+import DoctorPrescription from "./DoctorPrescription/DoctorPrescription";
 
 const DrDashboard = () => {
   const location = useLocation();
@@ -22,20 +23,18 @@ const DrDashboard = () => {
       <div className="doctor-dashboard-button-group">
         <Link to="/doctor/outpatient">
           <button
-            className={`dashboard-button ${
-              location.pathname === "/doctor/outpatient" ? "active" : ""
-            }`}
+            className={`dashboard-button ${location.pathname === "/doctor/outpatient" ? "active" : ""
+              }`}
           >
             Out Patient
           </button>
         </Link>
         <Link to="/doctor/inpatientdepartment">
           <button
-            className={`dashboard-button ${
-              location.pathname === "/doctor/inpatientdepartment"
-                ? "active"
-                : ""
-            }`}
+            className={`dashboard-button ${location.pathname === "/doctor/inpatientdepartment"
+              ? "active"
+              : ""
+              }`}
           >
             In Patient Department
           </button>
@@ -49,6 +48,14 @@ const DrDashboard = () => {
             Patient Record
           </button>
         </Link> */}
+        <Link to="/doctor/symptomsList">
+          <button
+            className={`dashboard-button ${location.pathname === "/doctor/symptomsList" ? "active" : ""
+              }`}
+          >
+            Doctor Prescription
+          </button>
+        </Link>
       </div>
 
       {/* Content Rendering */}
@@ -56,7 +63,7 @@ const DrDashboard = () => {
         <Routes>
           <Route path="/outpatient" element={<DoctorMainPage />} />
           <Route path="/inpatientdepartment" element={<IpDoctorMainPage />} />
-          {/* <Route path="/patientrecord" element={<Records />} /> */}
+          <Route path="/symptomsList/*" element={<DoctorPrescription />} />
         </Routes>
       </div>
     </div>

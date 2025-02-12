@@ -1,13 +1,15 @@
 /* Mohini_SettingTax_WholePage_14/sep/2024 */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
-import './SettingSupplier.css';
+import './SettingSupplier.css'; 
 import { API_BASE_URL } from '../api/api';
 import CustomModal from '../../CustomModel/CustomModal';
 import useCustomAlert from '../../alerts/useCustomAlert';
 import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 import * as XLSX from 'xlsx';
+import { toast } from 'react-toastify';
+import { FloatingInput } from '../../FloatingInputs';
 
 const SettingTax = () => {
   const [suppliers, setSuppliers] = useState([]);
@@ -18,7 +20,7 @@ const SettingTax = () => {
   const { success, error, CustomAlerts } = useCustomAlert();
   const [openStickerPopup, setOpenStickerPopup] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
+    const tableRef = useRef(null);
 
 
   useEffect(() => {
@@ -63,18 +65,20 @@ const SettingTax = () => {
             supplier.id === selectedUser.id ? response.data : supplier
           ));
           handleCloseModal();
+          toast.success("Tax Added Successfully")
         })
         .catch(error => {
-          console.error("There was an error updating the data!", error);
+          toast.error("There was an error updating the data!", error);
         });
     } else {
       // Add a new item
       axios.post(`${API_BASE_URL}/taxes/create-tax`, selectedUser)
         .then(response => {
           handleCloseModal();
+          toast.success("Tax Updated Successfully")
         })
         .catch(error => {
-          console.error("There was an error adding the data!", error);
+          toast.error("There was an error adding the data!", error);
         });
     }
   };
@@ -97,43 +101,14 @@ const SettingTax = () => {
   };
 
   // Function to trigger print
-  // Function to trigger print
   const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
-        <head>
-          <title>Print Table</title>
-          <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
-            }
-          </style>
-        </head>
-        <body>
-          ${printContent.outerHTML}
-        </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+    window.print(); // Triggers the browser's print window
   };
 
 
   return (
     <div className="setting-supplier-container">
-      <CustomAlerts />
+      <CustomAlerts/>
       <div className="setting-supplier-header">
         <button className="setting-supplier-add-user-button" onClick={() => handleShowModal()}>
           + Add Tax
@@ -150,30 +125,30 @@ const SettingTax = () => {
         
       </div> */}
       <div className='setting-supplier-span'>
-        <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
-        <button className='item-wise-export-button' onClick={handleExport}>Export</button>
-        <button className='item-wise-print-button' onClick={handlePrint}>Print</button>
-      </div>
+      <span>Showing {filteredUsers.length} / {suppliers.length} results</span>
+        <button className='item-wise-export-button'onClick={handleExport}>Export</button>
+  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
+</div>
       <div className='table-container'>
-        <table ref={tableRef}>
-          <thead>
-            <tr>
-              {["Tax Name",
-                "Tax Percentage",
-                "Description",
-                "Action"].map((header, index) => (
-                  <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                    <div className="header-content">
-                      <span>{header}</span>
-                      <div
-                        className="resizer"
-                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                      ></div>
-                    </div>
-                  </th>
-                ))}
-            </tr>
-          </thead>
+      <table ref={tableRef}>
+                        <thead>
+                            <tr>
+                                {[ "Tax Name",
+  "Tax Percentage",
+  "Description",
+  "Action"].map((header, index) => (
+                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                        <div className="header-content">
+                                            <span>{header}</span>
+                                            <div
+                                                className="resizer"
+                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                            ></div>
+                                        </div>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
 
           <tbody>
             {filteredUsers.map((user, index) => (
@@ -201,61 +176,59 @@ const SettingTax = () => {
       </div>
 
       <CustomModal
-        isOpen={showModal}
-        onClose={handleCloseModal}
-        className="supplier-setting-supplier-update-modal"
-      >
-        <div className="supplier-setting-modal-header">
-          <h5>{isEditMode ? `Edit Tax for ${selectedUser?.name}` : 'Add New Tax'}</h5>
-          {/* <button className="close" onClick={handleCloseModal}>&times;</button> */}
-        </div>
-        <div className="supplier-setting-modal-body">
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="taxName" className="supplier-setting-form-group">
-              <Form.Label className="supplier-setting-form-label">
-                Tax Name<span className="supplier-setting-text-danger">*</span>:
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="name"
-                value={selectedUser?.name || ''}
-                onChange={handleInputChange}
-                placeholder="Enter Tax Name"
-                required
-                className="supplier-setting-form-control"
-              />
-            </Form.Group>
+  isOpen={showModal}
+  onClose={handleCloseModal}
+  className="supplier-setting-supplier-update-modal"
+>
+  <div className="supplier-setting-modal-header">
+    <h5>{isEditMode ? `Edit Tax for ${selectedUser?.name}` : 'Add New Tax'}</h5>
+    {/* <button className="close" onClick={handleCloseModal}>&times;</button> */}
+  </div>
+  <div className="supplier-setting-modal-body">
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="taxName" className="supplier-setting-form-group">
+        
+        <FloatingInput
+        label={"Tax Name"}
+          type="text"
+          name="name"
+          value={selectedUser?.name || ''}
+          onChange={handleInputChange}
+          placeholder="Enter Tax Name"
+          required
+        />
+      </Form.Group>
 
-            <Form.Group controlId="taxPercentage" className="supplier-setting-form-group">
-              <Form.Label className="supplier-setting-form-label">Tax Percentage:</Form.Label>
-              <Form.Control
-                type="text"
-                name="percentage"
-                value={selectedUser?.percentage || ''}
-                onChange={handleInputChange}
-                placeholder="Enter Tax Percentage"
-                className="supplier-setting-form-control"
-              />
-            </Form.Group>
+      <Form.Group controlId="taxPercentage" className="supplier-setting-form-group">
+        <FloatingInput
+        label={"Tax Percentage"}
+          type="text"
+          name="percentage"
+          value={selectedUser?.percentage || ''}
+          onChange={handleInputChange}
+          placeholder="Enter Tax Percentage"
+         
+        />
+      </Form.Group>
 
-            <Form.Group controlId="description" className="supplier-setting-form-group">
-              <Form.Label className="supplier-setting-form-label">Description:</Form.Label>
-              <Form.Control
-                type="text"
-                name="description"
-                value={selectedUser?.description || ''}
-                onChange={handleInputChange}
-                placeholder="Enter Description"
-                className="supplier-setting-form-control"
-              />
-            </Form.Group>
+      <Form.Group controlId="description" className="supplier-setting-form-group">
+        <FloatingInput
+        label={"Description"}
+          type="text"
+          name="description"
+          value={selectedUser?.description || ''}
+          onChange={handleInputChange}
+          placeholder="Enter Description"
+          
+        />
+      </Form.Group>
 
-            <div className="supplier-setting-text-right">
-              <Button variant="primary" type="submit">Save</Button>
-            </div>
-          </Form>
-        </div>
-      </CustomModal>
+      <div className="supplier-setting-text-right">
+        <Button variant="primary" type="submit">Save</Button>
+      </div>
+    </Form>
+  </div>
+</CustomModal>
 
     </div>
   );

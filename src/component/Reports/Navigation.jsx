@@ -12,6 +12,7 @@ function Navigation() {
     const isLabSubNavOpen = location.pathname.startsWith('/reports/lab');
     const isAppointmentSubNavOpen = location.pathname.startsWith('/reports/appointment');
     const isBillingReportsSubNavOpen = location.pathname.startsWith('/reports/billingreports');
+    const isDoctorReportsSubNavOpen = location.pathname.startsWith('/reports/doctors')
 
     return (
         <div>
@@ -48,7 +49,7 @@ function Navigation() {
                 >
                     Patient
                 </NavLink>
-                <NavLink to="/reports/policecase" className="reports-nav-link">Police Case</NavLink>
+                {/* <NavLink to="/reports/policecase" className="reports-nav-link">Police Case</NavLink> */}
             </nav>
 
             {/* Admission Submenu */}
@@ -59,11 +60,11 @@ function Navigation() {
                         <Link to="/reports/admission/AdmittedPatient" className="patient-nav-link">Admitted Patient</Link>
                         <Link to="/reports/admission/DischargedPatient" className="patient-nav-link">Discharged Patient</Link>
                         <Link to="/reports/admission/TransferredPatient" className="patient-nav-link">Transferred Patient</Link>
-                        <Link to="/reports/admission/DiagnosisWisePatient" className="patient-nav-link">DiagnosisWise Patient</Link>
+                        {/* <Link to="/reports/admission/DiagnosisWisePatient" className="patient-nav-link">DiagnosisWise Patient</Link> */}
                         <Link to="/reports/admission/AdmissionDischargeList" className="patient-nav-link">Admission Discharge List</Link>
-                        <Link to="/reports/admission/RankMembershipWiseAdmittedPatient" className="patient-nav-link">Rank-MembershipWise Admitted Patient Report</Link>
+                        {/* <Link to="/reports/admission/RankMembershipWiseAdmittedPatient" className="patient-nav-link">Rank-MembershipWise Admitted Patient Report</Link>
                         <Link to="/reports/admission/InPatientOutstanding" className="patient-nav-link">InPatient Outstanding Report</Link>
-                        <Link to="/reports/admission/RankMembershipWiseDischargedPatient" className="patient-nav-link">Rank-MembershipWise Discharged Patient Report</Link>
+                        <Link to="/reports/admission/RankMembershipWiseDischargedPatient" className="patient-nav-link">Rank-MembershipWise Discharged Patient Report</Link> */}
                     </div>
                 </div>
             )}
@@ -73,7 +74,7 @@ function Navigation() {
                 <div className="patient-sub-nav-container">
                     <div className="Appointment-sub-nav">
                         <Link to="/reports/patient/Registration" className="patient-nav-link">Registration Report</Link>
-                        <Link to="/reports/patient/EditedDetails" className="patient-nav-link">Edited Patient Detail Report</Link>
+                        {/* <Link to="/reports/patient/EditedDetails" className="patient-nav-link">Edited Patient Detail Report</Link> */}
                     </div>
                 </div>
             )}
@@ -116,11 +117,11 @@ function Navigation() {
                         <Link to="/reports/lab/total-revenue" className="patient-nav-link">Total Revenue</Link>
                         <Link to="/reports/lab/item-wise-lab" className="patient-nav-link">Item Vise Lab</Link>
                         <Link to="/reports/lab/test-status-detail-report" className="patient-nav-link">Test Status Detail Report</Link>
-                        <Link to="/reports/lab/covid-country-wise" className="patient-nav-link">Covid Country Wise</Link>
-                        <Link to="/reports/lab/hiv-test-details-report" className="patient-nav-link">Hiv Test Details Report</Link>
-                        <Link to="/reports/lab/lab-culture-details-report" className="patient-nav-link">Lab Culture Details Report</Link>
+                        {/* <Link to="/reports/lab/covid-country-wise" className="patient-nav-link">Covid Country Wise</Link> */}
+                        {/* <Link to="/reports/lab/hiv-test-details-report" className="patient-nav-link">Hiv Test Details Report</Link> */}
+                        {/* <Link to="/reports/lab/lab-culture-details-report" className="patient-nav-link">Lab Culture Details Report</Link> */}
                         <Link to="/reports/lab/labtype-wise-test-count-report" className="patient-nav-link">LabType Wise Test Count Report</Link>
-                        <Link to="/reports/lab/covid-cases-detail-report" className="patient-nav-link">Covid Cases Details Report</Link>
+                        {/* <Link to="/reports/lab/covid-cases-detail-report" className="patient-nav-link">Covid Cases Details Report</Link> */}
 
                     </div>
                 </div>

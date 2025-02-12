@@ -45,11 +45,6 @@
   margin-bottom: 5px;
 }
 
-.purchase-order-form-summary-item label {
-  flex: 0 0 20%;
-  margin-right: 10px;
-  text-align: right;
-}
 .purchase-order-form-summary-buttons {
   text-align: right;
 }
@@ -88,22 +83,6 @@
   gap: 10px;
 }
 
-.purchase-order-form-item label {
-  font-size: var(--font-size);
-  margin-bottom: 0;
-  flex: 1 0 5px;
-  text-align: right;
-}
-
-.purchase-order-form-item input,
-.purchase-order-form-item select {
-  flex: 1;
-  padding: 5px;
-  font-size: var(--font-size);
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
 .purchase-span {
   color: red;
   padding: 5px;

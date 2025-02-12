@@ -8,58 +8,29 @@ import * as XLSX from 'xlsx';
 const PurchaseSummaryReport = () => {
   // const [suppliers, setSuppliers] = useState(usersData);
   const [searchTerm, setSearchTerm] = useState('');
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef=useRef(null);
   // const filteredUsers = suppliers.filter((user) =>
   //   Object.values(user).some((value) =>
   //     value.toString().toLowerCase().includes(searchTerm.toLowerCase())
   //   )
   // );
-  // Function to export table to Excel
-  const handleExport = () => {
-    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
-    const wb = XLSX.utils.book_new(); // Creates a new workbook
-    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
-    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
-  };
+ // Function to export table to Excel
+ const handleExport = () => {
+  const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+  const wb = XLSX.utils.book_new(); // Creates a new workbook
+  XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+  XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+};
 
-  // Function to trigger print
-  // Function to trigger print
-  const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-    <html>
-      <head>
-        <title>Print Table</title>
-        <style>
-          table {
-            width: 100%;
-            border-collapse: collapse;
-          }
-          th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-          }
-          th {
-            background-color: #f2f2f2;
-          }
-        </style>
-      </head>
-      <body>
-        ${printContent.outerHTML}
-      </body>
-    </html>
-  `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
-  };
+// Function to trigger print
+const handlePrint = () => {
+  window.print(); // Triggers the browser's print window
+};
   return (
     <div className="iten-purchase-container">
       <h2 className="iten-purchase-header"> ⚛ Purchase Summary Report</h2>
-
+      
       <div className="iten-purchase-filterRow">
         <div className='item-data-date'>
           <span>From: </span>
@@ -73,10 +44,10 @@ const PurchaseSummaryReport = () => {
             <option>--Select Supplier--</option>
           </select>
         </div>
-        <div>
-          <button className="iten-purchase-show-bt">Show Report</button>
+       <div>
+              <button className="iten-purchase-show-bt">Show Report</button>
 
-        </div>
+       </div>
       </div>
 
       <div className="iten-purchase-searchRow">
@@ -88,21 +59,21 @@ const PurchaseSummaryReport = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-
+      
       <div className='item-purchase-btn'>
-        <span>Showing 0 / 0 results</span>
-        <button className="iten-purchase-button" onClick={handleExport}>Export</button>
-        <button className="iten-purchase-button" onClick={handlePrint}>Print</button>
+      <span>Showing 0 / 0 results</span>
+        <button className="iten-purchase-button"onClick={handleExport}>Export</button>
+        <button className="iten-purchase-button"onClick={handlePrint}>Print</button>
       </div>
+      
 
-
-
+      
       <div className="item-purchase-ta">
-        <table ref={tableRef}>
+      <table  ref={tableRef}>
           <thead>
             <tr>
               {[
-                "Purchase", "Purchase Return", "Balance"
+                "Purchase", "Purchase Return", "Balance"   
               ].map((header, index) => (
                 <th
                   key={index}
@@ -133,13 +104,13 @@ const PurchaseSummaryReport = () => {
                 </tr>
               ))
             ) : ( */}
-            <tr className="iten-purchase-noRows">
-              <td colSpan="3">No records found</td>
-            </tr>
+              <tr className="iten-purchase-noRows">
+                <td colSpan="3">No records found</td>
+              </tr>
             {/* )} */}
           </tbody>
         </table>
-
+        
         {/* <div className="iten-purchase-pagination">
         <button className="iten-purchase-paginationButton">First</button>
         <button className="iten-purchase-paginationButton">Previous</button>

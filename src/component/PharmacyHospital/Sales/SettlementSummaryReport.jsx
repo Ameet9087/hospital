@@ -1,8 +1,9 @@
 /* Mohini_SettlementSummaryReport_WholePage_14/sep/2024 */
 import React, { useState, useEffect, useRef } from 'react';
 import './InvoiceBilling.css';
-import * as XLSX from 'xlsx';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import * as XLSX from 'xlsx';
+
 const SettlementSummaryReport = () => {
   const [columnWidths,setColumnWidths] = useState({});
   const tableRef=useRef(null);
@@ -16,37 +17,8 @@ const SettlementSummaryReport = () => {
   };
 
   // Function to trigger print
-   // Function to trigger print
-   const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
-        <head>
-          <title>Print Table</title>
-          <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
-            }
-          </style>
-        </head>
-        <body>
-          ${printContent.outerHTML}
-        </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+  const handlePrint = () => {
+    window.print(); // Triggers the browser's print window
   };
 
 

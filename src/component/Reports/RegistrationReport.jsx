@@ -1,337 +1,217 @@
-import React, { useState,useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import './UserCollectionReport.css';
-
 import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import { jsPDF } from "jspdf";
+import 'jspdf-autotable';
+
 const RegistrationReport = () => {
   const [showReport, setShowReport] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [filteredReportsData, setFilteredReportsData] = useState([]);
+  const [reportsData, setReportsData] = useState([]); // Store original data
+  const [filteredReportsData, setFilteredReportsData] = useState([]); // Store filtered data
   const [columnWidths, setColumnWidths] = useState({});
+  const [fromDate, setFromDate] = useState('');
+  const [toDate, setToDate] = useState('');
+  const [selectedGender, setSelectedGender] = useState('All'); // State for gender filter
+  const [searchQuery, setSearchQuery] = useState(''); // State for search input
   const tableRef = useRef(null);
 
+  useEffect(() => {
+    fetch("http://192.168.233.114:8080/api/patient-register/all")
+      .then(response => response.json())
+      .then(data => {
+        setReportsData(data);
+        setFilteredReportsData(data);
+      })
+      .catch(error => console.error("Error fetching data:", error));
+  }, []);
+
   const handlePrint = () => {
-    window.print(); // Simple print functionality using the browser's print dialog
+    const doc = new jsPDF('l', 'mm', 'a4');
+    doc.setFontSize(16);
+    doc.text('Patient Registration Report', doc.internal.pageSize.width / 2, 15, { align: 'center' });
+    doc.setFontSize(10);
+    doc.text(`From Date: ${fromDate}`, 14, 25);
+    doc.text(`To Date: ${toDate}`, 14, 30);
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 35);
+
+    // Prepare the table data
+    const tableData = filteredReportsData.map(patient => [
+      patient.registrationDate,
+      `${patient.firstName} ${patient.lastName}`,
+      patient.dateOfBirth,
+      patient.age,
+      patient.gender,
+      patient.mobileNumber,
+      patient.country,
+      patient.address,
+      patient.emailId,
+      patient.policyNumber
+    ]);
+
+    const headers = [
+      "Registration Date",
+      "Patient Name",
+      "Date of Birth",
+      "Age",
+      "Gender",
+      "Phone Number",
+      "Country",
+      "Address",
+      "Email",
+      "Policy No"
+    ];
+
+    doc.autoTable({
+      head: [headers],
+      body: tableData,
+      startY: 40,
+      styles: {
+        fontSize: 8,
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: [51, 122, 183],
+        textColor: 255,
+        fontSize: 9,
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+    });
+
+    // Add total collection or any other summary you need
+    const lastY = doc.lastAutoTable.finalY;
+    doc.text(`Total Patients: ${filteredReportsData.length}`, 14, lastY + 10);
+
+    const pdfOutput = doc.output('bloburl');
+    window.open(pdfOutput, '_blank');
   };
 
   const handleExport = () => {
-    console.log('Export function not yet implemented');
-    // Implement your export logic here
+    if (filteredReportsData.length === 0) {
+      alert("No data available to export!");
+      return;
+    }
+
+    const ws = XLSX.utils.table_to_sheet(tableRef.current);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'PatientRegistrationReport');
+    XLSX.writeFile(wb, 'Patient_Registration_Report.xlsx');
   };
+
 
   const handlePopupToggle = () => {
     setIsPopupOpen(!isPopupOpen);
   };
 
   const handleDateRangeSelection = (range) => {
-    console.log('Selected Range:', range);
-    // Implement the logic to filter data based on the selected range
-    setIsPopupOpen(false); // Close the popup after selection
+    setIsPopupOpen(false);
+    const today = new Date();
+    let fromDateValue = new Date();
+
+    switch (range) {
+      case 'Today':
+        setFromDate(today.toISOString().split('T')[0]);
+        setToDate(today.toISOString().split('T')[0]);
+        break;
+      case 'Last 1 Week':
+        fromDateValue.setDate(today.getDate() - 7);
+        setFromDate(fromDateValue.toISOString().split('T')[0]);
+        setToDate(today.toISOString().split('T')[0]);
+        break;
+      case 'Last 1 Month':
+        fromDateValue.setMonth(today.getMonth() - 1);
+        setFromDate(fromDateValue.toISOString().split('T')[0]);
+        setToDate(today.toISOString().split('T')[0]);
+        break;
+      case 'Last 3 Months':
+        fromDateValue.setMonth(today.getMonth() - 3);
+        setFromDate(fromDateValue.toISOString().split('T')[0]);
+        setToDate(today.toISOString().split('T')[0]);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const filterData = (gender, query) => {
+    let filteredData = reportsData;
+
+    if (gender !== 'All') {
+      filteredData = filteredData.filter(patient => patient.gender === gender);
+    }
+
+    if (query) {
+      filteredData = filteredData.filter(patient =>
+        `${patient.firstName} ${patient.lastName}`.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+
+    setFilteredReportsData(filteredData);
+  };
+
+  const handleGenderChange = (event) => {
+    const gender = event.target.value;
+    setSelectedGender(gender);
+    filterData(gender, searchQuery);
   };
 
   const handleSearch = (query) => {
-    // Filter reportsData based on the query
-    console.log(`Searching for: ${query}`);
+    setSearchQuery(query);
+    filterData(selectedGender, query);
   };
-
-  // Sample reportsData, replace with actual data
-  const reportsData = [
-    {
-      registeredDate: '1-Aug-2024',
-      patientName: 'Test 1',
-      dateOfBirth: '01-Aug-1991',
-      age: '33Y',
-      gender: 'Male',
-      phoneNumber: '234567890',
-      country: 'Kenya',
-      address: 'sodo',
-      schemeName: 'Astra',
-      bloodGroup: 'AB positive',
-      email: 'yaredgetu@...',
-      insuranceNo: '1234',
-    },
-    {
-      registeredDate: '1-Aug-2024',
-      patientName: 'Yared Getu Kusa',
-      dateOfBirth: '31-Jul-2002',
-      age: '22Y',
-      gender: 'Male',
-      phoneNumber: '92322323',
-      country: 'Ethiopia',
-      address: '23A, 2nd Street',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'saravanans@...',
-      insuranceNo: '5678',
-    },
-    {
-      registeredDate: '1-Jul-2024',
-      patientName: 'Saravanan Fgg s',
-      dateOfBirth: '01-Jul-2024',
-      age: '16Y',
-      gender: 'Male',
-      phoneNumber: '9086543245',
-      country: 'India',
-      address: '453',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'loicntwaliO@...',
-      insuranceNo: '9101',
-    },
-    {
-      registeredDate: '6-Jul-2024',
-      patientName: 'Mathayo Mihangwa M...',
-      dateOfBirth: '26-Jul-2008',
-      age: '35Y',
-      gender: 'Male',
-      phoneNumber: '0768634033',
-      country: 'Kenya',
-      address: '906-10400',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'ASDASDA@...',
-      insuranceNo: '1121',
-    },
-    {
-      registeredDate: '10-Jul-2024',
-      patientName: 'Asdasd Asdasdas',
-      dateOfBirth: '20-Jul-1989',
-      age: '27Y',
-      gender: 'Male',
-      phoneNumber: '0930976026',
-      country: 'Rwanda',
-      address: 'dfsdf fgfgd',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'mitaliaggar@...',
-      insuranceNo: '1314',
-    },
-    {
-      registeredDate: '18-Jul-2024',
-      patientName: 'John Munye',
-      dateOfBirth: '18-Jul-1997',
-      age: '29Y',
-      gender: 'Male',
-      phoneNumber: '0788000000',
-      country: 'United States',
-      address: 'cvxcvxcxczx',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '1516',
-    },
-    {
-      registeredDate: '14-Jul-2024',
-      patientName: 'Post As Malone',
-      dateOfBirth: '07-Apr-1995',
-      age: '22Y',
-      gender: 'Male',
-      phoneNumber: '54564354',
-      country: 'Kenya',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '1718',
-    },
-    {
-      registeredDate: '1-Jul-2024',
-      patientName: 'Sajid Passa Shafin',
-      dateOfBirth: '10-Jul-2002',
-      age: '45Y',
-      gender: 'Male',
-      phoneNumber: '22222',
-      country: 'India',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '1920',
-    },
-    {
-      registeredDate: '8-Jul-2024',
-      patientName: 'Stephen Kariuki',
-      dateOfBirth: '08-Jul-1979',
-      age: '25Y',
-      gender: 'Male',
-      phoneNumber: '0705720712',
-      country: 'Kenya',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '2122',
-    },
-    {
-      registeredDate: '7-Jun-2024',
-      patientName: 'Test Patient',
-      dateOfBirth: '27-Jun-1999',
-      age: '3M',
-      gender: 'Male',
-      phoneNumber: '123456789',
-      country: 'Kenya',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '2324',
-    },
-    {
-      registeredDate: '5-Jun-2024',
-      patientName: 'Cdsfssdfsdf Dsfsdffds...',
-      dateOfBirth: '25-Mar-2024',
-      age: '15M',
-      gender: 'Male',
-      phoneNumber: '232344',
-      country: 'Kenya',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '2526',
-    },
-    {
-      registeredDate: '1-Jun-2024',
-      patientName: 'Isaac John',
-      dateOfBirth: '19-Jun-1984',
-      age: '29Y',
-      gender: 'Male',
-      phoneNumber: '0765656565',
-      country: 'Kenya',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '2728',
-    },
-    {
-      registeredDate: '1-Jun-2024',
-      patientName: 'James Gathanju',
-      dateOfBirth: '19-Jun-2009',
-      age: '12M',
-      gender: 'Male',
-      phoneNumber: '0765343434',
-      country: 'Kenya',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '2930',
-    },
-    {
-      registeredDate: '18-Jun-2024',
-      patientName: 'Brian Okumu',
-      dateOfBirth: '19-Jun-1995',
-      age: '16Y',
-      gender: 'Male',
-      phoneNumber: '0878564545',
-      country: 'Kenya',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '3132',
-    },
-    {
-      registeredDate: '18-Jun-2024',
-      patientName: 'James Omondi',
-      dateOfBirth: '18-Jun-2012',
-      age: '34Y',
-      gender: 'Male',
-      phoneNumber: '0784536718',
-      country: 'Kenya',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '3334',
-    },
-    {
-      registeredDate: '18-Jun-2024',
-      patientName: 'Joseph Gathanga',
-      dateOfBirth: '18-Jun-2008',
-      age: '23Y',
-      gender: 'Male',
-      phoneNumber: '0735634231',
-      country: 'Kenya',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '3536',
-    },
-    {
-      registeredDate: '18-Jun-2024',
-      patientName: 'Joseph Wambui',
-      dateOfBirth: '18-Jun-1990',
-      age: '23Y',
-      gender: 'Male',
-      phoneNumber: '0745634536',
-      country: 'Kenya',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '3738',
-    },
-    {
-      registeredDate: '18-Jun-2024',
-      patientName: 'Kevin Gichango',
-      dateOfBirth: '18-Jun-2001',
-      age: '67Y',
-      gender: 'Male',
-      phoneNumber: '0785963452',
-      country: 'Kenya',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '3940',
-    },
-    {
-      registeredDate: '18-Jun-2024',
-      patientName: 'Kevin Nguthiru',
-      dateOfBirth: '18-Jun-2001',
-      age: '67Y',
-      gender: 'Male',
-      phoneNumber: '0784563428',
-      country: 'Kenya',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '4142',
-    },
-    {
-      registeredDate: '18-Jun-2024',
-      patientName: 'Kevin Nguthiru',
-      dateOfBirth: '18-Jun-1957',
-      age: '67Y',
-      gender: 'Male',
-      phoneNumber: '0743763872',
-      country: 'Kenya',
-      address: 'Address example',
-      schemeName: 'General',
-      bloodGroup: 'AB positive',
-      email: 'example@domain.com',
-      insuranceNo: '4344',
-    },  ];
-
   const handleShowReport = () => {
+    if (!fromDate && !toDate) {
+      // If both dates are empty, show all data
+      setFilteredReportsData(reportsData);
+      setShowReport(true);
+      return;
+    }
+
+    if (!fromDate || !toDate) {
+      alert("Please select both From and To date.");
+      return;
+    }
+
+    const from = new Date(fromDate);
+    const to = new Date(toDate);
+    to.setHours(23, 59, 59, 999); // Include the full day
+
+    // Check if both dates are valid
+    if (isNaN(from.getTime()) || isNaN(to.getTime())) {
+      alert("Invalid date range!");
+      return;
+    }
+
+    // Filter data based on date range
+    const filteredData = reportsData.filter((patient) => {
+      const registrationDate = new Date(patient.registrationDate);
+      return registrationDate >= from && registrationDate <= to;
+    });
+
+    if (filteredData.length === 0) {
+      alert("No data found for the selected date range!");
+    }
+
+    setFilteredReportsData(filteredData);
     setShowReport(true);
-    setFilteredReportsData(reportsData); // Show all data initially or apply any filters if needed
   };
+
+
 
   return (
     <div className="user-collection-report">
       <div className="user-collection-report-header">
-        <h3 className="user-collection-report-title">⚛ Patient Registration Report</h3>
+        <h3 className="user-collection-report-title">⚛Patient Registration Report</h3>
         <div className="user-collection-report-filters">
           <div className="user-collection-report-date-filter">
             <label>From:</label>
-            <input type="date" />
+            <input type="date" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
             <label>To:</label>
-            <input type="date" />
+            <input type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} />
             <button className="user-collection-report-fav-btn">☆</button>
             <button className="user-collection-report-fav-btn" onClick={handlePopupToggle}>-</button>
 
@@ -346,128 +226,87 @@ const RegistrationReport = () => {
               </div>
             )}
           </div>
-
-          <button className="user-collection-report-show-btn" onClick={handleShowReport}>Show Report</button>
-        </div>
-      </div>
-
-      <div className='user-collection-report-counter'>
-        <div className="user-collection-report-gender-filter">
-          <label>Gender:</label>
-          <div className="gender-options">
-            <label>
-              <input type="checkbox" value="Male" />
-              Male
-            </label>
-            <label>
-              <input type="checkbox" value="Female" />
-              Female
-            </label>
-            <label>
-              <input type="checkbox" value="All" />
-              All
-            </label>
+          <div className="user-collection-report-gender-filter">
+            <label>Gender:</label>
+            <div className="gender-options">
+              <label>
+                <input type="radio" name="gender" value="Male" checked={selectedGender === 'Male'} onChange={handleGenderChange} />
+                Male
+              </label>
+              <label>
+                <input type="radio" name="gender" value="Female" checked={selectedGender === 'Female'} onChange={handleGenderChange} />
+                Female
+              </label>
+              <label>
+                <input type="radio" name="gender" value="All" checked={selectedGender === 'All'} onChange={handleGenderChange} />
+                All
+              </label>
+            </div>
           </div>
-        </div>
-
-        <div className="user-collection-report-counter-filter">
-          <label>Select User:</label>
-          <select>
-            <option value="All">All</option>
-            {/* Add more options as needed */}
-          </select>
+          <button className="user-collection-report-show-btn" onClick={handleShowReport}>Show Report</button>
         </div>
       </div>
 
       {showReport && (
         <>
-          {filteredReportsData.length > 0 ? (
-            <>
-              <div className="user-collection-report-controls">
-                <input
-                  type="text"
-                  className="user-collection-report-search"
-                  placeholder="Search..."
-                  onChange={(e) => handleSearch(e.target.value)}
-                />
-                <div className="user-collection-page-results-info">
-                  Showing {filteredReportsData.length}/{filteredReportsData.length} results
-                </div>
-                <button className="user-collection-report-print-btn" onClick={handlePrint}>Print</button>
-                <button className="user-collection-report-print-btn" onClick={handleExport}>Export</button>
-              </div>
+          <div className="user-collection-report-controls">
+            <input
+              type="text"
+              className="user-collection-report-search"
+              placeholder="Search by Patient Name..."
+              value={searchQuery}
+              onChange={(e) => handleSearch(e.target.value)}
+            />
+            <div className="user-collection-page-results-info">
+              Showing {filteredReportsData.length}/{reportsData.length} results
+            </div>
 
-              <div className='user-collection-report-tab'>
-                <div className="table-scroll-container">
-                <table className="patientList-table" ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-               "Registered Date",
-                "Patient Name",
-                "Date of Birth",
-                "Age",
-                "Gender",
-                "Phone Number",
-                "Country",
-                "Address",
-                "Scheme Name",
-                "Blood Group",
-                "Email",
-                "Insurance No"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-                    <tbody>
-                      {filteredReportsData.map((row, index) => (
-                        <tr key={index}>
-                          <td>{row.registeredDate}</td>
-                          <td>{row.patientName}</td>
-                          <td>{row.dateOfBirth}</td>
-                          <td>{row.age}</td>
-                          <td>{row.gender}</td>
-                          <td>{row.phoneNumber}</td>
-                          <td>{row.country}</td>
-                          <td>{row.address}</td>
-                          <td>{row.schemeName}</td>
-                          <td>{row.bloodGroup}</td>
-                          <td>{row.email}</td>
-                          <td>{row.insuranceNo}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+            <button className="user-collection-report-print-btn" onClick={handlePrint}>Print</button>
+            <button className="user-collection-report-print-btn" onClick={handleExport}>Export</button>
+          </div>
 
-                <div className="user-collection-report-page-no">
-                  <Button className="user-collection-report-pagination-btn">First</Button>
-                  <Button className="user-collection-report-pagination-btn">Previous</Button>
-                  <span>Page 1 of 4</span>
-                  <Button className="user-collection-report-pagination-btn">Next</Button>
-                  <Button className="user-collection-report-pagination-btn">Last</Button>
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="user-name-no-row">No Rows To Show</div>
-          )}
+          <div className="user-collection-report-tab">
+            <div className="table-scroll-container">
+              <table className="patientList-table" ref={tableRef}>
+                <thead>
+                  <tr>
+                    {["Registration Date ", "Patient Name", "Date of Birth", "Age", "Gender", "Phone Number", "Country", "Address", "Email", "Policy No"].map((header, index) => (
+                      <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                        <div className="header-content">
+                          <span>{header}</span>
+                          <div className="resizer" onMouseDown={startResizing(tableRef, setColumnWidths)(index)}></div>
+                        </div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredReportsData.length > 0 ? (
+                    filteredReportsData.map((row, index) => (
+                      <tr key={index}>
+                        <td>{row.registrationDate}</td>
+                        <td>{`${row.firstName} ${row.lastName}`}</td>
+                        <td>{row.dateOfBirth}</td>
+                        <td>{row.age}</td>
+                        <td>{row.gender}</td>
+                        <td>{row.mobileNumber}</td>
+                        <td>{row.country}</td>
+                        <td>{row.address}</td>
+                        <td>{row.emailId}</td>
+                        <td>{row.policyNumber}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="10" style={{ textAlign: "center", fontWeight: "bold" }}>
+                        No Patients Found
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </>
       )}
     </div>

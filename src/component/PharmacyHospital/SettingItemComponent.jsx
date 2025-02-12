@@ -1,36 +1,41 @@
 /* Mohini_SettingItemComponent_WholePage_14/sep/2024 */
-import React, { useState, useEffect, useRef } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
-import axios from "axios";
-import "./SettingSupplier.css"; // Ensure this contains relevant styles
-import { API_BASE_URL } from "../api/api";
-import CustomModal from "../../CustomModel/CustomModal";
-import useCustomAlert from "../../alerts/useCustomAlert";
-import * as XLSX from "xlsx";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
-import AddItemMaster from "./AddItemMaster";
+import React, { useState, useEffect,useRef } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
+import axios from 'axios';
+import './SettingSupplier.css'; // Ensure this contains relevant styles
+import { API_BASE_URL } from '../api/api';
+import CustomModal from '../../CustomModel/CustomModal';
+import useCustomAlert from '../../alerts/useCustomAlert';
+import * as XLSX from 'xlsx';
+import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
+import AddItemMaster from './AddItemMaster';
+
 
 const SettingItemComponent = () => {
   const [items, setItems] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const { success, error, CustomAlerts } = useCustomAlert();
   const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
+    const tableRef = useRef(null);
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const itemsResponse = await axios.get(
-          `${API_BASE_URL}/pharmacy-item-master`
-        );
+        const itemsResponse = await 
+          axios.get(`${API_BASE_URL}/pharmacy-item-master`);
 
-        console.log("Items Response:", itemsResponse.data);
+        console.log('Items Response:', itemsResponse.data);
+    
+
         setItems(itemsResponse.data);
+  
       } catch (error) {
-        console.error("Error fetching data:", error);
+        setError('Error fetching data');
+        console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
       }
@@ -39,23 +44,13 @@ const SettingItemComponent = () => {
     fetchData();
   }, [showModal]);
 
-  // ✅ Updated search logic to filter by all relevant fields
-  const filteredItems = items.filter(
-    (item) =>
-      item.genericNames?.genericName
-        ?.toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      item.itemName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.manufactures?.companyName
-        ?.toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      item.itemType?.itemType?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.reOrderQuantity?.toString().includes(searchTerm) ||
-      item.minStockQuantity?.toString().includes(searchTerm)
+  const filteredItems = items.filter(item =>
+    item.genericNameDTO?.genericName?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  console.log("Search Term:", searchTerm);
-  console.log("Filtered Items:", filteredItems);
+  console.log('Search Term:', searchTerm);
+  console.log('Items:', items);
+  console.log('Filtered Items:', filteredItems);
 
   const handleShowModal = (item) => {
     setShowModal(true);
@@ -63,52 +58,30 @@ const SettingItemComponent = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setSelectedItem(null);
   };
 
-  // ✅ Function to export table to Excel
+ 
+  // Function to export table to Excel
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
     const wb = XLSX.utils.book_new(); // Creates a new workbook
-    XLSX.utils.book_append_sheet(wb, ws, "PurchaseOrderReport"); // Appends worksheet to workbook
-    XLSX.writeFile(wb, "PurchaseOrderReport.xlsx"); // Downloads the Excel file
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
   };
 
-  // ✅ Function to trigger print
+  // Function to trigger print
   const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
-        <head>
-          <title>Print Table</title>
-          <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
-            }
-          </style>
-        </head>
-        <body>
-          ${printContent.outerHTML}
-        </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+    window.print(); // Triggers the browser's print window
   };
+
+
+
+
 
   return (
     <div className="setting-supplier-container">
-      <CustomAlerts />
+      <CustomAlerts/>
       <div className="setting-supplier-header">
         <button
           className="setting-supplier-add-user-button"
@@ -124,60 +97,53 @@ const SettingItemComponent = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-
-      <div className="setting-supplier-span">
-        Showing {filteredItems.length} / {items.length} results
-        <button className="item-wise-export-button" onClick={handleExport}>
-          Export
-        </button>
-        <button className="item-wise-print-button" onClick={handlePrint}>
-          Print
-        </button>
-      </div>
-
+      {/* <div className="setting-supplier-span"> */}
+    
+          <div className='setting-supplier-span'>
+          Showing {filteredItems.length} / {items.length} results
+  <button className='item-wise-export-button'onClick={handleExport}>Export</button>
+  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
+</div>
+        
+      {/* </div> */}
       <div className="table-container">
-        <table ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-                "Generic Name",
-                "Medicine Name",
-                "Company Name",
-                "Item Type",
-                "ReOrder Quantity",
-                "MinStock Quantity",
-                "Action",
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(tableRef, setColumnWidths)(
-                        index
-                      )}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
+      <table ref={tableRef}>
+                        <thead>
+                            <tr>
+                                {[ "Generic Name",
+  "Medicine Name",
+  "Company Name",
+  "Item Type",
+  "ReOrder Quantity",
+  "MinStock Quantity",
+  "Action"].map((header, index) => (
+                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                                        <div className="header-content">
+                                            <span>{header}</span>
+                                            <div
+                                                className="resizer"
+                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                                            ></div>
+                                        </div>
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
 
           <tbody>
-            {filteredItems.length ? (
-              filteredItems.map((item, index) => (
+            {items.length ? (
+              items.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.genericNames?.genericName || "N/A"}</td>
-                  <td>{item.itemName || "N/A"}</td>
-                  <td>{item.manufactures?.companyName || "N/A"}</td>
-                  <td>{item.itemType?.itemType || "N/A"}</td>
-                  <td>{item.reOrderQuantity || "N/A"}</td>
-                  <td>{item.minStockQuantity || "N/A"}</td>
+                  <td>{item.genericNames?.genericName || 'N/A'}</td>
+                  <td>{item.itemName || 'N/A'}</td>
+                  <td>{item.manufactures?.companyName || 'N/A'}</td>
+                  <td>{item.itemType?.itemType || 'N/A'}</td>
+                  <td>{item.reOrderQuantity || 'N/A'}</td>
+                  <td>{item.minStockQuantity || 'N/A'}</td>
                   <td className="setting-supplier-action-buttons">
+                    {/* <button className="setting-supplier-action-button">
+                      Add To Rack
+                    </button> */}
                     <button
                       className="setting-supplier-action-button"
                       onClick={() => handleShowModal(item)}
@@ -189,7 +155,7 @@ const SettingItemComponent = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="7">No items found</td>
+                <td colSpan="9">No items found</td>
               </tr>
             )}
           </tbody>
@@ -197,8 +163,10 @@ const SettingItemComponent = () => {
       </div>
 
       <CustomModal isOpen={showModal} onClose={handleCloseModal}>
-        <AddItemMaster onClose={handleCloseModal} />
+        <AddItemMaster onClose={handleCloseModal}/>
       </CustomModal>
+      
+
     </div>
   );
 };
