@@ -3,7 +3,12 @@ import "./CreateRequest.css";
 import PopupTable from "../../Admission/PopupTable";
 import { FaSearch } from "react-icons/fa";
 import { API_BASE_URL } from "../../api/api";
-
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 const CreateRequest = ({ onClose, onSubmit }) => {
   const [activePopup, setActivePopup] = useState(null);
   const [patient, setPatient] = useState([]);
@@ -36,7 +41,6 @@ const CreateRequest = ({ onClose, onSubmit }) => {
 
         setPatient(formattedPatients);
         console.log("formattedPatients", formattedPatients);
-
       } catch (error) {
         console.error("Error fetching transport info:", error);
       }
@@ -44,8 +48,6 @@ const CreateRequest = ({ onClose, onSubmit }) => {
 
     fetchTransferPatients();
   }, []);
-
-
 
   const getPopupData = () => {
     if (activePopup === "transportrequest") {
@@ -57,7 +59,8 @@ const CreateRequest = ({ onClose, onSubmit }) => {
   const handleSelect = (selectedData) => {
     if (activePopup === "transportrequest") {
       setSelectedPatient({
-        patientRegistrationId: patient?.inPatient?.patient?.patientRegistrationId,
+        patientRegistrationId:
+          patient?.inPatient?.patient?.patientRegistrationId,
         // patient_id:selectedData.inPatient?.patient?.patientRegistrationId
       });
       console.log("111111111111111", selectedData);
@@ -75,11 +78,6 @@ const CreateRequest = ({ onClose, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!selectedPatient || !pickupLocation || !dropLocation || !transportType || !priority) {
-      alert("All fields are required!");
-      return;
-    }
-
     const requestData = {
       requestType: transportType,
       status: priority,
@@ -95,20 +93,15 @@ const CreateRequest = ({ onClose, onSubmit }) => {
         body: JSON.stringify(requestData),
       });
 
-      alert("Transport request created successfully!");
+      toast.success("Transport request created successfully!");
 
-      // Reset form fields after successful submission
-      // setSelectedPatient(null);
       setTransportType("");
       setPriority("");
       setPickupLocation("");
       setDropLocation("");
-
-      // if (onSubmit) {
-      //   onSubmit(result);
-      // }
     } catch (error) {
       console.error("Error submitting request:", error);
+      toast.error("Failed Transport request ");
     }
   };
 
@@ -119,7 +112,7 @@ const CreateRequest = ({ onClose, onSubmit }) => {
           Create Transport Request
         </span>
 
-        <form >
+        <form>
           {/* <div className="transport-request-form-group">
             <label>Patient ID:</label>
             <input
@@ -132,37 +125,42 @@ const CreateRequest = ({ onClose, onSubmit }) => {
           </div> */}
 
           <div className="transport-request-form-group">
-            <label>Transport Type:</label>
-            <select
+            <FloatingSelect
+              label="Transport Type"
+              name="transportType"
               value={transportType}
               onChange={(e) => setTransportType(e.target.value)}
+              options={[
+                { value: "", label: "Select Transport Type" },
+                { value: "Patient Transfer", label: "Patient Transfer" },
+                { value: "Equipment Transport", label: "Equipment Transport" },
+                { value: "Lab Sample Transfer", label: "Lab Sample Transfer" },
+              ]}
               required
-            >
-              <option value="">Select Transport Type</option>
-              <option value="Patient Transfer">Patient Transfer</option>
-              <option value="Equipment Transport">Equipment Transport</option>
-              <option value="Lab Sample Transfer">Lab Sample Transfer</option>
-            </select>
+            />
           </div>
 
           <div className="transport-request-form-group">
-            <label>Priority:</label>
-            <select
+            <FloatingSelect
+              label="Priority"
+              name="priority"
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
+              options={[
+                { value: "", label: "Select Priority" },
+                { value: "Low", label: "Low" },
+                { value: "Medium", label: "Medium" },
+                { value: "High", label: "High" },
+                { value: "Critical", label: "Critical" },
+              ]}
               required
-            >
-              <option value="">Select Priority</option>
-              <option value="Low">Low</option>
-              <option value="Medium">Medium</option>
-              <option value="High">High</option>
-              <option value="Critical">Critical</option>
-            </select>
+            />
           </div>
 
           <div className="transport-request-form-group">
-            <label>Pickup Location:</label>
-            <input
+            
+            <FloatingInput
+              label={"Pickup Location"}
               type="text"
               value={pickupLocation}
               onChange={(e) => setPickupLocation(e.target.value)}
@@ -171,8 +169,8 @@ const CreateRequest = ({ onClose, onSubmit }) => {
           </div>
 
           <div className="transport-request-form-group">
-            <label>Drop-off Location:</label>
-            <input
+            <FloatingInput
+              label={"Drop-off Location"}
               type="text"
               value={dropLocation}
               onChange={(e) => setDropLocation(e.target.value)}
@@ -181,7 +179,11 @@ const CreateRequest = ({ onClose, onSubmit }) => {
           </div>
 
           <div className="transport-request-modal-actions">
-            <button onClick={handleSubmit} className="transport-request-model-action-button" type="submit">
+            <button
+              onClick={handleSubmit}
+              className="transport-request-model-action-button"
+              type="submit"
+            >
               Submit
             </button>
           </div>

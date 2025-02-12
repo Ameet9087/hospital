@@ -17,33 +17,26 @@
 .patient-details {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 5px;
+  gap: 15px;
+  background-color: white;
   margin-bottom: 10px;
+  padding: 40px;
 
 }
 
 .detail {
   display: grid;
-  grid-template-columns: 80px 150px 40px; /* Fixed widths for label and input */
+  /* grid-template-columns: 80px 150px 40px;  */
   align-items: center;
   gap: 2px;
 }
 
 .detail label {
-  font-weight: bold;
+  /* font-weight: bold; */
   font-size: 12px;
 }
 
-.detail input, 
-.detail select, 
-.detail button {
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 12px;
-  width: 100%;
-  box-sizing: border-box;
-}
+
 
 
 
@@ -51,17 +44,17 @@
   background-color: #0056b3;
 } */
 
-.patient-details a {
+/* .patient-details a {
   grid-column: span 4;
   color: #007bff;
   cursor: pointer;
   text-decoration: underline;
   margin-top: 10px;
-}
+} */
 
 .item-details {
   margin-top: 20px;
-  /* overflow-x: scroll; */
+  
 }
 
 .item-table {
@@ -125,7 +118,7 @@
  .ipdissuedward-section label {
    flex: 1;
    font-size: 14px;
-   width: 50px;
+   /* width: 50px; */
  }
  
  .ipdissuedward-section input {

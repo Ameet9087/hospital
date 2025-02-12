@@ -6,6 +6,12 @@ import { API_BASE_URL } from '../../../api/api';
 import CustomModal from '../../../../CustomModel/CustomModal';
 import * as XLSX from 'xlsx';
 import RequisitionDetails from './RequisitionDetails';
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 
 function SSPRequisition() {
   const { store } = useParams();
@@ -189,12 +195,13 @@ function SSPRequisition() {
       <div className="sSPRequisition-search-N-results">
         <div className="sSPRequisition-search-bar">
           <i className="fa-solid fa-magnifying-glass"></i>
-          <input 
-            type="text" 
-            placeholder="Search" 
-            value={searchQuery}
-            onChange={handleSearch}
-          />
+          
+          <FloatingInput
+              label={"Search"}
+              type="search"
+              value={searchQuery}
+              onChange={handleSearch}
+            />
         </div>
         <div className="sSPRequisition-results-info">
           <span>Showing {filteredRequisitions?.length} / {requisitions?.length} results</span>

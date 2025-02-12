@@ -1,33 +1,40 @@
 /* Ajhar tamboli sSPStoreTransfer.jsx 19-09-24 */
 
-
-import React, { useEffect, useState } from 'react'
-import "../SSPharmacy/sSPStoreTransfer.css"
-import { API_BASE_URL } from '../../../api/api';
-import { useParams } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import PopupTable from '../../../Admission/PopupTable';
-import axios from 'axios';
-import CustomModal from '../../../../CustomModel/CustomModal';
+import React, { useEffect, useState } from "react";
+import "../SSPharmacy/sSPStoreTransfer.css";
+import { API_BASE_URL } from "../../../api/api";
+import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import PopupTable from "../../../Admission/PopupTable";
+import axios from "axios";
+import CustomModal from "../../../../CustomModel/CustomModal";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 function SSPStoreTransfer() {
   const { store } = useParams();
   const [showModal, setShowModal] = useState(false);
   const [activePopup, setActivePopup] = useState(null);
   const [activeRowIndex, setActiveRowIndex] = useState(null);
   const [itemData, setItemData] = useState([]);
-  const [packageTableRows, setPackageTableRows] = useState([{
-    sn: 1,
-    itemName: "",
-    genericName: "",
-    batchNo: "",
-    costprice: "",
-    availableQuantity: "",
-    returnQuantity: "",
-    quantity: "",
-    expiryDate: "",
-    isSelected: false,
-  }]);
+  const [packageTableRows, setPackageTableRows] = useState([
+    {
+      sn: 1,
+      itemName: "",
+      genericName: "",
+      batchNo: "",
+      costprice: "",
+      availableQuantity: "",
+      returnQuantity: "",
+      quantity: "",
+      expiryDate: "",
+      isSelected: false,
+    },
+  ]);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]); // Selected rows for transfer
   const [receivedBy, setReceivedBy] = useState(""); // Received By field value
@@ -52,13 +59,15 @@ function SSPStoreTransfer() {
 
   const handleDeleteRow = (index) => {
     setPackageTableRows((prev) =>
-      prev.filter((_, i) => i !== index).map((row, i) => ({ ...row, sn: i + 1 }))
+      prev
+        .filter((_, i) => i !== index)
+        .map((row, i) => ({ ...row, sn: i + 1 }))
     );
   };
 
   const handleSelectAll = () => {
     setSelectAll((prev) => !prev);
-    const updatedRows = packageTableRows.map(row => ({
+    const updatedRows = packageTableRows.map((row) => ({
       ...row,
       isSelected: !selectAll,
     }));
@@ -71,9 +80,11 @@ function SSPStoreTransfer() {
     setPackageTableRows(updatedRows);
 
     if (checked) {
-      setSelectedRows(prev => [...prev, updatedRows[index]]);
+      setSelectedRows((prev) => [...prev, updatedRows[index]]);
     } else {
-      setSelectedRows(prev => prev.filter(row => row.sn !== updatedRows[index].sn));
+      setSelectedRows((prev) =>
+        prev.filter((row) => row.sn !== updatedRows[index].sn)
+      );
     }
   };
 
@@ -95,7 +106,7 @@ function SSPStoreTransfer() {
     if (selectedRows.length > 0) {
       setShowModal(true);
     } else {
-      alert('Please select at least one row');
+      alert("Please select at least one row");
     }
   };
 
@@ -109,17 +120,17 @@ function SSPStoreTransfer() {
 
   const handleConfirmTransfer = async () => {
     if (!receivedBy.trim()) {
-      alert("Please enter the 'Received By' information.");
+      toast.error("Please enter the 'Received By' information.");
       return;
     }
 
-    const transferDate = new Date().toISOString().split('T')[0]; // Get today's date in 'YYYY-MM-DD' format
+    const transferDate = new Date().toISOString().split("T")[0]; // Get today's date in 'YYYY-MM-DD' format
     const transferType = "Internal"; // Set this according to your transfer type
-    const transferItemDTOs = selectedRows.map(row => ({
+    const transferItemDTOs = selectedRows.map((row) => ({
       returnQty: row.returnQuantity,
       subPharmRequisitionItemDTO: {
         subPharmRequisitionItemId: row.sn, // Using row.sn as ID
-      }
+      },
     }));
 
     const payload = {
@@ -135,12 +146,12 @@ function SSPStoreTransfer() {
         `${API_BASE_URL}/store-transfers`,
         payload
       );
-      console.log('Transfer successful:', response.data);
-      alert('Transfer successful!');
+      console.log("Transfer successful:", response.data);
+      toast.success("Transfer successful!");
       setShowModal(false); // Close the modal after successful transfer
     } catch (error) {
-      console.error('Error posting transfer data:', error);
-      alert('Transfer failed, please try again.');
+      console.error("Error posting transfer data:", error);
+      toast.error("Transfer failed, please try again.");
     }
   };
 
@@ -167,7 +178,8 @@ function SSPStoreTransfer() {
       updatedRows[activeRowIndex].genericName = data?.genericName || "";
       updatedRows[activeRowIndex].batchNo = data?.batchNo || "";
       updatedRows[activeRowIndex].expiryDate = data?.expiryDate || "";
-      updatedRows[activeRowIndex].availableQuantity = data?.availableQuantity || "";
+      updatedRows[activeRowIndex].availableQuantity =
+        data?.availableQuantity || "";
       updatedRows[activeRowIndex].costprice = data?.costprice || "";
       setPackageTableRows(updatedRows);
     }
@@ -181,13 +193,14 @@ function SSPStoreTransfer() {
         columns: ["itemName", "genericName", "batchNo"],
         data: Array.isArray(itemData)
           ? itemData.map((item) => ({
-            itemName: item?.items?.itemMaster?.itemName || "N/A",
-            genericName: item?.items?.itemMaster?.genericNames?.genericName || "N/A",
-            batchNo: item?.items?.batchNo || "N/A",
-            expiryDate: item?.items?.expiryDate || "N/A",
-            availableQuantity: item?.dispatchQuantity || "N/A",
-            costprice: item?.items?.salePrice || "N/A",
-          }))
+              itemName: item?.items?.itemMaster?.itemName || "N/A",
+              genericName:
+                item?.items?.itemMaster?.genericNames?.genericName || "N/A",
+              batchNo: item?.items?.batchNo || "N/A",
+              expiryDate: item?.items?.expiryDate || "N/A",
+              availableQuantity: item?.dispatchQuantity || "N/A",
+              costprice: item?.items?.salePrice || "N/A",
+            }))
           : [],
       };
     }
@@ -197,19 +210,26 @@ function SSPStoreTransfer() {
   const { columns, data } = getPopupData();
 
   return (
-    <div className='NormalTransfer-container'>
+    <div className="NormalTransfer-container">
       <div className="NormalTransfer-header">
         <div className="NormalTransfer-data">
-          <label>Transfer Type</label>
-          <select name="transferType" id="transferType">
-            <option value="">Select Transfer Type</option>
-            <option value="NormalTransfer">Normal Transfer</option>
-            <option value="tt">TT</option>
-          </select>
+          <FloatingSelect
+            label="Transfer Type"
+            name="transferType"
+            id="transferType"
+            options={[
+              { value: "", label: "Select Transfer Type" },
+              { value: "NormalTransfer", label: "Normal Transfer" },
+              { value: "tt", label: "TT" },
+            ]}
+          />
         </div>
         <div className="NormalTransfer-data">
-          <label>Transfer Date</label>
-          <input type="date" />
+          <FloatingInput
+            label="Transfer Date"
+            type="date"
+            name="transferDate"
+          />
         </div>
       </div>
 
@@ -242,11 +262,18 @@ function SSPStoreTransfer() {
                 <input
                   type="checkbox"
                   checked={row.isSelected || false}
-                  onChange={(e) => handleRowCheckboxChange(index, e.target.checked)}
+                  onChange={(e) =>
+                    handleRowCheckboxChange(index, e.target.checked)
+                  }
                 />
               </td>
-              <td className='NormalTransfer-actions'>
-                <button className="NormalTransfer-add-btn" onClick={handleAddRow}>Add</button>
+              <td className="NormalTransfer-actions">
+                <button
+                  className="NormalTransfer-add-btn"
+                  onClick={handleAddRow}
+                >
+                  Add
+                </button>
                 <button
                   onClick={() => handleDeleteRow(index)}
                   disabled={packageTableRows.length <= 1}
@@ -272,11 +299,15 @@ function SSPStoreTransfer() {
               <td>{row.costprice}</td>
               <td>{row.availableQuantity}</td>
               <td>
-                <input
-                  className='NormalTransfer-returnQty'
+                <FloatingInput
+                  label="Return Quantity"
                   type="number"
+                  className="NormalTransfer-returnQty"
                   value={row.returnQuantity}
-                  onChange={(e) => handleReturnQuantityChange(index, e.target.value)}
+                  onChange={(e) =>
+                    handleReturnQuantityChange(index, e.target.value)
+                  }
+                  min="0"
                 />
               </td>
               <td>{row.quantity}</td>
@@ -286,8 +317,10 @@ function SSPStoreTransfer() {
         </tbody>
       </table>
 
-      <div className='NormalTransfer-footer'>
-        <button className='NormalTransfer-button' onClick={handleTransfer}>Transfer</button>
+      <div className="NormalTransfer-footer">
+        <button className="NormalTransfer-button" onClick={handleTransfer}>
+          Transfer
+        </button>
       </div>
 
       {activePopup && (
@@ -303,8 +336,8 @@ function SSPStoreTransfer() {
       )}
 
       {showModal && (
-        <CustomModal isOpen={showModal} onClose={handleClose} >
-          <div className='NormalTransfer-Custom'>
+        <CustomModal isOpen={showModal} onClose={handleClose}>
+          <div className="NormalTransfer-Custom">
             <table>
               <thead>
                 <tr>
@@ -325,7 +358,7 @@ function SSPStoreTransfer() {
                 ))}
               </tbody>
             </table>
-            <div className='NormalTransfer-receivedBy'>
+            <div className="NormalTransfer-receivedBy">
               <label>Received By</label>
               <input
                 type="text"
@@ -334,14 +367,19 @@ function SSPStoreTransfer() {
                 onChange={handleReceivedByChange}
               />
             </div>
-            <div className='NormalTransfer-footer'>
-              <button className='NormalTransfer-button' onClick={handleConfirmTransfer}>Confirm Transfer</button>
+            <div className="NormalTransfer-footer">
+              <button
+                className="NormalTransfer-button"
+                onClick={handleConfirmTransfer}
+              >
+                Confirm Transfer
+              </button>
             </div>
           </div>
         </CustomModal>
       )}
     </div>
   );
-};
+}
 
-export default SSPStoreTransfer
+export default SSPStoreTransfer;

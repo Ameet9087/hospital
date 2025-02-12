@@ -2,7 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import "./IpdReturnsWard.css";
 
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
-
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 const IpdReturnsWard = ({ ipAdmission }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -38,8 +43,8 @@ const IpdReturnsWard = ({ ipAdmission }) => {
       billNo: ipAdmission?.billNo || "",
       patientName:
         ipAdmission?.patient?.patient?.firstName +
-        " " +
-        ipAdmission?.patient?.patient?.lastName || "",
+          " " +
+          ipAdmission?.patient?.patient?.lastName || "",
       doctorName:
         ipAdmission?.admissionUnderDoctorDetails?.consultant?.doctorName || "",
       uhId: ipAdmission?.patient?.patient?.uhid || "",
@@ -121,12 +126,19 @@ const IpdReturnsWard = ({ ipAdmission }) => {
           { label: "Bed No", name: "bedNo" },
         ].map((field, index) => (
           <div key={index} className="ipdreturnsward-section">
-            <label>{field.label}:</label>
-            <input
+            <FloatingInput
+              label={field.label}
               type="text"
               name={field.name}
               value={formData[field.name]}
-              onChange={handleChange}
+              onChange={(e) =>
+                handleChange({
+                  target: {
+                    name: field.name,
+                    value: e.target.value,
+                  },
+                })
+              }
             />
           </div>
         ))}
@@ -198,7 +210,8 @@ const IpdReturnsWard = ({ ipAdmission }) => {
                 </td>
                 <td>{row.sn}</td>
                 <td>
-                  <input
+                  <FloatingInput
+                    label="Issued Item Name"
                     type="text"
                     value={row.issuedItemName}
                     onChange={(e) =>
@@ -217,13 +230,13 @@ const IpdReturnsWard = ({ ipAdmission }) => {
                 <td>{row.totalIssQty}</td>
                 <td>{row.issuedQty}</td>
                 <td>
-                  <input
+                  <FloatingInput
+                    label="Search Country"
                     type="search"
                     id="description"
-                    placeholder="Search Country "
+                    value={row.batchNo || ""} 
+                    onChange={(e) => console.log(e.target.value)}
                   />
-
-                  {row.batchNo}
                 </td>
                 <td>{row.mrp}</td>
                 <td>{row.billDisc}</td>
@@ -255,12 +268,19 @@ const IpdReturnsWard = ({ ipAdmission }) => {
           { label: "Remarks", name: "remarks" },
         ].map((field, index) => (
           <div key={index} className="ipdreturnsward-section">
-            <label>{field.label}:</label>
-            <input
+            <FloatingInput
+              label={field.label}
               type="text"
               name={field.name}
               value={formData[field.name]}
-              onChange={handleChange}
+              onChange={(e) =>
+                handleChange({
+                  target: {
+                    name: field.name,
+                    value: e.target.value,
+                  },
+                })
+              }
             />
           </div>
         ))}

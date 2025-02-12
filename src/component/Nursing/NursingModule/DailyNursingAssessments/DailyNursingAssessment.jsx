@@ -4,7 +4,12 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { API_BASE_URL } from "../../../api/api";
 import CustomModal from "../../../../CustomModel/CustomModal";
-
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 const DailyNursingAssessment = ({ ipAdmission }) => {
   const patientData = useSelector((state) => state?.patient?.patientData);
   const [dailyNursingAssessment, setDailyNursingAssessment] = useState([]);
@@ -84,10 +89,11 @@ const DailyNursingAssessment = ({ ipAdmission }) => {
         }
       );
       fetchAllDailyAssessment();
-      alert("Data submitted successfully!");
+      toast.success("Data submitted successfully!");
       console.log("Response:", response.data);
     } catch (error) {
       console.error("Error:", error);
+      toast.error("Error submitting nursing assignment");
     }
   };
 
@@ -110,8 +116,8 @@ const DailyNursingAssessment = ({ ipAdmission }) => {
                 Patients Details
               </div>
               <div className="DailyNursingAssessment-data">
-                <label>Admission Diagnosis :</label>
-                <textarea
+                <FloatingTextarea
+                  label={"Admission Diagnosis"}
                   name="admissionDiagnosis"
                   type="text"
                   value={formData.admissionDiagnosis}
@@ -119,8 +125,8 @@ const DailyNursingAssessment = ({ ipAdmission }) => {
                 />
               </div>
               <div className="DailyNursingAssessment-data">
-                <label>Current Diagnosis :</label>
-                <textarea
+                <FloatingTextarea
+                  label={"Current Diagnosis"}
                   name="currentDiagnosis"
                   type="text"
                   value={formData.currentDiagnosis}
@@ -128,8 +134,8 @@ const DailyNursingAssessment = ({ ipAdmission }) => {
                 />
               </div>
               <div className="DailyNursingAssessment-data">
-                <label>Chronic Disease History:</label>
-                <textarea
+                <FloatingTextarea
+                  label={"Chronic Disease History"}
                   name="chronicDiseaseHistory"
                   type="text"
                   value={formData.chronicDiseaseHistory}
@@ -320,8 +326,8 @@ const DailyNursingAssessment = ({ ipAdmission }) => {
               </div>
 
               <div className="DailyNursingAssessment-data">
-                <label>BP(Systolic/Diastolic) :</label>
-                <input
+                <FloatingInput
+                  label={"BP(Systolic/Diastolic)"}
                   name="bloodPressure"
                   type="text"
                   value={formData.bloodPressure}
@@ -527,8 +533,8 @@ const DailyNursingAssessment = ({ ipAdmission }) => {
               </div>
 
               <div className="DailyNursingAssessment-data">
-                <label>Oxygen(rate/min) :</label>
-                <input
+                <FloatingInput
+                  label={"Oxygen(rate/min)"}
                   name="oxygenRate"
                   type="text"
                   value={formData.oxygenRate}
@@ -750,11 +756,12 @@ const DailyNursingAssessment = ({ ipAdmission }) => {
                   </div>
 
                   <div className="DailyNursingAssessment-data">
-                    <label>Cleaned With:</label>
-                    <textarea
+                    <FloatingTextarea
+                      label={"Cleaned With"}
                       name="cleanedWith"
                       value={formData.cleanedWith}
                       onChange={handleInputChange}
+                      restrictions={{ varchar: true }}
                     />
                   </div>
 
@@ -932,29 +939,35 @@ const DailyNursingAssessment = ({ ipAdmission }) => {
               </div>
 
               <div className="DailyNursingAssessment-data">
-                <label>Nursing Plan Diagnosis:</label>
-                <textarea
+               
+                <FloatingTextarea
+                  label={"Nursing Plan Diagnosis"}
                   name="nursingPlanOutcome"
                   value={formData.nursingPlanOutcome}
                   onChange={handleInputChange}
+                  restrictions={{varchar:true}}
                 />
               </div>
 
               <div className="DailyNursingAssessment-data">
-                <label>Nursing Plan Intervention:</label>
-                <textarea
+                
+                <FloatingTextarea
+                  label={"Nursing Plan Intervention"}
                   name="nursingPlanIntervention"
                   value={formData.nursingPlanIntervention}
                   onChange={handleInputChange}
+                  restrictions={{varchar:true}}
                 />
               </div>
 
               <div className="DailyNursingAssessment-data">
-                <label>Needle Stick Injuries Details:</label>
-                <textarea
+                
+                 <FloatingTextarea
+                  label={"Needle Stick Injuries Details"}
                   name="needleStickInjuries"
                   value={formData.needleStickInjuries}
                   onChange={handleInputChange}
+                  restrictions={{varchar:true}}
                 />
               </div>
             </div>

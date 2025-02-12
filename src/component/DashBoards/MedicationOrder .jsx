@@ -184,6 +184,7 @@ const MedicationOrder = ({ inPatientId, outPatientId, setActiveSection, onClose 
                   label={"Dose"}
                   type="number"
                   name="dose"
+                  min="0"
                   value={medication.dose || ""}
                   placeholder="Dose"
                   onChange={(e) => handleInputChange(index, e)}

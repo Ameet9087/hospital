@@ -12,8 +12,9 @@ const FloatingInput = ({ label, type = "text", ...props }) => {
   };
   return (
     <div
-      className={`GCSSheetForm-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
+      className={`GCSSheetForm-floating-field ${
+        isFocused || hasValue ? "active" : ""
+      }`}
     >
       <input
         type={type}
@@ -35,8 +36,9 @@ const FloatingSelect = ({ label, options = [], ...props }) => {
   const [hasValue, setHasValue] = useState(false);
   return (
     <div
-      className={`GCSSheetForm-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
+      className={`GCSSheetForm-floating-field ${
+        isFocused || hasValue ? "active" : ""
+      }`}
     >
       <select
         className="GCSSheetForm-floating-select"
@@ -48,7 +50,7 @@ const FloatingSelect = ({ label, options = [], ...props }) => {
         onChange={(e) => setHasValue(e.target.value !== "")}
         {...props}
       >
-        <option value="">{ }</option>
+        <option value="">{}</option>
         {options.map((option, index) => (
           <option key={index} value={option.value}>
             {option.label}
@@ -70,40 +72,62 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
   const [manufacture, setManufacture] = useState([]);
   const [unit, setUnit] = useState([]);
   const [frequency, setFrequency] = useState([]);
-
+  const [location, setLocation] = useState([]);
+  const [substore, setSubstore] = useState([]);
+  const [subStoreId, setSubstoreId] = useState([]);
+  const [genericId, setGenericId] = useState([]);
+  const [itemId, setItemId] = useState([]);
+  const [taxId, setTaxId] = useState([]);
+  const [categoryiId, setCategoryId] = useState([]);
+  const [componyId, setComponyId] = useState([]);
+  const [unitId, setUnitId] = useState([]);
+  const [frequencyId, setFrequincyId] = useState([]);
+  const [pharmacyId, setpharmacyId] = useState([]);
+  const [dependStockId, setDependStockId] = useState([]);
+  const [locationId, setLocationId] = useState([]);
+  const [row, setRow] = useState([
+    {
+      sn: 1,
+      rackNumber: "",
+      rol: "",
+      maxLevel: "",
+      limitedOrder: "",
+      maxCons30Days: "",
+    },
+  ]);
   const [formData, setFormData] = useState({
     itemGroup: "",
     itemName: "",
     scrapItem: "No",
     hsnCode: "",
     medCode: "",
-    margin: 0,
-    packSize: 0,
+    margin: "",
+    packSize: "",
     expireNotRequired: "No",
     startDate: "",
     endDate: "",
-    quantity: 0,
-    freeQuantity: 0,
+    quantity: "",
+    freeQuantity: "",
     itemClassification: "",
     potency: "",
-    asset: "No",
-    infusion: "No",
+    asset: "",
+    infusion: "",
     schedule: "",
     drugType: "",
     drugRisk: "",
     dosage: "",
-    reOrderQuantity: 0,
+    reOrderQuantity: "",
     formula: "",
     nabhCategory: "",
     dosageType: "",
     strengthMg: "",
-    ml: 0,
-    fixedDoes: 0,
+    ml: "",
+    fixedDoes: "",
     numberOfTimes: "",
-    doesInMgKg: 0,
-    numberOfDays: 0,
-    quantityInOneBottle: 0,
-    unit2: 0,
+    doesInMgKg: "",
+    numberOfDays: "",
+    quantityInOneBottle: "",
+    unit2: "",
     invMethod: "",
     purchaseExpiry: "",
     salesExpiryDays: "",
@@ -114,17 +138,17 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
     includeMusting: "",
     ipBillable: "",
     itemTypes: "",
-    mrpDiscount: 0,
+    mrpDiscount: "",
     higherLower: "",
     formulation: "",
     route: "",
-    packCalculation: 0,
+    packCalculation: "",
     supplyType: "",
-    numberOfDaysPermitted: 0,
-    mrpDiscountOP: 0,
-    mrpDiscountIP: 0,
+    numberOfDaysPermitted: "",
+    mrpDiscountOP: "",
+    mrpDiscountIP: "",
     tcode: "",
-    lastPoRate: 0,
+    lastPoRate: "",
     disField: "",
     drugRequiredTagging: "",
     otherExpense: "",
@@ -132,7 +156,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
     storageType: "",
     gradingExpiry: "",
     mrpItem: "",
-    mrpForNonMrpItems: 0,
+    mrpForNonMrpItems: "",
     diet: "",
     genericNames: { genericNameId: 0, genericName: "" },
     itemType: { itemTypeId: 0, itemType: "" },
@@ -144,6 +168,21 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
     pharmacyFrequencies: { pharmacyFrequencyId: 0, name: "" },
     pharmacyConstitutions: { pharmacyConstitutionId: 1 },
     dependentStocks: { pharmacyDependentStockId: 1 },
+    locationMaster: { id: "" },
+    departmentStores: [
+      {
+        rackNumber: "",
+        rol: "",
+        maxLevel: "",
+        limitedOrder: "",
+        maxCons30Days: "",
+        subStores: [
+          {
+            subStoreId: "",
+          },
+        ],
+      },
+    ],
   });
 
   useEffect(() => {
@@ -207,6 +246,8 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
           manufactureResponse,
           unitResponse,
           frequencyResponse,
+          masterResponse,
+          substoreResponse,
         ] = await Promise.all([
           axios.get(`${API_BASE_URL}/generic-names`),
           axios.get(`${API_BASE_URL}/itemtypes`),
@@ -215,6 +256,8 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
           axios.get(`${API_BASE_URL}/companies`),
           axios.get(`${API_BASE_URL}/unitofmeasurement/fetchAll`),
           axios.get(`${API_BASE_URL}/pharmacy-frequency`),
+          axios.get(`${API_BASE_URL}/location-masters`),
+          axios.get(`${API_BASE_URL}/substores/get-all-substores`),
         ]);
 
         setGeneric(genericResponse.data);
@@ -224,6 +267,8 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
         setManufacture(manufactureResponse.data);
         setUnit(unitResponse.data);
         setFrequency(frequencyResponse.data);
+        setLocation(masterResponse.data);
+        setSubstore(substoreResponse.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -234,40 +279,115 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Submitted:", formData);
 
-    // Construct the payload using formData directly
     const payload = {
-      ...formData,
-      genericNames: { genericNameId: formData.genericNames.genericNameId }, // Directly use the nested object
-      itemType: { itemTypeId: formData.itemType.itemTypeId }, // Directly use the nested object
-      taxes: { taxesId: formData.taxes.taxesId }, // Directly use the nested object
-      itemCategories: { categoryId: formData.itemCategories.categoryId }, // Directly use the nested object
-      manufactures: { companyId: formData.manufactures.companyId }, // Directly use the nested object
-      unitsOfMeasurement: { unitOfMeasurementId: formData.unitsOfMeasurement.unitOfMeasurementId }, // Directly use the nested object
-      unitsOfMeasurement2: { unitOfMeasurementId: formData.unitsOfMeasurement.unitOfMeasurementId }, // Directly use the nested object
-      pharmacyFrequencies: { pharmacyFrequencyId: formData.pharmacyFrequencies.pharmacyFrequencyId }, // Directly use the nested object
-      pharmacyConstitutions: formData.pharmacyConstitutions, // Directly use the nested object
-      dependentStocks: formData.dependentStocks, // Directly use the nested object
+      itemGroup: formData.itemGroup || "",
+      itemName: formData.itemName || "",
+      scrapItem: formData.scrapItem || "",
+      hsnCode: formData.hsnCode || "",
+      medCode: formData.medCode || "",
+      margin: formData.margin || "",
+      packSize: formData.packSize || "",
+      expireNotRequired: formData.expireNotRequired || "",
+      startDate: formData.startDate || "",
+      endDate: formData.endDate || "",
+      quantity: formData.quantity || "",
+      freeQuantity: formData.freeQuantity || "",
+      itemClassification: formData.itemClassification || "",
+      potency: formData.potency || "",
+      asset: formData.asset || "",
+      infusion: formData.infusion || "",
+      schedule: formData.schedule || "",
+      drugType: formData.drugType || "",
+      drugRisk: formData.drugRisk || "",
+      dosage: formData.dosage || "",
+      formula: formData.formula || "",
+      nabhCategory: formData.nabhCategory || "",
+      dosageType: formData.dosageType || "",
+      strengthMg: formData.strengthMg || "",
+      ml: formData.ml || "",
+      fixedDoes: formData.fixedDoes || "",
+      numberOfTimes: formData.numberOfTimes || "",
+      doesInMgKg: formData.doesInMgKg || "",
+      numberOfDays: formData.numberOfDays || "",
+      quantityInOneBottle: formData.quantityInOneBottle || "",
+      unit2: formData.unit2 || "",
+      invMethod: formData.invMethod || "",
+      purchaseExpiry: formData.purchaseExpiry || "",
+      salesExpiryDays: formData.salesExpiryDays || "",
+      allowsSalesLoose: formData.allowsSalesLoose || "",
+      checkForDoubleIssues: formData.checkForDoubleIssues || "",
+      tds: formData.tds || "",
+      nonStockItems: formData.nonStockItems || "",
+      includeMusting: formData.includeMusting || "",
+      ipBillable: formData.ipBillable || "",
+      itemTypes: formData.itemTypes || "",
+      mrpDiscount: formData.mrpDiscount || "",
+      higherLower: formData.higherLower || "",
+      formulation: formData.formulation || "",
+      route: formData.route || "",
+      packCalculation: formData.packCalculation || "",
+      supplyType: formData.supplyType || "",
+      numberOfDaysPermitted: formData.numberOfDaysPermitted || "",
+      mrpDiscountOP: formData.mrpDiscountOP || "",
+      mrpDiscountIP: formData.mrpDiscountIP || "",
+      tcode: formData.tcode || "",
+      lastPoRate: formData.lastPoRate || "",
+      disField: formData.disField || "",
+      drugRequiredTagging: formData.drugRequiredTagging || "",
+      otherExpense: formData.otherExpense || "",
+      bloodBankItem: formData.bloodBankItem || "",
+      storageType: formData.storageType || "",
+      gradingExpiry: formData.gradingExpiry || "",
+      mrpItem: formData.mrpItem || "",
+      mrpForNonMrpItems: formData.mrpForNonMrpItems || "",
+      diet: formData.diet || "",
+      genericNames: { genericNameId: genericId?.genericNameId || "" },
+      taxes: { taxesId: taxId?.taxesId || "" },
+      itemCategories: { categoryId: categoryiId?.categoryId || "" },
+      itemType: { itemTypeId: itemId?.itemTypesId },
+      manufactures: { companyId: componyId?.companyId || "" },
+      unitsOfMeasurement: {
+        unitOfMeasurementId: unitId?.unitOfMeasurementId || "",
+      },
+      unitsOfMeasurement2: { unitOfMeasurementId: 2 },
+      pharmacyFrequencies: {
+        pharmacyFrequencyId: frequencyId?.pharmacyFrequencyId || "",
+      },
+      pharmacyConstitutions: { pharmacyConstitutionId: 1 },
+      dependentStocks: { pharmacyDependentStockId: 1 },
+      locationMaster: { id: locationId?.id || "" },
+      departmentStores:
+        formData.departmentStores?.map((store) => ({
+          rackNumber: store.rackNumber || "",
+          rol: store.rol || "",
+          maxLevel: store.maxLevel || "",
+          limitedOrder: store.limitedOrder || "",
+          maxCons30Days: store.maxCons30Days || "",
+          subStores:
+            store.subStores?.map((sub) => ({
+              subStoreId: subStoreId?.subStoreId || "",
+            })) || [],
+        })) || [],
     };
 
+    console.log("hiiii", payload);
     try {
-      const response = await fetch(`${API_BASE_URL}/pharmacy-item-master`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to submit form data");
-      }
-      const result = await response.json();
-      console.log("Form submission success:", result);
+      const response = await axios.post(
+        `${API_BASE_URL}/pharmacy-item-master`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Form submission success:", response.data);
       alert("Form submitted successfully!");
-      onClose();
     } catch (error) {
       console.error("Error submitting form data:", error);
+      alert("Failed to submit form data. Please try again.");
+      console.log(response.data, "wwww");
     }
   };
 
@@ -279,55 +399,84 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
       [name]: fieldValue,
     }));
   };
+  const handleDepartmentStoreChange = (index, field, value) => {
+    const updatedDepartmentStores = formData.departmentStores.map((store, i) =>
+      i === index ? { ...store, [field]: value } : store
+    );
+    setFormData({ ...formData, departmentStores: updatedDepartmentStores });
+  };
+
   const handleSelect = (data) => {
     console.log(data);
 
     // Check the selected popup and update formData accordingly
     if (activePopup === "genericName") {
+      setGenericId(data);
       setFormData((prevFormData) => ({
         ...prevFormData,
         genericNames: {
           genericNameId: data.genericNameId,
-          genericName: data.genericName
+          genericName: data.genericName,
         }, // Keep it as an object
       }));
     } else if (activePopup === "type") {
+      console.log(data, "aaaaa");
+      setItemId(data);
       setFormData((prevFormData) => ({
         ...prevFormData,
         itemType: {
-          itemTypeId: data.itemTypesId,
-          itemType: data.type
+          itemTypeId: data.itemTypeId,
+          itemType: data.itemType,
         }, // Keep it as an object
       }));
     } else if (activePopup === "tax") {
+      setTaxId(data);
       setFormData((prevFormData) => ({
         ...prevFormData,
         taxes: {
           taxesId: data.taxesId,
-          taxName: data.name
+          taxName: data.name,
         }, // Keep it as an object
       }));
     } else if (activePopup === "category") {
+      console.log(data);
+      setCategoryId(data);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        itemCategories: { categoryId: data.categoryId, categoryName: data.categoryName }, // Keep it as an object
+        itemCategories: {
+          categoryId: data.categoryId,
+          categoryName: data.categoryName,
+        }, // Keep it as an object
       }));
     } else if (activePopup === "manufacturer") {
+      setComponyId(data);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        manufactures: { companyId: data.companyId, companyName: data.companyName }, // Keep it as an object
+        manufactures: {
+          companyId: data.companyId,
+          companyName: data.companyName,
+        }, // Keep it as an object
       }));
     } else if (activePopup === "unit") {
+      setUnitId(data);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        unitsOfMeasurement: { unitOfMeasurementId: data.unitOfMeasurementId, name: data.name }, // Keep it as an object
+        unitsOfMeasurement: {
+          unitOfMeasurementId: data.unitOfMeasurementId,
+          name: data.name,
+        }, // Keep it as an object
       }));
     } else if (activePopup === "frequency") {
+      setFrequincyId(data);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        pharmacyFrequencies: { pharmacyFrequencyId: data.pharmacyFrequencyId, name: data.frequency }, // Keep it as an object
+        pharmacyFrequencies: {
+          pharmacyFrequencyId: data.pharmacyFrequencyId,
+          name: data.frequency,
+        }, // Keep it as an object
       }));
     } else if (activePopup === "pharmacyConstitutions") {
+      setpharmacyId(data);
       setFormData((prevFormData) => ({
         ...prevFormData,
         pharmacyConstitutions: {
@@ -335,11 +484,28 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
         }, // Keep it as an object
       }));
     } else if (activePopup === "dependentStocks") {
+      setDependStockId(data);
       setFormData((prevFormData) => ({
         ...prevFormData,
         dependentStocks: {
           pharmacyDependentStockId: data.pharmacyDependentStockId,
         }, // Keep it as an object
+      }));
+    } else if (activePopup === "location") {
+      setLocationId(data);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        locationMaster: {
+          locationName: data.locationName,
+          id: data.id,
+        },
+      }));
+    } else if (activePopup === "substore") {
+      console.log("Data received:", data.subStoreName);
+      setSubstoreId(data);
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        subStoreName: data.subStoreName,
       }));
     }
     setActivePopup(null);
@@ -398,6 +564,22 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
       const popupData = {
         columns: ["frequency", "atGivenTime"],
         data: frequency,
+      };
+      console.log("Popup Data:", popupData);
+      return popupData;
+    }
+    if (activePopup === "location") {
+      const popupData = {
+        columns: ["locationName"],
+        data: location,
+      };
+      console.log("Popup Data:", popupData);
+      return popupData;
+    }
+    if (activePopup === "substore") {
+      const popupData = {
+        columns: ["subStoreName"],
+        data: substore,
       };
       console.log("Popup Data:", popupData);
       return popupData;
@@ -563,6 +745,25 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
               value={formData.medCode}
               onChange={handleChange}
             />
+            <div className="GCSSheetForm-search-field">
+              <FloatingInput
+                label="Location"
+                type="text"
+                name="unit"
+                value={formData?.locationMaster?.locationName}
+              />
+              <button
+                className="GCSSheetForm-search-icon"
+                onClick={() => setActivePopup("location")}
+              >
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                  <path
+                    fill="currentColor"
+                    d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -690,7 +891,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
               type="text"
               name="othrFreeQty"
               value={formData.othrFreeQty}
-            // onChange={handleChange}
+              // onChange={handleChange}
             />
 
             <FloatingSelect
@@ -1378,6 +1579,127 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             </label>
           </div>
         </div>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>S.No.</th>
+                <th>Department</th>
+                <th>Rack No</th>
+                <th>ROL</th>
+                <th>Max Level</th>
+                <th>Limited Order</th>
+                <th>Max Cons (30 Days)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {formData.departmentStores.map((item, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                <td>
+                  <div className="GCSSheetForm-search-field">
+                    <FloatingInput
+                      label="Sub Store Name"
+                      type="text"
+                      name="subStoreName"
+                      value={formData.subStoreName || ""}
+                      onChange={(e) =>
+                        handleDepartmentStoreChange(
+                          index,
+                          "subStoreId",
+                          e.target.value
+                        )
+                      }
+                    />
+                    <button
+                      type="button"
+                      className="GCSSheetForm-search-icon"
+                      onClick={() => setActivePopup("substore")}
+                    >
+                      <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path
+                          fill="currentColor"
+                          d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  </td>
+                  <td>
+                    <FloatingInput
+                      label="Rack No"
+                      name="rackNumber"
+                      value={item.rackNumber}
+                      onChange={(e) =>
+                        handleDepartmentStoreChange(
+                          index,
+                          "rackNumber",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </td>
+                  <td>
+                    <FloatingInput
+                      label="ROL"
+                      name="rol"
+                      value={item.rol}
+                      onChange={(e) =>
+                        handleDepartmentStoreChange(
+                          index,
+                          "rol",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </td>
+                  <td>
+                    <FloatingInput
+                      label="Max Level"
+                      name="maxLevel"
+                      value={item.maxLevel}
+                      onChange={(e) =>
+                        handleDepartmentStoreChange(
+                          index,
+                          "maxLevel",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </td>
+                  <td>
+                    <FloatingInput
+                      label="Limited Order"
+                      name="limitedOrder"
+                      value={item.limitedOrder}
+                      onChange={(e) =>
+                        handleDepartmentStoreChange(
+                          index,
+                          "limitedOrder",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </td>
+                  <td>
+                    <FloatingInput
+                      label="Max Cons"
+                      name="maxCons30Days"
+                      value={item.maxCons30Days}
+                      onChange={(e) =>
+                        handleDepartmentStoreChange(
+                          index,
+                          "maxCons30Days",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <div className="GCSSheetForm-section">
           <button className="btn-blue" onClick={handleSubmit}>
             Save
@@ -1398,4 +1720,3 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
   );
 };
 export default AddItemMaster;
-

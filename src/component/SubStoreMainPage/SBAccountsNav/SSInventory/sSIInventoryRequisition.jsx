@@ -1,44 +1,50 @@
 /* Ajhar Tamboli sSIInventoryRequisition.jsx 19-09-24 */
 
-
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import "../SSInventory/sSIInventoryRequisition.css";
-import { useReactToPrint } from 'react-to-print';
-import SSSIInvenReqCreateReq from './sSSIInvenReqCreateReq';
-import SSSIInvenReqView from './sSSIInvenReqView';
-import { useParams } from 'react-router-dom';
-import { API_BASE_URL } from '../../../api/api';
-import CustomModal from '../../../../CustomModel/CustomModal';
-import SSIReceivedRequisition from './sSIReceivedRequisition';
+import { useReactToPrint } from "react-to-print";
+import SSSIInvenReqCreateReq from "./sSSIInvenReqCreateReq";
+import SSSIInvenReqView from "./sSSIInvenReqView";
+import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../../../api/api";
+import CustomModal from "../../../../CustomModel/CustomModal";
+import SSIReceivedRequisition from "./sSIReceivedRequisition";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 
 function SSIInventoryRequisition() {
   const { store } = useParams();
-  const printRef = useRef();
+  const tableRef = useRef();
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [showViewRequisition, setShowViewRequisition] = useState(false);
   const [requisitions, setRequisitions] = useState([]);
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
-  const [statusFilter, setStatusFilter] = useState('Pending');
-  const [storeFilter, setStoreFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState("Pending");
+  const [storeFilter, setStoreFilter] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
   const [showReceived, setShowReceived] = useState(false);
 
-  const [datas, setDatas] = useState([])
+  const [datas, setDatas] = useState([]);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/inventory-requisitions`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setRequisitions(data);
         setFilteredRequisitions(data);
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   useEffect(() => {
-    const filtered = requisitions.filter(req => {
-      return (statusFilter === 'all' || req.status === statusFilter) &&
-        (storeFilter === '' || req.storeName === storeFilter);
+    const filtered = requisitions.filter((req) => {
+      return (
+        (statusFilter === "all" || req.status === statusFilter) &&
+        (storeFilter === "" || req.storeName === storeFilter)
+      );
     });
     setFilteredRequisitions(filtered);
   }, [statusFilter, storeFilter, requisitions]);
@@ -50,7 +56,7 @@ function SSIInventoryRequisition() {
   const handleViewClick = (req) => {
     console.log(req);
 
-    setDatas(req)
+    setDatas(req);
     setShowViewRequisition(true);
   };
 
@@ -61,7 +67,7 @@ function SSIInventoryRequisition() {
   const handleReceived = (item) => {
     setSelectedItem(item);
     setShowReceived(true);
-  }
+  };
   // const handlePrint = useReactToPrint({
   //   content: () => printRef.current,
   //   documentTitle: 'Requisition_Report',
@@ -73,41 +79,58 @@ function SSIInventoryRequisition() {
   //   `,
   // });
   // Function to trigger print
-  const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-    <html>
-      <head>
-        <title>Print Table</title>
-        <style>
-          table {
-            width: 100%;
-            border-collapse: collapse;
-          }
-          th, td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-          }
-          th {
-            background-color: #f2f2f2;
-          }
-        </style>
-      </head>
-      <body>
-        ${printContent.outerHTML}
-      </body>
-    </html>
-  `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
   };
   return (
     <div className="sSIInventoryRequisition-active-imaging-request">
       <CustomModal isOpen={showReceived} onClose={() => setShowReceived(false)}>
-        <SSIReceivedRequisition selectedItem={selectedItem} onClose={() => setShowReceived(false)} />
+        <SSIReceivedRequisition
+          selectedItem={selectedItem}
+          onClose={() => setShowReceived(false)}
+        />
       </CustomModal>
 
       <CustomModal isOpen={showCreateRequisition} onClose={closePopups}>
@@ -118,7 +141,6 @@ function SSIInventoryRequisition() {
         </div> */}
       </CustomModal>
 
-
       {/* Popup for View Requisition */}
       {showViewRequisition && (
         <div className="sSIInventoryRequisition-popup-overlay">
@@ -128,8 +150,11 @@ function SSIInventoryRequisition() {
         </div>
       )}
 
-      <header className='sSIInventoryRequisition-header'>
-        <button className='sSIInventoryRequisition-CreateRequisition' onClick={handleCreateRequisitionClick}>
+      <header className="sSIInventoryRequisition-header">
+        <button
+          className="sSIInventoryRequisition-CreateRequisition"
+          onClick={handleCreateRequisitionClick}
+        >
           Create Requisition
         </button>
         <div className="sSIInventoryRequisition-status-filters">
@@ -139,7 +164,7 @@ function SSIInventoryRequisition() {
               type="radio"
               name="status-filter"
               value="Pending"
-              checked={statusFilter === 'Pending'}
+              checked={statusFilter === "Pending"}
               onChange={(e) => setStatusFilter(e.target.value)}
             />
             Pending
@@ -149,7 +174,7 @@ function SSIInventoryRequisition() {
               type="radio"
               name="status-filter"
               value="Complete"
-              checked={statusFilter === 'Complete'}
+              checked={statusFilter === "Complete"}
               onChange={(e) => setStatusFilter(e.target.value)}
             />
             Complete
@@ -159,7 +184,7 @@ function SSIInventoryRequisition() {
               type="radio"
               name="status-filter"
               value="Cancelled"
-              checked={statusFilter === 'Cancelled'}
+              checked={statusFilter === "Cancelled"}
               onChange={(e) => setStatusFilter(e.target.value)}
             />
             Cancelled
@@ -169,7 +194,7 @@ function SSIInventoryRequisition() {
               type="radio"
               name="status-filter"
               value="Withdrawn"
-              checked={statusFilter === 'Withdrawn'}
+              checked={statusFilter === "Withdrawn"}
               onChange={(e) => setStatusFilter(e.target.value)}
             />
             Withdrawn
@@ -179,7 +204,7 @@ function SSIInventoryRequisition() {
               type="radio"
               name="status-filter"
               value="all"
-              checked={statusFilter === 'all'}
+              checked={statusFilter === "all"}
               onChange={(e) => setStatusFilter(e.target.value)}
             />
             All
@@ -210,21 +235,25 @@ function SSIInventoryRequisition() {
         </div> */}
       </div>
 
-
-
       <div className="sSIInventoryRequisition-search-N-results">
         <div className="sSIInventoryRequisition-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Search" />
+          
+          <FloatingInput label={"Search"} type="search" />
         </div>
         <div className="sSIInventoryRequisition-results-info">
-          Showing {filteredRequisitions.length} / {filteredRequisitions.length} results
-          <button className='sSIInventoryRequisition-print-button' onClick={handlePrint}><i class="fa-solid fa-print"></i> Print</button>
+          Showing {filteredRequisitions.length} / {filteredRequisitions.length}{" "}
+          results
+          <button
+            className="sSIInventoryRequisition-print-button"
+            onClick={printList}
+          >
+            <i class="fa-solid fa-print"></i> Print
+          </button>
         </div>
       </div>
 
       <div className="sSIInventoryRequisition-table-N-paginat">
-        <table>
+        <table ref={tableRef}>
           <thead>
             <tr>
               <th>Req.No</th>
@@ -244,9 +273,21 @@ function SSIInventoryRequisition() {
                 <td>{req.status}</td>
                 <td>{req.verifyOrNot}</td>
                 <td>
-                  <div className='sSIInventoryRequisition-view-btn'>
-                    <button className='sSIInventoryRequisition-view' onClick={() => handleViewClick(req)}>View</button>
-                    {req.status == "Dispatch" && (<button className='sSIInventoryRequisition-view' onClick={() => handleReceived(req)}>Received</button>)}
+                  <div className="sSIInventoryRequisition-view-btn">
+                    <button
+                      className="sSIInventoryRequisition-view"
+                      onClick={() => handleViewClick(req)}
+                    >
+                      View
+                    </button>
+                    {req.status == "Dispatch" && (
+                      <button
+                        className="sSIInventoryRequisition-view"
+                        onClick={() => handleReceived(req)}
+                      >
+                        Received
+                      </button>
+                    )}
                   </div>
                 </td>
               </tr>

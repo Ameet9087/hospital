@@ -6,7 +6,12 @@ import axios from "axios";
 import PopupTable from "../Services/PopupTable";
 import { API_BASE_URL } from "../../../api/api";
 import { useSelector } from "react-redux";
-
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 const calculateTotalAmount = (rows) => {
   return rows.reduce((total, row) => {
     const amount = parseFloat(row.totalAmount) || 0;
@@ -63,10 +68,10 @@ const IPDIssuesWard = ({ ipAdmission }) => {
       );
 
       console.log("Data posted successfully:", response.data);
-      alert("Data posted successfully");
+      toast.success("Data posted successfully");
     } catch (error) {
       console.error("Error posting data:", error);
-      alert("Error posting data. Please check the console for more details.");
+      toast.error("Error posting data. Please check the console for more details.");
     }
   };
 
@@ -337,25 +342,23 @@ const IPDIssuesWard = ({ ipAdmission }) => {
         </center>
       </h6>
 
-      <div className="detail">
-        <label>Issue No:</label>
-        <input type="text" />
-      </div>
-
       <h6>
         <b>Patient Details</b>
       </h6>
       <div className="patient-details">
         <div className="detail">
-          <label>Issue Type:</label>
-          <select>
-            <option>Direct</option>
-          </select>
+          <FloatingInput label={"Issue No"} type="text" />
+        </div>
+        <div className="detail">
+          <FloatingSelect
+            label={"Issue Type"}
+            options={[{ label: "Direct", value: "Direct" }]}
+          />
         </div>
 
         <div className="detail">
-          <label>IP No:</label>
-          <input
+          <FloatingInput
+            label={"IP No"}
             type="text"
             value={patientData?.ipAdmmissionId || ipAdmission?.ipAdmmissionId}
             disabled
@@ -363,8 +366,8 @@ const IPDIssuesWard = ({ ipAdmission }) => {
         </div>
 
         <div className="detail">
-          <label>Patient Name:</label>
-          <input
+          <FloatingInput
+            label="Patient Name"
             type="text"
             value={`${
               patientData?.patient?.firstName ||
@@ -378,8 +381,8 @@ const IPDIssuesWard = ({ ipAdmission }) => {
         </div>
 
         <div className="detail">
-          <label>Age:</label>
-          <input
+          <FloatingInput
+            label={"Age "}
             type="text"
             value={
               patientData?.patient?.age || ipAdmission?.patient?.patient?.age
@@ -389,8 +392,8 @@ const IPDIssuesWard = ({ ipAdmission }) => {
         </div>
 
         <div className="detail">
-          <label>Sex:</label>
-          <input
+          <FloatingInput
+            label={"Sex"}
             type="text"
             value={
               patientData?.patient?.gender ||
@@ -401,8 +404,8 @@ const IPDIssuesWard = ({ ipAdmission }) => {
         </div>
 
         <div className="detail">
-          <label>Relative Name:</label>
-          <input
+          <FloatingInput
+            label={"Relative Name"}
             type="text"
             value={
               patientData?.patient?.guarantorDTO?.relationWithPatient ||
@@ -413,8 +416,8 @@ const IPDIssuesWard = ({ ipAdmission }) => {
         </div>
 
         <div className="detail">
-          <label>Doctor Name:</label>
-          <input
+          <FloatingInput
+            label={"Doctor Name"}
             type="text"
             value={
               patientData?.admissionUnderDoctorDetail?.consultantDoctor
@@ -427,8 +430,8 @@ const IPDIssuesWard = ({ ipAdmission }) => {
         </div>
 
         <div className="detail">
-          <label>Unit Name:</label>
-          <input
+          <FloatingInput
+            label={"Unit Name"}
             type="text"
             value={
               patientData?.admissionUnderDoctorDetail?.unitMaster ||
@@ -440,8 +443,8 @@ const IPDIssuesWard = ({ ipAdmission }) => {
         </div>
 
         <div className="detail">
-          <label>Mobile Number:</label>
-          <input
+          <FloatingInput
+            label={"Mobile Number"}
             type="text"
             value={
               patientData?.patient?.phoneNumber ||
@@ -452,15 +455,16 @@ const IPDIssuesWard = ({ ipAdmission }) => {
         </div>
 
         <div className="detail">
-          <label>Type:</label>
-          <select disabled>
-            <option>General</option>
-          </select>
+          <FloatingSelect
+            label={"Type"}
+            options={[{ label: "General", value: "General" }]}
+            disabled
+          />
         </div>
 
         <div className="detail">
-          <label>Bed No:</label>
-          <input
+          <FloatingInput
+            label={"Bed No"}
             type="text"
             value={
               patientData?.roomDetails?.bedDTO?.bedNo ||
@@ -471,8 +475,8 @@ const IPDIssuesWard = ({ ipAdmission }) => {
         </div>
 
         <div className="detail">
-          <label>Room No:</label>
-          <input
+          <FloatingInput
+            label={"Room No"}
             type="text"
             value={
               patientData?.roomDetails?.roomDTO?.roomNumber ||
@@ -483,8 +487,8 @@ const IPDIssuesWard = ({ ipAdmission }) => {
         </div>
 
         <div className="detail">
-          <label>Floor No:</label>
-          <input
+          <FloatingInput
+            label={"Floor No"}
             type="text"
             value={
               patientData?.roomDetails?.floorDTO?.floorNumber ||
@@ -495,8 +499,8 @@ const IPDIssuesWard = ({ ipAdmission }) => {
         </div>
 
         <div className="detail">
-          <label>Room Type:</label>
-          <input
+          <FloatingInput
+            label={"Room Type"}
             type="text"
             value={
               patientData?.roomDetails?.roomTypeDTO?.type ||
@@ -507,8 +511,8 @@ const IPDIssuesWard = ({ ipAdmission }) => {
         </div>
 
         <div className="detail">
-          <label>Pay Type:</label>
-          <input
+          <FloatingInput
+            label={"Pay Type"}
             type="text"
             value={
               patientData?.roomDetails?.payTypeDTO?.payTypeName ||
@@ -517,23 +521,24 @@ const IPDIssuesWard = ({ ipAdmission }) => {
             disabled
           />
         </div>
+        <div className="detail">
+          <FloatingSelect
+            label="Select Sub-Store"
+            name="subStore"
+            value={selectedSubStore}
+            onChange={(e) => handleSelectionChange(e.target.value)}
+            options={[
+              { value: "", label: "-- Select Sub-Store --" },
+              ...subStores.map((store) => ({
+                value: store.subStoreId,
+                label: store.subStoreName,
+              })),
+            ]}
+          />
+        </div>
       </div>
 
-      <div className="subStoreDropdown-div">
-        <label htmlFor="subStoreDropdown">Select Sub-Store:</label>
-        <select
-          id="subStoreDropdown"
-          value={selectedSubStore}
-          onChange={(e) => handleSelectionChange(e.target.value)}
-        >
-          <option value="">-- Select Sub-Store --</option>
-          {subStores.map((store, index) => (
-            <option key={index} value={store.subStoreId}>
-              {store.subStoreName}
-            </option>
-          ))}
-        </select>
-      </div>
+      <div className="subStoreDropdown-div"></div>
       <div className="item-details">
         <h6>
           <b>Item Details</b>
@@ -578,27 +583,30 @@ const IPDIssuesWard = ({ ipAdmission }) => {
                   </button>
                 </td>
                 <td>
-                  <input type="text" value={selectedItemCode.invItemId || ""} />
-                </td>
-                <td>
-                  <input
+                  <FloatingInput
+                    label={"invItemId"}
                     type="text"
-                    value={selectedItemCode.itemName || ""}
-                    style={{ width: "70%" }}
-                  />
-                  <FontAwesomeIcon
-                    icon={faSearch}
-                    onClick={() => setActivePopup("ItemCode")}
+                    value={selectedItemCode.invItemId || ""}
                   />
                 </td>
                 <td>
-                  <input
+                  <FloatingInput
+                    label={"itemName"}
+                    type="search"
+                    value={selectedItemCode.itemName || ""}
+                    onIconClick={() => setActivePopup("ItemCode")}
+                  />
+                </td>
+                <td>
+                  <FloatingInput
+                    label={"description"}
                     type="text"
                     value={selectedItemCode?.description || ""}
                   />
                 </td>
                 <td>
-                  <input
+                  <FloatingInput
+                    label={"Available Quantity"}
                     type="text"
                     value={selectedItemCode.dispatchQuantity || "0"}
                   />
@@ -609,8 +617,10 @@ const IPDIssuesWard = ({ ipAdmission }) => {
                 <td>
                   {/* <input type="text" value={row.issueQty || ''} onChange={(e) => updateIssueQty(row.itemDetailIssueWardId, e.target.value)} /> */}
 
-                  <input
+                  <FloatingInput
+                    label={"Issue Qty"}
                     type="number"
+                    min="0"
                     value={row.issueQty || ""}
                     onChange={(e) =>
                       updateIssueQty(row.itemDetailIssueWardId, e.target.value)
@@ -618,14 +628,19 @@ const IPDIssuesWard = ({ ipAdmission }) => {
                   />
                 </td>
                 <td>
-                  <input type="text" value={selectedItemCode.itemCode || ""} />
+                  <FloatingInput
+                    label={"Item Code"}
+                    type="text"
+                    value={selectedItemCode.itemCode || ""}
+                  />
                 </td>
                 {/* <td>
                   <input type="text" value={selectedItemCode.expiry || ""} />
                 </td> */}
 
                 <td>
-                  <input
+                  <FloatingInput
+                    label={"Standard Rate"}
                     type="text"
                     value={selectedItemCode.standardRate || ""}
                   />
@@ -633,7 +648,8 @@ const IPDIssuesWard = ({ ipAdmission }) => {
                 {/* <td><input type='text' value={row.tax || ''} onChange={(e)=>updateTax(row.itemDetailIssueWardId,e.target.value)} /></td> */}
                 {/* <td><input type="text" value={row.discount || ''} /></td> */}
                 <td>
-                  <input
+                  <FloatingInput
+                    label={"Tax"}
                     type="text"
                     value={row.tax || ""}
                     onChange={(e) =>
@@ -642,12 +658,18 @@ const IPDIssuesWard = ({ ipAdmission }) => {
                   />
                 </td>
                 <td>
-                  <input type="text" value={row.colTax || ""} readOnly />
+                  <FloatingInput
+                    label={"Tax Amount"}
+                    type="text"
+                    value={row.colTax || ""}
+                    readOnly
+                  />
                 </td>
 
                 {/* <td><input type="text" value={selectedItemCode.taxPercent || ''} /></td> */}
                 <td>
-                  <input
+                  <FloatingInput
+                    label={"Total Amount"}
                     type="text"
                     value={row.totalAmount || ""}
                     onChange={(e) =>
@@ -680,8 +702,8 @@ const IPDIssuesWard = ({ ipAdmission }) => {
           { label: "Amount in Words", name: "amountInWords", readOnly: true },
         ].map((field, index) => (
           <div key={index} className="ipdissuedward-section">
-            <label>{field.label}:</label>
-            <input
+            <FloatingInput
+              label={field.label}
               type="text"
               name={field.name}
               value={
@@ -690,10 +712,17 @@ const IPDIssuesWard = ({ ipAdmission }) => {
                   : formData[field.name]
               }
               readOnly={field.readOnly || false}
+              onChange={(e) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  [field.name]: e.target.value,
+                }))
+              }
             />
           </div>
         ))}
       </div>
+
       <div className="ipdissuedward-buttons">
         <button className="postIssue-buttons" onClick={postIssueData}>
           Post Data

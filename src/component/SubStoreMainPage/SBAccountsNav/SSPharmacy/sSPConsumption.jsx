@@ -1,35 +1,49 @@
 /* Ajhar tamboli sSPConsumption.jsx 19-09-24 */
 
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from "react";
 import "../SSPharmacy/sSPConsumption.css";
-import { useParams } from 'react-router-dom';
-import SSPConsumInternalConsum from './sSPConsumInternalConsum';
-import { API_BASE_URL } from '../../../api/api';
+import { useParams } from "react-router-dom";
+import SSPConsumInternalConsum from "./sSPConsumInternalConsum";
+import { API_BASE_URL } from "../../../api/api";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
+import * as XLSX from 'xlsx';
 
 function SSPConsumption() {
   const { store } = useParams();
   const [consumptions, setConsumptions] = useState([]);
   const [isPopupOpen, setIsPopupOpen] = useState(false); // State to manage popup visibility
-
+  const tableRef = useRef(null);
   const handlePopupToggle = () => {
     setIsPopupOpen(!isPopupOpen); // Toggle the popup open/close state
   };
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/subPharmConsumption`)
-      .then(response => response.json())
-      .then(data => {
-        const filteredData = data.filter(item => item.storeName.subStoreId == store);
+      .then((response) => response.json())
+      .then((data) => {
+        const filteredData = data.filter(
+          (item) => item.storeName.subStoreId == store
+        );
         console.log(filteredData);
-        
+
         setConsumptions(filteredData);
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching data:", error));
   }, [store]);
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'Consumption'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'Consumption.xlsx'); // Downloads the Excel file
+  };
 
-   // Function to trigger print
-   const handlePrint = () => {
+  // Function to trigger print
+  const handlePrint = () => {
     const printContent = tableRef.current;
     const newWindow = window.open("", "_blank");
     newWindow.document.write(`
@@ -59,42 +73,58 @@ function SSPConsumption() {
     newWindow.document.close();
     newWindow.print();
     newWindow.close();
+    
   };
   return (
     <div className="sSPConsumption-container">
-      <button className="sSPConsumption-create-requisition" onClick={handlePopupToggle}>
+      <button
+        className="sSPConsumption-create-requisition"
+        onClick={handlePopupToggle}
+      >
         <i className="fa-solid fa-plus"></i> Internal Consumption
       </button>
-      
+
       {/* Show the popup if isPopupOpen is true */}
       {isPopupOpen && (
         <div className="sSPConsumption-popup-overlay">
           <div className="sSPConsumption-popup-content">
-            <SSPConsumInternalConsum  onClose={handlePopupToggle}/>
-            <button className="sSPConsumption-popup-close-button" onClick={handlePopupToggle}>X</button>
+            <SSPConsumInternalConsum onClose={handlePopupToggle} />
+            <button
+              className="sSPConsumption-popup-close-button"
+              onClick={handlePopupToggle}
+            >
+              X
+            </button>
           </div>
         </div>
       )}
       <div className="sSPConsumption-search-N-results">
-          <div className="sSPConsumption-search-bar">
-            <i className="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Search" />
-          </div>
-          <div className="sSPConsumption-results-info">
-        <span>Showing {consumptions.length} / {consumptions.length} results</span>
-            {/* Showing 2 / 2 results */}
-            <button className='sSPConsumption-print-btn' 
-            // onClick={handleExportToExcel}
-            >
-              <i className="fa-regular fa-file-excel"></i> Export
-            </button>
-            <button className='sSPConsumption-print-btn' 
-            onClick={handlePrint}
-            ><i class="fa-solid fa-print"></i> Print</button>
-          </div>
+        <div className="sSPConsumption-search-bar">
+          
+          <FloatingInput
+            label={"Search"}
+            type="search"
+          />
         </div>
+        <div className="sSPConsumption-results-info">
+          <span>
+            Showing {consumptions.length} / {consumptions.length} results
+          </span>
+          {/* Showing 2 / 2 results */}
+          <button
+            className="sSPConsumption-print-btn"
+            // onClick={handleExportToExcel}
+            onClick={handleExport}
+          >
+            <i className="fa-regular fa-file-excel"></i> Export
+          </button>
+          <button className="sSPConsumption-print-btn" onClick={handlePrint}>
+            <i class="fa-solid fa-print"></i> Print
+          </button>
+        </div>
+      </div>
 
-      <table>
+      <table ref={tableRef}>
         <thead>
           <tr>
             <th>Consumed Date</th>

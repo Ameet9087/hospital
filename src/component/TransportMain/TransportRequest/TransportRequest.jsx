@@ -5,7 +5,12 @@ import CreateRequest from './CreateRequest';
 import CustomModal from '../../../CustomModel/CustomModal';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import { API_BASE_URL } from '../../api/api';
-
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 const TransportRequest = () => {
   const [showCreateRequestModal, setShowCreateRequestModal] = useState(false);
   const [requests, setRequests] = useState([]);
@@ -31,8 +36,10 @@ const TransportRequest = () => {
     try {
       const response = await axios.post(`${API_BASE_URL}/vehicle-requests`, requestData);
       setRequests([...requests, response.data]);
+      toast.success("Form submitted successfully!");
     } catch (error) {
       console.error("Error creating request:", error);
+      toast.error("Failed to submit form.");
     }
   };
 
@@ -40,6 +47,7 @@ const TransportRequest = () => {
     try {
       await axios.delete(`${API_BASE_URL}/vehicle-requests/${id}`);
       setRequests(requests.filter(request => request.vehicleRequestId !== id));
+      
     } catch (error) {
       console.error("Error deleting request:", error);
     }

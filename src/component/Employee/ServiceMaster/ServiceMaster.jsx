@@ -4,10 +4,21 @@ import "./ServiceMaster.css";
 import ServiceRate from "./ServiceRate";
 import OperationOrProcedureRate from "./OperationOrProcedureRate";
 import { API_BASE_URL } from "../../api/api";
+import PopupTable from "../../Admission/PopupTable";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 
 const ServiceMaster = ({ refreshTable, onClose }) => {
   const [activeComponent, setActiveComponent] = useState("defaultValue");
   const [payType, setPayType] = useState([]);
+  const [activePopup, setActivePopup] = useState(null);
+  const [locationId, setLocationId] = useState([])
+  const [locationMasters, setLocationMasters] = useState([])
+  const [selectedLocation, setSelectedLocation] = useState("");
+  const locationHeading=["id","locationName"];
   const [formData, setFormData] = useState({
     serviceName: "",
     displayName: "",
@@ -36,31 +47,46 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
     serviceRates: [],
   });
 
+  
+
+  const fetchPayType = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/pay-type`);
+      const payTypeData = response.data;
+
+      setPayType(payTypeData);
+
+      // Map payType data to serviceRates format
+      const initialServiceRates = payTypeData.map((type) => ({
+        payTypeid: type.id,
+        payType: type.payTypeName,
+        rate: null,
+        doctorSharePercentage: null,
+        doctorShareAmount: null,
+      }));
+      setServiceRates(initialServiceRates);
+    } catch (error) {
+      console.error("Error fetching pay types:", error);
+    }
+  };
+
+  const fetchLocationMasters = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/location-masters`);
+      const locationData = response.data;
+      
+      setLocationMasters(locationData); 
+  
+      console.log("Location Masters:", locationData);
+    } catch (error) {
+      console.error("Error fetching location masters:", error);
+    }
+  };
+  
   useEffect(() => {
-    const fetchPayType = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/pay-type`);
-        const payTypeData = response.data;
-
-        setPayType(payTypeData);
-
-        // Map payType data to serviceRates format
-        const initialServiceRates = payTypeData.map((type) => ({
-          payTypeid: type.id,
-          payType: type.payTypeName,
-          rate: null,
-          doctorSharePercentage: null,
-          doctorShareAmount: null,
-        }));
-        setServiceRates(initialServiceRates);
-      } catch (error) {
-        console.error("Error fetching pay types:", error);
-      }
-    };
-
     fetchPayType();
+    fetchLocationMasters();
   }, []);
-
   const [serviceRates, setServiceRates] = useState([]);
 
   const [procedureRates, setProcedureRates] = useState([]);
@@ -129,55 +155,16 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
     setProcedureRates(updatedRates);
   };
 
-  // const handleSave = async () => {
-  //   try {
-  //     // Prepare the complete payload
-  //     const payload = {
-  //       serviceDetailsId: 1, // You might want to generate or receive this dynamically
-  //       ...formData,
-  //       serviceRates: serviceRates.map((rate, index) => ({
-  //         serviceRateid: index + 1,
-  //         rate: rate.rate,
-  //         doctorSharePercentage: rate.doctorSharePercentage,
-  //         doctorShareAmount: rate.doctorShareAmount,
-  //         payType: {
-  //           payTypeId: index + 1,
-  //           payTypeName: rate.payType,
-  //           payOrder: (index + 1).toString(),
-  //           activeStatus: "Active",
-  //           opdCategory: "General",
-  //           categoryCode: CAT${index + 1}
-  //         }
-  //       })),
-  //       procedureRates: procedureRates.map((rate, index) => ({
-  //         operationOrProcedureRateId: index + 1,
-  //         description: rate.description,
-  //         percentage: rate.percentage,
-  //         drRef: rate.drRef || ''
-  //       }))
-  //     };
-
-  //     const response = await axios.post(
-  //       'http://192.168.0.114:4200/api/service-details',
-  //       payload
-  //     );
-
-  //     console.log('Save successful:', response.data);
-  //     alert('Service details saved successfully!');
-  //   } catch (error) {
-  //     console.error('Error saving service details:', error);
-  //     alert('Failed to save service details. Please try again.');
-  //   }
-  // };
+  
   const handleSave = async () => {
-    if (!formData.serviceName || !formData.serviceCode) {
-      alert("Please fill in required fields");
-      return;
-    }
+    
 
     try {
       const payload = {
         ...formData,
+        locationMasterDTO: {
+          id: selectedLocation?.id, 
+        },
         serviceRates: serviceRates.map((rate, index) => ({
           rate: rate.rate,
           doctorSharePercentage: rate.doctorSharePercentage,
@@ -194,6 +181,7 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
           drRef: rate.drRef || "",
         })),
       };
+
       console.log(payload);
 
       const response = await axios.post(
@@ -224,7 +212,32 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
       );
     }
   };
+  const handleSelect = async (data) => {
+      if (activePopup === "location") {
+        setSelectedLocation(data);
+        console.log(data, "selectedLocation");
+        setForm((prevFormData) => ({
+          ...prevFormData,
+          locationMaster: {
+            id: data.id, // Assuming 'data' contains the location with 'id' field
+          },
+        }));
+      }
+      setActivePopup(null); // Close the popup after selection
+};
 
+const getPopupData = () => {
+    if (activePopup === "location") {
+        return { columns: locationHeading, data: locationMasters };
+    }
+    else  {
+        return { columns: [], data: [] };
+    }
+};
+
+
+
+const { columns, data } = getPopupData();
   return (
     <>
       <div className="ServiceMaster-sh-container">
@@ -313,7 +326,13 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
               onChange={handleChange}
             />
           </div>
-          <div></div>
+            <FloatingInput
+            type="search"
+            label={"Location Name"}
+            value={selectedLocation.locationName || ""}
+            onIconClick={() => setActivePopup("location")}
+            />
+            
           <h3 className="ServiceMaster-sub-header">Service Options</h3>
           <div></div>
           <div></div>
@@ -669,6 +688,14 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
             />
           )}
         </div>
+        {activePopup && (
+                <PopupTable
+                    columns={columns}
+                    data={data}
+                    onSelect={handleSelect}
+                    onClose={() => setActivePopup(null)}
+                />
+            )}
       </div>
 
       <div className="ServiceMaster-sh-btn">

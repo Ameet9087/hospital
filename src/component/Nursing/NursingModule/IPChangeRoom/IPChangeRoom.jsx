@@ -5,7 +5,12 @@ import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 import { API_BASE_URL } from "../../../api/api";
 import { useSelector } from "react-redux";
-
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 const IPChangeRoom = ({ ipAdmission }) => {
   const [activePopup, setActivePopup] = useState(null);
   const [beds, setBeds] = useState([]);
@@ -149,7 +154,7 @@ const IPChangeRoom = ({ ipAdmission }) => {
         `${API_BASE_URL}/ward-request-change/save`,
         payload
       );
-      alert("request Success");
+      toast.success("data save Successfull");
       setSelectedBedDetails(null); // Or {} if your initial state is an object
       setSelectedFloor(null); // Or {} if applicable
       setSelectedPytype(null);
@@ -157,6 +162,7 @@ const IPChangeRoom = ({ ipAdmission }) => {
       setSelectedRoomType(null);
     } catch (error) {
       console.log(error);
+      toast.error("data save failed");
     }
   };
 
@@ -174,42 +180,41 @@ const IPChangeRoom = ({ ipAdmission }) => {
               <div className="iPChangeRoom-panel-header">Patient Details</div>
               <div className="iPChangeRoom-panel-content">
                 <div className="iPChangeRoom-form-row">
-                  <label>IP No: *</label>
-                  <div className="iPChangeRoom-input-with-search">
-                    <input
-                      type="text"
-                      value={
-                        activePatient?.patient?.inPatientId ||
-                        ipAdmission?.patient?.inPatientId
-                      }
-                      placeholder="Ip No"
-                      readOnly
-                    />
-                  </div>
+                  <FloatingInput
+                    label={"IP No"}
+                    type="text"
+                    value={
+                      activePatient?.patient?.inPatientId ||
+                      ipAdmission?.patient?.inPatientId
+                    }
+                    readOnly
+                  />
                 </div>
                 <div className="iPChangeRoom-form-row">
-                  <label>Admission Date:</label>
-                  <input
+                  <FloatingInput
+                    label={"Admission Date"}
                     type="date"
                     value={
                       activePatient?.admissionDate || ipAdmission?.admissionDate
                     }
+                    readOnly
                   />
                 </div>
 
                 <div className="iPChangeRoom-form-row">
-                  <label>Admission Time:</label>
-                  <input
+                  <FloatingInput
+                    label={"Admission Time"}
                     type="text"
                     value={
                       activePatient?.admissionTime || ipAdmission?.admissionTime
                     }
+                    readOnly
                   />
                 </div>
 
                 <div className="iPChangeRoom-form-row">
-                  <label>Patient Name:</label>
-                  <input
+                  <FloatingInput
+                    label={"Patient Name"}
                     type="text"
                     value={`${
                       activePatient?.patient?.firstName ||
@@ -225,8 +230,8 @@ const IPChangeRoom = ({ ipAdmission }) => {
                   />
                 </div>
                 <div className="iPChangeRoom-form-row">
-                  <label>Age:</label>
-                  <input
+                  <FloatingInput
+                    label={"Age"}
                     type="text"
                     value={
                       activePatient?.patient?.age ||
@@ -235,34 +240,27 @@ const IPChangeRoom = ({ ipAdmission }) => {
                     readOnly
                   />
                 </div>
+
                 <div className="iPChangeRoom-form-row">
-                  <label>Gender:</label>
-                  <select
+                  <FloatingSelect
+                    label="Gender"
+                    name="gender"
                     value={
                       activePatient?.patient?.gender ||
                       ipAdmission?.patient?.patient?.gender
                     }
-                  >
-                    <option value={"Male"}>Male</option>
-                    <option value={"Female"}>Female</option>
-                  </select>
-                </div>
-                {/* <div className="iPChangeRoom-form-row">
-                  <label>Change Date:</label>
-                  <input
-                    type="date"
-                    value={changeDate}
-                    onChange={(e) => setChangeDate(e.target.value)}
+                    onChange={(e) => {
+                      const selectedGender = e.target.value;
+                      // Handle your change logic here, like directly setting the value if needed
+                      ipAdmission.patient.patient.gender = selectedGender;
+                    }}
+                    options={[
+                      { value: "", label: "Select Gender" }, // Default option
+                      { value: "Male", label: "Male" },
+                      { value: "Female", label: "Female" },
+                    ]}
                   />
                 </div>
-                <div className="iPChangeRoom-form-row">
-                  <label>Change Time:</label>
-                  <input
-                    type="time"
-                    value={changeTime}
-                    onChange={(e) => setChangeTime(e.target.value)}
-                  />
-                </div> */}
               </div>
             </div>
             <div className="iPChangeRoom-panel operation-details">
@@ -271,8 +269,8 @@ const IPChangeRoom = ({ ipAdmission }) => {
               </div>
               <div className="iPChangeRoom-panel-content">
                 <div className="iPChangeRoom-form-row">
-                  <label>Current Pay Type:</label>
-                  <input
+                  <FloatingInput
+                    label={"Current Pay Type"}
                     type="text"
                     value={
                       activePatient?.roomDetails?.payTypeDTO?.payTypeName ||
@@ -281,8 +279,8 @@ const IPChangeRoom = ({ ipAdmission }) => {
                   />
                 </div>
                 <div className="iPChangeRoom-form-row">
-                  <label>Current Room Type:</label>
-                  <input
+                  <FloatingInput
+                    label={"Current Room Type"}
                     type="text"
                     value={
                       activePatient?.roomDetails?.roomTypeDTO?.roomtype ||
@@ -291,8 +289,8 @@ const IPChangeRoom = ({ ipAdmission }) => {
                   />
                 </div>
                 <div className="iPChangeRoom-form-row">
-                  <label>Current Room No:</label>
-                  <input
+                  <FloatingInput
+                    label={"Current Room No"}
                     type="text"
                     value={
                       activePatient?.roomDetails?.roomDTO?.roomNumber ||
@@ -301,8 +299,8 @@ const IPChangeRoom = ({ ipAdmission }) => {
                   />
                 </div>
                 <div className="iPChangeRoom-form-row">
-                  <label>Current Bed No:</label>
-                  <input
+                  <FloatingInput
+                    label={"Current Bed No"}
                     type="text"
                     value={
                       activePatient?.roomDetails?.bedDTO?.bedNo ||
@@ -311,8 +309,8 @@ const IPChangeRoom = ({ ipAdmission }) => {
                   />
                 </div>
                 <div className="iPChangeRoom-form-row">
-                  <label>Current Floor No:</label>
-                  <input
+                  <FloatingInput
+                    label={"Current Floor No"}
                     type="text"
                     value={
                       activePatient?.roomDetails?.floorDTO?.location ||
@@ -329,73 +327,61 @@ const IPChangeRoom = ({ ipAdmission }) => {
               </div>
               <div className="iPChangeRoom-panel-content">
                 <div className="iPChangeRoom-form-row">
-                  <label>Select Paytype:</label>
-                  <input type="text" value={selectedPaytype?.payTypeName} />
-                  <i
-                    onClick={() => setActivePopup("paytype")}
-                    className="fa-solid fa-magnifying-glass"
-                  ></i>
+                  <FloatingInput
+                    label={"Select Pay Type"}
+                    type="search"
+                    value={selectedPaytype?.payTypeName}
+                    onIconClick={() => setActivePopup("paytype")}
+                  />
                 </div>
 
                 <div className="iPChangeRoom-form-row">
-                  <label>Floor:</label>
-                  <input type="text" value={selectedFloor?.floorNumber} />
-                  <i
-                    onClick={() => setActivePopup("floor")}
-                    className="fa-solid fa-magnifying-glass"
-                  ></i>
+                  <FloatingInput
+                    label={"Floor"}
+                    type="search"
+                    value={selectedFloor?.floorNumber}
+                    onIconClick={() => setActivePopup("floor")}
+                  />
                 </div>
                 <div className="iPChangeRoom-form-row">
-                  <label>Room Type:</label>
-                  <input type="text" value={selectedRoomType?.roomtype} />
-                  <i
-                    onClick={() => setActivePopup("roomType")}
-                    className="fa-solid fa-magnifying-glass"
-                  ></i>
+                  <FloatingInput
+                    label={"Room Type"}
+                    type="search"
+                    value={selectedRoomType?.roomtype}
+                    onIconClick={() => setActivePopup("roomType")}
+                  />
                 </div>
                 <div className="iPChangeRoom-form-row">
-                  <label>Room No:</label>
-                  <input type="text" value={selectedRoom?.roomNumber} />
-                  <i
-                    onClick={() => setActivePopup("room")}
-                    className="fa-solid fa-magnifying-glass"
-                  ></i>
+                  <FloatingInput
+                    label={"Room No"}
+                    type="search"
+                    value={selectedRoom?.roomNumber}
+                    onIconClick={() => setActivePopup("room")}
+                  />
                 </div>
                 <div className="iPChangeRoom-form-row">
-                  <label>Bed No:</label>
-                  <input type="text" value={selectedBedDetails?.bedNo} />
-                  <i
-                    onClick={() => setActivePopup("bed")}
-                    className="fa-solid fa-magnifying-glass"
-                  ></i>
+                  <FloatingInput
+                    label={"Bed No"}
+                    type="search"
+                    value={selectedBedDetails?.bedNo}
+                    onIconClick={() => setActivePopup("bed")}
+                  />
                 </div>
                 <div className="iPChangeRoom-form-row">
-                  <label>Charge Type:</label>
-                  <input
+                  <FloatingInput
+                    label={"Charge Type"}
                     type="text"
                     value={selectedBedDetails?.chargeType}
                     readOnly
                   />
                 </div>
                 <div className="iPChangeRoom-form-row">
-                  <label>Remarks:</label>
-                  <textarea />
+                  
+                  <FloatingTextarea
+                    label={"Remarks"}
+                    
+                  />
                 </div>
-
-                {/* <div className="iPChangeRoom-form-row">
-                  <label>Change Entitlement:</label>
-                  <div className="iPChangeRoom-input-with-search">
-                    <input type="text" />
-                    <FaSearch
-                      onClick={handleSearchClick}
-                      style={{ cursor: "pointer" }}
-                    />
-                  </div>
-                </div> */}
-                {/* <div className="iPChangeRoom-form-row">
-                <label>Remarks:</label>
-                <textarea name="" id=""></textarea>
-              </div> */}
               </div>
             </div>
           </div>
