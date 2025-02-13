@@ -1,15 +1,12 @@
-/* swapnil Rokade ReferralSource Adding className And color and table css 18/09 */
 .hist-container {
   padding: 20px;
   font-family: Arial, sans-serif;
   display: flex;
 }
-
 .hist-main {
   margin: 0 auto;
   width: 100%;
 }
-
 .hist-subdiv{
   width: 100%;
   padding: 5px;
@@ -22,16 +19,13 @@
   justify-content: space-between;
   width: 100%;
 }
-
 .hist-section {
   margin-bottom: 20px;
 }
-
 .hist-section label {
   font-size: 14px;
   font-weight: bold;
 }
-
 /* .add-button {
   background-color: #4c5baf;
   color: white;
@@ -45,32 +39,26 @@ width: 100%;
 display: flex;
 justify-content: space-between;
 }
-
 .hist-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
 }
-
 .hist-table th,
 .hist-table td {
   padding: 8px;
   text-align: left;
 }
-
 .hist-table th {
   background-color: #f2f2f2;
 }
-
   .hist-modal-overlay {
     top: 0;
     left: 0;
     width: 100%;
     display: flex;
-    /* align-items: center; */
     justify-content: center;
   }
-  
   .hist-modal-content {
     background: white;
     padding: 20px;
@@ -81,7 +69,6 @@ justify-content: space-between;
     scrollbar-width: none;
     position: relative;
   }
-  
   .hist-close-button {
     position: absolute;
     top: 0px;
@@ -91,7 +78,6 @@ justify-content: space-between;
     font-size: var(--heading-font);
     cursor: pointer;
   }
-  
   .hist-form-group {
     margin-bottom: 15px;
     display: flex;
@@ -108,14 +94,12 @@ justify-content: space-between;
     display: block;
     width: 50%;
   }
-  
   .hist-form-group input,
   .hist-form-group textarea {
     padding: 5px;
     margin-top: 4px;
     width: 50%;
   }
-  
   .hist-add-button {
     background-color: var(--button-color);
     color: white;
@@ -124,5 +108,23 @@ justify-content: space-between;
     border-radius: 5px;
     cursor: pointer;
   }
-  
-  
+  .referral-source-add-button {
+    background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding:5px;
+    cursor: pointer;
+    border: 1px solid var(--button-hover-border-color);
+  }
+  .referral-source-add-button:hover
+  {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1px solid var(--button-hover-border-color);
+  }
+  .referral-source-add-print-btn{
+    display: flex;
+    gap: 5px;
+    
+  }

@@ -3,6 +3,7 @@ import "./DgMasterPopup.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
+import { CiSearch } from "react-icons/ci";
 import { API_BASE_URL } from "../../api/api";
 import {
   FloatingInput,
@@ -11,6 +12,8 @@ import {
   PopupTable,
 } from "../../../FloatingInputs";
 function DgMasterPopup() {
+  const [locations, setLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
   const [activePopup, setActivePopup] = useState("");
   const [testDetailsColumnWidths, setTestDetailsColumnWidths] = useState({});
   const [organizationsColumnWidths, setOrganizationsColumnWidths] = useState(
@@ -92,6 +95,15 @@ function DgMasterPopup() {
     });
   };
 
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/location-masters`)
+      .then((response) => response.json())
+      .then((data) => {
+        setLocations(data);
+      })
+      .catch((error) => console.error("Error fetching Locations:", error));
+  }, []);
+
   const handleorgDeleteRow = (setter, id) => {
     if (organizations.length === 1) {
       return;
@@ -124,6 +136,11 @@ function DgMasterPopup() {
       return {
         columns: ["masterId", "name", "classification"],
         data: organisation,
+      };
+    } else if (activePopup === "Location") {
+      return {
+        columns: ["id", "locationName"],
+        data: locations,
       };
     } else {
       return { columns: [], data: [] };
@@ -204,6 +221,8 @@ function DgMasterPopup() {
             : org
         )
       );
+    } else if (activePopup === "Location") {
+      setSelectedLocation(data);
     }
 
     setActivePopup(null);
@@ -228,6 +247,9 @@ function DgMasterPopup() {
       status: status,
       total_cost: totalRate,
       pkgactcost: totalRate,
+      locationMasterDTO: {
+        id: selectedLocation?.id,
+      },
       testDetailsDTO: testDetails.map((detail) => ({
         testId: detail.id,
         testRate: parseFloat(detail.testRate) || 0,
@@ -540,6 +562,15 @@ function DgMasterPopup() {
             >
               For All Organisations
             </label>
+          </div>
+          <div className="dgpkg-input-with-icon">
+            <FloatingInput
+              label="Location"
+              value={selectedLocation?.locationName}
+            />
+            <div className="dgpkg-magnifier-btn">
+              <CiSearch onClick={() => setActivePopup("Location")} />
+            </div>
           </div>
         </div>
         <div className="dgpkg-EditAndDelete-section">

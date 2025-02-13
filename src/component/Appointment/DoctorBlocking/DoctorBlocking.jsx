@@ -18,7 +18,7 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
   const [formData, setFormData] = useState({
     formDate: selectedDoctorBlocking?.fromDate || "",
     toDate: selectedDoctorBlocking?.toDate || "",
-    doctor:selectedDoctorBlocking?.addDoctorDTO?.doctorName||"",
+    doctor: selectedDoctorBlocking?.addDoctorDTO?.doctorName || "",
     message: selectedDoctorBlocking?.message || "",
     timeWise: selectedDoctorBlocking?.timeWise || false,
     formTime: selectedDoctorBlocking?.fromTime || "",
@@ -125,7 +125,7 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
       } else {
         // Create new entry
         response = await axios.post(`${API_BASE_URL}/doctor-blocking`, payload);
-        toast.error("Doctor blocking details submitted successfully!");
+        toast.success("Doctor blocking details submitted successfully!");
       }
 
       console.log("Form submitted successfully:", response.data);
@@ -170,10 +170,10 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
       </div>
       <div className="doctor-blocking-field">
         <FloatingTextarea
-        label={"Message"}
-        name="message"
-        value={formData.message}
-        onChange={handleChange}
+          label={"Message"}
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
         />
       </div>
       <div className="doctor-blocking-field">
@@ -189,20 +189,20 @@ const DoctorBlocking = ({ selectedDoctorBlocking, onClose }) => {
         <>
           <div className="doctor-blocking-field">
             <FloatingInput
-            label={"From Time"}
-            type="time"
-            name="formTime"
-            value={formData.formTime}
-            onChange={handleChange}
+              label={"From Time"}
+              type="time"
+              name="formTime"
+              value={formData.formTime}
+              onChange={handleChange}
             />
           </div>
           <div className="doctor-blocking-field">
             <FloatingInput
-            label={"To Time"}
-            type="time"
-            name="toTime"
-            value={formData.toTime}
-            onChange={handleChange}
+              label={"To Time"}
+              type="time"
+              name="toTime"
+              value={formData.toTime}
+              onChange={handleChange}
             />
           </div>
         </>

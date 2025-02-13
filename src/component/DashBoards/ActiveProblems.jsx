@@ -1,12 +1,119 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Activeproblems.css"; // Import the CSS file for styling
+import "./Activeproblems.css";
 import { Label } from "recharts";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import { FloatingInput, FloatingTextarea } from "../../FloatingInputs";
 import { toast } from "react-toastify";
-
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 const ActiveProblems = ({ patientId, outPatientId }) => {
+  const printRef = useRef();
+  const formatDateTime = () => {
+    const now = new Date();
+    return now.toLocaleString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    });
+  };
+
+  const handlePrint = () => {
+    const doc = new jsPDF('l', 'mm', 'a4');
+    doc.setFontSize(16);
+    doc.text('Medical Problems Report', doc.internal.pageSize.width / 2, 15, { align: 'center' });
+    doc.setFontSize(10);
+    doc.text(`Generated on: ${formatDateTime()}`, 219, 25);
+    const activeProblemsData = activeProblems.map(problem => [
+      problem.searchProblem || '',
+      problem.onsetDate || '',
+      problem.note || '',
+      problem.currentStatus || '',
+      problem.isPrincipalProblem ? '✓' : ''
+    ]);
+    const activeHeaders = [
+      "ICD-11 Description",
+      "Onset Date",
+      "Notes",
+      "Current Status",
+      "Principal Problem"
+    ];
+    doc.setFontSize(12);
+    doc.text('Active Medical Problems', 14, 35);
+    doc.autoTable({
+      head: [activeHeaders],
+      body: activeProblemsData,
+      startY: 40,
+      styles: {
+        fontSize: 8,
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: [51, 122, 183],
+        textColor: 255,
+        fontSize: 9,
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+      margin: { left: 14 }
+    });
+    const firstTableHeight = doc.lastAutoTable.finalY;
+    const pastProblemsData = pastProblem.map(problem => [
+      problem.searchProblem || '',
+      problem.onSetDate || '',
+      problem.resolvedDate || '',
+      problem.note || '',
+      problem.isPrincipalProblem ? '✓' : ''
+    ]);
+    const pastHeaders = [
+      "ICD-11 Description",
+      "Onset Date",
+      "Resolved Date",
+      "Notes",
+      "Principal Problem"
+    ];
+    doc.setFontSize(12);
+    doc.text('Past Medical Problems', 14, firstTableHeight + 15);
+    doc.autoTable({
+      head: [pastHeaders],
+      body: pastProblemsData,
+      startY: firstTableHeight + 20,
+      styles: {
+        fontSize: 8,
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: [51, 122, 183],
+        textColor: 255,
+        fontSize: 9,
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+      margin: { left: 14 }
+    });
+    const pageCount = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.text(
+        `Page ${i} of ${pageCount}`,
+        doc.internal.pageSize.width / 2,
+        doc.internal.pageSize.height - 10,
+        { align: 'center' }
+      );
+    }
+    const fileName = "Medical_Problems_Report.pdf";
+    doc.save(fileName);
+    const pdfOutput = doc.output('bloburl');
+    window.open(pdfOutput, '_blank');
+  };
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -27,40 +134,35 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
   });
   const [updateProblem, setUpdateProblem] = useState({});
   const [newPastProblem, setNewPastProblem] = useState({
-    searchProblem: "", // Search Problem field
-    isPrincipalProblem: false, // Principal Problem checkbox
-    currentStatus: "", // Current Status field
-    onSetDate: "", // OnSet Date field
-    resolvedDate: "", // Resolved Date field
-    note: "", // Note field
-    isActive: true, // Active status (default to true)
-    addedDate: new Date().toISOString().split("T")[0], // Current date
+    searchProblem: "",
+    isPrincipalProblem: false,
+    currentStatus: "",
+    onSetDate: "",
+    resolvedDate: "",
+    note: "",
+    isActive: true,
+    addedDate: new Date().toISOString().split("T")[0],
     addedTime: new Date().toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
-    }), // Current time
+    }),
   });
-
   const handleOpenModal = () => {
     setIsAddModalOpen(true);
     setIsAddPastModalOpen(false);
   };
-
   const handleOpenPastModal = () => {
     setIsAddPastModalOpen(true);
     setIsAddModalOpen(false);
   };
-
   const handleCloseModal = () => {
     setIsAddModalOpen(false);
     setNewProblem({});
   };
-
   const handleClosePastModal = () => {
     setIsAddPastModalOpen(false);
-    setNewPastProblem({}); // Clear form data
+    setNewPastProblem({});
   };
-
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setActiveProblem({
@@ -68,18 +170,14 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
       [name]: type === "checkbox" ? checked : value,
     });
   };
-
   useEffect(() => {
     const fetchActiveProblems = async () => {
       let endpoint = "";
-
       if (outPatientId) {
         endpoint = `${API_BASE_URL}/active-problems/by-newVisitPatientId/${outPatientId}`;
       } else if (patientId) {
         endpoint = `${API_BASE_URL}/active-problems/by-patientId/${patientId}`;
       }
-
-      // Fetch data if a valid endpoint is determined
       if (endpoint) {
         try {
           const response = await fetch(endpoint);
@@ -95,25 +193,18 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
         }
       }
     };
-
-    // Only fetch active problems if there is a newPatientVisitId or admissionId
     if (outPatientId || patientId) {
       fetchActiveProblems();
     }
-  }, [outPatientId, patientId, isAddModalOpen]); // Dependencies to track ID changes
-
+  }, [outPatientId, patientId, isAddModalOpen]);
   useEffect(() => {
     const fetchPastProblems = async () => {
       let endpoint = "";
-
-      // Determine which endpoint to use based on available IDs
       if (outPatientId) {
         endpoint = `${API_BASE_URL}/past-problem/by-newPatientVisitId?newPatientVisitId=${outPatientId}`;
       } else if (patientId) {
         endpoint = `${API_BASE_URL}/past-problem/by-patientId?patientId=${patientId}`;
       }
-
-      // Fetch data if a valid endpoint is determined
       if (endpoint) {
         try {
           const response = await fetch(endpoint);
@@ -129,21 +220,17 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
         }
       }
     };
-
     if (outPatientId || patientId) {
       fetchPastProblems();
     }
-  }, [outPatientId, patientId, isAddPastModalOpen]); // Dependencies to track ID changes
-
+  }, [outPatientId, patientId, isAddPastModalOpen]);
   const handleSubmit = async () => {
     const formData =
       patientId > 0
         ? { ...activeProblem, inPatientDTO: { inPatientId: patientId } }
         : { ...activeProblem, outPatientDTO: { outPatientId } };
-
     try {
       console.log(formData);
-
       const response = await fetch(
         `${API_BASE_URL}/active-problems/save-active-problem`,
         {
@@ -154,7 +241,6 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
           body: JSON.stringify(formData),
         }
       );
-
       if (response.ok) {
         toast.success(`${isEditMode ? "Updated" : "Added"} Problem successfully!`);
         setActiveProblem({
@@ -166,7 +252,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
           note: "",
         });
         handleCloseModal();
-        setIsEditMode(false); // Reset edit mode
+        setIsEditMode(false);
       } else {
         toast.error(`Failed to ${isEditMode ? "update" : "add"} Problem`);
       }
@@ -175,16 +261,13 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
       toast.error(`Error ${isEditMode ? "updating" : "submitting"} form`);
     }
   };
-
   const handleAddPastProblem = async () => {
     const formData =
       patientId > 0
         ? { ...newPastProblem, patientDTO: { inPatientId: patientId } }
         : { ...newPastProblem, outPatientDTO: { outPatientId } };
-
     try {
       console.log(formData);
-
       const response = await fetch(`${API_BASE_URL}/past-problem/save`, {
         method: "POST",
         headers: {
@@ -192,20 +275,18 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
         },
         body: JSON.stringify(formData),
       });
-
       if (!response.ok) {
         throw new Error("Failed to add past problem");
       }
       toast.success("Past Problem Added Successfully")
-      handleClosePastModal(); // Close the modal
-      setNewPastProblem({}); // Reset the form
+      handleClosePastModal();
+      setNewPastProblem({});
     } catch (error) {
-      toast.error(error.message); // Set error message
+      toast.error(error.message);
     } finally {
-      setIsLoading(false); // Reset loading state
+      setIsLoading(false);
     }
   };
-
   const handlePastInputChange = (e) => {
     setNewPastProblem({
       ...newPastProblem,
@@ -213,17 +294,15 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
   };
-
   const handleEdit = (problem) => {
     setUpdateProblem({ ...problem });
-    setActiveProblem({ ...problem }); // Populate the form with the selected problem data
-    setIsEditMode(true); // Set to edit mode
-    setIsAddModalOpen(true); // Open the modal for editing
+    setActiveProblem({ ...problem });
+    setIsEditMode(true);
+    setIsAddModalOpen(true);
   };
 
   return (
     <div className="medical-problems-container">
-      {/* Active Medical Problems Section */}
       <div className="active-problem-main">
         <div className="actproblem-table">
           <section className="activeproblems-problems-section">
@@ -231,12 +310,20 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
               <label className="activeproblems-sectionh5 ">
                 Active Medical Problems
               </label>
-              <button
-                className="activeproblems-add-button"
-                onClick={handleOpenModal}
-              >
-                Add
-              </button>
+              <div className="activeproblems-add-print-btn">
+                <button
+                  className="activeproblems-add-button"
+                  onClick={handlePrint}
+                >
+                  Print
+                </button>
+                <button
+                  className="activeproblems-add-button"
+                  onClick={handleOpenModal}
+                >
+                  Add
+                </button>
+              </div>
             </div>
             <div className="table-container">
               <table className="patientList-table" ref={tableRef}>
@@ -296,8 +383,6 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
               </table>
             </div>
           </section>
-
-          {/* Past Medical Problems Section */}
           <section className="activeproblems-problems-section">
             <div className="activeproblems-subdiv">
               <label className="activeproblems-sectionh5 ">
@@ -363,8 +448,6 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
             </div>
           </section>
         </div>
-
-        {/* Modal for Adding Active Problem */}
         {isAddModalOpen && (
           <div className="activeproblems-modal-overlay">
             <div className="activeproblems-modal-content">
@@ -377,7 +460,6 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
               >
                 ❌
               </button>
-
               <div className="activeproblems-form-group">
                 <FloatingInput
                   label={"Search Problem"}
@@ -431,7 +513,6 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                   onChange={handleInputChange}
                 />
               </div>
-
               <button
                 className="activeproblems-add-problem-button"
                 onClick={handleSubmit}
@@ -441,7 +522,6 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
             </div>
           </div>
         )}
-
         {isAddPastModalOpen && (
           <div className="activeproblems-modal-overlay">
             <div className="activeproblems-modal-content">
@@ -456,7 +536,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                 <FloatingInput
                   label={"Search Problem"}
                   type="text"
-                  name="searchProblem" // Updated name attribute
+                  name="searchProblem"
                   placeholder="ICD-11"
                   value={newPastProblem.searchProblem}
                   onChange={handlePastInputChange}
@@ -466,7 +546,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                 <label>Mark if Principal Problem:</label>
                 <input
                   type="checkbox"
-                  name="isPrincipalProblem" // Updated name attribute
+                  name="isPrincipalProblem"
                   value={newPastProblem.isPrincipalProblem}
                   onChange={handlePastInputChange}
                 />
@@ -475,7 +555,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                 <FloatingInput
                   label={"Current Status"}
                   type="text"
-                  name="currentStatus" // Updated name attribute
+                  name="currentStatus"
                   value={newPastProblem.currentStatus}
                   onChange={handlePastInputChange}
 
@@ -485,7 +565,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                 <FloatingInput
                   label={"OnSet Date"}
                   type="date"
-                  name="onSetDate" // Updated name attribute
+                  name="onSetDate"
                   value={newPastProblem.onSetDate}
                   onChange={handlePastInputChange}
                 />
@@ -494,7 +574,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                 <FloatingInput
                   label={"Resolved Date"}
                   type="date"
-                  name="resolvedDate" // Updated name attribute
+                  name="resolvedDate"
                   value={newPastProblem.resolvedDate}
                   onChange={handlePastInputChange}
                 />
@@ -502,7 +582,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
               <div className="activeproblems-form-group">
                 <FloatingTextarea
                   label={"Note"}
-                  name="note" // Updated name attribute
+                  name="note"
                   value={newPastProblem.note}
                   onChange={handlePastInputChange}
                 />
@@ -520,5 +600,4 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
     </div>
   );
 };
-
 export default ActiveProblems;

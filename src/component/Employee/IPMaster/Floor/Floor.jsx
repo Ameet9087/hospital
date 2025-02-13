@@ -8,14 +8,19 @@ import {
   FloatingInput,
   FloatingSelect,
   FloatingTextarea,
+  PopupTable
 } from "../../../../FloatingInputs";
 import { toast } from "react-toastify";
 
 export default function Floor() {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
-  const [data, setData] = useState([]);
+  const [fdata, setData] = useState([]);
   const [openModel, setOpenModel] = useState(false);
+  const [activePopup, setActivePopup] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [location, setLocation] = useState(null);
+
   const [form, setForm] = useState({
     name: "",
     floorNumber: "",
@@ -24,9 +29,62 @@ export default function Floor() {
     remarks: "",
     createByName: "",
     status: "Active",
+
+
+
   });
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
+
+
+
+
+
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/location-masters`);
+        setLocation(response.data);
+        console.log(response.data, "prachi");
+
+      } catch (error) {
+        console.error("Error fetching location data:", error);
+
+      }
+    };
+    fetchLocationData();
+  }, [])
+
+
+  const getPopupData = () => {
+    if (activePopup === "location") {
+      return {
+        columns: ["id", "locationName", "locationCode"],
+        data: location,
+      };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
+
+  const { columns, data } = getPopupData();
+
+  const handleSelect = async (data) => {
+    if (activePopup === "location") {
+      setSelectedLocation(data);
+      console.log(data, "selectedLocation");
+
+      // Update formData with the selected location's ID
+      setForm((prevFormData) => ({
+        ...prevFormData,
+        locationMaster: {
+          id: data.id, // Assuming 'data' contains the location with 'id' field
+        },
+      }));
+    }
+    setActivePopup(null); // Close the popup after selection
+  };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,12 +137,16 @@ export default function Floor() {
       status: form.status,
       createDate: createdDate,
       createTime: createdTime,
+      locationMasterDTO: {
+        id: selectedLocation?.id
+      }
     };
+
 
     try {
       if (isEditing) {
         // Update functionality
-        const id = data[editIndex]?.id; // Get the id from the selected item
+        const id = fdata[editIndex]?.id; // Get the id from the selected item
         await axios.put(`${API_BASE_URL}/floors/${id}`, payload);
         toast.success("Floor updated successfully!");
       } else {
@@ -116,7 +178,7 @@ export default function Floor() {
   };
 
   const handleEdit = (index) => {
-    const selectedFloor = data[index];
+    const selectedFloor = fdata[index];
     setForm({
       name: selectedFloor.name || "",
       floorNumber: selectedFloor.floorNumber || "",
@@ -135,7 +197,7 @@ export default function Floor() {
     try {
       const response = await axios.delete(`${API_BASE_URL}/floors/${id}`);
       if (response.ok) {
-        const updatedData = data.filter((item) => item.id !== id);
+        const updatedData = fdata.filter((item) => item.id !== id);
         setData(updatedData);
         toast.success("Floor deleted successfully!");
       } else {
@@ -175,7 +237,8 @@ export default function Floor() {
           <thead>
             <tr>
               {[
-                "Floor name",
+                "Floor Number",
+                "Floor Name",
                 "Order No",
                 "Location",
                 "Remarks",
@@ -203,9 +266,10 @@ export default function Floor() {
             </tr>
           </thead>
           <tbody>
-            {data.length > 0 ? (
-              data.map((item, index) => (
+            {fdata.length > 0 ? (
+              fdata.map((item, index) => (
                 <tr key={item.id}>
+                  <td>{item.floorNumber}</td>
                   <td>{item.name}</td>
                   <td>{item.orderNo}</td>
                   <td>{item.location}</td>
@@ -242,7 +306,19 @@ export default function Floor() {
         <div className="floor-modal">
           <form className="floor-form" onSubmit={handleSubmit}>
             <span className="floors-Detail">Floor Details</span>
+
             <div className="floor-form-group">
+              <FloatingInput
+                label={"Location"}
+                type="search"
+                value={selectedLocation?.locationName}
+                onChange={handleChange}
+                onIconClick={() => setActivePopup("location")}
+              />
+            </div>
+
+            <div className="floor-form-group">
+
               <FloatingInput
                 label={"Floor Name"}
                 type="text"
@@ -338,6 +414,14 @@ export default function Floor() {
           </form>
         </div>
       </CustomModal>
+      {activePopup && (
+        <PopupTable
+          columns={columns}
+          data={data}
+          onSelect={handleSelect}
+          onClose={() => setActivePopup(null)}
+        />
+      )}
     </>
   );
 }

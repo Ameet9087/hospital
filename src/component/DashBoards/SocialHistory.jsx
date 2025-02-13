@@ -5,6 +5,8 @@ import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { FloatingInput } from "../../FloatingInputs";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const SocialHistory = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -22,16 +24,13 @@ const SocialHistory = ({ patientId, outPatientId }) => {
     familySupport: "",
     hobby: "",
   });
-
   const handleOpenModal = () => {
     setIsAddModalOpen(true);
   };
-
   const handleCloseModal = () => {
     setIsAddModalOpen(false);
     setIsUpdateModalOpen(false);
   };
-
   useEffect(() => {
     setUpdateSocialHistory({
       smokingHistory: socialHistory.smokingHistory || "",
@@ -46,21 +45,17 @@ const SocialHistory = ({ patientId, outPatientId }) => {
     const fetchSocialHistories = () => {
       let endpoint = "";
 
-      // Check if newPatientVisitId or admissionId is present
       if (outPatientId) {
         endpoint = `${API_BASE_URL}/social-histories/by-newVisitPatientId/${outPatientId}`;
       } else if (patientId) {
         endpoint = `${API_BASE_URL}/social-histories/by-patientId/${patientId}`;
       }
-
-      // If an endpoint is determined, make the API call
       if (endpoint) {
         axios
           .get(endpoint)
           .then((response) => {
             if (response.data.length > 0) {
               setSocialHistories(response.data);
-              console.log(response.data);
             }
           })
           .catch((error) => {
@@ -68,17 +63,13 @@ const SocialHistory = ({ patientId, outPatientId }) => {
           });
       }
     };
-
     fetchSocialHistories();
-  }, [patientId, outPatientId, isAddModalOpen, isUpdateModalOpen]); // Dependencies to re-fetch when IDs change
-
+  }, [patientId, outPatientId, isAddModalOpen, isUpdateModalOpen]);
   const handleAddSocialHistory = async () => {
     const formData =
       patientId > 0
         ? { ...newSocialHistory, inPatientDTO: { inPatientId: patientId } }
         : { ...newSocialHistory, outPatientDTO: { outPatientId } };
-    console.log(formData);
-
     try {
       const response = await fetch(
         `${API_BASE_URL}/social-histories/save-social-history`,
@@ -93,7 +84,6 @@ const SocialHistory = ({ patientId, outPatientId }) => {
 
       if (response.ok) {
         toast.success("Social History added successfully!");
-        // Reset the form and close the modal
         setNewSocialHistory({
           smokingHistory: "",
           alcoholHistory: "",
@@ -119,8 +109,6 @@ const SocialHistory = ({ patientId, outPatientId }) => {
   };
 
   const handleUpdateSocialHistory = async () => {
-    console.log(updateSocialHistory);
-
     try {
       const response = await fetch(
         `${API_BASE_URL}/social-histories/update/${socialHistory.socialHistoryId}`,
@@ -135,17 +123,9 @@ const SocialHistory = ({ patientId, outPatientId }) => {
 
       if (response.ok) {
         toast.success("Social History updated successfully!");
-        setNewSocialHistory({
-          smokingHistory: "",
-          alcoholHistory: "",
-          drugHistory: "",
-          occupation: "",
-          familySupport: "",
-          hobby: "",
-        });
         handleCloseModal();
       } else {
-        toast.error("Failed to add Social History");
+        toast.error("Failed to update Social History");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -163,6 +143,61 @@ const SocialHistory = ({ patientId, outPatientId }) => {
     setUpdateSocialHistory({ ...updateSocialHistory, [name]: value });
   };
 
+  const handlePrint = () => {
+    const doc = new jsPDF("l", "mm", "a4");
+    doc.setFontSize(16);
+    doc.text("Social History Report", doc.internal.pageSize.width / 2, 15, {
+      align: "center",
+    });
+    doc.setFontSize(10);
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, 219, 25);
+
+    const tableData = socialHistories.map((history) => [
+      history.smokingHistory,
+      history.alcoholHistory,
+      history.drugHistory,
+      history.occupation,
+      history.familySupport,
+      history.hobby,
+    ]);
+
+    const headers = [
+      "Smoking History",
+      "Alcohol History",
+      "Drug History",
+      "Occupation",
+      "Family Support",
+      "Hobby",
+    ];
+
+    doc.autoTable({
+      head: [headers],
+      body: tableData,
+      startY: 30,
+      styles: {
+        fontSize: 8,
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: [51, 122, 183],
+        textColor: 255,
+        fontSize: 9,
+        fontStyle: "bold",
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+    });
+
+    const fileName = `Social_History_Report_${patientId || outPatientId}_${new Date()
+      .toISOString()
+      .split("T")[0]}.pdf`;
+
+    doc.save(fileName);
+    const pdfOutput = doc.output("bloburl");
+    window.open(pdfOutput, "_blank");
+  };
+
   return (
     <div className="social-history-container">
       <div className="social-history-main">
@@ -170,12 +205,20 @@ const SocialHistory = ({ patientId, outPatientId }) => {
           <section className="social-history-section">
             <div className="social-history-subdiv">
               <label>Social History Problem List</label>
-              <button
-                className="social-history-add-button"
-                onClick={handleOpenModal}
-              >
-                Add
-              </button>
+              <div className="social-history-add-print-btn">
+                <button
+                  className="social-history-add-button"
+                  onClick={handlePrint}
+                >
+                  Print
+                </button>
+                <button
+                  className="social-history-add-button"
+                  onClick={handleOpenModal}
+                >
+                  Add
+                </button>
+              </div>
             </div>
             <table className="patientList-table" ref={tableRef}>
               <thead>
@@ -198,10 +241,7 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                         <span>{header}</span>
                         <div
                           className="resizer"
-                          onMouseDown={startResizing(
-                            tableRef,
-                            setColumnWidths
-                          )(index)}
+                          onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
                         ></div>
                       </div>
                     </th>
@@ -218,7 +258,10 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                     <td>{history.familySupport}</td>
                     <td>{history.hobby}</td>
                     <td>
-                      <button className="social-history-add-button" onClick={() => handleUpdate(history)}>
+                      <button
+                        className="social-history-add-button"
+                        onClick={() => handleUpdate(history)}
+                      >
                         Edit
                       </button>
                     </td>
@@ -228,7 +271,6 @@ const SocialHistory = ({ patientId, outPatientId }) => {
             </table>
           </section>
 
-          {/* Modal for Adding Social History */}
           {isAddModalOpen && (
             <div className="social-history-modal-overlay">
               <div className="social-history-modal-content">
@@ -239,7 +281,6 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                 >
                   ❌
                 </button>
-
                 <div className="social-history-form-group">
                   <FloatingInput
                     label={"Smoking History"}
@@ -283,7 +324,6 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                     name="familySupport"
                     value={newSocialHistory.familySupport}
                     onChange={handleInputChange}
-
                   />
                 </div>
                 <div className="social-history-form-group">
@@ -293,10 +333,8 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                     name="hobby"
                     value={newSocialHistory.hobby}
                     onChange={handleInputChange}
-
                   />
                 </div>
-
                 <button
                   className="social-history-add-button"
                   onClick={handleAddSocialHistory}
@@ -317,7 +355,6 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                 >
                   ❌
                 </button>
-
                 <div className="social-history-form-group">
                   <FloatingInput
                     label={"Smoking History"}
@@ -353,7 +390,6 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                     value={updateSocialHistory.occupation}
                     onChange={handleUpdateInputChange}
                   />
-
                 </div>
                 <div className="social-history-form-group">
                   <FloatingInput
@@ -373,7 +409,6 @@ const SocialHistory = ({ patientId, outPatientId }) => {
                     onChange={handleUpdateInputChange}
                   />
                 </div>
-
                 <button
                   className="social-history-add-button"
                   onClick={handleUpdateSocialHistory}

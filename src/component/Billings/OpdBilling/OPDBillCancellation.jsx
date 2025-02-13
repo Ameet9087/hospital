@@ -560,8 +560,9 @@ const OPDBillCancellation = () => {
       <div className="OPDBillCancellation-services-section">
         <div className="OPDBillCancellation-tab-bar">
           <button
-            className={`OPDBillCancellation-tab ${selectedTab === "testDetails" ? "active" : ""
-              }`}
+            className={`OPDBillCancellation-tab ${
+              selectedTab === "testDetails" ? "active" : ""
+            }`}
             onClick={() => setSelectedTab("testDetails")}
           >
             Test Deatils

@@ -102,7 +102,7 @@ const DoctorScheduleTable = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredItems?.length > 0 ? (
+            {Array.isArray(filteredItems) && filteredItems.length > 0 ? (
               filteredItems?.map((item, index) => (
                 <tr key={item.scheduleId}>
                   <td>{index + 1}</td>

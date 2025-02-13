@@ -5,8 +5,68 @@ import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { FloatingInput, FloatingTextarea } from "../../FloatingInputs";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const FamilyHistory = ({ patientId, outPatientId }) => {
+  const formatDateTime = () => {
+    const now = new Date();
+    return now.toLocaleString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    });
+  };
+
+  const handlePrint = () => {
+    const doc = new jsPDF('l', 'mm', 'a4');
+    doc.setFontSize(16);
+    doc.text('Family History Report', doc.internal.pageSize.width / 2, 15, { align: 'center' });
+    doc.setFontSize(10);
+    doc.text(`Generated on: ${formatDateTime()}`, 219, 25);
+    const tableData = familyHistories.map(history => [
+      history.searchProblem || '',
+      history.relationship || '',
+      history.note || ''
+    ]);
+    const headers = [
+      "Problem",
+      "Relationship",
+      "Note"
+    ];
+    doc.autoTable({
+      head: [headers],
+      body: tableData,
+      startY: 30,
+      styles: {
+        fontSize: 8,
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: [51, 122, 183],
+        textColor: 255,
+        fontSize: 9,
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+      margin: { left: 10 }
+    });
+    const pageCount = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.text(`Page ${i} of ${pageCount}`, doc.internal.pageSize.width - 20, doc.internal.pageSize.height - 10);
+    }
+    const fileName = "Family_History_Report.pdf";
+    doc.save(fileName);
+    const pdfOutput = doc.output('bloburl');
+    window.open(pdfOutput, '_blank');
+  };
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -24,7 +84,6 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
   const [updatefamilyhistory, setUpdateFamilyhistory] = useState({});
 
   useEffect(() => {
-    // Sync the update form values with the selected family history
     if (newFamilyHistory) {
       setUpdateFamilyhistory({
         searchProblem: newFamilyHistory.searchProblem || "",
@@ -47,15 +106,11 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
   useEffect(() => {
     const fetchFamilyHistories = () => {
       let endpoint = "";
-
-      // Determine if newPatientVisitId or admissionId should be used
       if (outPatientId) {
         endpoint = `${API_BASE_URL}/family-histories/by-newVisitPatientId/${outPatientId}`;
       } else if (patientId) {
         endpoint = `${API_BASE_URL}/family-histories/by-patientId/${patientId}`;
       }
-
-      // Fetch data if a valid endpoint is determined
       if (endpoint) {
         axios
           .get(endpoint)
@@ -169,12 +224,20 @@ const FamilyHistory = ({ patientId, outPatientId }) => {
           <section className="family-history-section">
             <div className="family-history-subdiv">
               <label>Family History Problem List</label>
-              <button
-                className="family-history-add-button"
-                onClick={handleOpenModal}
-              >
-                Add
-              </button>
+              <div className="family-historyadd-print-btn">
+                <button
+                  className="family-historyadd-button"
+                  onClick={handlePrint}
+                >
+                  Print
+                </button>
+                <button
+                  className="family-historyadd-button"
+                  onClick={handleOpenModal}
+                >
+                  Add
+                </button>
+              </div>
             </div>
             <table className="patientList-table" ref={tableRef}>
               <thead>

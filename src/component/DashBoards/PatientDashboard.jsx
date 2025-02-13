@@ -1,5 +1,3 @@
-// SwapnilRokade_PatientDashboard_Adding_New_patientDashboard_13/09
-
 import React, { useEffect, useRef, useState } from "react";
 import "./InPatientAction.css";
 import VitalsPage from "./ClinicalVitals";
@@ -31,6 +29,8 @@ import PatientDetailsPrint from "./PatientDetailsPrint";
 import Vitals from "./AddVitals";
 import SaveHistoryTemplate from "./SaveTemplate/SaveHistoryTemplate";
 import SaveClinicalTemplate from "./SaveTemplate/SaveClinicalTemplate";
+import jsPDF from "jspdf";
+import "jspdf-autotable"; // Import jspdf-autotable
 
 const Section = ({ title, handleAddClick, children, isAddBTN }) => (
   <div className="Patient-Dashboard-firstBox">
@@ -49,7 +49,6 @@ const Section = ({ title, handleAddClick, children, isAddBTN }) => (
     )}
   </div>
 );
-
 const PatientDashboard = ({
   isPatientOPEN,
   patient,
@@ -57,7 +56,6 @@ const PatientDashboard = ({
   ipAdmission,
 }) => {
   console.log(patient);
-
   const [selectedRadiology, setSelectedRadiology] = useState(null);
   const [selectedLabrotary, setSelectedLabrotary] = useState(null);
   const [activeSection, setActiveSection] = useState("dashboard");
@@ -75,11 +73,10 @@ const PatientDashboard = ({
   const [treatment, setTreatment] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(false);
-  const [showPopup, setShowPopup] = useState(false); //Ajhar Tamboli start
+  const [showPopup, setShowPopup] = useState(false);
   const [showHistorypopup, setShowHistoryPopup] = useState(false);
   const [showClinicalPopup, setShowClinicalPopup] = useState(false);
   const [showPrintPage, setShowPrintPage] = useState(false);
-
   const [contextMenuData, setContextMenuData] = useState([]);
   const [showContextMenu, setShowContextMenu] = useState(false);
   const [contextMenuPosition, setContextMenuPosition] = useState({
@@ -88,7 +85,6 @@ const PatientDashboard = ({
   });
   const [textareaValue, setTextareaValue] = useState("");
   const textareaRef = useRef(null);
-
   const [historyMenuData, setHistoryMenuData] = useState([]);
   const [showHistoryContextMenu, setShowHistoryContextMenu] = useState(false);
   const [historyContextMenuPosition, setHistoryContextMenuPosition] = useState({
@@ -97,7 +93,6 @@ const PatientDashboard = ({
   });
   const [historyTextareaValue, setHistoryTextareaValue] = useState("");
   const historyTextareaRef = useRef(null);
-
   const [clinicalImpressionTextareaValue, setClinicalImpressionTextareaValue] =
     useState("");
   const [
@@ -112,49 +107,217 @@ const PatientDashboard = ({
     clinicalImpressionContextMenuPosition,
     setClinicalImpressionContextMenuPosition,
   ] = useState({ x: 0, y: 0 });
-
   const [patientQueueData, setPatientQueueData] = useState([]);
-
-  // Refs for textarea
   const clinicalTextareaRef = useRef(null);
 
+  const handlePrint = () => {
+    const doc = new jsPDF('l', 'mm', 'a4');
+    doc.setFontSize(16);
+    doc.text('Patient Report', doc.internal.pageSize.width / 2, 15, { align: 'center' });
+
+    const currentDate = new Date().toLocaleString();
+    doc.setFontSize(10);
+    doc.text(`Generated on: ${currentDate}`, 14, 10);
+
+    const addTableToPDF = (headers, data, title) => {
+      doc.text(title, 14, doc.autoTable.previous.finalY + 10 || 20); // Add title
+      doc.autoTable({
+        head: [headers],
+        body: data,
+        startY: doc.autoTable.previous.finalY + 15 || 30,
+      });
+    };
+    if (LabRequest.length > 0) {
+      const labHeaders = ["Test", "Date", "Result"];
+      const labData = LabRequest.map((item) => [
+        item.labTests.map((test) => test.labTestName).join(", "),
+        item.requisitionDate,
+        item.status === "Completed" ? "View" : item.status,
+      ]);
+      addTableToPDF(labHeaders, labData, "Labs");
+    }
+    if (radiology.length > 0) {
+      const imagingHeaders = ["Type", "Item", "Date", "Status"];
+      const imagingData = radiology.map((item) => [
+        item.imagingItemDTO?.imagingType?.imagingTypeName,
+        item.imagingItemDTO?.imagingItemName,
+        item.requestedDate,
+        item.status === "Completed" ? "View" : item.status,
+      ]);
+      addTableToPDF(imagingHeaders, imagingData, "Imaging");
+    }
+    if (allergies?.length > 0) {
+      const allergyHeaders = ["Allergy", "Severity", "Comment", "Recorded Date"];
+      const allergyData = allergies.map((item) => [
+        item.typeOfAllergy,
+        item.severity,
+        item.comments,
+        item.recordedDate,
+      ]);
+      addTableToPDF(allergyHeaders, allergyData, "Allergies");
+    }
+    if (activeProblem.length > 0) {
+      const problemHeaders = ["Problem", "Onset Date"];
+      const problemData = activeProblem.map((item) => [
+        item.searchProblem,
+        item.onsetDate,
+      ]);
+      addTableToPDF(problemHeaders, problemData, "Active Problems");
+    }
+    if (medications.length > 0) {
+      const medicationHeaders = ["Medication Name", "Frequency", "Last Taken"];
+      const medicationData = medications.map((item) => [
+        item.medicationName,
+        item.frequency,
+        item.lastTaken,
+      ]);
+      addTableToPDF(medicationHeaders, medicationData, "Medications");
+    }
+    if (showInfusion.length > 0) {
+      const infusionHeaders = [
+        "Infusion Name",
+        "Infusion Generic",
+        "Infusion Frequency",
+        "Drug",
+        "Flow Rate",
+        "Infu Remarks",
+        "Start Date",
+        "Start Time",
+        "End Date",
+        "End Time",
+      ];
+      const infusionData = showInfusion.map((item) => [
+        item.infusionNm,
+        item.infusionGeneric,
+        item.infusionRoute,
+        item.drug,
+        item.flowRate,
+        item.infuRemarks,
+        item.startDate,
+        item.startTime,
+        item.endDate,
+        item.endTime,
+      ]);
+      addTableToPDF(infusionHeaders, infusionData, "Infusion");
+    }
+    if (services.length > 0) {
+      const serviceHeaders = ["Service Name"];
+      const serviceData = services.map((item) => [item.serviceName]);
+      addTableToPDF(serviceHeaders, serviceData, "Procedures / Services");
+    }
+    if (treatment.length > 0) {
+      const treatmentHeaders = ["Treatment Descriptions"];
+      const treatmentData = treatment.map((item) => [
+        item.treatmentDescriptions,
+      ]);
+      addTableToPDF(treatmentHeaders, treatmentData, "Treatment Given");
+    }
+
+    const pdfOutput = doc.output("datauristring");
+    const pdfWindow = window.open();
+    pdfWindow.document.write(
+      `<iframe width='100%' height='100%' src='${pdfOutput}'></iframe>`
+    );
+  };
+  const handleDeleteLabRequest = async (labRequestId) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/lab-requests/${labRequestId}`);
+      setLabRequest(LabRequest.filter((item) => item.labRequestId !== labRequestId));
+    } catch (error) {
+      console.error("Error deleting lab request:", error);
+    }
+  };
+
+  const handleDeleteRadiology = async (imagingRequisitionId) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/imaging-requisitions/${imagingRequisitionId}`);
+      setRadiology(radiology.filter((item) => item.imagingRequisitionId !== imagingRequisitionId));
+    } catch (error) {
+      console.error("Error deleting radiology:", error);
+    }
+  };
+
+  const handleDeleteAllergy = async (allergyId) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/allergies/${allergyId}`);
+      setAllergies(allergies.filter((item) => item.allergyId !== allergyId));
+    } catch (error) {
+      console.error("Error deleting allergy:", error);
+    }
+  };
+
+  const handleDeleteActiveProblem = async (activeProblemId) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/active-problems/${activeProblemId}`);
+      setActiveProblem(activeProblem.filter((item) => item.activeProblemId !== activeProblemId));
+    } catch (error) {
+      console.error("Error deleting active problem:", error);
+    }
+  };
+
+  const handleDeleteMedication = async (medicationId) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/medications/${medicationId}`);
+      setMedications(medications.filter((item) => item.medicationId !== medicationId));
+    } catch (error) {
+      console.error("Error deleting medication:", error);
+    }
+  };
+
+  const handleDeleteInfusion = async (infusionId) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/infusions/${infusionId}`);
+      setInfusion(showInfusion.filter((item) => item.infusionId !== infusionId));
+    } catch (error) {
+      console.error("Error deleting infusion:", error);
+    }
+  };
+
+  const handleDeleteService = async (serviceId) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/services/${serviceId}`);
+      setServices(services.filter((item) => item.serviceId !== serviceId));
+    } catch (error) {
+      console.error("Error deleting service:", error);
+    }
+  };
+
+  const handleDeleteTreatment = async (treatmentId) => {
+    try {
+      await axios.delete(`${API_BASE_URL}/treatments/${treatmentId}`);
+      setTreatment(treatment.filter((item) => item.treatmentId !== treatmentId));
+    } catch (error) {
+      console.error("Error deleting treatment:", error);
+    }
+  };
   const openPopup = () => {
     setShowPopup(true);
   };
-
   const closePopup = () => {
     setShowPopup(false);
   };
-
   const openHistoryPopup = () => {
     setShowHistoryPopup(true);
   };
-
   const closeHistoryPopup = () => {
     setShowHistoryPopup(false);
   };
-
   const openClinicalPopup = () => {
     setShowClinicalPopup(true);
   };
-
   const closeClinicalPopup = () => {
     setShowClinicalPopup(false);
   };
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
   const handleOpenModal = (contentType) => {
     setModalContent(contentType);
     setIsModalOpen(true);
   };
-
   const handleClearData = () => {
     setTextareaValue("");
   };
-
   useEffect(() => {
     const fetchInfusions = async () => {
       let endpoint = "";
@@ -166,7 +329,6 @@ const PatientDashboard = ({
         console.error("No valid patient ID provided.");
         return;
       }
-
       try {
         const response = await fetch(endpoint);
         if (!response.ok) {
@@ -174,48 +336,34 @@ const PatientDashboard = ({
         }
         const data = await response.json();
         console.log("Infusion data:", data);
-
         setInfusion(data);
       } catch (error) {
         console.error("Error fetching infusion:", error);
       }
     };
-
     fetchInfusions();
   }, [patient?.inPatientId, patient?.outPatientId, activeSection]);
-
   const fetchQueueData = async () => {
     try {
-      // Get today's date in yyyy-mm-dd format
       const today = new Date().toISOString().split("T")[0];
-
-      // Fetch the queue data
       const response = await axios.get(
         `${API_BASE_URL}/patient-queues/getAllQueue`
       );
-
-      // Filter the data for today's date and pending status
       const filteredData = response.data.filter(
         (patient) =>
           patient.status.toLowerCase() === "pending" && patient.date === today // Assuming queueDate is in yyyy-mm-dd format
       );
-
-      // Update the state with filtered data
       setPatientQueueData(filteredData);
     } catch (error) {
       console.error("Error fetching patient queue data:", error);
     }
   };
-
   useEffect(() => {
     fetchQueueData();
   }, []);
-
   useEffect(() => {
-    // Fetch medications data from the API
     const fetchMedications = async () => {
       let endpoint = "";
-
       if (patient?.outPatientId) {
         endpoint = `${API_BASE_URL}/medications/by-opd-id?opdPatientId=${patient?.outPatientId}`;
       } else if (patient?.inPatientId) {
@@ -229,14 +377,11 @@ const PatientDashboard = ({
         console.error("Error fetching medications:", error);
       }
     };
-
     fetchMedications();
   }, [activeSection, isModalOpen]);
-
   useEffect(() => {
     const fetchServices = async () => {
       let endpoint = "";
-
       if (patient?.inPatientId) {
         endpoint = `${API_BASE_URL}/services/in-patient/${patient?.inPatientId}`;
       } else if (patient?.outPatientId) {
@@ -245,7 +390,6 @@ const PatientDashboard = ({
         console.error("No valid patient ID provided.");
         return;
       }
-
       try {
         const response = await fetch(endpoint);
         if (!response.ok) {
@@ -253,18 +397,14 @@ const PatientDashboard = ({
         }
         const data = await response.json();
         console.log("Infusion data:", data);
-
         setServices(data);
       } catch (error) { }
     };
-
     fetchServices();
   }, [activeSection, isModalOpen]);
-
   useEffect(() => {
     const fetchTreatmentGive = async () => {
       let endpoint = "";
-
       if (patient?.inPatientId) {
         endpoint = `${API_BASE_URL}/treatments/in-patient/${patient?.inPatientId}`;
       } else if (patient.outPatientId) {
@@ -274,16 +414,13 @@ const PatientDashboard = ({
         const response = await fetch(endpoint);
         const data = await response.json();
         console.log(data);
-
         setTreatment(data);
       } catch (error) {
         console.error("Error fetching Treatments:", error);
       }
     };
-
     fetchTreatmentGive();
   }, [activeSection, isModalOpen]);
-
   useEffect(() => {
     const fetchVitals = () => {
       let endpoint = "";
@@ -305,14 +442,11 @@ const PatientDashboard = ({
           });
       }
     };
-
     fetchVitals();
   }, [patient?.inPatientId, patient?.outPatientId, activeSection]);
-
   useEffect(() => {
     const fetchAllergies = () => {
       let endpoint = "";
-
       if (patient?.outPatientId) {
         endpoint = `${API_BASE_URL}/allergies/by-newVisitPatientId/${patient?.outPatientId}`;
       } else if (patient?.inPatientId) {
@@ -333,10 +467,8 @@ const PatientDashboard = ({
           });
       }
     };
-
     fetchAllergies();
   }, [patient?.outPatientId, patient?.inPatientId, activeSection, isModalOpen]);
-
   useEffect(() => {
     const fetchActiveProblems = () => {
       let endpoint = "";
@@ -358,10 +490,8 @@ const PatientDashboard = ({
           });
       }
     };
-
     fetchActiveProblems();
   }, [patient?.outPatientId, patient?.inPatientId, activeSection, isModalOpen]);
-
   useEffect(() => {
     const fetchImagingRequisitions = () => {
       let endpoint = "";
@@ -384,11 +514,8 @@ const PatientDashboard = ({
           });
       }
     };
-
     fetchImagingRequisitions();
   }, [patient?.outPatientId, patient?.inPatientId, activeSection, isModalOpen]);
-
-  // -----------------Prachi complaint---------------------
   useEffect(() => {
     fetch(`${API_BASE_URL}/presenting-complaints`)
       .then((response) => {
@@ -408,7 +535,6 @@ const PatientDashboard = ({
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
-
   const handleContextMenu = (event) => {
     event.preventDefault();
     const rect = textareaRef.current.getBoundingClientRect();
@@ -418,30 +544,22 @@ const PatientDashboard = ({
     });
     setShowContextMenu(true);
   };
-
   const handleClickOutside = () => {
     setShowContextMenu(false);
   };
-
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
-
   const handleContextMenuItemClick = (complaintsText) => {
-    setTextareaValue(complaintsText); // Set the initial complaintsText
+    setTextareaValue(complaintsText);
     setShowContextMenu(false);
   };
-
   const handleTextareaChange = (event) => {
-    setTextareaValue(event.target.value); // Update the state with the new textarea value
+    setTextareaValue(event.target.value);
   };
-
-  // -------Prachi end complaint--------------------
-
-  // -----------------Prachi History---------------------
   useEffect(() => {
     fetch(`${API_BASE_URL}/history-examinations`)
       .then((response) => {
@@ -451,7 +569,7 @@ const PatientDashboard = ({
         return response.json();
       })
       .then((data) => {
-        console.log("Fetched data:", data); // Log data to check if it's correct
+        console.log("Fetched data:", data);
         const menuItems = data
           .filter((item) => item.template?.templateName)
           .map((item) => ({
@@ -462,8 +580,6 @@ const PatientDashboard = ({
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
-
-  // Handle right-click to show the context menu
   const handleHistoryContextMenu = (event) => {
     event.preventDefault();
     const rect = historyTextareaRef.current.getBoundingClientRect();
@@ -473,32 +589,23 @@ const PatientDashboard = ({
     });
     setShowHistoryContextMenu(true);
   };
-
-  // Handle outside click to hide the context menu
   const handleHistoryClickOutside = () => {
     setShowHistoryContextMenu(false);
   };
-
   useEffect(() => {
     document.addEventListener("click", handleHistoryClickOutside);
     return () => {
       document.removeEventListener("click", handleHistoryClickOutside);
     };
   }, []);
-
-  // Handle clicking a context menu item
   const handleHistoryContextMenuItemClick = (historyexamination) => {
     console.log("Selected historyexamination:", historyexamination);
     setHistoryTextareaValue(historyexamination); // Set the value in the textarea
     setShowHistoryContextMenu(false); // Hide context menu
   };
-
-  // Handle textarea change
   const handleHistoryTextareaChange = (event) => {
     setHistoryTextareaValue(event.target.value); // Update state with new textarea value
   };
-
-  // Fetch clinical impression data
   useEffect(() => {
     fetch(`${API_BASE_URL}/clinical-impressions`)
       .then((response) => {
@@ -518,8 +625,6 @@ const PatientDashboard = ({
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
-
-  // Show context menu on right-click
   const handleClinicalImpressionContextMenu = (event) => {
     event.preventDefault();
     const rect = clinicalTextareaRef.current.getBoundingClientRect();
@@ -529,12 +634,9 @@ const PatientDashboard = ({
     });
     setShowClinicalImpressionContextMenu(true);
   };
-
-  // Close context menu when clicked outside
   const handleClinicalImpressionClickOutside = () => {
     setShowClinicalImpressionContextMenu(false);
   };
-
   useEffect(() => {
     document.addEventListener("click", handleClinicalImpressionClickOutside);
     return () => {
@@ -544,20 +646,13 @@ const PatientDashboard = ({
       );
     };
   }, []);
-
-  // Handle context menu item click
   const handleClinicalImpressionMenuItemClick = (clinicalImpressionText) => {
     setClinicalImpressionTextareaValue(clinicalImpressionText);
     setShowClinicalImpressionContextMenu(false);
   };
-
-  // Handle textarea value change
   const handleClinicalImpressionTextareaChange = (event) => {
     setClinicalImpressionTextareaValue(event.target.value);
   };
-
-  // -----------------Prachi Clinical Impression end---------------------
-
   useEffect(() => {
     const fetchLabRequests = () => {
       let endpoint = "";
@@ -580,16 +675,12 @@ const PatientDashboard = ({
           });
       }
     };
-
     fetchLabRequests();
   }, [patient?.outPatientId, patient?.inPatientId, activeSection, isModalOpen]); // Dependencies to track patient IDs
-
   const handleSkipQueuePatient = async (nextQueue, upcomming) => {
     try {
       const skipUrl = `${API_BASE_URL}/patient-queues/patient/quit?patientQueueId=${nextQueue}`;
       const attendUrl = `${API_BASE_URL}/patient-queues/patient/attend?patientQueueId=${upcomming}`;
-
-      // Call both APIs in parallel
       const [skipResponse, attendResponse] = await Promise.all([
         fetch(skipUrl, {
           method: "PUT",
@@ -604,8 +695,6 @@ const PatientDashboard = ({
           },
         }),
       ]);
-
-      // Manually check for successful responses
       if (!skipResponse.ok || !attendResponse.ok) {
         const skipError = await skipResponse.text();
         const attendError = await attendResponse.text();
@@ -620,20 +709,14 @@ const PatientDashboard = ({
       alert("An error occurred. Please try again.");
     }
   };
-
   const handleCallNextPatient = async (currentPatientId, nextPatientId) => {
     try {
-      // Define the URLs for "completed" and "attend" actions
       const completedUrl = `${API_BASE_URL}/patient-queues/patient/completed?patientQueueId=${currentPatientId}`;
       const attendUrl = `${API_BASE_URL}/patient-queues/patient/attend?patientQueueId=${nextPatientId}`;
-
-      // Make both API calls in parallel
       const [completedResponse, attendResponse] = await Promise.all([
         fetch(completedUrl, { method: "PUT" }),
         fetch(attendUrl, { method: "PUT" }),
       ]);
-
-      // Check for successful responses
       if (!completedResponse.ok || !attendResponse.ok) {
         const completedError = await completedResponse.text();
         const attendError = await attendResponse.text();
@@ -648,7 +731,6 @@ const PatientDashboard = ({
       alert("An error occurred. Please try again.");
     }
   };
-
   const sortedPatientQueueData = [...patientQueueData].sort(
     (a, b) => parseInt(a.queueNumber) - parseInt(b.queueNumber)
   );
@@ -672,17 +754,14 @@ const PatientDashboard = ({
   //     setFilteredMedications(filtered);
   //   }
   // }, [medications, patient.patientId, patient.newPatientVisitId]);
-
   const ShowImagingReport = (item) => {
     setSelectedRadiology(item);
     setShowRadioReport(true);
   };
-
   const ShowlabReportResult = (item) => {
     setSelectedLabrotary(item);
     setShowLabReport(true);
   };
-
   const renderContent = () => {
     switch (activeSection) {
       case "clinical":
@@ -817,15 +896,12 @@ const PatientDashboard = ({
         );
     }
   };
-
   const patientPrint = () => {
     setShowPrintPage(true);
   };
-
   if (showPrintPage) {
     return <PatientDetailsPrint />;
   }
-
   const renderDashboard = () => (
     <div className="Patient-Dashboard-main-section">
       {activeSection === "dashboard" ? (
@@ -968,8 +1044,8 @@ const PatientDashboard = ({
                     <tbody>
                       {patientQueueData.length > 0 ? (
                         patientQueueData
-                          .sort((a, b) => a.queueNumber - b.queueNumber) // Sort by queue number
-                          .slice(0, 2) // Take only the first two entries
+                          .sort((a, b) => a.queueNumber - b.queueNumber)
+                          .slice(0, 2)
                           .map((item) => (
                             <tr key={item.queueNumber}>
                               <td>{item.queueNumber}</td>
@@ -988,7 +1064,6 @@ const PatientDashboard = ({
               </div>
             )}
           </aside>
-
           <main className="Patient-Dashboard-betweenSection">
             <div>
               <div className="Patient-Dashboard-subNav">
@@ -1068,7 +1143,6 @@ const PatientDashboard = ({
                 )}
               </div>
               {/* <textarea className="Patient-Dashboard-textarea" name="" id=""></textarea> */}
-
               {/* History Prachi */}
             </div>
             <div>
@@ -1099,9 +1173,9 @@ const PatientDashboard = ({
                     borderRadius: "5px",
                     border: "1px solid lightgrey",
                   }}
-                  value={historyTextareaValue} // Bind textarea to state
-                  onChange={handleHistoryTextareaChange} // Handle user input
-                  onContextMenu={handleHistoryContextMenu} // Trigger context menu on right-click
+                  value={historyTextareaValue}
+                  onChange={handleHistoryTextareaChange}
+                  onContextMenu={handleHistoryContextMenu}
                 />
                 {showHistoryContextMenu && (
                   <div
@@ -1184,7 +1258,6 @@ const PatientDashboard = ({
                   onChange={handleClinicalImpressionTextareaChange}
                   onContextMenu={handleClinicalImpressionContextMenu}
                 />
-
                 {showClinicalImpressionContextMenu && (
                   <div
                     style={{
@@ -1235,7 +1308,6 @@ const PatientDashboard = ({
                 )}
               </div>
             </div>
-
             <div className="Patient-Dashboard-scrollCon">
               <Section
                 title="🧪 Labs"
@@ -1259,6 +1331,7 @@ const PatientDashboard = ({
                               <th className="Patient-Dashboard-th">Test</th>
                               <th className="Patient-Dashboard-th">Date</th>
                               <th className="Patient-Dashboard-th">Result</th>
+                              <th className="Patient-Dashboard-th">Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1292,6 +1365,16 @@ const PatientDashboard = ({
                                     radiology?.status
                                   )}
                                 </td>
+                                <td className="Patient-Dashboard-td">
+                                  <div className="Patient-Dashboard-btn-delbtn">
+                                    <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                      Edit
+                                    </button>
+                                    <button className="Patient-Dashboard-btn-del" onClick={() => handleDeleteLabRequest(radiology.labRequestId)}>
+                                      Del
+                                    </button>
+                                  </div>
+                                </td>
                               </tr>
                             ))}
                           </tbody>
@@ -1304,7 +1387,6 @@ const PatientDashboard = ({
                 }
               />
             </div>
-
             <div className="Patient-Dashboard-scrollCon">
               <Section
                 title="🖼 Imaging"
@@ -1326,6 +1408,7 @@ const PatientDashboard = ({
                               <th className="Patient-Dashboard-th">Item</th>
                               <th className="Patient-Dashboard-th">Date</th>
                               <th className="Patient-Dashboard-th">Status</th>
+                              <th className="Patient-Dashboard-th">Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1346,7 +1429,7 @@ const PatientDashboard = ({
                                 <td className="Patient-Dashboard-td">
                                   {radiology?.status === "Completed" ? (
                                     <>
-                                      <button
+                                      <button className="Patient-Dashboard-btnAdd"
                                         onClick={() =>
                                           ShowImagingReport(radiology)
                                         }
@@ -1357,6 +1440,16 @@ const PatientDashboard = ({
                                   ) : (
                                     radiology.status
                                   )}
+                                </td>
+                                <td className="Patient-Dashboard-td">
+                                  <div className="Patient-Dashboard-btn-delbtn">
+                                    <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                      Edit
+                                    </button>
+                                    <button className="Patient-Dashboard-btn-del" onClick={() => handleDeleteRadiology(radiology.imagingRequisitionId)}>
+                                      Del
+                                    </button>
+                                  </div>
                                 </td>
                               </tr>
                             ))}
@@ -1370,7 +1463,6 @@ const PatientDashboard = ({
                 }
               />
             </div>
-
             <div className="Patient-Dashboard-scrollCon">
               <Section
                 title="🚫 Allergies"
@@ -1395,6 +1487,7 @@ const PatientDashboard = ({
                               <th className="Patient-Dashboard-th">
                                 Recorded Date
                               </th>
+                              <th className="Patient-Dashboard-th">Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1412,6 +1505,16 @@ const PatientDashboard = ({
                                 <td className="Patient-Dashboard-td">
                                   {active.recordedDate}
                                 </td>
+                                <td className="Patient-Dashboard-td">
+                                  <div className="Patient-Dashboard-btn-delbtn">
+                                    <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                      Edit
+                                    </button>
+                                    <button className="Patient-Dashboard-btn-del" onClick={""}>
+                                      Del
+                                    </button>
+                                  </div>
+                                </td>
                               </tr>
                             ))}
                           </tbody>
@@ -1424,7 +1527,6 @@ const PatientDashboard = ({
                 }
               />
             </div>
-
             <div className="Patient-Dashboard-scrollCon">
               <Section
                 title="⚠ Active Problems"
@@ -1447,6 +1549,7 @@ const PatientDashboard = ({
                               <th className="Patient-Dashboard-th">
                                 Onset Date
                               </th>
+                              <th className="Patient-Dashboard-th">Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1457,6 +1560,16 @@ const PatientDashboard = ({
                                 </td>
                                 <td className="Patient-Dashboard-td">
                                   {active.onsetDate}
+                                </td>
+                                <td className="Patient-Dashboard-td">
+                                  <div className="Patient-Dashboard-btn-delbtn">
+                                    <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                      Edit
+                                    </button>
+                                    <button className="Patient-Dashboard-btn-del" onClick={""}>
+                                      Del
+                                    </button>
+                                  </div>
                                 </td>
                               </tr>
                             ))}
@@ -1470,7 +1583,6 @@ const PatientDashboard = ({
                 }
               />
             </div>
-
             <div className="Patient-Dashboard-scrollCon">
               <Section
                 title="🧪 Medication"
@@ -1498,6 +1610,9 @@ const PatientDashboard = ({
                               <th className="Patient-Dashboard-th">
                                 Last Taken
                               </th>
+                              <th className="Patient-Dashboard-th">
+                                Action
+                              </th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1512,6 +1627,16 @@ const PatientDashboard = ({
                                 <td className="Patient-Dashboard-td">
                                   {medication.lastTaken}
                                 </td>
+                                <td className="Patient-Dashboard-td">
+                                  <div className="Patient-Dashboard-btn-delbtn">
+                                    <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                      Edit
+                                    </button>
+                                    <button className="Patient-Dashboard-btn-del" onClick={""}>
+                                      Del
+                                    </button>
+                                  </div>
+                                </td>
                               </tr>
                             ))}
                           </tbody>
@@ -1524,9 +1649,6 @@ const PatientDashboard = ({
                 }
               />
             </div>
-
-            {/* adan 14/11/24 */}
-
             <div className="Patient-Dashboard-scrollCon">
               <Section
                 title="💉 Infusion"
@@ -1569,6 +1691,7 @@ const PatientDashboard = ({
                               </th>
                               <th className="Patient-Dashboard-th">End Date</th>
                               <th className="Patient-Dashboard-th">End Time</th>
+                              <th className="Patient-Dashboard-th">Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1604,6 +1727,16 @@ const PatientDashboard = ({
                                 <td className="Patient-Dashboard-td">
                                   {Infusion.endTime}
                                 </td>
+                                <td className="Patient-Dashboard-td">
+                                  <div className="Patient-Dashboard-btn-delbtn">
+                                    <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                      Edit
+                                    </button>
+                                    <button className="Patient-Dashboard-btn-del" onClick={""}>
+                                      Del
+                                    </button>
+                                  </div>
+                                </td>
                               </tr>
                             ))}
                           </tbody>
@@ -1636,21 +1769,32 @@ const PatientDashboard = ({
                               <th className="Patient-Dashboard-th">
                                 Service Name
                               </th>
+                              <th>
+                                Action
+                              </th>
                             </tr>
                           </thead>
                           <tbody>
                             {services.map((service, index) => {
-                              // Ensure serviceNames is an array before joining
                               const serviceNames = Array.isArray(
                                 service.serviceNames
                               )
                                 ? service.serviceName
                                 : [service.serviceName]; // If it's not an array, treat it as a single item array
-
                               return (
                                 <tr key={index}>
                                   <td className="Patient-Dashboard-td">
                                     {service.serviceName}
+                                  </td>
+                                  <td className="Patient-Dashboard-td">
+                                    <div className="Patient-Dashboard-btn-delbtn">
+                                      <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                        Edit
+                                      </button>
+                                      <button className="Patient-Dashboard-btn-del" onClick={""}>
+                                        Del
+                                      </button>
+                                    </div>
                                   </td>
                                 </tr>
                               );
@@ -1665,7 +1809,6 @@ const PatientDashboard = ({
                 }
               />
             </div>
-
             <div className="Patient-Dashboard-scrollCon">
               <Section
                 title="📟 Treatment Given"
@@ -1687,6 +1830,9 @@ const PatientDashboard = ({
                               <th className="Patient-Dashboard-th">
                                 Treatment Descriptions
                               </th>
+                              <th className="Patient-Dashboard-th">
+                                Action
+                              </th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1695,12 +1841,21 @@ const PatientDashboard = ({
                                 treatment.treatmentDescriptions
                               )
                                 ? treatment.treatmentDescriptions
-                                : []; // Default to an empty array if it's not an array
+                                : [];
                               return (
                                 <tr key={index}>
                                   <td className="Patient-Dashboard-td">
                                     {treatment.treatmentDescriptions}{" "}
-                                    {/* Safely join the array */}
+                                  </td>
+                                  <td className="Patient-Dashboard-td">
+                                    <div className="Patient-Dashboard-btn-delbtn">
+                                      <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                        Edit
+                                      </button>
+                                      <button className="Patient-Dashboard-btn-del" onClick={""}>
+                                        Del
+                                      </button>
+                                    </div>
                                   </td>
                                 </tr>
                               );
@@ -1720,7 +1875,6 @@ const PatientDashboard = ({
       ) : (
         <div className="Patient-Dashboard-render-Com">{renderContent()}</div>
       )}
-
       <aside className="Patient-Dashboard-aside-section  Patient-Dashboard-right-aside">
         <div className="Patient-Dashboard-detailsBox">
           <div
@@ -1755,13 +1909,11 @@ const PatientDashboard = ({
               <i class="fas fa-exclamation-triangle"></i>
             </div>
           </div>
-
           {/* <div className="Patient-Dashboard-boxOne">
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Current Medications</span>
             </div>
           </div> */}
-
           {/* <div
             onClick={() => {
               setActiveSection("encounte-rHistory");
@@ -1787,7 +1939,6 @@ const PatientDashboard = ({
               </span>
             </div>
           </div> */}
-
           <div
             onClick={() => {
               setActiveSection("clinical");
@@ -1855,7 +2006,6 @@ const PatientDashboard = ({
               <i className="fas fa-handshake"></i>
             </div>
           </div>
-
           <div
             onClick={() => {
               setActiveSection("nursing");
@@ -1868,7 +2018,6 @@ const PatientDashboard = ({
               <i className="fas fa-user-nurse"></i>
             </div>
           </div>
-
           <div
             onClick={() => {
               setActiveSection("pacrequest");
@@ -2080,19 +2229,16 @@ const PatientDashboard = ({
           />
         </CustomModal>
       )}
-
       {showPopup && (
         <CustomModal isOpen={showPopup} onClose={closePopup}>
           <SaveTemplate complaintsText={textareaValue} />
         </CustomModal>
       )}
-
       {showHistorypopup && (
         <CustomModal isOpen={showHistorypopup} onClose={closeHistoryPopup}>
           <SaveHistoryTemplate historyText={historyTextareaValue} />
         </CustomModal>
       )}
-
       {showClinicalPopup && (
         <CustomModal isOpen={showClinicalPopup} onClose={closeClinicalPopup}>
           <SaveClinicalTemplate
@@ -2100,8 +2246,6 @@ const PatientDashboard = ({
           />
         </CustomModal>
       )}
-
-      {/* Prachi */}
       <CustomModal isOpen={isModalOpen} onClose={handleCloseModal}>
         {modalContent === "problems" && (
           <Problems
@@ -2145,7 +2289,6 @@ const PatientDashboard = ({
             outPatientId={patient?.outPatientId}
           />
         )}
-
         {modalContent === "Allergies" && (
           <Allergy
             setIsModalOpen={setIsModalOpen}
@@ -2160,11 +2303,6 @@ const PatientDashboard = ({
       </CustomModal>
     </div>
   );
-
-  {
-    /*/ Prachi */
-  }
-
   return (
     <div
       className={`patient-dashboard ${isPatientOPEN ? "isPatientDetailsActive" : "isPatientDetailsInActive"
@@ -2250,6 +2388,9 @@ const PatientDashboard = ({
             >
               <i class="fas fa-chevron-circle-left"></i> Back
             </button>
+            <button className="Patient-Dashboard-btn-print" onClick={handlePrint}>
+              Print
+            </button>
           </div>
         </div>
       </nav>
@@ -2257,5 +2398,4 @@ const PatientDashboard = ({
     </div>
   );
 };
-
 export default PatientDashboard;

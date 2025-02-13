@@ -4,6 +4,60 @@ import axios from 'axios';
 import { API_BASE_URL } from "../../../../api/api"
 
 const OperationMaster = () => {
+  const [paytypeRows, setPaytypeRows] = useState([
+    { id: 1, payTypeName: '', charges: '' }
+  ]);
+  const [payTypes, setPayTypes] = useState([]);
+
+  useEffect(() => {
+    axios.get(`${API_BASE_URL}/pay-type`)
+      .then(response => {
+        setPayTypes(response.data);
+      })
+      .catch(error => {
+        console.error('Error in fetching paytype', error);
+      });
+  }, []);
+
+  const getChargesForPayType = (payTypeName) => {
+    const selectedPayType = payTypes.find(pt => pt.payTypeName === payTypeName);
+    return selectedPayType ? selectedPayType.charges : '';
+  };
+
+  const handlePaytypeChange = (id, selectedPayTypeName) => {
+    const updatedRows = paytypeRows.map(row =>
+      row.id === id ? { ...row, payTypeName: selectedPayTypeName } : row
+    );
+    setPaytypeRows(updatedRows);
+  };
+
+  const handleChargeChange = (id, value) => {
+    const updatedRows = paytypeRows.map(row =>
+      row.id === id ? { ...row, charges: value } : row
+    );
+    setPaytypeRows(updatedRows);
+  };
+
+  const addpayRow = () => {
+    const newRow = {
+      id: paytypeRows.length + 1,
+      payTypeName: '',
+      charges: '',
+    };
+    setPaytypeRows([...paytypeRows, newRow]);
+  };
+
+  // Delete Row
+  const deletepayRow = (id) => {
+    const updatedRows = paytypeRows.filter(row => row.id !== id);
+    if (updatedRows.length === 0) {
+      setPaytypeRows([{ id: 1, payTypeName: '', charges: '' }]);
+    } else {
+      setPaytypeRows(updatedRows);
+    }
+  };
+
+
   const [formData, setFormData] = useState({
     operationName: '',
     operationType: '',
@@ -37,27 +91,27 @@ const OperationMaster = () => {
   }, []);
 
   // Fetch service options from the API
- const fetchServices = async () => {
-  try {
-    const response = await axios.get(`${ API_BASE_URL }/service-details`);
-    const services = response.data.map((service) => ({
-      id: service.sn,
-      name: service.serviceName,
-      displayName: service.displayName,
-      companyCode: service.companyCode,
-    }));
-    setServiceOptions(services);
-  } catch (error) {
-    if (error.response) {
-      console.error("Error response from server:", error.response.data);
-    } else if (error.request) {
-      console.error("Network error or no response:", error.message);
-    } else {
-      console.error("Unexpected error:", error.message);
+  const fetchServices = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/service-details`);
+      const services = response.data.map((service) => ({
+        id: service.sn,
+        name: service.serviceName,
+        displayName: service.displayName,
+        companyCode: service.companyCode,
+      }));
+      setServiceOptions(services);
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response.data);
+      } else if (error.request) {
+        console.error("Network error or no response:", error.message);
+      } else {
+        console.error("Unexpected error:", error.message);
+      }
+      alert("Failed to fetch service details. Please check your network or API configuration.");
     }
-    alert("Failed to fetch service details. Please check your network or API configuration.");
-  }
-};
+  };
 
   // Handle row updates on service selection
   const handleServiceChange = (id, serviceName) => {
@@ -104,204 +158,248 @@ const OperationMaster = () => {
   };
 
   // Submit the form data
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  // Define required fields
-  const requiredFields = [
-    "operationName", "operationType", "entryCode", "companyName",
-    "companyCode", "calculationMethodology", "category", "source",
-    "timeInMinutes", "department", "departmentSelection", "equipment",
-    "packageDtl", "docterFeeVisit", "emergencyFee", "increase",
-    "message", "classification", "sacCODE", "gstCategory"
-  ];
+    try {
+      const serviceDetailsIds = rows
+        .map((row) => {
+          const service = serviceOptions.find((s) => s.name === row.serviceName);
+          return service?.id || null;
+        })
+        .filter((id) => id);
 
-  // Check if any required field is empty
-  const emptyFields = requiredFields.filter((field) => !formData[field]?.trim());
 
-  if (emptyFields.length > 0) {
-    alert(`Please fill in all required fields: ${emptyFields.join(", ")}`);
-    return; // Stop form submission
-  }
+      const operationMasterPayTypeDTO = paytypeRows.map((prow) => {
+        const paytype = payTypes.find((s) => s.payTypeName === prow.payTypeName);
+        return paytype
+          ? { charges: prow.charges, payTypeDTO: { id: paytype.id } }
+          : null;
+      }).filter((item) => item !== null);
 
-  // Ensure at least one service is selected in the table
-  if (rows.length === 0 || rows.some(row => !row.serviceName.trim())) {
-    alert("Please add at least one valid service in the Service Details table.");
-    return; // Stop form submission
-  }
 
-  try {
-    const serviceDetailsIds = rows
-      .map((row) => {
-        const service = serviceOptions.find((s) => s.name === row.serviceName);
-        return service?.id || null;
-      })
-      .filter((id) => id);
+      const operationMasterData = {
+        ...formData,
+        serviceDetailsIds,
+        operationMasterPayTypeDTO
+      };
 
-    const operationMasterData = {
-      ...formData,
-      serviceDetailsIds,
-    };
+      console.log("Submitting Operation Master Data:", operationMasterData);
 
-    console.log("Submitting Operation Master Data:", operationMasterData);
+      const response = await axios.post(`${API_BASE_URL}/operation-Master`, operationMasterData);
 
-    const response = await axios.post(`${API_BASE_URL}/operation-Master`, operationMasterData);
+      alert("Operation Master data saved successfully!");
+      console.log("Response from API:", response.data);
 
-    alert("Operation Master data saved successfully!");
-    console.log("Response from API:", response.data);
+      setFormData({
+        operationName: '',
+        operationType: '',
+        entryCode: '',
+        companyName: '',
+        companyCode: '',
+        calculationMethodology: '',
+        category: '',
+        source: '',
+        timeInMinutes: '',
+        department: '',
+        departmentSelection: '',
+        equipment: '',
+        packageDtl: '',
+        docterFeeVisit: '',
+        emergencyFee: '',
+        increase: '',
+        message: '',
+        classification: '',
+        sacCODE: '',
+        gstCategory: '',
+        serviceDetailsIds: [],
+      });
+      setRows([{ id: 1, serviceName: "", displayName: "", companyCode: "" }]);
+      setPaytypeRows([{ id: 1, payTypeName: "", charges: "" }]);
+    } catch (error) {
+      console.error("Error saving Operation Master data:", error);
+      alert("Failed to save Operation Master data. Please check your input or API configuration.");
+    }
+  };
 
-    // Reset form
-    setFormData({
-      operationName: '',
-      operationType: '',
-      entryCode: '',
-      companyName: '',
-      companyCode: '',
-      calculationMethodology: '',
-      category: '',
-      source: '',
-      timeInMinutes: '',
-      department: '',
-      departmentSelection: '',
-      equipment: '',
-      packageDtl: '',
-      docterFeeVisit: '',
-      emergencyFee: '',
-      increase: '',
-      message: '',
-      classification: '',
-      sacCODE: '',
-      gstCategory: '',
-      serviceDetailsIds: [],
-    });
-    setRows([{ id: 1, serviceName: "", displayName: "", companyCode: "" }]);
-
-  } catch (error) {
-    console.error("Error saving Operation Master data:", error);
-    alert("Failed to save Operation Master data. Please check your input or API configuration.");
-  }
-};
 
 
   return (
     <div className="operation-master">
-    <div className="operationMaster-title-bar">
-      <div className="operationMaster-header">
-        <span>Operation Master</span>
-      </div>
-    </div>
-    <form className="operationMaster-content-wrapper" onSubmit={handleSubmit}>
-      <div className="operationMaster-main-section">
-        {/* Panel 1 */}
-        <div className="operationMaster-panel operation-details">
-          <div className="operationMaster-panel-header">Operation Details (1)</div>
-          <div className="operationMaster-panel-content">
-            {Object.keys(formData)
-              .slice(0, Math.ceil(Object.keys(formData).length / 2))
-              .map((key) => (
-                key !== 'serviceDetailsIds' && (
-                  <div className="operationMaster-form-row" key={key}>
-                    <label>{key.replace(/([A-Z])/g, ' $1')}: <span className='operation-master-span'>*</span></label>
-                    <input
-                      type={key === 'timeInMinutes' ? 'number' : 'text'}
-                      name={key}
-                      value={formData[key]}
-                      required
-                      onChange={(e) =>
-                        setFormData({ ...formData, [key]: e.target.value })
-                      }
-                    />
-                  </div>
-                )
-              ))}
-          </div>
-        </div>
-  
-        {/* Panel 2 */}
-        <div className="operationMaster-panel operation-details">
-          <div className="operationMaster-panel-header">Operation Details (2)</div>
-          <div className="operationMaster-panel-content">
-            {Object.keys(formData)
-              .slice(Math.ceil(Object.keys(formData).length / 2))
-              .map((key) => (
-                key !== 'serviceDetailsIds' && (
-                  <div className="operationMaster-form-row" key={key}>
-                    <label>{key.replace(/([A-Z])/g, ' $1')}: <span className='operation-master-span'>*</span></label>
-                    <input
-                      type={key === 'timeInMinutes' ? 'number' : 'text'}
-                      name={key}
-                      value={formData[key]}
-                      onChange={(e) =>
-                        setFormData({ ...formData, [key]: e.target.value })
-                      }
-                    />
-                  </div>
-                )
-              ))}
-          </div>
+      <div className="operationMaster-title-bar">
+        <div className="operationMaster-header">
+          <span>Operation Master</span>
         </div>
       </div>
-    </form>
-  
-    {/* Table Section */}
-    <div className="operationMaster-table-section">
-      <h3>Service Details</h3>
-      <table className="operation-master-table">
-        <thead>
-          <tr>
-            <th>SN</th>
-            <th>Service Name</th>
-            <th>Display Name</th>
-            <th>Company Code</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr key={row.id}>
-              <td>{row.id}</td>
-              <td>
-                <select
-                  value={row.serviceName}
-                  onChange={(e) => handleServiceChange(row.id, e.target.value)}
-                >
-                  <option value="">Select Service</option>
-                  {serviceOptions.map((service) => (
-                    <option key={service.id} value={service.name}>
-                      {service.name}
-                    </option>
-                  ))}
-                </select>
-              </td>
-              <td>
-                <input type="text" value={row.displayName} readOnly />
-              </td>
-              <td>
-                <input type="text" value={row.companyCode} readOnly />
-              </td>
-              <td>
-                <button type="button" onClick={() => deleteRow(row.id)}>
-                  Delete
-                </button>
-              </td>
+      <form className="operationMaster-content-wrapper" onSubmit={handleSubmit}>
+        <div className="operationMaster-main-section">
+          {/* Panel 1 */}
+          <div className="operationMaster-panel operation-details">
+            <div className="operationMaster-panel-header">Operation Details (1)</div>
+            <div className="operationMaster-panel-content">
+              {Object.keys(formData)
+                .slice(0, Math.ceil(Object.keys(formData).length / 2))
+                .map((key) => (
+                  key !== 'serviceDetailsIds' && (
+                    <div className="operationMaster-form-row" key={key}>
+                      <label>{key.replace(/([A-Z])/g, ' $1')}: *</label>
+                      <input
+                        type={key === 'timeInMinutes' ? 'number' : 'text'}
+                        name={key}
+                        value={formData[key]}
+                        onChange={(e) =>
+                          setFormData({ ...formData, [key]: e.target.value })
+                        }
+                      />
+                    </div>
+                  )
+                ))}
+            </div>
+          </div>
+
+          {/* Panel 2 */}
+          <div className="operationMaster-panel operation-details">
+            <div className="operationMaster-panel-header">Operation Details (2)</div>
+            <div className="operationMaster-panel-content">
+              {Object.keys(formData)
+                .slice(Math.ceil(Object.keys(formData).length / 2))
+                .map((key) => (
+                  key !== 'serviceDetailsIds' && (
+                    <div className="operationMaster-form-row" key={key}>
+                      <label>{key.replace(/([A-Z])/g, ' $1')}: *</label>
+                      <input
+                        type={key === 'timeInMinutes' ? 'number' : 'text'}
+                        name={key}
+                        value={formData[key]}
+                        onChange={(e) =>
+                          setFormData({ ...formData, [key]: e.target.value })
+                        }
+                      />
+                    </div>
+                  )
+                ))}
+            </div>
+          </div>
+        </div>
+      </form>
+
+      {/* paytype section */}
+
+      <div className="operationMaster-table-section">
+        <h3>Paytype Details</h3>
+        <table className="operation-master-table">
+          <thead>
+            <tr>
+              <th>SN</th>
+              <th>Paytype Name</th>
+              <th>Charges</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="operation-master-actions">
-        <button type="button" onClick={addRow}>
-          Add Row
+          </thead>
+          <tbody>
+            {paytypeRows.map((row) => (
+              <tr key={row.id}>
+                <td>{row.id}</td>
+                <td>
+                  <select
+                    value={row.payTypeName}
+                    onChange={(e) => handlePaytypeChange(row.id, e.target.value)}
+                  >
+                    <option value="">Select Paytype</option>
+                    {payTypes.map((payType) => (
+                      <option key={payType.id} value={payType.payTypeName}>
+                        {payType.payTypeName}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    value={row.charges}
+                    onChange={(e) => handleChargeChange(row.id, e.target.value)}
+                  />
+                </td>
+                <td>
+                  <button type="button" onClick={() => deletepayRow(row.id)}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="operation-master-actions">
+          <button type="button" onClick={addpayRow}>
+            Add Row
+          </button>
+        </div>
+      </div>
+
+
+
+
+      {/* end paytype section */}
+
+      {/* Table Section */}
+      <div className="operationMaster-table-section">
+        <h3>Service Details</h3>
+        <table className="operation-master-table">
+          <thead>
+            <tr>
+              <th>SN</th>
+              <th>Service Name</th>
+              <th>Display Name</th>
+              <th>Company Code</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={row.id}>
+                <td>{row.id}</td>
+                <td>
+                  <select
+                    value={row.serviceName}
+                    onChange={(e) => handleServiceChange(row.id, e.target.value)}
+                  >
+                    <option value="">Select Service</option>
+                    {serviceOptions.map((service) => (
+                      <option key={service.id} value={service.name}>
+                        {service.name}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  <input type="text" value={row.displayName} readOnly />
+                </td>
+                <td>
+                  <input type="text" value={row.companyCode} readOnly />
+                </td>
+                <td>
+                  <button type="button" onClick={() => deleteRow(row.id)}>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="operation-master-actions">
+          <button type="button" onClick={addRow}>
+            Add Row
+          </button>
+        </div>
+      </div>
+      <div className="operationMaster-action-buttons">
+        <button type="submit" onClick={handleSubmit}>
+          Submit
         </button>
       </div>
-    </div>
-    <div className="operationMaster-action-buttons">
-  <button type="submit" onClick={handleSubmit}>
-    Submit
-  </button>
-</div>
 
-  </div>
-  
+    </div>
+
   );
 };
 

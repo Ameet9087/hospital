@@ -4,11 +4,13 @@ import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import OutPatient from "./OutPatient";
 import { FloatingInput } from "../../FloatingInputs";
+import { jsPDF } from "jspdf";
+import 'jspdf-autotable';
 
 const ReferralSource = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false); // Manage modal visibility
-  const [referralData, setReferralData] = useState([]); // Store fetched referral data
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [referralData, setReferralData] = useState([]);
   const [formData, setFormData] = useState({
     newsPaper: false,
     doctor: false,
@@ -23,26 +25,90 @@ const ReferralSource = ({ patientId, outPatientId }) => {
   });
 
   const tableRef = useRef(null);
-
+  const formatDateTime = () => {
+    const now = new Date();
+    return now.toLocaleString();
+  };
+  const handlePrint = () => {
+    const doc = new jsPDF('l', 'mm', 'a4');
+    doc.setFontSize(16);
+    doc.text('Referral Source Report', doc.internal.pageSize.width / 2, 15, { align: 'center' });
+    doc.setFontSize(10);
+    doc.text(`Generated on: ${formatDateTime()}`, 219, 25);
+    const tableData = referralData.map(referral => [
+      referral.newsPaper === "true" ? "Yes" : "No",
+      referral.doctor === "true" ? "Yes" : "No",
+      referral.radio === "true" ? "Yes" : "No",
+      referral.webPage === "true" ? "Yes" : "No",
+      referral.staff === "true" ? "Yes" : "No",
+      referral.friendsFamily === "true" ? "Yes" : "No",
+      referral.tv === "true" ? "Yes" : "No",
+      referral.magazine === "true" ? "Yes" : "No",
+      referral.unknown === "true" ? "Yes" : "No",
+      referral.note || "N/A"
+    ]);
+    const headers = [
+      "Newspaper",
+      "Doctor",
+      "Radio",
+      "Web Page",
+      "Staff",
+      "Friends & Family",
+      "TV",
+      "Magazine",
+      "Unknown",
+      "Note"
+    ];
+    doc.autoTable({
+      head: [headers],
+      body: tableData,
+      startY: 30,
+      styles: {
+        fontSize: 8,
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: [51, 122, 183],
+        textColor: 255,
+        fontSize: 9,
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+      columnStyles: {
+        9: { cellWidth: 40 }
+      },
+      didDrawPage: function (data) {
+        doc.setFontSize(8);
+        doc.text(
+          `Page ${doc.internal.getCurrentPageInfo().pageNumber}`,
+          doc.internal.pageSize.width / 2,
+          doc.internal.pageSize.height - 10,
+          { align: 'center' }
+        );
+      }
+    });
+    const fileName = "Referral_Source_Report.pdf";
+    doc.save(fileName);
+    const pdfOutput = doc.output('bloburl');
+    window.open(pdfOutput, '_blank');
+  };
   useEffect(() => {
     const fetchReferralData = async () => {
       try {
         let endpoint = "";
-
-        // Check if newPatientVisitId or admissionId is present
         if (outPatientId) {
           endpoint = `${API_BASE_URL}/referral-sources/by-newVisitPatientId/${outPatientId}`;
         } else if (patientId) {
           endpoint = `${API_BASE_URL}/referral-sources/by-patientId/${patientId}`;
         }
-
-        // If an endpoint is determined, fetch data
         if (endpoint) {
           const response = await fetch(endpoint);
           if (response.ok) {
             const data = await response.json();
             console.log(data);
-            setReferralData(data); // Store fetched data in state
+            setReferralData(data);
           } else {
             console.error("Failed to fetch referral data.");
           }
@@ -51,22 +117,17 @@ const ReferralSource = ({ patientId, outPatientId }) => {
         console.error("Error:", error);
       }
     };
-
-    // Fetch referral data if newPatientVisitId or admissionId exists
     if (outPatientId || patientId) {
       fetchReferralData();
     }
-  }, [patientId, outPatientId, isAddModalOpen]); // Dependencies to re-fetch when IDs change
-
+  }, [patientId, outPatientId, isAddModalOpen]);
   const handleOpenModal = () => {
-    setIsAddModalOpen(true); // Open modal
+    setIsAddModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsAddModalOpen(false); // Close modal
+    setIsAddModalOpen(false);
   };
-
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, type, checked, value } = e.target;
     setFormData({
@@ -74,8 +135,6 @@ const ReferralSource = ({ patientId, outPatientId }) => {
       [name]: type === "checkbox" ? checked : value,
     });
   };
-
-  // Submit form data to backend
   const handleSubmit = async () => {
     const referrals =
       patientId > 0
@@ -96,10 +155,9 @@ const ReferralSource = ({ patientId, outPatientId }) => {
 
       if (response.ok) {
         console.log("Referral source added successfully!");
-        setIsAddModalOpen(false); // Close modal after success
-        // Refetch data to update table
+        setIsAddModalOpen(false);
         const updatedData = await response.json();
-        setReferralData([...referralData, updatedData]); // Add new referral to the data list
+        setReferralData([...referralData, updatedData]);
       } else {
         console.error("Failed to add referral source.");
       }
@@ -115,9 +173,21 @@ const ReferralSource = ({ patientId, outPatientId }) => {
           <div className="hist-section">
             <div className="hist-subdiv">
               <span className="hist-title">Referral Source List</span>
-              <button className="hist-add-button" onClick={handleOpenModal}>
-                Add New
-              </button>
+
+              <div className="referral-source-add-print-btn">
+                <button
+                  className="referral-source-add-button"
+                  onClick={handlePrint}
+                >
+                  Print
+                </button>
+                <button
+                  className="referral-source-add-button"
+                  onClick={handleOpenModal}
+                >
+                  Add New
+                </button>
+              </div>
             </div>
             <div className="table-container">
               <table className="patientList-table" ref={tableRef}>
@@ -176,7 +246,6 @@ const ReferralSource = ({ patientId, outPatientId }) => {
             </div>
           </div>
 
-          {/* Modal for adding referral source */}
           {isAddModalOpen && (
             <div className="hist-modal-overlay">
               <div className="hist-modal-content">

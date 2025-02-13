@@ -220,11 +220,42 @@ const EmployeeHeader = () => {
                 Paymode Master
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/settings/hopsitalpolicies"
+                className={
+                  location.pathname === "/settings/hopsitalpolicies"
+                    ? "active"
+                    : ""
+                }
+              >
+                Hospital Policies
+              </NavLink>
+            </li>
 
           </ul>
         </nav>
       </header>
 
+
+      {location.pathname.includes("/settings/hopsitalpolicies") && (
+        <div className="sub-nav-container">
+          <ul>
+            <li>
+              <NavLink
+                to="/settings/hopsitalpolicies/createhospitalpolicies"
+                className={
+                  location.pathname === "/settings/hopsitalpolicies/createhospitalpolicies"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create Hospital policies
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      )}
 
       {location.pathname.includes("/settings/paymodemaster") && (
         <div className="sub-nav-container">
@@ -614,6 +645,18 @@ const EmployeeHeader = () => {
                 }
               >
                 Create Beds
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/dischargetemplate"
+                className={
+                  location.pathname === "/settings/ipmaster/dischargetemplate"
+                    ? "active"
+                    : ""
+                }
+              >
+                Discharge Template
               </NavLink>
             </li>
             {/* <li>

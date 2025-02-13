@@ -2,10 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./PurchaseOrderForm.css";
 import { API_BASE_URL } from "../api/api";
-import { toast } from "react-toastify";
-import { FloatingInput, FloatingSelect } from "../../FloatingInputs";
+import { PopupTable } from "../../FloatingInputs";
 
-const PurchaseOrderForm = ({onClose}) => {
+const PurchaseOrderForm = () => {
   const [formVisible, setFormVisible] = useState(true);
   const [selectedSupplierId, setSelectedSupplierId] = useState();
   const [genericName, setGenericName] = useState("");
@@ -25,6 +24,10 @@ const PurchaseOrderForm = ({onClose}) => {
   const [vatPercentage, setVatPercentage] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
   const [remarks, setRemarks] = useState("");
+
+  const [locations, setLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
+  const [activePopup, setActivePopup] = useState("");
   const [formData, setFormData] = useState({
     supplier: {
       suppliersId: "",
@@ -73,6 +76,7 @@ const PurchaseOrderForm = ({onClose}) => {
     totalAmount: 0,
     remarks: "",
     inWords: "",
+    termsAndCondition: "",
   });
 
   const [items, setItems] = useState([]);
@@ -80,7 +84,37 @@ const PurchaseOrderForm = ({onClose}) => {
   const [availableItems, setAvailableItems] = useState([]);
   const [availableGenerics, setAvailableGenerics] = useState([]);
 
+  const getPopupData = () => {
+    if (activePopup === "Location") {
+      return {
+        columns: ["id", "locationName"],
+        data: locations,
+      };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
+
+  const { columns, data } = getPopupData();
+
+  const handleSelect = async (data) => {
+    if (activePopup === "Location") {
+      setSelectedLocation(data);
+    }
+
+    setActivePopup(null);
+  };
+
   useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/location-masters`)
+      .then((response) => {
+        setLocations(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the Locations!", error);
+      });
+
     axios
       .get(`${API_BASE_URL}/suppliers`)
       .then((response) => {
@@ -95,7 +129,10 @@ const PurchaseOrderForm = ({onClose}) => {
       .then((response) => {
         setAvailableItems(response.data);
         console.log(response.data);
-        console.log(availableItems?.dependentStocks?.pharmacyDependentStockId);
+        console.log(
+          "777777",
+          availableItems?.dependentStocks?.pharmacyDependentStockId
+        );
       })
       .catch((error) => {
         console.error("There was an error fetching the items!", error);
@@ -130,6 +167,11 @@ const PurchaseOrderForm = ({onClose}) => {
 
   const handleInputChange = (index, e) => {
     const { name, value } = e.target;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value, // Update the formData directly with the name and value
+    }));
 
     setItems((prevItems) =>
       prevItems.map((item, idx) => {
@@ -207,7 +249,7 @@ const PurchaseOrderForm = ({onClose}) => {
     setItems((prevItems) => {
       // Check if prevItems is an array
       if (!Array.isArray(prevItems)) {
-        toast.error("prevItems is not an array:", prevItems);
+        console.error("prevItems is not an array:", prevItems);
         return prevItems; // Return the original data without modification
       }
 
@@ -275,7 +317,6 @@ const PurchaseOrderForm = ({onClose}) => {
     ]);
   };
 
-  console.log("added row item ", items);
   const removeItem = (index) => {
     setItems(items.filter((_, i) => i !== index));
   };
@@ -287,14 +328,9 @@ const PurchaseOrderForm = ({onClose}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!selectedSupplierId) {
-      toast.error("Please select a supplier.");
-      return;
-    }
-    console.log("selected ", selectedSupplierId);
     const data = {
       poDate: formData.poDate,
-      deliveryDays: parseInt(formData.deliveryDays) || 0, // Make sure it's an integer
+      deliveryDays: parseInt(formData.deliveryDays) || 0,
       deliveryAddress: formData.deliveryAddress,
       deliveryDate: formData.deliveryDate,
       referenceNumber: formData.referenceNo,
@@ -306,6 +342,7 @@ const PurchaseOrderForm = ({onClose}) => {
       vatAmount: parseInt(formData.vatAmount) || 0, // Convert to int
       discountAmount: parseInt(formData.discountAmount) || 0, // Convert to int
       inWords: formData.inWords,
+      termsAndCondition: formData.termsAndCondition,
       discountPercent: parseInt(formData.discountPercentage) || 0, // Convert to int
       nonTaxableAmount: parseInt(formData.nonTaxableAmount) || 0, // Convert to int
       ccCharge: parseInt(formData.ccCharge) || 0, // Convert to int
@@ -313,6 +350,10 @@ const PurchaseOrderForm = ({onClose}) => {
       supplierDTO: {
         suppliersId: selectedSupplierId,
       },
+      locationMasterDTO: {
+        id: selectedLocation?.id,
+      },
+
       purchaseOrderItemDTOs: items.map((item) => ({
         quantity: parseInt(item.itemQuantity) || 0, // Convert to int
         freeQuantity: parseInt(item.freeQuantity) || 0, // Convert to int
@@ -331,18 +372,16 @@ const PurchaseOrderForm = ({onClose}) => {
       })),
     };
 
-    console.log(data);
+    console.log(JSON.stringify(data, null, 2));
 
     axios
       .post(`${API_BASE_URL}/purchaseorders/add`, data)
       .then((response) => {
-        toast.success("Purchase order saved successfully!");
-        onClose();
+        alert("Purchase order saved successfully!");
       })
       .catch((error) => {
         console.error("There was an error saving the purchase order!", error);
-        toast.error("Failed to save purchase order.");
-        onClose();
+        alert("Failed to save purchase order.");
       });
   };
 
@@ -357,25 +396,27 @@ const PurchaseOrderForm = ({onClose}) => {
       </div>
       <div className="purchase-order-form-summary">
         <div className="purchase-order-form-item">
-          <FloatingSelect
-            label={"Supplier"}
+          <label>
+            Supplier:<span className="purchase-span">*</span>
+          </label>
+          <select
             name="supplier"
             value={formData.supplier}
             onChange={handleSupplierChange}
-            options={[
-              { value: "", label: "" },
-              ...(Array.isArray(suppliers)
-                ? suppliers.map((supplier) => ({
-                    value: supplier.suppliersId,
-                    label: supplier.supplierName,
-                  }))
-                : []),
-            ]}
-          />
+          >
+            <option value="">Select Supplier</option>
+            {suppliers.map((supplier) => (
+              <option key={supplier.suppliersId} value={supplier.suppliersId}>
+                {supplier.supplierName}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="purchase-order-form-item">
-          <FloatingInput
-            label={"PO Date"}
+          <label>
+            PO Date:<span className="purchase-span">*</span>
+          </label>
+          <input
             type="date"
             name="poDate"
             value={formData.poDate}
@@ -383,8 +424,8 @@ const PurchaseOrderForm = ({onClose}) => {
           />
         </div>
         <div className="purchase-order-form-item">
-          <FloatingInput
-            label={"Delivery Days"}
+          <label>Delivery Days:</label>
+          <input
             type="number"
             name="deliveryDays"
             value={formData.deliveryDays}
@@ -392,18 +433,16 @@ const PurchaseOrderForm = ({onClose}) => {
           />
         </div>
         <div className="purchase-order-form-item">
-          <FloatingInput
-            label={"Delivery Address"}
-            type="text"
+          <label>Delivery Address:</label>
+          <input
             name="deliveryAddress"
             value={formData.deliveryAddress}
             onChange={handleChangeInput}
-          />
+          ></input>
         </div>
-
         <div className="purchase-order-form-item">
-          <FloatingInput
-            label={"Delivery Date"}
+          <label>Delivery Date:</label>
+          <input
             type="date"
             name="deliveryDate"
             value={formData.deliveryDate}
@@ -411,18 +450,17 @@ const PurchaseOrderForm = ({onClose}) => {
           />
         </div>
         <div className="purchase-order-form-item">
-          <FloatingInput
-            label={"Reference No"}
+          <label>Reference No.:</label>
+          <input
             type="text"
             name="referenceNo"
             value={formData.referenceNo}
             onChange={handleChangeInput}
           />
         </div>
-
         <div className="purchase-order-form-item">
-          <FloatingInput
-            label={"Contact"}
+          <label>Contact:</label>
+          <input
             type="text"
             name="contact"
             value={formData.contact}
@@ -430,14 +468,35 @@ const PurchaseOrderForm = ({onClose}) => {
           />
         </div>
         <div className="purchase-order-form-item">
-          <FloatingInput
-            label={"Invoicing Address"}
+          <label>Invoicing Address:</label>
+          <input
             name="invoicingAddress"
             value={formData.invoicingAddress}
             onChange={handleChangeInput}
-          />
+          ></input>
         </div>
-        <div className="purchase-order-form-item"></div>
+        <div className="purchase-order-form-item">
+          <label>Location:</label>
+          <div className="purchase-order-search-field">
+            <input
+              className="purchase-order-tableinput"
+              type="text"
+              value={selectedLocation?.locationName}
+            />
+            <button
+              type="button"
+              className="purchase-order-search-icon"
+              onClick={() => setActivePopup("Location")}
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <path
+                  fill="currentColor"
+                  d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="purchase-order-com-tab">
@@ -616,8 +675,8 @@ const PurchaseOrderForm = ({onClose}) => {
       <div className="goods-receipt-totals-section">
         <div className="purchase-order-form-summary">
           <div className="purchase-order-form-item">
-            <FloatingInput
-              label={"Sub Total"}
+            <label>Sub Total:</label>
+            <input
               type="text"
               name="subtotal"
               value={formData.subtotal}
@@ -625,16 +684,16 @@ const PurchaseOrderForm = ({onClose}) => {
             />
           </div>
           <div className="purchase-order-form-item">
-            <FloatingInput
-              label={"Discount %"}
+            <label>Discount %:</label>
+            <input
               type="number"
               name="discountPercentage"
               onChange={handleInputChange}
             />
           </div>
           <div className="purchase-order-form-item">
-            <FloatingInput
-              label={"Taxable Amount"}
+            <label>Taxable Amount:</label>
+            <input
               type="number"
               name="taxableAmount"
               value={formData.taxableAmount}
@@ -642,8 +701,8 @@ const PurchaseOrderForm = ({onClose}) => {
             />
           </div>
           <div className="purchase-order-form-item">
-            <FloatingInput
-              label={"Non-Taxable Amount"}
+            <label>Non-Taxable Amount:</label>
+            <input
               type="number"
               name="nonTaxableAmount"
               value={formData.nonTaxableAmount}
@@ -651,8 +710,8 @@ const PurchaseOrderForm = ({onClose}) => {
             />
           </div>
           <div className="purchase-order-form-item">
-            <FloatingInput
-              label={"VAT Amount"}
+            <label>VAT Amount:</label>
+            <input
               type="number"
               name="vatAmount"
               value={formData.vatAmount}
@@ -660,8 +719,8 @@ const PurchaseOrderForm = ({onClose}) => {
             />
           </div>
           <div className="purchase-order-form-item">
-            <FloatingInput
-              label={"CC Charge"}
+            <label>CC Charge:</label>
+            <input
               type="number"
               name="ccCharge"
               value={formData.ccCharge}
@@ -669,8 +728,8 @@ const PurchaseOrderForm = ({onClose}) => {
             />
           </div>
           <div className="purchase-order-form-item">
-            <FloatingInput
-              label={"Discount Amount"}
+            <label>Discount Amount:</label>
+            <input
               type="number"
               name="discount"
               value={items.discountAmount}
@@ -678,22 +737,30 @@ const PurchaseOrderForm = ({onClose}) => {
             />
           </div>
           <div className="purchase-order-form-item">
-            <FloatingInput
-              label={"Total Amount"}
-              type="number" // Changed to "number" for better validation
+            <label>Total Amount:</label>
+            <input
+              type="text"
               name="totalAmount"
               value={formData.totalAmount}
               onChange={handleInputChange}
-              restrictions={{ number: true }} // Keeping this if FloatingInput uses it internally
             />
           </div>
           <div className="purchase-order-form-item">
-            <FloatingInput
-              label={"In Words"}
+            <label>In Words:</label>
+            <input
               type="text"
               name="inWords"
               value={formData.inWords}
-              onChange={handleInputChange}
+              onChange={handleChangeInput}
+            />
+          </div>
+          <div className="purchase-order-form-item">
+            <label>Tearms and Conditions:</label>
+            <input
+              type="text"
+              name="termsAndCondition"
+              value={formData.termsAndCondition}
+              onChange={handleChangeInput}
             />
           </div>
         </div>
@@ -703,6 +770,14 @@ const PurchaseOrderForm = ({onClose}) => {
             Submit
           </button>
         </div>
+        {activePopup && (
+          <PopupTable
+            columns={columns}
+            data={data}
+            onSelect={handleSelect}
+            onClose={() => setActivePopup(false)}
+          />
+        )}
       </div>
     </form>
   );

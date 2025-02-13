@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import "./OPDPostDiscount.css";
 import {
   PopupTable,
@@ -23,8 +23,6 @@ const OPDPostDiscount = () => {
     { netAmt: 0, lessDisc: 0, discAmt: 0, postNetAmt: 0 },
   ]);
   const [selectedDiscAuthority, setSelectedDiscAuthority] = useState(null);
-
-  // Inside the OPDPostDiscount component:
 
   const [netAmount, setNetAmount] = useState(0);
   const [billPaid, setBillPaid] = useState(0);
@@ -225,10 +223,6 @@ const OPDPostDiscount = () => {
     }
   };
 
-  // const [test, setTest] = useState([
-  //   { sn: 1, serviceName: "Service 1", unitOrDoctor: "Dr. John", netAmt: 500, lessDisc: 10, discAmt: 50 },
-  // ]);
-
   const handleServiceNameChange = (e, index) => {
     const value = e.target.value;
     setTest((prevRows) => {
@@ -356,25 +350,8 @@ const OPDPostDiscount = () => {
   const getPopupData = () => {
     if (activePopup === "billNo") {
       return {
-        columns: ["opdBillingId", "uhid", "firstName", "lastName"],
-        data: billNo.map((item) => ({
-          opdBillingId: item.opdBillingId,
-          uhid: item.outPatientDTO.patient.uhid,
-          mobileNumber: item.outPatientDTO.patient.mobileNumber,
-          billing_date: item.billing_date,
-          firstName: item.outPatientDTO.patient.firstName,
-          middleName: item.outPatientDTO.patient.middleName,
-          lastName: item.outPatientDTO.patient.lastName,
-          salutation: item.outPatientDTO.patient.salutation,
-          age: item.outPatientDTO.patient.age,
-          dateOfBirth: item.outPatientDTO.patient.dateOfBirth,
-          gender: item.outPatientDTO.patient.gender,
-          paymentMode: item.paymentModeDTO.paymentMode,
-          maritalStatus: item.outPatientDTO.patient.maritalStatus,
-          sourceOfRegistration: item.outPatientDTO.patient.sourceOfRegistration,
-          relation: item.outPatientDTO.patient.relation,
-          originalobj: item,
-        })),
+        columns: ["opdBillingId", "opBalanceAmount"],
+        data: billNo,
       };
     } else if (activePopup === "discountAuthority") {
       return {
@@ -443,9 +420,11 @@ const OPDPostDiscount = () => {
   };
 
   const handleSelect = (row) => {
+    console.log(row);
+
     // Update selected row state and autofill selectedBillNo data
-    setSelectedRow(row.originalobj);
-    setSelectedBillNo(row.originalobj); // Use row data to autofill the table
+    setSelectedRow(row);
+    setSelectedBillNo(row); // Use row data to autofill the table
   };
 
   const { columns, data } = getPopupData();
@@ -541,93 +520,81 @@ const OPDPostDiscount = () => {
             </tr>
           </thead>
           <tbody>
-            {
-              selectedBillNo.testGridOpdBillDTO?.map((item, subIndex) => {
-                const rate = parseFloat(item.rate || 0);
-                const doctorShare = parseFloat(item.doctorShareAmount || 0);
-                const quantity = item.quantity || 0;
-                const netAmt = rate * quantity - doctorShare;
-                const postDiscPercent = parseFloat(item.postDiscPercent || 0);
-                const discAmt = (netAmt * postDiscPercent) / 100;
-                const postNetAmt = netAmt - discAmt;
-
-                return (
-                  <tr key={`${subIndex}`}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={item.isChecked || false}
-                        onChange={(e) =>
-                          handleCheckboxChange(e.target.checked, index)
-                        }
-                      />
-                    </td>
-                    <td>{subIndex + 1}</td>
-                    <td>
-                      <FloatingInput type="number" value={rate} readOnly />
-                    </td>
-                    <td>
-                      <FloatingInput
-                        type="number"
-                        value={quantity}
-                        onChange={(e) => {
-                          const newQuantity = parseFloat(e.target.value) || 0;
-                          setBillNo((prevRows) => {
-                            const updatedRows = [...prevRows];
-                            if (updatedRows[index].testGridOpdBillDTO) {
-                              updatedRows[index].testGridOpdBillDTO[subIndex] =
-                              {
-                                ...updatedRows[index].testGridOpdBillDTO[
-                                subIndex
-                                ],
-                                quantity: newQuantity,
-                              };
-                            }
-                            return updatedRows;
-                          });
-                        }}
-                      />
-                    </td>
-                    <td>
-                      <FloatingInput
-                        type="text"
-                        value={item.serviceDetailsDTO?.serviceName || ""}
-                        readOnly
-                      />
-                    </td>
-                    <td>{doctorShare.toFixed(2)}</td>
-                    <td>{netAmt.toFixed(2)}</td>
-                    <td>
-                      <FloatingInput
-                        type="number"
-                        value={postDiscPercent}
-                        onChange={(e) => {
-                          let newDiscPercent = Math.min(
-                            parseFloat(e.target.value) || 0,
-                            15
-                          );
-                          setBillNo((prevRows) => {
-                            const updatedRows = [...prevRows];
-                            if (updatedRows[index].testGridOpdBillDTO) {
-                              updatedRows[index].testGridOpdBillDTO[subIndex] =
-                              {
-                                ...updatedRows[index].testGridOpdBillDTO[
-                                subIndex
-                                ],
-                                postDiscPercent: newDiscPercent,
-                              };
-                            }
-                            return updatedRows;
-                          });
-                        }}
-                      />
-                    </td>
-                    <td>{discAmt.toFixed(2)}</td>
-                    <td>{postNetAmt.toFixed(2)}</td>
-                  </tr>
-                );
-              })
-            }
+            {selectedBillNo.testGridOpdBillDTO?.map((item, subIndex) => {
+              const rate = parseFloat(item.rate || 0);
+              const doctorShare = parseFloat(item.doctorShareAmount || 0);
+              const quantity = item.quantity || 0;
+              const netAmt = rate * quantity - doctorShare;
+              const postDiscPercent = parseFloat(item.postDiscPercent || 0);
+              const discAmt = (netAmt * postDiscPercent) / 100;
+              const postNetAmt = netAmt - discAmt;
+              
+              return (
+                <tr key={subIndex}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={item.isChecked || false} // ✅ Use item.isChecked instead of subIndex.isChecked
+                      onChange={(e) =>
+                        handleCheckboxChange(e.target.checked, subIndex)
+                      }
+                    />
+                  </td>
+                  <td>{subIndex + 1}</td>
+                  <td>
+                    <FloatingInput type="number" value={rate} readOnly />
+                  </td>
+                  <td>
+                    <FloatingInput
+                      type="number"
+                      value={quantity}
+                      onChange={(e) => {
+                        const newQuantity = parseFloat(e.target.value) || 0;
+                        setSelectedBillNo((prev) => {
+                          const updatedRows = [...prev.testGridOpdBillDTO];
+                          updatedRows[subIndex] = {
+                            ...updatedRows[subIndex],
+                            quantity: newQuantity,
+                          };
+                          return { ...prev, testGridOpdBillDTO: updatedRows };
+                        });
+                      }}
+                    />
+                  </td>
+                  <td>
+                    <FloatingInput
+                      type="text"
+                      value={item.serviceDetailsDTO?.serviceName || ""}
+                      readOnly
+                    />
+                  </td>
+                  <td>{doctorShare.toFixed(2)}</td>
+                  <td>{netAmt.toFixed(2)}</td>
+                  <td>
+                    <FloatingInput
+                      type="number"
+                      value={postDiscPercent}
+                      onChange={(e) => {
+                        let newDiscPercent = Math.min(
+                          parseFloat(e.target.value) || 0,
+                          15
+                        );
+                        setSelectedBillNo((prev) => {
+                          const updatedRows = [...prev.testGridOpdBillDTO];
+                          updatedRows[subIndex] = {
+                            ...updatedRows[subIndex],
+                            postDiscPercent: newDiscPercent,
+                          };
+                          return { ...prev, testGridOpdBillDTO: updatedRows };
+                        });
+                      }}
+                    />
+                  </td>
+                  <td>{discAmt.toFixed(2)}</td>
+                  <td>{postNetAmt.toFixed(2)}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -709,8 +676,9 @@ const OPDPostDiscount = () => {
         <div className="OPDPostDiscount-services-section">
           <div className="OPDPostDiscount-tab-bar">
             <button
-              className={`OPDPostDiscount-tab ${selectedTab === "testGrid" ? "active" : ""
-                }`}
+              className={`OPDPostDiscount-tab ${
+                selectedTab === "testGrid" ? "active" : ""
+              }`}
               onClick={() => setSelectedTab("testGrid")}
             >
               Test Grid

@@ -38,6 +38,8 @@ import DiscountAuthorityMaster from "./DiscountAuthority/DiscountAuthorityMaster
 import Organisition_Master from "./Organisition_New/Organisition_Master";
 import Firewall from "./Firewall/Firewall";
 import PaymentMode from "./PaymentMode"
+import DischargeTemplate from "./DischargeTemplate";
+import HospitalPolicies from "./HospitalPolicies";
 
 const SettingRouting = () => {
   return (
@@ -121,10 +123,12 @@ const SettingRouting = () => {
           element={<PaytypeMaster />}
         />
         <Route path="/ipmaster/IP-master-room-info" element={<Roominfo />} />
+        <Route path="/ipmaster/dischargetemplate" element={<DischargeTemplate />} />
         <Route path="/servicemaster" element={<ServiceList />} />
         <Route path="/locationmaster/locationform" element={<Location />} />
         <Route path="/socmaster/socform" element={<SOCMaster />} />
         <Route path="/paymodemaster/createpaymode" element={<PaymentMode />} />
+        <Route path="/hopsitalpolicies/createhospitalpolicies" element={<HospitalPolicies />} />
 
         {/* <Route
           path="/ipmaster/IP-master-OTPackageMaster"
