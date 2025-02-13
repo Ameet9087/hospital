@@ -212,3 +212,98 @@
   background-color: var(--button-hover-background-color);
   color: #da190b;
 }
+
+
+
+
+
+
+/* Style for the search icon */
+.DoctorMastericon {
+  position: absolute;
+  right: 10px; /* Adjust position inside the input box */
+  top: 50%;
+  transform: translateY(-50%);
+  color: black; /* Ensure the icon color is black */
+  cursor: pointer;
+}
+
+.iccon-container {
+  width: 200%;
+  padding: 8px 35px 8px 10px; /* Space for the icon on the right */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: white;
+}
+
+
+.DoctorMaster-add-btn,
+.DoctorMaster-delete-btn {
+  margin-right: 4px;
+  padding: 2px 8px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+.DoctorMaster-add-btn {
+  background-color: green;
+}
+.DoctorMaster-delete-btn {
+  background-color: red;
+}
+
+
+
+
+
+/* Wrapper for input and icon */
+.input-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+
+
+.DoctorMaster-add-btn {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.DoctorMaster-delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.services-table input {
+  width: 100%;
+  padding: 8px;
+  padding-right: 35px; /* Space for the icon */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.services-table {
+  position: relative;
+}
+
+.services-table .DoctorMastericon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: black; /* Set the icon color to black */
+  cursor: pointer;
+}
