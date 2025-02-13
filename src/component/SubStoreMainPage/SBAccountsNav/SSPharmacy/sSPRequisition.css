@@ -47,12 +47,7 @@
   width: 200px;
 
 }
-.sSPRequisition-search-bar i{
-  position: relative;
-  color:gray;
-  top: 7px;
-left: 190px;
-}
+
 .sSPRequisition-results-info {
   text-align: right;
   font-size: var(--font-size);
@@ -105,6 +100,12 @@ left: 190px;
   border-radius: 5px;
   cursor: pointer;
   margin-right: 5px;
+  border: 1px solid var(--button-hover-border-color);
+}
+.sSPRequisition-btn-view:hover{
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+  
 }
 
 /* Pagination Styles */

@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import "../VehicleMaintenance/vMAddNewVehicle.css"
-import PopupTable from '../../Admission/PopupTable';
-import { FaSearch } from 'react-icons/fa';
-import { API_BASE_URL } from '../../api/api';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import "../VehicleMaintenance/vMAddNewVehicle.css";
+import PopupTable from "../../Admission/PopupTable";
+import { FaSearch } from "react-icons/fa";
+import { API_BASE_URL } from "../../api/api";
+import axios from "axios";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 
 const LabVenderAddNewLV = ({ onClose }) => {
   const [vehicle, setVehicle] = useState([]);
   const [selectedVehicle, setSelectedVehicle] = useState({});
   const [formData, setFormData] = useState({
-    yearOfManufacture: '',
-    vehicleType: '',
-    vehicleCompanyName: '',
-    fuelType: '',
-    driverName: '',
-    driverContactNumber: ''
+    yearOfManufacture: "",
+    vehicleType: "",
+    vehicleCompanyName: "",
+    fuelType: "",
+    driverName: "",
+    driverContactNumber: "",
   });
   const [activePopup, setActivePopup] = useState(null);
 
@@ -78,16 +84,18 @@ const LabVenderAddNewLV = ({ onClose }) => {
     };
     console.log("dfghjkl", requestData);
 
-
     try {
-      const response = await axios.post(`${API_BASE_URL}/vehicle-maintenance`, requestData);
+      const response = await axios.post(
+        `${API_BASE_URL}/vehicle-maintenance`,
+        requestData
+      );
       // Assuming you want to handle the response data or update any state here
       console.log("Success:", response);
-      alert("Vehicle added successfully!");
+      toast.success("Vehicle added successfully!");
       console.log("Success:", response);
     } catch (error) {
       console.error("Error:", error);
-      alert("Error adding vehicle!");
+      toast.error("Error adding vehicle!");
     }
   };
 
@@ -101,71 +109,77 @@ const LabVenderAddNewLV = ({ onClose }) => {
         <div className="vMAddNewVehicle-form-row">
           <div className="vMAddNewVehicle-form-group-1row">
             <div className="vMAddNewVehicle-form-group">
-              <label>Vehicle Id<span>*</span></label>
-              <input type="text" placeholder="Vehicle Id" value={selectedVehicle?.vehicleId || ''} readOnly />
-              <FaSearch onClick={() => setActivePopup("vehicls")} />
+              <FloatingInput
+                label={"Vehicle Id"}
+                type="search"
+                value={selectedVehicle?.vehicleId || ""}
+                onIconClick={() => setActivePopup("vehicls")}
+              />
             </div>
+
             <div className="vMAddNewVehicle-form-group">
-              <label>Vehicle Type<span>*</span></label>
-              <select
+              <FloatingSelect
+                label="Vehicle Type"
                 name="vehicleType"
                 value={formData.vehicleType}
                 onChange={handleInputChange}
-              >
-                <option value="">Select Vehicle Type</option>
-                <option value="ambulance">Ambulance</option>
-                <option value="air-ambulance">Air Ambulance</option>
-                <option value="rapid-response">Rapid Response Vehicles</option>
-                <option value="critical-care">Critical Care Ambulance</option>
-              </select>
+                options={[
+                  { value: "", label: "Select Vehicle Type" },
+                  { value: "ambulance", label: "Ambulance" },
+                  { value: "air-ambulance", label: "Air Ambulance" },
+                  { value: "rapid-response", label: "Rapid Response Vehicles" },
+                  { value: "critical-care", label: "Critical Care Ambulance" },
+                ]}
+              />
             </div>
           </div>
 
           <div className="vMAddNewVehicle-form-group-1row">
             <div className="vMAddNewVehicle-form-group">
-              <label>Registration Number</label>
-              <input
+              <FloatingInput
+                label={"Registration Number"}
                 type="text"
-                placeholder="Vehicle Number"
-                value={selectedVehicle?.registrationNumber || ''}
-                readOnly
-              />
-            </div>
-            <div className="vMAddNewVehicle-form-group">
-              <label>Vehicle Company Name<span>*</span></label>
-              <input
-                type="text"
-                placeholder="Vehicle Company Name"
-                name="vehicleCompanyName"
-                value={formData.vehicleCompanyName}
+                name="registrationNumber"
+                value={selectedVehicle?.registrationNumber || ""}
                 onChange={handleInputChange}
               />
             </div>
+            <div className="vMAddNewVehicle-form-group">
+              <FloatingInput
+                label={"Vehicle Company Name *"}
+                type="text"
+                name="vehicleCompanyName"
+                value={formData.vehicleCompanyName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
           </div>
 
           <div className="vMAddNewVehicle-form-group-1row">
             <div className="vMAddNewVehicle-form-group">
-              <label>Year Of Manufacture</label>
-              <input
+              <FloatingInput
+                label={"Year Of Manufacture"}
                 type="text"
-                placeholder="Year Of Manufacture"
                 name="yearOfManufacture"
                 value={formData.yearOfManufacture}
                 onChange={handleInputChange}
               />
             </div>
             <div className="vMAddNewVehicle-form-group">
-              <label>Fuel Type<span>*</span></label>
-              <select
+              <FloatingSelect
+                label="Fuel Type"
                 name="fuelType"
                 value={formData.fuelType}
                 onChange={handleInputChange}
-              >
-                <option value="">Select Fuel Type</option>
-                <option value="petrol">Petrol</option>
-                <option value="diesel">Diesel</option>
-                <option value="cng">CNG</option>
-              </select>
+                options={[
+                  { value: "", label: "Select Fuel Type" },
+                  { value: "petrol", label: "Petrol" },
+                  { value: "diesel", label: "Diesel" },
+                  { value: "cng", label: "CNG" },
+                ]}
+                required
+              />
             </div>
           </div>
         </div>

@@ -102,11 +102,7 @@ background-color: var(--background-color);
     margin-bottom: 10px;
   }
   
-  .sSIStock-search-bar {
-    /* display: flex;
-    width: 20%; */
-    margin-left: -15px;
-  }
+ 
   
   .sSIStock-search-bar input {
     /* flex-grow: 1; */
@@ -115,12 +111,7 @@ background-color: var(--background-color);
     /* border-right: none; */
   }
 
-  .sSIStock-search-bar i{
-    position: relative;
-    color:gray;
-    top: 3px;
-  left: 200px;
-  }
+  
   
   .sSIStock-search-bar button {
     padding: 5px 10px;

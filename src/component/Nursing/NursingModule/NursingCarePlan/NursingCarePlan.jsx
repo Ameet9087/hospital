@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { API_BASE_URL } from "../../../api/api";
-
+import { toast } from "react-toastify";
 const NursingCarePlan = ({ patientId, ipAdmission }) => {
   // const [selectedIPNo, setSelectedIPNo] = useState(null);
   // const ipNoHeading = ["IpNo", "Patient Name  ", " Age"];
@@ -144,10 +144,10 @@ const NursingCarePlan = ({ patientId, ipAdmission }) => {
         nursingPlanForTheShift: "",
       });
       console.log("Response:", response.data);
-      alert("Data submitted successfully!");
+      toast.success("Data submitted successfully!");
     } catch (error) {
       console.error("Error posting data:", error);
-      alert("An error occurred while submitting data.");
+      toast.error("An error occurred while submitting data.");
     }
   };
 

@@ -1,8 +1,14 @@
-import React, { useState, useRef,useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./EmergencyRequest.css";
 import axios from "axios";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 const EmergencyRequest = () => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -73,8 +79,6 @@ const EmergencyRequest = () => {
           : null,
     };
 
-    
-
     try {
       const response = await axios.post(
         `${API_BASE_URL}/emergency/create`,
@@ -121,12 +125,12 @@ const EmergencyRequest = () => {
         transportMode: "",
       });
       setShowForm(false);
-      alert("Form submitted successfully!");
+      toast.success("Form submitted successfully!");
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error("Failed to submit form.");
     }
   };
-
 
   useEffect(() => {
     // Fetch data from the API
@@ -139,7 +143,6 @@ const EmergencyRequest = () => {
         console.error("Error fetching emergency data:", error);
       });
   }, []);
-
 
   return (
     <div className="emergency-request-com-module-form-container">
@@ -219,29 +222,28 @@ const EmergencyRequest = () => {
               />
             </div> */}
             <div className="emergency-request-com-module-group">
-              <label>
-                Patient Name <span className="mandatory">*</span>
-              </label>
-              <input
-                type="text"
+              <FloatingInput
+                label={"Patient Name"}
                 name="patientName"
                 value={formData.patientName}
-                onChange={handleInputChange}
-                placeholder="Patient Name"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (/^[a-zA-Z\s]*$/.test(value)) {
+                    handleInputChange(e); // Only update state if the input is valid
+                  }
+                }}
                 required
               />
             </div>
             <div className="emergency-request-com-module-group">
-              <label>
-                Patient Age <span className="mandatory">*</span>
-              </label>
-              <input
+              <FloatingInput
+                label={"Patient Age"}
                 type="number"
                 name="patientAge"
                 value={formData.patientAge}
                 onChange={handleInputChange}
-                placeholder="Patient Age"
                 required
+                min="0"
               />
             </div>
             <div className="emergency-request-com-module-group">
@@ -286,103 +288,111 @@ const EmergencyRequest = () => {
             </div>
 
             <div className="emergency-request-com-module-group">
-              <label>Medical Record Number</label>
-              <input
+              <FloatingInput
+                label={"Medical Record Number"}
                 type="text"
                 name="medicalRecordNumber"
                 value={formData.medicalRecordNumber}
                 onChange={handleInputChange}
-                placeholder="Medical Record Number"
               />
             </div>
             <div className="emergency-request-com-module-group">
-              <label>Contact Person Name</label>
-              <input
+              <FloatingInput
+                label="Contact Person Name"
                 type="text"
                 name="contactPersonName"
                 value={formData.contactPersonName}
-                onChange={handleInputChange}
-                placeholder="Contact Person Name"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (/^[a-zA-Z\s]*$/.test(value)) {
+                    handleInputChange(e); // Only update state if the input is valid
+                  }
+                }}
+                required
               />
             </div>
             <div className="emergency-request-com-module-group">
-              <label>Contact Phone Number</label>
-              <input
-                type="text"
+              <FloatingInput
+                label="Contact Phone Number"
+                type="text" // Use "text" to prevent issues with leading zeros and better control validation
                 name="contactPhoneNumber"
                 value={formData.contactPhoneNumber}
-                onChange={handleInputChange}
-                placeholder="Contact Phone Number"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Allow only numbers and restrict to 10 digits
+                  if (/^\d{0,10}$/.test(value)) {
+                    handleInputChange(e); // Update the state only if valid
+                  }
+                }}
+                required
               />
             </div>
             <div className="emergency-request-com-module-group">
-              <label>Relationship to Patient</label>
-              <input
+              <FloatingInput
+                label={"Relationship to Patient"}
                 type="text"
                 name="relationshipToPatient"
                 value={formData.relationshipToPatient}
-                onChange={handleInputChange}
-                placeholder="Relationship to Patient"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (/^[a-zA-Z\s]*$/.test(value)) {
+                    handleInputChange(e); // Only update state if the input is valid
+                  }
+                }}
               />
             </div>
             <div className="emergency-request-com-module-group">
-              <label>Emergency Type</label>
-              <input
+              <FloatingInput
+                label={"Emergency Type"}
                 type="text"
                 name="emergencyType"
                 value={formData.emergencyType}
                 onChange={handleInputChange}
-                placeholder="Emergency Type"
               />
             </div>
             <div className="emergency-request-com-module-group">
-              <label>Requesting Facility</label>
-              <input
+              <FloatingInput
+                label={"Requesting Facility"}
                 type="text"
                 name="requestingFacility"
                 value={formData.requestingFacility}
                 onChange={handleInputChange}
-                placeholder="Requesting Facility"
               />
             </div>
             <div className="emergency-request-com-module-group">
-              <label>Facility Address</label>
-              <input
+              <FloatingInput
+                label={"Facility Address"}
                 type="text"
                 name="facilityAddress"
                 value={formData.facilityAddress}
                 onChange={handleInputChange}
-                placeholder="Facility Address"
               />
             </div>
             <div className="emergency-request-com-module-group">
-              <label>Pick-Up Location</label>
-              <input
+              <FloatingInput
+                label={"Pick-Up Location"}
                 type="text"
                 name="pickUpLocation"
                 value={formData.pickUpLocation}
                 onChange={handleInputChange}
-                placeholder="Pick-Up Location"
               />
             </div>
             <div className="emergency-request-com-module-group">
-              <label>Destination Location</label>
-              <input
+              <FloatingInput
+                label={"Destination Location"}
                 type="text"
                 name="destinationLocation"
                 value={formData.destinationLocation}
                 onChange={handleInputChange}
-                placeholder="Destination Location"
               />
             </div>
             <div className="emergency-request-com-module-group">
-              <label>Patient Condition</label>
-              <input
+              <FloatingInput
+                label={"Patient Condition"}
                 type="text"
                 name="patientCondition"
                 value={formData.patientCondition}
                 onChange={handleInputChange}
-                placeholder="Patient Condition"
               />
             </div>
             <div className="emergency-request-com-module-group">
@@ -409,44 +419,40 @@ const EmergencyRequest = () => {
             </div>
 
             <div className="emergency-request-com-module-group">
-              <label>Medication Administered</label>
-              <input
+              <FloatingInput
+                label={"Medication Administered"}
                 type="text"
                 name="medicationAdministered"
                 value={formData.medicationAdministered}
                 onChange={handleInputChange}
-                placeholder="Medication Administered"
               />
             </div>
           </div>
           <div className="emergency-request-com-module-right">
             <div className="emergency-request-com-module-group">
-              <label>Priority Level</label>
-              <input
+              <FloatingInput
+                label={"Priority Level"}
                 type="text"
                 name="priorityLevel"
                 value={formData.priorityLevel}
                 onChange={handleInputChange}
-                placeholder="Priority Level"
               />
             </div>
             <div className="emergency-request-com-module-group">
-              <label>Transport Mode</label>
-              <input
+              <FloatingInput
+                label={"Transport Mode"}
                 type="text"
                 name="transportMode"
                 value={formData.transportMode}
                 onChange={handleInputChange}
-                placeholder="Transport Mode"
               />
             </div>
             <div className="emergency-request-com-module-group">
-              <label>Additional Notes</label>
-              <textarea
+              <FloatingTextarea
+                label={"Additional Notes"}
                 name="additionalNotes"
                 value={formData.additionalNotes}
                 onChange={handleInputChange}
-                placeholder="Additional Notes"
               />
             </div>
             {/* <div className="emergency-request-com-module-group">
@@ -460,25 +466,26 @@ const EmergencyRequest = () => {
               />
             </div> */}
             <div className="emergency-request-com-module-group">
-              <label>Dispatch Date and Time</label>
-              <div className="emergency-request-com-module-dispatch-date-time">
-                <input
-                  type="date"
-                  name="dispatchDate"
-                  value={formData.dispatchDate}
-                  onChange={handleInputChange}
-                  required
-                />
-                <input
-                  type="time"
-                  name="dispatchTime"
-                  value={formData.dispatchTime}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
+              <FloatingInput
+                label="Dispatch Date"
+                type="date"
+                name="dispatchDate"
+                value={formData.dispatchDate || ""}
+                onChange={handleInputChange}
+                required
+              />
+             
             </div>
-
+            <div className="emergency-request-com-module-group">
+            <FloatingInput
+                label="Dispatch Time"
+                type="time"
+                name="dispatchTime"
+                value={formData.dispatchTime || ""}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
             <button
               type="submit"
               className="emergency-request-com-module-submit-button"

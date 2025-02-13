@@ -9,11 +9,11 @@
   font-size:14px;
 }
 
-.transport-request-form-group input{
+/* .transport-request-form-group input{
   padding:1px;
   width:300px;
   border-radius:5px;
-}
+} */
 
 .transport-request-model-action-button{
   background-color: var(--button-bg-color);

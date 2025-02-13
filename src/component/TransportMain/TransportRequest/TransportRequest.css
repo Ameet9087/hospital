@@ -15,7 +15,7 @@
 }
 
 .new-request-button {
-  background-color: var(--button-bg-color);
+  background-color: var(--button-color);
   color: white;
   border: none;
   padding: 5px;
