@@ -24,10 +24,10 @@ function PurchaseOrder() {
           <input type="date" className="requisitionDateInput" />
           {/* <button className="requisitionOkButton">OK</button> */}
         </div>
-        <label className="requisitionCheckboxLabel">
+        {/* <label className="requisitionCheckboxLabel">
           <input type="checkbox" />
           Check and Verify Purchase Order
-        </label>
+        </label> */}
       </div>
 
       <div className="requisitionStatusSection">
@@ -45,13 +45,12 @@ function PurchaseOrder() {
             <input type="radio" name="verificationStatus" /> All
           </label>
         </div>
-        <div className="requisitionDropdownContainer">
+        {/* <div className="requisitionDropdownContainer">
           <label>Requisition Status:</label>
           <select className="requisitionDropdown">
             <option value="all">--ALL--</option>
-            {/* Add more options as needed */}
           </select>
-        </div>
+        </div> */}
       </div>
 
       <div className="requisitionTableContainer">

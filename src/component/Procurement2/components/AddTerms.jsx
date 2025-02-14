@@ -3,8 +3,9 @@ import "./AddTerms.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { API_BASE_URL } from "../../api/api";
-import axios from 'axios';
-
+import axios from "axios";
+import { FloatingInput } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 const AddTermsAndConditions = ({ terms }) => {
   // State for handling form inputs
   const [shortName, setShortName] = useState("");
@@ -30,7 +31,7 @@ const AddTermsAndConditions = ({ terms }) => {
     e.preventDefault();
   
     if (!shortName || !value || !type) {
-      setError("Please fill in all required fields.");
+      toast.error("Please fill in all required fields.", { autoClose: 2000 });
       return;
     }
   
@@ -44,13 +45,16 @@ const AddTermsAndConditions = ({ terms }) => {
     try {
       let response;
       if (isEditing) {
-        response = await axios.put(`${API_BASE_URL}/terms/${termsId}`, termData, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        response = await axios.put(
+          `${API_BASE_URL}/terms/${termsId}`,
+          termData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
       } else {
-        // POST request for creating new terms
         response = await axios.post(`${API_BASE_URL}/terms/create`, termData, {
           headers: {
             "Content-Type": "application/json",
@@ -59,31 +63,42 @@ const AddTermsAndConditions = ({ terms }) => {
       }
   
       if (response.status === 200 || response.status === 201) {
-        alert(isEditing ? "Terms and Conditions updated successfully!" : "Terms and Conditions added successfully!");
-        // Reset form fields after successful operation
-        setShortName("");
-        setValue("");
-        setType("");
-        setIsActive("");
+        toast.success(
+          isEditing
+            ? "Terms and Conditions updated successfully!"
+            : "Terms and Conditions added successfully!",
+          { autoClose: 2000 }
+        );
+  
+        // Only reset the form for new entries, not updates
+        if (!isEditing) {
+          setShortName("");
+          setValue("");
+          setType("");
+          setIsActive(true);
+        }
+        
         setIsEditing(false); // Reset the editing flag
       } else {
         setError(response.data.message || "Error saving terms.");
+        toast.error(response.data.message || "Error saving terms.", { autoClose: 2000 });
       }
     } catch (error) {
       console.error("Error submitting form:", error);
       setError("Failed to save terms.");
+      toast.error("Failed to save terms.", { autoClose: 2000 });
     }
   };
-
+  
   return (
     <div className="cons-container">
-      <h2 className="cons-heading">{isEditing ? "Update Terms & Conditions" : "Add Terms & Conditions"}</h2>
+      <h2 className="cons-heading">
+        {isEditing ? "Update Terms & Conditions" : "Add Terms & Conditions"}
+      </h2>
       <form className="cons-terms-form" onSubmit={handleSubmit}>
         <div className="cons-form-group">
-          <label htmlFor="shortName">
-            Short Name<span>*</span>:
-          </label>
-          <input
+          <FloatingInput
+            label={" Short Name"}
             type="text"
             id="shortName"
             className="cons-input-text"
@@ -93,7 +108,7 @@ const AddTermsAndConditions = ({ terms }) => {
           />
         </div>
 
-        <div className="cons-form-group">
+        <div className="cons-form-groupsdf"> 
           <label htmlFor="text">
             Text<span>*</span>:
           </label>
@@ -107,22 +122,21 @@ const AddTermsAndConditions = ({ terms }) => {
         </div>
 
         <div className="cons-form-group">
-          <label htmlFor="type">
-            Type<span>*</span>:
-          </label>
-          <input
-            type="text"
-            id="type"
-            className="cons-input-text"
-            placeholder="Type"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
+          <FloatingInput
+          label={"Type"}
+          type="text"
+          id="type"
+          className="cons-input-text"
+          placeholder="Type"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
           />
+        
         </div>
 
-        <div className="cons-form-group">
+        <div className="cons-form-groups">
           <label htmlFor="isActive">
-            Is Active<span>*</span>:
+            Is Active
           </label>
           <input
             type="checkbox"

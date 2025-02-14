@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import "./VerifyModal.css";
 import { API_BASE_URL } from "../api/api";
 import CustomModal from "../../CustomModel/CustomModal";
+import FloatingInput from "../../FloatingInputs/FloatingInput";
+import FloatingTextarea from "../../FloatingInputs/FloatingTextarea";
+import FloatingSelect from "../../FloatingInputs/FloatingSelect";
 function VerifyModal({ isOpen, onClose, requisitionDetails }) {
   const [verifyRemark, setVerifyRemark] = useState("");
   const [verifiedBy, setVerifiedBy] = useState(""); // Dynamic value for verifier
@@ -97,67 +100,73 @@ function VerifyModal({ isOpen, onClose, requisitionDetails }) {
               ))}
             </tbody>
           </table>
-          <div className="verifyRemarksSection">
-            <label>Requisition Remark:</label>
-            <textarea
-              className="verifyRemarksInput"
-              value={verifyRemark}
-              onChange={(e) => setVerifyRemark(e.target.value)}
+
+          <div className="verify-modal-footer-fields"> 
+          
+         
+            <FloatingInput
+            label={"Verified By"}
+            type="text"
+            className="verifyInput"
+            value={verifiedBy}
+            onChange={(e) => setVerifiedBy(e.target.value)}
+            placeholder="Enter verifier's name"
             />
-          </div>
-          <div className="VerifyRemarkContainer">
-          <div className="verifyRemarksSection">
-            <label>Verified By:</label>
-            <input
-              type="text"
-              className="verifyInput"
-              value={verifiedBy}
-              onChange={(e) => setVerifiedBy(e.target.value)}
-              placeholder="Enter verifier's name"
+          
+         
+            <FloatingInput
+            label={"Checked By"}
+            type="text"
+            className="verifyInput"
+            value={checkedBy}
+            onChange={(e) => setCheckedBy(e.target.value)}
+            placeholder="Enter checker’s name"
             />
-          </div>
-          <div className="verifyRemarksSection">
-            <label>Checked By:</label>
-            <input
-              type="text"
-              className="verifyInput"
-              value={checkedBy}
-              onChange={(e) => setCheckedBy(e.target.value)}
-              placeholder="Enter checker’s name"
+          
+         
+          
+            <FloatingInput
+            label={"Withdraw Remark"}
+            type="text"
+            className="verifyInput"
+            value={withdrawRemark}
+            onChange={(e) => setWithdrawRemark(e.target.value)}
+            placeholder="Enter withdrawal remark"
             />
-          </div>
-          </div>
-          <div className="VerifyRemarkContainer">
-          <div className="verifyRemarksSection">
-            <label>Withdraw Remark:</label>
-            <input
-              type="text"
-              className="verifyInput"
-              value={withdrawRemark}
-              onChange={(e) => setWithdrawRemark(e.target.value)}
-              placeholder="Enter withdrawal remark"
+            
+            <FloatingTextarea
+            label={"Requisition Remark"}
+            className="verifyRemarksInput"
+            value={verifyRemark}
+            onChange={(e) => setVerifyRemark(e.target.value)}
             />
+      
+          
+ 
+          <FloatingSelect
+        label={"Status"}
+        value={status}
+        onChange={(e) => setStatus(e.target.value)}
+            options={[
+              { value: "", label: "Select Accounting" },
+              { value: "Approved", label: "Approved" },
+              { value: "Rejected", label: "Rejected" },
+           
+           
+            ]}
+          />
           </div>
-          <div className="verifyRemarksSection">
-            <label>Status:</label>
-            <select
-              className="verifyInput"
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-            >
-              <option value="Approved">Approved</option>
-              <option value="Rejected">Rejected</option>
-            </select>
-            </div>
-          </div>
-        </div>
-        <div className="verifyModalFooter">
+          
+          
+        
+          <div className="verifyApproveButton-div">
           <button onClick={handleApprove} className="verifyApproveButton">
             Approve
           </button>
-          <button onClick={onClose} className="verifyRejectButton">
+          <button onClick={onClose} className="verifyApproveButton">
             Reject All
           </button>
+          </div>
         </div>
       </div>
     </div>

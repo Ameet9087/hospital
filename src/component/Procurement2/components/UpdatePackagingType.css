@@ -11,7 +11,9 @@
   text-align: left;
   margin-bottom: 10px;
 }
-
+.AddPackagingType-formgroup{
+  gap: 20px;
+}
 .MeasssFormGroup {
   margin-bottom: 15px;
 }

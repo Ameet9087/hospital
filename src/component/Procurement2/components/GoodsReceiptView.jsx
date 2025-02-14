@@ -176,7 +176,7 @@ function GoodsReceiptView({selectedItem}) {
       </footer>
     </div>
     <div className='goods-receipt-btn-container'>
-    <button  onClick={handlePrint} >
+    <button className='goods-receipt-btn-print'  onClick={handlePrint} >
         print
     </button>
     </div>

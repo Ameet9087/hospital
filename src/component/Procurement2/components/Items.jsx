@@ -128,7 +128,8 @@ const ItemList = () => {
             <input type="text" placeholder="Search" />
           </div>
           <div className="ItemList-results-info">
-            <span>Showing 0 / 0 results</span>
+          <span>Showing {items.length} / {items.length} results</span>
+
 
             <button className="ItemList-export-button" onClick={handleExport}>
               Export

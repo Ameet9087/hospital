@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './VerifyModal.css';
 import { API_BASE_URL } from '../api/api';
-
+import { FloatingTextarea } from '../../FloatingInputs';
+import { toast } from 'react-toastify';
 function VerifyModalPharmacy({ isOpen, onClose, requisitionDetails }) {
   console.log(requisitionDetails);
 
@@ -34,6 +35,7 @@ function VerifyModalPharmacy({ isOpen, onClose, requisitionDetails }) {
       }
     } catch (error) {
       console.error('Error:', error);
+      
     }
   };
 
@@ -75,17 +77,18 @@ function VerifyModalPharmacy({ isOpen, onClose, requisitionDetails }) {
             </tbody>
           </table>
           <div className="verifyRemarksSection">
-            <label>Requisition Remark:</label>
-            <textarea
-              className="verifyRemarksInput"
-              value={verifyRemark}
-              onChange={(e) => setVerifyRemark(e.target.value)}
+            <FloatingTextarea
+            label={"Requisition Remark"}
+            className="verifyRemarksInput"
+            value={verifyRemark}
+            onChange={(e) => setVerifyRemark(e.target.value)}
             />
+           
           </div>
         </div>
         <div className="verifyModalFooter">
           <button onClick={handleApprove} className="verifyApproveButton">Approve</button>
-          <button onClick={onClose} className="verifyRejectButton">Reject All</button>
+          <button onClick={onClose} className="verifyApproveButton">Reject All</button>
         </div>
       </div>
    

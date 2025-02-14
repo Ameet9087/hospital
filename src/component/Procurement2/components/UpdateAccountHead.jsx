@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios"; // Import axios for API requests
 import "./UpdateAccountHead.css"; // Ensure the CSS file has the updated class names
 import { API_BASE_URL } from "../../api/api";
-
+import { FloatingInput } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 const UpdateAccountHead = ({ accountHead, onClose, onUpdate }) => {
   const [name, setName] = useState(accountHead.accountHeadName || "");
   const [description, setDescription] = useState(accountHead.description || "");
@@ -26,7 +27,7 @@ const UpdateAccountHead = ({ accountHead, onClose, onUpdate }) => {
       );
 
       if (response.status === 200) {
-        alert("Account head updated successfully!");
+        toast.success("Account head updated successfully!");
         onUpdate(response.data); // Call the onUpdate prop to update state in the parent component
         onClose(); // Close the modal after successful update
       } else {
@@ -34,7 +35,7 @@ const UpdateAccountHead = ({ accountHead, onClose, onUpdate }) => {
       }
     } catch (error) {
       console.error("Error updating account head:", error);
-      alert("An error occurred while updating the account head.");
+      toast.error("An error occurred while updating the account head.");
     }
   };
 
@@ -43,26 +44,26 @@ const UpdateAccountHead = ({ accountHead, onClose, onUpdate }) => {
       <h2 className="UpdateAcHead-title">Update Account Head</h2>
       <form onSubmit={handleSubmit} className='AddAccountHead-form'>
         <div className="AddAccountHead-formgroup">
-          <label>
-            Account Head Name<span className="UpdateAcHead-required">* :</span>
-          </label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            placeholder="Enter Account Head Name"
+          <FloatingInput
+          label={"Account Head Name"}
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          placeholder="Enter Account Head Name"
           />
+         
         </div>
 
         <div className="AddAccountHead-formgroup">
-          <label>Description</label>
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Enter Description"
+          <FloatingInput
+          label={"Description"}
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Enter Description"
           />
+      
         </div>
 
         <div className="AddAccountHead-formgroup">

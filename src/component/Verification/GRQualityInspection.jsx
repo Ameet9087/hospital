@@ -43,13 +43,12 @@ function GRQualityInspection() {
             <input type="radio" name="verificationStatus" /> All
           </label>
         </div>
-        <div className="requisitionDropdownContainer">
+        {/* <div className="requisitionDropdownContainer">
           <label>Requisition Status:</label>
           <select className="requisitionDropdown">
             <option value="all">--ALL--</option>
-            {/* Add more options as needed */}
-          </select>
-        </div>
+         </select>
+        </div> */}
       </div>
 
       <div className="requisitionTableContainer">

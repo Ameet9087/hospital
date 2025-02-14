@@ -51,10 +51,10 @@ function RequisitionPagePharmacy() {
           <input type="date" className="requisitionDateInput" />
           {/* <button className="requisitionOkButton">OK</button> */}
         </div>
-        <label className="requisitionCheckboxLabel">
+        {/* <label className="requisitionCheckboxLabel">
           <input type="checkbox" />
           Check and Verify Requisition
-        </label>
+        </label> */}
       </div>
 
       <div className="requisitionStatusSection">
@@ -97,13 +97,12 @@ function RequisitionPagePharmacy() {
             All
           </label>
         </div>
-        <div className="requisitionDropdownContainer">
+        {/* <div className="requisitionDropdownContainer">
           <label>Requisition Status:</label>
           <select className="requisitionDropdown">
             <option value="all">--ALL--</option>
-            {/* Add more options as needed */}
           </select>
-        </div>
+        </div> */}
       </div>
 
       <div className="table-container">
@@ -131,7 +130,7 @@ function RequisitionPagePharmacy() {
                     : "1 verified out of 1"}
                 </td>
                 <td>
-                  <button onClick={() => handleVerifyClick(requisition)}>
+                  <button className="requisitionPaginationButton" onClick={() => handleVerifyClick(requisition)}>
                     Verify
                   </button>
                 </td>

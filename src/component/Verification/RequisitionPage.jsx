@@ -73,10 +73,10 @@ function RequisitionPage() {
   return (
     <div className="requisitionPageContainer">
       <div className="requisitionFilterSection">
-        <label className="requisitionCheckboxLabel">
+        {/* <label className="requisitionCheckboxLabel">
           <input type="checkbox" />
           Check and Verify Requisition
-        </label>
+        </label> */}
         <div className="requisitionDatePickerContainer">
           <label>From:</label>
           <input type="date" className="requisitionDateInput" />
@@ -128,12 +128,12 @@ function RequisitionPage() {
             All
           </label>
         </div>
-        <div className="requisitionDropdownContainer">
+        {/* <div className="requisitionDropdownContainer">
           <label>Requisition Status:</label>
           <select className="requisitionDropdown">
             <option value="all">--ALL--</option>
           </select>
-        </div>
+        </div> */}
       </div>
 
       <div className="verify-purchase-actions-span">

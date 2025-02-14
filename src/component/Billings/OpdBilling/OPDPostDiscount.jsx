@@ -10,8 +10,8 @@ import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-// Dhanashree
-const OPDPostDiscount = () => {
+
+const OPDPostDiscount = (onClose) => {
   const [selectedTab, setSelectedTab] = useState("testGrid");
   const [columnWidths, setColumnWidths] = useState({});
   const [selectedBillNo, setSelectedBillNo] = useState({ opdBillingId: "" });
@@ -486,7 +486,10 @@ const OPDPostDiscount = () => {
     if (selectedTab !== "testGrid") return null;
 
     return (
+      
       <div className="OPDPostDiscount-services-table">
+
+
         <table ref={tableRef}>
           <thead>
             <tr>
@@ -635,6 +638,7 @@ const OPDPostDiscount = () => {
   };
 
   return (
+
     <>
       <div className="OPDPostDiscount-container">
         <div className="OPDPostDiscount-section">

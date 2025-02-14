@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import './FacilityService.css';
 import { API_BASE_URL } from '../../api/api';
-
+import { FloatingInput } from '../../../FloatingInputs';
 Modal.setAppElement('#root');
 
 const FacilityService = () => {

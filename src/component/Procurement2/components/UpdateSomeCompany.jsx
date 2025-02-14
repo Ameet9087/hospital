@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './UpdateSomeCompany.css';
 import axios from 'axios';
 import { API_BASE_URL } from '../../api/api';
-
+import { FloatingInput } from '../../../FloatingInputs';
+import { toast } from 'react-toastify';
 const UpdateSomeCompany = ({ company, closeModal }) => {
   // Set initial state for the company fields using the passed `company` prop
   const [companyData, setCompanyData] = useState({
@@ -30,10 +31,14 @@ const UpdateSomeCompany = ({ company, closeModal }) => {
       // Make an API request to update the company data
       console.log(companyData)
       await axios.put(`${API_BASE_URL}/company/updateCompany/${company.id}`, companyData);
-      alert('Company updated successfully!');
+      // alert('Company updated successfully!');
+      toast.success('Proposal saved successfully!');
+
       closeModal(); // Close the modal after successful update
     } catch (error) {
-      alert('Failed to update company: ' + error.message);
+      toast.error('Failed to save proposal. Please try again.');
+
+      // alert('Failed to update company: ' + error.message);
     }
   };
 
@@ -42,71 +47,77 @@ const UpdateSomeCompany = ({ company, closeModal }) => {
       <h2>Update Some Company</h2>
       <form onSubmit={handleSubmit} className='add-company-form'>
         <div className="add-companyFormGroup">
-          <label>Company Name<span className="MeasssRequired">*</span></label>
-          <input
-            type="text"
-            name="companyName"
-            value={companyData.companyName}
-            onChange={handleInputChange}
-            placeholder="Some Company"
-            required
+          <FloatingInput
+           label={"Company Name"}
+           type="text"
+           name="companyName"
+           value={companyData.companyName}
+           onChange={handleInputChange}
+           placeholder="Some Company"
+           required
           />
+        
         </div>
 
         <div className="add-companyFormGroup">
-          <label>Code<span className="MeasssRequired">*</span></label>
-          <input
-            type="text"
-            name="code"
-            value={companyData.code}
-            onChange={handleInputChange}
-            placeholder="Code"
-            required
+          <FloatingInput
+          label={"Code"}
+          type="text"
+          name="code"
+          value={companyData.code}
+          onChange={handleInputChange}
+          placeholder="Code"
+          required
           />
+         
         </div>
 
         <div className="add-companyFormGroup">
-          <label>Address</label>
-          <input
-            type="text"
-            name="address"
-            value={companyData.address}
-            onChange={handleInputChange}
-            placeholder="Address"
+          <FloatingInput
+          label={"Address"}
+          type="text"
+          name="address"
+          value={companyData.address}
+          onChange={handleInputChange}
+          placeholder="Address"
           />
+         
         </div>
 
         <div className="add-companyFormGroup">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={companyData.email}
-            onChange={handleInputChange}
-            placeholder="Email"
+          <FloatingInput
+          label={"Email"}
+          type="email"
+          name="email"
+          value={companyData.email}
+          onChange={handleInputChange}
+          placeholder="Email"
           />
+         
         </div>
 
         <div className="add-companyFormGroup">
-          <label>Contact No</label>
-          <input
-            type="text"
-            name="contactNo"
-            value={companyData.contactNo}
-            onChange={handleInputChange}
-            placeholder="Contact No"
+          <FloatingInput
+          label={"Contact No"}
+          type="text"
+          name="contactNo"
+          value={companyData.contactNo}
+          onChange={handleInputChange}
+          placeholder="Contact No"
           />
+       
         </div>
 
         <div className="add-companyFormGroup">
-          <label>Description</label>
-          <input
-            type="text"
-            name="description"
-            value={companyData.description}
-            onChange={handleInputChange}
-            placeholder="Description"
+          <FloatingInput
+          label={"Description"}
+          type="text"
+          name="description"
+          value={companyData.description}
+          onChange={handleInputChange}
+          placeholder="Description"
           />
+       
         </div>
 
         <button type="submit" className="MeasssBtnAdd">Update</button>

@@ -85,7 +85,7 @@
 /* Status section */
 .requisitionStatusSection {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   /* margin-top: 20px; */
   background-color: var(--background-color);
   padding: 10px;
