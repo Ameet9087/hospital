@@ -1,65 +1,17 @@
- /* Ajhar Tamboli disPrescription.css 19-09-24 */
-
-
 .disPrescription-list-requisition {
   background-color: var(--background-color);
   padding: 10px 10px;
   font-family: Arial, sans-serif;
   height: 80vh;
   margin: 0;
-  /* overflow-y: scroll; */
-  /* border: 1px solid #CAF2FF; */
 }
 
 .disPrescription-controls {
+  width: 31%;
   display: flex;
-  padding: 10px;
+  gap: 10px;
   margin-bottom: 5px;
 }
-
-.disPrescription-date-range {
-  display: flex;
-  align-items: center;
-  width: 38%;
-  gap: 10px;
-  background-color: #f0f0f0;
-  margin-bottom: 10px;
-  padding: 3px;
-}
-.disPrescription-date-range label{
-  display: flex;
-  align-items: center;
-  margin-left: 20px;
-  font-size: var(--font-size);
-}
-
-.disPrescription-date-range input[type="date"] {
-  padding: 3px;
-  margin-left: 10px;
-}
-
-
-.disPrescription-search-bar input {
-  /* height: 25px; */
-  padding: 5px;
-  font-size: var(--font-size);
-  width: 200px;
-  border: 1px solid gray;
-  border-radius: 5px;
-}
-
-.disPrescription-search-bar i {
-  position: relative;
-  color: gray;
-  top: 2px;
-  left: 190px;
-}
-
-.disPrescription-results-info {
-  display: flex;
-  align-items: center;
-}
-
 .disPrescription-results-info span {
   /* color: black; */
   font-size: var(--font-size);
@@ -85,30 +37,6 @@
   width: 100%;
   overflow-x: auto; /* Enables horizontal scrolling */
 }
-
-/* .disPrescription-requisition-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  margin-bottom: 20px;
-}
-
-.disPrescription-requisition-table th {
-  border: 1px solid #ddd;
-  padding: 3px 0;
-  text-align: center;
-  background-color: #F3F3F3;
-  font-size: var(--heading-font);
-  white-space: nowrap;
-}
-
-.disPrescription-requisition-table td {
-  border: 1px solid #ddd;
-  padding: 5px 0;
-  text-align: center;
-  font-size: var(--font-size);
-  white-space: nowrap;
-} */
 
 .disPrescription-pagination {
   display: flex;
@@ -141,6 +69,7 @@
 
 .disPrescription-table-N-paginationDiv {
   background-color: white;
+  margin-top: 10px;
 }
 
 .disPrescription-Availability-button {
@@ -161,8 +90,12 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  margin-top: 20px;
 }
-
+.disPrescription-modal-content{
+  max-height: 650px;
+  overflow-y: auto;
+}
 
 /*  */
 

@@ -1,0 +1,47 @@
+.groupServiceTypeCon{
+
+}
+.groupServiceTypeForm-con{
+    width: 350px;
+}
+.groupServiceTypeForm-con h1{
+    font-size: 18px;
+}
+.groupServiceTypeForm{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.groupServiceType-btn,.groupServiceTypeForm-subBtn{
+    border: none;
+    border-radius: 5px;
+    background-color: var(--button-color);
+    color: white;
+    padding: 2px 5px;
+    border: 1px solid var(--button-color);
+}
+.groupServiceType-table{
+    margin-top: 10px;
+}
+
+.groupServiceType-edit-btn,.groupServiceType-delete-btn{
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 2px 5px;
+    margin: 2px;
+}
+.groupServiceType-edit-btn{
+    background-color: var(--button-color);
+    border: 1px solid var(--button-color);
+}
+.groupServiceType-delete-btn{
+    background-color: red;
+    border: 1px solid red;
+}
+
+.groupServiceType-edit-btn:hover,.groupServiceType-delete-btn:hover{
+    background-color: white;
+    color: black;
+}

@@ -91,3 +91,13 @@
     border: 1px solid #E31D2D;
     background-color: #E31D2D;
   }
+  .registerNewSSUPatient-form-row-single{
+    margin-top: 10px;
+    width: 24%;
+  }
+  .registerNewSSUPatient-form-row-income{
+    display: flex;
+    width: 48.5%;
+    gap: 20px;
+    margin-top: 10px;
+  }

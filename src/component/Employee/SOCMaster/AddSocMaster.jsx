@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { API_BASE_URL } from "../../api/api";
 import "./SocMaster.css";
 import axios from "axios";
-
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 const AddSocMaster = ({ onClose, initialData }) => {
   const today = new Date().toISOString().split("T")[0];
 
@@ -32,7 +37,7 @@ const AddSocMaster = ({ onClose, initialData }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (new Date(dateTo) < new Date(dateFrom)) {
-      alert("End date cannot be earlier than start date.");
+      toast.error("End date cannot be earlier than start date.");
       return;
     }
 
@@ -48,12 +53,15 @@ const AddSocMaster = ({ onClose, initialData }) => {
     try {
       if (initialData) {
         // Update existing SOC Master
-        await axios.put(`${API_BASE_URL}/socmasters/${initialData.socId}`, socData);
-        alert("SOC Master updated successfully");
+        await axios.put(
+          `${API_BASE_URL}/socmasters/${initialData.socId}`,
+          socData
+        );
+        toast.success("SOC Master updated successfully");
       } else {
         // Create a new SOC Master
         await axios.post(`${API_BASE_URL}/socmasters`, socData);
-        alert("SOC Master saved successfully");
+        toast.error("SOC Master saved successfully");
       }
 
       // Clear the form after submission
@@ -77,8 +85,8 @@ const AddSocMaster = ({ onClose, initialData }) => {
 
       <form onSubmit={handleSubmit} className="soc-master__form-container">
         <div className="soc-master__form-group">
-          <label>SOC Name: *</label>
-          <input
+          <FloatingInput
+            label="SOC Name *"
             type="text"
             value={socName}
             onChange={(e) => setSocName(e.target.value)}
@@ -86,8 +94,8 @@ const AddSocMaster = ({ onClose, initialData }) => {
           />
         </div>
         <div className="soc-master__form-group">
-          <label>Remarks: *</label>
-          <input
+          <FloatingInput
+            label="Remarks *"
             type="text"
             value={remarks}
             onChange={(e) => setRemarks(e.target.value)}
@@ -95,8 +103,8 @@ const AddSocMaster = ({ onClose, initialData }) => {
           />
         </div>
         <div className="soc-master__form-group">
-          <label>From: *</label>
-          <input
+          <FloatingInput
+            label="From *"
             type="date"
             value={dateFrom}
             onChange={(e) => setDateFrom(e.target.value)}
@@ -104,8 +112,8 @@ const AddSocMaster = ({ onClose, initialData }) => {
           />
         </div>
         <div className="soc-master__form-group">
-          <label>To: *</label>
-          <input
+          <FloatingInput
+            label="To *"
             type="date"
             value={dateTo}
             onChange={(e) => setDateTo(e.target.value)}
@@ -113,14 +121,16 @@ const AddSocMaster = ({ onClose, initialData }) => {
           />
         </div>
         <div className="soc-master__form-group">
-          <label>OP Reg Fees: *</label>
-          <input
+          <FloatingInput
+            label="OP Reg Fees *"
             type="number"
             value={opRegFees}
             onChange={(e) => setOpRegFees(e.target.value)}
             required
+            min="1"
           />
         </div>
+
         <div className="soc-master__form-group">
           <label>Status:</label>
           <div className="soc-master__radio-group">

@@ -94,7 +94,6 @@ const AddDepartment = ({ onClose }) => {
   const [isActive, setIsActive] = useState("Yes");
   const [isAppointmentApplicable, setIsAppointmentApplicable] = useState("No");
   const [customParentDepartment, setCustomParentDepartment] = useState(""); // For "Other"
-  const [complaintMangement, setComplaintManagement] = useState(false);
 
   const [loading, setLoading] = useState(false); // To manage loading state
 
@@ -112,109 +111,40 @@ const AddDepartment = ({ onClose }) => {
     setDepartmentCode(generateDepartmentCode(name));
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-
-  //   const payload = {
-  //     departmentCode,
-  //     departmentName,
-  //     parentDepartmentName:
-  //       parentDepartment === "other"
-  //         ? customParentDepartment
-  //         : parentDepartment,
-  //     description: departmentDescription || null,
-  //     noticeText: departmentNoticeText || null,
-  //     departmentHead: departmentHead || null,
-  //     roomNumber: roomNumber || null,
-  //     isActive,
-  //     isAppointmentApplicable,
-  //     complaintMangement,
-  //   };
-
-  //   try {
-  //     const response = await fetch(
-  //       `${API_BASE_URL}/departments/add-department`
-  //       ,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(payload),
-  //       }
-  //     );
-
-  //     if (response.ok) {
-  //       toast.success("Department added successfully!");
-
-  //       // Reset form fields
-  //       setDepartmentCode("");
-  //       setDepartmentName("");
-  //       setParentDepartment("");
-  //       setDepartmentDescription("");
-  //       setDepartmentNoticeText("");
-  //       setDepartmentHead("");
-  //       setRoomNumber("");
-  //       setIsActive(true);
-  //       setIsAppointmentApplicable(false);
-
-  //       onClose();
-  //     } else {
-  //       let errorMessage = "Failed to add department.";
-  //       try {
-  //         const errorData = await response.json();
-  //         errorMessage = errorData.message || errorMessage;
-  //       } catch {
-  //         // Keep default message
-  //       }
-  //       toast.error(errorMessage);
-  //     }
-  //   } catch (err) {
-  //     toast.error(
-  //       "An error occurred while adding the department. Please try again."
-  //     );
-  //     console.error("Error adding department:", err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-  
+
     const payload = {
       departmentCode,
       departmentName,
       parentDepartmentName:
-        parentDepartment === "other" ? customParentDepartment : parentDepartment,
-      departmentDescription: departmentDescription || null,
-      departmentNoticeText: departmentNoticeText || null,
+        parentDepartment === "other"
+          ? customParentDepartment
+          : parentDepartment,
+      description: departmentDescription || null,
+      noticeText: departmentNoticeText || null,
       departmentHead: departmentHead || null,
       roomNumber: roomNumber || null,
       isActive,
       isAppointmentApplicable,
-      complaintMangement, // Corrected typo here
     };
-  
+
     try {
       const response = await fetch(
-        `http://192.168.1.64:4096/api/departments/add-department`, // Updated API URL
+        `${API_BASE_URL}/departments/add-department`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(payload),
-          
-          
         }
-        
       );
-      console.log(response.data,"rrrrrr");
+
       if (response.ok) {
         toast.success("Department added successfully!");
-  
+
         // Reset form fields
         setDepartmentCode("");
         setDepartmentName("");
@@ -223,10 +153,9 @@ const AddDepartment = ({ onClose }) => {
         setDepartmentNoticeText("");
         setDepartmentHead("");
         setRoomNumber("");
-        setIsActive("Yes");
-        setIsAppointmentApplicable("No");
-        setComplaintManagement(false); // Reset this too
-  
+        setIsActive(true);
+        setIsAppointmentApplicable(false);
+
         onClose();
       } else {
         let errorMessage = "Failed to add department.";
@@ -247,7 +176,7 @@ const AddDepartment = ({ onClose }) => {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="update-setting-department-form-container">
       <form className="update-setting-department-form" onSubmit={handleSubmit}>
@@ -334,17 +263,6 @@ const AddDepartment = ({ onClose }) => {
             onChange={(e) => setRoomNumber(e.target.value)}
           />
         </div>
-        <div className="update-setting-form-group-">
-          <label htmlFor="complaintManagement">Complaint Management :</label>
-          <input
-            type="checkbox"
-            id="complaintManagement"
-            checked={complaintMangement}
-            onChange={(e) => setComplaintManagement(e.target.checked)}
-          />
-          Active
-        </div>
-
         <div className="update-setting-form-group submit-btn">
           <button type="submit" disabled={loading}>
             {loading ? "Adding..." : "Add"}

@@ -36,36 +36,51 @@ function SSIStock() {
 
   // Function to print specific elements: table, FromDate, ToDate, and current date and time
   // Function to trigger print
-  const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
         <head>
           <title>Print Table</title>
           <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none;
             }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
-            }
+            
           </style>
         </head>
         <body>
-          ${printContent.outerHTML}
+          <table>
+            ${printContents}
+          </table>
         </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
   };
 
   useEffect(() => {
@@ -150,7 +165,7 @@ function SSIStock() {
                   >
                     <i className="fa-solid fa-file-excel"></i> Export
                   </button>
-                  <button className="sSIStock-btn-blue" onClick={handlePrint}>
+                  <button className="sSIStock-btn-blue" onClick={printList}>
                     <i className="fa-solid fa-print"></i> Print
                   </button>
                   {/* <button className="sSIStock-btn-blue" onClick={toggleSortDirection}>

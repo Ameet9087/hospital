@@ -88,9 +88,8 @@
 .pharmacy-clearance-date-range {
     display: flex;
     align-items: center;
-    background-color: #f2f2f2;
     gap: 10px;
-    width: 50%;
+    width: 30%;
 }
 
 .pharmacy-clearance-date-range label {
@@ -147,6 +146,9 @@
     margin-top: 20px;
     /* width: 30%; */
     font-size: 14px;
+}
+.pharmacy-clearance-search{
+    margin-left: 10px;
 }
 
 

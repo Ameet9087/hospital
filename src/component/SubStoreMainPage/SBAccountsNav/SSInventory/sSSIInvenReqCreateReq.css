@@ -24,50 +24,64 @@
 
 .sSSIInvenReqCreateReq-form-group {
   display: flex;
-  /* flex-direction: column; */
-  /* margin-bottom: 15px; */
   align-items: center;
 }
 
 .sSSIInvenReqCreateReq-form-group label {
   margin-bottom: 5px;
-  /* font-weight: bold; */
   font-size: var(--font-size);
 }
-
-.sSSIInvenReqCreateReq-form-group input,
+.sSSIInvenReqCreateReq-add-row-button{
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  color: white;
+  /* border: none; */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  padding: var(--input-box-padding);
+}
+.sSSIInvenReqCreateReq-add-row-button:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-color);
+}
+.sSSIInvenReqCreateReq-delete-row-button{
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  padding: var(--input-box-padding);
+}
+.sSSIInvenReqCreateReq-delete-row-button:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-color);
+}
+/* .sSSIInvenReqCreateReq-form-group input,
 .sSSIInvenReqCreateReq-form-group textarea {
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-left: 10px;
-}
+} */
 
-.sSSIInvenReqCreateReq-date-input {
+/* .sSSIInvenReqCreateReq-date-input {
   position: relative;
   
-}
-.sSSIInvenReqCreateReq-date-input  textarea{
+} */
+/* .sSSIInvenReqCreateReq-date-input  textarea{
   padding: 5px;
   margin-left: 5px;
 
-}
+} */
 .sSSIInvenReqCreateReq-table-select{
-  width: 80%;
+  width: 100%;
 }
 .sSSIInvenReqCreateReq-table-input{
-  width: 80%;
+  width: 100%;
 }
-.sSSIInvenReqCreateReq-addrow-button{
-  border: none;
-}
-.sSSIInvenReqCreateReq-calendar-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #666;
-}
+
 
 .sSSIInvenReqCreateReq-inventory-table {
   width: 100%;
@@ -86,7 +100,6 @@
 .sSSIInvenReqCreateReq-inventory-table th {
   background-color: #f0f0f0;
   font-size: var(--heading-font);
-  /* font-weight: bold; */
 }
 
 .sSSIInvenReqCreateReq-table-category {
@@ -99,9 +112,7 @@
   align-items: center;
 }
 
-.sSSIInvenReqCreateReq-checkbox-group input {
-  margin-right: 5px;
-}
+
 .sSSIInvenReqCreateReq-min-buttonFs{
   background-color:var( --button-color);
   margin-left: 10px;

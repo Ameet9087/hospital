@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../../api/api";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import SSIReceivedRequisition from "./sSIReceivedRequisition";
+import * as XLSX from 'xlsx';
 import {
   FloatingInput,
   FloatingSelect,
@@ -68,17 +69,12 @@ function SSIInventoryRequisition() {
     setSelectedItem(item);
     setShowReceived(true);
   };
-  // const handlePrint = useReactToPrint({
-  //   content: () => printRef.current,
-  //   documentTitle: 'Requisition_Report',
-  //   pageStyle: `
-  //     @page {
-  //       size: A4;
-  //       margin: 20mm;
-  //     }
-  //   `,
-  // });
-  // Function to trigger print
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'InventeryRequisition'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'InventeryRequisition.xlsx'); // Downloads the Excel file
+  }
   const printList = () => {
     if (tableRef.current) {
       const printContents = tableRef.current.innerHTML;
@@ -238,11 +234,20 @@ function SSIInventoryRequisition() {
       <div className="sSIInventoryRequisition-search-N-results">
         <div className="sSIInventoryRequisition-search-bar">
           
-          <FloatingInput label={"Search"} type="search" />
+          <FloatingInput 
+          label={"Search"} 
+          type="search" 
+          />
         </div>
         <div className="sSIInventoryRequisition-results-info">
           Showing {filteredRequisitions.length} / {filteredRequisitions.length}{" "}
           results
+          <button
+            className="sSIInventoryRequisition-print-button"
+            onClick={handleExport}
+          >
+            <i class="fa-solid fa-print"></i> Export
+          </button>
           <button
             className="sSIInventoryRequisition-print-button"
             onClick={printList}

@@ -7,82 +7,15 @@ import LinenMaster from "../LinenMaster/LinenMaster";
 import LinenRequirement from "../LinenRequirement/linenRequirement";
 import LaundryStaffMapping from "../LaundryStaffMapping/LaundryStaffMapping";
 import axios from "axios";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 import { API_BASE_URL } from '../../api/api'
 
-const FloatingInput = ({ label, type = "text", value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
 
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  const handleChange = (e) => {
-    setHasValue(e.target.value.length > 0);
-    if (props.onChange) props.onChange(e);
-  };
-
-  return (
-    <div
-      className={`linensType-form-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <input
-        type={type}
-        className="linensType-form-floating-input"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value.length > 0);
-        }}
-        onChange={handleChange}
-        {...props}
-      />
-      <label className="linensType-form-floating-label">{label}</label>
-    </div>
-  );
-};
-
-// FloatingSelect component remains exactly the same
-const FloatingSelect = ({ label, options = [], value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  return (
-    <div
-      className={`linensType-form-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <select
-        className="linensType-form-floating-select"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value !== "");
-        }}
-        onChange={(e) => {
-          setHasValue(e.target.value !== "");
-          if (props.onChange) props.onChange(e);
-        }}
-        {...props}
-      >
-        <option value="">{ }</option>
-        {options.map((option, index) => (
-          <option key={index} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <label className="linensType-form-floating-label">{label}</label>
-    </div>
-  );
-};
 function NavNotification() {
   const [selectedTab, setSelectedTab] = useState("LinensType"); // State to keep track of the selected tab
   const [startDate, setStartDate] = useState(new Date());
@@ -154,13 +87,16 @@ function NavNotification() {
 
       if (response.status === 201 || response.status === 200) {
         console.log("Data submitted successfully!", payload);
+        toast.success("Data submitted successfully!")
         handleClear(); // Clear the form after successful submission
       } else {
         setMessage(`Failed to submit data. Status code: ${response.status}`);
+        toast.error("Failed to submit data!")
       }
     } catch (error) {
       console.error("Error submitting form:", error);
       setMessage("Error submitting data. Please try again.");
+      toast.error("Failed to submit data!")
     } finally {
       setIsSubmitting(false);
     }
@@ -263,13 +199,8 @@ function NavNotification() {
               >
                 {isSubmitting ? "Submitting..." : "Submit"}
               </button>
-              {/* <button
-                type="button"
-                className="btn-orange"
-                onClick={handleClear}
-              >
-                Clear
-              </button> */}
+              <button onClick={handleClear}>Reseat</button>
+              
             </div>
         </div>
       )}

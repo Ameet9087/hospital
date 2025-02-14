@@ -86,19 +86,16 @@
   
   .socialService-search-bar {
     display: flex;
-    margin-bottom: 10px;
+    padding: var(--input-box-padding);
     width: 300px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
+    margin-bottom: 20px;
   }
   
   .socialService-search-bar input {
     flex-grow: 1;
     padding: 5px;
     width: 200px;
-    border: none;
-    background: none;
-    outline: none;
+    
   }
   
   .socialService-search-button {

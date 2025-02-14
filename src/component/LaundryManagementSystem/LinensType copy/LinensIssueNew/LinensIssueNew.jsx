@@ -6,73 +6,13 @@ import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns
 import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from '../../../api/api'
 import * as XLSX from 'xlsx';
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 
-const FloatingInput = ({ label, type = "text", value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
 
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  const handleChange = (e) => {
-    setHasValue(e.target.value.length > 0);
-    if (props.onChange) props.onChange(e);
-  };
-
-  return (
-    <div className={`LinensIssueNew-form-floating-field ${(isFocused || hasValue) ? 'active' : ''}`}>
-      <input
-        type={type}
-        className="LinensIssueNew-form-floating-input"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value.length > 0);
-        }}
-        onChange={handleChange}
-        {...props}
-      />
-      <label className="LinensIssueNew-form-floating-label">{label}</label>
-    </div>
-  );
-};
-
-// FloatingSelect component remains exactly the same
-const FloatingSelect = ({ label, options = [], value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  return (
-    <div className={`LinensIssueNew-form-floating-field ${(isFocused || hasValue) ? 'active' : ''}`}>
-      <select
-        className="LinensIssueNew-form-floating-select"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value !== '');
-        }}
-        onChange={(e) => {
-          setHasValue(e.target.value !== '');
-          if (props.onChange) props.onChange(e);
-        }}
-        {...props}
-      >
-        <option value="">{ }</option>
-        {options.map((option, index) => (
-          <option key={index} value={option.value}>{option.label}</option>
-        ))}
-      </select>
-      <label className="LinensIssueNew-form-floating-label">{label}</label>
-    </div>
-  );
-};
 const LinensIssueNew = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
@@ -239,17 +179,7 @@ const LinensIssueNew = () => {
           <FloatingInput label="Search" 
             value={searchTerm}
             onChange={handleSearchChange}/>
-          {/* <button
-            className="LinensIssueNew-search-icon"
-            onClick={() => fetchLinenTypes("billNo")}
-          >
-            <svg viewBox="0 0 24 24" width="16" height="16">
-              <path
-                fill="currentColor"
-                d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-              />
-            </svg>
-          </button> */}
+          
         </div>
         <div className="LinensIssueNew-results-info">
           <span>

@@ -135,12 +135,7 @@ color: var(--button-color);
   width: 200px;
 
 }
-.sSIConsumption-search-bar i{
-  position: relative;
-  color:gray;
-  top: 7px;
-left: 205px;
-}
+
 
 /* .search-bar button {
   padding: 5px 10px;
@@ -150,24 +145,20 @@ left: 205px;
 } */
 
 .sSIConsumption-results-info {
-  width: 60%;
   display: flex;
-  align-items: center;
+  width: 100%;
   justify-content: flex-end;
-  color: black;
-  font-size: var(--font-size);
+  
 }
 .sSIConsumption-print-btn{
     margin-left: 10px;
-    /* gap: 10px; */
   background-color: var(--button-color);
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 8px 15px;
-  font-size: 12px;
-  margin-left: 200px;
-
+  padding:var(--input-box-padding);
+  font-size: var(--font-size);
+  border: 1px solid var(--button-color);
 }
 
 .sSIConsumption-table-N-paginat table {
@@ -224,8 +215,6 @@ left: 205px;
 
 .sSIConsumption-search-N-results{
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 10px;
 }
 .sSIConsumption-pagination {

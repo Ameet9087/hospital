@@ -4,21 +4,19 @@ import "./ServiceMaster.css";
 import ServiceRate from "./ServiceRate";
 import OperationOrProcedureRate from "./OperationOrProcedureRate";
 import { API_BASE_URL } from "../../api/api";
-import PopupTable from "../../Admission/PopupTable";
-import {
-  FloatingInput,
-  FloatingSelect,
-  FloatingTextarea,
-} from "../../../FloatingInputs";
+import { PopupTable } from "../../../FloatingInputs";
+
+
 
 const ServiceMaster = ({ refreshTable, onClose }) => {
+
+  const [activePopup, setActivePopup] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [activeComponent, setActiveComponent] = useState("defaultValue");
   const [payType, setPayType] = useState([]);
-  const [activePopup, setActivePopup] = useState(null);
-  const [locationId, setLocationId] = useState([])
-  const [locationMasters, setLocationMasters] = useState([])
-  const [selectedLocation, setSelectedLocation] = useState("");
-  const locationHeading=["id","locationName"];
+
+  const [servicetypedata,setServicetypeData]= useState();
+  const[selectedServicetype,setSelectedservicetype]=useState();
   const [formData, setFormData] = useState({
     serviceName: "",
     displayName: "",
@@ -47,46 +45,44 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
     serviceRates: [],
   });
 
-  
+  useEffect(() => {
+    const fetchPayType = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/pay-type`);
+        const payTypeData = response.data;
 
-  const fetchPayType = async () => {
+        setPayType(payTypeData);
+
+        // Map payType data to serviceRates format
+        const initialServiceRates = payTypeData.map((type) => ({
+          payTypeid: type.id,
+          payType: type.payTypeName,
+          rate: null,
+          doctorSharePercentage: null,
+          doctorShareAmount: null,
+        }));
+        setServiceRates(initialServiceRates);
+      } catch (error) {
+        console.error("Error fetching pay types:", error);
+      }
+    };
+
+    fetchPayType();
+    fetchservicetype();
+  }, []);
+
+
+  const fetchservicetype = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/pay-type`);
-      const payTypeData = response.data;
-
-      setPayType(payTypeData);
-
-      // Map payType data to serviceRates format
-      const initialServiceRates = payTypeData.map((type) => ({
-        payTypeid: type.id,
-        payType: type.payTypeName,
-        rate: null,
-        doctorSharePercentage: null,
-        doctorShareAmount: null,
-      }));
-      setServiceRates(initialServiceRates);
+      const response = await axios.get(`${API_BASE_URL}/servicetypes`);
+     
+      console.log(response.data);
+      setServicetypeData(response.data);
     } catch (error) {
       console.error("Error fetching pay types:", error);
     }
   };
 
-  const fetchLocationMasters = async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/location-masters`);
-      const locationData = response.data;
-      
-      setLocationMasters(locationData); 
-  
-      console.log("Location Masters:", locationData);
-    } catch (error) {
-      console.error("Error fetching location masters:", error);
-    }
-  };
-  
-  useEffect(() => {
-    fetchPayType();
-    fetchLocationMasters();
-  }, []);
   const [serviceRates, setServiceRates] = useState([]);
 
   const [procedureRates, setProcedureRates] = useState([]);
@@ -157,14 +153,14 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
 
   
   const handleSave = async () => {
-    
+    if (!formData.serviceName || !formData.serviceCode) {
+      alert("Please fill in required fields");
+      return;
+    }
 
     try {
       const payload = {
         ...formData,
-        locationMasterDTO: {
-          id: selectedLocation?.id, 
-        },
         serviceRates: serviceRates.map((rate, index) => ({
           rate: rate.rate,
           doctorSharePercentage: rate.doctorSharePercentage,
@@ -174,6 +170,8 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
             payTypeName: rate.payType,
           },
         })),
+        serviceType:{serviceTypeId:selectedServicetype?.serviceTypeId},
+
         procedureRates: procedureRates.map((rate, index) => ({
           operationOrProcedureRateId: index + 1,
           description: rate.description,
@@ -181,7 +179,6 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
           drRef: rate.drRef || "",
         })),
       };
-
       console.log(payload);
 
       const response = await axios.post(
@@ -199,7 +196,6 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
 
       onClose();
       refreshTable();
-
     } catch (error) {
       console.error(
         "Error saving service details:",
@@ -212,32 +208,28 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
       );
     }
   };
-  const handleSelect = async (data) => {
-      if (activePopup === "location") {
-        setSelectedLocation(data);
-        console.log(data, "selectedLocation");
-        setForm((prevFormData) => ({
-          ...prevFormData,
-          locationMaster: {
-            id: data.id, // Assuming 'data' contains the location with 'id' field
-          },
-        }));
-      }
-      setActivePopup(null); // Close the popup after selection
-};
 
-const getPopupData = () => {
-    if (activePopup === "location") {
-        return { columns: locationHeading, data: locationMasters };
+  const getPopupData = () => {
+   
+    if (activePopup) {
+      return {
+        columns: ["serviceTypeId", "serviceTypeName","serviceTypeCode","description"],
+        data:servicetypedata,
+      };
+    } else {
+      return { columns: [], data: [] };
     }
-    else  {
-        return { columns: [], data: [] };
+  };
+
+
+  const handleSelect = (data) => {
+    if (activePopup) {
+      setSelectedservicetype(data);
     }
-};
+  };
 
+  const { columns, data } = getPopupData();
 
-
-const { columns, data } = getPopupData();
   return (
     <>
       <div className="ServiceMaster-sh-container">
@@ -280,9 +272,21 @@ const { columns, data } = getPopupData();
               type="text"
               name="serviceTypeName"
               placeholder="Enter Service Type"
-              value={formData.serviceTypeName}
+              value={selectedServicetype?.serviceTypeName}
               onChange={handleChange}
+              
             />
+             <button
+                onClick={() => setActivePopup(true)}
+                
+              >
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                  <path
+                    fill=""
+                    d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
+                  />
+                </svg>
+              </button>
           </div>
           <div className="ServiceMaster-sh-section">
             <label>Company Name</label>
@@ -326,13 +330,7 @@ const { columns, data } = getPopupData();
               onChange={handleChange}
             />
           </div>
-            <FloatingInput
-            type="search"
-            label={"Location Name"}
-            value={selectedLocation.locationName || ""}
-            onIconClick={() => setActivePopup("location")}
-            />
-            
+          <div></div>
           <h3 className="ServiceMaster-sub-header">Service Options</h3>
           <div></div>
           <div></div>
@@ -688,14 +686,6 @@ const { columns, data } = getPopupData();
             />
           )}
         </div>
-        {activePopup && (
-                <PopupTable
-                    columns={columns}
-                    data={data}
-                    onSelect={handleSelect}
-                    onClose={() => setActivePopup(null)}
-                />
-            )}
       </div>
 
       <div className="ServiceMaster-sh-btn">
@@ -703,6 +693,15 @@ const { columns, data } = getPopupData();
           Save
         </button>
       </div>
+
+      {activePopup && (
+              <PopupTable
+                columns={columns}
+                data={data}
+                onClose={() => setActivePopup(false)}
+                onSelect={handleSelect}
+              />
+            )}
     </>
   );
 };

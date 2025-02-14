@@ -1,66 +1,74 @@
-import React, { useEffect, useState } from 'react';
-import '../SSInventory/sSIPatientConsumConsumEntry.css';
-import { useLocation, useParams } from 'react-router-dom';
-import { API_BASE_URL } from '../../../api/api';
+import React, { useEffect, useState } from "react";
+import "../SSInventory/sSIPatientConsumConsumEntry.css";
+import { useLocation, useParams } from "react-router-dom";
+import { API_BASE_URL } from "../../../api/api";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 
 const SSIPatientConsumConsumEntry = ({ onClose }) => {
   const { store } = useParams();
-  const [consumptionDate, setConsumptionDate] = useState('');
-  const [patient, setPatient] = useState('');
-  const [itemName, setItemName] = useState('');
+  const [consumptionDate, setConsumptionDate] = useState("");
+  const [patient, setPatient] = useState("");
+  const [itemName, setItemName] = useState("");
   const [availableQty, setAvailableQty] = useState(0);
   const [consumedQty, setConsumedQty] = useState(1);
-  const [remark, setRemark] = useState('');
+  const [remark, setRemark] = useState("");
   const [items, setItems] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [storeName, setStoreName] = useState('');
+  const [storeName, setStoreName] = useState("");
   const [requisitions, setRequisitions] = useState([]);
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
-  const [sortDirection, setSortDirection] = useState('asc'); // Added sort direction state
+  const [sortDirection, setSortDirection] = useState("asc"); // Added sort direction state
 
   const [rows, setRows] = useState([
-    { invItemId: "", itemName: "", unit: "", availableQty: "", code: "", consumedQty: "" }
+    {
+      invItemId: "",
+      itemName: "",
+      unit: "",
+      availableQty: "",
+      code: "",
+      consumedQty: "",
+    },
   ]);
-
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/inventory-requisitions/received?subStoreId=${store}`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         console.log("Fetched Items:", data);
         setItems(data);
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching data:", error));
   }, [store]);
   const handleItemChange = (index, event) => {
     const selectedItemId = event.target.value;
 
     if (selectedItemId) {
-      const selectedItem = items.find(item => item?.item?.invItemId?.toString() === selectedItemId);
+      const selectedItem = items.find(
+        (item) => item?.item?.invItemId?.toString() === selectedItemId
+      );
 
       if (selectedItem) {
         const updatedRows = rows.map((row, i) =>
           i === index
             ? {
-              ...row,
-              invItemId: selectedItem.item.invItemId, // Set the correct ID here
-              itemName: selectedItem.item.itemName,
-              unit: selectedItem.item.unitOfMeasurement.name,
-              availableQty: selectedItem.dispatchQuantity,
-              code: selectedItem.item.itemCode,
-            }
+                ...row,
+                invItemId: selectedItem.item.invItemId, // Set the correct ID here
+                itemName: selectedItem.item.itemName,
+                unit: selectedItem.item.unitOfMeasurement.name,
+                availableQty: selectedItem.dispatchQuantity,
+                code: selectedItem.item.itemCode,
+              }
             : row
         );
         setRows(updatedRows);
       }
     }
   };
-
-
-
-
-
-
 
   const handleSave = async () => {
     try {
@@ -80,13 +88,16 @@ const SSIPatientConsumConsumEntry = ({ onClose }) => {
       console.log("Payload to be sent:", consumptionData);
 
       // Send the payload to the backend
-      const response = await fetch(`${API_BASE_URL}/inventory-consumption/add`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(consumptionData),
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/inventory-consumption/add`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(consumptionData),
+        }
+      );
 
       if (!response.ok) {
         const responseText = await response.text();
@@ -94,30 +105,31 @@ const SSIPatientConsumConsumEntry = ({ onClose }) => {
         throw new Error(responseText);
       }
 
-      alert("Saved successfully!");
+      toast.success("Saved successfully!");
       onClose();
     } catch (error) {
       console.error("Error saving data:", error.message);
-      alert("Failed to save!");
+      toast.error("Failed to save!");
     }
   };
 
-
-
   const handleDiscard = () => {
-    alert('Discarded!');
+    alert("Discarded!");
   };
-
 
   const addNewRow = () => {
     setRows([
       ...rows,
-      { invItemId: "", itemName: "", unit: "", availableQty: "", code: "", consumedQty: "" },
+      {
+        invItemId: "",
+        itemName: "",
+        unit: "",
+        availableQty: "",
+        code: "",
+        consumedQty: "",
+      },
     ]);
   };
-
-
-
 
   const deleteRow = (index) => {
     const updatedRows = rows.filter((_, i) => i !== index);
@@ -129,24 +141,25 @@ const SSIPatientConsumConsumEntry = ({ onClose }) => {
       <h2 className="sSIPatientConsumConsumEntry-title">
         <i className="fa-solid fa-star-of-life"></i> Consumption Entry
       </h2>
-      <div className="sSIPatientConsumConsumEntry-form-section">
-        <label>Consumption Date*:</label>
-        <input
-          type="date"
-          value={consumptionDate}
-          onChange={(e) => setConsumptionDate(e.target.value)}
-        />
+      <div className="sSIPatientConsumConsumEntry-section">
         <div className="sSIPatientConsumConsumEntry-form-section">
-          <label>Consumption Type*:</label>
-          <input
+          <FloatingInput
+            label={"Consumption Date"}
+            type="date"
+            value={consumptionDate}
+            onChange={(e) => setConsumptionDate(e.target.value)}
+          />
+        </div>
+        <div className="sSIPatientConsumConsumEntry-form-section">
+          <FloatingInput
+            label={"Consumption Type"}
             type="text"
-            placeholder="Search By HospitalNo, Patient Name"
             value={patient}
             onChange={(e) => setPatient(e.target.value)}
           />
         </div>
-
       </div>
+
       <div className="sSIPatientConsumConsumEntry-table-section">
         <table className="sSIPatientConsumConsumEntry-table">
           <thead>
@@ -163,24 +176,46 @@ const SSIPatientConsumConsumEntry = ({ onClose }) => {
             {rows.map((row, index) => (
               <tr key={index}>
                 <td>
-                  <select value={row.invItemId} onChange={(e) => handleItemChange(index, e)}>
-                    <option value="">--Select Item--</option>
-                    {items.map((item) => (
-                      <option key={item.invItemId} value={item?.item?.invItemId}>{item?.item?.itemName}</option>
-                    ))}
-                  </select>
+                  <FloatingSelect
+                    label={"Item"}
+                    value={row.invItemId}
+                    onChange={(e) => handleItemChange(index, e)}
+                    options={[
+                      { value: "", label: "--Select Item--" },
+                      ...items.map((item) => ({
+                        value: item?.item?.invItemId,
+                        label: item?.item?.itemName,
+                      })),
+                    ]}
+                  />
                 </td>
                 <td>
-                  <input type="text" value={row.code || ""} readOnly />
+                  <FloatingInput
+                    label={"Code"}
+                    type="text"
+                    value={row.code || ""}
+                    readOnly
+                  />
                 </td>
                 <td>
-                  <input type="text" value={row.unit || ""} readOnly />
+                  <FloatingInput
+                    label={"Unit"}
+                    type="text"
+                    value={row.unit || ""}
+                    readOnly
+                  />
                 </td>
                 <td>
-                  <input type="text" value={row.availableQty || 0} readOnly />
+                  <FloatingInput
+                    label={"Available Quantity"}
+                    type="text"
+                    value={row.availableQty || 0}
+                    readOnly
+                  />
                 </td>
                 <td>
-                  <input
+                  <FloatingInput
+                    label={"Consumed Quantity"}
                     type="number"
                     value={row.consumedQty}
                     onChange={(e) => {
@@ -189,28 +224,48 @@ const SSIPatientConsumConsumEntry = ({ onClose }) => {
                       );
                       setRows(updatedRows);
                     }}
+                    min="0"
                   />
                 </td>
+
                 <td>
-                  <button className="delete-btn" onClick={() => deleteRow(index)}>❌</button>
-                  <button className="add-btn" onClick={addNewRow}>➕</button>
+                <button className="add-btn" onClick={addNewRow}>
+                    Add
+                  </button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteRow(index)}
+                  >
+                    Del
+                  </button>
+                  
                 </td>
               </tr>
             ))}
           </tbody>
-
         </table>
       </div>
       <div className="sSIPatientConsumConsumEntry-remark-section">
         <div className="sSIPatientConsumConsumEntry-remark">
-          <label>Remark:</label>
-          <textarea value={remark} onChange={(e) => setRemark(e.target.value)} className='sSIPatientConsumConsumEntry-textarea' />
+         
+          <FloatingTextarea
+            label={"Remark"}
+            value={remark}
+            onChange={(e) => setRemark(e.target.value)}
+            // className="sSIPatientConsumConsumEntry-textarea"
+            />
         </div>
         <div className="sSIPatientConsumConsumEntry-button-section">
-          <button className="sSIPatientConsumConsumEntry-save-btn" onClick={handleSave}>
+          <button
+            className="sSIPatientConsumConsumEntry-save-btn"
+            onClick={handleSave}
+          >
             Save
           </button>
-          <button className="sSIPatientConsumConsumEntry-discard-btn" onClick={handleDiscard}>
+          <button
+            className="sSIPatientConsumConsumEntry-discard-btn"
+            onClick={handleDiscard}
+          >
             Discard
           </button>
         </div>

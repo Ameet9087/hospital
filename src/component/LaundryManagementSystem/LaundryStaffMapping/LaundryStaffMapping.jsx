@@ -5,6 +5,12 @@ import "./LaundryStaffMapping.css";
 import { FaSearch, FaArrowCircleRight } from "react-icons/fa";
 import PopupTable from "../../Admission/PopupTable";
 import { API_BASE_URL } from "../../api/api";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 
 const LaundryStaffMapping = () => {
   const [selectedDetail, setSelectedDetail] = useState("staffmapping");
@@ -122,12 +128,21 @@ const LaundryStaffMapping = () => {
         console.log("Response:", response.data);
       }
 
-      alert("Staff details saved successfully!");
+      toast.success("Staff details saved successfully!");
     } catch (error) {
       console.error("Error saving staff details:", error.response || error);
-      alert("Error saving staff details");
+      toast.error("Error saving staff details");
     }
   };
+  const handleReset = () => {
+      
+    setAddEmployees([]);
+    setFormData([]);
+    setPackageTableRows([{ sn: 1, type: "", nameofstaff: "", mapwithpayroll: "" }]);
+    setEmployeeTypes([]);
+   
+  };
+  
 
   return (
     <div className="StaffMap-container">
@@ -136,16 +151,17 @@ const LaundryStaffMapping = () => {
           <span>Laundry Staff and Department Map</span>
         </div> */}
         <div className="StaffMap-Table-button">
-        <button
-  onClick={() => {
-    console.log("Button Clicked: Staff Mapping");
-    handleDetailClick("staffmapping");
-  }}
-  className={`detail-button ${selectedDetail === "staffmapping" ? "active" : ""}`}
->
-  Staff Mapping
-</button>
-
+          <button
+            onClick={() => {
+              console.log("Button Clicked: Staff Mapping");
+              handleDetailClick("staffmapping");
+            }}
+            className={`detail-button ${
+              selectedDetail === "staffmapping" ? "active" : ""
+            }`}
+          >
+            Staff Mapping
+          </button>
         </div>
         <div className="StaffMap-table">
           {selectedDetail === "staffmapping" && (
@@ -202,40 +218,31 @@ const LaundryStaffMapping = () => {
                     </td>
                     <td>{row.sn}</td>
                     <td>
-                      {/* <select
-                        value={row.type}
-                        onChange={(e) => handleRowChange(e, index, 'type')}
-                      >
-                        <option value="">Select Type</option>
-                        {employeeTypes.map((type) => (
-                          <option key={type.employeeTypeId} value={type.employeeType?.employeeTypeId}>
-                            {type.employeeType}
-                          </option>
-                        ))}
-                      </select> */}
-                      <input
-                        value={formData.employeeType}
-                        className="line-requirement-in"
-                      ></input>
-                      <FaSearch
-                        className="RefLinenRequirement-search-icon-row"
-                        onClick={() => setActivePopup("employeeType")}
+                      
+                      
+                      
+                      <FloatingInput
+                      label={"Type"}
+                      type="search"
+                      onIconClick={() => setActivePopup("employeeType")}
+                       value={formData.employeeType}
                       />
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        value={row.nameStaff}
-                        onChange={(e) => handleRowChange(e, index, "nameStaff")}
-                        placeholder="Enter name"
+                      <FloatingInput
+                      label={"Name of Staff"}
+                      type="text"
+                      value={row.nameStaff}
+                      onChange={(e) => handleRowChange(e, index, "nameStaff")}
                       />
                     </td>
-                    <td className="serchIconInput">
-                      <input
-                        type="text"
-                        value={row.payroll}
-                        onChange={(e) => handleRowChange(e, index, "payroll")}
-                        placeholder="Enter map with payroll"
+                    <td >
+                      
+                      <FloatingInput
+                      label={"Type"}
+                      type="text"
+                      value={row.payroll}
+                      onChange={(e) => handleRowChange(e, index, "payroll")}
                       />
                     </td>
                   </tr>
@@ -255,6 +262,7 @@ const LaundryStaffMapping = () => {
         <aside className="StaffMap-navbar-btns">
           <button onClick={handleSubmit}>Save</button>
         </aside>
+        <button onClick={handleReset}>Reseat</button>
       </div>
       {activePopup && (
         <PopupTable

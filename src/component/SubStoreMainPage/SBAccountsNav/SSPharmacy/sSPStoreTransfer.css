@@ -31,6 +31,24 @@
   color: var(--button-bg-color); 
   border-bottom: 1px solid var(--button-bg-color);
 }
+.NormalTransfer-buttons{
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.NormalTransfer-buttons button{
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  color: white;
+  padding: var(--input-box-padding);
+  font-size: var(--font-size);
+  border-radius: 5px;
+}
+.NormalTransfer-buttons button:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-color);
+}
 .NormalTransfer-table-actions button{
   margin-right: 4px;
   padding: 2px 8px;

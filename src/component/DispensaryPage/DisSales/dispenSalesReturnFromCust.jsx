@@ -1,26 +1,33 @@
 /* Ajhar Tamboli dispenSalesReturnFromCust.jsx 19-09-24 */
 
 import axios from "axios"; // Import Axios
-import React, { useState } from "react";
-import { Calendar, Search } from "lucide-react";
+import React, { useRef, useState } from "react";
+import { Calendar, Search, X } from "lucide-react";
 import "../DisSales/dispenSalesReturnFromCust.css";
 import SalesInvoice from "./SalesInvoice";
 import { API_BASE_URL } from "../../api/api";
+import * as XLSX from "xlsx";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 const DispenSalesReturnFromCust = () => {
-  const [fiscalYear, setFiscalYear] = useState("2024");
+  const [fiscalYear, setFiscalYear] = useState("");
   const [invoiceNo, setInvoiceNo] = useState("");
   const [patientName, setPatientName] = useState("");
   const [referenceInvoiceNo, setReferenceInvoiceNo] = useState("");
-  const [referenceInvoiceDate, setReferenceInvoiceDate] =useState("08/30/2024");
+  const [referenceInvoiceDate, setReferenceInvoiceDate] = useState("");
   const [medicines, setMedicines] = useState([]); // To hold medicine data
   const [invoiceData, setInvoiceData] = useState(); // State to hold invoice data
   const [showInvoice, setShowInvoice] = useState(false); // State to control visibility of SalesInvoice component
-
+  const tableRef = useRef ("")
   const handleSearch = async (e) => {
     e.preventDefault();
 
     if (!invoiceNo) {
-      alert("Please enter an Invoice Number to search.");
+      toast.error("Please enter an Invoice Number to search.");
       return;
     }
 
@@ -60,121 +67,93 @@ const DispenSalesReturnFromCust = () => {
       alert("Please enter an Invoice Number.");
       return;
     }
-  var subtot;
+    var subtot;
     // Filter only medicines with returned quantities greater than 0
     const returnedMedicines = medicines
-    .filter((medicine) => Number(medicine.returnedQty) > 0)
-    .map((medicine) => ({
-      medicineId: medicine.medicineId,  // Extract medicineId
-      storeMedId: medicine.storeMedId,  // Extract storeMedId
-      qty: medicine.returnedQty,  
-      subTotal:medicine.qty * medicine.salePrice      // Use returnedQty as qty
-     }));
-    
-  
+      .filter((medicine) => Number(medicine.returnedQty) > 0)
+      .map((medicine) => ({
+        medicineId: medicine.medicineId, // Extract medicineId
+        storeMedId: medicine.storeMedId, // Extract storeMedId
+        qty: medicine.returnedQty,
+        subTotal: medicine.qty * medicine.salePrice, // Use returnedQty as qty
+      }));
+
     if (returnedMedicines.length === 0) {
       alert("No medicines selected for return.");
       return;
     }
-    console.log("return med",returnedMedicines);
-  
+    console.log("return med", returnedMedicines);
+
     try {
       const response = await axios.post(
         `${API_BASE_URL}/patient-invoices/${invoiceNo}/return-medicines`,
         returnedMedicines
       );
-  
+
       if (response.status === 200 || response.status === 201) {
-        alert("Return receipt generated successfully!");
-  
+        toast.success("Return receipt generated successfully!");
+
         setShowInvoice(true); // Show the invoice component
       } else {
-        alert("Failed to generate the return receipt.");
+        toast.error("Failed to generate the return receipt.");
       }
     } catch (error) {
       console.error("Error printing return receipt:", error);
-      alert("An error occurred while printing the return receipt.");
+      toast.error("An error occurred while printing the return receipt.");
     }
   };
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
 
-  // const handlePrintReceipt = async () => {
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
 
-  //   if (!invoiceNo) {
-  //     alert("Please enter an Invoice Number.");
-  //     return;
-  //   }
-  
-  //   // Filter only medicines with returned quantities greater than 0
-  //   const returnedMedicines = medicines.filter(
-  //     (medicine) => Number(medicine.returnedQty) > 0
-  //   ).map((medicine) => ({
-  //     medicineId: medicine.medicineId,
-  //     storeMedId: medicine.storeMedId,
-  //     qty: medicine.returnedQty,
-  //   }));
-  
-  //   if (returnedMedicines.length === 0) {
-  //     alert("No medicines selected for return.");
-  //     return;
-  //   }
-  
-  //   try {
-  //     const response = await axios.post(
-  //       `http://localhost:3155/api/patient-invoices/${invoiceNo}/return-medicines`,
-  //       returnedMedicines
-  //     );
-  
-  //     if (response.status === 200 || response.status === 201) {
-  //       alert("Return receipt generated successfully!");
-  //        //setInvoiceData(response.data);
-  //       setShowInvoice(true);
-  //     } else {
-  //       alert("Failed to generate the return receipt.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error printing return receipt:", error);
-  //     alert("An error occurred while printing the return receipt.");
-  //   }
-  // };
-  
-  // const handlePrintReceipt = async () => {
-  //   if (!invoiceNo) {
-  //     alert("Please enter an Invoice Number.");
-  //     return;
-  //   }
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
 
-  //   const returnedMedicines = medicines
-  //     .filter((medicine) => medicine.returnedQty > 0)
-  //     .map((medicine) => ({
-  //       medicineId: medicine.medicineId,
-  //       storeMedId: medicine.storeMedId, // Ensure you have this field in your medicine data
-  //       qty: medicine.returnedQty,
-  //     }));
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
 
-  //   if (returnedMedicines.length === 0) {
-  //     alert("No medicines selected for return.");
-  //     return;
-  //   }
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
 
-  //   try {
-  //     const response = await axios.post(
-  //       `http://localhost:3155/api/patient-invoices/${invoiceNo}/return-medicines`,
-  //       returnedMedicines
-  //     );
+      document.body.removeChild(iframe);
+    }
+  };
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, "DispenceSalesReturnFromCust"); // Appends worksheet to workbook
+    XLSX.writeFile(wb, "DispenceSalesReturnFromCust.xlsx"); // Downloads the Excel file
+  };
 
-  //     if (response.status === 200 || response.status === 201) {
-  //       alert("Return receipt generated successfully!");
-  //       console.log("Return Receipt:", response.data);
-  //       setInvoiceData(response.data); // Assuming the response returns the full invoice data
-  //       setShowInvoice(true); // Show the invoice component
-  //     } else {
-  //       alert("Failed to generate the return receipt.");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error printing return receipt:", error);
-  //     alert("An error occurred while printing the return receipt.");
-  //   }
-  // };
   return (
     <div className="dispenSalesReturnFromCust-form">
       <div className="dispenSalesReturnFromCust-options">
@@ -195,19 +174,19 @@ const DispenSalesReturnFromCust = () => {
       <div className="dispenSalesReturnFromCust-search-section">
         <div className="dispenSalesReturnFromCust-form-group-two">
           <div className="dispenSalesReturnFromCust-form-group-fs">
-            <label htmlFor="fiscalYear">Fiscal Year:</label>
-            <select
-              id="fiscalYear"
+            <FloatingSelect
+              label="Fiscal Year"
+              name="fiscalYear"
               value={fiscalYear}
               onChange={(e) => setFiscalYear(e.target.value)}
-            >
-              <option value="2024">2024</option>
-              {/* Add more options as needed */}
-            </select>
-          </div>
-          <div className="dispenSalesReturnFromCust-form-group-fs">
-            <label htmlFor="invoiceNo">Invoice No:</label>
-            <input
+              options={[
+                { value: "2024", label: "2024" },
+                { value: "2023", label: "2023" }, // Add more options as needed
+                { value: "2022", label: "2022" },
+              ]}
+            />
+             <FloatingInput
+              label={"Invoice No"}
               type="text"
               id="invoiceNo"
               placeholder="Enter InvoiceNo."
@@ -234,56 +213,37 @@ const DispenSalesReturnFromCust = () => {
 
       <div className="dispenSalesReturnFromCust-patient-info">
         <div className="dispenSalesReturnFromCust-form-group">
-          <label htmlFor="patientName">Patient Name *:</label>
-          <div className="dispenSalesReturnFromCust-search-input">
-            <input
-              type="text"
-              id="patientName"
-              placeholder="Search Patient"
-              value={patientName}
-              onChange={(e) => setPatientName(e.target.value)}
-            />
-            <Search
-              size={16}
-              className="dispenSalesReturnFromCust-search-icon"
-            />
-          </div>
-          {patientName === "" && (
-            <div className="dispenSalesReturnFromCust-error-messages">
-              <p>Patient Name is required.</p>
-              <p>Patient is not registered.</p>
-            </div>
-          )}
-        </div>
-        <div className="dispenSalesReturnFromCust-form-group">
-          <label htmlFor="referenceInvoiceNo">Reference Invoice No *:</label>
-          <input
+          <FloatingInput
+            label={"Patient Name"}
+            type="search"
+            id="patientName"
+            placeholder="Search Patient"
+            value={patientName}
+            onChange={(e) => setPatientName(e.target.value)}
+          />
+          <FloatingInput
+            label={"Reference Invoice No"}
             type="text"
             id="referenceInvoiceNo"
             value={referenceInvoiceNo}
             onChange={(e) => setReferenceInvoiceNo(e.target.value)}
           />
+
+          <FloatingInput
+            label={"Reference Invoice Date"}
+            type="date"
+            id="referenceInvoiceDate"
+            value={referenceInvoiceDate}
+            onChange={(e) => setReferenceInvoiceDate(e.target.value)}
+          />
         </div>
-        <div className="dispenSalesReturnFromCust-form-group">
-          <label htmlFor="referenceInvoiceDate">
-            Reference Invoice Date *:
-          </label>
-          <div className="date-input">
-            <input
-              type="text"
-              id="referenceInvoiceDate"
-              value={referenceInvoiceDate}
-              onChange={(e) => setReferenceInvoiceDate(e.target.value)}
-            />
-            <Calendar
-              size={16}
-              className="dispenSalesReturnFromCust-calendar-icon"
-            />
-          </div>
+        <div className="dispenSalesReturnFromCust-buttons">
+          <button onClick={printList}>Print</button>
+          <button onClick={handleExport}>Export</button>
         </div>
       </div>
 
-      <table className="dispenSalesReturnFromCust-return-table">
+      <table className="dispenSalesReturnFromCust-return-table" ref={tableRef}>
         <thead>
           <tr>
             <th></th>
@@ -322,17 +282,7 @@ const DispenSalesReturnFromCust = () => {
               <td>
                 <input type="text" value={medicine.expiry} readOnly />
               </td>
-              {/* <td>
-          <input
-            type="text"
-            value={medicine.returnedQty || medicine.qty} // Default to the quantity
-            onChange={(e) => {
-              const updatedMedicines = [...medicines];
-              updatedMedicines[index].returnedQty = Number(e.target.value);
-              setMedicines(updatedMedicines);
-            }}
-          />
-        </td> */}
+
               <td>
                 <input type="text" value={medicine.qty} readOnly />
               </td>
@@ -346,7 +296,7 @@ const DispenSalesReturnFromCust = () => {
                       e.target.value
                     ); // Ensure numeric update
                     setMedicines(updatedMedicines);
-                    console.log("////////",updatedMedicines);
+                    console.log("////////", updatedMedicines);
                     // setInvoiceData(updatedMedicines);
                   }}
                 />
@@ -375,17 +325,6 @@ const DispenSalesReturnFromCust = () => {
         </tfoot>
       </table>
 
-      {/* <button className="dispenSalesReturnFromCust-btn-add">+</button> */}
-
-      {/* <div className="dispenSalesReturnFromCust-form-group-remarks">
-        <label htmlFor="remarks">Remarks *:</label>
-        <textarea 
-          id="remarks" 
-          value={remarks} 
-          onChange={(e) => setRemarks(e.target.value)} 
-        ></textarea>
-      </div> */}
-
       <div className="dispenSalesReturnFromCust-PRB">
         <button
           className="dispenSalesReturnFromCust-btn-print"
@@ -394,16 +333,15 @@ const DispenSalesReturnFromCust = () => {
           Print Return Receipt
         </button>
       </div>
-      {/* SalesInvoice Component */}
       {showInvoice && (
-  <SalesInvoice
-    showInvoice={showInvoice}
-    handleClose={() => setShowInvoice(false)}
-    invoiceData={invoiceData}
-    handlePrint={handlePrintReceipt}
-    invoiceType="Return Invoice" // Added invoiceType prop
-  />
-)}
+        <SalesInvoice
+          showInvoice={showInvoice}
+          handleClose={() => setShowInvoice(false)}
+          invoiceData={invoiceData}
+          handlePrint={handlePrintReceipt}
+          invoiceType="Return Invoice" 
+        />
+      )}
     </div>
   );
 };

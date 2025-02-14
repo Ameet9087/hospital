@@ -6,6 +6,12 @@ import { API_BASE_URL } from '../api/api';
 import axios from 'axios';
 import CustomModal from '../../CustomModel/CustomModal';
 import PharmacyClearancePopup from "./PharmacyClearancePopup/PharmacyClearancePopup"
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../FloatingInputs";
 export default function PharmacyClearance() {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -13,6 +19,8 @@ export default function PharmacyClearance() {
   const [showModal, setShowModal] = useState(false);
   const [selectedRequisition, setSelectedRequisition] = useState(null);
   const [patient, setPatient] = useState([]);
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
 
   useEffect(() => {
     // Fetch requisition data
@@ -27,16 +35,58 @@ export default function PharmacyClearance() {
 
   // Function to export table to Excel
   const handleExport = () => {
-    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Convert table to worksheet
-    const wb = XLSX.utils.book_new(); // Create a new workbook
-    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Add sheet to workbook
-    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Download the file
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, "PharmacyClearence"); // Appends worksheet to workbook
+    XLSX.writeFile(wb, "PharmacyClearence.xlsx"); // Downloads the Excel file
   };
 
-  // Function to trigger print
-  const handlePrint = () => {
-    window.print(); // Trigger the browser print dialog
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
   };
+
 
   // Function to open modal with requisition details
   const openModal = (requisition) => {
@@ -57,22 +107,37 @@ export default function PharmacyClearance() {
       {/* Date range filter */}
       <div className="purchase-data-order">
         <div className="pharmacy-clearance-date-range">
-          <label htmlFor="from-date">From:</label>
-          <input type="date" id="from-date" />
-          <label htmlFor="to-date">To:</label>
-          <input type="date" id="to-date" />
+        <FloatingInput
+        label="From Date"
+        type="date"
+        name="fromDate"
+        value={fromDate}
+        onChange={(e) => setFromDate(e.target.value)}
+      />
+      <FloatingInput
+        label="To Date"
+        type="date"
+        name="toDate"
+        value={toDate}
+        onChange={(e) => setToDate(e.target.value)}
+      />
         </div>
       </div>
 
       {/* Search and action buttons */}
       <div className="pharmacy-clearance-search-container">
-        <input type="text" className="pharmacy-clearance-search-box" placeholder="Search" />
+        <div className='pharmacy-clearance-search'>
+        <FloatingInput 
+         label={"Search"}
+        />
+        </div>
+        
         <div className="pharmacy-clearance-search-right">
-          <span className="purchase-results-count-span">Showing 0 / 0 results</span>
+          <span className="purchase-results-count-span">Showing {requestdata.length} / {requestdata.length}results</span>
           <button className="pharmacy-clearance-print-button" onClick={handleExport}>
             Export
           </button>
-          <button className="pharmacy-clearance-print-button" onClick={handlePrint}>
+          <button className="pharmacy-clearance-print-button" onClick={printList}>
             Print
           </button>
         </div>

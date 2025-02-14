@@ -1,6 +1,6 @@
 /* Ajhar tamboli sSPStoreTransfer.jsx 19-09-24 */
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import "../SSPharmacy/sSPStoreTransfer.css";
 import { API_BASE_URL } from "../../../api/api";
 import { useParams } from "react-router-dom";
@@ -9,6 +9,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import PopupTable from "../../../Admission/PopupTable";
 import axios from "axios";
 import CustomModal from "../../../../CustomModel/CustomModal";
+import * as XLSX from 'xlsx';
 import { toast } from "react-toastify";
 import {
   FloatingInput,
@@ -20,6 +21,7 @@ function SSPStoreTransfer() {
   const [showModal, setShowModal] = useState(false);
   const [activePopup, setActivePopup] = useState(null);
   const [activeRowIndex, setActiveRowIndex] = useState(null);
+  const tableRef = useRef(null);
   const [itemData, setItemData] = useState([]);
   const [packageTableRows, setPackageTableRows] = useState([
     {
@@ -209,6 +211,71 @@ function SSPStoreTransfer() {
 
   const { columns, data } = getPopupData();
 
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'StoreTransfer'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'StoreTransfer.xlsx'); // Downloads the Excel file
+  };
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none;
+            }
+            .NormalTransfer-search-icon{ display: none}
+            .NormalTransfer-returnQty {
+            border: none !important;
+          }
+          .NormalTransfer-returnQty input {
+            border: none !important;
+            background: transparent !important;
+            color: black !important;
+            font-weight: bold;
+          }
+          .NormalTransfer-returnQty label {
+            display:
+          }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
+  };
+
   return (
     <div className="NormalTransfer-container">
       <div className="NormalTransfer-header">
@@ -231,9 +298,15 @@ function SSPStoreTransfer() {
             name="transferDate"
           />
         </div>
-      </div>
 
-      <table>
+        <div className="NormalTransfer-buttons">
+        <button onClick={handleExport}>Export</button>
+        <button onClick={printList}>Print</button>
+      </div>
+      </div>
+     
+
+      <table ref={tableRef}>
         <thead>
           <tr>
             <th>
@@ -259,7 +332,7 @@ function SSPStoreTransfer() {
           {packageTableRows.map((row, index) => (
             <tr key={index}>
               <td>
-                <input
+                <input className="NormalTransfer-checkbox"
                   type="checkbox"
                   checked={row.isSelected || false}
                   onChange={(e) =>

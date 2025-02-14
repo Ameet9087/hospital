@@ -1,0 +1,47 @@
+.serviceTypeCon{
+
+}
+.serviceTypeForm-con{
+    width: 350px;
+}
+.serviceTypeForm-con h1{
+    font-size: 18px;
+}
+.serviceTypeForm{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.serviceType-btn,.serviceTypeForm-subBtn{
+    border: none;
+    border-radius: 5px;
+    background-color: var(--button-color);
+    color: white;
+    padding: 2px 5px;
+    border: 1px solid var(--button-color);
+}
+.serviceType-table{
+    margin-top: 10px;
+}
+
+.serviceType-edit-btn,.serviceType-delete-btn{
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 2px 5px;
+    margin: 2px;
+}
+.serviceType-edit-btn{
+    background-color: var(--button-color);
+    border: 1px solid var(--button-color);
+}
+.serviceType-delete-btn{
+    background-color: red;
+    border: 1px solid red;
+}
+
+.serviceType-edit-btn:hover,.serviceType-delete-btn:hover{
+    background-color: white;
+    color: black;
+}
