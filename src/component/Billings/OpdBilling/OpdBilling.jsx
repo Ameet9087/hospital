@@ -5,7 +5,7 @@ import {
   FloatingInput,
   FloatingSelect,
 } from "../../../FloatingInputs/index";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -934,38 +934,38 @@ const OpdBilling = () => {
       outPatientDTO: {
         ...(patientType != "new patient"
           ? {
-              outPatientId: outPatientId,
-              patient: {
-                patientRegistrationId: selectedPatient?.patientRegistrationId,
-              },
-            }
+            outPatientId: outPatientId,
+            patient: {
+              patientRegistrationId: selectedPatient?.patientRegistrationId,
+            },
+          }
           : {
-              patient: {
-                salutation: newpatientformData.salutation,
-                firstName: newpatientformData.firstName,
-                middleName: newpatientformData.middleName,
-                lastName: newpatientformData.lastName,
-                gender: newpatientformData.gender,
-                age: newpatientformData.age,
-                ageUnit: "Years",
-                maritalStatus: newpatientformData.maritalStatus,
-                relation: newpatientformData.relation,
-                adharCardId: newpatientformData.adharCardId,
-                relationName: newpatientformData.relationName,
-                address: newpatientformData.address,
-                mobileNumber: newpatientformData.mobileNumber,
-                emailId: newpatientformData.emailId,
-                pinCode: newpatientformData.pinCode,
-                areaVillage: newpatientformData.areaVillage,
-                nationality: newpatientformData.nationality,
-                sourceOfRegistration: newpatientformData.sourceOfRegistration,
-              },
-            }),
+            patient: {
+              salutation: newpatientformData.salutation,
+              firstName: newpatientformData.firstName,
+              middleName: newpatientformData.middleName,
+              lastName: newpatientformData.lastName,
+              gender: newpatientformData.gender,
+              age: newpatientformData.age,
+              ageUnit: "Years",
+              maritalStatus: newpatientformData.maritalStatus,
+              relation: newpatientformData.relation,
+              adharCardId: newpatientformData.adharCardId,
+              relationName: newpatientformData.relationName,
+              address: newpatientformData.address,
+              mobileNumber: newpatientformData.mobileNumber,
+              emailId: newpatientformData.emailId,
+              pinCode: newpatientformData.pinCode,
+              areaVillage: newpatientformData.areaVillage,
+              nationality: newpatientformData.nationality,
+              sourceOfRegistration: newpatientformData.sourceOfRegistration,
+            },
+          }),
         financialDetaildto: {
           id: selectedPatient?.financialDetails?.id || null,
           totalAmount: parseFloat(
             selectedPatient?.financialDetails?.totalAmount ||
-              formData.totalAmount
+            formData.totalAmount
           ),
           lessDiscount: parseFloat(
             selectedPatient?.financialDetails?.lessDiscount || 0
@@ -1857,17 +1857,15 @@ const OpdBilling = () => {
           <div className="iPBilling-services-section">
             <div className="iPBilling-tab-bar">
               <button
-                className={`iPBilling-tab ${
-                  selectedTab === "testGrid" ? "active" : ""
-                }`}
+                className={`iPBilling-tab ${selectedTab === "testGrid" ? "active" : ""
+                  }`}
                 onClick={() => setSelectedTab("testGrid")}
               >
                 Test Grid
               </button>
               <button
-                className={`iPBilling-tab ${
-                  selectedTab === "paymentDetails" ? "active" : ""
-                }`}
+                className={`iPBilling-tab ${selectedTab === "paymentDetails" ? "active" : ""
+                  }`}
                 onClick={() => setSelectedTab("paymentDetails")}
               >
                 Payment Details
