@@ -41,6 +41,18 @@ const EmployeeHeader = () => {
                 Radiology
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/settings/servicemaster"
+                className={
+                  location.pathname === "/settings/servicemaster"
+                    ? "active"
+                    : ""
+                }
+              >
+                service Master
+              </NavLink>
+            </li>
 
             {/* <li>
               <NavLink
