@@ -23,6 +23,8 @@ const OpdBilling = () => {
   const [selectedPatient, setSelectedPatient] = useState();
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState("");
+  const [serviceDoctors, setServiceDoctors] = useState([]);
+  const [selectedServiceDoctor, setSelectedServiceDoctor] = useState("");
   const [serviceDetails, setServiceDetails] = useState([]);
   const [selectedService, setSelectedService] = useState([]);
   const [fileName, setFileName] = useState("No file chosen");
@@ -158,12 +160,16 @@ const OpdBilling = () => {
       });
     }
   }, [selectedPatient]);
-  const [selectedPaymentMode, setSelectedPaymentMode] = React.useState("");
+  const [paymentDetails, setPaymentDetails] = React.useState({
+    mode: "",
+    amount: "",
+    cardNumber: "",
+    upiId: "",
+    checkNumber: "",
+    checkDate: "",
+  });
   const [selectedPaymentIndex, setSelecteddPaymentIndex] = useState(null);
-  const [paymentDetails, setPaymentDetails] = React.useState({});
   const [addedPayments, setAddedPayments] = React.useState([]);
-  const [editableRow, setEditableRow] = React.useState(null);
-  const [editingPayment, setEditingPayment] = React.useState({});
   const [currentBalance, setCurrentBalance] = useState(0);
   const [dueAmount, setDueAmount] = useState(0);
   const [serviceType, setServiceType] = useState("Investigation");
@@ -206,59 +212,49 @@ const OpdBilling = () => {
     });
   };
 
-  const handleAddPayment = (paymentMode, paymentAmount, paymentDetails) => {
-    if (!paymentAmount || parseFloat(paymentAmount) <= 0) {
+  const handleAddPayment = () => {
+    if (!paymentDetails.amount || parseFloat(paymentDetails.amount) <= 0) {
       alert("Please enter a valid amount.");
       return;
     }
 
     setAddedPayments((prevPayments) => {
       let updatedPayments = [...prevPayments];
-      let newAmount = parseFloat(paymentAmount).toFixed(2);
+      let newAmount = parseFloat(paymentDetails.amount).toFixed(2);
 
       if (selectedPaymentIndex !== null) {
-        const existingPayment = updatedPayments[selectedPaymentIndex];
-        if (existingPayment && existingPayment.mode !== paymentMode) {
-          newAmount = existingPayment.amount; // Carry forward the amount
-          updatedPayments = updatedPayments.filter(
-            (_, i) => i !== selectedPaymentIndex
-          );
-        }
-
         updatedPayments[selectedPaymentIndex] = {
-          mode: paymentMode,
+          ...paymentDetails,
           amount: newAmount,
-          details: {
-            ...paymentDetails,
-            index: selectedPaymentIndex + 1,
-          },
+          index: selectedPaymentIndex + 1,
         };
       } else {
         updatedPayments.push({
-          mode: paymentMode,
+          ...paymentDetails,
           amount: newAmount,
-          details: {
-            ...paymentDetails,
-            index: prevPayments.length + 1,
-          },
+          index: prevPayments.length + 1,
         });
       }
 
-      calculateTotalPaidAmount(updatedPayments); // Update total paid amount
+      calculateTotalPaidAmount(updatedPayments);
       return updatedPayments;
     });
 
-    resetPaymentForm();
+    setPaymentDetails({
+      mode: "",
+      amount: "",
+      cardNumber: "",
+      upiId: "",
+      checkNumber: "",
+      checkDate: "",
+    });
+    setSelecteddPaymentIndex(null);
   };
 
   const handleEditPayment = (index, payment) => {
-    console.log(index);
-
-    setSelecteddPaymentIndex(index); // Store index for updating
-    setSelectedPaymentMode(payment.mode); // Set selected mode
-    setPaymentDetails(payment.details); // Populate form fields
+    setSelecteddPaymentIndex(index);
+    setPaymentDetails(payment);
   };
-
   // const handleSaveEditedPayment = () => {
   //   if (selectedPaymentIndex === null || !selectedPaymentMode) return;
 
@@ -283,16 +279,7 @@ const OpdBilling = () => {
   //   });
 
   //   resetPaymentForm();
-  // };
-
-  // Utility function to reset form state
-  const resetPaymentForm = () => {
-    setSelecteddPaymentIndex(null);
-    setSelectedPaymentMode("");
-    setPaymentDetails({});
-    setPaymentDetails();
-  };
-
+  // }
   // useEffect(() => {
   //   calculateBalance(totalAmount, paidAmount);
   // }, [paidAmount, totalAmount]);
@@ -469,6 +456,11 @@ const OpdBilling = () => {
         columns: ["doctorId", "doctorName", "mobileNumber", "title"],
         data: doctors,
       };
+    } else if (activePopup === "serviceDoctor") {
+      return {
+        columns: ["employeeId", "salutation", "firstName", "lastName"],
+        data: serviceDoctors,
+      };
     } else {
       return { columns: [], data: [] };
     }
@@ -479,23 +471,14 @@ const OpdBilling = () => {
   const handleSelect = async (data) => {
     if (activePopup === "patient" || activePopup === "mobilenumber") {
       setSelectedPatient(data.originalObject);
-
-      console.log("data+++++++++", data);
-
-      console.log("Registration Id", data.patientRegistrationId);
-
       try {
         const fetchedAppointments = await fetchunpaidAppointmentsByOutPatientId(
           data?.originalObject?.patientRegistrationId
         );
-
-        console.log("apppppppppppp", fetchedAppointments.outPatientId);
         setOutPatientId(fetchedAppointments.outPatientId);
-
         const doctorId = fetchedAppointments.addDoctor?.doctorId;
         if (doctorId) {
           const doctorDetails = await fetchDoctorDetails(doctorId);
-          console.log("Doctor Details Id +++++++++++", doctorDetails);
 
           const opdFees = doctorDetails?.orgDoctorFees?.find(
             (fee) => fee.payType?.payTypeName === "OPD"
@@ -503,9 +486,6 @@ const OpdBilling = () => {
 
           const generalOpdFee = opdFees?.generalOpdFee || 0;
           const followupfees = opdFees?.followupopdfees || 0;
-
-          console.log("fetched apppp=====", fetchedAppointments);
-          // Check if fees are unpaid before creating the row
           if (
             fetchedAppointments.feespaid !== "yes" &&
             fetchedAppointments.typeOfAppointment == "New Patient"
@@ -608,7 +588,6 @@ const OpdBilling = () => {
         }
 
         let doctorServices;
-        console.log("Fetched doctor services:", doctorServices);
         const isEmergency = data.originalObject.isEmergency === "yes";
 
         if (isEmergency) {
@@ -619,7 +598,6 @@ const OpdBilling = () => {
 
           if (doctorServices.length > 0) {
             const firstService = doctorServices[0];
-            console.log("-----p", firstService);
 
             const rateToUse = isEmergency
               ? firstService.morningEmergencyToDoctor
@@ -738,7 +716,7 @@ const OpdBilling = () => {
       }
     } else if (activePopup === "services") {
       setSelectedService(data);
-
+      await fetchServiceDoctors(data.serviceType);
       setTestGridTableRowsableRows((prevRows) => {
         const isDuplicate = prevRows.some(
           (row) =>
@@ -841,6 +819,8 @@ const OpdBilling = () => {
       setSelectedReferredDoctor(data);
     } else if (activePopup === "mainDoctor") {
       setSelectedDoctor(data);
+    } else if (activePopup === "serviceDoctor") {
+      setSelectedServiceDoctor(data);
     }
     setActivePopup(null);
   };
@@ -886,7 +866,6 @@ const OpdBilling = () => {
     });
 
     setAddedPayments([]);
-    setSelectedPaymentMode("");
     setPaymentDetails({});
     setSelectedPackage(null);
     setSelectedOrganisation(null);
@@ -906,7 +885,7 @@ const OpdBilling = () => {
         emerg: "",
         emergAmt: "",
       },
-    ]); // Clear test grid data
+    ]);
     setSelectedPatient(null);
     setOutPatientId(null);
     setIsPrintEnabled(false);
@@ -918,11 +897,22 @@ const OpdBilling = () => {
     setTotalAmount(0);
     setAddedPayments([]);
     setDueAmount(0);
-    setEditingPayment(null);
     setNetAmount(0);
+    setSelectedService(null);
+    setSelectedServiceDoctor(null);
+    setSelectedReferredDoctor(null);
+    setPaymentDetails({
+      mode: "",
+      amount: "",
+      cardNumber: "",
+      upiId: "",
+      checkNumber: "",
+      checkDate: "",
+    });
   };
 
   const handleSubmit = async () => {
+    const updatedPayments = addedPayments.map(({ index, ...rest }) => rest);
     const payload = {
       patientType: patientType,
       totalAmount: parseFloat(formData.totalAmount || 0),
@@ -994,24 +984,15 @@ const OpdBilling = () => {
         },
       },
 
-      paymentModeDTO: addedPayments.map((payment) => ({
-        paymentMode: payment.mode,
-        amount: parseFloat(payment.details.amount || 0),
-        chqDt: payment.details.checkNumber
-          ? parseFloat(payment.details.checkNumber)
-          : null,
-        cardNumber: payment.details.cardNumber
-          ? parseFloat(payment.details.cardNumber)
-          : null,
-      })),
+      paymentModeDTO: updatedPayments,
       testGridOpdBillDTO: testGridTableRowsableRows.map((row) => ({
         serviceDetailsId: row.serviceDetailsId || null,
         serviceName: row.serviceName,
         rate: row.rate,
         quantity: row.qty,
-        netAmount: row.totalAmt,
         discountAmount: row.discAmt,
         netAmount: row.netAmt,
+        employeeDTO: { employeeId: selectedServiceDoctor.employeeId },
       })),
       doctorservice: testGridTableRowsableRows
         .filter((row) => row.serviceType === "Doctor")
@@ -1199,6 +1180,25 @@ const OpdBilling = () => {
     }
   };
 
+  const fetchServiceDoctors = async (department) => {
+    try {
+      console.log(department);
+
+      const response = await fetch(
+        `${API_BASE_URL}/employees/findAllDoctors?departmentName=${department}`
+      );
+      if (!response.ok) {
+        throw new Error(`${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data);
+
+      setServiceDoctors(data);
+    } catch (error) {
+      console.error("Error fetching doctors:", error);
+    }
+  };
+
   const fetchDoctors = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/doctors`);
@@ -1347,7 +1347,8 @@ const OpdBilling = () => {
                       <div className="OpdBilling-test-search-field">
                         <FloatingInput
                           type="search"
-                          onIconClick={() => setActivePopup("doctorName")}
+                          value={selectedServiceDoctor?.firstName}
+                          onIconClick={() => setActivePopup("serviceDoctor")}
                         />
                       </div>
                     </td>
@@ -1947,20 +1948,12 @@ const OpdBilling = () => {
                       id="paymentMode"
                       onChange={(e) => {
                         const selectedMode = e.target.value;
-                        setSelectedPaymentMode(selectedMode);
-                        setEditingPayment({
-                          ...editingPayment,
+                        setPaymentDetails((prev) => ({
+                          ...prev,
                           mode: selectedMode,
-                        });
-                        if (selectedMode) {
-                          // Auto-fill with the lower value between currentBalance and netAmount
-                          setPaymentDetails((prev) => ({
-                            ...prev,
-                            amount: Math.min(currentBalance, netAmount),
-                          }));
-                        } else {
-                          setPaymentDetails({});
-                        }
+                          amount:
+                            prev.amount || Math.min(currentBalance, netAmount),
+                        }));
                       }}
                       options={[
                         { value: "", label: "-- Select Payment Mode --" },
@@ -1971,55 +1964,27 @@ const OpdBilling = () => {
                       ]}
                     />
                   </div>
-                  {selectedPaymentMode && (
+                  {paymentDetails.mode && (
                     <div className="OpdBilling-grid-sec">
                       <FloatingInput
                         label="Amount"
                         htmlFor="amount"
                         type="text"
                         id="amount"
-                        name={"amount"}
-                        value={
-                          paymentDetails.amount ??
-                          Math.min(currentBalance, netAmount)
-                        }
+                        name="amount"
+                        value={paymentDetails.amount}
                         onChange={(e) => {
-                          let amount = e.target.value.replace(/[^0-9.]/g, ""); // Allow only numbers and decimal
-                          let parsedAmount = parseFloat(amount);
-
-                          if (!isNaN(parsedAmount)) {
-                            parsedAmount = Math.min(
-                              parsedAmount,
-                              currentBalance,
-                              netAmount
-                            ); // Clamp within allowed limits
-                            setPaymentDetails({
-                              ...paymentDetails,
-                              amount: parsedAmount,
-                            });
-                          } else {
-                            setPaymentDetails({
-                              ...paymentDetails,
-                              amount: "", // Reset if invalid input
-                            });
-                          }
-                        }}
-                        onFocus={() => {
-                          if (!paymentDetails.amount) {
-                            setPaymentDetails({
-                              ...paymentDetails,
-                              amount: Math.min(currentBalance, netAmount),
-                            });
-                          }
+                          let amount = e.target.value.replace(/[^0-9.]/g, "");
+                          setPaymentDetails({ ...paymentDetails, amount });
                         }}
                       />
-                      {selectedPaymentMode === "card" && (
+                      {paymentDetails.mode === "card" && (
                         <FloatingInput
                           label="Card Number"
                           htmlFor="cardNumber"
                           type="text"
                           id="cardNumber"
-                          value={paymentDetails.cardNumber || ""}
+                          value={paymentDetails.cardNumber}
                           onChange={(e) =>
                             setPaymentDetails({
                               ...paymentDetails,
@@ -2028,13 +1993,13 @@ const OpdBilling = () => {
                           }
                         />
                       )}
-                      {selectedPaymentMode === "upi" && (
+                      {paymentDetails.mode === "upi" && (
                         <FloatingInput
                           label="UPI ID"
                           htmlFor="upiId"
                           type="text"
                           id="upiId"
-                          value={paymentDetails.upiId || ""}
+                          value={paymentDetails.upiId}
                           onChange={(e) =>
                             setPaymentDetails({
                               ...paymentDetails,
@@ -2043,17 +2008,14 @@ const OpdBilling = () => {
                           }
                         />
                       )}
-                      {selectedPaymentMode === "check" && (
+                      {paymentDetails.mode === "check" && (
                         <>
                           <FloatingInput
                             label="Check Number"
                             htmlFor="checkNumber"
                             type="text"
                             id="checkNumber"
-                            focused={
-                              paymentDetails.checkNumber != null ? true : false
-                            }
-                            value={paymentDetails.checkNumber || ""}
+                            value={paymentDetails.checkNumber}
                             onChange={(e) =>
                               setPaymentDetails({
                                 ...paymentDetails,
@@ -2065,7 +2027,7 @@ const OpdBilling = () => {
                             label="Check Date"
                             type="date"
                             id="checkDate"
-                            value={paymentDetails.checkDate || ""}
+                            value={paymentDetails.checkDate}
                             onChange={(e) =>
                               setPaymentDetails({
                                 ...paymentDetails,
@@ -2079,38 +2041,18 @@ const OpdBilling = () => {
                   )}
                 </div>
                 <div className="payment-actions">
-                  {selectedPaymentIndex !== null ? ( // 🔥 Check explicitly for "not null"
-                    <button
-                      onClick={() =>
-                        handleAddPayment(
-                          selectedPaymentMode,
-                          paymentDetails.amount,
-                          paymentDetails
-                        )
-                      }
-                    >
-                      Save Changes
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() =>
-                        handleAddPayment(
-                          selectedPaymentMode,
-                          paymentDetails.amount,
-                          paymentDetails
-                        )
-                      }
-                    >
-                      Add Payment
-                    </button>
-                  )}
+                  <button onClick={handleAddPayment}>
+                    {selectedPaymentIndex !== null
+                      ? "Save Changes"
+                      : "Add Payment"}
+                  </button>
                 </div>
               </div>
             </div>
-            <div className="billing-opd-com-panel-payment">
+            <div className="billing-opd-com-panel-payment OpdBilling-section">
+              <div className="OpdBilling-header">Added Payments</div>
               <div className="billing-opd-com-panel-content">
                 <div className="payment-summary">
-                  <h4>Added Payments</h4>
                   <table className="payment-table">
                     <thead>
                       <tr>
@@ -2124,20 +2066,18 @@ const OpdBilling = () => {
                       {addedPayments.map((payment, index) => (
                         <tr key={index}>
                           <td>{payment.mode}</td>
-                          <td>{payment.details.amount}</td>
+                          <td>{payment.amount}</td>
                           <td>
                             {payment.mode === "card" && (
-                              <span>
-                                Card Number: {payment.details.cardNumber}
-                              </span>
+                              <span>Card Number: {payment.cardNumber}</span>
                             )}
                             {payment.mode === "upi" && (
-                              <span>UPI ID: {payment.details.upiId}</span>
+                              <span>UPI ID: {payment.upiId}</span>
                             )}
                             {payment.mode === "check" && (
                               <span>
-                                Check Number: {payment.details.checkNumber},
-                                Check Date: {payment.details.checkDate}
+                                Check Number: {payment.checkNumber}, Check Date:{" "}
+                                {payment.checkDate}
                               </span>
                             )}
                           </td>
@@ -2167,13 +2107,16 @@ const OpdBilling = () => {
             <button className="btn-blue" onClick={handleSubmit}>
               Save
             </button>
-            <button
+            <button className="btn-blue" onClick={() => resetForm()}>
+              Clear
+            </button>
+            {/* <button
               className="billing-opd-com-action-buttons"
               onClick={() => handlePrintBilling()}
               disabled={!isPrintEnabled}
             >
               Print
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

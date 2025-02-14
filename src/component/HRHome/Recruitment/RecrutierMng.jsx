@@ -29,7 +29,7 @@ const RecrutierMng = () => {
         setShowPopup(true);
     };
 
-   
+
 
     const handleClosePopup = () => {
         setShowPopup(false);
@@ -54,13 +54,13 @@ const RecrutierMng = () => {
 
     const handleUpdateSubmitButton = async (formData) => {
         console.log(formData);
-        
+
         try {
             const response = await axios.put(`${API_BASE_URL}/recruitments/update/${formData.recruitement_id}`, formData);
             fetchRecruiters();
-            
+
             success('Recruitment Updated Successfully');
-            
+
 
         } catch (error) {
             console.error('Error adding recruiter:', error);
@@ -98,8 +98,8 @@ const RecrutierMng = () => {
         setSelectedRecruiter(recruiter); // Set the selected recruiter in state
         setShowupdatePopup(true);
     };
-    
-    
+
+
 
     const filteredRecruiters = recruiters.filter(recruiter =>
         recruiter.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -284,7 +284,7 @@ const RecrutierMng = () => {
                         <Updaterecruiter
                             onClose={handleClosePopup}
                             onSubmit={handleUpdateSubmitButton}
-                            recruiter={selectedRecruiter} 
+                            recruiter={selectedRecruiter}
                         />
                     </div>
                 </div>

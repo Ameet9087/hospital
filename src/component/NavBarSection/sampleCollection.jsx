@@ -110,20 +110,20 @@ const SampleCollection = () => {
       <div className="sampleCollection-controls">
         <div className="sampleCollection-date-range">
           <FloatingInput
-            label={"From"}
-            type="date"
-            name="dateFrom"
-            value={dateFrom}
-            onChange={handleDateFromChange}
+          label={"From"}
+           type="date"
+           name="dateFrom"
+           value={dateFrom}
+           onChange={handleDateFromChange}
           />
-
+          
 
           <FloatingInput
-            label={"To"}
-            type="date"
-            id="dateTo"
-            value={dateTo}
-            onChange={handleDateToChange}
+          label={"To"}
+          type="date"
+          id="dateTo"
+          value={dateTo}
+          onChange={handleDateToChange}
           />
         </div>
       </div>
@@ -131,12 +131,12 @@ const SampleCollection = () => {
       <div className="sampleCollection-search-N-print">
         <div className="sampleCollection-search-bar">
           <FloatingInput
-            label={"Search"}
-            type="text"
-            value={searchQuery}
-            onChange={handleSearchChange}
+          label={"Search"}
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange}
           />
-
+         
         </div>
         <div className="sampleCollection-results-info">
           <span>

@@ -34,6 +34,9 @@ const NavigationBar = () => {
           <NavLink to="addresults">Add Results</NavLink>
         </li>
         <li>
+          <NavLink to="AddedResults">Added Results</NavLink>
+        </li>
+        <li>
           <NavLink to="pendingreports">Pending Reports</NavLink>
         </li>
         <li>

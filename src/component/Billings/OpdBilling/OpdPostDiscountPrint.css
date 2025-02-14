@@ -1,0 +1,124 @@
+
+.OpdBillingPrint-container {
+    border: 2px solid #000; /* Add a border */
+    border-radius: 5px; /* Optional: rounded corners */
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for better visibility */
+    background-color: #fff; /* Optional: ensure a white background */
+    overflow-x: hidden;
+  }
+  
+    
+    .OpdBillingPrint-header {
+      text-align: center;
+    }
+    
+    .OpdBillingPrint-info {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0;
+    }
+    
+    .OpdBillingPrint-info p {
+      margin: 5px 0;
+    }
+    
+    .OpdBillingPrint-table{
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      table-layout: auto;
+      overflow-x: auto;
+    }
+    
+    .OpdBillingPrint-table th,
+    .OpdBillingPrint-table td {
+      border: 1px solid #000;
+      width: 150px;
+      text-align: center;
+    }
+    
+    .OpdBillingPrint-table th {
+      background-color: #f4f4f4;
+    }
+    
+    .OpdBillingPrint-footer {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+   
+    .OpdBillingPrint-signature {
+      text-align: right;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    
+    .OpdBillingPrint-print-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 14px;
+      background-color:var(--button-bg-color);
+      color: #fff;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .OpdBillingPrint-print-button:hover {
+     background-color:white;
+     color: var(--button-hover-text-color);
+     border: 1px solid var(--button-hover-border-color);
+    }
+    .OpdBillingPrint-bill-info{
+      display: flex;
+      justify-content: space-between;
+    }
+    .opd-billing-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    
+    .opd-billing-title {
+      text-align: center;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .opd-billing-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .opd-billing-row:last-child {
+      border-bottom: none;
+    }
+    
+    .opd-billing-column {
+      flex: 1;
+      padding: 5px;
+    }
+    
+    .opd-billing-column p {
+      margin: 5px 0;
+    }
+    .OpdPostDiscount-billDetails {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-end;
+      }
+      
+      .OpdPostDiscount-billDetails p {
+        font-size: 14px;
+        margin: 0px;
+        text-align: left;
+      }

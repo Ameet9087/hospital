@@ -5,7 +5,7 @@ import "../NavBarSection/finalReports.css";
 
 import { API_BASE_URL } from "../api/api";
 import { useNavigate } from "react-router-dom";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { FloatingInput } from "../../FloatingInputs";
 
 const getCurrentDate = () => {
