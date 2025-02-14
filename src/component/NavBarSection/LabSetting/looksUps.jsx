@@ -4,7 +4,7 @@ import LabLookUpAddNewLUp from "./labLookUpAddNewLUp";
 import LabLookUpUpdateNewLUp from "./LabLookUpUpdateNewLUp";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { FloatingInput } from "../../../FloatingInputs";
 
 const LookUps = () => {
@@ -83,14 +83,14 @@ const LookUps = () => {
       </div>
 
       <div className="looksUps-search-N-result">
-       
+
         <div className="looksUps-search-bar">
-        <FloatingInput
-          type="text"
-          label={"Search"}
-          value={searchTerm} 
-          onChange={(e) => setSearchTerm(e.target.value)} 
-        />
+          <FloatingInput
+            type="text"
+            label={"Search"}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
         <div className="looksUps-results-info">
           <span>
@@ -135,33 +135,33 @@ const LookUps = () => {
           <tbody>
             {filteredLabTests.length > 0
               ? filteredLabTests.map((test, index) => (
-                  <tr key={index}>
-                    <td>{test.moduleName}</td>
-                    <td>{test.lookupName}</td>
-                    <td>{JSON.stringify(test.lookupdata)}</td>{" "}
-                    {/* Convert array to string */}
-                    <td>{test.description}</td>
-                    <td>
-                      <button
-                        className="looksUps-edit-button"
-                        onClick={() => handleUpdateNewLabTestClick(test)}
-                      >
-                        Edit
-                      </button>
-                      {/* <button
+                <tr key={index}>
+                  <td>{test.moduleName}</td>
+                  <td>{test.lookupName}</td>
+                  <td>{JSON.stringify(test.lookupdata)}</td>{" "}
+                  {/* Convert array to string */}
+                  <td>{test.description}</td>
+                  <td>
+                    <button
+                      className="looksUps-edit-button"
+                      onClick={() => handleUpdateNewLabTestClick(test)}
+                    >
+                      Edit
+                    </button>
+                    {/* <button
                         className="looksUps-delete-button"
                         onClick={() => handleDelete(test.labLookupId)}
                       >
                         Delete
                       </button> */}
-                    </td>
-                  </tr>
-                ))
+                  </td>
+                </tr>
+              ))
               : !loading && (
-                  <tr>
-                    <td colSpan="5">No lab lookups available</td>
-                  </tr>
-                )}
+                <tr>
+                  <td colSpan="5">No lab lookups available</td>
+                </tr>
+              )}
           </tbody>
         </table>
       </div>
