@@ -9,6 +9,8 @@ import {
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
 import { toast } from "react-toastify";
+import CustomModal from "../../../CustomModel/CustomModal";
+import OpdBillingCancellationPrint from "./OPDBillCancellationPrint";
 
 const OPDBillCancellation = () => {
   const [selectedTab, setSelectedTab] = useState("testDetails");
@@ -25,6 +27,8 @@ const OPDBillCancellation = () => {
   const [paymentDetails, setPaymentDetails] = useState("");
   const [discAmt, setDiscAmt] = useState("");
   const [selectedRowIds, setSelectedRowIds] = useState([]);
+  const [selectedCancel, setSelectedCancel] = useState();
+  const [showPrint, setShowPrint] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     middleName: "",
@@ -51,7 +55,6 @@ const OPDBillCancellation = () => {
       const data = await response.json();
       console.log("Fetched OPD Billing Data:", data); // Log the data for verification
       setOpdBillingData(data); // Store the fetched data in state
-      settestgriddata(data);
     } catch (error) {
       console.error("Error fetching OPD Billing details:", error);
       alert(`Error: ${error.message}`);
@@ -91,23 +94,29 @@ const OPDBillCancellation = () => {
   const getPopupData = () => {
     if (activePopup === "billNo") {
       return {
-        columns: ["opdBillingId", "firstName", "lastName"],
+        columns: [
+          "opdBillingId",
+          "uhid",
+          "firstName",
+          "lastName",
+          "mobileNumber",
+        ],
         data: opdBillingData.map((item) => ({
           opdBillingId: item.opdBillingId,
-          uhid: item.outPatientDTO.patient.uhid,
-          mobileNumber: item.outPatientDTO.patient.mobileNumber,
+          uhid: item.outPatientDTO.patient?.uhid,
           billing_date: item.billing_date,
-          firstName: item.outPatientDTO.patient.firstName,
-          middleName: item.outPatientDTO.patient.middleName,
-          lastName: item.outPatientDTO.patient.lastName,
-          salutation: item.outPatientDTO.patient.salutation,
-          age: item.outPatientDTO.patient.age,
-          dateOfBirth: item.outPatientDTO.patient.dateOfBirth,
-          gender: item.outPatientDTO.patient.gender,
+          firstName: item.outPatientDTO.patient?.firstName,
+          middleName: item.outPatientDTO.patient?.middleName,
+          lastName: item.outPatientDTO.patient?.lastName,
+          salutation: item.outPatientDTO.patient?.salutation,
+          age: item.outPatientDTO.patient?.age,
+          dateOfBirth: item.outPatientDTO.patient?.dateOfBirth,
+          gender: item.outPatientDTO.patient?.gender,
           paymentMode: item.paymentModeDTO.paymentMode,
-          maritalStatus: item.outPatientDTO.patient.maritalStatus,
-          sourceOfRegistration: item.outPatientDTO.patient.sourceOfRegistration,
-          relation: item.outPatientDTO.patient.relation,
+          mobileNumber: item.outPatientDTO.patient?.mobileNumber,
+          sourceOfRegistration:
+            item.outPatientDTO.patient?.sourceOfRegistration,
+          relation: item.outPatientDTO.patient?.relation,
           originalobj: item,
         })),
       };
@@ -131,6 +140,7 @@ const OPDBillCancellation = () => {
 
       // Simulate filling all inputs to activate them
       setFormData({
+        opdBillingId: data.opdBillingId || "",
         firstName: data.firstName || "",
         lastName: data.lastName || "",
         middleName: data.middleName || "",
@@ -237,8 +247,6 @@ const OPDBillCancellation = () => {
     // Ensure opdBillingDTO is always an object before accessing its properties
     const opdBillingId = formData.opdBillingDTO?.opdBillingId || 0; // Default to 0 if undefined
 
-    // Define the data to be sent in the request body
-    console.log("-------------", testgriddata);
     const requestBody = {
       cancelType: formData.cancelType || "",
       sourceName: formData.sourceName || "",
@@ -249,7 +257,7 @@ const OPDBillCancellation = () => {
       cashCounter: formData.cashCounter || 0,
       fileCharges: formData.fileCharges || 0,
       towards: formData.towards || "",
-      paymentMode: formData.paymentMode || "",
+      paymentMode: selectedPaymentMode || "",
       cardNo: formData.cardNo || "",
       reason: formData.reason || "",
       receivedby: formData.receivedby || "",
@@ -269,28 +277,52 @@ const OPDBillCancellation = () => {
       })
       .then((response) => {
         toast.success("Successfully saved");
+        setSelectedCancel(response.data);
+        setShowPrint(true);
         console.log("Response received:", response.data);
-        // You can add additional logic after a successful submission here
+
+        // Reset formData after successful submission
+        setFormData({
+          cancelType: "",
+          sourceName: "",
+          cancelNo: "",
+          totalDue: 0,
+          hidden: "",
+          refundableAmount: 0,
+          cashCounter: 0,
+          fileCharges: 0,
+          towards: "",
+          paymentMode: "",
+          cardNo: "",
+          reason: "",
+          receivedby: "",
+          adjustAmount: 0,
+          checkdate: "",
+          listofTest: [],
+          opdBillingDTO: {
+            opdBillingId: 0,
+          },
+        });
+        setPaymentDetails({});
+        settestgriddata([]);
+        // Optionally reset selectedRowIds if needed
+        setSelectedRowIds([]);
       })
       .catch((error) => {
-        console.error("Error posting data:", error);
         if (error.response) {
-          // Server responded with a status other than 2xx
-          console.error("Response error:", error.response.data);
           toast.error(
             `Error posting data: ${error.response.status} - ${error.response.data}`
           );
         } else if (error.request) {
-          // Request was made but no response received
           console.error("Request error:", error.request);
-          alert("No response received from the server.");
+          toast.error("No response received from the server.");
         } else {
-          // Something else happened
           console.error("Error:", error.message);
-          alert(`Error posting data: ${error.message}`);
+          toast.error(`Error posting data: ${error.message}`);
         }
       });
   };
+
   // Function to update testgriddata without triggering infinite loop
   const processTestGridData = useCallback(() => {
     settestgriddata((prevData) => {
@@ -426,6 +458,7 @@ const OPDBillCancellation = () => {
             <FloatingInput
               label="Bill No"
               type="search"
+              value={formData.opdBillingId}
               onIconClick={() => setActivePopup("billNo")}
             />
           </div>
@@ -501,6 +534,7 @@ const OPDBillCancellation = () => {
           <FloatingSelect
             label="CancelType"
             name="cancelType"
+            required={true}
             value={formData.cancelType}
             onChange={(e) =>
               setFormData({ ...formData, cancelType: e.target.value })
@@ -560,8 +594,9 @@ const OPDBillCancellation = () => {
       <div className="OPDBillCancellation-services-section">
         <div className="OPDBillCancellation-tab-bar">
           <button
-            className={`OPDBillCancellation-tab ${selectedTab === "testDetails" ? "active" : ""
-              }`}
+            className={`OPDBillCancellation-tab ${
+              selectedTab === "testDetails" ? "active" : ""
+            }`}
             onClick={() => setSelectedTab("testDetails")}
           >
             Test Deatils
@@ -570,27 +605,64 @@ const OPDBillCancellation = () => {
         {renderTable()}
       </div>
       <div className="OPDBillCancellation-section">
+        <div className="OPDBillCancellation-header">Other Details</div>
+        <div className="OPDBillCancellation-grid">
+          <FloatingInput
+            label="Reason"
+            value={formData.reason}
+            onChange={(e) =>
+              setFormData({ ...formData, reason: e.target.value })
+            }
+          />
+          <FloatingInput
+            label="Received By	"
+            value={formData.receivedby}
+            onChange={(e) =>
+              setFormData({ ...formData, receivedby: e.target.value })
+            }
+          />
+          {/* <FloatingInput
+            label="Adjust Amount"
+            value={formData.adjustAmount}
+            onChange={(e) =>
+              setFormData({ ...formData, adjustAmount: e.target.value })
+            }
+          />
+          <div className="OPDBillCancellation-search-field">
+            <FloatingInput label="CC Machine Bank" type="search" />
+          </div>
+          <FloatingInput
+            label="Check Date"
+            type="date"
+            value={formData.checkdate}
+            onChange={(e) =>
+              setFormData({ ...formData, checkdate: e.target.value })
+            }
+          /> */}
+        </div>
+      </div>
+      <div className="OPDBillCancellation-section">
         <div className="OPDBillCancellation-header">Financial Details</div>
         <div className="OPDBillCancellation-grid">
           <FloatingInput label="Total Amount" value={totalAmount} readOnly />
           {/* <FloatingInput label="Disc Amount" value={discAmt} readOnly /> */}
           {/* <FloatingInput label="Net Amount" value={netAmount} readOnly /> */}
           <FloatingInput label="Refund Amount" value={totalAmount} />
-          <FloatingInput label="Advance Adjusted" />
+          {/* <FloatingInput label="Advance Adjusted" />
           <FloatingInput
             label="File Charges"
             value={formData.fileCharges}
             onChange={(e) =>
               setFormData({ ...formData, fileCharges: e.target.value })
             }
-          />
-          <FloatingInput
+          /> */}
+          {/* <FloatingInput
             label="Towards"
             value={formData.towards}
             onChange={(e) =>
               setFormData({ ...formData, towards: e.target.value })
             }
-          />
+          /> */}
 
           {/* <div className="OpdBilling-grid-sec"> */}
 
@@ -617,7 +689,6 @@ const OPDBillCancellation = () => {
             onChange={(e) => {
               setSelectedPaymentMode(e.target.value);
               setFormData({ ...formData, towards: e.target.value });
-              setPaymentDetails({});
             }}
             options={[
               { value: "", label: "-- Select Payment Mode --" },
@@ -707,43 +778,6 @@ const OPDBillCancellation = () => {
           </div>
           <FloatingInput label="Post Discount" /> */}
         </div>
-      </div>
-      <div className="OPDBillCancellation-section">
-        <div className="OPDBillCancellation-header">Other Details</div>
-        <div className="OPDBillCancellation-grid">
-          <FloatingInput
-            label="Reason"
-            value={formData.reason}
-            onChange={(e) =>
-              setFormData({ ...formData, reason: e.target.value })
-            }
-          />
-          <FloatingInput
-            label="Received By	"
-            value={formData.receivedby}
-            onChange={(e) =>
-              setFormData({ ...formData, receivedby: e.target.value })
-            }
-          />
-          <FloatingInput
-            label="Adjust Amount"
-            value={formData.adjustAmount}
-            onChange={(e) =>
-              setFormData({ ...formData, adjustAmount: e.target.value })
-            }
-          />
-          <div className="OPDBillCancellation-search-field">
-            <FloatingInput label="CC Machine Bank" type="search" />
-          </div>
-          <FloatingInput
-            label="Check Date"
-            type="date"
-            value={formData.checkdate}
-            onChange={(e) =>
-              setFormData({ ...formData, checkdate: e.target.value })
-            }
-          />
-        </div>
         <button className="OPDBillCancellation-save-btn" onClick={handleSubmit}>
           Submit
         </button>
@@ -755,6 +789,11 @@ const OPDBillCancellation = () => {
           onSelect={handleSelect}
           onClose={() => setActivePopup(false)}
         />
+      )}
+      {selectedCancel && (
+        <CustomModal isOpen={showPrint} onClose={() => setShowPrint(false)}>
+          <OpdBillingCancellationPrint formData={selectedCancel} />
+        </CustomModal>
       )}
     </div>
   );

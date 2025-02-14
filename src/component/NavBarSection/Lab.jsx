@@ -33,6 +33,7 @@ import UnCollectSample from "./UnCollectSample";
 import RejectSample from "./RejectSample";
 import SampleRecieving from "./SampleRecieving";
 import FinalizedReportLabResult from "./FinalizedReportLabResult";
+import AddedResults from "./OPDBillingLab/addedresults";
 
 const Lab = () => {
   return (
@@ -75,6 +76,8 @@ const Lab = () => {
             path="/rejectedreports/rejected-labResult"
             element={<RejectedReportResult />}
           ></Route>
+          <Route
+          path="/AddedResults" element={<AddedResults/>}/>
         </Routes>
       </div>
     </>

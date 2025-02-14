@@ -6,16 +6,19 @@ import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
 import ReturnForm from './ReturnForm';
 import CustomModal from '../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../api/api';
-
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 const ReturnToSupplier = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [showReturnForm, setShowReturnForm] = useState(false); 
-  const [selectedItem, setSelectedItem] = useState(null); 
-
-
+  const [showReturnForm, setShowReturnForm] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  // const [fromDate, setFromDate] = useState();
+  // const [toDate, setToDate] = useState();
+  const [fromDate, setFromDate] = useState("2025-01-15"); // From date
+  const [toDate, setToDate] = useState("2025-01-31"); // To date
   // Function to export table to Excel
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
@@ -25,38 +28,83 @@ const ReturnToSupplier = () => {
   };
 
   // Function to trigger print
+
+
   const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
-        <head>
-          <title>Print Table</title>
-          <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
-            }
-          </style>
-        </head>
-        <body>
-          ${printContent.outerHTML}
-        </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+    const doc = new jsPDF('l', 'mm', 'a4'); // Landscape mode, A4 size
+
+    // Set the title and header information
+    doc.setFontSize(16);
+    doc.text('Return To Supplier Report', doc.internal.pageSize.width / 2, 15, { align: 'center' });
+    doc.setFontSize(10);
+    doc.text(`From Date: ${fromDate}`, 14, 25);
+    doc.text(`To Date: ${toDate}`, 64, 25);
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, 219, 25);
+
+    // Prepare the table data
+    const tableData = filteredData.map((item, index) => [
+      index + 1, // S.N.
+      item.goodsReceiptDate || "N/A", // Date
+      item.supplier?.supplierName || "N/A", // Supplier Name
+      item.invoiceNumber || "N/A", // Invoice Number
+      item.paymentMode || "N/A", // Payment Mode
+      item.creditPeriod || "N/A", // Credit Period
+      item.taxableSubTotal || "N/A", // Taxable Sub Total
+      item.nonTaxableSubTotal || "N/A", // Non-Taxable Sub Total
+      item.subTotal || "N/A", // Sub Total
+      item.discountPercent || "N/A", // Discount Percent
+      item.vatPercent || "N/A", // VAT Percent
+      item.totalAmount || "N/A", // Total Amount
+      item.remarks || "N/A", // Remarks
+    ]);
+
+    // Define the table headers
+    const headers = [
+      "S.N.",
+      "Date",
+      "Supplier Name",
+      "Invoice Number",
+      "Payment Mode",
+      "Credit Period",
+      "Taxable Sub Total",
+      "Non-Taxable Sub Total",
+      "Sub Total",
+      "Discount Percent",
+      "VAT Percent",
+      "Total Amount",
+      "Remarks",
+    ];
+
+    // Add the table to the PDF
+    doc.autoTable({
+      head: [headers],
+      body: tableData,
+      startY: 30, // Start the table below the header information
+      styles: {
+        fontSize: 8,
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: [51, 122, 183], // Header background color
+        textColor: 255, // Header text color
+        fontSize: 9,
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245], // Alternate row background color
+      },
+    });
+
+    // Calculate and display the total amount
+    const totalAmount = filteredData.reduce((sum, item) => sum + (item.totalAmount || 0), 0);
+    const lastY = doc.lastAutoTable.finalY; // Get the Y position after the table
+    doc.text(`Total Amount: ₹${totalAmount.toFixed(2)}`, 14, lastY + 10);
+
+    // Open the PDF in a new tab
+    const pdfOutput = doc.output('bloburl');
+    window.open(pdfOutput, '_blank');
   };
-  
+
 
   // Fetch data from the API
   useEffect(() => {
@@ -72,24 +120,34 @@ const ReturnToSupplier = () => {
     fetchData();
   }, []);
 
-  // Filter data based on search term
+  // Filter data based on search term and date range
   const filteredData = Array.isArray(data)
-  ? data.filter((item) =>
-      item.supplier?.supplierName?.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  : [];
+    ? data.filter((item) => {
+      const supplierMatch = item.supplier?.supplierName
+        ?.toLowerCase()
+        .includes(searchTerm.toLowerCase());
 
-  const handleReturnClick = (item) => {    
-    setSelectedItem(item); 
-    setShowReturnForm(true); 
+      const itemDate = new Date(item.goodsReceiptDate); // Convert item date to Date object
+      const from = new Date(fromDate);
+      const to = new Date(toDate);
+
+      // Check if the item's date falls within the selected range
+      const dateMatch = itemDate >= from && itemDate <= to;
+
+      return supplierMatch && dateMatch;
+    })
+    : [];
+  const handleReturnClick = (item) => {
+    setSelectedItem(item);
+    setShowReturnForm(true);
   };
 
   const closeModal = () => {
-    setShowReturnForm(false); 
-    setSelectedItem(null); 
+    setShowReturnForm(false);
+    setSelectedItem(null);
   };
 
-  
+
 
 
   return (
@@ -99,13 +157,22 @@ const ReturnToSupplier = () => {
       <div className="return-to-supplier-date-filter-container">
         <div className="return-to-supplier-date-filter">
           <label>From:</label>
-          <input type="date" className="return-to-supplier-input-date" defaultValue="2024-08-15" />
+          <input
+            type="date"
+            className="return-to-supplier-input-date"
+            value={fromDate}
+            onChange={(e) => setFromDate(e.target.value)}
+          />
         </div>
 
         <div className="return-to-supplier-date-filter">
           <label>To:</label>
-          <input type="date" className="return-to-supplier-input-date" defaultValue="2024-08-22" />
-        </div>
+          <input
+            type="date"
+            className="return-to-supplier-input-date"
+            value={toDate}
+            onChange={(e) => setToDate(e.target.value)}
+          />        </div>
       </div>
 
       <div className="return-to-supplier-search-bar">
@@ -116,9 +183,9 @@ const ReturnToSupplier = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button className="return-to-supplier-search-icon-button">
+        {/* <button className="return-to-supplier-search-icon-button">
           <i className="fa fa-search"></i>
-        </button>
+        </button> */}
         <div className="return-to-supplier-print-container">
           <span>
             Showing {filteredData.length} / {data.length} results
@@ -190,7 +257,7 @@ const ReturnToSupplier = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="13" className="return-to-supplier-no-rows">
+                <td colSpan="14" className="return-to-supplier-no-rows">
                   No Rows To Show
                 </td>
               </tr>
@@ -199,8 +266,8 @@ const ReturnToSupplier = () => {
         </table>
       </div>
 
-      <CustomModal isOpen={showReturnForm } onClose={closeModal}>
-         <ReturnForm selectedItem={selectedItem} onClose={closeModal} /> {/* Pass the selected item */}
+      <CustomModal isOpen={showReturnForm} onClose={closeModal}>
+        <ReturnForm selectedItem={selectedItem} onClose={closeModal} /> {/* Pass the selected item */}
       </CustomModal>
     </div>
   );

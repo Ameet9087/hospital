@@ -1,133 +1,67 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./OpdBilling.css";
-import PopupTable from "../../Admission/PopupTable";
+import {
+  PopupTable,
+  FloatingInput,
+  FloatingSelect,
+} from "../../../FloatingInputs/index";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
-
-const FloatingInput = ({ label, type = "text", value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  const handleChange = (e) => {
-    setHasValue(e.target.value.length > 0);
-    if (props.onChange) props.onChange(e);
-  };
-
-  return (
-    <div
-      className={`OpdBilling-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <input
-        type={type}
-        className="OpdBilling-floating-input"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value.length > 0);
-        }}
-        onChange={handleChange}
-        {...props}
-      />
-      <label className="OpdBilling-floating-label">{label}</label>
-    </div>
-  );
-};
-
-const FloatingSelect = ({ label, options = [], value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  return (
-    <div
-      className={`OpdBilling-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <select
-        className="OpdBilling-floating-select"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value !== "");
-        }}
-        onChange={(e) => {
-          setHasValue(e.target.value !== "");
-          if (props.onChange) props.onChange(e);
-        }}
-        {...props}
-      >
-        <option value="">{ }</option>
-        {options.map((option, index) => (
-          <option key={index} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <label className="OpdBilling-floating-label">{label}</label>
-    </div>
-  );
-};
+import { toast } from "react-toastify";
+import { usePopup } from "../../../FidgetSpinner/PopupContext";
+import OpdBillingPrint from "./OpdBillingPrint";
+import CustomModal from "../../../CustomModel/CustomModal";
 
 const OpdBilling = () => {
-  const location = useLocation();
-  const appointment = location.state?.outPatientId;
-  console.log(appointment);
-  const newData = {
-    outPatientId: appointment?.outPatientId,
-    uhid: appointment?.patient?.uhid,
-    firstName: appointment?.patient?.firstName,
-    lastName: appointment?.patient?.lastName,
-    originalObject: appointment
-};
-console.log("Hello---",newData);
-
-
-  useEffect(() => {
-    if (appointment) {
-      console.log("Executing handleSelect with appointment:", appointment);
-      handleSelect(newData);
-    }
-  }, [appointment]);
-  
+  const { showPopup } = usePopup();
   const [opdPatients, setOpdPatients] = useState([]);
   const [selectedTab, setSelectedTab] = useState("testGrid");
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
-  const [advancesTableRows, setAdvancesTableRows] = useState([]);
   const [activePopup, setActivePopup] = useState("");
   const [selectedPatient, setSelectedPatient] = useState();
   const [doctors, setDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState("");
+  const [serviceDoctors, setServiceDoctors] = useState([]);
+  const [selectedServiceDoctor, setSelectedServiceDoctor] = useState("");
   const [serviceDetails, setServiceDetails] = useState([]);
   const [selectedService, setSelectedService] = useState([]);
   const [fileName, setFileName] = useState("No file chosen");
   const [overallDiscPercent, setOverallDiscPercent] = useState(0);
   const [overallDiscAmt, setOverallDiscAmt] = useState(0);
-  const [finalDiscountAmt, setFinalDiscountAmt] = useState(0);
-  const [discountPercentage, setDiscountPercentage] = useState(0); // For Less Disc% on total
-  const [totalAmount, setTotalAmount] = useState(0); // For Total Amt
-  const [discountAmount, setDiscountAmount] = useState(0); // For Less Disc Amt
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [paidAmount, setPaidAmount] = useState(0);
   const [netAmount, setNetAmount] = useState(0);
   const [appointments, setAppointments] = useState([]);
-  const identification = "someValue";
   const [outPatientId, setOutPatientId] = useState();
-  const [doctorservice, setdoctorservice] = useState([]);
   const [patientType, setPatientType] = useState("");
+  const [isPrintEnabled, setIsPrintEnabled] = useState(false);
+  const [billFromResponse, setBillFromResponse] = useState(null);
 
   const [isEmergency, setemergency] = useState(false);
 
+  const handlePrintBilling = () => {
+    console.log("Navigating with state:", {
+      selectedPatient,
+      selectedDoctor,
+      testGridTableRowsableRows,
+      netAmount,
+      selectedPaymentMode,
+      billFromResponse,
+    });
+    navigate("/billing/OpdBillingPrint", {
+      state: {
+        selectedPatient,
+        selectedDoctor,
+        testGridTableRowsableRows,
+        netAmount,
+        selectedPaymentMode,
+        billFromResponse,
+      },
+    });
+  };
 
   const fetchDoctorService = async (outPatientId) => {
     try {
@@ -146,7 +80,6 @@ console.log("Hello---",newData);
   };
 
   const fetchEmergencyDoctorService = async (erNo) => {
-    console.log("erno", erNo);
     try {
       const response = await fetch(
         `${API_BASE_URL}/emergency/er-initial-assessment/${erNo}/emergency-doctor-fees`
@@ -181,7 +114,6 @@ console.log("Hello---",newData);
   });
 
   const [newpatientformData, newpatientsetFormData] = useState({
-
     salutation: "",
     firstName: "",
     middleName: "",
@@ -228,74 +160,129 @@ console.log("Hello---",newData);
       });
     }
   }, [selectedPatient]);
-  const [selectedPaymentMode, setSelectedPaymentMode] = React.useState("");
-  const [paymentDetails, setPaymentDetails] = React.useState({});
+  const [paymentDetails, setPaymentDetails] = React.useState({
+    mode: "",
+    amount: "",
+    cardNumber: "",
+    upiId: "",
+    checkNumber: "",
+    checkDate: "",
+  });
+  const [selectedPaymentIndex, setSelecteddPaymentIndex] = useState(null);
   const [addedPayments, setAddedPayments] = React.useState([]);
-  const [editableRow, setEditableRow] = React.useState(null);
-  const [editingPayment, setEditingPayment] = React.useState({});
-  const [totalPaidAmount, setTotalPaidAmount] = useState(0); // State to track total paid amount
   const [currentBalance, setCurrentBalance] = useState(0);
+  const [dueAmount, setDueAmount] = useState(0);
+  const [serviceType, setServiceType] = useState("Investigation");
+  const [referedDoctor, setReferredDoctor] = useState([]);
+  const [selectedReferedDoctor, setSelectedReferredDoctor] = useState(null);
+  const [organisation, setOrganisation] = useState([]);
+  const [selectedOrganisation, setSelectedOrganisation] = useState(null);
+  const [packages, setPackage] = useState([]);
+  const [selectedPackage, setSelectedPackage] = useState(null);
 
-  const calculateBalance = (total, paid) => {
-    const balance = total - paid;
-    console.log("balance", balance);
-    setCurrentBalance(balance >= 0 ? balance : 0);
-  };
+  // const calculateBalance = (total, paid) => {
+  //   const balance = total - paid;
+  //   console.log("Balance:", balance);
+  //   setCurrentBalance(balance >= 0 ? balance : 0);
+  // };
 
-  const calculateTotalPaidAmount = (payments) => {
-    const total = payments.reduce(
-      (sum, payment) => sum + parseFloat(payment.amount || 0),
+  const calculateTotalPaidAmount = (payments = []) => {
+    if (!Array.isArray(payments)) {
+      console.error("Invalid payments array", payments);
+      return;
+    }
+
+    const totalPaid = payments.reduce(
+      (sum, payment) => sum + (parseFloat(payment.amount) || 0),
       0
     );
-    setTotalPaidAmount(total.toFixed(2));
+
+    console.log("Total Paid Amount:", totalPaid);
+
+    setPaidAmount(totalPaid.toFixed(2));
+
+    setNetAmount((prevNetAmount) => {
+      const updatedBalance = prevNetAmount - totalPaid;
+      setCurrentBalance(
+        updatedBalance >= 0 ? updatedBalance.toFixed(2) : "0.00"
+      );
+      const newDueAmount = Math.max(prevNetAmount - totalPaid, 0).toFixed(2);
+      setDueAmount(newDueAmount);
+      return prevNetAmount;
+    });
   };
 
-  console.log("Total paid amount", totalPaidAmount);
-  const handleAddPayment = (
-    paymentMode = "Cash",
-    paymentAmount = 0,
-    paymentDetails = {}
-  ) => {
-    if (!paymentAmount || parseFloat(paymentAmount) <= 0) {
+  const handleAddPayment = () => {
+    if (!paymentDetails.amount || parseFloat(paymentDetails.amount) <= 0) {
       alert("Please enter a valid amount.");
       return;
     }
 
-    const newPayment = {
-      mode: paymentMode,
-      amount: parseFloat(paymentAmount).toFixed(2),
-      details: paymentDetails,
-    };
+    setAddedPayments((prevPayments) => {
+      let updatedPayments = [...prevPayments];
+      let newAmount = parseFloat(paymentDetails.amount).toFixed(2);
 
-    const updatedPayments = [...addedPayments, newPayment];
-    setAddedPayments(updatedPayments);
-    calculateTotalPaidAmount(updatedPayments); // Update total paid amount
-    setSelectedPaymentMode(""); // Reset payment mode
-    setPaymentDetails({});
-    //calculateBalance(totalAmount,totalPaidAmount);
+      if (selectedPaymentIndex !== null) {
+        updatedPayments[selectedPaymentIndex] = {
+          ...paymentDetails,
+          amount: newAmount,
+          index: selectedPaymentIndex + 1,
+        };
+      } else {
+        updatedPayments.push({
+          ...paymentDetails,
+          amount: newAmount,
+          index: prevPayments.length + 1,
+        });
+      }
+
+      calculateTotalPaidAmount(updatedPayments);
+      return updatedPayments;
+    });
+
+    setPaymentDetails({
+      mode: "",
+      amount: "",
+      cardNumber: "",
+      upiId: "",
+      checkNumber: "",
+      checkDate: "",
+    });
+    setSelecteddPaymentIndex(null);
   };
 
-  const handleEditPayment = (index) => {
-    setEditableRow(index);
-    setEditingPayment({ ...addedPayments[index].details });
+  const handleEditPayment = (index, payment) => {
+    setSelecteddPaymentIndex(index);
+    setPaymentDetails(payment);
   };
+  // const handleSaveEditedPayment = () => {
+  //   if (selectedPaymentIndex === null || !selectedPaymentMode) return;
 
-  const handleSaveEdit = (index) => {
-    const updatedPayments = [...addedPayments];
-    updatedPayments[index] = {
-      ...updatedPayments[index],
-      details: editingPayment,
-      amount: parseFloat(editingPayment.amount).toFixed(2), // Update amount in payment
-    };
-    setAddedPayments(updatedPayments);
-    calculateTotalPaidAmount(updatedPayments); // Update total paid amount
-    setEditableRow(null);
-    setEditingPayment({});
-  };
+  //   setAddedPayments((prevPayments) => {
+  //     const existingPayment = prevPayments[selectedPaymentIndex];
 
-  useEffect(() => {
-    calculateBalance(totalAmount, totalPaidAmount);
-  }, [totalPaidAmount, totalAmount]);
+  //     // 🔥 Remove the previous payment mode
+  //     const filteredPayments = prevPayments.filter(
+  //       (_, i) => i !== selectedPaymentIndex
+  //     );
+
+  //     return [
+  //       ...filteredPayments,
+  //       {
+  //         mode: selectedPaymentMode,
+  //         details: {
+  //           ...paymentDetails,
+  //           amount: existingPayment.details.amount, // Keep the same amount
+  //         },
+  //       },
+  //     ];
+  //   });
+
+  //   resetPaymentForm();
+  // }
+  // useEffect(() => {
+  //   calculateBalance(totalAmount, paidAmount);
+  // }, [paidAmount, totalAmount]);
 
   const handleRemovePayment = (index) => {
     const updatedPayments = addedPayments.filter((_, i) => i !== index);
@@ -325,61 +312,58 @@ console.log("Hello---",newData);
     { sn: 1, Date: "", dCode: "" },
   ]);
 
-  useEffect(() => {
-    // Calculate the total amount from all rows
-    const total = testGridTableRowsableRows.reduce(
-      (acc, row) => acc + (row.totalAmt || 0),
-      0
-    );
-    setTotalAmount(total);
-
-    // Calculate the discount and net amount
-    const discount = (total * discountPercentage) / 100;
-    setDiscountAmount(discount);
-    setNetAmount(total - discount);
-  }, [testGridTableRowsableRows, discountPercentage]);
-
   const handleOverallDiscountPercentChange = (e) => {
-    const percent = parseFloat(e.target.value) || 0;
+    let percent = parseFloat(e.target.value) || 0;
+    percent = Math.min(percent, 100);
     setOverallDiscPercent(percent);
-
     setTestGridTableRowsableRows((prevRows) => {
-      let totalDiscount = 0;
-      const updatedRows = prevRows.map((row) => {
-        const discAmt = (row.totalAmt * percent) / 100;
-        totalDiscount += discAmt;
-        return {
-          ...row,
-          lessDisc: percent,
-          discAmt,
-          netAmt: row.totalAmt - discAmt,
-        };
-      });
-      setFinalDiscountAmt(totalDiscount);
-      return updatedRows;
+      let totalAmt = prevRows.reduce(
+        (sum, row) => sum + (row.totalAmt || 0),
+        0
+      );
+      let discountAmount = (totalAmt * percent) / 100;
+      let newNetAmount = totalAmt - discountAmount;
+
+      let updatedPaidAmount = Math.min(paidAmount, newNetAmount);
+      let newCurrentBalance = newNetAmount - updatedPaidAmount;
+      setTotalAmount(totalAmt.toFixed(2));
+      setDiscountAmount(discountAmount.toFixed(2));
+      setNetAmount(newNetAmount.toFixed(2));
+      setPaidAmount(updatedPaidAmount.toFixed(2));
+      setCurrentBalance(newCurrentBalance.toFixed(2));
+
+      return prevRows;
     });
   };
 
   const handleOverallDiscountAmountChange = (e) => {
-    const amount = parseFloat(e.target.value) || 0;
-    setOverallDiscAmt(amount);
+    let discountAmount = parseFloat(e.target.value) || 0;
+    discountAmount = Math.min(discountAmount, totalAmount);
+
+    setOverallDiscAmt(discountAmount);
 
     setTestGridTableRowsableRows((prevRows) => {
-      const totalAmt = prevRows.reduce((sum, row) => sum + row.totalAmt, 0);
-      const percent = (amount / totalAmt) * 100;
+      let totalAmt = prevRows.reduce(
+        (sum, row) => sum + (row.totalAmt || 0),
+        0
+      );
 
-      const updatedRows = prevRows.map((row) => {
-        const discAmt = (row.totalAmt * percent) / 100;
-        return {
-          ...row,
-          lessDisc: percent,
-          discAmt,
-          netAmt: row.totalAmt - discAmt,
-        };
-      });
-      setFinalDiscountAmt(amount);
-      setOverallDiscPercent(percent);
-      return updatedRows;
+      let percent = totalAmt > 0 ? (discountAmount / totalAmt) * 100 : 0;
+      percent = Math.min(percent, 100);
+
+      let newNetAmount = totalAmt - discountAmount;
+      let updatedPaidAmount = Math.min(paidAmount, newNetAmount);
+
+      let newCurrentBalance = newNetAmount - updatedPaidAmount;
+
+      setTotalAmount(totalAmt.toFixed(2));
+      setDiscountAmount(discountAmount.toFixed(2));
+      setNetAmount(newNetAmount.toFixed(2));
+      setOverallDiscPercent(percent.toFixed(2));
+      setPaidAmount(updatedPaidAmount.toFixed(2));
+      setCurrentBalance(newCurrentBalance.toFixed(2));
+
+      return prevRows;
     });
   };
 
@@ -403,9 +387,18 @@ console.log("Hello---",newData);
     }
   };
 
-  useEffect(() => {
-    fetchOpdData();
-  }, []);
+  const fetchAllReferredDoctors = async () => {
+    try {
+      const response = await axios.get(
+        `${API_BASE_URL}/doctors/doctors/non-employees`
+      );
+      console.log(response.data);
+
+      setReferredDoctor(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const getPopupData = () => {
     if (activePopup === "patient") {
@@ -432,32 +425,60 @@ console.log("Hello---",newData);
           originalObject: item,
         })),
       };
+    } else if (activePopup === "organisation") {
+      return {
+        columns: [
+          "masterId",
+          "name",
+          "organisationCode",
+          "organisationCategory",
+          "email",
+        ],
+        data: organisation,
+      };
+    } else if (activePopup === "pkgType") {
+      return {
+        columns: [
+          "packageId",
+          "packageName",
+          "packageType",
+          "companyPackageName",
+        ],
+        data: packages,
+      };
+    } else if (activePopup === "referredDoctor") {
+      return {
+        columns: ["doctorId", "doctorName", "mobileNumber", "title"],
+        data: referedDoctor,
+      };
+    } else if (activePopup === "mainDoctor") {
+      return {
+        columns: ["doctorId", "doctorName", "mobileNumber", "title"],
+        data: doctors,
+      };
+    } else if (activePopup === "serviceDoctor") {
+      return {
+        columns: ["employeeId", "salutation", "firstName", "lastName"],
+        data: serviceDoctors,
+      };
     } else {
       return { columns: [], data: [] };
     }
   };
 
   const { columns, data } = getPopupData();
-  const handleSelect = async (data) => { 
+
+  const handleSelect = async (data) => {
     if (activePopup === "patient" || activePopup === "mobilenumber") {
       setSelectedPatient(data.originalObject);
-
-      console.log("data+++++++++", data)
-
-      console.log("Registration Id", data.patientRegistrationId);
-
       try {
         const fetchedAppointments = await fetchunpaidAppointmentsByOutPatientId(
           data?.originalObject?.patientRegistrationId
         );
-
-        console.log("apppppppppppp", fetchedAppointments.outPatientId);
         setOutPatientId(fetchedAppointments.outPatientId);
-
         const doctorId = fetchedAppointments.addDoctor?.doctorId;
         if (doctorId) {
           const doctorDetails = await fetchDoctorDetails(doctorId);
-          console.log("Doctor Details Id +++++++++++", doctorDetails);
 
           const opdFees = doctorDetails?.orgDoctorFees?.find(
             (fee) => fee.payType?.payTypeName === "OPD"
@@ -465,12 +486,9 @@ console.log("Hello---",newData);
 
           const generalOpdFee = opdFees?.generalOpdFee || 0;
           const followupfees = opdFees?.followupopdfees || 0;
-
-          console.log("fetched apppp=====", fetchedAppointments);
-          // Check if fees are unpaid before creating the row
           if (
             fetchedAppointments.feespaid !== "yes" &&
-            fetchedAppointments.typeOfAppointment == "New Patient" || fetchedAppointments.typeOfAppointment == "Old patient"
+            fetchedAppointments.typeOfAppointment == "New Patient"
           ) {
             // New Patient Logic
             const doctorRow = {
@@ -570,29 +588,24 @@ console.log("Hello---",newData);
         }
 
         let doctorServices;
-        console.log("Fetched doctor services:", doctorServices);
         const isEmergency = data.originalObject.isEmergency === "yes";
-        console.log("is emergency print", isEmergency);
 
         if (isEmergency) {
-
           setemergency(true);
           doctorServices = await fetchEmergencyDoctorService(
             data.originalObject.erNo
           );
 
-          console.log("Fetched doctor services:", doctorServices)
-
           if (doctorServices.length > 0) {
             const firstService = doctorServices[0];
-            console.log("-----p", firstService)
 
             const rateToUse = isEmergency
               ? firstService.morningEmergencyToDoctor
               : firstService.morningEmergencyToDoctor;
 
-
-            const EmergencydocName = await fetchDoctorDetails(firstService.doctorId);
+            const EmergencydocName = await fetchDoctorDetails(
+              firstService.doctorId
+            );
 
             console.log("emergency doctor", EmergencydocName);
 
@@ -703,7 +716,7 @@ console.log("Hello---",newData);
       }
     } else if (activePopup === "services") {
       setSelectedService(data);
-
+      await fetchServiceDoctors(data.serviceType);
       setTestGridTableRowsableRows((prevRows) => {
         const isDuplicate = prevRows.some(
           (row) =>
@@ -774,15 +787,132 @@ console.log("Hello---",newData);
 
         return updatedRows;
       });
+    } else if (activePopup === "organisation") {
+      setSelectedOrganisation(data);
+      await fetchPackage(data.masterId, selectedPatient.gender, null, "OPD");
+    } else if (activePopup === "pkgType") {
+      setSelectedPackage(data);
+      console.log(data);
+      const mappedTestGridRows = [selectedPackage].flatMap((pkg) =>
+        pkg.testDetailsDTO.map((detail, index) => {
+          setSelectedService(detail?.serviceDetailsDTO);
+          return {
+            sn: index + 1,
+            serviceDetailsId: detail?.serviceDetailsDTO?.serviceDetailsId || "",
+            code: detail?.serviceDetailsDTO?.serviceCode || "",
+            serviceName: detail?.serviceDetailsDTO?.serviceName || "",
+            doctorName: detail?.doctorDTO?.doctorName || "",
+            rate: pkg.packageRates?.[0]?.rate || "",
+            qty: 1,
+            totalAmt: pkg.packageRates?.[0]?.rate || "",
+            lessDisc: pkg.packageRates?.[0]?.discount || "",
+            discAmt: pkg.packageRates?.[0]?.disAmount || "",
+            netAmt: "",
+            emerg: "",
+            emergAmt: "",
+          };
+        })
+      );
+
+      setTestGridTableRowsableRows(mappedTestGridRows);
+    } else if (activePopup === "referredDoctor") {
+      setSelectedReferredDoctor(data);
+    } else if (activePopup === "mainDoctor") {
+      setSelectedDoctor(data);
+    } else if (activePopup === "serviceDoctor") {
+      setSelectedServiceDoctor(data);
     }
     setActivePopup(null);
   };
 
+  const resetForm = () => {
+    setFormData({
+      totalAmount: "",
+      financialDiscAmt: "",
+      paidAmt: "",
+      creditAmt: "",
+      currBalance: "",
+      discReason: "",
+      discAuthorization: "",
+      remarks: "",
+      lastConsultDoctor: "",
+      lastConsultDate: "",
+      lastConsultFee: "",
+      opBalanceAmount: "",
+      refferedDoctor: "",
+      doctor: "",
+      netAmount: "",
+    });
+
+    newpatientsetFormData({
+      salutation: "",
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      gender: "",
+      age: "",
+      ageUnit: "Years",
+      maritalStatus: "",
+      relation: "",
+      adharCardId: "",
+      relationName: "",
+      address: "",
+      mobileNumber: "",
+      emailId: "",
+      pinCode: "",
+      areaVillage: "",
+      nationality: "Indian",
+      sourceOfRegistration: "",
+    });
+
+    setAddedPayments([]);
+    setPaymentDetails({});
+    setSelectedPackage(null);
+    setSelectedOrganisation(null);
+    setTestGridTableRowsableRows([
+      {
+        sn: 1,
+        serviceDetailsId: "",
+        code: "",
+        serviceName: "",
+        doctorName: "",
+        rate: "",
+        qty: "",
+        totalAmt: "",
+        lessDisc: "",
+        discAmt: "",
+        netAmt: "",
+        emerg: "",
+        emergAmt: "",
+      },
+    ]);
+    setSelectedPatient(null);
+    setOutPatientId(null);
+    setIsPrintEnabled(false);
+    setBillFromResponse(null);
+    setSelectedOrganisation(null);
+    setSelectedDoctor(null);
+    setSelectedPackage(null);
+    setNetAmount(0);
+    setTotalAmount(0);
+    setAddedPayments([]);
+    setDueAmount(0);
+    setNetAmount(0);
+    setSelectedService(null);
+    setSelectedServiceDoctor(null);
+    setSelectedReferredDoctor(null);
+    setPaymentDetails({
+      mode: "",
+      amount: "",
+      cardNumber: "",
+      upiId: "",
+      checkNumber: "",
+      checkDate: "",
+    });
+  };
+
   const handleSubmit = async () => {
-    console.log(
-      "================================================",
-      testGridTableRowsableRows
-    );
+    const updatedPayments = addedPayments.map(({ index, ...rest }) => rest);
     const payload = {
       patientType: patientType,
       totalAmount: parseFloat(formData.totalAmount || 0),
@@ -797,10 +927,40 @@ console.log("Hello---",newData);
       lastConsultDate: formData.lastConsultDate,
       lastConsultFee: parseFloat(formData.lastConsultFee || 0),
       opBalanceAmount: parseFloat(formData.opBalanceAmount || 0),
+      ...(patientType === "new patient" && {
+        refferedDoctor: formData.refferedDoctor,
+        doctor: formData.doctor,
+      }),
       outPatientDTO: {
         ...(patientType != "new patient"
-          ? { outPatientId: outPatientId }
-          : { patient: { ...newpatientformData } }),
+          ? {
+            outPatientId: outPatientId,
+            patient: {
+              patientRegistrationId: selectedPatient?.patientRegistrationId,
+            },
+          }
+          : {
+            patient: {
+              salutation: newpatientformData.salutation,
+              firstName: newpatientformData.firstName,
+              middleName: newpatientformData.middleName,
+              lastName: newpatientformData.lastName,
+              gender: newpatientformData.gender,
+              age: newpatientformData.age,
+              ageUnit: "Years",
+              maritalStatus: newpatientformData.maritalStatus,
+              relation: newpatientformData.relation,
+              adharCardId: newpatientformData.adharCardId,
+              relationName: newpatientformData.relationName,
+              address: newpatientformData.address,
+              mobileNumber: newpatientformData.mobileNumber,
+              emailId: newpatientformData.emailId,
+              pinCode: newpatientformData.pinCode,
+              areaVillage: newpatientformData.areaVillage,
+              nationality: newpatientformData.nationality,
+              sourceOfRegistration: newpatientformData.sourceOfRegistration,
+            },
+          }),
         financialDetaildto: {
           id: selectedPatient?.financialDetails?.id || null,
           totalAmount: parseFloat(
@@ -813,7 +973,7 @@ console.log("Hello---",newData);
           netAmount: parseFloat(
             selectedPatient?.financialDetails?.netAmount || formData.netAmount
           ),
-          paidAmount: parseFloat(totalPaidAmount || formData.paidAmt),
+          paidAmount: parseFloat(paidAmount || formData.paidAmt),
           dueAmount: parseFloat(currentBalance || currentBalance),
           totalDoctorShareAmount: parseFloat(
             selectedPatient?.financialDetails?.totalDoctorShareAmount || 0
@@ -822,27 +982,17 @@ console.log("Hello---",newData);
             selectedPatient?.financialDetails?.totalHospitalAmount || 0
           ),
         },
-        patient: { patientRegistrationId: selectedPatient.patientRegistrationId }
       },
 
-      paymentModeDTO: addedPayments.map((payment) => ({
-        paymentMode: payment.mode,
-        amount: parseFloat(payment.details.amount || 0),
-        chqDt: payment.details.checkNumber
-          ? parseFloat(payment.details.checkNumber)
-          : null,
-        cardNumber: payment.details.cardNumber
-          ? parseFloat(payment.details.cardNumber)
-          : null,
-      })),
+      paymentModeDTO: updatedPayments,
       testGridOpdBillDTO: testGridTableRowsableRows.map((row) => ({
         serviceDetailsId: row.serviceDetailsId || null,
         serviceName: row.serviceName,
         rate: row.rate,
         quantity: row.qty,
-        netAmount: row.totalAmt,
         discountAmount: row.discAmt,
-        // netAmount: row.netAmt,
+        netAmount: row.netAmt,
+        employeeDTO: { employeeId: selectedServiceDoctor.employeeId },
       })),
       doctorservice: testGridTableRowsableRows
         .filter((row) => row.serviceType === "Doctor")
@@ -851,8 +1001,16 @@ console.log("Hello---",newData);
           serviceNames: row.serviceName,
         })),
       isEmergency: isEmergency,
-
     };
+
+    if (selectedPackage) {
+      payload.dgPackageDto = { packageId: selectedPackage?.packageId };
+    }
+    if (selectedOrganisation) {
+      payload.organisationMasterDTO = {
+        masterId: selectedOrganisation?.masterId,
+      };
+    }
     console.log("Payload------:", payload);
 
     try {
@@ -863,17 +1021,21 @@ console.log("Hello---",newData);
       });
 
       if (response.status === 200) {
-        alert("Data submitted successfully!");
-        console.log("Response:", response.data);
+        toast.success("Data submitted successfully!");
+        showPopup([
+          { url: "/patient/registerpatient", text: "Patient Registration" },
+          { url: "/appointment/doctorappointment", text: "Appointment" },
+        ]);
+        setIsPrintEnabled(true);
+        resetForm();
+        setBillFromResponse(response.data);
       } else {
-        alert("Failed to submit data. Please try again.");
+        toast.error("Failed to submit data. Please try again.");
         console.error("Response status:", response.status);
       }
     } catch (error) {
-      console.error("Error submitting data:", error);
-      alert(
-        "An error occurred while submitting data. Please check the console."
-      );
+      toast.error("Error submitting data:", error);
+      setIsPrintEnabled(false);
     }
   };
 
@@ -900,7 +1062,7 @@ console.log("Hello---",newData);
         `${API_BASE_URL}/out-patient/${outPatientId}/today`
       );
       console.log("Fetched Appointments:", response.data);
-      setAppointments(response.data); // Update the state
+      response.data; // Update the state
       return response.data; // Explicitly return the data
     } catch (error) {
       console.error("Error fetching appointments:", error);
@@ -959,37 +1121,139 @@ console.log("Hello---",newData);
 
   const fetchServiceDetails = async () => {
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/service-details/sorted-map`
+      const response = await axios.get(
+        `${API_BASE_URL}/service-details/by-consultation-type?consultationType=${serviceType}`
       );
-      if (!response.ok) {
-        throw new Error("Failed to fetch service details");
-      }
-      const data = await response.json();
-      setServiceDetails(data); // Store the fetched data in state
+
+      const data = Array.isArray(response.data) ? response.data : [];
+      console.log(data);
+      setServiceDetails(data);
     } catch (error) {
       console.error("Error fetching service details:", error);
-      setError(error.message); // Set error message in state
+      setServiceDetails([]); // Ensure state is set to an empty array in case of an error
+    }
+  };
+
+  const fetchOrganisation = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/organisation-masters`);
+
+      const data = Array.isArray(response.data) ? response.data : [];
+      console.log(data);
+      setOrganisation(data);
+    } catch (error) {
+      console.error("Error fetching service details:", error);
+      setServiceDetails([]); // Ensure state is set to an empty array in case of an error
+    }
+  };
+  const fetchPackage = async (
+    organisationId,
+    gender,
+    packageForIpdOpd,
+    payTypeName
+  ) => {
+    try {
+      let response;
+      if (organisationId) {
+        response = await axios.get(`${API_BASE_URL}/dg-packages/search`, {
+          params: {
+            gender: gender,
+            organisationId: organisationId,
+            packageforipdopd: packageForIpdOpd,
+            payTypeName: payTypeName,
+          },
+        });
+      } else {
+        response = await axios.get(`${API_BASE_URL}/dg-packages/search`, {
+          params: {
+            payTypeName: "OPD",
+          },
+        });
+      }
+
+      const data = Array.isArray(response.data) ? response.data : [];
+      console.log(data);
+      setPackage(data);
+    } catch (error) {
+      console.error("Error fetching package details:", error);
+      setPackage([]); // Ensure state is set to an empty array in case of an error
+    }
+  };
+
+  const fetchServiceDoctors = async (department) => {
+    try {
+      console.log(department);
+
+      const response = await fetch(
+        `${API_BASE_URL}/employees/findAllDoctors?departmentName=${department}`
+      );
+      if (!response.ok) {
+        throw new Error(`${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data);
+
+      setServiceDoctors(data);
+    } catch (error) {
+      console.error("Error fetching doctors:", error);
+    }
+  };
+
+  const fetchDoctors = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/doctors`);
+      if (!response.ok) {
+        throw new Error(`${response.status}`);
+      }
+      const data = await response.json();
+      setDoctors(data);
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching doctors:", error);
     }
   };
 
   useEffect(() => {
-    const fetchDoctors = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/doctors`);
-        if (!response.ok) {
-          throw new Error(`${response.status}`);
-        }
-        const data = await response.json();
-        setDoctors(data);
-        console.log(data);
-      } catch (error) {
-        console.error("Error fetching doctors:", error);
+        await fetchOpdData(); // Fetch OPD data first
+        await fetchAllReferredDoctors();
+        await fetchDoctors();
+        await fetchServiceDetails();
+        await fetchOrganisation();
+        await fetchPackage();
+      } catch (err) {
+        console.log("Error fetching data:", err);
       }
     };
-    fetchDoctors();
-    fetchServiceDetails();
-  }, []);
+
+    fetchData();
+  }, [serviceType]);
+
+  const calculateFinancialDetails = (rows, selectedPatient) => {
+    let totalAmt = 0;
+    let discAmt = 0;
+    rows.forEach((row) => {
+      totalAmt += Number(row.totalAmt) || 0;
+      discAmt += Number(row.discAmt) || 0;
+    });
+
+    let netAmt = totalAmt - discAmt; // Update states correctly
+    setTotalAmount(totalAmt.toFixed(2));
+    setDiscountAmount(discAmt.toFixed(2));
+    setNetAmount(netAmt.toFixed(2));
+
+    let calculatedPaidAmount =
+      parseFloat(selectedPatient?.financialDetaildto?.paidAmount) || 0;
+    calculatedPaidAmount = Math.min(calculatedPaidAmount, netAmt);
+
+    setPaidAmount(calculatedPaidAmount.toFixed(2));
+    setCurrentBalance((netAmt - calculatedPaidAmount).toFixed(2));
+  };
+
+  useEffect(() => {
+    calculateFinancialDetails(testGridTableRowsableRows, selectedPatient);
+  }, [testGridTableRowsableRows, selectedPatient]);
 
   const renderTable = () => {
     switch (selectedTab) {
@@ -1007,7 +1271,7 @@ console.log("Hello---",newData);
                     "Service Name",
                     "Doctor Name ",
                     "Rate",
-                    "Qty",
+                    "Quantity",
                     "Total Amt",
                     "Less Disc(%)",
                     "Disc Amt",
@@ -1057,28 +1321,43 @@ console.log("Hello---",newData);
                     <td>{row.sn}</td>
                     <td>
                       <div className="OpdBilling-test-search-field">
-                        <FloatingInput label="MR No * " type="text" />
-                        <button
-                          className="OpdBilling-search-icon"
-                          onClick={() => setActivePopup("services")}
-                        >
-                          <svg viewBox="0 0 24 24" width="16" height="16">
-                            <path
-                              fill="currentColor"
-                              d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                            />
-                          </svg>
-                        </button>
+                        <FloatingSelect
+                          type="search"
+                          value={serviceType}
+                          onChange={(e) => setServiceType(e.target.value)}
+                          options={[
+                            { value: "Investigation", label: "Investigation" },
+                            { value: "Consultation", label: "Consultation" },
+                            { value: "Procedure", label: "Procedure" },
+                          ]}
+                        />
                       </div>
                     </td>
-                    <td>{row.code}</td>
-                    <td>{row.serviceName}</td>
-                    <td>{row.doctorName}</td>
+                    <td>{row.serviceCode}</td>
+                    <td>
+                      <div className="OpdBilling-test-search-field">
+                        <FloatingInput
+                          type="search"
+                          value={selectedService?.serviceName}
+                          onIconClick={() => setActivePopup("services")}
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <div className="OpdBilling-test-search-field">
+                        <FloatingInput
+                          type="search"
+                          value={selectedServiceDoctor?.firstName}
+                          onIconClick={() => setActivePopup("serviceDoctor")}
+                        />
+                      </div>
+                    </td>
                     <td>{row.rate}</td>
                     <td>
-                      <input
+                      <FloatingInput
                         type="number"
-                        value={row.qty}
+                        min="0"
+                        value={row.qty || 0}
                         onChange={(e) => {
                           const qty = parseInt(e.target.value, 10) || 0;
                           setTestGridTableRowsableRows((prevRows) => {
@@ -1099,22 +1378,47 @@ console.log("Hello---",newData);
                         type="number"
                         value={row.lessDisc || 0}
                         onChange={(e) => {
-                          const lessDisc = parseFloat(e.target.value) || 0;
+                          let lessDisc = parseFloat(e.target.value) || 0;
+                          let discAmt = (row.totalAmt * lessDisc) / 100;
+
+                          // **Validation: Ensure discount does not exceed totalAmt**
+                          if (discAmt > row.totalAmt) {
+                            discAmt = row.totalAmt;
+                            lessDisc = 100; // Max discount is 100%
+                          }
+
                           setTestGridTableRowsableRows((prevRows) => {
                             const updatedRows = [...prevRows];
                             updatedRows[index].lessDisc = lessDisc;
-                            updatedRows[index].discAmt =
-                              (updatedRows[index].totalAmt * lessDisc) / 100;
-                            updatedRows[index].netAmt =
-                              updatedRows[index].totalAmt -
-                              updatedRows[index].discAmt;
+                            updatedRows[index].discAmt = discAmt;
+                            updatedRows[index].netAmt = row.totalAmt - discAmt;
                             return updatedRows;
                           });
                         }}
                       />
                     </td>
                     <td>
-                      <input type="number" value={row.discAmt || 0} readOnly />
+                      <FloatingInput
+                        type="text"
+                        value={row.discAmt || 0}
+                        onChange={(e) => {
+                          let discAmt = parseFloat(e.target.value) || 0;
+
+                          // **Validation: Ensure discount does not exceed totalAmt**
+                          if (discAmt > row.totalAmt) {
+                            discAmt = row.totalAmt;
+                          }
+
+                          setTestGridTableRowsableRows((prevRows) => {
+                            const updatedRows = [...prevRows];
+                            updatedRows[index].discAmt = discAmt;
+                            updatedRows[index].lessDisc =
+                              (discAmt / row.totalAmt) * 100; // Recalculate percentage
+                            updatedRows[index].netAmt = row.totalAmt - discAmt;
+                            return updatedRows;
+                          });
+                        }}
+                      />
                     </td>
                     <td>{row.netAmt}</td>
                     <td>{row.emerg}</td>
@@ -1127,18 +1431,20 @@ console.log("Hello---",newData);
             <div className="billing-opd-com-summary-section">
               <div className="billing-opd-com-summary-row">
                 <div className="billing-opd-com-summary-field">
-                  <label>Less Disc% On All Services:</label>
-                  <input
-                    type="number"
-                    value={discountPercentage}
-                    onChange={(e) =>
-                      setDiscountPercentage(parseFloat(e.target.value) || 0)
-                    }
+                  <FloatingInput
+                    label={"Less Disc% On All Services"}
+                    type="text"
+                    value={overallDiscPercent}
+                    onChange={handleOverallDiscountPercentChange}
                   />
                 </div>
                 <div className="billing-opd-com-summary-field">
-                  <label> Less Disc Amt on All Services :</label>
-                  <input type="number" value={discountAmount} readOnly />
+                  <FloatingInput
+                    label={"Less Disc Amt on All Services"}
+                    type="text"
+                    value={overallDiscAmt}
+                    onChange={handleOverallDiscountAmountChange}
+                  />
                 </div>
               </div>
             </div>
@@ -1206,61 +1512,58 @@ console.log("Hello---",newData);
   };
 
   return (
-    <div className="billing-opd-com-Events">
-      <div className="billing-opd-com-title-bar">
-        <div className="billing-opd-com-header">
-          <span>OPD Billing </span>
+    <>
+      <div className="billing-opd-com-Events">
+        <div className="billing-opd-com-title-bar">
+          <div className="billing-opd-com-header">
+            <span>OPD Billing </span>
+          </div>
         </div>
-      </div>
-      <div className="OpdBilling-section">
-        <div className="OpdBilling-grid">
-          <div className="billing-opd-com-form-row">
-            <label>Mobile No:</label>
-            <div className="billing-opd-com-input-with-search">
-              <input
-                type="text"
-                value={selectedPatient?.originalObject?.patient?.mobileNumber}
+        <div className="OpdBilling-section">
+          <div className="OpdBilling-grid">
+            <div className="billing-opd-com-form-row">
+              <FloatingInput
+                label={"Mobile No"}
+                type="search"
+                value={selectedPatient?.mobileNumber}
+                restrictions={{ number: true, max: 10 }}
+                onIconClick={() => setActivePopup("mobilenumber")}
               />
-              <button
-                className="billing-opd-com-magnifier-btn"
-                onClick={() => setActivePopup("mobilenumber")}
-              >
-                🔍
-              </button>
             </div>
-          </div>
 
-          <div className="billing-opd-com-form-row">
-            <label>
-              MR No:<span className="billing-opd-required">*</span>
-            </label>
-            <div className="billing-opd-com-input-with-search">
-              <input type="text" value={selectedPatient?.uhid} />
-              <button
-                className="billing-opd-com-magnifier-btn"
-                onClick={() => setActivePopup("patient")}
-              >
-                🔍
-              </button>
+            <div className="billing-opd-com-form-row">
+              <FloatingInput
+                label={"UHID"}
+                type="search"
+                value={selectedPatient?.uhid}
+                onIconClick={() => setActivePopup("patient")}
+              />
+            </div>
+            <div className="billing-opd-com-form-row">
+              <FloatingInput
+                label={"Appointment Id"}
+                type="text"
+                value={outPatientId || ""}
+                readOnly
+              />
             </div>
           </div>
         </div>
-      </div>
-      <div className="OpdBilling-section">
-        <div className="OpdBilling-header">Patient Details</div>
-        <div className="OpdBilling-grid">
-          <FloatingSelect
-            label="Patient Type"
-            name="patientType"
-            value={patientType}
-            onChange={(e) => setPatientType(e.target.value)}
-            options={[
-              { value: "", label: "Select Patient Type" },
-              { value: "new patient", label: "New Patient" },
-              { value: "old patient", label: " Old Patient" },
-            ]}
-          />
-          {/* <FloatingSelect
+        <div className="OpdBilling-section">
+          <div className="OpdBilling-header">Patient Details</div>
+          <div className="OpdBilling-grid">
+            <FloatingSelect
+              label="Patient Type"
+              name="patientType"
+              value={patientType}
+              onChange={(e) => setPatientType(e.target.value)}
+              options={[
+                { value: "", label: "Select Patient Type" },
+                { value: "new patient", label: "New Patient" },
+                { value: "old patient", label: " Old Patient" },
+              ]}
+            />
+            {/* <FloatingSelect
             label="Category Counter"
             id="patientCategory"
             name="patientCategory"
@@ -1269,162 +1572,165 @@ console.log("Hello---",newData);
               { value: "private", label: "General OPD" },
             ]}
           /> */}
-          {/* <div className="billing-opd-com-form-row">
+            {/* <div className="billing-opd-com-form-row">
             <label>Employee:</label>
             <input type="checkbox" value="" />
           </div> */}
-          <FloatingSelect
-            label="Name Initial"
-            name="salutation"
-            value={patientType}
-            onChange={(e) => setPatientType(e.target.value)}
-            options={[
-              { value: "", label: "Select Patient Type" },
-              { value: "Mr.", label: "Mr" },
-              { value: "Mrs.", label: "Mrs" },
-              { value: "Ms.", label: "Ms" },
-              { value: "Prof.", label: "Prof" },
-            ]}
-          />
-          <FloatingInput
-            label="Adhar Card"
-            type="text"
-            name="adharCardId"
-            onChange={handleNewPatientChange}
-            value={newpatientformData.adharCardId}
-          />
-          <FloatingInput
-            label="F Name"
-            type="text"
-            name="firstName"
-            onChange={handleNewPatientChange}
-            value={newpatientformData.firstName}
-          />
-          <FloatingInput
-            label="M Name"
-            type="text"
-            value={newpatientformData.middleName}
-            onChange={handleNewPatientChange}
-            name="middleName"
-          />
-          <FloatingInput
-            label="L Name"
-            type="text"
-            name="lastName"
-            onChange={handleNewPatientChange}
-            value={newpatientformData.lastName}
-          />
+            <FloatingSelect
+              label="Name Initial"
+              name="salutation"
+              value={
+                selectedPatient?.salutation || newpatientformData.salutation
+              }
+              onChange={handleNewPatientChange}
+              options={[
+                { value: "", label: "Select Patient Type" },
+                { value: "Mr.", label: "Mr" },
+                { value: "Mrs.", label: "Mrs" },
+                { value: "Ms.", label: "Ms" },
+                { value: "Prof.", label: "Prof" },
+              ]}
+            />
+            <FloatingInput
+              label="Adhar Card"
+              type="text"
+              name="adharCardId"
+              onChange={handleNewPatientChange}
+              restrictions={{ number: true, max: 12 }}
+              value={newpatientformData.adharCardId}
+            />
+            <FloatingInput
+              label="F Name"
+              type="text"
+              name="firstName"
+              onChange={handleNewPatientChange}
+              value={newpatientformData.firstName}
+            />
+            <FloatingInput
+              label="M Name"
+              type="text"
+              value={newpatientformData.middleName}
+              onChange={handleNewPatientChange}
+              name="middleName"
+            />
+            <FloatingInput
+              label="L Name"
+              type="text"
+              name="lastName"
+              onChange={handleNewPatientChange}
+              value={newpatientformData.lastName}
+            />
 
-          <FloatingSelect
-            label="Gender"
-            name="gender"
-            onChange={handleNewPatientChange}
-            value={newpatientformData.gender}
-            options={[
-              { value: "Male", label: "Male" },
-              { value: "Female", label: "Female" },
-              { value: "Other", label: " Other" },
-            ]}
-          />
-          <FloatingSelect
-            label="Material Status *"
-            name="maritalStatus"
-            value={newpatientformData.maritalStatus}
-            onChange={handleNewPatientChange}
-            options={[
-              { value: "Single", label: "Single" },
-              { value: "Married", label: "Married" },
-              { value: "Divorced", label: "Divorced" },
-              { value: "Widowed", label: "Widowed" },
-            ]}
-          />
-          <FloatingSelect
-            label="Relation"
-            name="relation"
-            value={newpatientformData.relation}
-            onChange={handleNewPatientChange}
-            options={[
-              { value: "Father", label: "Father" },
-              { value: "Mother", label: "Mother" },
-              { value: "Brother", label: "Brother" },
-              { value: "Sister", label: "Sister" },
-              { value: "Son", label: "Son" },
-              { value: "Daughter", label: "Daughter" },
-              { value: "Spouse", label: "Spouse" },
-              { value: "Other", label: "Other" },
-            ]}
-          />
+            <FloatingSelect
+              label="Gender"
+              name="gender"
+              onChange={handleNewPatientChange}
+              value={newpatientformData.gender}
+              options={[
+                { value: "Male", label: "Male" },
+                { value: "Female", label: "Female" },
+                { value: "Other", label: " Other" },
+              ]}
+            />
+            <FloatingSelect
+              label="Material Status *"
+              name="maritalStatus"
+              value={newpatientformData.maritalStatus}
+              onChange={handleNewPatientChange}
+              options={[
+                { value: "Single", label: "Single" },
+                { value: "Married", label: "Married" },
+                { value: "Divorced", label: "Divorced" },
+                { value: "Widowed", label: "Widowed" },
+              ]}
+            />
+            <FloatingSelect
+              label="Relation"
+              name="relation"
+              value={newpatientformData.relation}
+              onChange={handleNewPatientChange}
+              options={[
+                { value: "Father", label: "Father" },
+                { value: "Mother", label: "Mother" },
+                { value: "Brother", label: "Brother" },
+                { value: "Sister", label: "Sister" },
+                { value: "Son", label: "Son" },
+                { value: "Daughter", label: "Daughter" },
+                { value: "Spouse", label: "Spouse" },
+                { value: "Other", label: "Other" },
+              ]}
+            />
 
-          <FloatingInput
-            label="Relative Name"
-            name="relationName"
-            type="text"
-            onChange={handleNewPatientChange}
-            value={newpatientformData.relationName}
-          />
-          <FloatingInput
-            name="age"
-            onChange={handleNewPatientChange}
-            label="Age"
-            type="text"
-            value={newpatientformData.age}
-          />
-          <FloatingInput
-            label="Address"
-            type="text"
-            name="address"
-            onChange={handleNewPatientChange}
-            value={newpatientformData.address}
-          />
-          <FloatingInput
-            label="City/Village"
-            type="text"
-            name="areaVillage"
-            onChange={handleNewPatientChange}
-            value={newpatientformData.areaVillage}
-          />
-          <FloatingInput
-            label="PinCode"
-            type="text"
-            name="pinCode"
-            onChange={handleNewPatientChange}
-            value={newpatientformData.pinCode}
-          />
-          <FloatingInput
-            label="Country"
-            type="text"
-            name="nationality"
-            onChange={handleNewPatientChange}
-            value={newpatientformData.nationality}
-          />
-          <FloatingInput
-            name="sourceOfRegistration"
-            value={newpatientformData.sourceOfRegistration}
-            onChange={handleNewPatientChange}
-            label="Source Of Registration"
-            type="text"
-          />
-          <FloatingInput
-            label="Mobile No"
-            type="text"
-            name="mobileNumber"
-            onChange={handleNewPatientChange}
-            value={newpatientformData.mobileNumber}
-          />
-          <FloatingInput
-            label="Phone"
-            type="text"
-            onChange={handleNewPatientChange}
-            value={selectedPatient?.patient?.alternateNumber}
-          />
-          <FloatingInput
-            label="Email Id *"
-            type="text"
-            name="emailId"
-            onChange={handleNewPatientChange}
-            value={newpatientformData.emailId}
-          />
-          {/* <div className="billing-opd-com-form-row">
+            <FloatingInput
+              label="Relative Name"
+              name="relationName"
+              type="text"
+              onChange={handleNewPatientChange}
+              value={newpatientformData.relationName}
+            />
+            <FloatingInput
+              name="age"
+              onChange={handleNewPatientChange}
+              label="Age"
+              type="text"
+              value={newpatientformData.age}
+            />
+            <FloatingInput
+              label="Address"
+              type="text"
+              name="address"
+              onChange={handleNewPatientChange}
+              value={newpatientformData.address}
+            />
+            <FloatingInput
+              label="City/Village"
+              type="text"
+              name="areaVillage"
+              onChange={handleNewPatientChange}
+              value={newpatientformData.areaVillage}
+            />
+            <FloatingInput
+              label="PinCode"
+              type="text"
+              name="pinCode"
+              onChange={handleNewPatientChange}
+              value={newpatientformData.pinCode}
+            />
+            <FloatingInput
+              label="Country"
+              type="text"
+              name="nationality"
+              onChange={handleNewPatientChange}
+              value={newpatientformData.nationality}
+            />
+            <FloatingInput
+              name="sourceOfRegistration"
+              value={newpatientformData.sourceOfRegistration}
+              onChange={handleNewPatientChange}
+              label="Source Of Registration"
+              type="text"
+            />
+            <FloatingInput
+              label="Mobile No"
+              type="text"
+              name="mobileNumber"
+              onChange={handleNewPatientChange}
+              value={newpatientformData.mobileNumber}
+            />
+            <FloatingInput
+              label="Phone"
+              type="text"
+              onChange={handleNewPatientChange}
+              value={selectedPatient?.patient?.alternateNumber}
+            />
+            <FloatingInput
+              label="Email Id *"
+              type="text"
+              name="emailId"
+              onChange={handleNewPatientChange}
+              value={newpatientformData.emailId}
+            />
+            {/* <div className="billing-opd-com-form-row">
             <label>
               Doctor Name:<span className="billing-opd-required">*</span>
             </label>
@@ -1446,58 +1752,58 @@ console.log("Hello---",newData);
             </div>
           </div> */}
 
-          <FloatingSelect
-            label="Referral Type"
-            name=""
-            options={[
-              { value: "walkin", label: "Walk in" },
-              { value: "website", label: "Website" },
-              { value: "other", label: "other" },
-            ]}
-          />
-          <FloatingInput
-            label="Referred Dr"
-            type="text"
-            name="referredDoctor"
-            value={formData.referredDoctor}
-            onChange={handleChange}
-          />
-
-          <FloatingInput
-            label="Bill No"
-            type="text"
-            name="billNo"
-            value={formData.billNo}
-            onChange={handleChange}
-          />
-
-          <FloatingInput
-            label="NonRegular DoctorNM"
-            type="text"
-            name="nonregulardctorname"
-            value={formData.nonregulardctorname}
-            onChange={handleChange}
-          />
-          <div className="billing-opd-com-form-row">
-            <label>Package:</label>
-            <input
-              type="checkbox"
-              name="package"
-              checked
-              value={formData.package}
+            <FloatingSelect
+              label="Referral Type"
+              name=""
+              options={[
+                { value: "walkin", label: "Walk in" },
+                { value: "website", label: "Website" },
+                { value: "other", label: "other" },
+              ]}
             />
-          </div>
+            <FloatingInput
+              label="Referred Dr"
+              type="search"
+              name="referredDoctor"
+              value={selectedReferedDoctor?.doctorName}
+              onIconClick={() => setActivePopup("referredDoctor")}
+            />
 
-          <FloatingSelect
-            label="Pkg Type"
-            id="patientCategory"
-            options={[
-              { value: "general", label: "OPD Package" },
-              { value: "general", label: "Private OPD" },
-              { value: "private", label: " Other" },
-            ]}
-          />
-          <FloatingInput
+            <FloatingInput
+              label="Bill No"
+              type="text"
+              name="billNo"
+              value={formData.billNo}
+              onChange={handleChange}
+            />
+
+            <FloatingInput
+              label="NonRegular DoctorNM"
+              type="text"
+              name="nonregulardctorname"
+              value={formData.nonregulardctorname}
+              onChange={handleChange}
+            />
+            <FloatingInput
+              label="Doctor"
+              value={selectedDoctor?.doctorName || "SELF"}
+              onIconClick={() => setActivePopup("mainDoctor")}
+              type="search"
+            />
+            <FloatingInput
+              label="Organisation"
+              value={selectedOrganisation?.name}
+              onIconClick={() => setActivePopup("organisation")}
+              type="search"
+            />
+
+            <FloatingInput
+              label="Pkg Type"
+              value={selectedPackage?.packageName}
+              onIconClick={() => setActivePopup("pkgType")}
+              type="search"
+            />
+            {/* <FloatingInput
             label="Old Mrno"
             type="text"
             name="oldmrno"
@@ -1511,8 +1817,8 @@ console.log("Hello---",newData);
             name="Empdiscountpolicy"
             value={formData.Empdiscountpolicy}
             onChange={handleChange}
-          />
-          {/* <div className="billing-opd-com-form-row">
+          /> */}
+            {/* <div className="billing-opd-com-form-row">
                 <label>Empdiscountpolicy:</label>
                 <input
                   type="text"
@@ -1521,389 +1827,307 @@ console.log("Hello---",newData);
                   onChange={handleChange}
                 />
               </div> */}
-          <FloatingInput
+            {/* <FloatingInput
             label="Diagnosis"
             type="text"
             name="diagnosis"
             value={formData.diagnosis}
             onChange={handleChange}
-          />
-        </div>
-      </div>
-      <div className="billing-opd-com-content-wrapper">
-        <div className="billing-opd-com-main-section">
-          {activePopup && (
-            <PopupTable
-              columns={columns}
-              data={data}
-              onSelect={handleSelect}
-              onClose={() => setActivePopup(false)}
-            />
-          )}
-          <div className="billing-opd-com-panel operation-details">
-            <div className="billing-opd-com-panel-content"></div>
-          </div>
-          <div className="billing-opd-com-panel operation-details">
-            {/* <div className="billing-opd-com-panel-header">Surgery Details</div>  */}
-            <div className="billing-opd-com-panel-content"></div>
+          /> */}
           </div>
         </div>
-        <div className="iPBilling-services-section">
-          <div className="iPBilling-tab-bar">
-            <button
-              className={`iPBilling-tab ${selectedTab === "testGrid" ? "active" : ""
-                }`}
-              onClick={() => setSelectedTab("testGrid")}
-            >
-              Test Grid
-            </button>
-            <button
-              className={`iPBilling-tab ${selectedTab === "paymentDetails" ? "active" : ""
-                }`}
-              onClick={() => setSelectedTab("paymentDetails")}
-            >
-              Payment Details
-            </button>
-          </div>
-
-          {/* Dynamically render tables based on selected tab */}
-          {renderTable()}
-        </div>
-
-        {/* ---------------------------------------------------------------------------------------------------------------------      */}
-        <div className="billing-opd-com-main-section-payment">
-          <div className="OpdBilling-section">
-            <div className="OpdBilling-header">Financial Details</div>
-            <div className="OpdBilling-grid-sec">
-              <FloatingInput
-                label="Total Amt *"
-                type="text"
-                value={totalAmount}
-                readOnly
+        <div className="billing-opd-com-content-wrapper">
+          <div className="billing-opd-com-main-section">
+            {activePopup && (
+              <PopupTable
+                columns={columns}
+                data={data}
+                onSelect={handleSelect}
+                onClose={() => setActivePopup(false)}
               />
-              <FloatingInput
-                label="Final Disc Amt"
-                type="text"
-                value={discountAmount}
-                readOnly
-              />
-              <FloatingInput
-                label="Net Amt"
-                type="text"
-                value={netAmount}
-                readOnly
-              />
-              <FloatingInput
-                label="Paid Amt"
-                type="text"
-                value={selectedPatient?.financialDetaildto?.paidAmount}
-                name="paidAmt"
-                onChange={handleChange}
-              />
-              <FloatingInput
-                label="Credit Amt"
-                type="text"
-                value="0"
-                name="creditAmt"
-                onChange={handleChange}
-              />
-              <FloatingInput
-                label="Curr Balance"
-                type="text"
-                value={currentBalance.toFixed(2)}
-                name="currBalance"
-              />
-              <FloatingInput
-                label="Due Amount"
-                type="text"
-                name="discReason"
-                value={selectedPatient?.financialDetaildto?.dueAmount}
-                readOnly
-              />
-              <FloatingInput
-                label="Remarks *"
-                type="text"
-                name="remarks"
-                value={formData.remarks}
-                onChange={handleChange}
-              />
-              <FloatingInput label="OP Bal Amt" type="text" value="" />
+            )}
+            <div className="billing-opd-com-panel operation-details">
+              <div className="billing-opd-com-panel-content"></div>
+            </div>
+            <div className="billing-opd-com-panel operation-details">
+              {/* <div className="billing-opd-com-panel-header">Surgery Details</div>  */}
+              <div className="billing-opd-com-panel-content"></div>
             </div>
           </div>
+          <div className="iPBilling-services-section">
+            <div className="iPBilling-tab-bar">
+              <button
+                className={`iPBilling-tab ${selectedTab === "testGrid" ? "active" : ""
+                  }`}
+                onClick={() => setSelectedTab("testGrid")}
+              >
+                Test Grid
+              </button>
+              <button
+                className={`iPBilling-tab ${selectedTab === "paymentDetails" ? "active" : ""
+                  }`}
+                onClick={() => setSelectedTab("paymentDetails")}
+              >
+                Payment Details
+              </button>
+            </div>
+            {renderTable()}
+          </div>
 
-          <div className="OpdBilling-section">
-            <div className="OpdBilling-header">Payment Mode</div>
-            <div className="billing-opd-com-panel-content">
-              <div className="payment-mode-selection">
-                <div className="OpdBilling-grid-sec">
-                  <FloatingSelect
-                    label="Select Payment Mode"
-                    htmlFor="paymentMode"
-                    id="paymentMode"
-                    onChange={(e) => {
-                      setSelectedPaymentMode(e.target.value);
-                      setPaymentDetails({}); // Reset payment details when mode changes
-                    }}
-                    options={[
-                      { value: "", label: "-- Select Payment Mode --" },
-                      { value: "cash", label: "Cash" },
-                      { value: "card", label: " Card" },
-                      { value: "upi", label: " UPI" },
-                      { value: "check", label: " Check" },
-                    ]}
-                  />
-                </div>
-                {selectedPaymentMode && (
-                  <div className="OpdBilling-grid-sec">
-                    <FloatingInput
-                      label="Amount"
-                      htmlFor="amount"
-                      type="number"
-                      id="amount"
-                      // placeholder="Enter Amount"
-                      value={paymentDetails.amount || ""}
-                      onChange={(e) =>
-                        setPaymentDetails({
-                          ...paymentDetails,
-                          amount: e.target.value,
-                        })
-                      }
-                    />
-
-
-                    {selectedPaymentMode === "card" && (
-                      <FloatingInput
-                        label="Card Number"
-                        htmlFor="cardNumber"
-                        type="text"
-                        id="cardNumber"
-                        value={paymentDetails.cardNumber || ""}
-                        onChange={(e) =>
-                          setPaymentDetails({
-                            ...paymentDetails,
-                            cardNumber: e.target.value,
-                          })
-                        }
-                      />
-
-
-                    )}
-                    {selectedPaymentMode === "upi" && (
-                      <FloatingInput
-                        label="UPI ID"
-                        htmlFor="upiId"
-                        type="text"
-                        id="upiId"
-                        value={paymentDetails.upiId || ""}
-                        onChange={(e) =>
-                          setPaymentDetails({
-                            ...paymentDetails,
-                            upiId: e.target.value,
-                          })
-                        }
-                      />
-
-
-                    )}
-                    {selectedPaymentMode === "check" && (
-                      <>
-                        <FloatingInput
-                          label="Check Number"
-                          htmlFor="checkNumber"
-                          type="text"
-                          id="checkNumber"
-                          focused={
-                            paymentDetails.checkNumber != null ? true : false
-                          }
-                          value={paymentDetails.checkNumber || ""}
-                          onChange={(e) =>
-                            setPaymentDetails({
-                              ...paymentDetails,
-                              checkNumber: e.target.value,
-                            })
-                          }
-                        />
-
-                        <FloatingInput
-                          label="Check Date"
-                          type="date"
-                          id="checkDate"
-                          value={paymentDetails.checkDate || ""}
-                          onChange={(e) =>
-                            setPaymentDetails({
-                              ...paymentDetails,
-                              checkDate: e.target.value,
-                            })
-                          }
-                        />
-
-                      </>
-                    )}
-                  </div>
-                )}
+          {/* ---------------------------------------------------------------------------------------------------------------------      */}
+          <div className="billing-opd-com-main-section-payment">
+            <div className="OpdBilling-section">
+              <div className="OpdBilling-header">Financial Details</div>
+              <div className="OpdBilling-grid-sec">
+                <FloatingInput
+                  label="Total Amt *"
+                  type="text"
+                  value={totalAmount}
+                  readOnly
+                />
+                <FloatingInput
+                  label="Final Disc Amt"
+                  type="text"
+                  value={discountAmount}
+                  readOnly
+                />
+                <FloatingInput
+                  label="Net Amt"
+                  type="text"
+                  value={netAmount}
+                  readOnly
+                />
+                <FloatingInput
+                  label="Paid Amt"
+                  type="text"
+                  value={paidAmount}
+                  name="paidAmt"
+                  onChange={handleChange}
+                />
+                <FloatingInput
+                  label="Credit Amt"
+                  type="text"
+                  value="0"
+                  name="creditAmt"
+                  onChange={handleChange}
+                />
+                <FloatingInput
+                  label="Curr Balance"
+                  type="text"
+                  value={currentBalance}
+                  name="currBalance"
+                />
+                <FloatingInput
+                  label="Due Amount"
+                  type="text"
+                  name="discReason"
+                  value={dueAmount}
+                  readOnly
+                />
+                <FloatingInput
+                  label="Remarks *"
+                  type="text"
+                  name="remarks"
+                  value={formData.remarks}
+                  onChange={handleChange}
+                />
+                <FloatingInput label="OP Bal Amt" type="text" value="" />
               </div>
-              {selectedPaymentMode && (
+            </div>
+
+            <div className="OpdBilling-section">
+              <div className="OpdBilling-header">Payment Mode</div>
+              <div className="billing-opd-com-panel-content">
+                <div className="payment-mode-selection">
+                  <div className="OpdBilling-grid-sec">
+                    <FloatingSelect
+                      label="Select Payment Mode"
+                      htmlFor="paymentMode"
+                      id="paymentMode"
+                      onChange={(e) => {
+                        const selectedMode = e.target.value;
+                        setPaymentDetails((prev) => ({
+                          ...prev,
+                          mode: selectedMode,
+                          amount:
+                            prev.amount || Math.min(currentBalance, netAmount),
+                        }));
+                      }}
+                      options={[
+                        { value: "", label: "-- Select Payment Mode --" },
+                        { value: "cash", label: "Cash" },
+                        { value: "card", label: "Card" },
+                        { value: "upi", label: "UPI" },
+                        { value: "check", label: "Check" },
+                      ]}
+                    />
+                  </div>
+                  {paymentDetails.mode && (
+                    <div className="OpdBilling-grid-sec">
+                      <FloatingInput
+                        label="Amount"
+                        htmlFor="amount"
+                        type="text"
+                        id="amount"
+                        name="amount"
+                        value={paymentDetails.amount}
+                        onChange={(e) => {
+                          let amount = e.target.value.replace(/[^0-9.]/g, "");
+                          setPaymentDetails({ ...paymentDetails, amount });
+                        }}
+                      />
+                      {paymentDetails.mode === "card" && (
+                        <FloatingInput
+                          label="Card Number"
+                          htmlFor="cardNumber"
+                          type="text"
+                          id="cardNumber"
+                          value={paymentDetails.cardNumber}
+                          onChange={(e) =>
+                            setPaymentDetails({
+                              ...paymentDetails,
+                              cardNumber: e.target.value,
+                            })
+                          }
+                        />
+                      )}
+                      {paymentDetails.mode === "upi" && (
+                        <FloatingInput
+                          label="UPI ID"
+                          htmlFor="upiId"
+                          type="text"
+                          id="upiId"
+                          value={paymentDetails.upiId}
+                          onChange={(e) =>
+                            setPaymentDetails({
+                              ...paymentDetails,
+                              upiId: e.target.value,
+                            })
+                          }
+                        />
+                      )}
+                      {paymentDetails.mode === "check" && (
+                        <>
+                          <FloatingInput
+                            label="Check Number"
+                            htmlFor="checkNumber"
+                            type="text"
+                            id="checkNumber"
+                            value={paymentDetails.checkNumber}
+                            onChange={(e) =>
+                              setPaymentDetails({
+                                ...paymentDetails,
+                                checkNumber: e.target.value,
+                              })
+                            }
+                          />
+                          <FloatingInput
+                            label="Check Date"
+                            type="date"
+                            id="checkDate"
+                            value={paymentDetails.checkDate}
+                            onChange={(e) =>
+                              setPaymentDetails({
+                                ...paymentDetails,
+                                checkDate: e.target.value,
+                              })
+                            }
+                          />
+                        </>
+                      )}
+                    </div>
+                  )}
+                </div>
                 <div className="payment-actions">
-                  <button
-                    onClick={() =>
-                      handleAddPayment(
-                        selectedPaymentMode,
-                        paymentDetails.amount,
-                        paymentDetails
-                      )
-                    }
-                  >
-                    Add Payment
+                  <button onClick={handleAddPayment}>
+                    {selectedPaymentIndex !== null
+                      ? "Save Changes"
+                      : "Add Payment"}
                   </button>
                 </div>
-              )}
+              </div>
             </div>
-          </div>
-          <div className="billing-opd-com-panel-payment">
-            <div className="billing-opd-com-panel-content">
-              <div className="payment-summary">
-                <h4>Added Payments</h4>
-                <table className="payment-table">
-                  <thead>
-                    <tr>
-                      <th>Mode</th>
-                      <th>Amount</th>
-                      <th>Details</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {addedPayments.map((payment, index) => (
-                      <tr key={index}>
-                        <td>{payment.mode}</td>
-                        <td>
-                          {editableRow === index ? (
-                            <input
-                              type="number"
-                              value={editingPayment.amount || ""}
-                              onChange={(e) =>
-                                setEditingPayment({
-                                  ...editingPayment,
-                                  amount: e.target.value,
-                                })
-                              }
-                            />
-                          ) : (
-                            payment.details.amount
-                          )}
-                        </td>
-                        <td>
-                          {payment.mode === "card" && (
-                            <span>
-                              Card Number:{" "}
-                              {editableRow === index ? (
-                                <input
-                                  type="text"
-                                  value={editingPayment.cardNumber || ""}
-                                  onChange={(e) =>
-                                    setEditingPayment({
-                                      ...editingPayment,
-                                      cardNumber: e.target.value,
-                                    })
-                                  }
-                                />
-                              ) : (
-                                payment.details.cardNumber
-                              )}
-                            </span>
-                          )}
-                          {payment.mode === "upi" && (
-                            <span>
-                              UPI ID:{" "}
-                              {editableRow === index ? (
-                                <input
-                                  type="text"
-                                  value={editingPayment.upiId || ""}
-                                  onChange={(e) =>
-                                    setEditingPayment({
-                                      ...editingPayment,
-                                      upiId: e.target.value,
-                                    })
-                                  }
-                                />
-                              ) : (
-                                payment.details.upiId
-                              )}
-                            </span>
-                          )}
-                          {payment.mode === "check" && (
-                            <span>
-                              Check Number:{" "}
-                              {editableRow === index ? (
-                                <input
-                                  type="text"
-                                  value={editingPayment.checkNumber || ""}
-                                  onChange={(e) =>
-                                    setEditingPayment({
-                                      ...editingPayment,
-                                      checkNumber: e.target.value,
-                                    })
-                                  }
-                                />
-                              ) : (
-                                payment.details.checkNumber
-                              )}
-                              , Check Date:{" "}
-                              {editableRow === index ? (
-                                <input
-                                  type="date"
-                                  value={editingPayment.checkDate || ""}
-                                  onChange={(e) =>
-                                    setEditingPayment({
-                                      ...editingPayment,
-                                      checkDate: e.target.value,
-                                    })
-                                  }
-                                />
-                              ) : (
-                                payment.details.checkDate
-                              )}
-                            </span>
-                          )}
-                        </td>
-                        <td>
-                          {editableRow === index ? (
+            <div className="billing-opd-com-panel-payment OpdBilling-section">
+              <div className="OpdBilling-header">Added Payments</div>
+              <div className="billing-opd-com-panel-content">
+                <div className="payment-summary">
+                  <table className="payment-table">
+                    <thead>
+                      <tr>
+                        <th>Mode</th>
+                        <th>Amount</th>
+                        <th>Details</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {addedPayments.map((payment, index) => (
+                        <tr key={index}>
+                          <td>{payment.mode}</td>
+                          <td>{payment.amount}</td>
+                          <td>
+                            {payment.mode === "card" && (
+                              <span>Card Number: {payment.cardNumber}</span>
+                            )}
+                            {payment.mode === "upi" && (
+                              <span>UPI ID: {payment.upiId}</span>
+                            )}
+                            {payment.mode === "check" && (
+                              <span>
+                                Check Number: {payment.checkNumber}, Check Date:{" "}
+                                {payment.checkDate}
+                              </span>
+                            )}
+                          </td>
+                          <td>
                             <button
                               className="opd-billing-button"
-                              onClick={() => handleSaveEdit(index)}
-                            >
-                              Save
-                            </button>
-                          ) : (
-                            <button
-                              className="opd-billing-button"
-                              onClick={() => handleEditPayment(index)}
+                              onClick={() => handleEditPayment(index, payment)}
                             >
                               Edit
                             </button>
-                          )}
-                          <button
-                            className="opd-billing-button-remove"
-                            onClick={() => handleRemovePayment(index)}
-                          >
-                            X
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                            <button
+                              className="opd-billing-button-remove"
+                              onClick={() => handleRemovePayment(index)}
+                            >
+                              X
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="billing-opd-com-action-buttons">
-          <button className="btn-blue" onClick={handleSubmit}>
-            Save
-          </button>
+          <div className="billing-opd-com-action-buttons">
+            <button className="btn-blue" onClick={handleSubmit}>
+              Save
+            </button>
+            <button className="btn-blue" onClick={() => resetForm()}>
+              Clear
+            </button>
+            {/* <button
+              className="billing-opd-com-action-buttons"
+              onClick={() => handlePrintBilling()}
+              disabled={!isPrintEnabled}
+            >
+              Print
+            </button> */}
+          </div>
         </div>
       </div>
-    </div>
+
+      {billFromResponse && (
+        <CustomModal
+          isOpen={billFromResponse ? true : false}
+          onClose={() => setBillFromResponse(null)}
+        >
+          <OpdBillingPrint formData={billFromResponse} />
+        </CustomModal>
+      )}
+    </>
   );
 };
 export default OpdBilling;

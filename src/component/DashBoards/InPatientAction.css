@@ -323,9 +323,9 @@
   border-radius: 50%;
   background: linear-gradient(160deg, #ffffff 50%, #004255 50%);
   z-index: 1;
-}
-
-.patient-img::after {
+  }
+  
+  .patient-img::after {
   content: "";
   position: absolute;
   top: -2px;
@@ -797,7 +797,7 @@
   .Patient-Dashboard-btnIpd {
     margin-top: 25px;
   }
-
+  
   .Patient-Dashboard-textSurname {
     padding-left: 5px;
   }
@@ -833,11 +833,11 @@
     margin-top: 5px;
     margin-left: 8px;
   }
-
+  
   .Patient-Dashboard-right-aside {
     width: 100%;
   }
-
+  
   .Patient-Dashboard-divOne {
     display: flex;
     align-items: center;
@@ -927,3 +927,36 @@
   align-items: center;
   color: white;
 }
+
+.Patient-Dashboard-btn-delbtn
+{
+  display: flex;
+  gap: 5px;
+}
+.Patient-Dashboard-btn-del {
+  width: 65px;
+  border-radius: 5px;
+  border: 1px solid #da0303;
+  background-color: #da0303;
+  color: white;
+}
+
+.Patient-Dashboard-btn-del:hover {
+  color: #da0303;
+  background-color: var(--button-hover-background-color);
+}
+  .Patient-Dashboard-btn-print {
+    width: 65px;
+    border-radius: 5px;
+    padding: 3px 5px;
+    border: 1px solid var(--button-hover-border-color);
+    background-color: var(--button-color);
+    color: white;
+    margin-left: 5px;
+  }
+  
+  .Patient-Dashboard-btn-print:hover {
+    border: 1px solid var(--button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }

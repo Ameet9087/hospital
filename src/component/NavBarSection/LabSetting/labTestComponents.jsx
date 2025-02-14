@@ -3,7 +3,7 @@ import "../LabSetting/labTestComponents.css";
 import LSLabTestAddNLTest from "./lSLabTestAddNLTest";
 import LabTestComponentsAddNewLTC from "./labTestComponentsAddNewLTC";
 
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
 import { FloatingInput } from "../../../FloatingInputs";
@@ -58,11 +58,11 @@ const LabTestComponent = () => {
 
   const filteredLabComponents = labComponentData
     ? labComponentData.filter(
-        (test) =>
-          test.componentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          test.displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          test.unit.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      (test) =>
+        test.componentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        test.displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        test.unit.toLowerCase().includes(searchTerm.toLowerCase())
+    )
     : [];
 
   return (
@@ -92,10 +92,10 @@ const LabTestComponent = () => {
       <div className="labTestComponents-search-N-result">
         <div className="labTestComponents-search-bar">
           <FloatingInput
-           type="text"
-           label={"Search"}
-           value={searchTerm}
-           onChange={handleSearchChange}
+            type="text"
+            label={"Search"}
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
         </div>
         <div className="labTestComponents-results-info">

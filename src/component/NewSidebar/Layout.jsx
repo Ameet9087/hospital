@@ -53,7 +53,7 @@ import MainVisitorFile from "../VisitorMgt/MainVisitorFile";
 import OtMain from "../OperationTheater/OtMain";
 
 import AssetmgntNavBar from "../ASsetManagement/assetmgnt";
-import BillingRoute from "../Billings/billing";
+import BillingRoute from "../Billings/Billing";
 import AccountComponent from "../Accounting/AccountingComponent";
 import IMSRoutes from "../LaundryManagementSystem/lMSRoutes";
 import AutopsyNavbar from "../Autopsy/Autopsy NavBar/AutopsyNavbar";

@@ -2,7 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import "./GoodsReceiptForm.css";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
-import PopupTable from "../Admission/PopupTable";
+import PopupTable from "../../FloatingInputs/PopupTable";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hasValue, setHasValue] = useState(!!value);
@@ -348,7 +350,9 @@ const GoodsReceiptForm = ({ receivedPO, onClose }) => {
           pharmacyItemMasterId: Number(item.addItemId),
         },
       })),
+
     };
+
     console.log(data);
 
     axios
@@ -363,7 +367,95 @@ const GoodsReceiptForm = ({ receivedPO, onClose }) => {
           error.response ? error.response.data : error
         );
       });
+
   };
+
+
+
+
+
+  const handlePrint = () => {
+    const doc = new jsPDF('l', 'mm', 'a4');
+
+    // Set the title and other header information
+    doc.setFontSize(16);
+    doc.text('Goods Receipt Report', doc.internal.pageSize.width / 2, 15, { align: 'center' });
+    doc.setFontSize(10);
+    doc.text(`Supplier Bill Date: ${supplierBillDate}`, 14, 25);
+    doc.text(`Goods Receipt Date: ${goodsReceiptDate}`, 14, 30);
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, 219, 25);
+
+    // Prepare the table data
+    const tableData = items.map((item, index) => [
+      index + 1,
+      item.itemName,
+      item.batchNo,
+      item.expiryDate,
+      item.quantity,
+      item.freeQuantity,
+      item.totalQuantity,
+      item.rate,
+      item.marginPercentage,
+      item.ccChargePercentage,
+      item.ccAmount,
+      item.subTotal,
+      item.discountPercentage,
+      item.discountAmount,
+      item.vatPercentage,
+      item.vatAmount,
+      item.totalAmount,
+    ]);
+
+    // Define the table headers
+    const headers = [
+      "S.No",
+      "Item Name",
+      "Batch No",
+      "Expiry Date",
+      "Quantity",
+      "Free Quantity",
+      "Total Quantity",
+      "Rate",
+      "Margin %",
+      "CC Charge %",
+      "CC Amt",
+      "Sub Total",
+      "Discount %",
+      "Discount Amt",
+      "VAT %",
+      "VAT Amt",
+      "Total Amount"
+    ];
+
+    // Add the table to the PDF
+    doc.autoTable({
+      head: [headers],
+      body: tableData,
+      startY: 40,
+      styles: {
+        fontSize: 8,
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: [51, 122, 183],
+        textColor: 255,
+        fontSize: 9,
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+    });
+
+    // Add the total amount at the end of the PDF
+    const lastY = doc.lastAutoTable.finalY;
+    doc.text(`Total Amount: ₹${totals.totalAmount.toFixed(2)}`, 14, lastY + 10);
+
+    // Open the PDF in a new tab
+    const pdfOutput = doc.output('bloburl');
+    window.open(pdfOutput, '_blank');
+  };
+
 
   const handleSelect = (data) => {
     if (activePopup === "supplier") {
@@ -401,6 +493,7 @@ const GoodsReceiptForm = ({ receivedPO, onClose }) => {
     // Update the state
     setItems(updatedItems);
   };
+
   return (
     <div className="GoodsReceiptForm-container">
       <div className="GoodsReceiptForm-header">Add Good Receipt</div>
@@ -787,28 +880,20 @@ const GoodsReceiptForm = ({ receivedPO, onClose }) => {
           </button>
         </div>
         {/* </div> */}
+        <button
+          type="button"
+          className="purchase-order-print-button"
+          onClick={handlePrint}
+        >
+          <i className="fa-solid fa-print"></i> Print
+        </button>
       </form >
-      {/* {isAddGRItemFormOpen && (
-        <CustomModal
-          title="Add GR Item"
-          onClose={() => setIsAddGRItemFormOpen(false)}
-          isOpen={isAddGRItemFormOpen}
-        >
-          <AddGRItemForm
-            onSubmit={(item) => setItems([...items, item])}
-            onClose={() => setIsAddGRItemFormOpen(false)}
-          />
-        </CustomModal>
-      )} */}
-      {/* {isAddSupplierModalOpen && (
-        <CustomModal
-          title="Add Supplier"
-          onClose={() => setIsAddSupplierModalOpen(false)}
-          isOpen={isAddSupplierModalOpen}
-        >
-          <AddSupplierForm onClose={() => setIsAddSupplierModalOpen(false)} />
-        </CustomModal>
-      )} */}
+
+
+
+
+
+
       {
         activePopup && (
           <PopupTable

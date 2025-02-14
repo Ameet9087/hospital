@@ -1,26 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import * as XLSX from 'xlsx';
-import { API_BASE_URL } from '../api/api';
-import PurchaseOrderForm from './PurchaseOrderForm';
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import * as XLSX from "xlsx";
+import { API_BASE_URL } from "../api/api";
+import PurchaseOrderForm from "./PurchaseOrderForm";
 import CustomModel from "../../CustomModel/CustomModal";
-import './PurchaseOrder.css';
-import { startResizing } from '../../TableHeadingResizing/ResizableColumns';
-import GoodsReceiptForm from './GoodsReceiptForm';
-import PurchaseOrderBillPrint from './PurchaseOrderBillPrint';
+import "./PurchaseOrder.css";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import GoodsReceiptForm from "./GoodsReceiptForm";
+import PurchaseOrderBillPrint from "./PurchaseOrderBillPrint";
+import UpdatePurchaseOrder from "./UpdatePurchaseOrder";
 const PurchaseOrder = () => {
   const [purchaseOrders, setPurchaseOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
+  const [showSaveModal, setShowSaveModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [addGoodReceipt, setAddGoodReceipt] = useState(false);
-  const [viewBillModal, setViewBillModal] = useState(false); // New state for PurchaseOrderBillPrint modal
+  const [viewBillModal, setViewBillModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState();
   const [columnWidths, setColumnWidths] = useState({});
-  const [filterDates, setFilterDates] = useState({ fromDate: '', toDate: '' });
-  const [searchText, setSearchText] = useState('');
+  const [filterDates, setFilterDates] = useState({ fromDate: "", toDate: "" });
+  const [searchText, setSearchText] = useState("");
   const tableRef = useRef(null);
-  const handleOpenModal = () => setShowEditModal(true);
-  const handleCloseModal = () => setShowEditModal(false);
+  const handleOpenModal = () => setShowSaveModal(true);
+  const handleCloseModal = () => setShowSaveModal(false);
   useEffect(() => {
     fetchPurchaseOrders();
   }, []);
@@ -35,7 +37,7 @@ const PurchaseOrder = () => {
       setPurchaseOrders(response.data);
       setFilteredOrders(response.data);
     } catch (error) {
-      console.error('Error fetching purchase orders:', error);
+      console.error("Error fetching purchase orders:", error);
     }
   };
   const handleDateChange = (e) => {
@@ -50,7 +52,9 @@ const PurchaseOrder = () => {
     if (filterDates.fromDate || filterDates.toDate) {
       filtered = filtered.filter((order) => {
         const deliveryDate = new Date(order.deliveryDate);
-        const fromDate = filterDates.fromDate ? new Date(filterDates.fromDate) : null;
+        const fromDate = filterDates.fromDate
+          ? new Date(filterDates.fromDate)
+          : null;
         const toDate = filterDates.toDate ? new Date(filterDates.toDate) : null;
         if (fromDate && toDate) {
           return deliveryDate >= fromDate && deliveryDate <= toDate;
@@ -80,11 +84,20 @@ const PurchaseOrder = () => {
     setSelectedItem(item); // Set the selected item to view
     setViewBillModal(true); // Open the modal
   };
+  const handleSave = (order) => {
+    setShowSaveModal(true);
+  };
+
+  const handleEdit = (order) => {
+    setSelectedItem(order);
+    setShowEditModal(true);
+  };
+
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport');
-    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
+    XLSX.utils.book_append_sheet(wb, ws, "PurchaseOrderReport");
+    XLSX.writeFile(wb, "PurchaseOrderReport.xlsx");
   };
   // Function to trigger print
   const handlePrint = () => {
@@ -125,17 +138,35 @@ const PurchaseOrder = () => {
       </button>
       <div className="purchase-order-header">
         <div className="purchase-order-status-filters">
-          <label><input type="checkbox" defaultChecked /> Pending</label>
-          <label><input type="checkbox" /> Completed</label>
-          <label><input type="checkbox" /> Cancelled</label>
-          <label><input type="checkbox" /> All</label>
+          <label>
+            <input type="checkbox" defaultChecked /> Pending
+          </label>
+          <label>
+            <input type="checkbox" /> Completed
+          </label>
+          <label>
+            <input type="checkbox" /> Cancelled
+          </label>
+          <label>
+            <input type="checkbox" /> All
+          </label>
         </div>
       </div>
       <div className="purchase-order-date-range">
         <label htmlFor="fromDate">From:</label>
-        <input type="date" id="fromDate" value={filterDates.fromDate} onChange={handleDateChange} />
+        <input
+          type="date"
+          id="fromDate"
+          value={filterDates.fromDate}
+          onChange={handleDateChange}
+        />
         <label htmlFor="toDate">To:</label>
-        <input type="date" id="toDate" value={filterDates.toDate} onChange={handleDateChange} />
+        <input
+          type="date"
+          id="toDate"
+          value={filterDates.toDate}
+          onChange={handleDateChange}
+        />
       </div>
       <div className="purchase-order-search-container">
         <input
@@ -146,8 +177,13 @@ const PurchaseOrder = () => {
           onChange={handleSearchChange}
         />
         <div className="purchase-order-search-right">
-          <span className="purchase-results-count-span">Showing {filteredOrders.length} / {purchaseOrders.length} results</span>
-          <button className="purchase-order-print-button" onClick={handleExport}>
+          <span className="purchase-results-count-span">
+            Showing {filteredOrders.length} / {purchaseOrders.length} results
+          </span>
+          <button
+            className="purchase-order-print-button"
+            onClick={handleExport}
+          >
             <i className="fa-solid fa-file-excel"></i> Export
           </button>
           <button className="purchase-order-print-button" onClick={handlePrint}>
@@ -155,26 +191,45 @@ const PurchaseOrder = () => {
           </button>
         </div>
       </div>
-      <CustomModel isOpen={showEditModal} onClose={handleCloseModal}>
+      <CustomModel isOpen={showSaveModal} onClose={handleCloseModal}>
         <PurchaseOrderForm />
+      </CustomModel>
+      <CustomModel
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+      >
+        <UpdatePurchaseOrder purchaseOrder={selectedItem} />
       </CustomModel>
       <div className="table-container">
         <table ref={tableRef}>
           <thead>
             <tr>
-              {["PO ID", "Date", "Supplier", "Delivery Date", "Total Amount", "Status", "Action"].map(
-                (header, index) => (
-                  <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                    <div className="header-content">
-                      <span>{header}</span>
-                      <div
-                        className="resizer"
-                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                      ></div>
-                    </div>
-                  </th>
-                )
-              )}
+              {[
+                "PO ID",
+                "Date",
+                "Supplier",
+                "Delivery Date",
+                "Total Amount",
+                "Status",
+                "Action",
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -183,30 +238,57 @@ const PurchaseOrder = () => {
                 <tr key={order.purchaseOrderId}>
                   <td>{order.poId}</td>
                   <td>{order.poDate}</td>
-                  <td>{order.supplierDTO?.supplierName || 'N/A'}</td>
+                  <td>{order.supplierDTO?.supplierName || "N/A"}</td>
                   <td>{order.deliveryDate}</td>
                   <td>{order.totalAmount}</td>
                   <td>{order.status}</td>
                   <td>
                     <div className="pharmacy-btn">
-                      <button className="pobtn-view" onClick={() => handleViewBill(order)}>View</button>
-                      <button className="pobtn-view" onClick={() => handleAddGoodReceipt(order)}>Add Good Receipt</button>
+                      <button
+                        className="pobtn-view"
+                        onClick={() => handleViewBill(order)}
+                      >
+                        View
+                      </button>
+                      <button
+                        className="pobtn-view"
+                        onClick={() => handleAddGoodReceipt(order)}
+                      >
+                        Add Good Receipt
+                      </button>
+                      <button
+                        className="pobtn-view"
+                        onClick={() => handleEdit(order)}
+                      >
+                        Edit
+                      </button>
                     </div>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="purchase-order-no-rows">No Rows To Show</td>
+                <td colSpan="6" className="purchase-order-no-rows">
+                  No Rows To Show
+                </td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-      <CustomModel isOpen={addGoodReceipt} onClose={() => setAddGoodReceipt(false)}>
-        <GoodsReceiptForm receivedPO={selectedItem} onClose={() => setAddGoodReceipt(false)} />
+      <CustomModel
+        isOpen={addGoodReceipt}
+        onClose={() => setAddGoodReceipt(false)}
+      >
+        <GoodsReceiptForm
+          receivedPO={selectedItem}
+          onClose={() => setAddGoodReceipt(false)}
+        />
       </CustomModel>
-      <CustomModel isOpen={viewBillModal} onClose={() => setViewBillModal(false)}>
+      <CustomModel
+        isOpen={viewBillModal}
+        onClose={() => setViewBillModal(false)}
+      >
         <PurchaseOrderBillPrint purchaseOrder={selectedItem} />
       </CustomModel>
     </div>
@@ -214,4 +296,3 @@ const PurchaseOrder = () => {
 };
 
 export default PurchaseOrder;
-

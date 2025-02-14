@@ -1,13 +1,16 @@
 
 .OpdBillingPrint-container {
-  width: 800px;
+  height: 550px;
   margin: auto;
   padding: 20px;
-  border: 2px solid #000; /* Add a border */
-  border-radius: 5px; /* Optional: rounded corners */
+  border: 2px solid #000;
+  border-radius: 5px;
   font-family: Arial, sans-serif;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for better visibility */
-  background-color: #fff; /* Optional: ensure a white background */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  background-color: #fff;
+  overflow-y: scroll;
+}
+.OpdBillingPrint-data{
 }
 
   
@@ -41,7 +44,9 @@
   .OpdBillingPrint-table th {
     background-color: #f4f4f4;
   }
-  
+.opdBillingPrint-paymentModes{
+  display: block;
+}  
   .OpdBillingPrint-footer {
     margin-top: 20px;
     font-size: 14px;

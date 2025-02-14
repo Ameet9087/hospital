@@ -1,6 +1,13 @@
+
+
+
+
+
 import React, { useState, useEffect } from 'react';
 import './AddBreakageItem.css';
 import { API_BASE_URL } from '../api/api';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const AddBreakeageItem = () => {
   const [items, setItems] = useState([
@@ -21,21 +28,20 @@ const AddBreakeageItem = () => {
   const [breakageDate, setBreakageDate] = useState('');
   const [remark, setRemark] = useState('');
   const [itemList, setItemList] = useState([]);
-  const [successMessage, setSuccessMessage] = useState('');  // New state for success message
+  const [successMessage, setSuccessMessage] = useState('');
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/add-item`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        
         if (Array.isArray(data)) {
           const extractedItems = data.map((item) => ({
             id: item?.addItemId,
             name: item?.itemMaster?.itemName,
             quantity: item.itemQty,
-            batchNo:item.batchNo,
-            expDate:item.expiryDate,
+            batchNo: item.batchNo,
+            expDate: item.expiryDate,
             salePrice: item.salePrice,
           }));
           setItemList(extractedItems);
@@ -151,8 +157,8 @@ const AddBreakeageItem = () => {
         updatedItems[index] = {
           ...updatedItems[index],
           avlQty: selectedItem.quantity,
-          batch:selectedItem.batchNo,
-          expDate:selectedItem.expDate,
+          batch: selectedItem.batchNo,
+          expDate: selectedItem.expDate,
           salePrice: selectedItem.salePrice,
         };
       }
@@ -161,6 +167,7 @@ const AddBreakeageItem = () => {
     setItems(updatedItems);
     updateTotalAmountWords(updatedItems);
   };
+
   const handleRequest = () => {
     const postData = {
       subTotal: items.reduce((sum, item) => sum + item.subTotal, 0),
@@ -177,7 +184,7 @@ const AddBreakeageItem = () => {
         },
       })),
     };
-  
+
     fetch(`${API_BASE_URL}/breakage-items`, {
       method: 'POST',
       headers: {
@@ -192,7 +199,64 @@ const AddBreakeageItem = () => {
       })
       .catch((error) => console.error('Error posting data:', error));
   };
-  
+
+  const handlePrint = () => {
+    const doc = new jsPDF('l', 'mm', 'a4');
+    doc.setFontSize(16);
+    doc.text('Breakage Item Report', doc.internal.pageSize.width / 2, 15, { align: 'center' });
+    doc.setFontSize(10);
+    doc.text(`Breakage Date: ${breakageDate}`, 14, 25);
+    doc.text(`Total Amount: ${items.reduce((sum, item) => sum + item.totalAmount, 0)}`, 14, 35);
+
+    const tableData = items.map((item) => [
+      item.itemName,
+      item.avlQty,
+      item.batch,
+      item.expDate,
+      item.qty,
+      item.salePrice,
+      item.subTotal,
+      item.discount,
+      item.vat,
+      item.totalAmount,
+    ]);
+
+    const headers = [
+      'Item Name',
+      'Avl Qty',
+      'Batch',
+      'Exp Date',
+      'Qty',
+      'Sale Price',
+      'Sub Total',
+      'Discount Amt',
+      'VAT %',
+      'Total Amount',
+    ];
+
+    doc.autoTable({
+      head: [headers],
+      body: tableData,
+      startY: 45,
+      styles: {
+        fontSize: 8,
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: [51, 122, 183],
+        textColor: 255,
+        fontSize: 9,
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+    });
+
+    const pdfOutput = doc.output('bloburl');
+    window.open(pdfOutput, '_blank');
+  };
+
   return (
     <div className="breakage-container">
       <div className="breakage-header">
@@ -329,9 +393,12 @@ const AddBreakeageItem = () => {
           Request
         </button>
         <button className="cancel-button">Cancel</button>
+        <button className="cancel-button" onClick={handlePrint}>
+          Print
+        </button>
       </div>
 
-      {successMessage && <div className="success-message">{successMessage}</div>} {/* Show success message */}
+      {successMessage && <div className="success-message">{successMessage}</div>}
     </div>
   );
 };

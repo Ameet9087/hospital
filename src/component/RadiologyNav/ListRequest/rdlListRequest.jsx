@@ -4,8 +4,8 @@ import React, { useState, useEffect, useRef } from "react";
 import "../ListRequest/rdlListRequest.css";
 import AddReportForm from "./rdlAddReport";
 import RDLAddScanDoneDetails from "./rdlScanDone";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
-import { API_BASE_URL } from "../../api/api"; 
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { API_BASE_URL } from "../../api/api";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
 import { toast } from "react-toastify";
@@ -139,7 +139,7 @@ function RDLListRequest() {
       const matchesFilter =
         selectedFilter === "--All--" ||
         request.imagingItemDTO?.imagingType?.imagingTypeName?.toUpperCase() ===
-          selectedFilter;
+        selectedFilter;
 
       const matchesSearch = [
         request.inPatientDTO?.firstName || "",

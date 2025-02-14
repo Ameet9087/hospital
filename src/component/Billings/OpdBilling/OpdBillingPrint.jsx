@@ -2,16 +2,48 @@ import React, { useRef } from "react";
 import "./OpdBillingPrint.css"; // Make sure the CSS file is created for styling
 import { useLocation } from "react-router-dom";
 
-const OpdBillingPrint = () => {
+const OpdBillingPrint = (formData) => {
   const printRef = useRef(null);
-  const location = useLocation();
-  const { selectedPatient, testGridTableRowsableRows, netAmount,selectedPaymentMode,billFromResponse,selectedDoctor } = location.state || {};
+  console.log(formData);
 
   // Function to convert number to words
   const convertNumberToWords = (num) => {
-    const singleDigits = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
-    const doubleDigits = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
-    const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+    const singleDigits = [
+      "",
+      "One",
+      "Two",
+      "Three",
+      "Four",
+      "Five",
+      "Six",
+      "Seven",
+      "Eight",
+      "Nine",
+    ];
+    const doubleDigits = [
+      "Ten",
+      "Eleven",
+      "Twelve",
+      "Thirteen",
+      "Fourteen",
+      "Fifteen",
+      "Sixteen",
+      "Seventeen",
+      "Eighteen",
+      "Nineteen",
+    ];
+    const tens = [
+      "",
+      "",
+      "Twenty",
+      "Thirty",
+      "Forty",
+      "Fifty",
+      "Sixty",
+      "Seventy",
+      "Eighty",
+      "Ninety",
+    ];
     const thousandPowers = ["", "Thousand", "Million", "Billion"];
 
     if (num === 0) return "Zero";
@@ -23,7 +55,9 @@ const OpdBillingPrint = () => {
       if (n < 10) return singleDigits[n] + " ";
       if (n < 20) return doubleDigits[n - 10] + " ";
       if (n < 100) return tens[Math.floor(n / 10)] + " " + getWords(n % 10, 0);
-      return singleDigits[Math.floor(n / 100)] + " Hundred " + getWords(n % 100, 0);
+      return (
+        singleDigits[Math.floor(n / 100)] + " Hundred " + getWords(n % 100, 0)
+      );
     };
 
     const chunks = [];
@@ -117,9 +151,9 @@ const OpdBillingPrint = () => {
   };
 
   return (
-    <div>
+    <div className="OpdBillingPrint-container">
       {/* Bill Design */}
-      <div ref={printRef} className="OpdBillingPrint-container">
+      <div ref={printRef} className="OpdBillingPrint-data">
         <div className="OpdBillingPrint-header">
           <h2>Hospital</h2>
           <p>
@@ -134,13 +168,14 @@ const OpdBillingPrint = () => {
         <div>
           <div className="OpdBillingPrint-bill-info">
             <label htmlFor="">
-              Bill Date: <span>{billFromResponse?.billing_date}</span>
+              Bill Date: <span>{formData.formData?.billing_date}</span>
             </label>
             <label htmlFor="">
-              Bill No: <span>{billFromResponse?.opdBillingId}</span>
+              Bill No: <span>{formData.formData?.opdBillingId}</span>
             </label>
             <label htmlFor="">
-              Consulting Doctor: <span>{selectedDoctor?.doctorName}</span>
+              Consulting Doctor:{" "}
+              <span>{formData.formData?.doctorDTO?.doctorName}</span>
             </label>
           </div>
         </div>
@@ -148,73 +183,84 @@ const OpdBillingPrint = () => {
         <div className="OpdBillingPrint-info">
           <div className="OpdBillingPrint-left">
             <p>
-              Patient Name: <span>{selectedPatient?.firstName}</span>
+              Patient Name:{" "}
+              <span>
+                {formData.formData.outPatientDTO?.patient?.firstName}{" "}
+                {formData.formData.outPatientDTO?.patient?.middleName}{" "}
+                {formData.formData.outPatientDTO?.patient?.lastName}
+              </span>
             </p>
             <p>
-              Age: <span>{selectedPatient?.age}</span>
+              Age: <span>{formData.formData.outPatientDTO?.patient?.age}</span>
             </p>
             <p>
-              Address: <span>{selectedPatient?.address}</span>
+              Address:{" "}
+              <span>{formData.formData.outPatientDTO?.patient?.address}</span>
             </p>
           </div>
           <div className="OpdBillingPrint-right">
             <p>
-              Gender: <span>{selectedPatient?.gender}</span>
+              Gender:{" "}
+              <span>{formData.formData.outPatientDTO?.patient?.gender}</span>
             </p>
             <p>
-              Patient ID: <span>{selectedPatient?.patientRegistrationId}</span>
+              UHID:{" "}
+              <span>{formData.formData.outPatientDTO?.patient?.uhid}</span>
             </p>
             <p>
-              Mobile No: <span>{selectedPatient?.contactNumber}</span>
+              Mobile No:{" "}
+              <span>
+                {formData.formData.outPatientDTO?.patient?.mobileNumber}
+              </span>
             </p>
           </div>
         </div>
-        {testGridTableRowsableRows && testGridTableRowsableRows.length > 0 && (
-          <table className="OpdBillingPrint-table">
-            <thead>
-              <tr>
-                <th>Sr No</th>
-                <th>OPD Services Details</th>
-                <th>QTY</th>
-                <th>Rate</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              {testGridTableRowsableRows.map((row, index) => (
-                <tr key={index}>
-                  <td>{row.sn}</td>
-                  <td>{row.serviceName}</td>
-                  <td>{row.qty}</td>
-                  <td>{row.rate}</td>
-                  <td>{row.netAmt}</td>
+        {formData.formData?.testGridOpdBillDTO &&
+          formData.formData?.testGridOpdBillDTO.length > 0 && (
+            <table className="OpdBillingPrint-table">
+              <thead>
+                <tr>
+                  <th>Sr No</th>
+                  <th>OPD Services Details</th>
+                  <th>QTY</th>
+                  <th>Rate</th>
+                  <th>Amount</th>
                 </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan={"2"}>
-                  Amount Received
-                  <br />
-                  {/* Displaying netAmount in words */}
-                  {convertNumberToWords(netAmount)}
-                </td>
+              </thead>
+              <tbody>
+                {formData.formData?.testGridOpdBillDTO.map((row, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{row.serviceDetailsDTO.serviceName}</td>
+                    <td>{row.quantity}</td>
+                    <td>{row.rate}</td>
+                    <td>{row.netAmount}</td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colSpan={"2"}>
+                    Amount Received
+                    <br />
+                    {convertNumberToWords(formData.formData.totalAmount)}
+                  </td>
 
-                <td colSpan={"2"}>
-                  Total Amount by: 
-                  {billFromResponse.paymentModeDTO?.map((paymentModeObj, index) => (
-                    <span key={paymentModeObj.opdbillingPaymentModeID}>
-                      {paymentModeObj.paymentMode} ({paymentModeObj.amount})
-                      {index < billFromResponse.paymentModeDTO.length - 1 && ', '}
-                    </span>
-                  ))}
-                </td>
-                {/* <td>Total Amount by {billFromResponse.paymentModeDTO?.[0]?.paymentMode}</td> */}
-                <td>{netAmount}</td>
-              </tr>
-            </tfoot>
-          </table>
-        )}
+                  <td colSpan={"2"}>
+                    Total Amount by:
+                    {formData.formData.paymentModeDTO?.map(
+                      (paymentModeObj, index) => (
+                        <span className="opdBillingPrint-paymentModes" key={paymentModeObj.opdbillingPaymentModeID}>
+                          {paymentModeObj.paymentMode} ({paymentModeObj.amount})
+                        </span>
+                      )
+                    )}
+                  </td>
+                  <td>{formData.formData.totalAmount}</td>
+                </tr>
+              </tfoot>
+            </table>
+          )}
 
         <div className="OpdBillingPrint-footer">
           <p>
@@ -233,7 +279,6 @@ const OpdBillingPrint = () => {
         </div>
       </div>
 
-      {/* Print Button */}
       <button onClick={handlePrint} className="OpdBillingPrint-print-button">
         Print Bill
       </button>

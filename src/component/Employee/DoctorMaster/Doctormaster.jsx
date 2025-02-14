@@ -15,12 +15,19 @@ import { toast } from "react-toastify";
 const DoctorMaster = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const [selectedTab, setSelectedTab] = useState("doctorFee");
+  const [locations, setLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
+  const [showLocationModal, setShowLocationModal] = useState(false);
   const tableRef = useRef(null);
   const [modelOpen, setModelOpen] = useState(false);
   const [doctorData, setDoctorData] = useState([]);
   const [allPaytype, setAllPaytype] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [doctorId, setDoctorId] = useState();
+
+  const [locationData, setLocationData] = useState([
+    { id: "", locationName: "", locationCode: "" },
+  ]);
 
   const [formdata, setFormdata] = useState({
     salutation: "Dr",
@@ -128,8 +135,14 @@ const DoctorMaster = () => {
     console.log(response.data);
   };
 
+  const fetchLocation = async () => {
+    const response = await axios.get(`${API_BASE_URL}/location-masters`);
+    setLocations(response.data);
+  };
+
   useEffect(() => {
     fetchSpecialisation();
+    fetchLocation();
   }, []);
 
   const fetchAllDoctorData = async () => {
@@ -147,6 +160,11 @@ const DoctorMaster = () => {
         columns: ["specialisationId", "specialisationName"],
         data: specialisation,
       };
+    } else if (showLocationModal) {
+      return {
+        columns: ["id", "locationName"],
+        data: locations,
+      };
     } else {
       return { columns: [], data: [] };
     }
@@ -161,6 +179,23 @@ const DoctorMaster = () => {
       specialization: data?.specialisationName,
     }));
     setShowModal(false);
+  };
+  const [selectedLocationIndex, setSelectedLocationIndex] = useState(0);
+
+  const handleLocationSelect = (data) => {
+    setSelectedLocation(data);
+
+    // Update the specific row in locationData
+    setLocationData((prevState) => {
+      const updatedLocationData = [...prevState];
+      updatedLocationData[selectedLocationIndex] = {
+        locationName: data.locationName,
+        locationCode: data.locationCode,
+      };
+      return updatedLocationData;
+    });
+
+    setShowLocationModal(false);
   };
 
   const fetchDataByPinCode = async (pincode) => {
@@ -194,9 +229,9 @@ const DoctorMaster = () => {
       prevState.map((row, i) =>
         i === index
           ? {
-              ...row,
-              [name]: value,
-            }
+            ...row,
+            [name]: value,
+          }
           : row
       )
     );
@@ -362,31 +397,86 @@ const DoctorMaster = () => {
 
   const handleSubmit = async () => {
     try {
+      // Validate required fields
+      if (!formdata.doctorName || !formdata.gender || !formdata.mobileNumber) {
+        toast.error("Please fill all required fields");
+        return;
+      }
+
+      // Structure the doctor data according to API requirements
       const doctordata = {
-        ...formdata,
+        salutation: formdata.salutation || "Dr.",
+        doctorName: formdata.doctorName,
+        gender: formdata.gender,
+        dob: formdata.dob,
+        anniversaryDate: formdata.anniversaryDate,
+        specialization: formdata.specialization,
+        pancardNo: formdata.pancardNo,
+        emailId: formdata.emailId,
+        degree: formdata.degree,
+        title: formdata.title,
+        registrationNo: formdata.registrationNo,
+        employeeType: formdata.employeeType,
+        doctorType: formdata.doctorType,
+        typeOfConsultant: formdata.typeOfConsultant,
+        complemetType: formdata.complemetType || "None",
+        residenceAddress: formdata.residenceAddress,
+        residenceCity: formdata.residenceCity,
+        residenceDistrict: formdata.residenceDistrict,
+        residenceState: formdata.residenceState,
+        residencePinCode: formdata.residencePinCode,
+        residencePhoneNo: formdata.residencePhoneNo,
+        mobileNumber: formdata.mobileNumber,
+        clinicAddress: formdata.clinicAddress,
+        clinicCity: formdata.clinicCity,
+        clinicDistrict: formdata.clinicDistrict,
+        clinicState: formdata.clinicState,
+        clinicPhoneNo: formdata.clinicPhoneNo,
+        validSvNos: formdata.validSvNos,
+        svValidDays: formdata.svValidDays,
+        doctorAssistantNo: formdata.doctorAssistantNo,
+        doctorAssistantDis: formdata.doctorAssistantDis,
+        unitMaster: formdata.unitMaster,
+
+        // Add specialization ID
         specialisationId: {
-          specialisationId: selectedSpecialisation?.specialisationId || 1,
+          specialisationId: selectedSpecialisation?.specialisationId || 1
         },
-        orgDoctorFees: doctorFeeTableRowsableRows.map((row) => ({
-          payType: { id: row.paytypeId },
-          morningFirstVisit: row.morningFirstVisit,
-          morningFirstVisitToDoctor: row.morningFirstVisitToDoctor,
-          morningSubVisit: row.morningSubVisit,
-          morningSubVisitToDoctor: row.morningSubVisitToDoctor,
-          morningEmergency: row.morningEmergency,
-          morningEmergencyToDoctor: row.morningEmergencyToDoctor,
-          eveningFirstVisit: row.eveningFirstVisit,
-          eveningFirstVisitToDoctor: row.eveningFirstVisitToDoctor,
-          eveningSubVisit: row.eveningSubVisit,
-          eveningSubVisitToDoctor: row.eveningSubVisitToDoctor,
-          eveningEmergency: row.eveningEmergency,
-          eveningEmergencyToDoctor: row.eveningEmergencyToDoctor,
-          referralVisit: row.referralVisit,
-          referralVisitToDoctor: row.referralVisitToDoctor,
-          generalOpdFee: row.generalOpdFee,
-          followupopdfees: row.followupopdfees,
-        })),
+
+        // Format location data
+        locationMasterDTOs: locationData
+          .filter(location => location.locationName)
+          .map(location => ({
+            id: location.id
+          })),
+
+        // Format doctor fees
+        orgDoctorFees: doctorFeeTableRowsableRows
+          .filter(fee => fee.generalOpdFee || fee.followupopdfees) // Only include rows with fees
+          .map(fee => ({
+            payType: {
+              id: fee.paytypeId
+            },
+            morningFirstVisit: fee.morningFirstVisit || 0,
+            morningFirstVisitToDoctor: fee.morningFirstVisitToDoctor || 0,
+            morningSubVisit: fee.morningSubVisit || 0,
+            morningSubVisitToDoctor: fee.morningSubVisitToDoctor || 0,
+            morningEmergency: fee.morningEmergency || 0,
+            morningEmergencyToDoctor: fee.morningEmergencyToDoctor || 0,
+            eveningFirstVisit: fee.eveningFirstVisit || 0,
+            eveningFirstVisitToDoctor: fee.eveningFirstVisitToDoctor || 0,
+            eveningSubVisit: fee.eveningSubVisit || 0,
+            eveningSubVisitToDoctor: fee.eveningSubVisitToDoctor || 0,
+            eveningEmergency: fee.eveningEmergency || 0,
+            eveningEmergencyToDoctor: fee.eveningEmergencyToDoctor || 0,
+            referralVisit: fee.referralVisit || 0,
+            referralVisitToDoctor: fee.referralVisitToDoctor || 0,
+            generalOpdFee: fee.generalOpdFee || 0,
+            followupopdfees: fee.followupopdfees || 0
+          }))
       };
+
+
 
       const formDataObj = new FormData();
 
@@ -396,31 +486,59 @@ const DoctorMaster = () => {
 
       const jsonData = JSON.stringify(doctordata);
       formDataObj.append("addDoctorDTO", jsonData);
+      console.log(JSON.stringify(doctorData, null, 2));
+
 
       let response;
       if (isEdit) {
         response = await axios.put(
           `${API_BASE_URL}/doctors/${doctorId}`,
-          formDataObj
+          formDataObj,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
         );
       } else {
-        response = await axios.post(`${API_BASE_URL}/doctors`, formDataObj);
+        response = await axios.post(
+          `${API_BASE_URL}/doctors`,
+          formDataObj,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        );
       }
 
-      if (response) {
+      if (response.data) {
         setModelOpen(false);
         clear();
         fetchAllDoctorData();
-        toast.success(
-          isEdit ? "Doctor Updated Successfully" : "Doctor Added Successfully"
-        );
+        toast.success(isEdit ? "Doctor Updated Successfully" : "Doctor Added Successfully");
         setIsEdit(false);
-      } else {
-        toast.error("Failed:", response.statusText);
       }
     } catch (error) {
-      toast.error("Error during submission:", error);
+      console.error("Error during submission:", error);
+      toast.error(error.response?.data?.message || "Error saving doctor data");
     }
+  };
+
+
+  const handleAdd = (index) => {
+    // Logic to add a new row
+    const newLocation = { locationName: "", locationCode: "" };
+    setLocationData([...locationData, newLocation]);
+  };
+  const handleDeletes = (index) => {
+    if (index === 0) {
+      alert("The first row cannot be deleted!");
+      return;
+    }
+    // Remove the selected row except the first one
+    const updatedData = locationData.filter((_, i) => i !== index);
+    setLocationData(updatedData);
   };
 
   const renderTable = () => {
@@ -660,6 +778,87 @@ const DoctorMaster = () => {
               </tbody>
             </table>
             <div className="doctor-com-master-summary-section"></div>
+          </div>
+        );
+
+      case "location":
+        return (
+          <div className="services-table">
+            <table ref={tableRef}>
+              <thead>
+                <tr>
+                  <th style={{ width: "100px" }} className="resizable-th">
+                    Action
+                  </th>
+                  {["Sr. No", "Location Name", "Location Code"].map(
+                    (header, index) => (
+                      <th
+                        key={index}
+                        style={{ width: columnWidths[index] }}
+                        className="resizable-th"
+                      >
+                        <div className="header-content">
+                          <span>{header}</span>
+                          <div
+                            className="resizer"
+                            onMouseDown={startResizing(
+                              tableRef,
+                              setColumnWidths
+                            )(index)}
+                          ></div>
+                        </div>
+                      </th>
+                    )
+                  )}
+                </tr>
+              </thead>
+              <tbody>
+                {locationData.map((location, index) => (
+                  <tr key={index}>
+                    {/* Action Buttons */}
+                    <td>
+                      <button
+                        onClick={() => handleAdd(index)}
+                        className="DoctorMaster-add-btn"
+                      >
+                        Add
+                      </button>
+                      <button
+                        onClick={() => handleDeletes(index)}
+                        className="DoctorMaster-delete-btn"
+                      >
+                        Delete
+                      </button>
+                    </td>
+
+                    <td>{index + 1}</td>
+                    <td>
+                      <div style={{ position: "relative" }}>
+                        <input
+                          type="text"
+                          value={location.locationName}
+                          onClick={() => {
+                            setSelectedLocationIndex(index); // Set the index of the row being edited
+                            setShowLocationModal(true);
+                          }}
+                          readOnly
+                          style={{ paddingRight: "30px" }}
+                        />
+                        <FontAwesomeIcon
+                          className="DoctorMastericon"
+                          icon={faSearch}
+                          onClick={() => {
+                            setSelectedLocationIndex(index); // Set the index of the row being edited
+                            setShowLocationModal(true);
+                          }}
+                        />
+                      </div>
+                    </td>
+                    <td>{location.locationCode}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         );
     }
@@ -1084,12 +1283,19 @@ const DoctorMaster = () => {
           </div>
           <div>
             <button
-              className={`doctormaster-service-button ${
-                selectedTab === "doctorFee" ? "active" : ""
-              }`}
+              className={`doctormaster-service-button ${selectedTab === "doctorFee" ? "active" : ""
+                }`}
               onClick={() => setSelectedTab("doctorFee")}
             >
               Doctor Fee
+            </button>
+
+            <button
+              className={`doctormaster-service-button ${selectedTab === "location" ? "active" : ""
+                }`}
+              onClick={() => setSelectedTab("location")}
+            >
+              Location
             </button>
           </div>
           <div>{renderTable()}</div>
@@ -1106,6 +1312,15 @@ const DoctorMaster = () => {
           data={data}
           onSelect={handleSelect}
           onClose={() => setShowModal(false)}
+        />
+      )}
+
+      {showLocationModal && (
+        <PopupTable
+          columns={columns}
+          data={data}
+          onSelect={handleLocationSelect}
+          onClose={() => setShowLocationModal(false)}
         />
       )}
     </>

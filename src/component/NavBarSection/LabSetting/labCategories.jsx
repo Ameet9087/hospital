@@ -5,7 +5,7 @@ import LabCategoryAddNewLC from "./labCategoryAddNewLC";
 import LabCategoryUpdateNewLC from "./LabCategoryUpdateNewLC";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { FloatingInput } from "../../../FloatingInputs";
 
 const LabCategories = () => {
@@ -77,11 +77,11 @@ const LabCategories = () => {
       <div className="labCategories-search-N-result">
         <div className="labCategories-search-bar">
           <FloatingInput
-          type="text"
-          label={"Search"}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          
+            type="text"
+            label={"Search"}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+
           />
         </div>
         <div className="labCategories-results-info">

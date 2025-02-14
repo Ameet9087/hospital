@@ -28,12 +28,13 @@ function Specialisations({ onClose }) {
   ]);
 
   const [specialisation, setSpecialisation] = useState({
-    specialisationName: "",
-    groupSpeciality: "",
-    description: "",
-    status: "Active",
-    hospitalSpecialisation: "Yes",
-    groupId: "",
+
+    specialisationName: '',
+    groupSpeciality: '',
+    description: '',
+    status: 'Active',
+    hospitalSpecialisation: 'Yes',
+    groupId: '',
   });
   const [message, setMessage] = useState("");
   const [specialisationsList, setSpecialisationsList] = useState([]);
@@ -124,7 +125,8 @@ function Specialisations({ onClose }) {
       setSpecialisation((prevState) => ({
         ...prevState,
         groupSpeciality: data.specialityGroup,
-        groupId: data.groupId,
+
+        groupId: data.groupId
       }));
     }
     if (activePopup === "location" && data) {
@@ -146,7 +148,9 @@ function Specialisations({ onClose }) {
       return { columns: ["specialityGroup"], data: specialisationsList };
     } else if (activePopup === "location") {
       return { columns: ["locationName"], data: locations };
-    } else {
+
+    }
+    else {
       return { columns: [], data: [] };
     }
   };
@@ -231,10 +235,63 @@ function Specialisations({ onClose }) {
           />
         </div>
 
-        <button
-          onClick={addSpecialisation}
-          className="specialisations__submit-button"
-        >
+
+        <div className="LocationsTable-container" tabIndex="0">
+          <div className="LocationsTable-header">
+            <span>LOCATIONS</span>
+            <span className="LocationsTable-instruction">(Control + Enter For New Row)</span>
+          </div>
+          <table className="LocationsTable-table">
+            <thead>
+              <tr>
+                <th>Add</th>
+                <th>SN</th>
+                <th>Locations</th>
+              </tr>
+            </thead>
+            <tbody>
+              {selectedLocation.map((location, index) => (
+                <tr key={index}>
+                  <td>
+                    {index === 0 ? (
+                      <span onClick={addRow} className="LocationsTable-action LocationsTable-add">
+                        Add
+                      </span>
+                    ) : (
+                      <span
+                        onClick={() => setSelectedLocation(locations.filter((_, i) => i !== index))}
+                        className="LocationsTable-action LocationsTable-delete"
+                      >
+                        Del
+                      </span>
+                    )}
+                  </td>
+                  <td>{index + 1}</td>
+                  <td>
+                    <input
+                      type="text"
+                      value={location.name}
+                      onChange={(e) => handleLocationChange(index, e.target.value)}
+                      className="LocationsTable-input"
+                    />
+                    <button
+                      type="button"
+                      className="search-icon-button"
+                      onClick={() => {
+                        setActivePopup("location");
+                        setEditingRowIndex(index);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faSearch} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <button onClick={addSpecialisation} className="specialisations__submit-button">
           Save Specialisation
         </button>
       </div>

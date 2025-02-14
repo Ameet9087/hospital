@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./DiscountAuthorityMaster.css";
 import axios from "axios";
-import PopupTable from "../../Admission/PopupTable";
+// import PopupTable from "../../Admission/PopupTable";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { API_BASE_URL } from "../../api/api";
@@ -10,7 +10,9 @@ import {
   FloatingInput,
   FloatingSelect,
   FloatingTextarea,
-} from "../../../FloatingInputs";
+} from "../../../FloatingInputs/index";
+
+import { PopupTable } from "../../../FloatingInputs/index";
 
 const DiscountAuthorityMaster = () => {
   const [activePopup, setActivePopup] = useState(null);
@@ -18,6 +20,25 @@ const DiscountAuthorityMaster = () => {
   const [userNameData, setUserNameData] = useState([]);
   const [fileInput, setFileInput] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [location, setLocation] = useState(null);
+
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/location-masters`);
+        setLocation(response.data);
+        console.log(response.data, "prachi");
+
+      } catch (error) {
+        console.error("Error fetching location data:", error);
+
+      }
+    };
+    fetchLocationData();
+  }, [])
+
+
   const [formData, setFormData] = useState({
     authorizationName: "",
     mobileNo: "",
@@ -108,6 +129,9 @@ const DiscountAuthorityMaster = () => {
             userName: formData.userName,
             employeeId: formData.id,
           },
+          locationMasterDTO: {
+            id: selectedLocation?.id
+          }
         };
 
         try {
@@ -181,6 +205,18 @@ const DiscountAuthorityMaster = () => {
         id: data.employeeId,
       }));
     }
+    else if (activePopup === "location") {
+      setSelectedLocation(data);
+      console.log(data, "selectedLocation");
+
+      // Update formData with the selected location's ID
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        locationMasterDTO: {
+          id: data.id, // Assuming 'data' contains the location with 'id' field
+        },
+      }));
+    }
     setActivePopup(null);
   };
 
@@ -192,6 +228,12 @@ const DiscountAuthorityMaster = () => {
           employeeId: user.employeeId,
           firstName: user.firstName,
         })),
+      };
+    }
+    else if (activePopup === "location") {
+      return {
+        columns: ["id", "locationName", "locationCode"],
+        data: location,
       };
     }
     return { columns: [], data: [] };
@@ -206,9 +248,20 @@ const DiscountAuthorityMaster = () => {
       <div className="DiscountAuthorityMaster-content">
         <div className="DiscountAuthorityMaster-section">
           {/* Form Fields */}
-          <div className="DiscountAuthorityMaster-data-name">
+          
+          <div className="DiscountAuthorityMaster-data">
             <FloatingInput
-              label="Authorization Name"
+              label={"Location"}
+              type="search"
+              value={selectedLocation?.locationName}
+              onChange={handleInputChange}
+              onIconClick={() => setActivePopup("location")}
+            />
+          </div>
+          <div className="DiscountAuthorityMaster-data">
+            <label>Authorization Name :</label>
+            <input
+
               type="text"
               name="authorizationName"
               value={formData.authorizationName}
@@ -342,8 +395,17 @@ const DiscountAuthorityMaster = () => {
           <button onClick={handleSubmit} disabled={isLoading}>
             {isLoading ? "Saving..." : "Save"}
           </button>
+
         </aside>
       </div>
+      {activePopup && (
+        <PopupTable
+          columns={columns}
+          data={data}
+          onSelect={handleSelect}
+          onClose={() => setActivePopup(null)}
+        />
+      )}
     </div>
   );
 };

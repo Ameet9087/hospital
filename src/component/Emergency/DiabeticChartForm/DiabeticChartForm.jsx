@@ -115,14 +115,24 @@ const DiabeticChartForm = () => {
     bloodSugarValuesCBG: receipt?.bloodSugarValuesCBG || "",
     urineAcetone: receipt?.urineAcetone || "",
   });
-
   const [rows, setRows] = useState([
-    { sn: 1, drug: "", dose: "", route: "", remarks: "" },
+    {
+      sn: 1,
+      drug: "",
+      drugid: "", // for addItems
+      dose: "",
+      route: "",
+      serviceName: "",
+      serviceId: "", // for serviceDetailsDTO
+      remarks: ""
+    },
   ]);
+
   const tableRef = useRef(null);
   const [mrNoData, setMrNoData] = useState([]);
   const [activePopup, setActivePopup] = useState(null);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null); // Track the selected row index
+  const [serviceDetails, setServiceDetails] = useState([]); // Moved serviceDetails here
 
   useEffect(() => {
     if (activePopup === "MrNo") {
@@ -157,12 +167,33 @@ const DiabeticChartForm = () => {
           itemName: item.itemMaster?.itemName || "N/A",
         })),
       };
+    } else if (activePopup === "ServiceName") {
+      return {
+        columns: ["serviceDetailsId", "serviceName"],
+        data: serviceDetails.map((service) => ({
+          serviceDetailsId: service.serviceDetailsId,
+          serviceName: service.serviceName,
+        })),
+      };
     } else {
       return { columns: [], data: [] };
     }
   };
 
   const { columns, data } = getPopupData();
+
+  useEffect(() => {
+    const fetchServiceDetails = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/service-details`);
+        setServiceDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching service details:", error);
+      }
+    };
+
+    fetchServiceDetails();
+  }, []);
 
   const handleSelect = async (data, index) => {
     if (activePopup === "AddItem") {
@@ -174,13 +205,29 @@ const DiabeticChartForm = () => {
         const newRows = [...prevRows];
         newRows[selectedRowIndex] = {
           ...newRows[selectedRowIndex],
-          drug: data.itemName, // Update the drug field with the selected itemName
-          drugid: data.addItemId, // Update the drug field with the selected itemName
+          drug: data.itemName,
+          drugid: data.addItemId,
+          // Do not clear service fields
         };
         return newRows;
       });
+    } else if (activePopup === "ServiceName") {
+      const selectedService = serviceDetails.find(
+        (service) => service.serviceDetailsId === data.serviceDetailsId
+      );
+      if (selectedService) {
+        setRows((prevRows) => {
+          const newRows = [...prevRows];
+          newRows[selectedRowIndex] = {
+            ...newRows[selectedRowIndex],
+            serviceName: selectedService.serviceName,
+            serviceId: selectedService.serviceDetailsId,
+            // Do not clear drug fields
+          };
+          return newRows;
+        });
+      }
     }
-
     setActivePopup(null);
   };
 
@@ -210,49 +257,82 @@ const DiabeticChartForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate required fields
+    if (!formData.erInitialAssessmentId) {
+      alert("ER Initial Assessment ID is required");
+      return;
+    }
+
+    // Prepare services and items arrays
+    const services = rows
+      .filter(row => row.serviceId) // Only include rows with serviceId
+      .map(row => ({
+        serviceDetailsId: parseInt(row.serviceId)
+      }));
+
+    const items = rows
+      .filter(row => row.drugid) // Only include rows with drugid
+      .map(row => ({
+        addItemId: parseInt(row.drugid)
+      }));
+
+    // Check if at least one service or item is selected
+    if (services.length === 0 && items.length === 0) {
+      alert("Please select at least one service or item");
+      return;
+    }
+
     const submissionData = {
-      bloodSugarValues: parseFloat(formData.bloodSugarValuesCBG),
-      urineAcetone: formData.urineAcetone,
+      rate: 0,
+      status: "PAID",
       erInitialAssessmentDTO: {
-        erInitialAssessmentId: parseInt(formData.erInitialAssessmentId),
+        erInitialAssessmentId: parseInt(formData.erInitialAssessmentId)
       },
-      diabeticMedicationsDTOS: rows.map((row) => ({
-        addItemDTO: {
-          addItemId: parseInt(row.drugid),
-        },
-        dose: row.dose,
-        route: row.route,
-        remarks: row.remarks,
-      })),
+      serviceDetailsDTO: services,
+      addItems: items
     };
+    console.log(JSON.stringify(submissionData, null, 2));
+
 
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/diabeticChart`,
+        `http://192.168.1.53:4096/api/er-payments`,
         submissionData,
         {
           headers: {
-            "Content-Type": "application/json",
-          },
+            "Content-Type": "application/json"
+          }
         }
       );
 
-      if (response.status === 200 || response.status === 201) {
+      if (response) {
         console.log("Form submitted successfully:", response.data);
         alert("Form submitted successfully!");
+
+        // Reset form after successful submission
+        setRows([{
+          sn: 1,
+          drug: "",
+          drugid: "",
+          dose: "",
+          route: "",
+          serviceName: "",
+          serviceId: "",
+          remarks: ""
+        }]);
       } else {
         throw new Error("Failed to submit form data");
       }
     } catch (error) {
       console.error("Error submitting form data:", error);
-      alert("Failed to submit form.");
+      alert("Failed to submit form");
     }
   };
 
   const fetchMrno = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.1.46:4096/api/ip-admissions"
+        `${API_BASE_URL}/ip-admissions`
       );
       setMrNoData(response.data);
       console.log(response.data);
@@ -335,6 +415,7 @@ const DiabeticChartForm = () => {
             <th>Drug</th>
             <th>Dose</th>
             <th>Route</th>
+            <th>Service Name</th>
             <th>Remarks</th>
           </tr>
         </thead>
@@ -400,6 +481,30 @@ const DiabeticChartForm = () => {
                     handleRowChange(index, "route", e.target.value)
                   }
                 />
+              </td>
+              <td>
+                <div className="diabetic-chart-form-search-field">
+                  <input
+                    className="diabetic-chart-form-tableinput"
+                    type="text"
+                    value={row.serviceName || ""} // Display the selected service name
+                    readOnly
+                  />
+                  <button
+                    className="diabetic-chart-form-search-icon"
+                    onClick={() => {
+                      setSelectedRowIndex(index); // Set the selected row index
+                      setActivePopup("ServiceName"); // Open the popup for service name
+                    }}
+                  >
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                      <path
+                        fill="currentColor"
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </td>
               <td>
                 <input className="diabetic-chart-form-tableinput"
