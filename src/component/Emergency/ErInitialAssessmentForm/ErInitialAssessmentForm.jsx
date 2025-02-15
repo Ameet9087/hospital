@@ -247,7 +247,7 @@ const ErInitialAssessmentForm = () => {
   };
   const fetchDoctorDetails = async (doctor) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/doctors`);
+      const response = await fetch(`${API_BASE_URL}/doctors/specialization/1`);
 
       if (!response.ok) {
         throw new Error(`Server error: ${response.statusText}`);
@@ -435,7 +435,8 @@ const ErInitialAssessmentForm = () => {
     <>
       <div className="er-initial-assessment-com-container">
         <div className="er-initial-assessment-com-section">
-          <button className="er-initial-assessment-com-section-back" onClick={handleBack}>Back</button>
+
+          <button className="er-initial-assessment-com-button" onClick={handleBack}>Back</button>
         </div>
 
         <div className="er-initial-assessment-com-section">
@@ -1045,7 +1046,8 @@ const ErInitialAssessmentForm = () => {
       </div>
       <div className="er-initial-assement-pop-up-com-form-actions">
         <button
-          className="er-initial-assessment-com-tab"
+
+          className="er-initial-assessment-com-button"
           onClick={handleSubmit}
         >
           Submit

@@ -690,7 +690,7 @@ const NursingPatientDashboard = ({
                                 <td className="Patient-Dashboard-td">
                                   {radiology.status === "Completed" ? (
                                     <>
-                                      <button
+                                      <button 
                                         onClick={() =>
                                           ShowlabReportResult(radiology)
                                         }
@@ -756,7 +756,7 @@ const NursingPatientDashboard = ({
                                 <td className="Patient-Dashboard-td">
                                   {radiology.status === "Completed" ? (
                                     <>
-                                      <button
+                                      <button className="Patient-Dashboard-td-view"
                                         onClick={() =>
                                           ShowImagingReport(radiology)
                                         }

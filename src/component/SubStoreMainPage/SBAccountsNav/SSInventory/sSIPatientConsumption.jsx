@@ -8,26 +8,28 @@ import SSIPatientConsumNewPCbtn from "./sSIPatientConsumNewPCbtn";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../../api/api";
 import CustomModal from "../../../../CustomModel/CustomModal";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
-import { useFilter } from "../../../ShortCuts/useFilter";
+
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
+
 function SSIPatientConsumption() {
   const printRef = useRef();
   const { store } = useParams();
- 
-
+  const [fromDate, setFromDate] = useState("2024-08-14");
+  const [toDate, setToDate] = useState("2024-08-21");
   const [patientConsumptions, setPatientConsumptions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [showViewRequisition, setShowViewRequisition] = useState(false);
+
+  const tableRef = useRef(null);
   const [showNewPatientConsumption, setShowNewPatientConsumption] =
     useState(false); // State to control New Patient Consumption
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [dateFrom, setDateFrom] = useState('');
-  const [dateTo, setDateTo] = useState('');
-  
+
   const handleCreateRequisitionClick = () => {
     setShowCreateRequisition(true);
   };
@@ -79,55 +81,60 @@ function SSIPatientConsumption() {
     fetchPatientConsumptions();
   }, [store]);
 
-  const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
+
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
         <head>
           <title>Print Table</title>
           <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+>>>>>>> ad3dbcade0310743b9fa5d27715a29a847b1a3fa
             }
           </style>
         </head>
         <body>
-          ${printContent.outerHTML}
+          <table>
+            ${printContents}
+          </table>
         </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
   };
 
   // Function to handle exporting the table to an Excel file
-  const handleExportToExcel = () => {
-    // Get the table data
-    const tableData = [
-
-      ['Patient Name', 'Consumption Date', 'Entered By', 'Remarks'],
-
-    ];
-
-
-    // Create a new workbook and a new worksheet
-    const worksheet = XLSX.utils.aoa_to_sheet(tableData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Report");
-
-    // Convert the workbook to an Excel file and trigger the download
-    XLSX.writeFile(workbook, "PatientConsumption_Report.xlsx");
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, "PatientConsumeReport"); // Appends worksheet to workbook
+    XLSX.writeFile(wb, "PatientConsumeReport.xlsx"); // Downloads the Excel file
   };
 
 
@@ -154,34 +161,33 @@ function SSIPatientConsumption() {
 
   return (
     <div className="sSIPatientConsumption-active-imaging-request">
-
       <>
         <header className="sSIPatientConsumption-header">
           <div className="sSIPatientConsumption-status-filters">
 
-            <button className="sSIPatientConsumption-new-patient-button"
+            <button
+              className="sSIPatientConsumption-new-patient-button"
               onClick={handleNewPatientConsumptionClick} // Handle button click
-            >+ New Patient Consumption</button>
+            >
+              + New Patient Consumption
+            </button>
           </div>
         </header>
 
         <div className="sSIPatientConsumption-controls">
           <div className="sSIPatientConsumption-date-range">
-            <label>
-              From:
-              <input type="date" defaultValue="2024-08-09" value={dateFrom}
-                    onChange={(e) => setDateFrom(e.target.value)}
-                  />
- 
-            </label>
-            <label>
-              To:
-              <input type="date" defaultValue="2024-08-16"value={dateTo}
-                    onChange={(e) => setDateTo(e.target.value)}
-                  />
 
+            <FloatingInput
+              label="From Date"
+              type="date"
+              defaultValue="2024-08-09"
+            />
 
-            </label>
+            <FloatingInput
+              label="To Date"
+              type="date"
+              defaultValue="2024-08-16"
+            />
             {/* <button className="sSIPatientConsumption-star-button">☆</button>
     <button className="sSIPatientConsumption-more-btn">-</button>
       <button className="sSIPatientConsumption-ok-button">OK</button> */}
@@ -189,32 +195,29 @@ function SSIPatientConsumption() {
         </div>
         <div className="sSIPatientConsumption-search-N-results">
           <div className="sSIPatientConsumption-search-bar">
-            <i className="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Search"
-            value={searchTerm}
-            onChange={handleSearch}
-          />
 
-          
+            <FloatingInput label="Search" type="search" />
           </div>
           <div className="sSIPatientConsumption-results-info">
-          Showing {patientConsumptions.length} / {patientConsumptions.length} results
+            Showing 2 / 2 results
             <button
               className="sSIPatientConsumption-print-btn"
-              onClick={handleExportToExcel}
+              onClick={handleExport}
             >
               <i className="fa-regular fa-file-excel"></i> Export
             </button>
             <button
               className="sSIPatientConsumption-print-btn"
-              onClick={handlePrint}
+
+              onClick={printList}
             >
               <i class="fa-solid fa-print"></i> Print
             </button>
           </div>
         </div>
         <div style={{ display: "none" }}>
-          <div ref={printRef}>
+
+          <div ref={tableRef}>
             <h2>Patient Consumption Report</h2>
             <p>Printed On: {new Date().toLocaleString()}</p>
             <table>
@@ -224,6 +227,7 @@ function SSIPatientConsumption() {
                   <th>Consumption Date</th>
                   <th>Entered By</th>
                   <th>Remarks</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -238,7 +242,6 @@ function SSIPatientConsumption() {
                       <td>
                         <button className="action-button">Action</button>
                       </td>
-
                     </tr>
                   ))
                 ) : (
@@ -279,6 +282,7 @@ function SSIPatientConsumption() {
                   </th>
                 ))}
 
+
               </tr>
             </thead>
 
@@ -292,7 +296,9 @@ function SSIPatientConsumption() {
                     <td>{consumption.enteredBy}</td>
                     <td>{consumption.remark}</td>
 
-                    <td><button className="action-button">Action</button></td>
+                    <td>
+                      <button className="action-button">Action</button>
+                    </td>
                   </tr>
                 ))
               ) : (
@@ -314,7 +320,7 @@ function SSIPatientConsumption() {
       </>
 
       <CustomModal isOpen={showNewPatientConsumption} onClose={handleBack}>
-        <SSIPatientConsumNewPCbtn /> /
+        <SSIPatientConsumNewPCbtn />
       </CustomModal>
     </div>
   );

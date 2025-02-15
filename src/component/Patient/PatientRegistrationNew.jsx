@@ -11,6 +11,8 @@ import {
 } from "../../FloatingInputs/index";
 import { toast } from "react-toastify";
 import { usePopup } from "../../FidgetSpinner/PopupContext";
+import jsPDF from "jspdf";
+
 
 const qualificationOptions = [
   { value: "High School", label: "High School" },
@@ -104,6 +106,7 @@ const PatientRegistrationNew = ({ onClose }) => {
     height: patient?.height || "",
     weight: patient?.weight || "",
     sourceOfRegistration: patient?.sourceOfRegistration || "", // updated from sourceOfregistration
+    registrationDate: new Date().toISOString().split("T")[0],
     remarks: patient?.remarks || "",
     previousHospital: patient?.previousHospital || "",
     referredContactNumber: patient?.referredContactNumber || "", // updated from referredContactNo
@@ -255,20 +258,119 @@ const PatientRegistrationNew = ({ onClose }) => {
     fetchDataByPinCode();
   }, [formData.pinCode]);
 
+
+
+  useEffect(() => {
+    fetchDataByPinCode();
+  }, [formData.pinCode]);
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    const patientName = `${formData.firstName} ${formData.lastName}`;
+    const pdfName = `Patient_${patientName}_Registration.pdf`;
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text("Patient Registration Form", 68, 10);
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("Patient Details", 10, 20);
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    let y = 30;
+    const patientDetails = [
+      `Name: ${formData.salutation} ${formData.firstName} ${formData.middleName} ${formData.lastName}`,
+      `Age: ${formData.age} ${formData.ageUnit}`,
+      `Gender: ${formData.gender}`,
+      `Date of Birth: ${formData.dateOfBirth}`,
+      `Marital Status: ${formData.maritalStatus}`,
+      `Relation: ${formData.relation}`,
+      `Relation Name: ${formData.relationName}`,
+      `Religion: ${formData.religion}`,
+      `Caste: ${formData.cast}`,
+      `Occupation: ${formData.occupation}`,
+      `Qualification: ${formData.qualification}`,
+      `Mother's Name: ${formData.motherName}`,
+      `Address: ${formData.address}`,
+      `Area/Village: ${formData.areaVillage}`,
+      `City/District: ${formData.cityDistrict}`,
+      `State: ${formData.state}`,
+      `Country: ${formData.country}`,
+      `Pin Code: ${formData.pinCode}`,
+      `Mobile Number: ${formData.mobileNumber}`,
+      `Tel Number (Off): ${formData.telNumberOff}`,
+      `Tel Number (Res): ${formData.telNumberRes}`,
+      `Email ID: ${formData.emailId}`,
+      `Height: ${formData.height}`,
+      `Weight: ${formData.weight}`,
+      `Source of Registration: ${formData.sourceOfRegistration}`,
+      `Remarks: ${formData.remarks}`,
+      `Previous Hospital: ${formData.previousHospital}`,
+      `Referred Contact Number: ${formData.referredContactNumber}`,
+      `Nationality: ${formData.nationality}`,
+      `Income Range: ${formData.incomeRange}`,
+      `Contact Name Initial: ${formData.contactNameInitial}`,
+      `Contact Relation: ${formData.contactRelation}`,
+      `Contact Name: ${formData.contactName}`,
+      `Tel Number (Res 1): ${formData.telNumberRes1}`,
+      `Tel Number (Off 1): ${formData.telNumberOff1}`,
+      `Contact Number: ${formData.contactNumber}`,
+      `GSTIN: ${formData.gstin}`,
+      `PAN: ${formData.pan}`,
+      `Aadhar Card ID: ${formData.adharCardId}`,
+      `Sponsor Type: ${formData.sponserType}`,
+      `Eligibility: ${formData.eligibility}`,
+      `Policy Number: ${formData.policyNumber}`,
+      `Policy Start Date: ${formData.policyStartDate}`,
+      `Policy End Date: ${formData.policyEndDate}`,
+      `Is Emergency: ${formData.isEmergency}`,
+      `ER No: ${formData.erNo}`,
+    ];
+
+    patientDetails.forEach((detail) => {
+      if (y > 280) {
+        doc.addPage();
+        y = 10;
+      }
+      doc.text(detail, 10, y);
+      y += 10;
+    });
+    if (selectedDoctors.length > 0) {
+      doc.setFontSize(14);
+      doc.setFont("helvetica", "bold");
+      doc.text("Referred Doctors", 10, y);
+      y += 10;
+
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "normal");
+
+      selectedDoctors.forEach((doctor, index) => {
+        if (y > 280) {
+          doc.addPage();
+          y = 10;
+        }
+        doc.text(`Doctor ${index + 1}: ${doctor.doctorName}`, 15, y);
+        y += 10;
+        doc.text(`Address: ${doctor.residenceAddress}`, 15, y);
+        y += 10;
+        doc.text(`Mobile: ${doctor.mobileNumber}`, 15, y);
+        y += 10;
+        doc.text(`Email: ${doctor.emailId}`, 15, y);
+        y += 10;
+      });
+    }
+    doc.save(pdfName);
+    const pdfBlob = doc.output("blob");
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+    window.open(pdfUrl, "_blank");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const dataToSend = new FormData();
-
-      // Transform selectedDoctors into the required format
       const doctorData = selectedDoctors.map((doctor) => ({
-        doctorId: doctor.doctorId, // Include other fields if necessary
+        doctorId: doctor.doctorId,
       }));
-
-      // Log the transformed doctorData for debugging
       console.log("Doctor Data:", doctorData);
-
-      // Prepare submission data
       const submissionData = {
         ...formData,
         ...(organisationId > 0 && {
@@ -277,34 +379,25 @@ const PatientRegistrationNew = ({ onClose }) => {
           },
         }),
       };
-
-      // Log submission data for debugging
       console.log("Submission Data:", submissionData);
-
-      // Append data to FormData
-      dataToSend.append("patientData", JSON.stringify(submissionData)); // Serialize to JSON
+      dataToSend.append("patientData", JSON.stringify(submissionData));
       if (file != null) {
         dataToSend.append("file", file);
       }
       if (selectedDoctors > 0) {
-        dataToSend.append("doctorList", JSON.stringify(doctorData)); // Serialize doctorData to JSON
+        dataToSend.append("doctorList", JSON.stringify(doctorData));
       }
-
-      // Log FormData for debugging (use a utility since FormData cannot be directly logged)
       for (let pair of dataToSend.entries()) {
         console.log(pair[0], pair[1]);
       }
-      // Check if patientId exists
       const url = patient?.patientRegistrationId
-        ? `${API_BASE_URL}/patient-register/${patient?.patientRegistrationId}` // Update endpoint
-        : `${API_BASE_URL}/patient-register/add`; // Save endpoint
-      const method = patient?.patientRegistrationId ? "PUT" : "POST"; // Use PUT for updates, POST for save
-
+        ? `${API_BASE_URL}/patient-register/${patient?.patientRegistrationId}`
+        : `${API_BASE_URL}/patient-register/add`;
+      const method = patient?.patientRegistrationId ? "PUT" : "POST";
       const response = await fetch(url, {
         method: method,
         body: dataToSend,
       });
-
       if (response.ok) {
         showPopup([
           { url: "/appointment/doctorappointment", text: "Appointment" },
@@ -317,6 +410,7 @@ const PatientRegistrationNew = ({ onClose }) => {
             : `Patient registered successfully with ID: ${result.uhid}`
         );
         setResult(result);
+        generatePDF();
       } else {
         toast.error(
           "Error submitting form:",
@@ -440,7 +534,7 @@ const PatientRegistrationNew = ({ onClose }) => {
               <FloatingInput
                 label={"ER No"}
                 type="text"
-                name="erNumber"
+                name="erNo"
                 value={formData.erNo}
                 onChange={handleChange}
               />
@@ -449,7 +543,7 @@ const PatientRegistrationNew = ({ onClose }) => {
               <FloatingInput
                 label={"MR NO"}
                 type="text"
-                name="mrNo"
+                name="uhid"
                 value={result?.uhid || patient?.uhid}
                 onChange={handleChange}
               />
@@ -973,9 +1067,9 @@ const PatientRegistrationNew = ({ onClose }) => {
                 { value: "", label: "Select Organisation" },
                 ...(Array.isArray(organisation)
                   ? organisation.map((org) => ({
-                      value: org.masterId,
-                      label: org.name,
-                    }))
+                    value: org.masterId,
+                    label: org.name,
+                  }))
                   : []),
               ]}
             />

@@ -34,7 +34,7 @@ const SubstoreDispatchCom = () => {
     XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Download the file
   };
 
-  const requesteddata = useFilter(requestdata, searchTerm);
+    const requesteddata = useFilter(requestdata, searchTerm);
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -71,7 +71,7 @@ const SubstoreDispatchCom = () => {
     newWindow.print();
     newWindow.close();
   };
-
+  
 
   // Function to open modal with requisition details
   const openModal = (requisition) => {
@@ -142,7 +142,7 @@ const SubstoreDispatchCom = () => {
 
   return (
     <div className="purchase-order-container">
-
+      
 
       {/* Date range filter */}
       {/* <div className="purchase-data-order">
@@ -157,13 +157,13 @@ const SubstoreDispatchCom = () => {
       {/* Search and action buttons */}
       <div className="purchase-order-search-container">
         <input type="text" className="purchase-order-search-box" placeholder="Search"
-          value={searchTerm}
-          onChange={handleSearch}
+         value={searchTerm}
+         onChange={handleSearch}
         />
         <div className="purchase-order-search-right">
-          <span className="purchase-results-count-span">
-            Showing {requesteddata.length} / {requestdata.length} results
-          </span>
+        <span className="purchase-results-count-span">
+  Showing {requesteddata.length} / {requestdata.length} results
+</span>
           <button className="purchase-order-print-button" onClick={handleExport}>
             Export
           </button>
@@ -220,7 +220,7 @@ const SubstoreDispatchCom = () => {
 
       {/* Modal for requisition details */}
       <CustomModal isOpen={showModal} onClose={closeModal}>
-        {/* {showModal && ( */}
+      {/* {showModal && ( */}
         <div >
           <div >
             <div className="dispensarystockreqdetail-modal-header">
@@ -293,14 +293,14 @@ const SubstoreDispatchCom = () => {
               {/* <button type="button" className="purchase-order-add-purchase-order-button" onClick={closeModal}>
                 Close
               </button> */}
-
+            
               <button type="button" className="purchase-order-add-purchase-order-button" onClick={handleSave}>
                 Save
               </button>
             </div>
           </div>
         </div>
-      </CustomModal>
+         </CustomModal>
     </div>
   );
 };

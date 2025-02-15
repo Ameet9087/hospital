@@ -4,10 +4,19 @@ import "./ServiceMaster.css";
 import ServiceRate from "./ServiceRate";
 import OperationOrProcedureRate from "./OperationOrProcedureRate";
 import { API_BASE_URL } from "../../api/api";
+import { PopupTable } from "../../../FloatingInputs";
+
+
 
 const ServiceMaster = ({ refreshTable, onClose }) => {
+
+  const [activePopup, setActivePopup] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [activeComponent, setActiveComponent] = useState("defaultValue");
   const [payType, setPayType] = useState([]);
+
+  const [servicetypedata,setServicetypeData]= useState();
+  const[selectedServicetype,setSelectedservicetype]=useState();
   const [formData, setFormData] = useState({
     serviceName: "",
     displayName: "",
@@ -59,7 +68,20 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
     };
 
     fetchPayType();
+    fetchservicetype();
   }, []);
+
+
+  const fetchservicetype = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/servicetypes`);
+     
+      console.log(response.data);
+      setServicetypeData(response.data);
+    } catch (error) {
+      console.error("Error fetching pay types:", error);
+    }
+  };
 
   const [serviceRates, setServiceRates] = useState([]);
 
@@ -129,46 +151,7 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
     setProcedureRates(updatedRates);
   };
 
-  // const handleSave = async () => {
-  //   try {
-  //     // Prepare the complete payload
-  //     const payload = {
-  //       serviceDetailsId: 1, // You might want to generate or receive this dynamically
-  //       ...formData,
-  //       serviceRates: serviceRates.map((rate, index) => ({
-  //         serviceRateid: index + 1,
-  //         rate: rate.rate,
-  //         doctorSharePercentage: rate.doctorSharePercentage,
-  //         doctorShareAmount: rate.doctorShareAmount,
-  //         payType: {
-  //           payTypeId: index + 1,
-  //           payTypeName: rate.payType,
-  //           payOrder: (index + 1).toString(),
-  //           activeStatus: "Active",
-  //           opdCategory: "General",
-  //           categoryCode: CAT${index + 1}
-  //         }
-  //       })),
-  //       procedureRates: procedureRates.map((rate, index) => ({
-  //         operationOrProcedureRateId: index + 1,
-  //         description: rate.description,
-  //         percentage: rate.percentage,
-  //         drRef: rate.drRef || ''
-  //       }))
-  //     };
-
-  //     const response = await axios.post(
-  //       'http://192.168.0.114:4200/api/service-details',
-  //       payload
-  //     );
-
-  //     console.log('Save successful:', response.data);
-  //     alert('Service details saved successfully!');
-  //   } catch (error) {
-  //     console.error('Error saving service details:', error);
-  //     alert('Failed to save service details. Please try again.');
-  //   }
-  // };
+  
   const handleSave = async () => {
     if (!formData.serviceName || !formData.serviceCode) {
       alert("Please fill in required fields");
@@ -187,6 +170,8 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
             payTypeName: rate.payType,
           },
         })),
+        serviceType:{serviceTypeId:selectedServicetype?.serviceTypeId},
+
         procedureRates: procedureRates.map((rate, index) => ({
           operationOrProcedureRateId: index + 1,
           description: rate.description,
@@ -211,7 +196,6 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
 
       onClose();
       refreshTable();
-
     } catch (error) {
       console.error(
         "Error saving service details:",
@@ -224,6 +208,27 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
       );
     }
   };
+
+  const getPopupData = () => {
+   
+    if (activePopup) {
+      return {
+        columns: ["serviceTypeId", "serviceTypeName","serviceTypeCode","description"],
+        data:servicetypedata,
+      };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
+
+
+  const handleSelect = (data) => {
+    if (activePopup) {
+      setSelectedservicetype(data);
+    }
+  };
+
+  const { columns, data } = getPopupData();
 
   return (
     <>
@@ -267,9 +272,21 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
               type="text"
               name="serviceTypeName"
               placeholder="Enter Service Type"
-              value={formData.serviceTypeName}
+              value={selectedServicetype?.serviceTypeName}
               onChange={handleChange}
+              
             />
+             <button
+                onClick={() => setActivePopup(true)}
+                
+              >
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                  <path
+                    fill=""
+                    d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
+                  />
+                </svg>
+              </button>
           </div>
           <div className="ServiceMaster-sh-section">
             <label>Company Name</label>
@@ -676,6 +693,15 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
           Save
         </button>
       </div>
+
+      {activePopup && (
+              <PopupTable
+                columns={columns}
+                data={data}
+                onClose={() => setActivePopup(false)}
+                onSelect={handleSelect}
+              />
+            )}
     </>
   );
 };

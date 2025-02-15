@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./ManageSubstore.css";
 import { API_BASE_URL } from "../api/api";
@@ -6,10 +6,35 @@ import {
   FloatingInput,
   FloatingSelect,
   FloatingTextarea,
+  PopupTable
 } from "../../FloatingInputs";
 import { toast } from "react-toastify";
 
+
 const AddSubStore = ({ substore, onClose }) => {
+
+  const [errors, setErrors] = useState({});
+  const [activePopup, setActivePopup] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [location, setLocation] = useState(null);
+
+
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/location-masters`);
+        setLocation(response.data);
+        console.log(response.data, "prachi");
+
+      } catch (error) {
+        console.error("Error fetching location data:", error);
+
+      }
+    };
+    fetchLocationData();
+  }, [])
+
+
   const [formData, setFormData] = useState({
     subStoreName: substore?.subStoreName || "",
     maxVerificationLevel: substore?.maxVerificationLevel || "",
@@ -20,8 +45,42 @@ const AddSubStore = ({ substore, onClose }) => {
     subStoreDescription: substore?.subStoreDescription || "",
     isActive: !substore?.isActive || "true",
     label: substore?.label || "",
+    locationMaster: {
+      id: selectedLocation?.id || 1
+    }
   });
-  const [errors, setErrors] = useState({});
+
+  const getPopupData = () => {
+    if (activePopup === "location") {
+      return {
+        columns: ["id", "locationName", "locationCode"],
+        data: location,
+      };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
+
+  const { columns, data } = getPopupData();
+
+  const handleSelect = async (data) => {
+    if (activePopup === "location") {
+      setSelectedLocation(data);
+      console.log(data, "selectedLocation");
+
+      // Update formData with the selected location's ID
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        locationMaster: {
+          id: data.id, // Assuming 'data' contains the location with 'id' field
+        },
+      }));
+    }
+    setActivePopup(null); // Close the popup after selection
+  };
+
+
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -119,9 +178,21 @@ const AddSubStore = ({ substore, onClose }) => {
       </div>
       <form className="update-substore-form-container" onSubmit={handleSubmit}>
         <div className="update-substore-form-grid">
+
           <div className="update-substore-form-group">
             <FloatingInput
-              label={"SubStore Name"}
+              label={"Location"}
+              type="search"
+              value={selectedLocation?.locationName}
+              onChange={handleInputChange}
+              onIconClick={() => setActivePopup("location")}
+            />
+          </div>
+
+
+          <div className="update-substore-form-group">
+            <FloatingInput
+              label={"SubStore Name "}
               type="text"
               name="subStoreName"
               value={formData.subStoreName}
@@ -211,6 +282,14 @@ const AddSubStore = ({ substore, onClose }) => {
           </button>
         </div>
       </form>
+      {activePopup && (
+        <PopupTable
+          columns={columns}
+          data={data}
+          onSelect={handleSelect}
+          onClose={() => setActivePopup(null)}
+        />
+      )}
     </div>
   );
 };

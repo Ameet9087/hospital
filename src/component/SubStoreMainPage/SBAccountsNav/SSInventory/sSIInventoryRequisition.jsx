@@ -13,10 +13,15 @@ import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns
 import { useFilter } from "../../../ShortCuts/useFilter";
 import * as XLSX from 'xlsx';
 
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 
 function SSIInventoryRequisition() {
   const { store } = useParams();
-  const printRef = useRef();
+  const tableRef = useRef();
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [showViewRequisition, setShowViewRequisition] = useState(false);
   const [requisitions, setRequisitions] = useState([]);
@@ -26,8 +31,8 @@ function SSIInventoryRequisition() {
   const [selectedItem, setSelectedItem] = useState("");
   const [showReceived, setShowReceived] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState("");
+
   const [datas, setDatas] = useState([]);
 
   useEffect(() => {
@@ -110,6 +115,7 @@ function SSIInventoryRequisition() {
     newWindow.document.close();
     newWindow.print();
     newWindow.close();
+
   };
   const filteredsRequisitions = useFilter(filteredRequisitions, searchTerm);
 
@@ -241,11 +247,12 @@ function SSIInventoryRequisition() {
 
       <div className="sSIInventoryRequisition-search-N-results">
         <div className="sSIInventoryRequisition-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="Search"  value={searchTerm}
-            onChange={handleSearch}
-          />
 
+          
+          <FloatingInput 
+          label={"Search"} 
+          type="search" 
+          />
         </div>
         <div className="sSIInventoryRequisition-results-info">
           Showing {filteredRequisitions.length} / {filteredRequisitions.length}{" "}
@@ -259,13 +266,14 @@ function SSIInventoryRequisition() {
           <button
             className="sSIInventoryRequisition-print-button"
             onClick={handlePrint}
+
           >
             <i class="fa-solid fa-print"></i> Print
           </button>
         </div>
       </div>
 
-      <div className="table-container">
+      <div className="sSIInventoryRequisition-table-N-paginat">
         <table ref={tableRef}>
           <thead>
             <tr>

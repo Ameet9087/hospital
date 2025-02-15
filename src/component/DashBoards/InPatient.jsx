@@ -5,7 +5,7 @@ import "./InPatient.css";
 import PatientDashboard from "./PatientDashboard";
 import InPatientPage from "./InPatientPage";
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { useFilter } from "../ShortCuts/useFilter";
 
 const PatientList = () => {

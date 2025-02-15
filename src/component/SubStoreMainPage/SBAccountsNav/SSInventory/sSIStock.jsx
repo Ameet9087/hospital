@@ -1,24 +1,27 @@
 /* Ajhar Tamboli sSIStock.jsx 19-09-24 */
 
-
-import React, { useState, useEffect ,useRef} from 'react';
-import * as XLSX from 'xlsx'; // Import the xlsx library
+import React, { useState, useEffect, useRef } from "react";
+import * as XLSX from "xlsx"; // Import the xlsx library
 import "../SSInventory/sSIStock.css";
-import SSIInventoryRequisition from './sSIInventoryRequisition';
-import SSIConsumption from './sSIConsumption';
-import SSIReports from './sSIReports';
-import SSIPatientConsumption from './sSIPatientConsumption';
-import SSIReturn from './sSIReturn';
-import SSPharmacyNInven from '../SSPharmacy/sSPharmacyNInven';
-import { useParams } from 'react-router-dom';
-import { API_BASE_URL } from '../../../api/api';
-import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
-import { useFilter } from '../../../ShortCuts/useFilter';
 
+import SSIInventoryRequisition from "./sSIInventoryRequisition";
+import SSIConsumption from "./sSIConsumption";
+import SSIReports from "./sSIReports";
+import SSIPatientConsumption from "./sSIPatientConsumption";
+import SSIReturn from "./sSIReturn";
+import SSPharmacyNInven from "../SSPharmacy/sSPharmacyNInven";
+import { useParams } from "react-router-dom";
+import { API_BASE_URL } from "../../../api/api";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 function SSIStock() {
   const { store } = useParams();
-  const [activeTab, setActiveTab] = useState('Stock');
+  const [activeTab, setActiveTab] = useState("Stock");
   const [requisitions, setRequisitions] = useState([]);
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
   const [sortDirection, setSortDirection] = useState('asc'); // Added sort direction state
@@ -26,64 +29,82 @@ function SSIStock() {
   const [searchTerm, setSearchTerm] = useState("");
 
 const [columnWidths, setColumnWidths] = useState({});
+
   const tableRef = useRef(null);
   // Function to export the table to Excel
   const exportTableToExcel = () => {
-    const table = document.querySelector('table'); // Get the table element
+    const table = document.querySelector("table"); // Get the table element
     const workbook = XLSX.utils.table_to_book(table); // Convert the table to a workbook
-    XLSX.writeFile(workbook, 'SSIStockData.xlsx'); // Export the workbook as an Excel file
+    XLSX.writeFile(workbook, "SSIStockData.xlsx"); // Export the workbook as an Excel file
   };
 
   // Function to print specific elements: table, FromDate, ToDate, and current date and time
   // Function to trigger print
-  const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
         <head>
           <title>Print Table</title>
           <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none;
             }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
-            }
+            
           </style>
         </head>
         <body>
-          ${printContent.outerHTML}
+          <table>
+            ${printContents}
+          </table>
         </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
   };
 
   useEffect(() => {
     // Fetch data from API
     fetch(`${API_BASE_URL}/inventory-requisitions/received?subStoreId=${store}`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         console.log(data);
         setRequisitions(data);
         // Filter requisitions with status 'Approved'
         // setFilteredRequisitions(data.filter(req => req.status === 'Approved'));
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching data:", error));
   }, [store, sortDirection]); // Sort direction as a dependency
 
   // Function to handle sorting
   const toggleSortDirection = () => {
-    setSortDirection(prevDirection => (prevDirection === 'asc' ? 'desc' : 'asc'));
+    setSortDirection((prevDirection) =>
+      prevDirection === "asc" ? "desc" : "asc"
+    );
   };
 
   // Function to handle search
@@ -96,7 +117,13 @@ const [columnWidths, setColumnWidths] = useState({});
   //   setFilteredRequisitions(filtered);
   // };
   const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
+
+    const query = event.target.value;
+    setSearchQuery(query);
+    const filtered = requisitions.filter((req) =>
+      req.itemName.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredRequisitions(filtered);
   };
   const requisitionsData = useFilter(requisitions, searchTerm);
 
@@ -104,7 +131,7 @@ const [columnWidths, setColumnWidths] = useState({});
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'Stock':
+      case "Stock":
         return (
           <div className="sSIStock-content">
             {/* Stock content goes here */}
@@ -135,19 +162,27 @@ const [columnWidths, setColumnWidths] = useState({});
             </div>
             <div className="sSIStock-search-N-result">
               <div className="sSIStock-search-bar">
-                <i className="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Search" value={searchTerm}
-            onChange={handleSearch}
-          />
 
+                
+                <FloatingInput
+                  label={"Search"}
+                  type="search"
+                  value={searchQuery}
+                  onChange={handleSearch}
+                />
               </div>
               <div className="sSIStock-results-header">
-                <span>Showing {requisitions.length} / {requisitions.length} results</span>
+                <span>
+                  Showing {requisitions.length} / {requisitions.length} results
+                </span>
                 <div>
-                  <button className="sSIStock-btn-blue" onClick={exportTableToExcel}>
+                  <button
+                    className="sSIStock-btn-blue"
+                    onClick={exportTableToExcel}
+                  >
                     <i className="fa-solid fa-file-excel"></i> Export
                   </button>
-                  <button className="sSIStock-btn-blue" onClick={handlePrint}>
+                  <button className="sSIStock-btn-blue" onClick={printList}>
                     <i className="fa-solid fa-print"></i> Print
                   </button>
                   {/* <button className="sSIStock-btn-blue" onClick={toggleSortDirection}>
@@ -157,33 +192,36 @@ const [columnWidths, setColumnWidths] = useState({});
               </div>
             </div>
             <table ref={tableRef}>
-                     <thead>
-                       <tr>
-                         {[
-                           'Item Code',
-                           'SubCategory',
-                           'Item Name',
-                           'Unit',
-                           'Available Qty',
-                           'Item Type',
-                           'Store',
-                         ].map((header, index) => (
-                           <th
-                             key={index}
-                             style={{ width: columnWidths[index] }}
-                             className="resizable-th"
-                           >
-                             <div className="header-content">
-                               <span>{header}</span>
-                               <div
-                                 className="resizer"
-                                 onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                               ></div>
-                             </div>
-                           </th>
-                         ))}
-                       </tr>
-                     </thead>
+              <thead>
+                <tr>
+                  {[
+                    "Item Code",
+                    "SubCategory",
+                    "Item Name",
+                    "Unit",
+                    "Available Qty",
+                    "Item Type",
+                    "Store",
+                  ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
               <tbody>
                 {requisitionsData.length > 0 ? (
                   requisitionsData.map((req, index) => (
@@ -199,7 +237,9 @@ const [columnWidths, setColumnWidths] = useState({});
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="7" className="sSIStock-no-data">No Rows To Show</td>
+                    <td colSpan="7" className="sSIStock-no-data">
+                      No Rows To Show
+                    </td>
                   </tr>
                 )}
               </tbody>
@@ -214,15 +254,15 @@ const [columnWidths, setColumnWidths] = useState({});
             </div> */}
           </div>
         );
-      case 'Inventory Requisition':
+      case "Inventory Requisition":
         return <SSIInventoryRequisition />;
-      case 'Consumption':
+      case "Consumption":
         return <SSIConsumption />;
-      case 'Reports':
+      case "Reports":
         return <SSIReports />;
-      case 'Patient Consumption':
+      case "Patient Consumption":
         return <SSIPatientConsumption />;
-      case 'Return':
+      case "Return":
         return <SSIReturn />;
       default:
         return null;
@@ -235,38 +275,52 @@ const [columnWidths, setColumnWidths] = useState({});
       <nav>
         <ul>
           <li
-            className={activeTab === 'Stock' ? 'sSIStock-container-active' : ''}
-            onClick={() => setActiveTab('Stock')}
+            className={activeTab === "Stock" ? "sSIStock-container-active" : ""}
+            onClick={() => setActiveTab("Stock")}
           >
             Stock
           </li>
           <li
-            className={activeTab === 'Inventory Requisition' ? 'sSIStock-container-active' : ''}
-            onClick={() => setActiveTab('Inventory Requisition')}
+            className={
+              activeTab === "Inventory Requisition"
+                ? "sSIStock-container-active"
+                : ""
+            }
+            onClick={() => setActiveTab("Inventory Requisition")}
           >
             Inventory Requisition
           </li>
           <li
-            className={activeTab === 'Consumption' ? 'sSIStock-container-active' : ''}
-            onClick={() => setActiveTab('Consumption')}
+            className={
+              activeTab === "Consumption" ? "sSIStock-container-active" : ""
+            }
+            onClick={() => setActiveTab("Consumption")}
           >
             Consumption
           </li>
           <li
-            className={activeTab === 'Reports' ? 'sSIStock-container-active' : ''}
-            onClick={() => setActiveTab('Reports')}
+            className={
+              activeTab === "Reports" ? "sSIStock-container-active" : ""
+            }
+            onClick={() => setActiveTab("Reports")}
           >
             Reports
           </li>
           <li
-            className={activeTab === 'Patient Consumption' ? 'sSIStock-container-active' : ''}
-            onClick={() => setActiveTab('Patient Consumption')}
+            className={
+              activeTab === "Patient Consumption"
+                ? "sSIStock-container-active"
+                : ""
+            }
+            onClick={() => setActiveTab("Patient Consumption")}
           >
             Patient Consumption
           </li>
           <li
-            className={activeTab === 'Return' ? 'sSIStock-container-active' : ''}
-            onClick={() => setActiveTab('Return')}
+            className={
+              activeTab === "Return" ? "sSIStock-container-active" : ""
+            }
+            onClick={() => setActiveTab("Return")}
           >
             Return
           </li>

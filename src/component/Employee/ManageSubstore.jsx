@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import "./ManageSubstore.css";
 
 import { API_BASE_URL } from "../api/api";
@@ -8,7 +9,6 @@ import AddSubStore from "./AddSubstore";
 import CustomModal from "../../CustomModel/CustomModal";
 import { useFilter } from "../ShortCuts/useFilter";
 import { FloatingInput } from "../../FloatingInputs";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 
 const ManageSubstore = () => {
   const [showModal, setShowModal] = useState(false);

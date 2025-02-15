@@ -1,369 +1,13 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import "../SocialServicesMain/registerNewSSUPatient.css";
-// import { API_BASE_URL } from "../../api/api";
-
-// function RegisterNewSSUPatient({ togglePopup, patientData = null }) {
-//   const [formData, setFormData] = useState({
-//     firstName: "",
-//     lastName: "",
-//     middleName: "",
-//     fatherName: "",
-//     motherName: "",
-//     country: "",
-//     age: "",
-//     ageUnit: "Years",
-//     gender: "",
-//     address: "",
-//     religion: "",
-//     phoneNumber: "",
-//     race: "",
-//     maritalStatus: "",
-//     targetGroup: "",
-//     community: "",
-//     membership: "",
-//     hasTargetGroupCertificate: false,
-//     targetGroupCertificateType: "",
-//     certificateNo: "",
-//     incomeSource: "",
-//     financialStatus: "",
-//   });
-
-//   useEffect(() => {
-//     if (patientData) {
-//       setFormData({
-//         ...patientData,
-//         hasTargetGroupCertificate:
-//           patientData.hasTargetGroupCertificate || false,
-//       });
-//     }
-//   }, [patientData]);
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData({
-//       ...formData,
-//       [name]: value,
-//     });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     try {
-//       if (patientData) {
-//         // Update existing patient
-//         const response = await axios.put(
-//           `${API_BASE_URL}/patients/${patientData.id}`,
-//           formData
-//         );
-//         console.log("Update Response:", response.data);
-//       } else {
-//         // Register new patient
-//         const response = await axios.post(
-//         `${API_BASE_URL}/patients/register`,
-//           formData
-//         );
-//         console.log("Create Response:", response.data);
-//       }
-//       togglePopup();
-//       // Handle success (e.g., show a success message, reset form, etc.)
-//     } catch (error) {
-//       console.error("There was an error submitting the form!", error);
-//       // Handle error (e.g., show an error message)
-//     }
-//   };
-
-//   return (
-//     <div className="registerNewSSUPatient-patient-registration">
-//       <h2>
-//         {patientData ? "Update SSU Patient" : "New SSU Patient Registration"}
-//       </h2>
-//       <form onSubmit={handleSubmit}>
-//         <div className="registerNewSSUPatient-section">
-//           <h3>Patient Information</h3>
-//           <div className="registerNewSSUPatient-form-row">
-//             <label>
-//               First Name*:{" "}
-//               <input
-//                 type="text"
-//                 name="firstName"
-//                 value={formData.firstName}
-//                 onChange={handleChange}
-//                 placeholder="First Name"
-//               />
-//             </label>
-//             <label>
-//               Father Name:{" "}
-//               <input
-//                 type="text"
-//                 name="fatherName"
-//                 value={formData.fatherName}
-//                 onChange={handleChange}
-//                 placeholder="Father Name"
-//               />
-//             </label>
-//           </div>
-//           <div className="registerNewSSUPatient-form-row">
-//             <label>
-//               Middle Name:{" "}
-//               <input
-//                 type="text"
-//                 name="middleName"
-//                 value={formData.middleName}
-//                 onChange={handleChange}
-//                 placeholder="Middle Name"
-//               />
-//             </label>
-//             <label>
-//               Mother Name:{" "}
-//               <input
-//                 type="text"
-//                 name="motherName"
-//                 value={formData.motherName}
-//                 onChange={handleChange}
-//                 placeholder="Mother Name"
-//               />
-//             </label>
-//           </div>
-//           <div className="registerNewSSUPatient-form-row">
-//             <label>
-//               Last Name*:{" "}
-//               <input
-//                 type="text"
-//                 name="lastName"
-//                 value={formData.lastName}
-//                 onChange={handleChange}
-//                 placeholder="Last Name"
-//               />
-//             </label>
-//             <label>
-//               Country*:
-//               <select
-//                 name="country"
-//                 value={formData.country}
-//                 onChange={handleChange}
-//               >
-//                 <option value="Kenya">Kenya</option>
-//               </select>
-//             </label>
-//           </div>
-//           <div className="registerNewSSUPatient-form-row">
-//             <label>
-//               Age*:
-//               <input
-//                 type="text"
-//                 name="age"
-//                 value={formData.age}
-//                 onChange={handleChange}
-//                 placeholder="Age"
-//                 className="register-new-age-input"
-//               />
-//               <select
-//                 name="ageUnit"
-//                 value={formData.ageUnit}
-//                 onChange={handleChange}
-//               >
-//                 <option>Years</option>
-//               </select>
-//             </label>
-//             <label>
-//               Address:{" "}
-//               <input
-//                 type="text"
-//                 name="address"
-//                 value={formData.address}
-//                 onChange={handleChange}
-//                 placeholder="Address"
-//               />
-//             </label>
-//           </div>
-//           <div className="registerNewSSUPatient-form-row">
-//             <label>
-//               Gender*:
-//               <select
-//                 name="gender"
-//                 value={formData.gender}
-//                 onChange={handleChange}
-//               >
-//                 <option value="">--select--</option>
-//                 <option value="Male">Male</option>
-//                 <option value="Female">Female</option>
-//               </select>
-//             </label>
-//             <label>
-//               Religion:
-//               <select
-//                 name="religion"
-//                 value={formData.religion}
-//                 onChange={handleChange}
-//               >
-//                 <option value="">--select--</option>
-//                 <option value="Christianity">Christianity</option>
-//                 <option value="Islam">Islam</option>
-//                 <option value="Hinduism">Hinduism</option>
-//                 <option value="Other">Other</option>
-//               </select>
-//             </label>
-//           </div>
-//           <div className="registerNewSSUPatient-form-row">
-//             <label>
-//               Phone number:{" "}
-//               <input
-//                 type="text"
-//                 name="phoneNumber"
-//                 value={formData.phoneNumber}
-//                 onChange={handleChange}
-//                 placeholder="phone number"
-//               />
-//             </label>
-//             <label>
-//               Race:{" "}
-//               <input
-//                 type="text"
-//                 name="race"
-//                 value={formData.race}
-//                 onChange={handleChange}
-//                 placeholder="race"
-//               />
-//             </label>
-//           </div>
-//           <div className="registerNewSSUPatient-form-row">
-//             <label>
-//               Marital status:
-//               <select
-//                 name="maritalStatus"
-//                 value={formData.maritalStatus}
-//                 onChange={handleChange}
-//               >
-//                 <option value="">--select--</option>
-//                 <option value="Single">Single</option>
-//                 <option value="Married">Married</option>
-//                 <option value="Widowed">Widowed</option>
-//               </select>
-//             </label>
-//           </div>
-//         </div>
-
-//         <div className="registerNewSSUPatient-section">
-//           <h3>SSU Information</h3>
-//           <div className="registerNewSSUPatient-form-row">
-//             <label>
-//               Target Group*:
-//               <select
-//                 name="targetGroup"
-//                 value={formData.targetGroup}
-//                 onChange={handleChange}
-//               >
-//                 <option value="">Choose Target Group</option>
-//                 <option value="Poor/Ultra Poor">Poor/Ultra Poor</option>
-//                 <option value="Helpless">Helpless</option>
-//                 <option value="Disability">Disability</option>
-//                 <option value="Senior Citizen">Senior Citizen</option>
-//                 <option value="Victim of Gender Violence">
-//                   Victim of Gender Violence
-//                 </option>
-//               </select>
-//             </label>
-//             <label>
-//               Community*:
-//               <select
-//                 name="community"
-//                 value={formData.community}
-//                 onChange={handleChange}
-//               >
-//                 <option value="">--select--</option>
-//                 <option value="Community 1">Community 1</option>
-//                 <option value="Community 2">Community 2</option>
-//               </select>
-//             </label>
-//             <label>
-//               Membership*:
-//               <select
-//                 name="membership"
-//                 value={formData.membership}
-//                 onChange={handleChange}
-//               >
-//                 <option value="">--select--</option>
-//                 <option value="Basic">Basic</option>
-//                 <option value="Premium">Premium</option>
-//               </select>
-//             </label>
-//           </div>
-//           <div className="registerNewSSUPatient-form-row">
-//             <label>
-//               Has Target Group Certificate?
-//               <select
-//                 name="hasTargetGroupCertificate"
-//                 value={formData.hasTargetGroupCertificate}
-//                 onChange={handleChange}
-//               >
-//                 <option value="true">Yes</option>
-//                 <option value="false">No</option>
-//               </select>
-//             </label>
-//           </div>
-//           <div className="registerNewSSUPatient-form-row">
-//             <label>
-//               Income Source:
-//               <select
-//                 name="incomeSource"
-//                 value={formData.incomeSource}
-//                 onChange={handleChange}
-//               >
-//                 <option value="">--Select Income Source--</option>
-//                 <option value="Unskilled Labour in Agriculture or Other">
-//                   Unskilled Labour in Agriculture or Other
-//                 </option>
-//                 <option value="Skilled Labour in Agriculture or Other">
-//                   Skilled Labour in Agriculture or Other
-//                 </option>
-//                 <option value="Agriculture/Farming">
-//                   Private Sector/Government Sector
-//                 </option>
-//                 <option value="Foreign employment in Malaysia or UAE">
-//                   Foreign employment in Malaysia or UAE
-//                 </option>
-//                 <option value="Others">Others</option>
-//               </select>
-//             </label>
-//             <label>
-//               Financial Status:
-//               <select
-//                 name="financialStatus"
-//                 value={formData.financialStatus}
-//                 onChange={handleChange}
-//               >
-//                 <option value="">--Select Status--</option>
-//                 <option value="Poor">Poor</option>
-//                 <option value="Ultra Poor">Ultra Poor</option>
-//                 <option value="Not Poor">Not Poor</option>
-//               </select>
-//             </label>
-//           </div>
-//         </div>
-
-//         <div className="registerNewSSUPatient-form-actions">
-//           <button type="submit" className="registerNewSSUPatient-register-btn">
-//             {patientData ? "Update" : "Register"}
-//           </button>
-//           <button
-//             type="button"
-//             onClick={togglePopup}
-//             className="registerNewSSUPatient-close-btn"
-//           >
-//             Close
-//           </button>
-//         </div>
-//       </form>
-//     </div>
-//   );
-// }
-
-// export default RegisterNewSSUPatient;
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../SocialServicesMain/registerNewSSUPatient.css";
 import { API_BASE_URL } from "../../api/api";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 
 function RegisterNewSSUPatient({ togglePopup, patientData = null }) {
   const [formData, setFormData] = useState({
@@ -457,6 +101,34 @@ function RegisterNewSSUPatient({ togglePopup, patientData = null }) {
       ssus: updatedSsus,
     });
   };
+  const handleClear = () => {
+    setFormData({
+      firstName: "",
+      fatherName: "",
+      middleName: "",
+      motherName: "",
+      lastName: "",
+      country: "",
+      age: "",
+      address: "",
+      gender: "",
+      religion: "",
+      phoneNumber: "",
+      race: "",
+      maritalStatus: "",
+      hasTargetGroupCertificate: "",
+      incomeSource: "",
+      financialStatus: "",
+      ssus: [
+        {
+          targetGroup: "",
+          community: "",
+          membership: "",
+        },
+      ],
+    });
+  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -468,6 +140,7 @@ function RegisterNewSSUPatient({ togglePopup, patientData = null }) {
           formData
         );
         console.log("Update Response:", response.data);
+        toast.success("Updated Successfully");
       } else {
         // Register new patient
         const response = await axios.post(
@@ -475,10 +148,12 @@ function RegisterNewSSUPatient({ togglePopup, patientData = null }) {
           formData
         );
         console.log("Create Response:", response.data);
+        toast.success("Submited Successfully");
       }
       togglePopup();
     } catch (error) {
       console.error("There was an error submitting the form!", error);
+      toast.error("Error for Submiting form!");
     }
   };
 
@@ -491,278 +166,261 @@ function RegisterNewSSUPatient({ togglePopup, patientData = null }) {
         <div className="registerNewSSUPatient-section">
           <h3>Patient Information</h3>
           <div className="registerNewSSUPatient-form-row">
-            <label>
-              First Name*:{" "}
-              <input
-                type="text"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                placeholder="First Name"
-              />
-            </label>
-            <label>
-              Father Name:{" "}
-              <input
-                type="text"
-                name="fatherName"
-                value={formData.fatherName}
-                onChange={handleChange}
-                placeholder="Father Name"
-              />
-            </label>
+            <FloatingInput
+              label="First Name"
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^[a-zA-Z\s]*$/.test(value)) {
+                  // Allow only letters and spaces
+                  handleChange(e);
+                }
+              }}
+            />
+
+            <FloatingInput
+              label={"Father Name"}
+              type="text"
+              name="fatherName"
+              value={formData.fatherName}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^[a-zA-Z\s]*$/.test(value)) {
+                  // Allow only letters and spaces
+                  handleChange(e);
+                }
+              }}
+            />
+            <FloatingInput
+              label={"Middle Name"}
+              type="text"
+              name="middleName"
+              value={formData.middleName}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^[a-zA-Z\s]*$/.test(value)) {
+                  // Allow only letters and spaces
+                  handleChange(e);
+                }
+              }}
+            />
+
+            <FloatingInput
+              label={"Mother Name"}
+              type="text"
+              name="motherName"
+              value={formData.motherName}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^[a-zA-Z\s]*$/.test(value)) {
+                  // Allow only letters and spaces
+                  handleChange(e);
+                }
+              }}
+            />
           </div>
+
           <div className="registerNewSSUPatient-form-row">
-            <label>
-              Middle Name:{" "}
-              <input
-                type="text"
-                name="middleName"
-                value={formData.middleName}
-                onChange={handleChange}
-                placeholder="Middle Name"
-              />
-            </label>
-            <label>
-              Mother Name:{" "}
-              <input
-                type="text"
-                name="motherName"
-                value={formData.motherName}
-                onChange={handleChange}
-                placeholder="Mother Name"
-              />
-            </label>
+            <FloatingInput
+              label={"Last Name"}
+              type="text"
+              name="lastName"
+              value={formData.lastName}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^[a-zA-Z\s]*$/.test(value)) {
+                  // Allow only letters and spaces
+                  handleChange(e);
+                }
+              }}
+            />
+
+            <FloatingSelect
+              label={"country"}
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              options={[
+                { label: "India", value: "India" },
+                { label: "Kenya", value: "Kenya" },
+                { label: "United States", value: "United States" },
+              ]}
+            />
+            <FloatingInput
+              label={"Age"}
+              type="text"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
+            />
+
+            <FloatingInput
+              label={"Address"}
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+            />
           </div>
+
           <div className="registerNewSSUPatient-form-row">
-            <label>
-              Last Name*:{" "}
-              <input
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-                placeholder="Last Name"
-              />
-            </label>
-            <label>
-              Country*:
-              <select
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-              >
-                <option value="Kenya">Kenya</option>
-              </select>
-            </label>
+            <FloatingSelect
+              label={"Gender"}
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              options={[
+                { label: "Male", value: "Male" },
+                { label: "Female", value: "Female" },
+              ]}
+            />
+
+            <FloatingSelect
+              label={"Religion"}
+              name="religion"
+              value={formData.religion}
+              onChange={handleChange}
+              options={[
+                { label: "Hinduism", value: "Hinduism" },
+                { label: "Christianity", value: "Christianity" },
+                { label: "Islam", value: "Islam" },
+                { label: "Other", value: "Other" },
+              ]}
+            />
+            <FloatingInput
+              label="Phone Number"
+              type="text"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d{0,10}$/.test(value)) {
+                  // Allows only digits and limits to 10 characters
+                  handleChange(e);
+                }
+              }}
+            />
+
+            <FloatingInput
+              label={"Race"}
+              type="text"
+              name="race"
+              value={formData.race}
+              onChange={handleChange}
+            />
           </div>
-          <div className="registerNewSSUPatient-form-row">
-            <label>
-              Age*:
-              <input
-                type="text"
-                name="age"
-                value={formData.age}
-                onChange={handleChange}
-                placeholder="Age"
-                className="register-new-age-input"
-              />
-            </label>
-            <label>
-              Address:{" "}
-              <input
-                type="text"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                placeholder="Address"
-              />
-            </label>
-          </div>
-          <div className="registerNewSSUPatient-form-row">
-            <label>
-              Gender*:
-              <select
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}
-              >
-                <option value="">--select--</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
-            </label>
-            <label>
-              Religion:
-              <select
-                name="religion"
-                value={formData.religion}
-                onChange={handleChange}
-              >
-                <option value="">--select--</option>
-                <option value="Christianity">Christianity</option>
-                <option value="Islam">Islam</option>
-                <option value="Hinduism">Hinduism</option>
-                <option value="Other">Other</option>
-              </select>
-            </label>
-          </div>
-          <div className="registerNewSSUPatient-form-row">
-            <label>
-              Phone number:{" "}
-              <input
-                type="text"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                placeholder="phone number"
-              />
-            </label>
-            <label>
-              Race:{" "}
-              <input
-                type="text"
-                name="race"
-                value={formData.race}
-                onChange={handleChange}
-                placeholder="Race"
-              />
-            </label>
-          </div>
-          <div className="registerNewSSUPatient-form-row">
-            <label>
-              Marital status:
-              <select
-                name="maritalStatus"
-                value={formData.maritalStatus}
-                onChange={handleChange}
-              >
-                <option value="">--select--</option>
-                <option value="Single">Single</option>
-                <option value="Married">Married</option>
-                <option value="Widowed">Widowed</option>
-              </select>
-            </label>
+
+          <div className="registerNewSSUPatient-form-row-single">
+            <FloatingSelect
+              label={"Marital status"}
+              name="maritalStatus"
+              value={formData.maritalStatus}
+              onChange={handleChange}
+              options={[
+                { label: "Single", value: "Single" },
+                { label: "Married", value: "Married" },
+                { label: "Widowed", value: "Widowed" },
+              ]}
+            />
           </div>
         </div>
 
         <div className="registerNewSSUPatient-section">
           <h3>SSU Information</h3>
           {formData.ssus.map((ssu, index) => (
-            <div key={index} className="registerNewSSUPatient-form-row">
-            
-              <label>
-                Target Group*:
-                <select
+            <div key={index} className="registerNewSSUPatient-ssu">
+              <div className="registerNewSSUPatient-form-row">
+                <FloatingSelect
+                  label="Target Group"
                   value={ssu.targetGroup}
                   onChange={(e) =>
                     handleSsuChange(index, "targetGroup", e.target.value)
                   }
-                >
-                  <option value="">Choose Target Group</option>
-                  <option value="Poor/Ultra Poor">Poor/Ultra Poor</option>
-                  <option value="Helpless">Helpless</option>
-                  <option value="Disability">Disability</option>
-                </select>
-              </label>
-              <label>
-                Community:
-                <input
+                  options={[
+                    { label: "Poor/Ultra Poor", value: "Poor/Ultra Poor" },
+                    { label: "Helpless", value: "Helpless" },
+                    { label: "Disability", value: "Disability" },
+                  ]}
+                />
+                <FloatingInput
+                  label="Community"
                   type="text"
                   value={ssu.community}
                   onChange={(e) =>
                     handleSsuChange(index, "community", e.target.value)
                   }
-                  placeholder="Community"
                 />
-              </label>
-              <label>
-                Membership:
-                <input
+                <FloatingInput
+                  label="Membership"
                   type="text"
                   value={ssu.membership}
                   onChange={(e) =>
                     handleSsuChange(index, "membership", e.target.value)
                   }
-                  placeholder="membership"
                 />
-              </label>
-
-           <div>
-
-          <div className="registerNewSSUPatient-form-row">
-             <label>
-               Has Target Group Certificate?
-               <select
-                 name="hasTargetGroupCertificate"
-                value={formData.hasTargetGroupCertificate}
-                 onChange={handleChange}
-              >
-                 <option value="true">Yes</option>
-                 <option value="false">No</option>
-               </select>
-             </label>
-           </div>
-           <div className="registerNewSSUPatient-form-row">
-             <label>
-               Income Source:
-                              <select
-                 name="incomeSource"
-                 value={formData.incomeSource}
-                 onChange={handleChange}>
-            
-                <option value="">--Select Income Source--</option>
-                 <option value="Unskilled Labour in Agriculture or Other">
-                   Unskilled Labour in Agriculture or Other
-                </option>
-                 <option value="Skilled Labour in Agriculture or Other">
-                   Skilled Labour in Agriculture or Other
-                 </option>
-                 <option value="Agriculture/Farming">
-                   Private Sector/Government Sector
-                 </option>
-                 <option value="Foreign employment in Malaysia or UAE">
-                   Foreign employment in Malaysia or UAE
-                 </option>
-                 <option value="Others">Others</option>
-               </select>
-             </label>
-             <label>
-               Financial Status:
-               <select
-                 name="financialStatus"
-                value={formData.financialStatus}
-                onChange={handleChange}
-               >
-                 <option value="">--Select Status--</option>
-                <option value="Poor">Poor</option>
-                <option value="Ultra Poor">Ultra Poor</option>
-                <option value="Not Poor">Not Poor</option>
-               </select>
-             </label>
-           </div>
-
-      </div>
-
-              {/* <button
-                type="button"
-                onClick={() => removeSsu(index)}
-                className="remove-ssu-btn"
-              >
-                Remove
-              </button> */}
+                <FloatingSelect
+                  label="Has Target Group Certificate?"
+                  name="hasTargetGroupCertificate"
+                  value={formData.hasTargetGroupCertificate}
+                  onChange={handleChange}
+                  options={[
+                    { label: "Yes", value: "true" },
+                    { label: "No", value: "false" },
+                  ]}
+                />
+              </div>
+              <div className="registerNewSSUPatient-form-row-income">
+                <FloatingSelect
+                  label="Income Source"
+                  name="incomeSource"
+                  value={formData.incomeSource}
+                  onChange={handleChange}
+                  options={[
+                    { label: "--Select Income Source--", value: "" },
+                    {
+                      label: "Unskilled Labour in Agriculture or Other",
+                      value: "Unskilled Labour in Agriculture or Other",
+                    },
+                    {
+                      label: "Skilled Labour in Agriculture or Other",
+                      value: "Skilled Labour in Agriculture or Other",
+                    },
+                    {
+                      label: "Private Sector/Government Sector",
+                      value: "Agriculture/Farming",
+                    },
+                    {
+                      label: "Foreign employment in Malaysia or UAE",
+                      value: "Foreign employment in Malaysia or UAE",
+                    },
+                    { label: "Others", value: "Others" },
+                  ]}
+                />
+                <FloatingSelect
+                  label="Financial Status"
+                  name="financialStatus"
+                  value={formData.financialStatus}
+                  onChange={handleChange}
+                  options={[
+                    { label: "--Select Status--", value: "" },
+                    { label: "Poor", value: "Poor" },
+                    { label: "Ultra Poor", value: "Ultra Poor" },
+                    { label: "Not Poor", value: "Not Poor" },
+                  ]}
+                />
+              </div>
             </div>
-            
-          )
-          )}
-          {/* <button type="button" onClick={addSsu}>
-            Add SSU
-          </button> */}
+          ))}
         </div>
 
         <div className="registerNewSSUPatient-form-actions">
           <button type="submit" className="registerNewSSUPatient-register-btn">
             {patientData ? "Update" : "Register"}
+          </button>
+          <button className="registerNewSSUPatient-register-btn" type="button" onClick={handleClear}>
+          Reset
           </button>
           <button
             type="button"

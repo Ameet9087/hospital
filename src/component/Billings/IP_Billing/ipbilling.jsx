@@ -1262,7 +1262,7 @@ const IpBilling = () => {
           <button className="btn-blue" onClick={handleSaveData}>
             Save
           </button>
-          <button className="btn-green">Print</button>
+          <button className="btn-green" >Print</button>
 
           {/* <button className="btn-red">Delete</button>
           <button className="btn-orange">Clear</button>

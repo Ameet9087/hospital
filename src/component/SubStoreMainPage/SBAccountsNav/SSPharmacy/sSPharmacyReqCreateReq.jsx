@@ -3,7 +3,12 @@ import { Calendar } from "lucide-react";
 import "../SSPharmacy/sSPharmacyReqCreateReq.css";
 import { API_BASE_URL } from "../../../api/api";
 import { useParams } from "react-router-dom";
-
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 const SSPharmacyReqCreateReq = ({ onClose }) => {
   const { store } = useParams();
 
@@ -92,7 +97,7 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
     });
   };
   console.log(itemsList);
-  
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -135,12 +140,12 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
       if (response.ok) {
         const result = await response.json();
         console.log("Requisition submitted successfully:", result);
-        alert("Requisition submitted successfully!");
+        toast.success("Requisition submitted successfully!");
         onClose(false); // Close the form/modal
       } else {
         const errorData = await response.json();
         console.error("Failed to submit requisition:", errorData);
-        alert("Failed to submit requisition. Please try again.");
+        toast.error("Failed to submit requisition. Please try again.");
       }
     } catch (error) {
       console.error("Error submitting requisition:", error);
@@ -167,7 +172,6 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
     });
     setItemsList([]); // Clear added items list
   };
-  
 
   return (
     <div className="sSPharmacyReqCreateReq-form">
@@ -176,26 +180,24 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
         {/* General Information */}
         <div className="sSPharmacyReqCreateReq-form-row">
           <div className="sSPharmacyReqCreateReq-form-group">
-            <label htmlFor="issueNo">Issue No : *</label>
-            <input
+            <FloatingInput
+              label={"Issue No"}
               type="number"
               id="issueNo"
-              placeholder="Enter Issue Number"
               value={issueNo}
               onChange={(e) => setIssueNo(e.target.value)}
               required
+              min="1"
             />
           </div>
           <div className="sSPharmacyReqCreateReq-form-group">
-            <label htmlFor="requisitionDate">Requisition Date :</label>
-            <div className="sSPharmacyReqCreateReq-date-input">
-              <input
-                type="date"
-                id="requisitionDate"
-                value={requisitionDate}
-                onChange={(e) => setRequisitionDate(e.target.value)}
-              />
-            </div>
+            <FloatingInput
+              label={"Requisition Date"}
+              type="date"
+              id="requisitionDate"
+              value={requisitionDate}
+              onChange={(e) => setRequisitionDate(e.target.value)}
+            />
           </div>
         </div>
 
@@ -218,22 +220,25 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
           <tbody>
             <tr>
               <td>
-                <select
+                <FloatingSelect
+                  label={"Item Name"}
+                  name="itemId"
                   value={item.itemId}
                   onChange={handleItemSelection}
-                  className="SSPharmacy-input"
-                >
-                  <option value="">Select Item</option>
-                  {chooseItem.map((item, index) => (
-                    <option key={index} value={item.addItemId}>
-                      {item?.itemMaster?.itemName}
-                    </option>
-                  ))}
-                </select>
+                  options={[
+                    { value: "", label: "Select Item" },
+                    ...chooseItem.map((item) => ({
+                      value: item.addItemId,
+                      label: item?.itemMaster?.itemName,
+                    })),
+                  ]}
+                />
               </td>
 
               <td>
-                <input
+                
+                <FloatingInput
+                  label={"Unit"}
                   type="text"
                   className="SSPharmacy-input"
                   value={item.unit}
@@ -241,7 +246,9 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
                 />
               </td>
               <td>
-                <input
+                
+                <FloatingInput
+                  label={"Available Qty in Store"}
                   type="number"
                   className="SSPharmacy-input"
                   value={item.availableQtyInStore}
@@ -249,7 +256,9 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
                 />
               </td>
               <td>
-                <input
+                
+                <FloatingInput
+                  label={"Required Quantity"}
                   type="number"
                   className="SSPharmacy-input"
                   value={item.requiredQuantity}
@@ -260,7 +269,9 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
                 />
               </td>
               <td>
-                <input
+                
+                <FloatingInput
+                  label={"Generic Name"}
                   type="text"
                   className="SSPharmacy-input"
                   value={item.genericName}
@@ -268,7 +279,9 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
                 />
               </td>
               <td>
-                <input
+                
+                 <FloatingInput
+                  label={"Batch No"}
                   type="text"
                   className="SSPharmacy-input"
                   value={item.batchNo}
@@ -276,7 +289,9 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
                 />
               </td>
               <td>
-                <input
+                
+                <FloatingInput
+                  label={"Expiry Date"}
                   type="date"
                   className="SSPharmacy-input"
                   value={item.expiryDate}
@@ -284,7 +299,9 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
                 />
               </td>
               <td>
-                <input
+                
+                <FloatingInput
+                  label={"Sales Price"}
                   type="number"
                   className="SSPharmacy-input"
                   value={item.salePrice}
@@ -292,7 +309,9 @@ const SSPharmacyReqCreateReq = ({ onClose }) => {
                 />
               </td>
               <td>
-                <input
+                
+                <FloatingInput
+                  label={"Remark"}
                   type="text"
                   className="SSPharmacy-input"
                   value={item.remark}

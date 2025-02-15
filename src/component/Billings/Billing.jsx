@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import IPBilling from "../Billings/IP_Billing/ipbilling";
+import IPBilling from "./IP_Billing/ipbilling";
 import OpdBilling from "./OpdBilling/OpdBilling";
 import Ipmoneyreceipt from "./IP_Billing/Transactions/IPMoneyReceipt/IpmoneyReceipt";
 import OPDBillCancellation from "./OpdBilling/OPDBillCancellation";

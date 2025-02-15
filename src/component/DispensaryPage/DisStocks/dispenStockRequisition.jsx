@@ -7,14 +7,22 @@ import * as XLSX from 'xlsx';
 import { API_BASE_URL } from "../../api/api";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
+
 function DispenStockRequisition() {
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [requisitions, setRequisitions] = useState([]);
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
   const [statusFilter, setStatusFilter] = useState("All");
-   const [columnWidths, setColumnWidths] = useState({});
-    const tableRef = useRef(null);
 
+  const tableRef = useRef();
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedRequisition, setSelectedRequisition] = useState({
     pharmacyRequisitionId: null,
@@ -54,68 +62,60 @@ function DispenStockRequisition() {
       console.error("Error fetching requisition details:", error);
     }
   };
-
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, "DispenceSalesStockDetails"); // Appends worksheet to workbook
+    XLSX.writeFile(wb, "DispenceSalesStockDetails.xlsx"); // Downloads the Excel file
+  };
   const closeModal = () => setShowModal(false);
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
 
-  // const handlePrint = useReactToPrint({
-  //   content: () => printRef.current,
-  //   documentTitle: "Requisition_Report",
-  //   pageStyle: `
-  //     @page {
-  //       size: A4;
-  //       margin: 20mm;
-  //     }
-  //   `,
-  // });
-  // const handleExport = () => {
-  //   const ws = XLSX.utils.table_to_sheet(tableRef.current);
-  //   const wb = XLSX.utils.book_new();
-  //   XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport');
-  //   XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
-  // };
-  const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
         <head>
           <title>Print Table</title>
           <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
             }
           </style>
         </head>
         <body>
-          ${printContent.outerHTML}
+
+          <table>
+            ${printContents}
+          </table>
         </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
   };
-
-
-
-  const handleExport = () => {
-    const ws = XLSX.utils.table_to_sheet(tableRef.current);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport');
-    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
-  };
-
-
-
 
   return (
     <div className="dispenStockRequisition-active-imaging-request">
@@ -159,40 +159,51 @@ function DispenStockRequisition() {
           </header>
           <div className="dispenStockRequisition-controls">
             <div className="dispenStockRequisition-date-range">
-              <label>
-                From:
-                <input type="date" defaultValue="2024-08-09" />
-              </label>
-              <label>
-                To:
-                <input type="date" defaultValue="2024-08-16" />
-              </label>
+              <FloatingInput
+                label="From"
+                type="date"
+                name="fromDate"
+                value={fromDate}
+                onChange={(e) => setFromDate(e.target.value)}
+              />
+              <FloatingInput
+                label="To"
+                type="date"
+                name="toDate"
+                value={toDate}
+                onChange={(e) => setToDate(e.target.value)}
+              />
             </div>
           </div>
           <div className="dispenStockRequisition-search-N-results">
             <div className="dispenStockRequisition-search-bar">
-              <i className="fa-solid fa-magnifying-glass"></i>
-              <input type="text" placeholder="Search" />
+              
+              <FloatingInput 
+              label={"Search"}
+              type="search"
+              />
             </div>
             <div className="dispenStockRequisition-results-info">
-              Showing {requisitions.length}/ {requisitions.length} results
+              Showing {filteredRequisitions.length} / {requisitions.length}{" "}
+              results
               <button
                 className="dispenStockRequisition-print-btn"
                 onClick={handleExport}
-
               >
                 <i className="fa-solid fa-file-excel"></i> Export
               </button>
               <button
                 className="dispenStockRequisition-print-btn"
-                onClick={handlePrint}
+
+                onClick={printList}
               >
                 <i className="fa-solid fa-print"></i> Print
               </button>
             </div>
           </div>
 
-          <div className="table-container">
+
+          <div className="dispenStockRequisition-table-N-paginat">
             <table ref={tableRef}>
               <thead>
                 <tr>
@@ -233,7 +244,6 @@ function DispenStockRequisition() {
                     <td>{req.requestedDate}</td>
                     <td>{req.status}</td>
                     <td>
-                      {/* <button className="dispenStockRequisition-view-button">Receive item</button> */}
                       <button
                         className="dispenStockRequisition-print-btn"
                         onClick={() => handleViewClick(req)}

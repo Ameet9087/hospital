@@ -208,22 +208,10 @@ gap: 10px;
 .billing-opd-com-summary-field {
 display: flex;
 align-items: center;
-gap: 10px; /* Space between label and input */
-flex-shrink: 0; /* Prevent fields from shrinking when space is limited */
+gap: 10px;
+margin-top: 10px;
+flex-shrink: 0;
 }
-
-.billing-opd-com-summary-field label {
-font-size: var(--font-size); /* Consistent font size */
-white-space: nowrap; /* Prevent labels from breaking onto new lines */
-}
-
-.billing-opd-com-summary-field input {
-font-size: var(--font-size); /* Consistent font size */
-padding: 5px;
-border: 1px solid #ccc;
-border-radius: 4px;
-}
-
 
 .billing-opd-com-form-row input[type="checkbox"] {
 width: 18px;
@@ -286,9 +274,9 @@ margin-bottom: 10px;
 margin-top: 10px;
 }
 
-.payment-summary {
+/* .payment-summary {
 margin-top: 20px;
-}
+} */
 .billing-opd-com-main-section-payment{
 display: flex;
 gap: 4px;

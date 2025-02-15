@@ -14,6 +14,7 @@ const IpBilling = ({ ipAdmission }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [previousBills, setPreviousBills] = useState([]); // State to hold API data
+  const [previousBillsId, setPreviousBillsId] = useState([]); // State to hold API data
   const [serviceData, setServiceData] = useState([]); // Store fetched service data
   const [selectedService, setSelectedService] = useState(null);
   const [rate, setRate] = useState(0);
@@ -27,13 +28,28 @@ const IpBilling = ({ ipAdmission }) => {
   const [error, setError] = useState(null); // State to handle errors
   const [doctorVisit, setDoctorVisit] = useState(null);
 
+  console.log("iPadmiassion ------------", ipAdmission);
+
+  // const fetchPreviousBills = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${API_BASE_URL}/ipbillings/${ipAdmission?.ipAdmmissionId}`
+  //     );
+  //     console.log("fetch previous test grid", response.data);
+  //     setPreviousBills(response.data.testGridIpdBill); // Update state with fetched data
+  //   } catch (error) {
+  //     console.error("Error fetching previous bills:", error);
+  //   }
+  // };
+
   const fetchPreviousBills = async () => {
     try {
       const response = await axios.get(
-        `${API_BASE_URL}/ipbillings/${ipAdmission?.ipAdmmissionId}`
+        `${API_BASE_URL}/ipbillings/previous-bills/${ipAdmission?.ipAdmmissionId}`
       );
-      console.log("fetch previous test grid", response.data);
-      setPreviousBills(response.data.testGridIpdBill); // Update state with fetched data
+      console.log("Fetched previous bills:", response.data);
+      setPreviousBillsId(response.data.id);
+      setPreviousBills(response.data.testGridIpdBill);
     } catch (error) {
       console.error("Error fetching previous bills:", error);
     }
@@ -295,7 +311,28 @@ const IpBilling = ({ ipAdmission }) => {
     fetchDoctors();
   }, []);
 
-  // prachi post Dr
+  const handleCancel = async (testGridIpdBillId, id) => {
+    try {
+      // Send a DELETE request to the API endpoint
+      const response = await axios.delete(
+        `${API_BASE_URL}/ipbillings/${id}/test-grid-ipd-bill/${testGridIpdBillId}`
+      );
+
+      if (response.status === 200) {
+        // If the deletion is successful, update the state to remove the deleted entry
+        setPreviousBills((prevBills) =>
+          prevBills.filter(
+            (bill) => bill.testGridIpdBillId !== testGridIpdBillId
+          )
+        );
+        console.log("Test entry deleted successfully:", response.data);
+      } else {
+        console.error("Failed to delete test entry:", response.data);
+      }
+    } catch (error) {
+      console.error("Error deleting test entry:", error);
+    }
+  };
 
   const [formData, setFormData] = useState({
     doctorVisitId: "",
@@ -658,6 +695,7 @@ const IpBilling = ({ ipAdmission }) => {
                     "Disc",
                     "Disc Amount",
                     "Net Amount",
+                    "Action",
                   ].map((header, index) => (
                     <th
                       key={index}
@@ -703,6 +741,21 @@ const IpBilling = ({ ipAdmission }) => {
                       {bill.rate && bill.quantity
                         ? (bill.rate * bill.quantity).toFixed(2)
                         : "0.00"}
+                    </td>
+                    <td>
+                      <div className="billing-ipBilling-action-buttons">
+                        <button
+                          className="btn-blue"
+                          onClick={() =>
+                            handleCancel(
+                              bill.testGridIpdBillId,
+                              previousBillsId
+                            )
+                          }
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}

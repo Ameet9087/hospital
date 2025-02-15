@@ -4,65 +4,13 @@ import "./DischargeIntimationForm.css";
 import PopupTable from "../Services/PopupTable";
 import axios from "axios";
 import { API_BASE_URL } from "../../../api/api";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 
-const FloatingInput = ({ label, type = "text", ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
-  const handleChange = (e) => {
-    setHasValue(e.target.value.length > 0);
-    if (props.onChange) props.onChange(e);
-  };
-  return (
-    <div
-      className={`DischargeIntimationForm-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
-    >
-      <input
-        type={type}
-        className="DischargeIntimationForm-floating-input"
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value.length > 0);
-        }}
-        onChange={handleChange}
-        {...props}
-      />
-      <label className="DischargeIntimationForm-floating-label">{label}</label>
-    </div>
-  );
-};
-const FloatingSelect = ({ label, options = [], ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(false);
-  return (
-    <div
-      className={`DischargeIntimationForm-floating-field ${
-        isFocused || hasValue ? "active" : ""
-      }`}
-    >
-      <select
-        className="DischargeIntimationForm-floating-select"
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value !== "");
-        }}
-        onChange={(e) => setHasValue(e.target.value !== "")}
-        {...props}
-      >
-        <option value="">{}</option>
-        {options.map((option, index) => (
-          <option key={index} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <label className="DischargeIntimationForm-floating-label">{label}</label>
-    </div>
-  );
-};
 
 const DischargeIntimationForm = ({ ipAdmission }) => {
   const [activePopup, setActivePopup] = useState(null);
@@ -93,7 +41,7 @@ const DischargeIntimationForm = ({ ipAdmission }) => {
         `${API_BASE_URL}/discharge-intimations`,
         requestData
       );
-      alert("Form submitted successfully!");
+      toast.success("Form submitted successfully!");
       setFormData({
         dischargeAdviceDate: "",
         dischargeAdviceTime: "",
@@ -102,7 +50,7 @@ const DischargeIntimationForm = ({ ipAdmission }) => {
       });
     } catch (error) {
       console.error("Error submitting form data:", error);
-      alert("Failed to submit form. Please check your data and try again.");
+      toast.error("Failed to submit form. Please check your data and try again.");
     }
   };
 

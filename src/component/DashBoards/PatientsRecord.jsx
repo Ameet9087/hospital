@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ReactToPrint from "react-to-print";
 import "./PatientsRecords.css";
 import PatientDashboard from "./PatientDashboard";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import { useFilter } from "../ShortCuts/useFilter";
 

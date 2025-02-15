@@ -283,11 +283,12 @@ const ErRegister = () => {
                   >
                     {receipt.patientType === "new"
                       ? "Generate MR NO"
-                      : "Alredy MR No"}
+                      : "Already MR No"}
                   </button>
                   <button
                     className="ErRegister-print-button"
                     onClick={() => handleERClinicalEntries(receipt)}
+                    disabled={receipt.patientType === "new"}
                   >
                     Add
                   </button>

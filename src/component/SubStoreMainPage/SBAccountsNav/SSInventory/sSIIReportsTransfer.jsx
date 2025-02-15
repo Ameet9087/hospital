@@ -1,16 +1,21 @@
- /* Ajhar Tamboli sSIIReportsTransfer.jsx 19-09-24 */
+/* Ajhar Tamboli sSIIReportsTransfer.jsx 19-09-24 */
 
-
-import React, { useState, useRef } from 'react';
-import * as XLSX from 'xlsx'; // Import the xlsx library
+import React, { useState, useRef } from "react";
+import * as XLSX from "xlsx"; // Import the xlsx library
 import "../SSInventory/sSIIReportsTransfer.css";
-import { useReactToPrint } from 'react-to-print';
+import { useReactToPrint } from "react-to-print";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 
 function SSIIReportsTransfer() {
   const printRef = useRef();
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [showViewRequisition, setShowViewRequisition] = useState(false);
-
+  const tableRef = useRef(null);
   const handleCreateRequisitionClick = () => {
     setShowCreateRequisition(true);
   };
@@ -20,103 +25,141 @@ function SSIIReportsTransfer() {
     setShowViewRequisition(false);
   };
 
-  const handlePrint = useReactToPrint({
-    content: () => printRef.current,
-    documentTitle: 'Transfer Report',
-    pageStyle: `
-      @page {
-        size: A4;
-        margin: 20mm;
-      }
-    `,
-  });
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
+  };
 
   const handleViewClick = () => {
     setShowViewRequisition(true);
   };
 
   // Function to handle exporting the table to an Excel file
-  const handleExportToExcel = () => {
-    // Get the table data
-    const tableData = [
-      [' Date', 'Department Name', 'Item Name', 'Transfer Qty', 'Remarks', 'Transfer By'],
-      
-    ];
-
-    // Create a new workbook and a new worksheet
-    const worksheet = XLSX.utils.aoa_to_sheet(tableData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Report');
-
-    // Convert the workbook to an Excel file and trigger the download
-    XLSX.writeFile(workbook, 'Requisition_Report.xlsx');
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, "ReportTransfer"); // Appends worksheet to workbook
+    XLSX.writeFile(wb, "ReportTransfer.xlsx"); // Downloads the Excel file
   };
 
   return (
     <div className="sSIIReportsTransfer-active-imaging-request">
       <>
-        <header className='sSIIReportsTransfer-header'>
+        <header className="sSIIReportsTransfer-header">
           <div className="sSIIReportsTransfer-status-filters">
-            <h4><i class="fa-solid fa-star-of-life"></i>Transfer Report</h4>
+            <h4>
+              <i class="fa-solid fa-star-of-life"></i>Transfer Report
+            </h4>
           </div>
         </header>
         <div className="sSIIReportsTransfer-controls">
+          <div className="sSIIReportsTransfer-date-range">
+            
+            <FloatingInput
+              label="From Date"
+              type="date"
+              defaultValue="2024-08-16"
+            />
+            <FloatingInput
+              label="To Date"
+              type="date"
+             defaultValue="2024-08-09"
+            />
 
-        <div className="sSIIReportsTransfer-date-range">
-            <label>
-              From:
-              <input type="date" defaultValue="2024-08-09" />
-            </label>
-            <label>
-              To:
-              <input type="date" defaultValue="2024-08-16" />
-            </label>
             <button className="sSIIReportsTransfer-star-button">☆</button>
-          <button className="sSIIReportsTransfer-more-btn">-</button>
+            <button className="sSIIReportsTransfer-more-btn">-</button>
             <button className="sSIIReportsTransfer-ok-button">OK</button>
           </div>
 
-     
           <div className="sSIIReportsTransfer-filter">
-          
-            <button className='sSIIReportsTransfer-print-btn'>Show Report</button>
+            <button className="sSIIReportsTransfer-print-btn">
+              Show Report
+            </button>
           </div>
         </div>
         <div className="sSIIReportsTransfer-search-N-results">
           <div className="sSIIReportsTransfer-search-bar">
-            <i className="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Search" />
+            
+            <FloatingInput 
+             label={"Search"}
+              type="search"
+            />
           </div>
           <div className="sSIIReportsTransfer-results-info">
             Showing 2 / 2 results
-            <button className='sSIIReportsTransfer-print-btn' onClick={handleExportToExcel}>
+            <button
+              className="sSIIReportsTransfer-print-btn"
+              onClick={handleExport}
+            >
               <i className="fa-regular fa-file-excel"></i> Export
             </button>
-            <button className='sSIIReportsTransfer-print-btn' onClick={handlePrint}><i class="fa-solid fa-print"></i> Print</button>
+            <button
+              className="sSIIReportsTransfer-print-btn"
+              onClick={printList}
+            >
+              <i class="fa-solid fa-print"></i> Print
+            </button>
           </div>
         </div>
-        <div style={{ display: 'none' }}>
-          <div ref={printRef}>
+        <div style={{ display: "none" }}>
+          <div ref={tableRef}>
             <h2>Transfer Report</h2>
             <p>Printed On: {new Date().toLocaleString()}</p>
             <table>
               <thead>
                 <tr>
-                <th> Date</th>
+                  <th> Date</th>
                   <th>Department Name</th>
                   <th>Item Name</th>
                   <th>Transfer Qty</th>
-                <th>Remarks</th>
+                  <th>Remarks</th>
                   <th>Transfer By</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                 
-                </tr>
-                <tr>
-                
-                </tr>
+                <tr></tr>
+                <tr></tr>
               </tbody>
             </table>
           </div>
@@ -125,22 +168,17 @@ function SSIIReportsTransfer() {
           <table>
             <thead>
               <tr>
-              <th> Date</th>
-                  <th>Department Name</th>
-                  <th>Item Name</th>
-                  <th>Transfer Qty</th>
+                <th> Date</th>
+                <th>Department Name</th>
+                <th>Item Name</th>
+                <th>Transfer Qty</th>
                 <th>Remarks</th>
-                  <th>Transfer By</th>
-                
+                <th>Transfer By</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                
-              </tr>
-              <tr>
-                
-              </tr>
+              <tr></tr>
+              <tr></tr>
             </tbody>
           </table>
           {/* <div className="sSIIReportsTransfer-pagination">

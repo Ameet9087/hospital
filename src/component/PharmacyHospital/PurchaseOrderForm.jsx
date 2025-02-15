@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./PurchaseOrderForm.css";
 import { API_BASE_URL } from "../api/api";
+import { PopupTable } from "../../FloatingInputs";
 
 const PurchaseOrderForm = () => {
   const [formVisible, setFormVisible] = useState(true);
@@ -23,6 +24,10 @@ const PurchaseOrderForm = () => {
   const [vatPercentage, setVatPercentage] = useState("");
   const [totalAmount, setTotalAmount] = useState("");
   const [remarks, setRemarks] = useState("");
+
+  const [locations, setLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
+  const [activePopup, setActivePopup] = useState("");
   const [formData, setFormData] = useState({
     supplier: {
       suppliersId: "",
@@ -71,6 +76,7 @@ const PurchaseOrderForm = () => {
     totalAmount: 0,
     remarks: "",
     inWords: "",
+    termsAndCondition: "",
   });
 
   const [items, setItems] = useState([]);
@@ -78,7 +84,37 @@ const PurchaseOrderForm = () => {
   const [availableItems, setAvailableItems] = useState([]);
   const [availableGenerics, setAvailableGenerics] = useState([]);
 
+  const getPopupData = () => {
+    if (activePopup === "Location") {
+      return {
+        columns: ["id", "locationName"],
+        data: locations,
+      };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
+
+  const { columns, data } = getPopupData();
+
+  const handleSelect = async (data) => {
+    if (activePopup === "Location") {
+      setSelectedLocation(data);
+    }
+
+    setActivePopup(null);
+  };
+
   useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/location-masters`)
+      .then((response) => {
+        setLocations(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the Locations!", error);
+      });
+
     axios
       .get(`${API_BASE_URL}/suppliers`)
       .then((response) => {
@@ -132,13 +168,20 @@ const PurchaseOrderForm = () => {
   const handleInputChange = (index, e) => {
     const { name, value } = e.target;
 
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value, // Update the formData directly with the name and value
+    }));
+
     setItems((prevItems) =>
       prevItems.map((item, idx) => {
         if (idx === index) {
           const updatedItem = { ...item, [name]: value };
 
           if (name === "itemName") {
-            const selectedItem = availableItems.find((i) => i.itemName === value);
+            const selectedItem = availableItems.find(
+              (i) => i.itemName === value
+            );
             if (selectedItem) {
               updatedItem.standardRate = parseFloat(selectedItem.mrpItem || 0);
               updatedItem.pharmacyItemMasterDTO = {
@@ -151,8 +194,12 @@ const PurchaseOrderForm = () => {
           const itemQuantity = parseInt(updatedItem.itemQuantity || 0, 10);
           const freeQuantity = parseInt(updatedItem.freeQuantity || 0, 10);
           const standardRate = parseFloat(updatedItem.standardRate || 0);
-          const ccChargePercentage = parseFloat(updatedItem.ccChargePercentage || 0);
-          const discountPercentage = parseFloat(updatedItem.discountPercentage || 0);
+          const ccChargePercentage = parseFloat(
+            updatedItem.ccChargePercentage || 0
+          );
+          const discountPercentage = parseFloat(
+            updatedItem.discountPercentage || 0
+          );
           const vatPercentage = parseFloat(updatedItem.vatPercentage || 0);
 
           // Calculate totals
@@ -187,8 +234,8 @@ const PurchaseOrderForm = () => {
   };
 
   useEffect(() => {
-    calculateFormDataTotals()
-  }, [items])
+    calculateFormDataTotals();
+  }, [items]);
 
   const calculateFormDataTotals = () => {
     let overallVatAmount = 0;
@@ -248,7 +295,6 @@ const PurchaseOrderForm = () => {
     }));
   };
 
-
   const addItem = () => {
     setItems([
       ...items,
@@ -271,7 +317,6 @@ const PurchaseOrderForm = () => {
     ]);
   };
 
-  console.log("added row item ", items);
   const removeItem = (index) => {
     setItems(items.filter((_, i) => i !== index));
   };
@@ -283,51 +328,51 @@ const PurchaseOrderForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!selectedSupplierId) {
-      alert("Please select a supplier.");
-      return;
-    }
-    console.log("selected ", selectedSupplierId);
     const data = {
       poDate: formData.poDate,
-      deliveryDays: parseInt(formData.deliveryDays) || 0,  // Make sure it's an integer
+      deliveryDays: parseInt(formData.deliveryDays) || 0,
       deliveryAddress: formData.deliveryAddress,
       deliveryDate: formData.deliveryDate,
       referenceNumber: formData.referenceNo,
       contact: formData.contact,
       invoicingAddress: formData.invoicingAddress,
 
-      subTotal: parseInt(formData.subtotal) || 0,  // Convert to int
-      taxableAmount: parseInt(formData.taxableAmount) || 0,  // Convert to int
-      vatAmount: parseInt(formData.vatAmount) || 0,  // Convert to int
-      discountAmount: parseInt(formData.discountAmount) || 0,  // Convert to int
+      subTotal: parseInt(formData.subtotal) || 0, // Convert to int
+      taxableAmount: parseInt(formData.taxableAmount) || 0, // Convert to int
+      vatAmount: parseInt(formData.vatAmount) || 0, // Convert to int
+      discountAmount: parseInt(formData.discountAmount) || 0, // Convert to int
       inWords: formData.inWords,
-      discountPercent: parseInt(formData.discountPercentage) || 0,  // Convert to int
-      nonTaxableAmount: parseInt(formData.nonTaxableAmount) || 0,  // Convert to int
-      ccCharge: parseInt(formData.ccCharge) || 0,  // Convert to int
-      totalAmount: parseInt(formData.totalAmount) || 0,  // Convert to int
+      termsAndCondition: formData.termsAndCondition,
+      discountPercent: parseInt(formData.discountPercentage) || 0, // Convert to int
+      nonTaxableAmount: parseInt(formData.nonTaxableAmount) || 0, // Convert to int
+      ccCharge: parseInt(formData.ccCharge) || 0, // Convert to int
+      totalAmount: parseInt(formData.totalAmount) || 0, // Convert to int
       supplierDTO: {
         suppliersId: selectedSupplierId,
       },
+      locationMasterDTO: {
+        id: selectedLocation?.id,
+      },
+
       purchaseOrderItemDTOs: items.map((item) => ({
-        quantity: parseInt(item.itemQuantity) || 0,  // Convert to int
-        freeQuantity: parseInt(item.freeQuantity) || 0,  // Convert to int
-        totalQuantity: parseInt(item.totalQuantity) || 0,  // Convert to int
-        vatPercentage: parseInt(item.vatPercentage) || 0,  // Convert to int
+        quantity: parseInt(item.itemQuantity) || 0, // Convert to int
+        freeQuantity: parseInt(item.freeQuantity) || 0, // Convert to int
+        totalQuantity: parseInt(item.totalQuantity) || 0, // Convert to int
+        vatPercentage: parseInt(item.vatPercentage) || 0, // Convert to int
         standardRate: parseInt(item.standardRate) || 0,
-        subTotal: parseInt(item.subtotal) || 0,  // Convert to int
-        ccCharge: parseInt(item.ccCharge) || 0,  // Convert to int
-        discountPercent: parseInt(item.discountPercentage) || 0,  // Convert to int
-        totalAmount: parseInt(item.totalAmount) || 0,  // Convert to int
+        subTotal: parseInt(item.subtotal) || 0, // Convert to int
+        ccCharge: parseInt(item.ccCharge) || 0, // Convert to int
+        discountPercent: parseInt(item.discountPercentage) || 0, // Convert to int
+        totalAmount: parseInt(item.totalAmount) || 0, // Convert to int
         remarks: item.remarks,
         pharmacyItemMasterDTO: {
           pharmacyItemMasterId:
-            item.pharmacyItemMasterDTO?.pharmacyItemMasterId || 0,  // Ensure it's an int or 0 if undefined
+            item.pharmacyItemMasterDTO?.pharmacyItemMasterId || 0, // Ensure it's an int or 0 if undefined
         },
       })),
     };
 
-    console.log(data);
+    console.log(JSON.stringify(data, null, 2));
 
     axios
       .post(`${API_BASE_URL}/purchaseorders/add`, data)
@@ -395,7 +440,6 @@ const PurchaseOrderForm = () => {
             onChange={handleChangeInput}
           ></input>
         </div>
-
         <div className="purchase-order-form-item">
           <label>Delivery Date:</label>
           <input
@@ -414,7 +458,6 @@ const PurchaseOrderForm = () => {
             onChange={handleChangeInput}
           />
         </div>
-
         <div className="purchase-order-form-item">
           <label>Contact:</label>
           <input
@@ -432,7 +475,28 @@ const PurchaseOrderForm = () => {
             onChange={handleChangeInput}
           ></input>
         </div>
-        <div className="purchase-order-form-item"></div>
+        <div className="purchase-order-form-item">
+          <label>Location:</label>
+          <div className="purchase-order-search-field">
+            <input
+              className="purchase-order-tableinput"
+              type="text"
+              value={selectedLocation?.locationName}
+            />
+            <button
+              type="button"
+              className="purchase-order-search-icon"
+              onClick={() => setActivePopup("Location")}
+            >
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <path
+                  fill="currentColor"
+                  d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="purchase-order-com-tab">
@@ -687,7 +751,16 @@ const PurchaseOrderForm = () => {
               type="text"
               name="inWords"
               value={formData.inWords}
-              onChange={handleInputChange}
+              onChange={handleChangeInput}
+            />
+          </div>
+          <div className="purchase-order-form-item">
+            <label>Tearms and Conditions:</label>
+            <input
+              type="text"
+              name="termsAndCondition"
+              value={formData.termsAndCondition}
+              onChange={handleChangeInput}
             />
           </div>
         </div>
@@ -697,6 +770,14 @@ const PurchaseOrderForm = () => {
             Submit
           </button>
         </div>
+        {activePopup && (
+          <PopupTable
+            columns={columns}
+            data={data}
+            onSelect={handleSelect}
+            onClose={() => setActivePopup(false)}
+          />
+        )}
       </div>
     </form>
   );

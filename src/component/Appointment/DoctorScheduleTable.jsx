@@ -63,9 +63,6 @@ const DoctorScheduleTable = () => {
       console.error("Delete Error:", error);
     }
   };
-  const filteredData = scheduleData.filter((item) =>
-    item.doctor.doctorName.toLowerCase().includes(search.toLowerCase())
-  );
 
   return (
     <div className="doctor-schedule-table">
@@ -105,8 +102,8 @@ const DoctorScheduleTable = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredItems.length > 0 ? (
-              filteredItems.map((item, index) => (
+            {Array.isArray(filteredItems) && filteredItems.length > 0 ? (
+              filteredItems?.map((item, index) => (
                 <tr key={item.scheduleId}>
                   <td>{index + 1}</td>
                   <td>{item.doctor.doctorName}</td>

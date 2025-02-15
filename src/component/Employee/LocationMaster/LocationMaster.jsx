@@ -325,7 +325,7 @@ function LocationMaster({ update, onClose, onSuccess }) {
             </div>
 
             {/* Online Appointment Desk */}
-            <div className="location-master__appointment-desk">
+            {/* <div className="location-master__appointment-desk">
               <div className="location-master-headers">
                 Online Appointment Desk
               </div>
@@ -400,7 +400,7 @@ function LocationMaster({ update, onClose, onSuccess }) {
                 value={locationData.gstNo}
                 onChange={handleChange}
               />
-            </div>
+            </div> */}
 
             <div className="location-master__checkbox-group">
               <label>

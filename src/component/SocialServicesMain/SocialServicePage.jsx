@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./SocialServicePage.css";
 import RegisterNewSSUPatient from "./registerNewSSUPatient";
 import { API_BASE_URL } from "../api/api";
@@ -7,6 +7,7 @@ function SocialServicePage() {
   const [showPopup, setShowPopup] = useState(false);
   const [data, setData] = useState(null);
   const [selectedEdit, setSelectedEdit] = useState(null);
+  const tableRef = useRef()
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
   useEffect(() => {
@@ -16,8 +17,50 @@ function SocialServicePage() {
       .catch((err) => console.log(err));
   }, []);
 
-  const handlePrint = () => {
-    window.print();
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
   };
 
   const togglePopup = () => {
@@ -94,7 +137,7 @@ function SocialServicePage() {
             </span>
             <button
               className="socialService-print-button"
-              onClick={handlePrint}
+              onClick={printList}
             >
               <i class="fa-solid fa-print"></i> Print
             </button>
@@ -102,7 +145,7 @@ function SocialServicePage() {
         </div>
 
         <div className="socialService-table-N-bttns">
-          <table>
+          <table ref={tableRef}>
             <thead>
               <tr>
                 <th>Patient Name</th>

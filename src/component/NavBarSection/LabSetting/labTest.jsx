@@ -4,7 +4,7 @@ import LSLabTestAddNLTest from "./lSLabTestAddNLTest";
 
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { FloatingInput } from "../../../FloatingInputs";
 
 const LabTestSetting = () => {
@@ -77,12 +77,12 @@ const LabTestSetting = () => {
         <div className="labTestLS-search-bar">
 
           <FloatingInput
-          type="text"
-          label={"Search"}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+            type="text"
+            label={"Search"}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
-          
+
         </div>
         <div className="labTestLS-results-info">
           <span>

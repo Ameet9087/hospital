@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import "./SurgicalHistory.css";
 import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
@@ -5,6 +6,8 @@ import { API_BASE_URL } from "../api/api";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { FloatingInput, FloatingTextarea } from "../../FloatingInputs";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const SurgicalHistory = ({ patientId, outPatientId }) => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -29,6 +32,7 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
     setIsAddModalOpen(false);
     setIsUpdateModalOpen(false);
   };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -47,21 +51,18 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
     const fetchSurgicalHistories = () => {
       let endpoint = "";
 
-      // Check if newPatientVisitId or admissionId is present
       if (outPatientId) {
         endpoint = `${API_BASE_URL}/surgical-histories/by-newVisitPatientId/${outPatientId}`;
       } else if (patientId) {
         endpoint = `${API_BASE_URL}/surgical-histories/by-patientId/${patientId}`;
       }
 
-      // If an endpoint is determined, make the API call
       if (endpoint) {
         axios
           .get(endpoint)
           .then((response) => {
             if (response.data.length > 0) {
               setSurgicalHistories(response.data);
-              console.log(response.data);
             }
           })
           .catch((error) => {
@@ -71,14 +72,13 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
     };
 
     fetchSurgicalHistories();
-  }, [patientId, outPatientId, isUpdateModalOpen, isAddModalOpen]); // Dependencies to track patient IDs
+  }, [patientId, outPatientId, isUpdateModalOpen, isAddModalOpen]);
 
   const handleAddSurgicalHistory = async () => {
     const Surgical =
       patientId > 0
         ? { ...formData, inPatientDTO: { inPatientId: patientId } }
         : { ...formData, outPatientDTO: { outPatientId } };
-    console.log(Surgical);
     try {
       const response = await fetch(
         `${API_BASE_URL}/surgical-histories/save-surgical-history`,
@@ -110,7 +110,6 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
   };
 
   const handleUpdateSurgicalHistory = async () => {
-    console.log(updateSurgicalHistory);
     try {
       const response = await fetch(
         `${API_BASE_URL}/surgical-histories/update/${newSurgicalHistory.surgicalHistoryId}`,
@@ -124,16 +123,10 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
       );
 
       if (response.ok) {
-        toast.success("Surgical History added successfully!");
-        setFormData({
-          surgeryType: "",
-          searchProblem: "",
-          surgeryDate: "",
-          note: "",
-        });
+        toast.success("Surgical History updated successfully!");
         handleCloseModal();
       } else {
-        toast.error("Failed to add Surgical History");
+        toast.error("Failed to update Surgical History");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -152,6 +145,48 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
     setUpdateSurgicalHistory({ ...updateSurgicalHistory, [name]: value });
   };
 
+  const handlePrint = () => {
+    const doc = new jsPDF("l", "mm", "a4");
+    doc.setFontSize(16);
+    doc.text("Surgical History Report", doc.internal.pageSize.width / 2, 15, {
+      align: "center",
+    });
+    doc.setFontSize(10);
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, 219, 25);
+
+    const tableData = surgicalHistories.map((history) => [
+      history.surgeryType,
+      history.searchProblem,
+      history.surgeryDate,
+      history.note,
+    ]);
+
+    const headers = ["Surgery Type", "ICD-11 Description", "Surgery Date", "Note"];
+
+    doc.autoTable({
+      head: [headers],
+      body: tableData,
+      startY: 30,
+      styles: {
+        fontSize: 8,
+        cellPadding: 2,
+      },
+      headStyles: {
+        fillColor: [51, 122, 183],
+        textColor: 255,
+        fontSize: 9,
+        fontStyle: "bold",
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+    });
+    const fileName = "Surgical_History_Report.pdf";
+    doc.save(fileName);
+    const pdfOutput = doc.output("bloburl");
+    window.open(pdfOutput, "_blank");
+  };
+
   return (
     <div className="surgical-history-container">
       <div className="surgical-history-main">
@@ -159,19 +194,27 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
           <section className="surgical-history-section">
             <div className="surgical-history-subdiv">
               <label>Surgical History List</label>
-              <button
-                className="surgical-history-add-button"
-                onClick={handleOpenModal}
-              >
-                Add
-              </button>
+              <div className="surgical-historyadd-print-btn">
+                <button
+                  className="surgical-history-add-button"
+                  onClick={handlePrint}
+                >
+                  Print
+                </button>
+                <button
+                  className="surgical-history-add-button"
+                  onClick={handleOpenModal}
+                >
+                  Add
+                </button>
+              </div>
             </div>
             <table className="patientList-table" ref={tableRef}>
               <thead>
                 <tr>
                   {[
                     "Surgery Type",
-                    "searchProblem",
+                    "ICD-11 Description",
                     "Surgery Date",
                     "Note",
                     "Edit",
@@ -185,10 +228,7 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
                         <span>{header}</span>
                         <div
                           className="resizer"
-                          onMouseDown={startResizing(
-                            tableRef,
-                            setColumnWidths
-                          )(index)}
+                          onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
                         ></div>
                       </div>
                     </th>
@@ -205,7 +245,10 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
                     <td>{history.surgeryDate}</td>
                     <td>{history.note}</td>
                     <td>
-                      <button className="surgical-history-add-button" onClick={() => handleUpdate(history)}>
+                      <button
+                        className="surgical-history-add-button"
+                        onClick={() => handleUpdate(history)}
+                      >
                         Edit
                       </button>
                     </td>
@@ -215,7 +258,6 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
             </table>
           </section>
 
-          {/* Modal for Adding Surgical History */}
           {isAddModalOpen && (
             <div className="surgical-history-modal-overlay">
               <div className="surgical-history-modal-content">
@@ -291,7 +333,6 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
                     placeholder="Surgery Type"
                     value={updateSurgicalHistory.surgeryType}
                     onChange={handleUpdateInputChange}
-
                   />
                 </div>
                 <div className="surgical-history-form-group">
@@ -302,9 +343,7 @@ const SurgicalHistory = ({ patientId, outPatientId }) => {
                     placeholder="ICD-11 Description"
                     value={updateSurgicalHistory.searchProblem}
                     onChange={handleUpdateInputChange}
-
                   />
-
                 </div>
                 <div className="surgical-history-form-group">
                   <FloatingInput

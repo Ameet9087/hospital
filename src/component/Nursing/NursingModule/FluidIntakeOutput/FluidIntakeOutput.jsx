@@ -4,7 +4,12 @@ import { useSelector } from "react-redux";
 import { API_BASE_URL } from "../../../api/api";
 import axios from "axios";
 import CustomModal from "../../../../CustomModel/CustomModal";
-
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 const FluidIntakeOutput = ({ ipAdmission }) => {
   const [loading, setLoading] = useState(false);
   const [isViewClicked, setIsActiveClicked] = useState(false);
@@ -184,10 +189,10 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
         balance: "",
       });
       fetchFluidIntakeOutputData();
-      alert("Data Submitted Successfully!");
+      toast.success("Data Submitted Successfully!");
     } catch (error) {
       console.error("Error submitting form data:", error);
-      alert("Failed to save data. Please try again");
+      toast.error("Failed to save data. Please try again");
     } finally {
       setLoading(false);
     }
@@ -214,25 +219,25 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 Fluid Intake
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Date of Capturing :</label>
-                <input
-                  name="dateofcapturing"
+                <FloatingInput
+                  label={"Date of Capturing "}
                   type="date"
+                  name="dateofcapturing"
                   value={formData.dateOfCapturing}
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Time :</label>
-                <input
-                  name="time"
+                <FloatingInput
+                  label={"Time "}
                   type="time"
+                  name="time"
                   value={formData.time}
                   onChange={handleInputChange}
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>IV Fluid Type :</label>
-                <input
+                <FloatingInput
+                  label={"IV Fluid Type"}
                   name="ivFluidType"
                   type="text"
                   value={formData.ivFluidType}
@@ -240,17 +245,18 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>IV Fluid Volume :</label>
-                <input
+                <FloatingInput
+                  label={"IV Fluid Volume"}
                   name="ivFluidVolume"
                   type="number"
+                  min="0"
                   value={formData.ivFluidVolume}
                   onChange={handleInputChange}
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Blood Type :</label>
-                <input
+                <FloatingInput
+                  label={"Blood Type"}
                   name="bloodType"
                   type="text"
                   value={formData.bloodType}
@@ -258,36 +264,37 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Blood Volume :</label>
-                <input
+                <FloatingInput
+                  label={"Blood Volume"}
                   name="bloodVolumeInMl"
                   type="number"
+                  min="0"
                   value={formData.bloodVolumeInMl}
                   onChange={handleInputChange}
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Feed Type :</label>
-                <input
+                <FloatingInput
+                  label={"Feed Type"}
                   name="feedType"
                   type="text"
                   value={formData.feedType}
                   onChange={handleInputChange}
                 />
               </div>
-
               <div className="FluidIntakeOutput-data">
-                <label>Feed Volume :</label>
-                <input
+                <FloatingInput
+                  label={"Feed Volume"}
                   name="feedVolumeInMl"
                   type="number"
                   value={formData.feedVolumeInMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Drugs Type :</label>
-                <input
+                <FloatingInput
+                  label={"Drugs Type"}
                   name="drugType"
                   type="text"
                   value={formData.drugType}
@@ -295,18 +302,19 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Drugs Volume :</label>
-                <input
+                <FloatingInput
+                  label={"Drugs Volume"}
                   name="drugTypeInMl"
                   type="number"
                   value={formData.drugTypeInMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
 
               <div className="FluidIntakeOutput-data">
-                <label>Irrigation :</label>
-                <input
+                <FloatingInput
+                  label={"Irrigation"}
                   name="irrigation"
                   type="text"
                   value={formData.irrigation}
@@ -314,8 +322,8 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>PO Type :</label>
-                <input
+                <FloatingInput
+                  label={"PO Type"}
                   name="poType"
                   type="text"
                   value={formData.poType}
@@ -323,17 +331,18 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>PO Volume :</label>
-                <input
+                <FloatingInput
+                  label={"PO Volume"}
                   name="poVolumeInMl"
                   type="number"
                   value={formData.poVolumeInMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>NG Type :</label>
-                <input
+                <FloatingInput
+                  label={"NG Type"}
                   name="ngType"
                   type="text"
                   value={formData.ngType}
@@ -341,18 +350,19 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>NG Volume :</label>
-                <input
+                <FloatingInput
+                  label={"NG Volume"}
                   name="ngInMl"
                   type="number"
                   value={formData.ngInMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
 
               <div className="FluidIntakeOutput-data">
-                <label>Other Type :</label>
-                <input
+                <FloatingInput
+                  label={"Other Type"}
                   name="otherType"
                   type="text"
                   value={formData.otherType}
@@ -360,26 +370,28 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Other Volume :</label>
-                <input
+                <FloatingInput
+                  label={"Other Volume"}
                   name="otherVolumeInMl"
                   type="number"
                   value={formData.otherVolumeInMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Total Intake :</label>
-                <input
+                <FloatingInput
+                  label={"Total Intake"}
                   name="totalIntake"
                   type="number"
                   value={formData.totalIntake}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Remarks :</label>
-                <textarea
+                <FloatingTextarea
+                  label={"Remarks"}
                   name="remarks"
                   value={formData.remarks}
                   onChange={handleInputChange}
@@ -392,36 +404,39 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
               </div>
 
               <div className="FluidIntakeOutput-data">
-                <label>Urine Foley :</label>
-                <input
+                <FloatingInput
+                  label={"Urine Foley"}
                   name="urineFoleyInMl"
                   type="number"
                   value={formData.urineFoleyInMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Urine Natural :</label>
-                <input
+                <FloatingInput
+                  label={"Urine Natural"}
                   name="urineNaturalInMl"
                   type="number"
                   value={formData.urineNaturalInMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Drain RT :</label>
-                <input
+                <FloatingInput
+                  label={"Drain RT"}
                   name="drainRtInMl"
                   type="number"
                   value={formData.drainRtInMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
 
               <div className="FluidIntakeOutput-data">
-                <label>Drain 1 Type :</label>
-                <input
+                <FloatingInput
+                  label={"Drain 1 Type"}
                   name="drain1Type"
                   type="text"
                   value={formData.drain1Type}
@@ -429,18 +444,19 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Drain 1 Volume :</label>
-                <input
+                <FloatingInput
+                  label={"Drain 1 Volume"}
                   name="drain1InMl"
                   type="number"
                   value={formData.drain1InMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
 
               <div className="FluidIntakeOutput-data">
-                <label>Drain 2 Type :</label>
-                <input
+                <FloatingInput
+                  label={"Drain 2 Type"}
                   name="drain2Type"
                   type="text"
                   value={formData.drain2Type}
@@ -448,18 +464,19 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Drain 2 Volume :</label>
-                <input
+                <FloatingInput
+                  label={"Drain 2 Volume"}
                   name="drain2InMl"
                   type="number"
                   value={formData.drain2InMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
 
               <div className="FluidIntakeOutput-data">
-                <label>Drain 3 Type :</label>
-                <input
+                <FloatingInput
+                  label={"Drain 3 Type"}
                   name="drain3Type"
                   type="text"
                   value={formData.drain3Type}
@@ -467,17 +484,18 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Drain 3 Volume :</label>
-                <input
+                <FloatingInput
+                  label={"Drain 3 Volume"}
                   name="drain3InMl"
                   type="number"
                   value={formData.drain3InMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Faeces Type :</label>
-                <input
+                <FloatingInput
+                  label={"Faeces Type"}
                   name="faecesType"
                   type="text"
                   value={formData.faecesType}
@@ -485,17 +503,18 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Faeces Volume :</label>
-                <input
+                <FloatingInput
+                  label={"Faeces Volume"}
                   name="faecesVilumeInMl"
                   type="number"
                   value={formData.faecesVilumeInMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>NG Emesis Type :</label>
-                <input
+                <FloatingInput
+                  label={"NG Emesis Type"}
                   name="ngEmesisType"
                   type="text"
                   value={formData.ngEmesisType}
@@ -503,17 +522,19 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>NG Emesis Volume :</label>
-                <input
+                <FloatingInput
+                  label={"NG Emesis Volume"}
                   name="ngEmesisVolumeInMl"
                   type="number"
                   value={formData.ngEmesisVolumeInMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Output Other Type :</label>
-                <input
+                
+                <FloatingInput
+                  label={"Output Other Type"}
                   name="otherType2"
                   type="text"
                   value={formData.otherType2}
@@ -521,56 +542,61 @@ const FluidIntakeOutput = ({ ipAdmission }) => {
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Output Other Volume :</label>
-                <input
+                <FloatingInput
+                  label={"Output Other Volume"}
                   name="otherTypeVolumeInMl"
                   type="number"
                   value={formData.otherTypeVolumeInMl}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
 
               <h3>Full Day</h3>
               <div className="FluidIntakeOutput-data">
-                <label>Total Fluid Output :</label>
-                <input
+                <FloatingInput
+                  label={"Total Fluid Output"}
                   name="totalFluidOutput"
                   type="number"
                   value={formData.totalFluidOutput}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Total Intake :</label>
-                <input
+                <FloatingInput
+                  label={"Total Intake"}
                   name="totalIntake1"
                   type="number"
                   value={formData.totalIntake1}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
 
               <div className="FluidIntakeOutput-data">
-                <label>Total Output :</label>
-                <input
+                <FloatingInput
+                  label={"Total Output "}
                   name="totalOutPut"
                   type="number"
                   value={formData.totalOutPut}
                   onChange={handleInputChange}
+                  min="0"
                 />
               </div>
               <div className="FluidIntakeOutput-data">
-                <label>Balance :</label>
-                <select
+                <FloatingSelect
+                  label={"Balance"}
                   name="balance"
                   value={formData.balance}
                   onChange={handleInputChange}
-                >
-                  <option value="">Select Balance</option>
-                  <option value="positive">Positive</option>
-                  <option value="negative">Negative</option>
-                  <option value="neutral">Neutral</option>
-                </select>
+                  options={[
+                    {label:"Selecte Balance"},
+                    {value:"positive" ,label:"Positive"},
+                    {value:"negative" ,label:"Negative"},
+                    {value:"neutral" ,label:"Neutral"}
+                  ]}
+                />
               </div>
             </div>
           </div>

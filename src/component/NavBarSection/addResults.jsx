@@ -3,7 +3,7 @@ import Barcode from "react-barcode"; // Import the barcode generator
 import "../NavBarSection/addResults.css";
 import LabAddResultWorkList from "./labAddresultWorkList";
 import { useNavigate } from "react-router-dom";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import { FloatingInput } from "../../FloatingInputs";
 
@@ -72,7 +72,7 @@ function AddResults() {
       link = `${API_BASE_URL}/lab-requests/between-date?startDate=${todayDate}&endDate=${todayDate}&status=Active`;
     }
 
-    // Fetch the data
+    
     fetch(link)
       .then((res) => {
         if (!res.ok) {
@@ -81,7 +81,7 @@ function AddResults() {
         return res.json();
       })
       .then((data) => {
-        console.log("Fetched data: ", data); // Debugging log
+        console.log("Fetched data: ", data); 
         setLabTest(data);
       })
       .catch((err) => {
@@ -90,7 +90,7 @@ function AddResults() {
   };
 
   useEffect(() => {
-    fetchLabResults(); // Call to fetch lab results when the component mounts or dates change
+    fetchLabResults(); 
   }, [dateFrom, dateTo]);
 
   const navigate = useNavigate();

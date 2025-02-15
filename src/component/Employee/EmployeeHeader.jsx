@@ -41,6 +41,18 @@ const EmployeeHeader = () => {
                 Radiology
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                to="/settings/servicemaster"
+                className={
+                  location.pathname === "/settings/servicemaster"
+                    ? "active"
+                    : ""
+                }
+              >
+                service Master
+              </NavLink>
+            </li>
 
             {/* <li>
               <NavLink
@@ -208,9 +220,75 @@ const EmployeeHeader = () => {
                 Speciality Group
               </NavLink>
             </li>
+
+            <li>
+              <NavLink
+                to="/settings/paymodemaster"
+                className={
+                  location.pathname === "/settings/paymodemaster"
+                    ? "active"
+                    : ""
+                }
+              >
+                Paymode Master
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/hopsitalpolicies"
+                className={
+                  location.pathname === "/settings/hopsitalpolicies"
+                    ? "active"
+                    : ""
+                }
+              >
+                Hospital Policies
+              </NavLink>
+            </li>
+
           </ul>
         </nav>
       </header>
+
+
+
+      {location.pathname.includes("/settings/hopsitalpolicies") && (
+        <div className="sub-nav-container">
+          <ul>
+            <li>
+              <NavLink
+                to="/settings/hopsitalpolicies/createhospitalpolicies"
+                className={
+                  location.pathname === "/settings/hopsitalpolicies/createhospitalpolicies"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create Hospital policies
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      )}
+
+      {location.pathname.includes("/settings/paymodemaster") && (
+        <div className="sub-nav-container">
+          <ul>
+            <li>
+              <NavLink
+                to="/settings/paymodemaster/createpaymode"
+                className={
+                  location.pathname === "/settings/paymodemaster/createpaymode"
+                    ? "active"
+                    : ""
+                }
+              >
+                Create Paymode
+              </NavLink>
+            </li>
+          </ul>
+        </div>
+      )}
 
       {location.pathname.includes("/settings/substore") && (
         <div className="sub-nav-container">
@@ -561,6 +639,18 @@ const EmployeeHeader = () => {
                 }
               >
                 Create Beds
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/settings/ipmaster/dischargetemplate"
+                className={
+                  location.pathname === "/settings/ipmaster/dischargetemplate"
+                    ? "active"
+                    : ""
+                }
+              >
+                Discharge Template
               </NavLink>
             </li>
             {/* <li>

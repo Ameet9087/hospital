@@ -55,30 +55,25 @@
   border-radius: 4px;
   border: 1px solid #ccc;
 }
-.return-form-supplierInfo
-{
+.return-form-supplierInfo {
   width: 40%;
   display: flex;
   justify-content: space-around;
 }
-.return-form-header
-{
+.return-form-header {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
-.return-form-date
-{
+.return-form-date {
   padding: 5px;
   border: 1px solid gray;
 }
-.return-form-textarea
-{
+.return-form-textarea {
   width: 70%;
 }
-.return-form-details-textarea
-{
+.return-form-details-textarea {
   width: 100%;
   padding: 10px 0px;
   display: flex;
@@ -86,15 +81,15 @@
   gap: 5px;
   align-items: center;
 }
-.return-form-details-container
-{
-  width:20%;
+.return-form-details-container {
+  width: 20%;
   padding: 5px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
-.return-form-details-container label,.return-form-details-container select{
+.return-form-details-container label,
+.return-form-details-container select {
   width: 50%;
 }
 
@@ -129,7 +124,7 @@
   cursor: pointer;
   font-size: 16px;
 }
-.return-form-details-btn-return{
+.return-form-details-btn-return {
   background-color: var(--button-color);
   color: white;
   border: none;
@@ -139,14 +134,13 @@
   font-size: var(--font-size);
 }
 
-.return-form-details-btn-return:hover{
-
-  border: 1px solid var( --button-hover-border-color);
+.return-form-details-btn-return:hover {
+  border: 1px solid var(--button-hover-border-color);
   color: var(--button-hover-text-color);
   background-color: var(--button-hover-background-color);
 }
 .return-button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }
 
@@ -176,4 +170,36 @@
   .return-form-button {
     font-size: 14px;
   }
+}
+
+.return-form-search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.return-form-tableinput {
+  padding: 3px 3px 3px 10px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.return-form-search-field {
+  position: relative;
+}
+.return-form-Supplier-div {
+  display: flex;
+  gap: 5px;
+  align-items: center;
 }

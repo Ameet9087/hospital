@@ -426,6 +426,28 @@
   margin-top: 13px;
 }
 
+
+.er-initial-assessment-com-button{
+  padding: 4px 12px;
+  border-radius: 5px;
+  border: 1px solid var(--button-color);
+  font-size: var(--font-size);
+  background: var(--button-color);
+  color: white;
+  cursor: pointer;
+}
+
+
+
+.er-initial-assessment-com-button:hover{
+  color: var(--button-color);
+  background: white;
+  /* color: var(--button-hover-background-color); */
+}
+
+
+
+
 @media (max-width: 1024px) {
   .er-initial-assessment-com-grid {
     grid-template-columns: repeat(2, 1fr);

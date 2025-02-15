@@ -5,8 +5,8 @@ import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import * as XLSX from 'xlsx';
 
 const SupplierInformationCom = () => {
-  const [columnWidths, setColumnWidths] = useState({});
-  const tableRef = useRef(null);
+  const [columnWidths,setColumnWidths] = useState({});
+  const tableRef=useRef(null);
   const suppliers = [
     { name: 'Naynesh', contact: '123456', city: '', pan: '', address: 'kenya', email: '' },
     { name: 'Vishal', contact: '785623', city: '', pan: '', address: 'Dubai', email: '' },
@@ -24,37 +24,8 @@ const SupplierInformationCom = () => {
   };
 
   // Function to trigger print
-  // Function to trigger print
   const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
-        <head>
-          <title>Print Table</title>
-          <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
-            }
-          </style>
-        </head>
-        <body>
-          ${printContent.outerHTML}
-        </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+    window.print(); // Triggers the browser's print window
   };
 
 
@@ -67,22 +38,22 @@ const SupplierInformationCom = () => {
         {/* <button className="supplier-info-search-button"><i className="fa fa-search"></i></button> */}
       </div>
       <div className='supplier-info-sale'>
-        <div>Showing 4 / 4 results</div>
+      <div>Showing 4 / 4 results</div>
 
-        <button className="supplier-info-export-button" onClick={handleExport}>Export</button>
-        <button className="supplier-info-print-button" onClick={handlePrint}>Print</button>
-      </div>
-      <div className='table-container'>
-        <table ref={tableRef}>
+          <button className="supplier-info-export-button" onClick={handleExport}>Export</button>
+          <button className="supplier-info-print-button"onClick={handlePrint}>Print</button>
+        </div>
+        <div className='table-container'>
+        <table  ref={tableRef}>
           <thead>
             <tr>
               {[
-                "SupplierName",
-                "Contact No",
-                "City",
-                "Pan No.",
-                "ContactAddress",
-                "Email"
+                 "SupplierName",
+                 "Contact No",
+                 "City",
+                 "Pan No.",
+                 "ContactAddress",
+                 "Email"
               ].map((header, index) => (
                 <th
                   key={index}
@@ -103,21 +74,21 @@ const SupplierInformationCom = () => {
               ))}
             </tr>
           </thead>
-          <tbody>
-            {suppliers.map((supplier, index) => (
-              <tr key={index}>
-                <td>{supplier.name}</td>
-                <td>{supplier.contact}</td>
-                <td>{supplier.city}</td>
-                <td>{supplier.pan}</td>
-                <td>{supplier.address}</td>
-                <td>{supplier.email}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <tbody>
+          {suppliers.map((supplier, index) => (
+            <tr key={index}>
+              <td>{supplier.name}</td>
+              <td>{supplier.contact}</td>
+              <td>{supplier.city}</td>
+              <td>{supplier.pan}</td>
+              <td>{supplier.address}</td>
+              <td>{supplier.email}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
-        {/* <div className="supplier-info-pagination-container">
+      {/* <div className="supplier-info-pagination-container">
        
           <button className="supplier-info-pagination-button">First</button>
           <button className="supplier-info-pagination-button">Previous</button>

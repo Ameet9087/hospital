@@ -8,6 +8,12 @@ import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
 import CustomModal from '../../../../CustomModel/CustomModal';
 import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 function SSIPatientConsumption() {
   const { store } = useParams();
   const [consumptions, setConsumptions] = useState([]);
@@ -66,57 +72,58 @@ const [columnWidths, setColumnWidths] = useState({});
     setSearchTerm(event.target.value);
   };
 
-  const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
         <head>
           <title>Print Table</title>
           <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
             }
           </style>
         </head>
         <body>
-          ${printContent.outerHTML}
+          <table>
+            ${printContents}
+          </table>
         </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
   };
 
-  const handleExportToExcel = () => {
-    const tableData = [
-      ['Consumed Date', 'Consumed Item', 'Consumed Qty', 'Unit', 'Consumption Type Name', 'Entered By', 'Remarks'],
-      ...consumptions.map(item => [
-        item.consumedDate,
-        item.consumedItem,
-        item.consumedQty,
-        item.unit,
-        item.consumptionTypeName,
-        item.enteredBy,
-        item.remarks
-      ])
-    ];
-
-    const worksheet = XLSX.utils.aoa_to_sheet(tableData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Report');
-    XLSX.writeFile(workbook, 'Consumption_Report.xlsx');
-  };
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'Consumption'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'Consumption.xlsx'); // Downloads the Excel file
+  }
 
   return (
     <div className="sSIConsumption-active-imaging-request">
@@ -160,21 +167,26 @@ const [columnWidths, setColumnWidths] = useState({});
         </div>
         <div className="sSIConsumption-search-N-results">
           <div className="sSIConsumption-search-bar">
-            <i className="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Search" />
+           
+            <FloatingInput
+            label={"Search"}
+            type="search"
+            
+            />
           </div>
          
         </div>
         <div className="sSIConsumption-results-btn">
             <p> Showing {consumptions.length} /  {consumptions.length} results</p>
 
-            <button className='sSIConsumption-print-btn' onClick={handleExportToExcel}>
+
+            <button className='sSIConsumption-print-btn' onClick={handleExport}>
               <i className="fa-regular fa-file-excel"></i> Export
             </button>
-            <button className='sSIConsumption-print-btn' onClick={handlePrint}>Print</button>
+            <button className='sSIConsumption-print-btn' onClick={printList}>Print</button>
           </div>
         <div style={{ display: 'none' }}>
-          <div ref={printRef}>
+          <div ref={tableRef}>
             <h2>Patient Consumption Report</h2>
             <p>Printed On: {new Date().toLocaleString()}</p>
             <div className="sSIConsumption-table-N-paginat">

@@ -9,6 +9,8 @@ import {
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
 import { toast } from "react-toastify";
+import CustomModal from "../../../CustomModel/CustomModal";
+import OpdPostDiscountPrint from "./OpdPostDiscountPrint";
 
 
 const OPDPostDiscount = (onClose) => {
@@ -16,294 +18,198 @@ const OPDPostDiscount = (onClose) => {
   const [columnWidths, setColumnWidths] = useState({});
   const [selectedBillNo, setSelectedBillNo] = useState({ opdBillingId: "" });
   const [selectedRow, setSelectedRow] = useState(null);
-  const [serviceDetails, setServiceDetails] = useState([]);
-  const [totalPostNetAmt, setTotalPostNetAmt] = useState(0);
-  const [calculatedValues, setCalculatedValues] = useState([]);
-  const [test, setTest] = useState([
-    { netAmt: 0, lessDisc: 0, discAmt: 0, postNetAmt: 0 },
-  ]);
   const [selectedDiscAuthority, setSelectedDiscAuthority] = useState(null);
-
-  // Inside the OPDPostDiscount component:
-
   const [netAmount, setNetAmount] = useState(0);
   const [billPaid, setBillPaid] = useState(0);
   const [paidRefund, setPaidRefund] = useState(0);
-
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [uploadedFileUrl, setUploadedFileUrl] = useState("");
-
-  // Add new state for remarks
   const [discRemarks, setDiscRemarks] = useState("");
-  const [paymentRemarks, setPaymentRemarks] = useState("");
-
-  // Add states for payment details
-  const [paymentAmount, setPaymentAmount] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [upiId, setUpiId] = useState("");
-  const [checkNumber, setCheckNumber] = useState("");
-  const [checkDate, setCheckDate] = useState("");
   const [fileCharges, setFileCharges] = useState(0);
-
-  // State for calculations
   const [totalAmount, setTotalAmount] = useState(0);
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
-
   const [discAuthority, setdiscAuthority] = useState([]);
+  const [paymentDetails, setPaymentDetails] = React.useState({
+    mode: "",
+    amount: 0,
+    cardNumber: "",
+    upiId: "",
+    checkNumber: "",
+    checkDate: "",
+  });
+  const [activePopup, setActivePopup] = useState("");
+  const [billNo, setBillNo] = useState([]);
+  const [addedData, setAddedData] = useState(null);
 
-  const [selecteddiscAuthority, setSelecteddiscAuthority] = useState(null);
-
-  const handleInputChange = (index, field, value) => {
-    const updatedRows = [...roomRentTableRows];
-    updatedRows[index][field] = value;
-
-    if (field === "rate" || field === "qty") {
-      updatedRows[index].totalAmt =
-        updatedRows[index].rate * updatedRows[index].qty || 0;
-      updatedRows[index].discAmt =
-        (updatedRows[index].totalAmt * updatedRows[index].disc) / 100 || 0;
-      updatedRows[index].netAmt =
-        updatedRows[index].totalAmt - updatedRows[index].discAmt;
-    } else if (field === "discountAmount") {
-      updatedRows[index].discAmt =
-        (updatedRows[index].totalAmt * updatedRows[index].disc) / 100 || 0;
-      updatedRows[index].netAmt =
-        updatedRows[index].totalAmt - updatedRows[index].discAmt;
-    }
-
-    setroomRentTableRows(updatedRows);
-  };
   const calculateTotals = () => {
-    const calculatedTotalAmount = billNo.reduce((total, row) => {
-      if (!row.isChecked) return total;
+    if (!selectedBillNo || !Array.isArray(selectedBillNo.testGridOpdBillDTO))
+      return;
 
-      return (
-        total +
-        (row.testGridOpdBillDTO?.reduce((serviceTotal, item) => {
-          const rate = parseFloat(item.rate || 0);
-          const quantity = parseFloat(item.quantity || 0);
-          const doctorShare = parseFloat(item.doctorShareAmount || 0);
+    let totalNetAmount = 0;
+    let totalDiscAmount = 0;
+    let totalBaseAmount = 0;
+    let totalWeightedDiscount = 0;
 
-          const serviceNetAmt = rate * quantity - doctorShare;
-          // Cap the discount percentage at 15%
-          const authorityDiscPercent =
-            selecteddiscAuthority?.discountPercentage || 0;
-          const cappedDiscPercent = Math.min(authorityDiscPercent, 15);
-          const discAmount = (serviceNetAmt * cappedDiscPercent) / 100;
-          const postNetAmt = serviceNetAmt - discAmount;
+    selectedBillNo.testGridOpdBillDTO.forEach((item) => {
+      if (item.isChecked) {
+        const rate = parseFloat(item.rate || 0);
+        const quantity = parseFloat(item.quantity || 0);
+        const doctorShare = parseFloat(item.doctorShareAmount || 0);
 
-          return serviceTotal + postNetAmt;
-        }, 0) || 0)
-      );
-    }, 0);
+        const serviceNetAmt = rate * quantity - doctorShare;
 
-    setTotalAmount(calculatedTotalAmount);
+        // Use the latest postDiscPercent value set in FloatingInput
+        const itemDiscPercent = parseFloat(item.postDiscPercent || 0);
+        const authorityDiscPercent =
+          selectedDiscAuthority?.discountPercentage || 0;
+        const cappedDiscPercent = Math.min(
+          itemDiscPercent,
+          authorityDiscPercent
+        );
 
-    // Apply the 15% cap to the discount percentage
-    const rawDiscPercentage = selecteddiscAuthority?.discountPercentage || 0;
-    const cappedDiscPercentage = Math.min(rawDiscPercentage, 15);
-    setDiscountPercentage(cappedDiscPercentage);
+        const discAmount = (serviceNetAmt * cappedDiscPercent) / 100;
 
-    // Calculate discount amount using the capped percentage
-    const calculatedDiscAmount =
-      (calculatedTotalAmount * cappedDiscPercentage) / 100;
-    setDiscountAmount(calculatedDiscAmount);
+        totalNetAmount += serviceNetAmt;
+        totalDiscAmount += discAmount;
+        totalBaseAmount += serviceNetAmt;
 
-    const calculatedNetAmount =
-      calculatedTotalAmount -
-      calculatedDiscAmount +
-      (parseFloat(fileCharges) || 0);
-    setNetAmount(calculatedNetAmount);
-
-    const calculatedPaidRefund = billPaid - calculatedNetAmount;
-    setPaidRefund(calculatedPaidRefund);
-  };
-
-  // Handle file charges change
-  const handleFileChargesChange = (e) => {
-    const charges = parseFloat(e.target.value) || 0;
-    setFileCharges(charges);
-  };
-
-  // Handle bill paid change
-  const handleBillPaidChange = (e) => {
-    const paid = parseFloat(e.target.value) || 0;
-    setBillPaid(paid);
-  };
-  // Handle test grid row changes
-  const handleTestGridChange = (index, field, value) => {
-    setTest((prevTest) => {
-      const updatedTest = [...prevTest];
-      updatedTest[index] = {
-        ...updatedTest[index],
-        [field]: parseFloat(value) || 0,
-      };
-
-      // Calculate row totals
-      if (field === "netAmt" || field === "lessDisc") {
-        const netAmt = updatedTest[index].netAmt || 0;
-        const lessDisc = Math.min(updatedTest[index].lessDisc || 0, 15); // Cap at 15%
-        const discAmt = (netAmt * lessDisc) / 100;
-        const postNetAmt = netAmt - discAmt;
-
-        updatedTest[index] = {
-          ...updatedTest[index],
-          discAmt,
-          postNetAmt,
-          lessDisc,
-        };
+        totalWeightedDiscount += (discAmount / serviceNetAmt) * 100; // Percentage per item
       }
-
-      return updatedTest;
     });
+
+    const avgDiscountPercent =
+      selectedBillNo.testGridOpdBillDTO.length > 0
+        ? totalWeightedDiscount / selectedBillNo.testGridOpdBillDTO.length
+        : 0;
+
+    const finalNetAmount =
+      totalNetAmount - totalDiscAmount + (parseFloat(fileCharges) || 0);
+
+    setTotalAmount(totalNetAmount);
+    setDiscountAmount(totalDiscAmount);
+    setDiscountPercentage(avgDiscountPercent.toFixed(2)); // Corrected
+    setNetAmount(finalNetAmount);
+    setBillPaid(totalNetAmount);
+    setPaidRefund(billPaid - finalNetAmount);
   };
 
   const calculateTotalAmount = () => {
-    const total = billNo.reduce((sum, row) => {
-      const rowTotal = row.testGridOpdBillDTO?.reduce((subSum, item) => {
+    if (!selectedBillNo || !Array.isArray(selectedBillNo.testGridOpdBillDTO))
+      return;
+
+    let totalNetAmount = 0;
+    let totalDiscAmount = 0;
+    let totalBaseAmount = 0;
+
+    selectedBillNo.testGridOpdBillDTO.forEach((item) => {
+      if (item.isChecked) {
         const rate = parseFloat(item.rate || 0);
+        const quantity = parseFloat(item.quantity || 0);
         const doctorShare = parseFloat(item.doctorShareAmount || 0);
-        const discountPercent = parseFloat(row.disc || 0);
-        const quantity = item.quantity || 0;
 
-        const netAmt = rate * quantity - doctorShare;
-        const discAmt = netAmt * (discountPercent / 100);
-        const postNetAmt = netAmt - discAmt;
+        const serviceNetAmt = rate * quantity - doctorShare;
 
-        return subSum + (row.isChecked ? postNetAmt : 0);
-      }, 0);
+        const itemDiscPercent = parseFloat(item.postDiscPercent || 0);
+        const discAmount = (serviceNetAmt * itemDiscPercent) / 100;
 
-      return sum + (rowTotal || 0);
-    }, 0);
-
-    setTotalAmount(total);
-  };
-
-  // Calculate totals whenever test data or discount authority changes
-  useEffect(() => {
-    calculateTotals();
-  }, [test, selecteddiscAuthority, fileCharges]);
-
-  const [paymentMode, setPaymentMode] = useState("select");
-
-  const handlePaymentModeChange = (e) => {
-    setPaymentMode(e.target.value);
-  };
-
-  const [selectedOption, setSelectedOption] = useState("select");
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [selectedRowIds, setSelectedRowIds] = useState([]);
-  const handleOptionChange = (e) => {
-    setSelectedOption(e.target.value);
-  };
-
-  const handleSelectAllChange = (e) => {
-    const isChecked = e.target.checked;
-
-    if (isChecked) {
-      // Select all rows
-      const newSelectedRows = billNo.filter(
-        (row) => !selectedRowIds.includes(row.opdBillingId)
-      );
-      const updatedSelection = [...selectedRows, ...newSelectedRows];
-
-      setSelectedRows(updatedSelection);
-      setSelectedRowIds(updatedSelection.map((row) => row.opdBillingId));
-
-      // Calculate the total amount for the selected rows
-      const calculatedTotal = updatedSelection.reduce(
-        (acc, item) => acc + (item.netAmount || 0),
-        0
-      );
-      setTotalAmount(calculatedTotal);
-    } else {
-      // Deselect all rows
-      setSelectedRows([]);
-      setSelectedRowIds([]);
-      setTotalAmount(0);
-    }
-  };
-
-  // const [test, setTest] = useState([
-  //   { sn: 1, serviceName: "Service 1", unitOrDoctor: "Dr. John", netAmt: 500, lessDisc: 10, discAmt: 50 },
-  // ]);
-
-  const handleServiceNameChange = (e, index) => {
-    const value = e.target.value;
-    setTest((prevRows) => {
-      const updatedRows = [...prevRows];
-      updatedRows[index].serviceName = value;
-      return updatedRows;
+        totalNetAmount += serviceNetAmt;
+        totalDiscAmount += discAmount;
+        totalBaseAmount += serviceNetAmt;
+      }
     });
+
+    // Apply discountPercentage to the final total
+    const discountPercentageAmount =
+      (totalNetAmount * discountPercentage) / 100;
+    const finalNetAmount =
+      totalNetAmount -
+      totalDiscAmount +
+      (parseFloat(fileCharges) || 0) -
+      discountPercentageAmount;
+
+    setTotalAmount(totalNetAmount);
+    setDiscountAmount(discountPercentageAmount);
+    setNetAmount(finalNetAmount);
+    setBillPaid(totalNetAmount);
+    setPaidRefund(billPaid - finalNetAmount);
   };
 
-  const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
-  };
+  useEffect(() => {
+    calculateTotalAmount();
+  }, [discountPercentage]);
 
-  // Function to handle file upload
-  const handleFileUpload = async () => {
-    if (!selectedFile) return;
-
-    const formData = new FormData();
-    formData.append("file", selectedFile);
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/opdPostDiscount`, {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
-      setUploadedFileUrl(data.fileUrl);
-    } catch (error) {
-      console.error("Error uploading file:", error);
-    }
+  // const handleFileChange = (e) => {
+  //   setSelectedFile(e.target.files[0]);
+  // };
+  const resetForm = () => {
+    setPaymentDetails({
+      mode: "",
+      amount: 0,
+      cardNumber: "",
+      upiId: "",
+      checkNumber: "",
+      checkDate: "",
+    });
+    setSelectedBillNo(null);
+    setSelectedDiscAuthority(null);
+    setSelectedRow(null);
+    setDiscRemarks(null);
+    setBillPaid(null);
+    setDiscountAmount(null);
+    setDiscountPercentage(null);
+    setNetAmount(null);
+    setPaidRefund(null);
+    setTotalAmount(null);
   };
 
   const handleSave = async () => {
-    // Format the data exactly as required
     const postData = {
-      postDiscountPercentage: 17.0, // Fixed value as per requirement
-      discountDate: new Date().toISOString().split("T")[0], // Format: YYYY-MM-DD
-      discountTime: new Date().toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      }), // Format: HH:MM in 24-hour format
-      remarks: discRemarks || "Discount applied for promotional offer",
-      discountAuthorityDTO: {
-        id: selecteddiscAuthority?.id,
-      },
-      opdBillingDTO: {
-        opdBillingId: selectedBillNo?.opdBillingId,
-      },
+      discountPercentage: discountPercentage ? parseInt(discountPercentage) : 0,
+      totalAmount: totalAmount ? parseInt(totalAmount) : 0,
+      discountAmount: discountAmount ? parseInt(discountAmount) : 0,
+      refundedAmount: paidRefund ? parseInt(paidRefund) : 0,
+      afterDiscountTotalAmount: netAmount ? parseInt(netAmount) : 0,
+      discountDate: String(new Date().toISOString().split("T")[0]),
+      discountTime: String(
+        new Date().toLocaleTimeString("en-US", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false,
+        })
+      ),
+      remarks: discRemarks || "",
+      discountAuthorityDTO: selectedDiscAuthority?.id
+        ? { id: selectedDiscAuthority.id }
+        : null,
+      opdBillingDTO: selectedBillNo?.opdBillingId
+        ? { opdBillingId: selectedBillNo.opdBillingId }
+        : null,
+      testGridPostDiscountbillDTO: selectedBillNo?.testGridOpdBillDTO
+        ? selectedBillNo.testGridOpdBillDTO.map((bill) => ({
+            serviceName: bill.serviceDetailsDTO?.serviceName,
+            rate: parseInt(bill.rate) || 0,
+            quantity: bill.quantity || 0,
+            status: bill.status || "",
+            discountAmount: parseInt(bill.discountAmount) || 0,
+            netAmount: parseInt(bill.netAmount) || 0,
+            emergencyAmt: parseInt(bill.emergencyAmt) || 0,
+            doctorPercentage: parseInt(bill.doctorPercentage) || 0,
+            doctorShareAmount: parseInt(bill.doctorShareAmount) || 0,
+            postDiscountPercent: parseInt(bill.postDiscountPercent) || 0,
+            postNetAmount: parseInt(bill.postNetAmount) || 0,
+          }))
+        : [],
       billPaid: billPaid > 0 ? "Yes" : "No",
-      fileCharges: (fileCharges || 50).toFixed(2), // Format: "50.00"
-      paymode: paymentMode || "Cash",
-      chequeDate: null,
+      opdBillingPaymentModeDTO: paymentDetails || "",
     };
-
     try {
-      // Log the request payload for verification
-      console.log("Sending data:", JSON.stringify(postData, null, 2));
-
-      // Use axios to send the request
       const response = await axios.post(
         `${API_BASE_URL}/opdPostDiscount`,
-        postData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        postData
       );
-
-      // Check the response status
-      if (response.status === 200) {
-        console.log("Server response:", response.data);
-
+      if (response) {
         toast.success("save success");
+        setAddedData(response.data);
+        resetForm();
       } else {
         throw new Error(`Failed with status code: ${response.status}`);
       }
@@ -313,14 +219,17 @@ const OPDPostDiscount = (onClose) => {
     }
   };
 
-  const [activePopup, setActivePopup] = useState("");
-
-  const [billNo, setBillNo] = useState([]);
-
   useEffect(() => {
     fetch(`${API_BASE_URL}/opdBilling`)
       .then((response) => response.json())
       .then((data) => {
+        if (data?.testGridOPDBillDTO) {
+          data.testGridOPDBillDTO = data.testGridOPDBillDTO.map((item) => ({
+            ...item,
+            isChecked: true,
+          }));
+        }
+
         setBillNo(data);
         console.log(data);
       })
@@ -332,47 +241,45 @@ const OPDPostDiscount = (onClose) => {
       .then((response) => response.json())
       .then((data) => {
         setdiscAuthority(data);
-        if (data.length > 0) {
-          setSelecteddiscAuthority(data[0]);
-        }
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   useEffect(() => {
     calculateTotals();
-  }, [billNo, selecteddiscAuthority, fileCharges, billPaid]);
+  }, [selectedBillNo, fileCharges, billPaid]);
 
-  useEffect(() => {
-    const total = test.reduce((sum, row) => sum + (row.postNetAmt || 0), 0);
-    setTotalPostNetAmt(total);
-  }, [test]);
-
-  useEffect(() => {
-    const total = test.reduce((sum, row) => sum + (row.postNetAmt || 0), 0);
-    setTotalPostNetAmt(total);
-  }, [test]);
+  // useEffect(() => {
+  //   const total = test.reduce((sum, row) => sum + (row.postNetAmt || 0), 0);
+  //   setTotalPostNetAmt(total);
+  // }, [test]);
 
   const getPopupData = () => {
     if (activePopup === "billNo") {
       return {
-        columns: ["opdBillingId", "uhid", "firstName", "lastName"],
+        columns: [
+          "opdBillingId",
+          "uhid",
+          "firstName",
+          "lastName",
+          "mobileNumber",
+        ],
         data: billNo.map((item) => ({
           opdBillingId: item.opdBillingId,
-          uhid: item.outPatientDTO.patient.uhid,
-          mobileNumber: item.outPatientDTO.patient.mobileNumber,
+          uhid: item.outPatientDTO.patient?.uhid,
           billing_date: item.billing_date,
-          firstName: item.outPatientDTO.patient.firstName,
-          middleName: item.outPatientDTO.patient.middleName,
-          lastName: item.outPatientDTO.patient.lastName,
-          salutation: item.outPatientDTO.patient.salutation,
-          age: item.outPatientDTO.patient.age,
-          dateOfBirth: item.outPatientDTO.patient.dateOfBirth,
-          gender: item.outPatientDTO.patient.gender,
+          firstName: item.outPatientDTO.patient?.firstName,
+          middleName: item.outPatientDTO.patient?.middleName,
+          lastName: item.outPatientDTO.patient?.lastName,
+          salutation: item.outPatientDTO.patient?.salutation,
+          age: item.outPatientDTO.patient?.age,
+          dateOfBirth: item.outPatientDTO.patient?.dateOfBirth,
+          gender: item.outPatientDTO.patient?.gender,
           paymentMode: item.paymentModeDTO.paymentMode,
-          maritalStatus: item.outPatientDTO.patient.maritalStatus,
-          sourceOfRegistration: item.outPatientDTO.patient.sourceOfRegistration,
-          relation: item.outPatientDTO.patient.relation,
+          mobileNumber: item.outPatientDTO.patient?.mobileNumber,
+          sourceOfRegistration:
+            item.outPatientDTO.patient?.sourceOfRegistration,
+          relation: item.outPatientDTO.patient?.relation,
           originalobj: item,
         })),
       };
@@ -385,67 +292,63 @@ const OPDPostDiscount = (onClose) => {
     return { columns: [], data: [] };
   };
 
-  // Part 1: Checkbox handling and row selection logic
-  const handleCheckboxChange = (isChecked, rowIndex) => {
-    setBillNo((prevRows) => {
-      const updatedRows = [...prevRows];
-      updatedRows[rowIndex] = {
-        ...updatedRows[rowIndex],
-        isChecked: isChecked,
-      };
-      return updatedRows;
+  const handleCheckboxChange = (isChecked, index) => {
+    setSelectedBillNo((prev) => {
+      const updatedRows = [...prev.testGridOpdBillDTO];
+      updatedRows[index] = { ...updatedRows[index], isChecked };
+      return { ...prev, testGridOpdBillDTO: updatedRows };
     });
 
-    // This will trigger the useEffect that calls calculateTotals
+    setTimeout(() => {
+      calculateTotals();
+    }, 0);
   };
 
-  // Add this useEffect to handle all calculations when checkboxes change
-  useEffect(() => {
-    calculateTotalAmounts();
-  }, [billNo]);
+  // // Add this useEffect to handle all calculations when checkboxes change
+  // useEffect(() => {
+  //   calculateTotalAmounts();
+  // }, [selectedBillNo]);
 
-  const calculateTotalAmounts = () => {
-    let totalNetAmount = 0;
-    let totalDiscAmount = 0;
-    let weightedDiscountPercent = 0;
-    let totalBaseAmount = 0;
+  // const calculateTotalAmounts = (billState = selectedBillNo) => {
+  //   let totalNetAmount = 0;
+  //   let totalDiscAmount = 0;
+  //   let weightedDiscountPercent = 0;
+  //   let totalBaseAmount = 0;
 
-    billNo.forEach((row) => {
-      if (row.isChecked && row.testGridOpdBillDTO) {
-        row.testGridOpdBillDTO.forEach((item) => {
-          const rate = parseFloat(item.rate || 0);
-          const quantity = parseFloat(item.quantity || 0);
-          const doctorShare = parseFloat(item.doctorShareAmount || 0);
-
-          const netAmt = rate * quantity - doctorShare;
-          const discPercent = parseFloat(item.postDiscPercent || 0);
-          const discAmt = (netAmt * discPercent) / 100;
-
-          totalNetAmount += netAmt;
-          totalDiscAmount += discAmt;
-          totalBaseAmount += netAmt; // For weighted average calculation
-          weightedDiscountPercent += netAmt * discPercent;
-        });
-      }
-    });
-
-    // Calculate weighted average discount percentage
-    const avgDiscountPercent =
-      totalBaseAmount > 0 ? weightedDiscountPercent / totalBaseAmount : 0;
-
-    // Update all the related states
-    setTotalAmount(totalNetAmount);
-    setDiscountAmount(totalDiscAmount);
-    setDiscountPercentage(avgDiscountPercent.toFixed(2));
-    setNetAmount(
-      totalNetAmount - totalDiscAmount + (parseFloat(fileCharges) || 0)
-    );
-  };
+  //   if (billState?.testGridOpdBillDTO) {
+  //     billState.testGridOpdBillDTO.forEach((item) => {
+  //       if (item.isChecked) {
+  //         const rate = parseFloat(item.rate || 0);
+  //         const quantity = parseFloat(item.quantity || 0);
+  //         const doctorShare = parseFloat(item.doctorShareAmount || 0);
+  //         const netAmt = rate * quantity - doctorShare;
+  //         const discPercent = parseFloat(item.postDiscPercent || 0);
+  //         const discAmt = (netAmt * discPercent) / 100;
+  //         totalNetAmount += netAmt;
+  //         totalDiscAmount += discAmt;
+  //         totalBaseAmount += netAmt;
+  //         weightedDiscountPercent += netAmt * discPercent;
+  //       }
+  //     });
+  //   }
+  //   const avgDiscountPercent =
+  //     totalBaseAmount > 0 ? weightedDiscountPercent / totalBaseAmount : 0;
+  //   setTotalAmount(totalNetAmount);
+  //   setDiscountAmount(totalDiscAmount);
+  //   setDiscountPercentage(avgDiscountPercent.toFixed(2));
+  //   setNetAmount(
+  //     totalNetAmount - totalDiscAmount + (parseFloat(fileCharges) || 0)
+  //   );
+  // };
 
   const handleSelect = (row) => {
-    // Update selected row state and autofill selectedBillNo data
-    setSelectedRow(row.originalobj);
-    setSelectedBillNo(row.originalobj); // Use row data to autofill the table
+    if (activePopup === "billNo") {
+      setSelectedBillNo(row.originalobj);
+    } else if (activePopup === "discountAuthority") {
+      setSelectedDiscAuthority(row);
+    } else {
+      setSelectedRow(row);
+    }
   };
 
   const { columns, data } = getPopupData();
@@ -463,11 +366,6 @@ const OPDPostDiscount = (onClose) => {
     }
     return null;
   };
-
-  // Call this function whenever there is a change in `test` data
-  useEffect(() => {
-    calculateTotals();
-  }, [test, billPaid]); // Dependencies include `test` and `billPaid`
 
   {
     activePopup && (
@@ -498,13 +396,17 @@ const OPDPostDiscount = (onClose) => {
                   <input
                     type="checkbox"
                     onChange={(e) => {
+                      calculateTotals();
                       const isChecked = e.target.checked;
-                      setBillNo((prevRows) =>
-                        prevRows.map((row) => ({
-                          ...row,
-                          isChecked,
-                        }))
-                      );
+                      setSelectedBillNo((prev) => ({
+                        ...prev,
+                        testGridOpdBillDTO: prev.testGridOpdBillDTO.map(
+                          (row) => ({
+                            ...row,
+                            isChecked,
+                          })
+                        ),
+                      }));
                     }}
                   />
                   <div
@@ -544,93 +446,94 @@ const OPDPostDiscount = (onClose) => {
             </tr>
           </thead>
           <tbody>
-            {
-              selectedBillNo.testGridOpdBillDTO?.map((item, subIndex) => {
-                const rate = parseFloat(item.rate || 0);
-                const doctorShare = parseFloat(item.doctorShareAmount || 0);
-                const quantity = item.quantity || 0;
-                const netAmt = rate * quantity - doctorShare;
-                const postDiscPercent = parseFloat(item.postDiscPercent || 0);
-                const discAmt = (netAmt * postDiscPercent) / 100;
-                const postNetAmt = netAmt - discAmt;
+            {selectedBillNo?.testGridOpdBillDTO?.map((item, subIndex) => {
+              const rate = parseFloat(item.rate || 0);
+              const doctorShare = parseFloat(item.doctorShareAmount || 0);
+              const quantity = item.quantity || 0;
+              const netAmt = rate * quantity - doctorShare;
+              const postDiscPercent = parseFloat(item.postDiscPercent || 0);
+              const discAmt = (netAmt * postDiscPercent) / 100;
+              const postNetAmt = netAmt - discAmt;
 
-                return (
-                  <tr key={`${subIndex}`}>
-                    <td>
-                      <input
-                        type="checkbox"
-                        checked={item.isChecked || false}
-                        onChange={(e) =>
-                          handleCheckboxChange(e.target.checked, index)
-                        }
-                      />
-                    </td>
-                    <td>{subIndex + 1}</td>
-                    <td>
-                      <FloatingInput type="number" value={rate} readOnly />
-                    </td>
-                    <td>
-                      <FloatingInput
-                        type="number"
-                        value={quantity}
-                        onChange={(e) => {
-                          const newQuantity = parseFloat(e.target.value) || 0;
-                          setBillNo((prevRows) => {
-                            const updatedRows = [...prevRows];
-                            if (updatedRows[index].testGridOpdBillDTO) {
-                              updatedRows[index].testGridOpdBillDTO[subIndex] =
-                              {
-                                ...updatedRows[index].testGridOpdBillDTO[
-                                subIndex
-                                ],
-                                quantity: newQuantity,
-                              };
-                            }
-                            return updatedRows;
-                          });
-                        }}
-                      />
-                    </td>
-                    <td>
-                      <FloatingInput
-                        type="text"
-                        value={item.serviceDetailsDTO?.serviceName || ""}
-                        readOnly
-                      />
-                    </td>
-                    <td>{doctorShare.toFixed(2)}</td>
-                    <td>{netAmt.toFixed(2)}</td>
-                    <td>
-                      <FloatingInput
-                        type="number"
-                        value={postDiscPercent}
-                        onChange={(e) => {
-                          let newDiscPercent = Math.min(
-                            parseFloat(e.target.value) || 0,
-                            15
+              return (
+                <tr key={subIndex}>
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={item.isChecked || false}
+                      onChange={(e) =>
+                        handleCheckboxChange(e.target.checked, subIndex)
+                      }
+                    />
+                  </td>
+                  <td>{subIndex + 1}</td>
+                  <td>
+                    <FloatingInput type="number" value={rate} readOnly />
+                  </td>
+                  <td>
+                    <FloatingInput
+                      type="number"
+                      readOnly
+                      value={quantity}
+                      onChange={(e) => {
+                        const newQuantity = parseFloat(e.target.value) || 0;
+                        setSelectedBillNo((prev) => {
+                          const updatedRows = [...prev.testGridOpdBillDTO];
+                          updatedRows[subIndex] = {
+                            ...updatedRows[subIndex],
+                            quantity: newQuantity,
+                          };
+                          return { ...prev, testGridOpdBillDTO: updatedRows };
+                        });
+                      }}
+                    />
+                  </td>
+                  <td>
+                    <FloatingInput
+                      type="text"
+                      value={item.serviceDetailsDTO?.serviceName || ""}
+                      readOnly
+                    />
+                  </td>
+                  <td>{doctorShare.toFixed(2)}</td>
+                  <td>{netAmt.toFixed(2)}</td>
+                  <td>
+                    <FloatingInput
+                      type="text"
+                      value={postDiscPercent}
+                      onChange={(e) => {
+                        const inputValue = parseFloat(e.target.value) || 0;
+                        const maxDiscount =
+                          selectedDiscAuthority?.discountPercentage || 0;
+                        const newDiscPercent = Math.min(
+                          inputValue,
+                          maxDiscount
+                        );
+                        console.log(inputValue);
+
+                        setSelectedBillNo((prev) => {
+                          const updatedRows = prev.testGridOpdBillDTO.map(
+                            (row, index) =>
+                              index === subIndex
+                                ? {
+                                    ...row,
+                                    postDiscPercent: newDiscPercent,
+                                    discAmt: discAmt,
+                                    postNetAmt: postNetAmt,
+                                  }
+                                : row
                           );
-                          setBillNo((prevRows) => {
-                            const updatedRows = [...prevRows];
-                            if (updatedRows[index].testGridOpdBillDTO) {
-                              updatedRows[index].testGridOpdBillDTO[subIndex] =
-                              {
-                                ...updatedRows[index].testGridOpdBillDTO[
-                                subIndex
-                                ],
-                                postDiscPercent: newDiscPercent,
-                              };
-                            }
-                            return updatedRows;
-                          });
-                        }}
-                      />
-                    </td>
-                    <td>{discAmt.toFixed(2)}</td>
-                    <td>{postNetAmt.toFixed(2)}</td>
-                  </tr>
-                );
-              })
-            }
+                          return { ...prev, testGridOpdBillDTO: updatedRows };
+                        });
+                        calculateTotals();
+                      }}
+                    />
+                  </td>
+                  <td>{discAmt?.toFixed(2)}</td>
+                  <td>{postNetAmt?.toFixed(2)}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -713,8 +616,9 @@ const OPDPostDiscount = (onClose) => {
         <div className="OPDPostDiscount-services-section">
           <div className="OPDPostDiscount-tab-bar">
             <button
-              className={`OPDPostDiscount-tab ${selectedTab === "testGrid" ? "active" : ""
-                }`}
+              className={`OPDPostDiscount-tab ${
+                selectedTab === "testGrid" ? "active" : ""
+              }`}
               onClick={() => setSelectedTab("testGrid")}
             >
               Test Grid
@@ -723,7 +627,7 @@ const OPDPostDiscount = (onClose) => {
           {renderTable()}
         </div>
 
-        <div className="OPDPostDiscount-section">
+        {/* <div className="OPDPostDiscount-section">
           <div className="OPDPostDiscount-header">Attach files</div>
           <div className="OPDPostDiscount-grid">
             <div className="OPDPostDiscount-form-for-file">
@@ -735,21 +639,45 @@ const OPDPostDiscount = (onClose) => {
               <button className="OPDPostDiscount-Upload">Upload</button>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="OPDPostDiscount-section">
           <div className="OPDPostDiscount-header">Other Details</div>
           <div className="OPDPostDiscount-grid">
             <FloatingInput
               label="Total Amount"
-              value={totalAmount.toFixed(2)}
+              value={totalAmount?.toFixed(2)}
               readOnly
             />
 
             <FloatingInput
-              label="Discount Percentage"
+              label={
+                selectedBillNo?.testGridOpdBillDTO?.some(
+                  (item) =>
+                    item.postDiscPercent !== undefined &&
+                    item.postDiscPercent !== null
+                )
+                  ? "Average Discount Percentage"
+                  : "Discount Percentage"
+              }
+              type="text"
               value={discountPercentage}
-              readOnly
+              onChange={(e) => {
+                let inputValue = e.target.value.trim(); // Trim spaces
+
+                if (inputValue === "") {
+                  setDiscountPercentage(""); // Allow empty value
+                  return; // Avoid unnecessary calculations
+                }
+
+                const numericValue = parseFloat(inputValue);
+                if (!isNaN(numericValue)) {
+                  const maxDiscount =
+                    selectedDiscAuthority?.discountPercentage || 0;
+                  const newDiscount = Math.min(numericValue, maxDiscount);
+                  setDiscountPercentage(newDiscount);
+                }
+              }}
             />
 
             {/* <FloatingInput
@@ -760,12 +688,12 @@ const OPDPostDiscount = (onClose) => {
 
             <FloatingInput
               label="Disc Amount"
-              value={discountAmount.toFixed(2)}
+              value={discountAmount?.toFixed(2)}
               readOnly
             />
             <FloatingInput
               label="Net Amount"
-              value={netAmount.toFixed(2)}
+              value={netAmount?.toFixed(2)}
               readOnly
             />
 
@@ -777,89 +705,116 @@ const OPDPostDiscount = (onClose) => {
             />
             <FloatingInput
               label="Paid/Refund"
-              value={paidRefund.toFixed(2)}
+              value={paidRefund?.toFixed(2)}
               readOnly
             />
-            <div className="OPDPostDiscount-search-field">
-              <FloatingInput
-                label="Disc Authority"
-                value={selecteddiscAuthority?.authorizationName || ""}
-                readOnly
-              />
-              <button
-                onClick={() => setActivePopup("discountAuthority")}
-                className="OPDPostDiscount-search-icon"
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                  <path
-                    fill="currentColor"
-                    d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                  />
-                </svg>
-              </button>
-            </div>
+            <FloatingInput
+              type="search"
+              onIconClick={() => setActivePopup("discountAuthority")}
+              label="Disc Authority"
+              value={selectedDiscAuthority?.authorizationName || ""}
+              readOnly
+            />
             <FloatingInput
               label="Discount %"
-              value={selecteddiscAuthority?.discountPercentage || ""}
+              value={selectedDiscAuthority?.discountPercentage || ""}
             />
             <FloatingInput
               label="Disc Remarks"
               value={discRemarks}
               onChange={(e) => setDiscRemarks(e.target.value)}
             />
-            <FloatingInput
-              label="File Charges"
-              type="number"
-              value={fileCharges}
-              onChange={handleFileChargesChange}
-            />
+
             <FloatingSelect
               label="Payment Mode"
+              onChange={(e) => {
+                setPaymentDetails((prev) => ({
+                  ...prev,
+                  mode: e.target.value,
+                  amount: prev.amount || paidRefund,
+                }));
+              }}
               options={[
-                { value: "select", label: "Select" },
+                { value: "", label: "-- Select Payment Mode --" },
+                { value: "cash", label: "Cash" },
                 { value: "card", label: "Card" },
                 { value: "upi", label: "UPI" },
-                { value: "check", label: "Checkque" },
+                { value: "check", label: "Check" },
               ]}
-              onChange={handlePaymentModeChange}
             />
-            {paymentMode === "card" && (
+            {paymentDetails.mode && (
               <>
                 <FloatingInput
                   label="Amount"
-                  value={paymentAmount}
-                  onChange={(e) => setPaymentAmount(e.target.value)}
+                  type="text"
+                  value={paymentDetails.amount}
+                  onChange={(e) =>
+                    setPaymentDetails({
+                      ...paymentDetails,
+                      amount: e.target.value,
+                    })
+                  }
                 />
-                <FloatingInput
-                  label="Card Number"
-                  value={cardNumber}
-                  onChange={(e) => setCardNumber(e.target.value)}
-                />
-                <FloatingInput
-                  label="Remarks"
-                  value={paymentRemarks}
-                  onChange={(e) => setPaymentRemarks(e.target.value)}
-                />
+                {paymentDetails.mode === "card" && (
+                  <>
+                    <FloatingInput
+                      label="Card Number"
+                      type="text"
+                      value={paymentDetails.cardNumber}
+                      restrictions={{ number: true, max: 12 }}
+                      onChange={(e) =>
+                        setPaymentDetails({
+                          ...paymentDetails,
+                          cardNumber: e.target.value,
+                        })
+                      }
+                    />
+                  </>
+                )}
+                {paymentDetails.mode === "upi" && (
+                  <>
+                    <FloatingInput
+                      label="UPI ID"
+                      type="text"
+                      value={paymentDetails.upiId}
+                      onChange={(e) =>
+                        setPaymentDetails({
+                          ...paymentDetails,
+                          upiId: e.target.value,
+                        })
+                      }
+                    />
+                  </>
+                )}
+                {paymentDetails.mode === "check" && (
+                  <>
+                    <FloatingInput
+                      label="Check Number"
+                      type="text"
+                      restrictions={{ number: true }}
+                      value={paymentDetails.checkNumber}
+                      onChange={(e) =>
+                        setPaymentDetails({
+                          ...paymentDetails,
+                          checkNumber: e.target.value,
+                        })
+                      }
+                    />
+                    <FloatingInput
+                      label="Check Date"
+                      type="date"
+                      value={paymentDetails.checkDate}
+                      onChange={(e) =>
+                        setPaymentDetails({
+                          ...paymentDetails,
+                          checkDate: e.target.value,
+                        })
+                      }
+                    />
+                  </>
+                )}
               </>
             )}
-            {paymentMode === "upi" && (
-              <>
-                <FloatingInput label="Amount" />
-                <FloatingInput label="UPI" />
-                <FloatingInput label="Id" />
-                <FloatingInput label="Remarks" />
-              </>
-            )}
-            {paymentMode === "check" && (
-              <>
-                <FloatingInput label="Amount" />
-                <FloatingInput label="Check Number" />
-                <FloatingInput label="Check Date" type="date" />
-                <FloatingInput label="Remarks" />
-              </>
-            )}
-
-            <FloatingInput label="Check Date" type="date" />
           </div>
         </div>
       </div>
@@ -867,9 +822,19 @@ const OPDPostDiscount = (onClose) => {
       <div className="OPDPostDiscount-buttons">
         <button className="btn-blue" onClick={handleSave}>
           Save
-        </button>{" "}
-        <button className="btn-red">Close</button>
+        </button>
+        <button onClick={() => resetForm()} className="btn-red">
+          clear
+        </button>
       </div>
+      {addedData && (
+        <CustomModal
+          isOpen={addedData ? true : false}
+          onClose={() => setAddedData(null)}
+        >
+          <OpdPostDiscountPrint formData={addedData} />
+        </CustomModal>
+      )}
     </>
   );
 };

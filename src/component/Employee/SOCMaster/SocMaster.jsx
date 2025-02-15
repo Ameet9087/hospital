@@ -5,6 +5,11 @@ import "./SocMaster.css";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
 import { useFilter } from "../../ShortCuts/useFilter";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 
 const SocMaster = () => {
   const [show, setShow] = useState(false);
@@ -52,6 +57,7 @@ const SocMaster = () => {
           value={searchTerm}
           onChange={handleSearch}
         />
+        
       </div>
 
       <table className="soc-master-table">

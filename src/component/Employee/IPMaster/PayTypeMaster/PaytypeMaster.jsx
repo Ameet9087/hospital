@@ -5,7 +5,7 @@ import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { toast } from "react-toastify";
-import { FloatingInput } from "../../../../FloatingInputs";
+import { FloatingInput, PopupTable } from "../../../../FloatingInputs";
 
 export default function PaytypeMaster() {
   const [columnWidths, setColumnWidths] = useState({});
@@ -16,13 +16,71 @@ export default function PaytypeMaster() {
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
 
+  const [activePopup, setActivePopup] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [location, setLocation] = useState(null);
+
+
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/location-masters`);
+        setLocation(response.data);
+        console.log(response.data, "prachi");
+
+      } catch (error) {
+        console.error("Error fetching location data:", error);
+
+      }
+    };
+    fetchLocationData();
+  }, [])
+
+
+
   const [formdata, setFormdata] = useState({
     payTypeName: "",
     payOrder: "",
     activeStatus: "",
     opdCategory: "",
     categoryCode: "",
+    locationMasterDTO: {
+      id: selectedLocation?.id
+    }
   });
+  console.log(formdata, "aaaaaaa");
+
+
+  const getPopupData = () => {
+    if (activePopup === "location") {
+      return {
+        columns: ["id", "locationName", "locationCode"],
+        data: location,
+      };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
+
+  const { columns, data } = getPopupData();
+
+  const handleSelect = async (data) => {
+    if (activePopup === "location") {
+      setSelectedLocation(data);
+      console.log(data, "selectedLocation");
+
+      // Update formData with the selected location's ID
+      setFormdata((prevFormData) => ({
+        ...prevFormData,
+        locationMasterDTO: {
+          id: data.id, // Assuming 'data' contains the location with 'id' field
+        },
+      }));
+    }
+    setActivePopup(null); // Close the popup after selection
+  };
+
+
 
   useEffect(() => {
     handleLoadData();
@@ -168,6 +226,16 @@ export default function PaytypeMaster() {
         <div className="paytypemaster-modal-container">
           <div className="paytypemaster-row">
             <FloatingInput
+              label={"Location"}
+              type="search"
+              value={selectedLocation?.locationName}
+              onChange={handleChange}
+              onIconClick={() => setActivePopup("location")}
+            />
+          </div>
+
+          <div className="paytypemaster-row">
+            <FloatingInput
               label={"Paytype Name"}
               type="text"
               value={formdata.payTypeName}
@@ -236,6 +304,15 @@ export default function PaytypeMaster() {
           </button>
         </div>
       </CustomModal>
+
+      {activePopup && (
+        <PopupTable
+          columns={columns}
+          data={data}
+          onSelect={handleSelect}
+          onClose={() => setActivePopup(null)}
+        />
+      )}
     </>
   );
 }

@@ -25,7 +25,9 @@
   display: flex;
   gap: 4px;
 }
-
+.billing-opd-com-summary-row{
+  margin-top: 10px;
+}
 .billing-ipBilling-panel {
   flex: 1;
   border: 1px solid #ccc;
@@ -356,6 +358,13 @@ td .date-input {
 }
 .services-table table{
   table-layout: auto;
+}
+.btn-blue{
+  background-color: var(--button-color);
+  color: white;
+  border: 1px solid var(--button-color);
+  padding: var(--input-box-padding);
+  border-radius: 5px;
 }
 @media (max-width: 1024px) {
   .billing-ipBilling-grid {

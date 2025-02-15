@@ -4,7 +4,6 @@ import axios from "axios";
 import PopupTable from "../popup";
 import { useLocation } from "react-router-dom";
 import { API_BASE_URL } from "../../api/api";
-import { useNavigate } from "react-router-dom";
 
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -117,6 +116,24 @@ const AccidentReportForm = ({ onClose }) => {
       ipAdmmissionId: "",
     },
   });
+
+  useEffect(() => {
+    if (erPatient) {
+      setFormData((prevData) => ({
+        ...prevData,
+        patientName: `${erPatient.firstName || ""} ${
+          erPatient.middleName || ""
+        } ${erPatient.lastName || ""}`.trim(),
+        contactNumber: erPatient.contactNumber || "",
+        dateOfBirth: erPatient.dob || "",
+        gender: erPatient.sex || "",
+        erNo: erPatient.erInitialAssessmentId || "",
+        doctorName: erPatient?.addDoctor[0]?.doctorName || "",
+        admissionDate: erPatient?.date || "",
+        relativeName: erPatient?.relativeName || "",
+      }));
+    }
+  }, [erPatient]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -252,24 +269,15 @@ const AccidentReportForm = ({ onClose }) => {
     return { columns: [], data: [] };
   };
   const { columns, data } = getPopupData();
-  const navigate = useNavigate();
-
-  const handleBack = () => navigate("/emergency/erinitial");
-
   return (
     <>
       <div className="AccidentReportForm-container">
         <div className="AccidentReportForm-section">
-        <div className="er-initial-assessment-com-section">
-        <button className="er-initial-assessment-com-section-back" onClick={handleBack}>Back</button>
-        </div>
-
           <div className="AccidentReportForm-header">
             Accident Report Details
           </div>
         </div>
         <div className="AccidentReportForm-section">
-          <div className="AccidentReportForm-header">CPR Reviewed </div>
           <div className="AccidentReportForm-grid">
             <FloatingInput
               label="ER Number"
@@ -555,6 +563,7 @@ const AccidentReportForm = ({ onClose }) => {
         <button className="btn-blue" onClick={handleSubmit}>
           Save
         </button>
+        <button className="btn-red">Close</button>
       </div>
     </>
   );

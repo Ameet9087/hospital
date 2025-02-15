@@ -53,46 +53,37 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
       <div style="font-size: 14px; margin-bottom: 20px; border:1px solid #ccc; padding:10px">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; ">
           <div style="flex: 1; padding-right: 10px; ">
-            <p><strong>Name:</strong> ${
-              reportData.inPatientDTO?.patient?.firstName ||
-              reportData.outPatientDTO?.patient?.firstName
-            } 
-            ${
-              reportData.inPatientDTO?.patient?.lastName ||
-              reportData.outPatientDTO?.patient?.lastName
-            }</p>
-            <p><strong>Age/Sex:</strong> ${
-              reportData.inPatientDTO?.patient?.age ||
-              reportData.outPatientDTO?.patient?.age
-            } ${
-      reportData.inPatientDTO?.patient?.ageUnit ||
+            <p><strong>Name:</strong> ${reportData.inPatientDTO?.patient?.firstName ||
+      reportData.outPatientDTO?.patient?.firstName
+      } 
+            ${reportData.inPatientDTO?.patient?.lastName ||
+      reportData.outPatientDTO?.patient?.lastName
+      }</p>
+            <p><strong>Age/Sex:</strong> ${reportData.inPatientDTO?.patient?.age ||
+      reportData.outPatientDTO?.patient?.age
+      } ${reportData.inPatientDTO?.patient?.ageUnit ||
       reportData.outPatientDTO?.patient?.ageUnit
-    } / 
-            ${
-              reportData.inPatientDTO?.patient?.gender ||
-              reportData.outPatientDTO?.patient?.gender
-            }</p>
+      } / 
+            ${reportData.inPatientDTO?.patient?.gender ||
+      reportData.outPatientDTO?.patient?.gender
+      }</p>
           </div>
           <div style="flex: 1; padding-left: 10px;">
-            <p><strong>Rep. Date:</strong> ${
-              new Date(reportData.imagingDate).toDateString() || "N/A"
-            }</p>
-            <p><strong>Address/Contact No:</strong> ${
-              reportData.inPatientDTO?.patient?.address ||
-              reportData.outPatientDTO?.patient?.address
-            } / 
-            ${
-              reportData.patientDTO?.patient?.mobileNumber ||
-              reportData.outPatientDTO?.patient?.mobileNumber
-            }</p>
+            <p><strong>Rep. Date:</strong> ${new Date(reportData.imagingDate).toDateString() || "N/A"
+      }</p>
+            <p><strong>Address/Contact No:</strong> ${reportData.inPatientDTO?.patient?.address ||
+      reportData.outPatientDTO?.patient?.address
+      } / 
+            ${reportData.patientDTO?.patient?.mobileNumber ||
+      reportData.outPatientDTO?.patient?.mobileNumber
+      }</p>
           </div>
         </div>
   
         <div style="display: flex; justify-content: space-between;">
           <div style="flex: 1; padding-right: 10px;">
-            <p><strong>Prescriber Name:</strong> ${
-              reportData.prescriberDTO?.doctorName || "Self"
-            }</p>
+            <p><strong>Prescriber Name:</strong> ${reportData.prescriberDTO?.doctorName || "Self"
+      }</p>
           </div>
         </div>
       </div>
@@ -109,21 +100,19 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
     `;
 
     const signature = `
-       ${
-         reportData?.signatureList
-           ? `<img src="data:image/jpeg;base64,${reportData?.signatureList}" alt="Radiology Scan" style="max-width: 100%; height: 150px;" />`
-           : "<p>No image</p>"
-       }
+       ${reportData?.signatureList
+        ? `<img src="data:image/jpeg;base64,${reportData?.signatureList}" alt="Radiology Scan" style="max-width: 100%; height: 150px;" />`
+        : "<p>No image</p>"
+      }
        <p>Signature</p>
     `;
 
     const reportBody = `
       <div style="text-align: center; margin-top: 20px;">
-        ${
-          reportData?.uploadFile
-            ? `<img src="data:image/jpeg;base64,${reportData?.uploadFile}" alt="Radiology Scan" style="max-width: 100%; height: auto;" />`
-            : "<p>No image available</p>"
-        }
+        ${reportData?.uploadFile
+        ? `<img src="data:image/jpeg;base64,${reportData?.uploadFile}" alt="Radiology Scan" style="max-width: 100%; height: auto;" />`
+        : "<p>No image available</p>"
+      }
       </div>
     `;
 

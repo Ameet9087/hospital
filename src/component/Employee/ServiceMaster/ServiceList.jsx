@@ -3,7 +3,7 @@ import "./ServiceList.css";
 import axios from "axios";
 import CustomModel from "../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import ServiceMaster from "./ServiceMaster";
 
 const Services = () => {

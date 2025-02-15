@@ -5,7 +5,7 @@ import "../NavBarSection/pendingReports.css";
 
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { FloatingInput } from "../../FloatingInputs";
 
 function PendingReports() {
@@ -43,24 +43,24 @@ function PendingReports() {
     const currentDate = getCurrentDate();
     setDateFrom(currentDate);
     setDateTo(currentDate);
-    let link;
-
-    if (dateFrom !== "" && dateTo !== "") {
-      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?startDate=${dateFrom}&endDate=${dateTo}&approvalStatus=Pending`;
-    } else {
-      let TodaysDate = new Date().toISOString().split("T")[0];
-      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?startDate=${TodaysDate}&endDate=${TodaysDate}&approvalStatus=Pending`;
-    }
-
+  }, []); // Runs only once when the component mounts
+  
+  useEffect(() => {
+    if (!dateFrom || !dateTo) return; // Ensure both dates are set before fetching data
+  
+    const link = `${API_BASE_URL}/lab-result/by-verify-dateRange?startDate=${dateFrom}&endDate=${dateTo}&approvalStatus=Active`;
+  
     fetch(link)
       .then((res) => res.json())
       .then((data) => {
         setLabResult(data);
       })
       .catch((err) => {
-        console.log(err);
+        console.error("Error fetching lab results:", err);
       });
-  }, [dateFrom, dateTo]);
+  
+  }, [dateFrom, dateTo]); // Now this runs only when the dates are actually updated
+  
 
   // Filter lab results based on the search query
   const filteredLabResults = labResult?.filter((result) => {

@@ -16,7 +16,9 @@
   border-radius: 4px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   margin-bottom: 10px;
+  margin-top: 10px;
   overflow: hidden;
+  padding: 10px;
   
 }
 .GCSSheetForm-header {
@@ -147,7 +149,19 @@
         font-size: var(--font-size);
         /* width: 400px; */
         /* border: 1px solid red; */
-      }      
+      } 
+      .btn-red{
+        background-color: red;
+        color: white;
+        border: 1px solid red;
+        padding: var(--input-box-padding);
+        border-radius: 5px;
+        margin-left: 5px;
+      }     
+      .btn-red:hover{
+        background-color: white;
+        color: red;
+      }
 @media (max-width: 1024px) {
   .GCSSheetForm-grid {
     grid-template-columns: repeat(2, 1fr);

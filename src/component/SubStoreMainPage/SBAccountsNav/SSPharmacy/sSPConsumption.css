@@ -37,21 +37,10 @@
   }
   .sSPConsumption-search-bar {
     display: flex;
-    margin-left: -15px;
   }
   
-  .sSPConsumption-search-bar input {
-    flex-grow: 1;
-    padding: 3px;
-    width: 200px;
   
-  }
-  .sSPConsumption-search-bar i{
-    position: relative;
-    color:gray;
-    top: 7px;
-  left: 190px;
-  }
+  
   .sSPConsumption-results-info {
     text-align: right;
     font-size: var(--font-size);

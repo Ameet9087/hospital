@@ -20,16 +20,16 @@
 
 .emergency-request-com-module-group {
   display: flex; /* Change to flex for horizontal layout */
-  align-items: center; /* Center align items vertically */
+  align-items: center;
   margin-bottom: 15px;
 }
 
-.emergency-request-com-module-group label {
-  flex: 0 0 120px; /* Set a fixed width for the label */
-  margin-right: 10px; /* Add space between label and input */
+/* .emergency-request-com-module-group label {
+  flex: 0 0 120px;
+  margin-right: 10px;
   margin-left: 20px;
   font-size: var(--heading-font);
-}
+} */
 
 .emergency-request-com-module-group input[type="text"],
 .emergency-request-com-module-group input[type="number"],

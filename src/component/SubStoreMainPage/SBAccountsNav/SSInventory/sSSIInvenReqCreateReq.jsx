@@ -6,6 +6,13 @@ import "../SSInventory/sSSIInvenReqCreateReq.css";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../../api/api";
 
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
+
 const SSSIInvenReqCreateReq = ({ onClose }) => {
   const { store } = useParams();
   const [inventoryName, setInventoryName] = useState("");
@@ -130,7 +137,8 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
 
       if (response.ok) {
         const result = await response.json();
-        alert("Requisition submitted successfully!");
+
+        toast.success("Requisition submitted successfully!");
         // Reset the form after successful submission
         setRows([
           {
@@ -146,7 +154,8 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
         ]);
       } else {
         console.error("Failed to submit requisition:", response.status);
-        alert("Error submitting the requisition. Please try again.");
+
+        toast.error("Error submitting the requisition. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -195,8 +204,9 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
       <form onSubmit={handleSubmit}>
         <div className="sSSIInvenReqCreateReq-form-row">
           <div className="sSSIInvenReqCreateReq-form-group">
-            <label htmlFor="targetInventory">Target Inventory: *</label>
-            <input
+
+            <FloatingInput
+              label={"Target Inventory"}
               type="text"
               id="targetInventory"
               value={inventoryName}
@@ -204,20 +214,18 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
             />
           </div>
           <div className="sSSIInvenReqCreateReq-form-group">
-            <label htmlFor="requisitionDate">Requisition Date :</label>
-            <div className="sSSIInvenReqCreateReq-date-input">
-              <input
-                type="date"
-                id="requisitionDate"
-                value={requisitionDate}
-                onChange={(e) => setRequisitionDate(e.target.value)}
-                readOnly
-              />
-            </div>
+            <FloatingInput
+              label={"Requisition Date"}
+              type="date"
+              id="requisitionDate"
+              value={requisitionDate}
+              onChange={(e) => setRequisitionDate(e.target.value)}
+              readOnly
+            />
           </div>
           <div className="sSSIInvenReqCreateReq-form-group">
-            <label htmlFor="issueNo">Issue No :</label>
-            <input
+            <FloatingInput
+              label={"Issue No"}
               type="text"
               id="issueNo"
               value={issueNo}
@@ -244,36 +252,41 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
             {rows.map((row, index) => (
               <tr key={index}>
                 <td>
-                  <select
+
+                  <FloatingSelect
+                    label={"Item Category"}
                     className="sSSIInvenReqCreateReq-table-select"
                     value={row.itemCategory}
                     onChange={(e) =>
                       handleRowChange(index, "itemCategory", e.target.value)
                     }
-                  >
-                    <option value="">Select Category</option>
-                    <option value="Consumable">Consumable</option>
-                    <option value="Capital Goods">Capital Goods</option>
-                  </select>
+                    options={[
+                      { value: "", label: "Select Category" },
+                      { value: "Consumable", label: "Consumable" },
+                      { value: "Capital Goods", label: "Capital Goods" },
+                    ]}
+                  />
                 </td>
                 <td>
-                  <select
+                  <FloatingSelect
+                    label={"Item Name"}
                     className="sSSIInvenReqCreateReq-table-select"
                     value={row.itemName}
                     onChange={(e) => handleItemChange(index, e.target.value)}
-                  >
-                    <option value="">Select Item</option>
-                    {items.map((item) => (
-                      <option key={item.id} value={item.itemName}>
-                        {item.itemName}
-                      </option>
-                    ))}
-                  </select>
+                    options={[
+                      { value: "", label: "Select Item" },
+                      ...items.map((item) => ({
+                        value: item.itemName,
+                        label: item.itemName,
+                      })),
+                    ]}
+                  />
                 </td>
                 <td>
-                  <input
-                    className="sSSIInvenReqCreateReq-table-input"
+                  <FloatingInput
+                    label={"Specification"}
                     type="text"
+                    className="sSSIInvenReqCreateReq-table-input"
                     value={row.specification}
                     onChange={(e) =>
                       handleRowChange(index, "specification", e.target.value)
@@ -281,59 +294,67 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
                   />
                 </td>
                 <td>
-                  <input
-                    className="sSSIInvenReqCreateReq-table-input"
+                  <FloatingInput
+                    label={"Unit"}
                     type="text"
+                    className="sSSIInvenReqCreateReq-table-input"
                     value={row.unit}
                     readOnly
                   />
                 </td>
                 <td>
-                  <input
-                    className="sSSIInvenReqCreateReq-table-input"
+                  <FloatingInput
+                    label={"Available Quantity"}
                     type="number"
+                    className="sSSIInvenReqCreateReq-table-input"
                     value={row.availableQty}
                     readOnly
+                    min="0"
                   />
                 </td>
                 <td>
-                  <input
-                    className="sSSIInvenReqCreateReq-table-input"
+                  <FloatingInput
+                    label={"Code"}
                     type="text"
+                    className="sSSIInvenReqCreateReq-table-input"
                     value={row.code}
                     readOnly
                   />
                 </td>
                 <td>
-                  <input
-                    className="sSSIInvenReqCreateReq-table-input"
+                  <FloatingInput
+                    label={"Required Quantity"}
                     type="number"
+                    name="requiredQuantity"
+                    className="sSSIInvenReqCreateReq-table-input"
                     value={row.requiredQuantity}
                     onChange={(e) =>
                       handleRowChange(index, "requiredQuantity", e.target.value)
                     }
+                    min="0"
                   />
                 </td>
                 <td>
-                  <input
-                    className="sSSIInvenReqCreateReq-table-input"
+                  <FloatingInput
+                    label={"Remark"}
                     type="text"
+                    className="sSSIInvenReqCreateReq-table-input"
                     value={row.remark}
                     onChange={(e) =>
                       handleRowChange(index, "remark", e.target.value)
                     }
                   />
                 </td>
+
+
                 <td>
-                  <div className="sSSIInvenReqCreateReq-minus-button">
-                    <button
-                      className="sSSIInvenReqCreateReq-delete-row-button"
-                      type="button"
-                      onClick={() => removeRow(index)}
-                    >
-                      -
-                    </button>
-                  </div>
+                  <button
+                    className="sSSIInvenReqCreateReq-delete-row-button"
+                    type="button"
+                    onClick={() => removeRow(index)}
+                  >
+                    Del
+                  </button>
                 </td>
               </tr>
             ))}
@@ -341,7 +362,7 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
         </table>
         <div className="sSSIInvenReqCreateReq-add-row-container">
           <button
-            className="sSSIInvenReqCreateReq-btn-request"
+            className="sSSIInvenReqCreateReq-add-row-button"
             type="button"
             onClick={addRow}
           >
@@ -366,18 +387,26 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
               <button className="sSSIInvenReqCreateReq-btn-checked">
                 Checked By
               </button>
-              <input type="text" value={checkedBy} readOnly />
+
+              
+              <FloatingInput
+                    label={"Checked By"}
+                    type="text" value={checkedBy} readOnly
+                  
+                  />
               <button className="sSSIInvenReqCreateReq-btn-add">+</button>
             </div>
           </div>
 
           <div className="sSSIInvenReqCreateReq-form-group">
-            <label htmlFor="remarks">Remarks:</label>
-            <textarea
-              id="remarks"
-              value={remarks}
-              onChange={(e) => setRemarks(e.target.value)}
-            ></textarea>
+
+            
+            <FloatingTextarea
+            label={"Remarks"}
+            id="remarks"
+            value={remarks}
+            onChange={(e) => setRemarks(e.target.value)}
+            />
           </div>
         </div>
 

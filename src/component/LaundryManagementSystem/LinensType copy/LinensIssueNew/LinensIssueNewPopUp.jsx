@@ -5,81 +5,15 @@ import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns
 import { CiSearch } from "react-icons/ci";
 import PopupTable from "../../../Admission/PopupTable";
 import { API_BASE_URL } from '../../../api/api'
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 
 
 
-const FloatingInput = ({ label, type = "text", value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  const handleChange = (e) => {
-    setHasValue(e.target.value.length > 0);
-    if (props.onChange) props.onChange(e);
-  };
-
-  return (
-    <div
-      className={`LinensIssueNewPopUp-form-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <input
-        type={type}
-        className="LinensIssueNewPopUp-form-floating-input"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value.length > 0);
-        }}
-        onChange={handleChange}
-        {...props}
-      />
-      <label className="LinensIssueNewPopUp-form-floating-label">{label}</label>
-    </div>
-  );
-};
-const FloatingSelect = ({ label, options = [], value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  return (
-    <div
-      className={`LinensIssueNewPopUp-form-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <select
-        className="LinensIssueNewPopUp-form-floating-select"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value !== "");
-        }}
-        onChange={(e) => {
-          setHasValue(e.target.value !== "");
-          if (props.onChange) props.onChange(e);
-        }}
-        {...props}
-      >
-        <option value="">{ }</option>
-        {options.map((option, index) => (
-          <option key={index} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <label className="LinensIssueNewPopUp-form-floating-label">{label}</label>
-    </div>
-  );
-};
 const LinensIssueNewPopUp = ({ onClose }) => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -194,64 +128,39 @@ const LinensIssueNewPopUp = ({ onClose }) => {
     }
   };
 
-
+  const handleReseat = () => {
+    setIssueDetails({
+      issueNumber: "",
+      issueDate: "",
+      issueTime: "",
+      nursingStation: "",
+      currentOccupancy: "",
+      issueType: "",
+    });
+  
+    setFormData({
+      linenType: "",
+      stock: "",
+    });
+  
+    setRows([
+      {
+        id: 1,
+        linensName: "",
+        prevBalance: "",
+        issuedQty: "",
+        lnm: "",
+      },
+    ]);
+  };
+  
 
 
   const handlePopupClose = () => {
     setActivePopup(null);
   };
 
-  // const handleSave = async () => {
-  //   try {
-  //     // Validate form before proceeding
-  //     // if (!validateForm()) {
-  //     //   return;
-  //     // }
-
-  //     // Map rows to the required linenDetailsListDTOs format
-  //     const linenDetailsListDTOs = rows.map((row) => ({
-  //       linenDetailsListId: details?.linenDetailsListId,
-  //       issueQuantity: parseInt(row.issuedQty) || 0,
-  //     }));
-
-  //     // Construct the payload
-  //     const payload = {
-  //       issueDate: formatDate(issueDetails.issueDate),
-  //       issueTime: formatTime(issueDetails.issueTime),
-  //       issueType: issueDetails.issueType,
-  //       nursingType: issueDetails.nursingStation,
-  //       currentOccupancy: parseInt(issueDetails.currentOccupancy) || 0,
-  //       status: "Pending",
-  //       linenDetailsListDTOs: linenDetailsListDTOs,
-  //     };
-
-  //     console.log("Sending payload:", handleSave);
-
-  //     const response = await axios.post(
-  //       `${API_BASE_URL}/linens-issues`,
-  //       payload,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-
-  //     if (response.status === 200 || response.status === 201) {
-  //       alert("Linens issue saved successfully!");
-  //       handleClear();
-  //     }
-  //   } catch (error) {
-  //     console.error("Error saving linens issue:", error);
-  //     let errorMessage = "Failed to save linens issue. ";
-  //     if (error.response?.data) {
-  //       errorMessage += error.response.data;
-  //     } else if (error.message) {
-  //       errorMessage += error.message;
-  //     }
-  //     alert(errorMessage);
-  //   }
-  // };
+  
 
   const handleSave = async () => {
     // Check if required fields are filled
@@ -263,7 +172,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
       !issueDetails.nursingStation.trim() ||
       !issueDetails.currentOccupancy
     ) {
-      alert("Please fill in all required fields.");
+      toast.error("Please fill in all required fields.");
       return;
     }
   
@@ -292,11 +201,11 @@ const LinensIssueNewPopUp = ({ onClose }) => {
       });
   
       if (response.status === 200 || response.status === 201) {
-        alert("Linens issue saved successfully!");
+        toast.success("Linens issue saved successfully!");
         handleClear();
       }
     } catch (error) {
-      console.error("Error saving linens issue:", error);
+      toast.error("Error saving linens issue:");
       let errorMessage = "Failed to save linens issue. ";
       if (error.response?.data) {
         errorMessage += error.response.data;
@@ -354,12 +263,12 @@ const LinensIssueNewPopUp = ({ onClose }) => {
         <div className="LinensIssueNewPopUp-section">
           <div className="LinensIssueNewPopUp-grid">
             <FloatingInput
-              type="text"
+              type="number"
               label="Issue Number"
               name="issueNumber"
               value={issueDetails.issueNumber}
               onChange={handleInputChange}
-              
+              min="0"
               required
             />
             <FloatingInput
@@ -386,17 +295,7 @@ const LinensIssueNewPopUp = ({ onClose }) => {
                 onChange={handleInputChange}
                 required
               />
-              {/* <button
-              className="LinenMaster-search-icon"
               
-            >
-              <svg viewBox="0 0 24 24" width="16" height="16">
-                <path
-                  fill="currentColor"
-                  d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                />
-              </svg>
-            </button> */}
             </div>
 
             <FloatingInput
@@ -552,6 +451,9 @@ const LinensIssueNewPopUp = ({ onClose }) => {
       <div className="LinensIssueNewPopUp-form-actions">
         <button className="LinensIssueNewPopUp-add-btn" onClick={handleSave}>
           Save
+        </button>
+        <button className="LinensIssueNewPopUp-add-btn" onClick={handleReseat}>
+          Reseat
         </button>
       </div>
       {activePopup && (

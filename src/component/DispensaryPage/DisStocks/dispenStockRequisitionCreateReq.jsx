@@ -1,10 +1,16 @@
- /* Ajhar Tamboli dispenStockRequisitionCreateReq.jsx 19-09-24 */
+/* Ajhar Tamboli dispenStockRequisitionCreateReq.jsx 19-09-24 */
 import "../DisStocks/dispenStockRequisitionCreateReq.css";
-import { API_BASE_URL } from '../../api/api';
-import React, { useEffect, useState } from 'react';
+import { API_BASE_URL } from "../../api/api";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 
 function DispenStockRequisitionCreateReq({ onClose }) {
-  const [requisitionDate, setRequisitionDate] = useState('');
+  const [requisitionDate, setRequisitionDate] = useState("");
   const [items, setItems] = useState([]);
 
   // Fetch items from the API
@@ -16,10 +22,10 @@ function DispenStockRequisitionCreateReq({ onClose }) {
           const data = await response.json();
           setItems(data);
         } else {
-          console.error('Failed to fetch items:', response.statusText);
+          console.error("Failed to fetch items:", response.statusText);
         }
       } catch (error) {
-        console.error('Error fetching items:', error);
+        console.error("Error fetching items:", error);
       }
     };
 
@@ -28,9 +34,9 @@ function DispenStockRequisitionCreateReq({ onClose }) {
 
   const [selectedItems, setSelectedItems] = useState([
     {
-      addItemId: '',
+      addItemId: "",
       requestingQuantity: 1,
-      remark: '',
+      remark: "",
     },
   ]);
 
@@ -38,7 +44,7 @@ function DispenStockRequisitionCreateReq({ onClose }) {
   const addItem = () => {
     setSelectedItems([
       ...selectedItems,
-      { addItemId: '', requestingQuantity: 1, remark: '' },
+      { addItemId: "", requestingQuantity: 1, remark: "" },
     ]);
   };
 
@@ -58,7 +64,9 @@ function DispenStockRequisitionCreateReq({ onClose }) {
 
   // Validate form inputs
   const validateForm = () => {
-    return selectedItems.every(item => item.addItemId && item.requestingQuantity);
+    return selectedItems.every(
+      (item) => item.addItemId && item.requestingQuantity
+    );
   };
 
   // Handle form submission to post data
@@ -87,7 +95,7 @@ function DispenStockRequisitionCreateReq({ onClose }) {
         dispatchQty: 50, // Replace with calculated dispatch quantity
         issueNo: "ISSUE123", // Replace with dynamic issue number
         recieveditem: "Item XYZ", // Replace with dynamic received item
-  
+
         // Add Requisition Detail DTOs
         requisitionDetailDTOs: selectedItems.map((item) => ({
           requestingQuantity: parseInt(item.requestingQuantity),
@@ -101,27 +109,27 @@ function DispenStockRequisitionCreateReq({ onClose }) {
         })),
       };
 
-      console.log(payload)
+      console.log(payload);
       const response = await fetch(`${API_BASE_URL}/pharmacyRequisitions`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
 
       if (response.ok) {
         const result = await response.json();
-        console.log('Requisition created successfully:', result);
-        alert('Requisition created successfully!');
+        console.log("Requisition created successfully:", result);
+        toast.success("Requisition created successfully!");
         onClose();
       } else {
-        console.error('Error creating requisition:', response.statusText);
-        alert('Failed to create requisition.');
+        console.error("Error creating requisition:", response.statusText);
+        toast.error("Failed to create requisition.");
       }
     } catch (error) {
-      console.error('Error creating requisition:', error);
-      alert('Error creating requisition. Please try again.');
+      console.error("Error creating requisition:", error);
+      toast.error("Error creating requisition. Please try again.");
     }
   };
 
@@ -129,15 +137,16 @@ function DispenStockRequisitionCreateReq({ onClose }) {
     <div className="dispenStockRequisitionCreateReq-form">
       <h3>* Add Requisition</h3>
       <div className="dispenStockRequisitionCreateReq-date-input">
-        <label>Requisition Date: </label>
-        <input
-          type="date"
+       
+        <FloatingInput
+        label={"Requisition Date"}
+        type="date"
           value={requisitionDate}
           onChange={(e) => setRequisitionDate(e.target.value)}
           required
         />
       </div>
-      <table>
+      <table >
         <thead>
           <tr>
             <th></th>
@@ -159,38 +168,41 @@ function DispenStockRequisitionCreateReq({ onClose }) {
                 </button>
               </td>
               <td>
-                <select
-                  className="dispenStockRequisitionCreateReq-select"
+                <FloatingSelect
+                  label="Select Item"
                   name="addItemId"
                   value={item.addItemId}
                   onChange={(e) => handleInputChange(index, e)}
-                >
-                  <option value="">--Select Item--</option>
-                  {items.map(({ addItemId, itemMaster }) => (
-                    <option key={addItemId} value={addItemId}>
-                      {itemMaster?.itemName}
-                    </option>
-                  ))}
-                </select>
+                  options={[
+                    { value: "", label: "--Select Item--" },
+                    ...items.map(({ addItemId, itemMaster }) => ({
+                      value: addItemId,
+                      label: itemMaster?.itemName,
+                    })),
+                  ]}
+                />
               </td>
+             
               <td>
-                <input
-                  className="dispenStockRequisitionCreateReq-input"
+                <FloatingInput
+                  label="Requesting Quantity"
                   type="number"
                   name="requestingQuantity"
                   value={item.requestingQuantity}
                   onChange={(e) => handleInputChange(index, e)}
+                  min="1"
                 />
               </td>
               <td>
-                <input
-                  className="dispenStockRequisitionCreateReq-input"
+                <FloatingInput
+                  label="Remark"
                   type="text"
                   name="remark"
                   value={item.remark}
                   onChange={(e) => handleInputChange(index, e)}
                 />
               </td>
+
               <td>
                 {index === selectedItems.length - 1 && (
                   <button

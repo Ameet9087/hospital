@@ -68,6 +68,7 @@
 
 .sSIInventoryRequisition-view
 {
+<<<<<<< HEAD
   background-color:var( --button-color);
     /* margin-left: 10px; */
     border: 1px solid var( --button-hover-border-color);
@@ -84,6 +85,18 @@
   border: 1px solid var( --button-hover-border-color);
   color: var(--button-hover-text-color);
   background-color: var(--button-hover-background-color);
+=======
+  padding: 5px 10px;
+  color: white;
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.sSIInventoryRequisition-view:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+>>>>>>> ad3dbcade0310743b9fa5d27715a29a847b1a3fa
 }
 .sSIInventoryRequisition-filter label {
   margin-right: 10px;
@@ -167,7 +180,6 @@ color: green;
 }
 .sSIInventoryRequisition-search-bar {
   display: flex;
-  margin-left: -15px;
 }
 
 .sSIInventoryRequisition-search-bar input {
@@ -176,12 +188,7 @@ color: green;
   width: 200px;
 
 }
-.sSIInventoryRequisition-search-bar i{
-  position: relative;
-  color:gray;
-  top: 7px;
-left: 190px;
-}
+
 
 /* .search-bar button {
   padding: 5px 10px;

@@ -49,35 +49,10 @@
   background: none;
 }
 
-/* .serchIconInput input:focus {
-  border: none !important;
-  outline: none !important; 
-  background: none !important;
-  box-shadow: none !important; 
-  text-decoration: none !important; 
-} */
+
 
 /* Button Section */
-.StaffMap-navbar-btns {
-  /* position: fixed;
-  top: 60px;
-  right: 0;
-  
-  padding: 10px;
-  bottom: 10px;
-  right: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  overflow-y: auto;
-  /* top: 60px; */
-  /* left: 0; */
-  /* width: 140px; */
-  /* background-color: #f0f0f0; */
-  /* border-left: 1px solid #ccc; */
-  /* height: calc(100% - 60px); */
-  /* flex-direction: column; */
-}
+
 .StaffMap-navbar {
   display: flex;
   justify-content: center;
