@@ -20,7 +20,7 @@ const FinalSaleByAccounts = () => {
       .then((data) => {
         setFinalSales(data);
         setFilteredSales(data); // Initialize filtered data
-
+        
       })
       .catch((err) => {
         console.error("Error fetching final sales:", err);

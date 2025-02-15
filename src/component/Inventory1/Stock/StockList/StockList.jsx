@@ -4,6 +4,8 @@ import StockManage from './StockManage'; // Import StockManage component
 import { API_BASE_URL } from '../../../api/api';
 import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 import * as XLSX from 'xlsx';
+import FloatingInput from '../../../../FloatingInputs/FloatingInput';
+import FloatingSelect from '../../../../FloatingInputs/FloatingSelect';
 
 const StockList = () => {
   const [columnWidths,setColumnWidths] = useState({});
@@ -81,16 +83,19 @@ const StockList = () => {
       ) : (
         <>
           <div className="stock-filters">
-            <label className='stock-list-label'>
-              SubCategory
-              <select value={subcategory} onChange={handleSubcategoryChange}>
-                <option>Select Option</option>
-              {filteredItems.map((item)=>(
-                <option>{item?.subCategory?.itemSubCategoryName}</option>
-              ))
-              }
-              </select>
-            </label>
+          <FloatingSelect
+  label={"SubCategory"}
+  value={subcategory}
+  onChange={handleSubcategoryChange}
+  options={[
+    { value: "", label: "Select Option" },
+    ...filteredItems.map((item) => ({
+      value: item?.subCategory?.itemSubCategoryName,
+      label: item?.subCategory?.itemSubCategoryName,
+    }))
+  ]}
+/>
+
             {/* <label>
               <input type="checkbox" />
               Show Fixed Assets Applicable Item
@@ -106,13 +111,13 @@ const StockList = () => {
           </div>
           <div className="stock-search-export">
             <div className='Stock-search-input-container'>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Search"}
+              type="text"
                 placeholder="Search"
                 value={searchQuery}
-                onChange={handleSearchChange}
-                className='Stock-search-input'
-              />
+                onChange={handleSearchChange}/>
+             
             </div>
             <div className='stock-button-list'>
               <span>{`Showing ${filteredItems.length} of ${items.length} results`}</span>

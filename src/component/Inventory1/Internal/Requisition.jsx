@@ -10,6 +10,9 @@ import CustomModal from "../../../CustomModel/CustomModal";
 import DispatchRequisition from "./DispatchRequisition";
 import { useFilter } from "../../ShortCuts/useFilter";
 import * as XLSX from 'xlsx';
+import FloatingInput from "../../../FloatingInputs/FloatingInput";
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import { toast } from "react-toastify";
 const Requisition = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -169,31 +172,27 @@ const Requisition = () => {
         </div>
       </div>
       <div className="requisition-inventory-date-range">
-        <label>
-          From:{" "}
-          <input
-            type="date"
-            value={dateFrom}
-            onChange={(e) => setDateFrom(e.target.value)}
-          />
-        </label>
-        <label>
-          To:{" "}
-          <input
-            type="date"
+        <FloatingInput
+        label={"From"}
+        type="date"
+        value={dateFrom}
+        onChange={(e) => setDateFrom(e.target.value)}/>
+        <FloatingInput
+        label={"To"}
+        type="date"
             value={dateTo}
-            onChange={(e) => setDateTo(e.target.value)}
-          />
-        </label>
+            onChange={(e) => setDateTo(e.target.value)}/>
+       
       </div>
       <div className="requisition-inventory-search-bar-container">
         <div className="requisition-inventory-search-bar">
-          <input
-            type="text"
+          <FloatingInput
+          label={"Search In"}
+          type="text"
             placeholder="Search"
             value={searchTerm}
-            onChange={handleSearch}
-          />
+            onChange={handleSearch}/>
+         
 
           {/* <button className="requisition-inventory-search-bar-button" onClick={handleSearch}>🔍</button> */}
         </div>

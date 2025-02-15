@@ -56,9 +56,42 @@ const AssetNewReplacementRequest = () => {
     const updatedRows = packageTableRows.filter((_, rowIndex) => rowIndex !== index);
     setPackageTableRows(updatedRows);
   };
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <h4>Asset New Replacement Request Report</h4>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
 
   return (
     <div className="AssetNewReplacementRequest-container">
+      <div className="assetnewreplacementreq-header">
       <div className="AssetNewReplacementRequest-addBtn">
         <button
           className="AssetNewReplacementRequest-add-button"
@@ -66,6 +99,10 @@ const AssetNewReplacementRequest = () => {
         >
           + Add New Asset New/Replacement Request
         </button>
+      </div>
+      <div>
+        <button className="AssetNewReplacementRequest-add-button" onClick={handlePrint} > Print</button>
+      </div>
       </div>
 
       <div className="AssetNewReplacementRequest-search-N-result">

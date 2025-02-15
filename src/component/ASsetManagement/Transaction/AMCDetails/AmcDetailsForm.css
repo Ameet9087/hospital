@@ -17,11 +17,6 @@
   .AMCDetails-header {
     font-size: var(--heading-font);
   }
-
-  .AMCDetails-checkbox-label {
-    font-weight: normal;
-    margin-left: 4px;
-  }
   
   .AMCDetails-content-wrapper {
     display: flex;
@@ -60,34 +55,10 @@
     font-size: var(--font-size);
   }
   
-  .AMCDetails-form-row label {
-    min-width: 140px;
-  }
-  .AMCDetails-form-row input  {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 47%;
-  }
-   .AMCDetails-form-row select
-   {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 50%;
-  }
-  .AMCDetails-input-with-search {
-    display: flex;
-    gap: 2px;
-  }
   
-  .AMCDetails-input-with-search input {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 100%;
+ 
+  
 
-  }
   .AMCDetails-magnifier-btn {
     background: #f0f0f0;
     border: 1px solid #ccc;

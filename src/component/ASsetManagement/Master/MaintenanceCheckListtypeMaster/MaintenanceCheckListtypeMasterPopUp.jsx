@@ -2,7 +2,9 @@ import React, { useState, useRef } from "react";
 import "./MaintenanceCheckListtypeMasterPopUp.css";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
-const MaintenanceCheckListtypeMasterPopUp = ({ onSave }) => {
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../../../FloatingInputs";
+const MaintenanceCheckListtypeMasterPopUp = ({ onSave,onClose }) => {
   const [formData, setFormData] = useState({
     typeofChecklist: "",
     remarks: "",
@@ -48,12 +50,13 @@ const MaintenanceCheckListtypeMasterPopUp = ({ onSave }) => {
         return response.json();
       })
       .then((data) => {
-        console.log("Data saved successfully:", data);
-        onSave(newChecklist); // Notify parent component
-        handleClear(); // Clear form after successful save
+        toast.success("Data saved successfully:", data);
+        onSave(newChecklist);
+        handleClear();
+        onClose();
       })
       .catch((error) => {
-        console.error("Error saving data:", error);
+        toast.error("Error saving data:", error);
         // Handle error
       });
   };
@@ -88,27 +91,29 @@ const MaintenanceCheckListtypeMasterPopUp = ({ onSave }) => {
         <div className="maintenanceChecklistPopUp-form-row">
           <div className="maintenanceChecklistPopUp-form-group-1row">
             <div className="maintenanceChecklistPopUp-form-group">
-              <label htmlFor="typeofChecklist">Type Of Checklist: *</label>
-              <input
-                type="text"
-                id="typeofChecklist"
-                name="typeofChecklist"
-                placeholder="Enter Type Name"
-                value={formData.typeofChecklist}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Type Of Checklist"}
+              type="text"
+              id="typeofChecklist"
+              name="typeofChecklist"
+              placeholder="Enter Type Name"
+              value={formData.typeofChecklist}
+              onChange={handleChange}
+              required
+              
               />
+
             </div>
             <div className="maintenanceChecklistPopUp-form-group">
-              <label htmlFor="remarks">Remarks: *</label>
-              <input
-                type="text"
-                id="remarks"
-                name="remarks"
-                placeholder="Enter Remarks"
-                value={formData.remarks}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Remarks"}
+               type="text"
+               id="remarks"
+               name="remarks"
+               placeholder="Enter Remarks"
+               value={formData.remarks}
+               onChange={handleChange}
+               required
               />
             </div>
           </div>
@@ -180,11 +185,12 @@ const MaintenanceCheckListtypeMasterPopUp = ({ onSave }) => {
 
                   <td>{row.sn}</td>
                   <td>
-                    <input
-                      type="text"
-                      placeholder="Enter description"
-                      value={row.description}
-                      onChange={(e) => handleRowChange(index, e)}
+                    <FloatingInput
+                    label={"Description"}
+                     type="text"
+                     placeholder="Enter description"
+                     value={row.description}
+                     onChange={(e) => handleRowChange(index, e)}
                     />
                   </td>
                 </tr>

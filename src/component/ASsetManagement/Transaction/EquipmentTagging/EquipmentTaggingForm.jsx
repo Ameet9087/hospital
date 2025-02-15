@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./EquipmentTaggingForm.css";
 import { API_BASE_URL } from "../../../api/api";
-
+import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 const EquipmentTaggingForm = () => {
   const [formData, setFormData] = useState({
     status: "Active",
@@ -61,14 +62,14 @@ const EquipmentTaggingForm = () => {
       });
 
       if (response.ok) {
-        alert("Equipment tagged successfully!");
+        toast.success("Equipment tagged successfully!");
         setFormData({ status: "Active", equipmentMasterId: "", partId: "" });
       } else {
         const errorData = await response.json();
-        alert(`Error: ${errorData.message || "Failed to tag equipment."}`);
+        toast.error(`Error: ${errorData.message || "Failed to tag equipment."}`);
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      toast.error("Error submitting form:", error);
       alert("An error occurred. Please try again.");
     }
   };
@@ -80,56 +81,50 @@ const EquipmentTaggingForm = () => {
       <form className="equipment-tagging__form" onSubmit={handleSubmit}>
         {/* Equipment Name */}
         <div className="equipment-tagging__group">
-          <label className="equipment-tagging__label">
-            Equipment Name<span className="equipment-tagging__required">*</span>
-          </label>
-          <span className="equipment-tagging__colon">:</span>
+        <FloatingSelect
+  label={"Equipment Name *"}
+  name="equipmentMasterId"
+  value={formData.equipmentMasterId}
+  onChange={handleInputChange}
+  required
+  options={[
+    { value: "", label: "Select Equipment", disabled: true },
+    ...equipmentMasters.map((equipment) => ({
+      value: equipment.equipmentMasterId,
+      label: equipment.equipmentName
+    }))
+  ]}
+/>
+
+        
           <div className="equipment-tagging__input-container">
-            <select
-              name="equipmentMasterId"
-              value={formData.equipmentMasterId}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="" disabled>
-                Select Equipment
-              </option>
-              {equipmentMasters.map((equipment) => (
-                <option key={equipment.equipmentMasterId} value={equipment.equipmentMasterId}>
-                  {equipment.equipmentName}
-                </option>
-              ))}
-            </select>
+           
           </div>
         </div>
 
         {/* Item Name */}
         <div className="equipment-tagging__group">
-          <label className="equipment-tagging__label">
-            Item Name<span className="equipment-tagging__required">*</span>
-          </label>
-          <span className="equipment-tagging__colon">:</span>
-          <div className="equipment-tagging__input-container">
-            <select
-              name="partId"
-              value={formData.partId}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="" disabled>
-                Select Item
-              </option>
-              {parts.map((part) => (
-                <option key={part.partId} value={part.partId}>
-                  {part.partName}
-                </option>
-              ))}
-            </select>
-          </div>
+          
+        <FloatingSelect
+  label={"Item Name"}
+  name="partId"
+  value={formData.partId}
+  onChange={handleInputChange}
+  required
+  options={[
+    { value: "", label: "Select Item", disabled: true },
+    ...parts.map((part) => ({
+      value: part.partId,
+      label: part.partName
+    }))
+  ]}
+/>
+
         </div>
 
         {/* Status */}
         <div className="equipment-tagging__group">
+          
           <label className="equipment-tagging__label">Status</label>
           <span className="equipment-tagging__colon">:</span>
           <div className="equipment-tagging__radio-group">

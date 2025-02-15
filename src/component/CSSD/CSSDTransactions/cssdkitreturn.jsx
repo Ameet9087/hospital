@@ -5,7 +5,9 @@ import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { API_BASE_URL } from "../../api/api";
-
+import FloatingInput from "../../../FloatingInputs/FloatingInput";
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import { toast } from "react-toastify";
 const KitReturnsDetails = () => {
   const { receivingId } = useParams(); // Get the 'receivingId' from the URL
   console.log(receivingId);
@@ -97,11 +99,12 @@ const KitReturnsDetails = () => {
         const data = await response.json();
         console.log("Kit returns saved successfully", data);
         // Display success alert
-        alert("Data saved successfully!");
+        toast.success("Data saved successfully!");
         // You can redirect or show success message here
       } else {
         // Handle failure
         console.error("Error saving kit returns:", response.statusText);
+        toast.error("Data Not Save")
       }
     } catch (error) {
       console.error("Error sending POST request:", error);
@@ -114,13 +117,12 @@ const KitReturnsDetails = () => {
         <h2>Kit Return Record</h2>
       </div>
       <div className="kitreturnrecord-search-div">
-        <label>Kit Received Id: </label>
-        <input
-          type="number"
+        <FloatingInput
+        label={"Kit Received Id"}
+        type="number"
           value={receivingId || "Receiving Id Not Found"}
-          onChange={handleSearch}
-          className="kitreturnrecord-search"
-        />
+          onChange={handleSearch}/>
+       
       </div>
 
       <table className="kitreturnrecord-table" ref={tableRef}>
@@ -150,39 +152,39 @@ const KitReturnsDetails = () => {
               <tr key={kit.kitMasterId}>
                 <td>{index + 1}</td>
                 <td>
-                  <input
-                    className="tableinput-cssdretirn"
-                    type="number"
-                    value={kit.kitMasterId}
+                  <FloatingInput
+                  type="number"
+                  value={kit.kitMasterId}
                   />
+                 
                 </td>
                 <td>
-                  <input
-                    className="tableinput-cssdretirn"
-                    type="text"
-                    value={kit.kitName}
-                    onChange={(e) =>
-                      setKits(
-                        kits.map((r) =>
-                          r.kitMasterId === kit.kitMasterId
-                            ? { ...r, kitName: e.target.value }
-                            : r
-                        )
+                  <FloatingInput
+                  label={"kit Name"}
+                  type="text"
+                  value={kit.kitName}
+                  onChange={(e) =>
+                    setKits(
+                      kits.map((r) =>
+                        r.kitMasterId === kit.kitMasterId
+                          ? { ...r, kitName: e.target.value }
+                          : r
                       )
-                    }
-                  />
+                    )
+                  }/>
+                 
                 </td>
                 <td>
-                  <input
-                    className="tableinput-cssdretirn"
-                    type="text"
-                    value={kit.receivingQuantity}
-                  />
+                  <FloatingInput
+                  label={"Receiving Quantity"}
+                  type="text"
+                    value={kit.receivingQuantity}/>
+                 
                 </td>
                 <td>
-                  <input
-                    className="tableinput-cssdretirn"
-                    type="number"
+                  <FloatingInput
+                  label={"Return Qty"}
+                  type="number"
                     value={kit.returnQty}
                     onChange={(e) => {
                       const newReturnQty = e.target.value;
@@ -196,25 +198,24 @@ const KitReturnsDetails = () => {
                           )
                         );
                       }
-                    }}
-                  />
+                    }}/>
+                 
                 </td>
                 <td>
-                  <input
-                    className="tableinput-cssdretirn"
-                    type="text"
-                    value={kit.remarks}
-                    onChange={(e) =>
-                      setKits(
-                        kits.map((item) =>
-                          item.kitMasterId === kit.kitMasterId
-                            ? { ...item, remarks: e.target.value }
-                            : item
-                        )
+                  <FloatingInput
+                  label={"Remarks"}
+                  type="text"
+                  value={kit.remarks}
+                  onChange={(e) =>
+                    setKits(
+                      kits.map((item) =>
+                        item.kitMasterId === kit.kitMasterId
+                          ? { ...item, remarks: e.target.value }
+                          : item
                       )
-                    }
-                    placeholder="Enter Remarks"
-                  />
+                    )
+                  }/>
+                  
                 </td>
                 <td>
                   <button className="kitreturnaddbtn" onClick={handleAddRow}>Add</button>

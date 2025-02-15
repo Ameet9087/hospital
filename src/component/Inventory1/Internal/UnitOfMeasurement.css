@@ -16,19 +16,6 @@
   margin-bottom: 15px;
 }
 
-.unit-of-MeasssFormGroup label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.unit-of-MeasssFormGroup input[type="text"],
-.unit-of-MeasssFormGroup select {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
 
 .unit-of-MeasssRequired {
   color: red;

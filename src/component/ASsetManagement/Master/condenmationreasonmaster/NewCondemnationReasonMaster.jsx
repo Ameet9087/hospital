@@ -4,6 +4,7 @@ import CondemnationReasonMasterPopUp from "./CondemnationReasonMasterPopUp";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput } from "../../../../FloatingInputs";
 
 const NewCondemnationReasonMaster = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -121,12 +122,12 @@ const NewCondemnationReasonMaster = () => {
 
       <div className="newCondemnationReasonMaster-search-N-result">
         <div className="newCondemnationReasonMaster-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+          <FloatingInput
+          label={"search"}
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
         <div className="newCondemnationReasonMaster-results-info">
@@ -186,7 +187,7 @@ const NewCondemnationReasonMaster = () => {
 
       {showPopup && (
         <CustomModal isOpen={showPopup} onClose={closePopup}>
-          <CondemnationReasonMasterPopUp />
+          <CondemnationReasonMasterPopUp onClose={closePopup} />
         </CustomModal>
       )}
     </div>

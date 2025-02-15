@@ -7,16 +7,22 @@
    align-items: center;
    padding: 5px 0px;
 }
+.stock-filters label{
+    width: 19%;
+}
+.stock-filters select{
+    width: 20%;
+}
 
 /* Style for each label within stock-filters */
 /* Style for select element inside stock-filters */
-.stock-filters select {
-    width: 100%;
+/* .stock-filters select {
+    width: 30%;
     max-width: 200px;
-}
+} */
 .Stock-search-input-container
 {
-    width: 40%;
+    width: 20%;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -32,14 +38,6 @@
     width: 15px;  /* Set the width of the checkbox for consistent size */
 }
 
-/* Style for label with checkbox */
-.stock-filters label {
-    display: flex; /* Use flexbox for label alignment */
-    align-items: center; /* Vertically center align items */
-    gap: 10px; /* Space between the checkbox and label text */
-    font-size: var(--heading-font); /* Font size for the label text */
-    color: #333; /* Color for the label text */
-}
 
 /* Style for the stock-legends container */
 .stock-legends {

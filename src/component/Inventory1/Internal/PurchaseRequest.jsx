@@ -7,7 +7,9 @@ import AddItemForm from "./AddItemForm";
 import CustomModal from "../../../CustomModel/CustomModal";
 import PurchaseView from "./PurchaseView";
 import { useFilter } from "../../ShortCuts/useFilter";
-
+import FloatingInput from "../../../FloatingInputs/FloatingInput";
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import { toast } from "react-toastify";
 const PurchaseRequest = () => {
   // State variables for the component
   const [columnWidths, setColumnWidths] = useState({});
@@ -198,9 +200,10 @@ const PurchaseRequest = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
+        toast.success("Submit successfully")
       })
       .catch((error) => {
-        console.error("Error:", error);
+        toast.error("Error:", error);
       });
 
     setIsCreatingRequest(false); // Hide the form after submission
@@ -255,30 +258,30 @@ const PurchaseRequest = () => {
           <div>
             <div className="purchase-request-pur-subContent">
               <div className="purchase-request-subdiv">
-                <label>Vendor:</label>
-                <select
-                  value={vendors}
-                  className="Inv-purchase-request-input-subDiv"
-                  onChange={(e) => setVendors(e.target.value)}
-                >
-                  <option value="">Choose Vendor</option>
-                  {vendorList.map((vendor) => (
-                    <option key={vendor.id} value={vendor.id}>
-                      {vendor.vendorName}
-                    </option>
-                  ))}
-                </select>
+              <FloatingSelect
+  label={"Vendor"}
+  value={vendors}
+  onChange={(e) => setVendors(e.target.value)}
+  options={[
+    { value: "", label: "Choose Vendor" },
+    ...vendorList.map((vendor) => ({
+      value: vendor.id,
+      label: vendor.vendorName,
+    })),
+  ]}
+/>
+
                 <button className="add-Inv-Item" onClick={openVendorModal}>
                   ?
                 </button>
               </div>
               <div className="purchase-request-subdiv">
-                <label>Request Date:</label>
-                <input
-                  type="date"
+                <FloatingInput
+                label={"Request Date"}
+                type="date"
                   value={requestDate}
-                  onChange={(e) => setRequestDate(e.target.value)}
-                />
+                  onChange={(e) => setRequestDate(e.target.value)}/>
+               
               </div>
             </div>
           </div>
@@ -306,95 +309,95 @@ const PurchaseRequest = () => {
                     </button>
                   </td>
                   <td>
-                    <select
-                      value={prCategory}
+                    <FloatingSelect
+                    label={"PR Category"}
+                    value={prCategory}
                       onChange={(e) => setPrCategory(e.target.value)}
-                      className="Inv-purchase-request-input-subDiv"
-                    >
-                      <option value="">Select Category</option>
-                      <option>Consumables</option>
-                      <option>Capital Goods</option>
-                    </select>
+                      
+                      options={[{value:""},{value:"Consumables",label:"Consumables"},
+                        {value:"Capital Goods",label:"Capital Goods"}
+                      ]}/>
+                   
                   </td>
                   <td className="purchase-request-add-Item-container">
-                    <select
-                      value={itemName}
-                      onChange={handleItemSelect}
-                      className="Inv-purchase-request-input-subDiv"
-                    >
-                      <option value="">Select Item</option>
-                      {item.map((item) => (
-                        <option key={item.invItemId} value={item.invItemId}>
-                          {item.itemName}
-                        </option>
-                      ))}
-                    </select>
+                  <FloatingSelect
+  label={"Item Name"}
+  value={itemName}
+  onChange={handleItemSelect}
+  options={[
+    { value: "", label: "Select Item" },
+    ...item.map((item) => ({
+      value: item.invItemId,
+      label: item.itemName,
+    })),
+  ]}
+/>
+
                   </td>
                   <td>
-                    <input
-                      type="text"
+                    <FloatingInput
+                    label={"Code"}
+                    type="text"
                       value={itemCode}
-                      onChange={(e) => setItemCode(e.target.value)}
-                      placeholder="Item Code"
-                      className="Inv-purchase-request-input"
-                    />
+                      onChange={(e) => setItemCode(e.target.value)}/>
+                  
                   </td>
                   <td>
-                    <input
-                      type="text"
+                    <FloatingInput
+                    label={"UOM"}
+                    type="text"
                       value={uom}
-                      onChange={(e) => setUom(e.target.value)}
-                      placeholder="Unit of Measure"
-                      className="Inv-purchase-request-input"
-                    />
+                      onChange={(e) => setUom(e.target.value)}/>
+                   
                   </td>
                   <td>
-                    <input
-                      type="number"
+                    <FloatingInput
+                    label={"Quantity"}
+                    type="number"
                       value={quantity}
-                      onChange={(e) => setQuantity(e.target.value)}
-                      className="Inv-purchase-request-input"
-                    />
+                      onChange={(e) => setQuantity(e.target.value)}/>
+                    
                   </td>
                   <td>
-                    <input
-                      type="number"
-                      value={availableQty}
-                      onChange={(e) => setAvailableQty(e.target.value)}
-                      placeholder="Available Qty"
-                      className="Inv-purchase-request-input"
+                    <FloatingInput
+                    label={"AVL QTY"}
+                    type="number"
+                    value={availableQty}
+                    onChange={(e) => setAvailableQty(e.target.value)}
+                    min={"0"}
                     />
+                   
                   </td>
                   <td>
-                    <input
-                      type="date"
+                    <FloatingInput
+                    label={"Date"}
+                          type="date"
                       value={quantityVerifiedOn}
-                      onChange={(e) => setQuantityVerifiedOn(e.target.value)}
-                      className="Inv-purchase-request-date"
-                    />
+                      onChange={(e) => setQuantityVerifiedOn(e.target.value)}/>
+                   
                   </td>
                   <td>
-                    <select
-                      className="Inv-purchase-request-input-subDiv"
-                      value={supplyRequiredBefore}
-                      onChange={(e) => setSupplyRequiredBefore(e.target.value)}
-                    >
-                      <option value="">Choose Supply</option>
-                      {[...Array(12)].map((_, i) => (
-                        <option key={i} value={`${i + 1} month`}>
-                          {i + 1} month
-                        </option>
-                      ))}
-                    </select>
+                  <FloatingSelect
+  label={"Supply Required Before"}
+  value={supplyRequiredBefore}
+  onChange={(e) => setSupplyRequiredBefore(e.target.value)}
+  options={[
+    { value: "", label: "Choose Supply" },
+    ...[...Array(12)].map((_, i) => ({
+      value: `${i + 1} month`,
+      label: `${i + 1} month`,
+    })),
+  ]}
+/>
+
                   </td>
                   <td>
-                    <input
-                      type="text"
+                    <FloatingInput
+                    label={"Remark"}
+                    type="text"
                       value={itemRemarks}
-                      onChange={(e) => setItemRemarks(e.target.value)}
-                      placeholder="Item Remark"
-                      className="Inv-purchase-request-input"
-                    />
+                      onChange={(e) => setItemRemarks(e.target.value)}/>
+                    
                   </td>
                 </tr>
               </tbody>
@@ -433,6 +436,7 @@ const PurchaseRequest = () => {
               </tbody>
             </table>
             <div>
+             
               <label>Remarks:</label>
               <textarea
                 rows="4"
@@ -466,34 +470,31 @@ const PurchaseRequest = () => {
           </button>
           <div className="purchase-request-filter">
             <div className="purchase-request-date-range">
-              <label>
-                From:{" "}
-                <input
-                  type="date"
+              <FloatingInput
+              label={"From"}
+              type="date"
                   value={dateFrom}
-                  onChange={(e) => setDateFrom(e.target.value)}
-                />
-              </label>
-              <label>
-                To:{" "}
-                <input
-                  type="date"
+                  onChange={(e) => setDateFrom(e.target.value)}/>
+              
+                <FloatingInput
+                label={"TO"}
+                type="date"
                   value={dateTo}
-                  onChange={(e) => setDateTo(e.target.value)}
-                />
-              </label>
+                  onChange={(e) => setDateTo(e.target.value)}/>
+                
               {/* <button className="purchase-request-star">☆</button>
               <button className="purchase-request-minus">-</button>
               <button className="purchase-request-ok">✓ OK</button> */}
             </div>
           </div>
           <div className="purchase-request-search-bar">
-            <input
-              type="text"
+          <FloatingInput
+            label={"Search Here"}
+            type="text"
               placeholder="Search"
               value={searchTerm}
-              onChange={handleSearch}
-            />
+              onChange={handleSearch}/>
+            
           </div>
           <div className="purchase-request-purchase-results">
             <div>

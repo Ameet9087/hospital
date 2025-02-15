@@ -40,15 +40,10 @@
     align-items: center;
     font-size: var(--font-size);
     width: 400px;
+    padding: 5px;
     /* border: 1px solid red; */
   }
   
-  .EquipmentGatePassInPopUp-form-group label {
-    display: block;
-    margin-bottom: 4px;
-    /* font-weight: bold; */
-    width: 75%;
-  }
   .EquipmentGatePassInPopUp-form-group-checkbox{
     display: flex;
     text-align: center;
@@ -56,30 +51,16 @@
     white-space: nowrap;
   }
   
-  .EquipmentGatePassInPopUp-form-group input,
-  .EquipmentGatePassInPopUp-form-group select,
-  .EquipmentGatePassInPopUp-form-group textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+ 
 .EquipmentGatePassInPopUp-form-group-options {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-}
-.EquipmentGatePassInPopUp-form-group-options label {
-  margin-right: 20px;
-  font-size: var(--font-size);
-  display: flex;
-  align-items: center;
+  gap: 5px;
 }
 
-.EquipmentGatePassInPopUp-form-group-options input {
-  margin-right: 5px;
-}
+
+
 
   .EquipmentGatePassInPopUp-form-actions {
     display: flex;

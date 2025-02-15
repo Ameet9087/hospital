@@ -13,11 +13,12 @@ import EmpIdentityVerificationForm from './Verification Model/EmpIdentityVerific
 import PatientIdentityVerificationForm from './Verification Model/PatientIdentityVerificationForm';
 import EmployeeInsuranceVerificationForm from './Verification Model/EmployeeInsuranceVerificationForm';
 import PatientInsuranceForm from './Verification Model/PatientInsuranceForm';
+import OPCancelationApproval from './OPCancelationApproval';
 
 
 const VerificationRouting = () => {
   return (
-      <>
+    <>
       <NavigationBar />
       <Routes>
         <Route path="/inventory/requisition" element={<RequisitionPage />} />
@@ -25,19 +26,20 @@ const VerificationRouting = () => {
 
         <Route path="/inventory/purchase-request" element={<VerifyPurchaseRequests />} />
         <Route path="/inventory/verify-purchase-order" element={<PurchaseOrder />} />
-        <Route path='/inventory/gr-quality-inspection' element={<GRQualityInspection/>}></Route>
+        <Route path='/inventory/gr-quality-inspection' element={<GRQualityInspection />}></Route>
         <Route path="/pharmacy/verify-purchase-order" element={<PurchaseOrder />} />
-        <Route path='/document&employmentverification/employee-verification' element={<EmployeeVerification/>}></Route>
-        <Route path='/document&employmentverification/patient-verification' element={<PatientDocumentVerification/>}></Route>
-        <Route path='/identityverification/employee-identity-verification' element={<EmpIdentityVerificationForm/>}></Route>
-        <Route path='/identityverification/patient-identity-verification' element={<PatientIdentityVerificationForm/>}></Route>
-        <Route path='/insuranceverification/employee-insurance-verification' element={<EmployeeInsuranceVerificationForm/>}></Route>
-        <Route path='/insuranceverification/patient-insurance-verification' element={<PatientInsuranceForm/>}></Route>
+        <Route path='/document&employmentverification/employee-verification' element={<EmployeeVerification />}></Route>
+        <Route path='/document&employmentverification/patient-verification' element={<PatientDocumentVerification />}></Route>
+        <Route path='/identityverification/employee-identity-verification' element={<EmpIdentityVerificationForm />}></Route>
+        <Route path='/identityverification/patient-identity-verification' element={<PatientIdentityVerificationForm />}></Route>
+        <Route path='/insuranceverification/employee-insurance-verification' element={<EmployeeInsuranceVerificationForm />}></Route>
+        <Route path='/insuranceverification/patient-insurance-verification' element={<PatientInsuranceForm />}></Route>
+        <Route path='/opdcanclepostapproval' element={<OPCancelationApproval />}></Route>
 
 
         {/* Add other routes here for different pages */}
       </Routes>
-      </>
+    </>
   );
 }
 

@@ -1,14 +1,15 @@
 .OpdBillingPrint-container {
-    height: 550px;
+    width: 800px;
     margin: auto;
     padding: 20px;
-    border: 2px solid #000;
-    border-radius: 5px;
+    border: 2px solid #000; /* Add a border */
+    border-radius: 5px; /* Optional: rounded corners */
     font-family: Arial, sans-serif;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    background-color: #fff;
-    overflow-y: scroll;
-  }  
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: add a shadow for better visibility */
+    background-color: #fff; /* Optional: ensure a white background */
+  }
+  
+    
     .OpdBillingPrint-header {
       text-align: center;
     }
@@ -39,9 +40,7 @@
     .OpdBillingPrint-table th {
       background-color: #f4f4f4;
     }
-  .opdBillingPrint-paymentModes{
-    display: block;
-  }  
+    
     .OpdBillingPrint-footer {
       margin-top: 20px;
       font-size: 14px;
@@ -73,4 +72,39 @@
     .OpdBillingPrint-bill-info{
       display: flex;
       justify-content: space-between;
+    }
+    .opd-billing-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    
+    .opd-billing-title {
+      text-align: center;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .opd-billing-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .opd-billing-row:last-child {
+      border-bottom: none;
+    }
+    
+    .opd-billing-column {
+      flex: 1;
+      padding: 5px;
+    }
+    
+    .opd-billing-column p {
+      margin: 5px 0;
     }

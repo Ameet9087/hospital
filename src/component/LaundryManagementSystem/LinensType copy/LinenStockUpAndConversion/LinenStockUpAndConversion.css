@@ -21,17 +21,6 @@
 .StockUpAndConversion-type-select {
     border-radius: 5px;
 }
-.StockUpAndConversion-type-select label,
-.StockUpAndConversion-department-select label {
-    margin-right: 10px;
-}
-.StockUpAndConversion-department-select input {
-    margin-right: 10px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid gray;
-
-}
 .StockUpAndConversion-load-button {
     color: blue;
     border: none;
@@ -81,9 +70,7 @@
 .StockUpAndConversionlabel {
     font-size: var(--heading-font);
 }
-.StockUpAndConversionlabel input {
-    border-radius: 5px;
-}
+
 
 .label2 {
     font-size: var(--heading-font);
@@ -143,77 +130,6 @@
     padding: 10px;
     background-color: white;
     /* margin-top: 10px; */
-  }
-  .LinenStockUpAndConversion-floating-field {
-    position: relative;
-  }
-  .LinenStockUpAndConversion-floating-input,
-  .LinenStockUpAndConversion-floating-select {
-    padding: 5px 12px;
-    border: 1px solid #00897b;
-    border-radius: 4px;
-    font-size: var(--font-size);
-    background: white;
-    transition: all 0.2s ease;
-  }
-  
-  .LinenStockUpAndConversion-form-floating-field {
-    position: relative;
-  }
-  .LinenStockUpAndConversion-search-field {
-    position: relative;
-  }
-  
-  .LinenStockUpAndConversion-floating-input:focus,
-  .LinenStockUpAndConversion-floating-select:focus {
-    outline: none;
-    border-color: #00897b;
-    box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
-  }
-  /* .LinenStockUpAndConversion-services-section {
-    background: white;
-    border: 1px solid #ccc;
-    margin-bottom: 5px;
-  } */
-  
-  .LinenStockUpAndConversion-form-floating-input,
-  .LinenStockUpAndConversion-form-floating-select {
-    padding: 5px 12px;
-    border: 1px solid #00897b;
-    border-radius: 4px;
-    font-size: 14px;
-    background: white;
-    transition: all 0.2s ease;
-    color: #00897b;
-  }
-  .LinenStockUpAndConversion-form-floating-input{
-    width: 92%;
-  }
-  .LinenStockUpAndConversion-form-floating-select {
-    width: 100%;
-  }
-  .LinenStockUpAndConversion-form-floating-label {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: white;
-    padding: 0 4px;
-    color: #666;
-    pointer-events: none;
-    transition: all 0.2s ease;
-    font-size: var(--font-size);
-    
-  }
-  .LinenStockUpAndConversion-form-floating-field.active .LinenStockUpAndConversion-form-floating-label {
-    top: 0;
-    font-size: 12px;
-    color: #00897b;
-    border-color: #00897b ;
-  }
-  .LinenStockUpAndConversion-form-floating-field.active .LinenStockUpAndConversion-form-floating-input,
-  .LinenStockUpAndConversion-form-floating-field.active .LinenStockUpAndConversion-form-floating-select {
-    border-color: #00897b;
   }
   .LinenStockUpAndConversion-save{
     background-color: var(--button-color);

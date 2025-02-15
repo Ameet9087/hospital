@@ -4,6 +4,8 @@ import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns
 import PopupTable from '../../../Admission/PopupTable';
 import { SearchIcon } from 'lucide-react';
 import { API_BASE_URL } from '../../../api/api';
+import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 const EquipmentUtilisationFormPopUp = ({ bookingId }) => {
   const [id, setId] = useState(bookingId || "");
@@ -182,12 +184,12 @@ const EquipmentUtilisationFormPopUp = ({ bookingId }) => {
   const handleSave = async () => {
     try {
       if (!selectedEquipment?.equipmentMasterId) {
-        alert("Please select an equipment");
+        toast.error("Please select an equipment");
         return;
       }
 
       if (!formData.utilisationDate) {
-        alert("Please select utilisation date");
+        toast.error("Please select utilisation date");
         return;
       }
 
@@ -195,7 +197,7 @@ const EquipmentUtilisationFormPopUp = ({ bookingId }) => {
       const validRows = packageTableRows.filter(row => row.ipAdmmissionId && row.sn);
 
       if (validRows.length === 0) {
-        alert("Please add at least one valid row with IP admission and service details");
+        toast.error("Please add at least one valid row with IP admission and service details");
         return;
       }
 
@@ -226,7 +228,7 @@ const EquipmentUtilisationFormPopUp = ({ bookingId }) => {
         throw new Error("Failed to save equipment utilisation");
       }
 
-      alert("Equipment utilisation saved successfully!");
+      toast.success("Equipment utilisation saved successfully!");
 
       // Reset form
       setFormData({
@@ -246,8 +248,8 @@ const EquipmentUtilisationFormPopUp = ({ bookingId }) => {
         sn: ''
       }]);
     } catch (error) {
-      console.error("Error saving equipment utilisation:", error);
-      alert("Failed to save equipment utilisation. Please try again.");
+      toast.error("Error saving equipment utilisation:", error);
+      toast.error("Failed to save equipment utilisation. Please try again.");
     }
   };
 
@@ -263,55 +265,65 @@ const EquipmentUtilisationFormPopUp = ({ bookingId }) => {
           <div className="MaintenanceChecklistPopUp-surgeryEvents-panel dis-templates">
             <div className="MaintenanceChecklistPopUp-surgeryEvents-panel-content">
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Equipment Selection:<span className='GatePassSecurityCheckPopUp-required'>*</span></label>
-                <input type="text" value={selectedEquipment?.equipmentName || ''} readOnly />
-                <button onClick={() => setActivePopup("equipment")}>🔍</button>
+                <FloatingInput
+                label={"Equipment Selection *"}
+                type="search" value={selectedEquipment?.equipmentName || ''} readOnly
+                onIconClick={() => setActivePopup("equipment")}/>
+                
               </div>
             </div>
           </div>
           <div className="MaintenanceChecklistPopUp-surgeryEvents-panel operation-details">
             <div className="MaintenanceChecklistPopUp-surgeryEvents-panel-content">
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Asset No:</label>
-                <input type="text" value={selectedEquipment?.assetNo || ''} readOnly />
+                <FloatingInput
+                label={"Asset No"}
+                type="text" value={selectedEquipment?.assetNo || ''} readOnly />
+                
               </div>
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Equipment No:</label>
-                <input type="text" value={selectedEquipment?.equipmentNo || ''} readOnly />
-              </div>
-            </div>
-          </div>
-          <div className="MaintenanceChecklistPopUp-surgeryEvents-panel operation-details">
-            <div className="MaintenanceChecklistPopUp-surgeryEvents-panel-content">
-              <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Serial No:</label>
-                <input type="text" value={selectedEquipment?.serialNo || ''} readOnly />
-              </div>
-              <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Utilisation Date:<span className='GatePassSecurityCheckPopUp-required'>*</span></label>
-                <input
-                  type="date"
-                  name="utilisationDate"
-                  value={formData.utilisationDate}
-                  onChange={handleInputChange}
-                />
+                <FloatingInput
+                label={"Equipment No"}
+                type="text" value={selectedEquipment?.equipmentNo || ''} readOnly/>
+               
               </div>
             </div>
           </div>
           <div className="MaintenanceChecklistPopUp-surgeryEvents-panel operation-details">
             <div className="MaintenanceChecklistPopUp-surgeryEvents-panel-content">
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Model No:</label>
-                <input type="text" value={selectedEquipment?.modelNo || ''} readOnly />
+                <FloatingInput
+                label={"Serial No"}
+                type="text" value={selectedEquipment?.serialNo || ''} readOnly/>
+               
               </div>
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Remarks:</label>
-                <input
-                  type="text"
+                <FloatingInput
+                label={"Utilisation Date *"}
+                type="date"
+                name="utilisationDate"
+                value={formData.utilisationDate}
+                onChange={handleInputChange}/>
+                
+              </div>
+            </div>
+          </div>
+          <div className="MaintenanceChecklistPopUp-surgeryEvents-panel operation-details">
+            <div className="MaintenanceChecklistPopUp-surgeryEvents-panel-content">
+              <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
+                <FloatingInput
+                label={"Model No"}
+                type="text" value={selectedEquipment?.modelNo || ''} readOnly/>
+               
+              </div>
+              <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
+                <FloatingInput
+                label={"Remarks"}
+                type="text"
                   name="remarks"
                   value={formData.remarks}
-                  onChange={handleInputChange}
-                />
+                  onChange={handleInputChange}/>
+                
               </div>
             </div>
           </div>
@@ -384,62 +396,56 @@ const EquipmentUtilisationFormPopUp = ({ bookingId }) => {
                     </td>
                     <td>{row.serialno}</td>
                     <td>
-                      <select
-                        className="MaintenanceChecklistPopUp-SurgeryEventsPanels"
-                        value={row.pattype}
+                      <FloatingSelect
+                      label={"Select MRno/IPno"}
+                      value={row.pattype}
                         onChange={(e) => {
                           const updatedRows = [...packageTableRows];
                           updatedRows[index].pattype = e.target.value;
                           setPackageTableRows(updatedRows);
                         }}
-                      >
-                        <option value="">select</option>
-                        <option value="MRNO">MRNO</option>
-                        <option value="IPNO">IPNO</option>
-                      </select>
+                        options={[{value:"MRNO",label:"MRNO"},{value:"IPNO",label:"IPNO"}]}/>
+                      
                     </td>
                     <td>
                       <div className="input-with-icon">
-                        <input
-                          type="text"
+                        <FloatingInput
+                        label={"Select IPNO"}
+                         type="search"
                           value={selectedIPNo[index]?.ipAdmissionId || ''}
                           readOnly
+                          onIconClick={() => setActivePopup("ipAdmission")}
                         />
-                        <SearchIcon
-                          onClick={() => setActivePopup("ipAdmission")}
-                          className="input-icon"
-                          size={18}
-                        />
+                        
 
                       </div>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        value={selectedIPNo[index]?.patientName || ''}
-                        readOnly
-                      />
+                      <FloatingInput
+                      label={"Selected IP NO"}
+                      type="text"
+                      value={selectedIPNo[index]?.patientName || ''}
+                      readOnly/>
+                     
                     </td>
                     <td>
                       <div className="input-with-icon">
-                        <input
-                          type="text"
+                        <FloatingInput
+                        label={"Selected IP Service"}
+                        type="search"
                           value={selectedIpServices[index]?.serviceName || ''}
                           readOnly
-                        />
-                        <SearchIcon
-                          onClick={() => setActivePopup("ipService")}
-                          className="input-icon"
-                          size={18}
-                        />
+                          onIconClick={() => setActivePopup("ipService")}/>
+                       
                       </div>
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        value={selectedIpServices[index]?.serviceCode || ''}
-                        readOnly
-                      />
+                      <FloatingInput
+                      label={"selected Ip Service"}
+                      type="text"
+                      value={selectedIpServices[index]?.serviceCode || ''}
+                      readOnly/>
+                     
                     </td>
                   </tr>
                 ))}

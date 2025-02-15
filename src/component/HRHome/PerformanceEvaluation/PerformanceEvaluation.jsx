@@ -3,11 +3,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import AddPerformancePopup from './AddPerformancePopup';
+import { toast } from 'react-toastify';
 import * as XLSX from 'xlsx'; // Import XLSX
 import './PerformanceEvaluation.css';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import { API_BASE_URL } from '../../api/api';
+import { FloatingInput } from '../../../FloatingInputs';
 
 function PerformanceEvaluation() {
     const [evaluations, setEvaluations] = useState([]);  // Initialize as an empty array
@@ -72,10 +74,10 @@ function PerformanceEvaluation() {
         try {
             const response = await axios.post(`${API_BASE_URL}/performance-evaluation/add`, newEvaluation);
             setEvaluations([...evaluations, response.data]);
-            success('Performance Added Successfully');
+            toast.success('Performance Added Successfully');
         } catch (error) {
             console.error('Error adding evaluation:', error);
-            warning('Failed to Add Performance');
+            toast.error('Failed to Add Performance');
         }
     };
 
@@ -146,13 +148,14 @@ function PerformanceEvaluation() {
 
             <div className="performance-evaluation-search-N-results">
                 <div className="performance-evaluation-search">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="performance-evaluation-searchInput"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+                    <FloatingInput
+                    label={"Search"}
+                    type="text"
+                    placeholder="Search..."
+                    
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}/>
+                    
                 </div>
 
                 <div className="performance-evaluation-results-info">

@@ -10,13 +10,14 @@
   align-items: center;
   margin-bottom: 10px;
   gap: 10px;
+  width: 30%;
 }
 
 .goods-receipt-date-input {
   padding: 5px;
   border: 1px solid #ddd;
   border-radius: 3px;
-  width: 120px;
+  width: 50px;
 }
 
 .goods-receipt-ok-button {

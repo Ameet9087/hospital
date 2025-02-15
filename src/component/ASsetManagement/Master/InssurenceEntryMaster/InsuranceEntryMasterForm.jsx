@@ -4,6 +4,7 @@ import InsuranceEntryMasterFormPopUp from "./InsuranceEntryMasterFormPopUp";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput } from "../../../../FloatingInputs";
 
 const NewInsuranceEntryMasterForm = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -160,12 +161,12 @@ const NewInsuranceEntryMasterForm = () => {
 
       <div className="EquipmentMaster-search-N-result">
         <div className="EquipmentMaster-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+          <FloatingInput
+          label={"search"}
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
         <div className="EquipmentMaster-results-info">

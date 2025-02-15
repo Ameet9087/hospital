@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import "./WriteOff.css";
 import { API_BASE_URL } from '../../api/api';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
+import FloatingInput from '../../../FloatingInputs/FloatingInput';
+import FloatingSelect from '../../../FloatingInputs/FloatingSelect';
+import { toast } from 'react-toastify';
 const WriteOff = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -149,12 +152,12 @@ const WriteOff = () => {
       });
   
       if (response.ok) {
-        alert('Write-Off Request Added Successfully');
+        toast.success('Write-Off Request Added Successfully');
         console.log('Write-Off Goods submitted successfully');
         navigate("/internal/writeOffItemsList")
         // Handle success response
       } else {
-        console.error('Failed to submit Write-Off Goods');
+        toast.error('Failed to submit Write-Off Goods');
         // Handle error response
       }
     } catch (error) {
@@ -211,24 +214,54 @@ const WriteOff = () => {
                   <button className='writeOff-add-row' onClick={handleAddRow}>+</button>
                 </td>
                 <td>
-                  <select className='writeOff-select' value={row.itemName} onChange={(e) => handleItemSelect(index, e.target.value)}>
-                    <option value="">Select Item</option>
-                    {items.map((item, idx) => (
-                      <option key={idx} value={item.itemName}>
-                        {item.itemName}
-                      </option>
-                    ))}
-                  </select>
+                <FloatingSelect
+  label={"Item Name"}
+  value={row.itemName}
+  onChange={(e) => handleItemSelect(index, e.target.value)}
+  options={[
+    { value: "", label: "Select Item" },
+    ...items.map((item) => ({ value: item.itemName, label: item.itemName }))
+  ]}
+/>
+
                 </td>
-                <td><input className='writeOff-input' type="text" value={row.code} readOnly /></td>
-                <td><input className='writeOff-input' type="text" value={row.availableQty} readOnly /></td>
-                <td><input className='writeOff-input' type="text" value={row.writeOffQty} onChange={(e) => handleChange(index, 'writeOffQty', e.target.value)} /> </td>
-                <td><input className='writeOff-input' type="date" value={row.writeOffDate} onChange={(e) => handleChange(index, 'writeOffDate', e.target.value)} /></td>
-                <td><input className='writeOff-input' type="text" value={row.remark} onChange={(e) => handleChange(index, 'remark', e.target.value)} /></td>
-                <td><input className='writeOff-input' type="text" value={row.itemRate} onChange={(e) => handleChange(index, 'itemRate', e.target.value)} /></td>
-                <td><input className='writeOff-input' type="text" value={row.subTotal} readOnly /></td>
-                <td><input className='writeOff-input' type="text" value={row.vat} readOnly /></td>
-                <td><input className='writeOff-input' type="text" value={row.totalAmount} readOnly /></td>
+                <td>
+                <FloatingInput
+                type="text" value={row.code} readOnly 
+                label={"Code"}/></td>
+                <td>
+                  <FloatingInput
+                  label={"Avl Quantity"}
+                  type="text" value={row.availableQty} readOnly/></td>
+                <td>
+                  <FloatingInput
+                  label={"Write off Qty"}
+                  type="text" value={row.writeOffQty}
+                   onChange={(e) => handleChange(index, 'writeOffQty', e.target.value)}/></td>
+                <td>
+                  <FloatingInput
+                  label={"Write off Date"}
+                  type="date" value={row.writeOffDate} 
+                  onChange={(e) => handleChange(index, 'writeOffDate', e.target.value)}/></td>
+                <td>
+                  <FloatingInput
+                  label={"Remark"}
+                  type="text" value={row.remark} 
+                  onChange={(e) => handleChange(index, 'remark', e.target.value)}/></td>
+                <td><FloatingInput
+                label={"Item Rate"}
+                type="text" value={row.itemRate} 
+                onChange={(e) => handleChange(index, 'itemRate', e.target.value)}/></td>
+                <td><FloatingInput
+                label={"Sub Total"}
+                type="text" value={row.subTotal} readOnly/></td>
+                <td><FloatingInput
+                label={"Vat"}
+                type="text" value={row.vat} readOnly/></td>
+               
+                <td><FloatingInput
+                label={"Total Amount"}
+                value={row.totalAmount} readOnly/></td>
               </tr>
               
             ))}

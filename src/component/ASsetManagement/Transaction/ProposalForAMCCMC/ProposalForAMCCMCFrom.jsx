@@ -54,11 +54,36 @@ const ProposalForAMCCMCFrom = () => {
   };
 
   const handlePrint = () => {
-    const printContent = document.querySelector(".table-container");
-    const newWindow = window.open("", "", "width=800,height=600");
-    newWindow.document.write(printContent.outerHTML);
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <h4>Proposal For AMC/CMC Report</h4>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
     newWindow.document.close();
     newWindow.print();
+    newWindow.close();
   };
 
   return (

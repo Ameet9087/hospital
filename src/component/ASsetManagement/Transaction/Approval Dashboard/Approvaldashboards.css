@@ -53,16 +53,8 @@
     font-size: var(--font-size);
 }
 
-.ApprovalDashboards-form-row label {
-    min-width: 140px;
-}
 
-.ApprovalDashboards-form-row input {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 47%;
-}
+
 
 .ApprovalDashboards-form-row select {
     padding: 5px;

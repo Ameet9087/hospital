@@ -1,6 +1,6 @@
- /* Ajhar Tamboli transportMainRoute.jsx 25-09-24 */
+/* Ajhar Tamboli transportMainRoute.jsx 25-09-24 */
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.css';
 import TransportNavBar from './transportNav';
@@ -13,7 +13,7 @@ import Tansferedpatientlist from './Transportsystem/Transferlist/tansferedpatien
 import AmbulanceNavbar from './Ambulance/ambulanceNavbar';
 import AmbulanceList from './Ambulance/AmbulanceList';
 import DispatchForm from './Ambulance/DispatchForm';
-import GPSMap from './Ambulance/GPSMap';
+// import GPSMap from './Ambulance/GPSMap';
 import EmergencyRequest from './Ambulance/EmergencyRequest';
 
 import StaffTransNavbar from './StaffTransport/staffTransNavbar';
@@ -35,20 +35,20 @@ function TransportMain() {
 
   return (
     <>
-        <TransportNavBar/>
-        <div className="transportNavBar-content">
+      <TransportNavBar />
+      <div className="transportNavBar-content">
         <Routes>
-         
-          <Route path="/patienttransport" element={<Transportsystem />} />           
-          <Route path="/patienttransport/patientTransportForm" element={<PatientTransportForm />} />           
-          <Route path="/patienttransport/patienttrasferstatus" element={<Patienttrasferstatus />} />           
+
+          <Route path="/patienttransport" element={<Transportsystem />} />
+          <Route path="/patienttransport/patientTransportForm" element={<PatientTransportForm />} />
+          <Route path="/patienttransport/patienttrasferstatus" element={<Patienttrasferstatus />} />
           <Route path="/patienttransport/tansferedpatientlist" element={<Tansferedpatientlist />} />
 
 
           <Route path="/ambulance" element={<AmbulanceNavbar />} />
           <Route path="/ambulance/ambulance-list" element={<AmbulanceList />} />
           <Route path="/ambulance/dispatch" element={<DispatchForm />} />
-          <Route path="/ambulance/gps-map" element={<GPSMap />} />
+          {/* <Route path="/ambulance/gps-map" element={<GPSMap />} /> */}
           <Route path="/ambulance/emergency-request" element={<EmergencyRequest />} />
 
           <Route path="/stafftransport" element={<StaffTransNavbar />} />
@@ -57,17 +57,17 @@ function TransportMain() {
           <Route path="/stafftransport/route-schedule-management" element={<RouteScheduleManagement />} />
           <Route path="/stafftransport/emergency-late-night-arrangements" element={<EmergencyLateNightArrangements />} />
 
-          <Route path="/emergencytransport" element={<EmergencyTransportTable />} />           
-          <Route path="/emergencytransport/addEmergencyPageTransport" element={<AddEmergencyPageTransport />} />  
-                   
-          <Route path="/transportRequest" element={<TransportRequest />} />           
+          <Route path="/emergencytransport" element={<EmergencyTransportTable />} />
+          <Route path="/emergencytransport/addEmergencyPageTransport" element={<AddEmergencyPageTransport />} />
 
-          
-          <Route path="/vehicleMaintenance" element={<VehicleMaintenance />} />           
- 
-          <Route path='/transport/patienttransport/TransportList' element={<TransportList/>} />
+          <Route path="/transportRequest" element={<TransportRequest />} />
+
+
+          <Route path="/vehicleMaintenance" element={<VehicleMaintenance />} />
+
+          <Route path='/transport/patienttransport/TransportList' element={<TransportList />} />
           <Route path="/transport/patienttransport/dispatchList" element={<DispatchList />} />
-          </Routes>
+        </Routes>
       </div>
     </>
   )

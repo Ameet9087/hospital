@@ -23,30 +23,24 @@
   }
   
   .complaint-entry-system-row {
+    gap: 5px;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
   }
-  
-  .complaint-entry-system-row label {
-    width: 200px;
-    font-size: var(--font-size);
-    color: black;
+  .complaint-entry-system-row-select
+  {
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
   }
-  
-  .complaint-entry-system-input,
-  .complaint-entry-system-select {
-    width: 390px;
-    padding: 5px;
-    font-size: var(--font-size);
-    border: 1px solid gray;
-    border-radius: 5px;
+  .complaintSpace
+  {
+    width: 100%;
+    padding: 10px 0px;
   }
-  
-  .complaint-entry-system-file {
-    width: 330px;
-    margin-right: 10px;
-  }
+
   
   .complaint-entry-system-upload-btn {
     background-color: var(--button-color);
@@ -63,14 +57,12 @@
   }
   
   .complaint-entry-system-radio-group {
+    gap: 10px;
     display: flex;
     align-items: center;
   }
   
-  .complaint-entry-system-radio-group label {
-    margin-right: 10px;
-    margin-left: 20px;
-  }
+
   
   .requiredtext{
     color: red;
@@ -89,33 +81,6 @@
     width: 400px; 
   }
   
-  .complaint-entry-system-search-input {
-    width: 400px;
-    padding: 5px 10px 5px 10px; 
-    font-size: var(--font-size);
-    border: 1px solid gray;
-    border-radius: 5px;
-    outline: none;
-    box-sizing: border-box;
-  }
-  
-  .complaint-entry-system-search-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: black;
-    font-size: var(--heading-font);
-    cursor: pointer;
-    outline: none;
-  }
-
-
-  .complaintSpace {
-    padding-top: 5px;
-  }
   
 
 

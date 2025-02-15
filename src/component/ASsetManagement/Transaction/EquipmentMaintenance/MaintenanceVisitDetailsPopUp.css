@@ -42,15 +42,11 @@
     align-items: center;
     font-size: var(--font-size);
     width: 400px;
+    padding: 5px;
     /* border: 1px solid red; */
   }
   
-  .MaintenanceVisitDetailsPopUp-form-group label {
-    display: block;
-    margin-bottom: 4px;
-    /* font-weight: bold; */
-    width: 75%;
-  }
+ 
   .MaintenanceVisitDetailsPopUp-form-group-checkbox{
     display: flex;
     text-align: center;
@@ -58,15 +54,7 @@
     white-space: nowrap;
   }
   
-  .MaintenanceVisitDetailsPopUp-form-group input,
-  .MaintenanceVisitDetailsPopUp-form-group select,
-  .MaintenanceVisitDetailsPopUp-form-group textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+  
 .MaintenanceVisitDetailsPopUp-form-group-options {
   display: flex;
   align-items: center;

@@ -5,85 +5,9 @@ import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns
 import PopupTable from "../../../Admission/PopupTable";
 import { API_BASE_URL } from "../../../api/api";
 import axios from "axios";
+import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 
-const FloatingInput = ({ label, type = "text", value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  const handleChange = (e) => {
-    setHasValue(e.target.value.length > 0);
-    if (props.onChange) props.onChange(e);
-  };
-
-  return (
-    <div
-      className={`LinenStockUpAndConversion-form-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <input
-        type={type}
-        className="LinenStockUpAndConversion-form-floating-input"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value.length > 0);
-        }}
-        onChange={handleChange}
-        {...props}
-      />
-      <label className="LinenStockUpAndConversion-form-floating-label">
-        {label}
-      </label>
-    </div>
-  );
-};
-
-// FloatingSelect component remains exactly the same
-const FloatingSelect = ({ label, options = [], value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  return (
-    <div
-      className={`LinenStockUpAndConversion-form-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <select
-        className="LinenStockUpAndConversion-form-floating-select"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value !== "");
-        }}
-        onChange={(e) => {
-          setHasValue(e.target.value !== "");
-          if (props.onChange) props.onChange(e);
-        }}
-        {...props}
-      >
-        <option value="">{ }</option>
-        {options.map((option, index) => (
-          <option key={index} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <label className="LinenStockUpAndConversion-form-floating-label">
-        {label}
-      </label>
-    </div>
-  );
-};
 function LinenStockUpAndConversion() {
   const [rows, setRows] = useState([
     { linenTypeId: "", stock: "" }, // Each row tracks its own data
@@ -176,10 +100,10 @@ function LinenStockUpAndConversion() {
       );
       console.log("Response from server:", response.data);
 
-      alert("Stock added successfully!");
+      toast.success("Stock added successfully!");
     } catch (error) {
       console.error("Error posting data:", error.response || error.message);
-      alert("Failed to post data. Please try again.");
+      toast.error("Failed to post data. Please try again.");
     }
   };
 

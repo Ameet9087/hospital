@@ -6,81 +6,10 @@ import axios from 'axios';
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
 import PopupTable from "../../../Admission/PopupTable";
+import { FloatingInput } from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 
-const FloatingInput = ({ label, type = "text", value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
 
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  const handleChange = (e) => {
-    setHasValue(e.target.value.length > 0);
-    if (props.onChange) props.onChange(e);
-  };
-
-  return (
-    <div
-      className={`reparingAndSewing-form-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <input
-        type={type}
-        className="reparingAndSewing-form-floating-input"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value.length > 0);
-        }}
-        onChange={handleChange}
-        {...props}
-      />
-      <label className="reparingAndSewing-form-floating-label">{label}</label>
-    </div>
-  );
-};
-
-// FloatingSelect component remains exactly the same
-const FloatingSelect = ({ label, options = [], value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  return (
-    <div
-      className={`reparingAndSewing-form-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <select
-        className="reparingAndSewing-form-floating-select"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value !== "");
-        }}
-        onChange={(e) => {
-          setHasValue(e.target.value !== "");
-          if (props.onChange) props.onChange(e);
-        }}
-        {...props}
-      >
-        <option value="">{ }</option>
-        {options.map((option, index) => (
-          <option key={index} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <label className="reparingAndSewing-form-floating-label">{label}</label>
-    </div>
-  );
-};
 const ReparingAndSewing = () => {
   const [formData, setFormData] = useState({
     refNo: "",
@@ -184,10 +113,12 @@ const ReparingAndSewing = () => {
     axios.post(`${API_BASE_URL}/linenRepairing`, payload)
       .then(response => {
         console.log("Data submitted successfully:", response.data);
+        toast.success("Data submitted successfully")
         handleClear();  // Clear the form after submission
       })
       .catch(error => {
         console.error("Error submitting form:", error);
+        toast.error("Error submitting form")
       });
   };
   const handleSelect = (data) => {
@@ -324,30 +255,35 @@ const ReparingAndSewing = () => {
                         </option>
                       ))}
                     </select> */}
-                    <input name="" value={formData.linenType} />
-                    <CiSearch onClick={() => setActivePopup("linenType")} />
+                    <FloatingInput
+                    type="search"
+                    value={formData.linenType}
+                    onIconClick={() => setActivePopup("linenType")}
+                    />
+                   
                   </div>
                 </td>
                 <td>
-                  <input
+                  <FloatingInput
                     type="text"
                     value={row.inUse}
                     onChange={(e) => handleInStockChange(e, index)}
-                    className="line-reparing-sew-in"
                   />
+                  
                 </td>
                 <td>
-                  <input
-                    type="number"
-                    value={row.quantity}
-                    onChange={(e) => {
-                      const updatedRows = [...packageTableRows];
-                      updatedRows[index].quantity = e.target.value;
-                      setPackageTableRows(updatedRows);
-                      // className="line-reparing-sew-in"
+                  <FloatingInput
+                  type="number"
+                  value={row.quantity}
+                  onChange={(e) => {
+                    const updatedRows = [...packageTableRows];
+                    updatedRows[index].quantity = e.target.value;
+                    setPackageTableRows(updatedRows);
+                    // className="line-reparing-sew-in"
 
-                    }}
+                  }}
                   />
+                  
                 </td>
               </tr>
             ))}

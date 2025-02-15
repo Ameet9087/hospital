@@ -63,6 +63,38 @@ const CondemnationAndDisposalRequest = () => {
     XLSX.utils.book_append_sheet(workbook, worksheet, "Condemnation Requests");
     XLSX.writeFile(workbook, "Condemnation_Requests.xlsx");
   };
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
+
 
   return (
     <div className="CondemnationAndDisposalRequest-container">
@@ -97,7 +129,7 @@ const CondemnationAndDisposalRequest = () => {
           </button>
           <button
             className="CondemnationAndDisposalRequest-print-button"
-            onClick={() => window.print()}
+            onClick={handlePrint}
           >
             <i className="fa-solid fa-print"></i> Print
           </button>

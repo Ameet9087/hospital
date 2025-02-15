@@ -102,14 +102,38 @@ const EquipmentGatePassIn = () => {
   };
 
   // Print the table
-  const printTable = () => {
-    const printWindow = window.open("", "", "width=800,height=600");
-    printWindow.document.write("<html><head><title>Equipment Gate Pass In</title></head><body>");
-    printWindow.document.write(tableRef.current.outerHTML);
-    printWindow.document.write("</body></html>");
-    printWindow.document.close();
-    printWindow.print();
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
+
 
   const closePopup = () => {
     setShowPopup(false);
@@ -140,7 +164,7 @@ const EquipmentGatePassIn = () => {
           <button className="EquipmentGatePassIn-print-button" onClick={exportToCSV}>
             <i className="fa-solid fa-file-excel"></i> Export
           </button>
-          <button className="EquipmentGatePassIn-print-button" onClick={printTable}>
+          <button className="EquipmentGatePassIn-print-button" onClick={handlePrint}>
             <i className="fa-solid fa-print"></i> Print
           </button>
         </div>
@@ -199,7 +223,7 @@ const EquipmentGatePassIn = () => {
                 <td>{data.equipmentMasterDTO?.vendor?.contactPerson}</td>
                 <td>{data.equipmentMasterDTO?.vendor?.contactAddress}</td>
                 <td>{data.approvalByDTO?.doctorName}</td>
-
+              
               </tr>
             ))}
           </tbody>

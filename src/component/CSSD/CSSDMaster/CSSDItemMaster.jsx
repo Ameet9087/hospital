@@ -7,6 +7,10 @@ import "./CSSDItemMaster.css";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { API_BASE_URL } from "../../api/api";
 import PopupTable from "../../Admission/PopupTable";
+import FloatingInput from "../../../FloatingInputs/FloatingInput";
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import FloatingTextarea from "../../../FloatingInputs/FloatingTextarea";
+import { toast } from "react-toastify";
 
 const CSSDItemMaster = () => {
   const [status, setStatus] = useState("Active");
@@ -80,7 +84,7 @@ const CSSDItemMaster = () => {
     if (window.confirm("Are you sure you want to delete this item?")) {
       try {
         await axios.delete(`${API_BASE_URL}/itemmaster/${itemId}`);
-        alert("Item deleted successfully!");
+        toast.success("Item deleted successfully!");
         fetchItems(); // Refresh the items list
       } catch (error) {
         console.error("Error deleting item:", error);
@@ -111,12 +115,12 @@ const CSSDItemMaster = () => {
     axios
       .post(`${API_BASE_URL}/itemmaster`, payload)
       .then((response) => {
-        console.log("Item saved successfully:", response.data);
-        alert("Item saved successfully!");
+        toast.success("Item saved successfully:", response.data);
+        toast.success("Item saved successfully!");
       })
       .catch((error) => {
         console.error("Error saving item:", error);
-        alert("Error saving item.");
+        toast.error("Error saving item.");
       });
   };
 
@@ -149,32 +153,33 @@ const CSSDItemMaster = () => {
       <div className="CSSDItemMaster-content">
         <div className="CSSDItemMaster-formContainer">
           <div className="CSSDItemMaster-formGroup">
-            <label>Item Name:</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Item Name"}
+            type="text"
               placeholder="Enter item name"
               value={itemName}
-              onChange={(e) => setItemName(e.target.value)}
-            />
+              onChange={(e) => setItemName(e.target.value)}/>
+           
           </div>
           <div className="CSSDItemMaster-formGroup">
-            <label>Item Quantity:</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Item Quantity"}
+            type="number"
               placeholder="Enter Quantity"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
-            />
+              min="0"/>
+           
           </div>
 
           <div className="CSSDItemMaster-formGroup">
-            <label>Description:</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Description"}
+            type="text"
               placeholder="Enter description"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
+              onChange={(e) => setDescription(e.target.value)}/>
+            
           </div>
           <div className="CSSDItemMaster-formGroup">
             <label></label>
@@ -188,28 +193,20 @@ const CSSDItemMaster = () => {
             </label>
           </div>
           <div className="CSSDItemMaster-formGroup">
-            <label>Sterile Type:</label>
-            <select
-              value={sterileType}
+            <FloatingSelect
+            label={"Sterile Type"}
+            value={sterileType}
               onChange={(e) => setSterileType(e.target.value)}
-              className="CSSDItemMaster-select"
-            >
-              <option value="Dry Heat">Dry Heat</option>
-              <option value="Steam High Pressure -Autoclave">
-                Steam High Pressure -Autoclave
-              </option>
-              <option value="Ethylene Oxide">Ethylene Oxide</option>
-              <option value="Chemical">Chemical</option>
-              <option value="Radiation">Radiation</option>
-              <option value="Infra Red Radiation">Infra Red Radiation</option>
-              <option value="Ultra Violet Radiation">
-                Ultra Violet Radiation
-              </option>
-              <option value="Ionizing/Gamma Radiation">
-                Ionizing/Gamma Radiation
-              </option>
-              <option value="ETO">ETO</option>
-            </select>
+              options={[ { value: "Dry Heat", label: "Dry Heat" },
+                { value: "Steam High Pressure -Autoclave", label: "Steam High Pressure -Autoclave" },
+                { value: "Ethylene Oxide", label: "Ethylene Oxide" },
+                { value: "Chemical", label: "Chemical" },
+                { value: "Radiation", label: "Radiation" },
+                { value: "Infra Red Radiation", label: "Infra Red Radiation" },
+                { value: "Ultra Violet Radiation", label: "Ultra Violet Radiation" },
+                { value: "Ionizing/Gamma Radiation", label: "Ionizing/Gamma Radiation" },
+                { value: "ETO", label: "ETO" }]}/>
+           
           </div>
           {/* <div className="CSSDItemMaster-formGroup">
             <label>Map Item From Inventory:</label>

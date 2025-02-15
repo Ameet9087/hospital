@@ -59,30 +59,10 @@
     align-items: center;
   }
   
-  .addperformance__formGroup label {
-    width: 30%;
-    min-width: 150px; /* Adjust as necessary */
-    margin-bottom: 5px;
-    font-size: 14px;
-    /* font-weight: bold; */
-  }
   
-  .addperformance__formGroup input,
-  .addperformance__formGroup select {
-    width: 70%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
   
-  .addperformance__ageInput {
-    display: flex;
-    gap: 10px;
-  }
   
-  .addperformance__ageInput input {
-    width: 50px;
-  }
+
   
   .addperformance__formActions {
     grid-column: span 2;
@@ -90,6 +70,7 @@
     justify-content: flex-end;
     gap: 10px;
     margin-top: 10px;
+    padding: 10px;
   }
   
   .addperformance__formActions button {
@@ -100,7 +81,8 @@
   }
   
   .addperformance__formActions button:first-child {
-    background-color: #ccc;
+    background-color: var(--button-color);
+    color: white;
   }
   
   .addperformance__formActions button:last-child {

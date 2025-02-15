@@ -1,7 +1,9 @@
 import React, { useRef, useState } from 'react';
 import "./GoodsReceiptList.css"
 import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
-
+import FloatingInput from '../../../../FloatingInputs/FloatingInput';
+import FloatingSelect from '../../../../FloatingInputs/FloatingSelect';
+import { toast } from 'react-toastify';
 const GoodsReceiptList = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -17,35 +19,28 @@ const GoodsReceiptList = () => {
   return (
     <div className="goods-receipt-list">
       <div className="goods-receipt-filters">
-        <label>
-          From:
-          <input
-            type="date"
+        <FloatingInput
+        label={"From"}
+         type="date"
             value={dateFrom}
-            onChange={handleDateFromChange}
-            className="goods-receipt-date-input"
-          />
-        </label>
-        <label>
-          To:
-          <input
-            type="date"
+            onChange={handleDateFromChange}/>
+       <FloatingInput
+       label={"To"}
+       type="date"
             value={dateTo}
-            onChange={handleDateToChange}
-            className="goods-receipt-date-input"
-          />
-        </label>
+            onChange={handleDateToChange}/>
+        
         {/* <button className="goods-receipt-ok-button">OK</button> */}
       </div>
       <div className="goods-receipt-search-export">
         <div>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Search"}
+          type="text"
             placeholder="Search"
             value={searchQuery}
-            onChange={handleSearchChange}
-            aria-label="Search"
-          />
+            onChange={handleSearchChange}/>
+          
 
         </div>
 

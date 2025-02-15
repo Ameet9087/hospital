@@ -103,3 +103,8 @@
   background-color: var(--button-hover-background-color);
 }
 
+.equi-transform-handover-form-header{
+  display: flex;
+  justify-content: space-between;
+}
+

@@ -37,24 +37,12 @@
   min-height: 32px;
 }
 
-.CondemnationAndDisposalRequestPopUp-label {
-  width: 130px;
-  font-size: var(--font-size);
-  color: black;
-}
+
 
 .CondemnationAndDisposalRequestPopUp-separator {
   color: #718096;
 }
 
-.CondemnationAndDisposalRequestPopUp-input-field {
-  flex: 1;
-  padding: 5px 10px;
-  border: 1px solid gray;
-  border-radius: 5px;
-  font-size: var(--font-size);
-  transition: border-color 0.2s;
-}
 
 .CondemnationAndDisposalRequestPopUp-input-field:focus {
   outline: none;
@@ -62,12 +50,6 @@
   box-shadow: 0 0 0 2px rgba(22, 160, 133, 0.1);
 }
 
-.CondemnationAndDisposalRequestPopUp-date-input {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex: 1;
-}
 
 .CondemnationAndDisposalRequestPopUp-calendar-icon {
   width: 20px;
@@ -235,27 +217,9 @@
 }
 
 /* =========================================================================== */
-.CondemnationAndDisposalRequestPopUp-input-field {
-  width: 100%; /* Adjust width as needed */
-  font-size: var(--font-size); /* Adjust font size as needed */
-  border: 1px solid gray;
-  border-radius: 5px;
-  background-color: white;
-  color: black;
-  box-sizing: border-box;
-  transition: border-color 0.3s, box-shadow 0.3s;
-}
 
-.CondemnationAndDisposalRequestPopUp-input-field:focus {
-  outline: none;
-  border-color: #008cba; /* Highlight color on focus */
-  box-shadow: 0 0 3px rgba(0, 140, 186, 0.5); /* Optional: glowing effect */
-}
 
-.CondemnationAndDisposalRequestPopUp-input-field option {
-  color: black;
-  background-color: white;
-}
+
 
 
 .CondemnationAndDisposalRequestPopUp-status {
@@ -263,22 +227,12 @@
   align-items: center;
 }
 
-.CondemnationAndDisposalRequestPopUp-label {
-  margin-right: 10px; /* Space between the label and the radio buttons */
-}
 
 .CondemnationAndDisposalRequestPopUp-radio-buttons {
   display: flex;
   align-items: center;
 }
 
-.CondemnationAndDisposalRequestPopUp-radio-buttons input {
-  margin-right: 5px; /* Space between the radio button and its label */
-}
-
-.CondemnationAndDisposalRequestPopUp-radio-buttons label {
-  margin-right: 20px; /* Space between the two labels */
-}
 
 
 .CondemnationAndDisposalRequestPopUp-required{
@@ -291,10 +245,7 @@
   align-items: flex-start;
 }
 
-.CondemnationAndDisposalRequestPopUp-label {
-  font-size: var(--font-size);
-  min-width: 160px;
-}
+
 
 
 .CondemnationAndDisposalRequestPopUp-input-container {
@@ -303,12 +254,7 @@
   width: 100%;
 }
 
-.CondemnationAndDisposalRequestPopUp-input-field {
-  padding: 5px;
-  font-size: var(--font-size);
-  border: 1px solid gray;
-  border-radius: 5px;
-}
+
 
 .CondemnationAndDisposalRequestPopUp-checkbox-group {
   display: flex;
@@ -316,24 +262,12 @@
   gap: 8px;
 }
 
-.CondemnationAndDisposalRequestPopUp-checkbox-label {
-  font-size: var(--font-size);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 
 .CondemnationAndDisposalRequestPopUp-checkbox {
   width: 16px;
   height: 16px;
   cursor: pointer;
 }
-
-
-
-
-
-/* Responsive styles */
 @media (max-width: 1024px) {
   .CondemnationAndDisposalRequestPopUp-form-container {
       grid-template-columns: 1fr;
@@ -364,9 +298,7 @@
       width: 100%;
   }
   
-  .CondemnationAndDisposalRequestPopUp-input-field {
-      width: 100%;
-  }
+ 
   
   .CondemnationAndDisposalRequestPopUp-file-upload {
       flex-direction: column;

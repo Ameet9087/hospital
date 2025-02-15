@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./EquipmentRecievFormPopUp.css";
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
+import { lazy } from "react";
 
 const EquipmentReceiveForm = ({ onSubmit, onClose }) => {
   const [equipmentDetails, setEquipmentDetails] = useState({
@@ -165,14 +168,14 @@ const EquipmentReceiveForm = ({ onSubmit, onClose }) => {
   
       if (response.ok) {
         const result = await response.json();
-        console.log("Successfully posted:", result);
+        toast.success("Successfully posted:", result);
         onSubmit(result); // Pass the new entry to the parent component
       } else {
         const errorText = await response.text();
-        console.error("Failed to submit:", errorText);
+        toast.error("Failed to submit:", errorText);
       }
     } catch (error) {
-      console.error("Error submitting data:", error);
+      toast.error("Error submitting data:", error);
     }
   };
   
@@ -186,174 +189,186 @@ const EquipmentReceiveForm = ({ onSubmit, onClose }) => {
       <div className="equipment-receive-form-section">
         <div className="equipment-receive-form-grid">
           <div>
-            <label>Handover No.</label>
-            <select value={selectedHandover?.transferId} onChange={handleHandoverNoChange}>
-              <option value="" disabled>
-                Select Handover
-              </option>
-              {handoverOptions.map((handOver) => (
-                <option key={handOver.transferId} value={handOver.transferId}>
-                  {handOver.transferId}
-                </option>
-              ))}
-            </select>
+          <FloatingSelect
+  label={"Handover No"}
+  value={selectedHandover?.transferId}
+  onChange={handleHandoverNoChange}
+  options={[
+    { value: "", label: "Select Handover", disabled: true },
+    ...handoverOptions.map((handOver) => ({
+      value: handOver.transferId,
+      label: handOver.transferId
+    }))
+  ]}
+/>
+
           </div>
 
           {/* Equipment Details */}
           <div>
-            <label>Equipment Name</label>
-            <input type="text" value={selectedHandover?.equipmentMasterDTO?.equipmentName} readOnly />
+            <FloatingInput
+            label={"Equipment Name"}
+            type="text" value={selectedHandover?.equipmentMasterDTO?.equipmentName} readOnly/>
+           
           </div>
           <div>
-            <label>Asset No.</label>
-            <input type="text" value={selectedHandover?.equipmentMasterDTO?.assetNo} readOnly />
+            <FloatingInput
+            label={"Asset No."}
+            type="text" value={selectedHandover?.equipmentMasterDTO?.assetNo} readOnly />
+           
           </div>
           <div>
-            <label>Equipment No.</label>
-            <input type="text" value={selectedHandover?.equipmentMasterDTO?.equipmentNo} readOnly />
+            <FloatingInput
+            label={"Equipment No"}
+            type="text" value={selectedHandover?.equipmentMasterDTO?.equipmentNo} readOnly/>
+           
           </div>
           <div>
-            <label>Serial No.</label>
-            <input type="text" value={selectedHandover?.equipmentMasterDTO?.serialNo} readOnly />
+            <FloatingInput
+            label={"Serial No"}
+            type="text" value={selectedHandover?.equipmentMasterDTO?.serialNo} readOnly/>
+            
           </div>
           <div>
-            <label>Location</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Location"}
+            type="text"
               value={selectedHandover?.equipmentMasterDTO?.assetLocationMaster?.subLocation || ""}
-              readOnly
-            />
+              readOnly/>
           </div>
           <div>
-            <label>Department</label>
-            <input
-              type="text"
-              value={selectedHandover?.equipmentMasterDTO?.department?.departmentName}
-              readOnly
-            />
+            <FloatingInput
+            label={"Department"}
+            type="text"
+            value={selectedHandover?.equipmentMasterDTO?.department?.departmentName}
+            readOnly/>
           </div>
           <div>
-            <label>Handed By</label>
-            <input
-              type="text"
-              value={selectedHandover?.handedByDTO?.firstName || ""}
-              readOnly
-            />
+            <FloatingInput
+            label={"Handed By"}
+            type="text"
+            value={selectedHandover?.handedByDTO?.firstName || ""}
+            readOnly
+          />
+           
+             
           </div>
           <div>
-          <label>Person in Charge:</label>
-        <input
-          type="text"
+            <FloatingInput
+            label={"Person in Charge"}
+            type="text"
           name="personInCharge"
           value={formData.personInCharge}
-          onChange={handleChange}
-          placeholder="Enter name of person in charge"
-        />
+          onChange={handleChange}/>
+          
           </div>
 
           {/* Date and Time */}
           <div>
-            <label>Date Of Receive / Takeover</label>
-            <input
-              type="date"
+            <FloatingInput
+            label={"Date Of Receive / Takeover"}
+            type="date"
               value={equipmentDetails.dateOfReceive}
               onChange={(e) =>
                 setEquipmentDetails({
                   ...equipmentDetails,
                   dateOfReceive: e.target.value,
                 })
-              }
-            />
+              }/>
+            
           </div>
           <div>
-            <label>Time Of Receive / Takeover</label>
-            <input
-              type="time"
+            <FloatingInput
+            label={"Time Of Receive / Takeover"}
+            type="time"
               value={equipmentDetails.timeOfReceive}
               onChange={(e) =>
                 setEquipmentDetails({
                   ...equipmentDetails,
                   timeOfReceive: e.target.value,
                 })
-              }
-            />
+              }/>
+
           </div>
           <div>
-          <label>manual Receive:</label>
-        <input
-          type="text"
+            <FloatingInput
+            label={"manual Receive"}
+            type="text"
           name="manualReceive"
           value={formData.manualReceive}
-          onChange={handleChange}
+          onChange={handleChange}/>
           
-        />
           </div>
 
           {/* Remarks */}
           <div>
-            <label>Remarks</label>
-            <textarea
-              value={formData.remarks}
+            <FloatingTextarea
+            label={"Remarks"}
+            value={formData.remarks}
               onChange={handleChange}
-              name="remarks"
-            />
+              name="remarks"/>
+            
           </div>
 
           {/* Employee Type */}
           <div>
-            <label>Employee Type:</label>
-            <select
-              name="employeeType"
+            <FloatingSelect
+            label={"Employee Type"}
+            name="employeeType"
               value={employeeType}
               onChange={handleEmployeeTypeChange}
-            >
-              <option value="">Select Employee Type</option>
-              <option value="Employee">Employee</option>
-              <option value="Non-Employee">Non-Employee</option>
-            </select>
+              options={[{
+                value:"Employee",label:"Employee"
+              },{value:"Non-Employee",label:"Non-Employee"}]}/>
+           
+           
           </div>
 
           {/* Handed By Field */}
           <div>
-            <label>Handed By:</label>
-            {employeeType === "Employee" ? (
-              <select
-                name="handedBy"
-                value={selectedEmployee}
-                onChange={handleEmployeeChange}
-              >
-                <option value="">Select Employee</option>
-                {employees.map((emp) => (
-                  <option key={emp.employeeId} value={emp.employeeId}>
-                    {emp.firstName} 
-                  </option>
-                ))}
-              </select>
-            ) : (
-              <input
-                type="text"
-                name="handedBy"
-                value={formData.handedBy}
-                onChange={handleHandedByChange}
-              />
-            )}
+          {employeeType === "Employee" ? (
+  <FloatingSelect
+    label={"Handed By"}
+    name="handedBy"
+    value={selectedEmployee}
+    onChange={handleEmployeeChange}
+    options={[
+      { value: "", label: "Select Employee" },
+      ...employees.map((emp) => ({
+        value: emp.employeeId,
+        label: emp.firstName
+      }))
+    ]}
+  />
+) : (
+  <FloatingInput
+  type="text"
+    name="handedBy"
+    value={formData.handedBy}
+    onChange={handleHandedByChange}/>
+  
+)}
+
+            
           </div>
 
           {/* Location Received */}
           <div>
-            <label>Location Received:</label>
-            <select
-              name="locationReceived"
-              value={formData.locationReceived}
-              onChange={handleChange}
-            >
-              <option value="">Select Location</option>
-              {locations.map((location) => (
-                <option key={location.locId} value={location.locId}>
-                  {location.subLocation}
-                </option>
-              ))}
-            </select>
+          <FloatingSelect
+  label={"Location Received"}
+  name="locationReceived"
+  value={formData.locationReceived}
+  onChange={handleChange}
+  options={[
+    { value: "", label: "Select Location" },
+    ...locations.map((location) => ({
+      value: location.locId,
+      label: location.subLocation
+    }))
+  ]}
+/>
+
+          
           </div>
         </div>
 

@@ -20,25 +20,6 @@
   margin-bottom: 10px;
 }
 
-.kit-master-form-group label {
-  width: 150px;
-  font-weight: bold;
-  color: #555;
-}
-
-.kit-master-form-group input {
-  flex: 1;
-  padding: var(--input-box-padding);
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: var(--font-size);
-}
-
-.kit-master-status-group label {
-  margin-left: 10px;
-  font-size: var(--font-size);
-}
-
 .kit-master-item-details {
   margin-top: 20px;
 }
@@ -67,13 +48,13 @@
   color: white;
 }
 
-.kit-master-item-details input {
+/* .kit-master-item-details input {
   width: 90%;
   padding: var(--input-box-padding);
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: var(--font-size);
-}
+} */
 
 .kit-master-item-details button {
   background-color: var(--button-bg-color);

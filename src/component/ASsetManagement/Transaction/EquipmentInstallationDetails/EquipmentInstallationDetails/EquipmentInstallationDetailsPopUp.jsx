@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./EquipmentInstallationDetailsPopUp.css";
 import axios from "axios";
 import { API_BASE_URL } from "../../../../api/api";
+import { FloatingInput,FloatingSelect} from "../../../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 const EquipmentInstallationDetailsPopUp = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -141,12 +143,12 @@ const EquipmentInstallationDetailsPopUp = ({ onClose }) => {
 
       const response = await axios.post(`${API_BASE_URL}/installations`, installationData);
       if (response.status === 200) {
-        alert("Installation details saved successfully!");
+        toast.success("Installation details saved successfully!");
         onClose();
           }
     } catch (error) {
-      console.error("Error saving installation details", error.response || error.message);
-      alert(`Error saving installation details: ${error.response?.data?.message || error.message}`);
+      toast.error("Error saving installation details", error.response || error.message);
+      toast.error(`Error saving installation details: ${error.response?.data?.message || error.message}`);
     }
   };
 
@@ -159,137 +161,158 @@ const EquipmentInstallationDetailsPopUp = ({ onClose }) => {
       <div className="EquipmentInstallationDetailsPopUp-form">
         <div className="EquipmentInstallationDetailsPopUp-form-panel">
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Equipment Name*:</label>
-            <select
-              name="equipmentMasterId"
-              value={formData.equipmentDTO.equipmentMasterId}
-              onChange={handleChange}
-            >
-              <option value="">Select Equipment</option>
-              {equipmentList.map((equipment) => (
-                <option key={equipment.equipmentMasterId} value={equipment.equipmentMasterId}>
-                  {equipment.equipmentName}
-                </option>
-              ))}
-            </select>
+          <FloatingSelect
+  label={"Equipment Name *"}
+  name="equipmentMasterId"
+  value={formData.equipmentDTO.equipmentMasterId}
+  onChange={handleChange}
+  options={[
+    { value: "", label: "Select Equipment" },
+    ...equipmentList.map((equipment) => ({
+      value: equipment.equipmentMasterId,
+      label: equipment.equipmentName
+    }))
+  ]}
+/>
+
           </div>
 
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Asset No:</label>
-            <input type="text" name="assetNo" value={formData.equipmentDTO.assetNo} readOnly />
+            <FloatingInput
+            label={"Asset No"}
+            type="text" name="assetNo" value={formData.equipmentDTO.assetNo} readOnly />
+           
           </div>
 
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Serial No:</label>
-            <input type="text" name="serialNo" value={formData.equipmentDTO.serialNo} readOnly />
+            <FloatingInput
+            label={"Serial No"}
+            type="text" name="serialNo" value={formData.equipmentDTO.serialNo} readOnly />
+           
           </div>
 
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Location Path:</label>
-            <input type="text" name="locationPath" value={formData.equipmentDTO.locationPath} readOnly />
+            <FloatingInput
+            label={"Location Path"}
+            type="text" name="locationPath" value={formData.equipmentDTO.locationPath} readOnly/>
+            
           </div>
 
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Software Version No:</label>
-            <input type="text" name="softwareVersion" value={formData.equipmentDTO.softwareVersion} readOnly />
+            <FloatingInput
+            label={"Software Version No "}
+            type="text" name="softwareVersion" value={formData.equipmentDTO.softwareVersion} readOnly/>
+          
           </div>
 
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Sub Department:</label>
-            <select name="departmentId" value={formData.departmentDTO.departmentId} onChange={handleChange}>
-              <option value="">Select Sub Department</option>
-              {departmentList.map((department) => (
-                <option key={department.departmentId} value={department.departmentId}>
-                  {department.departmentName}
-                </option>
-              ))}
-            </select>
+          <FloatingSelect
+  label={"Sub Department"}
+  name="departmentId"
+  value={formData.departmentDTO.departmentId}
+  onChange={handleChange}
+  options={[
+    { value: "", label: "Select Sub Department" },
+    ...departmentList.map((department) => ({
+      value: department.departmentId,
+      label: department.departmentName
+    }))
+  ]}
+/>
+
           </div>
         </div>
 
         <div className="EquipmentInstallationDetailsPopUp-form-panel">
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Installation Date:</label>
-            <input
-              type="date"
+            <FloatingInput
+            label={"Installation Date"}
+            type="date"
               name="installationDate"
               value={formData.installationDate}
-              onChange={handleChange}
-            />
+              onChange={handleChange}/>
           </div>
 
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Installation Time*:</label>
-            <input
-              type="time"
-              name="installationTime"
-              value={formData.installationTime}
-              onChange={handleChange}
-            />
+            <FloatingInput
+            label={"Installation Time *"}
+            type="time"
+            name="installationTime"
+            value={formData.installationTime}
+            onChange={handleChange}/>
+          
           </div>
 
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Installed By:</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Installed By"}
+            type="text"
               name="installedBy"
               value={formData.installedBy}
-              onChange={handleChange}
-            />
+              onChange={handleChange}/>
+           
           </div>
 
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Technical Details:</label>
-            <textarea
-              name="technicalDetails"
-              value={formData.technicalDetails}
-              onChange={handleChange}
-            />
+            <FloatingInput
+            label={"Technical Details"}
+            name="technicalDetails"
+            value={formData.technicalDetails}
+            onChange={handleChange}/>
+          
+             
+         
           </div>
 
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Remarks:</label>
-            <textarea name="remark" value={formData.remark} onChange={handleChange} />
+            <FloatingInput
+            label={"Remarks"}
+            name="remark" value={formData.remark} onChange={handleChange}/>
+           
           </div>
         </div>
 
         <div className="EquipmentInstallationDetailsPopUp-form-panel">
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Contract Type:</label>
-            <select name="contractType" value={formData.contractType} onChange={handleChange}>
-              <option value="Annual Maintenance Contract">AMC</option>
-              <option value="Oncall">Oncall</option>
-              <option value="CMS">CMS</option>
-            </select>
+            <FloatingSelect
+            label={"Contract Type"}
+            name="contractType" value={formData.contractType} onChange={handleChange}
+            options={[
+              {value:"Annual Maintenance Contract",label:"AMC"},
+              {value:"Oncall",label:"Oncall"},
+              {value:"CMS",label:"CMS"}
+            ]}/>
+           
           </div>
 
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Warranty From:</label>
-            <input
-              type="date"
+            <FloatingInput
+            label={"Warranty From"}
+            type="date"
               name="warrantyFrom"
               value={formData.equipmentDTO.warrantyFrom}
-              readOnly
-            />
+              readOnly/>
+            
           </div>
 
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Warranty To:</label>
-            <input
-              type="date"
-              name="warrantyToDate"
-              value={formData.equipmentDTO.warrantyToDate}
-              readOnly
-            />
+            <FloatingInput
+            label={"Warranty To"}
+            type="date"
+            name="warrantyToDate"
+            value={formData.equipmentDTO.warrantyToDate}
+            readOnly/>
+           
           </div>
 
           <div className="EquipmentInstallationDetailsPopUp-form-group">
-            <label>Warranty Details:</label>
-            <textarea
-              name="warrantyDetails"
+            <FloatingInput
+            label={"Warranty Details"}
+            name="warrantyDetails"
               value={formData.equipmentDTO.warrantyDetails}
-              readOnly
-            />
+              readOnly/>
+            <label>:</label>
+          
           </div>
         </div>
       </div>

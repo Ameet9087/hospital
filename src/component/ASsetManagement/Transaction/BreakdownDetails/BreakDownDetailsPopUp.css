@@ -1,5 +1,5 @@
 .BreakDownDetailsPopUp-container {
-  width: 1230px;
+  /* width: 1250px; */
   font-family: Arial, sans-serif;
   height: 80vh;
   overflow-x: auto;
@@ -32,6 +32,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
+  margin: 2px;
   margin-bottom: 16px;
 }
 
@@ -45,12 +46,12 @@
   /* border: 1px solid red; */
 }
 
-.BreakDownDetailsPopUp-form-group label {
+/* .BreakDownDetailsPopUp-form-group label {
   display: block;
   margin-bottom: 4px;
-  /* font-weight: bold; */
+  font-weight: bold;
   width: 75%;
-}
+} */
 
 .BreakDownDetailsPopUp-form-group-checkbox {
   display: flex;
@@ -75,16 +76,16 @@
   justify-content: flex-start;
 }
 
-.BreakDownDetailsPopUp-form-group-options label {
+/* .BreakDownDetailsPopUp-form-group-options label {
   margin-right: 20px;
   font-size: var(--font-size);
   display: flex;
   align-items: center;
-}
-
+} */
+/* 
 .BreakDownDetailsPopUp-form-group-options input {
   margin-right: 5px;
-}
+} */
 
 .BreakDownDetailsPopUp-form-actions {
   display: flex;
@@ -115,7 +116,7 @@
   color: var(--button-bg-color);
 }
 
-.BreakDownDetailsPopUp-add-main-btn {
+.BreakDownDetailsPopUp-add-main-btn,.BreakDownDetailsPopUp-btn-green {
   background-color: var(--button-color);
   border: 1px solid var(--button-hover-border-color);
   color: white;
@@ -127,7 +128,7 @@
   padding: 5px 5px;
 }
 
-.BreakDownDetailsPopUp-add-btn:hover {
+.BreakDownDetailsPopUp-add-btn:hover,.BreakDownDetailsPopUp-btn-green:hover {
   border: 1px solid var(--button-hover-border-color);
   color: var(--button-hover-text-color);
   background-color: var(--button-hover-background-color);
@@ -138,7 +139,7 @@
   justify-content: space-between;
 }
 
-.BreakDownDetailsPopUp-btn-green, .BreakDownDetailsPopUp-add-btn {
+ .BreakDownDetailsPopUp-add-btn {
   margin-top: 10px;
   background-color: green;
   color: white;

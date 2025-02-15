@@ -4,7 +4,9 @@ import './ProposalForAMCMultiplePopUp.css';
 import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 import { FaSearch } from "react-icons/fa";
 import { API_BASE_URL } from '../../../api/api';
-import PopupTable from '../../../Admission/PopupTable';
+
+import { toast } from 'react-toastify';
+import { FloatingInput, FloatingSelect, PopupTable } from '../../../../FloatingInputs';
 
 
 const ProposalforAMCMultiplePopUp = () => {
@@ -90,11 +92,11 @@ const ProposalforAMCMultiplePopUp = () => {
       }
 
       // Handle success (you can add your own success handling)
-      alert('Proposal saved successfully!');
+      toast.success('Proposal saved successfully!');
 
     } catch (error) {
       console.error('Error saving proposal:', error);
-      alert('Failed to save proposal. Please try again.');
+      toast.error('Failed to save proposal. Please try again.');
     }
   };
 
@@ -346,40 +348,38 @@ const ProposalforAMCMultiplePopUp = () => {
         <div className="ProposalforAMCMultiplePopUp-form-section">
 
           <div className="ProposalforAMCMultiplePopUp-form-group">
-            <span className="ProposalforAMCMultiplePopUp-label">Proposal Date</span>
-            <span className="ProposalforAMCMultiplePopUp-separator">:</span>
             <div className="ProposalforAMCMultiplePopUp-date-input">
-              <input
+              <FloatingInput
+              label={"Proposal Date"}
                 type="date"
                 name="proposalDate"
                 value={formData.proposalDate}
                 onChange={handleInputChange}
-                className="ProposalforAMCMultiplePopUp-input-field"
               />
             </div>
           </div>
 
           <div className="ProposalforAMCMultiplePopUp-section-header">Proposal Details</div>
           <div className="ProposalforAMCMultiplePopUp-form-group">
-            <span className="ProposalforAMCMultiplePopUp-label">Contract Type</span>
-            <span className="ProposalforAMCMultiplePopUp-separator">:</span>
-            <select name='contractType' className="ProposalforAMCMultiplePopUp-input-field"
+            <FloatingSelect 
+  name="contractType"
+  onChange={handleInputChange}
+  options={[
+    { value: "", label: "Select Contract Type" }, // Placeholder option
+    { value: "AMC", label: "AMC" },
+    { value: "CMC", label: "CMC" },
+    { value: "Warranty", label: "Warranty" },
+    { value: "On-Call", label: "On-Call" }
+  ]}
+/>
 
-              onChange={handleInputChange}>
-              <option value="AMC">AMC</option>
-              <option value="CMC">CMC</option>
-              <option value="Warranty">Warranty</option>
-              <option value="On-Call">On-Call</option>
-
-            </select>
           </div>
           <div className="ProposalforAMCMultiplePopUp-form-group">
-            <span className="ProposalforAMCMultiplePopUp-label">Proposal From Date</span>
-            <span className="ProposalforAMCMultiplePopUp-separator">:</span>
             <div className="ProposalforAMCMultiplePopUp-date-input">
 
 
-              <input
+              <FloatingInput
+              label={"Proposal From Date"}
                 type="date"
                 name="proposalFromDate"
                 value={formData.proposalFromDate}
@@ -390,10 +390,9 @@ const ProposalforAMCMultiplePopUp = () => {
             </div>
           </div>
           <div className="ProposalforAMCMultiplePopUp-form-group">
-            <span className="ProposalforAMCMultiplePopUp-label">Proposal To Date</span>
-            <span className="ProposalforAMCMultiplePopUp-separator">:</span>
             <div className="ProposalforAMCMultiplePopUp-date-input">
-              <input
+              <FloatingInput
+              label={"Proposal To Date"}
                 type="date"
                 name="proposalToDate"
                 value={formData.proposalToDate}
@@ -408,9 +407,10 @@ const ProposalforAMCMultiplePopUp = () => {
 
         <div className="ProposalforAMCMultiplePopUp-form-section">
           <div className="ProposalforAMCMultiplePopUp-form-group">
-            <span className="ProposalforAMCMultiplePopUp-label">Proposal To <span className='ProposalforAMCMultiplePopUp-required'>*</span></span>
-            <span className="ProposalforAMCMultiplePopUp-separator">:</span>
-            <input
+        
+            <FloatingInput
+
+            label={"Proposal To"}
               type="text"
               name="proposalTo"
               value={formData.proposalTo}
@@ -419,9 +419,8 @@ const ProposalforAMCMultiplePopUp = () => {
             />
           </div>
           <div className="ProposalforAMCMultiplePopUp-form-group">
-            <span className="ProposalforAMCMultiplePopUp-label">Proposal Charges</span>
-            <span className="ProposalforAMCMultiplePopUp-separator">:</span>
-            <input
+            <FloatingInput
+            label={"Proposal Charges"}
               type="number"
               name="proposalCharges"
               value={formData.proposalCharges}
@@ -432,9 +431,9 @@ const ProposalforAMCMultiplePopUp = () => {
 
 
           <div className="ProposalforAMCMultiplePopUp-form-group">
-            <span className="ProposalforAMCMultiplePopUp-label">Proposal Details</span>
-            <span className="ProposalforAMCMultiplePopUp-separator">:</span>
-            <input
+
+            <FloatingInput
+            label={"Proposal Details"}
               type="text"
               name="proposalDetails"
               value={formData.proposalDetails}
@@ -444,9 +443,8 @@ const ProposalforAMCMultiplePopUp = () => {
           </div>
 
           <div className="ProposalforAMCMultiplePopUp-form-group">
-            <span className="ProposalforAMCMultiplePopUp-label">Previous AMC Details</span>
-            <span className="ProposalforAMCMultiplePopUp-separator">:</span>
-            <input
+            <FloatingInput
+            label={"Previous AMC DetailsZ"}
               type="text"
               name="previousAmcDetails"
               value={formData.previousAmcDetails}
@@ -456,9 +454,9 @@ const ProposalforAMCMultiplePopUp = () => {
           </div>
 
           <div className="ProposalforAMCMultiplePopUp-form-group">
-            <span className="ProposalforAMCMultiplePopUp-label">Last Year AMC Charges</span>
-            <span className="ProposalforAMCMultiplePopUp-separator">:</span>
-            <input
+
+            <FloatingInput
+            label={"Last Year AMC Charges"}
               type="number"
               name="lastYearAmcCharge"
               value={formData.lastYearAmcCharge}
@@ -472,17 +470,14 @@ const ProposalforAMCMultiplePopUp = () => {
         <div className="ProposalforAMCMultiplePopUp-form-section">
 
           <div className="ProposalforAMCMultiplePopUp-form-group">
-            <span className="ProposalforAMCMultiplePopUp-label">Significant Terms</span>
-            <span className="ProposalforAMCMultiplePopUp-separator">:</span>
-            <select name='significantTerms' className="ProposalforAMCMultiplePopUp-input-field" onChange={handleInputChange}>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
+            <FloatingSelect label={"Significant Terms"} name='significantTerms'onChange={handleInputChange} options={[{value:"",label:""},
+              {value:"Yes",label:"Yes"},
+
+            ]}/>
           </div>
           <div className="ProposalforAMCMultiplePopUp-form-group">
-            <span className="ProposalforAMCMultiplePopUp-label">Terms</span>
-            <span className="ProposalforAMCMultiplePopUp-separator">:</span>
-            <input
+            <FloatingInput
+            label={"Terms"}
               type="text"
               name="terms"
               value={formData.terms}
@@ -493,9 +488,7 @@ const ProposalforAMCMultiplePopUp = () => {
 
 
           <div className="ProposalforAMCMultiplePopUp-form-group">
-            <span className="ProposalforAMCMultiplePopUp-label">Made By </span>
-            <span className="ProposalforAMCMultiplePopUp-separator">:</span>
-            <input type="text" className="ProposalforAMCMultiplePopUp-input-field" />
+            <FloatingInput label={"Made By"} type="text" className="ProposalforAMCMultiplePopUp-input-field" />
           </div>
 
           <div className="ProposalforAMCMultiplePopUp-format-section">

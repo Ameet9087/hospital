@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./CondemnationReasonMasterPopUp.css";
 import { API_BASE_URL } from "../../../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../../../FloatingInputs";
 const CondemnationReasonMasterPopUp = ({ onClose }) => {
   const [formData, setFormData] = useState({
     condemnationReason: "",
@@ -39,7 +41,8 @@ const CondemnationReasonMasterPopUp = ({ onClose }) => {
       });
 
       if (response.ok) {
-        alert("Condemnation reason added successfully!");
+        toast.success("Condemnation reason added successfully!");
+        onClose();
         // You can reset the form or close the popup here if needed
         setFormData({
           condemnationReason: "",
@@ -47,10 +50,10 @@ const CondemnationReasonMasterPopUp = ({ onClose }) => {
         });
         setIsActive(false);
       } else {
-        alert("Failed to add condemnation reason. Please try again.");
+        toast.error("Failed to add condemnation reason. Please try again.");
       }
     } catch (error) {
-      console.error("Error while adding condemnation reason:", error);
+      toast.error("Error while adding condemnation reason:", error);
     }
   };
 
@@ -64,23 +67,24 @@ const CondemnationReasonMasterPopUp = ({ onClose }) => {
         <div className="CondemnationReasonMasterPopUp-form-row">
           <div className="CondemnationReasonMasterPopUp-form-group-1row">
             <div className="CondemnationReasonMasterPopUp-form-group">
-              <label>Condemnation Reason:</label>
-              <input
-                type="text"
-                name="condemnationReason"
-                value={formData.condemnationReason}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Condemnation Reason"}
+               type="text"
+               name="condemnationReason"
+               value={formData.condemnationReason}
+               onChange={handleChange}
+               required
+              
               />
             </div>
             <div className="CondemnationReasonMasterPopUp-form-group">
-              <label>Description:</label>
-              <input
-                type="text"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Description"}
+              type="text"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              required
               />
             </div>
           </div>

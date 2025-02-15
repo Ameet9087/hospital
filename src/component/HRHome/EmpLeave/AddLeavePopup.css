@@ -57,31 +57,7 @@
     align-items: center;
   }
   
-  .addemployeeleave__formGroup label {
-    width: 30%;
-    min-width: 150px; /* Adjust as necessary */
-    margin-bottom: 5px;
-    font-size: 14px;
-    /* font-weight: bold; */
-  }
-  
-  .addemployeeleave__formGroup input,
-  .addemployeeleave__formGroup select {
-    width: 70%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  .addemployeeleave__ageInput {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .addemployeeleave__ageInput input {
-    width: 50px;
-  }
-  
+ 
   .addemployeeleave__formActions {
     grid-column: span 2;
     display: flex;

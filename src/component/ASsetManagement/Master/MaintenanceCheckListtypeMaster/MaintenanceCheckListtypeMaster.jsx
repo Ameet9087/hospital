@@ -4,6 +4,7 @@ import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns
 import CustomModal from "../../../../CustomModel/CustomModal";
 import MaintenanceCheckListtypeMasterPopUp from "./MaintenanceCheckListtypeMasterPopUp";
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput } from "../../../../FloatingInputs";
 
 const MaintenanceChecklisttypeMaster = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -176,12 +177,12 @@ const MaintenanceChecklisttypeMaster = () => {
 
       <div className="maintenanceChecklistMaster-search-N-result">
         <div className="maintenanceChecklistMaster-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+          <FloatingInput
+          label={"Search"}
+           type="text"
+           placeholder="Search..."
+           value={searchQuery}
+           onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
         <div className="maintenanceChecklistMaster-results-info">
@@ -217,6 +218,7 @@ const MaintenanceChecklisttypeMaster = () => {
             setPackageTableRows([...packageTableRows, newRow]);
             setShowPopup(false);
           }}
+          onClose={() => setShowPopup(false)}
         />
       </CustomModal>
     </div>

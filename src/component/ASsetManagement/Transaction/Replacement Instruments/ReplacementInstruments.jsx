@@ -104,7 +104,7 @@ const ReplacementInstruments = () => {
             <tr>
               {[
                 "Replacement ID",
-
+              
                 "Type",
                 "Manufacturer",
                 "Quantity",
@@ -127,23 +127,23 @@ const ReplacementInstruments = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredReplacementInstruments.length > 0 ? (
-              filteredReplacementInstruments.map((instrument, index) => (
-                <tr key={index}>
-                  <td>{instrument.replacementId}</td>
-
-                  <td>{instrument.repType || "N/A"}</td>
-                  <td>{instrument.equipmentReplacementDTO?.equipmentDTO?.type || "N/A"}</td>
-                  <td>{instrument.equipmentReplacementDTO?.equipmentDTO?.equipmentName || "N/A"}</td>
-                  <td>{instrument.equipmentReplacementDTO?.dmsRemark || "N/A"}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6">No data available</td>
-              </tr>
-            )}
-          </tbody>
+  {filteredReplacementInstruments.length > 0 ? (
+    filteredReplacementInstruments.map((instrument, index) => (
+      <tr key={index}>
+        <td>{instrument.replacementId}</td>
+        
+        <td>{instrument.repType || "N/A"}</td>
+        <td>{instrument.equipmentReplacementDTO?.equipmentDTO?.type || "N/A"}</td>
+        <td>{instrument.equipmentReplacementDTO?.equipmentDTO?.equipmentName || "N/A"}</td>
+        <td>{instrument.equipmentReplacementDTO?.dmsRemark || "N/A"}</td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="6">No data available</td>
+    </tr>
+  )}
+</tbody>
         </table>
       </div>
 

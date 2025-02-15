@@ -17,10 +17,7 @@
     font-size: var(--heading-font);
 }
 
-.AMCTrackerPopUp-surgeryEvents-checkbox-label {
-    font-weight: normal;
-    margin-left: 4px;
-}
+
 
 .AMCTrackerPopUp-surgeryEvents-content-wrapper {
     display: flex;
@@ -59,35 +56,9 @@
     font-size: var(--font-size);
 }
 
-.AMCTrackerPopUp-surgeryEvents-form-row label {
-    min-width: 140px;
-}
 
-.AMCTrackerPopUp-surgeryEvents-form-row input {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 47%;
-}
 
-.AMCTrackerPopUp-surgeryEvents-form-row select {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 50%;
-}
 
-.AMCTrackerPopUp-surgeryEvents-input-with-search {
-    display: flex;
-    gap: 2px;
-}
-
-.AMCTrackerPopUp-surgeryEvents-input-with-search input {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 80%;
-}
 
 .AMCTrackerPopUp-surgeryEvents-magnifier-btn {
     background: #f0f0f0;
@@ -211,15 +182,5 @@
     align-items: center;
   }
   
-  .AMCTrackerPopUp-surgeryEvents-form-row input {
-    width: 50%;
-    padding-right: 30px; /* Add space for the icon */
-  }
   
-  .AMCTrackerPopUp-surgeryEvents-form-row .input-icon {
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
-    color: #666;
-  }
   

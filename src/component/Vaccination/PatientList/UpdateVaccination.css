@@ -58,30 +58,7 @@
     align-items: center;
   }
   
-  .UpdateVaccinationRegister__formGroup label {
-    width: 30%;
-    min-width: 150px; /* Adjust as necessary */
-    margin-bottom: 5px;
-    font-size: 14px;
-    /* font-weight: bold; */
-  }
   
-  .UpdateVaccinationRegister__formGroup input,
-  .UpdateVaccinationRegister__formGroup select {
-    width: 70%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
-  .UpdateVaccinationRegister__ageInput {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .UpdateVaccinationRegister__ageInput input {
-    width: 50px;
-  }
   
   .UpdateVaccinationRegister__formActions {
     grid-column: span 2;

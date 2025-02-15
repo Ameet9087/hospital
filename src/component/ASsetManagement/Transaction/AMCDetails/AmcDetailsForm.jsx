@@ -3,6 +3,10 @@ import './AmcDetailsForm.css';
 import { API_BASE_URL } from '../../../api/api';
 import PopupTable from '../../../Admission/PopupTable';
 import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { FloatingInput, FloatingSelect } from '../../../../FloatingInputs';
+import {toast}  from "react-toastify";
+
+
 
 const AmcDetailsForm = () => {
 
@@ -135,10 +139,10 @@ const AmcDetailsForm = () => {
 
             const result = await response.json();
             console.log('Successfully saved:', result);
-            alert("Successfully saved")
+            toast.success("Successfully saved")
             // Add success notification here
         } catch (error) {
-            console.error('Error saving AMC details:', error);
+            toast.error('Error saving AMC details:', error);
             // Add error notification here
         }
     };
@@ -244,10 +248,6 @@ const AmcDetailsForm = () => {
         fetchUnCoveredItems();
         fetchInsuranceName();
     }, []);
-
-
-
-
 
     const getPopupData = () => {
         if (activePopup === "proposalAMCRenewal") {
@@ -515,14 +515,20 @@ const AmcDetailsForm = () => {
                                         <td>{row.sn}</td>
                                         <td>
                                             <div className="AMCDetails-input-with-search">
-                                                <input type="text" value={row.selectedItem?.itemName || ''}
-                                                    placeholder="Search..." />
-                                                <button onClick={() => setActivePopup("accessoriesItem")} className="AMCDetails-magnifier-btn">🔍</button>
+                                                <FloatingInput
+                                                label={"Accessories Item"}
+                                                type="search" value={row.selectedItem?.itemName || ''}
+                                                onIconClick={() => setActivePopup("accessoriesItem")}
+                                                />
+                                             
                                             </div>
                                         </td>
                                         <td>
                                             <div className="AMCDetails-input-with-search">
-                                                <input type="text" />
+                                            <FloatingInput
+                                                label={"No"}
+                                                type="text"/>
+                                               
                                             </div>
                                         </td>
                                     </tr>
@@ -566,14 +572,19 @@ const AmcDetailsForm = () => {
                                         <td>{row.sn}</td>
                                         <td>
                                             <div className="AMCDetails-input-with-search">
-                                                <input type="text" value={row.selectedItem?.itemName || ''}
-                                                    placeholder="Search..." />
-                                                <button onClick={() => setActivePopup("coveredItem")} className="AMCDetails-magnifier-btn">🔍</button>
+                                                <FloatingInput
+                                                label={"covered Item"}
+                                                type="search" value={row.selectedItem?.itemName || ''}
+                                                onIconClick={() => setActivePopup("coveredItem")}
+                                                />  
                                             </div>
                                         </td>
                                         <td>
                                             <div className="AMCDetails-input-with-search">
-                                                <input type="text" />
+                                                <FloatingInput
+                                                label={"No"}
+                                                type="text"/>
+                                               
                                             </div>
                                         </td>
                                     </tr>
@@ -618,14 +629,21 @@ const AmcDetailsForm = () => {
                                         <td>{row.sn}</td>
                                         <td>
                                             <div className="AMCDetails-input-with-search">
-                                                <input type="text" value={row.selectedItem?.itemName || ''}
-                                                    placeholder="Search..." />
-                                                <button onClick={() => setActivePopup("uncoveredItem")} className="AMCDetails-magnifier-btn">🔍</button>
+                                                <FloatingInput
+                                                label={"uncoveredItem"}
+                                                type="search" value={row.selectedItem?.itemName || ''}
+                                                onIconClick={() => setActivePopup("uncoveredItem")}/>
+                                              
+                                               
                                             </div>
                                         </td>
                                         <td>
                                             <div className="AMCDetails-input-with-search">
-                                                <input type="text" />
+                                                <FloatingInput
+                                                type="text"
+                                                label={"No"}
+                                                />
+                                              
                                             </div>
                                         </td>
                                     </tr>
@@ -660,44 +678,63 @@ const AmcDetailsForm = () => {
                         <div className="AMCDetails-panel-header">AMC Proposal Dtl</div>
                         <div className="AMCDetails-panel-content">
                             <div className="AMCDetails-form-row">
-                                <label>Entry Type:</label>
-                                <select>
-                                    <option>From Proposal</option>
-                                    <option>Existing</option>
-                                </select>
+                                <FloatingSelect
+                                label={"Entry Type"}
+                                options={[{value:"FromProposal",label:"From Proposal"},{value:"Existing" , label:"Existing"}]}/>
+                             
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Proposal No:</label>
-                                <div className="AMCDetails-input-with-search">
-                                    <input type="text" value={selectedProposalAMCRenewal?.renewalId} readOnly />
-                                    <button onClick={() => setActivePopup("proposalAMCRenewal")} className="AMCDetails-magnifier-btn">🔍</button>
-                                </div>
+                              
+                                  <FloatingInput
+                                  label={"Proposal No"}
+                                  type="search" 
+                                  value={selectedProposalAMCRenewal?.renewalId}
+                                  onIconClick={() => setActivePopup("proposalAMCRenewal")} 
+                                  readOnly
+                                  />
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Proposal To:</label>
-                                <input type="text" value={selectedProposalAMCRenewal?.proposalTo} />
+                                <FloatingInput
+                                label={"Proposal To"}
+                                type="text" 
+                                value={selectedProposalAMCRenewal?.proposalTo}
+                                />
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Proposal Date:</label>
-                                <input type="text" value={selectedProposalAMCRenewal?.proposalDate} />
+                                <FloatingInput
+                                label={"Proposal Date"}
+                                type="text" value={selectedProposalAMCRenewal?.proposalDate}
+                                />
+                               
                             </div>
                         </div>
                         <div className="AMCDetails-panel-header">Equipment Info</div>
                         <div className="AMCDetails-panel-content">
                             <div className="AMCDetails-form-row">
-                                <label>Date:</label>
-                                <input type="date" />
+                                <FloatingInput
+                                label={"Date"} 
+                                type="date"
+                                />
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Equipment Name: *</label>
-                                <div className="AMCDetails-input-with-search">
-                                    <input type="text" value={selectedEquipment?.equipmentName} readOnly />
-                                    <button onClick={() => setActivePopup("equipment")} className="AMCDetails-magnifier-btn">🔍</button>
-                                </div>
+                                <FloatingInput
+                                label={"Equipment Name"}
+                                type="search" 
+                                value={selectedEquipment?.equipmentName} readOnly
+                                onIconClick={() => setActivePopup("equipment")}
+                                />
+                               
+                              
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Asset No:</label>
-                                <input type="text" value={selectedEquipment?.assetNo} />
+                                <FloatingInput
+                                label={"Asset No"}
+                                type="text" value={selectedEquipment?.assetNo}
+                                />
+                               
                             </div>
                         </div>
 
@@ -705,6 +742,7 @@ const AmcDetailsForm = () => {
                             <div className="AMCDetails-panel-header">Document</div>
                             <div className="AMCDetails-panel-content">
                                 <div className="AMCDetailsPanels">
+                                   
                                     <input type="text" placeholder="Enter text" className="text-input" />
                                     <input type="file" className="file-input" />
                                     <button className="upload-button">Upload</button>
@@ -715,40 +753,65 @@ const AmcDetailsForm = () => {
                     <div className="AMCDetails-panel dis-templates">
                         <div className="AMCDetails-panel-content">
                             <div className="AMCDetails-form-row">
-                                <label>Manual No:</label>
-                                <input type="text" />
+                                <FloatingInput
+                                label={"Manual No"}
+                                type="text"
+                                />
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Location:</label>
-                                <input type="text" value={selectedEquipment?.assetLocationMaster?.subLocation} />
+                                <FloatingInput
+                                label={"Location"}
+                                type="text" value={selectedEquipment?.assetLocationMaster?.subLocation} 
+                                />
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Location Path:</label>
-                                <input type="text" value={selectedEquipment?.locationPath} />
+                                <FloatingInput
+                                label={"Location Path"}
+                                type="text" value={selectedEquipment?.locationPath}
+                                />
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Category:</label>
-                                <input type="text" value={selectedEquipment?.assetCateMasterDTO?.underCategory} />
+                                <FloatingInput
+                                label={"Category"}
+                                type="text" value={selectedEquipment?.assetCateMasterDTO?.underCategory}
+                                />
+                                
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Depreciation:</label>
-                                <input type="text" value={selectedEquipment?.assetCateMasterDTO?.depreciation} />
+                                <FloatingInput
+                                label={"Depreciation"}
+                                type="text" value={selectedEquipment?.assetCateMasterDTO?.depreciation}
+                                />
+                              
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Serial No:</label>
-                                <input type="text" value={selectedEquipment?.serialNo} />
+                                <FloatingInput
+                                label={"Serial No"}
+                                type="text" value={selectedEquipment?.serialNo} 
+                                />
+                                
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Equipment No:</label>
-                                <input type="text" value={selectedEquipment?.equipmentNo} />
+                                <FloatingInput
+                                label={"Equipment No"}
+                                type="text" value={selectedEquipment?.equipmentNo}
+                                />
+                              
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Description:</label>
-                                <input type="text" value={selectedEquipment?.remarks} />
+                                <FloatingInput label={"Description"}
+                                type="text" value={selectedEquipment?.remarks} />
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Model No:</label>
-                                <input type="text" value={selectedEquipment?.modelNo} />
+                                <FloatingInput
+                                label={"Model No"}
+                                type="text" value={selectedEquipment?.modelNo}
+                                />
+                                
                             </div>
                         </div>
                     </div>
@@ -763,57 +826,83 @@ const AmcDetailsForm = () => {
                     <div className="AMCDetails-panel operation-details">
                         <div className="AMCDetails-panel-content">
                             <div className="AMCDetails-form-row">
-                                <label>Software Version No:</label>
-                                {/* <div className="AMCDetails-input-with-search"> */}
-                                <input type="text" value={selectedEquipment?.softwareVersion} />
-                                {/* <button className="AMCDetails-magnifier-btn">🔍</button> */}
-                                {/* </div> */}
+                                <FloatingInput
+                                label={"Software Version No"}
+                                type="text" value={selectedEquipment?.softwareVersion}
+                                
+                                />
+                               
+                              
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Company Brand: *</label>
-                                {/* <div className="AMCDetails-input-with-search"> */}
-                                <input type="text" value={selectedEquipment?.companyBrand} />
-                                {/* <button className="AMCDetails-magnifier-btn">🔍</button> */}
-                                {/* </div> */}
+                                <FloatingInput
+                                label={"Company Brand"}
+                                type="text" value={selectedEquipment?.companyBrand}
+                                                                />
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Responsibility Person:</label>
-                                <input type="text" value={selectedEquipment?.employee?.firstName} />
+                                <FloatingInput
+                                label={"Responsibility Person"}
+                                type="text" value={selectedEquipment?.employee?.firstName}
+                                />
+                              
                             </div>
                         </div>
                         <div className="AMCDetails-panel-header">Contract Details</div>
                         <div className="AMCDetails-panel-content">
                             <div className="AMCDetails-form-row">
-                                <label>Contract Type:</label>
-                                <select name='contractType' onChange={handleFormChange}>
-                                    <option value="Warranty">Warranty</option>
-                                    <option value="AMC">AMC</option>
-                                    <option value="CMC">CMC</option>
-                                    <option value="On-Call">On-Call</option></select>
+                                <FloatingSelect
+                                label={"Contract Type"}
+                                onChange={handleFormChange}
+                                options={[
+                                   
+                                    { value: "Warranty", label: "Warranty" },
+                                    { value: "AMC", label: "AMC" },
+                                    { value: "CMC", label: "CMC" },
+                                     { value: "On-Call", label: "On-Call" },
+                                ]}/>
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Manual Contract No:</label>
-                                <input type="text" name='manualContractNo' onChange={handleFormChange} />
+                                <FloatingInput
+                                label={"Manual Contract No"}
+                                type="text" name='manualContractNo' onChange={handleFormChange}
+                                />
+                                
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Contract From: *</label>
-                                <input type="text" name='contractFrom' onChange={handleFormChange} />
+                                <FloatingInput
+                                label={"Contract From *"}
+                                type="text" name='contractFrom' onChange={handleFormChange}/>
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Contract To: *</label>
-                                <input type="text" name='contractTo' onChange={handleFormChange} />
+                                <FloatingInput
+                                label={"Contract To"}
+                                type="text" name='contractTo' onChange={handleFormChange}
+                                />
+                              
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Installation Date:</label>
-                                <input type="text" value={selectedEquipment?.installationDate} />
+                                <FloatingInput
+                                label={"Installation Date"}
+                                type="text" value={selectedEquipment?.installationDate}
+                                />
+                                
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Cost Of Contract: *</label>
-                                <input type="text" name='costOfContract' onChange={handleFormChange} />
+                                <FloatingInput
+                                label={"Cost Of Contract *"}
+                                type="text" name='costOfContract' onChange={handleFormChange}/>
+                                
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Contract Of AMC:</label>
-                                <input type="text" name='contractOfAmc' onChange={handleFormChange} />
+                                <FloatingInput
+                                label={"Contract Of AMC"}
+                                type="text" name='contractOfAmc' onChange={handleFormChange} 
+                                />
+                                
                             </div>
                         </div>
                     </div>
@@ -822,31 +911,44 @@ const AmcDetailsForm = () => {
                         <div className="AMCDetails-panel-header">Company Details</div>
                         <div className="AMCDetails-panel-content">
                             <div className="AMCDetails-form-row">
-                                <label>Contract Company: *</label>
-                                {/* <div className="AMCDetails-input-with-search"> */}
-                                <input value={selectedEquipment?.vendor?.vendorName} />
-                                {/* <button className="AMCDetails-magnifier-btn">🔍</button> */}
-                                {/* </div> */}
+                                <FloatingInput
+                                label={"Contract Company *"}
+                                value={selectedEquipment?.vendor?.vendorName} />
+                                <label>: *</label>
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Address:</label>
-                                <input type="text" value={selectedEquipment?.vendor?.contactAddress} />
+                                <FloatingInput
+                                label={"Address"}
+                                type="text" value={selectedEquipment?.vendor?.contactAddress} 
+                                />
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Mobile No:</label>
-                                <input type="text" value={selectedEquipment?.vendor?.contactNumber} />
+                                <FloatingInput label={"Mobile No"}
+                                type="text" value={selectedEquipment?.vendor?.contactNumber}
+                                />
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Email:</label>
-                                <input type="text" value={selectedEquipment?.vendor?.email} />
+                                <FloatingInput
+                                label={"Email"}
+                                type="text" value={selectedEquipment?.vendor?.email}/>
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Contact Person:</label>
-                                <input type="text" value={selectedEquipment?.vendor?.contactPerson} />
+                                <FloatingInput
+                                label={"Contact Person"}
+                                type="text" value={selectedEquipment?.vendor?.contactPerson} 
+                                />
+                               
                             </div>
                             <div className="AMCDetails-form-row">
-                                <label>Other Details:</label>
-                                <input type="text" />
+                                <FloatingInput
+                                label={"Other Details"}
+                                type="text"
+                                />
+                                
                             </div>
                         </div>
 
@@ -854,33 +956,33 @@ const AmcDetailsForm = () => {
                         <div className="AMCDetails-panel-header">Company Details</div>
                         <div className="AMCDetails-panel-content">
                             <div className="AMCDetails-form-row">
-                                <label>Insurance:</label>
-                                <select
-                                    name="insurance"
-                                    value={formData.insurance}
-                                    onChange={handleInsuranceChange}
-                                >
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                </select>
+                                <FloatingSelect
+                                label={"Insurance"}
+                               
+                               
+                                onChange={handleInsuranceChange}
+                                options={[
+                                   { value:"Yes" ,label:"Yes"},
+                                   { value:"No" ,label:"No"}
+                                ]}/>
+                                
+                               
                             </div>
                             {insuranceData.insurance === 'Yes' && (
                                 <div className="AMCDetails-form-row">
-                                    <label>Insurance Name:</label>
-
-                                    <input type="text" value={selectedInsurances?.name} readOnly />
-                                    <button onClick={() => setActivePopup("insurance")} className="AMCDetails-magnifier-btn">🔍</button>
-
-
-
-
+                                    <FloatingInput
+                                    label={"Insurance Name"}
+                                    type="search" value={selectedInsurances?.name} readOnly
+                                    onIconClick={() => setActivePopup("insurance")}
+                                    />
                                 </div>
                             )}
 
 
                             <div className="AMCDetails-form-row">
-                                <label>Warranty Details:</label>
-                                <input type="text" name='insuranceAndWarrantyDetails' onChange={handleFormChange} />
+                                <FloatingInput
+                                label={"Warranty Details"}
+                                type="text" name='insuranceAndWarrantyDetails' onChange={handleFormChange}/>
                             </div>
                         </div>
 

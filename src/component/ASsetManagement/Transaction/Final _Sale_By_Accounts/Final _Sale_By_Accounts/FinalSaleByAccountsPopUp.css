@@ -40,6 +40,7 @@
     align-items: center;
     font-size: var(--font-size);
     width: 400px;
+    padding: 5px;
     /* border: 1px solid red; */
   }
   

@@ -77,6 +77,37 @@ const BreakDownDetails = () => {
     XLSX.utils.book_append_sheet(workbook, worksheet, "Breakdown Details");
     XLSX.writeFile(workbook, "Breakdown_Details.xlsx");
   };
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
 
   return (
     <div className="BreakDownDetails-container">
@@ -108,7 +139,7 @@ const BreakDownDetails = () => {
           </button>
           <button
             className="BreakDownDetails-print-button"
-            onClick={() => window.print()}
+            onClick={handlePrint}
           >
             <i className="fa-solid fa-print"></i> Print
           </button>
@@ -131,7 +162,7 @@ const BreakDownDetails = () => {
                 "Work Completion Date",
                 "Work Completion Time",
                 "Remark"
-
+              
               ].map((header, index) => (
                 <th
                   key={index}
@@ -163,9 +194,9 @@ const BreakDownDetails = () => {
                 <td>{breakdown.workCompletionDate}</td>
                 <td>{breakdown.workCompletionTime}</td>
                 <td>{breakdown.remark}</td>
-
-
-
+                
+                
+               
               </tr>
             ))}
           </tbody>

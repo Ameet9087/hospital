@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa"; // Using react-icons
 import { API_BASE_URL } from "../../../api/api";
 const EquipmentMasterPopUp = ({ onClose }) => {
-
   // ===================================================================
   const [roomStatus, setRoomStatus] = useState("active"); // State to manage room status
   const [selectedTab, setSelectedTab] = useState("personal");
@@ -21,49 +20,45 @@ const EquipmentMasterPopUp = ({ onClose }) => {
   const [respDepartmentId, setRespDepartmentId] = useState();
   const [employeeId, setEmployeeId] = useState();
 
-
-
   const [data, setData] = useState({
-    type: '',
-    assetNo: '',
+    type: "",
+    assetNo: "",
 
-    typeOfEquipment: '',
+    typeOfEquipment: "",
     // ismsRequired: false, // Initialize boolean fields with default values
-    equipmentOwner: '',
-    equipmentName: '',
-    cost: '',
-    quantity: '',
-    serialNo: '',
-    modelNo: '',
-    ytdDepreciation: '',
-    accumulated: '',
-    accounts: '',
-    netValue: '',
-    equipmentNo: '',
-    remarks: '',
-    oldAssetNo: '',
-    locationPath: '',
-    companyBrand: '',
-    capacity: '',
-    softwareVersion: '',
-    active: '', // Initialize boolean fields with default values
-    powerConsumption: '',
-    lastGrnNo: '',
-    lastGrnDate: '',
-    lastGrnUser: '',
-    installationDate: '',
-    installationTime: '',
-    installedBy: '',
-    technicalDetails: '',
-    warrantyFrom: '',
-    warrantyToDate: '',
-    warrantyDetails: '',
-    status: '',
+    equipmentOwner: "",
+    equipmentName: "",
+    cost: "",
+    quantity: "",
+    serialNo: "",
+    modelNo: "",
+    ytdDepreciation: "",
+    accumulated: "",
+    accounts: "",
+    netValue: "",
+    equipmentNo: "",
+    remarks: "",
+    oldAssetNo: "",
+    locationPath: "",
+    companyBrand: "",
+    capacity: "",
+    softwareVersion: "",
+    active: "", // Initialize boolean fields with default values
+    powerConsumption: "",
+    lastGrnNo: "",
+    lastGrnDate: "",
+    lastGrnUser: "",
+    installationDate: "",
+    installationTime: "",
+    installedBy: "",
+    technicalDetails: "",
+    warrantyFrom: "",
+    warrantyToDate: "",
+    warrantyDetails: "",
+    status: "",
     financialEquipment: false, // Initialize boolean fields with default values
-    equipmentStart: '',
+    equipmentStart: "",
   });
-
-
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -79,8 +74,21 @@ const EquipmentMasterPopUp = ({ onClose }) => {
     fetchCategories();
   }, []);
   const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-    setCategoryId(event.target.value)
+    const selectedCategoryId = event.target.value;
+    setSelectedCategory(selectedCategoryId);
+
+    // Find the selected category object from the categories array
+    const selectedCategoryObj = categories.find(
+      (category) => category.categoryId === Number(selectedCategoryId)
+    );
+
+    // Set the categoryId, depreciation, and salvage values
+    setCategoryId(selectedCategoryId);
+    setData((prevData) => ({
+      ...prevData,
+      ytdDepreciation: selectedCategoryObj?.depreciation || "",
+      salvage: selectedCategoryObj?.salvage || "",
+    }));
   };
 
   useEffect(() => {
@@ -98,10 +106,7 @@ const EquipmentMasterPopUp = ({ onClose }) => {
   }, []);
   const handleLocationChange = (event) => {
     setSelectedAssetLocation(event.target.value);
-    setLocId(event.target.value)
-
-
-
+    setLocId(event.target.value);
   };
 
   const [suppliers, setSuppliers] = useState([]);
@@ -113,7 +118,6 @@ const EquipmentMasterPopUp = ({ onClose }) => {
         const response = await fetch(`${API_BASE_URL}/vendors/getAllVendors`); // Replace with your API URL
         const data = await response.json();
         setSuppliers(data); // Assuming the API returns an array of category objects
-
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -124,25 +128,20 @@ const EquipmentMasterPopUp = ({ onClose }) => {
   const handleSupplierChange = (event) => {
     setSelectedSupplier(event.target.value);
 
-    setId(event.target.value)
-
-
+    setId(event.target.value);
   };
-
-
 
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
 
-
   useEffect(() => {
     const fetcDepartments = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/departments/getAllDepartments`); // Replace with your API URL
+        const response = await fetch(
+          `${API_BASE_URL}/departments/getAllDepartments`
+        ); // Replace with your API URL
         const data = await response.json();
         setDepartments(data); // Assuming the API returns an array of category objects
-
-
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -153,7 +152,7 @@ const EquipmentMasterPopUp = ({ onClose }) => {
 
   const handleDepartmentChange = (event) => {
     setSelectedDepartment(event.target.value);
-    setDepartmentId(event.target.value)
+    setDepartmentId(event.target.value);
   };
 
   const [employees, setEmployees] = useState([]);
@@ -162,11 +161,11 @@ const EquipmentMasterPopUp = ({ onClose }) => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/employees/get-all-employee`); // Replace with your API URL
+        const response = await fetch(
+          `${API_BASE_URL}/employees/get-all-employee`
+        ); // Replace with your API URL
         const data = await response.json();
         setEmployees(data); // Assuming the API returns an array of category objects
-
-
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -177,7 +176,7 @@ const EquipmentMasterPopUp = ({ onClose }) => {
 
   const handleEmployeeChange = (event) => {
     setSelectedEmployee(event.target.value);
-    setEmployeeId(event.target.value)
+    setEmployeeId(event.target.value);
   };
 
   const [equipments, setEquipments] = useState([]);
@@ -189,8 +188,6 @@ const EquipmentMasterPopUp = ({ onClose }) => {
         const response = await fetch(`${API_BASE_URL}/equipment-masters`); // Replace with your API URL
         const data = await response.json();
         setEquipments(data); // Assuming the API returns an array of category objects
-
-
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -200,20 +197,33 @@ const EquipmentMasterPopUp = ({ onClose }) => {
   }, []);
 
   const handleEquipmentChange = (event) => {
-    setSelectedEquipment(event.target.value);
+    const selectedEquipmentId = event.target.value;
+    setSelectedEquipment(selectedEquipmentId);
+
+    // Find the selected equipment object from the equipments array
+    const selectedEquipmentObj = equipments.find(
+      (equipment) => equipment.equipmentMasterId === Number(selectedEquipmentId)
+    );
+
+    // Set the oldAssetNo in the data state
+    setData((prevData) => ({
+      ...prevData,
+      oldAssetNo: selectedEquipmentObj?.assetNo || "",
+    }));
   };
 
   const [responsibleDepartments, setResponsibleDepartments] = useState([]);
-  const [selectedResponsibleDepartment, setSelectedResponsibleDepartment] = useState("");
+  const [selectedResponsibleDepartment, setSelectedResponsibleDepartment] =
+    useState("");
 
   useEffect(() => {
     const fetcResponsibleDepartments = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/departments/getAllDepartments`); // Replace with your API URL
+        const response = await fetch(
+          `${API_BASE_URL}/departments/getAllDepartments`
+        ); // Replace with your API URL
         const data = await response.json();
         setResponsibleDepartments(data); // Assuming the API returns an array of category objects
-
-
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -224,7 +234,7 @@ const EquipmentMasterPopUp = ({ onClose }) => {
 
   const handleResponsibleDepartmentChange = (event) => {
     setSelectedResponsibleDepartment(event.target.value);
-    setRespDepartmentId(event.target.value)
+    setRespDepartmentId(event.target.value);
   };
 
   const handleChange = (event) => {
@@ -263,14 +273,11 @@ const EquipmentMasterPopUp = ({ onClose }) => {
     });
   };
 
-
-
   const handleStatusChange = (e) => {
     setRoomStatus(e.target.value);
   };
 
   const handleAddEquipmentMaster = async () => {
-
     try {
       // Prepare equipment master data
       const equipmentMasterData = {
@@ -296,7 +303,7 @@ const EquipmentMasterPopUp = ({ onClose }) => {
         softwareVersion: data.softwareVersion,
         capacity: data.capacity,
         active: data.active,
-        powerConsumption: parseFloat(data.powerConsumption),
+        powerConsumption: data.powerConsumption,
         lastGrnNo: data.lastGrnNo,
         lastGrnDate: data.lastGrnDate,
         lastGrnUser: data.lastGrnUser,
@@ -332,33 +339,36 @@ const EquipmentMasterPopUp = ({ onClose }) => {
         },
       };
 
+      console.log(JSON.stringify(equipmentMasterData, null, 2));
 
       // Send data to API
       const response = await fetch(`${API_BASE_URL}/equipment-masters`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(equipmentMasterData),
       });
 
-      if (response.ok) {
-        console.log('Equipment Master added successfully!');
+      if (response) {
+        alert("Equipment Master added successfully!");
         // Handle success (e.g., close the popup, display a success message)
       } else {
-        console.error('Error adding Equipment Master:', response.status, response.statusText);
+        console.error(
+          "Error adding Equipment Master:",
+          response.status,
+          response.statusText
+        );
         // Handle error (e.g., display an error message to the user)
       }
     } catch (error) {
-      console.error('Error adding Equipment Master:', error);
+      console.error("Error adding Equipment Master:", error);
       // Handle error (e.g., display an error message to the user)
     }
   };
 
   return (
-    <div
-      className="EquipmentMasterPopUp-container"
-    >
+    <div className="EquipmentMasterPopUp-container">
       <div className="EquipmentMasterPopUp-header">
         <h4>Equipment Master</h4>
         {/* <button className="EquipmentMasterPopUp-close-btn" onClick={onClose}>
@@ -370,71 +380,113 @@ const EquipmentMasterPopUp = ({ onClose }) => {
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
               <label>Type:</label>
-              <input type="text" placeholder="Enter Type"
+              <input
+                type="text"
+                placeholder="Enter Type"
                 name="type"
                 onChange={handleChange}
               />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Search Equipment:</label>
-              <select value={selectedEquipment} onChange={handleEquipmentChange}>
+              <select
+                value={selectedEquipment}
+                onChange={handleEquipmentChange}
+              >
                 <option value="">Select Equipment</option>
                 {equipments.map((equipment) => (
-                  <option key={equipment.equipmentMasterId} value={equipment.equipmentMasterId}>
+                  <option
+                    key={equipment.equipmentMasterId}
+                    value={equipment.equipmentMasterId}
+                  >
                     {equipment.equipmentName}
                   </option>
                 ))}
-              </select>                </div>
+              </select>{" "}
+            </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Asset No:</label>
-              <input type="text" placeholder="Enter Assetment No."
+              <label>Old Asset No:</label>
+              <input
+                type="text"
+                value={data.oldAssetNo}
+                placeholder="Enter Old Asset No."
               />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Type of Equipment:</label>
-              <input type="text" placeholder="Enter Type of Equipment" name="typeOfEquipment" onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Enter Type of Equipment"
+                name="typeOfEquipment"
+                onChange={handleChange}
+              />
             </div>
           </div>
 
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
               <label>Equipment Owner:</label>
-              <input type="text" placeholder="Enter Equipment Owner" name="equipmentOwner" onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Enter Equipment Owner"
+                name="equipmentOwner"
+                onChange={handleChange}
+              />
             </div>
-            <div className="EquipmentMasterPopUp-form-group">
-              <label>Equipment Name:</label>
-              <input type="text" placeholder="Enter Equipment Name" />
-            </div>
-            <div className="EquipmentMasterPopUp-form-group">
-            </div>
-            <div className="EquipmentMasterPopUp-form-group">
-            </div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
           </div>
           <h4>Equipment Info</h4>
 
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
               <label>Equipment Name:</label>
-              <input type="text" placeholder="Enter Equipment Name" name="equipmentName" onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Enter Equipment Name"
+                name="equipmentName"
+                onChange={handleChange}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Cost:</label>
-              <input type="number" placeholder="Enter Cost" name="cost" onChange={handleChange} />
+              <input
+                type="number"
+                placeholder="Enter Cost"
+                name="cost"
+                onChange={handleChange}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Quantity:</label>
-              <input type="number" placeholder="Enter Quantity" name="quantity" onChange={handleChange} />
+              <input
+                type="number"
+                placeholder="Enter Quantity"
+                name="quantity"
+                onChange={handleChange}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Serial No.:</label>
-              <input type="text" placeholder="Enter Serial No." name="serialNo" onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Enter Serial No."
+                name="serialNo"
+                onChange={handleChange}
+              />
             </div>
           </div>
 
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
               <label>Model No.:</label>
-              <input type="text" placeholder="Enter Model No." name="modelNo" onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Enter Model No."
+                name="modelNo"
+                onChange={handleChange}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Category:</label>
@@ -449,26 +501,94 @@ const EquipmentMasterPopUp = ({ onClose }) => {
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Salvage:</label>
-              <input type="text" placeholder="Enter Salvage" />
+              <input
+                type="text"
+                placeholder="Enter Salvage"
+                name="salvage"
+                value={data.salvage}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Depreciation:</label>
-              <input type="text" placeholder="Enter Depreciation" name="ytdDepreciation" onClick={handleChange} />
+              <input
+                type="number"
+                placeholder="Enter Depreciation"
+                name="ytdDepreciation"
+                value={data.ytdDepreciation}
+              />
+            </div>
+          </div>
+          <div className="EquipmentMasterPopUp-form-group-1row">
+            <div className="EquipmentMasterPopUp-form-group">
+              <label>Accumulated:</label>
+              <input
+                type="text"
+                placeholder="Enter Accumulated"
+                name="accumulated"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="EquipmentMasterPopUp-form-group">
+              <label>Accounts:</label>
+              <input
+                type="text"
+                placeholder="Enter Account"
+                name="accounts"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="EquipmentMasterPopUp-form-group">
+              <label>NetValue:</label>
+              <input
+                type="text"
+                placeholder="Enter NetValue"
+                name="netValue"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="EquipmentMasterPopUp-form-group">
+              <label>Equipment No.:</label>
+              <input
+                type="text"
+                placeholder="Enter Equipment No."
+                name="equipmentNo"
+                onChange={handleChange}
+              />
             </div>
           </div>
 
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Description / Asset No.:</label>
-              <textarea placeholder="Enter Description or Asset No." name="assetNo" onChange={handleChange}></textarea>
+              <label>Asset No.:</label>
+              <input
+                placeholder="Enter Asset No."
+                name="assetNo"
+                onChange={handleChange}
+              ></input>
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Remarks:</label>
-              <textarea placeholder="Enter Remarks" name="remarks" onChange={handleChange}></textarea>
+              <input
+                placeholder="Enter Remarks"
+                name="remarks"
+                onChange={handleChange}
+              ></input>
             </div>
             <div className="EquipmentMasterPopUp-form-group">
+              <label>Location Path:</label>
+              <input
+                placeholder="Enter Location Path"
+                name="locationPath"
+                onChange={handleChange}
+              ></input>
             </div>
             <div className="EquipmentMasterPopUp-form-group">
+              <label>Equipment Start:</label>
+              <input
+                placeholder="Enter Equipment Start"
+                name="equipmentStart"
+                onChange={handleChange}
+              ></input>
             </div>
           </div>
           <h4>Equipment Using Dept Info</h4>
@@ -476,39 +596,69 @@ const EquipmentMasterPopUp = ({ onClose }) => {
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
               <label>Location:</label>
-              <select value={selectedAssetLocation} onChange={handleLocationChange}>
+              <select
+                value={selectedAssetLocation}
+                onChange={handleLocationChange}
+              >
                 <option value="">Select Location</option>
                 {assetLocations.map((location) => (
                   <option key={location.locId} value={location.locId}>
                     {location.locationType}
                   </option>
                 ))}
-              </select>              </div>
+              </select>{" "}
+            </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Company:</label>
-              <input type="text" placeholder="Enter Company" name="companyBrand" onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Enter Company"
+                name="companyBrand"
+                onChange={handleChange}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Capacity:</label>
-              <input type="text" placeholder="Enter Capacity" name="capacity" onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Enter Capacity"
+                name="capacity"
+                onChange={handleChange}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Software Version No:</label>
-              <input type="text" placeholder="Enter Software Version No." name="softwareVersion" onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Enter Software Version No."
+                name="softwareVersion"
+                onChange={handleChange}
+              />
             </div>
           </div>
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
               <label>Active:</label>
-              <input type="text" placeholder="Enter Active Status" name="active" onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Enter Active Status"
+                name="active"
+                onChange={handleChange}
+              />
             </div>
 
             <div className="EquipmentMasterPopUp-form-group">
               <label>Department:</label>
-              <select value={selectedDepartment} onChange={handleDepartmentChange}>
+              <select
+                value={selectedDepartment}
+                onChange={handleDepartmentChange}
+              >
                 <option value="">Select Department</option>
                 {departments.map((department) => (
-                  <option key={department.departmentId} value={department.departmentId}>
+                  <option
+                    key={department.departmentId}
+                    value={department.departmentId}
+                  >
                     {department.departmentName}
                   </option>
                 ))}
@@ -522,22 +672,27 @@ const EquipmentMasterPopUp = ({ onClose }) => {
                 {employees.map((employee) => (
                   <option key={employee.employeeId} value={employee.employeeId}>
                     {employee.firstName} {employee.lastName}
-
                   </option>
                 ))}
-              </select>                </div>
+              </select>{" "}
+            </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Responsible Department:</label>
-              <select value={selectedResponsibleDepartment} onChange={handleResponsibleDepartmentChange}>
+              <select
+                value={selectedResponsibleDepartment}
+                onChange={handleResponsibleDepartmentChange}
+              >
                 <option value="">Select Department</option>
                 {responsibleDepartments.map((department) => (
-                  <option key={department.departmentId} value={department.departmentId}>
+                  <option
+                    key={department.departmentId}
+                    value={department.departmentId}
+                  >
                     {department.departmentName}
                   </option>
                 ))}
               </select>
             </div>
-
           </div>
           <h4>Supplier Info</h4>
           <div className="EquipmentMasterPopUp-form-group-1row">
@@ -550,7 +705,8 @@ const EquipmentMasterPopUp = ({ onClose }) => {
                     {supplier.vendorName}
                   </option>
                 ))}
-              </select>            </div>
+              </select>{" "}
+            </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Supplier Address:</label>
               <input type="text" placeholder="Enter Supplier Address" />
@@ -600,7 +756,6 @@ const EquipmentMasterPopUp = ({ onClose }) => {
               <label>Purchase Order No:</label>
               <input type="text" placeholder="Enter Purchase Order No." />
             </div>
-
           </div>
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
@@ -611,69 +766,136 @@ const EquipmentMasterPopUp = ({ onClose }) => {
               <label>Current GRN:</label>
               <input type="text" placeholder="Enter Current GRN" />
             </div>
-            <div className="EquipmentMasterPopUp-form-group">
-
-            </div>
-            <div className="EquipmentMasterPopUp-form-group">
-
-            </div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
           </div>
           <h4>Equipment Power Consumption</h4>
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
               <label>Power Consumption:</label>
-              <input type="text" placeholder="Enter Power Consumption" name="powerConsumption" onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Enter Power Consumption"
+                name="powerConsumption"
+                onChange={handleChange}
+              />
             </div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
           </div>
 
           <h4>Previous GRN Details</h4>
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
               <label>Last GRN No:</label>
-              <input type="text" placeholder="Enter Last GRN No." name="lastGrnNo" onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Enter Last GRN No."
+                name="lastGrnNo"
+                onChange={handleChange}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Last GRN Date:</label>
-              <input type="date" placeholder="Enter Last GRN Date" name="lastGrnDate" onChange={handleChange} />
+              <input
+                type="date"
+                placeholder="Enter Last GRN Date"
+                name="lastGrnDate"
+                onChange={handleChange}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Last GRN User:</label>
-              <input type="text" placeholder="Enter Last GRN User" name="lastGrnUser" onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Enter Last GRN User"
+                name="lastGrnUser"
+                onChange={handleChange}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
+              <label>Financial Equipment:</label>
+              <input
+                type="text"
+                placeholder="Enter Financial Equipment"
+                name="financialEquipment"
+                onChange={handleChange}
+              />
             </div>
           </div>
 
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
               <label>Installation Date:</label>
-              <input type="date" placeholder="Enter Installation Date" name="installationDate" onChange={handleChange} />
+              <input
+                type="date"
+                placeholder="Enter Installation Date"
+                name="installationDate"
+                onChange={handleChange}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Installation Time:</label>
-              <input type="time" placeholder="Enter Installation Time" name="installationTime" onChange={handleChange} />
+              <input
+                type="time"
+                placeholder="Enter Installation Time"
+                name="installationTime"
+                onChange={handleChange}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Installed By:</label>
-              <input type="text" placeholder="Enter Installed By" name="installedBy" onChange={handleChange} />
+              <input
+                type="text"
+                placeholder="Enter Installed By"
+                name="installedBy"
+                onChange={handleChange}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Technical Details:</label>
-              <textarea placeholder="Enter Technical Details" name="technicalDetails" onChange={handleChange}></textarea>
+              <input
+                placeholder="Enter Technical Details"
+                name="technicalDetails"
+                onChange={handleChange}
+              ></input>
             </div>
           </div>
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Remarks:</label>
-              <textarea placeholder="Enter Remarks"></textarea>
+              <label>Status:</label>
+              <input
+                name="status"
+                placeholder="Enter Status"
+                onChange={handleChange}
+              ></input>
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               <label>Warranty Details:</label>
-              <textarea placeholder="Enter Warranty Details" name="warrantyDetails" onChange={handleChange}></textarea>
+              <input
+                placeholder="Enter Warranty Details"
+                name="warrantyDetails"
+                onChange={handleChange}
+              ></input>
             </div>
             <div className="EquipmentMasterPopUp-form-group">
+              <label>Warranty From:</label>
+              <input
+                type="date"
+                placeholder="Enter Warranty From"
+                name="warrantyFrom"
+                onChange={handleChange}
+              />
             </div>
             <div className="EquipmentMasterPopUp-form-group">
+              <label>Warranty To:</label>
+              <input
+                type="date"
+                placeholder="Enter Warranty TO"
+                name="warrantyToDate"
+                onChange={handleChange}
+              />
             </div>
           </div>
           <h4>Documents</h4>
@@ -691,15 +913,10 @@ const EquipmentMasterPopUp = ({ onClose }) => {
               {/* <label>Poid:</label>
               <input type="text" placeholder="" /> */}
             </div>
-            <div className="EquipmentMasterPopUp-form-group">
-            </div>
-
+            <div className="EquipmentMasterPopUp-form-group"></div>
           </div>
         </div>
       </div>
-
-
-
 
       <div className="EquipmentMasterPopUp-form-actions">
         <button
@@ -710,7 +927,6 @@ const EquipmentMasterPopUp = ({ onClose }) => {
         </button>
         {/* <button className="EquipmentMasterPopUp-close-btn" onClick={onClose}>Close</button> */}
       </div>
-
     </div>
   );
 };

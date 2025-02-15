@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa"; // Using react-icons
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 
 const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
@@ -135,7 +137,7 @@ const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
       prevParts.map((row) => (row.id === id ? { ...row, [field]: value } : row))
     );
   };
-
+  
 
   const handleBreakDownChange = (event) => {
     const selectedBreakdownId = event.target.value;
@@ -182,7 +184,7 @@ const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
 
   const handleSave = async () => {
 
-
+    
     try {
       const response = await fetch(`${API_BASE_URL}/maintenance-visits`, {
         method: "POST",
@@ -191,20 +193,20 @@ const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
         },
         body: JSON.stringify(formData),
       });
-
+  
       if (response.ok) {
         const result = await response.json();
-        alert("Maintenance Visit Details saved successfully!");
+        toast.success("Maintenance Visit Details saved successfully!");
       } else {
         const errorData = await response.json();
-        console.error("Error saving data:", errorData);
-        alert("Failed to save maintenance visit details. Please try again.");
+        toast.error("Error saving data:", errorData);
+        toast.error("Failed to save maintenance visit details. Please try again.");
       }
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("Error:", error);
     }
   };
-
+  
 
   // Handle file upload
   const handleUpload = () => {
@@ -239,87 +241,120 @@ const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
         <div className="MaintenanceVisitDetailsPopUp-form-row">
           <div className="MaintenanceVisitDetailsPopUp-form-group-1row">
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="visit-number">Breakdown Details:</label>
-              <select
-                value={selectedBreakdownDtetails}
-                onChange={handleBreakDownChange}
-              >
-                <option value="" disabled>
-                  Select BreakDown Number
-                </option>
-                {breakdownDetails.map((breakdown) => (
-                  <option key={breakdown.breakdownId} value={breakdown.breakdownId}>
-                    {breakdown.breakdownDetails}
-                  </option>
-                ))}
-              </select>
+            <FloatingSelect
+  label={"Breakdown Details"}
+  value={selectedBreakdownDtetails}
+  onChange={handleBreakDownChange}
+  options={[
+    { value: "", label: "Select BreakDown Number", disabled: true },
+    ...breakdownDetails.map((breakdown) => ({
+      value: breakdown.breakdownId,
+      label: breakdown.breakdownDetails
+    }))
+  ]}
+/>
+            
+              </div>
+            <div className="MaintenanceVisitDetailsPopUp-form-group">
+              <FloatingInput
+              label={"Equipment Name"}
+              id="equipment-name" type="text" value={equipmentData.equipmentName}/>
+              
             </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="equipment-name">Equipment Name:</label>
-              <input id="equipment-name" type="text" value={equipmentData.equipmentName} placeholder="Enter Equipment Name" />
+              <FloatingInput
+              label={"Equipment Code"}
+              id="equipment-code" type="text" value={equipmentData.equipmentMasterId}
+              />
+             
             </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="equipment-code">Equipment Code:</label>
-              <input id="equipment-code" type="text" value={equipmentData.equipmentMasterId} placeholder="Enter Equipment Code" />
-            </div>
-            <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="asset-no">Asset No:</label>
-              <input id="asset-no" type="text" value={equipmentData.assetNo} placeholder="Enter Asset No" />
+              <FloatingInput
+              label={"Asset No"}id="asset-no" type="text" value={equipmentData.assetNo}/>
+              
             </div>
           </div>
           <h4>Equipment Details</h4>
           <div className="MaintenanceVisitDetailsPopUp-form-group-1row">
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="manual-code">Manual Code:</label>
-              <input id="manual-code" type="text" placeholder="Enter Manual Code" />
+              <FloatingInput
+              label={"Manual Code"}type="text" />
+           
             </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="location">Location:</label>
-              <input id="location" type="text" value={equipmentData.location} placeholder="Enter Location" />
+              <FloatingInput
+              label={"Location"}
+              id="location" type="text" value={equipmentData.location} />
+             
             </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="category">Category:</label>
-              <input id="category" type="text" value={equipmentData.category} placeholder="Enter Category" />
+              <FloatingInput
+              label={"Category"}
+              id="category" type="text" value={equipmentData.category}
+              />
+             
             </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="depreciation">Depreciation:</label>
-              <input id="depreciation" type="text" value={equipmentData.depreciation} placeholder="Enter Depreciation" />
-            </div>
-          </div>
-          <div className="MaintenanceVisitDetailsPopUp-form-group-1row">
-            <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="serial-no">Serial No.:</label>
-              <input id="serial-no" type="text" value={equipmentData.serialNo} placeholder="Enter Serial No" />
-            </div>
-            <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="model-no">Model No.:</label>
-              <input id="model-no" type="text" value={equipmentData.modelNo} placeholder="Enter Model No" />
-            </div>
-            <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="responsibility-person">Responsibility Person:</label>
-              <input id="responsibility-person" type="text" value={equipmentData.responsiblePerson} placeholder="Enter Responsibility Person" />
-            </div>
-            <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="awc-type">AMC Type:</label>
-              <input id="awc-type" type="text" placeholder="Enter AWC Type" />
+              <FloatingInput
+              label={"Depreciation"}
+              id="depreciation" type="text" value={equipmentData.depreciation}/>
+              
             </div>
           </div>
           <div className="MaintenanceVisitDetailsPopUp-form-group-1row">
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="amc-date">AMC Date:</label>
-              <input id="amc-date" type="date" />
+              <FloatingInput
+              label={"Serial No"}
+              id="serial-no" type="text" value={equipmentData.serialNo}/>
+              
             </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="company-brand">Company Brand:</label>
-              <input id="company-brand" type="text" value={equipmentData.companyBrand} placeholder="Enter Company Brand" />
+              <FloatingInput
+              label={"Model No"}
+              id="model-no" type="text" value={equipmentData.modelNo}/>
+              
             </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="maintenance-type">Maintenance Type:</label>
-              <input id="maintenance-type" type="text" placeholder="Enter Maintenance Type" />
+              <FloatingInput
+              label={"Responsibility Person"}
+              id="responsibility-person" type="text" value={equipmentData.responsiblePerson} 
+              />
+             
             </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="breakdown-number">Breakdown Number:</label>
-              <input id="breakdown-number" type="text" value={selectedBreakdownDtetails} placeholder="Enter Breakdown Number" />
+              <FloatingInput
+              label={"AMC Type"}
+              id="awc-type" type="text" placeholder="Enter AWC Type" />
+              
+            </div>
+          </div>
+          <div className="MaintenanceVisitDetailsPopUp-form-group-1row">
+            <div className="MaintenanceVisitDetailsPopUp-form-group">
+              <FloatingInput
+              label={"AMC Date"}
+              id="amc-date" type="date"
+              />
+             
+            </div>
+            <div className="MaintenanceVisitDetailsPopUp-form-group">
+              <FloatingInput
+              label={"Company Brand"}
+              id="company-brand" type="text" value={equipmentData.companyBrand} />
+             
+            </div>
+            <div className="MaintenanceVisitDetailsPopUp-form-group">
+              <FloatingInput
+              label={"Maintenance Type"}
+              id="maintenance-type" type="text"
+              />
+             
+            </div>
+            <div className="MaintenanceVisitDetailsPopUp-form-group">
+              <FloatingInput
+              label={"Breakdown Number"}
+              id="breakdown-number" type="text" value={selectedBreakdownDtetails}
+              />
+              
             </div>
 
           </div>
@@ -328,76 +363,82 @@ const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
 
           <div className="MaintenanceVisitDetailsPopUp-form-group-1row">
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="execution-name">Supplier Name:</label>
-              <input id="execution-name" type="text" value={equipmentData.supplierName} placeholder="Enter Execution Name" />
+              <FloatingInput label={"Supplier Name"}
+              id="execution-name" type="text" value={equipmentData.supplierName}></FloatingInput>
             </div>
 
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="phone-number">Phone Number:</label>
-              <input id="phone-number" type="tel" value={equipmentData.contactNumber} placeholder="Enter Phone Number" />
+              <FloatingInput
+              label={"Phone Number"}
+              id="phone-number" type="tel" value={equipmentData.contactNumber}/>
+             
             </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="visiting-date">Visiting Date:</label>
-              <input
-                id="visitingDate"
-                type="date"
-                name="visitingDate"
-                value={formData.visitingDate}
-                onChange={handleFormChange}
-              />
+              <FloatingInput
+              label={"Visiting Date"}
+              id="visitingDate"
+              type="date"
+              name="visitingDate"
+              value={formData.visitingDate}
+              onChange={handleFormChange}/>
+             
             </div>
 
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="next-schedule">Next Schedule:</label>
-              <input
-                id="nextSchedule"
-                type="date"
-                name="nextSchedule"
-                value={formData.nextSchedule}
-                onChange={handleFormChange}
+              <FloatingInput
+              label={"Next Schedule"}
+              id="nextSchedule"
+              type="date"
+              name="nextSchedule"
+              value={formData.nextSchedule}
+              onChange={handleFormChange}
               />
-            </div>
+                     
+              </div>
 
           </div>
 
           <div className="MaintenanceVisitDetailsPopUp-form-group-1row">
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="visiting-time">Visiting Time:</label>
-              <input
-                id="visitingTime"
+              <FloatingInput
+              label={"Visiting Time"}
+              id="visitingTime"
                 type="time"
                 name="visitingTime"
                 value={formData.visitingTime}
-                onChange={handleFormChange}
-              />          </div>
+                onChange={handleFormChange}/>
+            
+                      </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="arrival-date">Arrival Date:</label>
-              <input id="arrival-date" type="date" />
+              <FloatingInput
+              label={"Arrival Date"}
+               id="arrival-date" type="date"/>
+             
             </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="arrival-time">Maintainance Type:</label>
-              <select
-                value={selectedMaintainanceTypeMaster}
-                onChange={handleMaintainanceChange}
-              >
-                <option value="" disabled>
-                  Select Maintainance Type
-                </option>
-                {maintainaceTypeMasters.map((maintainaceTypeMaster) => (
-                  <option key={maintainaceTypeMaster.typeMasterId} value={maintainaceTypeMaster.typeMasterId}>
-                    {maintainaceTypeMaster.typeName}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <FloatingSelect
+  label={"Maintenance Type"}
+  value={selectedMaintainanceTypeMaster}
+  onChange={handleMaintainanceChange}
+  options={[
+    { value: "", label: "Select Maintenance Type", disabled: true },
+    ...maintainaceTypeMasters.map((maintainaceTypeMaster) => ({
+      value: maintainaceTypeMaster.typeMasterId,
+      label: maintainaceTypeMaster.typeName
+    }))
+  ]}
+/>
+               
+              </div>
             <div className="MaintenanceVisitDetailsPopUp-form-group">
-              <label htmlFor="repair-details">Repair Details:</label>
-              <textarea
-                id="repairDetails"
+              <FloatingTextarea
+              label={"Repair Details"}
+              id="repairDetails"
                 name="repairDetails"
                 value={formData.repairDetails}
-                onChange={handleFormChange}
-              />          </div>
+                onChange={handleFormChange}/>
+              <label htmlFor="repair-details">:</label>
+                      </div>
           </div>
           <div className="MaintenanceVisitDetailsPopUp-form-group-1row">
 
@@ -437,20 +478,22 @@ const MaintenanceVisitDetailsPopUp = ({ onClose }) => {
                     </td>
                   </td>
                   <td>
-                    <input
-                      type="text"
+                    <FloatingInput
+                     type="text"
                       value={row.partsName}
                       onChange={(e) => handlePartsChange(row.id, 'partsName', e.target.value)}
-                      placeholder="Enter Parts Name"
+                    
                     />
+                    
                   </td>
                   <td>
-                    <input
+                    <FloatingInput
                       type="text"
                       value={row.actionTaken}
                       onChange={(e) => handlePartsChange(row.id, 'actionTaken', e.target.value)}
-                      placeholder="Enter Action Taken"
+                      
                     />
+                    
                   </td>
                   <td>
                     <button

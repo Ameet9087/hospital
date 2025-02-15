@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./AddPerformancePopup.css";
 import { API_BASE_URL } from "../../api/api";
-
+import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 function AddPerformancePopup({ onClose, onAdd }) {
     const [formData, setFormData] = useState({
         employeeDTO: { employeeId: "" },
@@ -63,60 +64,60 @@ function AddPerformancePopup({ onClose, onAdd }) {
                 </div>
                 <form className="addperformance__form" onSubmit={handleSubmit}>
                     <div className="addperformance__formGroup">
-                        <label>Employee:</label>
-                        <select
-                            name="employeeId"
-                            value={formData.employeeDTO.employeeId}
-                            onChange={handleEmployeeChange}
-                            required
-                        >
-                            <option value="" disabled>
-                                Select Employee
-                            </option>
-                            {employees.map((employee) => (
-                                <option key={employee.employeeId} value={employee.employeeId}>
-                                    {employee.firstName} {employee.lastName}
-                                </option>
-                            ))}
-                        </select>
+                    <FloatingSelect
+    label="Employee"
+    name="employeeId"
+    value={formData.employeeDTO.employeeId || ""}
+    onChange={handleEmployeeChange}
+    options={[
+        { value: "", label: "Select Employee", disabled: true },
+        ...employees.map((employee) => ({
+            value: employee.employeeId,
+            label: `${employee.firstName} ${employee.lastName}`,
+        })),
+    ]}
+    placeholder="Select Employee"
+/>
+
+                        
                     </div>
                     <div className="addperformance__formGroup">
-                        <label>Evaluation Date:</label>
-                        <input
-                            type="date"
+                        <FloatingInput
+                        label={"Evaluation Date"}
+                        type="date"
                             value={evaluationDate}
                             onChange={(e) => setEvaluationDate(e.target.value)}
-                            required
-                        />
+                            required/>
+                        
                     </div>
                     <div className="addperformance__formGroup">
-                        <label>Evaluator Name:</label>
-                        <input
-                            type="text"
+                        <FloatingInput
+                        label={"Evaluator Name"}
+                        type="text"
                             value={evaluatorName}
                             onChange={(e) => setEvaluatorName(e.target.value)}
-                            required
-                        />
+                            required/>
+                        
                     </div>
                     <div className="addperformance__formGroup">
-                        <label>Feedback:</label>
-                        <input
-                            type="text"
+                        <FloatingInput
+                        label={"Feedback"}
+                        type="text"
                             value={feedback}
                             onChange={(e) => setFeedback(e.target.value)}
-                            required
-                        />
+                            required/>
+                        
                     </div>
                     <div className="addperformance__formGroup">
-                        <label>Score:</label>
-                        <input
-                            type="number"
+                        <FloatingInput
+                        label={"Score"}
+                        type="number"
                             value={score}
                             onChange={(e) => setScore(e.target.value)}
                             required
                             min="1"
-                            max="10"
-                        />
+                            max="10"/>
+                        
                     </div>
                     <div className="addperformance__formActions">
                         <button type="button" onClick={onClose}>

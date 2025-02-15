@@ -30,6 +30,38 @@ const PreventiveMaintenanceCalibration = () => {
     setShowPopup(false);
   };
 
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <h4> Preventive Maintennance Calibration Report</h4>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
   // Filter breakdown details based on the search query
   const filteredBreakDownDetails = breakDownDetails.filter((breakdown) => {
     return (
@@ -108,7 +140,7 @@ const PreventiveMaintenanceCalibration = () => {
           </button>
           <button
             className="PreventiveMaintenanceCalibration-print-button"
-            onClick={() => window.print()}
+            onClick={handlePrint}
           >
             <i className="fa-solid fa-print"></i> Print
           </button>
