@@ -6,6 +6,7 @@ import VMAddNewVehicle from './vMAddNewVehicle';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import CustomModal from '../../../CustomModel/CustomModal';
 import { API_BASE_URL } from '../../api/api';
+import { useFilter } from '../../ShortCuts/useFilter';
 
 const VehicleMaintenance = () => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -92,6 +93,15 @@ const VehicleMaintenance = () => {
     newWindow.close();
   };
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  const addVehicles = useFilter(addVehicle, searchTerm);
+
+
+
   return (
     <div className="vehicleMaintenance-container">
       <div className="vehicleMaintenance-firstRow">
@@ -99,6 +109,25 @@ const VehicleMaintenance = () => {
           <button className="vehicleMaintenance-add-button" onClick={handleAddNewLabTestClick}>+Add New Vehicle</button>
         </div>
       </div>
+
+      <div className="vehicleMaintenance-search-N-result">
+        <div className="vehicleMaintenance-search-bar">
+          {/* <i className="fa-solid fa-magnifying-glass"></i> */}
+          <input type="text" placeholder="Search..."
+           value={searchTerm}
+           onChange={handleSearch}
+         />
+
+    
+        </div>
+        <div className="vehicleMaintenance-results-info">
+          <span>Showing {addVehicle.length} / {addVehicle.length} results</span>
+          <button className="vehicleMaintenance-print-button"><i className="fa-solid fa-file-excel"></i> Export</button>
+          <button className="vehicleMaintenance-print-button" onClick={handlePrint}><i className="fa-solid fa-print"></i> Print</button>
+        </div>
+      </div>
+
+
       <div className="table-container">
         <table ref={tableRef}>
           <thead>

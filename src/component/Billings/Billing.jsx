@@ -11,6 +11,7 @@ import OpdBillingPrint from "./OpdBilling/OpdBillingPrint";
 import IPMoneyReceiptPrint from "./IP_Billing/Transactions/IPMoneyReceipt/IPMoneyReceiptPrint";
 import IpBillingPrint from "./IP_Billing/IpBillingPrint";
 import FinalBillPrint from "./IP_Billing/Transactions/FinalBill/FinalBillPrint"
+import OPDPostDiscountTable from "./OpdBilling/OPDPostDiscountTable";
 
 const Billing = () => {
   return (
@@ -19,7 +20,7 @@ const Billing = () => {
       <Routes>
         <Route path="/ipbilling/*" element={<IPBilling />} />
         <Route path="/opdbilling" element={<OpdBilling />} />
-        <Route path="/opdpostdiscount" element={<OPDPostDiscount />} />
+        <Route path="/opdpostdiscount" element={<OPDPostDiscountTable />} />
 
         <Route path="/ipdmoneyrecipt" element={<Ipmoneyreceipt />} />
 

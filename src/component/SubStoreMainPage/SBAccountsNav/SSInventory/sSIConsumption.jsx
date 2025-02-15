@@ -7,6 +7,13 @@ import SSIPatientConsumConsumEntry from './sSIPatientConsumConsumEntry';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
 import CustomModal from '../../../../CustomModel/CustomModal';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 function SSIPatientConsumption() {
   const { store } = useParams();
   const [consumptions, setConsumptions] = useState([]);
@@ -14,6 +21,8 @@ function SSIPatientConsumption() {
   const [error, setError] = useState(null);
   const [showNewPatientConsumption, setShowNewPatientConsumption] = useState(false);
   const printRef = useRef();
+const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   useEffect(() => {
     const fetchConsumptions = async () => {
@@ -59,37 +68,62 @@ function SSIPatientConsumption() {
   const handleBack = () => {
     setShowNewPatientConsumption(false);
   };
-
-  const handlePrint = useReactToPrint({
-    content: () => printRef.current,
-    documentTitle: 'Patient Consumption Report',
-    pageStyle: `
-      @page {
-        size: A4;
-        margin: 20mm;
-      }
-    `,
-  });
-
-  const handleExportToExcel = () => {
-    const tableData = [
-      ['Consumed Date', 'Consumed Item', 'Consumed Qty', 'Unit', 'Consumption Type Name', 'Entered By', 'Remarks'],
-      ...consumptions.map(item => [
-        item.consumedDate,
-        item.consumedItem,
-        item.consumedQty,
-        item.unit,
-        item.consumptionTypeName,
-        item.enteredBy,
-        item.remarks
-      ])
-    ];
-
-    const worksheet = XLSX.utils.aoa_to_sheet(tableData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Report');
-    XLSX.writeFile(workbook, 'Consumption_Report.xlsx');
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
   };
+
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
+  };
+
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'Consumption'); // Appends worksheet to workbook
+    XLSX.writeFile(wb, 'Consumption.xlsx'); // Downloads the Excel file
+  }
 
   return (
     <div className="sSIConsumption-active-imaging-request">
@@ -133,35 +167,61 @@ function SSIPatientConsumption() {
         </div>
         <div className="sSIConsumption-search-N-results">
           <div className="sSIConsumption-search-bar">
-            <i className="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Search" />
+           
+            <FloatingInput
+            label={"Search"}
+            type="search"
+            
+            />
           </div>
-          <div className="sSIConsumption-results-info">
+         
+        </div>
+        <div className="sSIConsumption-results-btn">
             <p> Showing {consumptions.length} /  {consumptions.length} results</p>
 
-            <button className='sSIConsumption-print-btn' onClick={handleExportToExcel}>
+
+            <button className='sSIConsumption-print-btn' onClick={handleExport}>
               <i className="fa-regular fa-file-excel"></i> Export
             </button>
-            <button className='sSIConsumption-print-btn' onClick={handlePrint}>Print</button>
+            <button className='sSIConsumption-print-btn' onClick={printList}>Print</button>
           </div>
-        </div>
         <div style={{ display: 'none' }}>
-          <div ref={printRef}>
+          <div ref={tableRef}>
             <h2>Patient Consumption Report</h2>
             <p>Printed On: {new Date().toLocaleString()}</p>
             <div className="sSIConsumption-table-N-paginat">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Consumed Date</th>
-                    <th>Requisition Item ID</th>
-                    <th>Consumed Qty</th>
-                    <th>Unit</th>
-                    <th>Consumption Type Name</th>
-                    <th>Entered By</th>
-                    <th>Remarks</th>
-                  </tr>
-                </thead>
+               <table  ref={tableRef}>
+                         <thead>
+                           <tr>
+                             {[ "Consumed Date",
+  "Requisition Item ID",
+  "Consumed Qty",
+  "Unit",
+  "Consumption Type Name",
+  "Entered By",
+  "Remarks"].map(
+                               (header, index) => (
+                                 <th
+                                   key={index}
+                                   style={{ width: columnWidths[index] }}
+                                   className="resizable-th"
+                                 >
+                                   <div className="header-content">
+                                     <span>{header}</span>
+                                     <div
+                                       className="resizer"
+                                       onMouseDown={startResizing(
+                                         tableRef,
+                                         setColumnWidths
+                                       )(index)}
+                                     ></div>
+                                   </div>
+                                 </th>
+                               )
+                             )}
+                           </tr>
+                         </thead>
+
                 <tbody>
                   {consumptions.map((consumption, index) => (
                     <React.Fragment key={index}>

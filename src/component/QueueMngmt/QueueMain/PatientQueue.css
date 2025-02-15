@@ -55,15 +55,9 @@
   
   .queue-management-form-group {
     margin-right: 20px;
+    width: 200px;
     margin-left: 10px;
     
-  }
-  
-  .queue-management-form-group label {
-    color: #004080;
-    margin-left: 10px;
-    font-size: 14px;
-    margin-right: 5px;
   }
   
   .queue-management-select-doctor {
@@ -82,13 +76,11 @@
   
   .queue-management-status-options {
     display: flex;
+    margin-left: 10px;
     gap: 10px;
   }
   
-  .queue-management-status-options input {
-    margin-right: 5px;
-  }
-  
+
   .queue-management-load-data-button {
     background-color: var(--button-color);
     color: white;
@@ -114,14 +106,14 @@
     justify-content: flex-start;
     margin-bottom: 10px;
   }
-  
+/*   
   .queue-management-search-container input {
     padding: 8px;
     border-radius: 4px;
     border: 1px solid #ccc;
     width: 200px;
   }
-  
+   */
   .queue-management-search-button {
     padding: 8px;
     border-radius: 4px;

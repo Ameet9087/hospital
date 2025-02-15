@@ -1,46 +1,46 @@
-import React, { useState } from 'react';
-import './VerifyPurchaseDetails.css';
-import { API_BASE_URL } from '../api/api';
-
-const VerifyPurchaseDetails = ({ onclose, request,handleCloseForm  }) => {
-  const [status, setStatus] = useState(request.status || 'active');
-  const [remarks, setRemarks] = useState(request.remarks || '');
-  const [verifiedBy,setVerifiedBy] = useState();
+import React, { useState } from "react";
+import "./VerifyPurchaseDetails.css";
+import { API_BASE_URL } from "../api/api";
+import { FloatingInput, FloatingSelect } from "../../FloatingInputs";
+import { toast } from "react-toastify";
+const VerifyPurchaseDetails = ({ onclose, request, handleCloseForm }) => {
+  const [status, setStatus] = useState(request.status || "active");
+  const [remarks, setRemarks] = useState(request.remarks || "");
+  const [verifiedBy, setVerifiedBy] = useState();
 
   const currentDate = new Date(Date.now()).toLocaleDateString();
 
   const handleSubmit = async () => {
     if (!status || !verifiedBy) {
-      alert('Please fill out both the status and verified by fields.');
+      toast.error("Please fill out both the status and verified by fields.");
       return; // Stop execution if validation fails
     }
-  
+
     try {
       const response = await fetch(
         `${API_BASE_URL}/purchase-requests/${request.id}/verify?status=${status}&verifyOrNot=Yes&verifyBy=${verifiedBy}`,
         {
-          method: 'PUT',
+          method: "PUT",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
-  
+
       if (response.ok) {
-        alert('Purchase request updated successfully!');
+        toast.success("Purchase request updated successfully!");
         handleCloseForm();
       } else {
-        alert('Failed to update purchase request.');
+        toast.error("Failed to update purchase request.");
       }
     } catch (error) {
-      console.error('Error updating purchase request:', error);
-      alert('An error occurred. Please try again.');
+      console.error("Error updating purchase request:", error);
+      // toast.error("An error occurred. Please try again.");
     }
   };
-  
 
   const handleRejectAll = async () => {
-    setStatus('reject');
+    setStatus("reject");
     await handleSubmit();
   };
 
@@ -83,36 +83,49 @@ const VerifyPurchaseDetails = ({ onclose, request,handleCloseForm  }) => {
         </thead>
         <tbody>
           {request.items.length > 0 &&
-          request.items.map((item,index)=>(
-            <tr key={index}>
-              <td>{item?.itemId?.itemName}</td>
-              <td>{item?.itemId?.unitOfMeasurement?.name}</td>
-              <td>{item?.requiredQty}</td>
-              <td>{request?.status}</td>
-            </tr>
-          ))
-          }
+            request.items.map((item, index) => (
+              <tr key={index}>
+                <td>{item?.itemId?.itemName}</td>
+                <td>{item?.itemId?.unitOfMeasurement?.name}</td>
+                <td>{item?.requiredQty}</td>
+                <td>{request?.status}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
-<div className='verify-purchase-update-container'>
-      <div className="verify-purchase-status">
-        <label htmlFor="status">Status:</label>
-        <select id="status" value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option value="">Select Status</option>
-          <option value="Approved">Approved</option>
-          <option value="Reject">Reject</option>
-        </select>
-      </div>
+      <div className="verify-purchase-update-container">
+        <div className="verify-purchase-status">
+          <FloatingSelect
+            label={"Status"}
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            options={[
+              { value: "", label: "Select Accounting" },
+              { value: "Approved", label: "Approved" },
+              { value: "Reject", label: "Reject" },
+            ]}
+          />
+        </div>
 
-      <div className="verify-purchase-status">
-        <label htmlFor="status">Verified By:</label>
-        <input type="text" name='verifiedBy' value={verifiedBy} onChange={(e)=>setVerifiedBy(e.target.value)}/>
-      </div>
+        <div className="verify-purchase-status">
+          <FloatingInput
+          label={"Verified By"}
+          type="text"
+          name="verifiedBy"
+          value={verifiedBy}
+          onChange={(e) => setVerifiedBy(e.target.value)}
+          />
+       
+        </div>
       </div>
 
       <div className="verify-purchase-actions">
-        <button className="verify-purchase-approve" onClick={handleSubmit}>✔ Approve</button>
-        <button className="verify-purchase-reject" onClick={handleRejectAll}>❌ Reject All</button>
+        <button className="verify-purchase-approve" onClick={handleSubmit}>
+          ✔ Approve
+        </button>
+        <button className="verify-purchase-reject" onClick={handleRejectAll}>
+          ❌ Reject All
+        </button>
       </div>
     </div>
   );

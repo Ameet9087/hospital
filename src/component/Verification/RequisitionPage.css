@@ -84,7 +84,7 @@
 /* Status section */
 .requisitionStatusSection {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   /* margin-top: 20px; */
   background-color: var(--background-color);
   padding: 10px;
@@ -172,12 +172,23 @@
   }
 }
 
-.actionButton {
-  background-color: var(--button-color);
+
+.requisition-verify-btn{
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
   color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
+  /* border: none; */
+  /* margin-right: 10px; */
+  border-radius: 5px;
   cursor: pointer;
-  margin-right: 5px;
+  font-size: var(--font-size);
+  margin: 1px;
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
+}
+
+.requisition-verify-btn:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
 }

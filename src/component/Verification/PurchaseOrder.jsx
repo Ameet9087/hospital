@@ -78,10 +78,7 @@ function PurchaseOrder() {
   return (
     <div className="requisitionPageContainer">
       <div className="requisitionFilterSection">
-        <label className="requisitionCheckboxLabel">
-          <input type="checkbox" />
-          Check and Verify Purchase Order
-        </label>
+      
         <div className="requisitionDatePickerContainer">
           <label>From:</label>
           <input
@@ -91,6 +88,7 @@ function PurchaseOrder() {
             onChange={(e) => setFromDate(e.target.value)}
           />
           <label>To:</label>
+
           <input
             type="date"
             className="requisitionDateInput"
@@ -99,6 +97,10 @@ function PurchaseOrder() {
           />
           <button className="requisitionOkButton">OK</button>
         </div>
+        {/* <label className="requisitionCheckboxLabel">
+          <input type="checkbox" />
+          Check and Verify Purchase Order
+        </label> */}
       </div>
 
       <div className="requisitionStatusSection">
@@ -144,13 +146,12 @@ function PurchaseOrder() {
             All
           </label>
         </div>
-        <div className="requisitionDropdownContainer">
+        {/* <div className="requisitionDropdownContainer">
           <label>Requisition Status:</label>
           <select className="requisitionDropdown">
             <option value="all">--ALL--</option>
-            {/* Add more options as needed */}
           </select>
-        </div>
+        </div> */}
       </div>
 
       <div className="requisitionTableContainer">

@@ -137,19 +137,7 @@
 .LinensIssueNewPopUp-floating-field {
   position: relative;
 }
-.LinensIssueNewPopUp-floating-input,
-.LinensIssueNewPopUp-floating-select {
-  padding: 5px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: var(--font-size);
-  background: white;
-  transition: all 0.2s ease;
-}
 
-.LinensIssueNewPopUp-form-floating-field {
-  position: relative;
-}
 .LinensIssueNewPopUp-search-field {
   position: relative;
 }
@@ -169,17 +157,8 @@
   justify-content: center;
   z-index: 1;
 }
-.LinensIssueNewPopUp-floating-input:focus,
-.LinensIssueNewPopUp-floating-select:focus {
-  outline: none;
-  border-color: #00897b;
-  box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
-}
-.LinensIssueNewPopUp-services-section {
-  background: white;
-  border: 1px solid #ccc;
-  margin-bottom: 5px;
-}
+
+
 .LinensIssueNewPopUp-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -189,41 +168,4 @@
   /* margin-top: 10px; */
 }
 
-.LinensIssueNewPopUp-form-floating-input,
-.LinensIssueNewPopUp-form-floating-select {
-  padding: 5px 12px;
-  border: 1px solid #00897b;
-  border-radius: 4px;
-  font-size: 14px;
-  background: white;
-  transition: all 0.2s ease;
-}
-.LinensIssueNewPopUp-form-floating-input{
-  width: 92%;
-}
-.LinensIssueNewPopUp-form-floating-select {
-  width: 100%;
-}
-.LinensIssueNewPopUp-form-floating-label {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: white;
-  padding: 0 4px;
-  /* color: #00897b; */
-  pointer-events: none;
-  transition: all 0.2s ease;
-  font-size: var(--font-size);
-  border-color: #00897b;
-}
-.LinensIssueNewPopUp-form-floating-field.active .LinensIssueNewPopUp-form-floating-label {
-  top: 0;
-  font-size: 12px;
-  color: #00897b;
 
-}
-.LinensIssueNewPopUp-form-floating-field.active .LinensIssueNewPopUp-form-floating-input,
-.LinensIssueNewPopUp-form-floating-field.active .LinensIssueNewPopUp-form-floating-select {
-  border-color: #00897b;
-}

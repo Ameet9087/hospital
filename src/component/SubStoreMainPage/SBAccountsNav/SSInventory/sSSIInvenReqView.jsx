@@ -125,7 +125,7 @@ const SSSIInvenReqView = ({ onClose, requisition }) => {
         </div>*/}
 
       <div className="subStore-requisition-table" >
-        <div className="subStore-table-header"><h1>REQUISITION DETAILS PRINT</h1> <span className='closeButton' onClick={() => onClose(false)}>X</span></div>
+        <div className="subStore-table-header"><h1>REQUISITION DETAILS PRINT</h1> </div>
         <table>
           <thead>
             <tr>

@@ -1,12 +1,18 @@
 // Specialisations.js
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './Specialisations.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { API_BASE_URL } from '../../api/api';
-import IpMasterPopupTable from '../IPMaster/IpMasterPopupTable';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./Specialisations.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate, useLocation } from "react-router-dom";
+import { API_BASE_URL } from "../../api/api";
+import IpMasterPopupTable from "../IPMaster/IpMasterPopupTable";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 
 function Specialisations({ onClose }) {
   const [activePopup, setActivePopup] = useState("");
@@ -22,6 +28,7 @@ function Specialisations({ onClose }) {
   ]);
 
   const [specialisation, setSpecialisation] = useState({
+
     specialisationName: '',
     groupSpeciality: '',
     description: '',
@@ -29,7 +36,7 @@ function Specialisations({ onClose }) {
     hospitalSpecialisation: 'Yes',
     groupId: '',
   });
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const [specialisationsList, setSpecialisationsList] = useState([]);
   const [editingRowIndex, setEditingRowIndex] = useState(null);
   const { specilityGroupName } = location.state || {};
@@ -50,7 +57,9 @@ function Specialisations({ onClose }) {
   const fetchSpecialisations = async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/specialityGroups`);
-      const locationResponse = await axios.get(`${API_BASE_URL}/location-masters`);
+      const locationResponse = await axios.get(
+        `${API_BASE_URL}/location-masters`
+      );
       setLocations(locationResponse.data);
       setSpecialisationsList(response.data);
     } catch (error) {
@@ -59,7 +68,7 @@ function Specialisations({ onClose }) {
   };
 
   const handleSearchClick = () => {
-    navigate('/Display-SpecialityGroup');
+    navigate("/Display-SpecialityGroup");
   };
 
   const addSpecialisation = async () => {
@@ -79,11 +88,11 @@ function Specialisations({ onClose }) {
 
   const resetForm = () => {
     setSpecialisation({
-      specialisationName: '',
-      groupSpeciality: '',
-      description: '',
-      status: 'Active',
-      hospitalSpecialisation: 'Yes',
+      specialisationName: "",
+      groupSpeciality: "",
+      description: "",
+      status: "Active",
+      hospitalSpecialisation: "Yes",
     });
     setStatus("Active");
   };
@@ -116,6 +125,7 @@ function Specialisations({ onClose }) {
       setSpecialisation((prevState) => ({
         ...prevState,
         groupSpeciality: data.specialityGroup,
+
         groupId: data.groupId
       }));
     }
@@ -123,7 +133,9 @@ function Specialisations({ onClose }) {
       // Update the specific row with the selected location
       setSelectedLocation((prevLocations) =>
         prevLocations.map((loc, i) =>
-          i === editingRowIndex ? { ...loc, id: data.id, name: data.locationName } : loc
+          i === editingRowIndex
+            ? { ...loc, id: data.id, name: data.locationName }
+            : loc
         )
       );
       setActivePopup(null); // Close the popup
@@ -136,6 +148,7 @@ function Specialisations({ onClose }) {
       return { columns: ["specialityGroup"], data: specialisationsList };
     } else if (activePopup === "location") {
       return { columns: ["locationName"], data: locations };
+
     }
     else {
       return { columns: [], data: [] };
@@ -153,8 +166,8 @@ function Specialisations({ onClose }) {
 
       <div className="specialisations__form-container">
         <div className="specialisations__form-group">
-          <label>Specialisation: *</label>
-          <input
+          <FloatingInput
+            label="Specialisation *"
             type="text"
             name="specialisationName"
             value={specialisation.specialisationName}
@@ -163,25 +176,20 @@ function Specialisations({ onClose }) {
         </div>
 
         <div className="specialisations__form-group">
-          <label>Group Speciality: *</label>
-          <input
-            type="text"
+          <FloatingInput
+            label="Group Speciality *"
+            type="search"
             name="groupSpeciality"
             value={specialisation.groupSpeciality}
             onChange={handleInputChange}
+            onIconClick={() => setActivePopup("groupSpeciality")}
+            
           />
-          <button
-            type="button"
-            className="search-icon-button"
-            onClick={() => setActivePopup("groupSpeciality")}
-          >
-            <FontAwesomeIcon icon={faSearch} />
-          </button>
         </div>
 
         <div className="specialisations__form-group">
-          <label>Description: *</label>
-          <input
+          <FloatingInput
+            label="Description *"
             type="text"
             name="description"
             value={specialisation.description}
@@ -214,17 +222,19 @@ function Specialisations({ onClose }) {
         </div>
 
         <div className="specialisations__form-group-sub">
-          <label>Hospital Specialisation: *</label>
-          <select
+          <FloatingSelect
+            label="Hospital Specialisation *"
             name="hospitalSpecialisation"
             value={specialisation.hospitalSpecialisation}
             onChange={handleInputChange}
-            className='specialisations__form-group-sub-input'
-          >
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
+            options={[
+              { value: "Yes", label: "Yes" },
+              { value: "No", label: "No" },
+            ]}
+            className="specialisations__form-group-sub-input"
+          />
         </div>
+
 
         <div className="LocationsTable-container" tabIndex="0">
           <div className="LocationsTable-header">
@@ -285,6 +295,7 @@ function Specialisations({ onClose }) {
           Save Specialisation
         </button>
       </div>
+
       {activePopup && (
         <IpMasterPopupTable
           columns={columns}
@@ -294,7 +305,6 @@ function Specialisations({ onClose }) {
         />
       )}
     </div>
-
   );
 }
 

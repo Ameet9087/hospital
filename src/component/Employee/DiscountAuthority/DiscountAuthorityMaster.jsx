@@ -5,8 +5,14 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { API_BASE_URL } from "../../api/api";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs/index";
 
-import { FloatingInput, PopupTable } from "../../../FloatingInputs";
+import { PopupTable } from "../../../FloatingInputs/index";
 
 const DiscountAuthorityMaster = () => {
   const [activePopup, setActivePopup] = useState(null);
@@ -133,17 +139,17 @@ const DiscountAuthorityMaster = () => {
             `${API_BASE_URL}/discount-authorities`,
             payload
           );
-          alert("Form submitted successfully.");
+          toast.success("Form submitted successfully.");
         } catch (error) {
           console.error("Error submitting form:", error);
-          alert(
+          toast.error(
             error.response?.data || "Error submitting form. Please try again."
           );
         }
       };
       reader.readAsBinaryString(uploadedFile.file);
     } else {
-      alert("No digital signature file selected.");
+      toast.error("No digital signature file selected.");
     }
   };
 
@@ -241,6 +247,8 @@ const DiscountAuthorityMaster = () => {
       </div>
       <div className="DiscountAuthorityMaster-content">
         <div className="DiscountAuthorityMaster-section">
+          {/* Form Fields */}
+          
           <div className="DiscountAuthorityMaster-data">
             <FloatingInput
               label={"Location"}
@@ -253,62 +261,60 @@ const DiscountAuthorityMaster = () => {
           <div className="DiscountAuthorityMaster-data">
             <label>Authorization Name :</label>
             <input
+
               type="text"
               name="authorizationName"
               value={formData.authorizationName}
               onChange={handleInputChange}
             />
-          </div>
-          <div className="DiscountAuthorityMaster-data">
-            <label>Mobile No :</label>
-            <input
+            <FloatingInput
+              label="Mobile No"
               type="text"
               name="mobileNo"
               value={formData.mobileNo}
               onChange={handleInputChange}
             />
           </div>
+
           <div className="DiscountAuthorityMaster-Section-header">Status</div>
           <div className="DiscountAuthorityMaster-data">
-            <label>Send SMS (Ref. Dr/Org):</label>
-            <input
-              type="checkbox"
-              name="sendSMS"
-              checked={formData.sendSMS === "Yes"}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="DiscountAuthorityMaster-data">
-            <label>Active:</label>
-            <input
-              type="checkbox"
-              name="active"
-              checked={formData.active === "Yes"}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="DiscountAuthorityMaster-data">
-            <label>Discount % Authorized To Give:</label>
-            <input
-              type="text"
-              name="discountPercentage"
-              value={formData.discountPercentage}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="DiscountAuthorityMaster-data">
-            <label>Select Authority Person's UserName:</label>
-            <input
-              type="text"
-              name="userName"
-              value={formData.userName}
-              onChange={handleInputChange}
-            />
-            <FontAwesomeIcon
-              className="DiscountAuthorityMaster-search-icon"
-              icon={faSearch}
-              onClick={() => setActivePopup("UserName")}
-            />
+            <div className="DiscountAuthorityMaster-data-checkbox">
+              <label>Send SMS (Ref. Dr/Org):</label>
+              <input
+                type="checkbox"
+                name="sendSMS"
+                checked={formData.sendSMS === "Yes"}
+                onChange={handleInputChange}
+              />
+              <label className="DiscountAuthorityMaster-data-checkbox-active">
+                Active:
+              </label>
+              <input
+                type="checkbox"
+                name="active"
+                checked={formData.active === "Yes"}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="DiscountAuthorityMaster-data-discount">
+              <FloatingInput
+                label="Discount % Authorized To Give"
+                type="text"
+                name="discountPercentage"
+                value={formData.discountPercentage}
+                onChange={handleInputChange}
+              />
+
+              <FloatingInput
+                label="Select Authority Person's UserName"
+                type="search"
+                name="userName"
+                value={formData.userName}
+                onChange={handleInputChange}
+                onIconClick={() => setActivePopup("UserName")}
+              />
+            </div>
           </div>
 
           {/* File Upload Section */}
@@ -316,26 +322,33 @@ const DiscountAuthorityMaster = () => {
             <div className="DiscountAuthorityMaster-Section-header">
               Attach Digital Signature Here
             </div>
-            <div className="DiscountAuthorityMaster-data">
-              <label>File Name:</label>
-              <input
-                type="text"
-                name="fileName"
-                value={fileInput.fileName}
-                onChange={handleFileInputChange}
-              />
+            <div className="DiscountAuthorityMaster-data-attach">
+              <div className="DiscountAuthorityMaster-data-attach-filename">
+                <FloatingInput
+                  label="File Name"
+                  type="text"
+                  name="fileName"
+                  value={fileInput.fileName}
+                  onChange={handleFileInputChange}
+                />
+              </div>
+
+              <div>
+                <label>Choose File:</label>
+                <input
+                  type="file"
+                  name="file"
+                  onChange={handleFileInputChange}
+                />
+                <button
+                  onClick={handleFileUpload}
+                  className="DiscountAuthorityMaster-upload"
+                  disabled={isLoading}
+                >
+                  Upload
+                </button>
+              </div>
             </div>
-            <div>
-              <label>Choose File:</label>
-              <input type="file" name="file" onChange={handleFileInputChange} />
-            </div>
-            <button
-              onClick={handleFileUpload}
-              className="DiscountAuthorityMaster-upload"
-              disabled={isLoading}
-            >
-              Upload
-            </button>
           </div>
 
           {/* Files Table */}

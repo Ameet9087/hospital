@@ -157,18 +157,21 @@
   display: none;
 }
 .er-initial-assessment-com-tab {
-  padding: 4px 12px;
-  border: 1px solid var(--button-color);
+  background-color:var( --button-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: white;
+ 
   border-radius: 5px;
-  color: var(--button-color);
-  font-size: var(--font-size);
-  background: var(--button-hover-background-color);
   cursor: pointer;
-  white-space: nowrap;
+  font-size: var(--font-size);
+ 
+  transition: background-color 0.3s ease;
+  padding: 5px 5px;
 }
 .er-initial-assessment-com-tab:hover {
-  background-color: var(--button-color);
-  color: var(--button-hover-background-color);
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
 }
 .er-initial-assessment-com-tab.active {
   background: var(--button-color);
@@ -471,4 +474,19 @@
   .er-initial-assessment-com-full-width {
     grid-column: span 1;
   }
+}
+
+.er-initial-assessment-com-section-back{
+  background-color: var(--button-color);
+  font-size: var(--font-size);
+  border-radius: 5px;
+  padding: 8px 12px;
+  border: 1px solid var(--button-hover-background-color);
+  color: white;
+  cursor: pointer;
+}
+.er-initial-assessment-com-section-back:hover{
+  background-color: var(--button-hover-background-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
 }

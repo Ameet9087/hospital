@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
-import './UpdateVendor.css'; // Import the CSS file
-import { API_BASE_URL } from '../../api/api';
-
-const UpdateVendor = ({vendor, onClose }) => {
+import React, { useState } from "react";
+import "./UpdateVendor.css"; // Import the CSS file
+import { API_BASE_URL } from "../../api/api";
+import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
+const UpdateVendor = ({ vendor, onClose }) => {
   const [formValues, setFormValues] = useState({
-    vendorName: vendor?.vendorName || '',
-    contactAddress: vendor?.contactAddress || '',
-    contactNumber: vendor?.contactNumber || '',
-    currencyCode: vendor?.currencyCode || '',
-    vendorCode: vendor?.vendorCode || '',
-    vendorCountry: vendor?.vendorCountry || '',
-    kraPin: vendor?.kraPin || '',
-    bankDetails: vendor?.bankDetails || '',
-    contactPerson: vendor?.contactPerson || '',
-    email: vendor?.email || '',
-    creditPeriod: vendor?.creditPeriod || '',
-    govtRegDate: vendor?.govtRegDate || '',
+    vendorName: vendor?.vendorName || "",
+    contactAddress: vendor?.contactAddress || "",
+    contactNumber: vendor?.contactNumber || "",
+    currencyCode: vendor?.currencyCode || "",
+    vendorCode: vendor?.vendorCode || "",
+    vendorCountry: vendor?.vendorCountry || "",
+    kraPin: vendor?.kraPin || "",
+    bankDetails: vendor?.bankDetails || "",
+    contactPerson: vendor?.contactPerson || "",
+    email: vendor?.email || "",
+    creditPeriod: vendor?.creditPeriod || "",
+    govtRegDate: vendor?.govtRegDate || "",
     isActive: vendor?.isActive ?? true,
     receiveDonation: vendor?.receiveDonation ?? false,
   });
@@ -25,64 +26,78 @@ const UpdateVendor = ({vendor, onClose }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-    setErrors({ ...errors, [name]: '' }); // Clear the error when the user starts typing
+    setErrors({ ...errors, [name]: "" }); // Clear the error when the user starts typing
   };
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validatePhoneNumber = (number) => /^\d{10}$/.test(number);
 
-  const handleSubmit = async () => {
-    const requiredFields = ['vendorName', 'contactAddress', 'contactNumber', 'currencyCode', 'vendorCode'];
-    const newErrors = {};
+const handleSubmit = async () => {
+  const requiredFields = [
+    "vendorName",
+    "contactAddress",
+    "contactNumber",
+    "currencyCode",
+    "vendorCode",
+  ];
+  const newErrors = {};
 
-    requiredFields.forEach(field => {
-      if (!formValues[field]) {
-        newErrors[field] = `${field.replace(/([A-Z])/g, ' $1')} is required`;
-      }
+  requiredFields.forEach((field) => {
+    if (!formValues[field]) {
+      newErrors[field] = `${field.replace(/([A-Z])/g, " $1")} is required`;
+    }
+  });
+
+  if (formValues.email && !validateEmail(formValues.email)) {
+    newErrors.email = "Invalid email format";
+  }
+
+  if (
+    formValues.contactNumber &&
+    !validatePhoneNumber(formValues.contactNumber)
+  ) {
+    newErrors.contactNumber = "Invalid contact number";
+  }
+
+  console.log(formValues);
+
+  if (Object.keys(newErrors).length > 0) {
+    setErrors(newErrors);
+    toast.error("Please fill in all required fields correctly!", { autoClose: 2000 });
+    return;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/vendors/${vendor.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formValues),
     });
 
-    if (formValues.email && !validateEmail(formValues.email)) {
-      newErrors.email = 'Invalid email format';
-    }
-
-    if (formValues.contactNumber && !validatePhoneNumber(formValues.contactNumber)) {
-      newErrors.contactNumber = 'Invalid contact number';
-    }
-
-    console.log(formValues);
-    
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    if (response.ok) {
+      toast.success("Vendor updated successfully!", { autoClose: 2000 });
+      // alert("Vendor updated successfully!");
+      onClose(); // Close the modal after successful update
     } else {
-      try {
-        const response = await fetch(`${API_BASE_URL}/vendors/${vendor.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formValues),
-        });
-
-        if (response.ok) {
-          alert('Vendor updated successfully!');
-          onClose(); // Close the modal after successful update
-        } else {
-          alert('Failed to update vendor');
-        }
-      } catch (error) {
-        console.error('Error updating vendor:', error);
-        alert('An error occurred while updating the vendor');
-      }
+      toast.error("Failed to update vendor", { autoClose: 2000 });
+      alert("Failed to update vendor");
     }
-  };
+  } catch (error) {
+    console.error("Error updating vendor:", error);
+    toast.error("An error occurred while updating the vendor", { autoClose: 2000 });
+    alert("An error occurred while updating the vendor");
+  }
+};
 
   return (
     <div className="vendddContainer">
       <h2 className="vendddHeading">Update Vendor</h2>
       <div className="vendddFormContainer">
         <div className="vendddColumn">
-          <VendddFormRow
-            label="Vendor Name"
+          <FloatingInput
+            label={"Vendor Name"}
             name="vendorName"
             required
             value={formValues.vendorName}
@@ -90,8 +105,8 @@ const UpdateVendor = ({vendor, onClose }) => {
             placeholder="Vendor Name"
             error={errors.vendorName}
           />
-          <VendddFormRow
-            label="Contact Address"
+          <FloatingInput
+            label={"Contact Address"}
             name="contactAddress"
             required
             value={formValues.contactAddress}
@@ -99,8 +114,8 @@ const UpdateVendor = ({vendor, onClose }) => {
             placeholder="Contact Address"
             error={errors.contactAddress}
           />
-          <VendddFormRow
-            label="Contact Number"
+          <FloatingInput
+            label={"Contact Number"}
             name="contactNumber"
             required
             value={formValues.contactNumber}
@@ -108,26 +123,54 @@ const UpdateVendor = ({vendor, onClose }) => {
             placeholder="Contact Number"
             error={errors.contactNumber}
           />
-          <VendddFormRow
-            label="KRA PIN"
+          <FloatingInput
+            label={"KRA PIN"}
             name="kraPin"
             value={formValues.kraPin}
             onChange={handleInputChange}
             placeholder="KRA PIN"
           />
-          <VendddFormRow
-            label="Vendor Country"
-            name="vendorCountry"
-            elementType="select"
-            options={[
-              "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
-              // Add more country options here
-            ]}
+          <FloatingSelect
             value={formValues.vendorCountry}
             onChange={handleInputChange}
+            options={[
+              { value: "", label: "Select a Country" },
+              { value: "Afghanistan", label: "Afghanistan" },
+              { value: "Albania", label: "Albania" },
+              { value: "Argentina", label: "Argentina" },
+              { value: "Australia", label: "Australia" },
+              { value: "Bangladesh", label: "Bangladesh" },
+              { value: "Brazil", label: "Brazil" },
+              { value: "Canada", label: "Canada" },
+              { value: "China", label: "China" },
+              { value: "Denmark", label: "Denmark" },
+              { value: "Egypt", label: "Egypt" },
+              { value: "France", label: "France" },
+              { value: "Germany", label: "Germany" },
+              { value: "India", label: "India" },
+              { value: "Indonesia", label: "Indonesia" },
+              { value: "Italy", label: "Italy" },
+              { value: "Japan", label: "Japan" },
+              { value: "Mexico", label: "Mexico" },
+              { value: "Netherlands", label: "Netherlands" },
+              { value: "New Zealand", label: "New Zealand" },
+              { value: "Pakistan", label: "Pakistan" },
+              { value: "Russia", label: "Russia" },
+              { value: "Saudi Arabia", label: "Saudi Arabia" },
+              { value: "South Africa", label: "South Africa" },
+              { value: "South Korea", label: "South Korea" },
+              { value: "Spain", label: "Spain" },
+              { value: "Sweden", label: "Sweden" },
+              { value: "Switzerland", label: "Switzerland" },
+              { value: "Turkey", label: "Turkey" },
+              { value: "United Arab Emirates", label: "United Arab Emirates" },
+              { value: "United Kingdom", label: "United Kingdom" },
+              { value: "United States", label: "United States" },
+            ]}
           />
-          <VendddFormRow
-            label="Currency Code"
+
+          <FloatingInput
+            label={"Currency Code"}
             name="currencyCode"
             required
             value={formValues.currencyCode}
@@ -135,8 +178,8 @@ const UpdateVendor = ({vendor, onClose }) => {
             placeholder="Currency Code"
             error={errors.currencyCode}
           />
-          <VendddFormRow
-            label="Bank Details"
+          <FloatingInput
+            label={"Bank Details"}
             name="bankDetails"
             elementType="textarea"
             value={formValues.bankDetails}
@@ -145,8 +188,8 @@ const UpdateVendor = ({vendor, onClose }) => {
           />
         </div>
         <div className="vendddColumn">
-          <VendddFormRow
-            label="Vendor Code"
+          <FloatingInput
+            label={"Vendor Code"}
             name="vendorCode"
             required
             value={formValues.vendorCode}
@@ -154,49 +197,55 @@ const UpdateVendor = ({vendor, onClose }) => {
             placeholder="Vendor Code"
             error={errors.vendorCode}
           />
-          <VendddFormRow
-            label="Contact Person"
+          <FloatingInput
+            label={"Contact Person"}
             name="contactPerson"
             value={formValues.contactPerson}
             onChange={handleInputChange}
             placeholder="Contact Person"
           />
-          <VendddFormRow
-            label="Email"
+          <FloatingInput
+            label={"Email"}
             name="email"
             value={formValues.email}
             onChange={handleInputChange}
             placeholder="Email Address"
           />
-          <VendddFormRow
-            label="Credit Period (days)"
+          <FloatingInput
+            label={"Credit Period (days)"}
             name="creditPeriod"
             elementType="number"
             value={formValues.creditPeriod}
             onChange={handleInputChange}
           />
-          <VendddFormRow
-            label="Govt Reg Date"
+          <FloatingInput
+            label={"Govt Reg Date"}
             name="govtRegDate"
             elementType="date"
             value={formValues.govtRegDate}
             onChange={handleInputChange}
           />
-          <VendddFormRow
-            label="Is Active"
-            name="isActive"
-            elementType="checkbox"
-            defaultChecked
-            value={formValues.isActive}
-            onChange={handleInputChange}
-          />
-          <VendddFormRow
-            label="Receive Donation"
-            name="receiveDonation"
-            elementType="checkbox"
-            value={formValues.receiveDonation}
-            onChange={handleInputChange}
-          />
+        
+          <label className="vendddAddLabel">
+            <input
+              type="checkbox"
+              name="receiveDonation"
+              checked={formValues.receiveDonation}
+              onChange={handleInputChange}
+            />
+            Is Active
+          </label>
+
+
+          <label className="vendddAddLabel">
+            <input
+              type="checkbox"
+              name="receiveDonation"
+              checked={formValues.receiveDonation}
+              onChange={handleInputChange}
+            />
+            Receive Donation
+          </label>
         </div>
       </div>
       <button className="vendddAddButton" onClick={handleSubmit}>
@@ -206,29 +255,58 @@ const UpdateVendor = ({vendor, onClose }) => {
   );
 };
 
-const VendddFormRow = ({ label, name, required, elementType = 'input', options = [], defaultChecked, value, onChange, placeholder, error }) => (
+const VendddFormRow = ({
+  label,
+  name,
+  required,
+  elementType = "input",
+  options = [],
+  defaultChecked,
+  value,
+  onChange,
+  placeholder,
+  error,
+}) => (
   <div className="vendddFormRow">
     <label className="vendddLabel">
       {label}
       {required && <span className="vendddRequired">*</span>}
     </label>
     <div className="vendddColon">:</div>
-    {elementType === 'input' && (
+    {elementType === "input" && (
       <>
-        <input className="vendddInput" type="text" name={name} value={value} onChange={onChange} placeholder={placeholder} />
+        <input
+          className="vendddInput"
+          type="text"
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'textarea' && (
+    {elementType === "textarea" && (
       <>
-        <textarea className="vendddTextarea" name={name} value={value} onChange={onChange} placeholder={placeholder} />
+        <textarea
+          className="vendddTextarea"
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'select' && (
+    {elementType === "select" && (
       <>
-        <select className="vendddInput" name={name} value={value} onChange={onChange}>
-          {options.map(option => (
+        <select
+          className="vendddInput"
+          name={name}
+          value={value}
+          onChange={onChange}
+        >
+          {options.map((option) => (
             <option key={option} value={option}>
               {option}
             </option>
@@ -237,21 +315,41 @@ const VendddFormRow = ({ label, name, required, elementType = 'input', options =
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'checkbox' && (
+    {elementType === "checkbox" && (
       <>
-        <input className="vendddCheckbox" type="checkbox" name={name} checked={value} onChange={onChange} defaultChecked={defaultChecked} />
+        <input
+          className="vendddCheckbox"
+          type="checkbox"
+          name={name}
+          checked={value}
+          onChange={onChange}
+          defaultChecked={defaultChecked}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'date' && (
+    {elementType === "date" && (
       <>
-        <input className="vendddInput" type="date" name={name} value={value} onChange={onChange} />
+        <input
+          className="vendddInput"
+          type="date"
+          name={name}
+          value={value}
+          onChange={onChange}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'number' && (
+    {elementType === "number" && (
       <>
-        <input className="vendddInput" type="number" name={name} value={value} onChange={onChange} placeholder={placeholder} />
+        <input
+          className="vendddInput"
+          type="number"
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}

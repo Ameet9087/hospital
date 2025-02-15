@@ -71,7 +71,7 @@
 // export default OperationOrProcedureRate;
 import React, { useState, useRef } from "react";
 import "./ServiceRate.css";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 
 function OperationOrProcedureRate({ rates, onRateChange }) {
   const [rows, setRows] = useState([

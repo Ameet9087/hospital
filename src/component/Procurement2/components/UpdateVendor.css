@@ -1,5 +1,5 @@
 .vendddContainer {
-    max-width: 800px;
+    /* max-width: 800px; */
     margin: auto;
     padding: 2px;
     font-family: Arial, sans-serif;
@@ -8,59 +8,31 @@
   
   .vendddHeading {
     text-align: center;
-    font-size: 16px;
+    font-size: var(--heading-font);
+    margin-bottom: 10px;
     color: #000;
+  }
+  .vendddAddLabel{
+    font-size: var(--font-size);
+  }
+  .vendddColumn{
+    gap: 10px;
+    display: grid;
   }
   
   .vendddFormContainer {
     display: flex;
     justify-content: space-between;
   }
-  
-  .vendddColumn {
-    width: 48%;
-  }
-  
+
+
   .vendddFormRow {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
   }
-  
-  .vendddLabel {
-    flex: 1 1 40%;
-    color: #000;
-    font-weight: bold;
-  }
-  
-  .vendddColon {
-    margin-right: 2px;
-  }
-  
-  .vendddInput {
-    flex: 1 1 60%;
-    padding: 2px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  .vendddTextarea {
-    flex: 1 1 60%;
-    padding: 2px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    resize: none;
-    height: 60px;
-  }
-  
-  .vendddCheckbox {
-    margin-left: 2px;
-  }
-  
-  .vendddRequired {
-    color: red;
-  }
-  
+
+ 
   .vendddAddButton {
     margin-top: 2px;
     padding: 2px 8px;
@@ -71,12 +43,7 @@
     cursor: pointer;
   }
   
-  .vendddError {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
-  }
-  
+
   /* Media Query for Tablets */
   @media (max-width: 768px) {
     .vendddFormContainer {

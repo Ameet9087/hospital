@@ -132,15 +132,10 @@ color: var(--button-color);
 .sSIConsumption-search-bar input {
   flex-grow: 1;
   padding: 5px;
-  width: 200px;
+  /* width: 200px; */
 
 }
-.sSIConsumption-search-bar i{
-  position: relative;
-  color:gray;
-  top: 7px;
-left: 205px;
-}
+
 
 /* .search-bar button {
   padding: 5px 10px;
@@ -149,25 +144,25 @@ left: 205px;
   cursor: pointer;
 } */
 
+<<<<<<< HEAD
+
+=======
 .sSIConsumption-results-info {
-  width: 60%;
   display: flex;
-  align-items: center;
+  width: 100%;
   justify-content: flex-end;
-  color: black;
-  font-size: var(--font-size);
+  
 }
+>>>>>>> ad3dbcade0310743b9fa5d27715a29a847b1a3fa
 .sSIConsumption-print-btn{
     margin-left: 10px;
-    /* gap: 10px; */
   background-color: var(--button-color);
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 8px 15px;
-  font-size: 12px;
-  margin-left: 200px;
-
+  padding:var(--input-box-padding);
+  font-size: var(--font-size);
+  border: 1px solid var(--button-color);
 }
 
 .sSIConsumption-table-N-paginat table {
@@ -224,8 +219,6 @@ left: 205px;
 
 .sSIConsumption-search-N-results{
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 10px;
 }
 .sSIConsumption-pagination {
@@ -235,25 +228,7 @@ left: 205px;
   margin-top: 50px;
 }
 
-.sSIConsumption-pagination button {
-  background-color: #008CBA;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  margin: 0 5px;
-  border-radius: 5px;
-}
 
-.sSIConsumption-pagination span {
-  margin: 0 10px;
-  color: gray;
-  font-size: 12px;
-}
-.sSIConsumption-table-N-paginat{
-  background-color: white ;
-  padding: 0 10px;
-}
 
 
 .sSIConsumption-modal-overlay {
@@ -294,6 +269,7 @@ cursor: pointer;
   background-color: var(--button-color);
   color: white;
   border: none;
+  margin-right: 10px;
   border-radius: 12px;
   margin-left: 10px;
   padding: 5px;
@@ -343,3 +319,24 @@ cursor: pointer;
   cursor: pointer;
 }
 
+.sSIConsumption-results-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Align everything to the right */
+  padding: 10px; /* Adjust padding if needed */
+  gap: 10px;
+}
+
+.sSIConsumption-results-btn p {
+  margin: 0;
+  font-size: var(--font-size);
+  font-weight: 500;
+}
+
+
+
+.sSIConsumption-results-btn p,
+.sSIConsumption-print-btn {
+  margin: 0;
+  
+}

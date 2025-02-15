@@ -32,6 +32,32 @@
     margin-bottom: 15px;
   }
   
+
+  /* Label styling */
+  .CSSDItemMaster-formGroup label {
+    width: 40%;
+    font-weight: bold;
+    font-size: var(--font-size);
+  }
+  
+  /* Input styling */
+  .CSSDItemMaster-formGroup input[type="text"],
+  .CSSDItemMaster-formGroup select {
+    width: 65%;
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Select box styling */
+  .CSSDItemMaster-select {
+    width: 60%;
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
   
  
  

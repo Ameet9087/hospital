@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./RequestForQuotation.css";
 import { API_BASE_URL } from "../../api/api";
-
-function RequestForQuotation({onClose}) {
+import { FloatingInput, FloatingSelect,FloatingTextarea } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
+function RequestForQuotation({ onClose }) {
   const [formData, setFormData] = useState({
     subject: "",
     description: "",
@@ -12,12 +13,12 @@ function RequestForQuotation({onClose}) {
     vendorId: "",
     items: [
       {
-        itemId: "",
+        itemId: 0,
         quantity: 0,
         pricePerUnit: 0.0,
-        description: ""
-      }
-    ]
+        description: "",
+      },
+    ],
   });
 
   const [vendors, setVendors] = useState([]); // State to store vendor data
@@ -38,23 +39,18 @@ function RequestForQuotation({onClose}) {
 
   // Handle input changes
   const handleChange = (e, index = null) => {
-    const { name, value, dataset } = e.target;
-  
-    if (name === "items") {
+    const { name, value } = e.target; // Use `name` instead of `dataset.name`
+
+    if (index !== null) {
+      // Update items array correctly
       const updatedItems = [...formData.items];
-      updatedItems[index][dataset.name] = value;
-      setFormData({ ...formData, items: updatedItems });
-    } else if (index !== null) {
-      // For items, when index is provided
-      const updatedItems = [...formData.items];
-      updatedItems[index][dataset.name] = value;
+      updatedItems[index][name] = value; // Use `name` directly
       setFormData({ ...formData, items: updatedItems });
     } else {
-      // For other fields
+      // Update other form fields
       setFormData({ ...formData, [name]: value });
     }
   };
-  
 
   // Add new item to the list
   const handleAddItem = () => {
@@ -66,9 +62,9 @@ function RequestForQuotation({onClose}) {
           itemId: "",
           quantity: 0,
           pricePerUnit: 0.0,
-          description: ""
-        }
-      ]
+          description: "",
+        },
+      ],
     }));
   };
 
@@ -78,19 +74,23 @@ function RequestForQuotation({onClose}) {
     updatedItems.splice(index, 1);
     setFormData((prevData) => ({
       ...prevData,
-      items: updatedItems
+      items: updatedItems,
     }));
   };
 
   // Handle form submission
   const handleSubmit = async (e) => {
-    e.preventDefault();    
+    e.preventDefault();
     try {
       const response = await axios.post(`${API_BASE_URL}/rfq/create`, formData);
       console.log("RFQ Created:", response.data);
+      toast.success('Proposal saved successfully!');
+
       onClose();
     } catch (error) {
       console.error("Error submitting RFQ:", error);
+      toast.error('Failed to save proposal. Please try again.');
+
     }
   };
 
@@ -100,8 +100,8 @@ function RequestForQuotation({onClose}) {
       <form onSubmit={handleSubmit}>
         <div className="RequestforQuotation-form-row">
           <div className="RequestforQuotation-form-group">
-            <label htmlFor="subject">Subject * :</label>
-            <input
+            <FloatingInput
+              label="Subject:"
               type="text"
               id="subject"
               name="subject"
@@ -112,27 +112,27 @@ function RequestForQuotation({onClose}) {
             />
           </div>
           <div className="RequestforQuotation-form-group">
-            <label htmlFor="vendor">Select Vendor * :</label>
-            <select
+            <FloatingSelect
+              label="Select Vendor"
               id="vendor"
               name="vendorId"
               value={formData.vendorId}
+              onChange={handleChange}
               required
-              onChange={(e) => handleChange(e)}
-            >
-              <option value="">---Select Vendor---</option>
-              {vendors.map((vendor) => (
-                <option key={vendor.id} value={vendor.id}>
-                  {vendor.vendorName}
-                </option>
-              ))}
-            </select>
+              options={[
+                { value: "", label: "---Select Vendor---" },
+                ...(Array.isArray(vendors)
+                  ? vendors.map((vendor) => ({
+                      value: vendor.id,
+                      label: vendor.vendorName,
+                    }))
+                  : []),
+              ]}
+            />
           </div>
-        </div>
-        <div className="RequestforQuotation-form-row">
           <div className="RequestforQuotation-form-group">
-            <label htmlFor="requestDate">Request Date *</label>
-            <input
+            <FloatingInput
+              label="Request Date:"
               type="date"
               id="requestDate"
               name="requestDate"
@@ -142,8 +142,8 @@ function RequestForQuotation({onClose}) {
             />
           </div>
           <div className="RequestforQuotation-form-group">
-            <label htmlFor="closeDate">Request Close Date *</label>
-            <input
+            <FloatingInput
+              label="Request Close Date:"
               type="date"
               id="closeDate"
               name="requestCloseDate"
@@ -153,8 +153,9 @@ function RequestForQuotation({onClose}) {
             />
           </div>
         </div>
-        
-        <table className="RequestforQuotation-table">
+
+        <div className="RequestforQuotation-table-container">
+      <table className="RequestforQuotation-table">
           <thead>
             <tr>
               <th>Item Name</th>
@@ -168,40 +169,44 @@ function RequestForQuotation({onClose}) {
             {formData.items.map((item, index) => (
               <tr key={index}>
                 <td>
-                  <select
-                    value={item.itemId}
-                    data-name="itemId"
+                  <FloatingSelect
+                    value={String(item.itemId)}
+                    name="itemId"
                     onChange={(e) => handleChange(e, index)}
-                  >
-                    <option value="">---Select Item---</option>
-                    {items.map((itemOption) => (
-                      <option key={itemOption.id} value={itemOption.invItemId}>
-                        {itemOption.itemName}
-                      </option>
-                    ))}
-                  </select>
+                    options={[
+                      { value: "", label: "---Select Item---" },
+                      ...(Array.isArray(items)
+                        ? items.map((itemOption) => ({
+                            value: String(itemOption.invItemId),
+                            label: itemOption.itemName,
+                          }))
+                        : []),
+                    ]}
+                  />
                 </td>
                 <td>
-                  <input
+                  <FloatingInput
                     type="number"
                     value={item.quantity}
-                    data-name="quantity"
+                    name="quantity"
                     onChange={(e) => handleChange(e, index)}
+                    min="0"
                   />
                 </td>
                 <td>
-                  <input
+                  <FloatingInput
                     type="number"
                     value={item.pricePerUnit}
-                    data-name="pricePerUnit"
+                    name="pricePerUnit" // Use `name` instead of `data-name`
                     onChange={(e) => handleChange(e, index)}
+                    min="0"
                   />
                 </td>
                 <td>
-                  <input
+                  <FloatingInput
                     type="text"
                     value={item.description}
-                    data-name="description"
+                    name="description" // Use `name` instead of `data-name`
                     onChange={(e) => handleChange(e, index)}
                   />
                 </td>
@@ -225,17 +230,19 @@ function RequestForQuotation({onClose}) {
             ))}
           </tbody>
         </table>
+      </div>
         <div className="RequestforQuotation-form-group">
-            <label htmlFor="description">Description *</label>
-            <textarea
-              id="description"
-              name="description"
-              value={formData.description}
-              placeholder="Description"
-              required
-              onChange={(e) => handleChange(e)}
-            ></textarea>
-          </div>
+          <FloatingTextarea
+          label={"Description"}
+           id="description"
+           name="description"
+           value={formData.description}
+          
+           required
+           onChange={(e) => handleChange(e)}
+          />
+         
+        </div>
         <div className="RequestforQuotation-form-actions">
           <button type="submit" className="RequestforQuotation-btn-request">
             Request

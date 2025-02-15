@@ -1,156 +1,11 @@
-// import React, { useRef, useEffect, useState } from "react";
-// import "./MaternityANCPopUp.css";
-// import { CiSearch } from "react-icons/ci";
-// import { Link } from "react-router-dom";
-// import { FaSearch } from "react-icons/fa"; // Using react-icons
-// import { startResizing } from "../TableHeadingResizing/resizableColumns";
-
-// const MaternityANCPopUp = ({ onClose }) => {
-//   const [selectedTab, setSelectedTab] = useState("itemDetails");
-//   const [columnWidths, setColumnWidths] = useState({});
-//   const [selectedFile, setSelectedFile] = useState(null);
-//   const [uploadMessage, setUploadMessage] = useState("");
-//   const tableRef = useRef(null);
-//   // ===================================================================
-//   return (
-//     <div className="MaternityANCPopUp-container">
-//       <div className="MaternityANCPopUp-header">
-//         <h4>Maternity ANC</h4>
-//         {/* <button className="MaternityANCPopUp-close-btn" onClick={onClose}>
-//           X
-//         </button> */}
-//       </div>
-//       <div className="MaternityANCPopUp-form">
-//         <div className="MaternityANCPopUp-form-row">
-//           <div className="MaternityANCPopUp-form-row-section-1">
-//             <div className="MaternityANCPopUp-form-group-1row">
-//               <div className="MaternityANCPopUp-form-group">
-//                 <label htmlFor="actual-sale-no">Name:</label>
-//                 <input
-//                   id="actual-sale-no"
-//                   type="text"
-//                   placeholder="Enter Actual Sale No"
-//                 />
-//               </div>
-//               <div className="MaternityANCPopUp-form-group">
-//                 <label htmlFor="manual-sale-no">Hospital:</label>
-//                 <input
-//                   id="manual-sale-no"
-//                   type="text"
-//                   placeholder="Enter Manual Sale No"
-//                 />
-//               </div>
-//               <div className="MaternityANCPopUp-form-group">
-//                 <label htmlFor="actual-sale-date">Age/Sex:</label>
-//                 <input id="actual-sale-date" type="text" />
-//               </div>
-//             </div>
-//             <div className="MaternityANCPopUp-form-group-1row">
-//               <div className="MaternityANCPopUp-form-group">
-//                 <label htmlFor="provisional-sale-no">Date of Birth:</label>
-//                 <input
-//                   id="provisional-sale-no"
-//                   type="date"
-//                   placeholder="Enter Provisional Sale No"
-//                 />
-//               </div>
-//               <div className="MaternityANCPopUp-form-group">
-//                 <label htmlFor="condemnation-date">Address:</label>
-//                 <input id="condemnation-date" type="date" />
-//               </div>
-//               <div className="MaternityANCPopUp-form-group">
-//                 <label htmlFor="equipment-name">Contact No:</label>
-//                 <input
-//                   id="equipment-name"
-//                   type="text"
-//                   placeholder="Enter Equipment Name"
-//                 />
-//               </div>
-//             </div>
-//           </div>
-
-//           {/* ----------------------------------------------------------------------------- */}
-
-//           <div className="MaternityANCPopUp-form-group-1row">
-//             <div className="MaternityANCPopUp-form-group">
-//               <label htmlFor="asset-no">Date:</label>
-//               <input id="asset-no" type="date" />
-//             </div>
-//             <div className="MaternityANCPopUp-form-group">
-//               <label htmlFor="cost">Time:</label>
-//               <input id="cost" type="time" />
-//             </div>
-//             <div className="MaternityANCPopUp-form-group">
-//               <label htmlFor="quantity">Select ANC Visit:</label>
-//               {/* <input id="quantity" type="number" placeholder="Enter Quantity" /> */}
-//               <select name="" id="">
-//                 <option value="">--select--</option>
-//                 <option value=""></option>
-//               </select>
-//             </div>
-//           </div>
-
-//           <div className="MaternityANCPopUp-form-group-1row">
-//             <div className="MaternityANCPopUp-form-group">
-//               <label htmlFor="serial-no">Condition of ANC:</label>
-//               <input
-//                 id="serial-no"
-//                 type="text"
-//                 placeholder="Enter Condition of ANC"
-//               />
-//             </div>
-//             <div className="MaternityANCPopUp-form-group">
-//               <label htmlFor="model-no">Pregnancy Period(in weeks):</label>
-//               <input id="model-no" type="text" placeholder="Pregnancy Period" />
-//             </div>
-//             <div className="MaternityANCPopUp-form-group">
-//               <label htmlFor="category">Place Of ANC:</label>
-//               <input id="category" type="text" placeholder="Place Of ANC" />
-//             </div>
-//           </div>
-//           <div className="MaternityANCPopUp-form-group-1row">
-//             <div className="MaternityANCPopUp-form-group">
-//               <label htmlFor="category">Weight(in kg):</label>
-//               <input id="category" type="text" placeholder="Weight(in kg)" />
-//             </div>
-//           </div>
-
-//           <div className="MaternityANCPopUp-form-actions">
-//             <button className="MaternityANCPopUp-add-btn" onClick={""}>
-//               Add
-//             </button>
-//             <button className="MaternityANCPopUp-add-btn" onClick={""}>
-//               Reset
-//             </button>
-//           </div>
-
-//           <div className="MaternityANCPopUp-form-row-section-1">
-//             <h4 className="MaternityANCPopUp-noANCListh4">No ANC List</h4>
-//           </div>
-//         </div>
-//       </div>
-
-//       <div className="MaternityANCPopUp-form-actions">
-//         <button className="MaternityANCPopUp-add-btn" onClick={""}>
-//           Print
-//         </button>
-//         <button className="MaternityANCPopUp-close-btn" onClick={onClose}>
-//           Close
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default MaternityANCPopUp;
-
 import React, { useRef, useState } from "react";
 import "./MaternityANCPopUp.css";
 import { CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa"; // Using react-icons
 import { API_BASE_URL } from "../../api/api";
-
+import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
+import { toast } from 'react-toastify';
 const MaternityANCPopUp = ({ onClose, patientData }) => {
   const printRef = useRef(null);
 
@@ -185,15 +40,19 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
 
       if (response.ok) {
         const result = await response.json();
-        setUploadMessage("Data saved successfully!");
-        alert("Data saved successfully!");
+        toast.success('Proposal saved successfully!');
+      
+
       } else {
-        setUploadMessage("Failed to save data.");
+       
         console.error("Error:", response.statusText);
+        toast.error('Failed to save proposal. Please try again.');
+
       }
     } catch (error) {
-      setUploadMessage("An error occurred while saving data.");
+      toast.error('Failed to save proposal. Please try again.');
       console.error("Error:", error);
+
     }
   };
 
@@ -328,20 +187,19 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
             <div className="MaternityANCPopUp-form-row-section-1">
               <div className="MaternityANCPopUp-form-group-1row">
                 <div className="MaternityANCPopUp-form-group">
-                  <label htmlFor="name">Name:</label>
-                  <input
-                    id="name"
+                  <FloatingInput
+                    label={"Name"}
                     type="text"
                     name="name"
+                    placeholder="Name"
                     value={`${patientData?.inPatientDTO?.patient?.firstName} ${patientData?.inPatientDTO?.patient?.lastName}`}
-                    placeholder="Enter Name"
                     onChange={handleInputChange}
+                    restrictions={{ char: true }}
                   />
                 </div>
                 <div className="MaternityANCPopUp-form-group">
-                  <label htmlFor="contactNo">Contact No:</label>
-                  <input
-                    id="contactNo"
+                  <FloatingInput
+                    label={"Contact No"}
                     type="text"
                     name="contactNo"
                     value={patientData?.inPatientDTO?.patient?.contactNumber}
@@ -350,9 +208,8 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
                   />
                 </div>
                 <div className="MaternityANCPopUp-form-group">
-                  <label htmlFor="age-sex">Age/Sex:</label>
-                  <input
-                    id="age-sex"
+                  <FloatingInput
+                    label={"Age/Sex"}
                     type="text"
                     name="ageSex"
                     value={`${patientData?.inPatientDTO?.patient?.age}/${patientData?.inPatientDTO?.patient?.gender}`}
@@ -363,9 +220,8 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
               </div>
               <div className="MaternityANCPopUp-form-group-1row">
                 <div className="MaternityANCPopUp-form-group">
-                  <label htmlFor="visitDate">Date of Birth:</label>
-                  <input
-                    id="visitDate"
+                  <FloatingInput
+                    label={"Date of Birth"}
                     type="date"
                     name="dateOfBirth"
                     value={patientData?.inPatientDTO?.patient?.dateOfBirth}
@@ -373,9 +229,8 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
                   />
                 </div>
                 <div className="MaternityANCPopUp-form-group">
-                  <label htmlFor="address">Address:</label>
-                  <input
-                    id="address"
+                  <FloatingInput
+                    label={"Address"}
                     type="text"
                     name="address"
                     value={patientData?.inPatientDTO?.patient?.address}
@@ -389,33 +244,35 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
 
             <div className="MaternityANCPopUp-form-group-1row">
               <div className="MaternityANCPopUp-form-group">
-                <label htmlFor="asset-no">Visit Date:</label>
-                <input
-                  id="visitDate"
-                  name="visitDate"
+                <FloatingInput
+                  label={"Visit Date"}
                   type="date"
-                  onChange={handleInputChange}
+                  name="visitDate"
+                  value={formData.visitDate || ""}
+                  onChange={(e) =>
+                    handleInputChange("visitDate", e.target.value)
+                  }
                 />
               </div>
 
               <div className="MaternityANCPopUp-form-group">
-                <label htmlFor="selectAncVisit">Select ANC Visit:</label>
-                <select
-                  id="selectAncVisit"
+                <FloatingSelect
+                  label={"Select ANC Visit"}
                   name="selectAncVisit"
                   onChange={handleInputChange}
-                >
-                  <option value="">--Select--</option>
-                  <option value="First Visit">First Visit</option>
-                  <option value="Second Visit">Second Visit</option>
-                </select>
+                  options={[
+                    { value: "", label: "Select" },
+                    { value: "First Visit", label: "First Visit" },
+                    { value: "Second Visit", label: "Second Visit" },
+                  ]}
+                />
               </div>
               <div className="MaternityANCPopUp-form-group">
-                <label htmlFor="conditionOfAnatenatal">Condition of ANC:</label>
-                <input
-                  id="conditionOfAnatenatal"
+                <FloatingInput
+                  label={"Condition of ANC"}
                   type="text"
                   name="conditionOfAnatenatal"
+                  value=""
                   placeholder="Enter Condition of ANC"
                   onChange={handleInputChange}
                 />
@@ -424,31 +281,31 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
 
             <div className="MaternityANCPopUp-form-group-1row">
               <div className="MaternityANCPopUp-form-group">
-                <label htmlFor="pregnancyPeriod">Pregnancy Period:</label>
-                <input
-                  id="pregnancyPeriod"
+                <FloatingInput
+                  label={"Pregnancy Period"}
                   type="text"
                   name="pregnancyPeriod"
+                  value=""
                   placeholder="Enter Pregnancy Period"
                   onChange={handleInputChange}
                 />
               </div>
               <div className="MaternityANCPopUp-form-group">
-                <label htmlFor="placeOfAnc">Place Of ANC:</label>
-                <input
-                  id="placeOfAnc"
+                <FloatingInput
+                  label={"Place Of ANC"}
                   type="text"
                   name="placeOfAnc"
+                  value=""
                   placeholder="Enter Place Of ANC"
                   onChange={handleInputChange}
                 />
               </div>
               <div className="MaternityANCPopUp-form-group">
-                <label htmlFor="weight">Weight (in kg):</label>
-                <input
-                  id="weight"
+                <FloatingInput
+                  label={"Weight (in kg)"}
                   type="number"
                   name="weight"
+                  value=""
                   placeholder="Enter Weight"
                   onChange={handleInputChange}
                 />
@@ -456,31 +313,24 @@ const MaternityANCPopUp = ({ onClose, patientData }) => {
             </div>
 
             <div className="MaternityANCPopUp-form-actions">
+             
+              <button
+                className="MaternityANCPopUp-add-btn"
+                onClick={handlePrint}>
+                Print
+              </button>
               <button
                 className="MaternityANCPopUp-add-btn"
                 onClick={handleSubmit}
               >
                 Save
               </button>
-              {/* <button
-                className="MaternityANCPopUp-add-btn"
-                onClick={handleReset}
-              >
-                Reset
-              </button> */}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="MaternityANCPopUp-form-actions">
-        <button className="MaternityANCPopUp-add-btn" onClick={handlePrint}>
-          Print
-        </button>
-        {/* <button className="MaternityANCPopUp-close-btn" onClick={onClose}>
-          Close
-        </button> */}
-      </div>
+     
 
       {uploadMessage && <p className="upload-message">{uploadMessage}</p>}
     </div>

@@ -1,5 +1,5 @@
 .AddAccountHead-model {
-    width: 400px;
+    width: 300px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -13,12 +13,12 @@
   }
   
   .AddAccountHead-model h2 {
-    font-size: 16px;
+    font-size: var(--heading-font);
     text-align: center;
   }
  .AddAccountHead-formgroup
  {
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   align-items: center;
   justify-content: space-between;

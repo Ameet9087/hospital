@@ -51,18 +51,13 @@
 
   .verify-purchase-update-container
   {
-    width: 100%;
+    /* width: 100%; */
+    margin-top: 10px;
     padding: 5px;
     display: flex;
     justify-content: space-between;
   }
-  .verify-purchase-status select{
-    padding: 5px;
-    border-radius: 5px;
-  }
-  .verify-purchase-status input{
-    border-radius: 5px;
-  }
+ 
   
   .verify-purchase-table {
     width: 100%;
@@ -85,11 +80,7 @@
     cursor: pointer;
   }
 
-  
-  .verify-purchase-remarks textarea {
-    width: 100%;
-    padding: 8px;
-  }
+
   .verify-purchase-actions {
     display: flex;
     justify-content: center;

@@ -26,27 +26,9 @@
   gap: 10px;
 }
 
-.sSIPatientConsumNewPCbtn-form-section label {
-  font-size: var(--font-size);
-  margin-right: 10px;
-  /* font-weight: bold; */
-}
-.sSIPatientConsumNewPCbtn-form-section input[type="date"]{
-  padding: 3px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  /* width: 50%; */
-  font-size: var(--font-size);
-  
-}
 
-.sSIPatientConsumNewPCbtn-form-section input[type="text"] {
-  padding: 3px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 50%;
-  font-size: var(--font-size);
-}
+
+
 
 .sSIPatientConsumNewPCbtn-back-btn {
   margin-left: auto;
@@ -102,12 +84,7 @@
   cursor: pointer;
 }
 
-.sSIPatientConsumConsumEntry-table input[type="number"] {
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  text-align: center;
-}
+
 .sSIPatientConsumNewPCbtn-remark{
   display: flex;
   justify-content: right;
@@ -115,13 +92,40 @@
 }
 .sSIPatientConsumNewPCbtn-remark-section {
   margin-top: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background-color: #F5F5F5;
-  padding: 10px;
+  width: 15%;
 }
-
+.sSIPatientConsumNewPCbtn-remark-section textarea{
+  height: 40px;
+}
+.sSIPatientConsumNewPCbtn-form-section{
+  width: 35%;
+  display: flex;
+}
+.sSIPatientConsumConsumEntry-table-buttons-add{
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  color: white;
+  padding: var(--input-box-padding);
+  border-radius: 5px;
+  margin-right: 5px;
+}
+.sSIPatientConsumConsumEntry-table-buttons-add:hover{
+  background-color: var(--button-hover-background-color);
+  color: var(--button-color);
+}
+.sSIPatientConsumConsumEntry-table-buttons-del{
+  background-color: red;
+  border: 1px solid red;
+  color: white;
+  padding: var(--input-box-padding);
+  border-radius: 5px;
+  margin-right: 5px;
+}
+.sSIPatientConsumConsumEntry-table-buttons-del:hover{
+  background-color: white;
+  color: red;
+}
 .sSIPatientConsumNewPCbtn-remark-section label {
   margin-right: 10px;
 }
@@ -145,12 +149,9 @@
   background-color:var( --button-color);
   border: 1px solid var( --button-hover-border-color);
   color: white;
-  /* border: none; */
-  /* margin-right: 10px; */
   border-radius: 5px;
   cursor: pointer;
   font-size: var(--font-size);
-  /* margin-bottom: 10px; */
   transition: background-color 0.3s ease;
   padding: 5px 5px;
 }
@@ -161,10 +162,23 @@
 }
 
 .sSIPatientConsumNewPCbtn-discard-btn {
-  background-color: #e74c3c;
+  background-color: red;
   color: white;
   padding: 8px 15px;
-  border: none;
+  border: 1px solid red;
   border-radius: 5px;
   cursor: pointer;
+}
+
+
+
+.sSIPatientConsumNewPCbtn-form-section select {
+
+  padding: 5px;
+  font-size: var(--font-size);
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
 }

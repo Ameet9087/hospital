@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import "./sSIReceivedRequisition.css";
 import { API_BASE_URL } from "../../../api/api";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 
 const SSIReceivedRequisition = ({selectedItem,onClose}) => {
   const [remarks, setRemarks] = useState(""); // For remarks
@@ -17,12 +23,12 @@ const SSIReceivedRequisition = ({selectedItem,onClose}) => {
 
       if (response.ok) {
         const data = await response.json();
-        alert("Requisition status updated successfully!");
+        toast.success("Requisition status updated successfully!");
         onClose();
         console.log("Response Data:", data);
       } else {
         console.error("Failed to update status", response.statusText);
-        alert("Failed to update status.");
+        toast.error("Failed to update status.");
       }
     } catch (error) {
       console.error("Error updating status:", error);

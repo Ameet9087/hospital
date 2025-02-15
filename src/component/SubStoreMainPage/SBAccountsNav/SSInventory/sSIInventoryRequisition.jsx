@@ -9,6 +9,10 @@ import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../../api/api";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import SSIReceivedRequisition from "./sSIReceivedRequisition";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { useFilter } from "../../../ShortCuts/useFilter";
+import * as XLSX from 'xlsx';
+
 import {
   FloatingInput,
   FloatingSelect,
@@ -26,6 +30,8 @@ function SSIInventoryRequisition() {
   const [storeFilter, setStoreFilter] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
   const [showReceived, setShowReceived] = useState(false);
+  const [columnWidths, setColumnWidths] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [datas, setDatas] = useState([]);
 
@@ -79,51 +85,54 @@ function SSIInventoryRequisition() {
   //   `,
   // });
   // Function to trigger print
-  const printList = () => {
-    if (tableRef.current) {
-      const printContents = tableRef.current.innerHTML;
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+    <html>
+      <head>
+        <title>Print Table</title>
+        <style>
+          table {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+          }
+          th {
+            background-color: #f2f2f2;
+          }
+        </style>
+      </head>
+      <body>
+        ${printContent.outerHTML}
+      </body>
+    </html>
+  `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
 
-      // Create an iframe element
-      const iframe = document.createElement("iframe");
-      iframe.style.position = "absolute";
-      iframe.style.width = "0";
-      iframe.style.height = "0";
-      iframe.style.border = "none";
-
-      // Append the iframe to the body
-      document.body.appendChild(iframe);
-
-      // Write the table content into the iframe's document
-      const doc = iframe.contentWindow.document;
-      doc.open();
-      doc.write(`
-        <html>
-        <head>
-          <title>Print Table</title>
-          <style>
-            table { width: 100%; border-collapse: collapse; }
-            th, td { border: 1px solid black; padding: 8px; text-align: left; }
-            th { background-color: #f2f2f2; }
-            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
-              display: none; /* Hide action buttons and Action column */
-            }
-          </style>
-        </head>
-        <body>
-          <table>
-            ${printContents}
-          </table>
-        </body>
-        </html>
-      `);
-      doc.close();
-
-      iframe.contentWindow.focus();
-      iframe.contentWindow.print();
-
-      document.body.removeChild(iframe);
-    }
   };
+  const filteredsRequisitions = useFilter(filteredRequisitions, searchTerm);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport');
+    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
+  };
+
+
+
+
   return (
     <div className="sSIInventoryRequisition-active-imaging-request">
       <CustomModal isOpen={showReceived} onClose={() => setShowReceived(false)}>
@@ -134,21 +143,22 @@ function SSIInventoryRequisition() {
       </CustomModal>
 
       <CustomModal isOpen={showCreateRequisition} onClose={closePopups}>
-        {/* <div className="sSIInventoryRequisition-popup-overlay">
-          <div className="sSIInventoryRequisition-popup-content"> */}
+      
         <SSSIInvenReqCreateReq />
-        {/* </div>
-        </div> */}
+     
       </CustomModal>
 
       {/* Popup for View Requisition */}
-      {showViewRequisition && (
+      {/* {showViewRequisition && (
         <div className="sSIInventoryRequisition-popup-overlay">
           <div className="sSIInventoryRequisition-popup-content">
             <SSSIInvenReqView onClose={closePopups} requisition={datas} />
           </div>
         </div>
-      )}
+      )} */}
+        <CustomModal isOpen={showViewRequisition} onClose={closePopups}>
+    <SSSIInvenReqView requisition={datas} />
+  </CustomModal>
 
       <header className="sSIInventoryRequisition-header">
         <button
@@ -237,15 +247,26 @@ function SSIInventoryRequisition() {
 
       <div className="sSIInventoryRequisition-search-N-results">
         <div className="sSIInventoryRequisition-search-bar">
+
           
-          <FloatingInput label={"Search"} type="search" />
+          <FloatingInput 
+          label={"Search"} 
+          type="search" 
+          />
         </div>
         <div className="sSIInventoryRequisition-results-info">
           Showing {filteredRequisitions.length} / {filteredRequisitions.length}{" "}
           results
           <button
             className="sSIInventoryRequisition-print-button"
-            onClick={printList}
+            onClick={handleExport}
+          >
+            <i class="fa-solid fa-print"></i> Export
+          </button>
+          <button
+            className="sSIInventoryRequisition-print-button"
+            onClick={handlePrint}
+
           >
             <i class="fa-solid fa-print"></i> Print
           </button>
@@ -256,16 +277,36 @@ function SSIInventoryRequisition() {
         <table ref={tableRef}>
           <thead>
             <tr>
-              <th>Req.No</th>
-              <th>Requested To</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Verification Status</th>
-              <th>Action</th>
+              {[
+                "Req.No",
+                "Requested To",
+                "Date",
+                "Status",
+                "Verification Status",
+                "Action",
+              ].map((header, index) => (
+                <th
+                  key={index}
+                  style={{ width: columnWidths[index] }}
+                  className="resizable-th"
+                >
+                  <div className="header-content">
+                    <span>{header}</span>
+                    <div
+                      className="resizer"
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
+                    ></div>
+                  </div>
+                </th>
+              ))}
             </tr>
           </thead>
+
           <tbody>
-            {filteredRequisitions.map((req) => (
+            {filteredsRequisitions.map((req) => (
               <tr key={req.id}>
                 <td>{req.id}</td>
                 <td>GENERAL-INVENTORY</td>
@@ -294,14 +335,6 @@ function SSIInventoryRequisition() {
             ))}
           </tbody>
         </table>
-        {/* <div className="sSIInventoryRequisition-pagination">
-          <span>0 to {filteredRequisitions.length} of {filteredRequisitions.length}</span>
-          <button disabled>First</button>
-          <button disabled>Previous</button>
-          <span>Page 1 of 1</span>
-          <button disabled>Next</button>
-          <button disabled>Last</button>
-        </div> */}
       </div>
     </div>
   );

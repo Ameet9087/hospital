@@ -16,18 +16,10 @@
   margin-bottom: 15px;
 }
 
-.UpdateAcHead-form-group label {
-  display: block;
-  margin-bottom: 5px;
+.AddAccountHead-form{
+  gap: 20px;
 }
 
-.UpdateAcHead-input {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
 
 .UpdateAcHead-required {
   color: red;

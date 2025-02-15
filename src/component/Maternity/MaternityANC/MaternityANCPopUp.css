@@ -1,5 +1,5 @@
 .MaternityANCPopUp-container {
-    width: 100%;
+    /* width: 100%; */
     font-family: Arial, sans-serif;
   }
   
@@ -9,25 +9,18 @@
     align-items: center;
     padding-bottom: 16px;
     border-bottom: 1px solid #ddd;
-    margin-bottom: 16px;
+    /* margin-bottom: 16px; */
   }
   
   .MaternityANCPopUp-header h4 {
     font-size: var(--heading-font);
     margin: 0;
-    color: gray;
+    color:black;
   }
   
 
   
-  .MaternityANCPopUp-close-btn {
-    background-color: #E52F3E;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    padding: 4px 8px;
-  }
+
   
   .MaternityANCPopUp-form .MaternityANCPopUp-MaternityANCPopUp-form-row {
     display: flex;
@@ -36,10 +29,9 @@
     margin-bottom: 16px;
   }
   .MaternityANCPopUp-form-row-section-1{
-    /* border: 1px solid rgb(211, 208, 208); */
-    padding: 5px;
-    margin: 10px 0 20px 0 ;
-    box-shadow: 1px 1px 1px 1px #e0dfdf;
+   padding: 5px;
+    margin: 10px 0 10px 0 ;
+    
   }
   .MaternityANCPopUp-noANCListh4{
     display: flex;
@@ -52,47 +44,26 @@
     text-align: center;
     align-items: center;
     font-size: var(--font-size);
-    width: 400px;
+    width: 300px;
+    margin-top: 10px;
     /* border: 1px solid red; */
   }
   
-  .MaternityANCPopUp-form-group label {
-    display: block;
-    margin-bottom: 4px;
-    /* font-weight: bold; */
-    width: 75%;
-  }
+ 
   .MaternityANCPopUp-form-group-checkbox{
     display: flex;
     text-align: center;
     align-items: center;
     white-space: nowrap;
   }
-  
-  .MaternityANCPopUp-form-group input,
-  .MaternityANCPopUp-form-group select,
-  .MaternityANCPopUp-form-group textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+
 .MaternityANCPopUp-form-group-options {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
-.MaternityANCPopUp-form-group-options label {
-  margin-right: 20px;
-  font-size: var(--font-size);
-  display: flex;
-  align-items: center;
-}
 
-.MaternityANCPopUp-form-group-options input {
-  margin-right: 5px;
-}
+
 
   .MaternityANCPopUp-form-actions {
     display: flex;
@@ -141,5 +112,8 @@
     display: flex;
     justify-content: space-between;
   }
-  
+  .MaternityANCPopUp-form-group-1row{
+    gap: 20px;
+    
+  }
   

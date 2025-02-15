@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import './UpdateSubCategory.css';
-import { API_BASE_URL } from '../../api/api';
-
-const UpdateSubCategory = ({ subCategory,onClose }) => {
+import React, { useState, useEffect } from "react";
+import "./UpdateSubCategory.css";
+import { API_BASE_URL } from "../../api/api";
+import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
+const UpdateSubCategory = ({ subCategory, onClose }) => {
   const [formData, setFormData] = useState({
-    subCategoryName: '',
-    subCategoryCode: '',
-    accountingLedger: '',
-    description: '',
-    category: '',
+    subCategoryName: "",
+    subCategoryCode: "",
+    accountingLedger: "",
+    description: "",
+    category: "",
     active: false,
   });
 
@@ -16,11 +17,11 @@ const UpdateSubCategory = ({ subCategory,onClose }) => {
   useEffect(() => {
     if (subCategory) {
       setFormData({
-        subCategoryName: subCategory.subCategoryName || '',
-        subCategoryCode: subCategory.subCategoryCode || '',
-        accountingLedger: subCategory.accountingLedger || '',
-        description: subCategory.description || '',
-        category: subCategory.category || '',
+        subCategoryName: subCategory.subCategoryName || "",
+        subCategoryCode: subCategory.subCategoryCode || "",
+        accountingLedger: subCategory.accountingLedger || "",
+        description: subCategory.description || "",
+        category: subCategory.category || "",
         active: subCategory.isActive || false,
       });
     }
@@ -31,7 +32,7 @@ const UpdateSubCategory = ({ subCategory,onClose }) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -40,7 +41,7 @@ const UpdateSubCategory = ({ subCategory,onClose }) => {
     e.preventDefault();
 
     if (!formData.subCategoryName) {
-      alert('SubCategory Name is required!');
+      toast.error("SubCategory Name is required!");
       return;
     }
 
@@ -48,23 +49,23 @@ const UpdateSubCategory = ({ subCategory,onClose }) => {
       const response = await fetch(
         `${API_BASE_URL}/subcategories/update/${subCategory.id}`,
         {
-          method: 'PUT',
+          method: "PUT",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
         }
       );
 
       if (response.ok) {
-        alert('SubCategory updated successfully!');
+        toast.success("SubCategory updated successfully!");
         // onClose();
-        // onUpdateSuccess(); 
+        // onUpdateSuccess();
       } else {
-        alert('Failed to update SubCategory');
+        toast.error("Failed to update SubCategory");
       }
     } catch (error) {
-      console.error('Error updating SubCategory:', error);
+      console.error("Error updating SubCategory:", error);
     }
   };
 
@@ -73,10 +74,8 @@ const UpdateSubCategory = ({ subCategory,onClose }) => {
       <h2>Update Item SubCategory</h2>
       <form onSubmit={handleSubmit} className="AddItemSubcategory-form">
         <div className="AddItemSubcategoryFormGroup">
-          <label>
-            SubCategory Name<span className="MeasssRequired">*</span>
-          </label>
-          <input
+          <FloatingInput
+            label={" SubCategory Name"}
             type="text"
             name="subCategoryName"
             value={formData.subCategoryName}
@@ -87,8 +86,8 @@ const UpdateSubCategory = ({ subCategory,onClose }) => {
         </div>
 
         <div className="AddItemSubcategoryFormGroup">
-          <label>SubCategory Code</label>
-          <input
+          <FloatingInput
+            label={"SubCategory Code"}
             type="text"
             name="subCategoryCode"
             value={formData.subCategoryCode}
@@ -98,25 +97,24 @@ const UpdateSubCategory = ({ subCategory,onClose }) => {
         </div>
 
         <div className="AddItemSubcategoryFormGroup">
-          <label>Accounting Ledger</label>
-          <select
+          <FloatingSelect
+            label={"Accounting Ledger"}
             name="accountingLedger"
             value={formData.accountingLedger}
             onChange={handleInputChange}
-            className='AddItemSubcategory-select'
-          >
-            <option value="">---Select Ledger---</option>
-            <option value="Assets">Assets</option>
-            <option value="Liabilities">Liabilities</option>
-            <option value="Revenue">Revenue</option>
-            <option value="Expenses">Expenses</option>
-            <option value="Equity">Equity</option>
-          </select>
+            options={[
+              { value: "", label: "Select " },
+              { value: "Assets ", label: "Assets " },
+              { value: "Liabilities ", label: "Liabilities " },
+              { value: "Revenue ", label: "Revenue " },
+              { value: "Expenses ", label: "Expenses " },
+            ]}
+          />
         </div>
 
         <div className="AddItemSubcategoryFormGroup">
-          <label>Description</label>
-          <input
+          <FloatingInput
+            label={"Description"}
             type="text"
             name="description"
             value={formData.description}
@@ -126,21 +124,23 @@ const UpdateSubCategory = ({ subCategory,onClose }) => {
         </div>
 
         <div className="AddItemSubcategoryFormGroup">
-          <label>Category</label>
-          <select
+        <FloatingSelect
+            label={"Category"}
             name="category"
             value={formData.category}
             onChange={handleInputChange}
-            className='AddItemSubcategory-select'
-          >
-            <option value="">---Select Category---</option>
-            <option value="Capital">Capital</option>
-            <option value="Inventory">Inventory</option>
-            <option value="Office Supplies">Office Supplies</option>
-          </select>
+            options={[
+              { value: "", label: "Select " },
+              { value: "Capital ", label: "Capital " },
+              { value: "Inventory ", label: "Inventory " },
+              { value: "Office Supplies ", label: "Office Supplies " },
+           
+            ]}
+          />
+         
         </div>
 
-        <div className="AddItemSubcategoryFormGroup">
+        <div className="AddItemSubcategoryForm">
           <label>Is Active</label>
           <input
             type="checkbox"

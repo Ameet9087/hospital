@@ -1,15 +1,20 @@
- /* Ajhar Tamboli sSIIReportsConsumReport.jsx 19-09-24 */
+/* Ajhar Tamboli sSIIReportsConsumReport.jsx 19-09-24 */
 
-
-import React, { useState, useRef } from 'react';
-import * as XLSX from 'xlsx'; // Import the xlsx library
+import React, { useState, useRef } from "react";
+import * as XLSX from "xlsx"; // Import the xlsx library
 import "../SSInventory/sSIIReportsConsumReport.css";
-import { useReactToPrint } from 'react-to-print';
+import { useReactToPrint } from "react-to-print";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 
 function SSIIReportsConsumReport() {
   const printRef = useRef();
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [showViewRequisition, setShowViewRequisition] = useState(false);
+  const tableRef = useRef(null);
 
   const handleCreateRequisitionClick = () => {
     setShowCreateRequisition(true);
@@ -20,126 +25,167 @@ function SSIIReportsConsumReport() {
     setShowViewRequisition(false);
   };
 
-  const handlePrint = useReactToPrint({
-    content: () => printRef.current,
-    documentTitle: 'Consumption Report',
-    pageStyle: `
-      @page {
-        size: A4;
-        margin: 20mm;
-      }
-    `,
-  });
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
 
-  const handleViewClick = () => {
-    setShowViewRequisition(true);
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
   };
 
-  // Function to handle exporting the table to an Excel file
-  const handleExportToExcel = () => {
-    // Get the table data
-    const tableData = [
-      [' Date', 'Item Name', 'Sub CategoryName', 'Quantity', 'Unit', 'CP Per Unit', 'Total Consumed Value', 'Dispatched Qty', 'User'],
-      ['30-Aug-2024', 'tissue', 'tissue', '5', 'Piece', '150', '750', 'Self', 'admin'],
-    ];
-    
-    // Create a new workbook and a new worksheet
-    const worksheet = XLSX.utils.aoa_to_sheet(tableData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Report');
-
-    // Convert the workbook to an Excel file and trigger the download
-    XLSX.writeFile(workbook, 'Consumption_Report.xlsx');
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, "ConsumeReport"); // Appends worksheet to workbook
+    XLSX.writeFile(wb, "ConsumeReport.xlsx"); // Downloads the Excel file
   };
 
   return (
     <div className="sSIIReportsConsumReport-active-imaging-request">
       <>
-        <header className='sSIIReportsConsumReport-header'>
+        <header className="sSIIReportsConsumReport-header">
           <div className="sSIIReportsConsumReport-status-filters">
-            <h4><i class="fa-solid fa-star-of-life"></i> Consumption Report</h4>
+            <h4>
+              <i class="fa-solid fa-star-of-life"></i> Consumption Report
+            </h4>
           </div>
         </header>
         <div className="sSIIReportsConsumReport-controls">
-        <div className="sSIIReportsConsumReport-date-range">
-            <label>
-              From:
-              <input type="date" defaultValue="2024-08-09" />
-            </label>
-            <label>
-              To:
-              <input type="date" defaultValue="2024-08-16" />
-            </label>
+          <div className="sSIIReportsConsumReport-date-range">
+            <FloatingInput
+              label={"From Date"}
+              type="date"
+              defaultValue="2024-08-09"
+            />
+            <FloatingInput
+              label={"To Date"}
+              type="date"
+              defaultValue="2024-08-16"
+            />
+
             <button className="sSIIReportsConsumReport-star-button">☆</button>
-          <button className="sSIIReportsConsumReport-more-btn">-</button>
+            <button className="sSIIReportsConsumReport-more-btn">-</button>
             <button className="sSIIReportsConsumReport-ok-button">OK</button>
           </div>
 
           <div className="sSIIReportsConsumReport-filter">
-            <label>SubCategory</label>
-            <select>
-              <option value="">ALL</option>
-              <option value="">Some Sub Category</option>
-              <option value="">Tissue</option>
-              <option value="">Cotton</option>
-              <option value="">Soap</option>
-            </select>
-            <button className='sSIIReportsConsumReport-print-btn'>Show Report</button>
+            <FloatingSelect
+              label={"SubCategory"}
+              options={[
+                { value: "", label: "ALL" },
+                { value: "Some Sub Category", label: "Some Sub Category" },
+                { value: "Tissue", label: "Tissue" },
+                { value: "Cotton", label: "Cotton" },
+                { value: "Soap", label: "Soap" },
+              ]}
+            />
+
+            <button className="sSIIReportsConsumReport-print-btn">
+              Show Report
+            </button>
           </div>
         </div>
 
         <div className="sSIIReportsConsumReport-filterBySubCategory-N-internalConsumption">
-        <div className="sSIIReportsConsumReport-filterBySubCategory">
-
-        <label>Filter By SubCategory:</label>
-            <select>
-              <option value="">ALL</option>
-              <option value="">Some Sub Category</option>
-              <option value="">Tissue</option>
-              <option value="">Cotton</option>
-              <option value="">Soap</option>
-            </select>
-        </div>
-
-        <div className="sSIIReportsConsumReport-internalConsumption">
-<input type="checkbox" />
-<label htmlFor=""> Internal Consumption</label>
-<input type="checkbox" />
-<label htmlFor=""> Patient Consumption</label>
-        </div>        
-
+          <div className="sSIIReportsConsumReport-filterBySubCategory">
+            <FloatingSelect
+              label={"Filter By SubCategory"}
+              options={[
+                { value: "", label: "ALL" },
+                { value: "Some Sub Category", label: "Some Sub Category" },
+                { value: "Tissue", label: "Tissue" },
+                { value: "Cotton", label: "Cotton" },
+                { value: "Soap", label: "Soap" },
+              ]}
+            />
+          </div>
+          <div className="sSIIReportsConsumReport-internalConsumption">
+            <input type="checkbox" />
+            <label htmlFor=""> Internal Consumption</label>
+            <input type="checkbox" />
+            <label htmlFor=""> Patient Consumption</label>
+          </div>
         </div>
 
         <div className="sSIIReportsConsumReport-search-N-results">
           <div className="sSIIReportsConsumReport-search-bar">
-            <i className="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Search" />
+            <FloatingInput
+              label={"Search"}
+              type="search"
+              className="search-box"
+            />
           </div>
           <div className="sSIIReportsConsumReport-results-info">
             Showing 2 / 2 results
-            <button className='sSIIReportsConsumReport-print-btn' onClick={handleExportToExcel}>
+            <button
+              className="sSIIReportsConsumReport-print-btn"
+              onClick={handleExport}
+            >
               <i className="fa-regular fa-file-excel"></i> Export
             </button>
-            <button className='sSIIReportsConsumReport-print-btn' onClick={handlePrint}><i class="fa-solid fa-print"></i> Print</button>
+            <button
+              className="sSIIReportsConsumReport-print-btn"
+              onClick={printList}
+            >
+              <i class="fa-solid fa-print"></i> Print
+            </button>
           </div>
         </div>
-        <div style={{ display: 'none' }}>
-          <div ref={printRef}>
+        <div style={{ display: "none" }}>
+          <div ref={tableRef}>
             <h2>Consumption Report</h2>
             <p>Printed On: {new Date().toLocaleString()}</p>
-            <table>
+            <table ref={tableRef}>
               <thead>
                 <tr>
-                <th> Date</th>
-                <th>Item Name</th>
-                <th>Sub CategoryName</th>
-                <th> Quantity</th>
-                <th>Unit</th>
-                <th>CP Per Unit</th>
-                <th>Total Consumed Value</th>
-                <th>Consumption Type</th>
-                <th>User</th>
-                <th>Remarks</th>
+                  <th> Date</th>
+                  <th>Item Name</th>
+                  <th>Sub CategoryName</th>
+                  <th> Quantity</th>
+                  <th>Unit</th>
+                  <th>CP Per Unit</th>
+                  <th>Total Consumed Value</th>
+                  <th>Consumption Type</th>
+                  <th>User</th>
+                  <th>Remarks</th>
                 </tr>
               </thead>
               <tbody>
@@ -155,9 +201,7 @@ function SSIIReportsConsumReport() {
                   <td>admin</td>
                   <td></td>
                 </tr>
-                <tr>
-                 
-                </tr>
+                <tr></tr>
               </tbody>
             </table>
           </div>
@@ -180,20 +224,18 @@ function SSIIReportsConsumReport() {
             </thead>
             <tbody>
               <tr>
-              <td>30-Aug-2024</td>
-                  <td>tissue</td>
-                  <td>tissue</td>
-                  <td>5</td>
-                  <td>Piece</td>
-                  <td>150</td>
-                  <td>750</td>
-                  <td>Self</td>
-                  <td>admin</td>
-                  <td></td>
+                <td>30-Aug-2024</td>
+                <td>tissue</td>
+                <td>tissue</td>
+                <td>5</td>
+                <td>Piece</td>
+                <td>150</td>
+                <td>750</td>
+                <td>Self</td>
+                <td>admin</td>
+                <td></td>
               </tr>
-              <tr>
-               
-              </tr>
+              <tr></tr>
             </tbody>
           </table>
           {/* <div className="sSIIReportsConsumReport-pagination">

@@ -55,6 +55,7 @@
   .specialisations__form-group-sub-input
   {
     padding: 10px;
+    width: 100%;
 
   }
   .specialisations__radio-group {

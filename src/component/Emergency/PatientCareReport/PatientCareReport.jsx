@@ -5,6 +5,7 @@ import axios from "axios";
 import PopupTable from "../popup";
 import { useLocation } from "react-router-dom";
 import { API_BASE_URL } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -276,7 +277,7 @@ const PatientCareReport = () => {
   const fetchMrno = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.1.46:4096/api/ip-admissions"
+        `${API_BASE_URL}/ip-admissions`
       );
       setMrNoData(response.data);
     } catch (error) {
@@ -329,12 +330,17 @@ const PatientCareReport = () => {
   };
 
   const { columns, data } = getPopupData();
-
-  // Rest of your JSX remains exactly the same, just update the checkbox inputs to include onChange handlers
+  const navigate = useNavigate();
+  const handleBack = () => navigate("/emergency/erinitial");
   return (
     <>
       <div className="PatientCareReport-container">
         <div className="PatientCareReport-section">
+        <div className="er-initial-assessment-com-section">
+        <button className="er-initial-assessment-com-section-back" onClick={handleBack}>Back</button>
+
+        </div>
+
           <div className="PatientCareReport-header">Patient Care Report</div>
         </div>
         <div className="PatientCareReport-section">
@@ -1268,7 +1274,6 @@ const PatientCareReport = () => {
         <button className="btn-blue" onClick={handleSave}>
           Save
         </button>
-        <button className="btn-red">Close</button>
       </div>
     </>
   );

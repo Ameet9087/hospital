@@ -1,16 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import "../DisStocks/dispenStockRequisition.css";
-import DispenStockRequisitionCreateReq from './dispenStockRequisitionCreateReq';
-import { useReactToPrint } from 'react-to-print';
-import axios from 'axios';
-import { API_BASE_URL } from '../../api/api';
+import DispenStockRequisitionCreateReq from "./dispenStockRequisitionCreateReq";
+import { useReactToPrint } from "react-to-print";
+import axios from "axios";
+import * as XLSX from 'xlsx';
+import { API_BASE_URL } from "../../api/api";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../CustomModel/CustomModal";
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 
 function DispenStockRequisition() {
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [requisitions, setRequisitions] = useState([]);
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
   const [statusFilter, setStatusFilter] = useState("All");
-  const printRef = useRef();
+
+  const tableRef = useRef();
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedRequisition, setSelectedRequisition] = useState({
     pharmacyRequisitionId: null,
@@ -26,13 +38,11 @@ function DispenStockRequisition() {
         setRequisitions(data);
         console.log("requisitions data", data);
       })
-      .catch((error) => console.error('Error fetching requisitions:', error));
+      .catch((error) => console.error("Error fetching requisitions:", error));
   }, []);
 
   const handleCreateRequisitionClick = () => setShowCreateRequisition(true);
   const closePopups = () => setShowCreateRequisition(false);
-
- 
 
   const handleViewClick = async (requisition) => {
     console.log("onclick", requisition);
@@ -41,7 +51,7 @@ function DispenStockRequisition() {
         `${API_BASE_URL}/pharmacyRequisitions/${requisition.pharmacyRequisitionId}`
       );
       const data = response.data;
-  
+
       setSelectedRequisition({
         pharmacyRequisitionId: data.pharmacyRequisitionId, // Use data from response
         availableQtyInStore: data.storeName, // Assuming availableQtyInStore maps to storeName
@@ -52,19 +62,60 @@ function DispenStockRequisition() {
       console.error("Error fetching requisition details:", error);
     }
   };
-
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, "DispenceSalesStockDetails"); // Appends worksheet to workbook
+    XLSX.writeFile(wb, "DispenceSalesStockDetails.xlsx"); // Downloads the Excel file
+  };
   const closeModal = () => setShowModal(false);
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
 
-  const handlePrint = useReactToPrint({
-    content: () => printRef.current,
-    documentTitle: 'Requisition_Report',
-    pageStyle: `
-      @page {
-        size: A4;
-        margin: 20mm;
-      }
-    `,
-  });
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
+  };
 
   return (
     <div className="dispenStockRequisition-active-imaging-request">
@@ -73,7 +124,10 @@ function DispenStockRequisition() {
       ) : (
         <>
           <header className="dispenStockRequisition-header">
-            <button className="dispenStockRequisition-CreateRequisition" onClick={handleCreateRequisitionClick}>
+            <button
+              className="dispenStockRequisition-CreateRequisition"
+              onClick={handleCreateRequisitionClick}
+            >
               Create Requisition
             </button>
             <div className="dispenStockRequisition-checkBox">
@@ -105,40 +159,82 @@ function DispenStockRequisition() {
           </header>
           <div className="dispenStockRequisition-controls">
             <div className="dispenStockRequisition-date-range">
-              <label>
-                From:
-                <input type="date" defaultValue="2024-08-09" />
-              </label>
-              <label>
-                To:
-                <input type="date" defaultValue="2024-08-16" />
-              </label>
+              <FloatingInput
+                label="From"
+                type="date"
+                name="fromDate"
+                value={fromDate}
+                onChange={(e) => setFromDate(e.target.value)}
+              />
+              <FloatingInput
+                label="To"
+                type="date"
+                name="toDate"
+                value={toDate}
+                onChange={(e) => setToDate(e.target.value)}
+              />
             </div>
           </div>
           <div className="dispenStockRequisition-search-N-results">
             <div className="dispenStockRequisition-search-bar">
-              <i className="fa-solid fa-magnifying-glass"></i>
-              <input type="text" placeholder="Search" />
+              
+              <FloatingInput 
+              label={"Search"}
+              type="search"
+              />
             </div>
             <div className="dispenStockRequisition-results-info">
-              Showing {filteredRequisitions.length} / {requisitions.length} results
-              <button className="dispenStockRequisition-print-btn" onClick={handlePrint}><i className="fa-solid fa-file-excel"></i> Export</button>
-              <button className="dispenStockRequisition-print-btn" onClick={handlePrint}><i className="fa-solid fa-print"></i> Print</button>
+              Showing {filteredRequisitions.length} / {requisitions.length}{" "}
+              results
+              <button
+                className="dispenStockRequisition-print-btn"
+                onClick={handleExport}
+              >
+                <i className="fa-solid fa-file-excel"></i> Export
+              </button>
+              <button
+                className="dispenStockRequisition-print-btn"
+
+                onClick={printList}
+              >
+                <i className="fa-solid fa-print"></i> Print
+              </button>
             </div>
           </div>
-          
+
+
           <div className="dispenStockRequisition-table-N-paginat">
-            <table>
+            <table ref={tableRef}>
               <thead>
                 <tr>
-                  <th>Requisition ID</th>
-                  <th>Requested By</th>
-                  <th>Requested From</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                  {[
+                    "Requisition ID",
+                    "Requested By",
+                    "Requested From",
+                    "Date",
+                    "Status",
+                    "Action",
+                  ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
                 </tr>
               </thead>
+
               <tbody>
                 {requisitions.map((req, index) => (
                   <tr key={index}>
@@ -148,9 +244,8 @@ function DispenStockRequisition() {
                     <td>{req.requestedDate}</td>
                     <td>{req.status}</td>
                     <td>
-                      {/* <button className="dispenStockRequisition-view-button">Receive item</button> */}
                       <button
-                        className="dispensarystockrequ-view"
+                        className="dispenStockRequisition-print-btn"
                         onClick={() => handleViewClick(req)}
                       >
                         View
@@ -164,11 +259,19 @@ function DispenStockRequisition() {
         </>
       )}
 
-      {showModal && (
-        <div className="dispensarystockreq-modal-dialog">
-          <div className="dispensarystockreq-modal-content">
+      {/* {showModal && ( */}
+         <CustomModal
+         isOpen={showModal}
+         onClose={() => setShowModal(false)}
+         title="Requisition Details"
+       >
+        <div  >
+          <div>
             <div className="dispensarystockreqdetail-modal-header">
-              <h5 className="dispensarystockreq-modal-title" id="viewModalLabel">
+              <h5
+                className="dispensarystockreq-modal-title"
+                id="viewModalLabel"
+              >
                 Requisition Details
               </h5>
             </div>
@@ -176,10 +279,12 @@ function DispenStockRequisition() {
               <>
                 <div className="dispensarystockreq-requisition-details">
                   <p>
-                    <strong>Requisition No:</strong> {selectedRequisition.pharmacyRequisitionId}
+                    <strong>Requisition No:</strong>{" "}
+                    {selectedRequisition.pharmacyRequisitionId}
                   </p>
                   <p>
-                    <strong>Requested Store:</strong> {selectedRequisition.availableQtyInStore}
+                    <strong>Requested Store:</strong>{" "}
+                    {selectedRequisition.availableQtyInStore}
                   </p>
                 </div>
                 <table className="dispensarystockreq-table">
@@ -197,16 +302,24 @@ function DispenStockRequisition() {
                       <th>Remarks</th>
                     </tr>
                   </thead>
-<tbody>
-                    {selectedRequisition.items && selectedRequisition.items.length > 0 ? (
+                  <tbody>
+                    {selectedRequisition.items &&
+                    selectedRequisition.items.length > 0 ? (
                       selectedRequisition.items.map((item, index) => (
                         <tr key={index}>
                           {/* <td>{item.genericName || "N/A"}</td> */}
-                          <td>{item?.addItemDTO?.itemMaster?.itemName  || "N/A"}</td> {/* Display itemName */}                          <td>{item.batchNo || "N/A"}</td>
+                          <td>
+                            {item?.addItemDTO?.itemMaster?.itemName || "N/A"}
+                          </td>{" "}
+                          {/* Display itemName */}{" "}
+                          <td>{item.batchNo || "N/A"}</td>
                           <td>{item.unit || "N/A"}</td>
                           <td>{item.requestingQuantity || 0}</td>
                           <td>{item.dispatchQty || 0}</td>
-                          <td>{(item.requiredQuantity || 0) - (item.dispatchQty || 0)}</td>
+                          <td>
+                            {(item.requiredQuantity || 0) -
+                              (item.dispatchQty || 0)}
+                          </td>
                           <td>{item.receivedQty || 0}</td>
                           <td>{item.status || "Pending"}</td>
                           <td>{item.remark || "N/A"}</td>
@@ -218,13 +331,12 @@ function DispenStockRequisition() {
                           Loading or no items found.
                         </td>
                       </tr>
-                    )
-                    }
+                    )}
                   </tbody>
                 </table>
               </>
             </div>
-            <div className="dispensarystockreq-modal-footer">
+            {/* <div className="dispensarystockreq-modal-footer">
               <button
                 type="button"
                 className="dispensarystockreq-modal-btn"
@@ -232,12 +344,13 @@ function DispenStockRequisition() {
               >
                 Close
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
-      )}
+      {/* )} */}
+      </CustomModal>
     </div>
   );
 }
-                  
+
 export default DispenStockRequisition;

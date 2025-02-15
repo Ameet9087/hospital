@@ -124,7 +124,7 @@ const ErInitialAssessmentForm = () => {
   const [selectedMrno, setSelectedMrno] = useState([]);
   const [totalScore, setTotalScore] = useState();
 
-  const handleBack = () => navigate("/emergency/finalizedpatients");
+  const handleBack = () => navigate("/emergency/erinitial");
 
   const [formData, setFormData] = useState({
     erNumber: "",
@@ -435,6 +435,7 @@ const ErInitialAssessmentForm = () => {
     <>
       <div className="er-initial-assessment-com-container">
         <div className="er-initial-assessment-com-section">
+
           <button className="er-initial-assessment-com-button" onClick={handleBack}>Back</button>
         </div>
 
@@ -1045,6 +1046,7 @@ const ErInitialAssessmentForm = () => {
       </div>
       <div className="er-initial-assement-pop-up-com-form-actions">
         <button
+
           className="er-initial-assessment-com-button"
           onClick={handleSubmit}
         >

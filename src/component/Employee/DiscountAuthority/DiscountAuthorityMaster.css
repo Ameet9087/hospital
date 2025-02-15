@@ -7,6 +7,7 @@
     
 
 }
+
 .DiscountAuthorityMaster-header{
    
     background-color: var(--upperBar-bg-color);
@@ -20,11 +21,10 @@
     justify-content: center;
 }
 .DiscountAuthorityMaster-section{
-    width: 40%;
-    padding: 8px;
+    width: 100%;
+    /* padding: 8px; */
     border: 1px solid #ccc;
     background-color: white;
-    margin-bottom: 30px;
 }
 .DiscountAuthorityMaster-Section-header{
     background-color: var(--upperBar-bg-color);
@@ -38,23 +38,36 @@
     display: flex;
     margin-bottom: 10px;
     gap: 10px;
+    justify-content: space-around;
 }
-.DiscountAuthorityMaster-data label{
-    width: 300px;
-   font-size: var(--font-size);
+
+.DiscountAuthorityMaster-data-checkbox{
+    width: 40%;
+    margin-left: 10px;
+    
 }
-.DiscountAuthorityMaster-data input{
-    width: 100%;
-    padding: var(--input-box-padding);
-    font-size: var(--font-size);
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    margin-bottom: 10px;
+.DiscountAuthorityMaster-data-checkbox-active{
+    margin-left: 100px;
 }
+.DiscountAuthorityMaster-data-discount{
+    display: flex;
+    width: 50%;
+    gap: 20px;
+}
+
 .DiscountAuthorityMaster-table{
     font-size: var(--font-size);
 }
-
+.DiscountAuthorityMaster-data-attach-filename{
+    width: 24%;
+    margin-left: 10px;
+}
+.DiscountAuthorityMaster-data-name{
+    width: 50%;
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+}
  .DiscountAuthorityMaster-table button,.DiscountAuthorityMaster-upload{
     background-color: var(--button-bg-color);
     color: var(--button-hover-background-color);
@@ -68,16 +81,7 @@
     background-color: var(--button-hover-background-color);
     color: var(--button-bg-color); 
 }
-/* .DiscountAuthorityMaster-navbar-btns{
-    position: fixed;
-    padding: 10px;
-    bottom: 10px;
-    right: 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    overflow-y: auto;
-} */
+
 .DiscountAuthorityMaster-navbar-btns button {
    
     background-color: var(--button-bg-color);
@@ -86,10 +90,18 @@
     padding: 5px;
     border: 1px solid var(--button-bg-color);
     border-radius: 5px;
-
+    margin-top: 10px;
   }
   
   .DiscountAuthorityMaster-navbar-btns button:hover {
     background-color: var(--button-hover-background-color);
     color: var(--button-bg-color); 
   }
+.DiscountAuthorityMaster-section-status{
+    display: flex;
+    width: 100%;
+}
+.DiscountAuthorityMaster-data-attach{
+    display: flex;
+    gap: 15px;
+}

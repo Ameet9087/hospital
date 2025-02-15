@@ -1,7 +1,6 @@
 .bloodbankrequest-container {
     max-width: 700px;
     margin: 10px auto;
-
     border-radius: 8px;
 }
 
@@ -56,7 +55,7 @@
     background-color: var(--button-color);
     font-size: var(--font-size);
     border-radius: 5px;
-    padding: 8px 12px;
+    padding: 5px 5px;
     border: 1px solid var(--button-hover-background-color);
     color: white;
     cursor: pointer;

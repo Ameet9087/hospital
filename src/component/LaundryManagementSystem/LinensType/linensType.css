@@ -132,22 +132,9 @@
 .linensType-section{
   margin-top: 10px;
 }
-.linensType-floating-field {
-  position: relative;
-}
-.linensType-floating-input,
-.linensType-floating-select {
-  padding: 5px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: var(--font-size);
-  background: white;
-  transition: all 0.2s ease;
-}
 
-.linensType-form-floating-field {
-  position: relative;
-}
+
+
 .linensType-search-field {
   position: relative;
 }
@@ -167,54 +154,16 @@
   justify-content: center;
   z-index: 1;
 }
-.linensType-floating-input:focus,
-.linensType-floating-select:focus {
-  outline: none;
-  border-color: #00897b;
-  box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
-}
+
 .linensType-services-section {
   background: white;
   border: 1px solid #ccc;
   margin-bottom: 5px;
 }
 
-.linensType-form-floating-input,
-.linensType-form-floating-select {
-  padding: 5px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
-  background: white;
-  transition: all 0.2s ease;
-}
-.linensType-form-floating-input{
-  width: 92%;
-}
-.linensType-form-floating-select {
-  width: 100%;
-}
-.linensType-form-floating-label {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: white;
-  padding: 0 4px;
-  color: #666;
-  pointer-events: none;
-  transition: all 0.2s ease;
-  font-size: var(--font-size);
-}
-.linensType-form-floating-field.active .linensType-form-floating-label {
-  top: 0;
-  font-size: 12px;
-  color: #00897b;
-}
-.linensType-form-floating-field.active .linensType-form-floating-input,
-.linensType-form-floating-field.active .linensType-form-floating-select {
-  border-color: #00897b;
-}
+
+
+
 .linensType-action-buttons {
   display: flex;
   gap: 5px;

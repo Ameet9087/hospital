@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./PatientQueue.css";
 import { API_BASE_URL } from "../../api/api";
-
+import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
 const PatientQueue = () => {
   const [data, setData] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState("");
@@ -38,7 +38,7 @@ const PatientQueue = () => {
       const response = await axios.get(
         `${API_BASE_URL}/patient-queues/employee/${selectedDoctor}`
       );
-      setData(response.data);            
+      setData(response.data);
       setShowTable(true);
     } catch (error) {
       console.error("Error fetching patient data:", error);
@@ -81,11 +81,10 @@ const PatientQueue = () => {
   };
 
   const filteredData = Array.isArray(data)
-  ? data.filter(
-      (row) => selectedStatus === "all" || row.status === selectedStatus
-    )
-  : [];
-
+    ? data.filter(
+        (row) => selectedStatus === "all" || row.status === selectedStatus
+      )
+    : [];
 
   return (
     <div className="patient-queue-management-container">
@@ -97,21 +96,24 @@ const PatientQueue = () => {
       </h2>
       <div className="queue-management-form-container">
         <div className="queue-management-form-group">
-          <label>Doctor:</label>
-          <select
+
+          <FloatingSelect
+           label="Doctor"
+            name="doctor"
             value={selectedDoctor}
             onChange={(e) => setSelectedDoctor(e.target.value)}
-          >
-            <option value="">Select Doctor</option>
-            {doctors.map((doctor) => (
-              <option key={doctor.id} value={doctor.id}>
-                {doctor.name}
-              </option>
-            ))}
-          </select>
+          
+                        options={[
+                          { value: "", label: "Select a state" },
+                          ...(Array.isArray(doctors)?doctors.map((doctor)=>({
+                            value:doctor.id,
+                            label:doctor.name,
+                          })):[])
+                        ]}
+                      />
         </div>
         <div className="queue-management-form-group status-group">
-          <label>Status :</label>
+          <label>Status:</label>
           <div className="queue-management-status-options">
             {["all", "pending", "completed", "skipped"].map((status) => (
               <React.Fragment key={status}>
@@ -122,12 +124,17 @@ const PatientQueue = () => {
                   checked={selectedStatus === status}
                   onChange={() => setSelectedStatus(status)}
                 />
-                <label htmlFor={status}>{status.charAt(0).toUpperCase() + status.slice(1)}</label>
+                <label htmlFor={status}>
+                  {status.charAt(0).toUpperCase() + status.slice(1)}
+                </label>
               </React.Fragment>
             ))}
           </div>
         </div>
-        <button className="queue-management-load-data-button" onClick={handleLoadData}>
+        <button
+          className="queue-management-load-data-button"
+          onClick={handleLoadData}
+        >
           Load Data
         </button>
       </div>
@@ -178,21 +185,30 @@ const PatientQueue = () => {
                         <button
                           className="que-complete-button"
                           onClick={() => handleStatusChange(row, "completed")}
-                          disabled={row.status === "completed" || row.status === "skipped"}
+                          disabled={
+                            row.status === "completed" ||
+                            row.status === "skipped"
+                          }
                         >
                           Complete
                         </button>
                         <button
                           className="que-skipped-button"
                           onClick={() => handleStatusChange(row, "skipped")}
-                          disabled={row.status === "completed" || row.status === "skipped"}
+                          disabled={
+                            row.status === "completed" ||
+                            row.status === "skipped"
+                          }
                         >
                           Skipped
                         </button>
                         <button
                           className="que-attend-button"
                           onClick={() => handleStatusChange(row, "attend")}
-                          disabled={row.status === "completed" || row.status === "skipped"}
+                          disabled={
+                            row.status === "completed" ||
+                            row.status === "skipped"
+                          }
                         >
                           Attend
                         </button>

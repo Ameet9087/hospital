@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './AddItemSubCategory.css';
 import { API_BASE_URL } from '../../api/api';
-
-
+import { FloatingInput ,FloatingSelect} from '../../../FloatingInputs';
+import { toast } from 'react-toastify';
 const AddItemSubCategory = ({onClose}) => {
   const [subCategoryName, setSubCategoryName] = useState('');
   const [itemSubCategoryName, setItemSubCategoryName] = useState('');
@@ -16,7 +16,8 @@ const AddItemSubCategory = ({onClose}) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
+   
     const newSubCategory = {
       subCategoryName,
       itemSubCategoryName,
@@ -24,9 +25,9 @@ const AddItemSubCategory = ({onClose}) => {
       accountingLedger,
       description,
       category,
-      active
+      active,
     };
-
+  
     try {
       const response = await fetch(`${API_BASE_URL}/subcategories/add`, {
         method: 'POST',
@@ -35,13 +36,16 @@ const AddItemSubCategory = ({onClose}) => {
         },
         body: JSON.stringify(newSubCategory),
       });
-
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
-      // Handle success
-      setSuccess('SubCategory added successfully!');
+  
+      // Show success toast
+      toast.success('SubCategory added successfully!', {
+       
+      });
+  
       // Reset form fields
       setSubCategoryName('');
       setItemSubCategoryName('');
@@ -51,10 +55,13 @@ const AddItemSubCategory = ({onClose}) => {
       setCategory('');
       setActive(true);
     } catch (error) {
-      // Handle error
-      setError('Failed to add SubCategory: ' + error.message);
+      // Show error toast
+      toast.error('Failed to add SubCategory: ' + error.message, {
+     
+      });
     }
   };
+  
 
   return (
     <div className="ItemSub-AddItemSubcategory">
@@ -62,59 +69,71 @@ const AddItemSubCategory = ({onClose}) => {
     
       <form onSubmit={handleSubmit} className='AddItemSubcategory-form'>
         <div className="AddItemSubcategoryFormGroup">
-          <label>SubCategory Name<span className="goryRequired">*</span></label>
-          <input
-            type="text"
-            placeholder="ItemSubCategory Name"
-            value={subCategoryName}
-            onChange={(e) => setSubCategoryName(e.target.value)}
-            required
+          <FloatingInput
+          label={"SubCategory Name"}
+          type="text"
+          placeholder="ItemSubCategory Name"
+          value={subCategoryName}
+          onChange={(e) => setSubCategoryName(e.target.value)}
+          required
           />
+          
         </div>
         <div className="AddItemSubcategoryFormGroup">
-          <label>SubCategory Code</label>
-          <input
-            type="text"
-            placeholder="Code"
-            value={subCategoryCode}
-            onChange={(e) => setSubCategoryCode(e.target.value)}
+          <FloatingInput
+          label={"SubCategory Code"}
+          type="text"
+          placeholder="Code"
+          value={subCategoryCode}
+          onChange={(e) => setSubCategoryCode(e.target.value)}
           />
+        
         </div>
         <div className="AddItemSubcategoryFormGroup">
-          <label>Accounting Ledger</label>
-          <select
+        <FloatingSelect
+        label={"Accounting Ledger"}
             value={accountingLedger}
             onChange={(e) => setAccountingLedger(e.target.value)}
-            className='AddItemSubcategory-select'
-          >
-            <option value="">-- Select Ledger --</option>
-            <option value="Pharmacy Ledger">Pharmacy Ledger</option>
-            {/* Add more options here */}
-          </select>
-        </div>
-        <div className="AddItemSubcategoryFormGroup">
-          <label>Description</label>
-          <input
-            type="text"
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+           
+            options={[
+              { value: "", label: "Select Accounting" },
+              { value: "Pharmacy Ledger", label: "Pharmacy Ledger" },
+           
+           
+            ]}
           />
+
+        
         </div>
         <div className="AddItemSubcategoryFormGroup">
-          <label>Category<span className="goryRequired">*</span></label>
-          <select
+          <FloatingInput
+          label={"Description"}
+          type="text"
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          />
+         
+        </div>
+        <div className="AddItemSubcategoryFormGroup">
+        
+        <FloatingSelect
+        label={"Category"}
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className='AddItemSubcategory-select'
+          
             required
-          >
-            <option value="">--select--</option>
-            <option value="Consumable">Consumable</option>
-            <option value="Capital">Capital</option>
-          </select>
+            options={[
+              { value: "", label: "Select " },
+              { value: "Consumable ", label: "Consumable " },
+              { value: "Capital ", label: "Capital " },
+
+           
+            ]}
+          />
+       
         </div>
-        <div className="AddItemSubcategoryFormGroup">
+        <div className="AddItemSubcategoryForm">
           <label>Is Active</label>
           <input
             type="checkbox"

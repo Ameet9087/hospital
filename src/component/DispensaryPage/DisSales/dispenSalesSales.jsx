@@ -14,7 +14,12 @@ import "./DropdownWithSearch.css";
 import { API_BASE_URL } from "../../api/api";
 import SalesInvoice from "./SalesInvoice";
 import CustomModal from "../../../CustomModel/CustomModal";
-
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../FloatingInputs";
 
 const SalesSales = () => {
   const [showExternalPopup, setShowExternalPopup] = useState(false);
@@ -49,9 +54,7 @@ const SalesSales = () => {
 
   const fetchInvoiceData = async () => {
     try {
-      const response = await axios.get(
-        `${API_BASE_URL}/patient-invoices`
-      );
+      const response = await axios.get(`${API_BASE_URL}/patient-invoices`);
       console.log("API Response:", response.data);
       setInvoiceData(response.data);
       // Ensure API response matches expected structure
@@ -111,12 +114,12 @@ const SalesSales = () => {
       medicineName: item.medicineName,
       expiry: item.expiry,
       batch: item.batch,
-      availableQty: parseInt(item.availableQty, 10), // Ensure availableQty is an integer
-      qty: parseInt(item.qty, 10), // Ensure qty is an integer
-      salePrice: parseFloat(item.salePrice), // Ensure salePrice is a double/float
-      subTotal: parseFloat(item.subTotal), // Ensure subTotal is a double/float
+      availableQty: parseInt(item.availableQty, 10),
+      qty: parseInt(item.qty, 10),
+      salePrice: parseFloat(item.salePrice),
+      subTotal: parseFloat(item.subTotal),
     }));
-    console.log(invoiceData)
+    console.log(invoiceData);
 
     try {
       const response = await axios.post(
@@ -127,7 +130,7 @@ const SalesSales = () => {
       if (response.status === 200 || response.status === 201) {
         alert("Invoice Printed Successfully!");
         setInvoiceData(response.data);
-        console.log(response.data);  // Corrected from response.body to response.data
+        console.log(response.data); // Corrected from response.body to response.data
         // setShowInvoice(true);
         console.log("Response Data:", response.data);
       } else {
@@ -140,7 +143,7 @@ const SalesSales = () => {
   };
 
   const [formData, setFormData] = useState({
-    medicineId: "",  // Add this line for medicineId
+    medicineId: "", // Add this line for medicineId
     genericName: "",
     medicineName: "",
     expiry: "",
@@ -314,8 +317,9 @@ const SalesSales = () => {
   }, [ccCharge, quantity]);
 
   const filteredPatients = patients.filter((patient) => {
-    const fullName = `${patient.firstName} ${patient.middleName || ""} ${patient.lastName
-      }`.toLowerCase();
+    const fullName = `${patient.firstName} ${patient.middleName || ""} ${
+      patient.lastName
+    }`.toLowerCase();
     return (
       fullName.includes(searchTerm.toLowerCase()) ||
       (patient.uhid && patient.uhid.toString().includes(searchTerm))
@@ -323,7 +327,6 @@ const SalesSales = () => {
   });
 
   console.log(options);
-
 
   const handleExternalPopupOpen = () => {
     setShowExternalPopup(true);
@@ -356,75 +359,50 @@ const SalesSales = () => {
       <div className="dispenSalesSales-header">
         <div className="dispenSalesSales-tabs">
           <div
-            className={`dispenSalesSales-tab ${activeTab === "Sale" ? "dispenSalesSales-tab-active" : ""
-              }`}
+            className={`dispenSalesSales-tab ${
+              activeTab === "Sale" ? "dispenSalesSales-tab-active" : ""
+            }`}
             onClick={() => handleTabClick("Sale")}
           >
             Sale
           </div>
           <div
-            className={`dispenSalesSales-tab ${activeTab === "Sale List" ? "dispenSalesSales-tab-active" : ""
-              }`}
+            className={`dispenSalesSales-tab ${
+              activeTab === "Sale List" ? "dispenSalesSales-tab-active" : ""
+            }`}
             onClick={() => handleTabClick("Sale List")}
           >
             Sale List
           </div>
           <div
-            className={`dispenSalesSales-tab ${activeTab === "Return From Customer"
+            className={`dispenSalesSales-tab ${
+              activeTab === "Return From Customer"
                 ? "dispenSalesSales-tab-active"
                 : ""
-              }`}
+            }`}
             onClick={() => handleTabClick("Return From Customer")}
           >
             Return From Customer
           </div>
           <div
-            className={`dispenSalesSales-tab ${activeTab === "Return Sale List"
+            className={`dispenSalesSales-tab ${
+              activeTab === "Return Sale List"
                 ? "dispenSalesSales-tab-active"
                 : ""
-              }`}
+            }`}
             onClick={() => handleTabClick("Return Sale List")}
           >
             Return Sale List
           </div>
-          {/* <div
-            className={`dispenSalesSales-tab ${
-              activeTab === "Provisional Bills"
-                ? "dispenSalesSales-tab-active"
-                : ""
-            }`}
-            onClick={() => handleTabClick("Provisional Bills")}
-          >
-            Provisional Bills
-          </div>
-          <div
-            className={`dispenSalesSales-tab ${
-              activeTab === "Settlement" ? "dispenSalesSales-tab-active" : ""
-            }`}
-            onClick={() => handleTabClick("Settlement")}
-          >
-            Settlement
-          </div>
-          <div
-            className={`dispenSalesSales-tab ${
-              activeTab === "Provisional Return"
-                ? "dispenSalesSales-tab-active"
-                : ""
-            }`}
-            onClick={() => handleTabClick("Provisional Return")}
-          >
-            Provisional Return
-          </div> */}
         </div>
       </div>
       {activeTab === "Sale" ? (
         <>
           <div className="dispenSalesSales-patient-info">
             <div className="dispenSalesSales-patient-search">
-              <label>Search Patient:</label>
-              <input
+              <FloatingInput
+                label={"Search Patient"}
                 type="text"
-                placeholder="Type to search patient"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="dispenSalesSales-patient-input"
@@ -450,35 +428,7 @@ const SalesSales = () => {
               )}
             </div>
 
-
-            <div className="dispenSalesSales-doctor-info">
-              {/* <label>Doctor:</label>
-              <input type="text" value="ANONYMOUS DOCTOR" readOnly />
-              <input type="checkbox" id="external" />
-              <label htmlFor="external">External?</label> */}
-              {/* <button
-                className="dispenSalesSales-add-button"
-                onClick={handleExternalPopupOpen}
-              >
-                +
-              </button> */}
-            </div>
-
-            {/* Conditionally render the AddExternalReferral popup */}
-            {/* {showExternalPopup && (
-              <div className="addExternalReferral-popup-overlay">
-                <AddExternalReferral onClose={handleExternalPopupClose} />
-              </div>
-            )} */}
-
-            {/* <div className="dispenSalesSales-register-patient">
-              <span onClick={handlePatientPopupOpen}>
-                Register New Outdoor Patient |
-              </span>
-              <span onClick={handleStockDetailsPopupOpen}>Stock Details</span>
-            </div> */}
-
-            {/* Conditionally render the AddNewPatient popup */}
+            <div className="dispenSalesSales-doctor-info"></div>
             {showPatientPopup && (
               <div className="salesAddNewPatient-popup-overlay">
                 <AddNewPatient onClose={handlePatientPopupClose} />
@@ -499,7 +449,6 @@ const SalesSales = () => {
           </div>
 
           <div className="dispenSalesSales-hospital-info">
-
             {selectedPatientInfo && (
               <div className="dispenSalesSales-hospital-info">
                 <div className="dispenSalesSales-hospital-info-subDiv">
@@ -518,37 +467,56 @@ const SalesSales = () => {
               </div>
             )}
             <div className="dispenSalesSales-hospital-info-subDiv">
-              <div>Visit Type: outpatient</div>
-              <div>Membership:</div>
-              <select>
-                <option>Astra</option>
-                <option>BRITAM</option>
-                <option>General</option>
-                <option>ABC</option>
-                <option>XYZ</option>
-                <option>PQR</option>
-                <option>SVT</option>
-              </select>
-              <div>Price Category:</div>
-              <select>
-                <option>Normal</option>
-              </select>
+              <div>
+                <FloatingSelect
+                  label={"Visit Type"}
+                  name="visitType"
+                  options={[
+                    { value: "", label: "Select Type" },
+                    { value: "Out Patient", label: "Out Patient" },
+                    { value: "BRITAM", label: "In Patient" },
+                  ]}
+                />
+                <FloatingSelect
+                  label={"Membership"}
+                  name="membership"
+                  options={[
+                    { value: "", label: "Select Membership" },
+                    { value: "Astra", label: "Astra" },
+                    { value: "BRITAM", label: "BRITAM" },
+                    { value: "General", label: "General" },
+                    { value: "ABC", label: "ABC" },
+                    { value: "XYZ", label: "XYZ" },
+                    { value: "PQR", label: "PQR" },
+                    { value: "SVT", label: "SVT" },
+                  ]}
+                />
+                <FloatingSelect
+                  label={"Price Category"}
+                  name="priceCategory"
+                  options={[
+                    { value: "", label: "Select Category" },
+                    { value: "Normal", label: "Normal" },
+                  ]}
+                />
+              </div>
             </div>
           </div>
 
           <div className="dispenSalesSales-medicineInfo-N-paymentSection">
             <div className="dispenSalesSales-medicineInfo-N-invoiceSummary">
-
               <div className="dispenSalesSales-medicine-info">
-                <div style={{ position: "relative" }}>
-                  <label>Drug/Medicine Name</label>
-                  <input
+                <div className="dispenSalesSales-medicine-info">
+                  <FloatingInput
+                    label={"Drug/Medicine Name"}
                     type="text"
                     name="medicineName"
                     value={formData.medicineName}
                     onChange={handleInputChange1}
                     placeholder="--Select Medicine--"
+                    required
                   />
+
                   {/* Suggestions Dropdown */}
                   {filteredMedicines.length > 0 && (
                     <ul className="suggestions-dropdown">
@@ -563,67 +531,52 @@ const SalesSales = () => {
                       ))}
                     </ul>
                   )}
-                </div>
-
-
-                <div>
-                  <label>Generic Name</label>
-                  <input
+                  <FloatingInput
+                    label={"Generic Name"}
                     type="text"
                     name="genericName"
                     value={formData.genericName}
                     readOnly
                   />
-                </div>
-
-                <div className="dispenSalesSales-Expiry">
-                  <label>Expiry</label>
-                  <input
+                  <FloatingInput
+                    label={"Expiry"}
                     type="text"
                     name="expiry"
                     value={formData.expiry}
                     readOnly
                   />
-                </div>
-                <div className="dispenSalesSales-Batch">
-                  <label>Batch</label>
-                  <input
+                  <FloatingInput
+                    label="Batch"
                     type="text"
                     name="batch"
                     value={formData.batch}
                     readOnly
                   />
-                </div>
-                <div className="dispenSalesSales-Avl-Qty">
-                  <label>Avl Qty</label>
-                  <input
+                  <FloatingInput
+                    label="Available Quantity"
                     type="text"
                     name="availableQty"
                     value={formData.availableQty}
                     readOnly
                   />
-                </div>
-                <div className="dispenSalesSales-Qty">
-                  <label>Qty</label>
-                  <input
+                  <FloatingInput
+                    label="Quantity"
                     type="number"
                     name="qty"
                     value={formData.qty}
                     onChange={handleInputChange1}
+                    min="0"
+
                   />
-                </div>
-                <div className="dispenSalesSales-QSalePricety">
-                  <label>Sale Price</label>
-                  <input
+                  <FloatingInput
+                    label="Sale Price"
                     type="text"
                     name="salePrice"
                     value={formData.salePrice}
                     readOnly
                   />
-                </div>
-                <div className="dispenSalesSales-SubTotal">
-                  <label>SubTotal</label>
-                  <input
+                  <FloatingInput
+                    label="SubTotal"
                     type="text"
                     name="subTotal"
                     value={formData.subTotal}
@@ -688,39 +641,37 @@ const SalesSales = () => {
             <div className="dispenSalesSales-payment-section">
               <div className="dispenSalesSales-payment-summary">
                 <div className="dispenSalesSales-payment-summary-subDiv">
-                  Sub Total:
-                  <input
+                  <FloatingInput
+                    label={"Sub Total"}
                     type="text"
                     value={totalSubTotal.toFixed(2)}
                     readOnly
                   />
-                </div>
-                <div className="dispenSalesSales-payment-summary-subDiv">
-                  Total Amount:
-                  <input
+                  <FloatingInput
+                    label={"Total Amount"}
                     type="text"
                     value={totalAmount}
                     onChange={(e) => setTotalAmount(e.target.value)}
                     placeholder="0"
                   />
-                </div>
-                <div className="dispenSalesSales-payment-summary-subDiv">
-                  In Words: Only.
-                </div>
-                <div className="dispenSalesSales-payment-summary-subDiv">
-                  Payment Options:
-                  <select
+                  <FloatingInput
+                    label={"In Words"}
+                    type="text"
+                    value="Only."
+                    readOnly
+                  />
+                  <FloatingSelect
+                    label="Payment Options"
                     value={paymentOption}
                     onChange={(e) => setPaymentOption(e.target.value)}
-                  >
-                    <option>Cash</option>
-                    <option>Credit</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-                <div className="dispenSalesSales-payment-summary-subDiv">
-                  Tender:
-                  <input
+                    options={[
+                      { value: "Cash", label: "Cash" },
+                      { value: "Credit", label: "Credit" },
+                      { value: "Other", label: "Other" },
+                    ]}
+                  />
+                  <FloatingInput
+                    label="Tender"
                     type="text"
                     value={tender}
                     onChange={(e) => {
@@ -734,24 +685,20 @@ const SalesSales = () => {
                     }}
                     placeholder="0"
                   />
-                </div>
-                <div className="dispenSalesSales-payment-summary-subDiv">
-                  Change:
-                  <div className="dispenSalesSales-payment-summary-subDiv-Kshs">
-                    Kshs. {change.toFixed(2)}
-                  </div>
-                </div>
-                <div className="dispenSalesSales-payment-summary-subDiv">
-                  Remarks:
-                  <input
+                  <FloatingInput
+                    label="Change"
+                    type="text"
+                    value={`Kshs. ${change.toFixed(2)}`}
+                    readOnly
+                  />
+                  <FloatingInput
+                    label="Remarks"
                     type="text"
                     value={remarks}
                     onChange={(e) => setRemarks(e.target.value)}
                   />
-                </div>
-                <div className="dispenSalesSales-payment-summary-subDiv">
-                  Paid Amount:
-                  <input
+                  <FloatingInput
+                    label="Paid Amount"
                     type="text"
                     value={paidAmount}
                     onChange={(e) => setPaidAmount(e.target.value)}
@@ -760,7 +707,7 @@ const SalesSales = () => {
                 </div>
               </div>
               <div className="dispenSalesSales-payment-actions">
-                <button onClick={setShowInvoice}>Show Invoice</button>
+                <button onClick={setShowInvoice} className="dispenSalesSales-print-button">Show Invoice</button>
 
                 <button
                   className="dispenSalesSales-print-button"
@@ -783,7 +730,6 @@ const SalesSales = () => {
               handlePrint={handlePrint}
             />
           )}
-
 
           <div className="dispenSalesSales-history-section">
             <div className="dispenSalesSales-invoice-history">

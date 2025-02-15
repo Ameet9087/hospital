@@ -4,6 +4,7 @@ import axios from "axios";
 import PopupTable from "../popup";
 import { useLocation } from "react-router-dom";
 import { API_BASE_URL } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -86,6 +87,8 @@ const IncidentReport = () => {
   const erPatient = location.state?.receipt;
   const [mrNoData, setMrNoData] = useState([]);
   const [activePopup, setActivePopup] = useState(null);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     uhid: "",
     ipNo: "",
@@ -179,7 +182,7 @@ const IncidentReport = () => {
   const fetchMrno = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.46:4096/api/ip-admissions`
+        `${API_BASE_URL}/ip-admissions`
       );
       setMrNoData(response.data);
     } catch (error) {
@@ -233,11 +236,17 @@ const IncidentReport = () => {
   };
 
   const { columns, data } = getPopupData();
+  const handleBack = () => navigate("/emergency/erinitial");
 
   return (
     <>
       <div className="IncidentReport-container">
         <div className="IncidentReport-section">
+        <div className="er-initial-assessment-com-section">
+          <button onClick={handleBack}>Back</button>
+        </div>
+
+
           <div className="IncidentReport-header">Incident Report</div>
           <div className="IncidentReport-grid">
             <FloatingInput
@@ -304,7 +313,9 @@ const IncidentReport = () => {
               type="Number"
               name="incidentNumber"
               value={formData.incidentNumber}
+              
               onChange={handleChange}
+               min="0"
             />
             <FloatingInput
               label="Description Of Incident"

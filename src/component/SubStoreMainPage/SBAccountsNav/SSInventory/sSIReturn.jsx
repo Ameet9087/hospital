@@ -1,37 +1,34 @@
 /* Ajhar Tamboli sSIReturn.jsx 19-09-24 */
 
-
-import React, { useState, useRef, useEffect } from 'react';
-import * as XLSX from 'xlsx'; // Import the xlsx library
+import React, { useState, useRef, useEffect } from "react";
+import * as XLSX from "xlsx"; // Import the xlsx library
 import "../SSInventory/sSIReturn.css";
-import { useReactToPrint } from 'react-to-print';
-import SSIRetunReturnItemBtn from './sSIRetunReturnItemBtn';
-import SSIPatientConsumNewPCbtn from './sSIPatientConsumNewPCbtn';
-import { API_BASE_URL } from '../../../api/api';
-import CustomModal from '../../../../CustomModel/CustomModal';
+import { useReactToPrint } from "react-to-print";
+import SSIRetunReturnItemBtn from "./sSIRetunReturnItemBtn";
+import SSIPatientConsumNewPCbtn from "./sSIPatientConsumNewPCbtn";
+import { API_BASE_URL } from "../../../api/api";
+import CustomModal from "../../../../CustomModel/CustomModal";
+
+import { toast } from "react-toastify";
+import {
+  FloatingInput,
+  FloatingSelect,
+  FloatingTextarea,
+} from "../../../../FloatingInputs";
 
 function SSIReturn() {
-  const printRef = useRef();
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [showViewRequisition, setShowViewRequisition] = useState(false);
   const [returns, setReturns] = useState([]);
-  const [showNewPatientConsumption, setShowNewPatientConsumption] = useState(false); // State to control New Patient Consumption
+  const [showNewPatientConsumption, setShowNewPatientConsumption] =
+    useState(false); // State to control New Patient Consumption
+  const tableRef = useRef(null);
 
-
-  const handleCreateRequisitionClick = () => {
-    setShowCreateRequisition(true);
-  };
   const handleNewPatientConsumptionClick = () => {
     setShowNewPatientConsumption(true); // Show the new patient consumption component
   };
   const handleBack = () => {
     setShowNewPatientConsumption(false); // Hide the new patient consumption component and go back to the main content
-  };
-  const closePopups = () => {
-    setShowCreateRequisition(false);
-    setShowViewRequisition(false);
-    setShowNewPatientConsumption(false); // Hide the new patient consumption component
-
   };
 
   useEffect(() => {
@@ -45,96 +42,133 @@ function SSIReturn() {
         console.log(data);
         setReturns(data); // Adjust based on your API response structure
       } catch (error) {
-        setError("Failed to fetch data");
+        console.error("Failed to fetch data", error);
       }
     };
 
     fetchReturns();
   }, []);
 
-  const handlePrint = useReactToPrint({
-    content: () => printRef.current,
-    documentTitle: 'Retrun Item Report',
-    pageStyle: `
-      @page {
-        size: A4;
-        margin: 20mm;
-      }
-    `,
-  });
+
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none; /* Hide action buttons and Action column */
+            }
+          </style>
+        </head>
+        <body>
+          <table>
+            ${printContents}
+          </table>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
+  };
 
   const handleViewClick = () => {
     setShowViewRequisition(true);
   };
 
-  // Function to handle exporting the table to an Excel file
-  const handleExportToExcel = () => {
-    // Get the table data
-    const tableData = [
-      ['  Store Name', ' Date', 'Returned By', 'Remarks',]
-
-    ];
-
-
-    // Create a new workbook and a new worksheet
-    const worksheet = XLSX.utils.aoa_to_sheet(tableData);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Report');
-
-    // Convert the workbook to an Excel file and trigger the download
-    XLSX.writeFile(workbook, 'Retrun Item_Report.xlsx');
+  const handleExport = () => {
+    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
+    const wb = XLSX.utils.book_new(); // Creates a new workbook
+    XLSX.utils.book_append_sheet(wb, ws, "SIReturn"); // Appends worksheet to workbook
+    XLSX.writeFile(wb, "SIReturn.xlsx"); // Downloads the Excel file
   };
 
   return (
     <div className="sSIReturn-active-imaging-request">
-
       <>
-        <header className='sSIReturn-header'>
+        <header className="sSIReturn-header">
           <div className="sSIReturn-status-filters">
-            <button className="sSIReturn-new-patient-button"
+
+            <button
+              className="sSIReturn-new-patient-button"
               onClick={handleNewPatientConsumptionClick} // Handle button click
-            >Returns Item</button>
+            >
+              Returns Item
+            </button>
           </div>
           <div className="sSIReturn-filterBySubCategory">
 
-            <label>Select Inventory:</label>
-            <select>
-              <option value="">GENERAL-INVENTORY</option>
-
-            </select>
+            <FloatingSelect
+              label="Select Inventory"
+              options={[{ value: "", label: "GENERAL-INVENTORY" }]}
+            />
           </div>
         </header>
         <div className="sSIReturn-controls">
-
           <div className="sSIReturn-date-range">
-            <label>
-              From:
-              <input type="date" defaultValue="2024-08-09" />
-            </label>
-            <label>
-              To:
-              <input type="date" defaultValue="2024-08-16" />
-            </label>
+            <FloatingInput
+              label="From Date"
+              type="date"
+              defaultValue="2024-08-09"
+            />
+
+            <FloatingInput
+              label="To Date"
+              type="date"
+              defaultValue="2024-08-16"
+            />
+
             <button className="sSIReturn-star-button">☆</button>
             <button className="sSIReturn-more-btn">-</button>
             <button className="sSIReturn-ok-button">OK</button>
           </div>
         </div>
+
+
         <div className="sSIReturn-search-N-results">
           <div className="sSIReturn-search-bar">
-            <i className="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Search" />
+
+            <FloatingInput 
+            label={"Search"}
+            type="search"
+            />
           </div>
           <div className="sSIReturn-results-info">
             Showing 2 / 2 results
-            <button className='sSIReturn-print-btn' onClick={handleExportToExcel}>
+            <button className="sSIReturn-print-btn" onClick={handleExport}>
               <i className="fa-regular fa-file-excel"></i> Export
             </button>
-            <button className='sSIReturn-print-btn' onClick={handlePrint}><i class="fa-solid fa-print"></i> Print</button>
+            <button className="sSIReturn-print-btn" onClick={printList}>
+              <i class="fa-solid fa-print"></i> Print
+            </button>
           </div>
         </div>
-        <div style={{ display: 'none' }}>
-          <div ref={printRef}>
+        <div style={{ display: "none" }}>
+          <div ref={tableRef}>
             <h2>Retrun Item Report</h2>
             <p>Printed On: {new Date().toLocaleString()}</p>
             <table>
@@ -144,6 +178,7 @@ function SSIReturn() {
                   <th>Date</th>
                   <th>Returned By</th>
                   <th>Remarks</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -154,7 +189,9 @@ function SSIReturn() {
                       <td>{item.returnDate}</td>
                       <td>{item.returnedBy}</td>
                       <td>{item.remarks}</td>
-                      <td><button className="action-button">Action</button></td>
+                      <td>
+                        <button className="action-button">Action</button>
+                      </td>
                     </tr>
                   ))
                 ) : (
@@ -177,18 +214,20 @@ function SSIReturn() {
                 <th>Returned By</th>
                 <th>Remarks</th>
                 <th>Action</th>
-
               </tr>
             </thead>
             <tbody>
-              {returns.length > 0 ? (
-                returns.map((item, index) => (
+              {filteredReturns.length > 0 ? (
+                filteredReturns.map((item, index) => (
                   <tr key={index}>
                     <td>{item.storeName}</td>
                     <td>{item.returnDate}</td>
-                    <td>{item.returnBy}</td>
+                    <td>{item.returnedBy}</td>
                     <td>{item.remarks}</td>
-                    <td><button className="action-button">Action</button></td>
+
+                    <td>
+                      <button className="action-button">Action</button>
+                    </td>
                   </tr>
                 ))
               ) : (
@@ -202,8 +241,8 @@ function SSIReturn() {
           </table>
         </div>
       </>
-      <CustomModal isOpen={showNewPatientConsumption} onClose={handleBack}>
 
+      <CustomModal isOpen={showNewPatientConsumption} onClose={handleBack}>
         <SSIRetunReturnItemBtn />
       </CustomModal>
     </div>

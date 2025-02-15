@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as XLSX from "xlsx"; // Import the xlsx library
 import "../SSInventory/sSIStock.css";
+
 import SSIInventoryRequisition from "./sSIInventoryRequisition";
 import SSIConsumption from "./sSIConsumption";
 import SSIReports from "./sSIReports";
@@ -23,9 +24,12 @@ function SSIStock() {
   const [activeTab, setActiveTab] = useState("Stock");
   const [requisitions, setRequisitions] = useState([]);
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
-  const [sortDirection, setSortDirection] = useState("asc"); // Added sort direction state
-  const [searchQuery, setSearchQuery] = useState(""); // State for search query
-  const [columnWidths, setColumnWidths] = useState({});
+  const [sortDirection, setSortDirection] = useState('asc'); // Added sort direction state
+  const [searchQuery, setSearchQuery] = useState(''); // State for search query
+  const [searchTerm, setSearchTerm] = useState("");
+
+const [columnWidths, setColumnWidths] = useState({});
+
   const tableRef = useRef(null);
   // Function to export the table to Excel
   const exportTableToExcel = () => {
@@ -36,36 +40,51 @@ function SSIStock() {
 
   // Function to print specific elements: table, FromDate, ToDate, and current date and time
   // Function to trigger print
-  const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
+  const printList = () => {
+    if (tableRef.current) {
+      const printContents = tableRef.current.innerHTML;
+
+      // Create an iframe element
+      const iframe = document.createElement("iframe");
+      iframe.style.position = "absolute";
+      iframe.style.width = "0";
+      iframe.style.height = "0";
+      iframe.style.border = "none";
+
+      // Append the iframe to the body
+      document.body.appendChild(iframe);
+
+      // Write the table content into the iframe's document
+      const doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <html>
         <head>
           <title>Print Table</title>
           <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
+              display: none;
             }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
-            }
+            
           </style>
         </head>
         <body>
-          ${printContent.outerHTML}
+          <table>
+            ${printContents}
+          </table>
         </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
+        </html>
+      `);
+      doc.close();
+
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+
+      document.body.removeChild(iframe);
+    }
   };
 
   useEffect(() => {
@@ -89,7 +108,16 @@ function SSIStock() {
   };
 
   // Function to handle search
+  // const handleSearch = (event) => {
+  //   const query = event.target.value;
+  //   setSearchQuery(query);
+  //   const filtered = requisitions.filter(req =>
+  //     req.itemName.toLowerCase().includes(query.toLowerCase())
+  //   );
+  //   setFilteredRequisitions(filtered);
+  // };
   const handleSearch = (event) => {
+
     const query = event.target.value;
     setSearchQuery(query);
     const filtered = requisitions.filter((req) =>
@@ -97,6 +125,9 @@ function SSIStock() {
     );
     setFilteredRequisitions(filtered);
   };
+  const requisitionsData = useFilter(requisitions, searchTerm);
+
+
 
   const renderContent = () => {
     switch (activeTab) {
@@ -131,6 +162,7 @@ function SSIStock() {
             </div>
             <div className="sSIStock-search-N-result">
               <div className="sSIStock-search-bar">
+
                 
                 <FloatingInput
                   label={"Search"}
@@ -150,7 +182,7 @@ function SSIStock() {
                   >
                     <i className="fa-solid fa-file-excel"></i> Export
                   </button>
-                  <button className="sSIStock-btn-blue" onClick={handlePrint}>
+                  <button className="sSIStock-btn-blue" onClick={printList}>
                     <i className="fa-solid fa-print"></i> Print
                   </button>
                   {/* <button className="sSIStock-btn-blue" onClick={toggleSortDirection}>
@@ -191,8 +223,8 @@ function SSIStock() {
                 </tr>
               </thead>
               <tbody>
-                {requisitions.length > 0 ? (
-                  requisitions.map((req, index) => (
+                {requisitionsData.length > 0 ? (
+                  requisitionsData.map((req, index) => (
                     <tr key={index}>
                       <td>{req?.item?.itemCode}</td>
                       <td>{req?.item?.subCategory?.subCategoryName}</td>

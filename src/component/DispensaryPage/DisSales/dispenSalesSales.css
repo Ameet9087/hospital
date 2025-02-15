@@ -52,15 +52,13 @@
     display: flex;
     justify-content: space-between;
     font-size: 14px;
-    margin-right: 50px;
   }
   .dispenSalesSales-hospital-info-subDiv div{
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    padding-left: 10px;
     font-size: 14px;
-    /* border: 1px solid red; */
+    gap: 10px;
   }
   .dispenSalesSales-hospital-info select{
     padding: 5px;
@@ -70,16 +68,16 @@
     /* flex-grow: 1; */
     width: 200px;
   }
-  .dispenSalesSales-hospital-info-subDiv div option{
+  /* .dispenSalesSales-hospital-info-subDiv div option{
     width: 10px;
     font-size: 14px;
-  }
+  } */
 
   
   .dispenSalesSales-medicine-info {
-   
     margin-bottom: 20px;
     display: flex;
+    gap: 10px;
     justify-content: space-between;
     align-items: center;
     background-color: #f2f2f2;
@@ -88,11 +86,8 @@
     width: 100%;
     font-size: 14px;
     color: gray;
-    /* border: 1px solid #0a0707; */
-/* height: 50px; */
   }
   .dispenSalesSales-Expiry input{
-/* border: 1px solid red; */
 width: 30px;
   }
   .dispenSalesSales-Batch input{
@@ -146,7 +141,6 @@ width: 30px;
     border-radius: 3px;
     border: 1px solid gray;
     font-size: 14px;
-    /* flex-grow: 1; */
   }
   .dispenSalesSales-patient-dropdown {
     padding: 3px;
@@ -208,24 +202,24 @@ width: 30px;
     /* flex-grow: 1; */
     display: flex;
     justify-content: center;
-    margin-top: 40px;
+    gap: 5px;
+    margin-top: 10px;
   }
  .dispenSalesSales-payment-summary{
    flex-grow: 1;
    /* padding: 10px; */
    width: 100%;
   }
-  .dispenSalesSales-payment-summary div{
-    padding: 3px;
-  }
+  
   .dispenSalesSales-payment-summary-subDiv{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
   }
-  .dispenSalesSales-payment-summary-subDiv input{
+  /* .dispenSalesSales-payment-summary-subDiv input{
     width: 120px;
-    /* margin-left: 10px; */
-  }
+  } */
   
   
   .dispenSalesSales-print-button {
@@ -239,7 +233,7 @@ width: 30px;
     font-size: 14px;
     margin-left: auto;
     transition: background-color 0.3s ease;
-    padding: 5px 5px;
+    padding: var(--input-box-padding);
   }
   .dispenSalesSales-print-button:hover {
     border: 1px solid var( --button-hover-border-color);
@@ -248,14 +242,17 @@ width: 30px;
 
   }
   .dispenSalesSales-discard-button {
-    background-color: #dc3545;
+    background-color: red;
+    border: 1px solid red;
     color: #fff;
-    padding: 10px 20px;
-    border: none;
+    padding: var(--input-box-padding);
     border-radius: 5px;
     cursor: pointer;
   }
-
+  .dispenSalesSales-discard-button:hover{
+    background-color: white;
+    color:red;
+  }
   .dispenSalesSales-remove-button {
     background-color: #dc3545;
     color: #fff;
@@ -356,4 +353,52 @@ margin-left: 10px;
 
 .suggestion-item:hover {
   background-color: #f0f0f0;
+}
+
+
+.dispenSalesSales-dropdown {
+  position: absolute;
+  margin-left: 105px;
+  width: 175px;
+  max-height: 200px; 
+  overflow-y: auto; 
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+.dispenSalesSales-dropdown::-webkit-scrollbar {
+  display: none; 
+}
+
+
+.dispenSalesSales-dropdown-option {
+  padding: 5px 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  color: #333;
+  transition: background 0.2s ease-in-out;
+  border-bottom: 1px solid #eee;
+}
+
+.dispenSalesSales-dropdown-option:last-child {
+  border-bottom: none; 
+}
+
+/* .dispenSalesSales-dropdown-option:hover {
+  background: #f4f4f4;
+} */
+
+@media (max-width: 768px) {
+  .dispenSalesSales-dropdown {
+    max-height: 200px;
+    font-size: 14px;
+  }
+
+  .dispenSalesSales-dropdown-option {
+    padding: 10px;
+  }
 }

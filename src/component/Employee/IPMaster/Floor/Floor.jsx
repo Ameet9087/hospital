@@ -238,7 +238,9 @@ export default function Floor() {
             <tr>
               {[
                 "Floor Number",
+
                 "Floor Name",
+
                 "Order No",
                 "Location",
                 "Remarks",

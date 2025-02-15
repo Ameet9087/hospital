@@ -87,11 +87,11 @@
 .actproblemtabledata{
   padding: 0px;
 }
-.activeproblems-form-group-checkBox
-{
-  width: 100%;
-  display: flex;
-  gap: 30px;
+
+.activeproblems-modal-content input,
+.activeproblems-modal-content  textarea{
+  width: 300px;
+  margin-top: 2px;
 
 }
 .activeproblems-modal-content {

@@ -8,7 +8,10 @@
     float: left;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  
+  .sSIPatientConsumConsumEntry-section{
+    display: flex;
+    justify-content: space-between;
+  }
   .sSIPatientConsumConsumEntry-title {
     font-size: 16px;
     margin-bottom: 20px;
@@ -19,6 +22,7 @@
   .sSIPatientConsumConsumEntry-form-section {
     margin-bottom: 15px;
     display: flex;
+    width: 20px;
     align-items: center;
     gap: 10px;
   }
@@ -26,16 +30,10 @@
   .sSIPatientConsumConsumEntry-form-section label {
     font-size: 14px;
     margin-right: 10px;
-    font-weight: bold;
+    /* font-weight: bold; */
   }
+
   
-  /* input[type="date"],
-  input[type="text"] {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-  } */
   
   .sSIPatientConsumConsumEntry-back-btn {
     margin-left: auto;
@@ -72,14 +70,32 @@
     background-color: white;
   }
   
-  .sSIPatientConsumConsumEntry-delete-btn, .sSIPatientConsumConsumEntry-add-btn {
-    background-color: var(--button-color);
+  .sSIPatientConsumConsumEntry-delete-btn {
+    background-color: #ff4d4d; /* Red color for delete */
     color: white;
     border: none;
-    padding: 5px;
-    border-radius: 4px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 10px;
+    font-size: var(--font-size);
+
     cursor: pointer;
+    transition: background-color 0.3s ease;
   }
+  
+ 
+  
+  .sSIPatientConsumConsumEntry-add-btn {
+    background-color: var(--button-color); /* Green color for add */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: var(--font-size);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
   
   /* input[type="number"] {
     padding: 5px;
@@ -91,20 +107,20 @@
     display: flex;
     justify-content: right;
     float: right;
+    padding: 5PX;
+
   }
+  
   .sSIPatientConsumConsumEntry-remark-section {
     margin-top: 15px;
     display: flex;
     justify-content: space-between;
-    /* flex-direction: column; */
     align-items: center;
     background-color: #F5F5F5;
     padding: 10px;
   }
   
-  .sSIPatientConsumConsumEntry-remark-section label {
-    margin-right: 10px;
-  }
+  
   
   /* textarea {
     flex-grow: 1;
@@ -124,18 +140,25 @@
   .sSIPatientConsumConsumEntry-save-btn {
     background-color: var(--button-color);
     color: white;
-    padding: 8px 15px;
-    border: none;
+    padding: var(--input-box-padding);
+    border: 1px solid var(--button-color);;
     border-radius: 5px;
     cursor: pointer;
+  }
+  .sSIPatientConsumConsumEntry-save-btn:hover{
+    background-color: white;
+    color: var(--button-color);
   }
   
   .sSIPatientConsumConsumEntry-discard-btn {
-    background-color: #e74c3c;
+    background-color:red;
     color: white;
     padding: 8px 15px;
-    border: none;
+    border: 1px solid red;
     border-radius: 5px;
     cursor: pointer;
   }
-  
+  .sSIPatientConsumConsumEntry-textarea{
+    width: 300px;
+    font-size: var(--font-size);
+  }

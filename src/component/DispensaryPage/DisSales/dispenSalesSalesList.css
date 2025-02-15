@@ -14,16 +14,8 @@
 
 
  
-  .dispenSalesSalesList-checkBox select {
-    padding: 3px 5px 3px 5px;
-    background-color: #f0f0f0;
-    margin-left: 10px;
-    width: 100px;
-  }
-  .dispenSalesSalesList-checkBox label {
-font-size: var(--font-size);
-color: green;
-}
+  
+
   
   .dispenSalesSalesList-controls {
     display: flex;
@@ -41,18 +33,28 @@ color: green;
     background-color: #f0f0f0;
     margin-bottom: 10px;
   }
-  .dispenSalesSalesList-date-range label{
+  .dispenSalesSalesList-buttons{
     display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 10px;
     align-items: center;
-    margin-left: 20px;
-    font-size: var(--font-size);
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+  .dispenSalesSalesList-buttons button{
+    background-color: var(--button-color);
+    color: white;
+    border: 1px solid var(--button-color);
+    border-radius: 5px;
+    cursor: pointer;
+    padding: var(--input-box-padding);
+  }
+  .dispenSalesSalesList-buttons button:hover{
+    background-color: var(--button-hover-background-color);
+    color: var(--button-color);
   }
   
-  .dispenSalesSalesList-date-range input[type="date"] {
-    margin-left: 10px;
-    padding: 3px;
-    font-size: var(--font-size);
-  }
 
   
   

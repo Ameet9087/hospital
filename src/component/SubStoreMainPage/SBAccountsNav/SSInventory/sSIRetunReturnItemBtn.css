@@ -1,17 +1,16 @@
-:root {
-  --sideBar-bg-color: #007973;
-  --upperBar-bg-color: #00968f;
-  --button-bg-color: #00968f;
-  --button-color: #00c9c0;
-  --background-color: #e3fffe;
-  --heading-font: 16px;
-  --font-size: 14px;
-  --button-hover-border-color: #00c9c0;
-  --button-hover-text-color: #00c9c0;
-  --button-hover-background-color: white;
-  --input-box-padding: 5px;
-}
 
+.sSIReturnItem-delete-btn{
+  background-color: var(--button-color);
+  border: 1px solid var(--button-color);
+  color: white;
+  padding: var(--input-box-padding);
+  border-radius: 5px;
+  
+}
+.sSIReturnItem-delete-btn:hover{
+  background-color: white;
+  color: var(--button-color);
+}
 .sSIRetunReturnItemBtn-entry {
   background-color: var(--background-color);
   padding: 30px;
@@ -34,6 +33,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 15%;
 }
 
 .sSIRetunReturnItemBtn-form-section label {
@@ -116,19 +116,19 @@
   cursor: pointer;
 }
 
-.ssi-return-return-input[type="number"] {
-  padding: var(--input-box-padding);
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  text-align: center;
-}
+
 
 .sSIRetunReturnItemBtn-remark {
   display: flex;
   justify-content:left;
   float: right;
+  width: 40%;
+  
 }
-
+.sSIRetunReturnItemBtn-remark textarea{
+  height: 40px;
+  
+}
 .sSIRetunReturnItemBtn-remark-section {
   margin-top: 15px;
   display: flex;
@@ -139,9 +139,6 @@
   width: 500px;
 }
 
-.sSIRetunReturnItemBtn-remark-section label {
-  margin-right: 10px;
-}
 
 .sSIRetunReturnItemBtn-button-section {
   margin-top: 20px;
@@ -182,17 +179,6 @@
   padding: 5px 5px;
 }
 
-.sSIRetunReturnItemBtn-discard-button:hover {
-  border: 1px solid var(--button-hover-border-color);
-  color: var(--button-hover-text-color);
-  background-color: var(--button-hover-background-color);
-}
-
-
-
-
-
-
 
 
 .sSIRetunReturnItemBtn-date-section {
@@ -219,17 +205,15 @@
   border: 1px solid #ccc;
   padding: 8px;
   text-align: center;
+  
 }
 
 .sSIReturnItem-table th {
   background-color: var(--button-bg-color);
   color: white;
 }
-
-.sSIReturnItem-table input,
-.sSIReturnItem-table select {
-  width: 90%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.sSIReturnItem-table input{
+  width: 100%;
 }
+
+
