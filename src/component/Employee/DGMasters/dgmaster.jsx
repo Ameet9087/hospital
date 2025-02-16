@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Dgmaster.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
 import { API_BASE_URL } from "../../api/api";
@@ -123,10 +123,10 @@ function Dgmaster() {
         prevRows.map((row) =>
           row.id === selectedRowId // Ensure you're updating the correct row
             ? {
-                ...row,
-                specialisation: data.specialisationName,
-                specialisationId: data.specialisationId, // Add the ID
-              }
+              ...row,
+              specialisation: data.specialisationName,
+              specialisationId: data.specialisationId, // Add the ID
+            }
             : row
         )
       );
@@ -141,10 +141,10 @@ function Dgmaster() {
           prevRows.map((row) =>
             row.id === data.rowId
               ? {
-                  ...row,
-                  doctor:
-                    response.data.length > 0 ? response.data[0].doctorName : "", // Set first doctor's name or empty
-                }
+                ...row,
+                doctor:
+                  response.data.length > 0 ? response.data[0].doctorName : "", // Set first doctor's name or empty
+              }
               : row
           )
         );
@@ -156,10 +156,10 @@ function Dgmaster() {
         prevRows.map((row) =>
           row.id === selectedRowId
             ? {
-                ...row,
-                doctor: data.doctorName,
-                doctorId: data.doctorId, // Add this
-              }
+              ...row,
+              doctor: data.doctorName,
+              doctorId: data.doctorId, // Add this
+            }
             : row
         )
       );
