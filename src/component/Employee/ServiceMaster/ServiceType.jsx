@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./serviceType.css";
+import "./ServiceType.css";
 import { FloatingInput, PopupTable } from "../../../FloatingInputs";
 import CustomModal from "../../../CustomModel/CustomModal";
 import axios from "axios";
