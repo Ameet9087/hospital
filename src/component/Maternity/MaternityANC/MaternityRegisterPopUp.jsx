@@ -45,6 +45,22 @@ const MaternityRegisterPopUp = ({ patientData, onClose }) => {
   };
 
   const saveData = async () => {
+    // Check if all form fields are filled
+    if (
+      !formData.placeOfDelivery ||
+      !formData.deliveryDateAndTime ||
+      !formData.typeOfDelivery ||
+      !formData.presentation ||
+      !formData.obstreticComplications ||
+      formData.newBornBabies.some(
+        (baby) =>
+          !baby.babyGender || !baby.babyWeight || !baby.outComeBaby || !baby.outComeMother
+      )
+    ) {
+      toast.error("All fields are mandatory. Please fill in all details.");
+      return;
+    }
+  
     try {
       const response = await fetch(
         `${API_BASE_URL}/maternity-register/save/${patientData?.inPatientDTO?.inPatientId}`,
@@ -56,20 +72,18 @@ const MaternityRegisterPopUp = ({ patientData, onClose }) => {
           body: JSON.stringify(formData),
         }
       );
-
+  
       if (response.ok) {
-        toast.success('Proposal saved successfully!');
-
+        toast.success("Proposal saved successfully!");
       } else {
-        toast.error('Failed to save proposal. Please try again.');
-
+        toast.error("Failed to save proposal. Please try again.");
       }
     } catch (error) {
       console.error("Error saving data:", error);
-      toast.error('Failed to save proposal. Please try again.');
-
+      toast.error("Failed to save proposal. Please try again.");
     }
   };
+  
 
   return (
     <div className="MaternityRegisterPopUp-container">
