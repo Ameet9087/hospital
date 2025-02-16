@@ -108,6 +108,7 @@
   }
   .CondemnationReasonMasterPopUp-form-group-1row{
     display: flex;
+    gap: 10px;
     justify-content: space-between;
   }
   

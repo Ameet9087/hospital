@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios"; // Import axios
 import "./assetLocationsMasterPopUp.css";
 import { API_BASE_URL } from "../../../../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingSelect } from "../../../../../FloatingInputs";
 
 const AssetLocationsMasterPopUp = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -52,7 +54,7 @@ const AssetLocationsMasterPopUp = ({ onClose }) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/asset-location`, payload);
       console.log("Asset Location Created:", response.data);
-      alert("Asset Location created successfully");
+      toast.success("Asset Location created successfully");
   
       // Reset form data
       setFormData({
@@ -70,7 +72,7 @@ const AssetLocationsMasterPopUp = ({ onClose }) => {
       if (onClose) onClose();
     } catch (error) {
       console.error("Error creating asset location:", error.response || error);
-      alert(`Failed to create asset location: ${error.response ? error.response.data.message : error.message}`);
+      toast.error(`Failed to create asset location: ${error.response ? error.response.data.message : error.message}`);
     }
   };
   
@@ -102,81 +104,85 @@ const AssetLocationsMasterPopUp = ({ onClose }) => {
         <div className="assetLocationsMasterPopUp-form-row">
           <div className="assetLocationsMasterPopUp-form-group-1row">
             <div className="assetLocationsMasterPopUp-form-group">
-              <label htmlFor="subLocation">Sub Location:</label>
-              <input
-                type="text"
-                id="subLocation"
-                name="subLocation"
-                value={formData.subLocation}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Sub Location"}
+              type="text"
+              id="subLocation"
+              name="subLocation"
+              value={formData.subLocation}
+              onChange={handleChange}
+              required
+              
               />
             </div>
             <div className="assetLocationsMasterPopUp-form-group">
-              <label htmlFor="locationType">Location Type:</label>
-              <select
-                id="locationType"
-                name="locationType"
-                value={formData.locationType}
-                onChange={handleChange}
-              >
-                <option value="">Select</option>
-                <option value="Location">Location</option>
-                <option value="Building">Sub Location</option>
-           
-              </select>
+              <FloatingSelect
+              label={"Location Type"}
+              id="locationType"
+              name="locationType"
+              value={formData.locationType}
+              onChange={handleChange}
+              options={[{value:"",label:""},
+                {value:"Location",label:"Location"},
+                {value:"Building",label:"Building"}
+              ]}
+              
+              />
             </div>
           </div>
 
           <div className="assetLocationsMasterPopUp-form-group-1row">
             {/* Under Location Dropdown */}
             <div className="assetLocationsMasterPopUp-form-group">
-              <label htmlFor="underLocation">Under Location:</label>
-              <div className="assetlocation-input-wrapper">
-                <select
-                  id="underLocation"
-                  name="underLocation"
-                  value={formData.underLocation}
-                  onChange={handleChange}
-                >
-                  <option value="">Select Under Location</option>
-                  {locationMasters.locationList.map((location) => (
-                    <option key={location.id} value={location.id}>
-                      {location.locationName}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <FloatingSelect
+              label={"Under Location"}
+              id="underLocation"
+              name="underLocation"
+              value={formData.underLocation}
+              onChange={handleChange}
+              options={[
+                { value: "", label: "" },
+                ...(Array.isArray(locationMasters.locationList)
+                  ? locationMasters.locationList.map((loc) => ({
+                      value: loc?.id,
+                      label: loc?.locationName,
+                    }))
+                  : []),
+              ]}
+              
+              />
             </div>
 
             {/* Main Location Dropdown */}
             <div className="assetLocationsMasterPopUp-form-group">
-              <label htmlFor="mainLocation">Main Location:</label>
-              <div className="assetlocation-input-wrapper">
-                <select
-                  id="mainLocation"
+            <FloatingSelect
+              label={"Main Location"}
+              id="mainLocation"
                   name="mainLocation"
                   value={formData.mainLocation}
                   onChange={handleChange}
-                >
-                  <option value="">Select Main Location</option>
-                  {locationMasters.locationList.map((location) => (
-                    <option key={location.id} value={location.id}>
-                      {location.locationName}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              options={[
+                { value: "", label: "" },
+                ...(Array.isArray(locationMasters.locationList)
+                  ? locationMasters.locationList.map((loc) => ({
+                      value: loc?.id,
+                      label: loc?.locationName,
+                    }))
+                  : []),
+              ]}
+              
+              />
             </div>
 
             <div className="assetLocationsMasterPopUp-form-group">
-              <label htmlFor="area">Area in Sq Feet:</label>
-              <input
-                type="text"
-                id="area"
-                name="area"
-                value={formData.area}
-                onChange={handleChange}
+              <FloatingInput
+              label={"Area in Sq Feet"}
+               type="text"
+               id="area"
+               name="area"
+               value={formData.area}
+               onChange={handleChange}
+              
               />
             </div>
           </div>
@@ -207,10 +213,6 @@ const AssetLocationsMasterPopUp = ({ onClose }) => {
                 </label>
               </div>
             </div>
-          </div>
-
-          {/* Floor and Room Checkboxes */}
-          <div className="assetLocationsMasterPopUp-form-group-1row">
             <div className="assetLocationsMasterPopUp-form-group">
               <label>Options:</label>
               <div className="assetLocationsMasterPopUp-form-group-options">
@@ -234,6 +236,11 @@ const AssetLocationsMasterPopUp = ({ onClose }) => {
                 </label>
               </div>
             </div>
+          </div>
+
+          {/* Floor and Room Checkboxes */}
+          <div className="assetLocationsMasterPopUp-form-group-1row">
+           
           </div>
         </div>
       </div>

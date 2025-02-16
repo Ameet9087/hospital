@@ -9,9 +9,9 @@ function NavigationBar() {
   const getActiveTab = () => {
     if (location.pathname.includes('/verification/inventory')) return 'Inventory';
     if (location.pathname.includes('/verification/pharmacy')) return 'Pharmacy';
-    if (location.pathname.includes('/verification/document&employmentverification')) return 'document-verification';
-    if (location.pathname.includes('/verification/identityverification')) return 'identity-verification';
-    if (location.pathname.includes('/verification/insuranceverification')) return 'insurance';
+    if (location.pathname.includes('/verification/opdcanclepostapproval')) return 'opdcanclepostapproval';
+    // if (location.pathname.includes('/verification/identityverification')) return 'identity-verification';
+    // if (location.pathname.includes('/verification/insuranceverification')) return 'insurance';
     return '';
   };
 
@@ -37,14 +37,16 @@ function NavigationBar() {
         >
           Pharmacy
         </NavLink>
-        {/* <NavLink
-          to="/verification/document&employmentverification"
+        <NavLink
+          to="/verification/opdcanclepostapproval"
+
           className={({ isActive }) =>
             `navigationBarTabButton ${isActive ? 'navigationBarActive' : ''}`
           }
         >
-          Document & Employment Verification
-        </NavLink> */}
+          Opd Billing Cancle and post Discount Approval
+        </NavLink>
+
         {/* <NavLink
           to="/verification/identityverification"
           className={({ isActive }) =>

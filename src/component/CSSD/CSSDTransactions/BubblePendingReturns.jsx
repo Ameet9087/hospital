@@ -61,7 +61,7 @@ const BubblePendingReturns = () => {
   return (
     <div className="Bubble_Pending_Returns_view">
       <div className="Bubble_Pending_Returns_header">
-        <h5>Pending Returns</h5>
+        <h5>Pending Returns </h5>
         <FontAwesomeIcon
             icon={faArrowLeftLong}
             className="back-icon"

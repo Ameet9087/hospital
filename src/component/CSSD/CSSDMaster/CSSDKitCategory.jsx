@@ -5,6 +5,10 @@ import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 import './CSSDKitCategory.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { API_BASE_URL } from '../../api/api';
+import FloatingInput from '../../../FloatingInputs/FloatingInput';
+import FloatingSelect from '../../../FloatingInputs/FloatingSelect';
+import FloatingTextarea from '../../../FloatingInputs/FloatingTextarea';
+import { toast } from 'react-toastify';
 
 const CSSDItemMaster = () => {
   const [itemName, setItemName] = useState('');
@@ -37,10 +41,10 @@ const CSSDItemMaster = () => {
     try {
       const response = await axios.post(`${API_BASE_URL}/kit-categories`, data);
       console.log('Save Successful:', response.data);
-      alert('Kit category saved successfully!');
+      toast.success('Kit category saved successfully!');
     } catch (error) {
-      console.error('Error saving kit category:', error);
-      alert('Failed to save kit category. Please try again.');
+      toast.error('Error saving kit category:', error);
+      toast.error('Failed to save kit category. Please try again.');
     }
   };
 
@@ -64,22 +68,23 @@ const CSSDItemMaster = () => {
       <div className="CSSDKitCategory-content">
         <div className="CSSDKitCategory-formContainer">
           <div className="CSSDKitCategory-formGroup">
-            <label>Kit Category Type:</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Kit Category Type"}
+            type="text"
               placeholder="Enter Category Type"
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
-            />
+              restrictions={{char:true}}/>
+           
           </div>
           <div className="CSSDKitCategory-formGroup">
-            <label>Description:</label>
-            <input
-              type="text"
-              placeholder="Enter description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
+            <FloatingInput
+            label={"Description"}
+            type="text"
+            placeholder="Enter description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}/>
+            
           </div>
           <div className="CSSDItemMaster-formGroup">
             <label>Status:</label>

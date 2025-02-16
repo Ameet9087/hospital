@@ -35,11 +35,7 @@
   gap: 10px;
 }
 
-.ProposalForAMCCMC-label {
-  font-size: var(--font-size);
-  margin-bottom: 0;
-  width: 150px;
-}
+
 
 .ProposalForAMCCMC-input {
   width: 100%;

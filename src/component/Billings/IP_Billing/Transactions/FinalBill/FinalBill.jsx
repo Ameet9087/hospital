@@ -35,7 +35,7 @@ const FinalBill = () => {
   const [remark, setRemark] = useState("");
 
   const OpenPrintFile = () => {
-    navigate("/OpdBillingPrint");
+    navigate("/billing/finalbillingprint");
   };
 
   const [roomRentTableRows, setroomRentTableRows] = useState([

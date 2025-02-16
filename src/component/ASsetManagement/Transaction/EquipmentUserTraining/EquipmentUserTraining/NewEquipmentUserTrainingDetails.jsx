@@ -5,6 +5,7 @@ import { startResizing } from "../../../../../TableHeadingResizing/ResizableColu
 import CustomModal from "../../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../../api/api";
 
+
 const NewEquipmentUserTrainingDetails = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
@@ -88,18 +89,19 @@ const NewEquipmentUserTrainingDetails = () => {
   };
 
   const handlePrint = () => {
-    const printWindow = window.open("", "_blank");
-    const printContent = `
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
       <html>
         <head>
-          <title>Equipment User Training Details</title>
+          <title>Print Table</title>
           <style>
             table {
               width: 100%;
               border-collapse: collapse;
             }
             th, td {
-              border: 1px solid #ddd;
+              border: 1px solid black;
               padding: 8px;
               text-align: left;
             }
@@ -109,56 +111,15 @@ const NewEquipmentUserTrainingDetails = () => {
           </style>
         </head>
         <body>
-          <h1>Equipment User Training Details</h1>
-          <table>
-            <thead>
-              <tr>
-                ${[
-        "SN",
-        "Employee Type",
-        "Manual Trainer",
-        "Contract Type",
-        "Contract From",
-        "Contract To",
-        "Trainer Name",
-        "Employee Name",
-        "Doctor Name",
-        "Equipment Name",
-        "Remarks",
-      ]
-        .map((header) => `<th>${header}</th>`)
-        .join("")}
-              </tr>
-            </thead>
-            <tbody>
-              ${filteredTrainingDetails
-        .map(
-          (detail, index) => `
-                    <tr>
-                      <td>${index + 1}</td>
-                      <td>${detail.employeeType}</td>
-                      <td>${detail.manualTrainer}</td>
-                      <td>${detail.contractType}</td>
-                      <td>${detail.contractFromDate}</td>
-                      <td>${detail.contractToDate}</td>
-                      <td>${detail.trainer?.firstName}</td>
-                      <td>${detail.employee?.firstName}</td>
-                      <td>${detail.doctor?.doctorName}</td>
-                      <td>${detail.equipmentMasterDTO?.equipmentName}</td>
-                      <td>${detail.remark}</td>
-                    </tr>
-                  `
-        )
-        .join("")}
-            </tbody>
-          </table>
+          ${printContent.outerHTML}
         </body>
       </html>
-    `;
-    printWindow.document.write(printContent);
-    printWindow.document.close();
-    printWindow.print();
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
+
 
   return (
     <div className="NewEquipmentUserTrainingDetails-container">

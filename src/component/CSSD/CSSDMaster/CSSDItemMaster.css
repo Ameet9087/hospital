@@ -32,6 +32,7 @@
     margin-bottom: 15px;
   }
   
+
   /* Label styling */
   .CSSDItemMaster-formGroup label {
     width: 40%;
@@ -58,6 +59,8 @@
     border-radius: 4px;
   }
   
+ 
+ 
   /* Inventory list and status options styling */
   .CSSDItemMaster-inventoryList label,
   .CSSDItemMaster-statusOptions label {

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import './AMCDetailsMulti.css';
 import { API_BASE_URL } from '../../../api/api';
 import PopupTable from '../../../Admission/PopupTable';
+import { FloatingInput, FloatingSelect } from '../../../../FloatingInputs';
+import {toast}  from "react-toastify";
 
 const AMCDetailsmulti = ({ bookingId }) => {
   const [id, setId] = useState(bookingId || "");
@@ -118,15 +120,15 @@ const AMCDetailsmulti = ({ bookingId }) => {
 
       if (response.ok) {
         const responseData = await response.json();
-        alert("Data saved successfully!");
+        toast.success("Data saved successfully!");
         console.log("Saved data:", responseData);
       } else {
-        console.error("Failed to save data:", response.statusText);
+        toast.error("Failed to save data:", response.statusText);
         alert("Failed to save data. Please try again.");
       }
     } catch (error) {
-      console.error("Error saving data:", error);
-      alert("Error occurred while saving data.");
+      toast.error("Error saving data:", error);
+      toast.error("Error occurred while saving data.");
     }
   };
 
@@ -180,23 +182,29 @@ const AMCDetailsmulti = ({ bookingId }) => {
           <div className="surgeryEvents-panel dis-templates">
             <div className="surgeryEvents-panel-content">
               <div className="surgeryEvents-form-row">
-                <label>Proposal No:</label>
-                <div className="surgeryEvents-input-with-search">
-                  <input type="text" value={selectedProposalForAmcMulti?.proposalId || ""} readOnly />
-                  <button className="surgeryEvents-magnifier-btn" onClick={() => setActivePopup("proposalamc")}>🔍</button>
-                </div>
+                <FloatingInput
+                label={"Proposal No"}
+                type="search" value={selectedProposalForAmcMulti?.proposalId || ""}
+                onIconClick={() => setActivePopup("proposalamc")}
+                />
+                
               </div>
               <div className="surgeryEvents-form-row">
-                <label>Proposal To:</label>
-                <input type="text" value={selectedProposalForAmcMulti?.proposalTo || ""} readOnly />
+                <FloatingInput
+                label={"Proposal To"}
+                type="text" value={selectedProposalForAmcMulti?.proposalTo || ""} readOnly/>
+                
               </div>
               <div className="surgeryEvents-form-row">
-                <label>Proposal Date:</label>
-                <input type="text" value={selectedProposalForAmcMulti?.proposalDate || ""} readOnly />
+                <FloatingInput
+                label={"Proposal Date"}
+                type="text" value={selectedProposalForAmcMulti?.proposalDate || ""} readOnly/>
+                
               </div>
               <div className="surgeryEvents-form-row">
-                <label>Proposal Charges:</label>
-                <input type="text" value={selectedProposalForAmcMulti?.proposalCharges || ""} readOnly />
+                <FloatingInput
+                label={"Proposal Charges"}
+                type="text" value={selectedProposalForAmcMulti?.proposalCharges || ""} readOnly/>
               </div>
             </div>
             {activePopup && (
@@ -213,67 +221,63 @@ const AMCDetailsmulti = ({ bookingId }) => {
             <div className="surgeryEvents-panel-header">Contract Details</div>
             <div className="surgeryEvents-panel-content">
               <div className="surgeryEvents-form-row">
-                <label>Manual Contract No:</label>
-                <input
-                  type="text"
+                <FloatingInput
+                label={"Manual Contract No"}
+                type="text"
                   name="manualContractNo"
                   value={formData.manualContractNo}
                   onChange={handleInputChange}
                 />
+               
               </div>
               <div className="surgeryEvents-form-row">
-                <label>Contract From:</label>
-                <input
-                  type="date"
+                <FloatingInput
+                label={"Contract From"}
+                type="date"
                   name="contractFrom"
                   value={formData.contractFrom}
-                  onChange={handleInputChange}
-                />
+                  onChange={handleInputChange}/>
               </div>
               <div className="surgeryEvents-form-row">
-                <label>Contract To:</label>
-                <input
-                  type="date"
-                  name="contractTo"
-                  value={formData.contractTo}
-                  onChange={handleInputChange}
-                />
+                <FloatingInput
+                label={"Contract To"}
+                type="date"
+                name="contractTo"
+                value={formData.contractTo}
+                onChange={handleInputChange}/>
               </div>
               <div className="surgeryEvents-form-row">
-                <label>Cost Of Contract:</label>
-                <input
-                  type="text"
-                  name="costOfContract"
-                  value={formData.costOfContract}
-                  onChange={handleInputChange}
-                />
+                <FloatingInput
+                label={"Cost Of Contract"}
+                type="text"
+                name="costOfContract"
+                value={formData.costOfContract}
+                onChange={handleInputChange}/>
               </div>
               <div className="surgeryEvents-form-row">
-                <label>Contract Of AMC:</label>
-                <input
-                  type="text"
+                <FloatingInput
+                label={"Contract Of AMC"}
+                type="text"
                   name="contractOfAmc"
                   value={formData.contractOfAmc}
                   onChange={handleInputChange}
                 />
               </div>
               <div className="surgeryEvents-form-row">
-                <label>Warranty Details:</label>
-                <input
-                  type="text"
+                <FloatingInput
+                label={"Warranty Details"}
+                type="text"
                   name="warrantyDetails"
                   value={formData.warrantyDetails}
-                  onChange={handleInputChange}
-                />
+                  onChange={handleInputChange}/>
               </div>
               <div className="surgeryEvents-form-row">
-                <label>Insurance:</label>
-                <input
-                  type="text"
-                  name="insurance"
-                  value={formData.insurance}
-                  onChange={handleInputChange}
-                />
+                <FloatingInput
+                label={"Insurance"}
+                type="text"
+                name="insurance"
+                value={formData.insurance}
+                onChange={handleInputChange}/>
               </div>
             </div>
           </div>
@@ -281,28 +285,41 @@ const AMCDetailsmulti = ({ bookingId }) => {
           <div className="surgeryEvents-panel operation-details">
             <div className="surgeryEvents-panel-header">Company Details</div>
             <div className="surgeryEvents-panel-content">
-              <div className="surgeryEvents-form-row">
-                <label>Supplier:</label>
+            
+              
                 <div className="surgeryEvents-input-with-search">
-                  <input type="text" value={selectedVendor?.vendorName || ""} readOnly />
-                  <button className="surgeryEvents-magnifier-btn" onClick={() => setActivePopup("supplier")}>🔍</button>
-                </div>
+                  <FloatingInput
+                  label={"Supplier"}
+                  type="search" value={selectedVendor?.vendorName || ""} readOnly 
+                  onIconClick={() => setActivePopup("supplier")}
+                  
+                  />
+                  
+               
               </div>
               <div className="surgeryEvents-form-row">
-                <label>Address:</label>
-                <input type="text" value={selectedVendor?.contactAddress || ""} readOnly />
+                <FloatingInput
+                label={"Address"}
+                type="text" value={selectedVendor?.contactAddress || ""} readOnly/>
+               
               </div>
               <div className="surgeryEvents-form-row">
-                <label>Mobile No:</label>
-                <input type="text" value={selectedVendor?.contactNumber || ""} readOnly />
+                <FloatingInput
+                label={"Mobile No"}
+                type="text" value={selectedVendor?.contactNumber || ""} readOnly
+                />
               </div>
               <div className="surgeryEvents-form-row">
-                <label>Email:</label>
-                <input type="text" value={selectedVendor?.email || ""} readOnly />
+                <FloatingInput
+                label={"Email"}
+                type="text" value={selectedVendor?.email || ""} readOnly/>
+                
               </div>
               <div className="surgeryEvents-form-row">
-                <label>Contact Person:</label>
-                <input type="text" value={selectedVendor?.contactPerson || ""} readOnly />
+                <FloatingInput
+                label={"Contact Person"}
+                type="text" value={selectedVendor?.contactPerson || ""} readOnly 
+                />
               </div>
             </div>
           </div>

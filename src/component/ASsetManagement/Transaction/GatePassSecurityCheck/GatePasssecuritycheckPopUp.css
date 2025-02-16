@@ -17,10 +17,7 @@
     font-size: var(--heading-font);
 }
 
-.MaintenanceChecklistPopUp-surgeryEvents-checkbox-label {
-    font-weight: normal;
-    margin-left: 4px;
-}
+
 
 .MaintenanceChecklistPopUp-surgeryEvents-content-wrapper {
     display: flex;
@@ -50,44 +47,19 @@
     padding: 8px;
 }
 
-.MaintenanceChecklistPopUp-surgeryEvents-form-row {
+/* .MaintenanceChecklistPopUp-surgeryEvents-form-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 6px;
     gap: 4px;
     font-size: var(--font-size);
-}
+} */
 
-.MaintenanceChecklistPopUp-surgeryEvents-form-row label {
-    min-width: 140px;
-}
 
-.MaintenanceChecklistPopUp-surgeryEvents-form-row input {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 47%;
-}
 
-.MaintenanceChecklistPopUp-surgeryEvents-form-row select {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 50%;
-}
 
-.MaintenanceChecklistPopUp-surgeryEvents-input-with-search {
-    display: flex;
-    gap: 2px;
-}
 
-.MaintenanceChecklistPopUp-surgeryEvents-input-with-search input {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 80%;
-}
 
 .MaintenanceChecklistPopUp-surgeryEvents-magnifier-btn {
     background: #f0f0f0;
@@ -266,21 +238,11 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 6px;
-    gap: 4px;
+    padding: 5px;
+    gap: 5px;
+    width: 100%;
     font-size: var(--font-size);
 }
-
-.MaintenanceChecklistPopUp-surgeryEvents-form-row label {
-    min-width: 140px;
-}
-
-.MaintenanceChecklistPopUp-surgeryEvents-form-row input {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 47%;
-}
-
 
 .GatePassSecurityCheckPopUp-required{
     color: red;

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Vaccinationreports.css";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
+import FloatingSelect from "../../../../FloatingInputs/FloatingSelect";
+
 
 function VaccinationsReports() {
   const [columnWidths, setColumnWidths] = useState({});
@@ -156,14 +158,19 @@ function VaccinationsReports() {
         <div className="vaccinationsReports-header">
           <h4>Vaccination Details</h4>
           <div className="vaccinationsReports-dropfilter">
-            <select value={selectedGender} onChange={handleGenderChange}>
-              <option value="">--All Gender--</option>
-              {genders.map((gender) => (
-                <option key={gender} value={gender}>
-                  {gender}
-                </option>
-              ))}
-            </select>
+          <FloatingSelect
+  label={"Select Gender"}
+  value={selectedGender}
+  onChange={handleGenderChange}
+  options={[
+    { value: "", label: "--All Gender--" },
+    ...genders.map((gender) => ({
+      value: gender,
+      label: gender,
+    })),
+  ]}
+/>
+
 
             <div
               className="vaccinationsReports__dropdown"
@@ -231,7 +238,7 @@ function VaccinationsReports() {
               className="vaccinationsReports-dash-btn"
               onClick={handleDashClick}
             >
-              -
+           -
             </button>
             {isDropdownDate && (
               <div className="vaccinationsReports-dropdown">
@@ -246,14 +253,14 @@ function VaccinationsReports() {
                 </div>
               </div>
             )}
-            <button className="vaccinationsReports-star-btn">☆</button>
-            <button className="vaccinationsReports-ok-btn">Ok</button>
+            
           </div>
         </div>
       </form>
 
       <div className="vaccinationsReports-search">
         <div className="vaccinationsReports-search-bar">
+          
           <input
             type="text"
             placeholder="Search"

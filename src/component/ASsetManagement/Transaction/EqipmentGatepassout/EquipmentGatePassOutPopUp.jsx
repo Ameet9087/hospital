@@ -3,6 +3,8 @@ import "./EquipmentGatePassOutPopUp.css";
 import { Link } from "react-router-dom";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput,FloatingSelect } from "../../../../FloatingInputs";
+import {toast}  from "react-toastify";
 
 
 const EquipmentGatePassOutPopUp = ({ onClose }) => {
@@ -283,7 +285,7 @@ const EquipmentGatePassOutPopUp = ({ onClose }) => {
   //     partsDTO: newPartsDTO,
   //   });
   // };
-
+ 
 
 
   const [selectedTab, setSelectedTab] = useState("itemDetails");
@@ -388,14 +390,14 @@ const EquipmentGatePassOutPopUp = ({ onClose }) => {
 
       if (response.ok) {
         const result = await response.json();
-        alert("Data submitted successfully!");
+        toast.success("Data submitted successfully!");
       } else {
         console.error("Error:", response.statusText);
-        alert("Failed to submit data!");
+        toast.error("Failed to submit data!");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while submitting data.");
+      toast.error("An error occurred while submitting data.");
     }
   };
 
@@ -518,38 +520,41 @@ const EquipmentGatePassOutPopUp = ({ onClose }) => {
                     </td>
                     <td>{row.sn}</td>
                     <td>
-                      <select
-                        value={row.selectedPart}
-                        onChange={(e) => handlePartChange(e, index)}
-                      >
-                        <option value="" disabled>Select Part</option>
-                        {parts.map((part) => (
-                          <option key={part.partId} value={part.partId}>
-                            {part.partName}
-                          </option>
-                        ))}
-                      </select>
+                    <FloatingSelect
+  label={"Select Part"}
+  value={row.selectedPart}
+  onChange={(e) => handlePartChange(e, index)}
+  options={[
+    { value: "", label: "Select Part", disabled: true },
+    ...parts.map((part) => ({
+      value: part.partId,
+      label: part.partName
+    }))
+  ]}
+/>
                     </td>
                     <td>
-                      <input
-                        type="text"
+                      <FloatingInput
+                      label={"Serial No"}
+                      type="text"
                         value={row.serialNo || ""}
-                        readOnly
-                      />
+                        readOnly/>
+                     
                     </td>
                     <td>
-                      <input
-                        type="text"
+                      <FloatingInput
+                      label={"Model No"}
+                      type="text"
                         value={row.modelNo || ""}
-                        readOnly
-                      />
+                        readOnly/>
                     </td>
                     <td>
-                      <input
-                        type="text"
+                      <FloatingInput
+                      label={"Stand By"}
+                      type="text"
                         value={row.standBy || ""}
-                        readOnly
-                      />
+                        readOnly/>
+                      
                     </td>
                   </tr>
                 ))}
@@ -609,15 +614,16 @@ const EquipmentGatePassOutPopUp = ({ onClose }) => {
                     </td> */}
                     <td>{row.sn}</td>
                     <td>{row.itemDetails}
-                      <textarea></textarea>
+                    <FloatingInput type="text" value=""/>
                     </td>
                     <td>{row.qty}
                       <div className="EquipmentGetPassOut-input-with-search">
-                        <input type="text" value="" />
+                        <FloatingInput type="text" value=""/>
+                        
                       </div>
                     </td>
                     <td>{row.description}
-                      <textarea></textarea>
+                    <FloatingInput type="text" value=""/>
                     </td>
                   </tr>
                 ))}
@@ -677,21 +683,23 @@ const EquipmentGatePassOutPopUp = ({ onClose }) => {
                     </td> */}
                     <td>{row.sn}</td>
                     <td>
-                      <select
-                        value={selectedApprover}
-                        onChange={(e) => handleAproverChange(e, index)}
-                      >
-                        <option value="" disabled>Select Approver</option>
-                        {approvedBy.map((approver) => (
-                          <option key={approver.doctorId} value={approver.doctorId}>
-                            {approver.doctorName}
-                          </option>
-                        ))}
-                      </select>
+                    <FloatingSelect
+  label={"Approve By"}
+  value={selectedApprover}
+  onChange={(e) => handleAproverChange(e, index)}
+  options={[
+    { value: "", label: "Select Approver", disabled: true },
+    ...approvedBy.map((approver) => ({
+      value: approver.doctorId,
+      label: approver.doctorName
+    }))
+  ]}
+/>
+
                     </td>
                     <td>{row.priority}
                       <div className="EquipmentGetPassOut-input-with-search">
-                        <input type="text" value="" />
+                      <FloatingInput type="text" value=""/>
                       </div>
                     </td>
                   </tr>
@@ -748,61 +756,66 @@ const EquipmentGatePassOutPopUp = ({ onClose }) => {
 
           <div className="EquipmentGatePassOutPopUp-form-group-1row">
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Supplier Name : </label>
-              <select value={selectedSupplier} onChange={handleSupplierChange}>
-                <option value="">Select Supplier</option>
-                {suppliers.map((supplier) => (
-                  <option key={supplier.id} value={supplier.id}>
-                    {supplier.vendorName}
-                  </option>
-                ))}
-              </select>
+            <FloatingSelect
+  label={"Supplier Name"}
+  value={selectedSupplier}
+  onChange={handleSupplierChange}
+  options={[
+    { value: "", label: "Select Supplier" },
+    ...suppliers.map((supplier) => ({
+      value: supplier.id,
+      label: supplier.vendorName
+    }))
+  ]}
+/>
+
             </div>
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Asset No : </label>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Asset No"}
+              type="text"
                 name="assetNo"
                 onChange={handleInputChange}
               />
+              
             </div>
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Recommended By : </label>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Recommended By"}
+              type="text"
                 name="recommendedBy"
-                onChange={handleInputChange}
-              />
+                onChange={handleInputChange}/>
             </div>
           </div>
           <div className="EquipmentGatePassOutPopUp-form-group-1row">
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Reason : </label>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Reason"}
+              type="text"
                 name="reason"
-                onChange={handleInputChange}
-              />
+                onChange={handleInputChange}/>
+              
             </div>
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Mode Of Transport : </label>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Mode Of Transport"}
+              type="text"
                 name="modeOfTransport"
-                onChange={handleInputChange}
-              />
+                onChange={handleInputChange}/>
+              
             </div>
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Type : </label>
-              <select
-                name="type"
+              <FloatingSelect
+              label={"Type"}
+              name="type"
                 onChange={handleInputChange}
-              >
-                <option>Returnable</option>
-                <option>Not-Returnable</option>
-                <option>Internal</option>
-                <option>Home Care</option>
-              </select>
+                options={[
+                  {value:"Returnable",label:"Returnable"},
+                  {value:"Not-Returnable",label:"Not-Returnable"},
+                  {value:"Internal",label:"Internal"},
+                  {value:"Home Care",label:"Home Care"},
+                ]}/>
+              
             </div>
           </div>
 
@@ -810,89 +823,86 @@ const EquipmentGatePassOutPopUp = ({ onClose }) => {
             {formData.type === "Internal" && (
               <>
                 <div className="EquipmentGatePassOutPopUp-form-group">
-                  <label>Location Name : </label>
-                  <select
-                    value={selectedFromLocation}
-                    onChange={handleFromLocationChange}
-                  >
-                    <option value="" disabled>
-                      Select Location
-                    </option>
-                    {fromLocations.map((fromLocation) => (
-                      <option key={fromLocation.id} value={fromLocation.id}>
-                        {fromLocation.locationName}
-                      </option>
-                    ))}
-                  </select>
+                <FloatingSelect
+  label={"Location Name"}
+  value={selectedFromLocation}
+  onChange={handleFromLocationChange}
+  options={[
+    { value: "", label: "Select Location", disabled: true },
+    ...fromLocations.map((fromLocation) => ({
+      value: fromLocation.id,
+      label: fromLocation.locationName
+    }))
+  ]}
+/>
+
                 </div>
                 <div className="EquipmentGatePassOutPopUp-form-group">
-                  <label>From Department: </label>
-                  <select
-                    value={selectedDepartment}
-                    onChange={handleDepartmentChange}
-                  >
-                    <option value="" disabled>
-                      Select Department
-                    </option>
-                    {fromDepartments.map((departments) => (
-                      <option key={departments.departmentId} value={departments.departmentId}>
-                        {departments.departmentName}
-                      </option>
-                    ))}
-                  </select>
+                <FloatingSelect
+  label={"From Department"}
+  value={selectedDepartment}
+  onChange={handleDepartmentChange}
+  options={[
+    { value: "", label: "Select Department", disabled: true },
+    ...fromDepartments.map((department) => ({
+      value: department.departmentId,
+      label: department.departmentName
+    }))
+  ]}
+/>
+
                 </div>
               </>
             )}
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Type Of Equipment: </label>
-              <select
-                name="typeOfEquipment"
+              <FloatingSelect
+              label={"Type Of Equipment"}
+              name="typeOfEquipment"
                 value={formData.typeOfEquipment}
                 onChange={handleInputChange}
-              >
-                <option value="Parts">Parts</option>
-                <option value="Equipments">Equipments</option>
-                <option value="Stock Item">Stock Item</option>
-              </select>
+                options={[
+                  {value:"Parts",label:"Parts"},
+                  {value:"Equipments",label:"Equipments"},
+                  {value:"Stock Item",label:"Stock Item"},
+                ]}/>
+              
 
             </div>
           </div>
 
           <div className="EquipmentGatePassOutPopUp-form-group-1row">
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Gate Pass out Date : </label>
-              <input
-                type="date"
+              <FloatingInput
+              label={"Gate Pass out Date "}
+              type="date"
                 name="gatePassOutDate"
-                onChange={handleInputChange}
-              />
+                onChange={handleInputChange}/>
             </div>
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Gate pass out Time : </label>
-              <input
-                type="time"
+              <FloatingInput
+              label={"Gate pass out Time"}
+               type="time"
                 name="gatePassOutTime"
                 value={formData.gatePassOutTime}
-                onChange={handleInputChange}
-              />
+                onChange={handleInputChange}/>
+              
             </div>
             {formData.typeOfEquipment === "Parts" && (
               <>
                 <div className="EquipmentGatePassOutPopUp-form-group">
-                  <label>Equipment : </label>
-                  <select
-                    value={selectedEquipmentMaster}
-                    onChange={handleEquipmentChange}
-                  >
-                    <option value="" disabled>
-                      Select Equipment
-                    </option>
-                    {equipmentmasters.map((equipment) => (
-                      <option key={equipment.equipmentMasterId} value={equipment.equipmentMasterId}>
-                        {equipment.equipmentName}
-                      </option>
-                    ))}
-                  </select>
+                <FloatingSelect
+  label={"Equipment"}
+  value={selectedEquipmentMaster}
+  onChange={handleEquipmentChange}
+  options={[
+    { value: "", label: "Select Equipment", disabled: true },
+    ...equipmentmasters.map((equipment) => ({
+      value: equipment.equipmentMasterId,
+      label: equipment.equipmentName
+    }))
+  ]}
+/>
+
                 </div>
               </>
             )}
@@ -906,40 +916,38 @@ const EquipmentGatePassOutPopUp = ({ onClose }) => {
           </div>
           <div className="EquipmentGatePassOutPopUp-form-group-1row">
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Location : </label>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Location"}
+              type="text"
                 name="location"
-                onChange={handleInputChange}
-              />
+                onChange={handleInputChange}/>
+             
             </div>
 
 
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>To Location : </label>
-              <select
-                value={selectedToLocation}
-                onChange={handleToLocationChange}
-              >
-                <option value="" disabled>
-                  Select To Location
-                </option>
-                {toLocations.map((location) => (
-                  <option key={location.id} value={location.id}>
-                    {location.locationName}
-                  </option>
-                ))}
-              </select>
+            <FloatingSelect
+  label={"To Location"}
+  value={selectedToLocation}
+  onChange={handleToLocationChange}
+  options={[
+    { value: "", label: "Select To Location", disabled: true },
+    ...toLocations.map((location) => ({
+      value: location.id,
+      label: location.locationName
+    }))
+  ]}
+/>
+
             </div>
             {formData.typeOfEquipment === "Parts" && (
               <>
                 <div className="EquipmentGatePassOutPopUp-form-group">
-                  <label>Resp. Department : </label>
-                  <input
-                    type="text"
+                  <FloatingInput
+                  label={"Resp. Department"}
+                  type="text"
                     name="respDepartment"
-                    onChange={handleInputChange}
-                  />
+                    onChange={handleInputChange}/>
                 </div>
               </>
             )}
@@ -954,68 +962,66 @@ const EquipmentGatePassOutPopUp = ({ onClose }) => {
           </div>
           <div className="EquipmentGatePassOutPopUp-form-group-1row">
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>To Department: </label>
-              <select
-                value={selectedToDepartment}
-                onChange={handleToDepartmentChange}
-              >
-                <option value="" disabled>
-                  Select To Department
-                </option>
-                {toDepartments.map((department) => (
-                  <option key={department.departmentId} value={department.departmentId}>
-                    {department.departmentName}
-                  </option>
-                ))}
-              </select>
+            <FloatingSelect
+  label={"To Department"}
+  value={selectedToDepartment}
+  onChange={handleToDepartmentChange}
+  options={[
+    { value: "", label: "Select To Department", disabled: true },
+    ...toDepartments.map((department) => ({
+      value: department.departmentId,
+      label: department.departmentName
+    }))
+  ]}
+/>
+ 
             </div>
 
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Time Period : </label>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Time Period"}
+               type="text"
                 name="timePeriod"
                 value={formData.timePeriod}
-                onChange={handleInputChange}
-              />
+                onChange={handleInputChange}/>
+             
             </div>
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Prepared By : </label>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Prepared By"}
+              type="text"
                 name="preparedBy"
                 value={formData.preparedBy}
-                onChange={handleInputChange}
-              />
+                onChange={handleInputChange}/>
+
             </div>
           </div>
           <div className="EquipmentGatePassOutPopUp-form-group-1row">
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Received By : </label>
-              <input
-                type="text"
-                name="receivedBy"
-                value={formData.receivedBy}
-                onChange={handleInputChange}
-              />
+              <FloatingInput
+              label={"Received By"}
+              type="text"
+              name="receivedBy"
+              value={formData.receivedBy}
+              onChange={handleInputChange}/>
+            
             </div>
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Authorised By : </label>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Authorised By"}
+              type="text"
                 name="authorisedBy"
                 value={formData.authorisedBy}
-                onChange={handleInputChange}
-              />
+                onChange={handleInputChange}/>
             </div>
             <div className="EquipmentGatePassOutPopUp-form-group">
-              <label>Remark : </label>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Remark"}
+              type="text"
                 name="remark"
                 value={formData.remark}
-                onChange={handleInputChange}
-              />
+                onChange={handleInputChange}/>
+              
             </div>
           </div>
           <div className="EquipmentGetPassOut-approveDetails-section">

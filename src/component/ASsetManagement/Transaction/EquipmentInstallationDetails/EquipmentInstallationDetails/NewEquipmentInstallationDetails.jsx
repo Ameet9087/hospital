@@ -28,6 +28,38 @@ const NewEquipmentInstallationDetails = () => {
   const closePopup = () => {
     setShowPopup(false);
   };
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
+
 
   return (
     <div className="newEquipmentInstallationDetails-container">
@@ -52,7 +84,7 @@ const NewEquipmentInstallationDetails = () => {
           <button className="newEquipmentInstallationDetails-print-button">
             <i className="fa-solid fa-file-excel"></i> Export
           </button>
-          <button className="newEquipmentInstallationDetails-print-button">
+          <button className="newEquipmentInstallationDetails-print-button" onClick={handlePrint}>
             <i className="fa-solid fa-print"></i> Print
           </button>
         </div>

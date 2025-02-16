@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./assetCategoryMaster.css";
 import AssetCategoryMasterPopUp from "./assetCategoryMasterPopUp";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput } from "../../../../FloatingInputs";
 
 const NewAssetCategoryMaster = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -113,12 +114,13 @@ const NewAssetCategoryMaster = () => {
 
       <div className="newAssetCategoryMaster-search-N-result">
         <div className="newAssetCategoryMaster-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+          <FloatingInput
+          label={"Search"}
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          
           />
         </div>
         <div className="newAssetCategoryMaster-results-info">
@@ -186,7 +188,7 @@ const NewAssetCategoryMaster = () => {
 
       {showPopup && (
         <CustomModal isOpen={showPopup} onClose={closePopup}>
-          <AssetCategoryMasterPopUp />
+          <AssetCategoryMasterPopUp onClose={closePopup} />
         </CustomModal>
       )}
     </div>

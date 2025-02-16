@@ -10,6 +10,7 @@ import {
 import { API_BASE_URL } from "../../../../api/api";
 import { text } from "@fortawesome/fontawesome-svg-core";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const IpMoneyReceiptAdvance = () => {
   const [columnWidths, setColumnWidths] = useState({});
@@ -23,13 +24,16 @@ const IpMoneyReceiptAdvance = () => {
   const [activePopup, setActivePopup] = useState(null);
   const [formData, setFormData] = useState({});
   const [isPrintEnabled, setIsPrintEnabled] = useState(false);
+  const [moneyReceiptData, setMoneyReceiptData] = useState(false);
+  const navigate = useNavigate();
+
   const handlePrintBilling = () => {
     console.log("Navigating with state:", {
       selectedIPNo,
       formData,
       moneyReceiptData,
     });
-    navigate("/billing/IPMoneyReceiptPrint", {
+    navigate("/billing/ipmoneyreceiptprint", {
       state: { selectedIPNo, formData, moneyReceiptData },
     });
   };
@@ -37,7 +41,7 @@ const IpMoneyReceiptAdvance = () => {
   const handlePopupClose = () => {
     setActivePopup(null);
   };
-  const handleChange = (e) => {};
+  const handleChange = (e) => { };
 
   const fetchIpNos = async () => {
     try {
@@ -48,9 +52,8 @@ const IpMoneyReceiptAdvance = () => {
       const inPatient = response.data.map((item) => ({
         IpNo: item.patient?.inPatientId || "N/A",
         patientName:
-          `${item.patient?.patient?.firstName || ""} ${
-            item.patient?.patient?.middleName || ""
-          } ${item.patient?.patient?.lastName || ""}`.trim() || "N/A",
+          `${item.patient?.patient?.firstName || ""} ${item.patient?.patient?.middleName || ""
+            } ${item.patient?.patient?.lastName || ""}`.trim() || "N/A",
         uhid: item.patient?.patient?.uhid || "N/A",
         bedNo: item.roomDetails?.bedDTO?.bedNo,
         address: item.patient?.patient?.address,
@@ -612,7 +615,7 @@ const IpMoneyReceiptAdvance = () => {
       <button
         className="ipmoneyreceiptadvance-save-btn"
         onClick={() => handlePrintBilling()}
-        disabled={!isPrintEnabled}
+      // disabled={!isPrintEnabled}
       >
         Print
       </button>

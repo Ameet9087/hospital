@@ -9,6 +9,7 @@ import UpdateEmployeePopup from './UpdateEmployeePopup';
 import * as XLSX from 'xlsx';  // Import the XLSX library for exporting to Excel
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import { API_BASE_URL } from '../../api/api';
+import { FloatingInput } from '../../../FloatingInputs';
 
 function AllEmployee() {
     const [employees, setEmployees] = useState([]);
@@ -61,13 +62,13 @@ function AllEmployee() {
                     'Content-Type': 'application/json',
                 },
             });
-            success('Employee Added Successfully');
+            toast.success('Employee Added Successfully');
 
             handlePopupClose();
             fetchEmployees();
         } catch (error) {
             console.error('Error adding employee:', error);
-            warning('Failed to Add Employee');
+            toast.error('Failed to Add Employee');
         }
     };
 
@@ -155,13 +156,14 @@ function AllEmployee() {
 
             <div className="employeelist-search-N-results">
                 <div className="employeelist-searchAndActions">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="employeelist-searchInput"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+                    <FloatingInput
+                    label={"Search"}
+                    type="text"
+                    placeholder="Search..."
+                   
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}/>
+                    
                 </div>
                 <div className="employeelist-results-info">
                     Showing {currentEmployees.length} / {filteredEmployees.length} results
@@ -243,24 +245,7 @@ function AllEmployee() {
                 </table>
             </div>
 
-            <div className='HRpagination'>
-                <button onClick={prevPage} disabled={currentPage === 1} className={currentPage === 1 ? 'disabled' : ''}>
-                    Previous
-                </button>
-
-                {[...Array(totalPages)].map((_, index) => (
-                    <button
-                        key={index + 1}
-                        onClick={() => paginate(index + 1)}
-                        className={currentPage === index + 1 ? 'active' : ''}>
-                        {index + 1}
-                    </button>
-                ))}
-
-                <button onClick={nextPage} disabled={currentPage === totalPages} className={currentPage === totalPages ? 'disabled' : ''}>
-                    Next
-                </button>
-            </div>
+            
         </div>
     );
 }

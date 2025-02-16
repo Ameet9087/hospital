@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 // import { FaSearch } from "react-icons/fa"; // Using react-icons
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput, FloatingSelect } from '../../../../FloatingInputs';
+import {toast}  from "react-toastify";
 
 const BreakDownDetailsPopUp = ({ onClose }) => {
   const [complaintNumbers, setComplaintNumbers] = useState([]);
@@ -195,14 +197,10 @@ const BreakDownDetailsPopUp = ({ onClose }) => {
 
 
   const handleSubmit = async () => {
-    const formDataWithoutSn = JSON.parse(JSON.stringify(formData)); // Deep copy of the data
-
-    // Remove 'sn' from the arrays of repairableParts, guaranteedParts, and replaceItems
+    const formDataWithoutSn = JSON.parse(JSON.stringify(formData)); 
     formDataWithoutSn.repairableParts = formDataWithoutSn.repairableParts.map(({ sn, ...rest }) => rest);
     formDataWithoutSn.guaranteedParts = formDataWithoutSn.guaranteedParts.map(({ sn, ...rest }) => rest);
     formDataWithoutSn.replaceItems = formDataWithoutSn.replaceItems.map(({ sn, ...rest }) => rest);
-
-
     try {
       const response = await fetch(`${API_BASE_URL}/breakdowns`, {
         method: "POST",
@@ -211,20 +209,15 @@ const BreakDownDetailsPopUp = ({ onClose }) => {
         },
         body: JSON.stringify(formData),
       });
-
       if (!response.ok) {
         throw new Error("Failed to submit breakdown details");
       }
-
-      alert("Breakdown details submitted successfully!");
+      toast.success("Breakdown details submitted successfully!");
       onClose();
     } catch (error) {
-      console.error(error);
+      toast.error(error);
     }
   };
-
-
-  // Function to delete a row from the appropriate table
   const handleDeleteRow = (tableType, indexToRemove) => {
     const updatedFormData = { ...formData };
     if (tableType === "repairbleParts") {
@@ -248,16 +241,15 @@ const BreakDownDetailsPopUp = ({ onClose }) => {
     }
     setFormData(updatedFormData);
   };
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
-      setUploadMessage(""); // Clear any previous upload messages
+      setUploadMessage("");
     }
   };
 
-  // Handle file upload
+
   const handleUpload = () => {
     if (!selectedFile) {
       setUploadMessage("Please select a file before uploading.");
@@ -329,33 +321,41 @@ const BreakDownDetailsPopUp = ({ onClose }) => {
                     </td>
                     <td>{index + 1}</td>
                     <td>
-                      <input
-                        type="date"
+                      <FloatingInput
+                      label={"Date"}
+                         type="date"
                         value={row.repairDate}
                         onChange={(e) => handleNestedChange(e, index, "repairDate", "repairableParts")}
                       />
+                    
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        value={row.partName}
-                        onChange={(e) => handleNestedChange(e, index, "partName", "repairableParts")}
+                      <FloatingInput
+                      label={"Part Name"}
+                      type="text"
+                      value={row.partName}
+                      onChange={(e) => handleNestedChange(e, index, "partName", "repairableParts")}
                       />
+                      
                     </td>
                     <td>
-                      <input
-                        type="text"
-                        value={row.consumedTime}
-                        onChange={(e) => handleNestedChange(e, index, "consumedTime", "repairableParts")}
-                      />
+                      <FloatingInput
+                      label={"Consumed Time"}
+                      type="text"
+                      value={row.consumedTime}
+                      onChange={(e) => handleNestedChange(e, index, "consumedTime", "repairableParts")}
+                    />
+                     
+                     
                     </td>
 
                     <td>
-                      <input
-                        type="number"
+                      <FloatingInput
+                      label={"Repair Cost"}
+                      type="number"
                         value={row.repairCost}
-                        onChange={(e) => handleNestedChange(e, index, "repairCost", "repairableParts")}
-                      />
+                        onChange={(e) => handleNestedChange(e, index, "repairCost", "repairableParts")}/>
+                     
                     </td>
                   </tr>
                 ))}
@@ -419,25 +419,26 @@ const BreakDownDetailsPopUp = ({ onClose }) => {
                     <td>{index + 1}</td>
                     {/* {row.date} */}
                     <td>
-                      <input
-                        type="text"
-                        value={row.partName}
-                        onChange={(e) => handleNestedChange(e, index, "partName", "guaranteedParts")}
-                      />
-                    </td>                    {/* {row.partName} */}
+                      <FloatingInput
+                      label={"Part Name"}
+                      type="text"
+                      value={row.partName}
+                      onChange={(e) => handleNestedChange(e, index, "partName", "guaranteedParts")}/>
+                    </td>                   
                     <td>
-                      <input
-                        type="text"
-                        value={row.guaranteePeriod}
-                        onChange={(e) => handleNestedChange(e, index, "guaranteePeriod", "guaranteedParts")}
-                      />
+                      <FloatingInput
+                      label={"Guarantee Period"}
+                      type="text"
+                      value={row.guaranteePeriod}
+                      onChange={(e) => handleNestedChange(e, index, "guaranteePeriod", "guaranteedParts")}/>
+                     
                     </td>                    {/* {row.guranteedPeriod} */}
                     <td>
-                      <input
-                        type="number"
+                      <FloatingInput
+                      label={"Cost"}
+                      type="number"
                         value={row.cost}
-                        onChange={(e) => handleNestedChange(e, index, "cost", "guaranteedParts")}
-                      />
+                        onChange={(e) => handleNestedChange(e, index, "cost", "guaranteedParts")}/>
                     </td>                    {/* {row.cost} */}
                   </tr>
                 ))}
@@ -499,18 +500,21 @@ const BreakDownDetailsPopUp = ({ onClose }) => {
                     </td>
                     <td>{index + 1}</td>
                     <td>
-                      <input
-                        type="text"
+                      <FloatingInput
+                      label={"Item Name"}
+                       type="text"
                         value={row.itemName}
-                        onChange={(e) => handleNestedChange(e, index, "itemName", "replaceItems")}
-                      />
+                        onChange={(e) => handleNestedChange(e, index, "itemName", "replaceItems")}/>
+                    
                     </td>
                     <td>
-                      <input
-                        type="number"
-                        value={row.qty}
-                        onChange={(e) => handleNestedChange(e, index, "qty", "replaceItems")}
+                      <FloatingInput
+                      label={"Quantity"}
+                      type="number"
+                      value={row.qty}
+                      onChange={(e) => handleNestedChange(e, index, "qty", "replaceItems")}
                       />
+                    
                     </td>
 
                   </tr>
@@ -541,101 +545,106 @@ const BreakDownDetailsPopUp = ({ onClose }) => {
           <div className="BreakDownDetailsPopUp-form-group-1row">
 
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Complaint <span className="complaint-required">*</span> : </label>
-              {/* <div className="BreakDownDetails-input-with-search"> */}
-              <select
-                value={selectedComplaintNumber}
-                onChange={handleComplaintNumberChange}
-              >
-                <option value="" disabled>
-                  Select Complaint Number
-                </option>
-                {complaintNumbers.map((complaint) => (
-                  <option key={complaint.complaintId} value={complaint.complaintId}>
-                    {complaint.complaintId}
-                  </option>
-                ))}
-              </select>
-              {/* <CiSearch className="BreakDownDetails-magnifier-btn" /> */}
-              {/* </div> */}
+            <FloatingSelect
+  label="Complaint *"
+  value={selectedComplaintNumber}
+  onChange={handleComplaintNumberChange}
+  options={[
+    { value: "", label: "Select Complaint Number", disabled: true }, // Default disabled option
+    ...complaintNumbers.map((complaint) => ({
+      value: complaint.complaintId,
+      label: complaint.complaintId,
+    }))
+  ]}
+/>
             </div>
 
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Subject : </label>
-              <input type="text" value={subject} />
-            </div>
-            <div className="BreakDownDetailsPopUp-form-group">
-            </div>
-            <div className="BreakDownDetailsPopUp-form-group">
-
-            </div>
-            <div className="BreakDownDetailsPopUp-form-group">
-
+              <FloatingInput
+              label={"Subject"}type="text" value={subject}/>
+             
+           
             </div>
           </div>
           <h4>Equipment Details</h4>
           <div className="BreakDownDetailsPopUp-form-group-1row">
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Equipment Name <span className="complaint-required">*</span>: </label>
-              {/* <div className="BreakDownDetails-input-with-search"> */}
-              <select
-                value={selectedEquipmentMaster}
-                onChange={handleEquipmentChange}
-              >
-                <option value="" disabled>
-                  Select Equipment
-                </option>
-                {equipmentmasters.map((equipment) => (
-                  <option key={equipment.equipmentMasterId} value={equipment.equipmentMasterId}>
-                    {equipment.equipmentName}
-                  </option>
-                ))}
-              </select>              {/* <CiSearch className="BreakDownDetails-magnifier-btn" /> */}
-              {/* </div> */}
+             <FloatingSelect
+  label="Equipment Name *"
+  value={selectedEquipmentMaster}
+  onChange={handleEquipmentChange}
+  options={[
+    { value: "", label: "Select Equipment", disabled: true }, // Default disabled option
+    ...equipmentmasters.map((equipment) => ({
+      value: equipment.equipmentMasterId,
+      label: equipment.equipmentName,
+    }))
+  ]}
+/>
+
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Equipment Code : </label>
-              <input type="text" value={equipmentData.equipmentNo} />
+              <FloatingInput
+              label={"Equipment Code"}
+              type="text" value={equipmentData.equipmentNo}/>
+              
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Asset No:</label>
-              <input type="text" value={equipmentData.assetNo} />
+              <FloatingInput
+              label={"Asset No"}
+              type="text" value={equipmentData.assetNo}/>
+              
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Manual Code:</label>
-              <input type="text" />
-            </div>
-          </div>
-          <div className="BreakDownDetailsPopUp-form-group-1row">
-            <div className="BreakDownDetailsPopUp-form-group">
-              <label>Location:</label>
-              <input type="text" value={equipmentData.location} />
-            </div>
-            <div className="BreakDownDetailsPopUp-form-group">
-              <label>Category:</label>
-              <input type="text" value={equipmentData.category} />
-            </div>
-            <div className="BreakDownDetailsPopUp-form-group">
-              <label>Depreciation:</label>
-              <input type="text" value={equipmentData.depreciation} />
-            </div>
-            <div className="BreakDownDetailsPopUp-form-group">
-              <label>Serial No:</label>
-              <input type="text" value={equipmentData.serialNo} />
+              <FloatingInput
+              label={"Manual Code"} type="text"/>
+              
             </div>
           </div>
           <div className="BreakDownDetailsPopUp-form-group-1row">
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Model No:</label>
-              <input type="text" value={equipmentData.modelNo} readOnly />
+              <FloatingInput
+              label={"Location"}
+              type="text" value={equipmentData.location}/>
+             
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Responsible Person:</label>
-              <input type="text" value={equipmentData.responsiblePerson} readOnly />
+              <FloatingInput
+              label={"Category"}
+              type="text" value={equipmentData.category} />
+             
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Company Brand:</label>
-              <input type="text" value={equipmentData.companyBrand} readOnly />
+              <FloatingInput
+              label={"Depreciation"}
+              type="text" value={equipmentData.depreciation}/>
+            
+            </div>
+            <div className="BreakDownDetailsPopUp-form-group">
+              <FloatingInput
+              label={"Serial No"}
+              type="text" value={equipmentData.serialNo}/>
+             
+            </div>
+          </div>
+          <div className="BreakDownDetailsPopUp-form-group-1row">
+            <div className="BreakDownDetailsPopUp-form-group">
+              <FloatingInput
+              label={"Model No"}
+              type="text" value={equipmentData.modelNo} readOnly />
+              
+            </div>
+            <div className="BreakDownDetailsPopUp-form-group">
+              <FloatingInput
+              label={"Responsible Person"}
+              type="text" value={equipmentData.responsiblePerson} readOnly/>
+             
+            </div>
+            <div className="BreakDownDetailsPopUp-form-group">
+              <FloatingInput
+              label={"Company Brand"}
+              type="text" value={equipmentData.companyBrand} readOnly/>
+            
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
             </div>
@@ -646,31 +655,38 @@ const BreakDownDetailsPopUp = ({ onClose }) => {
 
           <div className="BreakDownDetailsPopUp-form-group-1row">
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Supplier Name : </label>
-              {/* <div className="BreakDownDetails-input-with-search"> */}
-              <input type="text" value={equipmentData.supplierName} />
-              {/* <CiSearch className="BreakDownDetails-magnifier-btn" /> */}
-              {/* </div> */}
+              <FloatingInput
+              label={"Supplier Name "}
+              type="text" value={equipmentData.supplierName}/>
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Supplier Address : </label>
-              <textarea name="" id="" value={equipmentData.supplierAddress}></textarea>
+              <FloatingInput
+              label={"Supplier Address"}
+              name="" id="" value={equipmentData.supplierAddress}/>
+             
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Contact Person : </label>
-              <input type="text" value={equipmentData.contactPerson} />
+              <FloatingInput
+              label={"Contact Person"}
+              type="text" value={equipmentData.contactPerson} />
+              
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Contact Number : </label>
-              <input type="tel" value={equipmentData.contactNumber} />
+              <FloatingInput
+              label={"Contact Number"}
+              type="tel" value={equipmentData.contactNumber}/>
+             
             </div>
 
           </div>
 
           <div className="BreakDownDetailsPopUp-form-group-1row">
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Supplier E-mail: </label>
-              <input type="email" value={equipmentData.supplierEmail} />
+              <FloatingInput
+              label={"Supplier E-mail"}
+              type="email" value={equipmentData.supplierEmail}
+              />
+             
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
 
@@ -687,86 +703,89 @@ const BreakDownDetailsPopUp = ({ onClose }) => {
           <h4>Break Down Details</h4>
           <div className="BreakDownDetailsPopUp-form-group-1row">
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>BreakDown Details : </label>
-              <textarea name="breakdownDetails" id="" onChange={handleChange} ></textarea>
+              <FloatingInput
+              label={"BreakDown Details"}
+              name="breakdownDetails" id="" onChange={handleChange}/>
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Parts Replaced:</label>
-              {/* <input
-              type="text"
-              name="partsReplaced"
+              <FloatingSelect
+              label={"Parts Replaced"}
               value={formData.partsReplaced}
               onChange={handleChange}
-            /> */}
-              <select
-                name="partsReplaced"
-                value={formData.partsReplaced}
+              options={[
+                { value: "Yes", label: "Yes" },
+                { value: "No", label: "No" }
+              ]}
+              />
+            </div>
+
+            <div className="BreakDownDetailsPopUp-form-group">
+              <FloatingInput
+              label={"Compony Name"}
+              type="text" name="companyName" onChange={handleChange}/>
+            </div>
+          </div>
+        
+          <div className="BreakDownDetailsPopUp-form-group">
+  <FloatingInput
+    label="Date Of Invoice"
+    type="date"
+    name="dateOfInvoice"
+    value={formData?.dateOfInvoice || ""} // Ensure it's controlled
+    onChange={handleChange}
+  />
+</div>
+
+<div className="BreakDownDetailsPopUp-form-group-1row">
+<div className="BreakDownDetailsPopUp-form-group">
+  <FloatingInput
+    label={"Break Down Date"}
+    type="date"
+    name="breakDownDate"
+    value={formData?.breakDownDate || ""} // Ensure it's controlled
+    onChange={handleChange}
+  />
+</div>
+
+            <div className="BreakDownDetailsPopUp-form-group">
+              <FloatingInput
+              label={"Break Down Time"}
+              type="time" name="breakdownTime"
+                onChange={handleChange}/>
+              
+            </div>
+
+            <div className="BreakDownDetailsPopUp-form-group">
+              <FloatingSelect
+              label={"Complaint Status"}
+               value={formData.complaintStatus}
                 onChange={handleChange}
-              >
-                <option value="">Select</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            <div className="BreakDownDetailsPopUp-form-group">
-              <label>Compony Name : </label>
-              <input type="text" name="companyName"
-                onChange={handleChange} />
-            </div>
-
-            <div className="BreakDownDetailsPopUp-form-group">
-              <label>Invoice No : </label>
-              <input type="text" name="invoiceNo"
-                onChange={handleChange} />
+                options={[
+                  { value: "Resolved", label: "Resolved" },
+                  { value: "Re-solved", label: "Re-solved" }
+                ]}/>
+              
             </div>
           </div>
           <div className="BreakDownDetailsPopUp-form-group-1row">
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Date Of Invoice : </label>
-              <input type="date" name="dateOfInvoice"
-                onChange={handleChange} />
-            </div>
-
-            <div className="BreakDownDetailsPopUp-form-group">
-              <label>Break Down Date: </label>
-              <input type="date" name="breakdownDate"
-                onChange={handleChange} />
+              <FloatingInput
+              label={"Work Completion Date"}type="date" name="workCompletionDate"
+              onChange={handleChange}/>
+              
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Break Down Time: </label>
-              <input type="time" name="breakdownTime"
-                onChange={handleChange} />
-            </div>
-
-            <div className="BreakDownDetailsPopUp-form-group">
-              <label>Complaint Status :</label>
-              <select
-                name="complaintStatus"
-                value={formData.complaintStatus}
-                onChange={handleChange}
-              >
-                <option value="">Select</option>
-                <option value="Resolved">Resolved</option>
-                <option value="Re-solved">Re-solved</option>
-              </select>
-            </div>
-          </div>
-          <div className="BreakDownDetailsPopUp-form-group-1row">
-            <div className="BreakDownDetailsPopUp-form-group">
-              <label>Work Completion Date: </label>
-              <input type="date" name="workCompletionDate"
-                onChange={handleChange} />
+              <FloatingInput 
+              label={"Work Completion Time"}
+              type="time" name="workCompletionTime"
+                onChange={handleChange}/>
+             
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
-              <label>Work Completion Time: </label>
-              <input type="time" name="workCompletionTime"
-                onChange={handleChange} />
-            </div>
-            <div className="BreakDownDetailsPopUp-form-group">
-              <label>Remarks: </label>
-              <input type="text" name="remark"
-                onChange={handleChange} />
+              <FloatingInput
+              label={"Remarks"}type="text" name="remark"
+              onChange={handleChange}/>
+             
             </div>
             <div className="BreakDownDetailsPopUp-form-group">
             </div>

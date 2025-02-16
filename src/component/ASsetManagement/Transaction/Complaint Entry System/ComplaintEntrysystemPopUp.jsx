@@ -4,8 +4,10 @@ import "./ComplaintEntrySystemPopUp.css";
 // =================================================================================================
 import { API_BASE_URL } from "../../../api/api";
 import PopupTable from '../../../Admission/PopupTable';
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingSelect } from "../../../../FloatingInputs";
 
-const ComplaintEntrySystemPopUp = () => {
+const ComplaintEntrySystemPopUp = ({onClose}) => {
   const [activePopup, setActivePopup] = useState("")
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
@@ -112,7 +114,7 @@ const ComplaintEntrySystemPopUp = () => {
 
       if (!response.ok) throw new Error("Failed to submit complaint");
 
-      alert("Complaint submitted successfully!");
+      toast.success("Complaint submitted successfully!");
 
       // Reset form
       setFormData({
@@ -123,10 +125,11 @@ const ComplaintEntrySystemPopUp = () => {
       });
       setSelectedDepartment("");
       setSelectedEquipment("");
+      onClose();
 
     } catch (error) {
       console.error("Error submitting complaint:", error);
-      alert("Failed to submit complaint. Please try again.");
+      toast.error("Failed to submit complaint. Please try again.");
     }
   };
 
@@ -139,7 +142,7 @@ const ComplaintEntrySystemPopUp = () => {
       <div className="complaint-entry-system-form">
         <div className="complaint-panel-header">Complaint Details</div>
         <div className="complaintSpace">
-          <div className="complaint-entry-system-row">
+          <div className="complaint-entry-system-row-select">
             <label>Type :</label>
             <div className="complaint-entry-system-radio-group">
               <input type="radio" name="type" id="equipment" />
@@ -147,23 +150,133 @@ const ComplaintEntrySystemPopUp = () => {
             </div>
           </div>
           <div className="complaint-entry-system-row">
-            <label>
-              Complaint To Department<span className="requiredtext">*</span> :
-            </label>
-            <div className="complaint-entry-system-search-wrapper">
+            <FloatingInput
+            label={"Complaint To Department"}
+            onIconClick={() => setActivePopup("department")}
+            type="search"
+            value={selectedDepartment?.departmentName || ''}
+            />
+          </div>
+          <div className="complaint-entry-system-row">
+            <FloatingSelect
+            label={"Complaint Type"}
+            
+             name="complaintType"
+             value={formData.complaintType}
+             onChange={handleInputChange}
+             options={[{value:"",label:""},
+              {value:"Internal Department",label:"Internal Department"},
+              {value:"For Patient",label:"For Patient"}
+             ]}
+            />
+          </div>
+
+          {/* ========================================================================================= */}
+          <div className="complaint-entry-system-row">
+            <FloatingInput
+            label={"Equipment Name"}
+            type="search"
+            value={selectedEquipment?.equipmentName || ''}
+            
+            onIconClick={() => setActivePopup("equipment")}
+            readOnly
+            />
+          </div>
 
 
-              {/* ================================================================================================== */}
-              <input
-                type="text"
-                value={selectedDepartment?.departmentName || ''}
-                className="complaint-entry-system-search-input"
-              />
-              <button className="complaint-entry-system-search-icon" onClick={() => setActivePopup("department")}>
-                🔍
-              </button>
 
-              {activePopup && (
+          {/* ================================================================================================ */}
+
+
+          {/* Populated Fields */}
+          <div className="complaint-entry-system-row">
+            <FloatingInput
+            label={"Serial No"}
+            type="text"
+            value={selectedEquipment?.serialNo || ""}
+           
+            readOnly
+            />
+          </div>
+          <div className="complaint-entry-system-row">
+            <FloatingInput
+            label={"Model No"}
+            type="text"
+            value={selectedEquipment?.modelNo || ""}
+            
+            readOnly
+            />
+          </div>
+          <div className="complaint-entry-system-row">
+            <FloatingInput
+            label={"Asset No"}
+            type="text"
+            value={selectedEquipment?.assetNo || ""}
+           
+            readOnly
+            />
+          </div>
+          <div className="complaint-entry-system-row">
+            <FloatingInput
+            label={"Equipment No"}
+            type="text"
+            value={selectedEquipment?.equipmentNo || ""}
+            
+            readOnly
+            />
+          </div>
+          <div className="complaint-entry-system-row">
+            <FloatingInput
+            label={"Software Version No"}
+             type="text"
+             value={selectedEquipment?.softwareVersion || ""}
+            
+             readOnly
+            />
+          </div>
+
+          <div className="complaint-entry-system-row">
+            <FloatingInput
+            label={"Complaint Subject"}
+             type="text"
+             
+             name="complaintSubject"
+             value={formData.complaintSubject}
+             onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="complaint-entry-system-row">
+            <FloatingSelect
+             name="priority"
+             value={formData.priority}
+             onChange={handleInputChange}
+             options={[{value:"",label:""},
+              {value:"Ordinary",label:"Ordinary"},
+              {value:"Urgent",label:"Urgent"},
+              {value:"Immediate",label:"Immediate"}
+             ]}
+            
+            />
+          </div>
+        </div>
+        <div className="complaint-panel-header">Attachment</div>
+        <div className="complaintSpace">
+          <div className="complaint-entry-system-row">
+            <FloatingInput
+            label={"File Name"}
+            type="file"
+            />
+            <button className="complaint-entry-system-upload-btn">Upload</button>
+          </div>
+        </div>
+
+
+        <div className="ComplaintEntrySystemPopUp-action-buttons">
+          <button className="btn-blue" onClick={handleSubmit}>Save</button>
+        </div>
+      </div>
+      {activePopup && (
                 <PopupTable
                   columns={columns}
                   data={data}
@@ -172,42 +285,7 @@ const ComplaintEntrySystemPopUp = () => {
                 />
               )}
 
-              {/* ======================================================================================= */}
-            </div>
-          </div>
-          <div className="complaint-entry-system-row">
-            <label>Complaint Type:</label>
-            <select
-              className="complaint-entry-system-select"
-              name="complaintType"
-              value={formData.complaintType}
-              onChange={handleInputChange}
-            >
-              <option value="Internal Department">Internal Department</option>
-              <option value="For Patient">For Patient</option>
-            </select>
-          </div>
-
-          {/* ========================================================================================= */}
-          <div className="complaint-entry-system-row">
-            <label>
-              Equipment Name<span className="requiredtext">*</span> :
-            </label>
-            <div className="complaint-entry-system-search-wrapper">
-              <input
-                type="text"
-                value={selectedEquipment?.equipmentName || ''}
-                className="complaint-entry-system-search-input"
-                readOnly
-              />
-              <button
-                className="complaint-entry-system-search-icon"
-                onClick={() => setActivePopup("equipment")}
-              >
-                🔍
-              </button>
-
-              {activePopup === "equipment" && (
+{activePopup === "equipment" && (
                 <PopupTable
                   columns={["equipmentMasterId", "equipmentName"]}
                   data={equipments}
@@ -218,102 +296,6 @@ const ComplaintEntrySystemPopUp = () => {
                   onClose={() => setActivePopup(null)} // Close popup on cancel
                 />
               )}
-            </div>
-          </div>
-
-
-
-          {/* ================================================================================================ */}
-
-
-          {/* Populated Fields */}
-          <div className="complaint-entry-system-row">
-            <label>Serial No:</label>
-            <input
-              type="text"
-              value={selectedEquipment?.serialNo || ""}
-              className="complaint-entry-system-input"
-              readOnly
-            />
-          </div>
-          <div className="complaint-entry-system-row">
-            <label>Model No:</label>
-            <input
-              type="text"
-              value={selectedEquipment?.modelNo || ""}
-              className="complaint-entry-system-input"
-              readOnly
-            />
-          </div>
-          <div className="complaint-entry-system-row">
-            <label>Asset No:</label>
-            <input
-              type="text"
-              value={selectedEquipment?.assetNo || ""}
-              className="complaint-entry-system-input"
-              readOnly
-            />
-          </div>
-          <div className="complaint-entry-system-row">
-            <label>Equipment No:</label>
-            <input
-              type="text"
-              value={selectedEquipment?.equipmentNo || ""}
-              className="complaint-entry-system-input"
-              readOnly
-            />
-          </div>
-          <div className="complaint-entry-system-row">
-            <label>Software Version No:</label>
-            <input
-              type="text"
-              value={selectedEquipment?.softwareVersion || ""}
-              className="complaint-entry-system-input"
-              readOnly
-            />
-          </div>
-
-          <div className="complaint-entry-system-row">
-            <label>Complaint Subject<span className="requiredtext">*</span> :</label>
-            <div className="complaint-entry-system-search-wrapper">
-              <input
-                type="text"
-                className="complaint-entry-system-search-input"
-                name="complaintSubject"
-                value={formData.complaintSubject}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-
-          <div className="complaint-entry-system-row">
-            <label>Priority :</label>
-            <select
-              className="complaint-entry-system-select"
-              name="priority"
-              value={formData.priority}
-              onChange={handleInputChange}
-            >
-              <option value="Ordinary">Ordinary</option>
-              <option value="Urgent">Urgent</option>
-              <option value="Immediate">Immediate</option>
-            </select>
-          </div>
-        </div>
-        <div className="complaint-panel-header">Attachment</div>
-        <div className="complaintSpace">
-          <div className="complaint-entry-system-row">
-            <label>File Name :</label>
-            <input type="file" className="complaint-entry-system-file" />
-            <button className="complaint-entry-system-upload-btn">Upload</button>
-          </div>
-        </div>
-
-
-        <div className="ComplaintEntrySystemPopUp-action-buttons">
-          <button className="btn-blue" onClick={handleSubmit}>Save</button>
-        </div>
-      </div>
     </div>
   );
 };

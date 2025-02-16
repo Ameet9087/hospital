@@ -15,11 +15,7 @@
   .YearlyEquipmentDepreciation-surgeryEvents-header {
     font-size: var(--heading-font);
   }
-  
-  .YearlyEquipmentDepreciation-surgeryEvents-checkbox-label {
-    font-weight: normal;
-    margin-left: 4px;
-  }
+
   
   .YearlyEquipmentDepreciation-surgeryEvents-content-wrapper {
     display: flex;
@@ -50,30 +46,13 @@
   }
   
   .YearlyEquipmentDepreciation-surgeryEvents-form-row {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 6px;
     gap: 4px;
     font-size: var(--font-size);
-  }
-  
-  .YearlyEquipmentDepreciation-surgeryEvents-form-row label {
-    min-width: 140px;
-  }
-  
-  .YearlyEquipmentDepreciation-surgeryEvents-form-row input {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 47%;
-  }
-  
-  .YearlyEquipmentDepreciation-surgeryEvents-form-row select {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 50%;
   }
   
   .YearlyEquipmentDepreciation-surgeryEvents-input-with-search {

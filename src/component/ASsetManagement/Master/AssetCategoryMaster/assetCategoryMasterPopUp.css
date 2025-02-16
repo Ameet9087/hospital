@@ -163,6 +163,7 @@
   .assetCategoryMasterPopUp-form-group-1row{
     display: flex;
     justify-content: space-between;
+    gap: 5px;
   }
   .assetCategoryMasterPopUp-form-group-sub{
     display: flex;

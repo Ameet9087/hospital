@@ -4,6 +4,7 @@
     background-color: var(--background-color);
     padding: 20px;
     transition: opacity 0.3s ease-in-out;
+    
   }
   
   .PmCalibrationFromPopUp-container.hidden {
@@ -29,24 +30,13 @@
     align-items: center; /* Ensures the label and input are vertically aligned */
 }
 
-.PmCalibrationFromPopUp-form-group label {
-    display: inline-block;
-    margin-right: 10px; /* Space between label and input */
-    width: 150px; /* You can adjust the width as needed */
-}
 
-.PmCalibrationFromPopUp-form-group input,
-.PmCalibrationFromPopUp-form-group textarea {
-    flex: 1; /* Ensures the input takes up the remaining space */
-    padding: var(--input-box-padding);
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
+
 
 
 .PmCalibrationFromPopUp-upload-button {
     background-color: var(--button-bg-color);
-    color: var(--button-color);
+    color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 3px;
@@ -67,12 +57,12 @@
   .PmCalibrationFromPopUp-add-button,
   .PmCalibrationFromPopUp-close-button {
     background-color: var(--button-bg-color);
-    color: var(--button-color);
-    padding: 10px 20px;
+    color: white;
+    padding:5px 15px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
-    width: 48%;
+  
   }
   
   .PmCalibrationFromPopUp-add-button:hover,

@@ -4,6 +4,7 @@ import EquipmentPartsPopUp from "./EquipmentPartsPopUp";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 import * as XLSX from "xlsx";
+import { FloatingInput } from "../../../../FloatingInputs";
 
 const EquipmentParts = () => {
     const [showPopup, setShowPopup] = useState(false);
@@ -87,12 +88,12 @@ const EquipmentParts = () => {
 
             <div className="newCondemnationReasonMaster-search-N-result">
                 <div className="newCondemnationReasonMaster-search-bar">
-                    <i className="fa-solid fa-magnifying-glass"></i>
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
+                    <FloatingInput
+                    label={"search"}
+                    type="text"
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
                 <div className="newCondemnationReasonMaster-results-info">
@@ -163,7 +164,7 @@ const EquipmentParts = () => {
 
             {showPopup && (
                 <CustomModal isOpen={showPopup} onClose={closePopup}>
-                    <EquipmentPartsPopUp />
+                    <EquipmentPartsPopUp onClose={closePopup} />
                 </CustomModal>
             )}
         </div>

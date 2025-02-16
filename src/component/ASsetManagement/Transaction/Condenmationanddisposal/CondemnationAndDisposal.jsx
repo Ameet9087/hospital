@@ -48,7 +48,7 @@ const CondemnationAndDisposal = () => {
       (disposal.approvalBy?.doctorName || "").toLowerCase().includes(searchQuery.toLowerCase())
     );
   });
-
+  
 
   // Handle Export to Excel
   const handleExport = () => {
@@ -73,6 +73,38 @@ const CondemnationAndDisposal = () => {
     XLSX.utils.book_append_sheet(workbook, worksheet, "Condemnation and Disposal");
     XLSX.writeFile(workbook, "Condemnation_Disposal.xlsx");
   };
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
+
 
   return (
     <div className="CondemnationAndDisposal-container">
@@ -104,7 +136,7 @@ const CondemnationAndDisposal = () => {
           </button>
           <button
             className="CondemnationAndDisposal-print-button"
-            onClick={() => window.print()}
+            onClick={handlePrint}
           >
             <i className="fa-solid fa-print"></i> Print
           </button>

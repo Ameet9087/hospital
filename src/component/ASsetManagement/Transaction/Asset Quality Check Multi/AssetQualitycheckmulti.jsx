@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import './AssetQualityCheckMulti.css';
 import { API_BASE_URL } from '../../../api/api';
 import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
+import { FloatingInput, FloatingSelect } from '../../../../FloatingInputs';
+import {toast}  from "react-toastify";
 
 const AssetQualityCheckMulti = () => {
   const [id, setId] = useState('');
@@ -46,7 +48,7 @@ const AssetQualityCheckMulti = () => {
       .then((data) => {
         setEquipmentList(data);
         if (response.ok) {
-          alert("Data Save Successfully..")
+          toast.success("Data Save Successfully..")
         }
       })
 
@@ -129,15 +131,15 @@ const AssetQualityCheckMulti = () => {
     })
       .then((response) => {
         if (response.ok) {
-          alert('Data saved successfully!');
+          toast.success('Data saved successfully!');
           // Reset form if needed
         } else {
-          alert('Failed to save data!');
+          toast.error('Failed to save data!');
         }
       })
       .catch((error) => {
-        console.error('Error saving data:', error);
-        alert('An error occurred while saving data!');
+        toast.error('Error saving data:', error);
+        
       });
   };
 
@@ -153,13 +155,16 @@ const AssetQualityCheckMulti = () => {
           <div className="AssetQualityCheckMulti-surgeryEvents-panel dis-templates">
             <div className="AssetQualityCheckMulti-surgeryEvents-panel-content">
               <div className="AssetQualityCheckMulti-surgeryEvents-form-row">
-                <label>Record No:</label>
-                <input type="text" value={id} readOnly />
+                <FloatingInput
+                label={"Record No"}
+                type="text" value={id} readOnly
+                />
               </div>
 
               <div className="AssetQualityCheckMulti-surgeryEvents-form-row">
-                <label>Quality Check Date: *</label>
-                <input type="date" value={qualityCheckDate}
+                <FloatingInput
+                label={"Quality Check Date *"}
+                type="date" value={qualityCheckDate}
                   onChange={(e) => setQualityCheckDate(e.target.value)} />
               </div>
             </div>
@@ -170,30 +175,34 @@ const AssetQualityCheckMulti = () => {
 
             <div className="AssetQualityCheckMulti-surgeryEvents-panel-content">
               <div className="AssetQualityCheckMulti-surgeryEvents-form-row">
-                <label>Comments/Remarks:</label>
-                <input type="text" value={remarks}
+                <FloatingInput
+                label={"Comments/Remarks"}
+                type="text" value={remarks}
                   onChange={(e) => setRemarks(e.target.value)} />
+                
               </div>
 
               <div className="AssetQualityCheckMulti-surgeryEvents-form-row">
-                <label>Signature of Department HOD:</label>
-                <select
-                  className="AssetQualityCheckMulti-select"
-                  value={selectedHod}
-                  onChange={(e) => setSelectedHod(e.target.value)}
-                >
-                  <option value="">Select HOD</option>
-                  {hodList.map((hod) => (
-                    <option key={hod.departmentId} value={hod.departmentId}>
-                      {hod.departmentHead}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <FloatingSelect
+                label="Signature of Department HOD"
+                value={selectedHod}
+                onChange={(e) => setSelectedHod(e.target.value)}
+                options={[
+                { value: "", label: "Select HOD" }, // Default option
+                ...hodList.map((hod) => ({
+                value: hod.departmentId,
+                label: hod.departmentHead,
+              }))
+            ]}
+          />   
+            </div>
 
               <div className="AssetQualityCheckMulti-surgeryEvents-form-row">
-                <label>Signature Of BME:</label>
-                <input type="text" value={signatureBME} onChange={(e) => setSignatureBME(e.target.value)} />
+                <FloatingInput
+                label={"Signature Of BME"}
+                type="text" value={signatureBME} onChange={(e) => setSignatureBME(e.target.value)}
+                />
+               
               </div>
             </div>
           </div>
@@ -261,21 +270,19 @@ const AssetQualityCheckMulti = () => {
                     </td>
                     <td>{row.sn}</td>
                     <td>
-                      <select
-                        className="AssetQualityCheckMulti-select"
-                        value={row.equipmentMasterId}
-                        onChange={(e) => handleEquipmentChange(index, e.target.value)}
-                      >
-                        <option value="">Select Equipment</option>
-                        {equipmentList.map((equipment) => (
-                          <option
-                            key={equipment.equipmentMasterId}
-                            value={equipment.equipmentMasterId}
-                          >
-                            {equipment.equipmentName}
-                          </option>
-                        ))}
-                      </select>
+                    <FloatingSelect
+  label="Select Equipment"
+  value={row.equipmentMasterId}
+  onChange={(e) => handleEquipmentChange(index, e.target.value)}
+  options={[
+    { value: "", label: "Select Equipment" }, // Default option
+    ...equipmentList.map((equipment) => ({
+      value: equipment.equipmentMasterId,
+      label: equipment.equipmentName,
+    }))
+  ]}
+/>
+
                     </td>
                     <td>{row.assetNo}</td>
                     <td>{row.equipmentNo}</td>

@@ -16,10 +16,7 @@
     font-size: var(--heading-font);
 }
 
-.SecurityGatePassOut-surgeryEvents-checkbox-label {
-    font-weight: normal;
-    margin-left: 4px;
-}
+
 
 .SecurityGatePassOut-surgeryEvents-content-wrapper {
     display: flex;
@@ -58,23 +55,6 @@
     font-size: var(--font-size);
 }
 
-.SecurityGatePassOut-surgeryEvents-form-row label {
-    min-width: 140px;
-}
-
-.SecurityGatePassOut-surgeryEvents-form-row input {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 47%;
-}
-
-.SecurityGatePassOut-surgeryEvents-form-row select {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 50%;
-}
 
 .SecurityGatePassOut-surgeryEvents-input-with-search {
     display: flex;

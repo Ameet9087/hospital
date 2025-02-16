@@ -5,6 +5,8 @@ import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns
 import { FaSearch } from 'react-icons/fa';
 import PopupTable from '../../../Admission/PopupTable';
 import { API_BASE_URL } from '../../../api/api';
+import { FloatingInput, FloatingSelect } from '../../../../FloatingInputs';
+import {toast}  from "react-toastify";
 
 const CondemnationAndDisposalPopUp = () => {
   const [activeTab, setActiveTab] = useState('proposal');
@@ -198,17 +200,18 @@ const CondemnationAndDisposalPopUp = () => {
     })
       .then((response) => {
         if (response.ok) {
-          alert('Data saved successfully!');
+          toast.success('Data saved successfully!');
           // Reset form or additional logic
         } else {
-          alert('Failed to save data!');
+          toast.error('Failed to save data!');
         }
       })
       .catch((error) => {
         console.error('Error saving data:', error);
-        alert('An error occurred while saving data!');
+        
       });
   };
+ 
 
   return (
     <div className="CondemnationAndDisposalPopUp-container">
@@ -218,26 +221,23 @@ const CondemnationAndDisposalPopUp = () => {
       <div className="CondemnationAndDisposalPopUp-form-container">
         <div className="CondemnationAndDisposalPopUp-form-section">
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Disposal No</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" />
+            <FloatingInput
+            label={"Disposal No"}type="text"/>
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Request No <span className='CondemnationAndDisposalPopUp-required'>*</span></span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" value={formFields.requestId} onChange={() => setRequestid()} />
-            <FaSearch onClick={() => setActivePopup("request")} />
+            <FloatingInput
+            label={"Request No *"}
+            type="search" value={formFields.requestId} onChange={() => setRequestid()}
+            onIconClick={() => setActivePopup("request")}/>
+           
+          
           </div>
           <div className="CondemnationAndDisposalPopUp-section-header">Equipment Information</div>
           <div className="CondemnationAndDisposalPopUp-status">
-            <label className="CondemnationAndDisposalPopUp-label">Capital Item :</label>
+            <label className="CondemnationAndDisposalPopUp-label"> Capital Item:</label>
             <div className="CondemnationAndDisposalPopUp-radio-buttons">
               <input
-                type="radio"
-                id="yes"
-                name="status"
-                value={formFields.capitalItem}
-                onChange={() => setCapitalItem('yes')} />
+                />
               <label htmlFor="yes">Yes</label>
               <input
                 type="radio"
@@ -248,109 +248,110 @@ const CondemnationAndDisposalPopUp = () => {
             </div>
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Name Of Equipment </span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" value={formFields.equipmentName}
-              onChange={(e) => setEquipmentName(e.target.value)} />
+            <FloatingInput
+            label={"Name Of Equipment "}type="text" value={formFields.equipmentName}
+            onChange={(e) => setEquipmentName(e.target.value)}/>
+            
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Asset No</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.assetNo}
-              onChange={(e) => setAssetNo(e.target.value)} />
+            <FloatingInput
+            label={"Asset No"}
+            type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.assetNo}
+              onChange={(e) => setAssetNo(e.target.value)}/>
+            
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Old Asset No</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.oldAssetNo}
-              onChange={(e) => setOldAssetNo(e.target.value)} />
+            <FloatingInput
+            label={"Old Asset No"}
+            type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.oldAssetNo}
+              onChange={(e) => setOldAssetNo(e.target.value)}/>
+          
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Equipment No</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.equipmentNo}
-              onChange={(e) => setEquipmentNo(e.target.value)} />
+            <FloatingInput
+            label={"Equipment No"}type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.equipmentNo}
+            onChange={(e) => setEquipmentNo(e.target.value)}/>
+            
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Location</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.location}
-              onChange={(e) => setLocation(e.target.value)} />
+            <FloatingInput
+            label={"Location"}type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.location}
+            onChange={(e) => setLocation(e.target.value)}/>
+            
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Serial No</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.serialNo}
-              onChange={(e) => setSerialNo(e.target.value)} />
+            <FloatingInput
+            label={"Serial No"}
+            type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.serialNo}
+              onChange={(e) => setSerialNo(e.target.value)}/>
           </div>
         </div>
         <div className="CondemnationAndDisposalPopUp-form-section">
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Make And Model</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.makeAndModel}
-              onChange={(e) => setMakeModel(e.target.value)} />
+            <FloatingInput
+            label={"Make And Model"} type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.makeAndModel}
+            onChange={(e) => setMakeModel(e.target.value)}/>
+            
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Cost Of Purchase</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.costOfPurchase}
-              onChange={(e) => setCostOfPurchase(e.target.value)} />
+            <FloatingInput
+            label={"Cost Of Purchase"}type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.costOfPurchase}
+            onChange={(e) => setCostOfPurchase(e.target.value)}/>
           </div>
           <div className="CondemnationAndDisposalPopUp-section-header">Condemnation and Disposal Details</div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Life Recommended by Manufacturer</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.lifeRecommended}
-              onChange={(e) => setLifeRecommended(e.target.value)} />
+            <FloatingInput
+            label={"Life Recommended by Manufacturer"}
+            type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.lifeRecommended}
+              onChange={(e) => setLifeRecommended(e.target.value)}/>
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Expenditure incurred on repairs	</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.repairExpenditure}
-              onChange={(e) => setExpenditureRepairs(e.target.value)} />
+            <FloatingInput
+            label={"Expenditure incurred on repairs"}
+            type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.repairExpenditure}
+              onChange={(e) => setExpenditureRepairs(e.target.value)}/>
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Total downtime in months	</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.downtimeMonths}
-              onChange={(e) => setTotalDowntime(e.target.value)} />
+            <FloatingInput
+            label={"Total downtime in months"}type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.downtimeMonths}
+            onChange={(e) => setTotalDowntime(e.target.value)}/>
+           
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Name Of Proposer</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.proposerName}
-              onChange={(e) => setProposer(e.target.value)} />
+            <FloatingInput
+            label={"Name Of Proposer"}type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.proposerName}
+            onChange={(e) => setProposer(e.target.value)}/>
+           
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Name Of Operator</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.operatorName}
-              onChange={(e) => setOperator(e.target.value)} />
+            <FloatingInput
+            label={"Name Of Operator"}type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.operatorName}
+            onChange={(e) => setOperator(e.target.value)}/>
+          
           </div>
         </div>
         <div className="CondemnationAndDisposalPopUp-form-section">
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Reason For Condemnation<span className='CondemnationAndDisposalPopUp-required'>*</span></span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" value={formFields.reasonForCondemnation}
-              onChange={() => setCondemnationReason(e.target.value)} />
+            <FloatingInput
+            label={"Reason For Condemnation *"}type="text" value={formFields.reasonForCondemnation}
+            onChange={() => setCondemnationReason(e.target.value)} />
+           
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">condemnation date<span className='CondemnationAndDisposalPopUp-required'></span></span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" value={condemnationdate}
-              onChange={() => setCondmnationdate(e.target.value)} />
+            <FloatingInput
+            label={"condemnation date"}type="text" value={condemnationdate}
+            onChange={() => setCondmnationdate(e.target.value)}/>
+            
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Name For Recommending</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.recommender}
+            <FloatingInput
+            label={"Name For Recommending"}
+            type="text" className="CondemnationAndDisposalPopUp-input-field" value={formFields.recommender}
               onChange={(e) => setRecommender(e.target.value)} />
+           
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <label className="CondemnationAndDisposalPopUp-label"></label>
-            <span className="CondemnationAndDisposalPopUp-separator"></span>
+            
             <div className="CondemnationAndDisposalPopUp-input-container">
               <div className="CondemnationAndDisposalPopUp-checkbox-group">
                 <label className="CondemnationAndDisposalPopUp-checkbox-label">
@@ -367,20 +368,22 @@ const CondemnationAndDisposalPopUp = () => {
             </div>
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Remarks</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" onChange={() => setremark(e.target.value)} />
+            <FloatingInput
+            label={"Remarks"}
+            type="text" className="CondemnationAndDisposalPopUp-input-field" onChange={() => setremark(e.target.value)}/>
+           
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Recommended By</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" />
+            <FloatingInput
+            label={"Recommended By"} type="text" className="CondemnationAndDisposalPopUp-input-field"/>
+            
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Approval By</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <input type="text" className="CondemnationAndDisposalPopUp-input-field" value={selecteddoctor?.doctorName} />
-            <FaSearch onClick={() => setActivePopup("approvedr")} />
+            <FloatingInput
+            label={"Approval By"}
+            type="text" className="CondemnationAndDisposalPopUp-input-field" value={selecteddoctor?.doctorName}
+            onIconClick={() => setActivePopup("approvedr")}/>
+            
           </div>
           <div className="CondemnationAndDisposalPopUp-section-header">Attachment</div>
           <div className="CondemnationAndDisposalPopUp-file-upload">
@@ -405,12 +408,12 @@ const CondemnationAndDisposalPopUp = () => {
             <button className="CondemnationAndDisposalPopUp-btn-secondary">Upload</button>
           </div>
           <div className="CondemnationAndDisposalPopUp-form-group">
-            <span className="CondemnationAndDisposalPopUp-label">Patient data erased or Transferred (if applicable)	</span>
-            <span className="CondemnationAndDisposalPopUp-separator">:</span>
-            <select className="CondemnationAndDisposalPopUp-input-field">
-              <option value="">Yes</option>
-              <option value="">No</option>
-            </select>
+            <FloatingSelect
+            label={"Patient data erased or Transferred (if applicable)"}
+            options={[
+            {value:"Yes" ,label:"Yes"},{value:"No",label:"No"}]}
+            />
+            
           </div>
         </div>
       </div>
@@ -463,7 +466,10 @@ const CondemnationAndDisposalPopUp = () => {
                       </button>
                     </td>
                     <td>{row.sn}</td>
-                    <td><input type="text" value={selecteddoctor.doctorName} /></td>
+                    <td>
+                      <FloatingInput
+                      label={"Doctor Name"}
+                      type="text" value={selecteddoctor.doctorName}/></td>
                   </tr>
                 ))}
               </tbody>

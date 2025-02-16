@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa"; // Using react-icons
 import { startResizing } from "../../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../../api/api";
+import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../../../FloatingInputs";
+import { toast } from "react-toastify";
 const FinalSaleByAccountsPopUp = ({ onClose }) => {
 
 
@@ -85,7 +87,7 @@ const FinalSaleByAccountsPopUp = ({ onClose }) => {
           const data = await response.json();
           const { condemnationDisposalDTO, saleDate, writeDownValue, manualSaleBillNo } = data;
 
-
+          
 
           const { equipmentMasterDTO } = condemnationDisposalDTO.condemnationDisposalRequestDTO;
 
@@ -109,7 +111,7 @@ const FinalSaleByAccountsPopUp = ({ onClose }) => {
             writeDownValue: data.writeDownValue
           });
 
-
+        
         } catch (error) {
           console.error("Error fetching equipment details:", error);
         }
@@ -140,7 +142,7 @@ const FinalSaleByAccountsPopUp = ({ onClose }) => {
       },
     };
 
-
+    
 
     try {
       const response = await fetch(`${API_BASE_URL}/final-sales`, {
@@ -153,13 +155,13 @@ const FinalSaleByAccountsPopUp = ({ onClose }) => {
 
       if (response.ok) {
         const data = await response.json();
-        alert("Final Sale added successfully");
+        toast.success("Final Sale added successfully");
       } else {
         console.error("Failed to add Final Sale:", await response.text());
-        alert("Failed to add Final Sale");
+        toast.error("Failed to add Final Sale");
       }
     } catch (error) {
-      console.error("Error adding Final Sale:", error);
+      toast.error("Error adding Final Sale:", error);
     }
   };
 
@@ -179,131 +181,181 @@ const FinalSaleByAccountsPopUp = ({ onClose }) => {
         <div className="FinalSaleByAccountsPopUp-form-row">
           <div className="FinalSaleByAccountsPopUp-form-group-1row">
 
+           
+            <div className="FinalSaleByAccountsPopUp-form-group">
+            <FloatingSelect
+  label={"Provisional Sale No"}
+  value={selectedProvisionalSale}
+  onChange={handleProvisionalSaleChange}
+  options={[
+    { value: "", label: "Select Provisional Sale No", disabled: true }, // Default option
+    ...provisionalSales.map((provisionalSale) => ({
+      value: provisionalSale.provisionalSaleId,
+      label: provisionalSale.provisionalSaleId, // Display sale ID
+    })),
+  ]}
+/>
+
+            </div>
+            <div className="FinalSaleByAccountsPopUp-form-group">
+              <FloatingInput
+              label={"Manual Sale No"}
+              name="manualSaleNo" value={formDetails.manualSaleNo} onChange={handleFormChange} type="text"/>
+              
+            </div>
+            <div className="FinalSaleByAccountsPopUp-form-group">
+              <FloatingInput
+              label={"Actual Sale Date"}
+              name="actualSaleDate" onChange={handleFormChange} type="date"/>
+              
+            </div>
+          </div>
+          <div className="FinalSaleByAccountsPopUp-form-group-1row">
 
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="provisional-sale-no">Provisional Sale No:</label>
-              <select
-                value={selectedProvisionalSale}
-                onChange={handleProvisionalSaleChange}
-              >
-                <option value="" disabled>Select Provisional Sale No</option>
-                {provisionalSales.map((provisionalSale) => (
-                  <option key={provisionalSale.provisionalSaleId} value={provisionalSale.provisionalSaleId}>
-                    {provisionalSale.provisionalSaleId}
-                  </option>
-                ))}
-              </select>
+              <FloatingInput
+              label={"Condemnation Date"}
+              value={formDetails.condemnationDate} type="text"/>
+             
             </div>
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="manual-sale-no">Manual Sale No:</label>
-              <input id="manual-sale-no" name="manualSaleNo" value={formDetails.manualSaleNo} onChange={handleFormChange} type="text" placeholder="Enter Manual Sale No" />
+              <FloatingInput
+              label={"Equipment Name"}
+              type="text" value={formDetails.equipmentName}/>
             </div>
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="actual-sale-date">Actual Sale Date:</label>
-              <input id="actual-sale-date" name="actualSaleDate" onChange={handleFormChange} type="date" />
-            </div>
-          </div>
-          <div className="FinalSaleByAccountsPopUp-form-group-1row">
-
-            <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="condemnation-date">Condemnation Date:</label>
-              <input id="condemnation-date" value={formDetails.condemnationDate} type="text" />
-            </div>
-            <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="equipment-name">Equipment Name:</label>
-              <input id="equipment-name" type="text" value={formDetails.equipmentName} placeholder="Enter Equipment Name" />
-            </div>
-            <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="asset-no">Asset No:</label>
-              <input id="asset-no" type="text" value={formDetails.assetNo} placeholder="Enter Asset No" />
+              <FloatingInput
+              label={"Asset No"}
+              type="text" value={formDetails.assetNo}/>
             </div>
           </div>
           <div className="FinalSaleByAccountsPopUp-form-group-1row">
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="serial-no">Serial No.:</label>
-              <input id="serial-no" type="text" value={formDetails.serialNo} placeholder="Enter Serial No" />
+              <FloatingInput
+              label={"Serial No"}
+              type="text" value={formDetails.serialNo}/>
+             
             </div>
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="cost">Cost:</label>
-              <input id="cost" type="number" value={formDetails.cost} placeholder="Enter Cost" />
+              <FloatingInput
+              label={"Cost"}
+              type="number" value={formDetails.cost}/>
             </div>
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="quantity">Quantity:</label>
-              <input id="quantity" type="number" placeholder="Enter Quantity" />
+              <FloatingInput
+              label={"Quantity"}
+              type="number"
+              value={formDetails.quantity}/>
+             
             </div>
           </div>
 
 
           <div className="FinalSaleByAccountsPopUp-form-group-1row">
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="model-no">Model No.:</label>
-              <input id="model-no" type="text" value={formDetails.modelNo} placeholder="Enter Model No" />
+              <FloatingInput
+              label={"Model No"}
+              type="text" value={formDetails.modelNo}/>
+            
             </div>
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="category">Category:</label>
-              <input id="category" type="text" value={formDetails.category} placeholder="Enter Category" />
+              <FloatingInput
+              label={"Category"}
+              type="text" value={formDetails.category}
+              />
+             
             </div>
 
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="depreciation">Depreciation:</label>
-              <input id="depreciation" type="number" value={formDetails.depreciation} placeholder="Enter Depreciation" />
+              <FloatingInput
+              label={"Depreciation"}
+              type="number" value={formDetails.depreciation}/>
+              
             </div>
 
           </div>
           <div className="FinalSaleByAccountsPopUp-form-group-1row">
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="responsibility-person">Responsibility Person:</label>
-              <input id="responsibility-person" type="text" value={formDetails.responsibilityPerson} placeholder="Enter Responsibility Person" />
+              <FloatingInput
+              label={"Responsibility Person"}
+              type="text" value={formDetails.responsibilityPerson}/>
+              
             </div>
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="location">Location:</label>
-              <input id="location" type="text" value={formDetails.location} placeholder="Enter Location" />
+              <FloatingInput
+              label={"Location"}
+              type="text" value={formDetails.location} />
+            
             </div>
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="company-brand">Company Brand:</label>
-              <input id="company-brand" type="text" value={formDetails.companyBrand} placeholder="Enter Company Brand" />
-            </div>
-          </div>
-          <div className="FinalSaleByAccountsPopUp-form-group-1row">
-            <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="purchase-date">Purchase Date:</label>
-              <input id="purchase-date" type="date" />
-            </div>
-            <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="purchase-amount">Purchase Amount:</label>
-              <input id="purchase-amount" type="number" placeholder="Enter Purchase Amount" />
-            </div>
-            <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="write-down-value">Write Down Value:</label>
-              <input id="write-down-value" type="number" value={formDetails.writeDownValue} placeholder="Enter Write Down Value" />
+              <FloatingInput
+              label={"Company Brand"}
+              type="text" value={formDetails.companyBrand}
+              />
+              
             </div>
           </div>
           <div className="FinalSaleByAccountsPopUp-form-group-1row">
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="buyer-name">Buyer Name:</label>
-              <input id="buyer-name" type="text" placeholder="Enter Buyer Name" />
+              <FloatingInput
+              label={"Purchase Date"}
+              type="date"
+              value={formDetails.purchaseDate}/>
+            
             </div>
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="sale-price">Sale Price:</label>
-              <input id="sale-price" name="salePrice" onChange={handleFormChange} type="number" placeholder="Enter Sale Price" />
+              <FloatingInput
+              label={"Purchase Amount"}
+              type="number"
+              value={formDetails.purchaseAmount}/>
             </div>
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="gst-amount">GST Amount:</label>
-              <input id="gst-amount" name="gstAmount" onChange={handleFormChange} type="number" placeholder="Enter GST Amount" />
+              <FloatingInput
+              label={"Write Down Value"}
+              type="number" value={formDetails.writeDownValue}/>
             </div>
           </div>
           <div className="FinalSaleByAccountsPopUp-form-group-1row">
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="net-sale-price">Net Sale Price:</label>
-              <input id="net-sale-price" name="netSalePrice" onChange={handleFormChange} type="number" placeholder="Enter Net Sale Price" />
+              <FloatingInput
+              label={"Buyer Name"}
+              type="text"
+              value={formDetails.buyerName}/>
+              
             </div>
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="profit-or-loss">Profit or Loss Amount:</label>
-              <input id="profit-or-loss" name="profitOrLoss" onChange={handleFormChange} type="number" placeholder="Enter Profit or Loss Amount" />
+              <FloatingInput
+              label={"Sale Price"}
+              name="salePrice" onChange={handleFormChange} type="number"/>
+              
             </div>
             <div className="FinalSaleByAccountsPopUp-form-group">
-              <label htmlFor="description">Description:</label>
-              <input id="description" placeholder="Enter Description" />
+              <FloatingInput
+              label={"GST Amount"}
+              name="gstAmount" onChange={handleFormChange} type="number" 
+              value={formDetails.gstAmount}/>
+             
+            </div>
+          </div>
+          <div className="FinalSaleByAccountsPopUp-form-group-1row">
+            <div className="FinalSaleByAccountsPopUp-form-group">
+              <FloatingInput
+              label={"Net Sale Price"}
+               name="netSalePrice" onChange={handleFormChange} 
+               type="number"
+               value={formDetails.netSalePrice}/>
+              
+            </div>
+            <div className="FinalSaleByAccountsPopUp-form-group">
+              <FloatingInput
+              label={"Profit or Loss Amount"}
+              name="profitOrLoss" onChange={handleFormChange} type="number"
+              value={formDetails.profitOrLoss}/>
+            </div>
+            <div className="FinalSaleByAccountsPopUp-form-group">
+              <FloatingInput
+              label={"Description"}
+              value={formDetails.description}/>
             </div>
           </div>
 

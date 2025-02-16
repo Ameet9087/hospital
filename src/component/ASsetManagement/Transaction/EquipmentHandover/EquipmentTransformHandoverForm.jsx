@@ -31,14 +31,38 @@ const EquipmentTransformHandoverForm = () => {
     setShowPopup(false);
   };
 
-  // Function for printing the table content
   const handlePrint = () => {
-    const content = tableRef.current;
-    const printWindow = window.open("", "_blank");
-    printWindow.document.write(content.outerHTML);
-    printWindow.document.close();
-    printWindow.print();
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
+
 
   // Function for exporting the table data to PDF
   const handleExport = () => {
@@ -69,7 +93,8 @@ const EquipmentTransformHandoverForm = () => {
 
   return (
     <div className="EquipmentTransformHandoverForm-container">
-      <div className="EquipmentTransformHandoverForm-addBtn">
+    <div className="equi-transform-handover-form-header">
+    <div className="EquipmentTransformHandoverForm-addBtn">
         <button
           className="EquipmentTransformHandoverForm-add-button"
           onClick={openPopup}
@@ -90,6 +115,7 @@ const EquipmentTransformHandoverForm = () => {
           </button>
         </div>
       </div>
+    </div>
       <div className="table-container">
         <table ref={tableRef}>
           <thead>

@@ -78,22 +78,6 @@
     font-size: var(--font-size);
 }
 
-.AssetQualityCheckMulti-surgeryEvents-form-row label {
-    min-width: 140px;
-}
-
-.AssetQualityCheckMulti-surgeryEvents-form-row input {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 47%;
-}
-
-.AssetQualityCheckMulti-surgeryEvents-input-with-search {
-    display: flex;
-    gap: 2px;
-}
-
 .AssetQualityCheckMulti-surgeryEvents-input-with-search input {
     padding: 5px;
     border: 1px solid gray;

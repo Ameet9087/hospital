@@ -6,6 +6,10 @@ import { faSearch, faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { API_BASE_URL } from "../../api/api";
 // import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import FloatingInput from "../../../FloatingInputs/FloatingInput";
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import { toast } from "react-toastify";
+import { layer } from "@fortawesome/fontawesome-svg-core";
 
 const KitRequestIndent = () => {
   const [indentTo, setIndentTo] = useState("");
@@ -73,10 +77,10 @@ const KitRequestIndent = () => {
         `${API_BASE_URL}/kit-request-indent`,
         payload
       );
-      alert("Kit request successfully saved!");
+      toast.success("Kit request successfully saved!");
     } catch (error) {
       console.error("Error saving kit request:", error.response?.data || error.message);
-      alert("Failed to save kit request. Please try again.");
+      toast.error("Failed to save kit request. Please try again.");
     }
   };
 
@@ -150,56 +154,55 @@ const KitRequestIndent = () => {
       <div className="KitRequestIndent-content">
         <div className="KitRequestIndent-form">
         <div className="KitRequestIndent-form-group">
-        <label>Indent To:</label>
-        <select
-          id="departmentDropdown"
-          value={indentTo}
-          onChange={(e) => {
-            const selectedDepartment = departments.find(
-              (dept) => dept.departmentName === e.target.value
-            );
-            setIndentTo(e.target.value); // Set the selected department name
-            setSelectedDepartment(selectedDepartment?.departmentId ); // Set the department ID
-          }}
-        >
-          <option value="" disabled>
-            -- Select a Department --
-          </option>
-          {departments.map((dept) => (
-            <option key={dept.departmentId} value={dept.departmentName}>
-              {dept.departmentName}
-            </option>
-          ))}
-        </select>
+        <FloatingSelect
+  label={"Indent To"}
+  value={indentTo}
+  onChange={(e) => {
+    const selectedDepartment = departments.find(
+      (dept) => dept.departmentName === e.target.value
+    );
+    setIndentTo(e.target.value); // Set the selected department name
+    setSelectedDepartment(selectedDepartment?.departmentId); // Set the department ID
+  }}
+  options={[
+    { value: "", label: "-- Select a Department --", disabled: true }, // Default disabled option
+    ...departments.map((dept) => ({
+      value: dept.departmentName,
+      label: dept.departmentName,
+    })),
+  ]}
+/>
+
+        
       </div>
 
           <div className="KitRequestIndent-form-group">
-            <label>Kit Type:</label>
-            <select
-              value={kitType}
+            <FloatingSelect
+            label={"Kit Type"}
+            value={kitType}
               onChange={(e) => setKitType(e.target.value)}
-            >
-              <option value="Sterile">Sterile</option>
-              <option value="Non-Sterile">Non-Sterile</option>
-            </select>
+              options={[{value:"Sterile",label:"Sterile"},
+                {value:"Non-Sterile" , label:"Non-Sterile"}
+              ]}/>
+            
           </div>
           <div className="KitRequestIndent-form-group">
-            <label>Priority:</label>
-            <select
-              value={priority}
+            <FloatingSelect
+            label={"Priority"}
+             value={priority}
               onChange={(e) => setPriority(e.target.value)}
-            >
-              <option value="Normal">Normal</option>
-              <option value="High">High</option>
-            </select>
+              options={[{value:"Normal",label:"Normal"},
+                {value:"High",label:"High"}
+              ]}/>
+            
           </div>
           <div className="KitRequestIndent-form-group">
-            <label>Kit Required Date:</label>
-            <input
-              type="date"
-              value={kitRequiredDate}
-              onChange={(e) => setKitRequiredDate(e.target.value)}
-            />
+            <FloatingInput
+            label={"Kit Required Date"}
+            type="date"
+            value={kitRequiredDate}
+            onChange={(e) => setKitRequiredDate(e.target.value)}/>
+            
           </div>
         </div>
       </div>
@@ -220,40 +223,40 @@ const KitRequestIndent = () => {
                 <td>{index + 1}</td>
                 <td>
                   <div className="input-with-icon">
-                    <input
-                      type="text"
+                    <FloatingInput
+                    label={"kit Name"}
+                    type="search"
                       value={item.kitName}
-                      placeholder="Select Kit"
-                      onClick={() => {
-                        setSelectedRowIndex(index); // Set the selected row index
-                        setShowModal(true); // Open the modal to select the kit
-                      }}
                       
-                    />
-                    <FontAwesomeIcon
-                      icon={faSearch}
-                      className="search-icon"
                      
-                    />
+                      onIconClick={() => {
+                        setSelectedRowIndex(index); 
+                        setShowModal(true); 
+                      }}/>
+                   
+                      
+                  
                   </div>
                 </td>
                 <td>
-                  <input
-                    type="number"
+                  <FloatingInput
+                  label={"Quantity"}
+                  type="number"
                     value={item.quantity}
                     onChange={(e) =>
                       handleItemChange(index, "quantity", e.target.value)
-                    }
-                  />
+                    }/>
+                
                 </td>
                 <td>
-                  <input
-                    type="text"
+                  <FloatingInput
+                  label={"Remarks"}
+                  type="text"
                     value={item.remarks}
                     onChange={(e) =>
                       handleItemChange(index, "remarks", e.target.value)
-                    }
-                  />
+                    }/>
+                  
                 </td>
                 <td className="kit-details-buttons">
                   <button onClick={handleAddItem}>Add</button>
@@ -277,7 +280,7 @@ const KitRequestIndent = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search Kit"
+             
             />
             <table>
               <thead>

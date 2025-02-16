@@ -17,10 +17,7 @@
     font-size: var(--heading-font);
 }
 
-.EquipmentPartsPopUp-surgeryEvents-checkbox-label {
-    font-weight: normal;
-    margin-left: 4px;
-}
+
 
 .EquipmentPartsPopUp-surgeryEvents-content-wrapper {
     display: flex;
@@ -51,6 +48,7 @@
 }
 
 .EquipmentPartsPopUp-surgeryEvents-form-row {
+    width: 300px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -59,35 +57,7 @@
     font-size: var(--font-size);
 }
 
-.EquipmentPartsPopUp-surgeryEvents-form-row label {
-    min-width: 140px;
-}
 
-.EquipmentPartsPopUp-surgeryEvents-form-row input {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 47%;
-}
-
-.EquipmentPartsPopUp-surgeryEvents-form-row select {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 50%;
-}
-
-.EquipmentPartsPopUp-surgeryEvents-input-with-search {
-    display: flex;
-    gap: 2px;
-}
-
-.EquipmentPartsPopUp-surgeryEvents-input-with-search input {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    width: 80%;
-}
 
 .EquipmentPartsPopUp-surgeryEvents-magnifier-btn {
     background: #f0f0f0;
@@ -209,12 +179,6 @@
     position: relative;
     display: flex;
     align-items: center;
-}
-
-.EquipmentPartsPopUp-surgeryEvents-form-row input {
-    width: 50%;
-    padding-right: 30px;
-    /* Add space for the icon */
 }
 
 .EquipmentPartsPopUp-surgeryEvents-form-row .input-icon {

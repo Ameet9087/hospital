@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./EquipmentTransformHandoverFormPopUp.css";
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 const EquipmentTransformHandoverFormPopUp = ({ onClose }) => {
   const [columnWidths, setColumnWidths] = useState([150, 150, 150, 150, 150]);
   const tableRef = useRef(null);
@@ -202,15 +204,15 @@ useEffect(() => {
       });
 
       if (response.ok) {
-        alert("Data submitted successfully!");
+        toast.success("Data submitted successfully!");
         onClose(); // Close the popup after successful submission
       } else {
-        console.error("Error:", response.statusText);
-        alert("Failed to submit data!");
+        toast.error("Error:", response.statusText);
+        toast.error("Failed to submit data!");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while submitting data.");
+      toast.error("An error occurred while submitting data.");
     }
   };
 
@@ -247,158 +249,155 @@ useEffect(() => {
           {/* Left Panel */}
           <div className="EquipmentTransformHandoverFormPopUp-panel left-panel">
             <div className="EquipmentTransformHandoverFormPopUp-form-group">
-              <label>Transfer/Handover No:</label>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Transfer/Handover No"}
+              type="text"
                 name="transferNo"
                 value={formData.transferNo}
                 onChange={handleChange}
-                className="EquipmentTransformHandoverFormPopUp-form-input"
-                readOnly
-              />
+                readOnly/>
+             
             </div>
 
             <div className="EquipmentTransformHandoverFormPopUp-form-group">
-              <label>Equipment Name:</label>
-              <select
-                name="equipmentName"
-                value={formData.equipmentName}
-                onChange={handleEquipmentNameChange}
-                className="EquipmentTransformHandoverFormPopUp-form-select"
-              >
-                <option value="">Select Equipment</option>
-                {equipmentNames.map((equipment) => (
-                  <option key={equipment.equipmentMasterId} value={equipment.equipmentName}>
-                    {equipment.equipmentName}
-                  </option>
-                ))}
-              </select>
+            <FloatingSelect
+  label={"Equipment Name"}
+  name="equipmentName"
+  value={formData.equipmentName}
+  onChange={handleEquipmentNameChange}
+  options={[
+    { value: "", label: "Select Equipment" }, // Default option
+    ...equipmentNames.map((equipment) => ({
+      value: equipment.equipmentName,
+      label: equipment.equipmentName,
+    })),
+  ]}
+/>
+
             </div>
 
             <div className="EquipmentTransformHandoverFormPopUp-form-group">
-              <label>Asset No:</label>
-              <input
-                type="text"
-                name="assetNo"
-                value={formData.assetNo}
-                onChange={handleChange}
-                className="EquipmentTransformHandoverFormPopUp-form-input"
-              />
+              <FloatingInput
+              label={"Asset No"}
+              type="text"
+              name="assetNo"
+              value={formData.assetNo}
+              onChange={handleChange}/>
+              
             </div>
 
             <div className="EquipmentTransformHandoverFormPopUp-form-group">
-              <label>Serial No:</label>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Serial No"}
+              type="text"
                 name="serialNo"
                 value={formData.serialNo}
-                onChange={handleChange}
-                className="EquipmentTransformHandoverFormPopUp-form-input"
-              />
+                onChange={handleChange}/>
+             
             </div>
 
             <div className="EquipmentTransformHandoverFormPopUp-form-group">
-              <label>Location:</label>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Location"}
+              type="text"
                 name="location"
                 value={formData.location}
-                onChange={handleChange}
-                className="EquipmentTransformHandoverFormPopUp-form-input"
-              />
+                onChange={handleChange}/>
+              
             </div>
           </div>
 
-          {/* Right Panel */}
+          
           <div className="EquipmentTransformHandoverFormPopUp-panel right-panel">
             <div className="EquipmentTransformHandoverFormPopUp-form-group">
-              <label>Transfer Date:</label>
-              <input
-                type="date"
+              <FloatingInput
+              label={"Transfer Date"}
+              type="date"
                 name="transferDate"
                 value={formData.transferDate}
-                onChange={handleChange}
-                className="EquipmentTransformHandoverFormPopUp-form-input"
-              />
+                onChange={handleChange}/>
+              
             </div>
 
             <div className="EquipmentTransformHandoverFormPopUp-form-group">
-              <label>Transfer Time:</label>
-              <input
-                type="time"
+              <FloatingInput
+              label={"Transfer Time"}
+              type="time"
                 name="transferTime"
                 value={formData.transferTime}
-                onChange={handleChange}
-                className="EquipmentTransformHandoverFormPopUp-form-input"
-              />
+                onChange={handleChange}/>
+              
             </div>
 
             <div className="EquipmentTransformHandoverFormPopUp-form-group">
-              <label>Employee Type:</label>
-              <select
-                name="employeeType"
+              <FloatingSelect
+              label={"Employee Type"}
+              name="employeeType"
                 value={employeeType}
                 onChange={handleEmployeeTypeChange}
-                className="EquipmentTransformHandoverFormPopUp-form-select"
-              >
-                <option value="">Select Employee Type</option>
-                <option value="Employee">Employee</option>
-                <option value="Non-Employee">Non-Employee</option>
-              </select>
+                options={[{value:"Employee",label:"Employee"},
+                  {value:"Non-Employee",label:"Non-Employee"}
+                ]}/>
             </div>
 
             <div className="EquipmentTransformHandoverFormPopUp-form-group">
-              <label>Handed By:</label>
-              {employeeType === "Employee" ? (
-                <select
-                  name="handedBy"
-                  value={formData.handedBy}
-                  onChange={handleHandedByChange}
-                  className="EquipmentTransformHandoverFormPopUp-form-select"
-                >
-                  <option value="">Select Employee</option>
-                  {employees.map((emp) => (
-                    <option key={emp.employeeId} value={emp.employeeId}>
-                      {emp.firstName}
-                    </option>
-                  ))}
-                </select>
-              ) : (
-                <input
-                  type="text"
-                  name="handedBy"
-                  value={formData.handedBy}
-                  onChange={handleHandedByChange}
-                  className="EquipmentTransformHandoverFormPopUp-form-input"
-                />
-              )}
+            <div className="EquipmentTransformHandoverFormPopUp-form-group">
+  <FloatingSelect
+    label={"Handed By"}
+    name="handedBy"
+    value={formData.handedBy}
+    onChange={handleHandedByChange}
+    options={
+      employeeType === "Employee"
+        ? [
+            { value: "", label: "Select Employee" },
+            ...employees.map((emp) => ({
+              value: emp.employeeId,
+              label: emp.firstName,
+            })),
+          ]
+        : []
+    }
+  />
+  
+  {employeeType !== "Employee" && (
+    <FloatingInput
+      type="text"
+      name="handedBy"
+      value={formData.handedBy}
+      onChange={handleHandedByChange}
+      className="EquipmentTransformHandoverFormPopUp-form-input"
+      placeholder="Enter manually"
+    />
+  )}
+</div>
+
             </div>
 
             <div className="EquipmentTransformHandoverFormPopUp-form-group">
-              <label>Location Received:</label>
-              <select
-                name="locationReceived"
-                value={formData.locationReceived}
-                onChange={handleChange}
-                className="EquipmentTransformHandoverFormPopUp-form-select"
-              >
-                <option value="">Select Location</option>
-                {locations.map((location) => (
-                  <option key={location.locId} value={location.locId}>
-                    {location.subLocation}
-                  </option>
-                ))}
-              </select>
+            <FloatingSelect
+  label={"Location Received"}
+  name="locationReceived"
+  value={formData.locationReceived}
+  onChange={handleChange}
+  options={[
+    { value: "", label: "Select Location" }, // Default option
+    ...locations.map((location) => ({
+      value: location.locId,
+      label: location.subLocation,
+    })),
+  ]}
+/>
+
             </div>
 
             <div className="EquipmentTransformHandoverFormPopUp-form-group">
-              <label>Remarks:</label>
-              <textarea
-                name="remarks"
-                value={formData.remarks}
-                onChange={handleChange}
-                className="EquipmentTransformHandoverFormPopUp-form-textarea"
-              />
+              <FloatingTextarea
+              label={"Remarks"}
+              name="remarks"
+              value={formData.remarks}
+              onChange={handleChange}/>
+             
             </div>
           </div>
         </div>
@@ -420,41 +419,44 @@ useEffect(() => {
               {formData.parts.map((part, index) => (
                 <tr key={index}>
                   <td>
-                    <input
-                      type="text"
-                      name="partName"
-                      value={part.partName}
-                      onChange={(e) => handlePartChange(index, e)}
-                    />
+                    <FloatingInput
+                    label={"Part Name"}
+                    type="text"
+                    name="partName"
+                    value={part.partName}
+                    onChange={(e) => handlePartChange(index, e)}/>
+                    
                   </td>
                   <td>
-                    <select
-                      name="standBy"
-                      value={part.standBy}
-                      onChange={(e) => handlePartChange(index, e)}
-                    >
-                      <option value="YES">Yes</option>
-                      <option value="NO">No</option>
-                    </select>
+                    <FloatingSelect
+                    label={"Stand By"}
+                    name="standBy"
+                    value={part.standBy}
+                    onChange={(e) => handlePartChange(index, e)}
+                    options={[{value:"Yes",label:"Yes"},{value:"No",label:"No"}]}/>
+                    
                   </td>
                   <td>
-                    <input
-                      type="text"
-                      name="modelNo"
-                      value={part.modelNo}
-                      onChange={(e) => handlePartChange(index, e)}
-                    />
+                    <FloatingInput
+                    label={"Model No"}
+                    type="text"
+                    name="modelNo"
+                    value={part.modelNo}
+                    onChange={(e) => handlePartChange(index, e)}/>
+                    
                   </td>
                   <td>
-                    <input
-                      type="text"
+                    <FloatingInput
+                    label={"Serial No"}
+                    type="text"
                       name="serialNo"
                       value={part.serialNo}
                       onChange={(e) => handlePartChange(index, e)}
                     />
+                   
                   </td>
                   <td>
-                    <button type="button" onClick={() => handleDeletePart(index)}>
+                    <button className="EquipmentTransformHandoverFormPopUp-button" type="button" onClick={() => handleDeletePart(index)}>
                       Delete
                     </button>
                   </td>
@@ -465,8 +467,8 @@ useEffect(() => {
         </div>
 
         <div className="button-group">
-          <button onClick={handleSave}>Save</button>
-          <button onClick={closePopup}>Close</button>
+          <button className="EquipmentTransformHandoverFormPopUp-button" onClick={handleSave}>Save</button>
+          <button className="EquipmentTransformHandoverFormPopUp-button" onClick={closePopup}>Close</button>
         </div>
       </div>
     </div>

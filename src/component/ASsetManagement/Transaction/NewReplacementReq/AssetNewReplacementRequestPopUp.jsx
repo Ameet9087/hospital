@@ -3,18 +3,12 @@ import { FaSearch } from "react-icons/fa";
 import axios from "axios"; // Axios for API calls
 import "./AssetNewReplacementRequestPopUp.css";
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 const AssetNewReplacementRequestPopUp = ({ onClose }) => {
-
-
   const [selectedTab, setSelectedTab] = useState("approveDetails");
-
-  // State for approval details
-  const [approvalDetails, setApprovalDetails] = useState([
-    { id: 1, approvedBy: "", priority: "" },
-  ]);
-
-  // State for approval status
+  const [approvalDetails, setApprovalDetails] = useState([ { id: 1, approvedBy: "", priority: "" },]);
   const [approvalStatus, setApprovalStatus] = useState([
     {
       id: 1,
@@ -25,7 +19,6 @@ const AssetNewReplacementRequestPopUp = ({ onClose }) => {
     },
   ]);
 
-  // Handle input changes for Approval Details
   const handleApprovalDetailsChange = (id, field, value) => {
     setApprovalDetails((prevDetails) =>
       prevDetails.map((detail) =>
@@ -34,7 +27,6 @@ const AssetNewReplacementRequestPopUp = ({ onClose }) => {
     );
   };
 
-  // Handle input changes for Approval Status
   const handleApprovalStatusChange = (id, field, value) => {
     setApprovalStatus((prevStatus) =>
       prevStatus.map((status) =>
@@ -42,13 +34,7 @@ const AssetNewReplacementRequestPopUp = ({ onClose }) => {
       )
     );
   };
-
-  
-
   const [equipmentData, setEquipmentData] = useState(
-    
-    
-    
     {
       entryDate: "",
       capitalItem: "",
@@ -252,12 +238,12 @@ const AssetNewReplacementRequestPopUp = ({ onClose }) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/replacements`, requestData);
     if (response.status === 200) {
-      alert("Success");
+      toast.success("Successfully data added");
       onClose(); // Close the popup after successful save
     }
   } catch (error) {
     console.error("Error saving data:", error);
-    alert("Failed to save the data. Please try again.");
+    toast.error("Failed to save the data. Please try again.");
   }
 };
 
@@ -337,216 +323,211 @@ useEffect(() => {
       {/* Left Panel */}
       <div className="AssetNewReplacementRequestPopUp-left-panel">
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Record No:</label>
-          <input
-  type="text"
+          <FloatingInput
+          label={"Record No"}
+          type="text"
   name="recordNo"
   value={equipmentData.recordNo || ""}
-  readOnly // Prevent user from editing the auto-generated record number
+  readOnly/>
+         
+        </div>
+
+        <div className="AssetNewReplacementRequestPopUp-form-group">
+        <FloatingSelect
+  label={"Equipment Name"}
+  value={equipmentData?.equipmentDTO?.equipmentMasterId || ""}
+  onChange={handleEquipmentChange}
+  options={[
+    { value: "", label: "Select Equipment" }, // Default option
+    ...equipments.map((equipment) => ({
+      value: equipment.equipmentMasterId,
+      label: equipment.equipmentName, // Display equipment name
+    })),
+  ]}
 />
+
         </div>
 
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Equipment Name:</label>
-          <select
-            value={equipmentData.equipmentDTO.equipmentMasterId || ""}
-            onChange={handleEquipmentChange}
-          >
-            <option value="">Select Equipment</option>
-            {equipments.map((equipment) => (
-              <option key={equipment.equipmentMasterId} value={equipment.equipmentMasterId}>
-                {equipment.equipmentName}
-              </option>
-            ))}
-          </select>
-          <FaSearch />
-        </div>
-
-        <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Asset No:</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Asset No"}
+          type="text"
             value={equipmentData.equipmentDTO.assetNo || ""}
-            readOnly
-          />
+            readOnly/>
+          
         </div>
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Equipment No:</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Equipment No"}
+          type="text"
             value={equipmentData.equipmentDTO.equipmentNo || ""}
-            readOnly
-          />
+            readOnly/>
+          
         </div>
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Location Path:</label>
-          <input
-            type="text"
-            value={equipmentData.equipmentDTO.locationPath}
-            onChange={(e) => setEquipmentData({...equipmentData, equipmentDTO: {...equipmentData.equipmentDTO, locationPath: e.target.value}})}
-          /> 
+          <FloatingInput
+          label={"Location Path"}
+          type="text"
+          value={equipmentData.equipmentDTO.locationPath}
+          onChange={(e) => setEquipmentData({...equipmentData, equipmentDTO: {...equipmentData.equipmentDTO, locationPath: e.target.value}})}/>
+           
 </div>
         
 
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Entry Date:</label>
-          <input
-            type="date"
-            value={equipmentData.entryDate}
-            onChange={(e) => setEquipmentData({...equipmentData, entryDate: e.target.value})}
-          />
+          <FloatingInput
+          label={"Entry Date"}
+          type="date"
+          value={equipmentData.entryDate}
+          onChange={(e) => setEquipmentData({...equipmentData, entryDate: e.target.value})}/>
+          
         </div>
 
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Procedure To Be Done:</label>
-          <input
-            type="text"
-            value={equipmentData.procedureToBeDone}
-            onChange={(e) => setEquipmentData({...equipmentData, procedureToBeDone: e.target.value})}
+          <FloatingInput
+          label={"Procedure To Be Done"}
+          type="text"
+          value={equipmentData.procedureToBeDone}
+          onChange={(e) => setEquipmentData({...equipmentData, procedureToBeDone: e.target.value})}
           />
+          
         </div>
 
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Justification For Purchase:</label>
-          <input
-            type="text"
-            value={equipmentData.justification}
-            onChange={(e) => setEquipmentData({...equipmentData, justification: e.target.value})}
-          />
+          <FloatingInput
+          label={"Justification For Purchase"}
+          type="text"
+          value={equipmentData.justification}
+          onChange={(e) => setEquipmentData({...equipmentData, justification: e.target.value})}
+        />
+          
         </div>
 
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Rate Comparison:</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Rate Comparison"}
+           type="text"
             value={equipmentData.rateComparison}
             onChange={(e) => setEquipmentData({...equipmentData, rateComparison: e.target.value})}
-          />
+         />
+        
         </div>
 
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Capital Item:</label>
-          <input
-            type="text"
-            value={equipmentData.capitalItem}
-            onChange={(e) => setEquipmentData({...equipmentData, capitalItem: e.target.value})}
-          />
+          <FloatingInput
+          label={"Capital Item"}
+          type="text"
+          value={equipmentData.capitalItem}
+          onChange={(e) => setEquipmentData({...equipmentData, capitalItem: e.target.value})}
+       />
+         
         </div>
 
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Sub locationPath:</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Sub locationPath"}
+          type="text"
             value={equipmentData.equipmentDTO.assetLocationMaster?.subLocation}
-            readOnly
-          />
-
-
+            readOnly/>
         </div>
       </div>
 
       {/* Right Panel */}
       <div className="AssetNewReplacementRequestPopUp-right-panel">
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>If Existing - Damage Report</label>
-          <input
-            type="text"
-            value={equipmentData.damageReport}
-            onChange={(e) => setEquipmentData({...equipmentData, damageReport: e.target.value})}
-          />
+          <FloatingInput
+          label={"If Existing - Damage Report"}
+          type="text"
+          value={equipmentData.damageReport}
+          onChange={(e) => setEquipmentData({...equipmentData, damageReport: e.target.value})}/>
+          
         </div>
 
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>AMS/DMS/JMS Remark:</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"AMS/DMS/JMS Remark"}
+          type="text"
             value={equipmentData.dmsRemark}
-            onChange={(e) => setEquipmentData({...equipmentData, dmsRemark: e.target.value})}
-          />
+            onChange={(e) => setEquipmentData({...equipmentData, dmsRemark: e.target.value})}/>
+          
         </div>
 
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Remarks:</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Remarks"}
+          type="text"
             value={equipmentData.remark}
-            onChange={(e) => setEquipmentData({...equipmentData, remark: e.target.value})}
-          />
+            onChange={(e) => setEquipmentData({...equipmentData, remark: e.target.value})}/>
+          
         </div>
 
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Type:</label>
-          <input
-            type="text"
-            value={equipmentData.type}
-            onChange={(e) => setEquipmentData({...equipmentData, type: e.target.value})}
-          />
+          <FloatingInput
+          label={"Type"}
+          type="text"
+          value={equipmentData.type}
+          onChange={(e) => setEquipmentData({...equipmentData, type: e.target.value})}/>
+          
         </div>
 
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Name Of Manufacturer:</label>
-          <input
-            type="text"
-            value={equipmentData.nameOfManufacturer}
-            onChange={(e) => setEquipmentData({...equipmentData, nameOfManufacturer: e.target.value})}
-          />
-        </div>
+        <FloatingSelect
+  label={"Proposal Made By"}
+  value={equipmentData?.employeeDTO?.firstName || ""}
+  onChange={(e) => {
+    const selectedEmployee = employees.find(emp => emp.firstName === e.target.value);
+    if (selectedEmployee) {
+      setEquipmentData((prevData) => ({
+        ...prevData,
+        employeeDTO: {
+          ...prevData.employeeDTO,
+          firstName: selectedEmployee.firstName,
+          employeeId: selectedEmployee.employeeId, // Optionally save employee ID if needed
+        }
+      }));
+    }
+  }}
+  options={[
+    { value: "", label: "Select an employee" }, // Default option
+    ...employees.map((employee) => ({
+      value: employee.firstName,
+      label: employee.firstName,
+    })),
+  ]}
+/>
 
-        <div className="AssetNewReplacementRequestPopUp-form-group">
-  <label>Proposal Made By:</label>
-
-  <select
-    value={equipmentData.employeeDTO.firstName}
-    onChange={(e) => {
-      const selectedEmployee = employees.find(emp => emp.firstName === e.target.value);
-      if (selectedEmployee) {
-        setEquipmentData({
-          ...equipmentData,
-          employeeDTO: {
-            ...equipmentData.employeeDTO,
-            firstName: selectedEmployee.firstName,
-            employeeId: selectedEmployee.employeeId,  // Optionally save employee ID if needed
-          }
-        });
-      }
-    }}
-  >
-    <option value="">Select an employee</option>
-    {employees.map((employee) => (
-      <option key={employee.employeeId} value={employee.firstName}>
-        {employee.firstName}
-      </option>
-    ))}
-  </select>
 </div>
 
 
 
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Doctor Name:</label>
-          <select onChange={handleChange}>
-  {doctors.map((doctor) => (
-    <option key={doctor.doctorId} value={doctor.doctorId}>
-      {doctor.doctorName}
-    </option>
-  ))}
-</select>
-
+        <FloatingSelect
+  label={"Doctor Name"}
+  onChange={handleChange}
+  options={[
+    { value: "", label: "Select Doctor" }, // Default option
+    ...doctors.map((doctor) => ({
+      value: doctor.doctorId,
+      label: doctor.doctorName,
+    })),
+  ]}
+/>
         </div>
 
         <div className="AssetNewReplacementRequestPopUp-form-group">
-          <label>Department Name:</label> 
-          <select
-            value={equipmentData.departmentDTO.departmentId}
-            onChange={handleDepartmentChange}
-          >
-            <option value="">Select Department</option>
-            {departments.map((department) => (
-              <option key={department.departmentId} value={department.departmentId}>
-                {department.departmentName}
-              </option>
-            ))}
-          </select>
+        <FloatingSelect
+  label={"Department Name"}
+  value={equipmentData?.departmentDTO?.departmentId || ""}
+  onChange={handleDepartmentChange}
+  options={[
+    { value: "", label: "Select Department" }, // Default option
+    ...departments.map((department) => ({
+      value: department.departmentId,
+      label: department.departmentName,
+    })),
+  ]}
+/>
+
         </div>
       </div>
 
@@ -554,39 +535,39 @@ useEffect(() => {
       <div className="AssetNewReplacementRequestPopUp-right-panel">
 
       <div className="AssetNewReplacementRequestPopUp-form-group">
-        <label>Quantity:</label>
-        <input
-          type="text"
+        <FloatingInput
+        label={"Quantity"}
+        type="text"
           value={equipmentData.quantity}
-          onChange={(e) => setEquipmentData({...equipmentData, quantity: e.target.value})}
-        />
+          onChange={(e) => setEquipmentData({...equipmentData, quantity: e.target.value})}/>
+       
       </div>
 
       <div className="AssetNewReplacementRequestPopUp-form-group">
-        <label>Patient Load:</label>
-        <input
-          type="text"
+        <FloatingInput
+        label={"Patient Load"}
+        type="text"
           value={equipmentData.patientLoad}
-          onChange={(e) => setEquipmentData({...equipmentData, patientLoad: e.target.value})}
-        />
+          onChange={(e) => setEquipmentData({...equipmentData, patientLoad: e.target.value})}/>
+        
       </div>
 
       <div className="AssetNewReplacementRequestPopUp-form-group">
-        <label>MS Remarks:</label>
-        <input
-          type="text"
+        <FloatingInput
+        label={"MS Remarks"}
+        type="text"
           value={equipmentData.msRemark}
-          onChange={(e) => setEquipmentData({...equipmentData, msRemark: e.target.value})}
-        />
+          onChange={(e) => setEquipmentData({...equipmentData, msRemark: e.target.value})}/>
+        
       </div>
 
       <div className="AssetNewReplacementRequestPopUp-form-group">
-        <label>MD Remarks:</label>
-        <input
-          type="text"
+        <FloatingInput
+        label={"MD Remarks"}
+         type="text"
           value={equipmentData.mdRemark}
-          onChange={(e) => setEquipmentData({...equipmentData, mdRemark: e.target.value})}
-        />
+          onChange={(e) => setEquipmentData({...equipmentData, mdRemark: e.target.value})}/>
+       
       </div>
     </div>
 </div>
@@ -627,19 +608,18 @@ useEffect(() => {
           <tr key={detail.id}>
             <td>{detail.id}</td>
             <td>
-              <select
-                value={detail.approvedBy}
-                onChange={(e) =>
-                  handleApprovalDetailsChange(detail.id, "approvedBy", e.target.value)
-                }
-              >
-                <option value="">Select Employee</option>
-                {employees.map((employee) => (
-                  <option key={employee.employeeId} value={employee.employeeId}>
-                    {employee.firstName}
-                  </option>
-                ))}
-              </select>
+            <FloatingSelect
+  value={detail.approvedBy}
+  onChange={(e) => handleApprovalDetailsChange(detail.id, "approvedBy", e.target.value)}
+  options={[
+    { value: "", label: "Select Employee" }, // Default option
+    ...employees.map((employee) => ({
+      value: employee.employeeId,
+      label: employee.firstName,
+    })),
+  ]}
+/>
+
             </td>
       
           </tr>
@@ -667,40 +647,40 @@ useEffect(() => {
           <tr key={status.id}>
             <td>{status.id}</td>
             <td>
-              <select
-                value={status.approvedBy}
-                onChange={(e) =>
-                  handleApprovalStatusChange(status.id, "approvedBy", e.target.value)
-                }
-              >
-                <option value="">Select Employee</option>
-                {employees.map((employee) => (
-                  <option key={employee.employeeId} value={employee.employeeId}>
-                    {employee.firstName}
-                  </option>
-                ))}
-              </select>
-            </td>
+            <FloatingSelect
+  label={"Approve by"}
+  value={status.approvedBy}
+  onChange={(e) =>
+    handleApprovalStatusChange(status.id, "approvedBy", e.target.value)
+  }
+  options={[
+    { value: "", label: "Select Employee" }, // Default option
+    ...employees.map((employee) => ({
+      value: employee.employeeId,
+      label: employee.firstName,
+    })),
+  ]}
+/>
+           </td>
   
             <td>
-  <input
-    type="time"
+              <FloatingInput
+              label={"Approval Time"}
+              type="time"
     value={status.approvalTime || ""}
     onChange={(e) =>
       handleApprovalStatusChange(status.id, "approvalTime", e.target.value)
-    }
-    placeholder="Enter time"
-  />
+    }/>
+  
 </td>
 <td>
-  <input
-    type="date"
+  <FloatingInput
+  label={"Date"}
+   type="date"
     value={status.approvalDate || ""}
     onChange={(e) =>
       handleApprovalStatusChange(status.id, "approvalDate", e.target.value)
-    }
-    placeholder="Enter date"
-  />
+    }/>
 </td>
           </tr>
         ))}

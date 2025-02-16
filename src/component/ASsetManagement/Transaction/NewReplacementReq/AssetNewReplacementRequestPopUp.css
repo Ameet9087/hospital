@@ -1,18 +1,4 @@
-:root {
-  --sideBar-bg-color: #007973;
-  --upperBar-bg-color: #00968f;
-  --button-bg-color: #00968f;
-  --button-color: #00c9c0;
-  --background-color: #e3fffe;
-  --heading-font: 16px;
-  --font-size: 14px;
-  --button-hover-border-color: #00c9c0;
-  --button-hover-text-color: #00c9c0;
-  --button-hover-background-color: white;
-  --input-box-padding: 5px;
-}
 
-/* General Popup Container */
 .AssetNewReplacementRequestPopUp-container {
   width: 100%;
   font-family: Arial, sans-serif;
@@ -43,7 +29,7 @@
 /* Close Button Styling */
 .AssetNewReplacementRequestPopUp-close-btn {
   background-color: var(--button-bg-color);
-  color: var(--button-color);
+  color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -63,7 +49,19 @@
 
 .AssetNewReplacementRequestPopUp-left-panel, 
 .AssetNewReplacementRequestPopUp-right-panel {
-  width: 50%;
+  width: 30%;
+  padding:5px;
+  
+}
+.AssetNewReplacementRequestPopUp-tab {
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px 12px;
+  margin-bottom: 5px;
+  margin-right:5px;
 }
 
 /* Form Group Styling */
@@ -72,33 +70,17 @@
   text-align: left;
   align-items: center;
   font-size: var(--font-size);
-  flex: 1 1 300px;
+  padding:4px
+ 
 }
 
-.AssetNewReplacementRequestPopUp-form-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: bold;
-  width: 40%;
-  margin: 11px;
-}
 
-/* Input Styling */
-.AssetNewReplacementRequestPopUp-form-group input,
-.AssetNewReplacementRequestPopUp-form-group select,
-.AssetNewReplacementRequestPopUp-form-group textarea {
-  width: 100%;
-  padding: var(--input-box-padding);
-  margin-bottom: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: var(--font-size);
-}
+
 
 /* Action Buttons */
 .AssetNewReplacementRequestPopUp-form-actions {
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   gap: 16px;
   margin-top: 16px;
 }
@@ -106,7 +88,7 @@
 .AssetNewReplacementRequestPopUp-add-btn {
   background-color: var(--button-bg-color);
   border: 1px solid var(--upperBar-bg-color);
-  color: var(--button-color);
+  color: white;
   border-radius: 5px;
   padding: 8px 16px;
   cursor: pointer;
@@ -120,13 +102,6 @@
   color: var(--button-hover-text-color);
 }
 
-/* File Upload Styling */
-.AssetNewReplacementRequestPopUp-form-group input[type="file"] {
-  border: none;
-  padding: 5px 0;
-}
-
-/* Responsive Design */
 @media (max-width: 768px) {
   .AssetNewReplacementRequestPopUp-container {
     padding: 15px;

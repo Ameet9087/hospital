@@ -1,9 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
-import './SecuritygatePassOut.css';
-import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
-import { FaSearch } from 'react-icons/fa';
-import PopupTable from '../../../Admission/PopupTable';
-import { API_BASE_URL } from '../../../api/api';
+import React, { useState, useRef, useEffect } from "react";
+import "./SecuritygatePassOut.css";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { FaSearch } from "react-icons/fa";
+import PopupTable from "../../../Admission/PopupTable";
+import { API_BASE_URL } from "../../../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../../../FloatingInputs";
 const SecurityGatePassOut = ({ bookingId }) => {
   const [id, setId] = useState(bookingId || "");
   const [gateno, setGateno] = useState([]);
@@ -14,7 +16,7 @@ const SecurityGatePassOut = ({ bookingId }) => {
   const tableRef = useRef(null);
   const gateHeading = ["gatePassOutId", "reason", "timePeriod", "authorisedBy"];
   const [gateEntryNo, setGateEntryNo] = useState("");
-  const [store, setStore] = useState('');
+  const [store, setStore] = useState("");
 
   const fetchGateNo = async () => {
     try {
@@ -81,10 +83,10 @@ const SecurityGatePassOut = ({ bookingId }) => {
 
   const handleAddRow = () => {
     const newRow = {
-      partId: '',
-      partName: '',
-      serialNo: '',
-      modelNo: '',
+      partId: "",
+      partName: "",
+      serialNo: "",
+      modelNo: "",
     };
     setPartsData([...partsData, newRow]);
   };
@@ -93,7 +95,6 @@ const SecurityGatePassOut = ({ bookingId }) => {
     const updatedRows = partsData.filter((_, index) => index !== indexToRemove);
     setPartsData(updatedRows);
   };
-
 
   const handleSave = async () => {
     const payload = {
@@ -120,13 +121,12 @@ const SecurityGatePassOut = ({ bookingId }) => {
 
       const result = await response.json();
       console.log("Data saved successfully:", result);
-      alert("Data saved successfully!");
+      toast.success("Data saved successfully!");
     } catch (error) {
       console.error("Error saving data:", error);
-      alert("Failed to save data. Please try again.");
+      toast.error("Failed to save data. Please try again.");
     }
   };
-
 
   return (
     <div className="SecurityGatePassOut-surgery-Events">
@@ -140,82 +140,137 @@ const SecurityGatePassOut = ({ bookingId }) => {
           <div className="SecurityGatePassOut-surgeryEvents-panel dis-templates">
             <div className="SecurityGatePassOut-surgeryEvents-panel-content">
               <div className="SecurityGatePassOut-surgeryEvents-form-row">
-                <label>Gatepass Out No:</label>
-                <div className="SecurityGatePassOut-surgeryEvents-input-with-search">
-                  <input type="text" value={selectedgateno.gatePassOutId || ''} readOnly />
-                  <FaSearch onClick={() => setActivePopup("gateno")} />
-                </div>
+                <FloatingInput
+                label={"Gatepass Out No"}
+                  type="text"
+                  value={selectedgateno.gatePassOutId || ""}
+                  onIconClick={() => setActivePopup("gateno")}
+                  readOnly
+                />
               </div>
             </div>
 
-            <div className="SecurityGatePassOut-surgeryEvents-panel-header">EQUIPMENT OUT DETAILS</div>
+            <div className="SecurityGatePassOut-surgeryEvents-panel-header">
+              EQUIPMENT OUT DETAILS
+            </div>
 
             <div className="SecurityGatePassOut-surgeryEvents-panel-content">
               <div className="SecurityGatePassOut-surgeryEvents-form-row">
-                <label>Store:</label>
-                <input type="text" value={store}
-                  onChange={(e) => setStore(e.target.value)} />
+                <FloatingInput
+                label={"Store"}
+                 type="text"
+                 value={store}
+                 onChange={(e) => setStore(e.target.value)}
+                
+                />
               </div>
               <div>
-                <label>Gate Entry No.</label>
-                <input type="text" value={gateEntryNo}
-                  onChange={(e) => setGateEntryNo(e.target.value)} />
+                <FloatingInput
+                label={"Gate Entry No"}
+                type="text"
+                value={gateEntryNo}
+                onChange={(e) => setGateEntryNo(e.target.value)}
+                />
               </div>
             </div>
           </div>
           <div className="SecurityGatePassOut-surgeryEvents-panel operation-details">
             <div className="SecurityGatePassOut-surgeryEvents-panel-content">
               <div className="SecurityGatePassOut-surgeryEvents-form-row">
-                <label>Recommended By:</label>
-                <input type="text" value={selectedgateno.recommendedBy || ''} readOnly />
+                <FloatingInput
+                label={"Recommended By"}
+                  type="text"
+                  value={selectedgateno.recommendedBy || ""}
+                  readOnly
+                />
               </div>
               <div className="SecurityGatePassOut-surgeryEvents-form-row">
-                <label>Reason:</label>
-                <input type="text" value={selectedgateno.reason || ''} readOnly />
+                <FloatingInput
+                label={"Reason"}
+                 type="text"
+                 value={selectedgateno.reason || ""}
+                 readOnly
+                />
               </div>
               <div className="SecurityGatePassOut-surgeryEvents-form-row">
-                <label>Mode Of Transport:</label>
-                <input type="text" value={selectedgateno.modeOfTransport || ''} readOnly />
-              </div>
-            </div>
-          </div>
-          <div className="SecurityGatePassOut-surgeryEvents-panel operation-details">
-            <div className="SecurityGatePassOut-surgeryEvents-panel-content">
-              <div className="SecurityGatePassOut-surgeryEvents-form-row">
-                <label>Type:</label>
-                <input type="text" value={selectedgateno.type || ''} readOnly />
-              </div>
-              <div className="SecurityGatePassOut-surgeryEvents-form-row">
-                <label>Gate Pass Out Date:</label>
-                <input type="date" value={selectedgateno.gatePassOutDate || ''} readOnly />
-              </div>
-              <div className="SecurityGatePassOut-surgeryEvents-form-row">
-                <label>Gate Pass Out Time:</label>
-                <input type="time" value={selectedgateno.gatePassOutTime || ''} readOnly />
-              </div>
-              <div className="SecurityGatePassOut-surgeryEvents-form-row">
-                <label>Time Period:</label>
-                <input type="text" value={selectedgateno.timePeriod || ''} readOnly />
+                <FloatingInput
+                label={"Mode Of Transport"}
+                  type="text"
+                  value={selectedgateno.modeOfTransport || ""}
+                  readOnly
+                />
               </div>
             </div>
           </div>
           <div className="SecurityGatePassOut-surgeryEvents-panel operation-details">
             <div className="SecurityGatePassOut-surgeryEvents-panel-content">
               <div className="SecurityGatePassOut-surgeryEvents-form-row">
-                <label>Prepared By:</label>
-                <input type="text" value={selectedgateno.preparedBy || ''} readOnly />
+                <FloatingInput
+                label={"Type"}
+                type="text" value={selectedgateno.type || ""} readOnly
+                />
               </div>
               <div className="SecurityGatePassOut-surgeryEvents-form-row">
-                <label>Received By:</label>
-                <input type="text" value={selectedgateno.receivedBy || ''} readOnly />
+                <FloatingInput
+                label={"Gate Pass Out Date"}
+                 type="date"
+                 value={selectedgateno.gatePassOutDate || ""}
+                 readOnly
+                />
               </div>
               <div className="SecurityGatePassOut-surgeryEvents-form-row">
-                <label>Authorised:</label>
-                <input type="text" value={selectedgateno.authorisedBy || ''} readOnly />
+                <FloatingInput
+                label={"Gate Pass Out Time"}
+                  type="time"
+                  value={selectedgateno.gatePassOutTime || ""}
+                  readOnly
+                />
               </div>
               <div className="SecurityGatePassOut-surgeryEvents-form-row">
-                <label>Remarks:</label>
-                <input type="text" value={selectedgateno.remark || ''} readOnly />
+                <FloatingInput
+                label={"Time Period"}
+                type="text"
+                value={selectedgateno.timePeriod || ""}
+                readOnly
+                />
+              </div>
+            </div>
+          </div>
+          <div className="SecurityGatePassOut-surgeryEvents-panel operation-details">
+            <div className="SecurityGatePassOut-surgeryEvents-panel-content">
+              <div className="SecurityGatePassOut-surgeryEvents-form-row">
+                <FloatingInput
+                label={"Prepared By"}
+                  type="text"
+                  value={selectedgateno.preparedBy || ""}
+                  readOnly
+                />
+              </div>
+              <div className="SecurityGatePassOut-surgeryEvents-form-row">
+                <FloatingInput
+                label={"Received By"}
+                  type="text"
+                  value={selectedgateno.receivedBy || ""}
+                  readOnly
+                
+                />
+              </div>
+              <div className="SecurityGatePassOut-surgeryEvents-form-row">
+                <FloatingInput
+                label={"Authorised"}
+                 type="text"
+                 value={selectedgateno.authorisedBy || ""}
+                 readOnly
+                
+                />
+              </div>
+              <div className="SecurityGatePassOut-surgeryEvents-form-row">
+                <FloatingInput
+                label={"Remarks"}
+                  type="text"
+                  value={selectedgateno.remark || ""}
+                  readOnly
+                />
               </div>
             </div>
           </div>
@@ -247,7 +302,10 @@ const SecurityGatePassOut = ({ bookingId }) => {
                         <span>{header}</span>
                         <div
                           className="resizer"
-                          onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
                         ></div>
                       </div>
                     </th>
@@ -285,7 +343,9 @@ const SecurityGatePassOut = ({ bookingId }) => {
           </div>
         </div>
         <div className="SecurityGatePassOut-surgeryEvents-action-buttons">
-          <button className="SecurityGatePassOut-btn-blue" onClick={handleSave}>Save</button>
+          <button className="SecurityGatePassOut-btn-blue" onClick={handleSave}>
+            Save
+          </button>
         </div>
       </div>
       {activePopup && (

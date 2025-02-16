@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import "./AddNewrecrutier.css";
+import { FloatingInput } from '../../../FloatingInputs';
 
 const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
     const [formData, setFormData] = useState({
@@ -61,138 +62,129 @@ const Updaterecruiter = ({ onClose, onSubmit, recruiter }) => {
 
             <form className="addNewrecrutier-form" onSubmit={handleSubmit}>
                 <div className="addNewrecrutier-form-row">
-
+ 
                     <div className="addNewrecrutier-form-group-1row">
-                        <div className="addNewrecrutier-form-group">
-                            <label>Recruiter Name<span>*</span></label>
-                            <input
-                                type="text"
+                      
+                            <FloatingInput
+                            label={"Recruiter Name *"}
+                            type="text"
                                 name="name"
                                 value={formData.name}
                                 onChange={handleInputChange}
                                 placeholder="Recruiter Name"
-                                required
-                            />
-                        </div>
-                        <div className="addNewrecrutier-form-group">
-                            <label>Contact Number<span>*</span></label>
-                            <input
-                                type="text"
-                                name="mobile"
-                                value={formData.mobile}
-                                onChange={handleInputChange}
-                                placeholder="Contact Number"
-                                required
-                            />
-                        </div>
+                                required/>
+                            
+                       
+                            <FloatingInput
+                            label={"Contact Number *"}
+                            type="text"
+                            name="mobile"
+                            value={formData.mobile}
+                            onChange={handleInputChange}
+                            placeholder="Contact Number"
+                            required/>
+                            
+                  
                     </div>
 
                     <div className="addNewrecrutier-form-group-1row">
-                        <div className="addNewrecrutier-form-group">
-                            <label>Email Address</label>
-                            <input
-                                type="email"
+                      
+                            <FloatingInput
+                            label={"Email Address"}
+                            type="email"
                                 name="email"
                                 value={formData.email}
                                 onChange={handleInputChange}
-                                placeholder="Email Address"
-                            />
-                        </div>
-                        <div className="addNewrecrutier-form-group">
-                            <label>Date of Joining</label>
-                            <input
-                                type="date"
+                                placeholder="Email Address"/>
+                    
+                            <FloatingInput
+                            label={"Date of Joining"}
+                            type="date"
                                 name="dateOfJoining"
                                 value={formData.dateOfJoining}
                                 onChange={handleInputChange}
-                                placeholder="Date of Joining"
-                            />
-                        </div>
+                                placeholder="Date of Joining"/>
+                     
                     </div>
 
                     <div className="addNewrecrutier-form-group-1row">
-                        <div className="addNewrecrutier-form-group">
-                            <label>Department<span>*</span></label>
-                            <input
-                                type="text"
+                      
+                            <FloatingInput
+                            label={"Department"}
+                            type="text"
                                 name="department"
                                 value={formData.department}
                                 onChange={handleInputChange}
                                 placeholder="Department"
-                                required
-                            />
-                        </div>
-                        <div className="addNewrecrutier-form-group">
-                            <label>Designation</label>
-                            <input
-                                type="text"
-                                name="designation"
-                                value={formData.designation}
-                                onChange={handleInputChange}
-                                placeholder="Designation"
-                            />
-                        </div>
+                                required/>
+                            
+                        
+                            <FloatingInput
+                            label={"Designation"}
+                            type="text"
+                            name="designation"
+                            value={formData.designation}
+                            onChange={handleInputChange}
+                            placeholder="Designation"/>
+                   
                     </div>
 
                     <div className="addNewrecrutier-form-group-1row">
-                        <div className="addNewrecrutier-form-group">
-                            <label>Employee Type<span>*</span></label>
-                            <input
-                                type="text"
+                      
+                            <FloatingInput
+                            label={"Employee Type *"}
+                            type="text"
                                 name="typeOfEmployee"
                                 value={formData.typeOfEmployee}
                                 onChange={handleInputChange}
                                 placeholder="Employee Type"
-                                required
-                            />
-                        </div>
-                        <div className="addNewrecrutier-form-group">
-                            <label>Assigned Hiring Managers</label>
-                            <input
-                                type="text"
-                                name="hiredBy"
-                                value={formData.hiredBy}
-                                onChange={handleInputChange}
-                                placeholder="Assigned Hiring Managers"
-                            />
-                        </div>
+                                required/>
+                           
+                     
+                       
+                            <FloatingInput
+                            label={"Assigned Hiring Managers"}
+                            type="text"
+                            name="hiredBy"
+                            value={formData.hiredBy}
+                            onChange={handleInputChange}
+                            placeholder="Assigned Hiring Managers"/>
+                      
                     </div>
 
                     <div className="addNewrecrutier-form-group-1row">
-                        <div className="addNewrecrutier-form-group">
-                            <label>Previous Role<span>*</span></label>
-                            <input
-                                type="text"
-                                name="previousRole"
-                                value={formData.previousRole}
-                                onChange={handleInputChange}
-                                placeholder="Previous Role"
-                                required
-                            />
-                        </div>
-                        <div className="addNewrecrutier-form-group">
-                            <label>Status</label>
-                            <input
-                                type="text"
+                      
+                            <FloatingInput
+                            label={"Previous Role"}
+                            type="text"
+                            name="previousRole"
+                            value={formData.previousRole}
+                            onChange={handleInputChange}
+                            placeholder="Previous Role"
+                            required/>
+                       
+                        
+                            <FloatingInput
+                            label={"Status"}
+                            type="text"
                                 name="status"
                                 value={formData.status}
                                 onChange={handleInputChange}
-                                placeholder="Status"
-                            />
-                        </div>
+                                placeholder="Status"/>
+                            
                     </div>
 
                     <div className="addNewrecrutier-form-group-1row">
                         <div className="addNewrecrutier-form-group">
-                            <label>Remarks<span>*</span></label>
-                            <input
-                                type="text"
+                            <FloatingInput
+                            label={"Remark"}
+                            type="text"
                                 name="remark"
                                 value={formData.remark}
                                 onChange={handleInputChange}
                                 placeholder="Remarks"
-                                required
-                            />
+                                required/>
+                           
                         </div>
                     </div>
                 </div>

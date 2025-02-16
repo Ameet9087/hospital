@@ -7,6 +7,9 @@ import Updaterecruiter from './Updaterecruiter'
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import { API_BASE_URL } from '../../api/api';
+import { FloatingInput } from '../../../FloatingInputs';
+import CustomModal from '../../../CustomModel/CustomModal';
+import { toast } from 'react-toastify';
 
 
 const RecrutierMng = () => {
@@ -29,7 +32,7 @@ const RecrutierMng = () => {
         setShowPopup(true);
     };
 
-
+   
 
     const handleClosePopup = () => {
         setShowPopup(false);
@@ -42,11 +45,11 @@ const RecrutierMng = () => {
             const response = await axios.post(`${API_BASE_URL}/recruitments/add`, formData);
             console.log('Recruiter added:', response.data);
             fetchRecruiters();
-            success('Recruitment Added Successfully');
+            toast.success('Recruitment Added Successfully');
 
         } catch (error) {
             console.error('Error adding recruiter:', error);
-            warning('Failed to Add Recruitment');
+            toast.error('Failed to Add Recruitment');
 
         }
         setShowPopup(false);
@@ -54,17 +57,17 @@ const RecrutierMng = () => {
 
     const handleUpdateSubmitButton = async (formData) => {
         console.log(formData);
-
+        
         try {
             const response = await axios.put(`${API_BASE_URL}/recruitments/update/${formData.recruitement_id}`, formData);
             fetchRecruiters();
-
-            success('Recruitment Updated Successfully');
-
+            
+            toast.success('Recruitment Updated Successfully');
+            
 
         } catch (error) {
             console.error('Error adding recruiter:', error);
-            warning('Failed to Update Recruitment');
+            toast.error('Failed to Update Recruitment');
 
         }
         setShowupdatePopup(false);
@@ -98,8 +101,8 @@ const RecrutierMng = () => {
         setSelectedRecruiter(recruiter); // Set the selected recruiter in state
         setShowupdatePopup(true);
     };
-
-
+    
+    
 
     const filteredRecruiters = recruiters.filter(recruiter =>
         recruiter.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -170,13 +173,12 @@ const RecrutierMng = () => {
             </div>
             <div className="recrutierMng-search-N-results">
                 <div className="recrutierMng-search">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="recrutierMng-searchInput"
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                    />
+                    <FloatingInput
+                    label={"Search"}
+                    value={searchQuery}
+                     type="text"
+                        onChange={handleSearchChange}/>
+                    
                 </div>
                 <div className="recrutierMng-results-info">
                     <span>Showing {currentRecruiters.length} / {filteredRecruiters.length} results</span>
@@ -253,26 +255,11 @@ const RecrutierMng = () => {
                     </tbody>
                 </table>
             </div>
-            <div className="HRpagination">
-                <button onClick={prevPage} className={currentPage === 1 ? 'disabled' : ''} disabled={currentPage === 1}>
-                    Previous
-                </button>
-                {[...Array(totalPages)].map((_, index) => (
-                    <button
-                        key={index + 1}
-                        onClick={() => setCurrentPage(index + 1)}
-                        className={currentPage === index + 1 ? 'active' : ''}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-                <button onClick={nextPage} className={currentPage === totalPages ? 'disabled' : ''} disabled={currentPage === totalPages}>
-                    Next
-                </button>
-            </div>
+            
             {showPopup && (
                 <div className="recrutierMng-modal">
                     <div className="recrutierMng-modal-content">
+                        
                         <AddNewrecrutier onClose={handleClosePopup} onSubmit={handleSubmitButton} />
                     </div>
                 </div>
@@ -284,7 +271,7 @@ const RecrutierMng = () => {
                         <Updaterecruiter
                             onClose={handleClosePopup}
                             onSubmit={handleUpdateSubmitButton}
-                            recruiter={selectedRecruiter}
+                            recruiter={selectedRecruiter} 
                         />
                     </div>
                 </div>

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./MaintenanceFileMasterPopUp.css";
 import {API_BASE_URL} from "../../../api/api"
+import { toast } from "react-toastify";
+import { FloatingInput } from "../../../../FloatingInputs";
 
-const MaintenanceFileMasterPopUp = () => {
+const MaintenanceFileMasterPopUp = ({onClose}) => {
   const [formData, setFormData] = useState({
     typeName: "",
     code: "",
@@ -42,14 +44,13 @@ const MaintenanceFileMasterPopUp = () => {
       })
       .then((data) => {
         setMessage("Data saved successfully!");
-        console.log("Saved data:", data);
+       toast.success("Saved data:", data);
         handleClear();
-        setTimeout(() => setMessage(""), 1000); // Clear the message after 3 seconds
+        onClose();
       })
       .catch((err) => {
-        console.error("Error saving data:", err);
+        toast.error("Error saving data:", err);
         setMessage("Error saving data");
-        setTimeout(() => setMessage(""), 3000);
       });
   };
 
@@ -67,41 +68,42 @@ const MaintenanceFileMasterPopUp = () => {
         <div className="MaintenanceFileMasterPopUp-form-row">
           <div className="MaintenanceFileMasterPopUp-form-group-1row">
             <div className="MaintenanceFileMasterPopUp-form-group">
-              <label htmlFor="typeName">Type Name: *</label>
-              <input
-                type="text"
-                id="typeName"
-                name="typeName"
-                placeholder="Enter Type Name"
-                value={formData.typeName}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Type Name"}
+              type="text"
+              id="typeName"
+              name="typeName"
+              placeholder="Enter Type Name"
+              value={formData.typeName}
+              onChange={handleChange}
+              required
+              
               />
             </div>
             <div className="MaintenanceFileMasterPopUp-form-group">
-              <label htmlFor="code">Code: *</label>
-              <input
-                type="text"
-                id="code"
-                name="code"
-                placeholder="Enter Code"
-                value={formData.code}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Code"}
+              type="text"
+              id="code"
+              name="code"
+              placeholder="Enter Code"
+              value={formData.code}
+              onChange={handleChange}
+              required
               />
             </div>
           </div>
 
           <div className="MaintenanceFileMasterPopUp-form-group-1row">
             <div className="MaintenanceFileMasterPopUp-form-group">
-              <label htmlFor="description">Description:</label>
-              <input
-                type="text"
-                id="description"
-                name="description"
-                placeholder="Enter Description"
-                value={formData.description}
-                onChange={handleChange}
+              <FloatingInput
+              label={"Description"}
+              type="text"
+              id="description"
+              name="description"
+              placeholder="Enter Description"
+              value={formData.description}
+              onChange={handleChange}
               />
             </div>
           </div>

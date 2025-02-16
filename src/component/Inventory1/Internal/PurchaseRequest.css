@@ -37,12 +37,10 @@
   align-items: center; /* Centers icon vertically */
   justify-content: center;
 }
-.purchase-request-select{
-  width: 250px;
-}
+
 .purchase-request-ok
 {
-  padding: 5px 10px; /* Adjust padding */
+  padding: 5px 10px; 
   border: none;
   background-color: var(--button-color); /* Light green background */
   color: white; /* Text color */
@@ -72,10 +70,7 @@
   background-color: #f9f9f9;
 }
 
-.purchase-request-create-purchase-form label {
-  display: block;
-  margin: 10px 0 5px;
-}
+
 
 .purchase-request-pur-subContent {
   width: 100%;
@@ -138,25 +133,24 @@
 }
 
 .purchase-request-date-range {
-  width: 60%;
+  width: 40%;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.purchase-request-date-range label {
-  margin-right: 10px;
-}
+
 .purchase-request-filter{
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   /* justify-content: space-around; */
 }
 .purchase-request-search-bar {
-  /* width: 40%; */
+  width: 30%;
   margin-top: 10px;
   display: flex;
   justify-content: start;
+  /* width: 100%; */
 }
 
 .purchase-request-search-bar-input {
@@ -165,6 +159,7 @@
   border: 1px solid #ddd;
   margin-right: 10px;
   flex: 1;
+  width: 200px;
 }
 
 .purchase-request-search-bar-button {
@@ -314,6 +309,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  padding: 30px;
 }
 .purchase-request-create-heading
 {

@@ -6,6 +6,9 @@ import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import { faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import FloatingInput from "../../../FloatingInputs/FloatingInput";
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import { toast } from "react-toastify";
 
 
 const CSSDKitDiscard = () => {
@@ -108,10 +111,10 @@ const CSSDKitDiscard = () => {
 
       const result = await response.json();
       console.log("Save successful:", result);
-      alert("Data saved successfully!");
+      toast.success("Data saved successfully!");
     } catch (error) {
       console.error("Error saving data:", error);
-      alert("Failed to save data!");
+      toast.error("Failed to save data!");
     }
   };
 
@@ -129,22 +132,17 @@ const CSSDKitDiscard = () => {
           />
       </header>
       <div className="cssdkitdiscard-form">
-        <label>
-          Discard Date:
-          <input
-            type="date"
+        <FloatingInput
+        label={"Discard Date"}
+        type="date"
             value={discardDate}
-            onChange={(e) => setDiscardDate(e.target.value)}
-          />
-        </label>
-        <label>
-          Remarks:
-          <input
-            type="text"
+            onChange={(e) => setDiscardDate(e.target.value)}/>
+        <FloatingInput
+        label={" Remarks"}
+        type="text"
             value={remarks}
-            onChange={(e) => setRemarks(e.target.value)}
-          />
-        </label>
+            onChange={(e) => setRemarks(e.target.value)}/>
+       
       </div>
 
       <table className="cssdkitdiscard-table" ref={tableRef}>
@@ -187,44 +185,45 @@ const CSSDKitDiscard = () => {
               </td>
               <td>{index + 1}</td>
               <td>
-                <input
-                  type="number"
+                <FloatingInput
+                label={"Kit ID"}
+                type="number"
                   value={row.kitId}
-                  onChange={(e) => updateRow(index, "kitId", e.target.value)}
-                />
+                  onChange={(e) => updateRow(index, "kitId", e.target.value)}/>
+               
               </td>
               <td>
                 <div className="input-with-icon">
-                  <input
-                    type="text"
-                    value={row.kitName}
-                    placeholder="Select Kit"
-                    onClick={() => {
-                      setSelectedRowIndex(index); // Set selected row index
-                      setShowModal(true); // Open modal to select the kit
-                    }}
-                    readOnly
-                  />
-                  <FontAwesomeIcon
-                    icon={faSearch}
-                    className="search-icon"
-                    
-                  />
+                  <FloatingInput
+                  label={"Kit Name"}
+                  value={row.kitName}
+                  onIconClick={() => {
+                    setSelectedRowIndex(index); 
+                    setShowModal(true); 
+                  }}
+                  readOnly/>
+                 
+                 
                 </div>
               </td>
               <td>
-                <input
-                  type="number"
-                  value={row.quantity}
-                  onChange={(e) => updateRow(index, "quantity", e.target.value)}
-                />
+                <FloatingInput
+                label={"Quantity"}
+                type="number"
+                value={row.quantity}
+                onChange={(e) => updateRow(index, "quantity", e.target.value)}
+             />
+                
               </td>
               <td>
-                <input
-                  type="text"
-                  value={row.remarks}
-                  onChange={(e) => updateRow(index, "remarks", e.target.value)}
-                />
+                <FloatingInput
+                label={"Remark"}
+                type="text"
+                value={row.remarks}
+                onChange={(e) => updateRow(index, "remarks", e.target.value)}
+             />
+                
+               
               </td>
             </tr>
           ))}

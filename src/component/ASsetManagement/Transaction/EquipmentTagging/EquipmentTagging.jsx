@@ -65,7 +65,7 @@ const EquipmentTagging = () => {
 
   // Handle print functionality
   // Handle print functionality
-  const handlePrint = () => {
+const handlePrint = () => {
     const printContent = tableRef.current.outerHTML;
     const newWindow = window.open("", "_blank");
     newWindow.document.write(`
@@ -95,7 +95,7 @@ const EquipmentTagging = () => {
     newWindow.document.close();
     newWindow.print();
   };
-
+  
 
   return (
     <div className="Equipment-Tagging-container">

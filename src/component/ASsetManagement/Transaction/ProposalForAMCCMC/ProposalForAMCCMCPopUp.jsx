@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./ProposalForAMCCMCPopUp.css";
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 const ProposalForAMCCMCPopUp = () => {
   const [activeTab, setActiveTab] = useState("approve-details");
@@ -123,7 +125,9 @@ const ProposalForAMCCMCPopUp = () => {
       body: JSON.stringify(requestData),
     });
     if (response.ok) {
-      alert("Date Save Successfully")
+      toast.success("Date Save Successfully")
+    }else{
+      toast.error("Data not Saved")
     }
 
     const result = await response.json();
@@ -135,113 +139,141 @@ const ProposalForAMCCMCPopUp = () => {
       <div className="ProposalForAMCCMC-body">
         <div className="ProposalForAMCCMC-grid">
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Proposal To</label>
-            <input
-              className="ProposalForAMCCMC-input"
-              type="text"
-              value={proposalTo}
-              onChange={handleProposalToChange}
-            />
+            <FloatingInput
+            label={"Proposal To"}
+            type="text"
+            value={proposalTo}
+            onChange={handleProposalToChange}/>
+            
 
           </div>
 
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Proposal Date</label>
-            <input className="ProposalForAMCCMC-input" type="date"
+            <FloatingInput
+            label={"Proposal Date"}
+            type="date"
               value={proposalDate}
-              onChange={handleProposalDateChange} />
+              onChange={handleProposalDateChange}/>
+            
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Manual Code</label>
-            <input className="ProposalForAMCCMC-input" type="text"
+            <FloatingInput
+            label={"Manual Code"}
+            type="text"
               value={proposalManualCode}
-              onChange={handleProposalManualCodeChange} />
+              onChange={handleProposalManualCodeChange}
+            />
+           
           </div>
         </div>
 
         <div className="ProposalForAMCCMC-section-header">Equipment Info</div>
         <div className="ProposalForAMCCMC-equipment-grid">
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">
-              Equipment Name<span className="required">*</span>
-            </label>
-            {/* Equipment Name Dropdown */}
-            <select className="ProposalForAMCCMC-input" onChange={handleEquipmentChange}>
-              <option value="">Select Equipment</option>
-              {equipmentOptions.map((equipment) => (
-                <option key={equipment.id} value={equipment.equipmentName}>
-                  {equipment.equipmentName}
-                </option>
-              ))}
+          <FloatingSelect
+  label={"Equipment Name *"}
+  onChange={handleEquipmentChange}
+  options={[
+    { value: "", label: "Select Equipment" }, // Default option
+    ...equipmentOptions.map((equipment) => ({
+      value: equipment.equipmentName,
+      label: equipment.equipmentName,
+    })),
+  ]}
+/>
 
-            </select>
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Type</label>
-            <input className="ProposalForAMCCMC-input" type="text" value={selectedEquipment.type || ''} readOnly />
+            <FloatingInput
+            label={"Type"}
+            type="text" value={selectedEquipment.type || ''} readOnly/>
+            
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Category</label>
-            <input className="ProposalForAMCCMC-input" type="text" value={selectedEquipment.assetCateMasterDTO?.underCategory || ''} readOnly />
+            <FloatingInput
+            label={"Category"}
+            type="text" value={selectedEquipment.assetCateMasterDTO?.underCategory || ''} readOnly/>
+            
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">salvage</label>
-            <input
-              className="ProposalForAMCCMC-input"
-              type="text"
+            <FloatingInput
+            label={"salvage"}
+             type="text"
               value={selectedEquipment.assetCateMasterDTO?.salvage || ''}
-              readOnly
-            />
+              readOnly/>
+           
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Equipment No</label>
-            <input className="ProposalForAMCCMC-input" type="text" value={selectedEquipment.equipmentNo || ''} readOnly />
+            <FloatingInput
+            label={"Equipment No"}
+            type="text" value={selectedEquipment.equipmentNo || ''} readOnly/>
+            
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Serial No</label>
-            <input className="ProposalForAMCCMC-input" type="text" value={selectedEquipment.serialNo || ''} readOnly />
+            <FloatingInput
+            label={"Serial No"}
+            type="text" value={selectedEquipment.serialNo || ''} readOnly/>
+            
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Model No</label>
-            <input className="ProposalForAMCCMC-input" type="text" value={selectedEquipment.modelNo || ''} readOnly />
+            <FloatingInput
+            label={"Model No"}
+            type="text" value={selectedEquipment.modelNo || ''} readOnly/>
+            
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Company Brand</label>
-            <input className="ProposalForAMCCMC-input" type="text" value={selectedEquipment.companyBrand || ''} readOnly />
+            <FloatingInput
+            label={"Company Brand"}
+            type="text" value={selectedEquipment.companyBrand || ''} readOnly/>
+           
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Responsibility Person</label>
-            <input className="ProposalForAMCCMC-input" type="text" value={selectedEquipment.employee?.firstName || ''} readOnly />
+            <FloatingInput
+            label={"Responsibility Person"}
+            type="text" value={selectedEquipment.employee?.firstName || ''} readOnly/>
+            
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Responsible Department</label>
-            <input className="ProposalForAMCCMC-input" type="text" value={selectedEquipment.responsibleDepartment?.departmentName || ''} readOnly />
+            <FloatingInput
+            label={"Responsible Department"}
+            type="text" value={selectedEquipment.responsibleDepartment?.departmentName || ''} readOnly />
+            
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Location</label>
-            <input className="ProposalForAMCCMC-input" type="text" value={selectedEquipment.assetLocationMaster?.subLocation || ''} readOnly />
+            <FloatingInput
+            label={"Location"}
+            type="text" value={selectedEquipment.assetLocationMaster?.subLocation || ''} readOnly/>
+           
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Location Path</label>
+            <FloatingInput
+            label={"Location Path"}/>
+            <label className="ProposalForAMCCMC-label"></label>
             <input className="ProposalForAMCCMC-input" type="text" value={selectedEquipment.locationPath || ''} readOnly />
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">
-              Supplier Name<span className="required">*</span>
-            </label>
-            <input className="ProposalForAMCCMC-input" type="text" value={selectedEquipment.vendor?.vendorName || ''} readOnly />
+            <FloatingInput
+            label={"Supplier Name *"}
+            type="text" value={selectedEquipment.vendor?.vendorName || ''} readOnly />
+           
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Date Of Purchase</label>
-            <input className="ProposalForAMCCMC-input" type="date" value={selectedEquipment.installationDate || ''} readOnly />
+            <FloatingInput
+            label={"Date Of Purchase"}
+            type="date" value={selectedEquipment.installationDate || ''} readOnly/>
+           
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Cost Of Equipment</label>
-            <input className="ProposalForAMCCMC-input" type="text" value={selectedEquipment.cost || ''} readOnly />
+            <FloatingInput
+            label={"Cost Of Equipment"}
+            type="text" value={selectedEquipment.cost || ''} readOnly/>
+            
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Asset No</label>
-            <input className="ProposalForAMCCMC-input" type="text" value={selectedEquipment.assetNo || ''} readOnly />
+            <FloatingInput
+            label={"Asset No"}
+            type="text" value={selectedEquipment.assetNo || ''} readOnly/>
+            
           </div>
         </div>
 
@@ -249,95 +281,77 @@ const ProposalForAMCCMCPopUp = () => {
         <div className="ProposalForAMCCMC-section-header">Proposal Details</div>
         <div className="ProposalForAMCCMC-proposal-details-grid">
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Contract Type</label>
-            <select
-              className="ProposalForAMCCMC-input"
-              value={contractType}
-              onChange={handleContractTypeChange}
-            >
-              <option>AMC</option>
-              <option>CMC</option>
-            </select>
+            <FloatingSelect
+            label={"Contract Type"}
+            value={contractType}
+            onChange={handleContractTypeChange}
+            options={[{value:"AMC",label:"AMC"},
+              {value:"CMC",label:"CMC"}
+            ]}/>
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Proposal From Date</label>
-            <input
-              className="ProposalForAMCCMC-input"
-              type="date"
+            <FloatingInput
+            label={"Proposal From Date"}
+            type="date"
               value={proposalFromDate}
-              onChange={handleProposalFromDateChange}
-            />
+              onChange={handleProposalFromDateChange}/>
+           
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Proposal To Date</label>
-            <input
-              className="ProposalForAMCCMC-input"
-              type="date"
-              value={proposalToDate}
-              onChange={handleProposalToDateChange}
-            />
+            <FloatingInput
+            label={"Proposal To Date"}
+            type="date"
+            value={proposalToDate}
+            onChange={handleProposalToDateChange}/>
+            
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">
-              Proposal Detail<span className="required">*</span>
-            </label>
-            <input
-              className="ProposalForAMCCMC-input"
-              type="text"
+            <FloatingInput
+            label={" Proposal Detail *"}
+            type="text"
               value={proposalDetail}
-              onChange={handleProposalDetailChange}
-            />
+              onChange={handleProposalDetailChange}/>
+            
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Last Year AMC Charges</label>
-            <input
-              className="ProposalForAMCCMC-input"
-              type="text"
+            <FloatingInput
+            label={"Last Year AMC Charges"}
+            type="text"
               value={lastYearAmcCharges}
-              onChange={handleLastYearAmcChargesChange}
-            />
+              onChange={handleLastYearAmcChargesChange}/>
+            
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">
-              Proposal Charges<span className="required">*</span>
-            </label>
-            <input
-              className="ProposalForAMCCMC-input"
-              type="text"
+            <FloatingInput
+            label={"Proposal Charges * "}
+            type="text"
               value={proposalCharges}
-              onChange={handleProposalChargesChange}
-            />
+              onChange={handleProposalChargesChange}/>
+            
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Significant Terms (If Any)</label>
-            <select
-              className="ProposalForAMCCMC-input"
-              value={significantTerms}
+            <FloatingSelect
+            label={"Significant Terms (If Any)"}
+            value={significantTerms}
               onChange={handleSignificantTermsChange}
-            >
-              <option>No</option>
-              <option>Yes</option>
-            </select>
+              options={[{value:"Yes",label:"Yes"},{value:"No",label:"No"}]}/>
+           
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">Terms</label>
-            <input
-              className="ProposalForAMCCMC-input"
-              type="text"
-              value={terms}
-              onChange={handleTermsChange}
-            />
+            <FloatingInput
+            label={"Terms"}
+            type="text"
+            value={terms}
+            onChange={handleTermsChange}/>
+           
           </div>
           <div className="ProposalForAMCCMC-label-container">
-            <label className="ProposalForAMCCMC-label">
-              Made By<span className="required">*</span>
-            </label>
-            <input
-              className="ProposalForAMCCMC-input"
-              type="text"
+            <FloatingInput
+            label={"Made By *"}
+            type="text"
               value={madeBy}
-              onChange={handleMadeByChange} // Update value manually
-            />
+              onChange={handleMadeByChange} />
+           
           </div>
 
 
@@ -360,19 +374,19 @@ const ProposalForAMCCMCPopUp = () => {
               <tr>
                 <td>1</td>
                 <td>
-                  {/* Select Dropdown for "Approval By" */}
-                  <select
-                    className="ProposalForAMCCMC-input"
-                    value={selectedDoctor}
-                    onChange={handleDoctorChange}
-                  >
-                    <option value="">Select Doctor</option>
-                    {doctors.map((doc) => (
-                      <option key={doc.doctorId} value={doc.doctorId}>
-                        {doc.doctorName}
-                      </option>
-                    ))}
-                  </select>
+                <FloatingSelect
+  label={"Doctor Name"}
+  value={selectedDoctor}
+  onChange={handleDoctorChange}
+  options={[
+    { value: "", label: "Select Doctor" }, // Default option
+    ...doctors.map((doc) => ({
+      value: doc.doctorId,
+      label: doc.doctorName,
+    })),
+  ]}
+/>
+
                 </td>
               </tr>
             </tbody>

@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./MaintenanceFileMaster.css";
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import MaintenanceFileMasterPopUp from "../MaintenanceFileMaster/MaintenanceFileMasterPopUp";
 import { API_BASE_URL } from "../../../api/api";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { FloatingInput } from "../../../../FloatingInputs";
 
 const MaintenanceTypeMaster = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -119,12 +120,12 @@ const MaintenanceTypeMaster = () => {
 
       <div className="maintenanceTypeMaster-search-N-result">
         <div className="maintenanceTypeMaster-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+          <FloatingInput
+          label={"search"}
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
         <div className="maintenanceTypeMaster-results-info">
@@ -178,7 +179,7 @@ const MaintenanceTypeMaster = () => {
 
       {showPopup && (
         <CustomModal isOpen={showPopup} onClose={closePopup}>
-          <MaintenanceFileMasterPopUp />
+          <MaintenanceFileMasterPopUp onClose={closePopup} />
         </CustomModal>
       )}
     </div>

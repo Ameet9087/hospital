@@ -4,6 +4,10 @@ import './Pending_kit_issue.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 import { API_BASE_URL } from "../../api/api";
+import FloatingInput from "../../../FloatingInputs/FloatingInput";
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import FloatingTextarea from "../../../FloatingInputs/FloatingTextarea";
+import { toast } from "react-toastify";
 
 const KitDetailsPage = () => {
   const { id } = useParams(); // Get the bubble ID from the URL
@@ -73,10 +77,10 @@ const KitDetailsPage = () => {
         throw new Error(`Failed to save data: ${response.statusText}`);
       }
 
-      alert("Data saved successfully!");
+      toast.success("Data saved successfully!");
     } catch (error) {
       console.error("Error saving data:", error);
-      alert("Failed to save data. Please try again.");
+      toast.error("Failed to save data. Please try again.");
     }
   };
 
@@ -130,30 +134,30 @@ const KitDetailsPage = () => {
 
       <div className="kit-details-header">
         <div>
-          <label>Request No:</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Request No"}
+          type="text"
             value={requestNumber || "Request Number Not Found"}
-            readOnly
-          />
+            readOnly/>
+          
         </div>
         <div>
-          <label>Issue To:</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Issue To"}
+          type="text"
             placeholder="Enter Issue To"
             value={issueTo}
-            onChange={(e) => setIssueTo(e.target.value)}
-          />
+            onChange={(e) => setIssueTo(e.target.value)}/>
+         
         </div>
         <div>
-          <label>Remarks:</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Remarks"}
+          type="text"
             placeholder="Enter Remarks"
             value={remarks}
-            onChange={(e) => setRemarks(e.target.value)}
-          />
+            onChange={(e) => setRemarks(e.target.value)}/>
+         
         </div>
       </div>
 
@@ -174,8 +178,9 @@ const KitDetailsPage = () => {
             <tr key={row.id}>
               <td>{row.id}</td>
               <td>
-                <input
-                  type="number"
+                <FloatingInput
+                label={"Kit ID"}
+                type="number"
                   placeholder="Enter Kit Id"
                   value={row.kitId}
                   onChange={(e) =>
@@ -184,12 +189,13 @@ const KitDetailsPage = () => {
                         r.id === row.id ? { ...r, kitId: e.target.value } : r
                       )
                     )
-                  }
-                />
+                  }/>
+                
               </td>
               <td>
-                <input
-                  type="text"
+                <FloatingInput
+                label={"Kit Name"}
+                type="text"
                   value={row.kitName}
                   onChange={(e) =>
                     setRows(
@@ -198,12 +204,13 @@ const KitDetailsPage = () => {
                       )
                     )
                   }
-                  readOnly
-                />
+                  readOnly/>
+                
               </td>
               <td>
-                <input
-                  type="number"
+                <FloatingInput
+                label={"Req quantity"}
+                type="number"
                   placeholder="Enter Req Qty"
                   value={row.quantity}
                   onChange={(e) =>
@@ -212,12 +219,13 @@ const KitDetailsPage = () => {
                         r.id === row.id ? { ...r, quantity: e.target.value } : r
                       )
                     )
-                  }
-                />
+                  }/>
+               
               </td>
               <td>
-                <input
-                  type="number"
+                <FloatingInput
+                label={"Issued Quantity"}
+                type="number"
                   placeholder="Enter Issued Qty"
                   value={row.issuedQty}
                   onChange={(e) =>
@@ -226,22 +234,22 @@ const KitDetailsPage = () => {
                         r.id === row.id ? { ...r, issuedQty: e.target.value } : r
                       )
                     )
-                  }
-                />
+                  }/>
+               
               </td>
               <td>
-                <input
-                  type="text"
-                  placeholder="Enter Remarks"
-                  value={row.remarks}
-                  onChange={(e) =>
-                    setRows(
-                      rows.map((r) =>
-                        r.id === row.id ? { ...r, remarks: e.target.value } : r
-                      )
+                <FloatingInput
+                label={"Remark"}
+                type="text"
+                placeholder="Enter Remarks"
+                value={row.remarks}
+                onChange={(e) =>
+                  setRows(
+                    rows.map((r) =>
+                      r.id === row.id ? { ...r, remarks: e.target.value } : r
                     )
-                  }
-                />
+                  )
+                }/>
               </td>
               <td>
                 <button onClick={handleAddRow}>Add</button>
@@ -254,16 +262,16 @@ const KitDetailsPage = () => {
 
       <div className="kit-details-buttons">
         <button onClick={handleSave}>Save</button>
-        <button>Delete</button>
-        <button>Clear</button>
+        {/* <button>Delete</button>
+        <button>Clear</button> */}
         <button onClick={handleClose}>Close</button>
-        <button>Search</button>
+        {/* <button>Search</button>
         <button>Tracking</button>
         <button>Print</button>
         <button>Version Comparison</button>
         <button>SDC</button>
         <button>Testing</button>
-        <button>Info</button>
+        <button>Info</button> */}
       </div>
     </div>
   );
