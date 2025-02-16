@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./assetCategoryMaster.css";
 import AssetCategoryMasterPopUp from "./assetCategoryMasterPopUp";
-import { startResizing } from "../../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../../../api/api";
 import { FloatingInput } from "../../../../FloatingInputs";
@@ -115,12 +115,12 @@ const NewAssetCategoryMaster = () => {
       <div className="newAssetCategoryMaster-search-N-result">
         <div className="newAssetCategoryMaster-search-bar">
           <FloatingInput
-          label={"Search"}
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          
+            label={"Search"}
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+
           />
         </div>
         <div className="newAssetCategoryMaster-results-info">
