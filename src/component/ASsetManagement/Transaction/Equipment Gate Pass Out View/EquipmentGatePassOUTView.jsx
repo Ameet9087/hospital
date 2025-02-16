@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./EquipmentGatePassOutView.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import EquipmentGatePassOutPopUp from "../EqipmentGatepassout/EquipmentGatePassOutPopUp";
@@ -171,7 +171,7 @@ const EquipmentGatePassOUTView = () => {
 
       {showPopup && (
         <CustomModal isOpen={showPopup} onClose={closePopup}>
-          <EquipmentGatePassOutPopUp/>
+          <EquipmentGatePassOutPopUp />
         </CustomModal>
       )}
     </div>

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./EquipmentGatePassinview.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import { API_BASE_URL } from "../../../OT/OTNurseNotes/api/api";
@@ -125,7 +125,7 @@ const EquipmentGatePassInView = () => {
                 "Pending Qty",
                 "Rec Qty",
                 "Remarks",
-                ].map((header, index) => (
+              ].map((header, index) => (
                 <th
                   key={index}
                   style={{ width: columnWidths[index] }}
@@ -144,7 +144,7 @@ const EquipmentGatePassInView = () => {
                 </th>
               ))}
             </tr>
-          </thead>
+          </thead>
 
           <tbody>
             {filteredBreakDownDetails.map((breakdown, index) => (
