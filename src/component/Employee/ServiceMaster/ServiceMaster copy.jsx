@@ -62,7 +62,7 @@ const ServiceMaster = () => {
   return (
       <>
     <div className="ServiceMaster-sh-container">
-      <h2 className="ServiceMaster-sh-header">Service Master</h2>
+      <h2 className="ServiceMaster-sh-header">Service Master</h2> 
       <h3>Service Details  </h3>
       <div className="ServiceMaster-sh-form">
       <div className="ServiceMaster-sh-section">

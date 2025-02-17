@@ -24,7 +24,7 @@ const ServiceForm = () => {
           className="service-ms-form-add-button"
           onClick={openPopup}
         >
-          + Add New
+          + Add New 
         </button>
       </div>
 

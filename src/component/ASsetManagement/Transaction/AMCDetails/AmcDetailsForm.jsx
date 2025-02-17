@@ -21,7 +21,8 @@ const AmcDetailsForm = () => {
         contractTo: '',
         costOfContract: '',
         contractOfAmc: '',
-        insuranceAndWarrantyDetails: ''
+        insuranceAndWarrantyDetails: '',
+        date:'',
     });
 
 
@@ -175,7 +176,7 @@ const AmcDetailsForm = () => {
 
     const fetchAccessoriesItems = async () => {
         try {
-            const response = await fetch(`${API_BASE_URL}/add-items`);
+            const response = await fetch(`${API_BASE_URL}/add-item`);
             if (!response.ok) {
                 throw new Error("Failed to Add Items");
             }
@@ -190,7 +191,7 @@ const AmcDetailsForm = () => {
 
     const fetchCoveredItems = async () => {
         try {
-            const response = await fetch(`${API_BASE_URL}/add-items`);
+            const response = await fetch(`${API_BASE_URL}/add-item`);
             if (!response.ok) {
                 throw new Error("Failed to Add Items");
             }
@@ -205,7 +206,7 @@ const AmcDetailsForm = () => {
 
     const fetchUnCoveredItems = async () => {
         try {
-            const response = await fetch(`${API_BASE_URL}/add-items`);
+            const response = await fetch(`${API_BASE_URL}/add-item`);
             if (!response.ok) {
                 throw new Error("Failed to Add Items");
             }
@@ -262,17 +263,30 @@ const AmcDetailsForm = () => {
         }
         else if (activePopup === "accessoriesItem") {
             return {
-                columns: ["addItemId", "itemName"], data: accessoriesItems
+                columns: ["addItemId", "itemName"], 
+                data: accessoriesItems.map(item => ({
+                    ...item,
+                    itemName: item.itemMaster?.itemName || "Unknown"
+                }))
             };
         }
+       
         else if (activePopup === "coveredItem") {
             return {
-                columns: ["addItemId", "itemName"], data: coverdItems
+                columns: ["addItemId", "itemName"], 
+                data: coverdItems.map(item => ({
+                    ...item,
+                    itemName: item.itemMaster?.itemName || "Unknown"
+                }))
             };
         }
         else if (activePopup === "uncoveredItem") {
             return {
-                columns: ["addItemId", "itemName"], data: unCoverdItems
+                columns: ["addItemId", "itemName"], 
+                data: unCoverdItems.map(item => ({
+                    ...item,
+                    itemName: item.itemMaster?.itemName || "Unknown"
+                }))
             };
         }
 
@@ -713,10 +727,15 @@ const AmcDetailsForm = () => {
                         <div className="AMCDetails-panel-header">Equipment Info</div>
                         <div className="AMCDetails-panel-content">
                             <div className="AMCDetails-form-row">
-                                <FloatingInput
-                                label={"Date"} 
-                                type="date"
-                                />
+                            <FloatingInput
+    label="Date"
+    type="date"
+    name="date" // Add name to match the state key
+    value={formData.date} // Bind to state
+    onChange={handleFormChange} // Handle input change
+/>
+
+                            
                                
                             </div>
                             <div className="AMCDetails-form-row">
@@ -753,10 +772,14 @@ const AmcDetailsForm = () => {
                     <div className="AMCDetails-panel dis-templates">
                         <div className="AMCDetails-panel-content">
                             <div className="AMCDetails-form-row">
-                                <FloatingInput
-                                label={"Manual No"}
-                                type="text"
-                                />
+                            <FloatingInput
+    label="Manual No"
+    type="text"
+    name="manualContractNo"  // Name should match the state key
+    value={formData.manualContractNo}  // Bind value to state
+    onChange={handleFormChange}  // Handle input change
+/>
+
                                
                             </div>
                             <div className="AMCDetails-form-row">
@@ -867,21 +890,31 @@ const AmcDetailsForm = () => {
                             <div className="AMCDetails-form-row">
                                 <FloatingInput
                                 label={"Manual Contract No"}
-                                type="text" name='manualContractNo' onChange={handleFormChange}
+                                type="text" name='manualContractNo'
+                                value={formData.manualContractNo} onChange={handleFormChange}
                                 />
                                 
                             </div>
                             <div className="AMCDetails-form-row">
-                                <FloatingInput
-                                label={"Contract From *"}
-                                type="text" name='contractFrom' onChange={handleFormChange}/>
+                            <FloatingInput
+    label="contract From"
+    type="date"
+    name="contractFrom"  // Ensure this matches the state key
+    value={formData.contractFrom}  // Use state value instead of a hardcoded string
+    onChange={handleFormChange}  // Attach the change handler
+/>
+
                                
                             </div>
                             <div className="AMCDetails-form-row">
-                                <FloatingInput
-                                label={"Contract To"}
-                                type="text" name='contractTo' onChange={handleFormChange}
-                                />
+                            <FloatingInput
+    label="contract To "
+    type="date"
+    name="contractTo"  // Ensure this matches the state key
+    value={formData.contractTo}  // Use state value instead of a hardcoded string
+    onChange={handleFormChange}  // Attach the change handler
+/>
+
                               
                             </div>
                             <div className="AMCDetails-form-row">
@@ -894,7 +927,11 @@ const AmcDetailsForm = () => {
                             <div className="AMCDetails-form-row">
                                 <FloatingInput
                                 label={"Cost Of Contract *"}
-                                type="text" name='costOfContract' onChange={handleFormChange}/>
+                                type="number" 
+                                name='costOfContract' 
+                                value={formData.costOfContract} 
+                                onChange={handleFormChange}
+                                min={'0'}/>
                                 
                             </div>
                             <div className="AMCDetails-form-row">

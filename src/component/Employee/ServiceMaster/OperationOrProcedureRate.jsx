@@ -72,6 +72,7 @@
 import React, { useState, useRef } from "react";
 import "./ServiceRate.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { FloatingInput } from "../../../FloatingInputs";
 
 function OperationOrProcedureRate({ rates, onRateChange }) {
   const [rows, setRows] = useState([
@@ -143,32 +144,33 @@ function OperationOrProcedureRate({ rates, onRateChange }) {
             <tr key={index}>
               <td>{row.sn}</td>
               <td>
-                <input
-                  type="text"
-                  value={row.description}
-                  onChange={(e) =>
-                    updateRow(index, "description", e.target.value)
-                  }
-                  className="Service-rate-input"
+                <FloatingInput
+                type="text"
+                value={row.description}
+                onChange={(e) =>
+                  updateRow(index, "description", e.target.value)
+                }
                 />
+                
               </td>
               <td>
-                <input
-                  type="number"
-                  value={row.percentage}
-                  onChange={(e) =>
-                    updateRow(index, "percentage", e.target.value)
-                  }
-                  className="Service-rate-input"
-                />
+                <FloatingInput
+                type="number"
+                value={row.percentage}
+                onChange={(e) =>
+                  updateRow(index, "percentage", e.target.value)
+                }
+                min={'0'}/>
+
               </td>
               <td>
-                <input
-                  type="text"
-                  value={row.drRef}
-                  onChange={(e) => updateRow(index, "drRef", e.target.value)}
-                  className="Service-rate-input"
+                <FloatingInput
+                type="text"
+                value={row.drRef}
+                onChange={(e) => updateRow(index, "drRef", e.target.value)}
+               
                 />
+                
               </td>
               <td>
                 <div className="button-container">
