@@ -188,6 +188,9 @@ const OrganisitionMasterPopup = () => {
         organisationCategory: formData.organisationCategory,
         branches: formData.branches,
         employeemandatory: formData.employeemandatory ? "Yes" : "No",
+        creditcardnumber: formData.creditcardnumber || "", // Assuming creditcardnumber is part of formData
+        cssnumber: formData.cssnumber || "", // Assuming cssnumber is part of formData
+        expirydate: formData.expirydate || "", // Assuming expirydate is part of formData
         organisationClassificationDTO: {
           classificationName:
             formData.organisationClassificationDTO.classificationName,
