@@ -24,7 +24,12 @@ const AddCurrency = ({onClose}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
-    
+     // Validate all fields
+  if (!formData.currencyCode?.trim() || !formData.description?.trim()) {
+    toast.error("Please fill in all required fields.");
+    return;
+  }
+
     try {
       const response = await axios.post(`${API_BASE_URL}/currency-codes`, formData);
       console.log('Currency added successfully:', response.data);

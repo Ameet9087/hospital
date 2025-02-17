@@ -159,12 +159,17 @@ const AddItem = ({ isOpen, onClose, terms }) => {
     e.preventDefault();
   
     // Validate required fields only when adding a new item
-    if (
-      !isEditing && // Skip validation if updating
-      (!formValues.itemName || !formValues.itemCompany?.id || !formValues.itemSubCategory?.id)
-    ) {
-      return; // Stop execution without showing an error toast
-    }
+     // Validate required fields only when adding a new item
+  if (
+    !isEditing && // Skip validation if updating
+    (!formValues.itemName?.trim() || 
+     !formValues.itemCompany?.id || 
+     !formValues.itemSubCategory?.id)
+  ) {
+    toast.error("Please fill in all required fields before submitting.");
+    return; // Stop execution and show an error message
+  }
+
   
     // Ensure correct object structure before submitting
     const itemData = {

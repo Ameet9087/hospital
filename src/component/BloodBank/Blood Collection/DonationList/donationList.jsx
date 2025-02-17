@@ -66,7 +66,7 @@ function Donarlist() {
       !formData.hemoglobinLevel ||
       isNaN(parseFloat(formData.hemoglobinLevel))
     ) {
-      alert("Hemoglobin Level must be a valid number.");
+      toast.error("Hemoglobin Level must be a valid number.");
       return;
     }
 
