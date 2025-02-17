@@ -42,6 +42,7 @@
   color: white;
   border: 1px solid var(--button-color);
   padding: 5px;
+  margin-left: 10px;
   border-radius: 5px;
   cursor: pointer;
   margin-bottom: 10px;
