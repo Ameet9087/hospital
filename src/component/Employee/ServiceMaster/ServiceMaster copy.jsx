@@ -1,6 +1,6 @@
 import React, { useState ,useRef} from "react";
 import "./ServiceMaster.css";
-import { startResizing } from '../TableHeadingResizing/resizableColumns';
+// import { startResizing } from '../TableHeadingResizing/resizableColumns';
 import ServiceRate from "./ServiceRate";
 import OperationOrProcedureRate from "./OperationOrProcedureRate";
 const ServiceMaster = () => {

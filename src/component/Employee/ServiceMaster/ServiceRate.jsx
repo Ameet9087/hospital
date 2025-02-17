@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ServiceRate.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 
 function ServiceRate({ rates, onRateChange }) {
   console.log(rates);

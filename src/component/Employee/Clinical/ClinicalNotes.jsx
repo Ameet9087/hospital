@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ClinicalNotes.css';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 
 const ClinicalNotes = () => {
-  const [columnWidths,setColumnWidths] = useState({});
-  const tableRef=useRef(null);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
   return (
     <div className="clinical-notes-container">
       <div className="clinical-notes-form-section">
         <div className='clinical-header'>
-        <h3 >Clinical Notes Variable</h3>
+          <h3 >Clinical Notes Variable</h3>
         </div>
         <div className="clinical-notes-form-group">
           <label>Display Name<span>*</span></label>
@@ -36,20 +36,20 @@ const ClinicalNotes = () => {
         </button> */}
       </div>
       <div className='clicnical-notes-span'>
-      <span>Showing 1 / 1 results</span>
+        <span>Showing 1 / 1 results</span>
 
       </div>
       {/* <div className='clinical-notes-ta'> */}
       <div className="table-container">
-      <table  ref={tableRef}>
+        <table ref={tableRef}>
           <thead>
             <tr>
               {[
-"Display Name",
-  "Field Name",
-  "Display Order",
-  "Action"  
-               ].map((header, index) => (
+                "Display Name",
+                "Field Name",
+                "Display Order",
+                "Action"
+              ].map((header, index) => (
                 <th
                   key={index}
                   style={{ width: columnWidths[index] }}
@@ -81,7 +81,7 @@ const ClinicalNotes = () => {
           </tbody>
         </table>
         <div className="clinical-notes-pagination">
-          
+
           {/* <div className="clinical-notes-pagination-buttons">
             <button>First</button>
             <button>Previous</button>

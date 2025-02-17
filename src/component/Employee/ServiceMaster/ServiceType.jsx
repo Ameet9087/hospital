@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./serviceType.css";
+import "./ServiceType.css";
 import { FloatingInput, PopupTable } from "../../../FloatingInputs";
 import CustomModal from "../../../CustomModel/CustomModal";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { toast } from "react-toastify";
 function ServiceType() {
   const [columnWidths, setColumnWidths] = useState({});

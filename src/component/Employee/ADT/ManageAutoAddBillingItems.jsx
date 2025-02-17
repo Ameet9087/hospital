@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import './ManageAutoAddBillingItems.css';
-import { startResizing } from '../../TableHeadingResizing/resizableColumns';
+import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 
 const ManageAutoAddBillingItems = () => {
   const [columnWidths, setColumnWidths] = useState({});
