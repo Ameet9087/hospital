@@ -139,6 +139,20 @@ export default function PaytypeMaster() {
     }
   };
 
+  const handleReset = () => {
+    setFormdata({
+      payTypeName: "",
+      payOrder: "",
+      activeStatus: "",
+      opdCategory: "",
+      categoryCode: "",
+      locationMasterDTO: {
+        id: selectedLocation?.id
+      }
+    });
+    setSelectedLocation(null); // Optionally reset the selected location
+  };
+  
   return (
     <>
       <div className="paytypemaster-button-container">
@@ -302,6 +316,10 @@ export default function PaytypeMaster() {
           <button className="paytypemaster-button" onClick={handleSubmit}>
             {isEditing ? "Update" : "Submit"}
           </button>
+          <button className="paytypemaster-button" onClick={handleReset}>
+  Reset
+</button>
+
         </div>
       </CustomModal>
 

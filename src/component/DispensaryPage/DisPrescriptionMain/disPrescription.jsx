@@ -19,6 +19,7 @@ import {
 } from "../../../FloatingInputs";
 
 import CustomModal from '../../../CustomModel/CustomModal';
+import { useFilter } from "../../ShortCuts/useFilter";
 const DisPrescription = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -30,6 +31,7 @@ const DisPrescription = () => {
   const [showModal, setShowModal] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
+  const [groupedPrescriptions, setGroupedPrescriptions] = useState({});
 
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
@@ -150,7 +152,7 @@ const DisPrescription = () => {
     XLSX.utils.book_append_sheet(wb, ws, "DisPrrescription"); // Appends worksheet to workbook
     XLSX.writeFile(wb, "DisPrrescription.xlsx"); // Downloads the Excel file
   };
-  // const filteredPrescription = useFilter(filteredPrescriptions, searchTerm);
+  const filteredPrescription = useFilter(filteredPrescriptions, searchTerm);
   const filteredItems = useFilter(filterByDate(prescriptions), searchTerm);
 
 
@@ -248,7 +250,7 @@ const DisPrescription = () => {
                 patient.lastName || ""
               }`.trim();
               return (
-                <tr key={index}>
+                <tr key={index}>  
                   <td>{patient.outPatientId || "Unknown"}</td>
                   <td>{patient?.patient?.firstName || "Unknown"}</td>
                   <td>{prescription.medicationName || "Unknown"}</td>

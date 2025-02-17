@@ -10,6 +10,7 @@
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+    margin-bottom: 10px;
   }
   
   .HospitalSpecialityGroup__create-btn:hover {

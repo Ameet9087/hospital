@@ -160,7 +160,7 @@ const Organisition_Master = () => {
 
       <div className="Organisition_Master-search-N-result">
         <div className="Organisition_Master-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
+         
           <input
             type="text"
             placeholder="Search..."
