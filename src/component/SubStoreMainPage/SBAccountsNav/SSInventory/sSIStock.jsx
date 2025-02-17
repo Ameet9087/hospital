@@ -19,6 +19,7 @@ import {
   FloatingSelect,
   FloatingTextarea,
 } from "../../../../FloatingInputs";
+import { useFilter } from "../../../ShortCuts/useFilter";
 function SSIStock() {
   const { store } = useParams();
   const [activeTab, setActiveTab] = useState("Stock");
@@ -28,7 +29,7 @@ function SSIStock() {
   const [searchQuery, setSearchQuery] = useState(''); // State for search query
   const [searchTerm, setSearchTerm] = useState("");
 
-const [columnWidths, setColumnWidths] = useState({});
+  const [columnWidths, setColumnWidths] = useState({});
 
   const tableRef = useRef(null);
   // Function to export the table to Excel
@@ -163,7 +164,7 @@ const [columnWidths, setColumnWidths] = useState({});
             <div className="sSIStock-search-N-result">
               <div className="sSIStock-search-bar">
 
-                
+
                 <FloatingInput
                   label={"Search"}
                   type="search"

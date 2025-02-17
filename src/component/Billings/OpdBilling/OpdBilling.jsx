@@ -307,6 +307,7 @@ const OpdBilling = () => {
     { sn: 1, Date: "", dCode: "" },
   ]);
 
+
   const handleOverallDiscountPercentChange = (e) => {
     let percent = parseFloat(e.target.value) || 0;
     percent = Math.min(percent, 100);
@@ -1318,7 +1319,7 @@ const OpdBilling = () => {
                       <div className="OpdBilling-test-search-field">
                         <FloatingSelect
                           type="search"
-                          value={serviceType}
+                          value={serviceType || row?.serviceType}
                           onChange={(e) => setServiceType(e.target.value)}
                           options={[
                             { value: "Investigation", label: "Investigation" },
@@ -1333,7 +1334,7 @@ const OpdBilling = () => {
                       <div className="OpdBilling-test-search-field">
                         <FloatingInput
                           type="search"
-                          value={selectedService?.serviceName}
+                          value={selectedService?.serviceName || row?.serviceName}
                           onIconClick={() => setActivePopup("services")}
                         />
                       </div>
@@ -1342,7 +1343,7 @@ const OpdBilling = () => {
                       <div className="OpdBilling-test-search-field">
                         <FloatingInput
                           type="search"
-                          value={selectedServiceDoctor?.firstName}
+                          value={selectedServiceDoctor?.firstName || row?.doctorName}
                           onIconClick={() => setActivePopup("serviceDoctor")}
                         />
                       </div>

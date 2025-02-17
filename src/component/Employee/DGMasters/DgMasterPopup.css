@@ -9,22 +9,6 @@
   scrollbar-width: none;
 }
 
-.dgpkg-input-with-icon {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-
-.dgpkg-magnifier-btn {
-  position: absolute;
-  right: 10px;
-  cursor: pointer;
-  font-size: 20px;
-  color: #555;
-}
-
-
 .dgpkg-EditAndDelete-container::-webkit-scrollbar {
   display: none;
 }
