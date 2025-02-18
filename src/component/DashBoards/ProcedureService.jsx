@@ -110,8 +110,8 @@ const ProcedureService = ({ setIsModalOpen, inPatientId, outPatientId }) => {
               { value: "", label: "" },
               ...(Array.isArray(availableProcedures)
                 ? availableProcedures.map((procedure) => ({
-                    value: procedure.serviceName,
-                    label: procedure.serviceName,
+                    value: procedure?.serviceName,
+                    label: procedure?.serviceName,
                   }))
                 : []),
             ]}

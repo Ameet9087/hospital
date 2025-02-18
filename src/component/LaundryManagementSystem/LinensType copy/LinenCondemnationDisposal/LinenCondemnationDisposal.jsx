@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import PopupTable from "../../../Admission/PopupTable";
 import { API_BASE_URL } from "../../../api/api";
+import { toast } from "react-toastify";
 
 const LinenCondemnationDisposal = () => {
   const [activePopup, setActivePopup] = useState(null);
@@ -146,17 +147,17 @@ const LinenCondemnationDisposal = () => {
       if (!response.ok) {
         const errorDetails = await response.text();
         console.error("Failed to save data:", errorDetails);
-        alert(`Failed to save data. Server responded with: ${response.status}`);
+        toast.error(`Failed to save data. Server responded with: ${response.status}`);
         return;
       }
 
       const result = await response.json();
       console.log("Success:", result);
-      alert("Data saved successfully!");
+      toast.success("Data saved successfully!");
 
     } catch (error) {
       console.error("Error saving data:", error);
-      alert("Failed to save data. Please check your network connection.");
+      toast.error("Failed to save data. Please check your network connection.");
     }
   };
 

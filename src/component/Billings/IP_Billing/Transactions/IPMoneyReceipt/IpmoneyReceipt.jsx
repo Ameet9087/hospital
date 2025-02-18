@@ -10,9 +10,22 @@ import {
 import { API_BASE_URL } from "../../../../api/api";
 import { text } from "@fortawesome/fontawesome-svg-core";
 import { toast } from "react-toastify";
+import CustomModal from "../../../../../CustomModel/CustomModal";
 
 const IpMoneyReceiptAdvance = () => {
   const [columnWidths, setColumnWidths] = useState({});
+  const [patients, setPatients] = useState(
+    [
+      {
+        uhid:"",
+        patientName:"",
+        IpNo: "",
+        paymentType:""
+        
+      },
+      
+    ]
+  );
   const tableRef = useRef(null);
   const [selectedIPNo, setSelectedIPNo] = useState(null);
   const [selectedPaymentMode, setSelectedPaymentMode] = useState("");
@@ -92,7 +105,6 @@ const IpMoneyReceiptAdvance = () => {
       });
     }
 
-    // Add UPI payment mode
     if (selectedPaymentMode === "upi") {
       paymentModes.push({
         modeName: "UPI",
@@ -101,11 +113,10 @@ const IpMoneyReceiptAdvance = () => {
       });
     }
 
-    // Add check payment mode
     if (selectedPaymentMode === "check") {
       paymentModes.push({
         modeName: "Check",
-        amount: paymentDetails.amount || 0, // Ensure an amount is provided
+        amount: paymentDetails.amount || 0,
         chequeDate: paymentDetails.chequeDate || "",
       });
     }
@@ -125,7 +136,7 @@ const IpMoneyReceiptAdvance = () => {
       ipAdmissionDTO: {
         ipAdmmissionId: selectedIPNo?.ipAdmmissionId || null, // Ensure it's safely initialized
       },
-      paymentModes, // Add the paymentModes array
+      paymentModes,
     };
 
     // Log the request body data to the console
@@ -189,6 +200,42 @@ const IpMoneyReceiptAdvance = () => {
   const { columns, data } = getPopupData();
   return (
     <>
+     <div>
+      <table >
+        <thead>
+          <tr>
+            <th>UHID</th>
+            <th>Patient Name</th>
+            <th>IP No</th>
+            <th>Payment Type</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {patients.length > 0 ? (
+            patients.map((patient, index) => (
+              <tr key={index}>
+                <td>{patient.uhid}</td>
+                <td>{patient.name}</td>
+                <td>{patient.ipNo}</td>
+                <td>{patient.paymentType}</td>
+                <td>
+                  <button className="IpMoneyReceiptAdvance-Edit-button">Edit</button>
+                  <button className="IpMoneyReceiptAdvance-del-button">Del</button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5" align="center">No data available</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  <CustomModal>
+    
+  </CustomModal>
       <div className="IpMoneyReceiptAdvance-event">
         <div className="IpMoneyReceiptAdvance-event-bar">
           <div className="IpMoneyReceiptAdvance-event-header">

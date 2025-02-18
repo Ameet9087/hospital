@@ -57,8 +57,9 @@
   display: flex;
   justify-content: center;
   margin-top: 10px;
+  gap: 10px;
 }
-.StaffMap-navbar-btns button {
+.StaffMap-navbar button {
   background-color: var(--button-color);
   color: var(--button-hover-background-color);
   font-size: var(--font-size);
@@ -69,7 +70,7 @@
   justify-content: center;
 }
 
-.StaffMap-navbar-btns button:hover {
+.StaffMap-navbar button:hover {
   background-color: var(--button-hover-background-color);
   color: var(--button-bg-color);
 }

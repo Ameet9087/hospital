@@ -444,7 +444,7 @@ const DoctorMaster = () => {
         },
 
         // Format location data
-        locationMasterDTOs: locationData
+        locationMasterDTO: locationData
           .filter(location => location.locationName)
           .map(location => ({
             id: location.id
@@ -500,7 +500,7 @@ const DoctorMaster = () => {
             }
           }
         );
-      } else {
+      }else {
         response = await axios.post(
           `${API_BASE_URL}/doctors`,
           formDataObj,

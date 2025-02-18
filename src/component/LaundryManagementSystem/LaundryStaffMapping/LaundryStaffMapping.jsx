@@ -101,7 +101,7 @@ const LaundryStaffMapping = () => {
 
     try {
       if (packageTableRows.length === 0) {
-        alert("No staff details to submit.");
+        toast.error("No staff details to submit.");
         return;
       }
 

@@ -111,9 +111,11 @@ const PatientDashboard = ({
   const clinicalTextareaRef = useRef(null);
 
   const handlePrint = () => {
-    const doc = new jsPDF('l', 'mm', 'a4');
+    const doc = new jsPDF("l", "mm", "a4");
     doc.setFontSize(16);
-    doc.text('Patient Report', doc.internal.pageSize.width / 2, 15, { align: 'center' });
+    doc.text("Patient Report", doc.internal.pageSize.width / 2, 15, {
+      align: "center",
+    });
 
     const currentDate = new Date().toLocaleString();
     doc.setFontSize(10);
@@ -147,7 +149,12 @@ const PatientDashboard = ({
       addTableToPDF(imagingHeaders, imagingData, "Imaging");
     }
     if (allergies?.length > 0) {
-      const allergyHeaders = ["Allergy", "Severity", "Comment", "Recorded Date"];
+      const allergyHeaders = [
+        "Allergy",
+        "Severity",
+        "Comment",
+        "Recorded Date",
+      ];
       const allergyData = allergies.map((item) => [
         item.typeOfAllergy,
         item.severity,
@@ -220,36 +227,51 @@ const PatientDashboard = ({
     );
   };
   const handleDeleteLabRequest = async (labRequestId) => {
+    console.log(labRequestId, "qqqqqqqqqqq");
     try {
       await axios.delete(`${API_BASE_URL}/lab-requests/${labRequestId}`);
-      setLabRequest(LabRequest.filter((item) => item.labRequestId !== labRequestId));
+      setLabRequest(
+        LabRequest.filter((item) => item.labRequestId !== labRequestId)
+      );
     } catch (error) {
       console.error("Error deleting lab request:", error);
     }
   };
 
-  const handleDeleteRadiology = async (imagingRequisitionId) => {
+  const handleDeleteRadiology = async (imagingId) => {
+    console.log(imagingId, "hiiii");
     try {
-      await axios.delete(`${API_BASE_URL}/imaging-requisitions/${imagingRequisitionId}`);
-      setRadiology(radiology.filter((item) => item.imagingRequisitionId !== imagingRequisitionId));
+      const response = await axios.delete(
+        `${API_BASE_URL}/imaging-requisitions/${imagingId}`
+      );
+      console.log("Delete Response:", response);
+
+      setRadiology((prevRadiology) =>
+        prevRadiology.filter(
+          (item) => item.imagingId !== imagingId
+        )
+      );
     } catch (error) {
       console.error("Error deleting radiology:", error);
     }
   };
 
-  const handleDeleteAllergy = async (allergyId) => {
+  const handleDeleteAllergy = async (allergiesId) => {
+    
     try {
-      await axios.delete(`${API_BASE_URL}/allergies/${allergyId}`);
-      setAllergies(allergies.filter((item) => item.allergyId !== allergyId));
+      await axios.delete(`${API_BASE_URL}/allergies/remove/${allergiesId}`);
+      setAllergies(allergies.filter((item) => item.allergiesId !== allergiesId));
     } catch (error) {
       console.error("Error deleting allergy:", error);
     }
   };
 
-  const handleDeleteActiveProblem = async (activeProblemId) => {
+  const handleDeleteActiveProblem = async (activeId) => {
     try {
-      await axios.delete(`${API_BASE_URL}/active-problems/${activeProblemId}`);
-      setActiveProblem(activeProblem.filter((item) => item.activeProblemId !== activeProblemId));
+      await axios.delete(`${API_BASE_URL}/active-problems/${activeId}`);
+      setActiveProblem(
+        activeProblem.filter((item) => item.activeId !== activeId)
+      );
     } catch (error) {
       console.error("Error deleting active problem:", error);
     }
@@ -258,7 +280,9 @@ const PatientDashboard = ({
   const handleDeleteMedication = async (medicationId) => {
     try {
       await axios.delete(`${API_BASE_URL}/medications/${medicationId}`);
-      setMedications(medications.filter((item) => item.medicationId !== medicationId));
+      setMedications(
+        medications.filter((item) => item.medicationId !== medicationId)
+      );
     } catch (error) {
       console.error("Error deleting medication:", error);
     }
@@ -267,7 +291,9 @@ const PatientDashboard = ({
   const handleDeleteInfusion = async (infusionId) => {
     try {
       await axios.delete(`${API_BASE_URL}/infusions/${infusionId}`);
-      setInfusion(showInfusion.filter((item) => item.infusionId !== infusionId));
+      setInfusion(
+        showInfusion.filter((item) => item.infusionId !== infusionId)
+      );
     } catch (error) {
       console.error("Error deleting infusion:", error);
     }
@@ -285,7 +311,9 @@ const PatientDashboard = ({
   const handleDeleteTreatment = async (treatmentId) => {
     try {
       await axios.delete(`${API_BASE_URL}/treatments/${treatmentId}`);
-      setTreatment(treatment.filter((item) => item.treatmentId !== treatmentId));
+      setTreatment(
+        treatment.filter((item) => item.treatmentId !== treatmentId)
+      );
     } catch (error) {
       console.error("Error deleting treatment:", error);
     }
@@ -343,6 +371,7 @@ const PatientDashboard = ({
     };
     fetchInfusions();
   }, [patient?.inPatientId, patient?.outPatientId, activeSection]);
+
   const fetchQueueData = async () => {
     try {
       const today = new Date().toISOString().split("T")[0];
@@ -379,6 +408,7 @@ const PatientDashboard = ({
     };
     fetchMedications();
   }, [activeSection, isModalOpen]);
+
   useEffect(() => {
     const fetchServices = async () => {
       let endpoint = "";
@@ -398,10 +428,11 @@ const PatientDashboard = ({
         const data = await response.json();
         console.log("Infusion data:", data);
         setServices(data);
-      } catch (error) { }
+      } catch (error) {}
     };
     fetchServices();
   }, [activeSection, isModalOpen]);
+
   useEffect(() => {
     const fetchTreatmentGive = async () => {
       let endpoint = "";
@@ -444,6 +475,7 @@ const PatientDashboard = ({
     };
     fetchVitals();
   }, [patient?.inPatientId, patient?.outPatientId, activeSection]);
+  
   useEffect(() => {
     const fetchAllergies = () => {
       let endpoint = "";
@@ -456,6 +488,7 @@ const PatientDashboard = ({
         axios
           .get(endpoint)
           .then((response) => {
+            // console.log("Allergy:", response.data);
             if (response.data.length > 0) {
               console.log(response.data);
 
@@ -492,6 +525,7 @@ const PatientDashboard = ({
     };
     fetchActiveProblems();
   }, [patient?.outPatientId, patient?.inPatientId, activeSection, isModalOpen]);
+
   useEffect(() => {
     const fetchImagingRequisitions = () => {
       let endpoint = "";
@@ -505,7 +539,7 @@ const PatientDashboard = ({
           .get(endpoint)
           .then((response) => {
             if (response.data.length > 0) {
-              console.log(response.data);
+              console.log("API Response:", response.data);
               setRadiology(response.data);
             }
           })
@@ -516,6 +550,7 @@ const PatientDashboard = ({
     };
     fetchImagingRequisitions();
   }, [patient?.outPatientId, patient?.inPatientId, activeSection, isModalOpen]);
+
   useEffect(() => {
     fetch(`${API_BASE_URL}/presenting-complaints`)
       .then((response) => {
@@ -580,6 +615,7 @@ const PatientDashboard = ({
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+
   const handleHistoryContextMenu = (event) => {
     event.preventDefault();
     const rect = historyTextareaRef.current.getBoundingClientRect();
@@ -606,6 +642,7 @@ const PatientDashboard = ({
   const handleHistoryTextareaChange = (event) => {
     setHistoryTextareaValue(event.target.value); // Update state with new textarea value
   };
+
   useEffect(() => {
     fetch(`${API_BASE_URL}/clinical-impressions`)
       .then((response) => {
@@ -661,10 +698,12 @@ const PatientDashboard = ({
       } else if (patient?.inPatientId) {
         endpoint = `${API_BASE_URL}/lab-requests/by-ipd-patient-id?ipdPatientId=${patient?.inPatientId}`;
       }
+      
       if (endpoint) {
         axios
           .get(endpoint)
           .then((response) => {
+           
             if (response.data.length > 0) {
               console.log(response.data);
               setLabRequest(response.data);
@@ -676,7 +715,8 @@ const PatientDashboard = ({
       }
     };
     fetchLabRequests();
-  }, [patient?.outPatientId, patient?.inPatientId, activeSection, isModalOpen]); // Dependencies to track patient IDs
+  }, [patient?.outPatientId, patient?.inPatientId, activeSection, isModalOpen]); 
+
   const handleSkipQueuePatient = async (nextQueue, upcomming) => {
     try {
       const skipUrl = `${API_BASE_URL}/patient-queues/patient/quit?patientQueueId=${nextQueue}`;
@@ -933,13 +973,15 @@ const PatientDashboard = ({
                 <div className="patient-Dashboard-details">
                   <span className="Patient-Dashboard-textName">
                     Name :{" "}
-                    {`${patient?.firstName ||
+                    {`${
+                      patient?.firstName ||
                       patient?.patient?.firstName ||
                       patient?.FirstName
-                      } ${patient?.lastName ||
+                    } ${
+                      patient?.lastName ||
                       patient?.patient?.lastName ||
                       patient?.patientLastName
-                      }`}
+                    }`}
                   </span>
                 </div>
               </div>
@@ -955,13 +997,15 @@ const PatientDashboard = ({
                     <div className="Patient-Dashboard-ward">
                       <span className="Patient-Dashboard-detailHeading">
                         Age/Sex :{" "}
-                        {`${patient?.age ||
+                        {`${
+                          patient?.age ||
                           patient?.patient?.age ||
                           patient?.patientAge
-                          } ${patient?.ageUnit || patient?.patient?.ageUnit}/${patient?.gender ||
+                        } ${patient?.ageUnit || patient?.patient?.ageUnit}/${
+                          patient?.gender ||
                           patient?.patient?.gender ||
                           patient?.patientGender
-                          }`}
+                        }`}
                       </span>
                     </div>
                   </>
@@ -986,15 +1030,17 @@ const PatientDashboard = ({
                       <span className="Patient-Dashboard-detailHeading">
                         Consultant:
                       </span>
-                      <span>{`${patient?.employeeDTO?.salutation ||
+                      <span>{`${
+                        patient?.employeeDTO?.salutation ||
                         ipAdmission?.admissionUnderDoctorDetail
                           ?.consultantDoctor?.salutation ||
                         patient?.doctorSalutationName
-                        } ${patient?.employeeDTO?.firstName ||
+                      } ${
+                        patient?.employeeDTO?.firstName ||
                         ipAdmission?.admissionUnderDoctorDetail
                           ?.consultantDoctor?.doctorName ||
                         patient?.doctorFirstName
-                        }`}</span>
+                      }`}</span>
                     </div>
                   </>
                 )}
@@ -1354,6 +1400,7 @@ const PatientDashboard = ({
                                   {radiology?.status === "Completed" ? (
                                     <>
                                       <button
+                                        className="Patient-Dashboard-btnAdd"
                                         onClick={() =>
                                           ShowlabReportResult(radiology)
                                         }
@@ -1367,10 +1414,22 @@ const PatientDashboard = ({
                                 </td>
                                 <td className="Patient-Dashboard-td">
                                   <div className="Patient-Dashboard-btn-delbtn">
-                                    <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                    <button
+                                      className="Patient-Dashboard-btnAdd"
+                                      handleAddClick={() =>
+                                        handleOpenModal("procedures")
+                                      }
+                                    >
                                       Edit
                                     </button>
-                                    <button className="Patient-Dashboard-btn-del" onClick={() => handleDeleteLabRequest(radiology.labRequestId)}>
+                                    <button
+                                      className="Patient-Dashboard-btn-del"
+                                      onClick={() =>
+                                        handleDeleteLabRequest(
+                                          radiology.labRequestId
+                                        )
+                                      }
+                                    >
                                       Del
                                     </button>
                                   </div>
@@ -1381,7 +1440,10 @@ const PatientDashboard = ({
                         </table>
                       </div>
                     ) : (
-                      <p>No  Previous Radiology order Found  for this patient or visit.</p>
+                      <p>
+                        No Previous Radiology order Found for this patient or
+                        visit.
+                      </p>
                     )}
                   </>
                 }
@@ -1429,7 +1491,8 @@ const PatientDashboard = ({
                                 <td className="Patient-Dashboard-td">
                                   {radiology?.status === "Completed" ? (
                                     <>
-                                      <button className="Patient-Dashboard-btnAdd"
+                                      <button
+                                        className="Patient-Dashboard-btnAdd"
                                         onClick={() =>
                                           ShowImagingReport(radiology)
                                         }
@@ -1443,10 +1506,22 @@ const PatientDashboard = ({
                                 </td>
                                 <td className="Patient-Dashboard-td">
                                   <div className="Patient-Dashboard-btn-delbtn">
-                                    <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                    <button
+                                      className="Patient-Dashboard-btnAdd"
+                                      handleAddClick={() =>
+                                        handleOpenModal("actionRecord")
+                                      }
+                                    >
                                       Edit
                                     </button>
-                                    <button className="Patient-Dashboard-btn-del" onClick={() => handleDeleteRadiology(radiology.imagingRequisitionId)}>
+                                    <button
+                                      className="Patient-Dashboard-btn-del"
+                                      onClick={() =>
+                                        handleDeleteRadiology(
+                                          radiology.imagingId
+                                        )
+                                      }
+                                    >
                                       Del
                                     </button>
                                   </div>
@@ -1507,10 +1582,20 @@ const PatientDashboard = ({
                                 </td>
                                 <td className="Patient-Dashboard-td">
                                   <div className="Patient-Dashboard-btn-delbtn">
-                                    <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                    {/* <button
+                                      className="Patient-Dashboard-btnAdd"
+                                      handleAddClick={() =>
+                                        handleOpenModal("Allergies")
+                                      }
+                                    >
                                       Edit
-                                    </button>
-                                    <button className="Patient-Dashboard-btn-del" onClick={""}>
+                                    </button> */}
+                                    <button
+                                      className="Patient-Dashboard-btn-del"
+                                      onClick={() =>
+                                        handleDeleteAllergy(active.allergiesId)
+                                      }
+                                    >
                                       Del
                                     </button>
                                   </div>
@@ -1563,10 +1648,21 @@ const PatientDashboard = ({
                                 </td>
                                 <td className="Patient-Dashboard-td">
                                   <div className="Patient-Dashboard-btn-delbtn">
-                                    <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                    {/* <button
+                                      className="Patient-Dashboard-btnAdd"
+                                      handleAddClick={() =>
+                                        handleOpenModal("procedures")
+                                      }
+                                    >
                                       Edit
-                                    </button>
-                                    <button className="Patient-Dashboard-btn-del" onClick={""}>
+                                    </button> */}
+                                    <button
+                                      className="Patient-Dashboard-btn-del"
+                                      onClick={() =>
+                                        handleDeleteActiveProblem(active.activeId
+                                        )
+                                      }
+                                    >
                                       Del
                                     </button>
                                   </div>
@@ -1610,9 +1706,7 @@ const PatientDashboard = ({
                               <th className="Patient-Dashboard-th">
                                 Last Taken
                               </th>
-                              <th className="Patient-Dashboard-th">
-                                Action
-                              </th>
+                              <th className="Patient-Dashboard-th">Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1629,10 +1723,18 @@ const PatientDashboard = ({
                                 </td>
                                 <td className="Patient-Dashboard-td">
                                   <div className="Patient-Dashboard-btn-delbtn">
-                                    <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                    {/* <button
+                                      className="Patient-Dashboard-btnAdd"
+                                      handleAddClick={() =>
+                                        handleOpenModal("procedures")
+                                      }
+                                    >
                                       Edit
-                                    </button>
-                                    <button className="Patient-Dashboard-btn-del" onClick={""}>
+                                    </button> */}
+                                    <button
+                                      className="Patient-Dashboard-btn-del"
+                                      onClick={()=>handleDeleteMedication(medication?.medicationId)}
+                                    >
                                       Del
                                     </button>
                                   </div>
@@ -1729,10 +1831,18 @@ const PatientDashboard = ({
                                 </td>
                                 <td className="Patient-Dashboard-td">
                                   <div className="Patient-Dashboard-btn-delbtn">
-                                    <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                    {/* <button
+                                      className="Patient-Dashboard-btnAdd"
+                                      handleAddClick={() =>
+                                        handleOpenModal("procedures")
+                                      }
+                                    >
                                       Edit
-                                    </button>
-                                    <button className="Patient-Dashboard-btn-del" onClick={""}>
+                                    </button> */}
+                                    <button
+                                      className="Patient-Dashboard-btn-del"
+                                      onClick={()=>handleDeleteInfusion(Infusion.infusionId)}
+                                    >
                                       Del
                                     </button>
                                   </div>
@@ -1769,9 +1879,7 @@ const PatientDashboard = ({
                               <th className="Patient-Dashboard-th">
                                 Service Name
                               </th>
-                              <th>
-                                Action
-                              </th>
+                              <th>Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1788,10 +1896,18 @@ const PatientDashboard = ({
                                   </td>
                                   <td className="Patient-Dashboard-td">
                                     <div className="Patient-Dashboard-btn-delbtn">
-                                      <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                      {/* <button
+                                        className="Patient-Dashboard-btnAdd"
+                                        handleAddClick={() =>
+                                          handleOpenModal("procedures")
+                                        }
+                                      >
                                         Edit
-                                      </button>
-                                      <button className="Patient-Dashboard-btn-del" onClick={""}>
+                                      </button> */}
+                                      <button
+                                        className="Patient-Dashboard-btn-del"
+                                        onClick={()=>handleDeleteService(service.serviceId)}
+                                      >
                                         Del
                                       </button>
                                     </div>
@@ -1830,9 +1946,7 @@ const PatientDashboard = ({
                               <th className="Patient-Dashboard-th">
                                 Treatment Descriptions
                               </th>
-                              <th className="Patient-Dashboard-th">
-                                Action
-                              </th>
+                              <th className="Patient-Dashboard-th">Action</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1849,10 +1963,18 @@ const PatientDashboard = ({
                                   </td>
                                   <td className="Patient-Dashboard-td">
                                     <div className="Patient-Dashboard-btn-delbtn">
-                                      <button className="Patient-Dashboard-btnAdd" handleAddClick={() => handleOpenModal("procedures")}>
+                                      {/* <button
+                                        className="Patient-Dashboard-btnAdd"
+                                        handleAddClick={() =>
+                                          handleOpenModal("procedures")
+                                        }
+                                      >
                                         Edit
-                                      </button>
-                                      <button className="Patient-Dashboard-btn-del" onClick={""}>
+                                      </button> */}
+                                      <button
+                                        className="Patient-Dashboard-btn-del"
+                                        onClick={()=>handleDeleteTreatment(treatment.treatmentId)}
+                                      >
                                         Del
                                       </button>
                                     </div>
@@ -1879,8 +2001,9 @@ const PatientDashboard = ({
         <div className="Patient-Dashboard-detailsBox">
           <div
             onClick={() => setActiveSection("dashboard")}
-            className={`${activeSection === "dashboard" ? "isTabActive" : ""
-              } Patient-Dashboard-boxOne`}
+            className={`${
+              activeSection === "dashboard" ? "isTabActive" : ""
+            } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Orders</span>
@@ -1889,8 +2012,9 @@ const PatientDashboard = ({
           </div>
           <div
             onClick={() => setActiveSection("vitals")}
-            className={`${activeSection === "vitals" ? "isTabActive" : ""
-              } Patient-Dashboard-boxOne`}
+            className={`${
+              activeSection === "vitals" ? "isTabActive" : ""
+            } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Vitals</span>
@@ -1901,8 +2025,9 @@ const PatientDashboard = ({
             onClick={() => {
               setActiveSection("problems");
             }}
-            className={`${activeSection === "problems" ? "isTabActive" : ""
-              } Patient-Dashboard-boxOne`}
+            className={`${
+              activeSection === "problems" ? "isTabActive" : ""
+            } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Problems</span>
@@ -1943,8 +2068,9 @@ const PatientDashboard = ({
             onClick={() => {
               setActiveSection("clinical");
             }}
-            className={`${activeSection === "clinical" ? "isTabActive" : ""
-              } Patient-Dashboard-boxOne`}
+            className={`${
+              activeSection === "clinical" ? "isTabActive" : ""
+            } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Clinical</span>
@@ -1968,8 +2094,9 @@ const PatientDashboard = ({
               onClick={() => {
                 setActiveSection("dischargeSummary");
               }}
-              className={`${activeSection === "dischargeSummary" ? "isTabActive" : ""
-                } Patient-Dashboard-boxOne`}
+              className={`${
+                activeSection === "dischargeSummary" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
             >
               <div className="Patient-Dashboard-textAndLogo">
                 <span className="Patient-Dashboard-textOne">
@@ -1983,8 +2110,9 @@ const PatientDashboard = ({
             onClick={() => {
               setActiveSection("diet");
             }}
-            className={`${activeSection === "diet" ? "isTabActive" : ""
-              } Patient-Dashboard-boxOne`}
+            className={`${
+              activeSection === "diet" ? "isTabActive" : ""
+            } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Diet Order</span>
@@ -1996,8 +2124,9 @@ const PatientDashboard = ({
             onClick={() => {
               setActiveSection("referral");
             }}
-            className={`${activeSection === "referral" ? "isTabActive" : ""
-              } Patient-Dashboard-boxOne`}
+            className={`${
+              activeSection === "referral" ? "isTabActive" : ""
+            } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">
@@ -2010,8 +2139,9 @@ const PatientDashboard = ({
             onClick={() => {
               setActiveSection("nursing");
             }}
-            className={`${activeSection === "nursing" ? "isTabActive" : ""
-              } Patient-Dashboard-boxOne`}
+            className={`${
+              activeSection === "nursing" ? "isTabActive" : ""
+            } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">Nursing Order</span>
@@ -2022,8 +2152,9 @@ const PatientDashboard = ({
             onClick={() => {
               setActiveSection("pacrequest");
             }}
-            className={`${activeSection === "pacrequest" ? "isTabActive" : ""
-              } Patient-Dashboard-boxOne`}
+            className={`${
+              activeSection === "pacrequest" ? "isTabActive" : ""
+            } Patient-Dashboard-boxOne`}
           >
             <div className="Patient-Dashboard-textAndLogo">
               <span className="Patient-Dashboard-textOne">PAC Request</span>
@@ -2035,8 +2166,9 @@ const PatientDashboard = ({
               onClick={() => {
                 setActiveSection("admissionslip");
               }}
-              className={`${activeSection === "admissionslip" ? "isTabActive" : ""
-                } Patient-Dashboard-boxOne`}
+              className={`${
+                activeSection === "admissionslip" ? "isTabActive" : ""
+              } Patient-Dashboard-boxOne`}
             >
               <div className="Patient-Dashboard-textAndLogo">
                 <span className="Patient-Dashboard-textOne">
@@ -2305,8 +2437,9 @@ const PatientDashboard = ({
   );
   return (
     <div
-      className={`patient-dashboard ${isPatientOPEN ? "isPatientDetailsActive" : "isPatientDetailsInActive"
-        }`}
+      className={`patient-dashboard ${
+        isPatientOPEN ? "isPatientDetailsActive" : "isPatientDetailsInActive"
+      }`}
     >
       <nav className="Patient-Dashboard-navbar">
         <div className="Patient-Dashboard-navText">
@@ -2388,7 +2521,10 @@ const PatientDashboard = ({
             >
               <i class="fas fa-chevron-circle-left"></i> Back
             </button>
-            <button className="Patient-Dashboard-btn-print" onClick={handlePrint}>
+            <button
+              className="Patient-Dashboard-btn-print"
+              onClick={handlePrint}
+            >
               Print
             </button>
           </div>

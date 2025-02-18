@@ -5,44 +5,46 @@ import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../api/api";
 import { FloatingInput, FloatingTextarea } from "../../FloatingInputs";
 import { toast } from "react-toastify";
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 const ActiveProblems = ({ patientId, outPatientId }) => {
   const printRef = useRef();
   const formatDateTime = () => {
     const now = new Date();
-    return now.toLocaleString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
+    return now.toLocaleString("en-US", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
     });
   };
 
   const handlePrint = () => {
-    const doc = new jsPDF('l', 'mm', 'a4');
+    const doc = new jsPDF("l", "mm", "a4");
     doc.setFontSize(16);
-    doc.text('Medical Problems Report', doc.internal.pageSize.width / 2, 15, { align: 'center' });
+    doc.text("Medical Problems Report", doc.internal.pageSize.width / 2, 15, {
+      align: "center",
+    });
     doc.setFontSize(10);
     doc.text(`Generated on: ${formatDateTime()}`, 219, 25);
-    const activeProblemsData = activeProblems.map(problem => [
-      problem.searchProblem || '',
-      problem.onsetDate || '',
-      problem.note || '',
-      problem.currentStatus || '',
-      problem.isPrincipalProblem ? '✓' : ''
+    const activeProblemsData = activeProblems.map((problem) => [
+      problem.searchProblem || "",
+      problem.onsetDate || "",
+      problem.note || "",
+      problem.currentStatus || "",
+      problem.isPrincipalProblem ? "✓" : "",
     ]);
     const activeHeaders = [
       "ICD-11 Description",
       "Onset Date",
       "Notes",
       "Current Status",
-      "Principal Problem"
+      "Principal Problem",
     ];
     doc.setFontSize(12);
-    doc.text('Active Medical Problems', 14, 35);
+    doc.text("Active Medical Problems", 14, 35);
     doc.autoTable({
       head: [activeHeaders],
       body: activeProblemsData,
@@ -55,30 +57,30 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
         fillColor: [51, 122, 183],
         textColor: 255,
         fontSize: 9,
-        fontStyle: 'bold',
+        fontStyle: "bold",
       },
       alternateRowStyles: {
         fillColor: [245, 245, 245],
       },
-      margin: { left: 14 }
+      margin: { left: 14 },
     });
     const firstTableHeight = doc.lastAutoTable.finalY;
-    const pastProblemsData = pastProblem.map(problem => [
-      problem.searchProblem || '',
-      problem.onSetDate || '',
-      problem.resolvedDate || '',
-      problem.note || '',
-      problem.isPrincipalProblem ? '✓' : ''
+    const pastProblemsData = pastProblem.map((problem) => [
+      problem.searchProblem || "",
+      problem.onSetDate || "",
+      problem.resolvedDate || "",
+      problem.note || "",
+      problem.isPrincipalProblem ? "✓" : "",
     ]);
     const pastHeaders = [
       "ICD-11 Description",
       "Onset Date",
       "Resolved Date",
       "Notes",
-      "Principal Problem"
+      "Principal Problem",
     ];
     doc.setFontSize(12);
-    doc.text('Past Medical Problems', 14, firstTableHeight + 15);
+    doc.text("Past Medical Problems", 14, firstTableHeight + 15);
     doc.autoTable({
       head: [pastHeaders],
       body: pastProblemsData,
@@ -91,12 +93,12 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
         fillColor: [51, 122, 183],
         textColor: 255,
         fontSize: 9,
-        fontStyle: 'bold',
+        fontStyle: "bold",
       },
       alternateRowStyles: {
         fillColor: [245, 245, 245],
       },
-      margin: { left: 14 }
+      margin: { left: 14 },
     });
     const pageCount = doc.internal.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
@@ -106,13 +108,13 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
         `Page ${i} of ${pageCount}`,
         doc.internal.pageSize.width / 2,
         doc.internal.pageSize.height - 10,
-        { align: 'center' }
+        { align: "center" }
       );
     }
     const fileName = "Medical_Problems_Report.pdf";
     doc.save(fileName);
-    const pdfOutput = doc.output('bloburl');
-    window.open(pdfOutput, '_blank');
+    const pdfOutput = doc.output("bloburl");
+    window.open(pdfOutput, "_blank");
   };
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -170,6 +172,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
       [name]: type === "checkbox" ? checked : value,
     });
   };
+
   useEffect(() => {
     const fetchActiveProblems = async () => {
       let endpoint = "";
@@ -183,7 +186,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
           const response = await fetch(endpoint);
           if (response.ok) {
             const data = await response.json();
-            console.log(data);
+            console.log(data,"active");
             setActiveProblems(data);
           } else {
             console.error("Failed to fetch active problems");
@@ -242,7 +245,9 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
         }
       );
       if (response.ok) {
-        toast.success(`${isEditMode ? "Updated" : "Added"} Problem successfully!`);
+        toast.success(
+          `${isEditMode ? "Updated" : "Added"} Problem successfully!`
+        );
         setActiveProblem({
           searchProblem: "",
           icdCode: "",
@@ -278,7 +283,7 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
       if (!response.ok) {
         throw new Error("Failed to add past problem");
       }
-      toast.success("Past Problem Added Successfully")
+      toast.success("Past Problem Added Successfully");
       handleClosePastModal();
       setNewPastProblem({});
     } catch (error) {
@@ -294,12 +299,15 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
   };
+
   const handleEdit = (problem) => {
     setUpdateProblem({ ...problem });
     setActiveProblem({ ...problem });
     setIsEditMode(true);
     setIsAddModalOpen(true);
   };
+  
+  
 
   return (
     <div className="medical-problems-container">
@@ -373,9 +381,13 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                         />
                       </td>
                       <td className="actproblem-tabledata">
-                        <button className="activeproblems-add-button" onClick={() => handleEdit(problem)}>
+                        <button
+                          className="activeproblems-add-button"
+                          onClick={() => handleEdit(problem)}
+                        >
                           Edit
                         </button>
+                        
                       </td>
                     </tr>
                   ))}
@@ -558,7 +570,6 @@ const ActiveProblems = ({ patientId, outPatientId }) => {
                   name="currentStatus"
                   value={newPastProblem.currentStatus}
                   onChange={handlePastInputChange}
-
                 />
               </div>
               <div className="activeproblems-form-group">

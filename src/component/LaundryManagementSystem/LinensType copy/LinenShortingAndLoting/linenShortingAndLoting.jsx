@@ -131,10 +131,10 @@ const LinenShortingAndLoting = () => {
     try {
       const response = await axios.post(`${API_BASE_URL}/linenLoting`, payload);
       console.log("Data submitted successfully:", response.data);
-      alert("Linen Loting data submitted successfully!");
+      toast.success("Linen Loting data submitted successfully!");
     } catch (error) {
       console.error("Error submitting linen loting data:", error);
-      alert("Failed to submit data. Please try again.");
+      toast.error("Failed to submit data. Please try again.");
     }
   };
 
