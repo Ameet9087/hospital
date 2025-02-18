@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import ServiceMaster from "./ServiceMaster";
 import './ServiceForm.css'
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import CustomModal from "../../../CustomModel/CustomModal";
 const ServiceForm = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -24,7 +24,7 @@ const ServiceForm = () => {
           className="service-ms-form-add-button"
           onClick={openPopup}
         >
-          + Add New
+          + Add New 
         </button>
       </div>
 

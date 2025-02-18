@@ -4,7 +4,8 @@ import "./AddPurchaseOrder.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { API_BASE_URL } from "../../api/api";
-
+import FloatingInput from "../../../FloatingInputs/FloatingInput";
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
 const AddPurchaseOrderDraft = ({ request, onClose }) => {
   console.log(request);
 
@@ -240,53 +241,67 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
       {/* Vendor Selection */}
       <div className="AddPurchaseOrder-form-row">
         <div className="AddPurchaseOrder-form-group">
-          <label>Select Vendor:</label>
-          <select
+          <FloatingSelect
+            label="Select Vendor"
+            name="vendor"
             onChange={(e) => handleVendorSelect(Number(e.target.value))}
             value={request?.vendor?.vendorId || formData.vendorId || ""}
-          >
-            <option value="" disabled>
-              Select a vendor
-            </option>
-            {vendors.map((vendor) => (
-              <option key={vendor.id} value={vendor.id}>
-                {vendor.vendorName}
-              </option>
-            ))}
-          </select>
+            options={[
+              { value: "", label: "Select a vendor" },
+              ...(Array.isArray(vendors)
+                ? vendors.map((vendor) => ({
+                    value: vendor.id,
+                    label: vendor.vendorName,
+                  }))
+                : []),
+            ]}
+          />
         </div>
       </div>
 
       {/* Autofill Vendor Data */}
       <div className="AddPurchaseOrder-form-row">
         <div className="AddPurchaseOrder-form-group">
-          <label>Vendor Name:</label>
-          <input type="text" value={formData.vendorName} disabled />
-        </div>
-        <div className="AddPurchaseOrder-form-group">
-          <label>Currency Code:</label>
-          <input type="text" value={formData.currecyCode} disabled />
-        </div>
-        <div className="AddPurchaseOrder-form-group">
-          <label>Vendor Contact No:</label>
-          <input type="text" value={formData.vendorContactNo} disabled />
+          <FloatingInput
+            label={"Vendor Name"}
+            type="text"
+            value={formData.vendorName}
+            disabled
+          />
         </div>
 
         <div className="AddPurchaseOrder-form-group">
-          <label>Vendor Address:</label>
-          <input type="text" value={formData.vendorAddress} disabled />
+          <FloatingInput
+            label={"Currency Code"}
+            type="text"
+            value={formData.currencyCode}
+            disabled
+          />
         </div>
-        {/* <div className="AddPurchaseOrder-form-group">
-            <label>Contact Person:</label>
-            <input type="text" value={formData.contactPerson} disabled />
-          </div> */}
+        <div className="AddPurchaseOrder-form-group">
+          <FloatingInput
+            label={"Vendor Contact No"}
+            type="text"
+            value={formData.vendorContactNo}
+            disabled
+          />
+        </div>
+
+        <div className="AddPurchaseOrder-form-group">
+          <FloatingInput
+            label={"Vendor Address"}
+            type="text"
+            value={formData.vendorAddress}
+            disabled
+          />
+        </div>
       </div>
 
       {/* Additional Form Fields */}
       <div className="AddPurchaseOrder-form-row">
         <div className="AddPurchaseOrder-form-group">
-          <label>PO Date:</label>
-          <input
+          <FloatingInput
+            label={"PO Date"}
             type="date"
             name="poDate"
             value={formData.poDate}
@@ -294,8 +309,8 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
           />
         </div>
         <div className="AddPurchaseOrder-form-group">
-          <label>Delivery Date:</label>
-          <input
+          <FloatingInput
+            label={"Delivery Date"}
             type="date"
             name="deliveryDate"
             value={formData.deliveryDate}
@@ -303,8 +318,8 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
           />
         </div>
         <div className="AddPurchaseOrder-form-group">
-          <label>Reference no:</label>
-          <input
+          <FloatingInput
+            label={"Reference no"}
             type="text"
             name="referenceNo"
             value={formData.referenceNo}
@@ -312,8 +327,8 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
           />
         </div>
         <div className="AddPurchaseOrder-form-group">
-          <label>Invoicing Address:</label>
-          <input
+          <FloatingInput
+            label={"Invoicing Address"}
             type="text"
             name="invoicingAddress"
             value={formData.invoicingAddress}
@@ -321,8 +336,8 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
           />
         </div>
         <div className="AddPurchaseOrder-form-group">
-          <label>Contact Person:</label>
-          <input
+          <FloatingInput
+            label={"Contact Person"}
             type="text"
             name="contactPerson"
             value={formData.contactPerson}
@@ -330,8 +345,8 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
           />
         </div>
         <div className="AddPurchaseOrder-form-group">
-          <label>Contact Email:</label>
-          <input
+          <FloatingInput
+            label={"Contact Email"}
             type="text"
             name="contactEmail"
             value={formData.contactEmail}
@@ -340,7 +355,6 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
         </div>
       </div>
 
-      {/* Items Table */}
       <table className="AddPurchaseOrder-items-table">
         <thead>
           <tr>
@@ -363,19 +377,22 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
           {formData.items.map((item, index) => (
             <tr key={index}>
               <td>
-                <select
+                <FloatingSelect
                   value={item.category}
                   className="purchaseorderItemSelect"
                   onChange={(e) =>
                     handleItemChange(index, "category", e.target.value)
                   }
-                >
-                  <option value="Consumables">Consumables</option>
-                  <option value="Capital_goods">Capital Goods</option>
-                </select>
+                  options={[
+                    { value: "", label: "Select a category" },
+                    { value: "Consumables", label: "Consumables" },
+                    { value: "Capital_goods", label: "Capital Goods" },
+                  ]}
+                />
               </td>
               <td>
-                <select
+                <FloatingSelect
+                  name="selectItem"
                   value={item.itemName}
                   className="purchaseorderItemSelect"
                   onChange={(e) => {
@@ -408,27 +425,30 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
                       console.warn("Selected item not found");
                     }
                   }}
-                >
-                  <option value="">Select Item</option>
-                  {items.map((itm, idx) => (
-                    <option key={idx} value={itm.itemName}>
-                      {itm.itemName}
-                    </option>
-                  ))}
-                </select>
+                  options={[
+                    { value: "", label: "Select Item" },
+                    ...(Array.isArray(items)
+                      ? items.map((itm) => ({
+                          value: itm.itemName,
+                          label: itm.itemName,
+                        }))
+                      : []),
+                  ]}
+                />
               </td>
+
               <td>
-                <input
+                <FloatingInput
                   type="text"
                   value={item.vendorItemCode || ""}
                   className="purchaseorderItemInput"
                   onChange={(e) =>
                     handleItemChange(index, "vendorItemCode", e.target.value)
-                  } // User input only
+                  }
                 />
               </td>
               <td>
-                <input
+                <FloatingInput
                   type="text"
                   value={item.mssNo || ""}
                   className="purchaseorderItemInput"
@@ -438,17 +458,17 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
                 />
               </td>
               <td>
-                <input
+                <FloatingInput
                   type="text"
                   value={item.hsnCode || ""}
                   className="purchaseorderItemInput"
                   onChange={(e) =>
                     handleItemChange(index, "hsnCode", e.target.value)
-                  } // User input only
+                  }
                 />
               </td>
               <td>
-                <input
+                <FloatingInput
                   type="text"
                   value={item.itemCode || ""}
                   className="purchaseorderItemInput"
@@ -456,7 +476,7 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
                 />
               </td>
               <td>
-                <input
+                <FloatingInput
                   type="text"
                   value={item.unit || ""}
                   className="purchaseorderItemInput"
@@ -464,7 +484,7 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
                 />
               </td>
               <td>
-                <input
+                <FloatingInput
                   type="number"
                   value={item.quantity || ""}
                   className="purchaseorderItemInput"
@@ -472,7 +492,6 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
                     const quantity = e.target.value;
                     handleItemChange(index, "quantity", quantity);
 
-                    // Calculate total amount dynamically
                     const totalAmount = quantity * (item.standardRate || 0);
                     handleItemChange(
                       index,
@@ -483,48 +502,53 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
                 />
               </td>
               <td>
-                <input
+              <FloatingInput
                   type="text"
                   value={item.standardRate || ""}
                   className="purchaseorderItemInput"
                   readOnly
                 />
+              
               </td>
               <td>
-                <input
-                  type="text"
-                  value={item.vat || ""}
-                  className="purchaseorderItemInput"
-                  onChange={(e) => {
-                    const vatPercentage = parseFloat(e.target.value) || 0; // Parse VAT percentage
-                    const quantity = parseFloat(item.quantity) || 0;
-                    const standardRate = parseFloat(item.standardRate) || 0;
-
-                    // Calculate VAT and total amount
-                    const vatAmount =
-                      (quantity * standardRate * vatPercentage) / 100;
-                    const totalAmount = quantity * standardRate + vatAmount;
-
-                    // Update state with VAT and total amount
-                    handleItemChange(index, "vat", vatPercentage);
-                    handleItemChange(
-                      index,
-                      "totalAmount",
-                      totalAmount.toFixed(2)
-                    );
-                  }}
+              <FloatingInput
+                   type="text"
+                   value={item.vat || ""}
+                   className="purchaseorderItemInput"
+                   onChange={(e) => {
+                     const vatPercentage = parseFloat(e.target.value) || 0; // Parse VAT percentage
+                     const quantity = parseFloat(item.quantity) || 0;
+                     const standardRate = parseFloat(item.standardRate) || 0;
+ 
+                     // Calculate VAT and total amount
+                     const vatAmount =
+                       (quantity * standardRate * vatPercentage) / 100;
+                     const totalAmount = quantity * standardRate + vatAmount;
+ 
+                     // Update state with VAT and total amount
+                     handleItemChange(index, "vat", vatPercentage);
+                     handleItemChange(
+                       index,
+                       "totalAmount",
+                       totalAmount.toFixed(2)
+                     );
+                   }}
                 />
+              
+              
               </td>
               <td>
-                <input
+              <FloatingInput
                   type="text"
                   value={item.totalAmount || ""}
                   className="purchaseorderItemInput"
                   readOnly
                 />
+              
+              
               </td>
               <td>
-                <input
+              <FloatingInput
                   type="text"
                   value={item.remarks || ""}
                   className="purchaseorderItemInput"
@@ -532,6 +556,8 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
                     handleItemChange(index, "remarks", e.target.value)
                   } // User input only
                 />
+              
+              
               </td>
               <td>
                 <button
@@ -552,7 +578,7 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
 
       {/* Submit Button */}
       <div className="AddPurchaseOrder-button-group">
-        <button onClick={handleSubmit}>Save Purchase Order</button>
+        <button className="purchaseorder-add-btn" onClick={handleSubmit}>Save Purchase Order</button>
       </div>
     </div>
   );

@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import './ReplacementinstrumentsPopUp.css';
 import { FaSearch } from 'react-icons/fa';
 import PopupTable from '../../../Admission/PopupTable';
+import { toast } from 'react-toastify';
+import { FloatingInput } from '../../../../FloatingInputs';
 
 const ReplacementInstrumentsPopUp = () => {
   const [activePopup, setActivePopup] = useState("");
@@ -80,11 +82,11 @@ const ReplacementInstrumentsPopUp = () => {
       })
       .then((result) => {
         console.log("Save successful:", result);
-        alert("Data saved successfully!");
+        toast.success("Data saved successfully!");
       })
       .catch((error) => {
         console.error("Error saving data:", error);
-        alert("Failed to save data");
+        toast.error("Failed to save data");
       });
   };
 
@@ -103,138 +105,113 @@ const ReplacementInstrumentsPopUp = () => {
       <div className="ReplacementInstrumentsPopUp-form-container">
         <div className="ReplacementInstrumentsPopUp-form-section">
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Record No</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" />
+            <FloatingInput
+            label={"Record No"}
+            type="text"
+            />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Replacement No	</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement?.replacementId} />
-            <FaSearch onClick={() => setActivePopup("replacementid")} />
+            <FloatingInput
+            label={"Replacement No"}
+            type="search" value={selectedReplacement?.replacementId}
+            onIconClick={()=>setActivePopup("replacementid")}
+            
+            />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Equipment Name</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement.equipmentDTO?.equipmentName} />
+            <FloatingInput
+            label={"Equipment Name"}
+            type="text"  value={selectedReplacement.equipmentDTO?.equipmentName}
+            />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Type</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" value={selectedReplacement.type} />
+            <FloatingInput
+            label={"Type"}
+            type="text" value={selectedReplacement.type}
+            
+            />
+           
 
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Model</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement.equipmentDTO?.modelNo} />
+            <FloatingInput
+            label={"Model"}
+            type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement.equipmentDTO?.modelNo}
+            
+            />
           </div>
 
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Serial No	</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement.equipmentDTO?.serialNo} />
+            <FloatingInput
+            label={"Serial No"}
+            type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement.equipmentDTO?.serialNo} 
+            />
+
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Doctor's Name</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement?.docterDTO?.doctorName} />
+            <FloatingInput label={"Doctor's Name"} type="text"  value={selectedReplacement?.docterDTO?.doctorName} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Procedure To Be Done</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement.procedureToBeDone} />
+            <FloatingInput label={"Procedure To Be Done"} type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement.procedureToBeDone} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Name Of Manufacturer</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement?.nameOfManufacturer} />
+            <FloatingInput label={"Name Of Manufacturer"} type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement?.nameOfManufacturer} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Name Of Supplier</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" value={selectedReplacement?.equipmentDTO?.vendor?.vendorName} />
+            <FloatingInput label={"Name Of Supplier"} type="text" value={selectedReplacement?.equipmentDTO?.vendor?.vendorName} />
           </div>
         </div>
         <div className="ReplacementInstrumentsPopUp-form-section">
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Purchase Cost Of Equipment</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" />
+            <FloatingInput label={"Purchase Cost Of Equipment"} type="text" className="ReplacementInstrumentsPopUp-input-field" />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Department Name	</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" value={selectedReplacement.departmentDTO?.departmentName} />
+            <FloatingInput label={"Department Name"} type="text" value={selectedReplacement.departmentDTO?.departmentName} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Previous AMC Details	</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" />
+            <FloatingInput label={"Previous AMC Details"} type="text" className="ReplacementInstrumentsPopUp-input-field" />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Last Year AMC Charges	</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" />
+            <FloatingInput type="text" label={"Last Year AMC Charges"} className="ReplacementInstrumentsPopUp-input-field" />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Present AMC Proposal Details	</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" />
+            <FloatingInput label={"Present AMC Proposal Details"} type="text" className="ReplacementInstrumentsPopUp-input-field" />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Proposal Charges</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" name='proposalCharges' value={formData.proposalCharges} onChange={handleInputChange} />
+
+            <FloatingInput label={"Proposal Charges"}  type="text" className="ReplacementInstrumentsPopUp-input-field" name='proposalCharges' value={formData.proposalCharges} onChange={handleInputChange} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Siginificant Terms if any	</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" name='significantTerms' value={formData.significantTerms} onChange={handleInputChange} />
+
+            <FloatingInput label={"Siginificant Terms if any"} type="text" className="ReplacementInstrumentsPopUp-input-field" name='significantTerms' value={formData.significantTerms} onChange={handleInputChange} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Quantity</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement.quantity} />
+            <FloatingInput label={"Quantity"} type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement.quantity} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Patient Load</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement?.patientLoad} />
+            <FloatingInput label={"Patient Load"} type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement?.patientLoad} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Justification For Purchase            </span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement.justification} />
+            <FloatingInput label={"Justification For Purchase "} type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement.justification} />
           </div>
         </div>
         <div className="ReplacementInstrumentsPopUp-form-section">
           <div className="ReplacementInstrumentsPopUp-section-header">AMS / DMS / JMS</div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Remarks           </span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement?.remark} />
+            <FloatingInput label={"Remarks"} type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement?.remark} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">MS Remarks         </span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement?.msRemark} />
+            <FloatingInput label={"MS Remarks"} type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement?.msRemark} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">MD Remarks</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement.mdRemark} />
+            <FloatingInput label={"MD Remarks"} type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement.mdRemark} />
           </div>
           <div className="ReplacementInstrumentsPopUp-section-header">Purchase Departments</div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Proposal Made By</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" value={selectedReplacement.proposalMade} />
+            <FloatingInput label={"Proposal Made By"} type="text" value={selectedReplacement.proposalMade} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Approve Remarks</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" name='approveRemarks' value={formData.approveRemarks} onChange={handleInputChange} />
+            <FloatingInput label={"Approve Remarks"} type="text" className="ReplacementInstrumentsPopUp-input-field" name='approveRemarks' value={formData.approveRemarks} onChange={handleInputChange} />
           </div>
           <div className="ReplacementInstrumentsPopUp-status">
             <label className="ReplacementInstrumentsPopUp-label">Rep Type</label>
@@ -267,29 +244,19 @@ const ReplacementInstrumentsPopUp = () => {
             </div>
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">NextPriority	</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" name='nextPriority' value={formData.nextPriority} onChange={handleInputChange} />
+            <FloatingInput label={"NextPriority"} type="text" className="ReplacementInstrumentsPopUp-input-field" name='nextPriority' value={formData.nextPriority} onChange={handleInputChange} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Next Approval By	</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" name='nextApprovalBy' value={formData.nextApprovalBy} onChange={handleInputChange} />
+            <FloatingInput label={"Next Approval By"} type="text" className="ReplacementInstrumentsPopUp-input-field" name='nextApprovalBy' value={formData.nextApprovalBy} onChange={handleInputChange} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">equpid</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement?.equipmentDTO?.equipmentMasterId} />
+            <FloatingInput label={"equpid"} type="text" className="ReplacementInstrumentsPopUp-input-field" value={selectedReplacement?.equipmentDTO?.equipmentMasterId} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Approval Date</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="date" className="ReplacementInstrumentsPopUp-input-field" name='approvedDate' value={formData.approvedDate} onChange={handleInputChange} />
+            <FloatingInput label={"Approval Date"} type="date" className="ReplacementInstrumentsPopUp-input-field" name='approvedDate' value={formData.approvedDate} onChange={handleInputChange} />
           </div>
           <div className="ReplacementInstrumentsPopUp-form-group">
-            <span className="ReplacementInstrumentsPopUp-label">Approval Time</span>
-            <span className="ReplacementInstrumentsPopUp-separator">:</span>
-            <input type="time" className="ReplacementInstrumentsPopUp-input-field" name='approvedTime' value={formData.approvedTime} onChange={handleInputChange} />
+            <FloatingInput label={"Approval Time"} type="time" className="ReplacementInstrumentsPopUp-input-field" name='approvedTime' value={formData.approvedTime} onChange={handleInputChange} />
           </div>
         </div>
       </div>

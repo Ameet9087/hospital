@@ -206,7 +206,7 @@ const PurchaseOrderView = ({ item }) => {
       </div>
     </div>
     <div className="purchaseOrderView-btn">
-    <button onClick={handlePrint}>Print</button>
+    <button className="purchaseOrderView-print" onClick={handlePrint}>Print</button>
     </div>
   </>
   );

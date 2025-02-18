@@ -262,6 +262,7 @@ function SSPConsumInternalConsum({ onClose }) {
               ))}
             </tbody>
           </table>
+
           <button
             type="button"
             className="sSPConsumInternalConsum-button"

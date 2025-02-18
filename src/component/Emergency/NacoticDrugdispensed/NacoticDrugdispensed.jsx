@@ -4,6 +4,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import "./NacoticDrugdispensed.css";
 import { API_BASE_URL } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -255,18 +256,23 @@ const NarcoticDrugDispensedForm = () => {
   const fetchMrno = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.1.46:4096/api/ip-admissions"
+        `${API_BASE_URL}/ip-admissions`
       );
       setMrNoData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
-
+  const handleBack = () => navigate("/emergency/erinitial");
+  const navigate = useNavigate();
   return (
     <>
       <div className="nacotic-drug-dispensed-form-container">
         <div className="nacotic-drug-dispensed-form-section">
+        <div className="er-initial-assessment-com-section">
+        <button className="er-initial-assessment-com-section-back" onClick={handleBack}>Back</button>
+        </div>
+
           <div className="nacotic-drug-dispensed-form-header">
             Narcotic Drugs Dispensed
           </div>

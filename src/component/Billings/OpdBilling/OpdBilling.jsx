@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { usePopup } from "../../../FidgetSpinner/PopupContext";
 import OpdBillingPrint from "./OpdBillingPrint";
 import CustomModal from "../../../CustomModel/CustomModal";
+import { useNavigate } from "react-router-dom";
 
 const OpdBilling = () => {
   const { showPopup } = usePopup();
@@ -39,28 +40,22 @@ const OpdBilling = () => {
   const [patientType, setPatientType] = useState("");
   const [isPrintEnabled, setIsPrintEnabled] = useState(false);
   const [billFromResponse, setBillFromResponse] = useState(null);
+  const [selectedPaymentMode, setSelectedPaymentMode] = React.useState("");
+
+  const navigate = useNavigate();
 
   const [isEmergency, setemergency] = useState(false);
 
   const handlePrintBilling = () => {
-    console.log("Navigating with state:", {
-      selectedPatient,
-      selectedDoctor,
-      testGridTableRowsableRows,
-      netAmount,
-      selectedPaymentMode,
-      billFromResponse,
-    });
-    navigate("/billing/OpdBillingPrint", {
-      state: {
-        selectedPatient,
-        selectedDoctor,
-        testGridTableRowsableRows,
-        netAmount,
-        selectedPaymentMode,
-        billFromResponse,
-      },
-    });
+    console.log("hello");
+
+    // if (!isDataSaved) {
+    //   alert('Please save data before printing.');
+    //   return;
+    // }
+
+    console.log("Navigating with state:", { selectedPatient, selectedDoctor, testGridTableRowsableRows, netAmount, selectedPaymentMode, billFromResponse });
+    navigate("/billing/opdbillingprint", { state: { selectedPatient, selectedDoctor, testGridTableRowsableRows, netAmount, selectedPaymentMode, billFromResponse } });
   };
 
   const fetchDoctorService = async (outPatientId) => {
@@ -311,6 +306,7 @@ const OpdBilling = () => {
   const [identificationTableRows, setIdentificationTableRows] = useState([
     { sn: 1, Date: "", dCode: "" },
   ]);
+
 
   const handleOverallDiscountPercentChange = (e) => {
     let percent = parseFloat(e.target.value) || 0;
@@ -1323,7 +1319,7 @@ const OpdBilling = () => {
                       <div className="OpdBilling-test-search-field">
                         <FloatingSelect
                           type="search"
-                          value={serviceType}
+                          value={serviceType || row?.serviceType}
                           onChange={(e) => setServiceType(e.target.value)}
                           options={[
                             { value: "Investigation", label: "Investigation" },
@@ -1338,7 +1334,7 @@ const OpdBilling = () => {
                       <div className="OpdBilling-test-search-field">
                         <FloatingInput
                           type="search"
-                          value={selectedService?.serviceName}
+                          value={selectedService?.serviceName || row?.serviceName}
                           onIconClick={() => setActivePopup("services")}
                         />
                       </div>
@@ -1347,7 +1343,7 @@ const OpdBilling = () => {
                       <div className="OpdBilling-test-search-field">
                         <FloatingInput
                           type="search"
-                          value={selectedServiceDoctor?.firstName}
+                          value={selectedServiceDoctor?.firstName || row?.doctorName}
                           onIconClick={() => setActivePopup("serviceDoctor")}
                         />
                       </div>
@@ -2108,13 +2104,13 @@ const OpdBilling = () => {
             <button className="btn-blue" onClick={() => resetForm()}>
               Clear
             </button>
-            {/* <button
+            <button
               className="billing-opd-com-action-buttons"
               onClick={() => handlePrintBilling()}
-              disabled={!isPrintEnabled}
+            // disabled={!isPrintEnabled}
             >
               Print
-            </button> */}
+            </button>
           </div>
         </div>
       </div>

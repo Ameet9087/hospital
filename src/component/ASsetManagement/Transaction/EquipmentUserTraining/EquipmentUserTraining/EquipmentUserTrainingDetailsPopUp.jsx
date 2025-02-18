@@ -3,6 +3,8 @@ import "./EquipmentUserTrainingDetailsPopUp.css";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../../../../api/api";
 // import { FaSearch } from "react-icons/fa"; // Using react-icons
+import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 const EquipmentUserTrainingDetailsPopUp = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -194,14 +196,14 @@ const EquipmentUserTrainingDetailsPopUp = ({ onClose }) => {
 
       if (response.ok) {
         const result = await response.json();
-        alert("Data saved successfully!");
+        toast.success("Data saved successfully!");
       } else {
         const error = await response.json();
-        alert(`Failed to save data: ${error.message || response.statusText}`);
+        toast.error(`Failed to save data: ${error.message || response.statusText}`);
       }
     } catch (error) {
-      console.error("Error saving data:", error);
-      alert("An unexpected error occurred. Please try again later.");
+      toast.error("Error saving data:", error);
+      toast.error("An unexpected error occurred. Please try again later.");
     }
   };
 
@@ -340,61 +342,83 @@ const EquipmentUserTrainingDetailsPopUp = ({ onClose }) => {
               <div className="EquipmentUserTrainingDetailsPopUp-form-group-1row">
 
                 <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-                  <label>Equipment Name:<span className="equipment-user-training-required">*</span></label>
-                  <select value={selectedEquipmentId} onChange={handleEquipmentChange}>
-                    <option value="">Select Equipment</option>
-                    {equipments.map((equipment) => (
-                      <option key={equipment.equipmentMasterId} value={equipment.equipmentMasterId}>
-                        {equipment.equipmentName}
-                      </option>
-                    ))}
-                  </select>
+                <FloatingSelect
+  label={"Equipment Name *"}
+  value={selectedEquipmentId}
+  onChange={handleEquipmentChange}
+  options={[
+    { value: "", label: "Select Equipment" }, // Default option
+    ...equipments.map((equipment) => ({
+      value: equipment.equipmentMasterId,
+      label: equipment.equipmentName,
+    })),
+  ]}
+/>
+
                   {/* <FaSearch className="equipment-transfer-search-bar" /> */}
                 </div>
                 <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-                  <label>Equipment No:</label>
-                  <input type="text" value={equipmentData.equipmentNo} readOnly />
+                  <FloatingInput
+                  label={"Equipment No"}
+                  type="text" value={equipmentData.equipmentNo} readOnly/>
+                  
                 </div>
                 <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-                  <label>Serial No:</label>
-                  <input type="text" value={equipmentData.serialNo} readOnly />
+                  <FloatingInput
+                  label={"Serial No"}
+                  type="text" value={equipmentData.serialNo} readOnly/>
+                 
                 </div>
 
               </div>
 
               <div className="EquipmentUserTrainingDetailsPopUp-form-group-1row">
                 <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-                  <label>Asset No:</label>
-                  <input type="text" value={equipmentData.assetNo} readOnly />
+                  <FloatingInput
+                  label={"Asset No"}
+                  type="text" value={equipmentData.assetNo} readOnly/>
+                 
                 </div>
                 <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-                  <label>Equipment Location:</label>
-                  <input type="text" value={equipmentData.equipmentLocation} readOnly />
+                  <FloatingInput
+                  label={"Equipment Location"}
+                  type="text" value={equipmentData.equipmentLocation} readOnly />
+                  
                 </div>
                 <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-                  <label>Category:</label>
-                  <input type="text" value={equipmentData.category} readOnly />
+                  <FloatingInput
+                  label={"Category"}
+                  type="text" value={equipmentData.category} readOnly/>
+                 
                 </div>
               </div>
 
               <div className="EquipmentUserTrainingDetailsPopUp-form-group-1row">
                 <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-                  <label>Depreciation:</label>
-                  <input type="text" value={equipmentData.depriciation} readOnly />
+                  <FloatingInput
+                  label={"Depreciation"}
+                  type="text" value={equipmentData.depriciation} readOnly/>
+                 
                 </div>
                 <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-                  <label>Model No:</label>
-                  <input type="text" value={equipmentData.modelNo} readOnly />
+                  <FloatingInput
+                  label={"Model No"}
+                  type="text" value={equipmentData.modelNo} readOnly/>
+                  
                 </div>
                 <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-                  <label>Company Brand:</label>
-                  <input type="text" value={equipmentData.companyBrand} readOnly />
+                  <FloatingInput
+                  label={"Company Brand"}
+                  type="text" value={equipmentData.companyBrand} readOnly/>
+                  
                 </div>
               </div>
               <div className="EquipmentUserTrainingDetailsPopUp-form-group-1row">
                 <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-                  <label>Responsible Person:</label>
-                  <input type="text" value={equipmentData.responsiblePerson} />
+                  <FloatingInput
+                  label={"REsponsible Person"}
+                  type="text" value={equipmentData.responsiblePerson}/>
+                  
                 </div>
                 <div className="EquipmentUserTrainingDetailsPopUp-form-group">
 
@@ -410,123 +434,115 @@ const EquipmentUserTrainingDetailsPopUp = ({ onClose }) => {
 
           <div className="EquipmentUserTrainingDetailsPopUp-form-group-1row">
             <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-              <label>Trainer Name:<span className="equipment-user-training-required">*</span></label>
-              <select
-                value={selectedTrainerId}
-                onChange={handleTrainerChange}
-                className="equipment-user-training-select"
-              >
-                <option value="">Select Trainer</option>
-                {trainers.map((trainer) => (
-                  <option key={trainer.employeeId} value={trainer.employeeId}>
-                    {trainer.firstName} {trainer.lastName}
-
-                  </option>
-                ))}
-              </select>
-              {/* <FaSearch className="equipment-transfer-search-bar" /> */}
+            <FloatingSelect
+  label={"Trainer Name *"}
+  value={selectedTrainerId}
+  onChange={handleTrainerChange}
+  options={[
+    { value: "", label: "Select Trainer" }, // Default option
+    ...trainers.map((trainer) => ({
+      value: trainer.employeeId,
+      label: `${trainer.firstName} ${trainer.lastName}`, // Combining first & last name
+    })),
+  ]}
+/>
             </div>
             <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-              <label>Employee:<span className="equipment-user-training-required">*</span></label>
-              <select
-                value={selectedEmployeeId}
-                onChange={handleEmployeeChange}
-                className="equipment-user-training-select"
-              >
-                <option value="">Select Employee</option>
-                {trainers.map((trainer) => (
-                  <option key={trainer.employeeId} value={trainer.employeeId}>
-                    {trainer.firstName} {trainer.lastName}
+            <FloatingSelect
+  label={"Employee *"}
+  value={selectedEmployeeId}
+  onChange={handleEmployeeChange}
+  options={[
+    { value: "", label: "Select Employee" }, // Default option
+    ...trainers.map((trainer) => ({
+      value: trainer.employeeId,
+      label: `${trainer.firstName} ${trainer.lastName}`, // Full name
+    })),
+  ]}
+/>
 
-                  </option>
-                ))}
-              </select>
+              
             </div>
 
             <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-              <label>Doctor:<span className="equipment-user-training-required">*</span></label>
-              <select
-                value={selectedDoctorId}
-                onChange={handleDoctorChange}
-                className="equipment-user-training-select"
-              >
-                <option value="">Select Doctor</option>
-                {doctors.map((doctor) => (
-                  <option key={doctor.doctorId} value={doctor.doctorId}>
-                    {doctor.doctorName}
+            <FloatingSelect
+  label={"Doctor *"}
+  value={selectedDoctorId}
+  onChange={handleDoctorChange}
+  options={[
+    { value: "", label: "Select Doctor" }, // Default option
+    ...doctors.map((doctor) => ({
+      value: doctor.doctorId,
+      label: doctor.doctorName, // Display doctor names
+    })),
+  ]}
+/>
 
-                  </option>
-                ))}
-              </select>
             </div>
           </div>
           <div className="EquipmentUserTrainingDetailsPopUp-form-group-1row">
             <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-              <label>To Date:<span className="equipment-user-training-required">*</span></label>
-              <input
-                type="date"
-                name="contractToDate"
-                value={formData.contractToDate}
-                onChange={handleInputChange}
-              />
+              <FloatingInput
+              label={"To Date *"}
+              type="date"
+              name="contractToDate"
+              value={formData.contractToDate}
+              onChange={handleInputChange}/>
+              
+             
             </div>
             <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-              <label>Remarks:</label>
-              <input
-                type="text"
+              <FloatingInput
+              label={"Remarks"}
+              type="text"
                 name="remark"
                 value={formData.remark}
-                onChange={handleInputChange}
-                placeholder="Enter Remarks"
-              />
+                onChange={handleInputChange}/>
             </div>
             <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-              <label>From Date:<span className="equipment-user-training-required">*</span></label>
-              <input
-                type="date"
-                name="contractFromDate"
-                value={formData.contractFromDate}
-                onChange={handleInputChange}
-              />
+              <FloatingInput
+              label={"From Date * "}
+              type="date"
+              name="contractFromDate"
+              value={formData.contractFromDate}
+              onChange={handleInputChange}/>
+             
             </div>
           </div>
           <div className="EquipmentUserTrainingDetailsPopUp-form-group-1row">
             <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-              <label>Employee Type:<span className="equipment-user-training-required">*</span></label>
-              <input
-                type="text"
-                name="employeeType"
-                value={formData.employeeType}
-                onChange={handleInputChange}
-                placeholder="Enter Employee Type"
-              />
+              <FloatingInput
+              label={"Employee Type *"}
+              type="text"
+              name="employeeType"
+              value={formData.employeeType}
+              onChange={handleInputChange}/>
+              
             </div>
             <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-              <label>Manual Trainer:<span className="equipment-user-training-required">*</span></label>
-              <input
-                type="text"
-                name="manualTrainer"
-                value={formData.manualTrainer}
-                onChange={handleInputChange}
-                placeholder="Enter Manual Trainer"
-              />
+              <FloatingInput
+              label={"Manual Trainer * "}
+              type="text"
+              name="manualTrainer"
+              value={formData.manualTrainer}
+              onChange={handleInputChange}/>
+             
             </div>
             <div className="EquipmentUserTrainingDetailsPopUp-form-group">
-              <label>Contract Type:<span className="equipment-user-training-required">*</span></label>
-              <input
-                type="text"
-                name="contractType"
-                value={formData.contractType}
-                onChange={handleInputChange}
-                placeholder="Enter Contract Type"
-              />
+              <FloatingInput
+              label={"Contract Type *"}
+              type="text"
+              name="contractType"
+              value={formData.contractType}
+              onChange={handleInputChange}/>
+             
             </div>
           </div>
           <h4>Documents</h4>
           <div className="EquipmentUserTrainingDetailsPopUp-form-group-1row">
             <div className="EquipmentUserTrainingDetailsPopUp-form-group">
               <label>File Name</label>
-              <input className="equipment-user-training-attach" type="text" />
+              
               <input type="file" />
             </div>
 

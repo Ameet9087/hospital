@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./YearlyEquipmentdepreciationCalculationForm.css";
 import { API_BASE_URL } from "../../../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingSelect } from "../../../../FloatingInputs";
 const YearlyEquipmentDepreciationCalculationForm = ({ bookingId }) => {
   const [id, setId] = useState(bookingId || "");
   const [columnWidths, setColumnWidths] = useState({});
@@ -9,14 +11,15 @@ const YearlyEquipmentDepreciationCalculationForm = ({ bookingId }) => {
   const [data, setData] = useState([]);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [showModal, setShowModal] = useState(true);  // State to control modal visibility
+  const [showModal, setShowModal] = useState(true); // State to control modal visibility
 
   // Fetch data based on the selected type
   const fetchData = async () => {
     try {
-      const url = selectedType === "Category"
-        ? `${API_BASE_URL}/asset-categories`
-        : `${API_BASE_URL}/equipment-masters`;
+      const url =
+        selectedType === "Category"
+          ? `${API_BASE_URL}/asset-categories`
+          : `${API_BASE_URL}/equipment-masters`;
 
       const response = await fetch(url);
       const result = await response.json();
@@ -84,47 +87,49 @@ const YearlyEquipmentDepreciationCalculationForm = ({ bookingId }) => {
       });
 
       if (response.ok) {
-        alert("Data saved successfully!");
+        toast.success("Data saved successfully!");
       } else {
         const errorText = await response.text();
         console.error("Error saving data:", errorText);
-        alert("Failed to save data. Please check and try again.");
+        toast.error("Failed to save data. Please check and try again.");
       }
     } catch (error) {
       console.error("Error saving data:", error);
-      alert("An error occurred while saving data.");
+      toast.error("An error occurred while saving data.");
     }
   };
 
   const handleClose = () => {
-    setShowModal(false);  // Hide the modal
+    setShowModal(false); // Hide the modal
   };
 
   const handlePrint = () => {
-    window.print();  // Trigger print dialog
+    window.print(); // Trigger print dialog
   };
 
   const handleExport = () => {
     const csvRows = [];
-    const headers = selectedType === "Category"
-      ? ["SN", "Category Name", "Under Category", "Depreciation"]
-      : ["SN", "Equipment Name", "Equipment No", "Cost"];
+    const headers =
+      selectedType === "Category"
+        ? ["SN", "Category Name", "Under Category", "Depreciation"]
+        : ["SN", "Equipment Name", "Equipment No", "Cost"];
 
-    csvRows.push(headers.join(','));
+    csvRows.push(headers.join(","));
 
     data.forEach((row, index) => {
-      const rowData = selectedType === "Category"
-        ? [index + 1, row.assetCategory, row.underCategory, row.depreciation]
-        : [index + 1, row.equipmentName, row.equipmentNo, row.cost];
+      const rowData =
+        selectedType === "Category"
+          ? [index + 1, row.assetCategory, row.underCategory, row.depreciation]
+          : [index + 1, row.equipmentName, row.equipmentNo, row.cost];
 
-      csvRows.push(rowData.join(','));
+      csvRows.push(rowData.join(","));
     });
 
-    const csvData = new Blob([csvRows.join('\n')], { type: 'text/csv' });
+    const csvData = new Blob([csvRows.join("\n")], { type: "text/csv" });
     const csvUrl = URL.createObjectURL(csvData);
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = csvUrl;
-    link.download = 'depreciation_data.csv';
+    link.download = "depreciation_data.csv";
     link.click();
   };
 
@@ -143,11 +148,16 @@ const YearlyEquipmentDepreciationCalculationForm = ({ bookingId }) => {
           <div className="YearlyEquipmentDepreciation-surgeryEvents-panel dis-templates">
             <div className="YearlyEquipmentDepreciation-surgeryEvents-panel-content">
               <div className="YearlyEquipmentDepreciation-surgeryEvents-form-row">
-                <label>Type:</label>
-                <select onChange={handleTypeChange} value={selectedType}>
-                  <option value="Category">Category</option>
-                  <option value="Equipment">Equipment</option>
-                </select>
+                <FloatingSelect
+                  label={"Type"}
+                  onChange={handleTypeChange}
+                  value={selectedType}
+                  options={[
+                    { value: "", label: "" },
+                    { value: "Category", label: "Category" },
+                    { value: "Equipment", label: "Equipment" },
+                  ]}
+                />
               </div>
             </div>
           </div>
@@ -155,23 +165,22 @@ const YearlyEquipmentDepreciationCalculationForm = ({ bookingId }) => {
           <div className="YearlyEquipmentDepreciation-surgeryEvents-panel operation-details">
             <div className="YearlyEquipmentDepreciation-surgeryEvents-panel-content">
               <div className="YearlyEquipmentDepreciation-surgeryEvents-form-row">
-                <label>{selectedType} ID:</label>
-                <select
+                <FloatingSelect
                   value={id}
                   onChange={(e) => setId(e.target.value)}
-                >
-                  <option value="" disabled>
-                    Select {selectedType} ID
-                  </option>
-                  {data.map((item) => (
-                    <option
-                      key={item.categoryId || item.equipmentMasterId}
-                      value={item.categoryId || item.equipmentMasterId}
-                    >
-                      {selectedType === "Category" ? item.assetCategory : item.equipmentName}
-                    </option>
-                  ))}
-                </select>
+                  options={[
+                    { value: "", label: "Select an option" },
+                    ...(Array.isArray(data)
+                      ? data.map((loc) => ({
+                          value: loc.categoryId || loc.equipmentMasterId, // Ensure it's a valid value
+                          label:
+                            selectedType === "Category"
+                              ? loc.assetCategory
+                              : loc.equipmentName, // Use loc instead of item
+                        }))
+                      : []),
+                  ]}
+                />
               </div>
             </div>
           </div>
@@ -179,16 +188,24 @@ const YearlyEquipmentDepreciationCalculationForm = ({ bookingId }) => {
           <div className="YearlyEquipmentDepreciation-surgeryEvents-panel operation-details">
             <div className="YearlyEquipmentDepreciation-surgeryEvents-panel-content">
               <div className="YearlyEquipmentDepreciation-surgeryEvents-form-row">
-                <label>From Date:</label>
-                <input type="date" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
+                <FloatingInput
+                label={"From Date"}
+                 type="date"
+                 value={fromDate}
+                 onChange={(e) => setFromDate(e.target.value)}
+                />
               </div>
             </div>
           </div>
           <div className="YearlyEquipmentDepreciation-surgeryEvents-panel operation-details">
             <div className="YearlyEquipmentDepreciation-surgeryEvents-panel-content">
               <div className="YearlyEquipmentDepreciation-surgeryEvents-form-row">
-                <label>To Date:</label>
-                <input type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} />
+                <FloatingInput
+                label={"To Date"}
+                type="date"
+                value={toDate}
+                onChange={(e) => setToDate(e.target.value)}
+                />
               </div>
             </div>
           </div>
@@ -204,15 +221,16 @@ const YearlyEquipmentDepreciationCalculationForm = ({ bookingId }) => {
             <table ref={tableRef}>
               <thead>
                 <tr>
-                  {selectedType === "Category" ? (
-                    ["SN", "Category Name", "Under Category", "Depreciation"].map((header, index) => (
-                      <th key={index}>{header}</th>
-                    ))
-                  ) : (
-                    ["SN", "Equipment Name", "Equipment No", "Cost"].map((header, index) => (
-                      <th key={index}>{header}</th>
-                    ))
-                  )}
+                  {selectedType === "Category"
+                    ? [
+                        "SN",
+                        "Category Name",
+                        "Under Category",
+                        "Depreciation",
+                      ].map((header, index) => <th key={index}>{header}</th>)
+                    : ["SN", "Equipment Name", "Equipment No", "Cost"].map(
+                        (header, index) => <th key={index}>{header}</th>
+                      )}
                 </tr>
               </thead>
               <tbody>
@@ -237,7 +255,9 @@ const YearlyEquipmentDepreciationCalculationForm = ({ bookingId }) => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={selectedType === "Category" ? 4 : 4}>No data available</td>
+                    <td colSpan={selectedType === "Category" ? 4 : 4}>
+                      No data available
+                    </td>
                   </tr>
                 )}
               </tbody>
@@ -246,16 +266,28 @@ const YearlyEquipmentDepreciationCalculationForm = ({ bookingId }) => {
         </div>
 
         <div className="YearlyEquipmentDepreciation-surgeryEvents-action-buttons">
-          <button className="YearlyEquipmentDepreciation-btn-blue" onClick={handleSave}>
+          <button
+            className="YearlyEquipmentDepreciation-btn-blue"
+            onClick={handleSave}
+          >
             Save
           </button>
-          <button className="YearlyEquipmentDepreciation-btn-gray" onClick={handleClose}>
+          <button
+            className="YearlyEquipmentDepreciation-btn-gray"
+            onClick={handleClose}
+          >
             Close
           </button>
-          <button className="YearlyEquipmentDepreciation-btn-green" onClick={handlePrint}>
+          <button
+            className="YearlyEquipmentDepreciation-btn-green"
+            onClick={handlePrint}
+          >
             Print
           </button>
-          <button className="YearlyEquipmentDepreciation-btn-blue" onClick={handleExport}>
+          <button
+            className="YearlyEquipmentDepreciation-btn-blue"
+            onClick={handleExport}
+          >
             Export
           </button>
         </div>

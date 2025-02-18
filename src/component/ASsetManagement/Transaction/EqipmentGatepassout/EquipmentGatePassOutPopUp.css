@@ -34,21 +34,17 @@
   }
   
   .EquipmentGatePassOutPopUp-form-group {
-    /* flex: 1; */
+   
     display: flex;
     text-align: center;
     align-items: center;
     font-size: var(--font-size);
     width: 400px;
-    /* border: 1px solid red; */
+    padding: 5px;
+    
   }
   
-  .EquipmentGatePassOutPopUp-form-group label {
-    display: block;
-    margin-bottom: 4px;
-    /* font-weight: bold; */
-    width: 75%;
-  }
+  
   .EquipmentGatePassOutPopUp-form-group-checkbox{
     display: flex;
     text-align: center;
@@ -56,29 +52,11 @@
     white-space: nowrap;
   }
   
-  .EquipmentGatePassOutPopUp-form-group input,
-  .EquipmentGatePassOutPopUp-form-group select,
-  .EquipmentGatePassOutPopUp-form-group textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+  
 .EquipmentGatePassOutPopUp-form-group-options {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-}
-.EquipmentGatePassOutPopUp-form-group-options label {
-  margin-right: 20px;
-  font-size: var(--font-size);
-  display: flex;
-  align-items: center;
-}
-
-.EquipmentGatePassOutPopUp-form-group-options input {
-  margin-right: 5px;
 }
 
   .EquipmentGatePassOutPopUp-form-actions {

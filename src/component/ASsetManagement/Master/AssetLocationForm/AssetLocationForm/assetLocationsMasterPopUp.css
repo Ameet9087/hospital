@@ -37,6 +37,7 @@
     /* flex: 1; */
     display: flex;
     text-align: center;
+    justify-content: space-between;
     align-items: center;
     font-size: var(--font-size);
     width: 400px;
@@ -60,9 +61,11 @@
     border-radius: 4px;
 }
 .assetLocationsMasterPopUp-form-group-options {
+  width: 50%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+
+  justify-content: space-between;
 }
 .assetLocationsMasterPopUp-form-group-options label {
   margin-right: 20px;
@@ -102,6 +105,7 @@
   }
   .assetLocationsMasterPopUp-form-group-1row{
     display: flex;
+    gap: 10px;
     justify-content: space-between;
   }
   

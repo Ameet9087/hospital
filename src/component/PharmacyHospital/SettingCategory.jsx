@@ -129,6 +129,13 @@ const SettingCategory = () => {
 
 
 
+  
+  // 🔹 **Filtering categories based on search term**
+  const filteredSuppliers = suppliers.filter(supplier =>
+    supplier.categoryName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    supplier.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
 
   return (
     <div className="setting-supplier-container">

@@ -4,6 +4,8 @@ import { CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa"; // Using react-icons
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput, FloatingSelect } from '../../../../FloatingInputs';
+import {toast}  from "react-toastify";
 const DefectRaisingBreackageRequestPopUp = ({ onClose }) => {
 
 
@@ -30,25 +32,25 @@ const DefectRaisingBreackageRequestPopUp = ({ onClose }) => {
   useEffect(() => {
     const fetchedData = {
       // Simulating fetched GET data
-      insuranceDone: true,
-      insuranceUpTo: "2024-12-31",
-      natureOfDefect: "Mechanical",
-      probableCause: "Wear and Tear",
-      detailsOfDefectiveParts: "Brake failure",
-      costOfRepair: 5000,
-      lastRepaired: "Yes",
-      lastRepairDate: "2024-12-01",
-      lastRepairCost: 3000,
-      prospectiveRepair: "Replace brake pads",
-      expectedDurationOfRepair: "2 days",
-      lastRepairPart: "Brake pads",
-      recommendedByHOD: "John Doe",
-      contractType: "Annual Maintenance",
-      contractFrom: "2023-01-01",
-      contractTo: "2024-12-31",
-      contractDetails: "Covers brake systems",
-      hodRemarks: "Urgent repair required",
-      employeeDTO: { employeeId: 1 },
+      insuranceDone: "",
+      insuranceUpTo: "",
+      natureOfDefect: "",
+      probableCause: "",
+      detailsOfDefectiveParts: "",
+      costOfRepair,
+      lastRepaired: "",
+      lastRepairDate,
+      lastRepairCost,
+      prospectiveRepair: "",
+      expectedDurationOfRepair: "",
+      lastRepairPart: "",
+      recommendedByHOD: "",
+      contractType: "",
+      contractFrom,
+      contractTo,
+      contractDetails: "",
+      hodRemarks: "",
+      employeeDTO: { employeeId:1},
       parts: [
         {
           partId: 1,
@@ -166,16 +168,6 @@ const DefectRaisingBreackageRequestPopUp = ({ onClose }) => {
     },
   ]);
   const [selectedPartId, setSelectedPartId] = useState("");
-
-  // Fetch parts data from API
-  //  useEffect(() => {
-  //    fetch("API_BASE_URL/parts") // Replace with your actual API URL
-  //      .then((response) => response.json())
-  //      .then((data) => setParts(data.parts || [])) // Assuming response contains { parts: [...] }
-  //      .catch((error) => console.error("Error fetching parts:", error));
-  //  }, []);
-
-  // Add a new defective item row
   const addDefectiveItem = () => {
     setDefectiveItems((prevItems) => [
       ...prevItems,
@@ -297,44 +289,6 @@ const DefectRaisingBreackageRequestPopUp = ({ onClose }) => {
       .then((data) => setComplaintData(data))
       .catch((error) => console.error("Error fetching complaints:", error));
   }, []);
-
-
-
-
-  // Handle complaint selection and autofill fields
-  // const handleComplaintChange = (event) => {
-  //   const complaintId = event.target.value;
-  //   setSelectedComplaint(complaintId);
-
-  //   const selected = complaintData.find(
-  //     (complaint) => complaint.complaintId === parseInt(complaintId)
-  //   );
-
-  //   if (selected) {
-  //     setFormData({
-  //       complaintType: selected.equipmentComplaintDTO.complaintType, // Corrected line to set complaint type
-  //       complaintOn: selected.equipmentComplaintDTO.complaintSubject,
-  //       assetNo: selected.equipmentComplaintDTO.equipmentMaster.assetNo,
-  //       location: selected.equipmentComplaintDTO.equipmentMaster.assetLocationMaster.subLocation,
-  //       serialNo: selected.equipmentComplaintDTO.equipmentMaster.serialNo,
-  //       responsibleDepartment: selected.equipmentComplaintDTO.equipmentMaster.department.departmentName,
-  //       costOfItem: selected.equipmentComplaintDTO.equipmentMaster.cost,
-  //       dateOfInstallation: selected.equipmentComplaintDTO.equipmentMaster.installationDate,
-  //     });
-  //   } else {
-  //     setFormData({
-  //       complaintType: "", // Reset complaint type
-  //       complaintOn: "",
-  //       assetNo: "",
-  //       location: "",
-  //       serialNo: "",
-  //       responsibleDepartment: "",
-  //       costOfItem: "",
-  //       dateOfInstallation: "",
-  //     });
-  //   }
-  // };
-
   const handleComplaintChange = (event) => {
     const complaintId = event.target.value;
     setSelectedComplaint(complaintId);
@@ -424,11 +378,11 @@ const DefectRaisingBreackageRequestPopUp = ({ onClose }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Request successful:', data);
+        toast.success('Request successful:', data);
         // Optionally, close the popup or reset form here
       })
       .catch((error) => {
-        console.error('Error during submission:', error);
+        toast.error('Error during submission:', error);
       });
   };
 
@@ -443,229 +397,236 @@ const DefectRaisingBreackageRequestPopUp = ({ onClose }) => {
       <div className="DefectRaisingBreackageRequestPopUp-form">
         <div className="DefectRaisingBreackageRequestPopUp-panel">
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Complaint Number:</label>
-            <select value={selectedComplaint} onChange={handleComplaintChange}>
-              <option value="">Select Complaint</option>
-              {complaintData.map((complaint) => (
-                <option key={complaint.complaintId} value={complaint.complaintId}>
-                  {complaint.complaintType}
-                </option>
-              ))}
-            </select>
+          <FloatingSelect
+  label={"Complaint Number"}
+  value={selectedComplaint} 
+  onChange={handleComplaintChange}
+  options={[
+    { value: "", label: "Select Complaint" },
+    ...complaintData.map((complaint) => ({
+      value: complaint.complaintId,
+      label: complaint.complaintType
+    }))
+  ]}
+/>           
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Complaint On:</label>
-            <input type="text" value={formData.complaintOn} readOnly />
+            <FloatingInput
+            label={"Complaint On"}
+            type="text" value={formData.complaintOn} readOnly/>
+           
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Asset No:</label>
-            <input type="text" value={formData.assetNo} readOnly />
+            <FloatingInput
+            label={"Asset No"}
+            type="text" value={formData.assetNo} readOnly/>
+           
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Location:</label>
-            <input type="text" value={formData.location} readOnly />
+            <FloatingInput
+            label={"Location"}
+            type="text" value={formData.location} readOnly/>
+            
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Serial No:</label>
-            <input type="text" value={formData.serialNo} readOnly />
+            <FloatingInput
+            label={"Serial No"}
+            type="text" value={formData.serialNo} readOnly/>
+           
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Responsible Department:</label>
-            <input type="text" value={formData.responsibleDepartment} readOnly />
+            <FloatingInput
+            label={"Responsible Department"}
+            type="text" value={formData.responsibleDepartment} readOnly/>
+            
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Cost Of Item:</label>
-            <input type="text" value={formData.costOfItem} readOnly />
+            <FloatingInput
+            label={"Cost Of Item"}
+            type="text" value={formData.costOfItem} readOnly/>
+            
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Date Of Installation:</label>
-            <input type="text" value={formData.dateOfInstallation} readOnly />
+            <FloatingInput
+            label={"Date Of Installation"}
+            type="text" value={formData.dateOfInstallation} readOnly/>
+           
           </div>
 
           {/* Insurance */}
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Insurance Done:</label>
-            <select value={insuranceDone} onChange={(e) => setInsuranceDone(e.target.value === 'true')}>
-              <option value={true}>Yes</option>
-              <option value={false}>No</option>
-            </select>
+            <FloatingSelect
+            label={"Insurance Done"}
+            value={insuranceDone} onChange={(e) => setInsuranceDone(e.target.value === 'Yes')}
+            options={[
+              {value:"Yes" ,label:"Yes"},
+              {value:"No" , label:"No"}
+            ]}/>
+           
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Insurance Up To:</label>
-            <input type="date" value={insuranceUpTo} onChange={(e) => setInsuranceUpTo(e.target.value)} />
+            <FloatingInput
+            label={"Insurance Up To"}
+            type="date" 
+            value={insuranceUpTo} 
+            onChange={(e) => setInsuranceUpTo(e.target.value)}/>
+           
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Name Of Defect: *</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Name Of Defect *"}
+            type="text"
               value={natureOfDefect}
-              onChange={(e) => setNatureOfDefect(e.target.value)}
-            />
+              onChange={(e) => setNatureOfDefect(e.target.value)}/>
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Probable Cause:</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Probable Cause"}
+             type="text"
               value={probableCause}
-              onChange={(e) => setProbableCause(e.target.value)}
-            />
+              onChange={(e) => setProbableCause(e.target.value)}/>
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Details Of Defective Parts:</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Details Of Defective Parts"}
+            type="text"
               value={detailsOfDefectiveParts}
-              onChange={(e) => setDetailsOfDefectiveParts(e.target.value)}
-            />
+              onChange={(e) => setDetailsOfDefectiveParts(e.target.value)}/>
           </div>
         </div>
 
         <div className="DefectRaisingBreackageRequestPopUp-panel">
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Cost Of Repair With Contact No:</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Cost Of Repair With Contact No"}
+            type="text"
               value={costOfRepair}
-              onChange={(e) => setCostOfRepair(e.target.value)}
-            />
+              onChange={(e) => setCostOfRepair(e.target.value)}/>
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Last Repaired:</label>
-            <select
-              value={lastRepaired}
+            <FloatingSelect
+            label={"Last Repaired"}
+            value={lastRepaired}
               onChange={(e) => setLastRepaired(e.target.value)}
-            >
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
+              options={[{value:"Yes" , label:"Yes"},{value:"No",label:"No"}]}/>
+           
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Last Repaired Done Date:</label>
-            <input
-              type="date"
+            <FloatingInput
+            label={"Last Repaired Done Date"}
+            type="date"
               value={lastRepairDate}
               onChange={(e) => setLastRepairDate(e.target.value)}
             />
+           
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Last Repaired Done Cost:</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Last Repaired Done Cost"}
+             type="text"
               value={lastRepairCost}
-              onChange={(e) => setLastRepairCost(e.target.value)}
-            />
+              onChange={(e) => setLastRepairCost(e.target.value)}/>
+            
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Prospective Repairer:</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Prospective Repairer"}
+            type="text"
               value={prospectiveRepair}
               onChange={(e) => setProspectiveRepair(e.target.value)}
             />
+           
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Expected Duration Of Repair: *</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Expected Duration Of Repair * "}
+            type="text"
               value={expectedDurationOfRepair}
-              onChange={(e) => setExpectedDurationOfRepair(e.target.value)}
-            />
+              onChange={(e) => setExpectedDurationOfRepair(e.target.value)}/>
+            
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Proposal Made By:</label>
-            <select value={selectedEmployeeId} onChange={handleEmployeeChange}>
-              <option value="">Select Employee</option>
-              {employees.map((employee) => (
-                <option key={employee.employeeId} value={employee.employeeId}>
-                  {employee.firstName} {employee.lastName}
-                </option>
-              ))}
-            </select>
+          <FloatingSelect
+  label={"Proposal Made By"}
+  value={selectedEmployeeId} 
+  onChange={handleEmployeeChange}
+  options={[
+    { value: "", label: "Select Employee" },
+    ...employees.map((employee) => ({
+      value: employee.employeeId,
+      label: `${employee.firstName} ${employee.lastName}`
+    }))
+  ]}
+/>
           </div>
-
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>LAST Repair Part: *</label>
-            <input
-              type="text"
-              value={lastRepairPart}
-              onChange={(e) => setLastRepairPart(e.target.value)}
-            />
+            <FloatingInput
+            label={"LAST Repair Part *"}
+            type="text"
+            value={lastRepairPart}
+            onChange={(e) => setLastRepairPart(e.target.value)}/>
           </div>
-
-
-
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Contract Type:</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Contract Type"}
+            type="text"
               value={contractType}
-              onChange={(e) => setContractType(e.target.value)}
-            />
+              onChange={(e) => setContractType(e.target.value)}/>
           </div>
-
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Contract From:</label>
-            <input
-              type="date"
+            <FloatingInput
+            label={"Contract From"}
+            type="date"
               value={contractFrom}
-              onChange={(e) => setContractFrom(e.target.value)}
-            />
+              onChange={(e) => setContractFrom(e.target.value)}/>
           </div>
-
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Contract To:</label>
-            <input
-              type="date"
+            <FloatingInput
+            label={"Contract To"}
+            type="date"
               value={contractTo}
-              onChange={(e) => setContractTo(e.target.value)}
-            />
+              onChange={(e) => setContractTo(e.target.value)}/>
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>Contract Details:</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Contract Details"}
+            type="text"
               value={contractDetails}
-              onChange={(e) => setContractDetails(e.target.value)}
-            />
+              onChange={(e) => setContractDetails(e.target.value)}/>
+            
           </div>
 
           <div className="DefectRaisingBreackageRequestPopUp-form-group">
-            <label>HOD Remarks:</label>
-            <input
-              type="text"
-              value={hodRemarks}
-              onChange={(e) => setHodRemarks(e.target.value)}
-            />
+            <FloatingInput
+            label={"HOD Remarks"}
+            type="text"
+            value={hodRemarks}
+            onChange={(e) => setHodRemarks(e.target.value)}/>
           </div>
         </div>
       </div>
-
-
-
-
-
       <div className="DefectRaisingBreackageRequestPopUp-history-section">
         <div className="DefectRaisingBreackageRequestPopUp-tab-bar">
           <button
-            className={`DefectRaisingBreackageRequestPopUp-tab ${selectedTabContent === "approveDetails" ? "active" : ""
+            className={`DefectRaisingBreackageRequestPopUp-tab-btn ${selectedTabContent === "approveDetails" ? "active" : ""
               }`}
             onClick={() => setSelectedTabContent("approveDetails")}
           >
@@ -673,7 +634,7 @@ const DefectRaisingBreackageRequestPopUp = ({ onClose }) => {
           </button>
 
           <button
-            className={`DefectRaisingBreackageRequestPopUp-tab ${selectedTabContent === "approvalStatus" ? "active" : ""
+            className={`DefectRaisingBreackageRequestPopUp-tab-btn ${selectedTabContent === "approvalStatus" ? "active" : ""
               }`}
             onClick={() => setSelectedTabContent("approvalStatus")}
           >
@@ -682,7 +643,7 @@ const DefectRaisingBreackageRequestPopUp = ({ onClose }) => {
 
           {/* Add Defective Item Tab */}
           <button
-            className={`DefectRaisingBreackageRequestPopUp-tab ${selectedTabContent === "defectiveItems" ? "active" : ""
+            className={`DefectRaisingBreackageRequestPopUp-tab-btn ${selectedTabContent === "defectiveItems" ? "active" : ""
               }`}
             onClick={() => setSelectedTabContent("defectiveItems")}
           >
@@ -705,21 +666,24 @@ const DefectRaisingBreackageRequestPopUp = ({ onClose }) => {
                   <tr key={detail.id}>
                     <td>{detail.id}</td>
                     <td>
-                      <select
-                        value={detail.approvedBy}
-                        onChange={(e) => {
-                          const selectedId = e.target.value;
-                          handleApprovalDetailsChange(detail.id, "approvedBy", selectedId);
-                          setSelectedDoctorId(selectedId); // Update selectedDoctorId when a doctor is selected
-                        }}
-                      >
-                        <option value="">Select doctor</option>
-                        {doctors.map((doctor) => (
-                          <option key={doctor.doctorId} value={doctor.doctorId}>
-                            {doctor.doctorName}
-                          </option>
-                        ))}
-                      </select>
+                    <FloatingSelect
+  label={"Approved By"}
+  value={detail.approvedBy}
+  onChange={(e) => {
+    const selectedId = e.target.value;
+    handleApprovalDetailsChange(detail.id, "approvedBy", selectedId);
+    setSelectedDoctorId(selectedId); 
+  }}
+  options={[
+    { value: "", label: "Select Doctor" },
+    ...doctors.map((doctor) => ({
+      value: doctor.doctorId,
+      label: doctor.doctorName
+    }))
+  ]}
+/>
+
+                     
                     </td>
                   </tr>
                 ))}
@@ -745,43 +709,43 @@ const DefectRaisingBreackageRequestPopUp = ({ onClose }) => {
                   <tr key={status.id}>
                     <td>{status.id}</td>
                     <td>
-                      <select
-                        value={status.approvedBy}
-                        onChange={(e) => {
-                          const selectedId = e.target.value;
-                          handleApprovalDetailsChange(detail.id, "approvedBy", selectedId);
-                          setSelectedDoctorId(selectedId); // Update selectedDoctorId when a doctor is selected
-                        }}
-                      >
-                        <option value="">Select doctor</option>
-                        {doctors.map((doctor) => (
-                          <option key={doctor.doctorId} value={doctor.doctorId}>
-                            {doctor.doctorName}
-                          </option>
-                        ))}
-                      </select>
+                    <FloatingSelect
+  value={status.approvedBy}
+  onChange={(e) => {
+    const selectedId = e.target.value;
+    handleApprovalDetailsChange(detail.id, "approvedBy", selectedId);
+    setSelectedDoctorId(selectedId); // Update selectedDoctorId when a doctor is selected
+  }}
+  options={[
+    { value: "", label: "Select Doctor" },
+    ...doctors.map((doctor) => ({
+      value: doctor.doctorId,
+      label: doctor.doctorName
+    }))
+  ]}
+/>   
                     </td>
 
                     <td>
-                      <input
-                        type="time"
-                        value={status.approvalTime || ""}
-                        onChange={(e) =>
-                          handleApprovalStatusChange(status.id, "approvalTime", e.target.value)
-                        }
-                        placeholder="Enter time"
-                      />
+                      <FloatingInput
+                      label={"Time"}
+                      type="time"
+                      value={status.approvalTime || ""}
+                      onChange={(e) =>
+                        handleApprovalStatusChange(status.id, "approvalTime", e.target.value)
+                      }/>
                     </td>
 
                     <td>
-                      <input
-                        type="date"
+                      <FloatingInput
+                      label={"Date"}
+                      type="date"
                         value={status.approvalDate || ""}
                         onChange={(e) =>
                           handleApprovalStatusChange(status.id, "approvalDate", e.target.value)
                         }
-                        placeholder="Enter date"
                       />
+                      
                     </td>
                   </tr>
                 ))}
@@ -811,66 +775,69 @@ const DefectRaisingBreackageRequestPopUp = ({ onClose }) => {
                     <tr key={index}>
                       {/* Dropdown for part name */}
                       <td>
-                        <select
-                          value={selectedPart}
-                          onChange={handlePartChange}
-                        >
-                          <option value="" disabled>
-                            Select Part
-                          </option>
-                          {parts.map((part) => (
-                            <option key={part.partId} value={part.partId}>
-                              {part.partName}
-                            </option>
-                          ))}
-                        </select>
+                      <FloatingSelect
+  label={"Part Name"}
+  value={selectedPart}
+  onChange={handlePartChange}
+  options={[
+    { value: "", label: "Select Part", disabled: true },
+    ...parts.map((part) => ({
+      value: part.partId,
+      label: part.partName
+    }))
+  ]}
+/>
+
                       </td>
 
                       {/* Other fields */}
                       <td>
-                        <input
-                          type="number"
+                        <FloatingInput
+                        label={"Quantity"}
+                        type="number"
                           value={item.quantity}
                           onChange={(e) =>
-                            handleDefectiveItemChange(index, "quantity", e.target.value)
-                          }
+                            handleDefectiveItemChange(index, "quantity", e.target.value)}
                         />
+                        
                       </td>
                       <td>
-                        <input
-                          type="text"
+                        <FloatingInput
+                        label={"Covered Under"}
+                        type="text"
                           value={item.coveredUnder}
                           onChange={(e) =>
                             handleDefectiveItemChange(index, "coveredUnder", e.target.value)
-                          }
-                        />
+                          }/>
                       </td>
                       <td>
-                        <input
-                          type="text"
+                        <FloatingInput
+                        label={"Contract Type"}
+                        type="text"
                           value={item.contractType}
                           onChange={(e) =>
                             handleDefectiveItemChange(index, "contractType", e.target.value)
                           }
                         />
+                       
                       </td>
                       <td>
-                        <input
-                          type="number"
+                        <FloatingInput
+                        label={"Unser Insurance Cost"}
+                        type="number"
                           value={item.underInsuranceCost}
                           onChange={(e) =>
                             handleDefectiveItemChange(index, "underInsuranceCost", e.target.value)
-                          }
-                        />
+                          }/>
                       </td>
                       <td>
-                        <input
-                          type="text"
+                        <FloatingInput
+                        label={"Remark"}
+                        type="text"
                           value={item.remark}
                           onChange={(e) =>
                             handleDefectiveItemChange(index, "remark", e.target.value)
-                          }
-                        />
+                          }/>
                       </td>
                       <td>
                         <button onClick={() => removeDefectiveItem(index)}>Remove</button>

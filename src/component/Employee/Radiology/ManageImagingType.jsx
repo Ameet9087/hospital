@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
-import "./ManageImagingType.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
+import { FloatingInput } from "../../../FloatingInputs";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { useFilter } from "../../ShortCuts/useFilter";
-import { toast } from "react-toastify";
-import { FloatingInput } from "../../../FloatingInputs";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import "./ManageImagingType.css";
 
 const ManageImagingType = () => {
   const [showModal, setShowModal] = useState(false);
@@ -15,19 +14,20 @@ const ManageImagingType = () => {
   const [role, setRole] = useState("");
   const [description, setDescription] = useState("");
   const [isActive, setIsActive] = useState(false);
-  const [createdDate, setCreatedDate] = useState(""); // New state for created date
-  const [createdTime, setCreatedTime] = useState(""); // New state for created time
+  const [createdDate, setCreatedDate] = useState("");
+  const [createdTime, setCreatedTime] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
   const [imagingTypes, setImagingTypes] = useState([]);
   const [columnWidths, setColumnWidths] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
+
   const tableRef = useRef(null);
+
   useEffect(() => {
     const fetchImagingTypes = async () => {
       try {
-        const response = await axios.get(
-          `${API_BASE_URL}/imaging-type/imaging-types`
-        );
+        const response = await axios.get(`${API_BASE_URL}/imaging-type/imaging-types`);
+        console.log("Fetched Data:", response.data);
         setImagingTypes(response.data);
       } catch (error) {
         console.error("Error fetching imaging types:", error);
@@ -37,16 +37,18 @@ const ManageImagingType = () => {
   }, []);
 
   const filteredItems = useFilter(imagingTypes, searchTerm);
+
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
-
+ 
+  
   const handleEditClick = (type) => {
     setSelectedImagingType(type);
-    setRole(type.imagingTypeName); // Ensure the correct field name is used
-    setIsActive(type.isActive === "true"); // Convert string 'true'/'false' to boolean
-    setCreatedDate(type.createdDate); // Autofill created date
-    setCreatedTime(type.createdTime); // Autofill created time
+    setRole(type.imagingTypeName);
+    setIsActive(type.isActive === "true");
+    setCreatedDate(type.createdDate);
+    setCreatedTime(type.createdTime);
     setIsEditMode(true);
     setShowModal(true);
   };
@@ -55,8 +57,8 @@ const ManageImagingType = () => {
     setSelectedImagingType(null);
     setRole("");
     setIsActive(false);
-    setCreatedDate(""); // Clear date for new entries
-    setCreatedTime(""); // Clear time for new entries
+    setCreatedDate("");
+    setCreatedTime("");
     setIsEditMode(false);
     setShowModal(true);
   };
@@ -68,38 +70,46 @@ const ManageImagingType = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     const imagingTypeData = {
       imagingTypeName: role,
       isActive: isActive ? "true" : "false",
-      createdDate,
-      createdTime,
+      createdDate: createdDate || new Date().toISOString().split("T")[0],
+      createdTime: createdTime || new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
     try {
       if (isEditMode && selectedImagingType) {
+        console.log("Updating Imaging Type:", selectedImagingType.imagingTypeId);
         await axios.put(
-          `${API_BASE_URL}/imaging-type/create-imaging-items/${selectedImagingType.imagingTypeId}`,
+          `${API_BASE_URL}/imaging-type/imaging-types/${selectedImagingType.imagingTypeId}`,
           imagingTypeData
         );
-        toast.success("Updated:", imagingTypeData);
+        toast.success("Updated Successfully!");
       } else {
-        await axios.post(
-          `${API_BASE_URL}/imaging-type/imaging-types`,
-          imagingTypeData
-        );
-        toast.success("Added:", imagingTypeData);
+        console.log("Adding New Imaging Type:", imagingTypeData);
+        await axios.post(`${API_BASE_URL}/imaging-type/imaging-types`, imagingTypeData);
+        toast.success("Added Successfully!");
       }
-      // Refresh imaging types after update/add
-      const response = await axios.get(
-        `${API_BASE_URL}/imaging-type/imaging-types`
-      );
+
+      const response = await axios.get(`${API_BASE_URL}/imaging-type/imaging-types`);
       setImagingTypes(response.data);
       handleCloseModal();
     } catch (error) {
-      toast.error("Error submitting imaging type:", error);
+      toast.error("Error submitting imaging type.");
+      console.error("Error:", error);
     }
   };
-
+  const handleReset = (event) => {
+    event.preventDefault();  // Prevent form submission when reset is clicked
+    setRole("");
+    setDescription("");
+    setIsActive(false);
+    setCreatedDate("");
+    setCreatedTime("");
+    setResetClicked(true);  // Mark that reset was clicked
+  };
+  
   return (
     <div className="manage-imaging-type-container">
       <div>
@@ -108,33 +118,17 @@ const ManageImagingType = () => {
         </button>
       </div>
       <div className="manage-imaging-type-search-bar">
-        <FloatingInput
-          label={"Search"}
-          type="text"
-          placeholder="Search"
-          value={searchTerm}
-          onChange={handleSearch}
-        />
+        <FloatingInput label="Search" type="text" placeholder="Search" value={searchTerm} onChange={handleSearch} />
       </div>
       <div className="table-container">
         <table ref={tableRef}>
           <thead>
             <tr>
-              {["Type Name", "IsActive", "Action"].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
+              {["Type Name", "Is Active", "Action"].map((header, index) => (
+                <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
                   <div className="header-content">
                     <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
+                    <div className="resizer" onMouseDown={startResizing(tableRef, setColumnWidths)(index)}></div>
                   </div>
                 </th>
               ))}
@@ -145,13 +139,8 @@ const ManageImagingType = () => {
               <tr key={index}>
                 <td>{type.imagingTypeName}</td>
                 <td>{type.isActive}</td>
-                {/* <td>{type.createdDate}</td>
-                <td>{type.createdTime}</td> */}
                 <td>
-                  <button
-                    className="manage-imaging-type-edit-button"
-                    onClick={() => handleEditClick(type)}
-                  >
+                  <button className="manage-imaging-type-edit-button" onClick={() => handleEditClick(type)}>
                     Edit
                   </button>
                 </td>
@@ -164,20 +153,12 @@ const ManageImagingType = () => {
       <CustomModal isOpen={showModal} onClose={handleCloseModal}>
         <div className="manage-modal-dialog">
           <div className="manage-modal-modal-header">
-            <div className="manage-modal-modal-title">
-              {isEditMode ? "Update Imaging Type" : "Add Imaging Type"}
-            </div>
+            <div className="manage-modal-modal-title">{isEditMode ? "Update Imaging Type" : "Add Imaging Type"}</div>
           </div>
           <div className="manage-modal-modal-body">
             <form onSubmit={handleSubmit}>
               <div className="manage-modal-form-group">
-                <FloatingInput
-                  label={"Imaging Item Name"}
-                  type="text"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  required
-                />
+                <FloatingInput label="Imaging Item Name" type="text" value={role} onChange={(e) => setRole(e.target.value)} required />
               </div>
 
               <div className="manage-modal-form-group">
@@ -191,26 +172,17 @@ const ManageImagingType = () => {
               </div>
 
               <div className="manage-modal-form-group">
-                <FloatingInput
-                  label={"Created Date"}
-                  type="date"
-                  value={createdDate}
-                  onChange={(e) => setCreatedDate(e.target.value)}
-                />
+                <FloatingInput label="Created Date" type="date" value={createdDate} onChange={(e) => setCreatedDate(e.target.value)} />
               </div>
 
               <div className="manage-modal-form-group">
-                <FloatingInput
-                  label={"Created Time"}
-                  type="time"
-                  value={createdTime}
-                  onChange={(e) => setCreatedTime(e.target.value)}
-                />
+                <FloatingInput label="Created Time" type="time" value={createdTime} onChange={(e) => setCreatedTime(e.target.value)} />
               </div>
 
               <button type="submit" className="manage-modal-employee-btn">
                 {isEditMode ? "Update" : "Add"}
               </button>
+              <button  className="manage-modal-employee-btn" onClick={handleReset}> Reset</button>
             </form>
           </div>
         </div>

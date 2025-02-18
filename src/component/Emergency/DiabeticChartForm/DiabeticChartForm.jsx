@@ -4,6 +4,7 @@ import PopupTable from "../popup";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { API_BASE_URL } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 // FloatingInput component remains exactly the same
 const FloatingInput = ({ label, type = "text", value, ...props }) => {
@@ -132,6 +133,7 @@ const DiabeticChartForm = () => {
   const [mrNoData, setMrNoData] = useState([]);
   const [activePopup, setActivePopup] = useState(null);
   const [selectedRowIndex, setSelectedRowIndex] = useState(null); // Track the selected row index
+  const navigate = useNavigate();
   const [serviceDetails, setServiceDetails] = useState([]); // Moved serviceDetails here
 
   useEffect(() => {
@@ -340,13 +342,20 @@ const DiabeticChartForm = () => {
       console.error("Error fetching data:", error);
     }
   };
-
+  const handleBack = () => navigate("/emergency/erinitial");
+  
   return (
     <>
       <div className="diabetic-chart-form-container">
         <div className="diabetic-chart-form-section">
+        <div className="er-initial-assessment-com-section">
+        <button className="er-initial-assessment-com-section-back" onClick={handleBack}>Back</button>
+        </div>
+
           <div className="diabetic-chart-form-header">
             Diabetic Chart Details
+            
+          
           </div>
           <div className="diabetic-chart-form-grid">
             <FloatingInput

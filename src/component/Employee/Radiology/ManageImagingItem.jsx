@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import "./ManageImagingType.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { useFilter } from "../../ShortCuts/useFilter";
@@ -182,7 +182,18 @@ const ManageImagingItem = () => {
     }
     setShowEditModal(false);
   };
-
+  const resetForm = (e) => {
+    e.preventDefault(); // Prevent form submission when resetting
+    setRole("");
+    setIsActive(false);
+    setIsValidForReporting(false);
+    setSelectedImagingType("");
+    setProcedureCode("");
+    setSelectedServiceDetails(null);
+    setSelectedRadiologyTemplate(null);
+    setIsEditMode(false);
+  };
+  
   return (
     <>
       <div className="manage-imaging-item-container">
@@ -335,6 +346,7 @@ const ManageImagingItem = () => {
                 <button type="submit" className="manage-modal-submit-btn">
                   {isEditMode ? "Update" : "Add"}
                 </button>
+                <button  className="manage-modal-submit-btn" onClick={resetForm}>Reset</button>
               </form>
             </div>
           </div>

@@ -9,6 +9,7 @@ function DoctorMainPage() {
   const [myAppointment, setMyAppointment] = useState([]);
   const [newPatient, setNewPatient] = useState([]);
   const [followUpPatient, setFollowUpPatient] = useState([]);
+  const [opdPatientRecord, setOpdPatientRecord] = useState([]);
 
   const [isPatientOPEN, setIsPatientOPEN] = useState(false);
 
@@ -18,6 +19,7 @@ function DoctorMainPage() {
   const [filteredMyAppointments, setFilteredMyAppointments] = useState([]);
   const [filteredNewPatient, setFilteredNewPatient] = useState([]);
   const [filteredFollowUpPatient, setFilteredFollowUpPatient] = useState([]);
+  const [filteredOpdPatientRecord, setFilteredOpdPatientRecord] = useState([])
 
   const fetchAllMyAppointments = async (id = 0) => {
     let response;
@@ -58,10 +60,17 @@ function DoctorMainPage() {
     setFollowUpPatient(response.data);
   };
 
+  const fetchAllOpdPatientRecord = async () => {
+    let response = await axios.get(`${API_BASE_URL}/out-patient`)
+    setOpdPatientRecord(response.data)
+    setFilteredOpdPatientRecord(response.data)
+  }
+
   useEffect(() => {
     fetchAllMyAppointments();
     fetchAllNewPatientWhosePaymentIsDone();
     fetchFollowUpWhosePaymentIsDone();
+    fetchAllOpdPatientRecord()
   }, []);
 
   const handleSelectPatient = (data) => {
@@ -76,6 +85,7 @@ function DoctorMainPage() {
       setFilteredMyAppointments(myAppointment);
       setFilteredNewPatient(newPatient);
       setFollowUpPatient(followUpPatient);
+      setFilteredOpdPatientRecord(opdPatientRecord)
       return;
     }
 
@@ -119,6 +129,22 @@ function DoctorMainPage() {
         );
       });
       setFilteredFollowUpPatient(followPatient);
+    }
+
+    else if (isSearchVisible === "opdRecord") {
+      console.log(query);
+
+      const opdPatients = opdPatientRecord.filter((item) => {
+        return (
+          item.patient?.firstName?.toLowerCase().includes(lowerQuery) ||
+          item.patient?.lastName?.toLowerCase().includes(lowerQuery) ||
+          item.addDoctor?.doctorName?.toLowerCase().includes(lowerQuery) ||
+          item.patient?.uhid?.toLowerCase().includes(lowerQuery) ||
+          item.patient?.gender?.toLowerCase().includes(lowerQuery) ||
+          item.outPatientId?.toLowerCase().includes(lowerQuery)
+        );
+      });
+      setFilteredOpdPatientRecord(opdPatients);
     }
   };
 
@@ -311,7 +337,7 @@ function DoctorMainPage() {
 
           <div className="doctorMainPage-subcontainer">
             <div className="doctorMainPage-header">
-              <h1>FollowUp Patients</h1>
+              <h1>Followup Patients</h1>
               <div>
                 {isSearchVisible === "followup" && (
                   <input
@@ -369,6 +395,97 @@ function DoctorMainPage() {
                         <div class="doctorMainPage-info-row">
                           <span class="label">Fees Paid:</span>
                           <span class="value">{item.feespaid}</span>
+                        </div>
+                        <div class="doctorMainPage-info-row">
+                          <span class="label">Reason:</span>
+                          <span class="value">{item.remarks}</span>
+                        </div>
+                        <div class="doctorMainPage-info-row">
+                          <span class="label">Doctor:</span>
+                          <span class="value">
+                            {item.addDoctor?.salutation}{" "}
+                            {item.addDoctor?.doctorName}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  Data Not Available
+                </div>
+              )}
+            </div>
+          </div>
+
+
+          <div className="doctorMainPage-subcontainer">
+            <div className="doctorMainPage-header">
+              <h1>Opd Patients Records</h1>
+              <div>
+                {isSearchVisible === "opdRecord" && (
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    placeholder="search"
+                    onChange={(e) => handleSearch(e.target.value)}
+                    className="wardNurseDashboard-search-input"
+                  />
+                )}
+                <i
+                  onClick={() => setIsSearchVisible("opdRecord")}
+                  style={{ cursor: "pointer", marginLeft: "10px" }}
+                  className="fa-solid fa-magnifying-glass"
+                ></i>
+              </div>
+            </div>
+            <div className="doctorMainPage-boxes">
+              {filteredOpdPatientRecord.length > 0 ? (
+                filteredOpdPatientRecord.map((item) => (
+                  <div
+                    onClick={() => handleSelectPatient(item)}
+                    className="doctorMainPage-box"
+                  >
+                    <div class="doctorMainPage-patient-info">
+                      <div class="doctorMainPage-patient-data-img-con">
+                        <div class="doctorMainPage-patient-avatar">
+                          {!item?.patient?.hasOwnProperty("fileAttachment") ? (
+                            <span>{item?.patient?.firstName?.[0]}</span>
+                          ) : (
+                            <img
+                              src={`data:image/png;base64,${item?.patient?.fileAttachment}`}
+                              alt="patient attachment"
+                            />
+                          )}
+                        </div>
+                        <div className="doctorMainPage-patient-personal-details">
+                          <div class="doctorMainPage-info-row">
+                            <span class="value">
+                              {item.patient?.firstName} {item.patient?.lastName}
+                            </span>
+                          </div>
+                          <div class="doctorMainPage-info-row">
+                            <span class="value">{item.patient?.uhid}</span>
+                          </div>
+                          <div class="doctorMainPage-info-row">
+                            <span class="value">
+                              {item.patient?.age} {item.patient?.ageUnit} /{" "}
+                              {item.patient?.gender}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="doctorMainPage-patient-details">
+                        <div class="doctorMainPage-info-row">
+                          <span class="label">Out Patient Id:</span>
+                          <span class="value">{item.outPatientId}</span>
                         </div>
                         <div class="doctorMainPage-info-row">
                           <span class="label">Reason:</span>

@@ -3,7 +3,10 @@ import "../DisStocks/dispenStockRequisition.css";
 import DispenStockRequisitionCreateReq from "./dispenStockRequisitionCreateReq";
 import { useReactToPrint } from "react-to-print";
 import axios from "axios";
+import * as XLSX from 'xlsx';
 import { API_BASE_URL } from "../../api/api";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import CustomModal from "../../../CustomModel/CustomModal";
 import { toast } from "react-toastify";
 import {
   FloatingInput,
@@ -16,6 +19,7 @@ function DispenStockRequisition() {
   const [requisitions, setRequisitions] = useState([]);
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
   const [statusFilter, setStatusFilter] = useState("All");
+
   const tableRef = useRef();
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -69,6 +73,7 @@ function DispenStockRequisition() {
     if (tableRef.current) {
       const printContents = tableRef.current.innerHTML;
 
+
       // Create an iframe element
       const iframe = document.createElement("iframe");
       iframe.style.position = "absolute";
@@ -96,6 +101,7 @@ function DispenStockRequisition() {
           </style>
         </head>
         <body>
+
           <table>
             ${printContents}
           </table>
@@ -188,6 +194,7 @@ function DispenStockRequisition() {
               </button>
               <button
                 className="dispenStockRequisition-print-btn"
+
                 onClick={printList}
               >
                 <i className="fa-solid fa-print"></i> Print
@@ -195,18 +202,39 @@ function DispenStockRequisition() {
             </div>
           </div>
 
+
           <div className="dispenStockRequisition-table-N-paginat">
             <table ref={tableRef}>
               <thead>
                 <tr>
-                  <th>Requisition ID</th>
-                  <th>Requested By</th>
-                  <th>Requested From</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                  {[
+                    "Requisition ID",
+                    "Requested By",
+                    "Requested From",
+                    "Date",
+                    "Status",
+                    "Action",
+                  ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
                 </tr>
               </thead>
+
               <tbody>
                 {requisitions.map((req, index) => (
                   <tr key={index}>
@@ -217,7 +245,7 @@ function DispenStockRequisition() {
                     <td>{req.status}</td>
                     <td>
                       <button
-                        className="dispensarystockrequ-view"
+                        className="dispenStockRequisition-print-btn"
                         onClick={() => handleViewClick(req)}
                       >
                         View
@@ -231,9 +259,14 @@ function DispenStockRequisition() {
         </>
       )}
 
-      {showModal && (
-        <div className="dispensarystockreq-modal-dialog">
-          <div className="dispensarystockreq-modal-content">
+      {/* {showModal && ( */}
+         <CustomModal
+         isOpen={showModal}
+         onClose={() => setShowModal(false)}
+         title="Requisition Details"
+       >
+        <div  >
+          <div>
             <div className="dispensarystockreqdetail-modal-header">
               <h5
                 className="dispensarystockreq-modal-title"
@@ -303,7 +336,7 @@ function DispenStockRequisition() {
                 </table>
               </>
             </div>
-            <div className="dispensarystockreq-modal-footer">
+            {/* <div className="dispensarystockreq-modal-footer">
               <button
                 type="button"
                 className="dispensarystockreq-modal-btn"
@@ -311,10 +344,11 @@ function DispenStockRequisition() {
               >
                 Close
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
-      )}
+      {/* )} */}
+      </CustomModal>
     </div>
   );
 }

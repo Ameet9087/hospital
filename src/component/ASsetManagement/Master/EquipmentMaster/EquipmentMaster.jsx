@@ -38,10 +38,15 @@ const EquipmentMaster = () => {
   });
 
   const handleExport = () => {
-    const csvHeader = ["Type", "Search Equipment", "EQP No", "Type of Equipment", "Equipment Owner", "Equipment Name"];
+    const csvHeader = [
+      "Type",
+      "EQP No",
+      "Type of Equipment",
+      "Equipment Owner",
+      "Equipment Name",
+    ];
     const csvData = filteredEquipmentMasters.map((master) => [
       master.type,
-      master.equipmentNo,
       master.equipmentMasterId,
       master.typeOfEquipment,
       master.equipmentOwner,
@@ -87,7 +92,13 @@ const EquipmentMaster = () => {
           <table>
             <thead>
               <tr>
-                ${["Type", "Search Equipment", "EQP No", "Type of Equipment", "Equipment Owner", "Equipment Name"]
+                ${[
+        "Type",
+        "EQP No",
+        "Type of Equipment",
+        "Equipment Owner",
+        "Equipment Name",
+      ]
         .map((header) => `<th>${header}</th>`)
         .join("")}
               </tr>
@@ -98,7 +109,6 @@ const EquipmentMaster = () => {
           (master) => `
                     <tr>
                       <td>${master.type}</td>
-                      <td>${master.equipmentNo}</td>
                       <td>${master.equipmentMasterId}</td>
                       <td>${master.typeOfEquipment}</td>
                       <td>${master.equipmentOwner}</td>
@@ -120,10 +130,7 @@ const EquipmentMaster = () => {
   return (
     <div className="EquipmentMaster-container">
       <div className="EquipmentMaster-addBtn">
-        <button
-          className="EquipmentMaster-add-button"
-          onClick={openPopup}
-        >
+        <button className="EquipmentMaster-add-button" onClick={openPopup}>
           + Add New Equipment Master
         </button>
       </div>
@@ -140,7 +147,8 @@ const EquipmentMaster = () => {
         </div>
         <div className="EquipmentMaster-results-info">
           <span>
-            Showing {filteredEquipmentMasters.length} / {equipmentMasters.length} results
+            Showing {filteredEquipmentMasters.length} /{" "}
+            {equipmentMasters.length} results
           </span>
           <button
             className="EquipmentMaster-print-button"
@@ -161,7 +169,13 @@ const EquipmentMaster = () => {
         <table ref={tableRef}>
           <thead>
             <tr>
-              {["Type", "Search Equipment", "EQP No", "Type of Equipment", "Equipment Owner", "Equipment Name"].map((header, index) => (
+              {[
+                "Type",
+                "EQP No",
+                "Type of Equipment",
+                "Equipment Owner",
+                "Equipment Name",
+              ].map((header, index) => (
                 <th
                   key={index}
                   style={{ width: columnWidths[index] }}
@@ -185,7 +199,6 @@ const EquipmentMaster = () => {
             {filteredEquipmentMasters.map((master, index) => (
               <tr key={index}>
                 <td>{master.type}</td>
-                <td>{master.equipmentNo}</td>
                 <td>{master.equipmentMasterId}</td>
                 <td>{master.typeOfEquipment}</td>
                 <td>{master.equipmentOwner}</td>

@@ -39,8 +39,8 @@ const Internal = () => {
       </div>
       <div className="inventory-internal-tabs-content">
         <Routes>
+        <Route path="writeOff" element={<WriteOff />} />
           <Route path="requisition" element={<Requisition />} />
-          <Route path="writeOff" element={<WriteOff />} />
           <Route path="writeOffItemsList" element={<WriteOffItemsList />} />
           <Route path="returnFromSubstore" element={<ReturnFromSubstore />} />
           <Route path="purchaseRequest" element={<PurchaseRequest />} />

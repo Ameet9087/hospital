@@ -8,6 +8,7 @@ import SSIRetunReturnItemBtn from "./sSIRetunReturnItemBtn";
 import SSIPatientConsumNewPCbtn from "./sSIPatientConsumNewPCbtn";
 import { API_BASE_URL } from "../../../api/api";
 import CustomModal from "../../../../CustomModel/CustomModal";
+
 import { toast } from "react-toastify";
 import {
   FloatingInput,
@@ -41,12 +42,13 @@ function SSIReturn() {
         console.log(data);
         setReturns(data); // Adjust based on your API response structure
       } catch (error) {
-        setError("Failed to fetch data");
+        console.error("Failed to fetch data", error);
       }
     };
 
     fetchReturns();
   }, []);
+
 
   const printList = () => {
     if (tableRef.current) {
@@ -110,6 +112,7 @@ function SSIReturn() {
       <>
         <header className="sSIReturn-header">
           <div className="sSIReturn-status-filters">
+
             <button
               className="sSIReturn-new-patient-button"
               onClick={handleNewPatientConsumptionClick} // Handle button click
@@ -118,6 +121,7 @@ function SSIReturn() {
             </button>
           </div>
           <div className="sSIReturn-filterBySubCategory">
+
             <FloatingSelect
               label="Select Inventory"
               options={[{ value: "", label: "GENERAL-INVENTORY" }]}
@@ -143,8 +147,11 @@ function SSIReturn() {
             <button className="sSIReturn-ok-button">OK</button>
           </div>
         </div>
+
+
         <div className="sSIReturn-search-N-results">
           <div className="sSIReturn-search-bar">
+
             <FloatingInput 
             label={"Search"}
             type="search"
@@ -210,13 +217,14 @@ function SSIReturn() {
               </tr>
             </thead>
             <tbody>
-              {returns.length > 0 ? (
-                returns.map((item, index) => (
+              {filteredReturns.length > 0 ? (
+                filteredReturns.map((item, index) => (
                   <tr key={index}>
                     <td>{item.storeName}</td>
                     <td>{item.returnDate}</td>
-                    <td>{item.returnBy}</td>
+                    <td>{item.returnedBy}</td>
                     <td>{item.remarks}</td>
+
                     <td>
                       <button className="action-button">Action</button>
                     </td>
@@ -233,6 +241,7 @@ function SSIReturn() {
           </table>
         </div>
       </>
+
       <CustomModal isOpen={showNewPatientConsumption} onClose={handleBack}>
         <SSIRetunReturnItemBtn />
       </CustomModal>

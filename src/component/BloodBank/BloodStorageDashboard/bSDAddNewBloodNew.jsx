@@ -3,7 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./bSDAddNewBloodNew.css";
 import { API_BASE_URL } from "../../api/api";
-
+import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
+import { toast } from 'react-toastify';
 const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
   const [testId, setTestId] = useState("");
   const [storagedate, setstoragedate] = useState(null);
@@ -17,9 +18,7 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
   useEffect(() => {
     const fetchTestOptions = async () => {
       try {
-        const response = await fetch(
-          `${API_BASE_URL}/blood-testing/get-all-tests`
-        );
+        const response = await fetch(`${API_BASE_URL}/blood-testing/get-all-tests`);
         if (!response.ok) {
           throw new Error("Failed to fetch test IDs");
         }
@@ -29,19 +28,18 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
         console.error("Error fetching test IDs:", error);
       }
     };
-
     fetchTestOptions();
   }, []);
 
   const handleSave = async () => {
     const data = {
       bloodTestingDTO: {
-        testId: parseInt(testId, 10), // Convert to integer
+        testId: parseInt(testId, 10),
       },
-      storagedate: storagedate ? storagedate.toISOString() : null,
+      storagedate: storagedate ? new Date(storagedate).toISOString() : null,
       bloodgroup,
       volume,
-      expirydate: expirydate ? expirydate.toISOString() : null,
+      expirydate: expirydate ? new Date(expirydate).toISOString() : null,
       storagelocation,
       status,
     };
@@ -61,10 +59,15 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
 
       const result = await response.json();
       console.log("Data saved successfully:", result);
-      refreshData(); // Call refreshData to update the main component
+      toast.success('Proposal saved successfully!');
+
+      refreshData();
+      onClose(); // Close the modal (if applicable)
+
     } catch (error) {
       console.error("Error saving data:", error);
-      alert("Error saving data: " + error.message);
+      toast.error('Failed to save proposal. Please try again.');
+
     }
   };
 
@@ -74,48 +77,57 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
 
       <div className="BSDAddNewBloodNew-modal-form-group">
         <div className="BSDAddNewBloodNew-feild">
-          <label>Test ID:</label>
-          <select
+          <FloatingSelect
+            label="Test ID"
             value={testId}
             onChange={(e) => setTestId(e.target.value)}
             placeholder="Select Test ID"
-          >
-            <option value="">Select Test ID</option>
-            {testOptions.map((test) => (
-              <option key={test.testId} value={test.testId}>
-                {test.testName || `Test ID: ${test.testId}`}
-              </option>
-            ))}
-          </select>
+            options={[
+              { value: "", label: "Select Test ID" },
+              ...(Array.isArray(testOptions)
+                ? testOptions.map((test) => ({
+                    value: test.testId,
+                    label: test.testName || `Test ID: ${test.testId}`,
+                  }))
+                : []),
+            ]}
+          />
         </div>
         <div className="BSDAddNewBloodNew-feild">
-          <label>Storage Date:</label>
-          <DatePicker
-            selected={storagedate}
-            onChange={(date) => setstoragedate(date)}
-            placeholderText="Select Storage Date"
+          <FloatingInput
+            label="Storage Date"
+            type="date"
+            id="storageDate"
+            name="storageDate"
+            value={storagedate ? storagedate.toISOString().split("T")[0] : ""}
+            onChange={(e) => setstoragedate(new Date(e.target.value))}
+            placeholder="Select Storage Date"
           />
         </div>
       </div>
 
       <div className="BSDAddNewBloodNew-modal-form-group">
         <div className="BSDAddNewBloodNew-feild">
-          <label>Blood Group:</label>
-          <select
+          <FloatingSelect
+            label="Blood Group"
+            id="bloodgroup"
+            name="bloodgroup"
             value={bloodgroup}
             onChange={(e) => setbloodgroup(e.target.value)}
-          >
-            <option value="">Select Blood Group</option>
-            <option value="A+">A+</option>
-            <option value="B-">B-</option>
-            <option value="AB+">AB+</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-          </select>
+            required
+            options={[
+              { value: "", label: "Select Blood Group" },
+              { value: "A+", label: "A+" },
+              { value: "B-", label: "B-" },
+              { value: "AB+", label: "AB+" },
+              { value: "O+", label: "O+" },
+              { value: "O-", label: "O-" },
+            ]}
+          />
         </div>
         <div className="BSDAddNewBloodNew-feild">
-          <label>Volume (ml):</label>
-          <input
+          <FloatingInput
+            label="Volume (ml)"
             type="number"
             value={volume}
             onChange={(e) => {
@@ -127,23 +139,26 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
               }
             }}
             placeholder="Enter volume in ml"
-            min="0" 
+            min="0"
           />
         </div>
       </div>
 
       <div className="BSDAddNewBloodNew-modal-form-group">
         <div className="BSDAddNewBloodNew-feild">
-          <label>Expiry Date:</label>
-          <DatePicker
-            selected={expirydate}
-            onChange={(date) => setexpirydate(date)}
-            placeholderText="Select Expiry Date"
+          <FloatingInput
+            label="Expiry Date"
+            type="date"
+            id="expirydate"
+            name="expirydate"
+            value={expirydate ? expirydate.toISOString().split("T")[0] : ""}
+            onChange={(e) => setexpirydate(new Date(e.target.value))}
+            placeholder="Select Expiry Date"
           />
         </div>
         <div className="BSDAddNewBloodNew-feild">
-          <label>Storage Location:</label>
-          <input
+          <FloatingInput
+            label="Storage Location"
             type="text"
             value={storagelocation}
             onChange={(e) => setstoragelocation(e.target.value)}
@@ -153,12 +168,19 @@ const BSDAddNewBloodNew = ({ onClose, refreshData }) => {
       </div>
 
       <div className="BSDAddNewBloodNew-status">
-        <label>Status:</label>
-        <select value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option value="">Select Status</option>
-          <option value="Stored">Stored</option>
-          <option value="Discarded">Discarded</option>
-        </select>
+        <FloatingSelect
+          label="Status"
+          id="status"
+          name="status"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          required
+          options={[
+            { value: "", label: "Select a state" },
+            { value: "Stored", label: "Stored" },
+            { value: "Discarded", label: "Discarded" },
+          ]}
+        />
       </div>
 
       <div className="BSDAddNewBloodNew-modal-modal-actions">

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './PmCalibrationFromPopUp.css';
 import { API_BASE_URL } from '../../../api/api';
+import { FloatingInput,FloatingSelect,FloatingTextarea } from '../../../../FloatingInputs';
+import { toast } from 'react-toastify';
 const PmCalibrationFromPopUp = ({ closePopup }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [equipmentList, setEquipmentList] = useState([]);  // State for storing the list of equipment names
@@ -76,12 +78,12 @@ const PmCalibrationFromPopUp = ({ closePopup }) => {
       });
   
       const result = await response.json();
-      console.log('Success:', result);
+      toast.error('Success:', result);
   
       // After successful post, close the form
       closePopup(); // Close the modal after successful data posting
     } catch (error) {
-      console.error('Error posting data:', error);
+      toast.error('Error posting data:', error);
       // Handle error response if needed (e.g., show an error message)
     }
   };
@@ -91,152 +93,147 @@ const PmCalibrationFromPopUp = ({ closePopup }) => {
     
     <div className="PmCalibrationFromPopUp-container">
       <div className="PmCalibrationFromPopUp-left-panel">
-     
-
-        {/* Equipment Name Dropdown */}
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="equipmentName">Equipment Name</label>
-          <select
-            id="equipmentName"
-            value={selectedEquipment}
-            onChange={(e) => setSelectedEquipment(e.target.value)}
-          >
-            <option value="">Select Equipment</option>
-            {equipmentList.map((equipment) => (
-              <option key={equipment.equipmentMasterId} value={equipment.equipmentMasterId}>
-                {equipment.equipmentName}
-              </option>
-            ))}
-          </select>
+        <FloatingSelect
+  label={"Equipment Name"}
+  id="equipmentName"
+  value={selectedEquipment}
+  onChange={(e) => setSelectedEquipment(e.target.value)}
+  options={[
+    { value: "", label: "Select Equipment" }, // Default option
+    ...equipmentList.map((equipment) => ({
+      value: equipment.equipmentMasterId,
+      label: equipment.equipmentName,
+    })),
+  ]}
+/>  
         </div>
 
         {/* Asset No., Old Asset No., Serial No., Model No., Category, Location */}
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="assetNo">Asset No.</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Asset No"}
+          type="text"
             id="assetNo"
             value={equipmentDetails.assetNo || ''}
-            readOnly
-          />
+            readOnly/>
+          
         </div>
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="oldAssetNo">Old Asset No.</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Old Asset No"}
+          type="text"
             id="oldAssetNo"
             value={equipmentDetails.oldAssetNo || ''}
-            readOnly
-          />
+            readOnly/>
+          
         </div>
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="serialNo">Serial No.</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Serial No"}
+          type="text"
             id="serialNo"
             value={equipmentDetails.serialNo || ''}
-            readOnly
-          />
+            readOnly/>
+         
         </div>
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="modelNo">Model No.</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Model No"}
+          type="text"
             id="modelNo"
             value={equipmentDetails.modelNo || ''}
-            readOnly
-          />
+            readOnly/>
+          
         </div>
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="category">Category</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Category"}
+          type="text"
             id="category"
             value={equipmentDetails.assetCateMasterDTO?.underCategory || ''}
-            readOnly
-          />
+            readOnly/>
         </div>
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="location">Location</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Location"}
+          type="text"
             id="location"
             value={equipmentDetails.locationPath || ''}
-            readOnly
-          />
+            readOnly/>
+          
         </div>
 
         {/* Maintenance Type Dropdown */}
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="maintenanceType">Maintenance Type</label>
-          <select
-            id="maintenanceType"
-            value={selectedMaintenanceType}
-            onChange={(e) => setSelectedMaintenanceType(e.target.value)}
-          >
-            <option value="">Select Maintenance Type</option>
-            {maintenanceTypes.map((maintenance) => (
-              <option key={maintenance.typeMasterId} value={maintenance.typeMasterId}>
-                {maintenance.typeName}
-              </option>
-            ))}
-          </select>
+        <FloatingSelect
+  label={"Maintenance Type"}
+  id="maintenanceType"
+  value={selectedMaintenanceType}
+  onChange={(e) => setSelectedMaintenanceType(e.target.value)}
+  options={[
+    { value: "", label: "Select Maintenance Type" }, // Default option
+    ...maintenanceTypes.map((maintenance) => ({
+      value: maintenance.typeMasterId,
+      label: maintenance.typeName,
+    })),
+  ]}
+/>
         </div>
       </div>
 
       <div className="PmCalibrationFromPopUp-right-panel">
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="periodType">Period Type</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Period Type"}
+          type="text"
             id="periodType"
             value={periodType}
-            onChange={(e) => setPeriodType(e.target.value)}
-          />
+            onChange={(e) => setPeriodType(e.target.value)}/>
         </div>
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="maintenanceDate">Maintenance Date</label>
-          <input
-            type="date"
+          <FloatingInput
+          label={"Maintenance Date"}
+          type="date"
             id="maintenanceDate"
             value={maintenanceDate}
-            onChange={(e) => setMaintenanceDate(e.target.value)}
-          />
+            onChange={(e) => setMaintenanceDate(e.target.value)}/>
+          
         </div>
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="scheduledMaintenanceDate">Scheduled Maintenance Date</label>
-          <input
-            type="date"
+          <FloatingInput
+          label={"Scheduled Maintenance Date"}
+                type="date"
             id="scheduledMaintenanceDate"
             value={scheduledMaintenanceDate}
-            onChange={(e) => setScheduledMaintenanceDate(e.target.value)}
-          />
+            onChange={(e) => setScheduledMaintenanceDate(e.target.value)}/>
+          
         </div>
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="nextScheduleDate">Next Schedule Date</label>
-          <input
-            type="date"
+          <FloatingInput
+          label={"Next Schedule Date"}
+          type="date"
             id="nextScheduleDate"
             value={nextScheduleDate}
-            onChange={(e) => setNextScheduleDate(e.target.value)}
-          />
+            onChange={(e) => setNextScheduleDate(e.target.value)}/>
+         
         </div>
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="remarks">Remarks</label>
-          <textarea
-            id="remarks"
+          <FloatingTextarea
+          label={"Remarks"}
+          id="remarks"
             value={remarks}
-            onChange={(e) => setRemarks(e.target.value)}
-          ></textarea>
+            onChange={(e) => setRemarks(e.target.value)}/>
+          
         </div>
         <div className="PmCalibrationFromPopUp-form-group">
-          <label htmlFor="sparePart">Spare Part</label>
-          <input
-            type="text"
+          <FloatingInput
+          label={"Spare Part"}
+          type="text"
             id="sparePart"
             value={sparePart}
-            onChange={(e) => setSparePart(e.target.value)}
-          />
+            onChange={(e) => setSparePart(e.target.value)}/>
+          
         </div>
 
         {/* Add and Close buttons */}
@@ -244,6 +241,7 @@ const PmCalibrationFromPopUp = ({ closePopup }) => {
           <button className="PmCalibrationFromPopUp-add-button" onClick={handleAdd}>Add</button>
         </div>
       </div>
+     
     </div>
   );
 };

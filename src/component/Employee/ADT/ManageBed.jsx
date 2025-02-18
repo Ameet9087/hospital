@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import "./ManageWard.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import axios from "axios";
 import { API_BASE_URL } from "../../api/api";
 import CustomModal from "../../../CustomModel/CustomModal";
@@ -246,9 +246,9 @@ const ManageBed = () => {
                     setSelectedWardDepartment(
                       selectedDept
                         ? {
-                            wardDepartmentId: selectedDept.wardDepartmentId,
-                            wardDepartmentType: selectedDept.wardDepartmentType,
-                          }
+                          wardDepartmentId: selectedDept.wardDepartmentId,
+                          wardDepartmentType: selectedDept.wardDepartmentType,
+                        }
                         : { wardDepartmentId: 0, wardDepartmentType: "" } // Default state when no selection
                     );
                   }}

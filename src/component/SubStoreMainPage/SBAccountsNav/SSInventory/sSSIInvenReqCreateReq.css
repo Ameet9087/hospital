@@ -244,3 +244,31 @@ justify-content: space-between;
   justify-content: flex-end;
   margin-top: 20px;
 }
+
+
+.sSSIInvenReqCreateReq-minus-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sSSIInvenReqCreateReq-delete-row-button {
+  background-color: #ff4d4d; /* Red color for delete action */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.sSSIInvenReqCreateReq-delete-row-button:hover{
+  background-color: #ff4d4d; 
+  color: white;
+}

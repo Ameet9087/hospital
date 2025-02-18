@@ -76,13 +76,13 @@ function Specialisations({ onClose }) {
 
     try {
       await axios.post(`${API_BASE_URL}/specialisations`, specialisation);
-      setMessage("Specialisation added successfully!");
+      toast.success("Specialisation added successfully!");
       fetchSpecialisations();
       resetForm();
       onClose();
     } catch (error) {
       console.error("Error adding specialisation:", error);
-      setMessage("Failed to add specialisation.");
+      toast.error("Failed to add specialisation.");
     }
   };
 
@@ -159,7 +159,7 @@ function Specialisations({ onClose }) {
   return (
     <div className="specialisations">
       <div className="specialisations__header">
-        <h3>Specialisations</h3>
+        <h5>Specialisations</h5>
       </div>
 
       {message && <p className="specialisations__message">{message}</p>}
@@ -239,7 +239,7 @@ function Specialisations({ onClose }) {
         <div className="LocationsTable-container" tabIndex="0">
           <div className="LocationsTable-header">
             <span>LOCATIONS</span>
-            <span className="LocationsTable-instruction">(Control + Enter For New Row)</span>
+          
           </div>
           <table className="LocationsTable-table">
             <thead>
@@ -268,22 +268,15 @@ function Specialisations({ onClose }) {
                   </td>
                   <td>{index + 1}</td>
                   <td>
-                    <input
-                      type="text"
-                      value={location.name}
-                      onChange={(e) => handleLocationChange(index, e.target.value)}
-                      className="LocationsTable-input"
-                    />
-                    <button
-                      type="button"
-                      className="search-icon-button"
-                      onClick={() => {
-                        setActivePopup("location");
-                        setEditingRowIndex(index);
-                      }}
-                    >
-                      <FontAwesomeIcon icon={faSearch} />
-                    </button>
+                    <FloatingInput
+                     type="search"
+                     value={location.name}
+                     onChange={(e) => handleLocationChange(index, e.target.value)}
+                     onIconClick={() => {
+                      setActivePopup("location");
+                      setEditingRowIndex(index);
+                    }}/>
+                   
                   </td>
                 </tr>
               ))}
@@ -291,9 +284,10 @@ function Specialisations({ onClose }) {
           </table>
         </div>
 
-        <button onClick={addSpecialisation} className="specialisations__submit-button">
-          Save Specialisation
-        </button>
+        <div className="specialisations__div-button">
+        <button onClick={addSpecialisation} className="specialisations__submit-button">Save Specialisation </button>
+        <button className="specialisations__submit-button" onClick={resetForm}>Reset</button>
+        </div>
       </div>
 
       {activePopup && (

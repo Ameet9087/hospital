@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 import './CSSDItemMaster.css';
 import { API_BASE_URL } from '../../api/api';
+import FloatingInput from '../../../FloatingInputs/FloatingInput';
+import FloatingSelect from '../../../FloatingInputs/FloatingSelect';
+import { toast } from 'react-toastify';
 
 const CSSDItemMaster = () => {
   const [status, setStatus] = useState("Active");
@@ -38,10 +41,10 @@ const CSSDItemMaster = () => {
         machineData
       );
       console.log("Machine saved successfully:", response.data);
-      alert("Machine saved successfully!");
+      toast.success("Machine saved successfully!");
     } catch (error) {
       console.error("Error saving machine:", error);
-      alert("Failed to save machine. Please try again.");
+      toast.error("Failed to save machine. Please try again.");
     }
   };
 
@@ -64,42 +67,47 @@ const CSSDItemMaster = () => {
       <div className="CSSDItemMaster-content">
         <div className="CSSDItemMaster-formContainer">
           <div className="CSSDItemMaster-formGroup">
-            <label>Machine Name:</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Machine Name"}
+            type="text"
               placeholder="Enter machine name"
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
+              restrictions={{char:true}}
+              required/>
+            
+          </div>
+          <div className="CSSDItemMaster-formGroup">
+            <FloatingSelect
+            label={"Type"}
+            value={type} onChange={(e) => setType(e.target.value)}
+            options={[{value:"Auto Clave",label:"Auto Clave"},
+              {value:"Imaging",label:"Imaging"},
+              {value:"Diagnostic",label:"Diagnostic"},
+              {value:"ETO",label:"ETO"},
+            ]}
             />
+           
           </div>
           <div className="CSSDItemMaster-formGroup">
-            <label>Type:</label>
-            <select value={type} onChange={(e) => setType(e.target.value)}>
-              <option value="Auto Clave">Auto Clave</option>
-              <option value="Imaging">Imaging</option>
-              <option value="Diagnostic">Diagnostic</option>
-              <option value="ETO">ETO</option>
-            </select>
+            <FloatingSelect
+            label={"DEPT"}
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
+            options={[{value:"CSSD",label:"CSSD"},
+              {value:"Radiology",label:"Radiology"},
+              {value:"Pathology",label:"Pathology"}
+            ]}/>
+           
           </div>
           <div className="CSSDItemMaster-formGroup">
-            <label>Dept.:</label>
-            <select
-              value={department}
-              onChange={(e) => setDepartment(e.target.value)}
-            >
-              <option value="CSSD">CSSD</option>
-              <option value="Radiology">Radiology</option>
-              <option value="Pathology">Pathology</option>
-            </select>
-          </div>
-          <div className="CSSDItemMaster-formGroup">
-            <label>Description:</label>
-            <input
-              type="text"
-              placeholder="Enter description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
+            <FloatingInput
+            label={"Description"}
+            type="text"
+            placeholder="Enter description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}/>
+           
           </div>
           <div className="CSSDItemMaster-formGroup">
             <label>Status:</label>

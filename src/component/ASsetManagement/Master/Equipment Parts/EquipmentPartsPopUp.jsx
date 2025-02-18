@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./EquipmentPartspopup.css";
 import { API_BASE_URL } from "../../../api/api";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingSelect } from "../../../../FloatingInputs";
 
-const EquipmentPartsPopUp = () => {
+const EquipmentPartsPopUp = ({onClose}) => {
   const [equipments, setEquipments] = useState([]);
   const [selectedEquipment, setSelectedEquipment] = useState("");
 
@@ -57,7 +59,7 @@ const EquipmentPartsPopUp = () => {
   // Handle save action
   const handleSave = async () => {
     if (!selectedEquipment) {
-      alert("Please select an equipment.");
+      toast.error("Please select an equipment.");
       return;
     }
 
@@ -78,7 +80,7 @@ const EquipmentPartsPopUp = () => {
       });
 
       if (response.ok) {
-        alert("Data saved successfully!");
+        toast.success("Data saved successfully!");
         setFormData({
           partName: "",
           modelNo: "",
@@ -95,14 +97,15 @@ const EquipmentPartsPopUp = () => {
           remark: "",
         });
         setSelectedEquipment("");
+        onClose();
       } else {
         const errorData = await response.json();
         console.error("Error saving data:", errorData);
-        alert("Failed to save data.");
+        toast.error("Failed to save data.");
       }
     } catch (error) {
       console.error("Error saving data:", error);
-      alert("An error occurred while saving data.");
+      toast.error("An error occurred while saving data.");
     }
   };
 
@@ -118,54 +121,51 @@ const EquipmentPartsPopUp = () => {
           <div className="EquipmentPartsPopUp-surgeryEvents-panel dis-templates">
             <div className="EquipmentPartsPopUp-surgeryEvents-panel-content">
               <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Part Name:</label>
-                <input
-                  name="partName"
-                  value={formData.partName}
-                  onChange={handleInputChange}
+                <FloatingInput
+                label={"Part Name"}
+                name="partName"
+                value={formData.partName}
+                onChange={handleInputChange}
                 />
               </div>
 
               <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Equipment Name:</label>
-                <select value={selectedEquipment} onChange={handleEquipmentChange}>
-                  <option value="">Select Equipment</option>
-                  {equipments.map((equipment) => (
-                    <option
-                      key={equipment.equipmentMasterId}
-                      value={equipment.equipmentMasterId}
-                    >
-                      {equipment.equipmentName}
-                    </option>
-                  ))}
-                </select>
+                <FloatingSelect
+                label={"Equipment Name"}
+                value={selectedEquipment}
+                onChange={handleEquipmentChange}
+                options={[
+                  { value: "", label: "" },
+                  ...(Array.isArray(equipments)
+                    ? equipments.map((equipment) => ({
+                        value: equipment.equipmentMasterId,
+                        label: equipment.equipmentName,
+                      }))
+                    : []),
+                ]}
+                />
               </div>
-            </div>
-          </div>
-
-          <div className="EquipmentPartsPopUp-surgeryEvents-panel operation-details">
-            <div className="EquipmentPartsPopUp-surgeryEvents-panel-content">
               <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Model No:</label>
-                <input
-                  name="modelNo"
-                  value={formData.modelNo}
-                  onChange={handleInputChange}
+                <FloatingInput
+                label={"Model No"}
+                name="modelNo"
+                value={formData.modelNo}
+                onChange={handleInputChange}
                 />
               </div>
 
               <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Serial No:</label>
-                <input
-                  name="serialNo"
-                  value={formData.serialNo}
-                  onChange={handleInputChange}
+                <FloatingInput
+                label={"Serial No"}
+                name="serialNo"
+                value={formData.serialNo}
+                onChange={handleInputChange}
                 />
               </div>
 
               <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Stand By:</label>
-                <input
+                <FloatingInput
+                label={"Stand By"}
                   name="standBy"
                   value={formData.standBy}
                   onChange={handleInputChange}
@@ -173,52 +173,46 @@ const EquipmentPartsPopUp = () => {
               </div>
 
               <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Quantity:</label>
-                <input
-                  type="number"
-                  name="quantity"
-                  value={formData.quantity}
-                  onChange={handleInputChange}
+                <FloatingInput
+                label={"Quantity"}
+                type="number"
+                name="quantity"
+                value={formData.quantity}
+                onChange={handleInputChange}
                 />
               </div>
             </div>
           </div>
-
           <div className="EquipmentPartsPopUp-surgeryEvents-panel operation-details">
             <div className="EquipmentPartsPopUp-surgeryEvents-panel-content">
               <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Contract Type:</label>
-                <input
-                  name="contractType"
-                  value={formData.contractType}
-                  onChange={handleInputChange}
+                <FloatingInput
+                label={"Contract Type"}
+                 name="contractType"
+                 value={formData.contractType}
+                 onChange={handleInputChange}
                 />
               </div>
               <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Covered Under:</label>
-                <input
-                  name="coveredUnder"
-                  value={formData.coveredUnder}
-                  onChange={handleInputChange}
+                <FloatingInput
+                label={"Covered Under"}
+                name="coveredUnder"
+                value={formData.coveredUnder}
+                onChange={handleInputChange}
                 />
               </div>
 
               <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Remark:</label>
-                <input
-                  name="remark"
-                  value={formData.remark}
-                  onChange={handleInputChange}
+                <FloatingInput
+                label={"Remark"}
+                name="remark"
+                value={formData.remark}
+                onChange={handleInputChange}
                 />
               </div>
-            </div>
-          </div>
-
-          <div className="EquipmentPartsPopUp-surgeryEvents-panel operation-details">
-            <div className="EquipmentPartsPopUp-surgeryEvents-panel-content">
               <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Under Insurance Cost:</label>
-                <input
+                <FloatingInput
+                label={"Under Insurance Cost"}
                   name="underInsuranceCost"
                   value={formData.underInsuranceCost}
                   onChange={handleInputChange}
@@ -226,41 +220,47 @@ const EquipmentPartsPopUp = () => {
               </div>
 
               <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Pending Quantity:</label>
-                <input
-                  type="number"
-                  name="pendingQuantity"
-                  value={formData.pendingQuantity}
-                  onChange={handleInputChange}
+                <FloatingInput
+                label={"Pending Quantity"}
+                type="number"
+                name="pendingQuantity"
+                value={formData.pendingQuantity}
+                onChange={handleInputChange}
                 />
               </div>
 
               <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Rec Quantity:</label>
-                <input
-                  type="number"
-                  name="recQuantity"
-                  value={formData.recQuantity}
-                  onChange={handleInputChange}
+                <FloatingInput
+                label={"Rec Quantity"}
+                type="number"
+                name="recQuantity"
+                value={formData.recQuantity}
+                onChange={handleInputChange}
+                />
+              </div>
+
+              
+            </div>
+          </div>
+
+          <div className="EquipmentPartsPopUp-surgeryEvents-panel operation-details">
+            <div className="EquipmentPartsPopUp-surgeryEvents-panel-content">
+            <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
+                <FloatingInput
+                label={"Out Quantity"}
+                type="number"
+                name="outQuantity"
+                value={formData.outQuantity}
+                onChange={handleInputChange}
                 />
               </div>
 
               <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Out Quantity:</label>
-                <input
-                  type="number"
-                  name="outQuantity"
-                  value={formData.outQuantity}
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <div className="EquipmentPartsPopUp-surgeryEvents-form-row">
-                <label>Action:</label>
-                <input
-                  name="action"
-                  value={formData.action}
-                  onChange={handleInputChange}
+                <FloatingInput
+                label={"Action"}
+                 name="action"
+                 value={formData.action}
+                 onChange={handleInputChange}
                 />
               </div>
             </div>

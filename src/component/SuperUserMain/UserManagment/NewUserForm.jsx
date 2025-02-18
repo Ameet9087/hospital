@@ -28,6 +28,11 @@ const NewUserForm = ({ user, onClose }) => {
   const [selectedUser, setSelectedUser] = useState([]);
   const [allEmployees, setAllEmployees] = useState([]);
   const [allDoctors, setAllDoctors] = useState([]);
+  useEffect(() => {
+    fetchRoles();
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   const fetchRoles = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/admin/get-all-roles`);
@@ -185,11 +190,7 @@ const NewUserForm = ({ user, onClose }) => {
     });
   };
 
-  useEffect(() => {
-    fetchRoles();
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+ 
 
   const toggleMain = (index) => {
     setFormData((prevState) => {

@@ -5,6 +5,7 @@ import { Calendar } from "lucide-react";
 import "../SSInventory/sSSIInvenReqCreateReq.css";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../../api/api";
+
 import { toast } from "react-toastify";
 import {
   FloatingInput,
@@ -136,6 +137,7 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
 
       if (response.ok) {
         const result = await response.json();
+
         toast.success("Requisition submitted successfully!");
         // Reset the form after successful submission
         setRows([
@@ -152,6 +154,7 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
         ]);
       } else {
         console.error("Failed to submit requisition:", response.status);
+
         toast.error("Error submitting the requisition. Please try again.");
       }
     } catch (error) {
@@ -201,6 +204,7 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
       <form onSubmit={handleSubmit}>
         <div className="sSSIInvenReqCreateReq-form-row">
           <div className="sSSIInvenReqCreateReq-form-group">
+
             <FloatingInput
               label={"Target Inventory"}
               type="text"
@@ -248,6 +252,7 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
             {rows.map((row, index) => (
               <tr key={index}>
                 <td>
+
                   <FloatingSelect
                     label={"Item Category"}
                     className="sSSIInvenReqCreateReq-table-select"
@@ -341,6 +346,7 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
                   />
                 </td>
 
+
                 <td>
                   <button
                     className="sSSIInvenReqCreateReq-delete-row-button"
@@ -381,6 +387,7 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
               <button className="sSSIInvenReqCreateReq-btn-checked">
                 Checked By
               </button>
+
               
               <FloatingInput
                     label={"Checked By"}
@@ -392,6 +399,7 @@ const SSSIInvenReqCreateReq = ({ onClose }) => {
           </div>
 
           <div className="sSSIInvenReqCreateReq-form-group">
+
             
             <FloatingTextarea
             label={"Remarks"}

@@ -77,7 +77,8 @@
   /* .IpMoneyReceiptAdvance-form-row label {
     min-width: 140px;
   }
-  .IpMoneyReceiptAdvance-form-row input ,textarea {
+  .IpMoneyReceiptAdvance-form-row input ,
+  .IpMoneyReceiptAdvance-form-row textarea {
     padding: 5px;
     border: 1px solid gray;
     border-radius: 5px;
@@ -159,7 +160,7 @@
     right: 0;
     top: 0;
     cursor: col-resize;
-    user-select: none;
+    user-select:none;
   }
 .IpMoneyReceiptAdvance-Edit-button{
   background-color: var(--button-color);
@@ -190,6 +191,6 @@
     }
   
     .ipmoneyreceiptadvance-save-btn {
-      grid-column: 1;
+      grid-column:1;
     }
 }

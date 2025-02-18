@@ -5,6 +5,7 @@ import CustomModal from "../../../../CustomModel/CustomModal";
 import * as XLSX from "xlsx";
 import ComplaintEntrysystemPopUp from "./ComplaintEntrysystemPopUp";
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput } from "../../../../FloatingInputs";
 
 const ComplaintEntrysystem = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -74,12 +75,12 @@ const ComplaintEntrysystem = () => {
 
       <div className="AmcTracker-search-N-result">
         <div className="AmcTracker-search-bar">
-          <i className="fa-solid fa-magnifying-glass"></i>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+          <FloatingInput
+          label={"Search"}
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
         <div className="AmcTracker-results-info">
@@ -154,7 +155,7 @@ const ComplaintEntrysystem = () => {
 
       {showPopup && (
         <CustomModal isOpen={showPopup} onClose={closePopup}>
-          <ComplaintEntrysystemPopUp />
+          <ComplaintEntrysystemPopUp onClose={closePopup} />
         </CustomModal>
       )}
     </div>

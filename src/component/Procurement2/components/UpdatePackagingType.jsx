@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./AddPackagingType.css";
 import { API_BASE_URL } from "../../api/api";
-
+import { FloatingInput } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 const UpdatePackagingType = ({ packagingType, onUpdate, onClose }) => {
   const [name, setName] = useState(packagingType.packagingTypeName || "");
   const [description, setDescription] = useState(packagingType.description || "");
@@ -23,11 +24,14 @@ const UpdatePackagingType = ({ packagingType, onUpdate, onClose }) => {
       );
 
       if (response.status === 200) {
-        alert("Packaging type updated successfully!");
+
+        toast.success("Packaging type updated successfully!");
         onUpdate(updatedPackagingType); // Update state in parent component
         onClose(); // Close modal
       }
     } catch (error) {
+      toast.error('Failed to save proposal. Please try again.');
+
       console.error("Error updating packaging type:", error);
     }
   };
@@ -37,26 +41,27 @@ const UpdatePackagingType = ({ packagingType, onUpdate, onClose }) => {
       <h2>Update Packaging Type</h2>
       <form onSubmit={handleSubmit} className="AddPackagingType-form">
         <div className="AddPackagingType-formgroup">
-          <label>
-            Packaging Type Name<span className="MeasssRequired">*</span>
-          </label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            placeholder="Some Packaging Type"
+          <FloatingInput
+          label={"Packaging Type Name"}
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          placeholder="Some Packaging Type"
           />
+        
         </div>
-
         <div className="AddPackagingType-formgroup">
-          <label>Description</label>
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Description"
+          </div>
+        <div className="AddPackagingType-formgroup">
+          <FloatingInput
+          label={"Description"}
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Description"
           />
+        
         </div>
 
         <div className="AddPackagingType-formgroup">

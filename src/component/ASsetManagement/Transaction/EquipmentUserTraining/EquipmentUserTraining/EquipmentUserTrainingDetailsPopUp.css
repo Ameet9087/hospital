@@ -31,6 +31,7 @@
     flex-wrap: wrap;
     gap: 16px;
     margin-bottom: 16px;
+   
   }
   
   .EquipmentUserTrainingDetailsPopUp-form-group {
@@ -40,6 +41,7 @@
     align-items: center;
     font-size: var(--font-size);
     width: 400px;
+    padding: 5px;
     /* border: 1px solid red; */
   }
   

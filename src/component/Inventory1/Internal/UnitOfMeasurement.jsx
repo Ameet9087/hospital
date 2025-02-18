@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './UnitOfMeasurement.css';
 import { API_BASE_URL } from '../../api/api';
-
+import FloatingInput from '../../../FloatingInputs/FloatingInput';
+import FloatingSelect from '../../../FloatingInputs/FloatingSelect';
+import { toast } from 'react-toastify';
 const UnitOfMeasurement = ({onClose}) => {
   // State management for form inputs
   const [unitOfMeasurementName, setUnitOfMeasurementName] = useState('');
@@ -25,10 +27,10 @@ const UnitOfMeasurement = ({onClose}) => {
     try {
       // Send a POST request to the backend
       await axios.post(`${API_BASE_URL}/unitofmeasurement/add`, data);
-      setSuccess('Unit of Measurement added successfully!');
+      toast.success('Unit of Measurement added successfully!');
       setError('');
     } catch (err) {
-      setError('Failed to add Unit of Measurement. Please try again.');
+      toast.error('Failed to add Unit of Measurement. Please try again.');
       setSuccess('');
     }
   };
@@ -41,24 +43,23 @@ const UnitOfMeasurement = ({onClose}) => {
         </button>
       <form onSubmit={handleSubmit}>
         <div className="unit-of-MeasssFormGroup">
-          <label>Unit of Measurement Name<span className="unit-of-MeasssRequired">*</span></label>
-          <input
-            type="text"
-            placeholder="Unit of Measurement Name"
-            value={unitOfMeasurementName}
-            onChange={(e) => setUnitOfMeasurementName(e.target.value)}
-            required
-          />
+          <FloatingInput
+          label={"Unit of Measurement Name *"}
+          type="text"
+          placeholder="Unit of Measurement Name"
+          value={unitOfMeasurementName}
+          onChange={(e) => setUnitOfMeasurementName(e.target.value)}
+          required/>
+          
         </div>
        
-        <div className="unit-of-MeasssFormGroup">
-          <label>Description</label>
-          <input
-            type="text"
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+        <div className="unit-of-MeasssFormGroup"><FloatingInput
+        label={"Description"}
+        type="text"
+        placeholder="Description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}/>
+        
         </div>
        
         <div className="unit-of-MeasssFormGroup">

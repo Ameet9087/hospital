@@ -4,6 +4,7 @@ import "./OrganisitionMasterPopup.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { CiSearch } from "react-icons/ci";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { API_BASE_URL } from "../../api/api";
 import {
   FloatingInput,
@@ -82,7 +83,6 @@ const OrganisitionMasterPopup = () => {
       .filter((row) => row.locationId)
       .map((row) => ({ id: row.locationId })),
   });
-
   const handleAddRow = (tableType) => {
     if (tableType === "location") {
       const newRow = {
@@ -93,7 +93,6 @@ const OrganisitionMasterPopup = () => {
       setlocationTableRows([...locationTableRows, newRow]);
     }
   };
-
   const handleDeleteRow = (tableType, indexToRemove) => {
     if (tableType === "location") {
       const updatedRows = locationTableRows.filter(
@@ -104,8 +103,6 @@ const OrganisitionMasterPopup = () => {
         sn: index + 1,
       }));
       setlocationTableRows(renumberedRows);
-
-      // Update formData with remaining location IDs
       setFormData((prevData) => ({
         ...prevData,
         locationMasterDTOs: renumberedRows
@@ -180,14 +177,15 @@ const OrganisitionMasterPopup = () => {
         contactPerson: formData.contactPerson,
         grantAdPayMode: formData.grantAdPayMode,
         creditcardnumber: formData.creditcardnumber,
-        cssnumber: formData.cssnumber,
-        expirydate: formData.expirydate,
+     
         gstnumber: formData.gstnumber,
         discountPolicy: formData.discountPolicy,
         organisationCode: formData.organisationCode,
         organisationCategory: formData.organisationCategory,
         branches: formData.branches,
         employeemandatory: formData.employeemandatory ? "Yes" : "No",
+   // Assuming creditcardnumber is part of formData
+        
         organisationClassificationDTO: {
           classificationName:
             formData.organisationClassificationDTO.classificationName,
@@ -214,16 +212,16 @@ const OrganisitionMasterPopup = () => {
       // Check the response status
       if (response.status === 200 || response.status === 201) {
         // Handle success
-        alert("Data saved successfully!");
+        toast.success("Data saved successfully!");
       } else {
         // Handle unexpected status codes
         console.error("Unexpected response status:", response.status);
-        alert("Failed to save data. Please try again.");
+        toast.error("Failed to save data. Please try again.");
       }
     } catch (error) {
       // Handle error from API call
       console.error("Error posting data:", error);
-      alert("Error posting data. Please check the console for details.");
+      toast.error("Error posting data. Please check the console for details.");
     }
   };
 
@@ -307,6 +305,60 @@ const OrganisitionMasterPopup = () => {
     { value: "Panel", label: "Panel" },
     { value: "Insurance", label: "Insurance" },
   ];
+  const handleReset = () => {
+    setFormData({
+      name: "",
+      classification: "",
+      city: "",
+      address: "",
+      state: "",
+      phoneNumber1: "",
+      phoneNumber2: "",
+      mobileNumber: "",
+      email: "",
+      faxNumber: "",
+      pancardnumber: "",
+      pinCode: "",
+      mouStartDate: "",
+      mouEndDate: "",
+      validityForPatient: "",
+      opdConsDocFees: "",
+      regiCharNotApplicable: "",
+      creditType: "",
+      orgSaleType: "",
+      accEntry: "",
+      insurance: "",
+      contactPerson: "",
+      grantAdPayMode: "",
+      creditcardnumber: "",
+      cssnumber: "",
+      expirydate: "",
+      discountPolicy: "",
+      organisationCode: "",
+      organisationCategory: "",
+      branches: "",
+      employeemandatory: "",
+      gstnumber: "",
+      organisationClassificationDTO: {
+        classificationName: "",
+        description: "",
+        tpa: "",
+        status: "",
+      },
+      locationMasterDTOs: [],
+    });
+  
+    setlocationTableRows([
+      {
+        sn: 1,
+        locationName: "",
+        locationId: null,
+      },
+    ]);
+  
+    
+  };
+  
 
   const renderTable = () => {
     switch (selectedTab) {
@@ -359,25 +411,20 @@ const OrganisitionMasterPopup = () => {
                     <td>{row.sn}</td>
                     <td>
                       <div className="dg-package-input-with-icon">
-                        <input
-                          type="text"
-                          value={row.locationName}
-                          onChange={(e) =>
-                            updateRowValue(
-                              row.id,
-                              "locationName",
-                              e.target.value
-                            )
-                          }
-                          placeholder="Location Name"
-                          className="table-input-dg"
-                        />
-                        <CiSearch
-                          className="Organization_Master-magnifier-btn"
-                          onClick={() => {
-                            setActivePopup("Location");
-                          }}
-                        />
+                        <FloatingInput
+                        type="search"
+                        value={row.locationName}
+                        onChange={(e) =>
+                          updateRowValue(
+                            row.id,
+                            "locationName",
+                            e.target.value
+                          )
+                        }
+                        onIconClick={() => {
+                          setActivePopup("Location");
+                        }}/>
+                        
                       </div>
                     </td>
                   </tr>
@@ -426,6 +473,7 @@ const OrganisitionMasterPopup = () => {
           <div className="Organization_Master-input-with-icon">
             <FloatingInput
               label="City *"
+              type="search"
               value={formData.city}
               onChange={(e) =>
                 setFormData({
@@ -433,10 +481,9 @@ const OrganisitionMasterPopup = () => {
                   city: e.target.value,
                 })
               }
+              onIconClick={() => setActivePopup("City")} 
             />
-            <div className="Organization_Master-magnifier-btn">
-              <CiSearch onClick={() => setActivePopup("City")} />
-            </div>
+            
           </div>
           <FloatingInput
             label="Pin Code"
@@ -628,6 +675,7 @@ const OrganisitionMasterPopup = () => {
           />
           <div className="Organization_Master-input-with-icon">
             <FloatingInput
+            type="search"
               label="Discount Policy"
               value={formData.discountPolicy}
               onChange={(e) =>
@@ -636,10 +684,10 @@ const OrganisitionMasterPopup = () => {
                   discountPolicy: e.target.value,
                 })
               }
+              onIconClick={() => setActivePopup("DiscountPolicy")}
+              
             />
-            <div className="Organization_Master-magnifier-btn">
-              <CiSearch onClick={() => setActivePopup("DiscountPolicy")} />
-            </div>
+            
           </div>
 
           <FloatingInput
@@ -848,6 +896,9 @@ const OrganisitionMasterPopup = () => {
       <div className="Organization_Master-action-buttons">
         <button className="Organization_Master-btn-blue" onClick={handleSave}>
           Save
+        </button>
+        <button className="Organization_Master-btn-blue" onClick={handleReset}>
+          Reset
         </button>
       </div>
     </div>

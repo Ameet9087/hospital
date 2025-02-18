@@ -1,0 +1,250 @@
+.OPCancelationApprovalAction-container {
+  margin: 0 auto;
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  background-color:var(--background-color);
+  height: 80vh;
+  width: 1220px;
+  overflow: auto;
+}
+.OPCancelationApprovalAction-section {
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.OPCancelationApprovalAction-header {
+  background-color: #00897b;
+  color: white;
+  padding: 7px 20px;
+  font-size: var(--heading-font);
+}
+.OPCancelationApprovalAction-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  padding: 10px;
+  
+}
+.OPCancelationApprovalAction-grid.two-columns {
+  grid-template-columns: repeat(2, 1fr);
+}
+.OPCancelationApprovalAction-floating-field {
+  position: relative;
+}
+.OPCancelationApprovalAction-floating-input,
+.OPCancelationApprovalAction-floating-select {
+  padding: 5px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: var(--font-size);
+  background: white;
+  transition: all 0.2s ease;
+}
+.OPCancelationApprovalAction-floating-input{
+  width: 92%;
+}
+.OPCancelationApprovalAction-floating-select {
+  width: 100%;
+  
+}
+.OPCancelationApprovalAction-floating-label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  color: #666;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: var(--font-size);
+}
+.OPCancelationApprovalAction-floating-field.active .OPCancelationApprovalAction-floating-label {
+  top: 0;
+  font-size: var(--font-size);
+  color: #00897b;
+}
+.OPCancelationApprovalAction-floating-field.active .OPCancelationApprovalAction-floating-input,
+.OPCancelationApprovalAction-floating-field.active .OPCancelationApprovalAction-floating-select {
+  border-color: #00897b;
+}
+.OPCancelationApprovalAction-full-width {
+  grid-column: span 4;
+}
+.OPCancelationApprovalAction-search-field {
+  position: relative;
+}
+.OPCancelationApprovalAction-search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.OPCancelationApprovalAction-checkbox-group {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding-top: 24px;
+}
+.OPCancelationApprovalAction-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+.OPCancelationApprovalAction-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+}
+.OPCancelationApprovalAction-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.OPCancelationApprovalAction-tab {
+  background-color: #00897b;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  transition: background-color 0.2s;
+}
+.OPCancelationApprovalAction-tab:hover {
+  background-color: #00796b;
+}
+.OPCancelationApprovalAction-bottom-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 5px;
+}
+.OPCancelationApprovalAction-section.half-width {
+  margin-bottom: 0;
+}
+.OPCancelationApprovalAction-floating-input:focus,
+.OPCancelationApprovalAction-floating-select:focus {
+  outline: none;
+  border-color: #00897b;
+  box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+}
+.OPCancelationApprovalAction-services-section {
+  background: white;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+}
+.OPCancelationApprovalAction-tab-bar {
+  display: flex;
+  gap: 5px;
+  border-radius: 5px 0px;
+  padding: 4px;
+  background: var(--upperBar-bg-color);
+  overflow-x: auto; 
+  scrollbar-width: none; 
+  white-space: nowrap;
+}
+.OPCancelationApprovalAction-tab-bar::-webkit-scrollbar {
+  display: none; 
+}
+.OPCancelationApprovalAction-tab {
+  padding: 4px 12px;
+  border: 1px solid var(--button-color);
+  border-radius: 5px;
+  color: var(--button-color);
+  font-size: var(--font-size);
+  background: var(--button-hover-background-color);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.OPCancelationApprovalAction-tab:hover {
+  background-color:var(--button-color);
+  color: var(--button-hover-background-color);
+}
+.OPCancelationApprovalAction-tab.active {
+  background: var(--button-color);
+  color: var(--button-hover-background-color);
+}
+.OPCancelationApprovalAction-summary-row {
+  display: flex;
+  flex-wrap: nowrap; 
+  gap: 10px;
+  }
+  .OPCancelationApprovalAction-summary-field {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    flex-shrink: 0;
+    }
+    .OPCancelationApprovalAction-services-table{
+      padding: 8px;
+      overflow-x: scroll;
+    }
+    .OPCancelationApprovalAction-services-table table{
+      table-layout: auto;
+    }
+    .OPCancelationApprovalAction-summary-section {
+      display: flex;
+      margin-top: 10px;
+      flex-wrap: nowrap;
+      gap: 10px; 
+      overflow-x: auto; 
+      white-space: nowrap; 
+      scrollbar-width: none;
+      -ms-overflow-style: none; 
+      }
+      .OPCancelationApprovalAction-summary-section::-webkit-scrollbar {
+      display: none; 
+      }
+      .OPCancelationApprovalAction-save-btn{
+        background-color: var(--button-color);
+        border: none;
+        border-radius: 5px;
+        margin: 10px;
+        color: white;
+        padding: 5px;
+        border: 1px solid var(--button-color);
+      }
+      .OPCancelationApprovalAction-save-btn:hover{
+        background-color: white;
+       color: var(--button-color);
+      }
+@media (max-width: 1024px) {
+  .OPCancelationApprovalAction-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .OPCancelationApprovalAction-full-width {
+    grid-column: span 2;
+  }
+}
+@media (max-width: 768px) {
+  .OPCancelationApprovalAction-bottom-container {
+    grid-template-columns: 1fr;
+  }
+  .OPCancelationApprovalAction-tabs {
+    flex-direction: column;
+  }
+}
+@media (max-width: 480px) {
+  .OPCancelationApprovalAction-grid {
+    grid-template-columns: 1fr;
+  }
+  .OPCancelationApprovalAction-grid.two-columns {
+    grid-template-columns: 1fr;
+  }
+  .OPCancelationApprovalAction-full-width {
+    grid-column:span1;
+}
+}

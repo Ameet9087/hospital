@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./UpdateVaccination.css";
 import { API_BASE_URL } from "../../api/api";
+import FloatingInput from "../../../FloatingInputs/FloatingInput";
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import { toast } from "react-toastify";
 
 // Indian states and castes for selection
 const indianStates = [
@@ -92,10 +95,12 @@ const UpdateVaccinationRegister = ({ patient, onClose }) => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
+        toast.success("Successfully updated")
         onClose();
       })
       .catch((error) => {
         console.error("Error:", error);
+        toast.error("Error is ocured")
       });
   };
 
@@ -116,104 +121,98 @@ const UpdateVaccinationRegister = ({ patient, onClose }) => {
           onSubmit={handleSubmit}
         >
           <div className="UpdateVaccinationRegister__formGroup">
-            <label>Mother Name*</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Mother Name *"}
+            type="text"
               name="motherName"
               value={formData.motherName}
               onChange={handleInputChange}
               placeholder="Mother Name"
-              required
-            />
+              required/>
+            
           </div>
           <div className="UpdateVaccinationRegister__formGroup">
-            <label>Baby Name</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Baby Name"}
+            type="text"
               name="babyName"
               value={formData.babyName}
               onChange={handleInputChange}
-              placeholder="Baby Name"
-            />
+              placeholder="Baby Name"/>
+           
           </div>
           <div className="UpdateVaccinationRegister__formGroup">
-            <label>Age*</label>
-            <div className="UpdateVaccinationRegister__ageInput">
-              <input
-                type="number"
+            <FloatingInput
+            label={"Age *"}
+            type="number"
                 name="age"
                 value={formData.age}
                 onChange={handleInputChange}
                 placeholder="Age"
-                required
-              />
-              <select
-                name="ageUnit"
-                value={formData.ageUnit}
-                onChange={handleInputChange}
-              >
-                <option>Days</option>
-                <option>Months</option>
-                <option>Years</option>
-              </select>
+                required/>
+           
+            <div className="UpdateVaccinationRegister__ageInput">
+              <FloatingSelect
+              label={"Age Unit"}
+              name="ageUnit"
+              value={formData.ageUnit}
+              onChange={handleInputChange}
+              options={[{value:"Days",label:"Days"},{value:"Months",label:"Months"},{value:"Years",label:"Years"},]}/>
+              
             </div>
           </div>
           <div className="UpdateVaccinationRegister__formGroup">
-            <label>Date Of Birth</label>
-            <input
-              type="date"
+            <FloatingInput
+            label={"Date Of Birth"}
+             type="date"
               name="dateOfBirth"
               value={formData.dateOfBirth}
-              onChange={handleInputChange}
-            />
+              onChange={handleInputChange}/>
+            
           </div>
           <div className="UpdateVaccinationRegister__formGroup">
-            <label>Gender*</label>
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleInputChange}
-            >
-              <option>Male</option>
-              <option>Female</option>
-            </select>
+            <FloatingSelect
+            label={"Gender *"}
+            name="gender"
+            value={formData.gender}
+            onChange={handleInputChange}
+            options={[{value:"Male",label:"Male"},{value:"Female",label:"Female"}]}/>
           </div>
           <div className="UpdateVaccinationRegister__formGroup">
-            <label>Country*</label>
-            <select
-              name="country"
+            <FloatingSelect
+            label={"Country *"}
+            name="country"
               value={formData.country}
               onChange={handleInputChange}
               disabled
-            >
-              <option>India</option>
-            </select>
+              options={[{value:"India",label:"India"}]}/>
+            
           </div>
           <div className="UpdateVaccinationRegister__formGroup">
-            <label>State*</label>
-            <select
-              name="state"
-              value={formData.state}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Select State</option>
-              {indianStates.map((state) => (
-                <option key={state} value={state}>
-                  {state}
-                </option>
-              ))}
-            </select>
+          <FloatingSelect
+  label={"State *"}
+  name="state"
+  value={formData.state}
+  onChange={handleInputChange}
+  options={[
+    { value: "", label: "Select State" },
+    ...indianStates.map((state) => ({
+      value: state,
+      label: state,
+    })),
+  ]}
+/>
+           
           </div>
           <div className="UpdateVaccinationRegister__formGroup">
-            <label>Address</label>
-            <input
-              type="text"
+          <FloatingInput
+            label={"Address"}
+            type="text"
               name="address"
               value={formData.address}
               onChange={handleInputChange}
-              placeholder="Address"
-            />
+              placeholder="Address"/>
+           
           </div>
           {/* <div className="UpdateVaccinationRegister__formGroup">
             <label>Vacc. Regd. No.*</label>
@@ -227,43 +226,45 @@ const UpdateVaccinationRegister = ({ patient, onClose }) => {
             />
           </div> */}
           <div className="UpdateVaccinationRegister__formGroup">
-            <label>Father Name</label>
-            <input
-              type="text"
+          <FloatingInput
+            label={"Father Name"}
+            type="text"
               name="fatherName"
               value={formData.fatherName}
               onChange={handleInputChange}
-              placeholder="Father Name"
-            />
+              placeholder="Father Name"/>
+           
           </div>
           <div className="UpdateVaccinationRegister__formGroup">
-            <label>Phone number</label>
-            <input
-              type="tel"
+          <FloatingInput
+            label={"Phone number"}
+            type="tel"
               name="phoneNumber"
               value={formData.phoneNumber}
               onChange={handleInputChange}
-              placeholder="Phone number"
-            />
+              placeholder="Phone number"/>
+           
+           
           </div>
           <div className="UpdateVaccinationRegister__formGroup">
-            <label>Religion</label>
-            <select
-              name="religion"
-              value={formData.religion}
-              onChange={handleInputChange}
-            >
-              {castes.map((caste) => (
-                <option key={caste} value={caste}>
-                  {caste}
-                </option>
-              ))}
-            </select>
+          <FloatingSelect
+  label={"Religion"}
+  name="religion"
+  value={formData.religion}
+  onChange={handleInputChange}
+  options={[
+    { value: "", label: "Select Religion" },
+    ...castes.map((religion) => ({
+      value: religion,
+      label: religion,
+    })),
+  ]}
+/>
+
+         
           </div>
           <div className="UpdateVaccinationRegister__formActions">
-            <button type="button" onClick={onClose}>
-              Cancel
-            </button>
+            
             <button type="submit">Update</button>
           </div>
         </form>

@@ -145,7 +145,15 @@
   .table-actions {
     margin-bottom: 4px;
   }
-  
+  .Organisition_Master-add-button{
+    background-color: var(--button-color);
+    padding: 5px;
+    border-radius: 5px;
+    margin:5px;
+    border:none;
+    color:white;
+
+  }
   .Organisition_Master-add-btn,
   .Organisition_Master-del-btn {
     margin-right: 4px;
@@ -181,9 +189,10 @@
     border: 1px solid var(--button-bg-color);
     border-radius: 5px;
   }
-  .Organisition_Master-action-buttons button:hover {
+  .Organisition_Master-action-buttons button:hover,.Organisition_Master-add-button:hover {
     background-color: var(--button-hover-background-color);
     color: var(--button-bg-color);
+    border:1px solid var(--button-hover-border-color)
 }
 .Organisition_Master-orgDoctor-table{
 text-align: start;
@@ -239,3 +248,36 @@ max-height: 400px; /* Adjust this to the desired height */
   cursor: col-resize;
   user-select: none;
 }
+
+.Organisition_Master-search-bar input{
+  padding: 5px;
+  border-radius: 5px;
+  margin:5px;
+}
+.Organisition_Master-search-N-result{
+  display: flex;
+  justify-content:space-between;
+}
+.Organisition_Master-results-info{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding:10px;
+}
+
+.Organisition_Master-print-button{
+  background-color: var(--button-color);
+  color: var(--button-hover-background-color);
+  font-size: var(--font-size);
+  padding: 5px;
+  border: 1px solid var(--button-bg-color);
+  border-radius: 5px;
+  margin:5px;
+}
+
+.Organisition_Master-print-button:hover {
+  background-color: var(--button-hover-background-color);
+  color: var(--button-bg-color);
+  border:1px solid var(--button-hover-border-color)
+}
+

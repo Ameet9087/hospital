@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./AddUnitOfMeasurement.css";
 import { API_BASE_URL } from "../../api/api";
-
+import { FloatingInput } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 const AddUnitOfMeasurement = ({onClose}) => {
   const [unitOfMeasurementName, setUnitName] = useState("");
   const [description, setDescription] = useState("");
@@ -9,7 +10,11 @@ const AddUnitOfMeasurement = ({onClose}) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  // Validate all fields
+  if (!unitOfMeasurementName?.trim() || !description?.trim()) {
+    toast.error("Please fill in all required fields.");
+    return;
+  }
     const newUnit = {
       name:unitOfMeasurementName,
       description,
@@ -32,14 +37,14 @@ const AddUnitOfMeasurement = ({onClose}) => {
         setUnitName("");
         setDescription("");
         setIsActive(true);
-        alert("Unit of Measurement added successfully!");
+        toast.success("Unit of Measurement added successfully!");
         onClose();
       } else {
-        alert("Error adding Unit of Measurement");
+        toast.error("Error adding Unit of Measurement");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while adding the Unit of Measurement");
+      toast.error("An error occurred while adding the Unit of Measurement");
     }
   };
 
@@ -48,26 +53,26 @@ const AddUnitOfMeasurement = ({onClose}) => {
       <h2>Add Unit of Measurement</h2>
       <form onSubmit={handleSubmit} className="AddUnitOfMeasurement-form">
         <div className="AddUnitOfMeasurement-formgroup">
-          <label>
-            Unit of Measurement Name<span className="MeasssRequired">*</span>
-          </label>
-          <input
-            type="text"
-            placeholder="Unit of Measurement Name"
-            value={unitOfMeasurementName}
-            onChange={(e) => setUnitName(e.target.value)}
-            required
+          <FloatingInput
+          label={" Unit of Measurement Name"}
+          type="text"
+          placeholder="Unit of Measurement Name"
+          value={unitOfMeasurementName}
+          onChange={(e) => setUnitName(e.target.value)}
+          required
           />
+        
         </div>
 
         <div className="AddUnitOfMeasurement-formgroup" >
-          <label>Description</label>
-          <input
-            type="text"
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+          <FloatingInput
+          label={"Description"}
+          type="text"
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           />
+        
         </div>
 
         <div className="AddUnitOfMeasurement-formgroup" >

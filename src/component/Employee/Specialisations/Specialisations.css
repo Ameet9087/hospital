@@ -29,34 +29,18 @@
     align-items: center;
   }
   
-  .specialisations__form-group label {
-    font-weight: bold;
-    min-width: 150px;
-    margin-right: 10px;
-  }
-  
-  .specialisations__form-group input {
-    flex: 1;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
+
+ 
   .specialisations__form-group-sub{
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .specialisations__form-group-sub label{
-    font-weight: bold;
-    min-width: 150px;
-  }
- 
-  .specialisations__form-group-sub-input
-  {
-    padding: 10px;
-    width: 100%;
-
+  .specialisations__div-button{
+    display:flex;
+    gap:10px;
+  
   }
   .specialisations__radio-group {
     display: flex;
@@ -98,7 +82,9 @@
 }
 .specialisations__submit-button
 {
-  width: 33%;
+  /* width: 33%; */
+  padding: 5px;
+  border-radius:5px;
   color: white;
   background-color: var(--button-color);
   border: 1px solid var(--button-color);

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import SalesInvoice from "./SalesInvoice"; // Import SalesInvoice component
 import "../DisSales/dispenSalesSalesList.css";
+import CustomModal from '../../../CustomModel/CustomModal';
+
 import { API_BASE_URL } from "../../api/api";
 import * as XLSX from "xlsx";
 import { toast } from "react-toastify";
@@ -154,14 +156,16 @@ const [toDate, setToDate] = useState("");
           </tbody>
         </table>
       </div>
-      {showInvoice && selectedInvoice && (
-        <SalesInvoice
-          showInvoice={showInvoice}
-          handleClose={handleCloseInvoice}
-          invoiceData={selectedInvoice}
-          handlePrint={handlePrintInvoice}
-        />
-      )}
+  <CustomModal isOpen={showInvoice} onClose={handleCloseInvoice}>
+    <SalesInvoice
+      showInvoice={showInvoice}
+      handleClose={handleCloseInvoice}
+      invoiceData={selectedInvoice}
+      handlePrint={handlePrintInvoice}
+    />
+  </CustomModal>
+
+
     </div>
   );
 }

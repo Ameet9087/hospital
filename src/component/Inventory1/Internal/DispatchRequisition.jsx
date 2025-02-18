@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "./DispatchRequisition.css";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
-
+import FloatingInput from "../../../FloatingInputs/FloatingInput";
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import { toast } from "react-toastify";
 const DispatchRequisition = ({ request,onClose }) => {
   const [items, setItems] = useState(
     request?.requisitionItems?.map((item) => ({
@@ -41,11 +43,11 @@ const handleDispatch = () => {
       },
     })
     .then((response) => {
-      alert("Success:", response.data);
+      toast.success("Success:", response.data);
       onClose();
     })
     .catch((error) => {
-      console.error("Error:", error);
+      toast.error("Error:", error);
     });
 };
 
@@ -53,19 +55,27 @@ const handleDispatch = () => {
 
   return (
     <div className="dispatch-container">
+      
       <h2 className="dispatch-title">DISPATCH REQUISITION</h2>
       <div className="dispatch-header">
         <div>
-          <label>Requisition No:</label>
-          <input type="text" value={request?.id} readOnly />
+        <FloatingInput
+      label={"Requisition No"}
+      type="text" value={request?.id} readOnly/>
+          
         </div>
         <div>
-          <label>Store Name:</label>
-          <span>{request?.subStore?.subStoreName}</span>
+          <FloatingInput
+          label={"Store Name"}
+          value={request?.subStore?.subStoreName}
+          />
+         
         </div>
         <div>
-          <label>Requested On:</label>
-          <input type="text" value={request?.requisitionDate} readOnly />
+          <FloatingInput
+          label={"Requested On"}
+          type="text" value={request?.requisitionDate} readOnly/>
+         
         </div>
       </div>
       <table className="dispatch-table">
@@ -83,15 +93,17 @@ const handleDispatch = () => {
               <td>{item?.item?.itemName}</td>
               <td>{item?.requiredQuantity}</td>
               <td>
-                <input
-                  type="number"
+                <FloatingInput
+                min={"0"}
+                label={"Quantity"}
+                type="number"
                   value={
                     items.find((i) => i.id === item?.id)?.dispatchQuantity || 0
                   }
                   onChange={(e) =>
                     handleInputChange(item?.id, "dispatchQuantity", e.target.value)
-                  }
-                />
+                  }/>
+                
               </td>
               <td>
                 <textarea

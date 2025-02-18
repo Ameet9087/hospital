@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, Plus, Trash2 } from 'lucide-react';
 import './PreventiveMaintenanceForm.css';
-import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 import PopupTable from '../../../Admission/PopupTable';
 import { API_BASE_URL } from '../../../api/api';
+import { FloatingInput,FloatingSelect,FloatingTextarea } from '../../../../FloatingInputs';
+import { toast } from 'react-toastify';
 
 const PreventiveMaintenanceForm = () => {
     const tableRef = useRef(null);
@@ -120,17 +122,16 @@ const PreventiveMaintenanceForm = () => {
 
             .then((response) => {
                 if (response.ok) {
-                    alert("Preventive Maintenance Cancellation added successfully.");
+                    toast.success("Preventive Maintenance Cancellation added successfully.");
                 } else {
                     throw new Error("Failed to add Preventive Maintenance Cancellation.");
                 }
             })
             .catch((error) => {
                 console.error("Error:", error);
-                alert("An error occurred while adding the Preventive Maintenance Cancellation.");
+                toast.error("An error occurred while adding the Preventive Maintenance Cancellation.");
             });
     };
-
     return (
         <div className="preventive-maintenance-container">
             <div className="preventive-maintenance-header">
@@ -142,129 +143,120 @@ const PreventiveMaintenanceForm = () => {
 
 
                     <div className="preventive-maintenance-form-group">
-                        <label>
-                            PM NO<span className="preventive-maintenance-required">*</span>
-                        </label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input type="text" className="preventive-maintenance-input" value={selectedPONumber?.preventiveMaintenanceCalibrationId} />
-                            <Search onClick={() => setActivePopup("PONomber")} className="preventive-maintenance-input-icon" size={18} />
-                        </div>
+                        <FloatingInput
+                        label={"PM NO  *"}
+                        value={selectedPONumber?.preventiveMaintenanceCalibrationId} 
+                        type="search"
+                        onIconClick={() => setActivePopup("PONomber")}/>
+                        
                     </div>
 
 
                     <div className="preventive-maintenance-form-group">
-                        <label>
-                            Equipment Name
-                        </label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input type="text" className="preventive-maintenance-input" value={selectedPONumber?.equipmentMasterDTO?.equipmentName} />
-                        </div>
+                        <FloatingInput
+                        label={"Equipment Name"}
+                        type="text"
+                        value={selectedPONumber?.equipmentMasterDTO?.equipmentName}/>
+                       
                     </div>
 
                     <div className="preventive-maintenance-form-group">
-                        <label>Serial No</label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input type="text" value={selectedPONumber?.equipmentMasterDTO?.serialNo} className="preventive-maintenance-input" />
-                        </div>
+                        <FloatingInput
+                        label={"Serial No"}
+                        type="text"
+                        value={selectedPONumber?.equipmentMasterDTO?.serialNo}/>
+                        
                     </div>
 
                     <div className="preventive-maintenance-form-group">
-                        <label>Location</label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input type="text" value={selectedPONumber?.equipmentMasterDTO?.assetLocationMaster?.subLocation} className="preventive-maintenance-input" />
-                        </div>
+                        <FloatingInput
+                        label={"Location"}
+                        type="text" value={selectedPONumber?.equipmentMasterDTO?.assetLocationMaster?.subLocation}/>
+                        
                     </div>
 
 
                     <div className="preventive-maintenance-form-group">
-                        <label>Responsible Department</label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input type="text" value={selectedPONumber?.equipmentMasterDTO?.department?.departmentName} className="preventive-maintenance-input" />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="preventive-maintenance-form-row">
-                    <div className="preventive-maintenance-form-group">
-                        <label>
-                            PM Date
-                        </label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input value={selectedPONumber?.preventiveMaintenanceDate}
-                                type="text"
-                                className="preventive-maintenance-input"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="preventive-maintenance-form-group">
-                        <label>Equipment No</label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input type="text" value={selectedPONumber?.equipmentMasterDTO?.equipmentNo} className="preventive-maintenance-input" />
-                        </div>
-                    </div>
-
-                    <div className="preventive-maintenance-form-group">
-                        <label>Model No</label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input type="text" value={selectedPONumber?.equipmentMasterDTO?.modelNo} className="preventive-maintenance-input" />
-                        </div>
-                    </div>
-
-                    <div className="preventive-maintenance-form-group">
-                        <label>Responsible Person</label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input type="text" value={selectedPONumber?.equipmentMasterDTO?.employee?.firstName} className="preventive-maintenance-input" />
-                        </div>
-                    </div>
-
-                    <div className="preventive-maintenance-form-group">
-                        <label>Period Type</label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input type="text" value={selectedPONumber?.periodType} className="preventive-maintenance-input" />
-                        </div>
+                        <FloatingInput
+                        label={"Responsible Department"}
+                        type="text" value={selectedPONumber?.equipmentMasterDTO?.department?.departmentName}/>
+                        
                     </div>
                 </div>
 
                 <div className="preventive-maintenance-form-row">
                     <div className="preventive-maintenance-form-group">
-                        <label>
-                            Asset No
-                        </label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input type="text" value={selectedPONumber?.equipmentMasterDTO?.assetNo} className="preventive-maintenance-input" />
-                        </div>
+                        <FloatingInput
+                        label={"PM Date"}
+                        value={selectedPONumber?.preventiveMaintenanceDate}
+                                type="text"/>
+                       
+                       
+                           
+                            
+                       
                     </div>
 
                     <div className="preventive-maintenance-form-group">
-                        <label>Category</label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input type="text" value={selectedPONumber?.equipmentMasterDTO?.assetCateMasterDTO?.assetCategory} className="preventive-maintenance-input" />
-                        </div>
+                        <FloatingInput
+                        label={"Equipment No"}
+                        type="text" value={selectedPONumber?.equipmentMasterDTO?.equipmentNo}/>
+                        
                     </div>
 
                     <div className="preventive-maintenance-form-group">
-                        <label>
-                            Maintenance Types
-                        </label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input type="text" value={selectedPONumber?.maintenanceTypeMasterDTO?.typeName} className="preventive-maintenance-input" />
-                        </div>
+                        <FloatingInput
+                        label={"Model No"}
+                        type="text" value={selectedPONumber?.equipmentMasterDTO?.modelNo}
+                        />
+                       
                     </div>
 
                     <div className="preventive-maintenance-form-group">
-                        <label>
-                            Remark<span className="preventive-maintenance-required">*</span>
-                        </label>
-                        <div className="preventive-maintenance-input-with-icon">
-                            <input
-                                type="text"
+                        <FloatingInput
+                        label={"Responsible Person"}
+                        type="text" value={selectedPONumber?.equipmentMasterDTO?.employee?.firstName}/>
+                        
+                    </div>
+
+                    <div className="preventive-maintenance-form-group">
+                        <FloatingInput
+                        label={"Period Type"}
+                        type="text" value={selectedPONumber?.periodType}/>
+                       
+                    </div>
+                </div>
+
+                <div className="preventive-maintenance-form-row">
+                    <div className="preventive-maintenance-form-group">
+                        <FloatingInput
+                        label={"Asset No"}
+                        type="text" value={selectedPONumber?.equipmentMasterDTO?.assetNo}/>
+                        
+                    </div>
+
+                    <div className="preventive-maintenance-form-group">
+                        <FloatingInput
+                        label={"Category"}
+                        type="text" value={selectedPONumber?.equipmentMasterDTO?.assetCateMasterDTO?.assetCategory}/>
+                        
+                    </div>
+
+                    <div className="preventive-maintenance-form-group">
+                        <FloatingInput
+                        label={"Maintenance Types"}
+                        type="text" value={selectedPONumber?.maintenanceTypeMasterDTO?.typeName}/>
+                        
+                    </div>
+
+                    <div className="preventive-maintenance-form-group">
+                        <FloatingInput
+                        label={"Remark"}
+                        type="text"
                                 value={remark}
-                                onChange={(e) => setRemark(e.target.value)}
-                                className="preventive-maintenance-input"
-                                required
-                            />
-                        </div>
+                                onChange={(e) => setRemark(e.target.value)} required/>
+                        
+                       
                     </div>
                     {activePopup && (
                         <PopupTable

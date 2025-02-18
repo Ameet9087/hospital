@@ -4,6 +4,8 @@ import './PreventiveMaintenanceCalibrationPopUp.css';
 import { FaSearch } from 'react-icons/fa';
 import { API_BASE_URL } from '../../../api/api';
 import PopupTable from '../../../Admission/PopupTable';
+import { FloatingInput,FloatingSelect,FloatingTextarea } from '../../../../FloatingInputs';
+import { toast } from 'react-toastify';
 const PreventiveMaintenanceCalibrationPopUp = () => {
   const [activeTab, setActiveTab] = useState('proposal');
   const [selectedEquipment, setSelectedEquipment] = useState({
@@ -150,9 +152,9 @@ const PreventiveMaintenanceCalibrationPopUp = () => {
       });
 
       if (response.ok) {
-        alert('Data saved successfully!');
+        toast.success('Data saved successfully!');
       } else {
-        alert('Failed to save data.');
+        toast.error('Failed to save data.');
       }
     } catch (error) {
       console.error('Error saving data:', error);
@@ -168,120 +170,142 @@ const PreventiveMaintenanceCalibrationPopUp = () => {
       <div className="PreventiveMaintenanceCalibrationPopUp-form-container">
         <div className="PreventiveMaintenanceCalibrationPopUp-form-section">
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Preventive Maintenance No</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <input type="text" className="PreventiveMaintenanceCalibrationPopUp-input-field" />
+            <FloatingInput
+            label={"Preventive Maintenance No"} type="text"/>
+            
           </div>
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Preventive Maintenance Date</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <div className="PreventiveMaintenanceCalibrationPopUp-date-input">
-              <input type="date" className="PreventiveMaintenanceCalibrationPopUp-input-field" onChange={handleInputChange} />
-            </div>
+            <FloatingInput
+            label={"Preventive Maintenance Date"}
+            type="date"  onChange={handleInputChange}/>
+            
           </div>
           <div className="PreventiveMaintenanceCalibrationPopUp-section-header">Equipment Info</div>
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Equipment Name *</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <input type="text" value={selectedEquipment.name} />
-            <FaSearch onClick={() => setActivePopup("euipment")} />
+            <FloatingInput
+            label={"Equipment Name *"}
+            type="search" value={selectedEquipment.name} 
+            onIconClick={() => setActivePopup("euipment")}/>
+           
           </div>
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Equipment No</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <input type="text" className="PreventiveMaintenanceCalibrationPopUp-input-field" value={selectedEquipment.equipmentNo} />
+            <FloatingInput
+            label={"Equipment No"}
+            type="text"
+            value={selectedEquipment.equipmentNo}/>
+            
           </div>
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Asset No</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <input type="text" className="PreventiveMaintenanceCalibrationPopUp-input-field" value={selectedEquipment.assetNo} />
+            <FloatingInput
+            label={"Asset No"}
+            type="text"
+            value={selectedEquipment.assetNo}/>
+           
           </div>
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Serial No</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <input type="text" className="PreventiveMaintenanceCalibrationPopUp-input-field" value={selectedEquipment.serialNo} />
+            <FloatingInput
+            label={"Serial No"}
+            type="text"
+            value={selectedEquipment.serialNo}/>
+            
           </div>
         </div>
         <div className="PreventiveMaintenanceCalibrationPopUp-form-section">
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Model No</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <input type="text" className="PreventiveMaintenanceCalibrationPopUp-input-field" value={selectedEquipment.modelno} />
+            <FloatingInput
+            label={"Model No"}
+            type="text"
+            value={selectedEquipment.modelno} />
+           
           </div>
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Category</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <input type="text" className="PreventiveMaintenanceCalibrationPopUp-input-field" value={selectedEquipment.underCategory} />
+            <FloatingInput
+            label={"Category"}
+            type="text"
+            value={selectedEquipment.underCategory}/>
+          
           </div>
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Location</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <input type="text" className="PreventiveMaintenanceCalibrationPopUp-input-field" value={selectedEquipment.location} />
+            <FloatingInput
+            label={"Location"}
+            type="text"
+            value={selectedEquipment.location}/>
+           
           </div>
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Responsible Person</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <input type="text" className="PreventiveMaintenanceCalibrationPopUp-input-field" value={selectedEquipment.responsibleperson} />
+            <FloatingInput
+            label={"Responsible Person"}
+            type="text"
+            value={selectedEquipment.responsibleperson}/>
+           
           </div>
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Responsible Department</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <input type="text" className="PreventiveMaintenanceCalibrationPopUp-input-field" value={selectedEquipment.responsibleDepartment} />
+            <FloatingInput
+            label={"Responsible Department"}
+            type="text"
+            value={selectedEquipment.responsibleDepartment}/>
+            
           </div>
           <div className="PreventiveMaintenanceCalibrationPopUp-section-header">Scheduling Details</div>
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Maintenance Types: *</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <input type="text" value={selectedmaintains.typeName} onChange={handleInputChange} />
-            <FaSearch onClick={() => setActivePopup("maintainstype")} />
+            <FloatingInput
+            label={"Maintenance Types *"}
+            type="search"
+            value={selectedmaintains.typeName}
+            onChange={handleInputChange}
+            onIconClick={() => setActivePopup("maintainstype")} />
+           
           </div>
         </div>
         <div className="PreventiveMaintenanceCalibrationPopUp-form-section">
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Start Date</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <div className="PreventiveMaintenanceCalibrationPopUp-date-input">
-              <input type="date" className="PreventiveMaintenanceCalibrationPopUp-input-field" />
-            </div>
+            <FloatingInput
+            label={"Start Date"}
+            type="date"/>
+          
           </div>
 
 
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">End Date</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <div className="PreventiveMaintenanceCalibrationPopUp-date-input">
-              <input type="date" className="PreventiveMaintenanceCalibrationPopUp-input-field" />
-            </div>
+            <FloatingInput
+            label={"End Date"}
+            type="date"/>
+            
           </div>
 
 
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Period Type</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <select className="PreventiveMaintenanceCalibrationPopUp-input-field" value={formData.periodType} onChange={handleInputChange}>
-              <option>Daily</option>
-              <option>Weekly</option>
-              <option>FortNight</option>
-              <option>Monthly</option>
-              <option>Bimonthly</option>
-              <option>Quaterly</option>
-              <option>Half Yearly</option>
-              <option>Yearly</option>
-              <option>Fix Date</option>
-            </select>
+            <FloatingSelect
+            label={"Period Type"}
+            value={formData.periodType} onChange={handleInputChange}
+            options={[{value:"Daily",label:"Daily"},
+              {value:"Weekly",label:"Weekly"},
+              {value:"FortNight",label:"FortNight"},
+              {value:"Monthly",label:"Monthly"},
+              {value:"Bimonthly",label:"Bimonthly"},
+              {value:"Quaterly",label:"Quaterly"},
+              {value:"Half Yearly",label:"Half Yearly"},
+              {value:"Yearly",label:"Yearly"},
+              {value:"Fix Date",label:"Fix Date"}
+            ]}/>
+            
 
           </div>
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">Frequency No</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <input type="text" className="PreventiveMaintenanceCalibrationPopUp-input-field" name='frequencyno' value={formData.frequencyno} onChange={handleInputChange} />
+            <FloatingInput
+            label={"Frequency No"}
+            type="text"
+            name='frequencyno'
+            value={formData.frequencyno}
+            onChange={handleInputChange}/>
+           
           </div>
           <div className="PreventiveMaintenanceCalibrationPopUp-form-group">
-            <span className="PreventiveMaintenanceCalibrationPopUp-label">To Do Date</span>
-            <span className="PreventiveMaintenanceCalibrationPopUp-separator">:</span>
-            <div className="PreventiveMaintenanceCalibrationPopUp-date-input">
-              <input type="date" onChange={handleInputChange} className="PreventiveMaintenanceCalibrationPopUp-input-field" />
-            </div>
+            
+            <FloatingInput
+            label={"To Do Date"}
+            type="date" onChange={handleInputChange}/>
+            
           </div>
 
 

@@ -32,6 +32,7 @@
     margin-bottom: 15px;
   }
   
+
   /* Label styling */
   .CSSDItemMaster-formGroup label {
     width: 40%;
@@ -40,7 +41,8 @@
   }
   
   /* Input styling */
-  .CSSDItemMaster-formGroup input[type="text"],select {
+  .CSSDItemMaster-formGroup input[type="text"],
+  .CSSDItemMaster-formGroup select {
     width: 65%;
     padding: var(--input-box-padding);
     font-size: var(--font-size);
@@ -57,6 +59,8 @@
     border-radius: 4px;
   }
   
+ 
+ 
   /* Inventory list and status options styling */
   .CSSDItemMaster-inventoryList label,
   .CSSDItemMaster-statusOptions label {

@@ -73,7 +73,7 @@
     padding: 5px;
     cursor: pointer;
   }
-  .PatientVaccinationDetail-updateBtn:hover,.PatientVaccinationDetail-submitBtn:hover {
+  .PatientVaccinationDetail-updateBtn:hover,.PatientVaccinationDetail-submitBtn:hover ,.PatientVaccinationDetail-cancelBtn:hover{
     background-color: var(--button-hover-background-color);
     color: var(--button-hover-text-color);
      border: 1px solid var(--button-hover-border-color);
@@ -84,14 +84,7 @@
     gap: 10px;
     margin-bottom: 20px;
   }
-  .PatientVaccinationDetail-newVaccine input,.PatientVaccinationDetail-newVaccine select,  .PatientVaccinationDetail-fiscalYear input,.PatientVaccinationDetail-fiscalYear select{
-    border: 1px solid #c2cad8;
-    border-radius: 3px !important;
-    height: 30px !important;
-    width: 150px;
-    margin: 0 5px;
-    font-size: 14px;
-  }
+ 
   .PatientVaccinationDetail-formGroup {
     display: flex;
     gap: 10px;
@@ -117,10 +110,12 @@
     margin-bottom: 10px;
   }
   .PatientVaccinationDetail-cancelBtn{
-    background-color: #4c4faf;
+    background-color:var(--button-color);
     color: white;
     border: none;
     margin-left: 5px;
     padding: 5px 10px;
+    border-radius: 6px;
     cursor: pointer;
   }
+

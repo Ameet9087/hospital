@@ -1,6 +1,5 @@
 .provisional-sale-container {
-    width: 100%;
-    max-width: 1200px;
+    
     margin: 0 auto;
     background-color: #fff;
     border-radius: 4px;
@@ -30,7 +29,7 @@
 .provisional-sale-form-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 22px;
 }
 
 
@@ -46,29 +45,8 @@
     gap: 4px;
 }
 
-.provisional-sale-form-group label {
-    font-size: 14px;
-    color: #333;
-}
 
-.provisional-sale-input-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
 
-.provisional-sale-form-input {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.provisional-sale-form-input:focus {
-    outline: none;
-    border-color: #26a69a;
-}
 
 .provisional-sale-input-icon {
     position: absolute;

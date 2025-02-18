@@ -4,6 +4,9 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import "./Bubble_Pending_Kit_Receive.css";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../api/api";
+import FloatingInput from "../../../FloatingInputs/FloatingInput";
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import { toast } from "react-toastify";
 
 const PendingKitReceiveRecord = () => {
   const { issueId } = useParams(); // Get the 'issueId' from the URL
@@ -92,9 +95,9 @@ const PendingKitReceiveRecord = () => {
       if (!response.ok) {
         throw new Error(`Failed to save: ${response.statusText}`);
       }
-      alert("Data saved successfully!");
+      toast.success("Data saved successfully!");
     } catch (err) {
-      alert(`Error: ${err.message}`);
+      toast.error(`Error: ${err.message}`);
     }
   };
 
@@ -107,15 +110,20 @@ const PendingKitReceiveRecord = () => {
       <header className="pendingkitreceiverecord-header">
         <h3>Kit Receive</h3>
         <div className="pendingkitreceiverecord-inputs">
-          <label>
-            Kit Issued Number: <input className="pendinginputs" type="text" value={issueId || "Issue Number Not Found"} readOnly />
-          </label>
-          <label>
-            Department Name: <input className="pendinginputs" type="text" value={departmentName} readOnly />
-          </label>
-          <label>
-            Sub Department Name: <input className="pendinginputs" type="text" value={subdepartmentName} readOnly />
-          </label>
+          <FloatingInput
+          label={"Kit Issued Number"}
+          type="text" value={issueId || "Issue Number Not Found"} readOnly/>
+         
+          
+            <FloatingInput
+            label={"Department Name"}
+            type="text" value={departmentName} readOnly/>
+           
+            <FloatingInput
+            label={"Sub Department Name"}
+            type="text" value={subdepartmentName} readOnly/>
+            
+        
         </div>
       </header>
 
@@ -146,43 +154,44 @@ const PendingKitReceiveRecord = () => {
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>
-                  <input
-                    className="pendinginputs"
-                    type="number"
+                  <FloatingInput
+                  label={"Kit ID"}
+                  type="number"
                     value={row.kitMasterId || ""}
-                    onChange={(e) => updateRow(index, "kitMasterId", e.target.value)}
-                  />
+                    onChange={(e) => updateRow(index, "kitMasterId", e.target.value)}/>
+                  
                 </td>
                 <td>
-                  <input
-                    className="pendinginputs"
-                    type="text"
+                  <FloatingInput
+                  label={"Kit Name"}
+                  type="text"
                     value={row.kitName || ""}
                     onChange={(e) => updateRow(index, "kitName", e.target.value)}
-                    onClick={() => {
-                      setSelectedRowIndex(index);
-                      setShowModal(true);
-                    }}
-                  />
+                  onIconClick={() => {
+                    setSelectedRowIndex(index);
+                    setShowModal(true);
+                  }}/>
+                  
                 </td>
                 <td>
-                  <input
-                    className="pendinginputs"
-                    type="number"
-                    value={row.receivingQty || ""}
-                    onChange={(e) => updateRow(index, "receivingQty", e.target.value)}
-                  />
+                  <FloatingInput
+                  label={"Receiving Qty"}
+                  type="number"
+                  value={row.receivingQty || ""}
+                  onChange={(e) => updateRow(index, "receivingQty", e.target.value)}
+                />
+                 
                 </td>
                 <td>
                   {row.reqQuantity}
                 </td>
                 <td>
-                  <input
-                    className="pendinginputs"
-                    type="text"
-                    value={row.remarks || ""}
-                    onChange={(e) => updateRow(index, "remarks", e.target.value)}
-                  />
+                  <FloatingInput
+                  label={"Remark"}
+                  type="text"
+                  value={row.remarks || ""}
+                  onChange={(e) => updateRow(index, "remarks", e.target.value)}/>
+                 
                 </td>
               </tr>
             ))}

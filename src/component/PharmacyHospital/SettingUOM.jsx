@@ -1,4 +1,5 @@
 /* Mohini_SettingUOM_WholePage_14/sep/2024 */
+
 import React, { useState, useEffect,useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
@@ -13,11 +14,14 @@ import { FloatingInput } from '../../FloatingInputs';
 
 const SettingUOM = () => {
   const [suppliers, setSuppliers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [selectedUser, setSelectedUser] = useState({ name: '', description: '', isActive: true });
-  const [openStickerPopup, setOpenStickerPopup] = useState(false);
+  const [selectedUser, setSelectedUser] = useState({
+    name: "",
+    description: "",
+    isActive: true,
+  });
   const { success, error, CustomAlerts } = useCustomAlert();
   const [columnWidths, setColumnWidths] = useState({});
     const tableRef = useRef(null);
@@ -26,30 +30,29 @@ const SettingUOM = () => {
   const apiUrl = `${API_BASE_URL}/unitofmeasurement`;
 
   useEffect(() => {
-    // Fetch data from the API when the component mounts
     const fetchData = async () => {
       try {
         const response = await axios.get(`${apiUrl}/fetchAll`);
-        setSuppliers(response.data);
+        setSuppliers(response.data || []);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
   }, []);
 
-  // const filteredUsers = suppliers.filter(user =>
-  //   user.name.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
+  const filteredUsers = suppliers.filter((user) =>
+    (user?.name || "").toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
 
   const handleShowModal = (user = null) => {
     if (user) {
       setSelectedUser(user);
       setIsEditMode(true);
     } else {
-      // Reset form for adding a new UOM
-      setSelectedUser({ name: '', description: '', isActive: true });
+      setSelectedUser({ name: "", description: "", isActive: true });
       setIsEditMode(false);
     }
     setShowModal(true);
@@ -57,7 +60,7 @@ const SettingUOM = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setSelectedUser(null);
+    setSelectedUser({ name: "", description: "", isActive: true });
   };
 
   const handleSubmit = async (event) => {
@@ -65,13 +68,13 @@ const SettingUOM = () => {
 
     try {
       if (isEditMode) {
-        // Update existing UOM
         await axios.put(`${apiUrl}/${selectedUser.id}`, selectedUser);
+
         setSuppliers(suppliers.map(u => (u.id === selectedUser.id ? selectedUser : u)));
         toast.success("Unit of Measurement updated successfully!")
       } else {
-        // Add new UOM
         const response = await axios.post(`${apiUrl}/add`, selectedUser);
+
         setSuppliers([...suppliers, response.data]);
         toast.success("Unit of Measurement added successfully!")
       }
@@ -84,25 +87,52 @@ const SettingUOM = () => {
 
   // Function to export table to Excel
   const handleExport = () => {
-    const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
-    const wb = XLSX.utils.book_new(); // Creates a new workbook
-    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport'); // Appends worksheet to workbook
-    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx'); // Downloads the Excel file
+    if (!tableRef.current) return;
+    const ws = XLSX.utils.table_to_sheet(tableRef.current);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "PurchaseOrderReport");
+    XLSX.writeFile(wb, "PurchaseOrderReport.xlsx");
   };
 
-  // Function to trigger print
   const handlePrint = () => {
-    window.print(); // Triggers the browser's print window
+    if (!tableRef.current) return;
+    const printContent = tableRef.current.outerHTML;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>${printContent}</body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+
   };
-
-
-
 
   return (
     <div className="setting-supplier-container">
       <CustomAlerts/>
       <div className="setting-supplier-header">
-        <button className="setting-supplier-add-user-button" onClick={() => handleShowModal()}>+ Add Unit Of Measurement</button>
+        <button className="setting-supplier-add-user-button" onClick={() => handleShowModal()}>
+          + Add Unit Of Measurement
+        </button>
       </div>
       <input
         type="text"
@@ -111,6 +141,7 @@ const SettingUOM = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+
       <div className='setting-supplier-span'>
   <span>Showing {suppliers.length} results</span>
   <button className='item-wise-export-button'onClick={handleExport}>Export</button>
@@ -140,10 +171,11 @@ const SettingUOM = () => {
           <tbody>
             {suppliers.map((user, index) => (
               <tr key={index}>
-                <td>{user.name}</td>
-                <td>{user.description}</td>
-                <td>{user.isActive ? 'Yes' : 'No'}</td>
+                <td>{user?.name || "N/A"}</td>
+                <td>{user?.description || "N/A"}</td>
+                <td>{user?.isActive ? "Yes" : "No"}</td>
                 <td className="setting-supplier-action-buttons">
+
                   <button className="setting-supplier-action-button" onClick={() => handleShowModal(user)}>Edit</button>
                 
                 </td>
@@ -151,17 +183,8 @@ const SettingUOM = () => {
             ))}
           </tbody>
         </table>
-
-        {/* <div className="setting-supplier-pagination">
-          <div className="setting-supplier-pagination-controls">
-            <button>First</button>
-            <button>Previous</button>
-            <button>1</button>
-            <button>Next</button>
-            <button>Last</button>
-          </div>
-        </div> */}
       </div>
+
 
       <CustomModal
   isOpen={showModal}
@@ -173,6 +196,7 @@ const SettingUOM = () => {
     {/* <button onClick={handleCloseModal} className="close-button">
       &times;
     </button> */}
+
   </div>
   <div className="supplier-setting-supplier-update-modal-body">
     <Form onSubmit={handleSubmit}>

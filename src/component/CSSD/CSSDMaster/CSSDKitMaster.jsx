@@ -5,6 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { API_BASE_URL } from "../../api/api";
 import { useLocation, useNavigate } from "react-router-dom";
+import FloatingInput from "../../../FloatingInputs/FloatingInput";
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import FloatingTextarea from "../../../FloatingInputs/FloatingTextarea";
+import { toast } from "react-toastify";
 
 const KitMaster = () => {
   const [kitName, setKitName] = useState("");
@@ -74,13 +78,13 @@ const KitMaster = () => {
 
   const handleSubmit = async () => {
     if (!kitName || !kitCategoryId) {
-      alert("Please fill in all required fields.");
+      toast.error("Please fill in all required fields.");
       return;
     }
 
     const incompleteRow = items.find((item) => !item.name || !item.quantity || !item.itemId);
     if (incompleteRow) {
-      alert("Please complete all item details before submitting.");
+      toast.error("Please complete all item details before submitting.");
       return;
     }
 
@@ -99,7 +103,7 @@ const KitMaster = () => {
     try {
       const response = await axios.post(`${API_BASE_URL}/kit-masters`, payload);
       if (response.status === 201) {
-        alert("Kit Master added successfully!");
+        toast.success("Kit Master added successfully!");
         setKitName("");
         setKitCategoryId("");
         setExpiryDays("");
@@ -108,8 +112,8 @@ const KitMaster = () => {
         setItems([{ id: 1, name: "", quantity: "", itemId: "" }]);
       }
     } catch (error) {
-      console.error("Error creating Kit Master:", error);
-      alert("Failed to add Kit Master.");
+      toast.error("Error creating Kit Master:", error);
+      toast.error("Failed to add Kit Master.");
     }
   };
 
@@ -149,54 +153,55 @@ const KitMaster = () => {
       </div>
 
       <div className="kit-master-form-group">
-        <label>
-          Kit Name <span>*</span>
-        </label>
-        <input
-          type="text"
+        <FloatingInput
+        label={" Kit Name *"}
+        type="text"
           value={kitName}
           onChange={(e) => setKitName(e.target.value)}
           placeholder="Enter Kit Name"
           required
-        />
+          restrictions={{char:true}}/>
+       
       </div>
 
       <div className="kit-master-form-group">
-        <label>
-          Kit Category <span>*</span>
-        </label>
-        <select
-          value={kitCategoryId}
-          onChange={(e) => setKitCategoryId(e.target.value)}
-          required
-        >
-          <option value="">Select Kit Category</option>
-          {kitCategories.map((kit) => (
-            <option key={kit.kitCategoryId} value={kit.kitCategoryId}>
-              {kit.description}
-            </option>
-          ))}
-        </select>
+      <FloatingSelect
+  label={"Kit Category *"}
+  value={kitCategoryId}
+  onChange={(e) => setKitCategoryId(e.target.value)}
+  options={[
+    { value: "", label: "Select Kit Category" }, // Default option
+    ...kitCategories.map((kit) => ({
+      value: kit.kitCategoryId,
+      label: kit.description
+    }))
+  ]}
+  required
+/>
+
+      
+         
+       
       </div>
 
       <div className="kit-master-form-group">
-        <label>Expiry Days</label>
-        <input
-          type="number"
+        <FloatingInput
+        label={"Expiry Days"}
+         type="number"
           value={expiryDays}
           onChange={(e) => setExpiryDays(e.target.value)}
-          placeholder="Enter Expiry Days"
-        />
+          min={"1"}/>
+        
       </div>
 
       <div className="kit-master-form-group">
-        <label>Description</label>
-        <input
-          type="text"
+        <FloatingInput
+        label={"Description"}
+        type="text"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Enter Description"
-        />
+          placeholder="Enter Description"/>
+        
       </div>
 
       <div className="kit-master-form-group kit-master-status-group">
@@ -241,30 +246,28 @@ const KitMaster = () => {
 
                 <td>
                   <div className="input-with-icon">
-                    <input
-                      type="text"
+                    <FloatingInput
+                    label={"Select Item"}
+                    type="search"
                       value={item.name}
                       onChange={(e) => handleInputChange(index, "name", e.target.value)}
-                      placeholder="Select Item"
-                      onClick={() => setShowModal(true)}
+                      onIconClick={() => setShowModal(true)}
                     />
-                    <FontAwesomeIcon
-                      icon={faSearch}
-                      className="search-icon"
-
-                    />
+                    
+                   
                   </div>
                 </td>
 
                 <td>
-                  <input
-                    type="number"
+                  <FloatingInput
+                  label={"Quantity"}
+                  type="number"
                     value={item.quantity}
                     onChange={(e) =>
                       handleInputChange(index, "quantity", e.target.value)
                     }
-                    placeholder="Enter Quantity"
-                  />
+                    min={"0"}/>
+                 
                 </td>
                 <td>
                   <button onClick={() => deleteItem(item.id)}>Delete</button>

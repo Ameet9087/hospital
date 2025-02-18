@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import './AddLeavePopup.css';
 import { API_BASE_URL } from '../../api/api';
+import { FloatingInput,FloatingSelect,FloatingTextarea } from '../../../FloatingInputs';
 
 function AddLeavePopup({ onClose, onSubmit }) {
     const [employees, setEmployees] = useState([]);
@@ -69,60 +70,61 @@ function AddLeavePopup({ onClose, onSubmit }) {
                 </div>
                 <form className="addemployeeleave__form" onSubmit={handleSubmit}>
                     <div className="addemployeeleave__formGroup">
-                        <label>Employee:</label>
-                        <select
+                        
+                        <FloatingSelect
+                            label="Employee"
                             name="employeeId"
-                            value={formData.employeeDTO.employeeId}
+                            value={formData.employeeDTO.employeeId || ""}
                             onChange={handleEmployeeChange}
-                            required
-                        >
-                            <option value="" disabled>Select Employee</option>
-                            {employees.map((employee) => (
-                                <option key={employee.employeeId} value={employee.employeeId}>
-                                    {employee.firstName} {employee.lastName}
-                                </option>
-                            ))}
-                        </select>
+                            options={[
+                                { value: "", label: "Select Employee", disabled: true },
+                                ...employees.map((employee) => ({
+                                    value: employee.employeeId,
+                                    label: `${employee.firstName} ${employee.lastName}`,
+                                })),
+                            ]}
+                            placeholder="Select Employee"
+                        />
                     </div>
                     <div className="addemployeeleave__formGroup">
-                        <label>Start Date:</label>
-                        <input
-                            type="date"
+                        <FloatingInput
+                        label={"Start Date"}
+                        type="date"
                             name="startDate"
                             value={formData.startDate}
                             onChange={handleChange}
-                            required
-                        />
+                            required/>
+                        
                     </div>
                     <div className="addemployeeleave__formGroup">
-                        <label>End Date:</label>
-                        <input
-                            type="date"
+                        <FloatingInput
+                        label={"End Date"}
+                        type="date"
                             name="endDate"
                             value={formData.endDate}
                             onChange={handleChange}
-                            required
-                        />
+                            required/>
+                        
                     </div>
                     <div className="addemployeeleave__formGroup">
-                        <label>Leave Type:</label>
-                        <input
-                            type="text"
+                        <FloatingInput
+                        label={"Leave Type"}
+                        type="text"
                             name="leaveType"
                             value={formData.leaveType}
                             onChange={handleChange}
-                            required
-                        />
+                            required/>
+                       
                     </div>
                     <div className="addemployeeleave__formGroup">
-                        <label>Reason:</label>
-                        <input
-                            type="text"
+                        <FloatingInput
+                        label={"Reason"}
+                        type="text"
                             name="reason"
                             value={formData.reason}
                             onChange={handleChange}
-                            required
-                        />
+                            required/>
+                        
                     </div>
                     <div className="addemployeeleave__formActions">
                         <button type="button" onClick={onClose}>

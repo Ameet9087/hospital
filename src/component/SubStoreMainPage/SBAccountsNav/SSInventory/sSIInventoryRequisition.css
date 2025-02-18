@@ -68,6 +68,24 @@
 
 .sSIInventoryRequisition-view
 {
+<<<<<<< HEAD
+  background-color:var( --button-color);
+    /* margin-left: 10px; */
+    border: 1px solid var( --button-hover-border-color);
+    color: white;
+    /* border: none; */
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    /* margin: 1px; */
+    transition: background-color 0.3s ease;
+    padding: 5px 8px;
+}
+.sSIInventoryRequisition-view:hover{
+  border: 1px solid var( --button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-background-color);
+=======
   padding: 5px 10px;
   color: white;
   background-color: var(--button-color);
@@ -78,6 +96,7 @@
 .sSIInventoryRequisition-view:hover{
   background-color: var(--button-hover-background-color);
   color: var(--button-hover-text-color);
+>>>>>>> ad3dbcade0310743b9fa5d27715a29a847b1a3fa
 }
 .sSIInventoryRequisition-filter label {
   margin-right: 10px;

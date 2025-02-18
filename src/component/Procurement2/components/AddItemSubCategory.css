@@ -1,11 +1,11 @@
 
 .ItemSub-AddItemSubcategory {
-    width: 500px;
+    width: 400px;
     margin: 0 auto;
     padding: 5px;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     border-radius: 5px;
-    background-color: #f9f9f9;
+    /* background-color: #f9f9f9; */
     font-size: 12px;
   }
   
@@ -20,21 +20,15 @@
     align-items: center;
     justify-content: space-between;
   }
-  
-  .AddItemSubcategoryFormGroup label {
-   width: 40%;
-   font-size: 16px;
+  .AddItemSubcategoryForm {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
   }
+
   
-  .AddItemSubcategoryFormGroup input,
-  .AddItemSubcategory-select {
-    width: 60%;
-    padding: 5px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
-  
+ 
   .gorRequired {
     color: red;
   }
@@ -51,7 +45,10 @@
     flex-direction: column;
     gap: 5px;
   }
-  
+  .AddItemSubcategoryFormGroup{
+    gap: 20px;
+   margin-top: 10px;
+  }
   .goryBtnAdd {
     width: 100%;
     padding: 5px;

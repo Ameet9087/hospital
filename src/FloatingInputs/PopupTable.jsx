@@ -4,11 +4,14 @@ const AppoitmentPopupTable = ({ columns, data, onSelect, onClose }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Filtered data based on the search term
-  const filteredData = data?.filter((row) =>
-    columns.some((col) =>
-      String(row[col]).toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredData = Array.isArray(data)
+  ? data.filter((row) =>
+      columns.some((col) =>
+        String(row[col] || "").toLowerCase().includes(searchTerm.toLowerCase())
+      )
     )
-  );
+  : [];
+
 
   const handleRowClick = (row) => {
     onSelect(row); // Send selected row data to the parent
@@ -76,6 +79,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+
     zIndex: 5000,
   },
   header: {

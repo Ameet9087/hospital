@@ -29,7 +29,7 @@ const Rooms = () => {
     roomrent: "",
     status: "Available",
     advRes: "",
-    wardName: "",
+    // wardName: "",
     displayRoom: "",
     transitBed: "",
     nursery: "",
@@ -225,7 +225,7 @@ const Rooms = () => {
                 "Minimum Advance",
                 "Room Rent",
                 "Status",
-                "Ward Name",
+                // "Ward Name",
                 "Type",
                 "Dialysis Room",
                 "Transit Bed",
@@ -259,7 +259,7 @@ const Rooms = () => {
                   <td>{item.minimumAdvance}</td>
                   <td>{item.roomrent}</td>
                   <td>{item.status}</td>
-                  <td>{item.wardName}</td>
+                  {/* <td>{item.wardName}</td> */}
                   <td>{item.type}</td>
                   <td>{item.displayRoom}</td>
                   <td>{item.transitBed}</td>

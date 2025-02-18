@@ -9,19 +9,19 @@
     display: flex;
     gap: 20px;
 }
-.vaccinationsReports-dropfilter select{
+/* .vaccinationsReports-dropfilter select{
     border: 1px solid #c2cad8;
     border-radius: 3px !important;
     height: 30px !important;
     width: 150px;
     margin: 0 5px;
     font-size: 14px;
-}
+} */
 .vaccinationsReports__dropdown {
-    width: 250px;
+    width: 350px;
     height: 30px;
     text-align: center;
-    background-color: #f0f8ff;
+    background-color: white;
     border: 1px solid #ccc;
     cursor: pointer;
     display: flex;
@@ -87,19 +87,7 @@
   }
 
 
-.vaccinationsReports-ok-btn {
-    padding: 6px 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: var(--button-bg-color);
-    color: white;
-    cursor: pointer;
-}
-.vaccinationsReports-ok-btn:hover {
-  background-color: var(--button-hover-background-color);
-  color: var(--button-hover-text-color);
-   border: 1px solid var(--button-hover-border-color);
-}
+
 .vaccinationsReports-main {
     border-radius: 5px;
   }
@@ -111,7 +99,7 @@
     
   .vaccinationsReports-form {
     background-color: #d3d3d3;
-    padding: 15px;
+    padding: 5px;
     margin-bottom: 20px;
     display: flex;
     justify-content: space-between;

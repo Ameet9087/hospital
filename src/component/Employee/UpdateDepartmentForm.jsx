@@ -94,6 +94,7 @@ const UpdateDepartmentForm = ({ department, onClose }) => {
   const [roomNumber, setRoomNumber] = useState("");
   const [isActive, setIsActive] = useState("Yes");
   const [isAppointmentApplicable, setIsAppointmentApplicable] = useState("No");
+  const [customParentDepartment, setCustomParentDepartment] = useState("");
 
   // Populate form fields when department data is passed for editing
   useEffect(() => {
@@ -118,7 +119,7 @@ const UpdateDepartmentForm = ({ department, onClose }) => {
     const departmentData = {
       departmentCode,
       departmentName,
-      parentDepartmentName: parentDepartment,
+      parentDepartmentName: parentDepartment === "other" ? customParentDepartment : parentDepartment,
       description: departmentDescription,
       noticeText: departmentNoticeText,
       departmentHead,
@@ -128,16 +129,19 @@ const UpdateDepartmentForm = ({ department, onClose }) => {
     };
 
     try {
-      console.log(departmentData);
+      console.log("Department data to be submitted:", departmentData);
 
-      await axios.put(
+      const response = await axios.put(
         `${API_BASE_URL}/departments/update-department/${department.departmentId}`,
         departmentData
       );
+      console.log("Response:", response);
+
       toast.success("Department Updated successfully");
       onClose(); // Close modal after successful operation
     } catch (error) {
-      toast.error("Error submitting the form:", error);
+      console.error("Error submitting the form:", error);
+      toast.error("Error submitting the form: " + (error.response ? error.response.data.message : error.message));
     }
   };
 
@@ -168,7 +172,7 @@ const UpdateDepartmentForm = ({ department, onClose }) => {
         </div>
 
         <div className="update-setting-form-group">
-          {parentDepartment != "other" ? (
+          {parentDepartment !== "other" ? (
             <FloatingSelect
               label={"Parent Department Name"}
               name="parentDepartment"
@@ -212,19 +216,13 @@ const UpdateDepartmentForm = ({ department, onClose }) => {
             label={"Is Active"}
             value={isActive}
             onChange={(e) => setIsActive(e.target.value)}
-            options={[
-              { value: "Yes", label: "Yes" },
-              { value: "No", label: "No" },
-            ]}
+            options={[{ value: "Yes", label: "Yes" }, { value: "No", label: "No" }]}
           />
           <FloatingSelect
             label={"Is Appointment Applicable"}
             value={isAppointmentApplicable}
             onChange={(e) => setIsAppointmentApplicable(e.target.value)}
-            options={[
-              { value: "Yes", label: "Yes" },
-              { value: "No", label: "No" },
-            ]}
+            options={[{ value: "Yes", label: "Yes" }, { value: "No", label: "No" }]}
           />
         </div>
 

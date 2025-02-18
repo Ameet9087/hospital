@@ -7,7 +7,8 @@ import AddLeavePopup from './AddLeavePopup';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import { API_BASE_URL } from '../../api/api';
-
+import { FloatingInput } from '../../../FloatingInputs';
+import { toast } from 'react-toastify';
 function EmpLeave() {
     const [leaves, setLeaves] = useState([]); // Initialize as an empty array
     const [searchTerm, setSearchTerm] = useState('');
@@ -39,29 +40,26 @@ function EmpLeave() {
 
     // Handle adding a new leave
     const handleFormSubmit = async (formData) => {
-
         try {
             const response = await axios.post(`${API_BASE_URL}/leave/add`, formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-
             });
-
-            if (response) {
-                success('Employee Leave Added Successfully');
+    
+            if (response.status === 200 || response.status === 201) { 
+                toast.success('Employee Leave Added Successfully');
+                handlePopupClose(); // Close the popup only on success
+                fetchLeaves(); // Refresh the leave list
+            } else {
+                toast.error("Failed to add leave");
             }
-            throw new Error('Failed to add leave');
-
-
-            handlePopupClose();
-            fetchLeaves();
         } catch (err) {
             console.error('Error:', err);
+            toast.error("Something went wrong while adding leave");
         }
     };
-
-
+    
     // Filter leaves based on search term
     const filteredLeaves = leaves.filter((leave) => {
         const employeeId = leave.employeeDTO?.employeeId?.toString() || '';
@@ -184,13 +182,14 @@ function EmpLeave() {
             </div>
             <div className="leave-search-N-results">
                 <div className="leave-search">
-                    <input
-                        type="text"
+                    <FloatingInput
+                    label={"Search"}
+                    type="text"
                         placeholder="Search..."
-                        className="leave-searchInput"
+                       
                         value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+                        onChange={(e) => setSearchTerm(e.target.value)}/>
+                   
                 </div>
                 <div className="leave-results-info">
                     Showing {currentLeaves.length} / {filteredLeaves.length} results
@@ -252,19 +251,7 @@ function EmpLeave() {
 
                 </table>
             </div>
-            <div className="HRpagination">
-                <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => paginate(index + 1)}
-                        className={index + 1 === currentPage ? 'active' : ''}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-                <button onClick={nextPage} disabled={currentPage === totalPages}>Next</button>
-            </div>
+            
             {showPopup && (
                 <AddLeavePopup onClose={handlePopupClose} onSubmit={handleFormSubmit} />
             )}

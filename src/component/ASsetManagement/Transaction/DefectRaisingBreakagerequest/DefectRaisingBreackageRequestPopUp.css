@@ -47,21 +47,7 @@
   margin-bottom: 16px;
 }
 
-.DefectRaisingBreackageRequestPopUp-form-group label {
-  margin-right: 8px; /* Space between label and input */
-  font-weight: bold;
-  flex: 1; /* Allow label to take available space */
-}
 
-.DefectRaisingBreackageRequestPopUp-form-group input,
-.DefectRaisingBreackageRequestPopUp-form-group select,
-.DefectRaisingBreackageRequestPopUp-form-group textarea {
-  flex: 2; /* Allow input to take available space */
-  max-width: 300px; /* Reduce the width of input fields */
-  padding: 6px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
 
 .DefectRaisingBreackageRequestPopUp-form-actions {
   display: flex;
@@ -106,8 +92,19 @@
   margin: 1px;
   padding: 5px 5px;
 }
+.DefectRaisingBreackageRequestPopUp-tab-btn{
+  background-color: var(--button-color);
+  border: 1px solid var(--button-hover-border-color);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  margin: 1px;
+  padding: 5px 5px;
 
-.DefectRaisingBreackageRequestPopUp-add-btn:hover {
+}
+
+.DefectRaisingBreackageRequestPopUp-add-btn:hover,.DefectRaisingBreackageRequestPopUp-tab-btn:hover {
   border: 1px solid var(--button-hover-border-color);
   color: var(--button-hover-text-color);
   background-color: var(--button-hover-background-color);

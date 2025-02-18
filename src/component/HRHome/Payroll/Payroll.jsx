@@ -5,6 +5,8 @@ import * as XLSX from 'xlsx';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import { API_BASE_URL } from '../../api/api';
+import { FloatingInput,FloatingSelect } from '../../../FloatingInputs';
+import { toast } from 'react-toastify';
 
 function Payroll() {
     const [payrolls, setPayrolls] = useState([]);
@@ -53,14 +55,6 @@ function Payroll() {
 
         fetchEmployees();
     }, []);
-    const handleEmployeeChange = (e) => {
-        const employeeId = e.target.value;
-        setNewPayroll({
-            ...newPayroll,
-            employeeId: employeeId // Update the employeeId here for both Add and Edit modals
-        });
-    };
-
 
     const handleAddPayroll = async (e) => {
         e.preventDefault();
@@ -79,13 +73,13 @@ function Payroll() {
             if (response) {
                 fetchPayrolls();
                 setShowAddModal(false);
-                success('Employee Payroll Added Successfully');
+                toast.success('Employee Payroll Added Successfully');
                 setNewPayroll({ employeeId: '', payDate: '', totalSalary: '' });
             } else {
                 
             }
         } catch (error) {
-            console.error('Error adding payroll:', error);
+            toast.error('Error adding payroll:', error);
         }
     };
 
@@ -106,13 +100,13 @@ function Payroll() {
             if (response) {
                 fetchPayrolls();
                 setShowEditModal(false);
-                success('Employee Payroll Updated Successfully');
+                toast.success('Employee Payroll Updated Successfully');
             } else {
                 warning('Failed to Update Employee Payroll');
             }
         } catch (error) {
             console.error('Error editing payroll:', error);
-            warning('Failed to Update Employee Payroll');
+            toast.error=('Failed to Update Employee Payroll');
         }
     };
 
@@ -149,6 +143,13 @@ function Payroll() {
         setShowAddModal(false);
         setShowEditModal(false);
     };
+    const handleEmployeeChange = (selectedEmployeeId) => {
+        setNewPayroll((prev) => ({
+            ...prev,
+            employeeId: selectedEmployeeId, // Store only ID, not full object
+        }));
+    };
+    
 
     const printTable = () => {
         const printWindow = window.open('', '_blank');
@@ -213,13 +214,13 @@ function Payroll() {
             </div>
             <div className="payroll-search-N-results">
                 <div className="payroll-search">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="payroll-searchInput"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+                    <FloatingInput
+                    label={"Search"}
+                    type="text"
+                    placeholder="Search..."
+                    value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}/>
+                   
                 </div>
                 <div className="payroll-results-info">
                     Showing {currentPayrolls.length} / {filteredPayrolls.length} results
@@ -274,22 +275,7 @@ function Payroll() {
                 </table>
             </div>
 
-            <div className='HRpagination'>
-                <button onClick={prevPage} disabled={currentPage === 1} className={currentPage === 1 ? 'disabled' : ''}>
-                    Previous
-                </button>
-                {[...Array(totalPages)].map((_, index) => (
-                    <button
-                        key={index + 1}
-                        onClick={() => paginate(index + 1)}
-                        className={currentPage === index + 1 ? 'active' : ''}>
-                        {index + 1}
-                    </button>
-                ))}
-                <button onClick={nextPage} disabled={currentPage === totalPages} className={currentPage === totalPages ? 'disabled' : ''}>
-                    Next
-                </button>
-            </div>
+          
 
             {showAddModal && (
                 <div className="payroll__overlay">
@@ -300,39 +286,46 @@ function Payroll() {
                         </div>
                         <form className="payroll__form" onSubmit={handleAddPayroll}>
                             <div className="payroll__formGroup">
-                                <label>Employee:</label>
-                                <select
-                                    name="employeeId"
-                                    value={newPayroll.employeeId}
-                                    onChange={handleEmployeeChange}
-                                    required
-                                >
-                                    <option value="" disabled>Select Employee</option>
-                                    {employees.map((employee) => (
-                                        <option key={employee.employeeId} value={employee.employeeId}>
-                                            {employee.firstName} {employee.lastName}
-                                        </option>
-                                    ))}
-                                </select>
+                            <FloatingSelect
+    label="Employee"
+    name="employeeId"
+    value={newPayroll.employeeId || ""}
+    onChange={(e) =>
+        handleEmployeeChange(e.target.value) // Store only the ID
+    }
+    options={[
+        { value: "", label: "Select Employee" },
+        ...(Array.isArray(employees)
+            ? employees.map((employee) => ({
+                value: employee.employeeId, // Ensure value is ID
+                label: `${employee.firstName} ${employee.lastName}`,
+              }))
+            : []),
+    ]}
+    placeholder="Select Employee"
+/>
+
+
                             </div>
                             <div className="payroll__formGroup">
-                                <label>Pay Date:</label>
-                                <input
-                                    type="date"
-                                    value={newPayroll.payDate}
-                                    onChange={(e) => setNewPayroll({ ...newPayroll, payDate: e.target.value })}
-                                    required
-                                />
+                                <FloatingInput
+                                label={"Pay Date"}
+                                type="date"
+                                value={newPayroll.payDate}
+                                onChange={(e) => setNewPayroll({ ...newPayroll, payDate: e.target.value })}
+                                required/>
+                              
                             </div>
                             <div className="payroll__formGroup">
-                                <label>Total Salary:</label>
-                                <input
-                                    type="number"
+                                <FloatingInput
+                                label={"Total Salary"}
+                                type="number"
                                     placeholder="Total Salary"
                                     value={newPayroll.totalSalary}
                                     onChange={(e) => setNewPayroll({ ...newPayroll, totalSalary: e.target.value })}
                                     required
-                                />
+                                    min={"1000"}/>
+                               
                             </div>
 
                             <div className="payroll__formActions">
@@ -353,39 +346,43 @@ function Payroll() {
                         </div>
                         <form className="payroll__form" onSubmit={handleEditPayroll}>
                             <div className="payroll__formGroup">
-                                <label>Employee:</label>
-                                <select
-                                    name="employeeId"
-                                    value={editPayroll.employeeId}
-                                    onChange={(e) => setEditPayroll({ ...editPayroll, employeeId: e.target.value })}
-                                    required
-                                >
-                                    <option value="" disabled>Select Employee</option>
-                                    {employees.map((employee) => (
-                                        <option key={employee.employeeId} value={employee.employeeId}>
-                                            {employee.firstName} {employee.lastName}
-                                        </option>
-                                    ))}
-                                </select>
+                                <FloatingSelect
+    label="Employee"
+    name="employeeId"
+    value={editPayroll.employeeId || ""}
+    onChange={(e) => setEditPayroll({ ...editPayroll, employeeId: e.target.value })}
+    options={[
+        { value: "", label: "Select Employee" },
+        ...(Array.isArray(employees)
+            ? employees.map((employee) => ({
+                value: employee.employeeId,
+                label: `${employee.firstName} ${employee.lastName}`,
+              }))
+            : []),
+    ]}
+    placeholder="Select Employee"
+/>
+
+                               
                             </div>
                             <div className="payroll__formGroup">
-                                <label>Pay Date:</label>
-                                <input
-                                    type="date"
-                                    value={editPayroll.payDate}
-                                    onChange={(e) => setEditPayroll({ ...editPayroll, payDate: e.target.value })}
-                                    required
-                                />
+                                <FloatingInput
+                                label={"Pay Date"}
+                                type="date"
+                                value={editPayroll.payDate}
+                                onChange={(e) => setEditPayroll({ ...editPayroll, payDate: e.target.value })}
+                                required/>
+                                
                             </div>
                             <div className="payroll__formGroup">
-                                <label>Total Salary:</label>
-                                <input
-                                    type="number"
+                                <FloatingInput
+                                label={"Total Salary"}
+                                type="number"
                                     placeholder="Total Salary"
                                     value={editPayroll.totalSalary}
                                     onChange={(e) => setEditPayroll({ ...editPayroll, totalSalary: e.target.value })}
-                                    required
-                                />
+                                    required/>
+                                
                             </div>
 
                             <div className="payroll__formActions">

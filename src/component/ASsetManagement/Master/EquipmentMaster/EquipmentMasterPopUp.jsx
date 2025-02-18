@@ -4,8 +4,9 @@ import { CiSearch } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa"; // Using react-icons
 import { API_BASE_URL } from "../../../api/api";
+import { toast } from 'react-toastify';
+import {FloatingInput,FloatingSelect,FloatingTextarea} from "../../../../FloatingInputs"
 const EquipmentMasterPopUp = ({ onClose }) => {
-
   // ===================================================================
   const [roomStatus, setRoomStatus] = useState("active"); // State to manage room status
   const [selectedTab, setSelectedTab] = useState("personal");
@@ -21,49 +22,45 @@ const EquipmentMasterPopUp = ({ onClose }) => {
   const [respDepartmentId, setRespDepartmentId] = useState();
   const [employeeId, setEmployeeId] = useState();
 
-
-
   const [data, setData] = useState({
-    type: '',
-    assetNo: '',
+    type: "",
+    assetNo: "",
 
-    typeOfEquipment: '',
+    typeOfEquipment: "",
     // ismsRequired: false, // Initialize boolean fields with default values
-    equipmentOwner: '',
-    equipmentName: '',
-    cost: '',
-    quantity: '',
-    serialNo: '',
-    modelNo: '',
-    ytdDepreciation: '',
-    accumulated: '',
-    accounts: '',
-    netValue: '',
-    equipmentNo: '',
-    remarks: '',
-    oldAssetNo: '',
-    locationPath: '',
-    companyBrand: '',
-    capacity: '',
-    softwareVersion: '',
-    active: '', // Initialize boolean fields with default values
-    powerConsumption: '',
-    lastGrnNo: '',
-    lastGrnDate: '',
-    lastGrnUser: '',
-    installationDate: '',
-    installationTime: '',
-    installedBy: '',
-    technicalDetails: '',
-    warrantyFrom: '',
-    warrantyToDate: '',
-    warrantyDetails: '',
-    status: '',
+    equipmentOwner: "",
+    equipmentName: "",
+    cost: "",
+    quantity: "",
+    serialNo: "",
+    modelNo: "",
+    ytdDepreciation: "",
+    accumulated: "",
+    accounts: "",
+    netValue: "",
+    equipmentNo: "",
+    remarks: "",
+    oldAssetNo: "",
+    locationPath: "",
+    companyBrand: "",
+    capacity: "",
+    softwareVersion: "",
+    active: "", // Initialize boolean fields with default values
+    powerConsumption: "",
+    lastGrnNo: "",
+    lastGrnDate: "",
+    lastGrnUser: "",
+    installationDate: "",
+    installationTime: "",
+    installedBy: "",
+    technicalDetails: "",
+    warrantyFrom: "",
+    warrantyToDate: "",
+    warrantyDetails: "",
+    status: "",
     financialEquipment: false, // Initialize boolean fields with default values
-    equipmentStart: '',
+    equipmentStart: "",
   });
-
-
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -79,8 +76,21 @@ const EquipmentMasterPopUp = ({ onClose }) => {
     fetchCategories();
   }, []);
   const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-    setCategoryId(event.target.value)
+    const selectedCategoryId = event.target.value;
+    setSelectedCategory(selectedCategoryId);
+
+    // Find the selected category object from the categories array
+    const selectedCategoryObj = categories.find(
+      (category) => category.categoryId === Number(selectedCategoryId)
+    );
+
+    // Set the categoryId, depreciation, and salvage values
+    setCategoryId(selectedCategoryId);
+    setData((prevData) => ({
+      ...prevData,
+      ytdDepreciation: selectedCategoryObj?.depreciation || "",
+      salvage: selectedCategoryObj?.salvage || "",
+    }));
   };
 
   useEffect(() => {
@@ -98,10 +108,7 @@ const EquipmentMasterPopUp = ({ onClose }) => {
   }, []);
   const handleLocationChange = (event) => {
     setSelectedAssetLocation(event.target.value);
-    setLocId(event.target.value)
-
-
-
+    setLocId(event.target.value);
   };
 
   const [suppliers, setSuppliers] = useState([]);
@@ -113,7 +120,6 @@ const EquipmentMasterPopUp = ({ onClose }) => {
         const response = await fetch(`${API_BASE_URL}/vendors/getAllVendors`); // Replace with your API URL
         const data = await response.json();
         setSuppliers(data); // Assuming the API returns an array of category objects
-
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -124,25 +130,20 @@ const EquipmentMasterPopUp = ({ onClose }) => {
   const handleSupplierChange = (event) => {
     setSelectedSupplier(event.target.value);
 
-    setId(event.target.value)
-
-
+    setId(event.target.value);
   };
-
-
 
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState("");
 
-
   useEffect(() => {
     const fetcDepartments = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/departments/getAllDepartments`); // Replace with your API URL
+        const response = await fetch(
+          `${API_BASE_URL}/departments/getAllDepartments`
+        ); // Replace with your API URL
         const data = await response.json();
         setDepartments(data); // Assuming the API returns an array of category objects
-
-
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -153,7 +154,7 @@ const EquipmentMasterPopUp = ({ onClose }) => {
 
   const handleDepartmentChange = (event) => {
     setSelectedDepartment(event.target.value);
-    setDepartmentId(event.target.value)
+    setDepartmentId(event.target.value);
   };
 
   const [employees, setEmployees] = useState([]);
@@ -162,11 +163,11 @@ const EquipmentMasterPopUp = ({ onClose }) => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/employees/get-all-employee`); // Replace with your API URL
+        const response = await fetch(
+          `${API_BASE_URL}/employees/get-all-employee`
+        ); // Replace with your API URL
         const data = await response.json();
         setEmployees(data); // Assuming the API returns an array of category objects
-
-
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -177,7 +178,7 @@ const EquipmentMasterPopUp = ({ onClose }) => {
 
   const handleEmployeeChange = (event) => {
     setSelectedEmployee(event.target.value);
-    setEmployeeId(event.target.value)
+    setEmployeeId(event.target.value);
   };
 
   const [equipments, setEquipments] = useState([]);
@@ -189,8 +190,6 @@ const EquipmentMasterPopUp = ({ onClose }) => {
         const response = await fetch(`${API_BASE_URL}/equipment-masters`); // Replace with your API URL
         const data = await response.json();
         setEquipments(data); // Assuming the API returns an array of category objects
-
-
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -200,20 +199,33 @@ const EquipmentMasterPopUp = ({ onClose }) => {
   }, []);
 
   const handleEquipmentChange = (event) => {
-    setSelectedEquipment(event.target.value);
+    const selectedEquipmentId = event.target.value;
+    setSelectedEquipment(selectedEquipmentId);
+
+    // Find the selected equipment object from the equipments array
+    const selectedEquipmentObj = equipments.find(
+      (equipment) => equipment.equipmentMasterId === Number(selectedEquipmentId)
+    );
+
+    // Set the oldAssetNo in the data state
+    setData((prevData) => ({
+      ...prevData,
+      oldAssetNo: selectedEquipmentObj?.assetNo || "",
+    }));
   };
 
   const [responsibleDepartments, setResponsibleDepartments] = useState([]);
-  const [selectedResponsibleDepartment, setSelectedResponsibleDepartment] = useState("");
+  const [selectedResponsibleDepartment, setSelectedResponsibleDepartment] =
+    useState("");
 
   useEffect(() => {
     const fetcResponsibleDepartments = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/departments/getAllDepartments`); // Replace with your API URL
+        const response = await fetch(
+          `${API_BASE_URL}/departments/getAllDepartments`
+        ); // Replace with your API URL
         const data = await response.json();
         setResponsibleDepartments(data); // Assuming the API returns an array of category objects
-
-
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -224,7 +236,7 @@ const EquipmentMasterPopUp = ({ onClose }) => {
 
   const handleResponsibleDepartmentChange = (event) => {
     setSelectedResponsibleDepartment(event.target.value);
-    setRespDepartmentId(event.target.value)
+    setRespDepartmentId(event.target.value);
   };
 
   const handleChange = (event) => {
@@ -263,14 +275,11 @@ const EquipmentMasterPopUp = ({ onClose }) => {
     });
   };
 
-
-
   const handleStatusChange = (e) => {
     setRoomStatus(e.target.value);
   };
 
   const handleAddEquipmentMaster = async () => {
-
     try {
       // Prepare equipment master data
       const equipmentMasterData = {
@@ -296,7 +305,7 @@ const EquipmentMasterPopUp = ({ onClose }) => {
         softwareVersion: data.softwareVersion,
         capacity: data.capacity,
         active: data.active,
-        powerConsumption: parseFloat(data.powerConsumption),
+        powerConsumption: data.powerConsumption,
         lastGrnNo: data.lastGrnNo,
         lastGrnDate: data.lastGrnDate,
         lastGrnUser: data.lastGrnUser,
@@ -332,33 +341,38 @@ const EquipmentMasterPopUp = ({ onClose }) => {
         },
       };
 
+      console.log(JSON.stringify(equipmentMasterData, null, 2));
 
       // Send data to API
       const response = await fetch(`${API_BASE_URL}/equipment-masters`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(equipmentMasterData),
       });
 
-      if (response.ok) {
-        console.log('Equipment Master added successfully!');
+      if (response) {
+        alert("Equipment Master added successfully!");
+        toast.success("Equipment Master added successfully!");
         // Handle success (e.g., close the popup, display a success message)
       } else {
-        console.error('Error adding Equipment Master:', response.status, response.statusText);
-        // Handle error (e.g., display an error message to the user)
+        console.error(
+          "Error adding Equipment Master:",
+          response.status,
+          response.statusText
+        );
+     
       }
     } catch (error) {
-      console.error('Error adding Equipment Master:', error);
-      // Handle error (e.g., display an error message to the user)
+      console.error("Error adding Equipment Master:", error);
+      toast.error("Error adding Equipment Master")
+    
     }
   };
 
   return (
-    <div
-      className="EquipmentMasterPopUp-container"
-    >
+    <div className="EquipmentMasterPopUp-container">
       <div className="EquipmentMasterPopUp-header">
         <h4>Equipment Master</h4>
         {/* <button className="EquipmentMasterPopUp-close-btn" onClick={onClose}>
@@ -369,319 +383,570 @@ const EquipmentMasterPopUp = ({ onClose }) => {
         <div className="EquipmentMasterPopUp-form-row">
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Type:</label>
-              <input type="text" placeholder="Enter Type"
+            <FloatingInput
+            label={"Type"}
+            type="text"
+                placeholder="Enter Type"
                 name="type"
-                onChange={handleChange}
-              />
+                onChange={handleChange}/>
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Search Equipment:</label>
-              <select value={selectedEquipment} onChange={handleEquipmentChange}>
-                <option value="">Select Equipment</option>
-                {equipments.map((equipment) => (
-                  <option key={equipment.equipmentMasterId} value={equipment.equipmentMasterId}>
-                    {equipment.equipmentName}
-                  </option>
-                ))}
-              </select>                </div>
-            <div className="EquipmentMasterPopUp-form-group">
-              <label>Asset No:</label>
-              <input type="text" placeholder="Enter Assetment No."
-              />
+            <FloatingSelect
+  label={"Search Equipment"}
+  value={selectedEquipment}
+  onChange={handleEquipmentChange}
+  options={[
+    { value: "", label: "Select Equipment" },
+    ...equipments.map((equipment) => ({
+      value: equipment.equipmentMasterId,
+      label: equipment.equipmentName,
+    })),
+  ]}
+/>
+
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Type of Equipment:</label>
-              <input type="text" placeholder="Enter Type of Equipment" name="typeOfEquipment" onChange={handleChange} />
+              <FloatingInput
+              label={"Old Asset No"}
+              type="text"
+              value={data.oldAssetNo}
+              placeholder="Enter Old Asset No."/>
+              
+            </div>
+            <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Type of Equipment"}
+              type="text"
+              placeholder="Enter Type of Equipment"
+              name="typeOfEquipment"
+              onChange={handleChange}/>
+             
             </div>
           </div>
 
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Equipment Owner:</label>
-              <input type="text" placeholder="Enter Equipment Owner" name="equipmentOwner" onChange={handleChange} />
+              <FloatingInput
+              label={"Equipment Owner"}
+              type="text"
+              placeholder="Enter Equipment Owner"
+              name="equipmentOwner"
+              onChange={handleChange}/>
             </div>
-            <div className="EquipmentMasterPopUp-form-group">
-              <label>Equipment Name:</label>
-              <input type="text" placeholder="Enter Equipment Name" />
-            </div>
-            <div className="EquipmentMasterPopUp-form-group">
-            </div>
-            <div className="EquipmentMasterPopUp-form-group">
-            </div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
           </div>
           <h4>Equipment Info</h4>
 
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Equipment Name:</label>
-              <input type="text" placeholder="Enter Equipment Name" name="equipmentName" onChange={handleChange} />
+              <FloatingInput
+              label={"Equipment Name"}
+              type="text"
+              placeholder="Enter Equipment Name"
+              name="equipmentName"
+              onChange={handleChange}/>
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Cost:</label>
-              <input type="number" placeholder="Enter Cost" name="cost" onChange={handleChange} />
+              <FloatingInput
+              label={"Cost"}
+              type="number"
+              placeholder="Enter Cost"
+              name="cost"
+              onChange={handleChange}
+              min={'0'}/>
+             
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Quantity:</label>
-              <input type="number" placeholder="Enter Quantity" name="quantity" onChange={handleChange} />
+              <FloatingInput
+              label={"Quantity"}
+              type="number"
+                placeholder="Enter Quantity"
+                name="quantity"
+                onChange={handleChange}
+                min={'0'}/>
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Serial No.:</label>
-              <input type="text" placeholder="Enter Serial No." name="serialNo" onChange={handleChange} />
-            </div>
-          </div>
-
-          <div className="EquipmentMasterPopUp-form-group-1row">
-            <div className="EquipmentMasterPopUp-form-group">
-              <label>Model No.:</label>
-              <input type="text" placeholder="Enter Model No." name="modelNo" onChange={handleChange} />
-            </div>
-            <div className="EquipmentMasterPopUp-form-group">
-              <label>Category:</label>
-              <select value={selectedCategory} onChange={handleCategoryChange}>
-                <option value="">Select Category</option>
-                {categories.map((category) => (
-                  <option key={category.categoryId} value={category.categoryId}>
-                    {category.assetCategory}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="EquipmentMasterPopUp-form-group">
-              <label>Salvage:</label>
-              <input type="text" placeholder="Enter Salvage" />
-            </div>
-            <div className="EquipmentMasterPopUp-form-group">
-              <label>Depreciation:</label>
-              <input type="text" placeholder="Enter Depreciation" name="ytdDepreciation" onClick={handleChange} />
+              <FloatingInput
+              label={"Serial No"}
+              type="text"
+                placeholder="Enter Serial No."
+                name="serialNo"
+                onChange={handleChange}/>
+              
             </div>
           </div>
 
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Description / Asset No.:</label>
-              <textarea placeholder="Enter Description or Asset No." name="assetNo" onChange={handleChange}></textarea>
+              <FloatingInput
+              label={"Model No"}
+              type="text"
+                placeholder="Enter Model No."
+                name="modelNo"
+                onChange={handleChange}/>
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Remarks:</label>
-              <textarea placeholder="Enter Remarks" name="remarks" onChange={handleChange}></textarea>
+            <FloatingSelect
+  label={"Category"}
+  value={selectedCategory}
+  onChange={handleCategoryChange}
+  options={[
+    { value: "", label: "Select Category" },
+    ...categories.map((category) => ({
+      value: category.categoryId,
+      label: category.assetCategory,
+    })),
+  ]}
+/>
+
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Salvage"}
+              type="text"
+                placeholder="Enter Salvage"
+                name="salvage"
+                value={data.salvage}/>
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Depreciation"}
+              type="number"
+                placeholder="Enter Depreciation"
+                name="ytdDepreciation"
+                value={data.ytdDepreciation}/>
+             
+            </div>
+          </div>
+          <div className="EquipmentMasterPopUp-form-group-1row">
+            <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Accumulated"}
+              type="text"
+              placeholder="Enter Accumulated"
+              name="accumulated"
+              onChange={handleChange}/>
+             
+            </div>
+            <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Accounts"}
+              type="text"
+              placeholder="Enter Account"
+              name="accounts"
+              onChange={handleChange}/>
+              
+            </div>
+            <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"NetValue"}
+              type="text"
+                placeholder="Enter NetValue"
+                name="netValue"
+                onChange={handleChange}/>
+              
+            </div>
+            <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Equipment No"}
+              type="text"
+                placeholder="Enter Equipment No."
+                name="equipmentNo"
+                onChange={handleChange}/>
+              
+            </div>
+          </div>
+
+          <div className="EquipmentMasterPopUp-form-group-1row">
+            <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Asset No"}
+              placeholder="Enter Asset No."
+                name="assetNo"
+                onChange={handleChange}/>
+              
+            </div>
+            <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Remarks"}
+              placeholder="Enter Remarks"
+                name="remarks"
+                onChange={handleChange}/>
+
+            </div>
+            <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Location Path"}
+              placeholder="Enter Location Path"
+              name="locationPath"
+              onChange={handleChange}/>
+             
+            </div>
+            <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Equipment Start"}
+              placeholder="Enter Equipment Start"
+                name="equipmentStart"
+                onChange={handleChange}/>
             </div>
           </div>
           <h4>Equipment Using Dept Info</h4>
 
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Location:</label>
-              <select value={selectedAssetLocation} onChange={handleLocationChange}>
-                <option value="">Select Location</option>
-                {assetLocations.map((location) => (
-                  <option key={location.locId} value={location.locId}>
-                    {location.locationType}
-                  </option>
-                ))}
-              </select>              </div>
-            <div className="EquipmentMasterPopUp-form-group">
-              <label>Company:</label>
-              <input type="text" placeholder="Enter Company" name="companyBrand" onChange={handleChange} />
+            <FloatingSelect
+  label={"Location"}
+  value={selectedAssetLocation}
+  onChange={handleLocationChange}
+  options={[
+    { value: "", label: "Select Location" },
+    ...assetLocations.map((location) => ({
+      value: location.locId,
+      label: location.locationType,
+    })),
+  ]}
+/>
+
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Capacity:</label>
-              <input type="text" placeholder="Enter Capacity" name="capacity" onChange={handleChange} />
+              <FloatingInput
+              label={"Company"}
+              type="text"
+                placeholder="Enter Company"
+                name="companyBrand"
+                onChange={handleChange}/>
+             
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Software Version No:</label>
-              <input type="text" placeholder="Enter Software Version No." name="softwareVersion" onChange={handleChange} />
+              <FloatingInput
+              label={"Capacity"}
+              type="text"
+                placeholder="Enter Capacity"
+                name="capacity"
+                onChange={handleChange}/>
+              
+            </div>
+            <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Software Version No"}
+              type="text"
+                placeholder="Enter Software Version No."
+                name="softwareVersion"
+                onChange={handleChange}/>
+              
             </div>
           </div>
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Active:</label>
-              <input type="text" placeholder="Enter Active Status" name="active" onChange={handleChange} />
+              <FloatingInput
+              label={"Active"}
+              type="text"
+                placeholder="Enter Active Status"
+                name="active"
+                onChange={handleChange}/>
+              
             </div>
 
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Department:</label>
-              <select value={selectedDepartment} onChange={handleDepartmentChange}>
-                <option value="">Select Department</option>
-                {departments.map((department) => (
-                  <option key={department.departmentId} value={department.departmentId}>
-                    {department.departmentName}
-                  </option>
-                ))}
-              </select>
+            <FloatingSelect
+  label={"Department"}
+  value={selectedDepartment}
+  onChange={handleDepartmentChange}
+  options={[
+    { value: "", label: "Select Department" },
+    ...departments.map((department) => ({
+      value: department.departmentId,
+      label: department.departmentName,
+    })),
+  ]}
+/>
+
+              
             </div>
 
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Responsible Person:</label>
-              <select value={selectedEmployee} onChange={handleEmployeeChange}>
-                <option value="">Select Person</option>
-                {employees.map((employee) => (
-                  <option key={employee.employeeId} value={employee.employeeId}>
-                    {employee.firstName} {employee.lastName}
+            <FloatingSelect
+  label={"Responsible Person"}
+  value={selectedEmployee}
+  onChange={handleEmployeeChange}
+  options={[
+    { value: "", label: "Select Person" },
+    ...employees.map((employee) => ({
+      value: employee.employeeId,
+      label: `${employee.firstName} ${employee.lastName}`,
+    })),
+  ]}
+/>
 
-                  </option>
-                ))}
-              </select>                </div>
-            <div className="EquipmentMasterPopUp-form-group">
-              <label>Responsible Department:</label>
-              <select value={selectedResponsibleDepartment} onChange={handleResponsibleDepartmentChange}>
-                <option value="">Select Department</option>
-                {responsibleDepartments.map((department) => (
-                  <option key={department.departmentId} value={department.departmentId}>
-                    {department.departmentName}
-                  </option>
-                ))}
-              </select>
             </div>
+            <div className="EquipmentMasterPopUp-form-group">
+            <FloatingSelect
+  label={"Responsible Department"}
+  value={selectedResponsibleDepartment}
+  onChange={handleResponsibleDepartmentChange}
+  options={[
+    { value: "", label: "Select Department" },
+    ...responsibleDepartments.map((department) => ({
+      value: department.departmentId,
+      label: department.departmentName,
+    })),
+  ]}
+/>
 
+              
+            </div>
           </div>
           <h4>Supplier Info</h4>
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Supplier Name:</label>
-              <select value={selectedSupplier} onChange={handleSupplierChange}>
-                <option value="">Select Supplier</option>
-                {suppliers.map((supplier) => (
-                  <option key={supplier.id} value={supplier.id}>
-                    {supplier.vendorName}
-                  </option>
-                ))}
-              </select>            </div>
-            <div className="EquipmentMasterPopUp-form-group">
-              <label>Supplier Address:</label>
-              <input type="text" placeholder="Enter Supplier Address" />
+            <FloatingSelect
+  label={"Supplier Name"}
+  value={selectedSupplier}
+  onChange={handleSupplierChange}
+  options={[
+    { value: "", label: "Select Supplier" },
+    ...suppliers.map((supplier) => ({
+      value: supplier.id,
+      label: supplier.vendorName,
+    })),
+  ]}
+/>
+
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Supplier GST:</label>
-              <input type="text" placeholder="Enter Supplier GST" />
+              <FloatingInput
+              label={"Supplier Address"}
+              type="text" placeholder="Enter Supplier Address"/>
+             
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Breakdown Service Needed:</label>
-              <input type="text" placeholder="Enter Breakdown Service Needed" />
+              <FloatingInput
+              label={"Supplier GST"}
+              type="text" placeholder="Enter Supplier GST"/>
+             
+            </div>
+            <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Breakdown Service Needed"}
+              type="text" 
+              placeholder="Enter Breakdown Service Needed" />
+              
             </div>
           </div>
 
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Contact Person:</label>
-              <input type="text" placeholder="Enter Contact Person" />
+              <FloatingInput
+              label={"Contact Person"}
+              type="text" placeholder="Enter Contact Person"/>
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Mobile No:</label>
-              <input type="text" placeholder="Enter Mobile No." />
+              <FloatingInput
+              label={"Mobile No"}
+              type="text" placeholder="Enter Mobile No."/>
+             
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Contact No 1:</label>
-              <input type="text" placeholder="Enter Contact No 1" />
+              <FloatingInput
+              label={"Contact No 1"}
+              type="text" placeholder="Enter Contact No 1"/>
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Fax:</label>
-              <input type="text" placeholder="Enter Fax" />
+              <FloatingInput
+              label={"Fax"}
+              type="text" placeholder="Enter Fax"/>
+              
             </div>
           </div>
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Support Email:</label>
-              <input type="email" placeholder="Enter Support Email" />
+              <FloatingInput
+              label={"Support Email"}
+              type="email" placeholder="Enter Support Email"/>
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Vendor Email:</label>
-              <input type="email" placeholder="Enter Vendor Email" />
+              <FloatingInput
+              label={"Vendor Email"}
+              type="email" placeholder="Enter Vendor Email" />
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Purchase Order Date:</label>
-              <input type="date" placeholder="Enter Purchase Order Date" />
+              <FloatingInput
+              label={"Purchase Order Date"}
+              type="date" placeholder="Enter Purchase Order Date"/>
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Purchase Order No:</label>
-              <input type="text" placeholder="Enter Purchase Order No." />
+              <FloatingInput
+              label={"Purchase Order No"}
+              type="text" placeholder="Enter Purchase Order No."/>
+             
             </div>
-
           </div>
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Purchase Date:</label>
-              <input type="date" placeholder="Enter Purchase Date" />
+              <FloatingInput
+              label={"Purchase Date"}
+              type="date" placeholder="Enter Purchase Date"/>
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Current GRN:</label>
-              <input type="text" placeholder="Enter Current GRN" />
+              <FloatingInput
+              label={"Current GRN"}
+              type="text" placeholder="Enter Current GRN"/>
+             
             </div>
-            <div className="EquipmentMasterPopUp-form-group">
-
-            </div>
-            <div className="EquipmentMasterPopUp-form-group">
-
-            </div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
           </div>
           <h4>Equipment Power Consumption</h4>
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Power Consumption:</label>
-              <input type="text" placeholder="Enter Power Consumption" name="powerConsumption" onChange={handleChange} />
+              <FloatingInput
+              label={"Power Consumption"}
+              type="text"
+                placeholder="Enter Power Consumption"
+                name="powerConsumption"
+                onChange={handleChange}/>
+              
             </div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
+            <div className="EquipmentMasterPopUp-form-group"></div>
           </div>
 
           <h4>Previous GRN Details</h4>
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Last GRN No:</label>
-              <input type="text" placeholder="Enter Last GRN No." name="lastGrnNo" onChange={handleChange} />
+              <FloatingInput
+              label={"Last GRN No"}
+              type="text"
+                placeholder="Enter Last GRN No."
+                name="lastGrnNo"
+                onChange={handleChange}/>
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Last GRN Date:</label>
-              <input type="date" placeholder="Enter Last GRN Date" name="lastGrnDate" onChange={handleChange} />
+              <FloatingInput
+              label={"Last GRN Date"}
+              type="date"
+              placeholder="Enter Last GRN Date"
+              name="lastGrnDate"
+              onChange={handleChange}/>
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Last GRN User:</label>
-              <input type="text" placeholder="Enter Last GRN User" name="lastGrnUser" onChange={handleChange} />
+              <FloatingInput
+              label={"Last GRN User"}
+              type="text"
+                placeholder="Enter Last GRN User"
+                name="lastGrnUser"
+                onChange={handleChange}/>
+             
             </div>
             <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Financial Equipment"}
+              type="text"
+              placeholder="Enter Financial Equipment"
+              name="financialEquipment"
+              onChange={handleChange}/>
+              
             </div>
           </div>
 
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Installation Date:</label>
-              <input type="date" placeholder="Enter Installation Date" name="installationDate" onChange={handleChange} />
+              <FloatingInput
+              label={"Installation Date"}
+              type="date"
+                placeholder="Enter Installation Date"
+                name="installationDate"
+                onChange={handleChange}/>
+             
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Installation Time:</label>
-              <input type="time" placeholder="Enter Installation Time" name="installationTime" onChange={handleChange} />
+              <FloatingInput
+              label={"Installation Time"}
+              type="time"
+                placeholder="Enter Installation Time"
+                name="installationTime"
+                onChange={handleChange}/>
+             
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Installed By:</label>
-              <input type="text" placeholder="Enter Installed By" name="installedBy" onChange={handleChange} />
+              <FloatingInput
+              label={"Installed By"}
+              type="text"
+                placeholder="Enter Installed By"
+                name="installedBy"
+                onChange={handleChange}/>
+              
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Technical Details:</label>
-              <textarea placeholder="Enter Technical Details" name="technicalDetails" onChange={handleChange}></textarea>
+              <FloatingInput
+              label={"Technical Details"}
+              placeholder="Enter Technical Details"
+                name="technicalDetails"
+                onChange={handleChange}/>
+              
             </div>
           </div>
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Remarks:</label>
-              <textarea placeholder="Enter Remarks"></textarea>
+              <FloatingInput
+              label={"Status"}
+              name="status"
+                placeholder="Enter Status"
+                onChange={handleChange}/>
+             
             </div>
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Warranty Details:</label>
-              <textarea placeholder="Enter Warranty Details" name="warrantyDetails" onChange={handleChange}></textarea>
+              <FloatingInput
+              label={"Warranty Details"}
+              placeholder="Enter Warranty Details"
+              name="warrantyDetails"
+              onChange={handleChange}/>
+             
             </div>
             <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Warranty From"}
+              type="date"
+              placeholder="Enter Warranty From"
+              name="warrantyFrom"
+              onChange={handleChange}/>
+             
             </div>
             <div className="EquipmentMasterPopUp-form-group">
+              <FloatingInput
+              label={"Warranty To"}
+              type="date"
+                placeholder="Enter Warranty TO"
+                name="warrantyToDate"
+                onChange={handleChange}/>
+              
             </div>
           </div>
           <h4>Documents</h4>
 
           <div className="EquipmentMasterPopUp-form-group-1row">
             <div className="EquipmentMasterPopUp-form-group">
-              <label>Installed By:</label>
-              <input type="file" placeholder="document" />
+              <FloatingInput
+              label={"Installed By"}
+              type="file" placeholder="document"/>
+             
             </div>
             <div className="EquipmentMasterPopUp-form-group">
               {/* <label>Rcid:</label>
@@ -691,15 +956,10 @@ const EquipmentMasterPopUp = ({ onClose }) => {
               {/* <label>Poid:</label>
               <input type="text" placeholder="" /> */}
             </div>
-            <div className="EquipmentMasterPopUp-form-group">
-            </div>
-
+            <div className="EquipmentMasterPopUp-form-group"></div>
           </div>
         </div>
       </div>
-
-
-
 
       <div className="EquipmentMasterPopUp-form-actions">
         <button
@@ -710,7 +970,6 @@ const EquipmentMasterPopUp = ({ onClose }) => {
         </button>
         {/* <button className="EquipmentMasterPopUp-close-btn" onClick={onClose}>Close</button> */}
       </div>
-
     </div>
   );
 };

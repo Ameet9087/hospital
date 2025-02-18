@@ -185,37 +185,37 @@ const OpdBillingPrint = (formData) => {
             <p>
               Patient Name:{" "}
               <span>
-                {formData.formData.outPatientDTO?.patient?.firstName}{" "}
-                {formData.formData.outPatientDTO?.patient?.middleName}{" "}
-                {formData.formData.outPatientDTO?.patient?.lastName}
+                {formData?.formData?.outPatientDTO?.patient?.firstName}{" "}
+                {formData?.formData?.outPatientDTO?.patient?.middleName}{" "}
+                {formData?.formData?.outPatientDTO?.patient?.lastName}
               </span>
             </p>
             <p>
-              Age: <span>{formData.formData.outPatientDTO?.patient?.age}</span>
+              Age: <span>{formData?.formData?.outPatientDTO?.patient?.age}</span>
             </p>
             <p>
               Address:{" "}
-              <span>{formData.formData.outPatientDTO?.patient?.address}</span>
+              <span>{formData?.formData?.outPatientDTO?.patient?.address}</span>
             </p>
           </div>
           <div className="OpdBillingPrint-right">
             <p>
               Gender:{" "}
-              <span>{formData.formData.outPatientDTO?.patient?.gender}</span>
+              <span>{formData?.formData?.outPatientDTO?.patient?.gender}</span>
             </p>
             <p>
               UHID:{" "}
-              <span>{formData.formData.outPatientDTO?.patient?.uhid}</span>
+              <span>{formData?.formData?.outPatientDTO?.patient?.uhid}</span>
             </p>
             <p>
               Mobile No:{" "}
               <span>
-                {formData.formData.outPatientDTO?.patient?.mobileNumber}
+                {formData?.formData?.outPatientDTO?.patient?.mobileNumber}
               </span>
             </p>
           </div>
         </div>
-        {formData.formData?.testGridOpdBillDTO &&
+        {formData?.formData?.testGridOpdBillDTO &&
           formData.formData?.testGridOpdBillDTO.length > 0 && (
             <table className="OpdBillingPrint-table">
               <thead>

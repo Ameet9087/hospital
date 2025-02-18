@@ -2,6 +2,12 @@ import React, { useRef, useState } from 'react';
 import "./ReturnFromSubstore.css"; // Updated to match the provided file
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import * as XLSX from 'xlsx';
+import FloatingSelect from '../../../FloatingInputs/FloatingSelect';
+import {
+  toast
+
+} from 'react-toastify';
+import FloatingInput from '../../../FloatingInputs/FloatingInput';
 const ReturnFromSubstore = () => {
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
@@ -57,18 +63,28 @@ const ReturnFromSubstore = () => {
     <div className="return-form-substore-content"> {/* Updated class name */}
       <div className="return-form-substore-date-range"> {/* Updated class name */}
         <div className='return-from-substore-container-left'>
-          <label className='return-from-substore-label'>From: <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} /></label>
-          <label className='return-from-substore-label'>To: <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} /></label>
+          <FloatingInput
+            label={"From"}
+            type="date" value={dateFrom}
+            onChange={(e) => setDateFrom(e.target.value)}
+          />
+          <FloatingInput
+            label={"TO"}
+            type="date" value={dateTo}
+            onChange={(e) => setDateTo(e.target.value)} />
+
           {/* <button className="requisition-inventory-star">☆</button> 
         <button className="requisition-inventory-minus">-</button> 
         <button className="requisition-inventory-ok">✓ OK</button> */}
         </div>
         <div className="return-from-substore-container-right">
-          <label >Substore:</label>
-          <select>
-            <option value="">Select Substore</option>
-          </select>
+          <FloatingSelect
+            label={"Select Substore"}
+            value={""}
+            options={[{ value: "", label: "" }]} />
+
         </div>
+
       </div>
 
       <div className="return-from-substore-search-bar"> {/* Updated class name */}

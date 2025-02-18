@@ -4,7 +4,8 @@ import { SearchIcon } from 'lucide-react';
 import { useState } from 'react';
 import { API_BASE_URL } from '../../../api/api';
 import PopupTable from '../../../Admission/PopupTable';
-
+import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 const ProvisionalSaleForm = () => {
 
 
@@ -113,7 +114,7 @@ const ProvisionalSaleForm = () => {
             });
 
             if (response.ok) {
-                alert("Provisional Sale added successfully!");
+                toast.success("Provisional Sale added successfully!");
                 setFormData({
                     saleDate: "",
                     writeDownValue: "",
@@ -124,12 +125,12 @@ const ProvisionalSaleForm = () => {
                 setselectedDisposal("");
                 setSelectedVendor("");
             } else {
-                console.error("Error adding Provisional Sale:", await response.text());
-                alert("Failed to add Provisional Sale.");
+                toast.error("Error adding Provisional Sale:", await response.text());
+                console.error("Failed to add Provisional Sale.");
             }
         } catch (error) {
-            console.error("Error:", error);
-            alert("Error adding Provisional Sale.");
+            toast.error("Error:", error);
+            console.error("Error adding Provisional Sale.");
         }
     };
 
@@ -145,37 +146,37 @@ const ProvisionalSaleForm = () => {
                     <div className="provisional-sale-form-col">
 
                         <div className="provisional-sale-form-group">
-                            <label>Condemnation No</label>
-                            <div className="provisional-sale-input-container">
-                                <input type="text" value={selectedDisposal?.condemnationDisposalId} className="provisional-sale-form-input" />
-                                <SearchIcon onClick={() => setActivePopup("disposal")} className="provisional-sale-input-icon" size={16} />
-                            </div>
+                            <FloatingInput
+                            label={"Condemnation No"}
+                            type="search" value={selectedDisposal?.condemnationDisposalId}
+                            onIconClick={() => setActivePopup("disposal")}/>
+                            
+                            
                         </div>
 
                         <div className="provisional-sale-form-group">
-                            <label>Sale Date</label>
-                            <div className="provisional-sale-input-container">
-                                <input type="date" name='saleDate' className="provisional-sale-form-input" onChange={handleInputChange} />
-                            </div>
+                            <FloatingInput
+                            label={"Sale Date"}
+                            type="date" name='saleDate' onChange={handleInputChange}/>
+                            
                         </div>
 
 
                         <div className="provisional-sale-form-group">
-                            <label>Condemnation Date</label>
-                            <div className="provisional-sale-input-container">
-                                <input
-                                    type="text"
-                                    className="provisional-sale-form-input"
-                                    value={selectedDisposal?.condemDate}
-                                />
-                            </div>
+                            <FloatingInput
+                            label={"Condemnation Date"}
+                            type="text
+                            "
+                                    value={selectedDisposal?.condemDate}/>
+                            
                         </div>
 
                         <div className="provisional-sale-form-group">
-                            <label>Equipment Name</label>
-                            <div className="provisional-sale-input-container">
-                                <input type="text" value={selectedDisposal?.condemnationDisposalRequestDTO?.equipmentMasterDTO?.equipmentName} className="provisional-sale-form-input" />
-                            </div>
+                            <FloatingInput
+                            label={"Equipment Name"}
+                            type="text" value={selectedDisposal?.condemnationDisposalRequestDTO?.equipmentMasterDTO?.equipmentName}/>
+                            
+                            
                         </div>
                         {activePopup && (
                             <PopupTable
@@ -186,16 +187,13 @@ const ProvisionalSaleForm = () => {
                             />
                         )}
                         <div className="provisional-sale-form-group">
-                            <label>Remarks</label>
-                            <div className="provisional-sale-input-container">
-                                <input
-                                    type="text"
+                            <FloatingInput
+                            label={"Remarks"}
+                            type="text"
                                     name="remarks"
                                     value={formData.remarks}
-                                    onChange={handleInputChange}
-                                    className="provisional-sale-form-input"
-                                />
-                            </div>
+                                    onChange={handleInputChange}/>
+                            
                         </div>
 
 
@@ -204,79 +202,68 @@ const ProvisionalSaleForm = () => {
 
                     <div className="provisional-sale-form-col">
                         <div className="provisional-sale-form-group">
-                            <label>Buyer Name<span className="provisional-sale-required">*</span></label>
-                            <div className="provisional-sale-input-container">
-                                <input type="text" value={selectedVendor?.vendorName} className="provisional-sale-form-input" />
-                                <SearchIcon onClick={() => setActivePopup("vendor")} className="provisional-sale-input-icon" size={16} />
-                            </div>
+                            <FloatingInput
+                            label={"Buyer Name *"}
+                            type="text" value={selectedVendor?.vendorName}
+                            onIconClick={() => setActivePopup("vendor")}/>
+                            
+                            
                         </div>
 
                         <div className="provisional-sale-form-group">
-                            <label>Purchase Amount</label>
-                            <div className="provisional-sale-input-container">
-                                <input type="number" value={selectedDisposal?.condemnationDisposalRequestDTO?.equipmentMasterDTO?.cost} className="provisional-sale-form-input" />
-                            </div>
+                            <FloatingInput
+                            label={"Purchase Amount"}
+                            type="number" value={selectedDisposal?.condemnationDisposalRequestDTO?.equipmentMasterDTO?.cost}/>
+                           
                         </div>
 
                         <div className="provisional-sale-form-group">
-                            <label>Write Down Value (W.D.V)</label>
-                            <div className="provisional-sale-input-container">
-                                <input type="text" value={formData.writeDownValue}
-                                    onChange={handleInputChange} name='writeDownValue' className="provisional-sale-form-input" />
-                            </div>
+                            <FloatingInput
+                            label={"Write Down Value (W.D.V)"}
+                            type="text" value={formData.writeDownValue}
+                                    onChange={handleInputChange} name='writeDownValue'/>
+                           
                         </div>
 
                         <div className="provisional-sale-form-group">
-                            <label>Sale Type</label>
-                            <div className="provisional-sale-input-container">
-                                <select
-                                    name="saleType"
+                            <FloatingSelect
+                            label={"Sale Type"}
+                            name="saleType"
                                     value={formData.saleType}
                                     onChange={handleInputChange}
-                                    className="provisional-sale-form-input"
-                                >
-                                    <option value="Sales">Sales</option>
-                                    <option value="Direct Sale">Direct Sale</option>
-                                </select>
-                            </div>
+                                    options={[
+                                        {value:"Sales",label:"Sales"},
+                                        {value:"Direct Sale",label:"Direct Sale"}
+                                    ]}/>                       
                         </div>
-
-
-
-
                     </div>
-
                     <div className="provisional-sale-form-col">
-
                         <div className="provisional-sale-form-group">
-                            <label>Old Asset No</label>
-                            <div className="provisional-sale-input-container">
-                                <input type="text" value={selectedDisposal?.condemnationDisposalRequestDTO?.equipmentMasterDTO?.oldAssetNo} className="provisional-sale-form-input" />
-                            </div>
+                            <FloatingInput
+                            label={"Old Asset No"}
+                            type="text" value={selectedDisposal?.condemnationDisposalRequestDTO?.equipmentMasterDTO?.oldAssetNo}/>
+                            
                         </div>
 
                         <div className="provisional-sale-form-group">
-                            <label>Equipment No</label>
-                            <div className="provisional-sale-input-container">
-                                <input type="text" value={selectedDisposal?.condemnationDisposalRequestDTO?.equipmentMasterDTO?.equipmentNo} className="provisional-sale-form-input" />
+                            <FloatingInput
+                            label={"Equipment No"}
+                            type="text" value={selectedDisposal?.condemnationDisposalRequestDTO?.equipmentMasterDTO?.equipmentNo}/>
                             </div>
-                        </div>
                         <div className="provisional-sale-form-group">
-                            <label>Manual Sale Billno</label>
-                            <div className="provisional-sale-input-container">
-                                <input
-                                    type="text"
+                            <FloatingInput
+                            label={"Manual Sale Billno"}
+                            type="text"
                                     name="manualSaleBillNo"
                                     value={formData.manualSaleBillNo}
-                                    onChange={handleInputChange}
-                                    className="provisional-sale-form-input"
-                                />                            </div>
+                                    onChange={handleInputChange}/>
+                           
                         </div>
                         <div className="provisional-sale-form-group">
-                            <label>Asset No</label>
-                            <div className="provisional-sale-input-container">
-                                <input type="text" value={selectedDisposal?.condemnationDisposalRequestDTO?.equipmentMasterDTO?.assetNo} className="provisional-sale-form-input" />
-                            </div>
+                            <FloatingInput
+                            label={"Asset No"}
+                            type="text" value={selectedDisposal?.condemnationDisposalRequestDTO?.equipmentMasterDTO?.assetNo}/>
+                            
                         </div>
 
 

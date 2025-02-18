@@ -376,7 +376,7 @@ const IpAdmission = ({ patientData, onClose }) => {
       }));
     }
 
-    setActivePopup(null); // Close the popup after selection
+    setActivePopup(null); 
   };
 
   const fetchAllBedsAndRoomByPaytype = async (id) => {
@@ -491,6 +491,7 @@ const IpAdmission = ({ patientData, onClose }) => {
       setIsGenericSticker(true);
       setSubmittedPatientData(response.data);
       showPopup([{ url: "/billing/ipdmoneyrecipt", text: "Ip Money Reciept" }]);
+
       toast.success("Admission Successfully");
     } catch (error) {
       toast.error("Error submitting form:", error);

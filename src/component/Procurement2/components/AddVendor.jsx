@@ -1,90 +1,124 @@
-import React, { useState } from 'react';
-import './AddVendor.css';
-import { API_BASE_URL } from '../../api/api';
-
-const AddVendor = ({onClose}) => {
-
+import React, { useState } from "react";
+import "./AddVendor.css";
+import { API_BASE_URL } from "../../api/api";
+import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
+import { toast } from "react-toastify";
+const AddVendor = ({ onClose }) => {
   const [formValues, setFormValues] = useState({
-    vendorName: '',
-    contactAddress: '',
-    contactNumber: '',
-    currencyCode: '',
-    vendorCode: '',
-    vendorCountry: '',
-    kraPin: '',
-    bankDetails: '',
-    contactPerson: '',
-    email: '',
-    creditPeriod: '',
-    govtRegDate: '',
+    vendorName: "",
+    contactAddress: "",
+    contactNumber: "",
+    currencyCode: "",
+    vendorCode: "",
+    vendorCountry: "",
+    kraPin: "",
+    aadharNo: "",
+    gstNo: "",
+    panCard: "",
+    bankDetails: "",
+    contactPerson: "",
+    email: "",
+    creditPeriod: "",
+    govtRegDate: "",
     isActive: true,
-    receiveDonation: false
+    receiveDonation: false,
   });
 
   const [errors, setErrors] = useState({});
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormValues({
       ...formValues,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     });
-    setErrors({ ...errors, [name]: '' }); // Clear the error when the user starts typing
+    setErrors({ ...errors, [name]: "" }); // Clear the error when the user starts typing
   };
 
   const handleSubmit = async () => {
-    const requiredFields = ['vendorName', 'contactAddress', 'contactNumber', 'currencyCode', 'vendorCode'];
+    const requiredFields = [
+      "vendorName",
+      "contactAddress",
+      "contactNumber",
+      "currencyCode",
+      "vendorCode",
+      "kraPin",
+      "GSTNO",
+      "AadharNo",
+      "PanNo",
+      "bankDetails",
+      "contactPerson",
+      "email",
+      "creditPeriod",
+      "govtRegDate",
+    ];
+
     const newErrors = {};
 
-    requiredFields.forEach(field => {
+    // Validate required fields
+    requiredFields.forEach((field) => {
       if (!formValues[field]) {
-        newErrors[field] = `${field.replace(/([A-Z])/g, ' $1')} is required`;
+        newErrors[field] = `${field.replace(/([A-Z])/g, " $1")} is required`;
       }
     });
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-    } else {
-      try {
-        const response = await fetch(`${API_BASE_URL}/vendors/createVendor`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formValues),
+      toast.error("Please fill in all required fields!", { autoClose: 2000 });
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/vendors/createVendor`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+      });
+
+      if (response.ok) {
+        toast.success("Vendor added successfully!", { autoClose: 2000 });
+        setSuccessMessage("Vendor added successfully!");
+        setErrorMessage("");
+
+        // Reset form fields
+        setFormValues({
+          vendorName: "",
+          contactAddress: "",
+          contactNumber: "",
+          currencyCode: "",
+          vendorCode: "",
+          kraPin: "",
+          aadharNo: "",
+          gstNo: "",
+          panCard: "",
+          bankDetails: "",
+          contactPerson: "",
+          email: "",
+          creditPeriod: "",
+          govtRegDate: "",
+          isActive: true,
+          receiveDonation: false,
         });
 
-        if (response.ok) {
-          setSuccessMessage('Vendor added successfully!');
-          setErrorMessage('');
-
-          setFormValues({
-            vendorName: '',
-            contactAddress: '',
-            contactNumber: '',
-            currencyCode: '',
-            vendorCode: '',
-            kraPin: '',
-            bankDetails: '',
-            contactPerson: '',
-            email: '',
-            creditPeriod: '',
-            govtRegDate: '',
-            isActive: true,
-            receiveDonation: false
-          });
-          onClose()
-        } else {
-          const errorData = await response.json();
-          setErrorMessage(errorData.message || 'Failed to add vendor');
-          setSuccessMessage('');
-        }
-      } catch (error) {
-        setErrorMessage('An error occurred while adding the vendor');
-        setSuccessMessage('');
+        onClose();
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || "Failed to add vendor");
+        toast.error(errorData.message || "Failed to add vendor", {
+          autoClose: 2000,
+        });
+        setSuccessMessage("");
       }
+    } catch (error) {
+      setErrorMessage("An error occurred while adding the vendor");
+      toast.error("An error occurred while adding the vendor", {
+        autoClose: 2000,
+      });
+      setSuccessMessage("");
     }
   };
 
@@ -94,8 +128,8 @@ const AddVendor = ({onClose}) => {
         <h2 className="vendddHeading">Add Vendor</h2>
         <div className="vendddFormContainer">
           <div className="vendddColumn">
-            <VendddFormRow
-              label="Vendor Name"
+            <FloatingInput
+              label={"Vendor Name"}
               name="vendorName"
               required
               value={formValues.vendorName}
@@ -103,8 +137,8 @@ const AddVendor = ({onClose}) => {
               placeholder="Vendor Name"
               error={errors.vendorName}
             />
-            <VendddFormRow
-              label="Contact Address"
+            <FloatingInput
+              label={"Contact Address"}
               name="contactAddress"
               required
               value={formValues.contactAddress}
@@ -112,8 +146,8 @@ const AddVendor = ({onClose}) => {
               placeholder="Contact Address"
               error={errors.contactAddress}
             />
-            <VendddFormRow
-              label="Contact Number"
+            <FloatingInput
+              label={"Contact Number"}
               name="contactNumber"
               required
               value={formValues.contactNumber}
@@ -121,217 +155,58 @@ const AddVendor = ({onClose}) => {
               placeholder="Contact Number"
               error={errors.contactNumber}
             />
-            <VendddFormRow
-              label="KRA PIN"
+            <FloatingInput
+              label={"KRA PIN"}
               name="kraPin"
               value={formValues.kraPin}
               onChange={handleInputChange}
               placeholder="KRA PIN"
             />
-            <VendddFormRow
-              label="Vendor Country"
+            <FloatingSelect
+              label={"Vendor Country"}
               name="vendorCountry"
-              elementType="select"
-              options={[
-                "Afghanistan",
-                "Albania",
-                "Algeria",
-                "Andorra",
-                "Angola",
-                "Antigua and Barbuda",
-                "Argentina",
-                "Armenia",
-                "Australia",
-                "Austria",
-                "Azerbaijan",
-                "Bahamas",
-                "Bahrain",
-                "Bangladesh",
-                "Barbados",
-                "Belarus",
-                "Belgium",
-                "Belize",
-                "Benin",
-                "Bhutan",
-                "Bolivia",
-                "Bosnia and Herzegovina",
-                "Botswana",
-                "Brazil",
-                "Brunei",
-                "Bulgaria",
-                "Burkina Faso",
-                "Burundi",
-                "Cabo Verde",
-                "Cambodia",
-                "Cameroon",
-                "Canada",
-                "Central African Republic",
-                "Chad",
-                "Chile",
-                "China",
-                "Colombia",
-                "Comoros",
-                "Congo (Congo-Brazzaville)",
-                "Costa Rica",
-                "Croatia",
-                "Cuba",
-                "Cyprus",
-                "Czechia (Czech Republic)",
-                "Denmark",
-                "Djibouti",
-                "Dominica",
-                "Dominican Republic",
-                "Ecuador",
-                "Egypt",
-                "El Salvador",
-                "Equatorial Guinea",
-                "Eritrea",
-                "Estonia",
-                "Ethiopia",
-                "Fiji",
-                "Finland",
-                "France",
-                "Gabon",
-                "Gambia",
-                "Georgia",
-                "Germany",
-                "Ghana",
-                "Greece",
-                "Grenada",
-                "Guatemala",
-                "Guinea",
-                "Guinea-Bissau",
-                "Guyana",
-                "Haiti",
-                "Honduras",
-                "Hungary",
-                "Iceland",
-                "India",
-                "Indonesia",
-                "Iran",
-                "Iraq",
-                "Ireland",
-                "Israel",
-                "Italy",
-                "Jamaica",
-                "Japan",
-                "Jordan",
-                "Kazakhstan",
-                "Kenya",
-                "Kiribati",
-                "Kuwait",
-                "Kyrgyzstan",
-                "Laos",
-                "Latvia",
-                "Lebanon",
-                "Lesotho",
-                "Liberia",
-                "Libya",
-                "Liechtenstein",
-                "Lithuania",
-                "Luxembourg",
-                "Madagascar",
-                "Malawi",
-                "Malaysia",
-                "Maldives",
-                "Mali",
-                "Malta",
-                "Marshall Islands",
-                "Mauritania",
-                "Mauritius",
-                "Mexico",
-                "Micronesia",
-                "Moldova",
-                "Monaco",
-                "Mongolia",
-                "Montenegro",
-                "Morocco",
-                "Mozambique",
-                "Myanmar (formerly Burma)",
-                "Namibia",
-                "Nauru",
-                "Nepal",
-                "Netherlands",
-                "New Zealand",
-                "Nicaragua",
-                "Niger",
-                "Nigeria",
-                "North Korea",
-                "North Macedonia",
-                "Norway",
-                "Oman",
-                "Pakistan",
-                "Palau",
-                "Palestine State",
-                "Panama",
-                "Papua New Guinea",
-                "Paraguay",
-                "Peru",
-                "Philippines",
-                "Poland",
-                "Portugal",
-                "Qatar",
-                "Romania",
-                "Russia",
-                "Rwanda",
-                "Saint Kitts and Nevis",
-                "Saint Lucia",
-                "Saint Vincent and the Grenadines",
-                "Samoa",
-                "San Marino",
-                "Sao Tome and Principe",
-                "Saudi Arabia",
-                "Senegal",
-                "Serbia",
-                "Seychelles",
-                "Sierra Leone",
-                "Singapore",
-                "Slovakia",
-                "Slovenia",
-                "Solomon Islands",
-                "Somalia",
-                "South Africa",
-                "South Korea",
-                "South Sudan",
-                "Spain",
-                "Sri Lanka",
-                "Sudan",
-                "Suriname",
-                "Sweden",
-                "Switzerland",
-                "Syria",
-                "Taiwan",
-                "Tajikistan",
-                "Tanzania",
-                "Thailand",
-                "Timor-Leste",
-                "Togo",
-                "Tonga",
-                "Trinidad and Tobago",
-                "Tunisia",
-                "Turkey",
-                "Turkmenistan",
-                "Tuvalu",
-                "Uganda",
-                "Ukraine",
-                "United Arab Emirates",
-                "United Kingdom",
-                "United States of America",
-                "Uruguay",
-                "Uzbekistan",
-                "Vanuatu",
-                "Vatican City",
-                "Venezuela",
-                "Vietnam",
-                "Yemen",
-                "Zambia",
-               "Zimbabwe"
-              ]}
               value={formValues.vendorCountry}
               onChange={handleInputChange}
+              options={[
+                { value: "", label: "Select a Country" },
+                { value: "Afghanistan", label: "Afghanistan" },
+                { value: "Albania", label: "Albania" },
+                { value: "Argentina", label: "Argentina" },
+                { value: "Australia", label: "Australia" },
+                { value: "Bangladesh", label: "Bangladesh" },
+                { value: "Brazil", label: "Brazil" },
+                { value: "Canada", label: "Canada" },
+                { value: "China", label: "China" },
+                { value: "Denmark", label: "Denmark" },
+                { value: "Egypt", label: "Egypt" },
+                { value: "France", label: "France" },
+                { value: "Germany", label: "Germany" },
+                { value: "India", label: "India" },
+                { value: "Indonesia", label: "Indonesia" },
+                { value: "Italy", label: "Italy" },
+                { value: "Japan", label: "Japan" },
+                { value: "Mexico", label: "Mexico" },
+                { value: "Netherlands", label: "Netherlands" },
+                { value: "New Zealand", label: "New Zealand" },
+                { value: "Pakistan", label: "Pakistan" },
+                { value: "Russia", label: "Russia" },
+                { value: "Saudi Arabia", label: "Saudi Arabia" },
+                { value: "South Africa", label: "South Africa" },
+                { value: "South Korea", label: "South Korea" },
+                { value: "Spain", label: "Spain" },
+                { value: "Sweden", label: "Sweden" },
+                { value: "Switzerland", label: "Switzerland" },
+                { value: "Turkey", label: "Turkey" },
+                {
+                  value: "United Arab Emirates",
+                  label: "United Arab Emirates",
+                },
+                { value: "United Kingdom", label: "United Kingdom" },
+                { value: "United States", label: "United States" },
+              ]}
             />
-            <VendddFormRow
-              label="Currency Code"
+            <FloatingInput
+              label={"Currency Code"}
               name="currencyCode"
               required
               value={formValues.currencyCode}
@@ -339,18 +214,74 @@ const AddVendor = ({onClose}) => {
               placeholder="Currency Code"
               error={errors.currencyCode}
             />
-            <VendddFormRow
-              label="Bank Details"
+            <FloatingInput
+              label={"Aadhar No"}
+              name="aadharNo"
+              required
+              value={formValues.aadharNo}
+              onChange={handleInputChange}
+              placeholder="Aadhar No"
+              error={errors.aadharNo}
+            />
+            <FloatingInput
+              label={"GST NO"}
+              name="gstNo"
+              required
+              value={formValues.gstNo}
+              onChange={handleInputChange}
+              placeholder="GST NO"
+              error={errors.gstNo}
+            />
+            <FloatingInput
+              label={"Pan Card"}
+              name="panCard"
+              required
+              value={formValues.panCard}
+              onChange={handleInputChange}
+              placeholder="Pan Card"
+              error={errors.panCard}
+            />
+            <FloatingInput
+              label={"Contract Start Date"}
+              name="contractStartDate"
+              type="date"
+              required
+              value={formValues.contractStartDate}
+              onChange={handleInputChange}
+              error={errors.contractStartDate}
+            />
+          </div>
+          <div className="vendddColumn">
+            <FloatingInput
+              label={"Contract End Date"}
+              name="contractEndDate"
+              type="date"
+              required
+              value={formValues.contractEndDate}
+              onChange={handleInputChange}
+              error={errors.contractEndDate}
+            />
+          </div>
+          <div className="vendddColumn">
+            <FloatingInput
+              label={"Contract End Date"}
+              name="contractEndDate"
+              type="date"
+              required
+              value={formValues.contractEndDate}
+              onChange={handleInputChange}
+              error={errors.contractEndDate}
+            />
+            <FloatingInput
+              label={"Bank Details"}
               name="bankDetails"
               elementType="textarea"
               value={formValues.bankDetails}
               onChange={handleInputChange}
               placeholder="Bank details"
             />
-          </div>
-          <div className="vendddColumn">
-            <VendddFormRow
-              label="Vendor Code"
+            <FloatingInput
+              label={"Vendor Code"}
               name="vendorCode"
               required
               value={formValues.vendorCode}
@@ -358,80 +289,118 @@ const AddVendor = ({onClose}) => {
               placeholder="Vendor Code"
               error={errors.vendorCode}
             />
-            <VendddFormRow
-              label="Contact Person"
+            <FloatingInput
+              label={"Contact Person"}
               name="contactPerson"
               value={formValues.contactPerson}
               onChange={handleInputChange}
               placeholder="Contact Person"
             />
-            <VendddFormRow
-              label="Email"
+            <FloatingInput
+              label={"Email"}
               name="email"
               value={formValues.email}
               onChange={handleInputChange}
               placeholder="Email Address"
             />
-            <VendddFormRow
-              label="Credit Period (days)"
+            <FloatingInput
+              label={"Credit Period (days)"}
               name="creditPeriod"
               elementType="number"
               value={formValues.creditPeriod}
               onChange={handleInputChange}
             />
-            <VendddFormRow
-              label="Govt Reg Date"
+            <FloatingInput
+              label={"Govt Reg Date"}
               name="govtRegDate"
+              type="date"
               elementType="date"
               value={formValues.govtRegDate}
               onChange={handleInputChange}
             />
-            <VendddFormRow
-              label="Is Active"
-              name="isActive"
-              elementType="checkbox"
-              checked={formValues.isActive}
-              onChange={handleInputChange}
-            />
-            <VendddFormRow
-              label="Receive Donation"
-              name="receiveDonation"
-              elementType="checkbox"
-              checked={formValues.receiveDonation}
-              onChange={handleInputChange}
-            />
+            <label className="vendddAddLabel">
+              <input
+                type="checkbox"
+                name="isActive"
+                checked={formValues.isActive}
+                onChange={handleInputChange}
+              />
+              Is Active
+            </label>
+            <label className="vendddAddLabel">
+              <input
+                type="checkbox"
+                name="receiveDonation"
+                checked={formValues.receiveDonation}
+                onChange={handleInputChange}
+              />
+              Receive Donation
+            </label>
           </div>
         </div>
-        {successMessage && <div className="vendddSuccess">{successMessage}</div>}
+        {successMessage && (
+          <div className="vendddSuccess">{successMessage}</div>
+        )}
         {errorMessage && <div className="vendddError">{errorMessage}</div>}
-        <button className="vendddAddButton" onClick={handleSubmit}>Add Vendor</button>
+        <button className="vendddAddButton" onClick={handleSubmit}>
+          Add Vendor
+        </button>
       </div>
     </div>
   );
 };
 
-const VendddFormRow = ({ label, name, required, elementType = 'input', options = [], defaultChecked, value, onChange, placeholder, error }) => (
+const VendddFormRow = ({
+  label,
+  name,
+  required,
+  elementType = "input",
+  options = [],
+  defaultChecked,
+  value,
+  onChange,
+  placeholder,
+  error,
+}) => (
   <div className="vendddFormRow">
     <label className="vendddLabel">
       {label}
       {required && <span className="vendddRequired">*</span>}
     </label>
     <div className="vendddColon">:</div>
-    {elementType === 'input' && (
+    {elementType === "input" && (
       <>
-        <input className="vendddInput" type="text" name={name} value={value} onChange={onChange} placeholder={placeholder} />
+        <input
+          className="vendddInput"
+          type="text"
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'textarea' && (
+    {elementType === "textarea" && (
       <>
-        <textarea className="vendddTextarea" name={name} value={value} onChange={onChange} placeholder={placeholder} />
+        <textarea
+          className="vendddTextarea"
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'select' && (
+    {elementType === "select" && (
       <>
-        <select className="vendddInput" name={name} value={value} onChange={onChange}>
+        <select
+          className="vendddInput"
+          name={name}
+          value={value}
+          onChange={onChange}
+        >
           {options.map((option) => (
             <option key={option} value={option}>
               {option}
@@ -441,21 +410,40 @@ const VendddFormRow = ({ label, name, required, elementType = 'input', options =
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'checkbox' && (
+    {elementType === "checkbox" && (
       <>
-        <input className="vendddCheckbox" type="checkbox" name={name} checked={value} onChange={onChange} defaultChecked={defaultChecked} />
+        <input
+          className="vendddCheckbox"
+          type="checkbox"
+          name={name}
+          checked={value}
+          onChange={onChange}
+          defaultChecked={defaultChecked}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'date' && (
+    {elementType === "date" && (
       <>
-        <input className="vendddInput" type="date" name={name} value={value} onChange={onChange} />
+        <input
+          className="vendddInput"
+          type="date"
+          name={name}
+          value={value}
+          onChange={onChange}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
-    {elementType === 'number' && (
+    {elementType === "number" && (
       <>
-        <input className="vendddInput" type="number" name={name} value={value} onChange={onChange} />
+        <input
+          className="vendddInput"
+          type="number"
+          name={name}
+          value={value}
+          onChange={onChange}
+        />
         {error && <div className="vendddError">{error}</div>}
       </>
     )}
@@ -463,6 +451,3 @@ const VendddFormRow = ({ label, name, required, elementType = 'input', options =
 );
 
 export default AddVendor;
-
-
-

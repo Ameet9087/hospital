@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Modal, Button } from "react-bootstrap";
 import axios from "axios";
-import { startResizing } from "../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
 import "./ManageSubstore.css";
 
 import { API_BASE_URL } from "../api/api";
@@ -32,7 +32,7 @@ const ManageSubstore = () => {
       }
     };
     fetchSubstores();
-  }, []);
+  }, [showModal]);
 
   // Filter substores by subStoreName
   const filteredItems = useFilter(substores, searchTerm);
@@ -140,7 +140,7 @@ const ManageSubstore = () => {
                 <td>{substore.code}</td>
                 <td>{substore.email}</td>
                 <td>{substore.contactNo}</td>
-                <td>{substore.location}</td>
+                <td>{substore.locationMasterDTO?.locationName}</td>
                 <td>{substore.subStoreDescription}</td>
                 <td>{substore.label}</td>
                 <td>{substore.isActive ? "Active" : "Inactive"}</td>

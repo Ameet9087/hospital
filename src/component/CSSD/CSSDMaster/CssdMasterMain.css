@@ -2,7 +2,7 @@
 .CssdMaster-navbar {
   display: flex;
   flex-direction: row; /* Horizontal layout */
-  justify-content: center; /* Center the nav items */
+   /* Center the nav items */
   align-items: center;
   height: 60px; /* Fixed height for navbar */
   background-color: var(--background-color);

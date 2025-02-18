@@ -91,8 +91,7 @@ function VaccinationAppointment() {
                 </div>
               </div>
             )}
-            <button className="vaccinationAppointment-star-btn">☆</button>
-            <button className="vaccinationAppointment-ok-btn">Ok</button>
+            
           </div>
           <div className="vaccinationAppointment-form-input-group">
             <label>Appointment Type: </label>

@@ -3,6 +3,8 @@ import "./InsuranceEntryMasterFormPopUp.css";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../../../api/api";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { FloatingInput, FloatingTextarea } from "../../../../FloatingInputs";
 const InsuranceEntryMasterFormPopUp = ({ onClose }) => {
   const [formData, setFormData] = useState({
     entryNumber: "", 
@@ -40,12 +42,11 @@ const InsuranceEntryMasterFormPopUp = ({ onClose }) => {
         `${ API_BASE_URL }/insurance-entries` ,
         formData
       );
-      alert("Data saved successfully!");
-      console.log("Response:", response.data);
+      toast.success("Data saved successfully!");
       handleClear(); 
+      onClose();
     } catch (error) {
-      console.error("Error saving data:", error);
-      alert("Failed to save data. Please try again.");
+      toast.error("Failed to save data. Please try again.");
     }
   };
 
@@ -67,59 +68,69 @@ const InsuranceEntryMasterFormPopUp = ({ onClose }) => {
         <div className="InsuranceEntryMasterFormPopUp-form-row">
           <div className="InsuranceEntryMasterFormPopUp-form-group-1row">
             <div className="InsuranceEntryMasterFormPopUp-form-group">
-            <label>Entry Number:</label>
-              <input
-                type="text"
-                name="entryNumber"
-                value={formData.entryNumber}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Entry Number"}
+               type="text"
+               name="entryNumber"
+               value={formData.entryNumber}
+               onChange={handleChange}
+               required
               />
             </div>
             <div className="InsuranceEntryMasterFormPopUp-form-group">
-            <label>Insurance Company Name:</label>
-              <textarea
-                name="insuranceCompanyName"
-                value={formData.insuranceCompanyName}
-                onChange={handleChange}
-                rows="2"
-                required
-              ></textarea>
+              <FloatingInput
+              label={"Insurance Company Name"}
+              name="insuranceCompanyName"
+              value={formData.insuranceCompanyName}
+              onChange={handleChange}
+              required
+              />
             </div>
           </div>
 
           <div className="InsuranceEntryMasterFormPopUp-form-group-1row">
+            
             <div className="InsuranceEntryMasterFormPopUp-form-group">
-            <label>Address:</label>
-              <textarea
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                rows="3"
-                required
-              ></textarea>
+              <FloatingInput
+              label={"Policy Number"}
+               type="text"
+               name="policyNumber"
+               value={formData.policyNumber}
+               onChange={handleChange}
+               required
+              />
             </div>
             <div className="InsuranceEntryMasterFormPopUp-form-group">
-            <label>Policy Number:</label>
-              <input
-                type="text"
-                name="policyNumber"
-                value={formData.policyNumber}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Policy Type"}
+              type="text"
+              name="policyType"
+              value={formData.policyType}
+              onChange={handleChange}
+              required
               />
             </div>
             
           </div>
           <div className="InsuranceEntryMasterFormPopUp-form-group-1row">
+          <div className="InsuranceEntryMasterFormPopUp-form-group">
+              <FloatingInput
+              label={"Policy Form Date"}
+              type="date"
+              name="policyFormDate"
+              value={formData.policyFormDate}
+              onChange={handleChange}
+              required
+              />
+            </div>
             <div className="InsuranceEntryMasterFormPopUp-form-group">
-            <label>Policy Type:</label>
-              <input
-                type="text"
-                name="policyType"
-                value={formData.policyType}
-                onChange={handleChange}
-                required
+              <FloatingInput
+              label={"Policy To Date"}
+              type="date"
+              name="policyToDate"
+              value={formData.policyToDate}
+              onChange={handleChange}
+              required
               />
             </div>
             
@@ -128,28 +139,14 @@ const InsuranceEntryMasterFormPopUp = ({ onClose }) => {
           </div>
           <div className="InsuranceEntryMasterFormPopUp-form-group-1row">
             
-            <div className="InsuranceEntryMasterFormPopUp-form-group">
-            <label>Policy Form Date:</label>
-              <input
-                type="date"
-                name="policyFormDate"
-                value={formData.policyFormDate}
-                onChange={handleChange}
-                required
+              <FloatingTextarea
+              label={"Address"}
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              rows="2"
+              required
               />
-            </div>
-            <div className="InsuranceEntryMasterFormPopUp-form-group">
-            <label>Policy To Date:</label>
-              <input
-                type="date"
-                name="policyToDate"
-                value={formData.policyToDate}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            
-            
           </div>
           </div>
           </div>

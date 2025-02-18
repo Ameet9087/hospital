@@ -54,32 +54,6 @@
   display: flex;
   align-items: center;
 }
-
-.vaccinationRegister__formGroup label {
-  width: 30%;
-  min-width: 150px; /* Adjust as necessary */
-  margin-bottom: 5px;
-  font-size: 14px;
-  /* font-weight: bold; */
-}
-
-.vaccinationRegister__formGroup input,
-.vaccinationRegister__formGroup select {
-  width: 70%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-.vaccinationRegister__ageInput {
-  display: flex;
-  gap: 10px;
-}
-
-.vaccinationRegister__ageInput input {
-  width: 50px;
-}
-
 .vaccinationRegister__formActions {
   grid-column: span 2;
   display: flex;
@@ -96,13 +70,34 @@
 }
 
 .vaccinationRegister__formActions button:first-child {
-  background-color: #ccc;
+  background-color: var(--button-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
 }
 
 .vaccinationRegister__formActions button:last-child {
-  background-color: #4CAF50;
+  background-color: var(--button-color);
   color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
 }
+.vaccinationRegister__formActions button:last-child:hover {
+  background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+     border: 1px solid var(--button-hover-border-color);
+}
+.vaccinationRegister__formActions button:first-child:hover {
+  background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+     border: 1px solid var(--button-hover-border-color);
+}
+
+
 
 .vaccinationRegister__note {
   grid-column: span 2;

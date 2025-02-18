@@ -340,6 +340,7 @@ function SSPStoreTransfer() {
                   }
                 />
               </td>
+
               <td className="NormalTransfer-actions">
                 <button
                   className="NormalTransfer-add-btn"
@@ -377,6 +378,7 @@ function SSPStoreTransfer() {
                   type="number"
                   className="NormalTransfer-returnQty"
                   value={row.returnQuantity}
+
                   onChange={(e) =>
                     handleReturnQuantityChange(index, e.target.value)
                   }

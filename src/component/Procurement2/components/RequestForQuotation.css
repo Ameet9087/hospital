@@ -2,13 +2,16 @@
   background-color: #ffffff;
   padding: 5px;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 1000px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
   font-size: 10px;
 }
-
+.RequestforQuotation-form-actions{
+  margin-top: 20px;
+}
 .RequestforQuotation-container h1 {
   color: #333;
-  font-size: 20px;
+  font-size: var(--heading-font);
 }
 
 .RequestforQuotation-form-row {
@@ -18,6 +21,7 @@
 
 .RequestforQuotation-form-group {
   flex: 1;
+  margin-top: 20px;
   margin-right: 5px;
 }
 
@@ -25,14 +29,14 @@
   margin-right: 0;
 }
 
-.RequestforQuotation-form-group label {
+/* .RequestforQuotation-form-group label {
   font-weight: bold;
   display: block;
   margin-bottom: 5px;
   color:black;
-}
+} */
 
-.RequestforQuotation-form-group input[type="text"],
+/* .RequestforQuotation-form-group input[type="text"],
 .RequestforQuotation-form-group input[type="date"],
 .RequestforQuotation-form-group input[type="number"],
 .RequestforQuotation-form-group select,
@@ -42,14 +46,15 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
-}
+} */
 
-.RequestforQuotation-form-group textarea {
+/* .RequestforQuotation-form-group textarea {
   height: 100px;
   resize: vertical;
-}
+} */
 
 .RequestforQuotation-table {
+  margin-top: 10px;
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 5px;
@@ -61,7 +66,11 @@
   padding: 5px;
   text-align: left;
 }
-
+.RequestforQuotation-table td {
+  max-height: 250px; /* Adjust as needed */
+  overflow-y: auto;
+  width: 100%;
+}
 .RequestforQuotation-table th {
   background-color: #f2f2f2;
 }
@@ -82,6 +91,7 @@
   padding: 5px 10px;
   border: none;
   border-radius: 4px;
+  margin-left: 10px;
   cursor: pointer;
 }
 
@@ -117,4 +127,12 @@
   background-color: var(--button-color);
   color: white;
   margin-left: 5px;
+}
+
+.RequestforQuotation-table-container{
+  height: 120px;
+  overflow-y: scroll;
+}
+.RequestforQuotation-table-container::-webkit-scrollbar{
+  width: 1px;
 }

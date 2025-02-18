@@ -1,9 +1,8 @@
 .cons-container {
   max-width: 800px;  /* Limit the container width */
-  height: 500px;  /* Fixed height for the container */
-  overflow-y: auto;  /* Allow vertical scrolling if content overflows */
-  scrollbar-width: none;  /* Hide scrollbar in Firefox */
-  padding: 20px;  /* Add padding inside the container */
+ 
+ 
+  padding: 10px;  /* Add padding inside the container */
 }
 
 .cons-heading {
@@ -22,15 +21,11 @@
   flex-direction: column; /* Stack the form elements vertically */
   gap: 10px;
 }
-.cons-form-group label {
-  font-weight: bold;  /* Make label text bold */
-  margin-bottom: 5px;  /* Space below the label */
-}
 
 .cons-input-text {
   width: 100%;  /* Full width of the parent container */
-  padding: 8px;  /* Add padding inside the input field */
-  font-size: 14px;  /* Set font size */
+  padding: 5px;  /* Add padding inside the input field */
+  font-size: var(--font-size);  /* Set font size */
   border: 1px solid #ccc;  /* Light gray border */
   border-radius: 4px;  /* Rounded corners */
 }
@@ -45,20 +40,21 @@
 }
 
 .cons-save-button {
-  padding: 10px 20px;  /* Button padding */
-  background-color: #4CAF50;  /* Green background */
-  color: white;  /* White text */
-  border: none;  /* Remove default border */
-  border-radius: 4px;  /* Rounded corners */
-  cursor: pointer;  /* Show pointer cursor on hover */
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
 }
 
 .cons-save-button:hover {
-  background-color: #45a049;  /* Darker green on hover */
+  border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+}
+.cons-form-groupsdf{
+  margin-bottom: 50px;
 }
 
-.cons-error-message {
-  color: red;  /* Red color for error messages */
-  font-size: 14px;  /* Smaller font size for error messages */
-  margin-bottom: 10px;  /* Space below the error message */
-}

@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 const IPMoneyReceiptPrint = () => {
   const printRef = useRef(null);
   const location = useLocation();
-  const { selectedIPNo,formData,moneyReceiptData  } = location.state || {};
+  const { selectedIPNo, formData, moneyReceiptData } = location.state || {};
 
   // Function to convert number to words
   const convertNumberToWords = (num) => {
@@ -169,19 +169,19 @@ const IPMoneyReceiptPrint = () => {
             </p>
           </div>
         </div>
-       
+
         <table className="OpdBillingPrint-table">
-  <thead>
-    <tr>
-      <th>Sr No</th>
-      <th>IPD Details</th>
-      <th>QTY</th>
-      <th>Rate</th>
-      <th>Amount</th>
-    </tr>
-  </thead>
-  <tbody>
-    {/* <tr>
+          <thead>
+            <tr>
+              <th>Sr No</th>
+              <th>IPD Details</th>
+              <th>QTY</th>
+              <th>Rate</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* <tr>
       <td>1</td>
       <td>Receipt No: {moneyReceiptData.receiptNo}</td>
       <td>-</td>
@@ -195,33 +195,33 @@ const IPMoneyReceiptPrint = () => {
       <td>-</td>
       <td>-</td>
     </tr> */}
-    {moneyReceiptData.paymentModes.map((paymentMode, index) => (
-      <tr key={index}>
-        <td>{index+1}</td>
-        <td>Payment Mode: {paymentMode.modeName}</td>
-        <td>-</td>
-        <td>-</td>
-        <td>{paymentMode.amount}</td>
-      </tr>
-    ))}
-  </tbody>
-  <tfoot>
-    <tr>
-      <td colSpan={"3"}>
-        Amount Received in {moneyReceiptData.paymentModes.map(
-          (paymentMode) => paymentMode.modeName
-        ).join(", ")}{" "}
-        <br />
-        RUPEES {new Intl.NumberFormat("en-IN", {
-          style: "currency",
-          currency: "INR",
-        }).format(moneyReceiptData.amount).toUpperCase()}
-      </td>
-      <td>Total Amount</td>
-      <td>{moneyReceiptData.amount}</td>
-    </tr>
-  </tfoot>
-</table>
+            {moneyReceiptData?.paymentModes?.map((paymentMode, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>Payment Mode: {paymentMode.modeName}</td>
+                <td>-</td>
+                <td>-</td>
+                <td>{paymentMode.amount}</td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan={"3"}>
+                Amount Received in {moneyReceiptData?.paymentModes?.map(
+                  (paymentMode) => paymentMode.modeName
+                ).join(", ")}{" "}
+                <br />
+                RUPEES {new Intl.NumberFormat("en-IN", {
+                  style: "currency",
+                  currency: "INR",
+                }).format(moneyReceiptData.amount).toUpperCase()}
+              </td>
+              <td>Total Amount</td>
+              <td>{moneyReceiptData.amount}</td>
+            </tr>
+          </tfoot>
+        </table>
 
 
         <div className="OpdBillingPrint-footer">

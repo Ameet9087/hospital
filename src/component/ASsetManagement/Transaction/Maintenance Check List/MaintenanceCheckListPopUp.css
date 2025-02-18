@@ -58,7 +58,7 @@
     gap: 4px;
     font-size: var(--font-size);
 }
-
+/* 
 .MaintenanceChecklistPopUp-surgeryEvents-form-row label {
     min-width: 140px;
 }
@@ -75,7 +75,7 @@
     border: 1px solid gray;
     border-radius: 5px;
     width: 50%;
-}
+} */
 
 .MaintenanceChecklistPopUp-surgeryEvents-input-with-search {
     display: flex;
@@ -273,13 +273,13 @@
 .MaintenanceChecklistPopUp-surgeryEvents-form-row label {
     min-width: 140px;
 }
-
+/* 
 .MaintenanceChecklistPopUp-surgeryEvents-form-row input {
     padding: 5px;
     border: 1px solid gray;
     border-radius: 5px;
     width: 47%;
-}
+} */
 
 
 .MaintenanceChecklistPopUp-required{

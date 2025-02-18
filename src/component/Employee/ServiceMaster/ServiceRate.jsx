@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ServiceRate.css";
-import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { FloatingInput } from "../../../FloatingInputs";
 
 function ServiceRate({ rates, onRateChange }) {
   console.log(rates);
@@ -47,42 +48,44 @@ function ServiceRate({ rates, onRateChange }) {
                 <td>{index + 1}</td>
                 <td>{payType.payType}</td>
                 <td>
-                  <input
-                    type="number"
-                    value={payType.rate || ""}
-                    onChange={(e) =>
-                      onRateChange(index, "rate", parseFloat(e.target.value))
-                    }
-                    className="Service-rate-input"
-                  />
+                  <FloatingInput
+                  type="number"
+                  value={payType.rate || ""}
+                  onChange={(e) =>
+                    onRateChange(index, "rate", parseFloat(e.target.value))
+                  }
+                  min={'0'}/>
+                  
                 </td>
                 <td>
-                  <input
-                    type="number"
-                    value={payType.doctorSharePercentage || ""}
-                    onChange={(e) =>
-                      onRateChange(
-                        index,
-                        "doctorSharePercentage",
-                        parseFloat(e.target.value)
-                      )
-                    }
-                    className="Service-rate-input"
+                  <FloatingInput
+                  type="number"
+                  value={payType.doctorSharePercentage || ""}
+                  onChange={(e) =>
+                    onRateChange(
+                      index,
+                      "doctorSharePercentage",
+                      parseFloat(e.target.value)
+                    )
+                  }
+                  min={'0'}
                   />
+                  
                 </td>
                 <td>
-                  <input
-                    type="number"
-                    value={payType.doctorShareAmount || ""}
-                    onChange={(e) =>
-                      onRateChange(
-                        index,
-                        "doctorShareAmount",
-                        parseFloat(e.target.value)
-                      )
-                    }
-                    className="Service-rate-input"
+                  <FloatingInput
+                  type="number"
+                  value={payType.doctorShareAmount || ""}
+                  onChange={(e) =>
+                    onRateChange(
+                      index,
+                      "doctorShareAmount",
+                      parseFloat(e.target.value)
+                    )
+                  }
+                  min={'0'}
                   />
+                 
                 </td>
               </tr>
             ))}

@@ -565,7 +565,8 @@ const SalesSales = () => {
                     name="qty"
                     value={formData.qty}
                     onChange={handleInputChange1}
-                    min="1"
+                    min="0"
+
                   />
                   <FloatingInput
                     label="Sale Price"

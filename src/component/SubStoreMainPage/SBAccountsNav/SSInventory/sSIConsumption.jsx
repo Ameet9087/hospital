@@ -7,6 +7,7 @@ import SSIPatientConsumConsumEntry from './sSIPatientConsumConsumEntry';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../../api/api';
 import CustomModal from '../../../../CustomModel/CustomModal';
+import { startResizing } from '../../../../TableHeadingResizing/ResizableColumns';
 import { toast } from "react-toastify";
 import {
   FloatingInput,
@@ -16,11 +17,12 @@ import {
 function SSIPatientConsumption() {
   const { store } = useParams();
   const [consumptions, setConsumptions] = useState([]);
-  const tableRef = useRef();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showNewPatientConsumption, setShowNewPatientConsumption] = useState(false);
   const printRef = useRef();
+const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
 
   useEffect(() => {
     const fetchConsumptions = async () => {
@@ -65,6 +67,9 @@ function SSIPatientConsumption() {
 
   const handleBack = () => {
     setShowNewPatientConsumption(false);
+  };
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
   };
 
   const printList = () => {
@@ -169,32 +174,54 @@ function SSIPatientConsumption() {
             
             />
           </div>
-          <div className="sSIConsumption-results-info">
-            <span> Showing {consumptions.length} /  {consumptions.length} results</span>
+         
+        </div>
+        <div className="sSIConsumption-results-btn">
+            <p> Showing {consumptions.length} /  {consumptions.length} results</p>
+
 
             <button className='sSIConsumption-print-btn' onClick={handleExport}>
               <i className="fa-regular fa-file-excel"></i> Export
             </button>
             <button className='sSIConsumption-print-btn' onClick={printList}>Print</button>
           </div>
-        </div>
         <div style={{ display: 'none' }}>
           <div ref={tableRef}>
             <h2>Patient Consumption Report</h2>
             <p>Printed On: {new Date().toLocaleString()}</p>
             <div className="sSIConsumption-table-N-paginat">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Consumed Date</th>
-                    <th>Requisition Item ID</th>
-                    <th>Consumed Qty</th>
-                    <th>Unit</th>
-                    <th>Consumption Type Name</th>
-                    <th>Entered By</th>
-                    <th>Remarks</th>
-                  </tr>
-                </thead>
+               <table  ref={tableRef}>
+                         <thead>
+                           <tr>
+                             {[ "Consumed Date",
+  "Requisition Item ID",
+  "Consumed Qty",
+  "Unit",
+  "Consumption Type Name",
+  "Entered By",
+  "Remarks"].map(
+                               (header, index) => (
+                                 <th
+                                   key={index}
+                                   style={{ width: columnWidths[index] }}
+                                   className="resizable-th"
+                                 >
+                                   <div className="header-content">
+                                     <span>{header}</span>
+                                     <div
+                                       className="resizer"
+                                       onMouseDown={startResizing(
+                                         tableRef,
+                                         setColumnWidths
+                                       )(index)}
+                                     ></div>
+                                   </div>
+                                 </th>
+                               )
+                             )}
+                           </tr>
+                         </thead>
+
                 <tbody>
                   {consumptions.map((consumption, index) => (
                     <React.Fragment key={index}>

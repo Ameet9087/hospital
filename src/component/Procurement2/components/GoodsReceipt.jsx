@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-
-import FormInput from "../components/FormInput";
+import { FloatingInput } from "../../../FloatingInputs";
 import "./GoodsReceipt.css";
 import { API_BASE_URL } from "../../api/api";
-
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { toast } from "react-toastify";
 const GoodsReceipt = ({ goodReceipt, onClose }) => {
   const [vendorBillDate, setVendorBillDate] = useState("");
   const [goodsReceiptDate, setGoodsReceiptDate] = useState("");
@@ -24,6 +25,8 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
   const [itemlist, setLists] = useState([]);
   const [vendor, setVendor] = useState([]);
   const [isItemAdding, setItemAdding] = useState(false);
+  const [columnWidths, setColumnWidths] = useState({});
+  const tableRef = useRef(null);
   const [items, setItems] = useState([
     {
       itemId: "",
@@ -239,7 +242,7 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
     e.preventDefault();
 
     if (!vendorName || !billNo || !items.length) {
-      alert("Please fill out all required fields.");
+      toast.error("Please fill out all required fields.");
       return;
     }
 
@@ -265,243 +268,301 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
 
     try {
       await axios.post(`${API_BASE_URL}/goods-receipts/create`, data);
-      alert("Goods Receipt saved successfully!");
-      onClose();
+      toast.success("Goods Receipt saved successfully!");
     } catch (error) {
       console.error("Error saving goods receipt:", error);
-      alert("Failed to save goods receipt.");
+      toast.error("Failed to save goods receipt.");
     }
+      
+
   };
 
   return (
-    <form onSubmit={handleSubmit} className="GoodsReceiptSettings-container">
-      <h2>Add Goods Receipt</h2>
+    <div className="good-receipt-com">
+      <form onSubmit={handleSubmit} className="GoodsReceiptSettings-container">
+        <h2>Add Goods Receipt</h2>
 
-      <div className="GoodsReceiptSettings-form-row-date">
-        <FormInput
-          label="Vendor Bill Date:"
-          type="date"
-          value={vendorBillDate}
-          setValue={setVendorBillDate}
-        />
-        <FormInput
-          label="Goods Receipt Date:"
-          type="date"
-          value={goodsReceiptDate}
-          setValue={setGoodsReceiptDate}
-        />
-      </div>
+        <div className="GoodsReceiptSettings-form-row-date">
+          <FloatingInput
+            label="Vendor Bill Date:"
+            type="date"
+            value={vendorBillDate}
+            onChange={(e) => setVendorBillDate(e.target.value)}
+          />
 
-      <div className="GoodsReceiptSettings-form-row">
-        <div className="goods-receipts-form-group">
-          <label htmlFor="vendorSelect">Vendor Name:</label>
-          <select
+          <FloatingInput
+            label="Goods Receipt Date:"
+            type="date"
+            value={goodsReceiptDate}
+            onChange={(e) => setGoodsReceiptDate(e.target.value)}
+          />
+          <FloatingSelect
+            label="Vendor Name"
             id="vendorSelect"
             value={vendorName}
             onChange={handleVendorChange}
             required
-          >
-            <option value="">Select Vendor</option>
-            {vendor.map((vendor) => (
-              <option key={vendor.id} value={vendor.id}>
-                {vendor?.vendorName}
-              </option>
-            ))}
-          </select>
+            options={[
+              { value: "", label: "Select Vendor" },
+              ...(Array.isArray(vendor)
+                ? vendor.map((vendor) => ({
+                    value: vendor.id,
+                    label: vendor.vendorName,
+                  }))
+                : []),
+            ]}
+          />
         </div>
-        <FormInput
-          label="Bill No:"
-          type="text"
-          value={billNo}
-          setValue={setBillNo}
-          required
-        />
-        <FormInput
-          label="Payment Mode:"
-          type="select"
-          value={paymentMode}
-          setValue={setPaymentMode}
-          options={["Credit", "Cash"]}
-        />
-        <FormInput
-          label="Credit Period:"
-          type="number"
-          value={creditPeriod}
-          setValue={setCreditPeriod}
-        />
-      </div>
 
-      <div className="GoodsReceiptSettings-items-container">
-        <h3>Items</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Category</th>
-              <th>Item Name</th>
-              <th>Batch No</th>
-              <th>Expiry Date</th>
-              <th>Quantity</th>
-              <th>Free Quantity</th>
-              <th>Rate</th>
-              <th>Discount (%)</th>
-              <th>VAT (%)</th>
-              <th>CC Charge (%)</th>
-              <th>Other Charge</th>
-              <th>Total Amount</th>
-              <th>Remarks</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item, index) => (
-              <tr key={index} className="item-row">
-                <td>
-                  <select
-                    value={item.category}
-                    onChange={(e) =>
-                      handleItemChange(index, "category", e.target.value)
-                    }
-                  >
-                    <option value="Consumables">Consumables</option>
-                    <option value="Non-Consumables">Non-Consumables</option>
-                  </select>
-                </td>
-                <td>
-                  <select
-                    value={item.itemName}
-                    onChange={(e) => handleItemSelect(e, index)}
-                  >
-                    <option value="">Select Item</option>
-                    {itemlist.map((availableItem) => (
-                      <option
-                        key={availableItem.itemName}
-                        value={availableItem.itemName}
+        <div className="GoodsReceiptSettings-form-row-date">
+          <FloatingInput
+            label="Bill No:"
+            type="text"
+            value={billNo}
+            onChange={(e) => setBillNo(e.target.value)}
+            required
+          />
+
+          <FloatingInput
+            label="Payment Mode:"
+            type="select"
+            value={paymentMode}
+            setValue={setPaymentMode}
+            options={["Credit", "Cash"]}
+          />
+          <FloatingInput
+            label="Credit Period:"
+            type="number"
+            value={creditPeriod}
+            onChange={(e) => setCreditPeriod(e.target.value)}
+            min="0"
+          />
+        </div>
+       
+          <div className="good-receipt-tab">
+            <h3>Items</h3>
+            <table ref={tableRef}>
+              <thead>
+                <tr>
+                  {[
+                    "Category",
+                    "Item Name",
+                    "Batch No",
+                    "Expiry Date",
+                    "Quantity",
+                    "Free Quantity",
+                    "Rate",
+                    "Discount (%)",
+                    "VAT (%)",
+                    "CC Charge (%)",
+                    "Other Charge",
+                    "Total Amount",
+                    "Remarks",
+                  ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+
+              <tbody>
+                {items.map((item, index) => (
+                  <tr key={index} className="item-row">
+                    <td>
+                      <FloatingSelect
+                        label="Category"
+                        id="categorySelect"
+                        value={item.category}
+                        onChange={(e) =>
+                          handleItemChange(index, "category", e.target.value)
+                        }
+                        required
+                        options={[
+                          { value: "Consumables", label: "Consumables" },
+                          {
+                            value: "Non-Consumables",
+                            label: "Non-Consumables",
+                          },
+                        ]}
+                      />
+                    </td>
+
+                    <td>
+                      <FloatingSelect
+                        value={item.itemName}
+                        onChange={(e) => handleItemSelect(e, index)}
+                        required
+                        options={[
+                          { value: "", label: "Select Item" },
+                          ...(Array.isArray(itemlist)
+                            ? itemlist.map((availableItem) => ({
+                                value: availableItem.itemName,
+                                label: availableItem.itemName,
+                              }))
+                            : []),
+                        ]}
+                      />
+
+                      {/* <select
+                        value={item.itemName}
+                        onChange={(e) => handleItemSelect(e, index)}
                       >
-                        {availableItem.itemName}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    placeholder="Batch No"
-                    value={item.batchNo}
-                    onChange={(e) =>
-                      handleItemChange(index, "batchNo", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="date"
-                    value={item.expiryDate}
-                    onChange={(e) =>
-                      handleItemChange(index, "expiryDate", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    placeholder="Quantity"
-                    value={item.quantity}
-                    onChange={(e) =>
-                      handleItemChange(index, "quantity", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    placeholder="Free Quantity"
-                    value={item.freeQuantity}
-                    onChange={(e) =>
-                      handleItemChange(index, "freeQuantity", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    placeholder="Rate"
-                    value={item.rate}
-                    onChange={(e) =>
-                      handleItemChange(index, "rate", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    placeholder="Discount (%)"
-                    value={item.discountPercentage}
-                    onChange={(e) =>
-                      handleItemChange(
-                        index,
-                        "discountPercentage",
-                        e.target.value
-                      )
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    placeholder="VAT (%)"
-                    value={item.vatPercentage}
-                    onChange={(e) =>
-                      handleItemChange(index, "vatPercentage", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    placeholder="CC Charge (%)"
-                    value={item.ccChargePercentage}
-                    onChange={(e) =>
-                      handleItemChange(
-                        index,
-                        "ccChargePercentage",
-                        e.target.value
-                      )
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    placeholder="Other Charge"
-                    value={item.otherCharge}
-                    onChange={(e) =>
-                      handleItemChange(index, "otherCharge", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    placeholder="Total Amount"
-                    value={item.totalAmount}
-                    onChange={(e) =>
-                      handleItemChange(index, "totalAmount", e.target.value)
-                    }
-                  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    placeholder="Remarks"
-                    value={item.remarks}
-                    onChange={(e) =>
-                      handleItemChange(index, "remarks", e.target.value)
-                    }
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                        <option value="">Select Item</option>
+                        {itemlist.map((availableItem) => (
+                          <option
+                            key={availableItem.itemName}
+                            value={availableItem.itemName}
+                          >
+                            {availableItem.itemName}
+                          </option>
+                        ))}
+                      </select> */}
+                    </td>
+                    <td>
+                      <FloatingInput
+                        type="text"
+                        placeholder="Batch No"
+                        value={item.batchNo}
+                        onChange={(e) =>
+                          handleItemChange(index, "batchNo", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <FloatingInput
+                        type="date"
+                        value={item.expiryDate}
+                        onChange={(e) =>
+                          handleItemChange(index, "expiryDate", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <FloatingInput
+                        type="number"
+                        placeholder="Quantity"
+                        value={item.quantity}
+                        onChange={(e) =>
+                          handleItemChange(index, "quantity", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <FloatingInput
+                        type="number"
+                        placeholder="Free Quantity"
+                        value={item.freeQuantity}
+                        onChange={(e) =>
+                          handleItemChange(
+                            index,
+                            "freeQuantity",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </td>
+                    <td>
+                      <FloatingInput
+                        type="number"
+                        placeholder="Rate"
+                        value={item.rate}
+                        onChange={(e) =>
+                          handleItemChange(index, "rate", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <FloatingInput
+                        type="number"
+                        placeholder="Discount (%)"
+                        value={item.discountPercentage}
+                        onChange={(e) =>
+                          handleItemChange(
+                            index,
+                            "discountPercentage",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </td>
+                    <td>
+                      <FloatingInput
+                        type="number"
+                        placeholder="VAT (%)"
+                        value={item.vatPercentage}
+                        onChange={(e) =>
+                          handleItemChange(
+                            index,
+                            "vatPercentage",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </td>
+                    <td>
+                      <FloatingInput
+                        type="number"
+                        placeholder="CC Charge (%)"
+                        value={item.ccChargePercentage}
+                        onChange={(e) =>
+                          handleItemChange(
+                            index,
+                            "ccChargePercentage",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </td>
+                    <td>
+                      <FloatingInput
+                        type="number"
+                        placeholder="Other Charge"
+                        value={item.otherCharge}
+                        onChange={(e) =>
+                          handleItemChange(index, "otherCharge", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <FloatingInput
+                        type="number"
+                        placeholder="Total Amount"
+                        value={item.totalAmount}
+                        onChange={(e) =>
+                          handleItemChange(index, "totalAmount", e.target.value)
+                        }
+                      />
+                    </td>
+                    <td>
+                      <FloatingInput
+                        type="text"
+                        placeholder="Remarks"
+                        value={item.remarks}
+                        onChange={(e) =>
+                          handleItemChange(index, "remarks", e.target.value)
+                        }
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+     
         <button
           type="button"
           onClick={handleAddItem}
@@ -509,108 +570,101 @@ const GoodsReceipt = ({ goodReceipt, onClose }) => {
         >
           Add New Row
         </button>
-      </div>
 
-      <div className="GoodsReceiptSettings-total-section">
-        <div className="GoodsReceiptSettings-form-row">
-          <FormInput
-            label="Checked By:"
-            type="text"
-            value={checkedBy}
-            setValue={setCheckedBy}
-          />
+        <div className="GoodsReceiptSettings-total-section">
+          <div className="GoodsReceiptSettings-form-row-date">
+            <FloatingInput
+              label="Checked By:"
+              type="text"
+              value={checkedBy}
+              onChange={(e) => setCheckedBy(e.target.value)}
+            />
+
+            <FloatingInput
+              label="SubTotal:"
+              type="number"
+              value={subTotal}
+              setValue={setSubTotal}
+              readOnly
+            />
+            <FloatingInput
+              label="CC Charge:"
+              type="number"
+              value={ccCharge}
+              onChange={(e) => {
+                const val = Number(e.target.value);
+                if (val >= 0 && val <= subTotal) {
+                  setCcCharge(val);
+                }
+              }}
+            />
+
+            <FloatingInput
+              label="Discount Amount:"
+              type="number"
+              value={discountAmount}
+              onChange={(e) => {
+                const val = Number(e.target.value);
+                if (val >= 0 && val <= subTotal) {
+                  setDiscountAmount(val);
+                }
+              }}
+            />
+          </div>
         </div>
-      </div>
-      <div className="GoodsReceiptSettings-form-calculation">
-        <div className="GoodsReceiptSettings-form-row-total-section">
-          <FormInput
-            label="SubTotal:"
-            type="number"
-            value={subTotal}
-            setValue={setSubTotal}
-            readOnly
-          />
+        <div className="GoodsReceiptSettings-form-calculation">
+          <div className="GoodsReceiptSettings-form-row-date">
+            <FloatingInput
+              label="VAT:"
+              type="number"
+              value={vat}
+              onChange={(e) => {
+                const val = Number(e.target.value);
+                if (val >= 0 && val <= subTotal) {
+                  setVat(val);
+                }
+              }}
+            />
 
-          <FormInput
-            label="CC Charge:"
-            type="number"
-            value={ccCharge}
-            setValue={(val) => {
-              if (val < 0) {
-                return;
-              }
-              if (val > subTotal) {
-                return;
-              }
-              setCcCharge(val);
-            }}
-          />
+            <FloatingInput
+              label="Other Charges:"
+              type="number"
+              value={otherCharges}
+              onChange={(e) => {
+                const val = Number(e.target.value);
+                if (val >= 0) {
+                  setOtherCharges(val);
+                }
+              }}
+            />
 
-          <FormInput
-            label="Discount Amount:"
-            type="number"
-            value={discountAmount}
-            setValue={(val) => {
-              if (val < 0) {
-                return;
-              }
-              if (val > subTotal) {
-                return;
-              }
-              setDiscountAmount(val);
-            }}
-          />
+            <FloatingInput
+              label="Total Amount:"
+              type="number"
+              value={totalAmount}
+              setValue={setTotalAmount}
+              readOnly
+            />
 
-          <FormInput
-            label="VAT:"
-            type="number"
-            value={vat}
-            setValue={(val) => {
-              if (val < 0) {
-                return;
-              }
-              if (val > subTotal) {
-                return;
-              }
-              setVat(val);
-            }}
-          />
-
-          <FormInput
-            label="Other Charges:"
-            type="number"
-            value={otherCharges}
-            setValue={(val) => {
-              if (val < 0) {
-                return;
-              }
-              setOtherCharges(val);
-            }}
-          />
-
-          <FormInput
-            label="Total Amount:"
-            type="number"
-            value={totalAmount}
-            setValue={setTotalAmount}
-            readOnly
-          />
-
-          <FormInput
-            label="Remarks:"
-            type="text"
-            value={remarks}
-            setValue={setRemarks}
-          />
+            <FloatingInput
+              label="Remarks:"
+              type="text"
+              value={remarks}
+              onChange={(e) => setRemarks(e.target.value)}
+            />
+          </div>
         </div>
-      </div>
 
-      <div className="GoodsReceiptSettings-form-submit">
-        <button type="submit" className="GoodsReceiptSettings-add-item-button">
-          Submit
-        </button>
-      </div>
-    </form>
+        <div className="GoodsReceiptSettings-form-submit">
+          <button
+            type="submit"
+            className="GoodsReceiptSettings-add-item-button"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

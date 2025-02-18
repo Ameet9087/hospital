@@ -4,6 +4,7 @@ import './SpecialityGroup.css';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import { API_BASE_URL } from '../../api/api';
 import { FloatingInput, PopupTable } from "../../../FloatingInputs";
+import { toast } from 'react-toastify';
 
 function SpecialityMaster({ onClose }) {
   const [specialityGroup, setSpecialityGroup] = useState("");
@@ -70,12 +71,19 @@ function SpecialityMaster({ onClose }) {
 
     try {
       await axios.post(`${API_BASE_URL}/specialityGroups`, requestData);
-      alert("Speciality Group Added");
+      toast.success("Speciality Group Added");
       onClose();
     } catch (error) {
       console.error("Error submitting data:", error);
-      alert("Failed to submit data");
+      toast.error("Failed to submit data");
     }
+  };
+  const handleReset = () => {
+    setSpecialityGroup("");
+    setMisHeads("");
+    setDescription("");
+    setStatus("Active");
+    setSelectedLocation(null);
   };
 
   return (
@@ -150,8 +158,11 @@ function SpecialityMaster({ onClose }) {
             </label>
           </div>
         </div>
-
-        <button type="submit" className="speciality-group__submit-button">Submit</button>
+<div className="speciality-group__div-button">
+  
+<button type="submit" className="speciality-group__submit-button">Submit</button>
+        <button type="button" className="speciality-group__submit-button" onClick={handleReset}>Reset</button>
+</div>
       </form>
 
       {activePopup && (

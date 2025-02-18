@@ -145,17 +145,7 @@ const AddDepartment = ({ onClose }) => {
       if (response.ok) {
         toast.success("Department added successfully!");
 
-        // Reset form fields
-        setDepartmentCode("");
-        setDepartmentName("");
-        setParentDepartment("");
-        setDepartmentDescription("");
-        setDepartmentNoticeText("");
-        setDepartmentHead("");
-        setRoomNumber("");
-        setIsActive(true);
-        setIsAppointmentApplicable(false);
-
+       
         onClose();
       } else {
         let errorMessage = "Failed to add department.";
@@ -176,6 +166,19 @@ const AddDepartment = ({ onClose }) => {
       setLoading(false);
     }
   };
+  const handleReset = (e) => {
+    e.preventDefault();  // Prevent form submission on reset
+    setDepartmentCode("");
+    setDepartmentName("");
+    setParentDepartment("");
+    setDepartmentDescription("");
+    setDepartmentNoticeText("");
+    setDepartmentHead("");
+    setRoomNumber("");
+    setIsActive("Yes");
+    setIsAppointmentApplicable("No");
+  };
+  
 
   return (
     <div className="update-setting-department-form-container">
@@ -263,10 +266,11 @@ const AddDepartment = ({ onClose }) => {
             onChange={(e) => setRoomNumber(e.target.value)}
           />
         </div>
-        <div className="update-setting-form-group submit-btn">
-          <button type="submit" disabled={loading}>
+        <div >
+          <button className="manage-add-department-btn" type="submit" disabled={loading}>
             {loading ? "Adding..." : "Add"}
           </button>
+          <button className="manage-add-department-btn" onClick={handleReset}>Reset</button>
         </div>
       </form>
     </div>

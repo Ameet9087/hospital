@@ -1,56 +1,40 @@
-.GoodsReceiptSettings-container {
-  width: 92%;
+
+.good-receipt-com{
+  width: 1000px;
   height: 500px;
   margin: 0 auto;
   padding: 2px;
-  background: #f9f9f9;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: scroll;
   scrollbar-width: none;
 }
-/* 
-h2 {
-    text-align: center;
-    margin-bottom: 2px;
-} */
+.GoodsReceiptSettings-container {
+  /* width: 92%; */
+  /* height: 500px;
+  margin: 0 auto;
+  padding: 2px;
+  border-radius: 5px;
+  overflow-y: scroll;
+  scrollbar-width: none; */
+}
+
 
 .GoodsReceiptSettings-form-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 2px;
 }
-
-.GoodsReceiptSettings-form-row > div {
-  flex: 1;
-  margin: 0 5px; /* Add some space between columns */
+.GoodsReceiptSettings-form-row{
+  margin-top: 10px;
 }
 
-.GoodsReceiptSettings-form-group {
-  margin-bottom: 2px;
-}
 
-.GoodsReceiptSettings-form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
 
-.GoodsReceiptSettings-form-group input,
-.GoodsReceiptSettings-form-group select,
-.GoodsReceiptSettings-form-group textarea {
-  width: 100%;
-  padding: 2px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
 
-.GoodsReceiptSettings-items-container {
-  margin-top: 2px;
-}
+
+
 .GoodsReceiptSettings-form-calculation
 {
-  width: 100%;
   display: flex;
   flex-wrap: wrap;
 }
@@ -85,31 +69,7 @@ h2 {
   border: 1px solid var(--button-hover-border-color);
 }
 
-.GoodsReceiptSettings-btn-submit,
-.GoodsReceiptSettings-btn-discard {
-  padding: 5px 10px;
-  margin-top: 2px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  display: inline-block;
-}
-.item-row input[type="text"]
-{
-  width: 100%;
-}
-.item-row input[type="date"]
-{
-  width: 100%;
-}
-.item-row input[type="number"]
-{
-  width: 100%;
-}
-.item-row select
-{
-  width: 100%;
-}
+
 .GoodsReceiptSettings-total-section
 {
   width: 100%;
@@ -122,22 +82,15 @@ h2 {
   flex-direction: column;
   gap: 5px;
 }
-.goods-receipts-form-group input[type="date"]
-{
-  width: 300px;
-  border: 1px solid black;
-}
+
 .GoodsReceiptSettings-form-row-date
 {
-  width: 100%;
-  padding: 5px;
+  margin-top: 10px;
+ gap: 20px;
   display: flex;
-  justify-content: space-between;
+ 
 }
-.goods-receipts-form-group select
-{
-padding: 7px;
-}
+
 .GoodsReceiptSettings-btn-submit {
   background: var(--button-color);
   color: #fff;
@@ -171,3 +124,5 @@ padding: 7px;
     grid-template-columns: repeat(3, 1fr);
   }
 }
+/* ============================================================ */
+

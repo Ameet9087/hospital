@@ -1,3 +1,4 @@
+
 .sSIReturnItem-delete-btn{
   background-color: var(--button-color);
   border: 1px solid var(--button-color);
@@ -178,11 +179,7 @@
   padding: 5px 5px;
 }
 
-.sSIRetunReturnItemBtn-discard-button:hover {
-  border: 1px solid var(--button-hover-border-color);
-  color: var(--button-hover-text-color);
-  background-color: var(--button-hover-background-color);
-}
+
 
 .sSIRetunReturnItemBtn-date-section {
   display: flex;

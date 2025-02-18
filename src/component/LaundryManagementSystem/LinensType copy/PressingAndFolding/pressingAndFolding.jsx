@@ -4,81 +4,8 @@ import { FaSearch } from "react-icons/fa"; // Importing the search icon from Rea
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import axios from "axios"; // Importing axios for making API requests
 import PopupTable from "../../../Admission/PopupTable";
-
-const FloatingInput = ({ label, type = "text", value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  const handleChange = (e) => {
-    setHasValue(e.target.value.length > 0);
-    if (props.onChange) props.onChange(e);
-  };
-
-  return (
-    <div
-      className={`PressingAndFolding-form-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <input
-        type={type}
-        className="PressingAndFolding-form-floating-input"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value.length > 0);
-        }}
-        onChange={handleChange}
-        {...props}
-      />
-      <label className="PressingAndFolding-form-floating-label">{label}</label>
-    </div>
-  );
-};
-
-// FloatingSelect component remains exactly the same
-const FloatingSelect = ({ label, options = [], value, ...props }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!value);
-
-  useEffect(() => {
-    setHasValue(!!value);
-  }, [value]);
-
-  return (
-    <div
-      className={`PressingAndFolding-form-floating-field ${isFocused || hasValue ? "active" : ""
-        }`}
-    >
-      <select
-        className="PressingAndFolding-form-floating-select"
-        value={value}
-        onFocus={() => setIsFocused(true)}
-        onBlur={(e) => {
-          setIsFocused(false);
-          setHasValue(e.target.value !== "");
-        }}
-        onChange={(e) => {
-          setHasValue(e.target.value !== "");
-          if (props.onChange) props.onChange(e);
-        }}
-        {...props}
-      >
-        <option value="">{ }</option>
-        {options.map((option, index) => (
-          <option key={index} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-      <label className="PressingAndFolding-form-floating-label">{label}</label>
-    </div>
-  );
-};
+import { FloatingInput } from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 function PressingAndFolding() {
   const [packageTableRows, setPackageTableRows] = useState([
@@ -136,11 +63,11 @@ function PressingAndFolding() {
         dataToSave
       );
 
-      alert("Data saved successfully!");
+      toast.success("Data saved successfully!");
       console.log(response.data);
     } catch (error) {
       console.error("Error saving data:", error);
-      alert("Error saving data");
+      toast.error ("Error saving data");
     }
   };
 
@@ -149,9 +76,9 @@ function PressingAndFolding() {
       <h2 className="PressingLinenRequirementH2">Linens Pressing And Folding</h2>
       <div className="PressingAndFolding-section">
         <div className="PressingAndFolding-grid">
-          <FloatingInput label="Folding Number" type="text" />
+          <FloatingInput label={"Folding Number"} type="text" />
           <FloatingInput
-            label="Folding Date"
+            label={"Folding Date"}
             type="date"
             name="foldingDate"
             value={FormData.foldingDate}

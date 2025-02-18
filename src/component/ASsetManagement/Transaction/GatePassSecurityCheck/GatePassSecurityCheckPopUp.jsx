@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import "./GatePasssecuritycheckPopUp.css";
 import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../../api/api";
-
+import { FloatingInput,FloatingSelect,FloatingTextarea } from "../../../../FloatingInputs";
+import { toast } from "react-toastify";
 const GatePassSecurityCheckPopUp = ({ bookingId, closePopup }) => {
   const [id, setId] = useState(bookingId || "");
   const [columnWidths, setColumnWidths] = useState({});
@@ -11,8 +12,6 @@ const GatePassSecurityCheckPopUp = ({ bookingId, closePopup }) => {
   const [securityRemarks, setSecurityRemarks] = useState("");
   const tableRef = useRef(null);
   const [parts, setParts] = useState([]);
-
-  // Fetch Gate Pass Out Numbers on Component Mount
   useEffect(() => {
     fetch(`${API_BASE_URL}/security-gatepass-out`)
       .then((response) => response.json())
@@ -43,7 +42,7 @@ const GatePassSecurityCheckPopUp = ({ bookingId, closePopup }) => {
   // Handle Submit to POST API
   const handleSubmit = () => {
     if (!selectedGatePass) {
-      alert("Please select a Gate Pass Out No.");
+      toast.error("Please select a Gate Pass Out No.");
       return;
     }
 
@@ -63,15 +62,15 @@ const GatePassSecurityCheckPopUp = ({ bookingId, closePopup }) => {
     })
       .then((response) => {
         if (response.ok) {
-          alert("Data submitted successfully!");
+          toast.success("Data submitted successfully!");
           closePopup(); // Close the popup on success
         } else {
           throw new Error("Failed to submit data");
         }
       })
       .catch((error) => {
-        console.error("Error submitting data:", error);
-        alert("An error occurred while submitting the data.");
+        toast.error("Error submitting data:", error);
+        toast.error("An error occurred while submitting the data.");
       });
   };
 
@@ -92,20 +91,20 @@ const GatePassSecurityCheckPopUp = ({ bookingId, closePopup }) => {
             </div>
             <div className="MaintenanceChecklistPopUp-surgeryEvents-panel-content">
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Asset No:</label>
-                <input
-                  type="text"
+                <FloatingInput
+                label={"Asset No"}
+                type="text"
                   value={selectedGatePass?.equipmentGatePassOutDTO?.assetNo || id}
-                  readOnly
-                />
+                  readOnly/>
+               
               </div>
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Gate Pass Out Date:</label>
-                <input
+                <FloatingInput
+                label={"Gate Pass Out Date"}
                   type="text"
                   value={selectedGatePass?.equipmentGatePassOutDTO?.gatePassOutDate || id}
-                  readOnly
-                />
+                  readOnly/>
+                
               </div>
             </div>
           </div>
@@ -114,29 +113,30 @@ const GatePassSecurityCheckPopUp = ({ bookingId, closePopup }) => {
           <div className="MaintenanceChecklistPopUp-surgeryEvents-panel operation-details">
             <div className="MaintenanceChecklistPopUp-surgeryEvents-panel-content">
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>
-                  Gate Pass Out No: <span className="GatePassSecurityCheckPopUp-required">*</span>
-                </label>
-                <select onChange={handleGatePassChange}>
-                  <option value="">Select Gate Pass</option>
-                  {gatePassOptions.map((option) => (
-                    <option key={option.securityGatePassId} value={option.securityGatePassId}>
-                      {option.equipmentGatePassOutDTO.gatePassOutId}
-                    </option>
-                  ))}
-                </select>
+              <FloatingSelect
+  label={"Gate Pass Out No"}
+  onChange={handleGatePassChange}
+  options={[
+    { value: "", label: "Select Gate Pass" }, // Default option
+    ...gatePassOptions.map((option) => ({
+      value: option.securityGatePassId,
+      label: option.equipmentGatePassOutDTO.gatePassOutId, // Display gate pass ID
+    })),
+  ]}
+/>              </div>
+              <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
+                <FloatingInput
+                label={"Gate Entry No"}
+                type="text" value={selectedGatePass?.gateEntryNo || id} readOnly/>
+                
               </div>
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Gate Entry No:</label>
-                <input type="text" value={selectedGatePass?.gateEntryNo || id} readOnly />
-              </div>
-              <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>security Remarks:</label>
-                <textarea
-                  placeholder="Enter security remarks"
+                <FloatingTextarea
+                label={"security Remarks"}
+                
                   value={securityRemarks}
-                  onChange={(e) => setSecurityRemarks(e.target.value)}
-                ></textarea>
+                  onChange={(e) => setSecurityRemarks(e.target.value)}/>
+               
               </div>
             </div>
           </div>

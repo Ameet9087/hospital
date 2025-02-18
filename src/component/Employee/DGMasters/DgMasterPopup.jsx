@@ -3,8 +3,8 @@ import "./DgMasterPopup.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
-import { CiSearch } from "react-icons/ci";
 import { API_BASE_URL } from "../../api/api";
+import { toast } from "react-toastify";
 import {
   FloatingInput,
   FloatingSelect,
@@ -12,8 +12,6 @@ import {
   PopupTable,
 } from "../../../FloatingInputs";
 function DgMasterPopup() {
-  const [locations, setLocations] = useState([]);
-  const [selectedLocation, setSelectedLocation] = useState([]);
   const [activePopup, setActivePopup] = useState("");
   const [testDetailsColumnWidths, setTestDetailsColumnWidths] = useState({});
   const [organizationsColumnWidths, setOrganizationsColumnWidths] = useState(
@@ -95,15 +93,6 @@ function DgMasterPopup() {
     });
   };
 
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/location-masters`)
-      .then((response) => response.json())
-      .then((data) => {
-        setLocations(data);
-      })
-      .catch((error) => console.error("Error fetching Locations:", error));
-  }, []);
-
   const handleorgDeleteRow = (setter, id) => {
     if (organizations.length === 1) {
       return;
@@ -136,11 +125,6 @@ function DgMasterPopup() {
       return {
         columns: ["masterId", "name", "classification"],
         data: organisation,
-      };
-    } else if (activePopup === "Location") {
-      return {
-        columns: ["id", "locationName"],
-        data: locations,
       };
     } else {
       return { columns: [], data: [] };
@@ -221,8 +205,6 @@ function DgMasterPopup() {
             : org
         )
       );
-    } else if (activePopup === "Location") {
-      setSelectedLocation(data);
     }
 
     setActivePopup(null);
@@ -247,9 +229,6 @@ function DgMasterPopup() {
       status: status,
       total_cost: totalRate,
       pkgactcost: totalRate,
-      locationMasterDTO: {
-        id: selectedLocation?.id,
-      },
       testDetailsDTO: testDetails.map((detail) => ({
         testId: detail.id,
         testRate: parseFloat(detail.testRate) || 0,
@@ -284,10 +263,10 @@ function DgMasterPopup() {
 
     try {
       const response = await axios.post(`${API_BASE_URL}/dg-packages`, payload);
-      alert("Data saved successfully!");
+      toast.success("Data saved successfully!");
     } catch (error) {
       console.error("Error saving data:", error.response || error.message);
-      alert("Failed to save data. Please try again.");
+      toast.error("Failed to save data. Please try again.");
     }
   };
 
@@ -422,6 +401,49 @@ function DgMasterPopup() {
     0
   );
 
+  const handleReset = () => {
+    setPackageType("");
+    setPackagefor("");
+    setpackageforipdopd("");
+    setStatus("Active");
+    setPackageName("");
+    setPackageCode("");
+    setPaytypes([]);
+    setServiceDetails([]);
+    setSelectedService([]);
+    setSpecialisation([]);
+    setSelectedSpecialisation([]);
+    setSelectedRowId(null);
+    setDoctor([]);
+    setError([]);
+    setOrganisation([]);
+    setSelectOrganisation([]);
+    setforallorganisations("No");
+    setselectedOrganisationOnly("No");
+    setTotalRate(0);
+    setCompanyPackageName("");
+    setCompanyPackageCode("");
+    setfromDate("");
+    settoDate("");
+    setDuration(null);
+    setTestDetails([
+      {
+        id: 1,
+        testName: "",
+        testRate: "",
+        specialisation: "",
+        doctor: "",
+        actRate: "",
+        remarks: "",
+      },
+    ]);
+    setPackageRates([
+      { id: 1, paytype: "", rate: "", discount: "", discAmt: "", actDiscPer: "" },
+    ]);
+    setOrganizations([{ id: 1, orgName: "", type: "", masterId: 0 }]);
+    setActivePopup("");
+  };
+  
   return (
     <div className="dgpkg-EditAndDelete-container">
       <div className="dgpkg-EditAndDelete-section">
@@ -563,15 +585,6 @@ function DgMasterPopup() {
               For All Organisations
             </label>
           </div>
-          <div className="dgpkg-input-with-icon">
-            <FloatingInput
-              label="Location"
-              value={selectedLocation?.locationName}
-            />
-            <div className="dgpkg-magnifier-btn">
-              <CiSearch onClick={() => setActivePopup("Location")} />
-            </div>
-          </div>
         </div>
         <div className="dgpkg-EditAndDelete-section">
           <div className="dgpkg-EditAndDelete-header">Test Details</div>
@@ -613,128 +626,109 @@ function DgMasterPopup() {
                   <td>{row.id}</td>
                   <td>
                     <div className="dg-package-input-with-icon">
-                      <input
-                        type="text"
-                        value={row.testName}
-                        onChange={(e) =>
-                          updateRowValue(
-                            setTestDetails,
-                            row.id,
-                            "testName",
-                            e.target.value
-                          )
-                        }
-                        placeholder="Test Name"
-                        className="table-input-dg"
-                      />
-                      <FaSearch
-                        className="dg-search-icon"
-                        onClick={() => {
-                          setSelectedRowId(row.id); // Set the selected row ID
-                          setActivePopup("services"); // Open the services popup
-                        }}
-                      />
-                    </div>
-                  </td>
-                  <td>
-                    <input
-                      type="number"
-                      value={row.testRate}
+                      <FloatingInput
+                      type="search"
+                      value={row.testName}
                       onChange={(e) =>
                         updateRowValue(
                           setTestDetails,
                           row.id,
-                          "testRate",
+                          "testName",
                           e.target.value
                         )
                       }
-                      placeholder="Test Rate"
-                      className="table-input-dg"
-                    />
+                      onIconClick={() => {
+                        setSelectedRowId(row.id); // Set the selected row ID
+                        setActivePopup("services"); // Open the services popup
+                      }}
+                      />
+                    </div>
+                  </td>
+                  <td>
+                    <FloatingInput
+                    type="number"
+                    value={row.testRate}
+                    onChange={(e) =>
+                      updateRowValue(
+                        setTestDetails,
+                        row.id,
+                        "testRate",
+                        e.target.value
+                      )
+                    }
+                    min={'0'}/>
+                    
                   </td>
                   <td>
                     <div className="dg-package-input-with-icon">
-                      <input
-                        type="text"
-                        value={row.specialisation || ""}
-                        onChange={(e) =>
-                          updateRowValue(
-                            setTestDetails,
-                            row.id,
-                            "specialisation",
-                            e.target.value
-                          )
-                        }
-                        placeholder="Specialisation"
-                        className="table-input-dg"
-                        readOnly
-                      />
-                      <FaSearch
-                        className="dg-search-icon"
-                        onClick={() => {
-                          setSelectedRowId(row.id);
-                          setActivePopup("specialisation");
-                        }}
-                      />
+                      <FloatingInput
+                      type="search"
+                      value={row.specialisation || ""}
+                      onChange={(e) =>
+                        updateRowValue(
+                          setTestDetails,
+                          row.id,
+                          "specialisation",
+                          e.target.value
+                        )
+                      }
+                      onIconClick={() => {
+                        setSelectedRowId(row.id);
+                        setActivePopup("specialisation");
+                      }}
+                      readOnly/>
+                      
                     </div>
                   </td>
                   <td>
                     <div className="dg-package-input-with-icon">
-                      <input
-                        type="text"
-                        value={row.doctor || ""}
-                        onChange={(e) =>
-                          updateRowValue(
-                            setTestDetails,
-                            row.id,
-                            "doctor",
-                            e.target.value
-                          )
-                        }
-                        placeholder="Doctor"
-                        className="table-input-dg"
-                        readOnly
-                      />
-                      <FaSearch
-                        className="dg-search-icon"
-                        onClick={() => {
-                          setSelectedRowId(row.id);
-                          setActivePopup("doctor");
-                        }}
-                      />
+                      <FloatingInput
+                       type="search"
+                       value={row.doctor || ""}
+                       onChange={(e) =>
+                         updateRowValue(
+                           setTestDetails,
+                           row.id,
+                           "doctor",
+                           e.target.value
+                         )
+                       }
+                       readOnly
+                       onIconClick={() => {
+                        setSelectedRowId(row.id);
+                        setActivePopup("doctor");
+                      }}/>
+                     
                     </div>
                   </td>
                   <td>
-                    <input
-                      type="text"
-                      value={row.actRate || ""}
-                      onChange={(e) =>
-                        updateRowValue(
-                          setTestDetails,
-                          row.id,
-                          "actRate",
-                          e.target.value
-                        )
-                      }
-                      placeholder="Actual Rate"
-                      className="table-input-dg"
-                    />
+                    <FloatingInput
+                     type="text"
+                     value={row.actRate || ""}
+                     onChange={(e) =>
+                       updateRowValue(
+                         setTestDetails,
+                         row.id,
+                         "actRate",
+                         e.target.value
+                       )
+                     }
+                     restrictions={{number:true}} />
+                    
                   </td>
                   <td>
-                    <input
-                      type="text"
-                      value={row.remarks || ""}
-                      onChange={(e) =>
-                        updateRowValue(
-                          setTestDetails,
-                          row.id,
-                          "remarks",
-                          e.target.value
-                        )
-                      }
-                      placeholder="Remarks"
-                      className="table-input-dg"
-                    />
+                    <FloatingInput
+                     type="text"
+                     value={row.remarks || ""}
+                     onChange={(e) =>
+                       updateRowValue(
+                         setTestDetails,
+                         row.id,
+                         "remarks",
+                         e.target.value
+                       )
+                     }/>
+                   
                   </td>
                   <td>
                     <button
@@ -960,6 +954,9 @@ function DgMasterPopup() {
       <div className="dg-package-action-buttons">
         <button className="dg-package-btn-blue" onClick={handleSubmit}>
           Submit
+        </button>
+        <button className="dg-package-btn-blue" onClick={handleReset}>
+          Reset
         </button>
       </div>
     </div>

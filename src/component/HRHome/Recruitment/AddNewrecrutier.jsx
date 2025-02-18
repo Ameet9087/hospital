@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import "./AddNewrecrutier.css"
-
+import { FloatingInput,FloatingSelect,FloatingTextarea } from '../../../FloatingInputs';
 const AddNewrecrutier = ({ onClose, onSubmit }) => {
-    const [formData, setFormData] = useState({
+    const initialFormData = {
         name: '',
         email: '',
         mobile: '',
@@ -16,7 +16,9 @@ const AddNewrecrutier = ({ onClose, onSubmit }) => {
         previousRole: '',
         status: '',
         remark: ''
-    });
+    };
+
+    const [formData, setFormData] = useState(initialFormData);
 
     // Handle input changes
     const handleInputChange = (e) => {
@@ -26,11 +28,13 @@ const AddNewrecrutier = ({ onClose, onSubmit }) => {
             [name]: value,
         });
     };
-
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
         onSubmit(formData);
+    };
+    const handleReset = () => {
+        setFormData(initialFormData);
     };
 
     return (
@@ -55,146 +59,140 @@ const AddNewrecrutier = ({ onClose, onSubmit }) => {
                                 required
                             />
                         </div> */}
-                         <div className="addNewrecrutier-form-group">
-                            <label>Department<span>*</span></label>
-                            <input
-                                type="text"
-                                name="department"
-                                value={formData.department}
-                                onChange={handleInputChange}
-                                placeholder='Department'
-                                required
-                            />
-                        </div>
-                        <div className="addNewrecrutier-form-group">
-                            <label>Recruiter Name<span>*</span></label>
-                            <input
-                                type="text"
+                       
+                            <FloatingInput
+                            label={"Department *"}
+                            type="text"
+                            name="department"
+                            value={formData.department}
+                            onChange={handleInputChange}
+                            placeholder='Department'
+                            required/>
+                            
+                     
+                            <FloatingInput
+                            label={"Recruiter Name *"}
+                            type="text"
                                 name="name"
                                 value={formData.name}
                                 onChange={handleInputChange}
                                 placeholder="Recruiter Name"
-                                required
-                            />
-                        </div>
+                                required/>
+                            
+                      
                     </div>
 
                     <div className="addNewrecrutier-form-group-1row">
-                        <div className="addNewrecrutier-form-group">
-                            <label>Email Address</label>
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                placeholder="Email Address"
-                            />
-                        </div>
-                        <div className="addNewrecrutier-form-group">
-                            <label>Contact Number<span>*</span></label>
-                            <input
-                                type="text"
+                       
+                            <FloatingInput
+                            label={"Email Address"}
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            placeholder="Email Address"/>
+                            
+                           
+                       
+                            <FloatingInput
+                            label={"Contact Number *"}
+                            type="text"
                                 name="mobile"
                                 value={formData.mobile}
                                 onChange={handleInputChange}
                                 placeholder="Contact Number"
-                                required
-                            />
-                        </div>
+                                required/>
+                            
+                      
                     </div>
 
                     <div className="addNewrecrutier-form-group-1row">
-                        <div className="addNewrecrutier-form-group">
-                            <label>Date of Joining</label>
-                            <input
-                                type="date"
-                                name="dateOfJoining"
-                                value={formData.dateOfJoining}
-                                onChange={handleInputChange}
-                                placeholder="Date of Joining"
-                            />
-                        </div>
-                        <div className="addNewrecrutier-form-group">
-                            <label>Designation</label>
-                            <input
-                                type="text"
-                                name="designation"
-                                value={formData.designation}
-                                onChange={handleInputChange}
-                                placeholder="Designation"
-                            />
-                        </div>
+                       
+                            <FloatingInput
+                            label={"Date of Joining"}
+                            type="date"
+                            name="dateOfJoining"
+                            value={formData.dateOfJoining}
+                            onChange={handleInputChange}
+                            placeholder="Date of Joining"/>
+                            
+                       
+                            <FloatingInput
+                            label={"Designation"}
+                            type="text"
+                            name="designation"
+                            value={formData.designation}
+                            onChange={handleInputChange}
+                            placeholder="Designation"/>
+                      
                        
                     </div>
 
                     <div className="addNewrecrutier-form-group-1row">
                        
-                        <div className="addNewrecrutier-form-group">
-                            <label>Employee Type<span>*</span></label>
-                            <input
-                                type="text"
-                                name="typeOfEmployee"
-                                value={formData.typeOfEmployee}
-                                onChange={handleInputChange}
-                                placeholder='Employee Type'
-                                required
-                            />
-                        </div>
-                        <div className="addNewrecrutier-form-group">
-                            <label>Previous Role<span>*</span></label>
-                            <input
-                                type="text"
+                      
+                            <FloatingInput
+                            label={"Employee Type *"}
+                            type="text"
+                            name="typeOfEmployee"
+                            value={formData.typeOfEmployee}
+                            onChange={handleInputChange}
+                            placeholder='Employee Type'
+                            required/>
+                            
+                      
+                            <FloatingInput
+                            label={"Previous Role *"}
+                            type="text"
                                 name="previousRole"
                                 value={formData.previousRole}
                                 onChange={handleInputChange}
                                 placeholder='Previous Role'
-                                required
-                            />
-                        </div>
+                                required/>
+                            
+                     
                     </div>
 
                     <div className="addNewrecrutier-form-group-1row">
-                        <div className="addNewrecrutier-form-group">
-                            <label>Assigned Hiring Managers</label>
-                            <input
-                                type="text"
-                                name="hiredBy"
-                                value={formData.hiredBy}
-                                onChange={handleInputChange}
-                                placeholder="Assigned Hiring Managers"
-                            />
-                        </div>
-                        <div className="addNewrecrutier-form-group">
-                            <label>Remarks<span>*</span></label>
-                            <input
-                                type="text"
+                        
+                            <FloatingInput
+                            label={"Assigned Hiring Managers"}
+                            type="text"
+                            name="hiredBy"
+                            value={formData.hiredBy}
+                            onChange={handleInputChange}
+                            placeholder="Assigned Hiring Managers"/>
+                      
+                            <FloatingInput
+                            label={"Remarks"}
+                             type="text"
                                 name="remark"
                                 value={formData.remark}
                                 onChange={handleInputChange}
                                 placeholder='Remarks'
-                                required
-                            />
-                        </div>
+                                required/>
+                            
+                  
                        
                     </div>
 
-                    <div className="addNewrecrutier-form-group-1row">
-                        <div className="addNewrecrutier-form-group">
-                            <label>Status</label>
-                            <input
-                                type="text"
-                                name="status"
-                                value={formData.status}
-                                onChange={handleInputChange}
-                                placeholder="Status"
-                            />
-                        </div>
+                 
+                    
+                           
                        
-                    </div>
+             
                 </div>
 
+                <FloatingInput
+                            label={"Status"}
+                            type="text"
+                            name="status"
+                            value={formData.status}
+                            onChange={handleInputChange}
+                            placeholder="Status"/>
                 <div className="addNewrecrutier-form-actions">
                     <button type="submit" className="addNewrecrutier-add-btn">Add</button>
+                    <button type="button" className="addNewrecrutier-add-btn" onClick={handleReset}>Reset</button>
                 </div>
             </form>
         </div>

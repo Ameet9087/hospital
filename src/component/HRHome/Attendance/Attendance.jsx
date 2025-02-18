@@ -5,7 +5,7 @@ import './Attendance.css';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import useCustomAlert from '../../../alerts/useCustomAlert';
 import { API_BASE_URL } from '../../api/api';
-
+import { FloatingInput } from '../../../FloatingInputs';
 function Attendance() {
     const [employees, setEmployees] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -147,13 +147,14 @@ function Attendance() {
             <h2>Employee Attendance</h2>
             <div className="attendance-search-N-results">
                 <div className="attendance-searchAndActions">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="attendance-searchInput"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+                    <FloatingInput
+                    label={"Search"}
+                    type="text"
+                    placeholder="Search..."
+                   
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}/>
+                   
                 </div>
                 <div className="attendance-results-info">
                     Showing {currentEmployees.length} / {filteredEmployees.length} results
@@ -237,24 +238,7 @@ function Attendance() {
                 </table>
             </div>
 
-            <div className="pagination">
-                <button onClick={prevPage} className={currentPage === 1 ? 'disabled' : ''} disabled={currentPage === 1}>
-                    Previous
-                </button>
-                {[...Array(totalPages)].map((_, index) => (
-                    <button
-                        key={index + 1}
-                        onClick={() => paginate(index + 1)}
-                        className={currentPage === index + 1 ? 'active' : ''}
-                        disabled={currentPage === index + 1}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-                <button onClick={nextPage} className={currentPage === totalPages ? 'disabled' : ''} disabled={currentPage === totalPages}>
-                    Next
-                </button>
-            </div>
+            
         </div>
     );
 }

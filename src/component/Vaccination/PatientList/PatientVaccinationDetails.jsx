@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import "./PatientVaccinationDetail.css";
 import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import { API_BASE_URL } from "../../api/api";
+import FloatingInput from "../../../FloatingInputs/FloatingInput";
+import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import { toast } from "react-toastify";
 
 const vaccineOptions = [
   "BCG",
@@ -103,10 +106,12 @@ const PatientVaccinationDetails = ({ patient, onClose }) => {
       );
       if (response.ok) {
         console.log("Vaccination record added successfully.");
+        toast.success("Vaccination record added successfully.");
         onClose();
         // Optionally, you can refresh the vaccine list here
       } else {
         console.error("Failed to add vaccination record.");
+        toast.error("Failed to add vaccination record.");
       }
     } catch (error) {
       console.error("Error adding vaccination record:", error);
@@ -172,6 +177,38 @@ const PatientVaccinationDetails = ({ patient, onClose }) => {
   const filteredVaccines = vaccines.filter((vaccine) =>
     vaccine.vaccineName.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <h4>Vaccination Report</h4>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
+  };
 
   return (
     <div className="PatientVaccinationDetail-overlay">
@@ -187,7 +224,7 @@ const PatientVaccinationDetails = ({ patient, onClose }) => {
           <span>
             <i className="icon-user"></i> Name: {patient?.babyName}
           </span>
-          <span>Hospital #: {patient?.hospitalNo}</span>
+          {/* <span>Hospital #: {patient?.hospitalNo}</span> */}
           <span>
             <i className="icon-user"></i> Age/Sex: {patient?.age}{" "}
             {patient?.ageUnit} / {patient?.gender}
@@ -211,59 +248,60 @@ const PatientVaccinationDetails = ({ patient, onClose }) => {
 
         <div className="PatientVaccinationDetail-newVaccine">
           <div className="PatientVaccinationDetail-formGroup">
-            <label>Vaccine Date</label>
-            <input
-              type="date"
+            <FloatingInput
+            label={"Vaccine Date"}
+            type="date"
               name="vaccineDate"
               value={formData?.vaccineDate}
-              onChange={handleChange}
-            />
-            <input
-              type="time"
+              onChange={handleChange}/>
+           
+           <FloatingInput
+           label={"Time"}
+           type="time"
               name="vaccineTime"
               value={formData?.vaccineTime}
-              onChange={handleChange}
-            />
+              onChange={handleChange}/>
+           
           </div>
           <div className="PatientVaccinationDetail-formGroup">
-            <label>Vaccine Name</label>
-            <select
-              name="vaccineName"
-              value={formData?.vaccineName}
-              onChange={handleChange}
-            >
-              <option value="">--Vaccine--</option>
-              {vaccineOptions.map((vaccine) => (
-                <option key={vaccine} value={vaccine}>
-                  {vaccine}
-                </option>
-              ))}
-            </select>
+          <FloatingSelect
+  label={"Vaccine Name"}
+  name="vaccineName"
+  value={formData?.vaccineName}
+  onChange={handleChange}
+  options={[
+    { value: "", label: "--Vaccine--" },
+    ...vaccineOptions.map((vaccine) => ({
+      value: vaccine,
+      label: vaccine,
+    })),
+  ]}
+/>
           </div>
           <div className="PatientVaccinationDetail-formGroup">
-            <label>Vaccine Dose</label>
-            <select
-              name="vaccineDose"
-              value={formData?.vaccineDose}
-              onChange={handleChange}
-            >
-              <option value="">--Dose--</option>
-              {doses.map((dose) => (
-                <option key={dose} value={dose}>
-                  {dose}
-                </option>
-              ))}
-            </select>
+          <FloatingSelect
+  label={"Vaccine Dose"}
+  name="vaccineDose"
+  value={formData?.vaccineDose}
+  onChange={handleChange}
+  options={[
+    { value: "", label: "--Dose--" },
+    ...doses.map((dose) => ({
+      value: dose,
+      label: dose,
+    })),
+  ]}
+/>
           </div>
           <div className="PatientVaccinationDetail-formGroup">
-            <label>Remarks</label>
-            <input
+            <FloatingInput
+            label={"Remarks"}
               type="text"
               name="remarks"
               placeholder="Remarks"
               value={formData.remarks}
-              onChange={handleChange}
-            />
+              onChange={handleChange}/>
+            
           </div>
           {isEditing ? (
             <div>
@@ -306,7 +344,7 @@ const PatientVaccinationDetails = ({ patient, onClose }) => {
               <span className="patientList-results-count">
                 Showing {filteredVaccines.length} / {vaccines.length} results{" "}
               </span>
-              <button className="patientList-print-btn">Print</button>
+              <button className="patientList-print-btn" onClick={handlePrint}>Print</button>
             </div>
           </div>
           <table className="patientList-table" ref={tableRef}>

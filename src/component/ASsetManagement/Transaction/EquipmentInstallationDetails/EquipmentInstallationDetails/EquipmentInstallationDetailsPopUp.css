@@ -40,6 +40,7 @@
   flex-wrap: wrap;
   gap: 20px;
   justify-content: space-between;
+  padding: 5px;
 }
 
 .EquipmentInstallationDetailsPopUp-left-panel,
@@ -48,35 +49,25 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  padding: 5px;
 }
 
 .EquipmentInstallationDetailsPopUp-form-group {
   display: flex;
   align-items: center;
   gap: 10px; /* Adjust gap between label and input */
+  padding: 5px;
 }
 
-.EquipmentInstallationDetailsPopUp-form-group label {
-  margin-bottom: 15px; /* Remove bottom margin */
 
-  width: 150px; /* Set a fixed width for labels */
-}
 
-.EquipmentInstallationDetailsPopUp-form-group input,
-.EquipmentInstallationDetailsPopUp-form-group select,
-.EquipmentInstallationDetailsPopUp-form-group textarea {
-  padding: var(--input-box-padding);
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: var(--font-size);
-  width: 100%; /* Allow inputs to take available width */
-}
 
-textarea {
-  resize: none;
-}
+<<<<<<< HEAD
+=======
+
 
 /* Button Styling */
+>>>>>>> 365916e3b7fe72f327136e0be755637322cc2759
 .EquipmentInstallationDetailsPopUp-form-actions {
   display: flex;
   justify-content: flex-end;
@@ -92,6 +83,7 @@ textarea {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  border: 1px solid var(--button-bg-color);
 }
 
 .EquipmentInstallationDetailsPopUp-add-btn {
@@ -110,4 +102,5 @@ textarea {
 
 .EquipmentInstallationDetailsPopUp-close-btn:hover {
   background-color: var(--button-hover-border-color);
+  color: white;
 }

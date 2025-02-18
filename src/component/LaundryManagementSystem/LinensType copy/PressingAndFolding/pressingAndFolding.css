@@ -98,75 +98,10 @@
     background-color: white;
     /* margin-top: 10px; */
   }
-  .PressingAndFolding-floating-field {
-    position: relative;
-  }
-  .PressingAndFolding-floating-input,
-  .PressingAndFolding-floating-select {
-    padding: 5px 12px;
-    border: 1px solid #00897b;
-    border-radius: 4px;
-    font-size: var(--font-size);
-    background: white;
-    transition: all 0.2s ease;
-  }
-  
-  .PressingAndFolding-form-floating-field {
-    position: relative;
-  }
-  .PressingAndFolding-search-field {
-    position: relative;
-  }
-  
-  .PressingAndFolding-floating-input:focus,
-  .PressingAndFolding-floating-select:focus {
-    outline: none;
-    border-color: #00897b;
-    box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
-  }
-  /* .PressingAndFolding-services-section {
-    background: white;
-    border: 1px solid #ccc;
-    margin-bottom: 5px;
-  } */
-  
-  .PressingAndFolding-form-floating-input,
-  .PressingAndFolding-form-floating-select {
-    padding: 5px 12px;
-    border: 1px solid #00897b;
-    border-radius: 4px;
-    font-size: 14px;
-    background: white;
-    transition: all 0.2s ease;
-    color: #00897b;
-  }
-  .PressingAndFolding-form-floating-input{
-    width: 92%;
-  }
-  .PressingAndFolding-form-floating-select {
-    width: 100%;
-  }
-  .PressingAndFolding-form-floating-label {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: white;
-    padding: 0 4px;
-    color: #666;
-    pointer-events: none;
-    transition: all 0.2s ease;
-    font-size: var(--font-size);
-    
-  }
-  .PressingAndFolding-form-floating-field.active .PressingAndFolding-form-floating-label {
-    top: 0;
-    font-size: 12px;
-    color: #00897b;
-    border-color: #00897b ;
-  }
-  .PressingAndFolding-form-floating-field.active .PressingAndFolding-form-floating-input,
-  .PressingAndFolding-form-floating-field.active .PressingAndFolding-form-floating-select {
-    border-color: #00897b;
-  }
+ 
 
+  
+ 
+
+ 
+ 

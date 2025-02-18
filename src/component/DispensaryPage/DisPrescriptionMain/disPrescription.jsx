@@ -1,3 +1,4 @@
+
 // export default DisPrescription;
 import React, { useState, useEffect, useRef } from "react";
 import DatePicker from "react-datepicker";
@@ -17,6 +18,8 @@ import {
   FloatingTextarea,
 } from "../../../FloatingInputs";
 
+import CustomModal from '../../../CustomModel/CustomModal';
+import { useFilter } from "../../ShortCuts/useFilter";
 const DisPrescription = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -28,6 +31,10 @@ const DisPrescription = () => {
   const [showModal, setShowModal] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
+  const [groupedPrescriptions, setGroupedPrescriptions] = useState({});
+
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
 
   useEffect(() => {
     if (!showModal) {
@@ -47,6 +54,28 @@ const DisPrescription = () => {
       setLoading(false);
     }
   };
+
+  const filterByDate = (data) => {
+    if (!dateFrom || !dateTo) return data; // If no dates, return all data
+    return data.filter((item) => {
+      const consumptionDate = new Date(item.medicationDate);
+      const startDate = new Date(dateFrom);
+      const endDate = new Date(dateTo);
+      return consumptionDate >= startDate && consumptionDate <= endDate;
+    });
+  };
+
+  // const filteredPrescriptions = filterByDate(
+  //   prescriptions.filter(prescription => {
+  //     const searchStr = searchTerm.toLowerCase();
+  //     const patient = prescription.newPatientVisitDTO || {};
+  //     return (
+  //       prescription.medicationName?.toLowerCase().includes(searchStr) ||
+  //       patient.firstName?.toLowerCase().includes(searchStr) ||
+  //       patient.lastName?.toLowerCase().includes(searchStr)
+  //     );
+  //   })
+  // );
 
   const filteredPrescriptions = prescriptions.filter((prescription) => {
     const searchStr = searchTerm.toLowerCase();
@@ -77,50 +106,45 @@ const DisPrescription = () => {
     setSelectedPrescription(null);
   };
 
-  const printList = () => {
-    if (tableRef.current) {
-      const printContents = tableRef.current.innerHTML;
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
-      // Create an iframe element
-      const iframe = document.createElement("iframe");
-      iframe.style.position = "absolute";
-      iframe.style.width = "0";
-      iframe.style.height = "0";
-      iframe.style.border = "none";
 
-      // Append the iframe to the body
-      document.body.appendChild(iframe);
 
-      // Write the table content into the iframe's document
-      const doc = iframe.contentWindow.document;
-      doc.open();
-      doc.write(`
-        <html>
+  const handlePrint = () => {
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
         <head>
           <title>Print Table</title>
+          <h4>Lit Of Precription</h4>
           <style>
-            table { width: 100%; border-collapse: collapse; }
-            th, td { border: 1px solid black; padding: 8px; text-align: left; }
-            th { background-color: #f2f2f2; }
-            button, .admit-actions, th:nth-child(10), td:nth-child(10) {
-              display: none; /* Hide action buttons and Action column */
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+
             }
           </style>
         </head>
         <body>
-          <table>
-            ${printContents}
-          </table>
+          ${printContent.outerHTML}
         </body>
-        </html>
-      `);
-      doc.close();
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
 
-      iframe.contentWindow.focus();
-      iframe.contentWindow.print();
-
-      document.body.removeChild(iframe);
-    }
   };
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
@@ -128,15 +152,10 @@ const DisPrescription = () => {
     XLSX.utils.book_append_sheet(wb, ws, "DisPrrescription"); // Appends worksheet to workbook
     XLSX.writeFile(wb, "DisPrrescription.xlsx"); // Downloads the Excel file
   };
+  const filteredPrescription = useFilter(filteredPrescriptions, searchTerm);
+  const filteredItems = useFilter(filterByDate(prescriptions), searchTerm);
 
-  const groupedPrescriptions = prescriptions.reduce((acc, prescription) => {
-    const patientId = prescription.newPatientVisitDTO?.outPatientId;
-    if (!acc[patientId]) {
-      acc[patientId] = [];
-    }
-    acc[patientId].push(prescription);
-    return acc;
-  }, {});
+
 
   const filteredGroups = Object.keys(groupedPrescriptions).filter(
     (patientId) => {
@@ -156,6 +175,7 @@ const DisPrescription = () => {
   return (
     <div className="disPrescription-list-requisition">
       <div className="disPrescription-controls">
+
         <FloatingInput
           label="From *"
           type="date"
@@ -171,6 +191,7 @@ const DisPrescription = () => {
       </div>
       <div className="disPrescription-search-N-result">
         <div className="disPrescription-search-bar">
+
           
           <FloatingInput
           label="Search"
@@ -201,15 +222,7 @@ const DisPrescription = () => {
         <table ref={tableRef}>
           <thead>
             <tr>
-              {[
-                "Patient ID",
-                "Patient Name",
-                "Medicine Name",
-
-                "Date",
-                "Status",
-                "Actions",
-              ].map((header, index) => (
+              {["Patient ID", "Patient Name", "Medicine Name", "Date", "Status", "Actions"].map((header, index) => (
                 <th
                   key={index}
                   style={{ width: columnWidths[index] }}
@@ -230,20 +243,19 @@ const DisPrescription = () => {
             </tr>
           </thead>
           <tbody className="disPrescription-requisition-tableBody">
-            {filteredPrescriptions.map((prescription, index) => {
+            {filteredItems.map((prescription, index) => {
               const patient = prescription.newPatientVisitDTO || {};
+
               const patientName = `${patient.firstName || ""} ${
                 patient.lastName || ""
               }`.trim();
               return (
-                <tr key={index}>
+                <tr key={index}>  
                   <td>{patient.outPatientId || "Unknown"}</td>
                   <td>{patient?.patient?.firstName || "Unknown"}</td>
                   <td>{prescription.medicationName || "Unknown"}</td>
                   <td>{prescription.medicationDate || "Unknown"}</td>
                   <td>{prescription.status}</td>
-                  {/* <td>{prescription.dose || 'Unknown'}</td> */}
-                  {/* <td>{prescription.frequency || 'Unknown'}</td> */}
                   <td className="disPrescription-action-column">
                     <button
                       className="doctor-blocking-table-btn"
@@ -259,16 +271,13 @@ const DisPrescription = () => {
         </table>
       </div>
 
-      {showModal && selectedPrescription && (
-        <div className="disPrescription-modal-overlay">
-          <div className="disPrescription-modal-content">
-            <PrescriptionDetails
-              prescription={selectedPrescription}
-              onClose={handleCloseDetails}
-            />
-          </div>
-        </div>
-      )}
+     
+  <CustomModal isOpen={showModal} onClose={handleCloseDetails}>
+    <PrescriptionDetails prescription={selectedPrescription} onClose={handleCloseDetails} />
+  </CustomModal>
+
+
+
     </div>
   );
 };

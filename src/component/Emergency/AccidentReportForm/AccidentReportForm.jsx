@@ -117,6 +117,24 @@ const AccidentReportForm = ({ onClose }) => {
     },
   });
 
+  useEffect(() => {
+    if (erPatient) {
+      setFormData((prevData) => ({
+        ...prevData,
+        patientName: `${erPatient.firstName || ""} ${
+          erPatient.middleName || ""
+        } ${erPatient.lastName || ""}`.trim(),
+        contactNumber: erPatient.contactNumber || "",
+        dateOfBirth: erPatient.dob || "",
+        gender: erPatient.sex || "",
+        erNo: erPatient.erInitialAssessmentId || "",
+        doctorName: erPatient?.addDoctor[0]?.doctorName || "",
+        admissionDate: erPatient?.date || "",
+        relativeName: erPatient?.relativeName || "",
+      }));
+    }
+  }, [erPatient]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -184,7 +202,7 @@ const AccidentReportForm = ({ onClose }) => {
   const fetchMrno = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.1.46:4096/api/ip-admissions`
+        `${API_BASE_URL}/ip-admissions`
       );
       setMrNoData(response.data);
       console.log(data);
@@ -260,7 +278,6 @@ const AccidentReportForm = ({ onClose }) => {
           </div>
         </div>
         <div className="AccidentReportForm-section">
-          <div className="AccidentReportForm-header">CPR Reviewed </div>
           <div className="AccidentReportForm-grid">
             <FloatingInput
               label="ER Number"

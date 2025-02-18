@@ -3,6 +3,8 @@ import "./AMCTrackerPopUp.css";
 import { FaSearch } from "react-icons/fa";
 import PopupTable from '../../../Admission/PopupTable';
 import { API_BASE_URL } from "../../../api/api";
+import { FloatingInput, FloatingSelect } from '../../../../FloatingInputs';
+import {toast}  from "react-toastify";
 
 const AMCTrackerPopUp = ({ bookingId }) => {
   const [id, setId] = useState(bookingId || "");
@@ -18,7 +20,6 @@ const AMCTrackerPopUp = ({ bookingId }) => {
   const [activePopup, setActivePopup] = useState("")
 
 
-  const SearchIcon = FaSearch;
 
 
 
@@ -178,10 +179,10 @@ const AMCTrackerPopUp = ({ bookingId }) => {
       }
 
       const result = await response.json();
-      alert("Data saved successfully!");
+      toast.success("Data saved successfully!");
     } catch (error) {
-      console.error("Error saving data:", error);
-      alert("Failed to save data. Please try again.");
+      toast.error("Error saving data:", error);
+      
     }
   };
 
@@ -197,15 +198,17 @@ const AMCTrackerPopUp = ({ bookingId }) => {
           <div className="AMCTrackerPopUp-surgeryEvents-panel dis-templates">
             <div className="AMCTrackerPopUp-surgeryEvents-panel-content">
               <div className="AMCTrackerPopUp-surgeryEvents-form-row">
-                <label>Contract Type:</label>
-                <select name="contractType" value={formData.contractType} onChange={handleInputChange}>
-                  <option value="">Select</option>
-                  <option value="Warranty">Warranty</option>
-                  <option value="AMC">AMC</option>
-                  <option value="CMC">CMC</option>
-                  <option value="On Call">On Call</option>
-                  <option value="All">All</option>
-                </select>
+                <FloatingSelect
+                label={"Contract Type"}
+                name="contractType" value={formData.contractType} onChange={handleInputChange}
+                options={[{value:"Warranty",label:"Warranty"},
+                  {value:"AMC",label:"AMC"},
+                  {value:"CMC",label:"CMC"},
+                  {value:"On Call" , label:"On Call"},
+                  {value:"All" , label:"All"}
+                ]}
+                />
+                
               </div>
             </div>
           </div>
@@ -220,46 +223,60 @@ const AMCTrackerPopUp = ({ bookingId }) => {
           <div className="AMCTrackerPopUp-surgeryEvents-panel operation-details">
             <div className="AMCTrackerPopUp-surgeryEvents-panel-content">
               <div className="AMCTrackerPopUp-surgeryEvents-form-row">
-                <label>Date Period:</label>
-                <input
-                  type="date"
+                <FloatingInput
+                label={"Date Period"}
+                type="date"
                   name="datePeriod"
                   value={formData.datePeriod}
-                  onChange={handleInputChange}
-                  placeholder="e.g., 2024-2025"
-                />
+                  onChange={handleInputChange}/>
+                
               </div>
 
               <div className="AMCTrackerPopUp-surgeryEvents-form-row">
-                <label>Category:</label>
-                <input type="text" value={selectedCategory?.assetCategory} placeholder="Search..." />
-                <SearchIcon onClick={() => setActivePopup("category")} className="input-icon" size={18} />
+              <FloatingInput
+                label={"Category"}
+                type="search" value={selectedCategory?.assetCategory}
+                onIconClick={() => setActivePopup("category")}/>
               </div>
             </div>
           </div>
           <div className="AMCTrackerPopUp-surgeryEvents-panel operation-details">
             <div className="AMCTrackerPopUp-surgeryEvents-panel-content">
               <div className="AMCTrackerPopUp-surgeryEvents-form-row">
-                <label>Supplier:</label>
-                <input type="text" value={selectedVendor?.vendorName} placeholder="Search..." />
-                <SearchIcon onClick={() => setActivePopup("supplier")} className="input-icon" size={18} />
+              <FloatingInput
+              label={"Supplier"}
+              type="search" value={selectedVendor?.vendorName}
+              onIconClick={() => setActivePopup("supplier")}
+              />
+                
               </div>
               <div className="AMCTrackerPopUp-surgeryEvents-form-row">
-                <label>Equipment Name:</label>
-                <input type="text" value={selectedEquipment?.equipmentName} placeholder="Search..." />
-                <SearchIcon onClick={() => setActivePopup("equipment")} className="input-icon" size={18} />
+                <FloatingInput
+                label={"Equipment Name"}
+                type="text" value={selectedEquipment?.equipmentName}
+                onIconClick={() => setActivePopup("equipment")}
+                />
+                
               </div>
             </div>
           </div>
           <div className="AMCTrackerPopUp-surgeryEvents-panel operation-details">
             <div className="AMCTrackerPopUp-surgeryEvents-panel-content">
               <div className="AMCTrackerPopUp-surgeryEvents-form-row">
-                <label>From Date:</label>
-                <input type="date" name="fromDate" value={formData.fromDate} onChange={handleInputChange} />
+                <FloatingInput
+                label={"From Date"}
+                type="date" name="fromDate" 
+                value={formData.fromDate} 
+                onChange={handleInputChange}
+                />
+               
               </div>
               <div className="AMCTrackerPopUp-surgeryEvents-form-row">
-                <label>To Date:</label>
-                <input type="date" name="toDate" value={formData.toDate} onChange={handleInputChange} />
+                <FloatingInput
+                label={"To Date"}
+                type="date" name="toDate" value={formData.toDate} onChange={handleInputChange}
+                />
+               
               </div>
             </div>
           </div>

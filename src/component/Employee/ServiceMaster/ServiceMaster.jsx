@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, lazy } from "react";
 import axios from "axios"; // Make sure to install axios: npm install axios
 import "./ServiceMaster.css";
 import ServiceRate from "./ServiceRate";
 import OperationOrProcedureRate from "./OperationOrProcedureRate";
 import { API_BASE_URL } from "../../api/api";
 import { PopupTable } from "../../../FloatingInputs";
+import {FloatingInput,FloatingSelect,FloatingTextarea} from "../../../FloatingInputs";
+import { toast } from "react-toastify";
 
 
 
@@ -192,7 +194,7 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
       );
 
       console.log("Save successful:", response.data);
-      alert("Service details saved successfully!");
+      toast.success("Service details saved successfully!");
 
       onClose();
       refreshTable();
@@ -201,13 +203,64 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
         "Error saving service details:",
         error.response?.data || error.message
       );
-      alert(
+      toast.error(
         `Failed to save service details: ${
           error.response?.data?.message || "Unknown error"
         }`
       );
     }
   };
+
+  const handleReset = () => {
+    setFormData({
+      serviceName: "",
+      displayName: "",
+      serviceCode: "",
+      serviceTypeName: "",
+      companyName: "",
+      companyCode: "",
+      doctorRequireType: "",
+      packageServices: false,
+      status: "Active",
+      serviceOptions: {
+        fixedType: "",
+        consultationType: "",
+        typeOfService: "",
+        departmentType: "",
+        disOpdHistory: false,
+        counsellingServices: false,
+        bloodBankService: false,
+        dietService: false,
+        hourlyType: "",
+        primaryType: "",
+        postingType: "",
+        procedureDuration: null,
+      },
+      procedureRates: [],
+      serviceRates: [], // Reset serviceRates
+    });
+  
+    setSelectedservicetype(null); // Reset selected service type
+    
+    // Ensure payType is available before resetting serviceRates
+    if (payType.length > 0) {
+      setServiceRates(
+        payType.map((type) => ({
+          payTypeid: type.id,
+          payType: type.payTypeName,
+          rate: null,
+          doctorSharePercentage: null,
+          doctorShareAmount: null,
+        }))
+      );
+    } else {
+      setServiceRates([]);
+    }
+  
+    setProcedureRates([]); // Reset procedure rates
+    toast.info("Form has been reset.");
+  };
+  
 
   const getPopupData = () => {
    
@@ -237,90 +290,81 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
         <h3 className="ServiceMaster-sub-header">Service Details</h3>
         <div className="ServiceMaster-sh-form">
           <div className="ServiceMaster-sh-section">
-            <label>Service Name</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Service Name"}
+            type="text"
               name="serviceName"
               placeholder="Enter Service Name"
               value={formData.serviceName}
-              onChange={handleChange}
-            />
+              onChange={handleChange}/>
+            
           </div>
           <div className="ServiceMaster-sh-section">
-            <label>Display Name</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Display Name"}
+            type="text"
               name="displayName"
               placeholder="Enter Display Name"
               value={formData.displayName}
-              onChange={handleChange}
-            />
+              onChange={handleChange}/>
+            
           </div>
           <div className="ServiceMaster-sh-section">
-            <label>Service Code</label>
-            <input
-              type="text"
-              name="serviceCode"
-              placeholder="Enter Service Code"
-              value={formData.serviceCode}
-              onChange={handleChange}
-            />
+            <FloatingInput
+            label={"Service Code"}
+            type="text"
+            name="serviceCode"
+            placeholder="Enter Service Code"
+            value={formData.serviceCode}
+            onChange={handleChange}/>
+            
           </div>
           <div className="ServiceMaster-sh-section">
-            <label>Service Type Name</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Service Type Name"}
+            type="search"
               name="serviceTypeName"
               placeholder="Enter Service Type"
               value={selectedServicetype?.serviceTypeName}
               onChange={handleChange}
-              
-            />
-             <button
-                onClick={() => setActivePopup(true)}
-                
-              >
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                  <path
-                    fill=""
-                    d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                  />
-                </svg>
-              </button>
+              onIconClick={() => setActivePopup(true)}/>
+           
+            
           </div>
           <div className="ServiceMaster-sh-section">
-            <label>Company Name</label>
-            <input
-              type="text"
+            <FloatingInput
+            label={"Company Name"}
+            type="text"
               name="companyName"
               placeholder="Enter Company Name"
               value={formData.companyName}
-              onChange={handleChange}
-            />
+              onChange={handleChange}/>
+           
           </div>
           <div className="ServiceMaster-sh-section">
-            <label>Company Code</label>
-            <input
-              type="text"
-              name="companyCode"
-              placeholder="Enter Company Code"
-              value={formData.companyCode}
-              onChange={handleChange}
-            />
+            <FloatingInput
+            label={"Company Code"}
+            type="text"
+            name="companyCode"
+            placeholder="Enter Company Code"
+            value={formData.companyCode}
+            onChange={handleChange}/>
+           
           </div>
           <div className="ServiceMaster-sh-section">
-            <label>Doctor Required</label>
-            <select
-              name="doctorRequireType"
+            <FloatingSelect
+            label={"Doctor Required"}
+            name="doctorRequireType"
               value={formData.doctorRequireType}
               onChange={handleChange}
-            >
-              <option value="">Select Doctor Requirement</option>
-              <option value="Required">Doctor Required</option>
-              <option value="Not Required">Doctor Not Required</option>
-            </select>
+              options={[{value:"",label:"Select Doctor Requirement"},
+                {value:"Required",label:"Doctor Required"},
+                {value:"Not Required",label:"Doctor Not Required"}
+              ]}/>
+            
           </div>
           <div className="ServiceMaster-sh-section">
+            
             <label>Package Service</label>
             <input
               className="ServiceMaster-sh-checkbox"
@@ -336,59 +380,58 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
           <div></div>
           {/* Service Options Section */}
           <div className="ServiceMaster-sh-section">
-            <label>Fixed Type</label>
-            <select
-              name="serviceOptions.fixedType"
+            <FloatingSelect
+            label={"Fixed Type"}
+            name="serviceOptions.fixedType"
               value={formData.serviceOptions.fixedType}
               onChange={handleChange}
-            >
-              <option value=""> Fixed </option>
-              <option value="variable">Variable</option>
-            </select>
+              options={[{value:"Fixed",label:"Fixed"}
+                ,{value:"variable",label:"variable"}
+              ]}/>
+           
           </div>
           <div className="ServiceMaster-sh-section">
-            <label>Consultation Type</label>
-            <select
-              name="serviceOptions.consultationType"
+            <FloatingSelect
+            label={"Consultation Type"}
+            name="serviceOptions.consultationType"
               value={formData.serviceOptions.consultationType}
               onChange={handleChange}
-            >
-              <option value="">Select Consultation Type</option>
-              <option value="Consultation">Consultation</option>
-              <option value="Procedure">Procedure</option>
-              <option value="Investigation">Investigation</option>
-              <option value="Miscellaneous">Miscellaneous</option>
-            </select>
+              options={[{value:"",label:"Select Consultation Type"},
+                {value:"Consultation",label:"Consultation"},
+                {value:"Procedure",label:"Procedure"},
+                {value:"Investigation",label:"Investigation"},
+                {value:"Miscellaneous",label:"Miscellaneous"}
+              ]}/>
+            
           </div>
           <div className="ServiceMaster-sh-section">
-            <label>Type of Service</label>
-            <select
-              name="serviceOptions.typeOfService"
+            <FloatingSelect
+            label={"Type of Service"}
+            name="serviceOptions.typeOfService"
               value={formData.serviceOptions.typeOfService}
               onChange={handleChange}
-            >
-              <option value="">Select Service Type</option>
-              <option value="OPD">OPD</option>
-              <option value="IPD">IPD</option>
-              <option value="Both">Both</option>
-            </select>
+              options={[{value:"",label:"Select Service Type"},
+                {value:"OPD",label:"OPD"},
+                {value:"IPD",label:"IPD"}
+              ]}/>
+            
           </div>
           <div className="ServiceMaster-sh-section">
-            <label>Department Type</label>
-            <select
-              name="serviceOptions.departmentType"
+            <FloatingSelect
+            label={"Department Type"}
+            name="serviceOptions.departmentType"
               value={formData.serviceOptions.departmentType}
               onChange={handleChange}
-            >
-              <option value="">Select Department</option>
-              <option value="general">General</option>
-              <option value="cardiology">Cardiology</option>
-              <option value="neurology">Neurology</option>
-              <option value="orthopedics">Orthopedics</option>
-              <option value="pediatrics">Pediatrics</option>
-              <option value="gynecology">Gynecology</option>
-              <option value="radiology">Radiology</option>
-            </select>
+              options={[{value:"",label:"Select Department"},
+                {value:"general",label:"General"},
+                {value:"cardiology",label:"Cardiology"},
+                {value:"neurology",label:"Neurology"},
+                {value:"orthopedics",label:"Orthopedics"},
+                {value:"pediatrics",label:"Pediatrics"},
+                {value:"gynecology",label:"gynecology"},
+                {value:"radiology",label:"Radiology"}
+              ]}/>
+            
           </div>
           <div className="ServiceMaster-sh-section">
             <label>Dis OPD History</label>
@@ -411,6 +454,7 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
             />
           </div>
           <div className="ServiceMaster-sh-section">
+            
             <label>Blood Bank Services</label>
             <input
               className="ServiceMaster-sh-checkbox"
@@ -432,55 +476,55 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
             />
           </div>
           <div className="ServiceMaster-sh-section">
-            <label>Hourly Type</label>
-            <select
-              name="serviceOptions.hourlyType"
+            <FloatingSelect
+            label={"Hourly Type"}
+            name="serviceOptions.hourlyType"
               id=""
               value={formData.hourlyType}
               onChange={handleChange}
-            >
-              <option value="">Select Option</option>
-              <option value="Daily">Daily</option>
-              <option value="Hourly">Hourly</option>
-            </select>
+              options={[{value:"",label:"Select Option"},
+                {value:"Daily",label:"Daily"},
+                {value:"Hourly",label:"Hourly"}
+              ]}/>
+            
           </div>
           <div className="ServiceMaster-sh-section">
-            <label>Primary Type</label>
-            <select
-              name="serviceOptions.primaryType"
+            <FloatingSelect
+            label={"Primary Type"}
+            name="serviceOptions.primaryType"
               id=""
               value={formData.primaryType}
               onChange={handleChange}
-            >
-              <option value="Primary Service">Primary Service</option>
-              <option value="Non-Primary Service">Non-Primary Service</option>
-            </select>
+              options={[{value:"Primary Service",label:"Primary Service"},
+                {value:"Non-Primary Service",label:"Non-Primary Service"},
+              ]}/>
+            
           </div>
           <div className="ServiceMaster-sh-section">
-            <label>Posting Type</label>
-            <select
-              name="serviceOptions.postingType"
-              id=""
-              value={formData.postingType}
-              onChange={handleChange}
-            >
-              <option value="Auto Posting">Auto Posting</option>
-              <option value="Non-auto posting">Non-auto posting</option>
-            </select>
+            <FloatingSelect
+            label={"Posting Type"}
+            name="serviceOptions.postingType"
+            id=""
+            value={formData.postingType}
+            onChange={handleChange}
+            options={[{value:"Auto Posting",label:"Auto Posting"},
+              {value:"Non Auto Posting",label:"Non Auto Posting"}
+            ]}/>
+           
           </div>
           <div className="ServiceMaster-sh-section">
-            <label>Procedure Duration</label>
-            <select
-              name="serviceOptions.procedureDuration"
+            <FloatingSelect
+            label={"Procedure Duration"}
+            name="serviceOptions.procedureDuration"
               id=""
               value={formData.procedureDuration}
               onChange={handleChange}
-            >
-              <option value="15">15</option>
-              <option value="30">30</option>
-              <option value="40">40</option>
-              <option value="60">60</option>
-            </select>
+              options={[{value:"15",label:"15"},
+                {value:"30",label:"30"},
+                {value:"40",label:"40"},
+                {value:"60",label:"60"},
+              ]}/>
+            
           </div>
           <div></div> <div></div>
           <div></div>
@@ -691,6 +735,9 @@ const ServiceMaster = ({ refreshTable, onClose }) => {
       <div className="ServiceMaster-sh-btn">
         <button className="ServiceMaster-sh-sav" onClick={handleSave}>
           Save
+        </button>
+        <button className="ServiceMaster-sh-sav"  onClick={handleReset}>
+          Reset
         </button>
       </div>
 

@@ -8,6 +8,7 @@ import SSIPatientConsumNewPCbtn from "./sSIPatientConsumNewPCbtn";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../../api/api";
 import CustomModal from "../../../../CustomModel/CustomModal";
+
 import {
   FloatingInput,
   FloatingSelect,
@@ -24,6 +25,7 @@ function SSIPatientConsumption() {
   const [error, setError] = useState(null);
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [showViewRequisition, setShowViewRequisition] = useState(false);
+
   const tableRef = useRef(null);
   const [showNewPatientConsumption, setShowNewPatientConsumption] =
     useState(false); // State to control New Patient Consumption
@@ -79,6 +81,7 @@ function SSIPatientConsumption() {
     fetchPatientConsumptions();
   }, [store]);
 
+
   const printList = () => {
     if (tableRef.current) {
       const printContents = tableRef.current.innerHTML;
@@ -106,6 +109,7 @@ function SSIPatientConsumption() {
             th { background-color: #f2f2f2; }
             button, .admit-actions, th:nth-child(10), td:nth-child(10) {
               display: none; /* Hide action buttons and Action column */
+>>>>>>> ad3dbcade0310743b9fa5d27715a29a847b1a3fa
             }
           </style>
         </head>
@@ -133,11 +137,34 @@ function SSIPatientConsumption() {
     XLSX.writeFile(wb, "PatientConsumeReport.xlsx"); // Downloads the Excel file
   };
 
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+
+ const filterByDate = (data) => {
+    if (!dateFrom || !dateTo) return data; // If no dates, return all data
+    return data.filter((item) => {
+      const consumptionDate = new Date(item.consumptionDate);
+      const startDate = new Date(dateFrom);
+      const endDate = new Date(dateTo);
+      return consumptionDate >= startDate && consumptionDate <= endDate;
+    });
+  };
+
+  const filteredConsumptions = useFilter(
+    filterByDate(patientConsumptions),
+    searchTerm
+  );
+  
+
   return (
     <div className="sSIPatientConsumption-active-imaging-request">
       <>
         <header className="sSIPatientConsumption-header">
           <div className="sSIPatientConsumption-status-filters">
+
             <button
               className="sSIPatientConsumption-new-patient-button"
               onClick={handleNewPatientConsumptionClick} // Handle button click
@@ -149,6 +176,7 @@ function SSIPatientConsumption() {
 
         <div className="sSIPatientConsumption-controls">
           <div className="sSIPatientConsumption-date-range">
+
             <FloatingInput
               label="From Date"
               type="date"
@@ -167,7 +195,7 @@ function SSIPatientConsumption() {
         </div>
         <div className="sSIPatientConsumption-search-N-results">
           <div className="sSIPatientConsumption-search-bar">
-            <i className="fa-solid fa-magnifying-glass"></i>
+
             <FloatingInput label="Search" type="search" />
           </div>
           <div className="sSIPatientConsumption-results-info">
@@ -180,6 +208,7 @@ function SSIPatientConsumption() {
             </button>
             <button
               className="sSIPatientConsumption-print-btn"
+
               onClick={printList}
             >
               <i class="fa-solid fa-print"></i> Print
@@ -187,6 +216,7 @@ function SSIPatientConsumption() {
           </div>
         </div>
         <div style={{ display: "none" }}>
+
           <div ref={tableRef}>
             <h2>Patient Consumption Report</h2>
             <p>Printed On: {new Date().toLocaleString()}</p>
@@ -208,6 +238,7 @@ function SSIPatientConsumption() {
                       <td>{consumption.consumptionDate}</td>
                       <td>{consumption.enteredBy}</td>
                       <td>{consumption.remark}</td>
+
                       <td>
                         <button className="action-button">Action</button>
                       </td>
@@ -222,25 +253,49 @@ function SSIPatientConsumption() {
             </table>
           </div>
         </div>
-        <div className="sSIPatientConsumption-table-N-paginat">
-          <table>
+        <div className="table-container">
+          <table ref={tableRef}>
             <thead>
               <tr>
-                <th>Patient Name</th>
-                <th>Consumption Date</th>
-                <th>Entered By</th>
-                <th>Remarks</th>
-                <th>Action</th>
+                {[
+                  "Patient Name",
+                  "Consumption Date",
+                  "Entered By",
+                  "Remarks",
+                  "Action",
+                ].map((header, index) => (
+                  <th
+                    key={index}
+                    style={{ width: columnWidths[index] }}
+                    className="resizable-th"
+                  >
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(
+                          tableRef,
+                          setColumnWidths
+                        )(index)}
+                      ></div>
+                    </div>
+                  </th>
+                ))}
+
+
               </tr>
             </thead>
+
             <tbody>
-              {patientConsumptions.length > 0 ? (
-                patientConsumptions.map((consumption, index) => (
+              {filteredConsumptions.length > 0 ? (
+                filteredConsumptions.map((consumption, index) => (
+
                   <tr key={index}>
                     <td>{consumption.patientName}</td>
                     <td>{consumption.consumptionDate}</td>
                     <td>{consumption.enteredBy}</td>
                     <td>{consumption.remark}</td>
+
                     <td>
                       <button className="action-button">Action</button>
                     </td>

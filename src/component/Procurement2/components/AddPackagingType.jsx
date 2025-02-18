@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './AddPackagingType.css';
 import { API_BASE_URL } from '../../api/api';
-
+import { FloatingInput } from '../../../FloatingInputs';
+import { toast } from 'react-toastify';
 const AddPackagingType = ({onclose}) => {
   const [packagingTypeName, setPackagingTypeName] = useState('');
   const [description, setDescription] = useState('');
@@ -9,7 +10,11 @@ const AddPackagingType = ({onclose}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+ // Validate all fields
+ if (!packagingTypeName?.trim() || !description?.trim()) {
+  toast.error("Please fill in all required fields.");
+  return;
+}
     const packagingType = {
       packagingTypeName,
       description,
@@ -28,14 +33,16 @@ const AddPackagingType = ({onclose}) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
-      alert('Packaging Type added successfully!');
+      toast.success('Packaging Type added successfully!');
+      // alert('Packaging Type added successfully!');
       setPackagingTypeName('');
       setDescription('');
       setIsActive(true);
-      onclose();
+      // onclose();
     } catch (error) {
       console.error('There was a problem with the fetch operation:', error);
+      toast.error('There was a problem with the fetch operation:', error);
+      
     }
   };
 
@@ -44,24 +51,26 @@ const AddPackagingType = ({onclose}) => {
       <h2>Add Packaging Type</h2>
       <form onSubmit={handleSubmit} className='AddPackagingType-form'>
         <div  className='AddPackagingType-formgroup'>
-          <label>Packaging Type Name<span className="MeasssRequired">*</span></label>
-          <input
-            type="text"
-            placeholder="Packaging Type Name"
-            value={packagingTypeName}
-            onChange={(e) => setPackagingTypeName(e.target.value)}
-            required
+          <FloatingInput
+          label={"Packaging Type Name"}
+          type="text"
+          placeholder="Packaging Type Name"
+          value={packagingTypeName}
+          onChange={(e) => setPackagingTypeName(e.target.value)}
+          required
           />
+         
         </div>
        
         <div className='AddPackagingType-formgroup'>
-          <label>Description</label>
-          <input
-            type="text"
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+          <FloatingInput
+          label={"Description"}
+          type="text"
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
           />
+         
         </div>
        
         <div className='AddPackagingType-formgroup'>

@@ -9,6 +9,7 @@ import * as XLSX from "xlsx";
 import CustomModal from "../../../CustomModel/CustomModal";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../api/api";
+import { useFilter } from "../../ShortCuts/useFilter";
 
 const ErRegister = () => {
   const navigate = useNavigate();
@@ -24,6 +25,9 @@ const ErRegister = () => {
   const handleOpenModal = () => navigate("/emergency/erinitialassessment");
   const handleCloseModal = () => setShowEditModal(false);
   const [erData, setErData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [dateFrom, setDateFrom] = useState('');
+    const [dateTo, setDateTo] = useState('');
 
   const fetchErData = async () => {
     try {
@@ -33,6 +37,9 @@ const ErRegister = () => {
         `${API_BASE_URL}/emergency/er-initial-assessment`
       );
       setErData(response.data);
+      console.log('====================================');
+      console.log(erData);
+      console.log('====================================');
       // setFilteredReceipts(response.data);
       console.log(response.data);
     } catch (error) {
@@ -62,9 +69,36 @@ const ErRegister = () => {
   };
 
   const handlePrint = () => {
-    window.print();
+    const printContent = tableRef.current;
+    const newWindow = window.open("", "_blank");
+    newWindow.document.write(`
+      <html>
+        <head>
+          <title>Print Table</title>
+          <style>
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              border: 1px solid black;
+              padding: 8px;
+              text-align: left;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          ${printContent.outerHTML}
+        </body>
+      </html>
+    `);
+    newWindow.document.close();
+    newWindow.print();
+    newWindow.close();
   };
-
   useEffect(() => {
     let filtered = goodReceipts;
 
@@ -91,6 +125,23 @@ const ErRegister = () => {
 
     setFilteredReceipts(filtered);
   }, [searchText, dateRange, goodReceipts]);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filterByDate = (data) => {
+    if (!dateFrom || !dateTo) return data; // If no dates, return all data
+    return data.filter((item) => {
+      const erDate = new Date(item.date );
+      const startDate = new Date(dateFrom);
+      const endDate = new Date(dateTo);
+      return erDate >= startDate && erDate <= endDate;
+    });
+  };
+
+  const erDatas = useFilter(filterByDate(erData), searchTerm);
+
 
   return (
     <div className="ErRegister-container">
@@ -132,19 +183,15 @@ const ErRegister = () => {
           <input
             type="date"
             id="from-date"
-            value={dateRange.from}
-            onChange={(e) =>
-              setDateRange((prev) => ({ ...prev, from: e.target.value }))
-            }
+            value={dateFrom}
+            onChange={(e) => setDateFrom(e.target.value)}
           />
           <label htmlFor="to-date">To:</label>
           <input
             type="date"
             id="to-date"
-            value={dateRange.to}
-            onChange={(e) =>
-              setDateRange((prev) => ({ ...prev, to: e.target.value }))
-            }
+            value={dateTo}
+            onChange={(e) => setDateTo(e.target.value)}
           />
         </div>
       </div>
@@ -154,15 +201,16 @@ const ErRegister = () => {
           type="text"
           className="ErRegister-search-box"
           placeholder="Search..."
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
+          value={searchTerm}
+          onChange={handleSearch}
         />
+
 
         <div className="ErRegister-search-container">
           <div className="ErRegister-search-right">
             <span className="purchase-results-count-span">
-              Showing {filteredReceipts.length} / {goodReceipts.length} results
-            </span>
+            Showing {erData.length}/{erData.length} results           
+             </span>
             <button className="ErRegister-print-button" onClick={handleExport}>
               <i className="fa-solid fa-file-excel"></i> Export
             </button>
@@ -213,8 +261,8 @@ const ErRegister = () => {
                 Loading...
               </td>
             </tr>
-          ) : erData.length > 0 ? (
-            erData.map((receipt) => (
+          ) : erDatas.length > 0 ? (
+            erDatas.map((receipt) => (
               <tr key={receipt.goodReceiptId} className="parent-row">
                 <td>{receipt.erNumber}</td>
                 <td>{receipt.patientType || "N/A"}</td>

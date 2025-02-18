@@ -1,112 +1,79 @@
-/*Mohini_BloodDonationForm_24/sep/24/css_start_1_to_css_end_103  */
-.blood-donation-patient-form-container{
-    width: auto;
-    margin: 20px;
+.blood-donation-patient-form-container {
+  width: auto;
+  margin: 20px;
 }
-.blood-donation-patient-form {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background-color:var(--background-color) ;
-    height: 90vh;
-    overflow-y: scroll;
-}
-
-/* Styles for left and right sections */
-.blood-donation-patient-left,
-.blood-donation-patient-right {
-    width: 48%;
-}
-
-.blood-donation-patient-group {
-    display: flex; /* Change to flex for horizontal layout */
-    align-items: center; /* Center align items vertically */
-    margin-bottom: 15px;
-}
-
-.blood-donation-patient-group label {
-    flex: 0 0 120px; /* Set a fixed width for the label */
-    margin-right: 10px; /* Add space between label and input */
-    margin-left: 20px;
-    font-size: var( --heading-font);
-}
-
-.blood-donation-patient-group input[type="text"],
-.blood-donation-patient-group input[type="number"],
-.blood-donation-patient-group input[type="date"],
-.blood-donation-patient-group input[type="email"],
-.blood-donation-patient-group input[type="time"],
-.blood-donation-patient-group textarea {
-    flex: 1; /* Allow input to take up the remaining space */
-    padding: 4px;
-    font-size: var(--font-size);
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-}
-
-.blood-donation-patient-gender-options {
-    display: flex;
-    gap: 10px;
-}
-
-.blood-donation-patient-gender-options label {
-    display: flex;
-    font-size: var(--font-size);
-    align-items: center;
-}
-
+.blood-donation-patient-con {
+    max-width: 800px;
+    margin: auto;
+    background: #fff;
+    border-radius: 10px;
+    
+        
+  }
+  
 .blood-donation-submit-btn {
-    background-color: var(--button-color);
-    color: white;
-    border: none;
-    padding: 5px 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: var(--font-size);
-    border: 1px solid var(--button-hover-border-color);
-
+  background-color: var(--button-color);
+  color: white;
+  border: none;
+  padding: 5px 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-size);
+  border: 1px solid var(--button-hover-border-color);
 }
 
 .blood-donation-submit-btn:hover {
-    border: 1px solid var(--button-hover-border-color);
-    color: var(--button-color);
-    background-color: white;
+  border: 1px solid var(--button-hover-border-color);
+  color: var(--button-color);
+  background-color: white;
 }
+
+.blood-donation-patient-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.blood-donation-patient-left,
+.blood-donation-patient-right {
+  width: 48%;
+}
+
 .blood-donation-patient-group {
-    display: flex; /* Change to flex for horizontal layout */
-    align-items: center; /* Center align items vertically */
-    margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
-.blood-donation-patient-group label {
-    flex: 1; /* Allow label to take up space */
-    margin-right: 10px; /* Add some space between label and checkbox */
+.blood-donation-patient-gender-options {
+  display: flex;
+  gap: 10px;
+}
+.header-BloodDonation {
+  font-size: var(--heading-font);
 }
 
-.blood-donation-patient-group input[type="checkbox"] {
-    margin-right: 80px; /* Push checkbox to the right */
-}
-.blood-donation-patient-group label {
-    display: flex; /* Use flex to align label and checkbox */
-    align-items: center; /* Center the items vertically */
+.blood-donation-patient-group {
+    display: flex;
+    align-items: center; 
+    gap: 15px; 
+  }
+  
+  .blood-donation-patient-gender-options {
+    display: flex;
+    gap: 15px; 
+  }
+  
+
+  
+@media (max-width: 768px) {
+  .blood-donation-patient-left,
+  .blood-donation-patient-right {
+    width: 100%;
+  }
+
+  .blood-donation-patient-form {
+    flex-direction: column;
+  }
 }
 
-.blood-donation-patient-group label .mandatory {
-    color: red; /* Set color of the asterisk to red */
-    margin-left: 5px; /* Space between label text and asterisk */
-}
-.blood-donation-button {
-    display: flex;                /* Use Flexbox for centering */
-    justify-content: flex-start;      /* Center horizontally */
-    align-items: center;          /* Center vertically */
-    margin-left: -50px;
-}
-.mandatory {
-    color: red; /* Change the color to red */
-}
-.header-BloodDonation{
-    margin: 20px;
-    text-align: left;
-    font-size: var(--heading-font);
-}
-/*Mohini_BloodDonationForm_24/sep/24/css_start_1_to_css_end_103  */
+/* =========================================== */

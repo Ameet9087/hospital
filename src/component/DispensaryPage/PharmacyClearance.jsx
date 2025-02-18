@@ -19,6 +19,8 @@ export default function PharmacyClearance() {
   const [showModal, setShowModal] = useState(false);
   const [selectedRequisition, setSelectedRequisition] = useState(null);
   const [patient, setPatient] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
 
@@ -40,6 +42,7 @@ export default function PharmacyClearance() {
     XLSX.utils.book_append_sheet(wb, ws, "PharmacyClearence"); // Appends worksheet to workbook
     XLSX.writeFile(wb, "PharmacyClearence.xlsx"); // Downloads the Excel file
   };
+
 
   const printList = () => {
     if (tableRef.current) {
@@ -72,6 +75,7 @@ export default function PharmacyClearance() {
           </style>
         </head>
         <body>
+
           <table>
             ${printContents}
           </table>
@@ -133,7 +137,8 @@ export default function PharmacyClearance() {
         </div>
         
         <div className="pharmacy-clearance-search-right">
-          <span className="purchase-results-count-span">Showing {requestdata.length} / {requestdata.length}results</span>
+          <span className="purchase-results-count-span"> Showing {requestdata.length} / {requestdata.length} results</span>
+
           <button className="pharmacy-clearance-print-button" onClick={handleExport}>
             Export
           </button>

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as XLSX from "xlsx"; // Import the xlsx library
 import "../SSInventory/sSIStock.css";
+
 import SSIInventoryRequisition from "./sSIInventoryRequisition";
 import SSIConsumption from "./sSIConsumption";
 import SSIReports from "./sSIReports";
@@ -18,14 +19,18 @@ import {
   FloatingSelect,
   FloatingTextarea,
 } from "../../../../FloatingInputs";
+import { useFilter } from "../../../ShortCuts/useFilter";
 function SSIStock() {
   const { store } = useParams();
   const [activeTab, setActiveTab] = useState("Stock");
   const [requisitions, setRequisitions] = useState([]);
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
-  const [sortDirection, setSortDirection] = useState("asc"); // Added sort direction state
-  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [sortDirection, setSortDirection] = useState('asc'); // Added sort direction state
+  const [searchQuery, setSearchQuery] = useState(''); // State for search query
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [columnWidths, setColumnWidths] = useState({});
+
   const tableRef = useRef(null);
   // Function to export the table to Excel
   const exportTableToExcel = () => {
@@ -104,7 +109,16 @@ function SSIStock() {
   };
 
   // Function to handle search
+  // const handleSearch = (event) => {
+  //   const query = event.target.value;
+  //   setSearchQuery(query);
+  //   const filtered = requisitions.filter(req =>
+  //     req.itemName.toLowerCase().includes(query.toLowerCase())
+  //   );
+  //   setFilteredRequisitions(filtered);
+  // };
   const handleSearch = (event) => {
+
     const query = event.target.value;
     setSearchQuery(query);
     const filtered = requisitions.filter((req) =>
@@ -112,6 +126,9 @@ function SSIStock() {
     );
     setFilteredRequisitions(filtered);
   };
+  const requisitionsData = useFilter(requisitions, searchTerm);
+
+
 
   const renderContent = () => {
     switch (activeTab) {
@@ -146,7 +163,8 @@ function SSIStock() {
             </div>
             <div className="sSIStock-search-N-result">
               <div className="sSIStock-search-bar">
-                
+
+
                 <FloatingInput
                   label={"Search"}
                   type="search"
@@ -206,8 +224,8 @@ function SSIStock() {
                 </tr>
               </thead>
               <tbody>
-                {requisitions.length > 0 ? (
-                  requisitions.map((req, index) => (
+                {requisitionsData.length > 0 ? (
+                  requisitionsData.map((req, index) => (
                     <tr key={index}>
                       <td>{req?.item?.itemCode}</td>
                       <td>{req?.item?.subCategory?.subCategoryName}</td>

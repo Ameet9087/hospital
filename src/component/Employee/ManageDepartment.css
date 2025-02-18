@@ -28,14 +28,15 @@
   background-color: var(--button-color);
   color: white;
   border: none;
-  padding: 6px 12px; /* Reduced padding */
+  padding: 5px 10px; /* Reduced padding */
   border-radius: 4px;
-  font-weight: bold;
   cursor: pointer;
+  margin-left: 10px;
 }
 .manage-add-department-btn:hover{
-  color: var(--background-color);
-  background-color: white;
+  background-color: var(--button-hover-background-color);
+  color: var(--button-hover-text-color);
+  border: 1px solid var(--button-hover-border-color);
 }
 
 .manage-department-search-input {

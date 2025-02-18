@@ -12,11 +12,11 @@
 {
     color: red;
 }
-.writeOff-select
+/* .writeOff-select
 {
     padding: 7px;
     width: 100%;
-}
+} */
 
 /* .writeOff-tab-content {
     width: 100%;
@@ -53,9 +53,9 @@
     z-index: 1;
 }
 
-.writeOff-input{
+/* .writeOff-input{
     width: 100%;
-}
+} */
 
 .writeOff-remove-row {
     background-color: #d32f2f;
@@ -101,22 +101,14 @@
     margin-bottom: 20px;
 }
 
-.writeOff-totals label {
+/* .writeOff-totals label {
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     font-size: var(--font-size);
-}
+} */
 
-.writeOff-totals input[type="text"] {
-    width: 160px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    text-align: right;
-    box-sizing: border-box;
-    background-color: #f1f1f1;
-}
+/*    */
 
 .writeOff-buttons {
     display: flex;

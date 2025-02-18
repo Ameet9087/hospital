@@ -3,7 +3,8 @@ import './MaintenanceCheckListPopUp.css';
 import { FaSearch } from 'react-icons/fa';
 import { API_BASE_URL } from '../../../api/api';
 import PopupTable from '../../../Admission/PopupTable';
-
+import { FloatingInput,FloatingSelect,FloatingTextarea } from '../../../../FloatingInputs';
+import { toast } from 'react-toastify';
 
 const MaintenanceChecklistPopUp = ({ bookingId }) => {
   const [id, setId] = useState(bookingId || "");
@@ -166,13 +167,13 @@ const MaintenanceChecklistPopUp = ({ bookingId }) => {
       });
 
       if (response.ok) {
-        alert('Data saved successfully!');
+        toast.success('Data saved successfully!');
       } else {
-        alert('Failed to save data.');
+        toast.error('Failed to save data.');
       }
     } catch (error) {
-      console.error('Error saving data:', error);
-      alert('An error occurred while saving the data.');
+      toast.error('Error saving data:', error);
+      toast.error('An error occurred while saving the data.');
     }
   };
   return (
@@ -187,43 +188,57 @@ const MaintenanceChecklistPopUp = ({ bookingId }) => {
           <div className="MaintenanceChecklistPopUp-surgeryEvents-panel dis-templates">
             <div className="MaintenanceChecklistPopUp-surgeryEvents-panel-content">
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Equipment Name: <span className='MaintenanceChecklistPopUp-required'>*</span></label>
-                <input type="text" value={selectedEquipment?.equipmentName} />
-                <FaSearch onClick={() => setActivePopup("euipment")} />
+                <FloatingInput
+                label={"Equipment Name"}
+                type="search" value={selectedEquipment?.equipmentName}
+                onIconClick={() => setActivePopup("euipment")}/>
+               
               </div>
             </div>
           </div>
           <div className="MaintenanceChecklistPopUp-surgeryEvents-panel operation-details">
             <div className="MaintenanceChecklistPopUp-surgeryEvents-panel-content">
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Asset No:</label>
-                <input type="text" value={selectedEquipment.assetNo} readOnly />
+                <FloatingInput
+                label={"Asset No"}
+                type="text" value={selectedEquipment.assetNo} readOnly/>
+                
               </div>
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Eqp No:</label>
-                <input type="text" value={selectedEquipment.equipmentNo} readOnly />
+                <FloatingInput
+                label={"Eqp No"}
+                type="text" value={selectedEquipment.equipmentNo} readOnly/>
+               
               </div>
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Remarks:</label>
-                <input type="text" name='remarks' value={formData.remarks} onChange={handleInputChange} />
+                <FloatingInput
+                label={"Remarks"}
+                type="text" name='remarks' value={formData.remarks} onChange={handleInputChange}/>
+               
               </div>
             </div>
           </div>
           <div className="MaintenanceChecklistPopUp-surgeryEvents-panel operation-details">
             <div className="MaintenanceChecklistPopUp-surgeryEvents-panel-content">
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>Check List Type: </label>
-                <input type="text" value={selectCheckList.typeName} />
-                <FaSearch onClick={() => setActivePopup("checklist")} />
+                <FloatingInput
+                label={"Check List Type"}
+                type="search" value={selectCheckList.typeName}
+                onIconClick={() => setActivePopup("checklist")}/>
+               
               </div>
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>CheckList Remarks:</label>
-                <input type="text" name='remarks' value={selectCheckList.description} onChange={handleInputChange} />
+                <FloatingInput
+                label={"CheckList Remarks"}
+                type="text" name='remarks' value={selectCheckList.description} onChange={handleInputChange}/>
+               
               </div>
 
               <div className="MaintenanceChecklistPopUp-surgeryEvents-form-row">
-                <label>status:</label>
-                <input type="text" name='status' value={formData.status} onChange={handleInputChange} />
+                <FloatingInput
+                label={"Status"}
+                type="text" name='status' value={formData.status} onChange={handleInputChange}/>
+               
               </div>
             </div>
 
@@ -232,13 +247,12 @@ const MaintenanceChecklistPopUp = ({ bookingId }) => {
             <div className="MaintenanceChecklistPopUp-surgeryEvents-panel-header">Attachments</div>
             <div className="MaintenanceChecklistPopUp-surgeryEvents-panel-content">
               <div className="MaintenanceChecklistPopUp-file-upload">
-                <input
-                  type="text"
-                  className="MaintenanceChecklistPopUp-input-field"
-                  placeholder="File Name"
-                  value={fileName}
-                  readOnly
-                />
+                <FloatingInput
+                label={"File name"}
+                value={fileName}
+                type="text"
+                readOnly/>
+               
                 <input
                   type="file"
                   id="fileInput"

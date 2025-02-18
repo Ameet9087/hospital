@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./AddWardSubstoreMap.css"; // Ensure CSS matches the component name
 import axios from "axios";
+import { API_BASE_URL } from "../api/api";
 
-const API_BASE_URL = "http://your-api-endpoint.com"; // Replace with your actual API endpoint
 
 const AddWardSubstoreMap = () => {
   const [ward, setWard] = useState("");

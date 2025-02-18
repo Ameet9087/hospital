@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./BloodBankRequestForm.css";
 import { API_BASE_URL } from "../../api/api";
-
+import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
+import { toast } from 'react-toastify';
 const BloodBankRequestForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     bloodGroup: "",
@@ -23,15 +24,17 @@ const BloodBankRequestForm = ({ onSubmit }) => {
         if (!response.ok) {
           throw new Error("Failed to fetch patient data");
         }
-        const data = await response.json();
-        setPatients(data); // Assuming the API returns an array of patients
+        const data = await response.json(); // Ensure correct data extraction
+        console.log("Fetched data:", data); // Log the actual fetched data
+        setPatients(data); // Set state properly
       } catch (error) {
         console.error("Error fetching patients:", error);
       }
     };
-
+  
     fetchPatients();
   }, []);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,14 +72,17 @@ const BloodBankRequestForm = ({ onSubmit }) => {
       if (response.ok) {
         const responseData = await response.json();
         console.log("Request submitted successfully:", responseData);
-        alert("Request submitted successfully!");
+        toast.success('Proposal saved successfully!');
+
       } else {
         console.error("Failed to submit request:", response.statusText);
-        alert("Failed to submit request. Please try again.");
+        toast.error('Failed to save proposal. Please try again.');
+
       }
     } catch (error) {
       console.error("Error submitting request:", error);
-      alert("Error submitting request. Please try again.");
+      toast.error('Failed to save proposal. Please try again.');
+
     }
   };
 
@@ -87,7 +93,24 @@ const BloodBankRequestForm = ({ onSubmit }) => {
         {/* Patient Select */}
         <div className="bloodbankrequest-form-row">
           <div className="bloodbankrequest-form-group">
-            <label htmlFor="inPatientId">Patient:</label>
+            <FloatingSelect
+              label="Patient"
+              name="inPatientId"
+              value={formData.inPatientId}
+              onChange={handleChange}
+              required
+              options={[
+                { value: "", label: "Select a Patient" },
+                ...(Array.isArray(patients)
+                  ? patients.map((patient) => ({
+                      value: patient.inPatientId,
+                      label: `${patient?.patient?.firstName} ${patient?.patient?.lastName} ${patient?.patient?.uhid}`,
+                    }))
+                  : []),
+              ]}
+            />
+
+            {/* <label htmlFor="inPatientId">Patient:</label>
             <select
               id="inPatientId"
               name="inPatientId"
@@ -98,38 +121,39 @@ const BloodBankRequestForm = ({ onSubmit }) => {
               <option value="">Select Patient</option>
               {patients.map((patient) => (
                 <option key={patient.inPatientId} value={patient.inPatientId}>
-                  {patient.firstName} {patient.middleName} {patient.lastName} (UHID: {patient.uhid})
+                  {patient.firstName} {patient.middleName} {patient.lastName}{" "}
+                  (UHID: {patient.uhid})
                 </option>
               ))}
-            </select>
+            </select> */}
           </div>
           <div className="bloodbankrequest-form-group">
-            <label htmlFor="bloodGroup">Blood Group:</label>
-            <select
+            <FloatingSelect
+              label={"Blood Group"}
               id="bloodGroup"
               name="bloodGroup"
               value={formData.bloodGroup}
               onChange={handleChange}
               required
-            >
-              <option value="">Select Blood Group</option>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-              <option value="O+">O+</option>
-              <option value="O-">O-</option>
-            </select>
+              options={[
+                { value: "", label: "Select a Blood Group" },
+                { value: "A+", label: "A+" },
+                { value: "A-", label: "A-" },
+                { value: "B+", label: "B+" },
+                { value: "B-", label: "B-" },
+                { value: "AB+", label: "AB+" },
+                { value: "AB-", label: "AB-" },
+                { value: "O+", label: "O+" },
+              ]}
+            />
           </div>
         </div>
 
         {/* Required Units and Contact Information */}
         <div className="bloodbankrequest-form-row">
           <div className="bloodbankrequest-form-group">
-            <label htmlFor="requiredUnits">Required Units:</label>
-            <input
+            <FloatingInput
+              label={"Required Units"}
               type="number"
               id="requiredUnits"
               name="requiredUnits"
@@ -141,8 +165,8 @@ const BloodBankRequestForm = ({ onSubmit }) => {
             />
           </div>
           <div className="bloodbankrequest-form-group">
-            <label htmlFor="contactInformation">Contact Information:</label>
-            <input
+            <FloatingInput
+              label={"Contact Information"}
               type="text"
               id="contactInformation"
               name="contactInformation"
@@ -157,8 +181,8 @@ const BloodBankRequestForm = ({ onSubmit }) => {
         {/* Request Date and Required Date */}
         <div className="bloodbankrequest-form-row">
           <div className="bloodbankrequest-form-group">
-            <label htmlFor="requestDate">Request Date:</label>
-            <input
+            <FloatingInput
+              label={"Request Date"}
               type="date"
               id="requestDate"
               name="requestDate"
@@ -168,8 +192,8 @@ const BloodBankRequestForm = ({ onSubmit }) => {
             />
           </div>
           <div className="bloodbankrequest-form-group">
-            <label htmlFor="requiredDate">Required Date:</label>
-            <input
+            <FloatingInput
+              label={"Required Date"}
               type="date"
               id="requiredDate"
               name="requiredDate"
@@ -183,19 +207,20 @@ const BloodBankRequestForm = ({ onSubmit }) => {
         {/* Status */}
         <div className="bloodbankrequest-form-row">
           <div className="bloodbankrequest-form-group">
-            <label htmlFor="status">Status:</label>
-            <select
+            <FloatingSelect
+              label={"Status"}
               id="status"
               name="status"
               value={formData.status}
               onChange={handleChange}
               required
-            >
-              <option value="">Select Status</option>
-              <option value="Pending">Pending</option>
-              <option value="Approved">Approved</option>
-              <option value="Rejected">Rejected</option>
-            </select>
+              options={[
+                { value: "", label: "Select a state" },
+                { value: "Issued", label: "Issued" },
+                { value: "Pending", label: "Pending" },
+                { value: "Cancelled", label: "Cancelled" },
+              ]}
+            />
           </div>
         </div>
 

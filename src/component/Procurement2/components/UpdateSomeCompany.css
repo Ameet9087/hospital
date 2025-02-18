@@ -11,24 +11,16 @@
     text-align: left;
     margin-bottom: 10px;
   }
-  
+  .add-company-form{
+    gap: 20px;
+  }
   .MeasssFormGroup {
     margin-bottom: 15px;
   }
   
-  .MeasssFormGroup label {
-    display: block;
-    margin-bottom: 5px;
-  }
+
   
-  .MeasssFormGroup input[type="text"],
-  .MeasssFormGroup select {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
+
   
   .MeasssRequired {
     color: red;

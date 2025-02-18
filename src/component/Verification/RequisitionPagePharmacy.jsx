@@ -3,7 +3,7 @@ import VerifyModal from "./VerifyModal";
 import "./RequisitionPage.css";
 import VerifyModalPharmacy from "./VerifyModalPharmacy";
 import { API_BASE_URL } from "../api/api";
-
+import CustomModal from "../../CustomModel/CustomModal";
 function RequisitionPagePharmacy() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [requisitions, setRequisitions] = useState([]);
@@ -43,17 +43,18 @@ function RequisitionPagePharmacy() {
     <div className="requisitionPageContainer">
   
       <div className="requisitionFilterSection">
-        <label className="requisitionCheckboxLabel">
-          <input type="checkbox" />
-          Check and Verify Requisition
-        </label>
+       
         <div className="requisitionDatePickerContainer">
           <label>From:</label>
           <input type="date" className="requisitionDateInput" />
           <label>To:</label>
           <input type="date" className="requisitionDateInput" />
-          <button className="requisitionOkButton">OK</button>
+          {/* <button className="requisitionOkButton">OK</button> */}
         </div>
+        {/* <label className="requisitionCheckboxLabel">
+          <input type="checkbox" />
+          Check and Verify Requisition
+        </label> */}
       </div>
 
       <div className="requisitionStatusSection">
@@ -96,13 +97,12 @@ function RequisitionPagePharmacy() {
             All
           </label>
         </div>
-        <div className="requisitionDropdownContainer">
+        {/* <div className="requisitionDropdownContainer">
           <label>Requisition Status:</label>
           <select className="requisitionDropdown">
             <option value="all">--ALL--</option>
-            {/* Add more options as needed */}
           </select>
-        </div>
+        </div> */}
       </div>
 
       <div className="table-container">
@@ -130,7 +130,7 @@ function RequisitionPagePharmacy() {
                     : "1 verified out of 1"}
                 </td>
                 <td>
-                  <button onClick={() => handleVerifyClick(requisition)}>
+                  <button className="requisitionPaginationButton" onClick={() => handleVerifyClick(requisition)}>
                     Verify
                   </button>
                 </td>
@@ -140,13 +140,16 @@ function RequisitionPagePharmacy() {
         </table>
       </div>
 
-      {isModalOpen && (
-        <VerifyModalPharmacy
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          requisitionDetails={selectedRequisition} 
-        />
-      )}
+     
+  <CustomModal isOpen={isModalOpen} onClose={closeModal}>
+    <VerifyModalPharmacy
+      isOpen={isModalOpen}
+      onClose={closeModal}
+      requisitionDetails={selectedRequisition}
+    />
+  </CustomModal>
+
+
     </div>
   );
 }

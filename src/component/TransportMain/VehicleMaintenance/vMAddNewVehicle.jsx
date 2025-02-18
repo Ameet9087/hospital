@@ -163,7 +163,9 @@ const LabVenderAddNewLV = ({ onClose }) => {
                 type="text"
                 name="yearOfManufacture"
                 value={formData.yearOfManufacture}
-                onChange={handleInputChange}
+                onChange={handleChange}
+                min="1"
+
               />
             </div>
             <div className="vMAddNewVehicle-form-group">
