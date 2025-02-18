@@ -43,6 +43,15 @@ const BloodDonationForm = (isOpen, onClose) => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
+    if (name === "phoneNumber" || name === "postalCode") {
+      if (!/^\d*$/.test(value)) {
+        return; 
+      }
+      if ((name === "phoneNumber" && value.length > 10) || 
+          (name === "postalCode" && value.length > 6)) {
+        return;
+      }
+    }
     setFormData({
       ...formData,
       [name]: type === "checkbox" ? checked : value,
@@ -57,13 +66,37 @@ const BloodDonationForm = (isOpen, onClose) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+  
+    // Check if all required fields are filled
+    if (
+      !formData.fullName ||
+      !formData.dob ||
+      !formData.gender ||
+      !formData.bloodGroup ||
+      !formData.phoneNumber ||
+      !formData.email ||
+      !formData.address ||
+      !formData.city ||
+      !formData.state ||
+      !formData.postalCode ||
+      !formData.weight ||
+      !formData.lastDonationDate ||
+      !formData.medication ||
+      !formData.surgeries ||
+     
+      !formData.timeSlot
+    ) {
+      toast.error("All fields are mandatory. Please fill in all details.");
+      return;
+    }
+  
     const formattedData = {
       ...formData,
       dob: formatDate(formData.dob),
       lastDonationDate: formatDate(formData.lastDonationDate),
       donationDate: formatDate(formData.donationDate),
     };
-
+  
     axios
       .post(`${API_BASE_URL}/donors/register`, formattedData)
       .then((response) => {
@@ -71,16 +104,14 @@ const BloodDonationForm = (isOpen, onClose) => {
         setSubmissionStatus("Success! Form submitted.");
         setShowForm(false); // Hide the form after submission
         toast.success("Proposal saved successfully!");
-        // alert("Form Data Submitted Successfully: ", response.data);
       })
       .catch((error) => {
         setSubmissionStatus("Failed to submit the form.");
         toast.error("Failed to save proposal. Please try again.");
-
         console.error("There was an error submitting the form!", error);
       });
   };
-
+  
   useEffect(() => {
     axios
       .get(`${API_BASE_URL}/donors/allDonors`)
@@ -155,7 +186,7 @@ const BloodDonationForm = (isOpen, onClose) => {
         <div className="blood-donation-patient-con">
           <h3 className="header-BloodDonation">Blood Donation Registration</h3>
           <form className="blood-donation-patient-form" onSubmit={handleSubmit}>
-            {/* <div className="blood-donation-patient-left"> */}
+            <div className="blood-donation-patient-left">
               <div className="blood-donation-patient-group">
                 <FloatingInput
                   label="Full Name"
@@ -185,7 +216,7 @@ const BloodDonationForm = (isOpen, onClose) => {
               </div>
               <div className="blood-donation-patient-group">
                 <label>
-                  Gender<span className="mandatory"> *</span> :
+                  Gender:
                 </label>
                 <div className="blood-donation-patient-gender-options">
                   <label>
@@ -308,6 +339,7 @@ const BloodDonationForm = (isOpen, onClose) => {
                   value={formData.weight}
                   onChange={handleInputChange}
                   placeholder="Weight (kg)"
+                  min="0"
                   required
                 />
               </div>
@@ -320,8 +352,8 @@ const BloodDonationForm = (isOpen, onClose) => {
                   onChange={handleInputChange}
                 />
               </div>
-            {/* </div> */}
-            {/* <div className="blood-donation-patient-right"> */}
+            </div>
+            <div className="blood-donation-patient-right">
               {/* Right Side Inputs */}
               <div className="blood-donation-patient-group">
                 <FloatingInput
@@ -450,7 +482,7 @@ const BloodDonationForm = (isOpen, onClose) => {
                   Submit
                 </button>
               </div>
-          
+          </div>
           </form>
         </div>
       </CustomModal>

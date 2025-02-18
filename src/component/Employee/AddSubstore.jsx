@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 
 
 const AddSubStore = ({ substore, onClose }) => {
+  console.log("editing",substore);
+  
 
   const [errors, setErrors] = useState({});
   const [activePopup, setActivePopup] = useState("");
@@ -46,9 +48,31 @@ const AddSubStore = ({ substore, onClose }) => {
     isActive: !substore?.isActive || "true",
     label: substore?.label || "",
     locationMaster: {
-      id: selectedLocation?.id || 1
+      id: substore?.locationMasterDTO?.id || selectedLocation?.id
     }
   });
+  
+  useEffect(() => {
+    if (substore) {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        subStoreName: substore.subStoreName || "",
+        maxVerificationLevel: substore.maxVerificationLevel || "",
+        code: substore.code || "",
+        email: substore.email || "",
+        contactNo: substore.contactNo || "",
+        location: substore.location || "",
+        subStoreDescription: substore.subStoreDescription || "",
+        isActive: substore.isActive ?? "true",
+        label: substore.label || "",
+        locationMaster: {
+          id: substore.locationMasterDTO?.id || ""
+        }
+      }));
+  
+      setSelectedLocation(substore.locationMasterDTO || { id: "" });
+    }
+  }, [substore]);
 
   const getPopupData = () => {
     if (activePopup === "location") {
@@ -143,26 +167,23 @@ const AddSubStore = ({ substore, onClose }) => {
     }
   };
 
-  // Reset Button:
-  <button
-    type="button"
-    className="update-substore-update-btn"
-    onClick={() =>
-      setFormData({
-        subStoreName: "",
-        maxVerificationLevel: "",
-        code: "",
-        email: "",
-        contactNo: "",
-        location: "",
-        subStoreDescription: "",
-        isActive: "true",
-        label: "",
-      })
-    }
-  >
-    Reset
-  </button>;
+  const handleReset = () => {
+    setFormData({
+      subStoreName: "",
+      maxVerificationLevel: "",
+      code: "",
+      email: "",
+      contactNo: "",
+      location: "",
+      subStoreDescription: "",
+      isActive: "true",
+      label: "",
+      locationMaster: { id: "" }, // Reset locationMaster ID
+    });
+  
+    setSelectedLocation(null); // Reset selected location
+  };
+  
 
   return (
     <div className="update-substore-conatainer">
@@ -277,7 +298,7 @@ const AddSubStore = ({ substore, onClose }) => {
           <button type="submit" className="update-substore-update-btn">
             {substore ? "Update" : "Add"}
           </button>
-          <button type="reset" className="update-substore-update-btn">
+          <button  onClick={handleReset} type="reset" className="update-substore-update-btn">
             reset
           </button>
         </div>

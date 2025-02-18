@@ -12,6 +12,9 @@ const AddVendor = ({ onClose }) => {
     vendorCode: "",
     vendorCountry: "",
     kraPin: "",
+    aadharNo: "",
+    gstNo: "",
+    panCard: "",
     bankDetails: "",
     contactPerson: "",
     email: "",
@@ -42,28 +45,31 @@ const AddVendor = ({ onClose }) => {
       "currencyCode",
       "vendorCode",
       "kraPin",
+      "GSTNO",
+      "AadharNo",
+      "PanNo",
       "bankDetails",
       "contactPerson",
       "email",
       "creditPeriod",
       "govtRegDate",
     ];
-  
+
     const newErrors = {};
-  
+
     // Validate required fields
     requiredFields.forEach((field) => {
       if (!formValues[field]) {
         newErrors[field] = `${field.replace(/([A-Z])/g, " $1")} is required`;
       }
     });
-  
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       toast.error("Please fill in all required fields!", { autoClose: 2000 });
       return;
     }
-  
+
     try {
       const response = await fetch(`${API_BASE_URL}/vendors/createVendor`, {
         method: "POST",
@@ -72,12 +78,12 @@ const AddVendor = ({ onClose }) => {
         },
         body: JSON.stringify(formValues),
       });
-  
+
       if (response.ok) {
         toast.success("Vendor added successfully!", { autoClose: 2000 });
         setSuccessMessage("Vendor added successfully!");
         setErrorMessage("");
-  
+
         // Reset form fields
         setFormValues({
           vendorName: "",
@@ -86,6 +92,9 @@ const AddVendor = ({ onClose }) => {
           currencyCode: "",
           vendorCode: "",
           kraPin: "",
+          aadharNo: "",
+          gstNo: "",
+          panCard: "",
           bankDetails: "",
           contactPerson: "",
           email: "",
@@ -94,17 +103,21 @@ const AddVendor = ({ onClose }) => {
           isActive: true,
           receiveDonation: false,
         });
-  
+
         onClose();
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.message || "Failed to add vendor");
-        toast.error(errorData.message || "Failed to add vendor", { autoClose: 2000 });
+        toast.error(errorData.message || "Failed to add vendor", {
+          autoClose: 2000,
+        });
         setSuccessMessage("");
       }
     } catch (error) {
       setErrorMessage("An error occurred while adding the vendor");
-      toast.error("An error occurred while adding the vendor", { autoClose: 2000 });
+      toast.error("An error occurred while adding the vendor", {
+        autoClose: 2000,
+      });
       setSuccessMessage("");
     }
   };
@@ -202,6 +215,64 @@ const AddVendor = ({ onClose }) => {
               error={errors.currencyCode}
             />
             <FloatingInput
+              label={"Aadhar No"}
+              name="aadharNo"
+              required
+              value={formValues.aadharNo}
+              onChange={handleInputChange}
+              placeholder="Aadhar No"
+              error={errors.aadharNo}
+            />
+            <FloatingInput
+              label={"GST NO"}
+              name="gstNo"
+              required
+              value={formValues.gstNo}
+              onChange={handleInputChange}
+              placeholder="GST NO"
+              error={errors.gstNo}
+            />
+            <FloatingInput
+              label={"Pan Card"}
+              name="panCard"
+              required
+              value={formValues.panCard}
+              onChange={handleInputChange}
+              placeholder="Pan Card"
+              error={errors.panCard}
+            />
+            <FloatingInput
+              label={"Contract Start Date"}
+              name="contractStartDate"
+              type="date"
+              required
+              value={formValues.contractStartDate}
+              onChange={handleInputChange}
+              error={errors.contractStartDate}
+            />
+          </div>
+          <div className="vendddColumn">
+            <FloatingInput
+              label={"Contract End Date"}
+              name="contractEndDate"
+              type="date"
+              required
+              value={formValues.contractEndDate}
+              onChange={handleInputChange}
+              error={errors.contractEndDate}
+            />
+          </div>
+          <div className="vendddColumn">
+            <FloatingInput
+              label={"Contract End Date"}
+              name="contractEndDate"
+              type="date"
+              required
+              value={formValues.contractEndDate}
+              onChange={handleInputChange}
+              error={errors.contractEndDate}
+            />
+            <FloatingInput
               label={"Bank Details"}
               name="bankDetails"
               elementType="textarea"
@@ -209,8 +280,6 @@ const AddVendor = ({ onClose }) => {
               onChange={handleInputChange}
               placeholder="Bank details"
             />
-          </div>
-          <div className="vendddColumn">
             <FloatingInput
               label={"Vendor Code"}
               name="vendorCode"
@@ -256,7 +325,7 @@ const AddVendor = ({ onClose }) => {
                 checked={formValues.isActive}
                 onChange={handleInputChange}
               />
-             Is Active
+              Is Active
             </label>
             <label className="vendddAddLabel">
               <input
@@ -265,10 +334,8 @@ const AddVendor = ({ onClose }) => {
                 checked={formValues.receiveDonation}
                 onChange={handleInputChange}
               />
-            Receive Donation
+              Receive Donation
             </label>
-           
-           
           </div>
         </div>
         {successMessage && (

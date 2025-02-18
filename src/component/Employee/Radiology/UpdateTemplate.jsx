@@ -67,6 +67,17 @@ const UpdateTemplate = ({ template, onClose }) => {
       toast.error("Error saving template:", error);
     }
   };
+  const resetForm = (event) => {
+    event.preventDefault(); // Prevents form submission when reset is clicked
+
+    setModuleName("Radiology");
+    setTemplateCode("");
+    setTemplateName("");
+    setIsActive(false);
+    setTemplateContent("");
+    setFooterNote("");
+    setIsCodeEdited(false);
+  };
 
   return (
     <div className="update-template-modal-container">
@@ -129,6 +140,7 @@ const UpdateTemplate = ({ template, onClose }) => {
         <button type="submit" className="update-template-update-button">
           {template ? "Update" : "Create"}
         </button>
+        <button className="update-template-update-button" onClick={resetForm}>Reset</button>
       </form>
     </div>
   );

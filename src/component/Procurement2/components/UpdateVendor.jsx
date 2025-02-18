@@ -12,6 +12,11 @@ const UpdateVendor = ({ vendor, onClose }) => {
     vendorCode: vendor?.vendorCode || "",
     vendorCountry: vendor?.vendorCountry || "",
     kraPin: vendor?.kraPin || "",
+    gstNo: vendor?.gstNo || "",
+    aadharNo: vendor?.aadharNo || "",
+    panNo: vendor?.panNo || "",
+    contractStartDate:vendor?.contractStartDate|| "",
+    contractEndDate:vendor?.contractEndDate||"",
     bankDetails: vendor?.bankDetails || "",
     contactPerson: vendor?.contactPerson || "",
     email: vendor?.email || "",
@@ -32,64 +37,68 @@ const UpdateVendor = ({ vendor, onClose }) => {
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validatePhoneNumber = (number) => /^\d{10}$/.test(number);
 
-const handleSubmit = async () => {
-  const requiredFields = [
-    "vendorName",
-    "contactAddress",
-    "contactNumber",
-    "currencyCode",
-    "vendorCode",
-  ];
-  const newErrors = {};
+  const handleSubmit = async () => {
+    const requiredFields = [
+      "vendorName",
+      "contactAddress",
+      "contactNumber",
+      "currencyCode",
+      "vendorCode",
+    ];
+    const newErrors = {};
 
-  requiredFields.forEach((field) => {
-    if (!formValues[field]) {
-      newErrors[field] = `${field.replace(/([A-Z])/g, " $1")} is required`;
-    }
-  });
-
-  if (formValues.email && !validateEmail(formValues.email)) {
-    newErrors.email = "Invalid email format";
-  }
-
-  if (
-    formValues.contactNumber &&
-    !validatePhoneNumber(formValues.contactNumber)
-  ) {
-    newErrors.contactNumber = "Invalid contact number";
-  }
-
-  console.log(formValues);
-
-  if (Object.keys(newErrors).length > 0) {
-    setErrors(newErrors);
-    toast.error("Please fill in all required fields correctly!", { autoClose: 2000 });
-    return;
-  }
-
-  try {
-    const response = await fetch(`${API_BASE_URL}/vendors/${vendor.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formValues),
+    requiredFields.forEach((field) => {
+      if (!formValues[field]) {
+        newErrors[field] = `${field.replace(/([A-Z])/g, " $1")} is required`;
+      }
     });
 
-    if (response.ok) {
-      toast.success("Vendor updated successfully!", { autoClose: 2000 });
-      // alert("Vendor updated successfully!");
-      onClose(); // Close the modal after successful update
-    } else {
-      toast.error("Failed to update vendor", { autoClose: 2000 });
-      alert("Failed to update vendor");
+    if (formValues.email && !validateEmail(formValues.email)) {
+      newErrors.email = "Invalid email format";
     }
-  } catch (error) {
-    console.error("Error updating vendor:", error);
-    toast.error("An error occurred while updating the vendor", { autoClose: 2000 });
-    alert("An error occurred while updating the vendor");
-  }
-};
+
+    if (
+      formValues.contactNumber &&
+      !validatePhoneNumber(formValues.contactNumber)
+    ) {
+      newErrors.contactNumber = "Invalid contact number";
+    }
+
+    console.log(formValues);
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error("Please fill in all required fields correctly!", {
+        autoClose: 2000,
+      });
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/vendors/${vendor.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+      });
+
+      if (response.ok) {
+        toast.success("Vendor updated successfully!", { autoClose: 2000 });
+        // alert("Vendor updated successfully!");
+        onClose(); // Close the modal after successful update
+      } else {
+        toast.error("Failed to update vendor", { autoClose: 2000 });
+        alert("Failed to update vendor");
+      }
+    } catch (error) {
+      console.error("Error updating vendor:", error);
+      toast.error("An error occurred while updating the vendor", {
+        autoClose: 2000,
+      });
+      alert("An error occurred while updating the vendor");
+    }
+  };
 
   return (
     <div className="vendddContainer">
@@ -179,6 +188,53 @@ const handleSubmit = async () => {
             error={errors.currencyCode}
           />
           <FloatingInput
+            label={"Aadhar No"}
+            name="aadharNo"
+            required
+            value={formValues.aadharNo}
+            onChange={handleInputChange}
+            placeholder="Aadhar No"
+            error={errors.aadharNo}
+          />
+          <FloatingInput
+            label={"GST NO"}
+            name="gstNo"
+            required
+            value={formValues.gstNo}
+            onChange={handleInputChange}
+            placeholder="GST NO"
+            error={errors.gstNo}
+          />
+          <FloatingInput
+            label={"Pan Card"}
+            name="panCard"
+            required
+            value={formValues.panCard}
+            onChange={handleInputChange}
+            placeholder="Pan Card"
+            error={errors.panCard}
+          />
+           <FloatingInput
+            label={"Contract Start Date"}
+            name="contractStartDate"
+            type="date"
+            required
+            value={formValues.contractStartDate}
+            onChange={handleInputChange}
+            error={errors.contractStartDate}
+          />
+        </div>
+        <div className="vendddColumn">
+        <FloatingInput
+            label={"Contract End Date"}
+            name="contractEndDate"
+            type="date"
+            required
+            value={formValues.contractEndDate}
+            onChange={handleInputChange}
+            error={errors.contractEndDate}
+          />
+          <FloatingInput
             label={"Bank Details"}
             name="bankDetails"
             elementType="textarea"
@@ -186,8 +242,6 @@ const handleSubmit = async () => {
             onChange={handleInputChange}
             placeholder="Bank details"
           />
-        </div>
-        <div className="vendddColumn">
           <FloatingInput
             label={"Vendor Code"}
             name="vendorCode"
@@ -225,7 +279,7 @@ const handleSubmit = async () => {
             value={formValues.govtRegDate}
             onChange={handleInputChange}
           />
-        
+
           <label className="vendddAddLabel">
             <input
               type="checkbox"
@@ -235,7 +289,6 @@ const handleSubmit = async () => {
             />
             Is Active
           </label>
-
 
           <label className="vendddAddLabel">
             <input

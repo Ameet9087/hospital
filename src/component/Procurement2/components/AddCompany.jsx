@@ -14,6 +14,11 @@ const AddCompany = ({ closeModal }) => { // Accept closeModal as a prop
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+// Validate all fields
+if (!companyName?.trim() || !code?.trim() || !address?.trim() || !email?.trim() || !contactNo?.trim() || !description?.trim()) {
+  toast.error("Please fill in all required fields.");
+  return;
+}
 
     const newCompany = {
       companyName,

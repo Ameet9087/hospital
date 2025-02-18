@@ -10,7 +10,11 @@ const AddUnitOfMeasurement = ({onClose}) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  // Validate all fields
+  if (!unitOfMeasurementName?.trim() || !description?.trim()) {
+    toast.error("Please fill in all required fields.");
+    return;
+  }
     const newUnit = {
       name:unitOfMeasurementName,
       description,

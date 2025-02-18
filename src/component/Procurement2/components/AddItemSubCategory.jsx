@@ -17,7 +17,18 @@ const AddItemSubCategory = ({onClose}) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-   
+    // Validate required fields
+  if (
+    !subCategoryName?.trim() ||
+    !itemSubCategoryName?.trim() ||
+    !subCategoryCode?.trim() ||
+    !accountingLedger?.trim() ||
+    !description?.trim() ||
+    !category?.trim()
+  ) {
+    toast.error("Please fill in all required fields.");
+    return;
+  }
     const newSubCategory = {
       subCategoryName,
       itemSubCategoryName,

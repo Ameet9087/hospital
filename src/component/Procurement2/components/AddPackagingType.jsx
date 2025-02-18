@@ -10,7 +10,11 @@ const AddPackagingType = ({onclose}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+ // Validate all fields
+ if (!packagingTypeName?.trim() || !description?.trim()) {
+  toast.error("Please fill in all required fields.");
+  return;
+}
     const packagingType = {
       packagingTypeName,
       description,
