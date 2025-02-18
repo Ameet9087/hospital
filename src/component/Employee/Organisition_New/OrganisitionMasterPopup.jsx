@@ -177,8 +177,7 @@ const OrganisitionMasterPopup = () => {
         contactPerson: formData.contactPerson,
         grantAdPayMode: formData.grantAdPayMode,
         creditcardnumber: formData.creditcardnumber,
-        cssnumber: formData.cssnumber,
-        expirydate: formData.expirydate,
+     
         gstnumber: formData.gstnumber,
         discountPolicy: formData.discountPolicy,
         organisationCode: formData.organisationCode,
