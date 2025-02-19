@@ -98,7 +98,7 @@ const VehicleMaintenance = () => {
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   };
-  const addVehicles = useFilter(addVehicle, searchTerm);
+  const addVehicles = useFilter(labTests, searchTerm);
 
 
 
@@ -114,14 +114,14 @@ const VehicleMaintenance = () => {
         <div className="vehicleMaintenance-search-bar">
           {/* <i className="fa-solid fa-magnifying-glass"></i> */}
           <input type="text" placeholder="Search..."
-           value={searchTerm}
-           onChange={handleSearch}
-         />
+            value={searchTerm}
+            onChange={handleSearch}
+          />
 
-    
+
         </div>
         <div className="vehicleMaintenance-results-info">
-          <span>Showing {addVehicle.length} / {addVehicle.length} results</span>
+          <span>Showing {labTests.length} / {labTests.length} results</span>
           <button className="vehicleMaintenance-print-button"><i className="fa-solid fa-file-excel"></i> Export</button>
           <button className="vehicleMaintenance-print-button" onClick={handlePrint}><i className="fa-solid fa-print"></i> Print</button>
         </div>

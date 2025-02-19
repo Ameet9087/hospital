@@ -163,7 +163,7 @@ const LabVenderAddNewLV = ({ onClose }) => {
                 type="text"
                 name="yearOfManufacture"
                 value={formData.yearOfManufacture}
-                onChange={handleChange}
+                onChange={handleInputChange}
                 min="1"
 
               />
