@@ -15,11 +15,13 @@ import {
   FloatingSelect,
   FloatingTextarea,
 } from "../../../../FloatingInputs";
+import { useFilter } from "../../../ShortCuts/useFilter";
 
 function SSIReturn() {
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [showViewRequisition, setShowViewRequisition] = useState(false);
   const [returns, setReturns] = useState([]);
+  const [searchTerm, setSearchTerm] = useState();
   const [showNewPatientConsumption, setShowNewPatientConsumption] =
     useState(false); // State to control New Patient Consumption
   const tableRef = useRef(null);
@@ -106,6 +108,7 @@ function SSIReturn() {
     XLSX.utils.book_append_sheet(wb, ws, "SIReturn"); // Appends worksheet to workbook
     XLSX.writeFile(wb, "SIReturn.xlsx"); // Downloads the Excel file
   };
+  const filteredReturns = useFilter(returns,)
 
   return (
     <div className="sSIReturn-active-imaging-request">
@@ -152,9 +155,11 @@ function SSIReturn() {
         <div className="sSIReturn-search-N-results">
           <div className="sSIReturn-search-bar">
 
-            <FloatingInput 
-            label={"Search"}
-            type="search"
+            <FloatingInput
+              label={"text"}
+              type="search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           <div className="sSIReturn-results-info">

@@ -152,8 +152,8 @@ const AppointmentBookingList = () => {
     setFormData(id);
   };
   const handleConfirm = async (data) => {
-    navigate("/billing/opdbilling",{
-      state:{outPatientId:data}
+    navigate("/billing/opdbilling", {
+      state: { outPatientId: data }
     })
   };
 
@@ -247,12 +247,12 @@ const AppointmentBookingList = () => {
               onChange={handleDateToChange}
             />
           </div>
-          <button
+          {/* <button
             onClick={fetchAppointments}
             className="appointments__show-patient-btn"
           >
             Show Patient
-          </button>
+          </button> */}
         </div>
 
         <div className="appointments__upcoming-appointments">

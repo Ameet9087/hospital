@@ -8,7 +8,7 @@ import FloatingInput from '../../../../FloatingInputs/FloatingInput';
 import FloatingSelect from '../../../../FloatingInputs/FloatingSelect';
 
 const StockList = () => {
-  const [columnWidths,setColumnWidths] = useState({});
+  const [columnWidths, setColumnWidths] = useState({});
   const tableRef = useRef(null);
   const [subcategory, setSubcategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -83,7 +83,7 @@ const StockList = () => {
       ) : (
         <>
           <div className="stock-filters">
-          <FloatingSelect
+            {/* <FloatingSelect
   label={"SubCategory"}
   value={subcategory}
   onChange={handleSubcategoryChange}
@@ -94,7 +94,7 @@ const StockList = () => {
       label: item?.subCategory?.itemSubCategoryName,
     }))
   ]}
-/>
+/> */}
 
             {/* <label>
               <input type="checkbox" />
@@ -112,12 +112,12 @@ const StockList = () => {
           <div className="stock-search-export">
             <div className='Stock-search-input-container'>
               <FloatingInput
-              label={"Search"}
-              type="text"
+                label={"Search"}
+                type="text"
                 placeholder="Search"
                 value={searchQuery}
-                onChange={handleSearchChange}/>
-             
+                onChange={handleSearchChange} />
+
             </div>
             <div className='stock-button-list'>
               <span>{`Showing ${filteredItems.length} of ${items.length} results`}</span>
@@ -126,60 +126,60 @@ const StockList = () => {
             </div>
           </div>
           <div className='stock-ta'>
-          <table className="patientList-table" ref={tableRef}>
-          <thead>
-            <tr>
-              {[
-               "Item Type",
-  "Sub Category",
-  "Item Name",
-  "Item Code",
-  "Unit",
-  "Available Quantity",
-  "Action"
-              ].map((header, index) => (
-                <th
-                  key={index}
-                  style={{ width: columnWidths[index] }}
-                  className="resizable-th"
-                >
-                  <div className="header-content">
-                    <span>{header}</span>
-                    <div
-                      className="resizer"
-                      onMouseDown={startResizing(
-                        tableRef,
-                        setColumnWidths
-                      )(index)}
-                    ></div>
-                  </div>
-                </th>
-              ))}
-            </tr>
-          </thead>
-            <tbody>
-              {filteredItems.map(item => (
-                <tr key={item.id}>
-                  <td>{item?.inventory}</td>
-                  <td>{item?.subCategory?.itemSubCategoryName}</td>
-                  <td>{item?.itemName}</td>
-                  <td>{item?.itemCode}</td>
-                  <td>{item?.unitOfMeasurement?.name}</td>
-                  <td>{item?.availableQty}</td>
-                  <td>
-                    <button className="stock-view-button">View</button>
-                    <button
-                      className="stock-manage-button"
-                      onClick={() => handleManageStockClick(item)}
+            <table className="patientList-table" ref={tableRef}>
+              <thead>
+                <tr>
+                  {[
+                    "Item Type",
+                    "Sub Category",
+                    "Item Name",
+                    "Item Code",
+                    "Unit",
+                    "Available Quantity",
+                    "Action"
+                  ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
                     >
-                      Manage Stock
-                    </button>
-                  </td>
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-          {/* <div className="stock-pagination">
+              </thead>
+              <tbody>
+                {filteredItems.map(item => (
+                  <tr key={item.id}>
+                    <td>{item?.inventory}</td>
+                    <td>{item?.subCategory?.itemSubCategoryName}</td>
+                    <td>{item?.itemName}</td>
+                    <td>{item?.itemCode}</td>
+                    <td>{item?.unitOfMeasurement?.name}</td>
+                    <td>{item?.availableQty}</td>
+                    <td>
+                      <button className="stock-view-button">View</button>
+                      <button
+                        className="stock-manage-button"
+                        onClick={() => handleManageStockClick(item)}
+                      >
+                        Manage Stock
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {/* <div className="stock-pagination">
             <span>{`1 to ${filteredItems.length} of ${items.length}`}</span>
             <button disabled>First</button>
             <button disabled>Previous</button>

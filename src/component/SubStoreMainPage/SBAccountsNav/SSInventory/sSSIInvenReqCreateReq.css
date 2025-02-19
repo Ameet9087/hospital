@@ -252,8 +252,8 @@ justify-content: space-between;
   justify-content: center;
 }
 
-.sSSIInvenReqCreateReq-delete-row-button {
-  background-color: #ff4d4d; /* Red color for delete action */
+/* .sSSIInvenReqCreateReq-delete-row-button {
+  background-color: #ff4d4d; 
   color: white;
   border: none;
   border-radius: 5px;
@@ -266,9 +266,9 @@ justify-content: space-between;
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-}
-
+} */
+/* 
 .sSSIInvenReqCreateReq-delete-row-button:hover{
   background-color: #ff4d4d; 
   color: white;
-}
+} */

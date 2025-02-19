@@ -343,19 +343,19 @@ const DiabeticChartForm = () => {
     }
   };
   const handleBack = () => navigate("/emergency/erinitial");
-  
+
   return (
     <>
       <div className="diabetic-chart-form-container">
         <div className="diabetic-chart-form-section">
-        <div className="er-initial-assessment-com-section">
-        <button className="er-initial-assessment-com-section-back" onClick={handleBack}>Back</button>
-        </div>
+          <div className="er-initial-assessment-com-section">
+            <button className="er-initial-assessment-com-section-back" onClick={handleBack}>Back</button>
+          </div>
 
           <div className="diabetic-chart-form-header">
             Diabetic Chart Details
-            
-          
+
+
           </div>
           <div className="diabetic-chart-form-grid">
             <FloatingInput

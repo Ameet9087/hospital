@@ -133,7 +133,7 @@ const DoctorScheduleTable = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="doctor-schedule-table__no-data">
+                <td colSpan="9" className="doctor-schedule-table__no-data">
                   No records found
                 </td>
               </tr>

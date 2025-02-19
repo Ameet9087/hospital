@@ -8,23 +8,29 @@ import SSIPatientConsumNewPCbtn from "./sSIPatientConsumNewPCbtn";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../../../api/api";
 import CustomModal from "../../../../CustomModel/CustomModal";
+import { startResizing } from "../../../../TableHeadingResizing/ResizableColumns";
 
 import {
   FloatingInput,
   FloatingSelect,
   FloatingTextarea,
 } from "../../../../FloatingInputs";
+import { useFilter } from "../../../ShortCuts/useFilter";
 
 function SSIPatientConsumption() {
   const printRef = useRef();
   const { store } = useParams();
-  const [fromDate, setFromDate] = useState("2024-08-14");
-  const [toDate, setToDate] = useState("2024-08-21");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+
   const [patientConsumptions, setPatientConsumptions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showCreateRequisition, setShowCreateRequisition] = useState(false);
   const [showViewRequisition, setShowViewRequisition] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("")
+  const [columnWidths, setColumnWidths] = useState({});
+
 
   const tableRef = useRef(null);
   const [showNewPatientConsumption, setShowNewPatientConsumption] =
@@ -143,12 +149,12 @@ function SSIPatientConsumption() {
   };
 
 
- const filterByDate = (data) => {
-    if (!dateFrom || !dateTo) return data; // If no dates, return all data
+  const filterByDate = (data) => {
+    if (!fromDate || !toDate) return data; // If no dates, return all data
     return data.filter((item) => {
       const consumptionDate = new Date(item.consumptionDate);
-      const startDate = new Date(dateFrom);
-      const endDate = new Date(dateTo);
+      const startDate = new Date(fromDate);
+      const endDate = new Date(toDate);
       return consumptionDate >= startDate && consumptionDate <= endDate;
     });
   };
@@ -157,7 +163,7 @@ function SSIPatientConsumption() {
     filterByDate(patientConsumptions),
     searchTerm
   );
-  
+
 
   return (
     <div className="sSIPatientConsumption-active-imaging-request">
@@ -180,13 +186,15 @@ function SSIPatientConsumption() {
             <FloatingInput
               label="From Date"
               type="date"
-              defaultValue="2024-08-09"
+              onChange={(e) => setFromDate(e.target.value)}
+              value={fromDate}
             />
 
             <FloatingInput
               label="To Date"
               type="date"
-              defaultValue="2024-08-16"
+              onChange={(e) => setToDate(e.target.value)}
+              value={toDate}
             />
             {/* <button className="sSIPatientConsumption-star-button">☆</button>
     <button className="sSIPatientConsumption-more-btn">-</button>
