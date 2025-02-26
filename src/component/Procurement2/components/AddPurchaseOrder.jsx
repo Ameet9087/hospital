@@ -6,15 +6,20 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { API_BASE_URL } from "../../api/api";
 import FloatingInput from "../../../FloatingInputs/FloatingInput";
 import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
+import { FloatingTextarea, PopupTable } from "../../../FloatingInputs";
+import { CiSearch } from "react-icons/ci";
 const AddPurchaseOrderDraft = ({ request, onClose }) => {
   console.log(request);
-
+  const [locations, setLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
   const date = new Date();
   const [vendors, setVendors] = useState([]);
   const [currentDate, setCurrentDate] = useState(date);
   const [selectedVendor, setSelectedVendor] = useState(null);
   const [items, setItems] = useState([]); // To store all items
   const [filteredItems, setFilteredItems] = useState([]);
+  const [activePopup, setActivePopup] = useState("");
+
   const getCurrentDate = () => {
     const date = new Date();
     return date.toISOString().split("T")[0]; // Format as YYYY-MM-DD
@@ -35,6 +40,10 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
     paymentMode: "",
     remarks: "",
     items: [],
+    locationMasterDTO: {
+      id: ""
+    },
+    termsAndCondition: ""
   });
 
   useEffect(() => {
@@ -84,6 +93,39 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
       .then((response) => setItems(response.data))
       .catch((error) => console.error("Error fetching items:", error));
   }, []);
+
+
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/location-masters`)
+      .then((response) => response.json())
+      .then((data) => {
+        setLocations(data);
+      })
+      .catch((error) => console.error("Error fetching Locations:", error));
+  }, []);
+
+  const getPopupData = () => {
+    if (activePopup === "Location") {
+      return {
+        columns: ["id", "locationName"],
+        data: locations,
+      };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
+  const { columns, data } = getPopupData();
+
+
+  const handleSelect = async (data) => {
+    if (activePopup === "Location") {
+      setSelectedLocation(data);
+    }
+
+    setActivePopup(null);
+  };
+
 
   const handleCategorySelect = (index, category) => {
     const filtered = items.filter((item) => item.category === category);
@@ -219,6 +261,9 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
       status: "Draft",
       vendorId: formData.vendorId,
       items: cleanedItems, // Only itemId included
+      locationMasterDTO: {
+        id: selectedLocation.id
+      }
     };
 
     console.log("Payload:", payload);
@@ -250,9 +295,9 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
               { value: "", label: "Select a vendor" },
               ...(Array.isArray(vendors)
                 ? vendors.map((vendor) => ({
-                    value: vendor.id,
-                    label: vendor.vendorName,
-                  }))
+                  value: vendor.id,
+                  label: vendor.vendorName,
+                }))
                 : []),
             ]}
           />
@@ -353,6 +398,15 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
             onChange={handleInputChange}
           />
         </div>
+        <div className="dgpkg-input-with-icon">
+          <FloatingInput
+            label="Location"
+            value={selectedLocation?.locationName}
+          />
+          <div className="dgpkg-magnifier-btn">
+            <CiSearch onClick={() => setActivePopup("Location")} />
+          </div>
+        </div>
       </div>
 
       <table className="AddPurchaseOrder-items-table">
@@ -429,9 +483,9 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
                     { value: "", label: "Select Item" },
                     ...(Array.isArray(items)
                       ? items.map((itm) => ({
-                          value: itm.itemName,
-                          label: itm.itemName,
-                        }))
+                        value: itm.itemName,
+                        label: itm.itemName,
+                      }))
                       : []),
                   ]}
                 />
@@ -502,53 +556,53 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
                 />
               </td>
               <td>
-              <FloatingInput
+                <FloatingInput
                   type="text"
                   value={item.standardRate || ""}
                   className="purchaseorderItemInput"
                   readOnly
                 />
-              
+
               </td>
               <td>
-              <FloatingInput
-                   type="text"
-                   value={item.vat || ""}
-                   className="purchaseorderItemInput"
-                   onChange={(e) => {
-                     const vatPercentage = parseFloat(e.target.value) || 0; // Parse VAT percentage
-                     const quantity = parseFloat(item.quantity) || 0;
-                     const standardRate = parseFloat(item.standardRate) || 0;
- 
-                     // Calculate VAT and total amount
-                     const vatAmount =
-                       (quantity * standardRate * vatPercentage) / 100;
-                     const totalAmount = quantity * standardRate + vatAmount;
- 
-                     // Update state with VAT and total amount
-                     handleItemChange(index, "vat", vatPercentage);
-                     handleItemChange(
-                       index,
-                       "totalAmount",
-                       totalAmount.toFixed(2)
-                     );
-                   }}
+                <FloatingInput
+                  type="text"
+                  value={item.vat || ""}
+                  className="purchaseorderItemInput"
+                  onChange={(e) => {
+                    const vatPercentage = parseFloat(e.target.value) || 0; // Parse VAT percentage
+                    const quantity = parseFloat(item.quantity) || 0;
+                    const standardRate = parseFloat(item.standardRate) || 0;
+
+                    // Calculate VAT and total amount
+                    const vatAmount =
+                      (quantity * standardRate * vatPercentage) / 100;
+                    const totalAmount = quantity * standardRate + vatAmount;
+
+                    // Update state with VAT and total amount
+                    handleItemChange(index, "vat", vatPercentage);
+                    handleItemChange(
+                      index,
+                      "totalAmount",
+                      totalAmount.toFixed(2)
+                    );
+                  }}
                 />
-              
-              
+
+
               </td>
               <td>
-              <FloatingInput
+                <FloatingInput
                   type="text"
                   value={item.totalAmount || ""}
                   className="purchaseorderItemInput"
                   readOnly
                 />
-              
-              
+
+
               </td>
               <td>
-              <FloatingInput
+                <FloatingInput
                   type="text"
                   value={item.remarks || ""}
                   className="purchaseorderItemInput"
@@ -556,8 +610,8 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
                     handleItemChange(index, "remarks", e.target.value)
                   } // User input only
                 />
-              
-              
+
+
               </td>
               <td>
                 <button
@@ -576,10 +630,23 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
         + Add New Row
       </button>
 
+      <div>
+        <FloatingTextarea label={"Terms and Conditions"} name={"termsAndCondition"} value={formData.termsAndCondition} onChange={handleInputChange} />
+      </div>
+
       {/* Submit Button */}
       <div className="AddPurchaseOrder-button-group">
         <button className="purchaseorder-add-btn" onClick={handleSubmit}>Save Purchase Order</button>
       </div>
+
+      {activePopup && (
+        <PopupTable
+          columns={columns}
+          data={data}
+          onSelect={handleSelect}
+          onClose={() => setActivePopup(false)}
+        />
+      )}
     </div>
   );
 };

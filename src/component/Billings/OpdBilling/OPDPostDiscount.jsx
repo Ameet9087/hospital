@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../../TableHeadingResizing/resizableColumns";
 import "./OPDPostDiscount.css";
 import {
   PopupTable,
@@ -12,8 +12,8 @@ import { toast } from "react-toastify";
 import CustomModal from "../../../CustomModel/CustomModal";
 import OpdPostDiscountPrint from "./OpdPostDiscountPrint";
 
-
-const OPDPostDiscount = (onClose) => {
+// Dhanashree
+const OPDPostDiscount = () => {
   const [selectedTab, setSelectedTab] = useState("testGrid");
   const [columnWidths, setColumnWidths] = useState({});
   const [selectedBillNo, setSelectedBillNo] = useState({ opdBillingId: "" });
@@ -384,10 +384,7 @@ const OPDPostDiscount = (onClose) => {
     if (selectedTab !== "testGrid") return null;
 
     return (
-      
       <div className="OPDPostDiscount-services-table">
-
-
         <table ref={tableRef}>
           <thead>
             <tr>
@@ -541,7 +538,6 @@ const OPDPostDiscount = (onClose) => {
   };
 
   return (
-
     <>
       <div className="OPDPostDiscount-container">
         <div className="OPDPostDiscount-section">

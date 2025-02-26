@@ -35,7 +35,7 @@ const FinalBill = () => {
   const [remark, setRemark] = useState("");
 
   const OpenPrintFile = () => {
-    navigate("/billing/finalbillingprint");
+    navigate("/OpdBillingPrint");
   };
 
   const [roomRentTableRows, setroomRentTableRows] = useState([
@@ -310,7 +310,10 @@ const FinalBill = () => {
 
   const calculateTotalSurgeryAmount = () => {
     return displaySuegeryTableRows
-      .reduce((total, row) => total + (parseFloat(row.totalAmt) || 0), 0)
+      .reduce(
+        (total, row) => total + (parseFloat(row.totalHospitalAmt) || 0),
+        0
+      )
       .toFixed(2);
   };
 
@@ -379,9 +382,11 @@ const FinalBill = () => {
     const totalRoomRent = parseFloat(calculateTotalRoomRent());
     const totalDoctorVisit = parseFloat(calculateTotalDrVisit());
     const totalService = parseFloat(calculateTotalServiceAmount());
+    const totalsurgeryAmt = parseFloat(calculateTotalSurgeryAmount());
 
     // Gross Total Calculation (without discounts or GST yet)
-    const total = totalRoomRent + totalService + totalDoctorVisit;
+    const total =
+      totalRoomRent + totalService + totalDoctorVisit + totalsurgeryAmt;
 
     // Apply Discount if Discount Authority is selected
     let discountAmt = 0;
@@ -412,6 +417,8 @@ const FinalBill = () => {
     roomRentTableRows,
     advancesTableRows,
     selecteddiscAuthority,
+    displaySuegeryTableRows,
+
   ]);
 
   const populateSummaryTable = () => {
@@ -426,22 +433,6 @@ const FinalBill = () => {
         netAmt: calculateTotalRoomRent(),
       });
     }
-
-    // if (displaySuegeryTableRows.length > 0) {
-    //   const totalSurgeryAmt = displaySuegeryTableRows.reduce(
-    //     (sum, row) => sum + (parseFloat(row.totalHospitalAmt) || 0),
-
-    //   ).toFixed(2);
-
-    //   summaryData.push({
-    //     sn: summaryData.length + 1,
-    //     headName: "Surgery Details",
-    //     totalAmt: calculateTotalSurgeryAmount(),
-    //     discAmt: "0.00", // Assuming no discount
-    //     netAmt: totalSurgeryAmt,
-    //   });
-    // }
-
     if (Array.isArray(servicesTableRows) && servicesTableRows.length > 0) {
       const totalAmount = calculateTotalServiceAmount(); // Avoid duplicate calls
 
@@ -457,9 +448,7 @@ const FinalBill = () => {
     setsummaryTableRows(summaryData);
   };
 
-  useEffect(() => {
-    populateSummaryTable();
-  }, [selectedPatientDetails]);
+
 
   useEffect(() => {
     if (selectedPatientDetails) {
@@ -485,22 +474,18 @@ const FinalBill = () => {
   useEffect(() => {
     if (selectedPatientDetails) {
       axios
-        .get(`${API_BASE_URL}/surgery-events`)
+        .get(
+          `${API_BASE_URL}/surgery-events/by-ipAdmissionId/${selectedPatientDetails.ipAdmmissionId}`
+        )
         .then((response) => {
-          const surgeryData = response.data.map((event, index) => ({
-            sn: index + 1,
-            totalHospitalAmt: event.totalHospitalAmt,
-            operationName: event.operationMasterDTO.operationName,
-            remark: event.operationBookingDTO.remark,
-          }));
-
-          setdisplaySuegeryTableRows(surgeryData);
+          setdisplaySuegeryTableRows(response.data);
         })
         .catch((error) => {
           console.error("Error fetching surgery data:", error);
         });
     }
   }, [selectedPatientDetails]);
+
 
   useEffect(() => {
     if (selectedPatientDetails) {
@@ -1030,15 +1015,6 @@ const FinalBill = () => {
         sn: index + 1,
       }));
       setpharmacyRetTableRows(renumberedRows);
-    } else if (tableType === "summary") {
-      const updatedRows = summaryTableRows.filter(
-        (_, index) => index !== indexToRemove
-      );
-      const renumberedRows = updatedRows.map((row, index) => ({
-        ...row,
-        sn: index + 1,
-      }));
-      setsummaryTableRows(renumberedRows);
     } else if (tableType === "advances") {
       const updatedRows = advancesTableRows.filter(
         (_, index) => index !== indexToRemove
@@ -1222,7 +1198,6 @@ const FinalBill = () => {
                     <td>
                       <FloatingInput
                         type="text"
-                        label={"rate"}
                         value={row.rate}
                         onChange={(e) =>
                           handleInputChange(
@@ -1231,11 +1206,11 @@ const FinalBill = () => {
                             parseFloat(e.target.value)
                           )
                         }
+                        readOnly
                       />
                     </td>
                     <td>
                       <FloatingInput
-                        label={"qty"}
                         type="number"
                         value={row.qty}
                         onChange={(e) =>
@@ -1245,12 +1220,12 @@ const FinalBill = () => {
                             parseInt(e.target.value)
                           )
                         }
+                        readOnly
                       />
                     </td>
                     <td>{row.totalAmt}</td>
                     <td>
                       <FloatingInput
-                        label={"dis"}
                         type="number"
                         min="0"
                         value={row.disc}
@@ -1263,7 +1238,13 @@ const FinalBill = () => {
                         }
                       />
                     </td>
-                    <td>{row.discAmt}</td>
+                    <td>
+                      <FloatingInput
+                        type="text"
+                        value={row.discAmt}
+                        restrictions={{ number: true }}
+                      />
+                    </td>
                     <td>{row.netAmt}</td>
                     <td>{row.pkg}</td>
                     <td>{row.patPayable}</td>
@@ -1288,7 +1269,7 @@ const FinalBill = () => {
                     readOnly
                   />
                 </div>
-                <div className="final-bill-summary-field">
+                {/* <div className="final-bill-summary-field">
                   <label>Disc %:</label>
                   <input type="text" value="0.00" />
                 </div>
@@ -1315,7 +1296,7 @@ const FinalBill = () => {
                 <div className="final-bill-summary-field">
                   <label>Total Pkg Uncov:</label>
                   <input type="text" value="0.00" />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -1327,7 +1308,6 @@ const FinalBill = () => {
               <thead>
                 <tr>
                   {[
-                    "Actions",
                     "SN",
                     "DCode",
                     "Doctor Name",
@@ -1372,7 +1352,7 @@ const FinalBill = () => {
               <tbody>
                 {drVisitsTableRows.map((row, index) => (
                   <tr key={index}>
-                    <td>
+                    {/* <td>
                       <div className="table-actions">
                         <button
                           className="final-bill-add-btn"
@@ -1388,7 +1368,7 @@ const FinalBill = () => {
                           Del
                         </button>
                       </div>
-                    </td>
+                    </td> */}
                     <td>{row.sn}</td>
                     <td>{row.dCode}</td>
                     <td>{row.doctorName}</td>
@@ -1420,7 +1400,7 @@ const FinalBill = () => {
                   <label>Total:</label>
                   <input type="text" value={calculateTotalDrVisit()} />
                 </div>
-                <div className="final-bill-summary-field">
+                {/* <div className="final-bill-summary-field">
                   <label>Disc %:</label>
                   <input type="text" value="0.00" />
                 </div>
@@ -1459,7 +1439,7 @@ const FinalBill = () => {
                 <div className="final-bill-summary-field">
                   <label>Total To Hospital:</label>
                   <input type="text" value="0.00" />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -1669,7 +1649,7 @@ const FinalBill = () => {
                     readOnly
                   />
                 </div>
-                <div className="final-bill-summary-field">
+                {/* <div className="final-bill-summary-field">
                   <label>Disc %:</label>
                   <input type="text" value="0.00" />
                 </div>
@@ -1708,7 +1688,7 @@ const FinalBill = () => {
                 <div className="final-bill-summary-field">
                   <label>Total To Hospital:</label>
                   <input type="text" value="0.00" />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -1868,9 +1848,7 @@ const FinalBill = () => {
                     "Time",
                     "PCode",
                     "Medicine Name",
-
                     "Rate",
-
                     "Qty",
                     "Total Amt",
                     "Disc%",
@@ -1911,7 +1889,7 @@ const FinalBill = () => {
               <tbody>
                 {pharmacyTableRows.map((row, index) => (
                   <tr key={index}>
-                    <td>
+                    {/* <td>
                       <div className="table-actions">
                         <button
                           className="final-bill-add-btn"
@@ -1927,7 +1905,7 @@ const FinalBill = () => {
                           Del
                         </button>
                       </div>
-                    </td>
+                    </td> */}
                     <td>{row.sn}</td>
                     <td>{row.Date}</td>
                     <td>{row.pCode}</td>
@@ -1959,7 +1937,7 @@ const FinalBill = () => {
                   <label>Total:</label>
                   <input type="text" value="0.00" />
                 </div>
-                <div className="final-bill-summary-field">
+                {/* <div className="final-bill-summary-field">
                   <label>Disc %:</label>
                   <input type="text" value="0.00" />
                 </div>
@@ -1978,7 +1956,7 @@ const FinalBill = () => {
                 <div className="final-bill-summary-field">
                   <label>Total pKg UnCov:</label>
                   <input type="text" value="0.00" />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -2117,37 +2095,32 @@ const FinalBill = () => {
             <table border={1} ref={tableRef}>
               <thead>
                 <tr>
-                  {[
-                    "Actions",
-                    "SN",
-                    "Head Name",
-                    "Total Amt",
-                    "Disc Amt",
-                    "Net Amt",
-                  ].map((header, index) => (
-                    <th
-                      key={index}
-                      style={{ width: columnWidths[index] }}
-                      className="resizable-th"
-                    >
-                      <div className="header-content">
-                        <span>{header}</span>
-                        <div
-                          className="resizer"
-                          onMouseDown={startResizing(
-                            tableRef,
-                            setColumnWidths
-                          )(index)}
-                        ></div>
-                      </div>
-                    </th>
-                  ))}
+                  {["SN", "Head Name", "Total Amt", "Disc Amt", "Net Amt"].map(
+                    (header, index) => (
+                      <th
+                        key={index}
+                        style={{ width: columnWidths[index] }}
+                        className="resizable-th"
+                      >
+                        <div className="header-content">
+                          <span>{header}</span>
+                          <div
+                            className="resizer"
+                            onMouseDown={startResizing(
+                              tableRef,
+                              setColumnWidths
+                            )(index)}
+                          ></div>
+                        </div>
+                      </th>
+                    )
+                  )}
                 </tr>
               </thead>
               <tbody>
                 {summaryTableRows.map((row, index) => (
                   <tr key={index}>
-                    <td>
+                    {/* <td>
                       <div className="table-actions">
                         <button
                           className="final-bill-add-btn"
@@ -2163,7 +2136,7 @@ const FinalBill = () => {
                           Del
                         </button>
                       </div>
-                    </td>
+                    </td> */}
                     <td>{row.sn}</td>
                     {/* <td>{row.Date}</td> */}
                     <td>{row.headName}</td>
@@ -2181,14 +2154,14 @@ const FinalBill = () => {
                   <label>Total Amt:</label>
                   <input type="text" value={wholeGrossAmount} />
                 </div>
-                <div className="final-bill-summary-field">
+                {/* <div className="final-bill-summary-field">
                   <label>Disc Amt:</label>
                   <input type="text" value="0.00" />
                 </div>
                 <div className="final-bill-summary-field">
                   <label>Net Amt:</label>
                   <input type="text" value="0.00" />
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -2229,24 +2202,26 @@ const FinalBill = () => {
                 </tr>
               </thead>
               <tbody>
-                {advancesTableRows.map((row, index) => (
-                  <tr key={index}>
-                    <td>{row.sn}</td>
-                    <td>{row.receiptDate}</td>
-                    <td>{row.receiptNo}</td>
-                    <td>
-                      {row.paymentModes
-                        .map((mode) => `${mode.amount}`)
-                        .join(", ")}
-                    </td>
-                    <td>
-                      {row.paymentModes
-                        .map((mode) => `${mode.modeName}`)
-                        .join(", ")}
-                    </td>
-                    <td>{row.advanceType}</td>
-                  </tr>
-                ))}
+                {advancesTableRows
+                  .filter((row) => row.type === "Advance") // Filter for rows with type = "Advance"
+                  .map((row, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{row.receiptDate || "N/A"}</td>
+                      <td>{row.receiptNo || "N/A"}</td>
+                      <td>
+                        {row.paymentModes && row.paymentModes.length > 0
+                          ? row.paymentModes.map((mode) => mode.amount || "0").join(", ")
+                          : "N/A"}
+                      </td>
+                      <td>
+                        {row.paymentModes && row.paymentModes.length > 0
+                          ? row.paymentModes.map((mode) => mode.modeName || "N/A").join(", ")
+                          : "N/A"}
+                      </td>
+                      <td>{row.advanceType || "N/A"}</td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
             <div className="final-bill-summary-section">
@@ -2266,31 +2241,26 @@ const FinalBill = () => {
             <table border={1} ref={tableRef}>
               <thead>
                 <tr>
-                  {[
-                    "Actions",
-                    "SN",
-                    "Msg Date",
-                    "Msg Time",
-                    "Message",
-                    "Created",
-                  ].map((header, index) => (
-                    <th
-                      key={index}
-                      style={{ width: columnWidths[index] }}
-                      className="resizable-th"
-                    >
-                      <div className="header-content">
-                        <span>{header}</span>
-                        <div
-                          className="resizer"
-                          onMouseDown={startResizing(
-                            tableRef,
-                            setColumnWidths
-                          )(index)}
-                        ></div>
-                      </div>
-                    </th>
-                  ))}
+                  {["SN", "Msg Date", "Msg Time", "Message", "Created"].map(
+                    (header, index) => (
+                      <th
+                        key={index}
+                        style={{ width: columnWidths[index] }}
+                        className="resizable-th"
+                      >
+                        <div className="header-content">
+                          <span>{header}</span>
+                          <div
+                            className="resizer"
+                            onMouseDown={startResizing(
+                              tableRef,
+                              setColumnWidths
+                            )(index)}
+                          ></div>
+                        </div>
+                      </th>
+                    )
+                  )}
                 </tr>
               </thead>
               <tbody>
@@ -2313,7 +2283,7 @@ const FinalBill = () => {
                         </button>
                       </div>
                     </td>
-                    <td>{row.sn}</td>
+                    <td>{index + 1}</td>
                     <td>{row.msgDate}</td>
                     <td>{row.msgTime}</td>
                     <td>{row.message}</td>
@@ -2399,7 +2369,7 @@ const FinalBill = () => {
             <table border={1} ref={tableRef}>
               <thead>
                 <tr>
-                  {["Actions", "SN", "RoomTypeName", "RoomTypeId", "Limit"].map(
+                  {["SN", "RoomTypeName", "RoomTypeId", "Limit"].map(
                     (header, index) => (
                       <th
                         key={index}
@@ -2424,7 +2394,7 @@ const FinalBill = () => {
               <tbody>
                 {roomLimitTableRows.map((row, index) => (
                   <tr key={index}>
-                    <td>
+                    {/* <td>
                       <div className="table-actions">
                         <button
                           className="final-bill-add-btn"
@@ -2440,8 +2410,8 @@ const FinalBill = () => {
                           Del
                         </button>
                       </div>
-                    </td>
-                    <td>{row.sn}</td>
+                    </td> */}
+                    <td>{index + 1}</td>
                     <td>{row.msgDate}</td>
                     <td>{row.msgTime}</td>
                     <td>{row.message}</td>
@@ -2459,7 +2429,6 @@ const FinalBill = () => {
               <thead>
                 <tr>
                   {[
-                    "Actions",
                     "SN",
                     "Service Name",
                     "ServiceId",
@@ -2491,7 +2460,7 @@ const FinalBill = () => {
               <tbody>
                 {doctorServicesLimitTableRows.map((row, index) => (
                   <tr key={index}>
-                    <td>
+                    {/* <td>
                       <div className="table-actions">
                         <button
                           className="final-bill-add-btn"
@@ -2509,8 +2478,8 @@ const FinalBill = () => {
                           Del
                         </button>
                       </div>
-                    </td>
-                    <td>{row.sn}</td>
+                    </td> */}
+                    <td>{index + 1}</td>
                     <td>{row.msgDate}</td>
                     <td>{row.msgTime}</td>
                     <td>{row.message}</td>
@@ -2532,8 +2501,62 @@ const FinalBill = () => {
             </div>
           </div>
         );
-
       case "displaySuegery":
+        return (
+          <div className="services-table">
+            <table border={1} ref={tableRef}>
+              <thead>
+                <tr>
+                  {[
+                    "SN",
+                    "Description",
+                    "SurgAmount",
+                    "UnitName",
+                  ].map((header, index) => (
+                    <th
+                      key={index}
+                      style={{ width: columnWidths[index] }}
+                      className="resizable-th"
+                    >
+                      <div className="header-content">
+                        <span>{header}</span>
+                        <div
+                          className="resizer"
+                          onMouseDown={startResizing(
+                            tableRef,
+                            setColumnWidths
+                          )(index)}
+                        ></div>
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {displaySuegeryTableRows.map((row, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{row.remark}</td>
+                    <td>{row.totalHospitalAmt}</td>
+                    <td>{row?.operationMasterDTO?.operationName}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="final-bill-summary-section">
+              <div className="final-bill-summary-row">
+                <div className="final-bill-summary-field">
+                  <label>Total Surgery Ammount :</label>
+                  <input
+                    type="text"
+                    value={calculateTotalSurgeryAmount()}
+                    readOnly
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
         return (
           <div className="services-table">
             <table border={1} ref={tableRef}>
@@ -2587,7 +2610,7 @@ const FinalBill = () => {
                         </button>
                       </div>
                     </td>
-                    <td>{row.sn}</td>
+                    <td>{index + 1}</td>
                     <td>{row.remark}</td>
                     <td>{row.totalHospitalAmt}</td>
                     <td>{row.operationName}</td>
@@ -2826,7 +2849,7 @@ const FinalBill = () => {
                     type="text"
                     value={balanceAmount}
                   />
-                  <FloatingInput label="Refundable Amt:" type="text" value="" />
+                  <FloatingInput label="Refundable Amt:" type="text" value={balanceAmount} />
                   <FloatingInput label="Short AuthAmt" type="text" value="" />
                   <div className="final-bill-search-field">
                     <FloatingInput

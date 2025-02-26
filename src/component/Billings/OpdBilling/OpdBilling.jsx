@@ -12,7 +12,6 @@ import { toast } from "react-toastify";
 import { usePopup } from "../../../FidgetSpinner/PopupContext";
 import OpdBillingPrint from "./OpdBillingPrint";
 import CustomModal from "../../../CustomModel/CustomModal";
-import { useNavigate } from "react-router-dom";
 
 const OpdBilling = () => {
   const { showPopup } = usePopup();
@@ -40,22 +39,28 @@ const OpdBilling = () => {
   const [patientType, setPatientType] = useState("");
   const [isPrintEnabled, setIsPrintEnabled] = useState(false);
   const [billFromResponse, setBillFromResponse] = useState(null);
-  const [selectedPaymentMode, setSelectedPaymentMode] = React.useState("");
-
-  const navigate = useNavigate();
 
   const [isEmergency, setemergency] = useState(false);
 
   const handlePrintBilling = () => {
-    console.log("hello");
-
-    // if (!isDataSaved) {
-    //   alert('Please save data before printing.');
-    //   return;
-    // }
-
-    console.log("Navigating with state:", { selectedPatient, selectedDoctor, testGridTableRowsableRows, netAmount, selectedPaymentMode, billFromResponse });
-    navigate("/billing/opdbillingprint", { state: { selectedPatient, selectedDoctor, testGridTableRowsableRows, netAmount, selectedPaymentMode, billFromResponse } });
+    console.log("Navigating with state:", {
+      selectedPatient,
+      selectedDoctor,
+      testGridTableRowsableRows,
+      netAmount,
+      selectedPaymentMode,
+      billFromResponse,
+    });
+    navigate("/billing/OpdBillingPrint", {
+      state: {
+        selectedPatient,
+        selectedDoctor,
+        testGridTableRowsableRows,
+        netAmount,
+        selectedPaymentMode,
+        billFromResponse,
+      },
+    });
   };
 
   const fetchDoctorService = async (outPatientId) => {
@@ -306,7 +311,6 @@ const OpdBilling = () => {
   const [identificationTableRows, setIdentificationTableRows] = useState([
     { sn: 1, Date: "", dCode: "" },
   ]);
-
 
   const handleOverallDiscountPercentChange = (e) => {
     let percent = parseFloat(e.target.value) || 0;
@@ -785,11 +789,12 @@ const OpdBilling = () => {
       });
     } else if (activePopup === "organisation") {
       setSelectedOrganisation(data);
+      console.log(data);
+
       await fetchPackage(data.masterId, selectedPatient.gender, null, "OPD");
     } else if (activePopup === "pkgType") {
       setSelectedPackage(data);
-      console.log(data);
-      const mappedTestGridRows = [selectedPackage].flatMap((pkg) =>
+      const mappedTestGridRows = [selectedPackage]?.flatMap((pkg) =>
         pkg.testDetailsDTO.map((detail, index) => {
           setSelectedService(detail?.serviceDetailsDTO);
           return {
@@ -1149,6 +1154,8 @@ const OpdBilling = () => {
     payTypeName
   ) => {
     try {
+      console.log(organisationId);
+
       let response;
       if (organisationId) {
         response = await axios.get(`${API_BASE_URL}/dg-packages/search`, {
@@ -1319,7 +1326,7 @@ const OpdBilling = () => {
                       <div className="OpdBilling-test-search-field">
                         <FloatingSelect
                           type="search"
-                          value={serviceType || row?.serviceType}
+                          value={serviceType}
                           onChange={(e) => setServiceType(e.target.value)}
                           options={[
                             { value: "Investigation", label: "Investigation" },
@@ -1334,7 +1341,7 @@ const OpdBilling = () => {
                       <div className="OpdBilling-test-search-field">
                         <FloatingInput
                           type="search"
-                          value={selectedService?.serviceName || row?.serviceName}
+                          value={selectedService?.serviceName}
                           onIconClick={() => setActivePopup("services")}
                         />
                       </div>
@@ -1343,7 +1350,7 @@ const OpdBilling = () => {
                       <div className="OpdBilling-test-search-field">
                         <FloatingInput
                           type="search"
-                          value={selectedServiceDoctor?.firstName || row?.doctorName}
+                          value={selectedServiceDoctor?.firstName}
                           onIconClick={() => setActivePopup("serviceDoctor")}
                         />
                       </div>
@@ -2104,13 +2111,13 @@ const OpdBilling = () => {
             <button className="btn-blue" onClick={() => resetForm()}>
               Clear
             </button>
-            <button
+            {/* <button
               className="billing-opd-com-action-buttons"
               onClick={() => handlePrintBilling()}
-            // disabled={!isPrintEnabled}
+              disabled={!isPrintEnabled}
             >
               Print
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

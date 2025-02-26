@@ -3,44 +3,79 @@ import { startResizing } from "../../../TableHeadingResizing/ResizableColumns";
 import "./OpdBillingCancellationPrint.css"; // Make sure the CSS file is created for styling
 import { useLocation } from "react-router-dom";
 
-
-const OpdBillingCancellationPrint = ({ formData }) => {
+const OPDBillingCancellationPrint = ({ formData }) => {
   console.log(formData);
 
   const printRef = useRef(null);
   const location = useLocation();
-  const { selectedBillNo, selecteddiscAuthority, requestBodyPrint, selectedBillingData } = location.state || {};
+  const {
+    selectedBillNo,
+    selecteddiscAuthority,
+    requestBodyPrint,
+    selectedBillingData,
+  } = location.state || {};
   const tableRef = useRef(null);
   const [columnWidths, setColumnWidths] = useState({});
-
 
   console.log(requestBodyPrint, "req prachi");
   // console.log(selectedBillingData,"req bill prachi");
 
-  const formattedDate = formData?.cancelDate && !isNaN(Date.parse(formData.cancelDate))
-    ? new Date(formData.cancelDate).toISOString().split("T")[0]
-    : "N/A";  // Default fallback if the date is invalid or missing
-
-
+  const dateObject = new Date(formData.cancelDate);
+  const formattedDate = dateObject.toISOString().split("T")[0];
 
   const [testGridTableRowsableRows] = useState([
     {
       authorizedPersonName: `${selecteddiscAuthority?.employee?.firstName} ${selecteddiscAuthority?.employee?.lastName}`,
       totalAmount: selectedBillingData?.originalobj?.totalAmount,
       discountPercentage: 5,
-      amountToBePaid: selectedBillingData?.originalobj?.totalAmount - selectedBillingData?.originalobj?.financialDiscAmt,
+      amountToBePaid:
+        selectedBillingData?.originalobj?.totalAmount -
+        selectedBillingData?.originalobj?.financialDiscAmt,
       discountDate: selectedBillingData?.billing_date,
       // billPaid: selectedBillingData?.paymentModeDTO[0]?.paymentMode === "cash" ? "Yes" : "No",
       fileCharges: "50.00",
       paymode: "cash",
-    }
+    },
   ]);
 
   // Function to convert number to words
   const convertNumberToWords = (num) => {
-    const singleDigits = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"];
-    const doubleDigits = ["Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
-    const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+    const singleDigits = [
+      "",
+      "One",
+      "Two",
+      "Three",
+      "Four",
+      "Five",
+      "Six",
+      "Seven",
+      "Eight",
+      "Nine",
+    ];
+    const doubleDigits = [
+      "Ten",
+      "Eleven",
+      "Twelve",
+      "Thirteen",
+      "Fourteen",
+      "Fifteen",
+      "Sixteen",
+      "Seventeen",
+      "Eighteen",
+      "Nineteen",
+    ];
+    const tens = [
+      "",
+      "",
+      "Twenty",
+      "Thirty",
+      "Forty",
+      "Fifty",
+      "Sixty",
+      "Seventy",
+      "Eighty",
+      "Ninety",
+    ];
     const thousandPowers = ["", "Thousand", "Million", "Billion"];
 
     if (num === 0) return "Zero";
@@ -52,7 +87,9 @@ const OpdBillingCancellationPrint = ({ formData }) => {
       if (n < 10) return singleDigits[n] + " ";
       if (n < 20) return doubleDigits[n - 10] + " ";
       if (n < 100) return tens[Math.floor(n / 10)] + " " + getWords(n % 10, 0);
-      return singleDigits[Math.floor(n / 100)] + " Hundred " + getWords(n % 100, 0);
+      return (
+        singleDigits[Math.floor(n / 100)] + " Hundred " + getWords(n % 100, 0)
+      );
     };
 
     const chunks = [];
@@ -73,7 +110,7 @@ const OpdBillingCancellationPrint = ({ formData }) => {
   };
 
   const safeToFixed = (value) => {
-    return typeof value === 'number' ? value.toFixed(2) : '0.00';
+    return typeof value === "number" ? value.toFixed(2) : "0.00";
   };
 
   const handlePrint = () => {
@@ -144,12 +181,13 @@ const OpdBillingCancellationPrint = ({ formData }) => {
       </html>
     `);
     printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-    printWindow.close();
+
+    setTimeout(() => {
+      printWindow.focus();
+      printWindow.print();
+      printWindow.close();
+    }, 500); // Delay for 500ms
   };
-
-
 
   return (
     <div>
@@ -167,18 +205,26 @@ const OpdBillingCancellationPrint = ({ formData }) => {
           <h3>OPD {formData?.cancelType} bill</h3>
         </div>
         <div>
-          <div className="OpdBillingPrint-bill-info">
-
-          </div>
+          <div className="OpdBillingPrint-bill-info"></div>
         </div>
 
         <div className="OpdBillingPrint-info">
           <div className="OpdBillingPrint-left">
             <p>
-              Patient Name: <span>{formData?.opdBillingDTO?.outPatientDTO?.patient?.firstName} {formData?.opdBillingDTO?.outPatientDTO?.patient?.lastName}</span>
+              Patient Name:{" "}
+              <span>
+                {formData?.opdBillingDTO?.outPatientDTO?.patient?.firstName}{" "}
+                {formData?.opdBillingDTO?.outPatientDTO?.patient?.lastName}
+              </span>
             </p>
             <p>
-              Patient ID: <span>{formData?.opdBillingDTO?.outPatientDTO?.patient?.patientRegistrationId}</span>
+              Patient ID:{" "}
+              <span>
+                {
+                  formData?.opdBillingDTO?.outPatientDTO?.patient
+                    ?.patientRegistrationId
+                }
+              </span>
             </p>
           </div>
           <div className="OpdBillingPrint-right">
@@ -189,7 +235,11 @@ const OpdBillingCancellationPrint = ({ formData }) => {
               Bill No: <span>{formData?.opdBillingRefundCancellationId}</span>
             </label>
             <p>
-              Age: <span>{formData?.opdBillingDTO?.outPatientDTO?.patient?.age} {formData?.opdBillingDTO?.outPatientDTO?.patient?.ageUnit}</span>
+              Age:{" "}
+              <span>
+                {formData?.opdBillingDTO?.outPatientDTO?.patient?.age}{" "}
+                {formData?.opdBillingDTO?.outPatientDTO?.patient?.ageUnit}
+              </span>
             </p>
             {/* <p>
               Gender: <span>{formData?.opdBillingDTO?.outPatientDTO?.patient?.gender}</span>
@@ -204,10 +254,11 @@ const OpdBillingCancellationPrint = ({ formData }) => {
           <thead>
             <tr>
               {[
-
                 "Received By",
-                "File Charges", "Total Due"
-                , "Adjust Amount", "Refundable Amount"
+                "File Charges",
+                "Total Due",
+                "Adjust Amount",
+                "Refundable Amount",
               ].map((header, index) => (
                 <th
                   key={index}
@@ -218,7 +269,10 @@ const OpdBillingCancellationPrint = ({ formData }) => {
                     <span>{header}</span>
                     <div
                       className="resizer"
-                      onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                      onMouseDown={startResizing(
+                        tableRef,
+                        setColumnWidths
+                      )(index)}
                     ></div>
                   </div>
                 </th>
@@ -227,7 +281,6 @@ const OpdBillingCancellationPrint = ({ formData }) => {
           </thead>
           <tbody>
             <tr>
-
               <td>{formData?.receivedby} </td>
               <td>{formData?.fileCharges}</td>
               {/* <td>{requestBodyPrint.paymentMode }</td> */}
@@ -239,9 +292,7 @@ const OpdBillingCancellationPrint = ({ formData }) => {
         </table>
 
         <br></br>
-        <div>
-
-        </div>
+        <div></div>
         <div className="OpdBillingPrint-footer">
           <p>
             Terms & Conditions:
@@ -267,5 +318,4 @@ const OpdBillingCancellationPrint = ({ formData }) => {
   );
 };
 
-export default OpdBillingCancellationPrint;
-
+export default OPDBillingCancellationPrint;

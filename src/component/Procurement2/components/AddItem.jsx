@@ -10,8 +10,9 @@ import AddUnitOfMeasurement from "./AddUnitOfMeasurement";
 import AddPackagingType from "./AddPackagingType";
 import { API_BASE_URL } from "../../api/api";
 import axios from "axios";
-import { FloatingInput, FloatingSelect } from "../../../FloatingInputs";
+import { FloatingInput, FloatingSelect, PopupTable } from "../../../FloatingInputs";
 import { toast } from "react-toastify";
+import { CiSearch } from "react-icons/ci";
 const AddItem = ({ isOpen, onClose, terms }) => {
   if (!isOpen) return null;
 
@@ -39,6 +40,11 @@ const AddItem = ({ isOpen, onClose, terms }) => {
     isPatientConsumptionApplicable: false,
     isActive: true,
     companyName: "",
+    packSize: "",
+    gst: "",
+    locationMaster: {
+      id: ""
+    }
   });
 
   const [errors, setErrors] = useState({});
@@ -56,6 +62,10 @@ const AddItem = ({ isOpen, onClose, terms }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [itemId, setItemId] = useState(null);
   const [error, setError] = useState("");
+  const [activePopup, setActivePopup] = useState("");
+  const [locations, setLocations] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState([]);
+
 
   useEffect(() => {
     console.log("hhhhh", terms);
@@ -102,6 +112,38 @@ const AddItem = ({ isOpen, onClose, terms }) => {
     fetchCompanies();
     fetchPackagingTypes();
   }, []);
+
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/location-masters`)
+      .then((response) => response.json())
+      .then((data) => {
+        setLocations(data);
+      })
+      .catch((error) => console.error("Error fetching Locations:", error));
+  }, []);
+
+  const getPopupData = () => {
+    if (activePopup === "Location") {
+      return {
+        columns: ["id", "locationName"],
+        data: locations,
+      };
+    } else {
+      return { columns: [], data: [] };
+    }
+  };
+  const { columns, data } = getPopupData();
+
+
+  const handleSelect = async (data) => {
+    if (activePopup === "Location") {
+      setSelectedLocation(data);
+    }
+
+    setActivePopup(null);
+  };
+
 
   const fetchSubCategories = async () => {
     try {
@@ -157,20 +199,20 @@ const AddItem = ({ isOpen, onClose, terms }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Validate required fields only when adding a new item
-     // Validate required fields only when adding a new item
-  if (
-    !isEditing && // Skip validation if updating
-    (!formValues.itemName?.trim() || 
-     !formValues.itemCompany?.id || 
-     !formValues.itemSubCategory?.id)
-  ) {
-    toast.error("Please fill in all required fields before submitting.");
-    return; // Stop execution and show an error message
-  }
 
-  
+    // Validate required fields only when adding a new item
+    // Validate required fields only when adding a new item
+    if (
+      !isEditing && // Skip validation if updating
+      (!formValues.itemName?.trim() ||
+        !formValues.itemCompany?.id ||
+        !formValues.itemSubCategory?.id)
+    ) {
+      toast.error("Please fill in all required fields before submitting.");
+      return; // Stop execution and show an error message
+    }
+
+
     // Ensure correct object structure before submitting
     const itemData = {
       invItemId: isEditing ? itemId : undefined, // Include `invItemId` only for updates
@@ -188,27 +230,32 @@ const AddItem = ({ isOpen, onClose, terms }) => {
       isColdStorageApplicable: formValues.isColdStorageApplicable,
       isPatientConsumptionApplicable: formValues.isPatientConsumptionApplicable,
       isActive: formValues.isActive,
-  
+      packSize: formValues.packSize,
+      gst: formValues.gst,
+      locationMaster: {
+        id: selectedLocation.id
+      },
+
       // Ensure `id` is passed correctly in required fields
       packagingType: formValues.packagingType?.id
         ? { id: formValues.packagingType.id }
         : null,
       unitOfMeasurement: formValues.unitOfMeasurement?.unitOfMeasurementId
         ? {
-            unitOfMeasurementId: formValues.unitOfMeasurement.unitOfMeasurementId,
-          }
+          unitOfMeasurementId: formValues.unitOfMeasurement.unitOfMeasurementId,
+        }
         : null,
       subCategory: formValues.itemSubCategory?.id
         ? {
-            id: formValues.itemSubCategory.id,
-            active: formValues.itemSubCategory.active || false,
-          }
+          id: formValues.itemSubCategory.id,
+          active: formValues.itemSubCategory.active || false,
+        }
         : null,
       invCompany: formValues.itemCompany?.id
         ? { id: formValues.itemCompany.id }
         : null,
     };
-  
+
     try {
       let response;
       if (isEditing && itemId) {
@@ -226,9 +273,9 @@ const AddItem = ({ isOpen, onClose, terms }) => {
           headers: { "Content-Type": "application/json" },
         });
       }
-  
+
       console.log("API Response:", response.data);
-  
+
       if (response.status === 200 || response.status === 201) {
         toast.success(
           isEditing ? "Item updated successfully!" : "Item added successfully!"
@@ -245,7 +292,7 @@ const AddItem = ({ isOpen, onClose, terms }) => {
       toast.error(error.response?.data?.message || "Failed to save item.");
     }
   };
-  
+
   return (
     <div>
       <div className="aadddContainer">
@@ -289,9 +336,9 @@ const AddItem = ({ isOpen, onClose, terms }) => {
                   { value: "", label: "Select an Item Sub Category" },
                   ...(Array.isArray(subCategories)
                     ? subCategories.map((sub) => ({
-                        value: sub.subCategoryName,
-                        label: sub.subCategoryName,
-                      }))
+                      value: sub.subCategoryName,
+                      label: sub.subCategoryName,
+                    }))
                     : []),
                 ]}
                 placeholder="Item Sub Category"
@@ -314,9 +361,9 @@ const AddItem = ({ isOpen, onClose, terms }) => {
                   { value: "", label: "Select a Unit of Measurement" },
                   ...(Array.isArray(unitMeasurements)
                     ? unitMeasurements.map((unit) => ({
-                        value: unit.name,
-                        label: unit.name,
-                      }))
+                      value: unit.name,
+                      label: unit.name,
+                    }))
                     : []),
                 ]}
                 placeholder="Unit of Measurement"
@@ -338,9 +385,9 @@ const AddItem = ({ isOpen, onClose, terms }) => {
                   { value: "", label: "Select an Item Company" },
                   ...(Array.isArray(companies)
                     ? companies.map((comp) => ({
-                        value: comp.companyName,
-                        label: comp.companyName,
-                      }))
+                      value: comp.companyName,
+                      label: comp.companyName,
+                    }))
                     : []),
                 ]}
                 placeholder="Item Company"
@@ -362,9 +409,9 @@ const AddItem = ({ isOpen, onClose, terms }) => {
                   { value: "", label: "Select a Packaging Type" },
                   ...(Array.isArray(packagingTypes)
                     ? packagingTypes.map((pkg) => ({
-                        value: pkg.packagingTypeName,
-                        label: pkg.packagingTypeName,
-                      }))
+                      value: pkg.packagingTypeName,
+                      label: pkg.packagingTypeName,
+                    }))
                     : []),
                 ]}
                 placeholder="Packaging Type"
@@ -384,6 +431,21 @@ const AddItem = ({ isOpen, onClose, terms }) => {
                 onChange={handleInputChange}
                 placeholder="Description"
               />
+              <FloatingInput
+                label={"GST"}
+                name="gst"
+                value={formValues.gst}
+                onChange={handleInputChange}
+                placeholder="gst"
+              />
+              <div>
+                <FloatingInput
+                  label="Location"
+                  value={selectedLocation?.locationName}
+                />
+                <CiSearch onClick={() => setActivePopup("Location")} />
+
+              </div>
             </div>
             <div className="aadddColumn-part">
               <FloatingInput
@@ -424,6 +486,13 @@ const AddItem = ({ isOpen, onClose, terms }) => {
                 placeholder="availableQuantity"
                 error={errors.availableQuantity}
               />
+              <FloatingInput
+                label={"packSize"}
+                name={"packSize"}
+                value={formValues.packSize}
+                onChange={handleInputChange}
+                placeholder="packSize"
+              />
 
               <div className="aadddHeading-checkbox-container">
                 <label>
@@ -433,7 +502,7 @@ const AddItem = ({ isOpen, onClose, terms }) => {
                     checked={formValues.isVatApplicable}
                     onChange={handleInputChange}
                   />
-                 Is VAT Applicable
+                  Is VAT Applicable
                 </label>
               </div>
               <div className="aadddHeading-checkbox-container">
@@ -492,6 +561,15 @@ const AddItem = ({ isOpen, onClose, terms }) => {
           </button>
         </div>
       </div>
+
+      {activePopup && (
+        <PopupTable
+          columns={columns}
+          data={data}
+          onSelect={handleSelect}
+          onClose={() => setActivePopup(false)}
+        />
+      )}
       <CustomModal
         isOpen={isSubCategoryModalOpen}
         onClose={() => setIsSubCategoryModalOpen(false)}
