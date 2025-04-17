@@ -1,81 +1,154 @@
-.lowstocklist-container {
-  width: 90%;
-  max-width: 900px;
-  margin: 0 auto;
-  margin-top: 20px;
-  padding: 20px;
-  background-color: var(--background-color);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
+
+
+
+   .LateStockListDisplay-container {
+    padding: 0px;
+    background-color: var(--background-color);
   }
-  
-  .lowstocklist-title {
-    font-size: 32px;
+  .LateStockListDisplay-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0 5px 0px;
+    border-radius: 5px;
+  }
+  .LateStockListDisplay-status-filters {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  .LateStockListDisplay-status-filters label {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: var(--font-size);
+  }
+  .LateStockListDisplay-status-filters input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  .LateStockListDisplay-search-box {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 0px;
+    font-size: var(--font-size);
+  }
+  .LateStockListDisplay-search-right{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .LateStockListDisplay-no-rows {
     text-align: center;
-    color: #2c3e50;
-    margin-bottom: 30px;
-    letter-spacing: 1.2px;
+    background-color: #fff3e0;
+    color: #ff6f00;
     font-weight: bold;
   }
-  
-  
-  .lowstocklist-data.low {
-    background-color: #fff3cd;
-    color: #856404;
+  .LateStockListDisplay-search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
   }
-  
-  .lowstocklist-data.critical {
-    background-color: #f8d7da;
-    color: #721c24;
-  }
-  
-  .lowstocklist-row:last-child .lowstocklist-data {
-    border-bottom: none;
-  }
-  
-  .lowstocklist-table th, .lowstocklist-table td {
-    border-right: 1px solid #eaeaea;
-  }
-  
-  .lowstocklist-table th:last-child, .lowstocklist-table td:last-child {
-    border-right: none;
-  }
-
-  
-  .lowstock-back-button,.lowstockprintbtn {
-   
-    margin-top: 20px;
-    padding: 5px;
-    background-color: var(--button-color);
+  .LateStockListDisplay-print-button {
+    background-color:var( --button-color);
     color: white;
-    text-decoration: none;
+    border: 1px solid var( --button-hover-border-color);
+    padding: 5px 5px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s;
-    font-size: 14px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin-left: auto;
+    transition: background-color 0.3s ease;
   }
-  
-  .lowstock-back-button:hover,.lowstockprintbtn:hover {
-    background-color: var(--button-hover-background-color);
-    border: 1px solid var(--button-hover-border-color);
+  .LateStockListDisplay-print-button:hover{
+    border: 1px solid var( --button-hover-border-color);
     color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
   }
-  
-  
-  /* Responsive Design */
+  .LateStockListDisplay-back-button {
+    background-color:var( --button-color);
+    color: white;
+    border: 1px solid var( --button-hover-border-color);
+    margin-right: 10px;
+    padding: 5px 10px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: var(--font-size);
+    transition: background-color 0.3s ease;
+  }
+  .LateStockListDisplay-back-button:hover{
+    border: 1px solid var( --button-hover-border-color);
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+  }
+  .LateStockListDisplay-no-rows {
+    background-color: #ffecb3;
+    text-align: center;
+    padding: 15px;
+  }
+  .LateStockListDisplay-results-count-span {
+    font-size: var(--font-size);
+    color: black;
+    margin-right: 10px;
+  }
   @media (max-width: 768px) {
-    .lowstocklist-container {
-      padding: 20px;
+    .LateStockListDisplay-header,
+    .LateStockListDisplay-status-filters,
+    .LateStockListDisplay-search-container {
+      flex-direction: column;
+      gap: 10px; 
+      align-items: flex-start;
     }
-  
-    .lowstocklist-title {
-      font-size: 24px;
+    .LateStockListDisplay-search-box,
+    .LateStockListDisplay-print-button {
+      width: 100%; 
+      font-size: var(--font-size); 
     }
-  
-    .lowstocklist-header, .lowstocklist-data {
-      font-size: 14px;
-      padding: 10px;
+  }
+  .LateStockListDisplay-grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .LateStockListDisplay-grid.two-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 1024px) {
+    .LateStockListDisplay-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
+    .LateStockListDisplay-full-width {
+      grid-column: span 2;
+    }
+  }
+  @media (max-width: 480px) {
+    .LateStockListDisplay-grid {
+      grid-template-columns: 1fr;
+    }
+    .LateStockListDisplay-grid.two-columns {
+      grid-template-columns: 1fr;
+    }
+    .LateStockListDisplay-full-width {
+      grid-column: span 1;
+    }
+  }
+  .LateStockListDisplay-header-div{
+    border-radius: 5px ;
+    text-align: center;
+    border: 1px solid var(--button-bg-color);
+    width: 29%;
+    background-color:var(--button-bg-color);
+    padding: 3px 10px ;
+    color: white;
+    font-size: var(--heading-font);
+  }
+  .LateStockListDisplay-header-div:hover{
+    background-color:white;
+    color: var(--button-bg-color);
+  }
+  .LateStockListDisplay-header-main-div{
+    display: flex;justify-content: space-between;
+    margin: 5px 0 0 0 ;
   }
   

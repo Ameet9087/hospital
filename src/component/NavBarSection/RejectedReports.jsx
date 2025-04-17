@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import "../NavBarSection/finalReports.css";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { API_BASE_URL } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { FloatingInput } from "../../FloatingInputs";
@@ -32,7 +32,6 @@ function RejectedReports() {
       );
     }
   };
-
 
   const handleDateFromChange = (event) => {
     setDateFrom(event.target.value);
@@ -100,20 +99,20 @@ function RejectedReports() {
         <div className="finalReports-controls">
           <div className="finalReports-date-range">
             <FloatingInput
-                     label={"From"}
-                     type="date"
-                     id="dateFrom"
-                     value={dateFrom}
-                     onChange={handleDateFromChange}
-                     />
-           
-           <FloatingInput
-                     label={"To"}
-                     type="date"
-                     id="dateTo"
-                     value={dateTo}
-                     onChange={handleDateToChange}
-                     />
+              label={"From"}
+              type="date"
+              id="dateFrom"
+              value={dateFrom}
+              onChange={handleDateFromChange}
+            />
+
+            <FloatingInput
+              label={"To"}
+              type="date"
+              id="dateTo"
+              value={dateTo}
+              onChange={handleDateToChange}
+            />
           </div>
         </div>
       </div>

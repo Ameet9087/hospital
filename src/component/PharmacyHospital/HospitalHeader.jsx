@@ -71,6 +71,7 @@ const HospitalHeader = () => {
       { path: "/pharmacy/setting/setting-item-component", label: "Item" },
       { path: "/pharmacy/setting/setting-tax", label: "TAX" },
       { path: "/pharmacy/setting/setting-generic", label: "Generic" },
+      { path: "/pharmacy/setting/setting-frequency", label: "Frequency" },
       // { path: "/pharmacy/setting/setting-dispensary", label: "Dispensary" },
       // { path: "/pharmacy/setting/setting-rack", label: "Rack" },
       // { path: "/pharmacy/setting/setting-invoice-headers", label: "Invoice Headers" },

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./IPChangeRoom.css";
-import PopupTable from "../PopUpTableBedTransfer/PopupTable";
+import PopupTable from "../../../../FloatingInputs/PopupTable";
 import { FaSearch } from "react-icons/fa";
 import axios from "axios";
 import { API_BASE_URL } from "../../../api/api";
@@ -63,8 +63,10 @@ const IPChangeRoom = ({ ipAdmission }) => {
     setActivePopup(null);
   };
 
+
+
   const fetchAllAvailableBeds = async (id) => {
-    const response = await axios.get(`${API_BASE_URL}/beds/available/${id}`);
+    const response = await axios.get(`${API_BASE_URL}/beds/1`);
     setBeds(response.data);
   };
 
@@ -79,7 +81,7 @@ const IPChangeRoom = ({ ipAdmission }) => {
 
   const fetchRoomTypeByPaytypeId = async (id) => {
     const response = await axios.get(
-      `${API_BASE_URL}/room-types/available/${id}`
+      `${API_BASE_URL}/room-types`
     );
     setRoomType(response.data);
   };
@@ -89,10 +91,7 @@ const IPChangeRoom = ({ ipAdmission }) => {
     setRoom(response.data);
   };
 
-  useEffect(() => {
-    fetchAllPaytype();
-    fetchAllFloor();
-  }, []);
+
 
   const handleSave = async () => {
     const previousWardData = {
@@ -216,16 +215,13 @@ const IPChangeRoom = ({ ipAdmission }) => {
                   <FloatingInput
                     label={"Patient Name"}
                     type="text"
-                    value={`${
-                      activePatient?.patient?.firstName ||
+                    value={`${activePatient?.patient?.firstName ||
                       ipAdmission?.patient?.patient?.firstName
-                    } ${
-                      activePatient?.patient?.middleName ||
+                      } ${activePatient?.patient?.middleName ||
                       ipAdmission?.patient?.patient?.middleName
-                    } ${
-                      activePatient?.patient?.lastName ||
+                      } ${activePatient?.patient?.lastName ||
                       ipAdmission?.patient?.patient?.lastName
-                    }`}
+                      }`}
                     readOnly
                   />
                 </div>
@@ -376,10 +372,10 @@ const IPChangeRoom = ({ ipAdmission }) => {
                   />
                 </div>
                 <div className="iPChangeRoom-form-row">
-                  
+
                   <FloatingTextarea
                     label={"Remarks"}
-                    
+
                   />
                 </div>
               </div>

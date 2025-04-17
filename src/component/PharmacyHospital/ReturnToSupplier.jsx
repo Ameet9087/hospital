@@ -113,6 +113,8 @@ const ReturnToSupplier = () => {
         const response = await fetch(`${API_BASE_URL}/good-receipts`);
         const result = await response.json();
         setData(result);
+        console.log(data);
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }

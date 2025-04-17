@@ -56,7 +56,7 @@ const SettingItemType = () => {
       type: event.target.type.value,
       billTypes: event.target.billType.value,
       misHeads: event.target.misHeads.value,
-
+      isActive: event.target.isActive.value,
       description: event.target.description.value,
       preFixForItemCode: event.target.preFixForItemCode.value,
     };
@@ -102,6 +102,16 @@ const SettingItemType = () => {
   const handlePrint = () => {
     window.print(); // Triggers the browser's print window
   };
+
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSelectedItem((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
 
   return (
     <div className="setting-supplier-container">
@@ -216,89 +226,90 @@ const SettingItemType = () => {
                 className="supplier-setting-form-group col-md-6"
               >
                 <FloatingInput
-                label={"Type of Item"}
+                  label={"Type of Item"}
                   type="text"
                   placeholder="Enter Item Type"
                   name="itemType"
                   required
-                  value={
-                    formMode === "Edit" ? selectedItem?.itemType : ""
-                  }
+                  value={selectedItem?.itemType || ""}
+                  onChange={handleInputChange}
                 />
               </Form.Group>
               <Form.Group
-                controlId="selectCategory"
+                controlId="underItemType"
                 className="supplier-setting-form-group col-md-6"
               >
                 <FloatingInput
-                label={"Under Item Type"}
+                  label={"Under Item Type"}
                   type="text"
                   placeholder="Enter Category"
                   name="underItemType"
                   required
-                  value={
-                    formMode === "Edit" ? selectedItem?.underItemType : ""
-                  }
+                  value={selectedItem?.underItemType || ""}
+                  onChange={handleInputChange}
+
                 />
               </Form.Group>
             </div>
             <div className="supplier-setting-form-row">
               <Form.Group
-                controlId="description"
+                controlId="type"
                 className="supplier-setting-form-group"
               >
-    
+
                 <FloatingInput
-                label={"Type"}
-              
+                  label={"Type"}
+
                   type="text"
                   name="type"
                   placeholder="Enter Description"
-                  value={formMode === "Edit" ? selectedItem?.type : ""}
+                  value={selectedItem?.type || ""}
+                  onChange={handleInputChange}
+
                 />
               </Form.Group>
               <Form.Group
-                controlId="description"
+                controlId="billType"
                 className="supplier-setting-form-group"
               >
                 <FloatingInput
-                label={"Bill Types"}
+                  label={"Bill Types"}
                   type="text"
                   name="billType"
                   placeholder="Enter Bill Type"
-                  defaultValue={
-                    formMode === "Edit" ? selectedItem?.billType : ""
-                  }
+                  value={selectedItem?.billType || ""}
+                  onChange={handleInputChange}
+
                 />
               </Form.Group>
             </div>
             <div className="supplier-setting-form-row">
               <Form.Group
-                controlId="description"
+                controlId="misHeads"
                 className="supplier-setting-form-group"
               >
                 <FloatingInput
-                label={"Mis Heads"}
+                  label={"Mis Heads"}
                   type="text"
                   name="misHeads"
                   placeholder="Enter Mis Head"
-                  value={
-                    formMode === "Edit" ? selectedItem?.misHeads : ""
-                  }
+                  value={selectedItem?.misHeads || ""}
+                  onChange={handleInputChange}
+
                 />
               </Form.Group>
               <Form.Group
-                controlId="description"
+                controlId="preFixForItemCode"
                 className="supplier-setting-form-group"
               >
                 <FloatingInput
-                label={"Pre Fix For Item Code"}
+                  label={"Pre Fix For Item Code"}
                   type="text"
                   name="preFixForItemCode"
                   placeholder="Enter pre Fix For Item Code"
-                  value={
-                    formMode === "Edit" ? selectedItem?.preFixForItemCode : ""
-                  }
+                  value={selectedItem?.preFixForItemCode || ""}
+                  onChange={handleInputChange}
+
                 />
               </Form.Group>
             </div>
@@ -308,23 +319,24 @@ const SettingItemType = () => {
                 className="supplier-setting-form-group"
               >
                 <FloatingInput
-                label={"Description"}
+                  label={"Description"}
 
                   type="text"
                   name="description"
                   placeholder="Enter pre Fix For Item Code"
-                  value={
-                    formMode === "Edit" ? selectedItem?.description : ""
-                  }
+                  value={selectedItem?.description || ""}
+                  onChange={handleInputChange}
                 />
               </Form.Group>
-              {/* <Form.Group controlId="isActive" className="supplier-setting-form-group">
-        <Form.Check
-          type="checkbox"
-          label="Is Active"
-          defaultChecked={formMode === 'Edit' ? selectedItem?.isActive : false}
-        />
-      </Form.Group> */}
+              <Form.Group controlId="isActive" className="supplier-setting-form-group">
+                <Form.Check
+                  name="isActive"
+                  type="checkbox"
+                  label="Is Active"
+                  defaultChecked={formMode === 'Edit' ? selectedItem?.isActive : false}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
             </div>
             <div className="supplier-setting-text-right">
               <Button variant="primary" type="submit">

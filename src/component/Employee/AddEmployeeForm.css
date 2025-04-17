@@ -46,7 +46,7 @@
 
 .add-employee-grid {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 15px;
   /* width: 100%; */
 }
@@ -82,7 +82,6 @@
 
   max-width: 150px; /* Ensures label doesn't take too much space */
 }
-
 
 input[type="checkbox"] {
   margin-top: 5px;
@@ -185,4 +184,97 @@ input[type="checkbox"] {
 .service-table input[type="checkbox"] {
   margin: 0;
   margin-right: 10px;
+}
+
+.employee-EditAndDelete-section {
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  margin-top: 20px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.employee-EditAndDelete-section.half-width {
+  margin-bottom: 0;
+}
+
+.employee-EditAndDelete-header {
+  background-color: #00897b;
+  color: white;
+  padding: 7px 20px;
+  font-size: var(--heading-font);
+  font-weight: 500;
+}
+
+.employee-input-with-icon {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.employee-input-with-icon .table-input-employee {
+  padding-right: 30px; /* Add padding to prevent text overlap with the icon */
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+.employee-input-with-icon .employee-search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: gray;
+  font-size: 14px;
+}
+
+.employee-input-with-icon .table-input-employee {
+  padding-right: 30px; /* Add padding to prevent text overlap with the icon */
+  width: 100%;
+  border: 1px solid #ddd;
+}
+.table-input-employee {
+  padding-right: 5px; /* Add padding to prevent text overlap with the icon */
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+.table-input-employee {
+  width: 80%;
+  border-radius: 5px;
+}
+
+.employee-search-icon {
+  margin-left: 5px;
+  font-size: 14px;
+  color: gray;
+}
+
+.employee-input-with-icon .employee-search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: gray;
+  font-size: 14px;
+}
+
+.employee-add-btn,
+.employee-del-btn {
+  margin-right: 4px;
+  padding: 2px 8px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: var(--font-size);
+}
+.employee-add-btn {
+  background-color: green;
+}
+.employee-del-btn {
+  background-color: red;
 }

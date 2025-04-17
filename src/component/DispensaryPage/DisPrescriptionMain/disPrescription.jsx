@@ -192,14 +192,14 @@ const DisPrescription = () => {
       <div className="disPrescription-search-N-result">
         <div className="disPrescription-search-bar">
 
-          
+
           <FloatingInput
-          label="Search"
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-         
-        />
+            label="Search"
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+
+          />
         </div>
         <div className="disPrescription-results-info">
           <span>
@@ -212,7 +212,7 @@ const DisPrescription = () => {
           >
             <i className="fa-solid fa-file-excel"></i> Export
           </button>
-          <button className="disPrescription-print-button" onClick={printList}>
+          <button className="disPrescription-print-button" onClick={handlePrint}>
             <i className="fa-solid fa-print"></i> Print
           </button>
         </div>
@@ -246,11 +246,10 @@ const DisPrescription = () => {
             {filteredItems.map((prescription, index) => {
               const patient = prescription.newPatientVisitDTO || {};
 
-              const patientName = `${patient.firstName || ""} ${
-                patient.lastName || ""
-              }`.trim();
+              const patientName = `${patient.firstName || ""} ${patient.lastName || ""
+                }`.trim();
               return (
-                <tr key={index}>  
+                <tr key={index}>
                   <td>{patient.outPatientId || "Unknown"}</td>
                   <td>{patient?.patient?.firstName || "Unknown"}</td>
                   <td>{prescription.medicationName || "Unknown"}</td>
@@ -271,10 +270,10 @@ const DisPrescription = () => {
         </table>
       </div>
 
-     
-  <CustomModal isOpen={showModal} onClose={handleCloseDetails}>
-    <PrescriptionDetails prescription={selectedPrescription} onClose={handleCloseDetails} />
-  </CustomModal>
+
+      <CustomModal isOpen={showModal} onClose={handleCloseDetails}>
+        <PrescriptionDetails prescription={selectedPrescription} onClose={handleCloseDetails} />
+      </CustomModal>
 
 
 

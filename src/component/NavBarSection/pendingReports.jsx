@@ -43,24 +43,24 @@ function PendingReports() {
     const currentDate = getCurrentDate();
     setDateFrom(currentDate);
     setDateTo(currentDate);
-  }, []); // Runs only once when the component mounts
-  
-  useEffect(() => {
-    if (!dateFrom || !dateTo) return; // Ensure both dates are set before fetching data
-  
-    const link = `${API_BASE_URL}/lab-result/by-verify-dateRange?startDate=${dateFrom}&endDate=${dateTo}&approvalStatus=Active`;
-  
+    let link;
+
+    if (dateFrom !== "" && dateTo !== "") {
+      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?startDate=${dateFrom}&endDate=${dateTo}&approvalStatus=Pending`;
+    } else {
+      let TodaysDate = new Date().toISOString().split("T")[0];
+      link = `${API_BASE_URL}/lab-result/by-verify-dateRange?startDate=${TodaysDate}&endDate=${TodaysDate}&approvalStatus=Pending`;
+    }
+
     fetch(link)
       .then((res) => res.json())
       .then((data) => {
         setLabResult(data);
       })
       .catch((err) => {
-        console.error("Error fetching lab results:", err);
+        console.log(err);
       });
-  
-  }, [dateFrom, dateTo]); // Now this runs only when the dates are actually updated
-  
+  }, [dateFrom, dateTo]);
 
   // Filter lab results based on the search query
   const filteredLabResults = labResult?.filter((result) => {

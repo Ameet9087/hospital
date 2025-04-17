@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./UnCollectSample.css";
 import axios from "axios";
-import CustomModal from "../../CustomModel/CustomModal";
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import { FloatingInput } from "../../FloatingInputs";
-import * as XLSX from 'xlsx';
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];
 };
@@ -19,11 +17,6 @@ function UnCollectSample() {
   const [dateTo, setDateTo] = useState(getCurrentDate());
   const [searchQuery, setSearchQuery] = useState("");
   const [columnWidths, setColumnWidths] = useState({});
-  const [selectedSampleId, setSelectedSampleId] = useState(null);
-  const [reason, setReason] = useState("");
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [selectedSampleStatus, setSelectedSampleStatus] = useState("");
-
 
   const handleDateFromChange = (event) => {
     setDateFrom(event.target.value);
@@ -81,87 +74,15 @@ function UnCollectSample() {
     fetchAlltheunCollectSampleData();
   }, []);
 
-  
-
-  const handleCollectSample = async () => {
-    console.log(selectedSampleId);
-    console.log(reason);
-  
+  const handleCollectSample = async (id) => {
     try {
-      let apiUrl = `${API_BASE_URL}/samples/${selectedSampleId}/update-history`;
-
-      if (selectedSampleStatus === "Uncollected") {
-        apiUrl = `${API_BASE_URL}/samples/${selectedSampleId}/update-history-collect`;
-      }
-  
-      await axios.put(
-        apiUrl,
-        reason, 
-        {
-          headers: {
-            "Content-Type": "text/plain", 
-          },
-        }
-      );
-  
-      setIsPopupOpen(false);
-      setReason(""); 
+      await axios.delete(`${API_BASE_URL}/samples/${id}`);
       fetchAlltheunCollectSampleData();
     } catch (err) {
-      console.log("Error updating status:", err);
+      console.log(err);
     }
   };
-  
-  const handleEditClick = (id, status) => {
-    setSelectedSampleId(id);
-    setSelectedSampleStatus(status); 
-    setIsPopupOpen(true);
-  };
 
-  const handlePrint = () => {
-    const printContent = tableRef.current;
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-      <html>
-        <head>
-          <title>Print Table</title>
-          <h4>UncollectSample Report</h4>
-          <style>
-            table {
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: left;
-            }
-            th {
-              background-color: #f2f2f2;
-            }
-          </style>
-        </head>
-        <body>
-          ${printContent.outerHTML}
-        </body>
-      </html>
-    `);
-    newWindow.document.close();
-    newWindow.print();
-    newWindow.close();
-  };
-  const handleExport = () => {
-    const ws = XLSX.utils.table_to_sheet(tableRef.current);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'PurchaseOrderReport');
-    XLSX.writeFile(wb, 'PurchaseOrderReport.xlsx');
-  };
-
-
-
-
-
- 
   return (
     <div className="unCollectSample-container">
       <div className="unCollectSample-Header">
@@ -174,18 +95,15 @@ function UnCollectSample() {
           label={"From"}
           type="date"
           id="dateFrom"
-          name={dateFrom}
           value={dateFrom}
           onChange={handleDateFromChange}
           />
-          
 
 <FloatingInput
           label={"To"}
           type="date"
           id="dateTo"
           value={dateTo}
-          name={dateTo}
           onChange={handleDateToChange}
           />
         </div>
@@ -205,10 +123,10 @@ function UnCollectSample() {
             Showing {filteredSampleData?.length || 0} /{" "}
             {unCollectSampleData?.length || 0} results
           </span>
-          <button className="unCollectSample-print-btn" onClick={handleExport}>
+          <button className="unCollectSample-print-btn">
             <i className="fa fa-file-excel"></i> Export
           </button>
-          <button className="unCollectSample-print-btn" onClick={handlePrint}>
+          <button className="unCollectSample-print-btn">
             <i className="fa-solid fa-print"></i> Print
           </button>
         </div>
@@ -224,8 +142,6 @@ function UnCollectSample() {
                 "Age/Sex",
                 "Phone Number",
                 "Test Name",
-                "Reason",
-                "Status",
                 "Requesting Dept.",
                 "Run Number Type",
                 "Action",
@@ -277,8 +193,6 @@ function UnCollectSample() {
                       </span>
                     ))}
                   </td>
-                  <td>{test.history}</td>
-                  <td>{test.status}</td>
                   <td>
                     {test.labRequest?.inPatient?.isIPD?.toLowerCase() === "ipd"
                       ? "IPD"
@@ -286,27 +200,20 @@ function UnCollectSample() {
                   </td>
                   <td>normal</td>
                   <td>
-  <button
-    className="unCollectSample-viewDetails"
-    onClick={() => handleEditClick(test.sampleCollectionId, test.status)}
-  >
-    {test.status === "Pending"
-      ? "Uncollect Sample"
-      : test.status === "Uncollected"
-      ? "Collect Sample"
-      : "Uncollect Sample"}
-  </button>
-</td>
+                    <button
+                      className="unCollectSample-viewDetails"
+                      onClick={() =>
+                        handleCollectSample(test.sampleCollectionId)
+                      } // Pass the row's data
+                    >
+                      UnCollect Sample
+                    </button>
+                  </td>
                 </tr>
               ))}
           </tbody>
         </table>
       </div>
-      <CustomModal isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
-        <h2>Enter Reason</h2>
-        <textarea value={reason} onChange={(e) => setReason(e.target.value)} />
-        <button onClick={handleCollectSample}>Submit</button>
-      </CustomModal>
     </div>
   );
 }

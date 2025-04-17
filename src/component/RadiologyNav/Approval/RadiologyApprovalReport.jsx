@@ -40,10 +40,10 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
     const hospitalDetails = `
       <h1>
         <img src="lopmudralogo.jpeg" alt="Hospital Logo" style="width: 100px; height: auto;" />
-        LOPMUDRA HOSPITAL
+       HOSPITAL
       </h1>
       <p style="font-size: 14px;">
-        Survey No 148/4, Vishwakarma Nagar Lopmudra Hospital, CTS No. 1338, Pashan - Sus Rd, 
+        Survey No 148/4, Vishwakarma Nagar  Hospital, CTS No. 1338, Pashan - Sus Rd, 
         near NIV, Pashan, Pune, Maharashtra 411021
       </p>
       <h2 style="text-align: center;">Radiology Report</h2>
@@ -170,10 +170,10 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
             <div>
               <h1>
                 <img src="lopmudralogo.jpeg" class="radiology-hospital-logo" />{" "}
-                LOPMUDRA HOSPITAL
+                HOSPITAL
               </h1>
               <span class="radiology-address">
-                Survey No 148/4, Vishwakarma Nagar Lopmudra Hospital, CTS No.
+                Survey No 148/4, Vishwakarma Nagar Hospital, CTS No.
                 1338, Pashan - Sus Rd, near NIV, Pashan, Pune, Maharashtra
                 411021
                 <h2>Radiology Report</h2>

@@ -89,7 +89,7 @@ const MedicationOrder = ({ inPatientId, outPatientId, setActiveSection, onClose 
       // Check if response status is OK (200) or Created (201)
       if (response.status) {
         toast.success("Prescription Added Successfully");
-        onClose()
+        onClose();
       }
     } catch (error) {
       toast.error("Error submitting medication list");

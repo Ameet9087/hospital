@@ -12,6 +12,11 @@ import {
   FloatingSelect,
 } from "../../../FloatingInputs";
 import { toast } from "react-toastify";
+import IpBillingPrint from "../IP_Billing/IpBillingPrint"
+import CustomModal from "../../../CustomModel/CustomModal";
+
+
+
 const IpBilling = () => {
   const [selectedTab, setSelectedTab] = useState("testGrid");
   const [currentTime, setCurrentTime] = useState("");
@@ -31,6 +36,10 @@ const IpBilling = () => {
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [discountAmount, setDiscountAmount] = useState(0);
   const [finaltotalamt, setTotalAmt] = useState(0);
+  const [isPrintEnabled, setIsPrintEnabled] = useState(false);
+  const [billFromResponse, setBillFromResponse] = useState(null);
+
+
 
   const [finalTotalDrVisit, setFinalTotalDrVisit] = useState([]);
   // doctor visit
@@ -344,9 +353,14 @@ const IpBilling = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        setBillFromResponse(data);
         toast.success("Data successfully saved:", data);
+        setIsPrintEnabled(true);
+
       })
       .catch((error) => toast.error("Error saving data:", error));
+    setIsPrintEnabled(false);
+
   };
 
   // prachi dr visit
@@ -1262,7 +1276,7 @@ const IpBilling = () => {
           <button className="btn-blue" onClick={handleSaveData}>
             Save
           </button>
-          <button className="btn-green" >Print</button>
+          {/* <button className="btn-green" onClick={ } >Print</button> */}
 
           {/* <button className="btn-red">Delete</button>
           <button className="btn-orange">Clear</button>
@@ -1286,6 +1300,15 @@ const IpBilling = () => {
           onSelect={handleSelect}
           onClose={() => setActivePopup(null)}
         />
+      )}
+
+      {billFromResponse && (
+        <CustomModal
+          isOpen={billFromResponse ? true : false}
+          onClose={() => setBillFromResponse(null)}
+        >
+          <IpBillingPrint formData={billFromResponse} />
+        </CustomModal>
       )}
     </div>
   );

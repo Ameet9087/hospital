@@ -72,19 +72,17 @@ function PrintInvoice({ formData, selectedDoctor }) {
                 <h2>HIMS</h2>
               </div>
               <div>
-                <p>Lopmudra Hospital</p>
+                <p> Hospital</p>
                 <p>123 Health Street, Metropolis, 12345</p>
                 <p>(555) 123-4567</p>
               </div>
             </div>
             <div class="invoice-details">
               <div>
-                <p><strong>Name/Contact:</strong> ${formData.firstName} ${
-      formData.middleName
-    } ${formData.lastName}</p>
-                <p><strong>Age/Sex:</strong> ${formData.age} ${
-      formData.ageUnit
-    } / ${formData.gender}</p>
+                <p><strong>Name/Contact:</strong> ${formData.firstName} ${formData.middleName
+      } ${formData.lastName}</p>
+                <p><strong>Age/Sex:</strong> ${formData.age} ${formData.ageUnit
+      } / ${formData.gender}</p>
                 <p><strong>Department:</strong> ${formData.department}</p>
               </div>
               <div>
@@ -116,15 +114,13 @@ function PrintInvoice({ formData, selectedDoctor }) {
                 </span>
                 <strong>Subtotal:</strong> ${formData.subTotal}
               </p>
-              <p><strong>Discount:</strong> ${
-                formData.discountAmount || 0.0
-              }</p>
+              <p><strong>Discount:</strong> ${formData.discountAmount || 0.0
+      }</p>
               <p><strong>Total Due:</strong> ${formData.totalAmount}</p>
               <p><strong>Payment Mode:</strong> ${formData.paymentOptions}</p>
             </div>
-            <p>${new Date().toLocaleString()} - Received Rs ${
-      formData.totalAmount
-    } (by ${formData.paymentOptions}) as payment</p>
+            <p>${new Date().toLocaleString()} - Received Rs ${formData.totalAmount
+      } (by ${formData.paymentOptions}) as payment</p>
           </div>
         </body>
       </html>
@@ -155,7 +151,7 @@ function PrintInvoice({ formData, selectedDoctor }) {
               <h2>HIMS</h2>
             </div>
             <div>
-              <p>Lopmudra Hospital</p>
+              <p> Hospital</p>
               <p>123 Health Street, Metropolis, 12345</p>
               <p>(555) 123-4567</p>
             </div>

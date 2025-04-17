@@ -1140,9 +1140,10 @@ const FinalBill = () => {
     } catch (error) {
       console.error("Error saving final bill:", error);
       toast.error("Failed to save final bill.");
-    } finally {
-      setLoading(false);
     }
+    // } finally {
+    //   setLoading(false);
+    // }
   };
   // prachi room rent
   const renderTable = () => {

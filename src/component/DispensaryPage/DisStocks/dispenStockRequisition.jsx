@@ -19,6 +19,8 @@ function DispenStockRequisition() {
   const [requisitions, setRequisitions] = useState([]);
   const [filteredRequisitions, setFilteredRequisitions] = useState([]);
   const [statusFilter, setStatusFilter] = useState("All");
+  const [columnWidths, setColumnWidths] = useState({});
+
 
   const tableRef = useRef();
   const [fromDate, setFromDate] = useState("");
@@ -177,10 +179,10 @@ function DispenStockRequisition() {
           </div>
           <div className="dispenStockRequisition-search-N-results">
             <div className="dispenStockRequisition-search-bar">
-              
-              <FloatingInput 
-              label={"Search"}
-              type="search"
+
+              <FloatingInput
+                label={"Search"}
+                type="search"
               />
             </div>
             <div className="dispenStockRequisition-results-info">
@@ -260,11 +262,11 @@ function DispenStockRequisition() {
       )}
 
       {/* {showModal && ( */}
-         <CustomModal
-         isOpen={showModal}
-         onClose={() => setShowModal(false)}
-         title="Requisition Details"
-       >
+      <CustomModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title="Requisition Details"
+      >
         <div  >
           <div>
             <div className="dispensarystockreqdetail-modal-header">
@@ -304,7 +306,7 @@ function DispenStockRequisition() {
                   </thead>
                   <tbody>
                     {selectedRequisition.items &&
-                    selectedRequisition.items.length > 0 ? (
+                      selectedRequisition.items.length > 0 ? (
                       selectedRequisition.items.map((item, index) => (
                         <tr key={index}>
                           {/* <td>{item.genericName || "N/A"}</td> */}
@@ -347,7 +349,7 @@ function DispenStockRequisition() {
             </div> */}
           </div>
         </div>
-      {/* )} */}
+        {/* )} */}
       </CustomModal>
     </div>
   );

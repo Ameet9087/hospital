@@ -59,7 +59,8 @@ const AdmittedPatient = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${API_BASE_URL}/ip-admissions/admitted `
+          // `${API_BASE_URL}/ip-admissions/admitted `
+          `${API_BASE_URL}/ip-admissions/admitted-floor/1 `
         );
         setPatients(response.data);
       } catch (error) {

@@ -72,33 +72,27 @@ function OpdBillingPrintInvoice({ formData }) {
                 <h2>HIMS</h2>
               </div>
               <div>
-                <p>Lopmudra Hospital</p>
+                <p> Hospital</p>
                 <p>123 Health Street, Metropolis, 12345</p>
                 <p>(555) 123-4567</p>
               </div>
             </div>
             <div class="invoice-details">
               <div>
-                <p><strong>Name/Contact:</strong> ${
-                  formData.outPatientDTO?.patient?.firstName
-                } ${formData.outPatientDTO?.patient?.middleName} ${
-      formData.outPatientDTO?.patient?.lastName
-    }</p>
-                <p><strong>Age/Sex:</strong> ${
-                  formData.outPatientDTO?.patient?.age
-                } ${formData.outPatientDTO?.patient?.ageUnit} / ${
-      formData.outPatientDTO?.patient?.gender
-    }</p>
+                <p><strong>Name/Contact:</strong> ${formData.outPatientDTO?.patient?.firstName
+      } ${formData.outPatientDTO?.patient?.middleName} ${formData.outPatientDTO?.patient?.lastName
+      }</p>
+                <p><strong>Age/Sex:</strong> ${formData.outPatientDTO?.patient?.age
+      } ${formData.outPatientDTO?.patient?.ageUnit} / ${formData.outPatientDTO?.patient?.gender
+      }</p>
                 // <p><strong>Department:</strong> ${formData.department}</p>
               </div>
               <div>
                 <p><strong>Date:</strong> ${formData?.billing_date}</p>
-                <p><strong>Phone:</strong> ${
-                  formData.outPatientDTO?.patient?.phoneNumber
-                }</p>
-                <p><strong>Doctor:</strong> ${
-                  formData?.doctorDTO?.doctorName
-                }</p>
+                <p><strong>Phone:</strong> ${formData.outPatientDTO?.patient?.phoneNumber
+      }</p>
+                <p><strong>Doctor:</strong> ${formData?.doctorDTO?.doctorName
+      }</p>
               </div>
             </div>
             <table class="print-invoice-table">
@@ -124,17 +118,14 @@ function OpdBillingPrintInvoice({ formData }) {
                 </span>
                 <strong>Subtotal:</strong> ${formData?.totalAmount}
               </p>
-              <p><strong>Discount:</strong> ${
-                formData?.financialDiscAmt || 0.0
-              }</p>
+              <p><strong>Discount:</strong> ${formData?.financialDiscAmt || 0.0
+      }</p>
               <p><strong>Total Due:</strong> ${formData?.totalAmount}</p>
-              // <p><strong>Payment Mode:</strong> ${
-                formData.paymentOptions
-              }</p>
+              // <p><strong>Payment Mode:</strong> ${formData.paymentOptions
+      }</p>
             </div>
-            <p>${new Date().toLocaleString()} - Received Rs ${
-      formData?.totalAmount
-    } 
+            <p>${new Date().toLocaleString()} - Received Rs ${formData?.totalAmount
+      } 
     </p>
           </div>
         </body>
@@ -166,7 +157,7 @@ function OpdBillingPrintInvoice({ formData }) {
               <h2>HIMS</h2>
             </div>
             <div>
-              <p>Lopmudra Hospital</p>
+              <p> Hospital</p>
               <p>123 Health Street, Metropolis, 12345</p>
               <p>(555) 123-4567</p>
             </div>

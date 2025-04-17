@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CustomModal from '../../Admission/PopupTable';
-import PopupTable from '../../Admission/PopupTable';
+import CustomModal from '../../../CustomModel/CustomModal';
+import PopupTable from '../../../FloatingInputs/PopupTable';
 import { startResizing } from '../../../TableHeadingResizing/ResizableColumns';
 import './AutopsyReportDistributionform.css';
 import axios from 'axios';

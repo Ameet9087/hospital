@@ -8,6 +8,8 @@ import FloatingInput from "../../../FloatingInputs/FloatingInput";
 import FloatingSelect from "../../../FloatingInputs/FloatingSelect";
 import { FloatingTextarea, PopupTable } from "../../../FloatingInputs";
 import { CiSearch } from "react-icons/ci";
+import { toast } from "react-toastify";
+
 const AddPurchaseOrderDraft = ({ request, onClose }) => {
   console.log(request);
   const [locations, setLocations] = useState([]);
@@ -43,7 +45,8 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
     locationMasterDTO: {
       id: ""
     },
-    termsAndCondition: ""
+    termsAndCondition: "",
+    quantity: ""
   });
 
   useEffect(() => {
@@ -263,14 +266,15 @@ const AddPurchaseOrderDraft = ({ request, onClose }) => {
       items: cleanedItems, // Only itemId included
       locationMasterDTO: {
         id: selectedLocation.id
-      }
+      },
+
     };
 
     console.log("Payload:", payload);
     axios
       .post(`${API_BASE_URL}/purchase-orders/create`, payload)
       .then((response) => {
-        alert("Purchase Order saved successfully!");
+        toast.success("Purchase Order saved successfully!");
         console.log(response.data);
       })
       .catch((error) => {

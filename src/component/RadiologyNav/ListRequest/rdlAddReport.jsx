@@ -119,9 +119,9 @@ function AddReportForm({ onClose, selectedRequest }) {
 
     const hospitalDetails = `
     <div style="text-align: center;">
-      <h1>LOPMUDRA HOSPITAL</h1>
+      <h1> HOSPITAL</h1>
       <p style="font-size: 14px;">
-        Survey No 148/4, Vishwakarma Nagar Lopmudra Hospital, CTS No. 1338, Pashan - Sus Rd, 
+        Survey No 148/4, Vishwakarma Nagar  Hospital, CTS No. 1338, Pashan - Sus Rd, 
         near NIV, Pashan, Pune, Maharashtra 411021
       </p>
     </div>
@@ -131,43 +131,34 @@ function AddReportForm({ onClose, selectedRequest }) {
     const patientInfo = `
     <div style="font-size: 14px; border: 1px solid #ccc; padding:10px;">
       <div style="display: flex; justify-content: space-between;">
-        <p style="margin-bottom:2px"><strong>Patient Name:</strong> ${
-          selectedRequest.inPatientDTO?.patient?.firstName ||
-          selectedRequest.outPatientDTO?.patient?.firstName
-        } 
-          ${
-            selectedRequest.inPatientDTO?.patient?.lastName ||
-            selectedRequest.outPatientDTO?.patient?.lastName
-          }</p>
-        <p style="margin-bottom:2px"><strong>Prescriber:</strong> ${
-          selectedRequest.prescriberDTO?.doctorName || "self"
-        }</p>
+        <p style="margin-bottom:2px"><strong>Patient Name:</strong> ${selectedRequest.inPatientDTO?.patient?.firstName ||
+      selectedRequest.outPatientDTO?.patient?.firstName
+      } 
+          ${selectedRequest.inPatientDTO?.patient?.lastName ||
+      selectedRequest.outPatientDTO?.patient?.lastName
+      }</p>
+        <p style="margin-bottom:2px"><strong>Prescriber:</strong> ${selectedRequest.prescriberDTO?.doctorName || "self"
+      }</p>
       </div>
       <div style="display: flex; justify-content: space-between;">
-        <p style="margin-bottom:2px"><strong>Address:</strong> ${
-          selectedRequest.inPatientDTO?.patient?.address ||
-          selectedRequest.outPatientDTO?.patient?.address
-        }</p>
-        <p style="margin-bottom:2px"><strong>Phone No:</strong> ${
-          selectedRequest.inPatientDTO?.patient?.mobileNumber ||
-          selectedRequest.outPatientDTO?.patient?.mobileNumber
-        }</p>
+        <p style="margin-bottom:2px"><strong>Address:</strong> ${selectedRequest.inPatientDTO?.patient?.address ||
+      selectedRequest.outPatientDTO?.patient?.address
+      }</p>
+        <p style="margin-bottom:2px"><strong>Phone No:</strong> ${selectedRequest.inPatientDTO?.patient?.mobileNumber ||
+      selectedRequest.outPatientDTO?.patient?.mobileNumber
+      }</p>
       </div>
       <div style="display: flex; justify-content: space-between;">
-        <p style="margin-bottom:2px"><strong>Requested On:</strong> ${
-          selectedRequest.requestedDate
-        }</p>
-        <p style="margin-bottom:2px"><strong>Scanned On:</strong> ${
-          formData.scannedDate
-        }</p>
+        <p style="margin-bottom:2px"><strong>Requested On:</strong> ${selectedRequest.requestedDate
+      }</p>
+        <p style="margin-bottom:2px"><strong>Scanned On:</strong> ${formData.scannedDate
+      }</p>
       </div>
       <div style="display: flex; justify-content: space-between;">
-        <p style="margin-bottom:2px"><strong>Indication:</strong> ${
-          formData.indication
-        }</p>
-        <p style="margin-bottom:2px"><strong>MRI/CT/X-ray No:</strong> ${
-          formData.mriXRayCTNo
-        }</p>
+        <p style="margin-bottom:2px"><strong>Indication:</strong> ${formData.indication
+      }</p>
+        <p style="margin-bottom:2px"><strong>MRI/CT/X-ray No:</strong> ${formData.mriXRayCTNo
+      }</p>
       </div>
     </div>
   `;
@@ -185,11 +176,10 @@ function AddReportForm({ onClose, selectedRequest }) {
   `;
 
     const imageSection = `
-   ${
-     imagePreview
-       ? `<img src="${imagePreview}" alt="Image Preview" style="max-width: 100%; height: auto;" />`
-       : "<p>No image available</p>"
-   }
+   ${imagePreview
+        ? `<img src="${imagePreview}" alt="Image Preview" style="max-width: 100%; height: auto;" />`
+        : "<p>No image available</p>"
+      }
   `;
 
     printWindow.document.open();

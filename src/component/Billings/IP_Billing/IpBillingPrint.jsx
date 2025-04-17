@@ -1,4 +1,4 @@
-import React, { useRef,useState,useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./IpBillingPrint.css"; // Make sure the CSS file is created for styling
 import { useLocation } from "react-router-dom";
 
@@ -54,7 +54,7 @@ const convertNumberToWords = (num) => {
 };
 
 
-const IpBillingPrint = () => {
+const IpBillingPrint = ({ formData }) => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [totalAmountInWords, setTotalAmountInWords] = useState("");
   const [doctorVisitTotalAmountInWords, setDoctorVisitTotalAmountInWords] = useState("");
@@ -64,7 +64,7 @@ const IpBillingPrint = () => {
 
   const printRef = useRef(null);
   const location = useLocation();
-  const { patientData,ipBillingData,doctorVisitRows   } = location.state || {};
+  const { patientData, ipBillingData, doctorVisitRows } = location.state || {};
 
   // Function to convert number to words
   const convertNumberToWords = (num) => {
@@ -178,7 +178,7 @@ const IpBillingPrint = () => {
   useEffect(() => {
     if (ipBillingData?.testGridIpdBill?.length > 0) {
       // Calculate the total amount dynamically
-      const total = ipBillingData.testGridIpdBill.reduce(
+      const total = ipBillingData?.testGridIpdBill?.reduce(
         (sum, service) => sum + service.rate * service.quantity,
         0
       );
@@ -193,7 +193,7 @@ const IpBillingPrint = () => {
   useEffect(() => {
     if (doctorVisitRows?.length > 0) {
       // Calculate the total amount dynamically for doctor visits
-      const total = doctorVisitRows.reduce((sum, visit) => sum + visit.netAmt, 0);
+      const total = doctorVisitRows?.reduce((sum, visit) => sum + visit.netAmt, 0);
       setDoctorVisitTotalAmount(total); // Save total amount in state
       setDoctorVisitTotalAmountInWords(convertNumberToWords(total)); // Convert total amount to words
     } else {
@@ -204,7 +204,7 @@ const IpBillingPrint = () => {
 
   useEffect(() => {
     // Calculate the total gross amount
-    const doctorVisitTotal = doctorVisitRows.reduce((total, visit) => total + visit.netAmt, 0);
+    const doctorVisitTotal = doctorVisitRows?.reduce((total, visit) => total + visit.netAmt, 0);
     const grossAmount = totalAmount + doctorVisitTotal;
     setGrossAmountInWords(convertNumberToWords(grossAmount)); // Convert total gross amount to words
   }, [totalAmount, doctorVisitRows]);
@@ -265,97 +265,97 @@ const IpBillingPrint = () => {
             </p>
           </div>
         </div>
-       
+
         <table className="OpdBillingPrint-table">
-      <thead>
-        <tr>
-          <th>Sr No</th>
-          <th>OPD Services Details</th>
-          <th>QTY</th>
-          <th>Rate</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-  {ipBillingData?.testGridIpdBill?.length > 0 ? (
-    ipBillingData.testGridIpdBill.map((service, index) => (
-      <tr key={index}>
-        <td>{index + 1}</td>
-        <td>{service.serviceName}</td>
-        <td>{service.quantity}</td>
-        <td>{service.rate}</td>
-        <td>{service.rate * service.quantity}</td>
-      </tr>
-    ))
-  ) : (
-    <tr>
-      <td colSpan="5" style={{ textAlign: "center" }}>
-        No billing details available.
-      </td>
-    </tr>
-  )}
-</tbody>
-
-      <tfoot>
-        <tr>
-          <td colSpan={"3"}>
-            Amount Received <br />
-            RUPEES {totalAmountInWords.toUpperCase()}
-          </td>
-          <td>Total Amount</td>
-          <td>{totalAmount}</td>
-        </tr>
-      </tfoot>
-    </table>
-
-    <table className="DoctorVisitPrint-table">
-      <thead>
-        <tr>
-          <th>Sr No</th>
-          <th>Date</th>
-          <th>Doctor Name</th>
-          <th>Specialization</th>
-          <th>Rate</th>
-          <th>QTY</th>
-          <th>Net Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        {doctorVisitRows?.length > 0 ? (
-          doctorVisitRows.map((visit, index) => (
-            <tr key={index}>
-              <td>{visit.sn}</td>
-              <td>{visit.date || "N/A"}</td>
-              <td>{visit.doctorName}</td>
-              <td>{visit.specialization}</td>
-              <td>{visit.rate || visit.generalOpdFee}</td>
-              <td>{visit.qty}</td>
-              <td>{visit.netAmt}</td>
+          <thead>
+            <tr>
+              <th>Sr No</th>
+              <th>OPD Services Details</th>
+              <th>QTY</th>
+              <th>Rate</th>
+              <th>Amount</th>
             </tr>
-          ))
-        ) : (
-          <tr>
-            <td colSpan="7" style={{ textAlign: "center" }}>
-              No doctor visit details available.
-            </td>
-          </tr>
-        )}
-      </tbody>
-      <tfoot>
-        <tr>
-        <td colSpan={"5"} style={{ textAlign: "center" }}>
-            Amount Received <br />
-            RUPEES {doctorVisitTotalAmountInWords.toUpperCase()}
-          </td>
+          </thead>
+          <tbody>
+            {ipBillingData?.testGridIpdBill?.length > 0 ? (
+              ipBillingData.testGridIpdBill.map((service, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{service.serviceName}</td>
+                  <td>{service.quantity}</td>
+                  <td>{service.rate}</td>
+                  <td>{service.rate * service.quantity}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" style={{ textAlign: "center" }}>
+                  No billing details available.
+                </td>
+              </tr>
+            )}
+          </tbody>
 
-          <td  style={{ textAlign: "right" }}>
-            Total Amount
-          </td>
-          <td>
-            {doctorVisitTotalAmount}
-          </td>
-        </tr>
-        {/* <tr>
+          <tfoot>
+            <tr>
+              <td colSpan={"3"}>
+                Amount Received <br />
+                RUPEES {totalAmountInWords.toUpperCase()}
+              </td>
+              <td>Total Amount</td>
+              <td>{totalAmount}</td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <table className="DoctorVisitPrint-table">
+          <thead>
+            <tr>
+              <th>Sr No</th>
+              <th>Date</th>
+              <th>Doctor Name</th>
+              <th>Specialization</th>
+              <th>Rate</th>
+              <th>QTY</th>
+              <th>Net Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {doctorVisitRows?.length > 0 ? (
+              doctorVisitRows.map((visit, index) => (
+                <tr key={index}>
+                  <td>{visit.sn}</td>
+                  <td>{visit.date || "N/A"}</td>
+                  <td>{visit.doctorName}</td>
+                  <td>{visit.specialization}</td>
+                  <td>{visit.rate || visit.generalOpdFee}</td>
+                  <td>{visit.qty}</td>
+                  <td>{visit.netAmt}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" style={{ textAlign: "center" }}>
+                  No doctor visit details available.
+                </td>
+              </tr>
+            )}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan={"5"} style={{ textAlign: "center" }}>
+                Amount Received <br />
+                RUPEES {doctorVisitTotalAmountInWords.toUpperCase()}
+              </td>
+
+              <td style={{ textAlign: "right" }}>
+                Total Amount
+              </td>
+              <td>
+                {doctorVisitTotalAmount}
+              </td>
+            </tr>
+            {/* <tr>
           <td colSpan="6" style={{ textAlign: "right" }}>
             Amount in Words
           </td>
@@ -363,53 +363,53 @@ const IpBillingPrint = () => {
             {doctorVisitTotalAmountInWords.toUpperCase()}
           </td>
         </tr> */}
-      </tfoot>
-    </table>
-<br/>
+          </tfoot>
+        </table>
+        <br />
 
-<table className="GrossAmountPrint-table">
-      <thead>
-        <tr>
-          <th>Sr No</th>
-          <th>Description</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>OPD Services Total</td>
-          <td>{totalAmount}</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Doctor Visits Total</td>
-          <td>
-            {doctorVisitRows.reduce((total, visit) => total + visit.netAmt, 0)}
-          </td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colSpan="2" style={{ textAlign: "right" }}>
-            <strong>Gross Amount</strong>
-          </td>
-          <td>
-            <strong>
-              {totalAmount + doctorVisitRows.reduce((total, visit) => total + visit.netAmt, 0)}
-            </strong>
-          </td>
-        </tr>
-        <tr>
-          <td colSpan="2" style={{ textAlign: "right" }}>
-            <strong>Amount in Words</strong>
-          </td>
-          <td>
-            <strong>{grossAmountInWords.toUpperCase()} </strong>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+        <table className="GrossAmountPrint-table">
+          <thead>
+            <tr>
+              <th>Sr No</th>
+              <th>Description</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>OPD Services Total</td>
+              <td>{totalAmount}</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Doctor Visits Total</td>
+              <td>
+                {doctorVisitRows?.reduce((total, visit) => total + visit.netAmt, 0)}
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan="2" style={{ textAlign: "right" }}>
+                <strong>Gross Amount</strong>
+              </td>
+              <td>
+                <strong>
+                  {totalAmount + doctorVisitRows?.reduce((total, visit) => total + visit.netAmt, 0)}
+                </strong>
+              </td>
+            </tr>
+            <tr>
+              <td colSpan="2" style={{ textAlign: "right" }}>
+                <strong>Amount in Words</strong>
+              </td>
+              <td>
+                <strong>{grossAmountInWords.toUpperCase()} </strong>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
 
 
 

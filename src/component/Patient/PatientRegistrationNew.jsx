@@ -985,7 +985,7 @@ const PatientRegistrationNew = ({ onClose }) => {
               label={"Contact Mobile No"}
               type="text"
               name="contactNumber"
-              value={formData.mobileNumber}
+              value={formData.contactNumber}
               onChange={handleChange}
             />
           </div>

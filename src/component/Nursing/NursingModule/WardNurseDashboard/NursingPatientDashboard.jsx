@@ -412,7 +412,8 @@ const NursingPatientDashboard = ({
           />
         );
       case "dischargeSummary":
-        return <PatientDischargeForm patient={patient} />;
+        return <PatientDischargeForm patient={patient} ipAdmission={ipAdmission}
+ />;
       case "Allergies":
         return (
           <Allergy
@@ -690,7 +691,7 @@ const NursingPatientDashboard = ({
                                 <td className="Patient-Dashboard-td">
                                   {radiology.status === "Completed" ? (
                                     <>
-                                      <button 
+                                      <button
                                         onClick={() =>
                                           ShowlabReportResult(radiology)
                                         }
@@ -1261,7 +1262,7 @@ const NursingPatientDashboard = ({
                   <i className="fas fa-person-booth"></i>
                 </div>
               </div>
-              <div
+              {/* <div
                 onClick={() => {
                   setActiveSection("ipdissueward");
                 }}
@@ -1274,8 +1275,8 @@ const NursingPatientDashboard = ({
                   </span>
                   <i className="fas fa-bed"></i>
                 </div>
-              </div>
-              <div
+              </div> */}
+              {/* <div
                 onClick={() => {
                   setActiveSection("ipdreturnward");
                 }}
@@ -1288,7 +1289,7 @@ const NursingPatientDashboard = ({
                   </span>
                   <i className="fas fa-undo-alt"></i>
                 </div>
-              </div>
+              </div> */}
               <div
                 onClick={() => {
                   setActiveSection("dischareintimation");
@@ -1299,6 +1300,21 @@ const NursingPatientDashboard = ({
                 <div className="Patient-Dashboard-textAndLogo">
                   <span className="Patient-Dashboard-textOne">
                     Discharge Intimation
+                  </span>
+                  <i className="fas fa-undo-alt"></i>
+                </div>
+              </div>
+
+              <div
+                onClick={() => {
+                  setActiveSection("dischargeSummary");
+                }}
+                className={`${activeSection === "dischargeSummary" ? "isTabActive" : ""
+                  } Patient-Dashboard-boxOne`}
+              >
+                <div className="Patient-Dashboard-textAndLogo">
+                  <span className="Patient-Dashboard-textOne">
+                    Discharge Summary
                   </span>
                   <i className="fas fa-undo-alt"></i>
                 </div>

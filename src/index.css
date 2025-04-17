@@ -6,9 +6,9 @@
   --background-color: #e3fffe;
   --heading-font: 16px;
   --font-size: 14px;
-  --button-hover-border-color:#00c9c0;
-  --button-hover-text-color:#00c9c0;
-  --button-hover-background-color:white;
+  --button-hover-border-color: #00c9c0;
+  --button-hover-text-color: #00c9c0;
+  --button-hover-background-color: white;
   --input-box-padding: 5px;
 }
 
@@ -29,15 +29,15 @@ table {
   border-collapse: collapse;
   table-layout: fixed;
 }
-thead{
+thead {
   background-color: #f2f2f2;
   z-index: 15;
   position: sticky;
-  
+
   top: -0.5px;
 }
 
-table th{
+table th {
   background-color: #f2f2f2;
   border: 1px solid #ccc;
   padding: 8px;
@@ -63,7 +63,6 @@ table th .header-content {
   align-items: center;
   justify-content: space-between;
   text-overflow: ellipsis;
-
 }
 
 table th:last-child,
@@ -90,7 +89,6 @@ table th .resizer:hover {
   background-color: #aaa;
 }
 /* Akash Pawar Table related All Css 14/24 */
-
 
 /* Layout Container */
 .layout-container {
@@ -131,7 +129,7 @@ table th .resizer:hover {
   background-color: var(--upperBar-bg-color);
   color: white;
   height: 60px;
-  display: flex;  
+  display: flex;
   align-items: center;
   padding: 0 1rem;
   position: fixed;
@@ -141,7 +139,6 @@ table th .resizer:hover {
   z-index: 100;
   border-bottom: 1px solid #e5e7eb;
 }
-
 
 /* Custom input styling*/
 /* Container */
@@ -182,7 +179,7 @@ table th .resizer:hover {
 /* Active label */
 .custom-floating-field.active .custom-floating-label {
   top: 0px;
-  padding:0 5px;
+  padding: 0 5px;
   left: 5px;
   font-size: 12px;
   width: fit-content;
@@ -202,7 +199,6 @@ table th .resizer:hover {
 .custom-search-icon:hover {
   color: #00897b;
 }
-
 
 /* Container */
 .custom-floating-select-field {
@@ -271,7 +267,6 @@ table th .resizer:hover {
   color: red;
 }
 
-
 .toastify-text {
   font-size: 13px; /* Adjust font size */
- }
+}

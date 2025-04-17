@@ -12,9 +12,11 @@ const AddVendor = ({ onClose }) => {
     vendorCode: "",
     vendorCountry: "",
     kraPin: "",
-    aadharNo: "",
-    gstNo: "",
-    panCard: "",
+    adharnumber: "",
+    gstNumber: "",
+    pancardNumber: "",
+    contractStartdate: "",
+    contractEndDate: "",
     bankDetails: "",
     contactPerson: "",
     email: "",
@@ -45,9 +47,11 @@ const AddVendor = ({ onClose }) => {
       "currencyCode",
       "vendorCode",
       "kraPin",
-      "GSTNO",
-      "AadharNo",
-      "PanNo",
+      "adharnumber",
+      "gstNumber",
+      "pancardNumber",
+      "contractStartdate",
+      "contractEndDate",
       "bankDetails",
       "contactPerson",
       "email",
@@ -92,9 +96,11 @@ const AddVendor = ({ onClose }) => {
           currencyCode: "",
           vendorCode: "",
           kraPin: "",
-          aadharNo: "",
-          gstNo: "",
-          panCard: "",
+          adharnumber: "",
+          gstNumber: "",
+          pancardNumber: "",
+          contractStartdate: "",
+          contractEndDate: "",
           bankDetails: "",
           contactPerson: "",
           email: "",
@@ -216,42 +222,42 @@ const AddVendor = ({ onClose }) => {
             />
             <FloatingInput
               label={"Aadhar No"}
-              name="aadharNo"
+              name="adharnumber"
               required
-              value={formValues.aadharNo}
+              value={formValues.adharnumber}
               onChange={handleInputChange}
               placeholder="Aadhar No"
-              error={errors.aadharNo}
+              error={errors.adharnumber}
             />
             <FloatingInput
               label={"GST NO"}
-              name="gstNo"
+              name="gstNumber"
               required
-              value={formValues.gstNo}
+              value={formValues.gstNumber}
               onChange={handleInputChange}
               placeholder="GST NO"
-              error={errors.gstNo}
+              error={errors.gstNumber}
             />
             <FloatingInput
               label={"Pan Card"}
-              name="panCard"
+              name="pancardNumber"
               required
-              value={formValues.panCard}
+              value={formValues.pancardNumber}
               onChange={handleInputChange}
               placeholder="Pan Card"
-              error={errors.panCard}
+              error={errors.pancardNumber}
             />
             <FloatingInput
               label={"Contract Start Date"}
-              name="contractStartDate"
+              name="contractStartdate"
               type="date"
               required
-              value={formValues.contractStartDate}
+              value={formValues.contractStartdate}
               onChange={handleInputChange}
-              error={errors.contractStartDate}
+              error={errors.contractStartdate}
             />
           </div>
-          <div className="vendddColumn">
+          {/* <div className="vendddColumn">
             <FloatingInput
               label={"Contract End Date"}
               name="contractEndDate"
@@ -261,7 +267,7 @@ const AddVendor = ({ onClose }) => {
               onChange={handleInputChange}
               error={errors.contractEndDate}
             />
-          </div>
+          </div> */}
           <div className="vendddColumn">
             <FloatingInput
               label={"Contract End Date"}

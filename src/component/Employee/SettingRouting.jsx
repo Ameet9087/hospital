@@ -39,9 +39,9 @@ import Organisition_Master from "./Organisition_New/Organisition_Master";
 import Firewall from "./Firewall/Firewall";
 import ServiceMasterMain from "./ServiceMaster/ServiceMasterMain";
 
-import PaymentMode from "./IPMaster/PayTypeMaster/PaytypeMaster"
 import DischargeTemplate from "./DischargeTemplate";
 import HospitalPolicies from "./HospitalPolicies";
+import PaymentMode from "../Employee/PaymentMode";
 
 const SettingRouting = () => {
   return (

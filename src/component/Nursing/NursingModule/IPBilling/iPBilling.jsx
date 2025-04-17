@@ -6,6 +6,7 @@ import axios from "axios";
 import "../../../Billings/IP_Billing/ipbilling.css";
 import { API_BASE_URL } from "../../../api/api";
 import IpBillingPopupTable from "./IpBillingPopupTable";
+import { toast } from "react-toastify";
 const IpBilling = ({ ipAdmission }) => {
   const [selectedTab, setSelectedTab] = useState("testGrid");
   const [currentTime, setCurrentTime] = useState("");
@@ -272,6 +273,8 @@ const IpBilling = ({ ipAdmission }) => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Data successfully saved:", data);
+        toast.success("Data successfully saved:")
+
         setTestGridTableRowsableRows([
           {
             sn: 1,
@@ -580,13 +583,11 @@ const IpBilling = ({ ipAdmission }) => {
                 </td>
                 <td>{row.sn}</td>
                 <td>
-                  <input type="text" />
-                  <button
+                  <FloatingInput
+                    type="search"
                     className="billing-opd-com-magnifier-btn"
                     onClick={() => setActivePopup("services")}
-                  >
-                    🔍
-                  </button>
+                  />
                 </td>
                 <td>{row.code}</td>
                 <td>{row.serviceName}</td>
@@ -846,8 +847,8 @@ const IpBilling = ({ ipAdmission }) => {
 
                     {/* Doctor Name */}
                     <td>
-                      <input
-                        type="text"
+                      <FloatingInput
+                        type="search"
                         value={row.doctorName || ""}
                         onChange={(e) =>
                           setDoctorVisitRows((prevRows) =>
@@ -858,13 +859,13 @@ const IpBilling = ({ ipAdmission }) => {
                             )
                           )
                         }
-                      />
-                      <button
-                        className="billing-opd-com-magnifier-btn"
                         onClick={() => setActivePopup("doctor")}
+
+                      />
+                      {/* <button
                       >
                         🔍
-                      </button>
+                      </button> */}
                     </td>
 
                     {/* Doctor Fee */}

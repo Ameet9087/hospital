@@ -111,8 +111,8 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
     pharmacyFrequencies: { pharmacyFrequencyId: 0, name: "" },
     pharmacyConstitutions: { pharmacyConstitutionId: 1 },
     dependentStocks: { pharmacyDependentStockId: 1 },
-    locationMaster: { id: "" },
-    departmentStores: [
+    locationMasterDTO: { id: "" },
+    pharmacyDepartmentDetails: [
       {
         rackNumber: "",
         rol: "",
@@ -198,7 +198,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
           axios.get(`${API_BASE_URL}/categories`),
           axios.get(`${API_BASE_URL}/companies`),
           axios.get(`${API_BASE_URL}/unitofmeasurement/fetchAll`),
-          axios.get(`${API_BASE_URL}/pharmacy-frequency`),
+          axios.get(`${API_BASE_URL}/frequencies`),
           axios.get(`${API_BASE_URL}/location-masters`),
           axios.get(`${API_BASE_URL}/substores/get-all-substores`),
         ]);
@@ -295,23 +295,23 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
       },
       unitsOfMeasurement2: { unitOfMeasurementId: 2 },
       pharmacyFrequencies: {
-        pharmacyFrequencyId: frequencyId?.pharmacyFrequencyId || "",
+        pharmacyFrequencyId: 1,
       },
       pharmacyConstitutions: { pharmacyConstitutionId: 1 },
       dependentStocks: { pharmacyDependentStockId: 1 },
-      locationMaster: { id: locationId?.id || "" },
-      departmentStores:
-        formData.departmentStores?.map((store) => ({
-          rackNumber: store.rackNumber || "",
-          rol: store.rol || "",
-          maxLevel: store.maxLevel || "",
-          limitedOrder: store.limitedOrder || "",
-          maxCons30Days: store.maxCons30Days || "",
-          subStores:
-            store.subStores?.map((sub) => ({
-              subStoreId: subStoreId?.subStoreId || "",
-            })) || [],
-        })) || [],
+      locationMasterDTO: { id: locationId?.id || "" },
+      pharmacyDepartmentDetails: {
+        rackNo: formData.departmentStores?.[0]?.rackNo || "",
+        rol: formData.departmentStores?.[0]?.rol || "",
+        maxLevel: formData.departmentStores?.[0]?.maxLevel || "",
+        limitedOrder: formData.departmentStores?.[0]?.limitedOrder || "",
+        maxCons: formData.departmentStores?.[0]?.maxCons30Days || "",
+        // departmentName:
+        //   formData.departmentStores?.[0]?.subStores?.map((sub) => ({
+        //     subStoreId: sub.subStoreId || "",
+        //   })) || [{}],
+      },
+
     };
 
     console.log("hiiii", payload);
@@ -330,7 +330,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
     } catch (error) {
       console.error("Error submitting form data:", error);
       alert("Failed to submit form data. Please try again.");
-      console.log(response.data, "wwww");
+      // console.log(response.data, "wwww");
 
     }
   };
@@ -506,7 +506,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
     }
     if (activePopup === "frequency") {
       const popupData = {
-        columns: ["frequency", "atGivenTime"],
+        columns: ["frequency"],
         data: frequency,
       };
       console.log("Popup Data:", popupData);
@@ -600,7 +600,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             <div className="GCSSheetForm-search-field">
               <FloatingInput
                 label={"Manufacturer"}
-                type="text"
+                type="search"
                 name="manufacturer"
                 value={formData?.manufactures?.companyName}
                 onIconClick={() => setActivePopup("manufacturer")}
@@ -609,7 +609,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             <div className="GCSSheetForm-search-field">
               <FloatingInput
                 label={"Unit"}
-                type="text"
+                type="search"
                 name="unit"
                 value={formData?.unitsOfMeasurement?.name}
                 onIconClick={() => setActivePopup("unit")}
@@ -687,14 +687,14 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
             <div className="GCSSheetForm-header">Scheme Details</div>
             <FloatingInput
               label={"Start Dt"}
-              type="date "
+              type="date"
               name="startDate"
               value={formData.startDate}
               onChange={handleChange}
             />
             <FloatingInput
               label={"EndDt"}
-              type="date "
+              type="date"
               name="endDate"
               value={formData.endDate}
               onChange={handleChange}
@@ -775,7 +775,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
               type="text"
               name="othrFreeQty"
               value={formData.othrFreeQty}
-              // onChange={handleChange}
+              onChange={handleChange}
             />
 
             <FloatingSelect
@@ -1078,7 +1078,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
 
             <FloatingInput
               label={"Purchase Expiry"}
-              type="text"
+              type="date"
               name="purchaseExpiry"
               value={formData.purchaseExpiry}
               onChange={handleChange}
@@ -1086,7 +1086,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
 
             <FloatingInput
               label={"sale Expiry Days"}
-              type="text"
+              type="date"
               name="salesExpiryDays"
               value={formData.salesExpiryDays}
               onChange={handleChange}
@@ -1176,7 +1176,7 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
               onChange={handleChange}
             />
 
-            <FloatingInput label={"MRP Discount"} type="text" name="" />
+            <FloatingInput label={"MRP Discount"} type="text" name="mrpDiscount" value={formData.mrpDiscount} onChange={handleChange} />
             <label>
               Higher / Lower:
               <input
@@ -1467,37 +1467,37 @@ const AddItemMaster = ({ selectedItem, onClose }) => {
               </tr>
             </thead>
             <tbody>
-              {formData.departmentStores.map((item, index) => (
+              {formData.pharmacyDepartmentDetails?.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                <td>
-                  <div className="GCSSheetForm-search-field">
-                    <FloatingInput
-                      label="Sub Store Name"
-                      type="text"
-                      name="subStoreName"
-                      value={formData.subStoreName || ""}
-                      onChange={(e) =>
-                        handleDepartmentStoreChange(
-                          index,
-                          "subStoreId",
-                          e.target.value
-                        )
-                      }
-                    />
-                    <button
-                      type="button"
-                      className="GCSSheetForm-search-icon"
-                      onClick={() => setActivePopup("substore")}
-                    >
-                      <svg viewBox="0 0 24 24" width="16" height="16">
-                        <path
-                          fill="currentColor"
-                          d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
-                        />
-                      </svg>
-                    </button>
-                  </div>
+                  <td>
+                    <div className="GCSSheetForm-search-field">
+                      <FloatingInput
+                        label="Sub Store Name"
+                        type="text"
+                        name="subStoreName"
+                        value={formData.subStoreName || ""}
+                        onChange={(e) =>
+                          handleDepartmentStoreChange(
+                            index,
+                            "subStoreId",
+                            e.target.value
+                          )
+                        }
+                      />
+                      <button
+                        type="button"
+                        className="GCSSheetForm-search-icon"
+                        onClick={() => setActivePopup("substore")}
+                      >
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                          <path
+                            fill="currentColor"
+                            d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
                   </td>
                   <td>
                     <FloatingInput

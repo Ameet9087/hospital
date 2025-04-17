@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./SampleRecieving.css";
 import axios from "axios";
 import { API_BASE_URL } from "../api/api";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 import CustomModel from "../../CustomModel/CustomModal";
 import { FloatingInput } from "../../FloatingInputs";
 const getCurrentDate = () => {

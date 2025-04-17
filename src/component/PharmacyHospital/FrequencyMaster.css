@@ -1,0 +1,88 @@
+.FrequencyMaster-container{
+
+}
+.FrequencyMasteradd-btn{
+    background-color: var(--button-bg-color);
+    color: white;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size);
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .FrequencyMasteradd-btn:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+  }
+  .FrequencyMaster-form-group{
+    display: flex;
+    margin: 10px;
+    
+ }
+  
+  .FrequencyMaster-form-group label {
+   width: 300px;
+   font-size: var(--font-size);
+  }
+  
+  .FrequencyMaster-form-group input{
+    width: 100%;
+    padding: var(--input-box-padding);
+    font-size: var(--font-size);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  .FrequencyMaster-form-group textarea{
+    width: 105%;
+    padding: var(--input-box-padding);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  .frequency-actions{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .FrequencyMaster-time-field{
+    display: flex;
+    gap: 20px;
+  }
+  
+
+.FrequencyMaster-submit-button{
+   
+        display: flex;
+        justify-content: flex-end;
+      }
+
+
+  .FrequencyMaster-submit-btn,.FrequencyMaster-add-time-btn,.frequency-action-btn{
+    background-color: var(--button-color);
+    color: white;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: var(--font-size);
+    border-radius: 5px;
+  }
+  
+  .FrequencyMaster-submit-btn:hover,.FrequencyMaster-add-time-btn:hover,.frequency-action-btn:hover {
+    background-color: var(--button-hover-background-color);
+    color: var(--button-hover-text-color);
+    border: 1 px solid var(--button-color);
+  }
+  .FrequencyMaster-remove-time-btn{
+    padding: 5px;
+    font-size: var(--font-size);
+    background-color: #dc3545;
+    color: white;
+    border: 1px solid #dc3545;
+    border-radius: 5px;
+  }
+  .FrequencyMaster-remove-time-btn:hover{
+    color: #dc3545;
+    background-color: white;
+    border: 1px solid #dc3545;
+  }

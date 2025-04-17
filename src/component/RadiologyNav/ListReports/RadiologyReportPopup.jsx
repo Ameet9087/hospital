@@ -32,10 +32,10 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
     const hospitalDetails = `
       <h1>
         <img src="lopmudralogo.jpeg" alt="Hospital Logo" style="width: 100px; height: auto;" />
-        LOPMUDRA HOSPITAL
+         HOSPITAL
       </h1>
       <p style="font-size: 14px;">
-        Survey No 148/4, Vishwakarma Nagar Lopmudra Hospital, CTS No. 1338, Pashan - Sus Rd, 
+        Survey No 148/4, Vishwakarma Nagar  Hospital, CTS No. 1338, Pashan - Sus Rd, 
         near NIV, Pashan, Pune, Maharashtra 411021
       </p>
       <h2 style="text-align: center;">Radiology Report</h2>
@@ -45,46 +45,37 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
       <div style="font-size: 14px; margin-bottom: 20px; border:1px solid #ccc; padding:10px">
         <div style="display: flex; justify-content: space-between; margin-bottom: 10px; ">
           <div style="flex: 1; padding-right: 10px; ">
-            <p><strong>Name:</strong> ${
-              reportData.inPatientDTO?.patient?.firstName ||
-              reportData.outPatientDTO?.patient?.firstName
-            } 
-            ${
-              reportData.inPatientDTO?.patient?.lastName ||
-              reportData.outPatientDTO?.patient?.lastName
-            }</p>
-            <p><strong>Age/Sex:</strong> ${
-              reportData.inPatientDTO?.patient?.age ||
-              reportData.outPatientDTO?.patient?.age
-            } ${
-      reportData.inPatientDTO?.patient?.ageUnit ||
+            <p><strong>Name:</strong> ${reportData.inPatientDTO?.patient?.firstName ||
+      reportData.outPatientDTO?.patient?.firstName
+      } 
+            ${reportData.inPatientDTO?.patient?.lastName ||
+      reportData.outPatientDTO?.patient?.lastName
+      }</p>
+            <p><strong>Age/Sex:</strong> ${reportData.inPatientDTO?.patient?.age ||
+      reportData.outPatientDTO?.patient?.age
+      } ${reportData.inPatientDTO?.patient?.ageUnit ||
       reportData.outPatientDTO?.patient?.ageUnit
-    } / 
-            ${
-              reportData.inPatientDTO?.patient?.gender ||
-              reportData.outPatientDTO?.patient?.gender
-            }</p>
+      } / 
+            ${reportData.inPatientDTO?.patient?.gender ||
+      reportData.outPatientDTO?.patient?.gender
+      }</p>
           </div>
           <div style="flex: 1; padding-left: 10px;">
-            <p><strong>Rep. Date:</strong> ${
-              new Date(reportData.imagingDate).toDateString() || "N/A"
-            }</p>
-            <p><strong>Address/Contact No:</strong> ${
-              reportData.inPatientDTO?.patient?.address ||
-              reportData.outPatientDTO?.patient?.address
-            } / 
-            ${
-              reportData.patientDTO?.patient?.mobileNumber ||
-              reportData.outPatientDTO?.patient?.mobileNumber
-            }</p>
+            <p><strong>Rep. Date:</strong> ${new Date(reportData.imagingDate).toDateString() || "N/A"
+      }</p>
+            <p><strong>Address/Contact No:</strong> ${reportData.inPatientDTO?.patient?.address ||
+      reportData.outPatientDTO?.patient?.address
+      } / 
+            ${reportData.patientDTO?.patient?.mobileNumber ||
+      reportData.outPatientDTO?.patient?.mobileNumber
+      }</p>
           </div>
         </div>
   
         <div style="display: flex; justify-content: space-between;">
           <div style="flex: 1; padding-right: 10px;">
-            <p><strong>Prescriber Name:</strong> ${
-              reportData.prescriberDTO?.doctorName || "Self"
-            }</p>
+            <p><strong>Prescriber Name:</strong> ${reportData.prescriberDTO?.doctorName || "Self"
+      }</p>
           </div>
         </div>
       </div>
@@ -101,21 +92,19 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
     `;
 
     const signature = `
-       ${
-         reportData?.performerDTO?.signatureImage
-           ? `<img src="data:image/jpeg;base64,${reportData?.performerDTO?.signatureImage}" alt="Radiology Scan" style="max-width: 100%; height: 150px;" />`
-           : "<p>No image</p>"
-       }
+       ${reportData?.performerDTO?.signatureImage
+        ? `<img src="data:image/jpeg;base64,${reportData?.performerDTO?.signatureImage}" alt="Radiology Scan" style="max-width: 100%; height: 150px;" />`
+        : "<p>No image</p>"
+      }
        <p>Signature</p>
     `;
 
     const reportBody = `
       <div style="text-align: center; margin-top: 20px;">
-        ${
-          reportData?.uploadFile
-            ? `<img src="data:image/jpeg;base64,${reportData?.uploadFile}" alt="Radiology Scan" style="max-width: 100%; height: auto;" />`
-            : "<p>No image available</p>"
-        }
+        ${reportData?.uploadFile
+        ? `<img src="data:image/jpeg;base64,${reportData?.uploadFile}" alt="Radiology Scan" style="max-width: 100%; height: auto;" />`
+        : "<p>No image available</p>"
+      }
       </div>
     `;
 
@@ -176,10 +165,10 @@ const RadiologyReportPopup = ({ onClose, selectedRequest }) => {
                     src="lopmudralogo.jpeg"
                     class="radiology-hospital-logo"
                   />{" "}
-                  LOPMUDRA HOSPITAL
+                  HOSPITAL
                 </h1>
                 <span class="radiology-address">
-                  Survey No 148/4, Vishwakarma Nagar Lopmudra Hospital, CTS No.
+                  Survey No 148/4, Vishwakarma Nagar  Hospital, CTS No.
                   1338, Pashan - Sus Rd, near NIV, Pashan, Pune, Maharashtra
                   411021
                   <h2>Radiology Report</h2>

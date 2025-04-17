@@ -63,7 +63,7 @@ const ManageImagingItem = () => {
 
   const fetchServiceDetails = async () => {
     const response = await axios.get(
-      `${API_BASE_URL}/service-details/service?typeName=Radiology`
+      `${API_BASE_URL}/service-details/sorted-map?serviceTypeName=Radiology`
     );
     setServiceDetails(response.data);
   };
@@ -193,7 +193,7 @@ const ManageImagingItem = () => {
     setSelectedRadiologyTemplate(null);
     setIsEditMode(false);
   };
-  
+
   return (
     <>
       <div className="manage-imaging-item-container">
@@ -346,7 +346,7 @@ const ManageImagingItem = () => {
                 <button type="submit" className="manage-modal-submit-btn">
                   {isEditMode ? "Update" : "Add"}
                 </button>
-                <button  className="manage-modal-submit-btn" onClick={resetForm}>Reset</button>
+                <button className="manage-modal-submit-btn" onClick={resetForm}>Reset</button>
               </form>
             </div>
           </div>

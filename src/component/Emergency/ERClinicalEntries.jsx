@@ -63,13 +63,18 @@ const ERClinicalEntries = () => {
         break;
     }
   };
-  const handleBack = () => navigate("/emergency/erinitial");
+  const handleBack = () => navigate("/emergency/finalizedpatients");
 
   return (
     <div className="er-clinical-entries-container">
       <div className="er-initial-assessment-com-section">
-      <button className="er-initial-assessment-com-section-back" onClick={handleBack}>Back</button>
-        </div>
+        <button
+          className="er-initial-assessment-com-section-back"
+          onClick={handleBack}
+        >
+          Back
+        </button>
+      </div>
       <div className="er-clinical-entries-container-sub-header">
         ER Clinical Entries
       </div>

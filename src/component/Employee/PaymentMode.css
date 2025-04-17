@@ -1,0 +1,129 @@
+.PaymentMode-add-btn,.PaymentMode-print-button{
+    margin-bottom: 20px;
+    background-color: var(--button-bg-color);
+    font-size: var( --heading-font);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    border: 1px solid var(--button-hover-border-color);
+}
+.PaymentMode-search-bar input{
+    padding: 5px;
+    /* width: 300px; */
+    transition: border-color 0.3s;
+    font-size: var(--font-size);
+    margin-left: 0;
+}
+.PaymentMode-search-bar input:focus{
+    border: none;
+    /* outline: none; */
+}
+.PaymentMode-info{
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+    margin: 2px;
+}
+.PaymentMode-form{
+    margin: 0 auto;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    background-color:var(--background-color);
+}
+.PaymentMode-section{
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.PaymentMode-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 10px;
+  }
+  .PaymentMode-grid.two-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+
+
+
+/* Floating Label */
+.custom-floating-select-label {
+    position: absolute;
+    left: 1px;
+    top: 50%;
+    padding: 0 60px 0 0;
+    transform: translateY(-50%);
+    background: white;
+    padding: 0 4px;
+    color: #666;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    width: calc(90% - 3px);
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* When select has a value or is focused */
+  .custom-floating-select-field.active .custom-floating-select-label {
+    top: 0px;
+    left: 5px;
+    padding: 0 5px;
+    font-size: 12px;
+    width: fit-content;
+    color: #00897b;
+  }
+  
+  /* Focus effect */
+  .custom-floating-select:focus {
+    outline: none;
+    border-color: #00897b;
+    box-shadow: 0 0 0 2px rgba(0, 137, 123, 0.1);
+  }
+  
+  /* Error state */
+  .custom-floating-select-field.error .custom-floating-select {
+    border: 2px solid red;
+  }
+  
+  .custom-floating-select-field.error .custom-floating-select-label {
+    color: red;
+  }
+  .PaymentMode-action-btn{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .PaymentMode-submit-button{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+  }
+  .PaymentMode-print-button,.PaymentMode-submit-button button,.PaymentMode-status-btn{
+    background-color: var(--button-color);
+    font-size: var(--font-size);
+    border-radius: 5px;
+    padding: 5px ;
+    border: 1px solid var(--button-hover-background-color);
+    color: white;
+    cursor: pointer;
+    
+}
+.PaymentMode-print-button:hover,.PaymentMode-submit-button button:hover,.PaymentMode-status-btn:hover,.PaymentMode-add-btn:hover{
+    color: var(--button-hover-text-color);
+    background-color: var(--button-hover-background-color);
+    border: 1px solid var(--button-hover-border-color);
+}
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+

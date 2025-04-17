@@ -39,6 +39,15 @@ function wardNurseDashboard() {
     setAdmittedpatient(response.data);
     setFilteredAdmittedPatients(response.data);
   };
+
+  // const fetchAllAdmittedPatient = async () => {
+  //   const response = await axios.get(
+  //     `${API_BASE_URL}/ip-admissions/admitted-floor/1`
+  //   );
+  //   setAdmittedpatient(response.data);
+  //   setFilteredAdmittedPatients(response.data);
+  // };
+
   const fetchAllRequestedWardData = async () => {
     const response = await axios.get(`${API_BASE_URL}/ward-request-change/all`);
     setWardRequest(response.data);
@@ -689,6 +698,3 @@ function wardNurseDashboard() {
 }
 
 export default wardNurseDashboard;
-
-
-

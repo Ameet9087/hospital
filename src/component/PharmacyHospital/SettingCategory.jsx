@@ -1,5 +1,5 @@
 /* Mohini_SettingCategory_WholePage_14/sep/2024 */
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
 import './SettingSupplier.css';
@@ -13,7 +13,7 @@ import { FloatingInput, FloatingSelect } from '../../FloatingInputs';
 
 const SettingCategory = () => {
   const [suppliers, setSuppliers] = useState([]);
-  const [taxs,setTaxs] = useState();
+  const [taxs, setTaxs] = useState();
   const [searchTerm, setSearchTerm] = useState('');
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -21,7 +21,7 @@ const SettingCategory = () => {
   const { success, error, CustomAlerts } = useCustomAlert();
   const [openStickerPopup, setOpenStickerPopup] = useState(false);
   const [columnWidths, setColumnWidths] = useState({});
-    const tableRef = useRef(null);
+  const tableRef = useRef(null);
 
 
   useEffect(() => {
@@ -63,20 +63,21 @@ const SettingCategory = () => {
 
   const handleSubmit = (event) => {
     const formData = {
-      subCategoryName:selectedUser.subCategoryName ,
-    categoryName:selectedUser.categoryName,
-    code: selectedUser.code,
-    musting:selectedUser.musting ,
-    general:selectedUser.general,
-    considerForMis: selectedUser.considerForMis,
-    description: selectedUser.description,
-    tax: {
-        taxesId:isEditMode?selectedUser.tax.taxesId:selectedUser.tax
-    }
+      subCategoryName: selectedUser.subCategoryName,
+      categoryName: selectedUser.categoryName,
+      code: selectedUser.code,
+      musting: selectedUser.musting,
+      general: selectedUser.general,
+      considerForMis: selectedUser.considerForMis,
+      description: selectedUser.description,
+      isActive: selectedUser.isActive,
+      tax: {
+        taxesId: isEditMode ? selectedUser.tax.taxesId : selectedUser.tax
+      }
     }
     console.log(formData);
-    
-    
+
+
     event.preventDefault();
     const apiUrl = isEditMode
       ? `${API_BASE_URL}/categories/${selectedUser.categoryId}` // Assuming `id` is part of the user object for updates
@@ -115,7 +116,7 @@ const SettingCategory = () => {
       [name]: inputValue,
     }));
   };
-  
+
   const handleExport = () => {
     const ws = XLSX.utils.table_to_sheet(tableRef.current); // Converts the table to a worksheet
     const wb = XLSX.utils.book_new(); // Creates a new workbook
@@ -129,7 +130,7 @@ const SettingCategory = () => {
 
 
 
-  
+
   // 🔹 **Filtering categories based on search term**
   const filteredSuppliers = suppliers.filter(supplier =>
     supplier.categoryName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -139,7 +140,7 @@ const SettingCategory = () => {
 
   return (
     <div className="setting-supplier-container">
-      <CustomAlerts/>
+      <CustomAlerts />
       <div className="setting-supplier-header">
         <button
           className="setting-supplier-add-user-button"
@@ -156,30 +157,30 @@ const SettingCategory = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <div className='setting-supplier-span'>
-  <span>Showing {suppliers.length} results</span>
-  <button className='item-wise-export-button'onClick={handleExport}>Export</button>
-  <button className='item-wise-print-button'onClick={handlePrint}>Print</button>
-</div>
+        <span>Showing {suppliers.length} results</span>
+        <button className='item-wise-export-button' onClick={handleExport}>Export</button>
+        <button className='item-wise-print-button' onClick={handlePrint}>Print</button>
+      </div>
       <div className='table-container'>
-      <table ref={tableRef}>
-                        <thead>
-                            <tr>
-                                {[ "Category Name",
-  "Description",
-  "Is Active",
-  "Action"].map((header, index) => (
-                                    <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
-                                        <div className="header-content">
-                                            <span>{header}</span>
-                                            <div
-                                                className="resizer"
-                                                onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
-                                            ></div>
-                                        </div>
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
+        <table ref={tableRef}>
+          <thead>
+            <tr>
+              {["Category Name",
+                "Description",
+                "Is Active",
+                "Action"].map((header, index) => (
+                  <th key={index} style={{ width: columnWidths[index] }} className="resizable-th">
+                    <div className="header-content">
+                      <span>{header}</span>
+                      <div
+                        className="resizer"
+                        onMouseDown={startResizing(tableRef, setColumnWidths)(index)}
+                      ></div>
+                    </div>
+                  </th>
+                ))}
+            </tr>
+          </thead>
 
           <tbody>
             {suppliers.map((user, index) => (
@@ -225,126 +226,135 @@ const SettingCategory = () => {
         </div> */}
       </div>
       <CustomModal
-  isOpen={showEditModal}
-  onClose={handleCloseModal}
-  className="supplier-setting-supplier-update-modal"
->
-  <div className="supplier-setting-supplier-update-modal-header">
-    <h5>{isEditMode ? 'Update Company Category' : 'Add Company Category'}</h5>
-    {/* <button onClick={handleCloseModal} className="close-button">
+        isOpen={showEditModal}
+        onClose={handleCloseModal}
+        className="supplier-setting-supplier-update-modal"
+      >
+        <div className="supplier-setting-supplier-update-modal-header">
+          <h5>{isEditMode ? 'Update Company Category' : 'Add Company Category'}</h5>
+          {/* <button onClick={handleCloseModal} className="close-button">
       &times;
     </button> */}
-  </div>
-  <div className="supplier-setting-supplier-update-modal-body">
-    <Form onSubmit={handleSubmit}>
-      <div className="supplier-setting-form-row">
-        <Form.Group controlId="categoryName" className="supplier-setting-form-group col-md-6">
-          <FloatingInput
-          label={"Sub Category Name"}
-            type="text"
-            placeholder="Enter Category Name"
-            name="subCategoryName"
-            required
-            value={selectedUser?.subCategoryName || ''}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="categoryName" className="supplier-setting-form-group col-md-6">
-          <FloatingInput
-          label={"Category Name"}
-            type="text"
-            placeholder="Enter Category Name"
-            name="categoryName"
-            required
-            value={selectedUser?.categoryName || ''}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-        
-      </div>
-      <div className="supplier-setting-form-row">
-      <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
-          <FloatingInput
-          label={"Code"}
-            type="text"
-            placeholder="Enter Code"
-            name="code"
-            value={selectedUser?.code || ''}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
-          <FloatingInput
-          label={"Musting"}
-            type="text"
-            placeholder="Enter Musting"
-            name="musting"
-            value={selectedUser?.musting || ''}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-      </div>
-      <div className="supplier-setting-form-row">
-      <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
-          <FloatingInput
-          label={"General"}
-            type="text"
-            placeholder="Enter General"
-            name="general"
-            value={selectedUser?.general || ''}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
-          <FloatingInput
-          label={"Consider For Mis"}
-            type="text"
-            name="considerForMis"
-            value={selectedUser?.considerForMis || ''}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-      </div>
-      <div className="supplier-setting-form-row">
-      <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
-          <FloatingInput
-          label={"Description"}
-            type="text"
-            placeholder="Enter Description"
-            name="description"
-            value={selectedUser?.description || ''}
-            onChange={handleInputChange}
-          />
-        </Form.Group>
-        <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
-        <FloatingSelect
-  label="Tax"
-  name="tax"
-  value={selectedUser?.tax || ""}
-  onChange={handleInputChange}
-  options={[
-    { value: "", label: "" }, // Empty default option
-    ...(Array.isArray(taxs)
-      ? taxs.map((tax) => ({
-          value: tax.taxesId,
-          label: tax.name,
-        }))
-      : []), // Ensures safe fallback if `taxs` is undefined or not an array
-  ]}
-/>
+        </div>
+        <div className="supplier-setting-supplier-update-modal-body">
+          <Form onSubmit={handleSubmit}>
+            <div className="supplier-setting-form-row">
+              <Form.Group controlId="categoryName" className="supplier-setting-form-group col-md-6">
+                <FloatingInput
+                  label={"Sub Category Name"}
+                  type="text"
+                  placeholder="Enter Category Name"
+                  name="subCategoryName"
+                  required
+                  value={selectedUser?.subCategoryName || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="categoryName" className="supplier-setting-form-group col-md-6">
+                <FloatingInput
+                  label={"Category Name"}
+                  type="text"
+                  placeholder="Enter Category Name"
+                  name="categoryName"
+                  required
+                  value={selectedUser?.categoryName || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+
+            </div>
+            <div className="supplier-setting-form-row">
+              <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+                <FloatingInput
+                  label={"Code"}
+                  type="text"
+                  placeholder="Enter Code"
+                  name="code"
+                  value={selectedUser?.code || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+                <FloatingInput
+                  label={"Musting"}
+                  type="text"
+                  placeholder="Enter Musting"
+                  name="musting"
+                  value={selectedUser?.musting || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+            </div>
+            <div className="supplier-setting-form-row">
+              <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+                <FloatingInput
+                  label={"General"}
+                  type="text"
+                  placeholder="Enter General"
+                  name="general"
+                  value={selectedUser?.general || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+                <FloatingInput
+                  label={"Consider For Mis"}
+                  type="text"
+                  name="considerForMis"
+                  value={selectedUser?.considerForMis || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+            </div>
+            <div className="supplier-setting-form-row">
+              <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+                <FloatingInput
+                  label={"Description"}
+                  type="text"
+                  placeholder="Enter Description"
+                  name="description"
+                  value={selectedUser?.description || ''}
+                  onChange={handleInputChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="description" className="supplier-setting-form-group col-md-6">
+                <FloatingSelect
+                  label="Tax"
+                  name="tax"
+                  value={selectedUser?.tax || ""}
+                  onChange={handleInputChange}
+                  options={[
+                    { value: "", label: "" }, // Empty default option
+                    ...(Array.isArray(taxs)
+                      ? taxs.map((tax) => ({
+                        value: tax.taxesId,
+                        label: tax.name,
+                      }))
+                      : []), // Ensures safe fallback if `taxs` is undefined or not an array
+                  ]}
+                />
 
 
-</Form.Group>
+              </Form.Group>
 
-      </div>
-      <div className="supplier-setting-text-right">
-        <Button variant="primary" type="submit">
-          {isEditMode ? 'Update' : 'Add'}
-        </Button>
-      </div>
-    </Form>
-  </div>
-</CustomModal>
+            </div>
+            <Form.Group controlId="isActive" className="supplier-setting-form-group col-md-6">
+              <FloatingInput
+                label={"isActive"}
+                type="checkbox"
+                name="isActive"
+                value={selectedUser?.isActive || ''}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+            <div className="supplier-setting-text-right">
+              <Button variant="primary" type="submit">
+                {isEditMode ? 'Update' : 'Add'}
+              </Button>
+            </div>
+          </Form>
+        </div>
+      </CustomModal>
 
     </div>
   );

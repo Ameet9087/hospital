@@ -69,7 +69,7 @@ const DischargeTemplate = () => {
                   </div>
 
                   <div className="DischargeTemplate-editor-container">
-                        <label>OT NOTES:</label>
+                        <label>Discharge Template:</label>
                         <ReactQuill
                               className="DischargeTemplate-ql"
                               value={notes}

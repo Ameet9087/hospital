@@ -22,7 +22,7 @@ const SalesStockDetails = () => {
   const tableRef = useRef();
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
- 
+
 
   // Fetch data from the backend API when the component mounts
   useEffect(() => {
@@ -173,11 +173,11 @@ const SalesStockDetails = () => {
 
           <div className="dispenSalesStockDetails-search-N-result">
             <div className="dispenSalesStockDetails-search-bar">
-             
+
               <FloatingInput
-              label={"Search"}
-              type="search"
-              
+                label={"Search"}
+                type="search"
+
               />
             </div>
             <div className="dispenSalesStockDetails-results-info">
@@ -230,59 +230,9 @@ const SalesStockDetails = () => {
             </tbody>
           </table>
 
-                    <div className='dispenSalesStockDetails-search-N-result'>
-                        <div className="dispenSalesStockDetails-search-bar">
-                            <i className="fa-solid fa-magnifying-glass"></i>
-                            <input
-                                type="text"
-                                placeholder="Search..."
-                            />
-                        </div>
-                        <div className="dispenSalesStockDetails-results-info">
-                            <span>Showing {salesData.length}/{salesData.length} results</span>
-                            <button className="dispenSalesStockDetails-print-button" onClick={handleExport}>
-                                <i className="fa-solid fa-file-excel"></i> Export
-                            </button>
-                            <button className="dispenSalesStockDetails-print-button" onClick={handlePrint}>
-                                <i class="fa-solid fa-print"></i> Print
-                            </button>
-                        </div>
-                    </div>
 
-                    <table className="dSSD-stock-table">
-                        <thead>
-                            <tr>
-                                <th>Generic Name</th>
-                                <th>Medicine Name</th>
-                                <th>Unit</th>
-                                <th>Rack No</th>
-                                <th>Batch No</th>
-                                <th>Expiry Date</th>
-                                <th>Available Quantity</th>
-                                <th>Sale Price</th>
-                                <th>Total Value</th>
-                                <th>Store Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {salesData.map((item, index) => (
-                                <tr key={index}>
-                                    <td>{item.genericName}</td>
-                                    <td>{item.medicineName}</td>
-                                    <td>{item.unit}</td>
-                                    <td>{item.rackNumber}</td>
-                                    <td>{item.batchNumber}</td>
-                                    <td>{item.expiryDate}</td>
-                                    <td>{item.availableQty}</td>
-                                    <td>{item.salePrice}</td>
-                                    <td>{(item.availableQty * item.salePrice).toFixed(2)}</td>
-                                    <td>{item.storeName}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
 
-                    {/* <div className="dSSDetails-pagination-bar">
+          {/* <div className="dSSDetails-pagination-bar">
           {/* <div className="dSSDetails-pagination-bar">
                         <span>1 to 20 of {salesData.length}</span>
                         <button>First</button>

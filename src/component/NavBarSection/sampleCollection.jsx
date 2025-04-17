@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import CollectSample from "./CollectSample";
 import { API_BASE_URL } from "../api/api";
 import { FloatingInput } from "../../FloatingInputs";
-import { startResizing } from "../../TableHeadingResizing/ResizableColumns";
+import { startResizing } from "../../TableHeadingResizing/resizableColumns";
 
 const getCurrentDate = () => {
   return new Date().toISOString().split("T")[0];

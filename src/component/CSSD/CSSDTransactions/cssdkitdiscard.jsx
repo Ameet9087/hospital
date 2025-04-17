@@ -121,28 +121,28 @@ const CSSDKitDiscard = () => {
   return (
     <div className="cssdkitdiscard-container">
       <header className="cssdkitdiscard-header">
-     
+
 
 
         <h3>Kit Discard</h3>
         <FontAwesomeIcon
-            icon={faArrowLeftLong}
-            className="back-icon"
-            onClick={handleClose}
-          />
+          icon={faArrowLeftLong}
+          className="back-icon"
+          onClick={handleClose}
+        />
       </header>
       <div className="cssdkitdiscard-form">
         <FloatingInput
-        label={"Discard Date"}
-        type="date"
-            value={discardDate}
-            onChange={(e) => setDiscardDate(e.target.value)}/>
+          label={"Discard Date"}
+          type="date"
+          value={discardDate}
+          onChange={(e) => setDiscardDate(e.target.value)} />
         <FloatingInput
-        label={" Remarks"}
-        type="text"
-            value={remarks}
-            onChange={(e) => setRemarks(e.target.value)}/>
-       
+          label={" Remarks"}
+          type="text"
+          value={remarks}
+          onChange={(e) => setRemarks(e.target.value)} />
+
       </div>
 
       <table className="cssdkitdiscard-table" ref={tableRef}>
@@ -186,44 +186,45 @@ const CSSDKitDiscard = () => {
               <td>{index + 1}</td>
               <td>
                 <FloatingInput
-                label={"Kit ID"}
-                type="number"
+                  label={"Kit ID"}
+                  type="number"
                   value={row.kitId}
-                  onChange={(e) => updateRow(index, "kitId", e.target.value)}/>
-               
+                  onChange={(e) => updateRow(index, "kitId", e.target.value)} />
+
               </td>
               <td>
                 <div className="input-with-icon">
                   <FloatingInput
-                  label={"Kit Name"}
-                  value={row.kitName}
-                  onIconClick={() => {
-                    setSelectedRowIndex(index); 
-                    setShowModal(true); 
-                  }}
-                  readOnly/>
-                 
-                 
+                    type="search"
+                    label={"Kit Name"}
+                    value={row.kitName}
+                    onClick={() => {
+                      setSelectedRowIndex(index);
+                      setShowModal(true);
+                    }}
+                    readOnly />
+
+
                 </div>
               </td>
               <td>
                 <FloatingInput
-                label={"Quantity"}
-                type="number"
-                value={row.quantity}
-                onChange={(e) => updateRow(index, "quantity", e.target.value)}
-             />
-                
+                  label={"Quantity"}
+                  type="number"
+                  value={row.quantity}
+                  onChange={(e) => updateRow(index, "quantity", e.target.value)}
+                />
+
               </td>
               <td>
                 <FloatingInput
-                label={"Remark"}
-                type="text"
-                value={row.remarks}
-                onChange={(e) => updateRow(index, "remarks", e.target.value)}
-             />
-                
-               
+                  label={"Remark"}
+                  type="text"
+                  value={row.remarks}
+                  onChange={(e) => updateRow(index, "remarks", e.target.value)}
+                />
+
+
               </td>
             </tr>
           ))}

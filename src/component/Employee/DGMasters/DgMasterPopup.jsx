@@ -156,11 +156,11 @@ function DgMasterPopup() {
         prevRows.map((row) =>
           row.id === selectedRowId
             ? {
-              ...row,
-              testName: data.serviceName,
-              actRate: data.rates || "",
-              serviceDetailsId: data.serviceDetailsId,
-            }
+                ...row,
+                testName: data.serviceName,
+                actRate: data.rates || "",
+                serviceDetailsId: data.serviceDetailsId,
+              }
             : row
         )
       );
@@ -177,12 +177,12 @@ function DgMasterPopup() {
         prevRows.map((row) =>
           row.id === selectedRowId
             ? {
-              ...row,
-              specialisation: data.specialisationName,
-              specialisationId: data.specialisationId,
-              doctor: "",
-              doctorId: "",
-            }
+                ...row,
+                specialisation: data.specialisationName,
+                specialisationId: data.specialisationId,
+                doctor: "",
+                doctorId: "",
+              }
             : row
         )
       );
@@ -200,10 +200,10 @@ function DgMasterPopup() {
         prevRows.map((row) =>
           row.id === selectedRowId
             ? {
-              ...row,
-              doctor: data.doctorName,
-              doctorId: data.doctorId,
-            }
+                ...row,
+                doctor: data.doctorName,
+                doctorId: data.doctorId,
+              }
             : row
         )
       );
@@ -213,11 +213,11 @@ function DgMasterPopup() {
         prevOrganizations.map((org) =>
           org.id === selectedRowId
             ? {
-              ...org,
-              name: data.name || "",
-              type: data.classification || "",
-              masterId: data.masterId || 0, // Ensure masterId is assigned
-            }
+                ...org,
+                name: data.name || "",
+                type: data.classification || "",
+                masterId: data.masterId || 0, // Ensure masterId is assigned
+              }
             : org
         )
       );

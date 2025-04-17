@@ -19,9 +19,11 @@ const initialUser = {
   email: "",
   creditPeriod: "", // Ensure creditPeriod is correctly handled
   dda: "",
-  gstNo :"",
-  aadharNo:"",
-  panNo:"",
+  gstNumber: "",
+  adharnumber: "",
+  pancardNumber: "",
+  contractStartdate: "",
+  contractEndDate: "",
   additionalContact: "",
   isLedgerRequired: "",
   isActive: false,
@@ -92,11 +94,11 @@ const SettingSupplierComponent = () => {
       city: selectedUser.city || "",
       kraPin: selectedUser.kraPin || "",
       dda: selectedUser.dda || "",
-      gstNo:selectedUser.gstNo || "",
-      aadharNo:selectedUser.aadharNo || "",
-      panNo:selectedUser.panNo || "",
-      contractStartDate:selectedUser.contractStartDate || "",
-      contractEndDate:selectedUser.contractEndDate || "",
+      gstNumber: selectedUser.gstNumber || "",
+      adharnumber: selectedUser.adharnumber || "",
+      pancardNumber: selectedUser.pancardNumber || "",
+      contractStartdate: selectedUser.contractStartDate || "",
+      contractEndDate: selectedUser.contractEndDate || "",
       additionalContact: selectedUser.additionalContact || "",
       isActive: selectedUser.isActive || "", // Convert boolean to string if required
     };
@@ -294,25 +296,25 @@ const SettingSupplierComponent = () => {
                 value={selectedUser.dda || ""}
                 onChange={handleInputChange}
               />
-               <FloatingInput
+              <FloatingInput
                 label={"GST NO"}
                 type="text"
                 name="gstNo"
-                value={selectedUser.gstNo || ""}
+                value={selectedUser.gstNumber || ""}
                 onChange={handleInputChange}
               />
-                <FloatingInput
+              <FloatingInput
                 label={"Aadhar NO"}
                 type="text"
                 name="aadharNo"
-                value={selectedUser.aadharNo || ""}
+                value={selectedUser.adharnumber || ""}
                 onChange={handleInputChange}
               />
-                 <FloatingInput
+              <FloatingInput
                 label={"Pan No"}
                 type="text"
                 name="panNo"
-                value={selectedUser.panNo || ""}
+                value={selectedUser.pancardNumber || ""}
                 onChange={handleInputChange}
               />
               <FloatingInput
@@ -322,21 +324,21 @@ const SettingSupplierComponent = () => {
                 value={selectedUser.email || ""}
                 onChange={handleInputChange}
               />
-                <FloatingInput
+              <FloatingInput
                 label={"Contract Start Date"}
                 type="Date"
                 name="contractStartDate"
-                value={selectedUser.contractStartDate || ""}
+                value={selectedUser.contractStartdate || ""}
                 onChange={handleInputChange}
               />
-               <FloatingInput
+              <FloatingInput
                 label={"Contract End Date"}
                 type="Date"
                 name="contractEndDate"
                 value={selectedUser.contractEndDate || ""}
                 onChange={handleInputChange}
               />
-                <FloatingInput
+              <FloatingInput
                 label={"Email"}
                 type="email"
                 name="email"

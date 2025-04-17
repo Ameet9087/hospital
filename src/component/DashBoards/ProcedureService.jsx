@@ -13,13 +13,14 @@ const ProcedureService = ({ setIsModalOpen, inPatientId, outPatientId }) => {
   const [serviceTypes] = useState(["Radiology", "Lab"]); // Procedure types
 
   console.log("check in ", inPatientId);
+  console.log("check out ", outPatientId);
   // Fetch procedures based on selected type
   useEffect(() => {
     if (procedureType) {
       const fetchProcedures = async () => {
         try {
           const response = await axios.get(
-            `${API_BASE_URL}/service-details/service?typeName=${procedureType}`
+            `${API_BASE_URL}/service-details/sorted-map?serviceTypeName=${procedureType}`
           );
           setAvailableProcedures(response.data);
         } catch (error) {
@@ -53,29 +54,30 @@ const ProcedureService = ({ setIsModalOpen, inPatientId, outPatientId }) => {
       return;
     }
 
-    try {
-      const payload = selectedProcedures.map((serviceName) => ({
-        serviceName: serviceName,
-        payStatus: "Pending", // Example default value; update as needed
-        rate: 0.0, // Example default value; update as needed
-        ...(inPatientId
-          ? { inPatient: { inPatientId } }
-          : { outPatient: { outPatientId } }),
-      }));
+    const payload = selectedProcedures.map((serviceName) => ({
+      serviceName,
+      payStatus: "Pending",
+      rate: 0.0,
+      inPatient: inPatientId ? { inPatientId } : null,  // ✅ Ensure `inPatient` is an object or `null`
+      outPatient: outPatientId ? { outPatientId } : null, // ✅ Ensure `outPatient` is an object or `null`
+    }));
 
+    console.log("Submitting Payload:", JSON.stringify(payload, null, 2)); // Debugging
+
+    try {
       await axios.post(`${API_BASE_URL}/services`, payload, {
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
       });
+
       setIsModalOpen(false);
       toast.success("Procedures Saved Successfully");
       cancelSelection();
     } catch (error) {
-      console.error("Error saving procedures:", error.message);
+      console.error("Error saving procedures:", error);
       toast.error("Failed to save procedures. Please try again later.");
     }
   };
+
 
   return (
     <div className="procedures-service-container">
@@ -91,9 +93,9 @@ const ProcedureService = ({ setIsModalOpen, inPatientId, outPatientId }) => {
               { value: "", label: "" },
               ...(Array.isArray(serviceTypes)
                 ? serviceTypes.map((type) => ({
-                    value: type,
-                    label: type,
-                  }))
+                  value: type,
+                  label: type,
+                }))
                 : []),
             ]}
           />
@@ -110,9 +112,9 @@ const ProcedureService = ({ setIsModalOpen, inPatientId, outPatientId }) => {
               { value: "", label: "" },
               ...(Array.isArray(availableProcedures)
                 ? availableProcedures.map((procedure) => ({
-                    value: procedure?.serviceName,
-                    label: procedure?.serviceName,
-                  }))
+                  value: procedure?.serviceName,
+                  label: procedure?.serviceName,
+                }))
                 : []),
             ]}
           />
